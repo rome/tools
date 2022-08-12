@@ -16,13 +16,13 @@ export default (class {}.getInstance());
 +++ Rome
 @@ -1 +1 @@
 -export default (class {}.getInstance());
-+export default ((class {}).getInstance());
++export default (class {}).getInstance();
 ```
 
 # Output
 
 ```js
-export default ((class {}).getInstance());
+export default (class {}).getInstance();
 ```
 
 

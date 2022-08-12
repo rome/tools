@@ -23,7 +23,7 @@ pub(crate) use binary_like_expression::{
     JsAnyBinaryLikeLeftExpression,
 };
 pub(crate) use conditional::{resolve_expression, resolve_expression_syntax, JsAnyConditional};
-pub(crate) use member_chain::format_call_expression;
+pub(crate) use member_chain::get_member_chain;
 pub(crate) use object_like::JsObjectLike;
 pub(crate) use object_pattern_like::JsObjectPatternLike;
 use rome_formatter::{format_args, normalize_newlines, write, Buffer, VecBuffer};

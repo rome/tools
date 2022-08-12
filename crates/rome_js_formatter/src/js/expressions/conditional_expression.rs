@@ -3,7 +3,7 @@ use crate::utils::JsAnyConditional;
 
 use crate::parentheses::{
     is_binary_like_left_or_right, is_conditional_test, is_in_left_hand_side_position,
-    resolve_left_most_expression, NeedsParentheses,
+    NeedsParentheses,
 };
 use rome_js_syntax::{JsConditionalExpression, JsSyntaxKind, JsSyntaxNode};
 
@@ -45,7 +45,7 @@ impl NeedsParentheses for JsConditionalExpression {
 
 #[cfg(test)]
 mod tests {
-    use crate::parentheses::NeedsParentheses;
+
     use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
     use rome_js_syntax::{JsConditionalExpression, SourceType};
 

@@ -23,7 +23,7 @@ impl NeedsParentheses for JsClassExpression {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         is_callee(self.syntax(), parent)
             || is_first_in_statement(
-                self.syntax(),
+                self.clone().into(),
                 FirstInStatementMode::ExpressionOrExportDefault,
             )
     }
@@ -31,7 +31,7 @@ impl NeedsParentheses for JsClassExpression {
 
 #[cfg(test)]
 mod tests {
-    use crate::parentheses::NeedsParentheses;
+
     use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
     use rome_js_syntax::JsClassExpression;
 

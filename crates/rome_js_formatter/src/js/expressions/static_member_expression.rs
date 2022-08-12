@@ -1,10 +1,12 @@
 use crate::prelude::*;
 
 use crate::js::expressions::computed_member_expression::JsAnyComputedMemberLike;
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
     JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAnyName, JsAssignmentExpression,
-    JsInitializerClause, JsStaticMemberAssignment, JsStaticMemberExpression, JsSyntaxToken,
+    JsInitializerClause, JsStaticMemberAssignment, JsStaticMemberExpression, JsSyntaxKind,
+    JsSyntaxNode, JsSyntaxToken,
 };
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 
@@ -14,6 +16,10 @@ pub struct FormatJsStaticMemberExpression;
 impl FormatNodeRule<JsStaticMemberExpression> for FormatJsStaticMemberExpression {
     fn fmt_fields(&self, node: &JsStaticMemberExpression, f: &mut JsFormatter) -> FormatResult<()> {
         JsAnyStaticMemberLike::from(node.clone()).fmt(f)
+    }
+
+    fn needs_parentheses(&self, item: &JsStaticMemberExpression) -> bool {
+        item.needs_parentheses()
     }
 }
 
@@ -140,5 +146,64 @@ impl JsAnyStaticMemberLike {
         };
 
         Ok(layout)
+    }
+}
+
+impl NeedsParentheses for JsStaticMemberExpression {
+    fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
+        if self.is_optional_chain() && matches!(parent.kind(), JsSyntaxKind::JS_NEW_EXPRESSION) {
+            return true;
+        }
+
+        memberish_needs_parens(self.clone().into(), parent)
+    }
+}
+
+pub(crate) fn memberish_needs_parens(node: JsAnyExpression, parent: &JsSyntaxNode) -> bool {
+    use JsAnyExpression::*;
+    debug_assert!(
+        matches!(
+            node,
+            JsStaticMemberExpression(_)
+                | JsComputedMemberExpression(_)
+                | TsNonNullAssertionExpression(_)
+        ),
+        "Expected node to be a member expression"
+    );
+
+    match parent.kind() {
+        // `new (test().a)
+        JsSyntaxKind::JS_NEW_EXPRESSION => {
+            let mut object_chain =
+                std::iter::successors(Some(node), |expression| match expression {
+                    JsStaticMemberExpression(member) => member.object().ok(),
+                    JsComputedMemberExpression(member) => member.object().ok(),
+                    JsTemplate(template) => template.tag(),
+                    TsNonNullAssertionExpression(assertion) => assertion.expression().ok(),
+                    _ => None,
+                });
+
+            object_chain.any(|object| matches!(object, JsCallExpression(_)))
+        }
+        _ => false,
+    }
+}
+
+#[cfg(test)]
+mod tests {
+
+    use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
+    use rome_js_syntax::JsStaticMemberExpression;
+
+    #[test]
+    fn needs_parentheses() {
+        assert_needs_parentheses!("new (test().a)()", JsStaticMemberExpression);
+        assert_needs_parentheses!("new (test()[a].b)()", JsStaticMemberExpression);
+        assert_needs_parentheses!("new (test()`template`.length)()", JsStaticMemberExpression);
+        assert_needs_parentheses!("new (test()!.member)()", JsStaticMemberExpression);
+
+        assert_needs_parentheses!("new (foo?.bar)();", JsStaticMemberExpression);
+
+        assert_not_needs_parentheses!("new (test.a)()", JsStaticMemberExpression);
     }
 }

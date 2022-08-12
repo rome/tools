@@ -1,7 +1,6 @@
 use crate::prelude::*;
 
 use crate::js::declarations::function_declaration::FormatFunction;
-use crate::parentheses::FirstInStatementMode::ExpressionStatementOnly;
 use crate::parentheses::{
     is_callee, is_first_in_statement, is_tag, FirstInStatementMode, NeedsParentheses,
 };
@@ -26,7 +25,7 @@ impl NeedsParentheses for JsFunctionExpression {
         is_callee(self.syntax(), parent)
             || is_tag(self.syntax(), parent)
             || is_first_in_statement(
-                self.syntax(),
+                self.clone().into(),
                 FirstInStatementMode::ExpressionOrExportDefault,
             )
     }
@@ -34,9 +33,9 @@ impl NeedsParentheses for JsFunctionExpression {
 
 #[cfg(test)]
 mod tests {
-    use crate::parentheses::NeedsParentheses;
+
     use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
-    use rome_js_syntax::{JsFunctionExpression, JsPostUpdateExpression};
+    use rome_js_syntax::JsFunctionExpression;
 
     #[test]
     fn needs_parentheses() {

@@ -26,34 +26,8 @@ for (aLongIdentifierName = 0, aLongIdentifierName = 0, aLongIdentifierName = 0, 
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,8 +1,8 @@
--const f = (argument1, argument2, argument3) => (
--  doSomethingWithArgument(argument1),
--  doSomethingWithArgument(argument2),
--  argument1
--);
-+const f = (argument1, argument2, argument3) => (doSomethingWithArgument(
-+  argument1,
-+),
-+doSomethingWithArgument(argument2),
-+argument1);
- (function () {
-   return (
-     aLongIdentifierName,
-@@ -16,17 +16,15 @@
-   aLongIdentifierName,
-   aLongIdentifierName;
- a.then(
--  () => (
--    aLongIdentifierName,
--    aLongIdentifierName,
--    aLongIdentifierName,
--    aLongIdentifierName
--  ),
-+  () => (aLongIdentifierName,
-+  aLongIdentifierName,
-+  aLongIdentifierName,
-+  aLongIdentifierName),
+@@ -24,9 +24,9 @@
+   ),
  );
  for (
 -  aLongIdentifierName = 0,
@@ -70,11 +44,11 @@ for (aLongIdentifierName = 0, aLongIdentifierName = 0, aLongIdentifierName = 0, 
 # Output
 
 ```js
-const f = (argument1, argument2, argument3) => (doSomethingWithArgument(
-  argument1,
-),
-doSomethingWithArgument(argument2),
-argument1);
+const f = (argument1, argument2, argument3) => (
+  doSomethingWithArgument(argument1),
+  doSomethingWithArgument(argument2),
+  argument1
+);
 (function () {
   return (
     aLongIdentifierName,
@@ -88,10 +62,12 @@ aLongIdentifierName,
   aLongIdentifierName,
   aLongIdentifierName;
 a.then(
-  () => (aLongIdentifierName,
-  aLongIdentifierName,
-  aLongIdentifierName,
-  aLongIdentifierName),
+  () => (
+    aLongIdentifierName,
+    aLongIdentifierName,
+    aLongIdentifierName,
+    aLongIdentifierName
+  ),
 );
 for (
   (aLongIdentifierName = 0),

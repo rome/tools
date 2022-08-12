@@ -82,24 +82,10 @@ impl NeedsParentheses for JsSequenceExpression {
             JsSyntaxKind::JS_FOR_STATEMENT => false,
             JsSyntaxKind::JS_EXPRESSION_STATEMENT => false,
             JsSyntaxKind::JS_SEQUENCE_EXPRESSION => false,
+            // Handled as part of the arrow function formatting
+            JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION => false,
             // Be on the safer side
             _ => true,
         }
-        // case "SequenceExpression":
-        //       switch (parent.type) {
-        //
-        //         case "ExpressionStatement":
-        //           return name !== "expression";
-        //
-        //         case "ArrowFunctionExpression":
-        //           // We do need parentheses, but SequenceExpressions are handled
-        //           // specially when printing bodies of arrow functions.
-        //           return name !== "body";
-        //
-        //         default:
-        //           // Otherwise err on the side of overparenthesization, adding
-        //           // explicit exceptions above if this proves overzealous.
-        //           return true;
-        //       }
     }
 }

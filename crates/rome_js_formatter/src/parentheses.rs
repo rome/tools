@@ -137,9 +137,6 @@ pub(crate) fn get_expression_left_side(
 
 #[derive(Copy, Clone, Eq, PartialEq, Debug)]
 pub(crate) enum FirstInStatementMode {
-    /// Only considers [JsExpressionStatement] as a statement
-    ExpressionStatementOnly,
-
     /// Considers [JsExpressionStatement] and the body of [JsArrowFunctionExpression] as the first statement.
     ExpressionStatementOrArrow,
 
@@ -151,12 +148,10 @@ pub(crate) enum FirstInStatementMode {
 ///
 /// Traverses upwards the tree for as long as the `node` is the left most expression until the node isn't
 /// the left most node or reached a statement.
-pub(crate) fn is_first_in_statement(node: &JsSyntaxNode, mode: FirstInStatementMode) -> bool {
-    debug_assert_is_expression(node);
+pub(crate) fn is_first_in_statement(node: JsAnyExpression, mode: FirstInStatementMode) -> bool {
+    let mut current = node;
 
-    let mut current = node.clone();
-
-    while let Some(parent) = current.parent() {
+    while let Some(parent) = current.syntax().parent() {
         let parent = match parent.kind() {
             JsSyntaxKind::JS_EXPRESSION_STATEMENT => {
                 return true;
@@ -168,14 +163,16 @@ pub(crate) fn is_first_in_statement(node: &JsSyntaxNode, mode: FirstInStatementM
             | JsSyntaxKind::JS_CALL_EXPRESSION
             | JsSyntaxKind::JS_NEW_EXPRESSION
             | JsSyntaxKind::TS_AS_EXPRESSION
-            | JsSyntaxKind::TS_NON_NULL_ASSERTION_EXPRESSION => parent,
+            | JsSyntaxKind::TS_NON_NULL_ASSERTION_EXPRESSION => {
+                JsAnyExpression::unwrap_cast(parent)
+            }
             JsSyntaxKind::JS_SEQUENCE_EXPRESSION => {
                 let sequence = JsSequenceExpression::unwrap_cast(parent);
 
-                let is_left = sequence.left().map(AstNode::into_syntax).as_ref() == Ok(&current);
+                let is_left = sequence.left().as_ref() == Ok(&current);
 
                 if is_left {
-                    sequence.into_syntax()
+                    sequence.into()
                 } else {
                     break;
                 }
@@ -184,14 +181,10 @@ pub(crate) fn is_first_in_statement(node: &JsSyntaxNode, mode: FirstInStatementM
             JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION => {
                 let member_expression = JsComputedMemberExpression::unwrap_cast(parent);
 
-                let is_object = member_expression
-                    .object()
-                    .map(AstNode::into_syntax)
-                    .as_ref()
-                    == Ok(&current);
+                let is_object = member_expression.object().as_ref() == Ok(&current);
 
                 if is_object {
-                    member_expression.into_syntax()
+                    member_expression.into()
                 } else {
                     break;
                 }
@@ -200,8 +193,8 @@ pub(crate) fn is_first_in_statement(node: &JsSyntaxNode, mode: FirstInStatementM
             JsSyntaxKind::JS_CONDITIONAL_EXPRESSION => {
                 let conditional = JsConditionalExpression::unwrap_cast(parent);
 
-                if conditional.test().map(AstNode::into_syntax).as_ref() == Ok(&current) {
-                    conditional.into_syntax()
+                if conditional.test().as_ref() == Ok(&current) {
+                    conditional.into()
                 } else {
                     break;
                 }
@@ -213,9 +206,7 @@ pub(crate) fn is_first_in_statement(node: &JsSyntaxNode, mode: FirstInStatementM
                 let arrow = JsArrowFunctionExpression::unwrap_cast(parent);
 
                 let is_body = arrow.body().map_or(false, |body| match body {
-                    JsAnyFunctionBody::JsAnyExpression(expression) => {
-                        expression.syntax() == &current
-                    }
+                    JsAnyFunctionBody::JsAnyExpression(expression) => &expression == &current,
                     _ => false,
                 });
 
@@ -237,13 +228,13 @@ pub(crate) fn is_first_in_statement(node: &JsSyntaxNode, mode: FirstInStatementM
 
                 let is_left = binary_like.left().map_or(false, |left| match left {
                     JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => {
-                        expression.syntax() == &current
+                        &expression == &current
                     }
                     _ => false,
                 });
 
                 if is_left {
-                    binary_like.into_syntax()
+                    binary_like.into()
                 } else {
                     break;
                 }
@@ -333,11 +324,12 @@ pub(crate) fn is_member_object(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bo
         JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION => {
             let member_expression = JsComputedMemberExpression::unwrap_cast(parent.clone());
 
-            member_expression
-                .object()
-                .map(resolve_expression_syntax)
-                .as_ref()
-                == Ok(node)
+            member_expression.optional_chain_token().is_none()
+                && member_expression
+                    .object()
+                    .map(resolve_expression_syntax)
+                    .as_ref()
+                    == Ok(node)
         }
         _ => false,
     }
@@ -400,7 +392,90 @@ fn debug_assert_is_expression(node: &JsSyntaxNode) {
 }
 
 #[cfg(test)]
-mod tests {
+pub(crate) mod tests {
+    use super::NeedsParentheses;
+    use rome_js_syntax::{JsLanguage, SourceType};
+    use rome_rowan::AstNode;
+
+    pub(crate) fn assert_needs_parentheses_impl<
+        T: AstNode<Language = JsLanguage> + std::fmt::Debug + NeedsParentheses,
+    >(
+        input: &'static str,
+        index: Option<usize>,
+        source_type: SourceType,
+    ) {
+        let parse = rome_js_parser::parse(input, 0, source_type);
+
+        let diagnostics = parse.diagnostics();
+        assert!(
+            diagnostics.is_empty(),
+            "Expected input program to not have syntax errors but had {diagnostics:?}"
+        );
+
+        let root = parse.syntax();
+        let matching_nodes: Vec<_> = root.descendants().filter_map(T::cast).collect();
+
+        let node = if let Some(index) = index {
+            matching_nodes.get(index).unwrap_or_else(|| {
+                panic!("Out of bound index {index}, matching nodes are:\n{matching_nodes:#?}");
+            })
+        } else {
+            match matching_nodes.len() {
+                0 => {
+                    panic!(
+                        "Expected to find a '{}' node in '{input}' but found none.",
+                        core::any::type_name::<T>(),
+                    )
+                }
+                1 => matching_nodes.iter().next().unwrap(),
+                _ => {
+                    panic!("Expected to find a single node matching '{}' in '{input}' but found multiple ones:\n {matching_nodes:#?}", core::any::type_name::<T>());
+                }
+            }
+        };
+
+        assert!(node.needs_parentheses());
+    }
+
+    pub(crate) fn assert_not_needs_parentheses_impl<
+        T: AstNode<Language = JsLanguage> + std::fmt::Debug + NeedsParentheses,
+    >(
+        input: &'static str,
+        index: Option<usize>,
+        source_type: SourceType,
+    ) {
+        let parse = rome_js_parser::parse(input, 0, source_type);
+
+        let diagnostics = parse.diagnostics();
+        assert!(
+            diagnostics.is_empty(),
+            "Expected input program to not have syntax errors but had {diagnostics:?}"
+        );
+
+        let root = parse.syntax();
+        let matching_nodes: Vec<_> = root.descendants().filter_map(T::cast).collect();
+
+        let node = if let Some(index) = index {
+            matching_nodes.get(index).unwrap_or_else(|| {
+                panic!("Out of bound index {index}, matching nodes are:\n{matching_nodes:#?}");
+            })
+        } else {
+            match matching_nodes.len() {
+                0 => {
+                    panic!(
+                        "Expected to find a '{}' node in '{input}' but found none.",
+                        core::any::type_name::<T>(),
+                    )
+                }
+                1 => matching_nodes.iter().next().unwrap(),
+                _ => {
+                    panic!("Expected to find a single node matching '{}' in '{input}' but found multiple ones:\n {matching_nodes:#?}", core::any::type_name::<T>());
+                }
+            }
+        };
+
+        assert!(!node.needs_parentheses());
+    }
 
     #[macro_export]
     macro_rules! assert_needs_parentheses {
@@ -408,31 +483,28 @@ mod tests {
             $crate::assert_needs_parentheses!($input, $Node, rome_js_syntax::SourceType::ts())
         }};
 
+        ($input:expr, $Node:ident[$index:expr]) => {{
+            $crate::assert_needs_parentheses!(
+                $input,
+                $Node[$index],
+                rome_js_syntax::SourceType::ts()
+            )
+        }};
+
         ($input:expr, $Node:ident, $source_type: expr) => {{
-            use rome_rowan::AstNode;
-            let parse = rome_js_parser::parse($input, 0, $source_type);
+            $crate::parentheses::tests::assert_needs_parentheses_impl::<$Node>(
+                $input,
+                None,
+                $source_type,
+            )
+        }};
 
-            let diagnostics = parse.diagnostics();
-            assert!(diagnostics.is_empty(), "Expected input program to not have syntax errors but had {diagnostics:?}");
-
-            let root = parse.syntax();
-            let matching_nodes: Vec<_> = root.descendants().filter_map($Node::cast).collect();
-
-            let node = match matching_nodes.len() {
-                0 => {
-                    panic!(
-                        "Expected to find a '{}' node in '{}' but found none.",
-                        core::any::type_name::<$Node>(),
-                        $input
-                    )
-                }
-                1 => matching_nodes.into_iter().next().unwrap(),
-                _ => {
-                    panic!("Expected to find a single node matching '{}' in '{}' but found multiple ones\n: {matching_nodes:#?}", core::any::type_name::<$Node>(), $input);
-                }
-            };
-
-            assert!(node.needs_parentheses())
+        ($input:expr, $Node:ident[$index:expr], $source_type: expr) => {{
+            $crate::parentheses::tests::assert_needs_parentheses_impl::<$Node>(
+                $input,
+                Some($index),
+                $source_type,
+            )
         }};
     }
 
@@ -442,31 +514,28 @@ mod tests {
             $crate::assert_not_needs_parentheses!($input, $Node, rome_js_syntax::SourceType::ts())
         }};
 
+        ($input:expr, $Node:ident[$index:expr]) => {{
+            $crate::assert_not_needs_parentheses!(
+                $input,
+                $Node[$index],
+                rome_js_syntax::SourceType::ts()
+            )
+        }};
+
+        ($input:expr, $Node:ident[$index:expr], $source_type: expr) => {{
+            $crate::parentheses::tests::assert_not_needs_parentheses_impl::<$Node>(
+                $input,
+                Some($index),
+                $source_type,
+            )
+        }};
+
         ($input:expr, $Node:ident, $source_type: expr) => {{
-            use rome_rowan::AstNode;
-            let parse = rome_js_parser::parse($input, 0, $source_type);
-
-            let diagnostics = parse.diagnostics();
-            assert!(diagnostics.is_empty(), "Expected input program to not have syntax errors but had {diagnostics:?}");
-
-            let root = parse.syntax();
-            let matching_nodes: Vec<_> = root.descendants().filter_map($Node::cast).collect();
-
-            let node = match matching_nodes.len() {
-                0 => {
-                    panic!(
-                        "Expected to find a '{}' node in '{}' but found none.",
-                        core::any::type_name::<$Node>(),
-                        $input
-                    )
-                }
-                1 => matching_nodes.into_iter().next().unwrap(),
-                _ => {
-                    panic!("Expected to find a single node matching '{}' in '{}' but found multiple ones\n: {matching_nodes:#?}", core::any::type_name::<$Node>(), $input);
-                }
-            };
-
-            assert!(!node.needs_parentheses())
+            $crate::parentheses::tests::assert_not_needs_parentheses_impl::<$Node>(
+                $input,
+                None,
+                $source_type,
+            )
         }};
     }
 }

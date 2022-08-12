@@ -51,7 +51,7 @@ impl NeedsParentheses for JsStringLiteralExpression {
 
 #[cfg(test)]
 mod tests {
-    use crate::parentheses::NeedsParentheses;
+
     use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
     use rome_js_syntax::{JsStringLiteralExpression, ModuleKind, SourceType};
 

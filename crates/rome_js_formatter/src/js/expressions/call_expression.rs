@@ -1,59 +1,49 @@
 use crate::prelude::*;
-use crate::utils::format_call_expression;
 
-use crate::parentheses::{resolve_left_most_expression, NeedsParentheses};
+use crate::parentheses::NeedsParentheses;
+use crate::utils::get_member_chain;
 use rome_js_syntax::{JsCallExpression, JsSyntaxKind, JsSyntaxNode};
-use rome_rowan::AstNode;
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsCallExpression;
 
 impl FormatNodeRule<JsCallExpression> for FormatJsCallExpression {
-    fn fmt_fields(&self, node: &JsCallExpression, formatter: &mut JsFormatter) -> FormatResult<()> {
-        format_call_expression(node.syntax(), formatter)
+    fn fmt_fields(&self, node: &JsCallExpression, f: &mut JsFormatter) -> FormatResult<()> {
+        let member_chain = get_member_chain(node, f)?;
+
+        member_chain.fmt(f)
+    }
+
+    fn needs_parentheses(&self, item: &JsCallExpression) -> bool {
+        item.needs_parentheses()
     }
 }
 
-// impl NeedsParentheses for JsCallExpression {
-//     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
-//         match parent.kind() {
-//             JsSyntaxKind::JS_EXPRESSION_STATEMENT | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION => {
-//                 self.callee()
-//                     .map_or(false, |callee| starts_with_no_lookahead_token(&callee))
-//             }
-//             _ => {}
-//         }
-//
-//         //  case "CallExpression":
-//         //     case "MemberExpression":
-//         //     case "TaggedTemplateExpression":
-//         //     case "TSNonNullExpression":
-//         //       if (
-//         //         name === "callee" &&
-//         //         (parent.type === "BindExpression" || parent.type === "NewExpression")
-//         //       ) {
-//         //         let object = node;
-//         //         while (object) {
-//         //           switch (object.type) {
-//         //             case "CallExpression":
-//         //             case "OptionalCallExpression":
-//         //               return true;
-//         //             case "MemberExpression":
-//         //             case "OptionalMemberExpression":
-//         //             case "BindExpression":
-//         //               object = object.object;
-//         //               break;
-//         //             // tagged templates are basically member expressions from a grammar perspective
-//         //             // see https://tc39.github.io/ecma262/#prod-MemberExpression
-//         //             case "TaggedTemplateExpression":
-//         //               object = object.tag;
-//         //               break;
-//         //             case "TSNonNullExpression":
-//         //               object = object.expression;
-//         //               break;
-//         //             default:
-//         //               return false;
-//         //           }
-//         //         }
-//     }
-// }
+impl NeedsParentheses for JsCallExpression {
+    fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
+        match parent.kind() {
+            JsSyntaxKind::JS_NEW_EXPRESSION => true,
+
+            _ => false,
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+
+    use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
+    use rome_js_syntax::JsCallExpression;
+
+    #[test]
+    fn needs_parentheses() {
+        assert_needs_parentheses!("new (call())()", JsCallExpression);
+
+        assert_not_needs_parentheses!("a?.()!.c", JsCallExpression);
+        assert_not_needs_parentheses!("(a?.())!.c", JsCallExpression);
+
+        assert_not_needs_parentheses!("(call())()", JsCallExpression[1]);
+        assert_not_needs_parentheses!("getLogger().error(err);", JsCallExpression[0]);
+        assert_not_needs_parentheses!("getLogger().error(err);", JsCallExpression[1]);
+    }
+}

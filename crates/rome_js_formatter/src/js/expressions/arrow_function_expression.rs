@@ -6,8 +6,7 @@ use crate::parentheses::{
     NeedsParentheses,
 };
 use crate::utils::{
-    is_simple_expression, resolve_expression, resolve_left_most_expression,
-    JsAnyBinaryLikeLeftExpression,
+    resolve_expression, resolve_left_most_expression, JsAnyBinaryLikeLeftExpression,
 };
 use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyExpression, JsAnyFunctionBody, JsAnyTemplateElement,
@@ -36,36 +35,37 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
             body,
         } = node.as_fields();
 
-        if let Some(async_token) = async_token {
-            write!(f, [async_token.format(), space()])?;
-        }
-
-        write!(f, [type_parameters.format()])?;
-
-        match parameters? {
-            JsAnyArrowFunctionParameters::JsAnyBinding(binding) => write!(
-                f,
-                [format_parenthesize(
-                    binding.syntax().first_token().as_ref(),
-                    &format_args![binding.format(), if_group_breaks(&text(",")),],
-                    binding.syntax().last_token().as_ref(),
-                )
-                .grouped_with_soft_block_indent()]
-            )?,
-            JsAnyArrowFunctionParameters::JsParameters(params) => {
-                write![f, [group(&params.format())]]?
+        let format_signature = format_with(|f| {
+            if let Some(async_token) = &async_token {
+                write!(f, [async_token.format(), space()])?;
             }
-        }
 
-        write![
-            f,
-            [
-                return_type_annotation.format(),
-                space(),
-                fat_arrow_token.format(),
-                space()
+            write!(f, [type_parameters.format()])?;
+
+            match parameters.as_ref()? {
+                JsAnyArrowFunctionParameters::JsAnyBinding(binding) => write!(
+                    f,
+                    [format_parenthesize(
+                        binding.syntax().first_token().as_ref(),
+                        &format_args![binding.format(), if_group_breaks(&text(",")),],
+                        binding.syntax().last_token().as_ref(),
+                    )
+                    .grouped_with_soft_block_indent()]
+                )?,
+                JsAnyArrowFunctionParameters::JsParameters(params) => {
+                    write![f, [group(&params.format())]]?
+                }
+            }
+
+            write![
+                f,
+                [
+                    return_type_annotation.format(),
+                    space(),
+                    fat_arrow_token.format(),
+                ]
             ]
-        ]?;
+        });
 
         let body = body?;
 
@@ -88,14 +88,36 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
         // going to get broken anyways.
         let body_has_soft_line_break = match &body {
             JsFunctionBody(_) => true,
-            JsAnyExpression(expr) => match expr {
+            JsAnyExpression(expr) => match resolve_expression(expr.clone()) {
                 JsArrowFunctionExpression(_)
                 | JsArrayExpression(_)
                 | JsObjectExpression(_)
                 | JsParenthesizedExpression(_)
                 | JsTemplate(_)
                 | JsxTagExpression(_) => true,
-                expr => is_simple_expression(expr)?,
+                JsSequenceExpression(_) => {
+                    return write!(
+                        f,
+                        [group(&format_args![
+                            format_signature,
+                            group(&format_args![
+                                space(),
+                                text("("),
+                                soft_block_indent(&body.format()),
+                                text(")")
+                            ])
+                        ])]
+                    );
+                    //   // We handle sequence expressions as the body of arrows specially,
+                    //   // so that the required parentheses end up on their own lines.
+                    //   if (node.body.type === "SequenceExpression") {
+                    //     return group([
+                    //       ...parts,
+                    //       group([" (", indent([softline, body]), softline, ")"]),
+                    //     ]);
+                    //   }
+                }
+                _ => false,
             },
         };
 
@@ -120,23 +142,26 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
         };
 
         if body_has_soft_line_break && !should_add_parens {
-            write![f, [body.format()]]
+            write![f, [format_signature, space(), body.format()]]
         } else {
             write!(
                 f,
-                [group(&soft_line_indent_or_space(&format_with(|f| {
-                    if should_add_parens {
-                        write!(f, [if_group_fits_on_line(&text("("))])?;
-                    }
+                [
+                    format_signature,
+                    group(&soft_line_indent_or_space(&format_with(|f| {
+                        if should_add_parens {
+                            write!(f, [if_group_fits_on_line(&text("("))])?;
+                        }
 
-                    write!(f, [body.format()])?;
+                        write!(f, [body.format()])?;
 
-                    if should_add_parens {
-                        write!(f, [if_group_fits_on_line(&text(")"))])?;
-                    }
+                        if should_add_parens {
+                            write!(f, [if_group_fits_on_line(&text(")"))])?;
+                        }
 
-                    Ok(())
-                })))]
+                        Ok(())
+                    })))
+                ]
             )
         }
     }
@@ -165,7 +190,7 @@ impl NeedsParentheses for JsArrowFunctionExpression {
 
 #[cfg(test)]
 mod tests {
-    use crate::parentheses::NeedsParentheses;
+
     use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
     use rome_js_syntax::{JsArrowFunctionExpression, SourceType};
 

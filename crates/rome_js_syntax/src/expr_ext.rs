@@ -2,9 +2,10 @@
 use crate::numbers::parse_js_number;
 use crate::{
     JsAnyExpression, JsAnyLiteralExpression, JsArrayExpression, JsArrayHole,
-    JsAssignmentExpression, JsBinaryExpression, JsLiteralMemberName, JsLogicalExpression,
-    JsNumberLiteralExpression, JsObjectExpression, JsRegexLiteralExpression,
-    JsStringLiteralExpression, JsSyntaxToken, JsTemplate, JsUnaryExpression, OperatorPrecedence, T,
+    JsAssignmentExpression, JsBinaryExpression, JsCallExpression, JsComputedMemberExpression,
+    JsLiteralMemberName, JsLogicalExpression, JsNumberLiteralExpression, JsObjectExpression,
+    JsRegexLiteralExpression, JsStaticMemberExpression, JsStringLiteralExpression, JsSyntaxKind,
+    JsSyntaxToken, JsTemplate, JsUnaryExpression, OperatorPrecedence, T,
 };
 use crate::{JsPreUpdateExpression, JsSyntaxKind::*};
 use rome_rowan::{
@@ -443,4 +444,71 @@ impl JsRegexLiteralExpression {
 
         Ok(String::from(&text_trimmed[1..end_slash_pos]))
     }
+}
+
+impl JsStaticMemberExpression {
+    pub fn is_optional(&self) -> bool {
+        self.operator_token()
+            .map_or(false, |token| token.kind() == JsSyntaxKind::QUESTIONDOT)
+    }
+
+    pub fn is_optional_chain(&self) -> bool {
+        is_optional_chain(self.clone().into())
+    }
+}
+
+impl JsComputedMemberExpression {
+    pub fn is_optional(&self) -> bool {
+        self.optional_chain_token().is_some()
+    }
+
+    pub fn is_optional_chain(&self) -> bool {
+        is_optional_chain(self.clone().into())
+    }
+}
+
+impl JsCallExpression {
+    pub fn is_optional(&self) -> bool {
+        self.optional_chain_token().is_some()
+    }
+
+    pub fn is_optional_chain(&self) -> bool {
+        is_optional_chain(self.clone().into())
+    }
+}
+
+fn is_optional_chain(start: JsAnyExpression) -> bool {
+    let mut current = Some(start);
+
+    while let Some(node) = current {
+        current = match node {
+            JsAnyExpression::JsParenthesizedExpression(parenthesized) => {
+                parenthesized.expression().ok()
+            }
+
+            JsAnyExpression::JsCallExpression(call) => {
+                if call.is_optional() {
+                    return true;
+                }
+                call.callee().ok()
+            }
+
+            JsAnyExpression::JsStaticMemberExpression(member) => {
+                if member.is_optional() {
+                    return true;
+                }
+                member.object().ok()
+            }
+
+            JsAnyExpression::JsComputedMemberExpression(member) => {
+                if member.is_optional() {
+                    return true;
+                }
+                member.object().ok()
+            }
+            _ => return false,
+        }
+    }
+
+    false
 }

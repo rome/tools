@@ -1,11 +1,8 @@
 use crate::parentheses::{is_first_in_statement, FirstInStatementMode, NeedsParentheses};
 use crate::prelude::*;
-use crate::utils::{resolve_expression_syntax, JsObjectLike};
+use crate::utils::JsObjectLike;
 use rome_formatter::write;
-use rome_js_syntax::{
-    JsAnyExpression, JsAnyFunctionBody, JsArrowFunctionExpression, JsObjectExpression,
-    JsSyntaxKind, JsSyntaxNode,
-};
+use rome_js_syntax::{JsObjectExpression, JsSyntaxKind, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsObjectExpression;
@@ -24,7 +21,7 @@ impl NeedsParentheses for JsObjectExpression {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         matches!(parent.kind(), JsSyntaxKind::JS_EXTENDS_CLAUSE)
             || is_first_in_statement(
-                self.syntax(),
+                self.clone().into(),
                 FirstInStatementMode::ExpressionStatementOrArrow,
             )
     }
@@ -33,8 +30,7 @@ impl NeedsParentheses for JsObjectExpression {
 #[cfg(test)]
 mod tests {
     use crate::assert_needs_parentheses;
-    use crate::parentheses::NeedsParentheses;
-    use rome_js_syntax::{JsObjectExpression, JsStaticMemberExpression};
+    use rome_js_syntax::JsObjectExpression;
 
     #[test]
     fn needs_parentheses() {

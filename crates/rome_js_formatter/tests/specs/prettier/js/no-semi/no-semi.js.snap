@@ -105,12 +105,9 @@ aReallyLongLine012345678901234567890123456789012345678901234567890123456789 *
  x;
  <Hello />;
  x;
-@@ -85,7 +85,8 @@
- x;
- ++(a || b).c;
+@@ -87,5 +87,6 @@
  
--while (false) (function () {})();
-+while (false) ((function () {})());
+ while (false) (function () {})();
  
 -aReallyLongLine012345678901234567890123456789012345678901234567890123456789 *
 -  (b + c);
@@ -209,7 +206,7 @@ x;
 x;
 ++(a || b).c;
 
-while (false) ((function () {})());
+while (false) (function () {})();
 
 aReallyLongLine012345678901234567890123456789012345678901234567890123456789 * (
   b + c

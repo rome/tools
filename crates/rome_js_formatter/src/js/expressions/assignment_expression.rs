@@ -63,7 +63,7 @@ impl NeedsParentheses for JsAssignmentExpression {
             JsSyntaxKind::JS_EXPRESSION_STATEMENT => {
                 // Parenthesize `{ a } = { a: 5 }`
                 is_first_in_statement(
-                    self.syntax(),
+                    self.clone().into(),
                     FirstInStatementMode::ExpressionStatementOrArrow,
                 ) && matches!(
                     self.left(),
@@ -95,7 +95,7 @@ impl NeedsParentheses for JsAssignmentExpression {
 
 #[cfg(test)]
 mod tests {
-    use crate::parentheses::NeedsParentheses;
+
     use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
     use rome_js_syntax::JsAssignmentExpression;
 

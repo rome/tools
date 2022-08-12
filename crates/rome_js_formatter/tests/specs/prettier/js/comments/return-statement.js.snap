@@ -134,20 +134,7 @@ function inlineComment() {
 ```diff
 --- Prettier
 +++ Rome
-@@ -67,8 +67,10 @@
- 
- function memberInside() {
-   return (
--    // Reason for a.b
--    a.b.c
-+    (
-+      // Reason for a.b
-+      a.b
-+    ).c
-   );
- }
- 
-@@ -80,10 +82,11 @@
+@@ -80,10 +80,12 @@
  }
  
  function memberInAndOutWithCalls() {
@@ -156,14 +143,15 @@ function inlineComment() {
 -    ()
 -    .c.d();
 +  return (
-+    (
 +    // Reason for a
-+    aFunction.b()).c.d()
++    aFunction
++      .b()
++      .c.d()
 +  );
  }
  
  function excessiveEverything() {
-@@ -103,8 +106,8 @@
+@@ -103,8 +105,8 @@
  
  function sequenceExpressionInside() {
    return (
@@ -174,7 +162,7 @@ function inlineComment() {
    );
  }
  
-@@ -116,5 +119,7 @@
+@@ -116,5 +118,7 @@
  }
  
  function inlineComment() {
@@ -257,10 +245,8 @@ function call() {
 
 function memberInside() {
   return (
-    (
-      // Reason for a.b
-      a.b
-    ).c
+    // Reason for a.b
+    a.b.c
   );
 }
 
@@ -273,9 +259,10 @@ function memberOutside() {
 
 function memberInAndOutWithCalls() {
   return (
-    (
     // Reason for a
-    aFunction.b()).c.d()
+    aFunction
+      .b()
+      .c.d()
   );
 }
 

@@ -1,18 +1,142 @@
 use crate::context::TabWidth;
+use crate::js::expressions::parenthesized_expression::is_expression_handling_parens;
 use crate::prelude::*;
 use rome_formatter::write;
 use rome_js_syntax::{
     JsAnyExpression, JsCallExpression, JsCallExpressionFields, JsComputedMemberExpression,
     JsComputedMemberExpressionFields, JsIdentifierExpression, JsImportCallExpression,
-    JsNewExpression, JsStaticMemberExpression, JsStaticMemberExpressionFields, JsSyntaxNode,
-    JsThisExpression,
+    JsNewExpression, JsParenthesizedExpression, JsStaticMemberExpression,
+    JsStaticMemberExpressionFields, JsSyntaxNode, JsThisExpression,
 };
 use rome_rowan::{AstNode, SyntaxResult};
 use std::fmt::Debug;
 
 #[derive(Clone, Debug)]
+pub(crate) enum ChainEntry {
+    Parenthesized {
+        member: ChainMember,
+        top_most_parentheses: JsParenthesizedExpression,
+    },
+    Member(ChainMember),
+}
+
+impl ChainEntry {
+    pub fn member(&self) -> &ChainMember {
+        match self {
+            ChainEntry::Parenthesized { member, .. } => member,
+            ChainEntry::Member(member) => member,
+        }
+    }
+
+    pub fn top_most_parentheses(&self) -> Option<&JsParenthesizedExpression> {
+        match self {
+            ChainEntry::Parenthesized {
+                top_most_parentheses,
+                ..
+            } => Some(top_most_parentheses),
+            ChainEntry::Member(_) => None,
+        }
+    }
+
+    pub fn into_member(self) -> ChainMember {
+        match self {
+            ChainEntry::Parenthesized { member, .. } => member,
+            ChainEntry::Member(member) => member,
+        }
+    }
+
+    pub(crate) fn has_trailing_comments(&self) -> bool {
+        self.nodes().any(|node| node.has_trailing_comments())
+    }
+
+    pub(crate) fn has_leading_comments(&self) -> SyntaxResult<bool> {
+        let has_operator_comment = match self.member() {
+            ChainMember::StaticMember(node) => node.operator_token()?.has_leading_comments(),
+            _ => false,
+        };
+
+        Ok(self.nodes().any(|node| node.has_leading_comments()) || has_operator_comment)
+    }
+
+    fn nodes(&self) -> impl Iterator<Item = JsSyntaxNode> {
+        let first = match self {
+            ChainEntry::Parenthesized {
+                top_most_parentheses,
+                ..
+            } => top_most_parentheses.syntax().clone(),
+            ChainEntry::Member(member) => member.syntax().clone(),
+        };
+
+        let is_parenthesized = matches!(self, ChainEntry::Parenthesized { .. });
+
+        std::iter::successors(Some(first), move |previous| {
+            if is_parenthesized {
+                JsParenthesizedExpression::cast(previous.clone()).and_then(|parenthesized| {
+                    parenthesized.expression().map(AstNode::into_syntax).ok()
+                })
+            } else {
+                None
+            }
+        })
+    }
+}
+
+impl Format<JsFormatContext> for ChainEntry {
+    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        let parentheses = self.top_most_parentheses();
+
+        let handles_parens = JsAnyExpression::cast(self.member().syntax().clone())
+            .map_or(false, |expression| {
+                is_expression_handling_parens(&expression)
+            });
+
+        if let Some(parentheses) = parentheses {
+            let mut current = parentheses.clone();
+
+            loop {
+                if handles_parens {
+                    write!(f, [format_removed(&current.l_paren_token()?)])?;
+                } else {
+                    write!(f, [current.l_paren_token().format()])?;
+                }
+
+                match current.expression()? {
+                    JsAnyExpression::JsParenthesizedExpression(inner) => {
+                        current = inner;
+                    }
+                    _ => break,
+                }
+            }
+        }
+
+        write!(f, [self.member()])?;
+
+        if let Some(parentheses) = parentheses {
+            let mut current = parentheses.clone();
+
+            loop {
+                if handles_parens {
+                    write!(f, [format_removed(&current.r_paren_token()?)])?;
+                } else {
+                    write!(f, [current.r_paren_token().format()])?;
+                }
+
+                match current.expression()? {
+                    JsAnyExpression::JsParenthesizedExpression(inner) => {
+                        current = inner;
+                    }
+                    _ => break,
+                }
+            }
+        }
+
+        Ok(())
+    }
+}
+
+#[derive(Clone, Debug)]
 /// Data structure that holds the node with its formatted version
-pub(crate) enum FlattenItem {
+pub(crate) enum ChainMember {
     /// Holds onto a [rome_js_syntax::JsStaticMemberExpression]
     StaticMember(JsStaticMemberExpression),
     /// Holds onto a [rome_js_syntax::JsCallExpression]
@@ -24,12 +148,12 @@ pub(crate) enum FlattenItem {
     Node(JsSyntaxNode),
 }
 
-impl FlattenItem {
+impl ChainMember {
     /// checks if the current node is a [rome_js_syntax::JsCallExpression],  [rome_js_syntax::JsImportExpression] or a [rome_js_syntax::JsNewExpression]
     pub fn is_loose_call_expression(&self) -> bool {
         match self {
-            FlattenItem::CallExpression(_) => true,
-            FlattenItem::Node(node) => {
+            ChainMember::CallExpression(_) => true,
+            ChainMember::Node(node) => {
                 JsImportCallExpression::can_cast(node.kind())
                     | JsNewExpression::can_cast(node.kind())
             }
@@ -37,51 +161,31 @@ impl FlattenItem {
         }
     }
 
-    pub(crate) fn as_syntax(&self) -> &JsSyntaxNode {
+    pub(crate) fn syntax(&self) -> &JsSyntaxNode {
         match self {
-            FlattenItem::StaticMember(node) => node.syntax(),
-            FlattenItem::CallExpression(node) => node.syntax(),
-            FlattenItem::ComputedMember(node) => node.syntax(),
-            FlattenItem::Node(node) => node,
+            ChainMember::StaticMember(node) => node.syntax(),
+            ChainMember::CallExpression(node) => node.syntax(),
+            ChainMember::ComputedMember(node) => node.syntax(),
+            ChainMember::Node(node) => node,
         }
     }
 
-    pub(crate) fn has_trailing_comments(&self) -> bool {
-        match self {
-            FlattenItem::StaticMember(node) => node.syntax().has_trailing_comments(),
-            FlattenItem::CallExpression(node) => node.syntax().has_trailing_comments(),
-            FlattenItem::ComputedMember(node) => node.syntax().has_trailing_comments(),
-            FlattenItem::Node(node) => node.has_trailing_comments(),
-        }
-    }
-
-    pub fn is_computed_expression(&self) -> bool {
-        matches!(self, FlattenItem::ComputedMember(..))
+    pub const fn is_computed_expression(&self) -> bool {
+        matches!(self, ChainMember::ComputedMember(..))
     }
 
     pub(crate) fn is_this_expression(&self) -> bool {
         match self {
-            FlattenItem::Node(node) => JsThisExpression::can_cast(node.kind()),
+            ChainMember::Node(node) => JsThisExpression::can_cast(node.kind()),
             _ => false,
         }
     }
 
     pub(crate) fn is_identifier_expression(&self) -> bool {
         match self {
-            FlattenItem::Node(node) => JsIdentifierExpression::can_cast(node.kind()),
+            ChainMember::Node(node) => JsIdentifierExpression::can_cast(node.kind()),
             _ => false,
         }
-    }
-
-    pub(crate) fn has_leading_comments(&self) -> SyntaxResult<bool> {
-        Ok(match self {
-            FlattenItem::StaticMember(node) => {
-                node.syntax().has_comments_direct() || node.operator_token()?.has_leading_comments()
-            }
-            FlattenItem::CallExpression(node) => node.syntax().has_leading_comments(),
-            FlattenItem::ComputedMember(node) => node.syntax().has_leading_comments(),
-            FlattenItem::Node(node) => node.has_leading_comments(),
-        })
     }
 
     /// There are cases like Object.keys(), Observable.of(), _.values() where
@@ -108,7 +212,7 @@ impl FlattenItem {
                 || text.starts_with('$')
         }
 
-        if let FlattenItem::StaticMember(static_member, ..) = self {
+        if let ChainMember::StaticMember(static_member, ..) = self {
             if check_left_hand_side {
                 if let JsAnyExpression::JsIdentifierExpression(identifier_expression) =
                     static_member.object()?
@@ -122,7 +226,7 @@ impl FlattenItem {
             } else {
                 Ok(check_str(static_member.member()?.text().as_str()))
             }
-        } else if let FlattenItem::Node(node, ..) = self {
+        } else if let ChainMember::Node(node, ..) = self {
             if let Some(identifier_expression) = JsIdentifierExpression::cast(node.clone()) {
                 let value_token = identifier_expression.name()?.value_token()?;
                 let text = value_token.text_trimmed();
@@ -136,7 +240,7 @@ impl FlattenItem {
     }
 
     pub(crate) fn has_short_name(&self, tab_width: TabWidth) -> SyntaxResult<bool> {
-        if let FlattenItem::StaticMember(static_member, ..) = self {
+        if let ChainMember::StaticMember(static_member, ..) = self {
             if let JsAnyExpression::JsIdentifierExpression(identifier_expression) =
                 static_member.object()?
             {
@@ -152,19 +256,19 @@ impl FlattenItem {
     }
 }
 
-impl Format<JsFormatContext> for FlattenItem {
+impl Format<JsFormatContext> for ChainMember {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match self {
-            FlattenItem::StaticMember(static_member) => {
+            ChainMember::StaticMember(static_member) => {
                 let JsStaticMemberExpressionFields {
                     // Formatted as part of the previous item
                     object: _,
                     operator_token,
                     member,
                 } = static_member.as_fields();
-                write![f, [operator_token.format(), member.format(),]]
+                write![f, [operator_token.format(), member.format()]]
             }
-            FlattenItem::CallExpression(call_expression) => {
+            ChainMember::CallExpression(call_expression) => {
                 let JsCallExpressionFields {
                     // Formatted as part of the previous item
                     callee: _,
@@ -182,7 +286,7 @@ impl Format<JsFormatContext> for FlattenItem {
                     ]
                 )
             }
-            FlattenItem::ComputedMember(computed_member) => {
+            ChainMember::ComputedMember(computed_member) => {
                 let JsComputedMemberExpressionFields {
                     // Formatted as part of the previous item
                     object: _,
@@ -201,7 +305,7 @@ impl Format<JsFormatContext> for FlattenItem {
                     ]
                 )
             }
-            FlattenItem::Node(node) => {
+            ChainMember::Node(node) => {
                 write!(f, [node.format()])
             }
         }

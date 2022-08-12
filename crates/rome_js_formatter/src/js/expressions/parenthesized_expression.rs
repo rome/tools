@@ -121,7 +121,7 @@ fn is_simple_parenthesized_expression(node: &JsParenthesizedExpression) -> Synta
 }
 
 // Allow list of nodes that manually handle inserting parens if needed
-fn is_expression_handling_parens(expression: &JsAnyExpression) -> bool {
+pub(crate) fn is_expression_handling_parens(expression: &JsAnyExpression) -> bool {
     use JsAnyExpression::*;
 
     if let JsAnyExpression::JsParenthesizedExpression(inner) = expression {
@@ -150,6 +150,11 @@ fn is_expression_handling_parens(expression: &JsAnyExpression) -> bool {
                 | JsSuperExpression(_)
                 | JsAssignmentExpression(_)
                 | JsArrowFunctionExpression(_)
+                | JsCallExpression(_)
+                | JsStaticMemberExpression(_)
+                | JsComputedMemberExpression(_)
+                | TsNonNullAssertionExpression(_)
+                | JsxTagExpression(_)
         )
     }
 }
