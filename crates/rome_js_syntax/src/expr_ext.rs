@@ -447,31 +447,73 @@ impl JsRegexLiteralExpression {
 }
 
 impl JsStaticMemberExpression {
+    /// Returns `true` if this is an optional member access
+    ///
+    /// ```javascript
+    /// a.b -> false,
+    /// a?.b -> true
+    /// a?.[b][c][d].e -> false
+    /// ```
     pub fn is_optional(&self) -> bool {
         self.operator_token()
             .map_or(false, |token| token.kind() == JsSyntaxKind::QUESTIONDOT)
     }
 
+    /// Returns true if this member has an optional token or any member expression on the left side.
+    ///
+    /// ```javascript
+    /// a.b -> false
+    /// a?.b-> true
+    /// a?.[b][c][d].e -> true
+    /// ```
     pub fn is_optional_chain(&self) -> bool {
         is_optional_chain(self.clone().into())
     }
 }
 
 impl JsComputedMemberExpression {
+    /// Returns `true` if this is an optional member access
+    ///
+    /// ```javascript
+    /// a[b] -> false,
+    /// a?.[b] -> true
+    /// a?.b.c.d[e] -> false
+    /// ```
     pub fn is_optional(&self) -> bool {
         self.optional_chain_token().is_some()
     }
 
+    /// Returns true if this member has an optional token or any member expression on the left side.
+    ///
+    /// ```javascript
+    /// a[b] -> false
+    /// a?.[b]-> true
+    /// a?.b.c.d[e] -> true
+    /// ```
     pub fn is_optional_chain(&self) -> bool {
         is_optional_chain(self.clone().into())
     }
 }
 
 impl JsCallExpression {
+    /// Returns `true` if this is an optional member access
+    ///
+    /// ```javascript
+    /// a() -> false,
+    /// a?.() -> true
+    /// a?.b() -> false
+    /// ```
     pub fn is_optional(&self) -> bool {
         self.optional_chain_token().is_some()
     }
 
+    /// Returns true if this member has an optional token or any member expression on the left side.
+    ///
+    /// ```javascript
+    /// a() -> false
+    /// a?.()-> true
+    /// a?.b.c.d() -> true
+    /// ```
     pub fn is_optional_chain(&self) -> bool {
         is_optional_chain(self.clone().into())
     }

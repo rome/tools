@@ -2,9 +2,9 @@ use crate::prelude::*;
 use crate::utils::format_class::FormatClass;
 
 use crate::parentheses::{
-    is_callee, is_first_in_statement, FirstInStatementMode, NeedsParentheses,
+    is_callee, is_first_in_statement, ExpressionNode, FirstInStatementMode, NeedsParentheses,
 };
-use rome_js_syntax::{JsClassExpression, JsSyntaxNode};
+use rome_js_syntax::{JsAnyExpression, JsClassExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsClassExpression;
@@ -26,6 +26,18 @@ impl NeedsParentheses for JsClassExpression {
                 self.clone().into(),
                 FirstInStatementMode::ExpressionOrExportDefault,
             )
+    }
+}
+
+impl ExpressionNode for JsClassExpression {
+    #[inline]
+    fn resolve(&self) -> JsAnyExpression {
+        self.clone().into()
+    }
+
+    #[inline]
+    fn into_resolved(self) -> JsAnyExpression {
+        self.into()
     }
 }
 

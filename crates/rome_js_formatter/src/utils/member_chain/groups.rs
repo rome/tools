@@ -49,7 +49,7 @@ impl MemberChainGroupsBuilder {
     /// adds the passed element to the current group
     pub fn continue_group(&mut self, flatten_item: ChainEntry) {
         debug_assert!(!self.current_group.entries.is_empty());
-        self.current_group.entries.push(flatten_item.into());
+        self.current_group.entries.push(flatten_item);
     }
 
     /// clears the current group, and adds a new group to the groups

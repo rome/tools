@@ -6,6 +6,9 @@ use rome_js_syntax::{
     JsSyntaxNode, JsSyntaxToken, OperatorPrecedence,
 };
 
+use crate::parentheses::{
+    is_callee, is_member_object, is_spread, is_tag, ExpressionNode, NeedsParentheses,
+};
 use crate::utils::should_break_after_operator;
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 use std::fmt::Debug;
@@ -167,10 +170,6 @@ impl BinaryLikeOperator {
         }
     }
 
-    pub const fn is_logical(&self) -> bool {
-        matches!(self, BinaryLikeOperator::Logical(_))
-    }
-
     pub const fn is_remainder(&self) -> bool {
         matches!(
             self,
@@ -191,64 +190,13 @@ impl From<JsBinaryOperator> for BinaryLikeOperator {
     }
 }
 
-/// This function returns `true` when the binary expression should be wrapped in parentheses to either
-/// * a) correctly encode precedence
-/// * b) Improve readability by adding parentheses around expressions where the precedence may not be obvious to many readers.
-pub(crate) fn binary_argument_needs_parens(
-    parent_operator: BinaryLikeOperator,
-    node: &JsAnyBinaryLikeLeftExpression,
-    is_right: bool,
-) -> SyntaxResult<bool> {
-    let current_operator =
-        if let Some(binary_like) = JsAnyBinaryLikeExpression::cast(node.syntax().clone()) {
-            binary_like.operator()?
-        } else {
-            return Ok(false);
-        };
-
-    // For logical nodes, add parentheses if the operators aren't the same
-    if parent_operator.is_logical() && current_operator.is_logical() {
-        return Ok(parent_operator != current_operator);
-    }
-
-    let current_precedence = current_operator.precedence();
-    let parent_precedence = parent_operator.precedence();
-
-    #[allow(clippy::if_same_then_else, clippy::needless_bool)]
-    // If the parent has a higher precedence than parentheses are necessary to not change the semantic meaning
-    // when re-parsing.
-    let result = if parent_precedence > current_precedence {
-        true
-    } else if is_right && parent_precedence == current_precedence {
-        true
-    }
-    // Add parentheses around bitwise and bit shift operators
-    // `a * 3 >> 5` -> `(a * 3) >> 5`
-    else if parent_precedence.is_bitwise() || parent_precedence.is_shift() {
-        true
-    }
-    // `a % 4 + 4` -> `a % (4 + 4)`
-    else if parent_precedence < current_precedence && current_operator.is_remainder() {
-        parent_precedence.is_additive()
-    } else if parent_precedence == current_precedence
-        && !should_flatten(parent_operator, current_operator)
-    {
-        true
-    } else {
-        false
-    };
-
-    Ok(result)
-}
-
 // False positive, Removing the `+ 'a` lifetime fails to compile with `hidden type for `impl Trait` captures lifetime that does not appear in bounds`
 #[allow(clippy::needless_lifetimes)]
 fn format_sub_expression<'a>(
-    parent_operator: BinaryLikeOperator,
     sub_expression: &'a JsAnyBinaryLikeLeftExpression,
 ) -> impl Format<JsFormatContext> + 'a {
     format_with(move |f| {
-        if binary_argument_needs_parens(parent_operator, sub_expression, true)? {
+        if binary_argument_needs_parens(sub_expression) {
             format_parenthesize(
                 sub_expression.syntax().first_token().as_ref(),
                 &sub_expression,
@@ -408,11 +356,10 @@ impl FlattenItems {
         }
 
         let left = binary_like_expression.left()?;
-        let operator = binary_like_expression.operator()?;
         let operator_token = binary_like_expression.operator_token()?;
 
         let operator_has_trailing_comments = operator_token.has_trailing_comments();
-        let left_parenthesized = binary_argument_needs_parens(operator, &left, false)?;
+        let left_parenthesized = binary_argument_needs_parens(&left);
         let mut left_item = FlattenItem::new(
             FlattenedBinaryExpressionPart::Group {
                 current: left,
@@ -526,7 +473,7 @@ impl FlattenedBinaryExpressionPart {
             FlattenedBinaryExpressionPart::Right { parent } => {
                 let right = JsAnyBinaryLikeLeftExpression::JsAnyExpression(parent.right()?);
 
-                write!(f, [format_sub_expression(parent.operator()?, &right)])
+                write!(f, [format_sub_expression(&right)])
             }
             FlattenedBinaryExpressionPart::Left { expression } => {
                 write!(f, [expression])
@@ -878,6 +825,122 @@ impl From<JsAnyBinaryLikeExpression> for JsAnyExpression {
     }
 }
 
+/// This function returns `true` when the binary expression should be wrapped in parentheses to either
+/// * a) correctly encode precedence
+/// * b) Improve readability by adding parentheses around expressions where the precedence may not be obvious to many readers.
+pub(crate) fn binary_argument_needs_parens(node: &JsAnyBinaryLikeLeftExpression) -> bool {
+    if let Some(binary_like) = JsAnyBinaryLikeExpression::cast(node.syntax().clone()) {
+        binary_like.needs_parentheses()
+    } else {
+        false
+    }
+}
+
+pub(crate) fn needs_binary_like_parentheses(
+    node: &JsAnyBinaryLikeExpression,
+    parent: &JsSyntaxNode,
+) -> bool {
+    match parent.kind() {
+        JsSyntaxKind::JS_EXTENDS_CLAUSE
+        | JsSyntaxKind::TS_AS_EXPRESSION
+        | JsSyntaxKind::TS_TYPE_ASSERTION_EXPRESSION
+        | JsSyntaxKind::JS_UNARY_EXPRESSION
+        | JsSyntaxKind::JS_AWAIT_EXPRESSION
+        | JsSyntaxKind::TS_NON_NULL_ASSERTION_EXPRESSION => true,
+
+        kind if JsAnyBinaryLikeExpression::can_cast(kind) => {
+            let parent = JsAnyBinaryLikeExpression::unwrap_cast(parent.clone());
+
+            let operator = node.operator();
+            let parent_operator = parent.operator();
+
+            match (operator, parent_operator) {
+                (Ok(operator), Ok(parent_operator)) => {
+                    let precedence = operator.precedence();
+                    let parent_precedence = parent_operator.precedence();
+
+                    #[allow(clippy::if_same_then_else, clippy::needless_bool)]
+                    // If the parent has a higher precedence than parentheses are necessary to not change the semantic meaning
+                    // when re-parsing.
+                    if parent_precedence > precedence {
+                        return true;
+                    }
+
+                    let is_right = parent
+                        .right()
+                        .map(ExpressionNode::into_resolved_syntax)
+                        .as_ref()
+                        == Ok(node.syntax());
+
+                    // `a ** b ** c`
+                    if is_right && parent_precedence == precedence {
+                        return true;
+                    }
+
+                    // Add parentheses around bitwise and bit shift operators
+                    // `a * 3 >> 5` -> `(a * 3) >> 5`
+                    if parent_precedence.is_bitwise() || parent_precedence.is_shift() {
+                        return true;
+                    }
+
+                    // `a % 4 + 4` -> `(a % 4) + 4)`
+                    if parent_precedence < precedence && operator.is_remainder() {
+                        return parent_precedence.is_additive();
+                    }
+
+                    if parent_precedence == precedence && !should_flatten(parent_operator, operator)
+                    {
+                        return true;
+                    }
+
+                    false
+                }
+                // Just to be sure
+                _ => true,
+            }
+        }
+
+        _ => {
+            is_callee(node.syntax(), parent)
+                || is_tag(node.syntax(), parent)
+                || is_spread(node.syntax(), parent)
+                || is_member_object(node.syntax(), parent)
+        }
+    }
+}
+
+impl NeedsParentheses for JsAnyBinaryLikeExpression {
+    fn needs_parentheses(&self) -> bool {
+        match self {
+            JsAnyBinaryLikeExpression::JsLogicalExpression(logical) => logical.needs_parentheses(),
+            JsAnyBinaryLikeExpression::JsBinaryExpression(binary) => binary.needs_parentheses(),
+            JsAnyBinaryLikeExpression::JsInstanceofExpression(instanceof) => {
+                instanceof.needs_parentheses()
+            }
+            JsAnyBinaryLikeExpression::JsInExpression(in_expression) => {
+                in_expression.needs_parentheses()
+            }
+        }
+    }
+
+    fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
+        match self {
+            JsAnyBinaryLikeExpression::JsLogicalExpression(logical) => {
+                logical.needs_parentheses_with_parent(parent)
+            }
+            JsAnyBinaryLikeExpression::JsBinaryExpression(binary) => {
+                binary.needs_parentheses_with_parent(parent)
+            }
+            JsAnyBinaryLikeExpression::JsInstanceofExpression(instanceof) => {
+                instanceof.needs_parentheses_with_parent(parent)
+            }
+            JsAnyBinaryLikeExpression::JsInExpression(in_expression) => {
+                in_expression.needs_parentheses_with_parent(parent)
+            }
+        }
+    }
+}
+
 /// Returns `true` if a binary expression nested into another binary expression should be flattened together.
 ///
 /// This is generally the case if both operator have the same precedence. See the inline comments for the exceptions
@@ -886,38 +949,41 @@ fn should_flatten(parent_operator: BinaryLikeOperator, child_operator: BinaryLik
     let parent_precedence = parent_operator.precedence();
     let child_precedence = child_operator.precedence();
 
-    #[allow(clippy::if_same_then_else, clippy::needless_bool)]
     if parent_precedence != child_precedence {
-        false
+        return false;
     }
+
     // `**` is right associative.
-    else if parent_precedence.is_exponential() {
-        false
+    if parent_precedence.is_exponential() {
+        return false;
     }
     // avoid `a == b == c` -> `(a == b) == c`
-    else if parent_precedence.is_equality() && child_precedence.is_equality() {
-        false
+
+    if parent_precedence.is_equality() && child_precedence.is_equality() {
+        return false;
     }
+
     // `a % b * c` -> `(a % b) * c`
     // `a * b % c` -> `(a * b) % c`
-    else if (child_operator.is_remainder() && parent_precedence.is_multiplicative())
+    if (child_operator.is_remainder() && parent_precedence.is_multiplicative())
         || (parent_operator.is_remainder() && child_precedence.is_multiplicative())
     {
-        false
+        return false;
     }
+
     // `a * b / c` -> `(a * b) / c`
-    else if child_operator != parent_operator
+    if child_operator != parent_operator
         && child_precedence.is_multiplicative()
         && parent_precedence.is_multiplicative()
     {
-        false
+        return false;
     }
     // `a >> b >> c` -> `(a >> b) >> c`
-    else if parent_precedence.is_shift() && child_precedence.is_shift() {
-        false
-    } else {
-        true
+    if parent_precedence.is_shift() && child_precedence.is_shift() {
+        return false;
     }
+
+    true
 }
 
 declare_node_union! {
@@ -929,6 +995,26 @@ impl JsAnyBinaryLikeLeftExpression {
         match self {
             JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => Some(expression),
             JsAnyBinaryLikeLeftExpression::JsPrivateName(_) => None,
+        }
+    }
+}
+
+impl NeedsParentheses for JsAnyBinaryLikeLeftExpression {
+    fn needs_parentheses(&self) -> bool {
+        match self {
+            JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => {
+                expression.needs_parentheses()
+            }
+            JsAnyBinaryLikeLeftExpression::JsPrivateName(_) => false,
+        }
+    }
+
+    fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
+        match self {
+            JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) => {
+                expression.needs_parentheses_with_parent(parent)
+            }
+            JsAnyBinaryLikeLeftExpression::JsPrivateName(_) => false,
         }
     }
 }

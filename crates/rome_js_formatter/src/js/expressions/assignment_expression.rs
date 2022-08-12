@@ -1,12 +1,16 @@
 use crate::prelude::*;
-use crate::utils::{resolve_expression_syntax, JsAnyAssignmentLike};
+use crate::utils::JsAnyAssignmentLike;
 
-use crate::parentheses::{is_first_in_statement, FirstInStatementMode, NeedsParentheses};
-use rome_formatter::write;
-use rome_js_syntax::{
-    JsAnyAssignmentPattern, JsAnyForInitializer, JsAnyFunctionBody, JsArrowFunctionExpression,
-    JsAssignmentExpression, JsForStatement, JsParenthesizedExpression, JsSyntaxKind, JsSyntaxNode,
+use crate::parentheses::{
+    is_first_in_statement, ExpressionNode, FirstInStatementMode, NeedsParentheses,
 };
+use rome_formatter::write;
+
+use rome_js_syntax::{
+    JsAnyAssignmentPattern, JsAnyExpression, JsAnyForInitializer, JsAnyFunctionBody,
+    JsArrowFunctionExpression, JsAssignmentExpression, JsForStatement, JsSyntaxKind, JsSyntaxNode,
+};
+use rome_rowan::AstNode;
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsAssignmentExpression;
@@ -23,11 +27,6 @@ impl FormatNodeRule<JsAssignmentExpression> for FormatJsAssignmentExpression {
 
 impl NeedsParentheses for JsAssignmentExpression {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
-        let grand_parent = parent
-            .ancestors()
-            .skip(1)
-            .find(|parent| !JsParenthesizedExpression::can_cast(parent.kind()));
-
         match parent.kind() {
             JsSyntaxKind::JS_ASSIGNMENT_EXPRESSION => false,
             // `[a = b]`
@@ -38,7 +37,7 @@ impl NeedsParentheses for JsAssignmentExpression {
 
                 match arrow.body() {
                     Ok(JsAnyFunctionBody::JsAnyExpression(expression)) => {
-                        &resolve_expression_syntax(expression) == self.syntax()
+                        &expression.resolve_syntax() == self.syntax()
                     }
                     _ => false,
                 }
@@ -47,14 +46,14 @@ impl NeedsParentheses for JsAssignmentExpression {
                 let for_statement = JsForStatement::unwrap_cast(parent.clone());
                 let is_initializer = match for_statement.initializer() {
                     Some(JsAnyForInitializer::JsAnyExpression(expression)) => {
-                        &resolve_expression_syntax(expression) == self.syntax()
+                        &expression.resolve_syntax() == self.syntax()
                     }
                     None | Some(_) => false,
                 };
 
                 let is_update = for_statement
                     .update()
-                    .map(resolve_expression_syntax)
+                    .map(ExpressionNode::into_resolved_syntax)
                     .as_ref()
                     == Some(self.syntax());
 
@@ -70,26 +69,50 @@ impl NeedsParentheses for JsAssignmentExpression {
                     Ok(JsAnyAssignmentPattern::JsObjectAssignmentPattern(_))
                 )
             }
-            JsSyntaxKind::JS_SEQUENCE_EXPRESSION => grand_parent
-                .and_then(JsForStatement::cast)
-                .map_or(true, |for_statement| {
-                    let is_initializer = match for_statement.initializer() {
-                        Some(JsAnyForInitializer::JsAnyExpression(expression)) => {
-                            &resolve_expression_syntax(expression) == parent
-                        }
-                        None | Some(_) => false,
-                    };
-                    let is_update = for_statement
-                        .update()
-                        .map(resolve_expression_syntax)
-                        .as_ref()
-                        == Some(parent);
+            JsSyntaxKind::JS_SEQUENCE_EXPRESSION => {
+                let mut child = parent.clone();
 
-                    !(is_initializer || is_update)
-                }),
+                for ancestor in parent.ancestors().skip(1) {
+                    match ancestor.kind() {
+                        JsSyntaxKind::JS_SEQUENCE_EXPRESSION
+                        | JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION => child = ancestor,
+                        JsSyntaxKind::JS_FOR_STATEMENT => {
+                            let for_statement = JsForStatement::unwrap_cast(ancestor);
+
+                            let is_initializer = match for_statement.initializer() {
+                                Some(JsAnyForInitializer::JsAnyExpression(expression)) => {
+                                    expression.syntax() == &child
+                                }
+                                None | Some(_) => false,
+                            };
+
+                            let is_update =
+                                for_statement.update().map(AstNode::into_syntax).as_ref()
+                                    == Some(&child);
+
+                            return !(is_initializer || is_update);
+                        }
+                        _ => break,
+                    }
+                }
+
+                true
+            }
 
             _ => true,
         }
+    }
+}
+
+impl ExpressionNode for JsAssignmentExpression {
+    #[inline]
+    fn resolve(&self) -> JsAnyExpression {
+        self.clone().into()
+    }
+
+    #[inline]
+    fn into_resolved(self) -> JsAnyExpression {
+        self.into()
     }
 }
 
@@ -110,6 +133,8 @@ mod tests {
         assert_not_needs_parentheses!("a => { a = 3 }", JsAssignmentExpression);
 
         assert_not_needs_parentheses!("for(a = 3;;) {}", JsAssignmentExpression);
+        assert_not_needs_parentheses!("for(a = 3, b = 2;;) {}", JsAssignmentExpression[1]);
+        assert_not_needs_parentheses!("for(a = 3, b = 2, c= 3;;) {}", JsAssignmentExpression[2]);
         assert_needs_parentheses!("for(; a = 3; ) {}", JsAssignmentExpression);
         assert_not_needs_parentheses!("for(;;a = 3) {}", JsAssignmentExpression);
 

@@ -1,8 +1,8 @@
 use crate::prelude::*;
 
-use crate::parentheses::NeedsParentheses;
+use crate::parentheses::{ExpressionNode, NeedsParentheses};
 use crate::utils::get_member_chain;
-use rome_js_syntax::{JsCallExpression, JsSyntaxKind, JsSyntaxNode};
+use rome_js_syntax::{JsAnyExpression, JsCallExpression, JsSyntaxKind, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsCallExpression;
@@ -21,11 +21,19 @@ impl FormatNodeRule<JsCallExpression> for FormatJsCallExpression {
 
 impl NeedsParentheses for JsCallExpression {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
-        match parent.kind() {
-            JsSyntaxKind::JS_NEW_EXPRESSION => true,
+        matches!(parent.kind(), JsSyntaxKind::JS_NEW_EXPRESSION)
+    }
+}
 
-            _ => false,
-        }
+impl ExpressionNode for JsCallExpression {
+    #[inline]
+    fn resolve(&self) -> JsAnyExpression {
+        self.clone().into()
+    }
+
+    #[inline]
+    fn into_resolved(self) -> JsAnyExpression {
+        self.into()
     }
 }
 

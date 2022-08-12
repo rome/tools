@@ -1,8 +1,10 @@
-use crate::parentheses::{is_first_in_statement, FirstInStatementMode, NeedsParentheses};
+use crate::parentheses::{
+    is_first_in_statement, ExpressionNode, FirstInStatementMode, NeedsParentheses,
+};
 use crate::prelude::*;
 use crate::utils::JsObjectLike;
 use rome_formatter::write;
-use rome_js_syntax::{JsObjectExpression, JsSyntaxKind, JsSyntaxNode};
+use rome_js_syntax::{JsAnyExpression, JsObjectExpression, JsSyntaxKind, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsObjectExpression;
@@ -24,6 +26,18 @@ impl NeedsParentheses for JsObjectExpression {
                 self.clone().into(),
                 FirstInStatementMode::ExpressionStatementOrArrow,
             )
+    }
+}
+
+impl ExpressionNode for JsObjectExpression {
+    #[inline]
+    fn resolve(&self) -> JsAnyExpression {
+        self.clone().into()
+    }
+
+    #[inline]
+    fn into_resolved(self) -> JsAnyExpression {
+        self.into()
     }
 }
 

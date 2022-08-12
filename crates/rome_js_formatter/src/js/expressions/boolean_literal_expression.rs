@@ -1,8 +1,8 @@
 use crate::prelude::*;
 
-use crate::parentheses::NeedsParentheses;
+use crate::parentheses::{ExpressionNode, NeedsParentheses};
 use rome_formatter::write;
-use rome_js_syntax::JsBooleanLiteralExpressionFields;
+use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsBooleanLiteralExpressionFields};
 use rome_js_syntax::{JsBooleanLiteralExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
@@ -25,10 +25,24 @@ impl FormatNodeRule<JsBooleanLiteralExpression> for FormatJsBooleanLiteralExpres
 }
 
 impl NeedsParentheses for JsBooleanLiteralExpression {
+    #[inline(always)]
     fn needs_parentheses(&self) -> bool {
         false
     }
+    #[inline(always)]
     fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
         false
+    }
+}
+
+impl ExpressionNode for JsBooleanLiteralExpression {
+    #[inline]
+    fn resolve(&self) -> JsAnyExpression {
+        JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::from(self.clone()))
+    }
+
+    #[inline]
+    fn into_resolved(self) -> JsAnyExpression {
+        JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::from(self))
     }
 }

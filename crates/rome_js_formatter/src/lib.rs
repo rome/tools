@@ -415,19 +415,17 @@ where
 
         if f.context().comments().is_suppressed(syntax) {
             write!(f, [format_suppressed_node(syntax)])
+        } else if self.needs_parentheses(node) {
+            write!(
+                f,
+                [format_parenthesize(
+                    node.syntax().first_token().as_ref(),
+                    &format_once(|f| self.fmt_fields(node, f)),
+                    node.syntax().last_token().as_ref(),
+                )]
+            )
         } else {
-            if self.needs_parentheses(node) {
-                write!(
-                    f,
-                    [format_parenthesize(
-                        node.syntax().first_token().as_ref(),
-                        &format_once(|f| self.fmt_fields(node, f)),
-                        node.syntax().last_token().as_ref(),
-                    )]
-                )
-            } else {
-                self.fmt_fields(node, f)
-            }
+            self.fmt_fields(node, f)
         }
     }
 
@@ -714,33 +712,31 @@ mod test {
     use rome_js_parser::parse;
     use rome_js_syntax::{SourceType, TextRange, TextSize};
 
+    #[ignore]
     #[test]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-it(`handles
-  some
-    newlines
-  does something really long and complicated so I have to write a very long name for the test`, () => {
-  console.log("hello!");
-}, 2500);
-        "#;
+test.expect(t => {
+	t.true(a);
+}, false);
+"#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
         let result = format_node(JsFormatContext::default(), &tree.syntax())
             .unwrap()
             .print();
-        // check_reformat(CheckReformatParams {
-        //     root: &tree.syntax(),
-        //     text: result.as_code(),
-        //     source_type: syntax,
-        //     file_name: "quick_test",
-        //     format_context: JsFormatContext::default(),
-        // });
-        // assert_eq!(
-        //     result.as_code(),
-        //     "type B8 = /*1*/ (C);\ntype B9 = (/*1*/ C);\ntype B10 = /*1*/ /*2*/ C;\n"
-        // );
+        check_reformat(CheckReformatParams {
+            root: &tree.syntax(),
+            text: result.as_code(),
+            source_type: syntax,
+            file_name: "quick_test",
+            format_context: JsFormatContext::default(),
+        });
+        assert_eq!(
+            result.as_code(),
+            "type B8 = /*1*/ (C);\ntype B9 = (/*1*/ C);\ntype B10 = /*1*/ /*2*/ C;\n"
+        );
     }
 
     #[test]

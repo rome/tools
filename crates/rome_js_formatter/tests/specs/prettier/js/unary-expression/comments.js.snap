@@ -298,7 +298,7 @@ async function bar2() {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,207 +1,162 @@
+@@ -1,283 +1,218 @@
  !x;
 -!(x /* foo */);
 -!(/* foo */ x);
@@ -624,9 +624,28 @@ async function bar2() {
 +!x(); // foo
  
  !new x();
- !(new x() /* foo */);
-@@ -219,65 +174,49 @@
- );
+-!(new x() /* foo */);
+-!(/* foo */ new x());
+-!(
+-  /* foo */
+-  new x()
+-);
+-!(
+-  new x()
+-  /* foo */
+-);
+-!(
+-  new x() // foo
+-);
++!new x() /* foo */;
++! /* foo */ new x();
++!
++/* foo */
++new x();
++!new x()
++/* foo */
++;
++!new x(); // foo
  
  !(x, y);
 -!((x, y) /* foo */);
@@ -893,19 +912,15 @@ x();
 !x(); // foo
 
 !new x();
-!(new x() /* foo */);
-!(/* foo */ new x());
-!(
-  /* foo */
-  new x()
-);
-!(
-  new x()
-  /* foo */
-);
-!(
-  new x() // foo
-);
+!new x() /* foo */;
+! /* foo */ new x();
+!
+/* foo */
+new x();
+!new x()
+/* foo */
+;
+!new x(); // foo
 
 !(x, y);
 !(x, y) /* foo */;

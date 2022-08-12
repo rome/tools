@@ -53,18 +53,7 @@ bifornCringerMoshedPerplexSawder =
 ```diff
 --- Prettier
 +++ Rome
-@@ -29,22 +29,17 @@
- }
- 
- function foo() {
--  void ((
--    coooooooooooooooooooooooooooooooooooooooooooooooooooond
--      ? baaaaaaaaaaaaaaaaaaaaar
--      : baaaaaaaaaaaaaaaaaaaaaz
--  ) as Fooooooooooo);
-+  void ((coooooooooooooooooooooooooooooooooooooooooooooooooooond
-+    ? baaaaaaaaaaaaaaaaaaaaar
-+    : baaaaaaaaaaaaaaaaaaaaaz) as Fooooooooooo);
+@@ -37,14 +37,11 @@
  }
  
  bifornCringerMoshedPerplexSawder =
@@ -117,9 +106,11 @@ function foo() {
 }
 
 function foo() {
-  void ((coooooooooooooooooooooooooooooooooooooooooooooooooooond
-    ? baaaaaaaaaaaaaaaaaaaaar
-    : baaaaaaaaaaaaaaaaaaaaaz) as Fooooooooooo);
+  void ((
+    coooooooooooooooooooooooooooooooooooooooooooooooooooond
+      ? baaaaaaaaaaaaaaaaaaaaar
+      : baaaaaaaaaaaaaaaaaaaaaz
+  ) as Fooooooooooo);
 }
 
 bifornCringerMoshedPerplexSawder =
@@ -136,6 +127,6 @@ bifornCringerMoshedPerplexSawder =
 
 # Lines exceeding max width of 80 characters
 ```
-   43:   askTrovenaBeenaDependsRowans + ((glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+   45:   askTrovenaBeenaDependsRowans + ((glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
 ```
 

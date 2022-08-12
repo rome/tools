@@ -1,8 +1,8 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::parentheses::NeedsParentheses;
-use rome_js_syntax::JsThisExpressionFields;
+use crate::parentheses::{ExpressionNode, NeedsParentheses};
+use rome_js_syntax::{JsAnyExpression, JsThisExpressionFields};
 use rome_js_syntax::{JsSyntaxNode, JsThisExpression};
 
 #[derive(Debug, Clone, Default)]
@@ -20,10 +20,24 @@ impl FormatNodeRule<JsThisExpression> for FormatJsThisExpression {
     }
 }
 impl NeedsParentheses for JsThisExpression {
+    #[inline(always)]
     fn needs_parentheses(&self) -> bool {
         false
     }
+    #[inline(always)]
     fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
         false
+    }
+}
+
+impl ExpressionNode for JsThisExpression {
+    #[inline]
+    fn resolve(&self) -> JsAnyExpression {
+        self.clone().into()
+    }
+
+    #[inline]
+    fn into_resolved(self) -> JsAnyExpression {
+        self.into()
     }
 }

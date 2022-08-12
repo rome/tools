@@ -2,8 +2,8 @@ use crate::prelude::*;
 use rome_formatter::write;
 
 use crate::js::expressions::await_expression::await_or_yield_needs_parens;
-use crate::parentheses::NeedsParentheses;
-use rome_js_syntax::{JsSyntaxKind, JsYieldExpressionFields};
+use crate::parentheses::{ExpressionNode, NeedsParentheses};
+use rome_js_syntax::{JsAnyExpression, JsSyntaxKind, JsYieldExpressionFields};
 use rome_js_syntax::{JsSyntaxNode, JsYieldExpression};
 
 #[derive(Debug, Clone, Default)]
@@ -28,6 +28,18 @@ impl NeedsParentheses for JsYieldExpression {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         matches!(parent.kind(), JsSyntaxKind::JS_AWAIT_EXPRESSION)
             || await_or_yield_needs_parens(parent, self.syntax())
+    }
+}
+
+impl ExpressionNode for JsYieldExpression {
+    #[inline]
+    fn resolve(&self) -> JsAnyExpression {
+        self.clone().into()
+    }
+
+    #[inline]
+    fn into_resolved(self) -> JsAnyExpression {
+        self.into()
     }
 }
 

@@ -16,7 +16,7 @@
 ///!   .catch()
 ///! ```
 ///!
-///! In order to achieve that we use the same heuristic that [Prettier applies].
+///! In order to achieve that we use the same heuristic that [Prettier applies](https://github.com/prettier/prettier/blob/main/src/language-js/print/member-chain.js).
 ///!
 ///! The process is the following:
 ///!
@@ -102,13 +102,11 @@
 ///!     [StaticMemberExpression],
 ///! ]
 ///! ```
-///!
-///! [Prettier applies]: https://github.com/prettier/prettier/blob/main/src/language-js/print/member-chain.js
 mod chain_member;
 mod groups;
 mod simple_argument;
 
-use crate::parentheses::resolve_expression_parent;
+use crate::parentheses::NeedsParentheses;
 use crate::prelude::*;
 use crate::utils::member_chain::chain_member::{ChainEntry, ChainMember};
 use crate::utils::member_chain::groups::{
@@ -196,10 +194,9 @@ pub(crate) fn get_member_chain(
     f: &mut JsFormatter,
 ) -> SyntaxResult<MemberChain> {
     let mut chain_members = vec![];
-    let parent_is_expression_statement = resolve_expression_parent(call_expression.syntax())
-        .map_or(false, |parent| {
-            JsExpressionStatement::can_cast(parent.kind())
-        });
+    let parent_is_expression_statement = call_expression.resolve_parent().map_or(false, |parent| {
+        JsExpressionStatement::can_cast(parent.kind())
+    });
 
     let root = flatten_member_chain(
         &mut chain_members,

@@ -1,10 +1,10 @@
-use crate::parentheses::{is_callee, is_tag, NeedsParentheses};
+use crate::parentheses::{is_callee, is_tag, ExpressionNode, NeedsParentheses};
 use crate::prelude::*;
 use crate::utils::jsx::{get_wrap_state, WrapState};
-use crate::utils::resolve_expression_syntax;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
-    JsBinaryExpression, JsBinaryOperator, JsSyntaxKind, JsSyntaxNode, JsxTagExpression,
+    JsAnyExpression, JsBinaryExpression, JsBinaryOperator, JsSyntaxKind, JsSyntaxNode,
+    JsxTagExpression,
 };
 
 #[derive(Debug, Clone, Default)]
@@ -36,8 +36,11 @@ impl NeedsParentheses for JsxTagExpression {
             JsSyntaxKind::JS_BINARY_EXPRESSION => {
                 let binary = JsBinaryExpression::unwrap_cast(parent.clone());
 
-                let is_left =
-                    binary.left().map(resolve_expression_syntax).as_ref() == Ok(self.syntax());
+                let is_left = binary
+                    .left()
+                    .map(ExpressionNode::into_resolved_syntax)
+                    .as_ref()
+                    == Ok(self.syntax());
                 matches!(binary.operator(), Ok(JsBinaryOperator::LessThan)) && is_left
             }
             JsSyntaxKind::TS_AS_EXPRESSION
@@ -53,28 +56,17 @@ impl NeedsParentheses for JsxTagExpression {
             | JsSyntaxKind::JSX_SPREAD_CHILD => true,
             _ => is_callee(self.syntax(), parent) || is_tag(self.syntax(), parent),
         }
+    }
+}
 
-        //         (parent.type !== "ArrayExpression" &&
-        //           parent.type !== "ArrowFunctionExpression" &&
-        //           parent.type !== "AssignmentExpression" &&
-        //           parent.type !== "AssignmentPattern" &&
-        //           parent.type !== "BinaryExpression" &&
-        //           parent.type !== "NewExpression" &&
-        //           parent.type !== "ConditionalExpression" &&
-        //           parent.type !== "ExpressionStatement" &&
-        //           parent.type !== "JsExpressionRoot" &&
-        //           parent.type !== "JSXAttribute" &&
-        //           parent.type !== "JSXElement" &&
-        //           parent.type !== "JSXExpressionContainer" &&
-        //           parent.type !== "JSXFragment" &&
-        //           parent.type !== "LogicalExpression" &&
-        //           !isCallExpression(parent) &&
-        //           !isObjectProperty(parent) &&
-        //           parent.type !== "ReturnStatement" &&
-        //           parent.type !== "ThrowStatement" &&
-        //           parent.type !== "TypeCastExpression" &&
-        //           parent.type !== "VariableDeclarator" &&
-        //           parent.type !== "YieldExpression")
-        //       );
+impl ExpressionNode for JsxTagExpression {
+    #[inline]
+    fn resolve(&self) -> JsAnyExpression {
+        self.clone().into()
+    }
+
+    #[inline]
+    fn into_resolved(self) -> JsAnyExpression {
+        self.into()
     }
 }

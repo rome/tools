@@ -1,5 +1,5 @@
 use crate::context::QuoteStyle;
-use crate::parentheses::resolve_expression_parent;
+use crate::parentheses::NeedsParentheses;
 use crate::prelude::*;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsxAnyChild, JsxChildList, JsxTagExpression};
@@ -77,7 +77,7 @@ pub enum WrapState {
 pub fn get_wrap_state(node: &JsxTagExpression) -> WrapState {
     // We skip the first item because the first item in ancestors is the node itself, i.e.
     // the JSX Element in this case.
-    let parent = resolve_expression_parent(node.syntax());
+    let parent = node.resolve_parent();
 
     parent.map_or(WrapState::NoWrap, |parent| match parent.kind() {
         JsSyntaxKind::JS_ARRAY_EXPRESSION

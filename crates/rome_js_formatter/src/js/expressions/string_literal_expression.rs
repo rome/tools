@@ -2,8 +2,8 @@ use crate::prelude::*;
 
 use crate::utils::{FormatLiteralStringToken, StringLiteralParentKind};
 
-use crate::parentheses::NeedsParentheses;
-use rome_js_syntax::JsStringLiteralExpressionFields;
+use crate::parentheses::{ExpressionNode, NeedsParentheses};
+use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsStringLiteralExpressionFields};
 use rome_js_syntax::{JsExpressionStatement, JsSyntaxKind};
 use rome_js_syntax::{JsStringLiteralExpression, JsSyntaxNode};
 use rome_rowan::AstNode;
@@ -46,6 +46,18 @@ impl NeedsParentheses for JsStringLiteralExpression {
         } else {
             false
         }
+    }
+}
+
+impl ExpressionNode for JsStringLiteralExpression {
+    #[inline]
+    fn resolve(&self) -> JsAnyExpression {
+        JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::from(self.clone()))
+    }
+
+    #[inline]
+    fn into_resolved(self) -> JsAnyExpression {
+        JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::from(self))
     }
 }
 

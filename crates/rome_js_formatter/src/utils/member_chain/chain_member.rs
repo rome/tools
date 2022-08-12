@@ -11,16 +11,31 @@ use rome_js_syntax::{
 use rome_rowan::{AstNode, SyntaxResult};
 use std::fmt::Debug;
 
+/// One entry in a member chain.
 #[derive(Clone, Debug)]
 pub(crate) enum ChainEntry {
+    /// A member that is parenthesized in the source document
     Parenthesized {
+        /// The chain member
         member: ChainMember,
+        /// The top most ancestor of the chain member that is a parenthesized expression.
+        ///
+        /// ```text
+        /// (a.b).c()
+        ///  ^^^ -> member
+        /// ^----^ -> top_most_parentheses
+        ///
+        /// ((a.b)).c()
+        ///   ^^^ -> member
+        /// ^-----^ -> top most parentheses (skips inner parentheses node)
+        /// ```
         top_most_parentheses: JsParenthesizedExpression,
     },
     Member(ChainMember),
 }
 
 impl ChainEntry {
+    /// Returns the inner member
     pub fn member(&self) -> &ChainMember {
         match self {
             ChainEntry::Parenthesized { member, .. } => member,
@@ -28,6 +43,7 @@ impl ChainEntry {
         }
     }
 
+    /// Returns the top most parentheses node if any
     pub fn top_most_parentheses(&self) -> Option<&JsParenthesizedExpression> {
         match self {
             ChainEntry::Parenthesized {
@@ -49,6 +65,7 @@ impl ChainEntry {
         self.nodes().any(|node| node.has_trailing_comments())
     }
 
+    /// Returns true if the member any of it's ancestor parentheses nodes has any leading comments.
     pub(crate) fn has_leading_comments(&self) -> SyntaxResult<bool> {
         let has_operator_comment = match self.member() {
             ChainMember::StaticMember(node) => node.operator_token()?.has_leading_comments(),
@@ -134,8 +151,8 @@ impl Format<JsFormatContext> for ChainEntry {
     }
 }
 
-#[derive(Clone, Debug)]
 /// Data structure that holds the node with its formatted version
+#[derive(Clone, Debug)]
 pub(crate) enum ChainMember {
     /// Holds onto a [rome_js_syntax::JsStaticMemberExpression]
     StaticMember(JsStaticMemberExpression),

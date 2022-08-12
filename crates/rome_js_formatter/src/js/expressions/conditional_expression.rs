@@ -2,10 +2,10 @@ use crate::prelude::*;
 use crate::utils::JsAnyConditional;
 
 use crate::parentheses::{
-    is_binary_like_left_or_right, is_conditional_test, is_in_left_hand_side_position, is_spread,
-    NeedsParentheses,
+    is_binary_like_left_or_right, is_conditional_test, is_spread,
+    update_or_lower_expression_needs_parentheses, ExpressionNode, NeedsParentheses,
 };
-use rome_js_syntax::{JsConditionalExpression, JsSyntaxKind, JsSyntaxNode};
+use rome_js_syntax::{JsAnyExpression, JsConditionalExpression, JsSyntaxKind, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsConditionalExpression;
@@ -34,11 +34,23 @@ impl NeedsParentheses for JsConditionalExpression {
 
             _ => {
                 is_conditional_test(self.syntax(), parent)
-                    || is_in_left_hand_side_position(self.syntax(), parent)
+                    || update_or_lower_expression_needs_parentheses(self.syntax(), parent)
                     || is_binary_like_left_or_right(self.syntax(), parent)
                     || is_spread(self.syntax(), parent)
             }
         }
+    }
+}
+
+impl ExpressionNode for JsConditionalExpression {
+    #[inline]
+    fn resolve(&self) -> JsAnyExpression {
+        self.clone().into()
+    }
+
+    #[inline]
+    fn into_resolved(self) -> JsAnyExpression {
+        self.into()
     }
 }
 

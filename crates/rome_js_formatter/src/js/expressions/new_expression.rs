@@ -1,8 +1,9 @@
 use crate::prelude::*;
 
+use crate::parentheses::{ExpressionNode, NeedsParentheses};
 use rome_formatter::write;
-use rome_js_syntax::JsNewExpressionFields;
-use rome_js_syntax::{JsNewExpression, JsSyntaxKind};
+use rome_js_syntax::{JsAnyExpression, JsNewExpression, JsSyntaxKind};
+use rome_js_syntax::{JsNewExpressionFields, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsNewExpression;
@@ -40,5 +41,27 @@ impl FormatNodeRule<JsNewExpression> for FormatJsNewExpression {
                 )
             }
         }
+    }
+
+    fn needs_parentheses(&self, item: &JsNewExpression) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl NeedsParentheses for JsNewExpression {
+    fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
+        matches!(parent.kind(), JsSyntaxKind::JS_EXTENDS_CLAUSE)
+    }
+}
+
+impl ExpressionNode for JsNewExpression {
+    #[inline]
+    fn resolve(&self) -> JsAnyExpression {
+        self.clone().into()
+    }
+
+    #[inline]
+    fn into_resolved(self) -> JsAnyExpression {
+        self.into()
     }
 }

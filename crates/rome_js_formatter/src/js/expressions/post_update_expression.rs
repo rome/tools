@@ -1,8 +1,10 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::parentheses::{update_expression_needs_parentheses, NeedsParentheses};
-use rome_js_syntax::JsPostUpdateExpressionFields;
+use crate::parentheses::{
+    unary_like_expression_needs_parentheses, ExpressionNode, NeedsParentheses,
+};
+use rome_js_syntax::{JsAnyExpression, JsPostUpdateExpressionFields};
 use rome_js_syntax::{JsPostUpdateExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
@@ -25,7 +27,19 @@ impl FormatNodeRule<JsPostUpdateExpression> for FormatJsPostUpdateExpression {
 
 impl NeedsParentheses for JsPostUpdateExpression {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
-        update_expression_needs_parentheses(parent, self.syntax())
+        unary_like_expression_needs_parentheses(self.syntax(), parent)
+    }
+}
+
+impl ExpressionNode for JsPostUpdateExpression {
+    #[inline]
+    fn resolve(&self) -> JsAnyExpression {
+        self.clone().into()
+    }
+
+    #[inline]
+    fn into_resolved(self) -> JsAnyExpression {
+        self.into()
     }
 }
 
