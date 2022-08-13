@@ -1534,7 +1534,7 @@ impl<'src> Lexer<'src> {
     #[allow(clippy::many_single_char_names)]
     fn read_regex(&mut self) -> JsSyntaxKind {
         bitflags! {
-            struct RegexFlag: u32 {
+            struct RegexFlag: u8 {
                 const G = 1 << 0;
                 const I = 1 << 1;
                 const M = 1 << 2;
@@ -1573,51 +1573,44 @@ impl<'src> Lexer<'src> {
                                 b'g' => {
                                     if flag.contains(RegexFlag::G) {
                                         self.diagnostics.push(self.flag_err('g'));
-                                    } else {
-                                        flag |= RegexFlag::G;
                                     }
+                                    flag |= RegexFlag::G;
                                 }
                                 b'i' => {
                                     if flag.contains(RegexFlag::I) {
                                         self.diagnostics.push(self.flag_err('i'));
-                                    } else {
-                                        flag |= RegexFlag::I;
                                     }
+                                    flag |= RegexFlag::I;
                                 }
                                 b'm' => {
                                     if flag.contains(RegexFlag::M) {
                                         self.diagnostics.push(self.flag_err('m'));
-                                    } else {
-                                        flag |= RegexFlag::M;
                                     }
+                                    flag |= RegexFlag::M;
                                 }
                                 b's' => {
                                     if flag.contains(RegexFlag::S) {
                                         self.diagnostics.push(self.flag_err('s'));
-                                    } else {
-                                        flag |= RegexFlag::S;
                                     }
+                                    flag |= RegexFlag::S;
                                 }
                                 b'u' => {
                                     if flag.contains(RegexFlag::U) {
                                         self.diagnostics.push(self.flag_err('u'));
-                                    } else {
-                                        flag |= RegexFlag::U;
                                     }
+                                    flag |= RegexFlag::U;
                                 }
                                 b'y' => {
                                     if flag.contains(RegexFlag::Y) {
                                         self.diagnostics.push(self.flag_err('y'));
-                                    } else {
-                                        flag |= RegexFlag::Y;
                                     }
+                                    flag |= RegexFlag::Y;
                                 }
                                 b'd' => {
                                     if flag.contains(RegexFlag::D) {
                                         self.diagnostics.push(self.flag_err('d'));
-                                    } else {
-                                        flag |= RegexFlag::D;
                                     }
+                                    flag |= RegexFlag::D;
                                 }
                                 _ if self.cur_ident_part().is_some() => {
                                     self.diagnostics.push(
