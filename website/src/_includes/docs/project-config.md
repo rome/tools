@@ -15,7 +15,7 @@ We aim to offer everything out of the box and only introduce configuration if [a
 ```json
 {
   "formatter": {
-    "identStyle": "tab",
+    "indentStyle": "tab",
     "lineWidth": 120
   },
   "linter": {
