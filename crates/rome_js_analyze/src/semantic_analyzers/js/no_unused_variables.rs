@@ -85,7 +85,8 @@ fn is_typescript_unused_ok(binding: &JsIdentifierBinding) -> Option<()> {
                     match parameters.syntax().parent()?.kind() {
                         JsSyntaxKind::TS_METHOD_SIGNATURE_CLASS_MEMBER
                         | JsSyntaxKind::TS_CALL_SIGNATURE_TYPE_MEMBER
-                        | JsSyntaxKind::TS_METHOD_SIGNATURE_TYPE_MEMBER => Some(()),
+                        | JsSyntaxKind::TS_METHOD_SIGNATURE_TYPE_MEMBER
+                        | JsSyntaxKind::TS_FUNCTION_TYPE => Some(()),
                         _ => None,
                     }
                 }
