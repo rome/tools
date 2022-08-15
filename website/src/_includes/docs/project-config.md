@@ -197,6 +197,12 @@ The type of quote used when representing string literals. It can be `single` or 
 
 > Default: `double`
 
+#### `javascript.formatter.preserveQuotes`
+
+Respect the input use of quotes in object properties.
+
+> Default: `false`
+
 ### Configure a rule
 
 A rule can be configured for multiple purposes:

@@ -59,6 +59,9 @@ pub struct SerializableFormatContext {
 
     // The style for quotes. Defaults to double.
     pub quote_style: Option<SerializableQuoteStyle>,
+
+    /// Respect the input use of quotes in object properties.
+    pub preserve_quotes: Option<bool>,
 }
 
 impl From<SerializableFormatContext> for JsFormatContext {
@@ -77,6 +80,7 @@ impl From<SerializableFormatContext> for JsFormatContext {
                 test.quote_style
                     .map_or_else(|| QuoteStyle::Double, |value| value.into()),
             )
+            .with_preserve_quotes(test.preserve_quotes.unwrap_or_default())
     }
 }
 

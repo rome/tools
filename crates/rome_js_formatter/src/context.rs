@@ -21,6 +21,9 @@ pub struct JsFormatContext {
     /// The style for quotes. Defaults to double.
     quote_style: QuoteStyle,
 
+    /// Respect the input use of quotes in object properties.
+    preserve_quotes: bool,
+
     /// Information relative to the current file
     source_type: SourceType,
 
@@ -51,6 +54,11 @@ impl JsFormatContext {
         self
     }
 
+    pub fn with_preserve_quotes(mut self, preserve_quotes: bool) -> Self {
+        self.preserve_quotes = preserve_quotes;
+        self
+    }
+
     pub fn with_source_type(mut self, source_type: SourceType) -> Self {
         self.source_type = source_type;
         self
@@ -62,6 +70,10 @@ impl JsFormatContext {
 
     pub fn quote_style(&self) -> QuoteStyle {
         self.quote_style
+    }
+
+    pub fn preserve_quotes(&self) -> bool {
+        self.preserve_quotes
     }
 
     pub fn source_type(&self) -> SourceType {
@@ -113,7 +125,8 @@ impl fmt::Display for JsFormatContext {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         writeln!(f, "Indent style: {}", self.indent_style)?;
         writeln!(f, "Line width: {}", self.line_width.value())?;
-        writeln!(f, "Quote style: {}", self.quote_style)
+        writeln!(f, "Quote style: {}", self.quote_style)?;
+        writeln!(f, "Preserve quotes: {}", self.preserve_quotes)
     }
 }
 

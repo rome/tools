@@ -101,6 +101,14 @@ pub(crate) fn apply_format_settings_from_cli(
         workspace_settings.languages.javascript.format.quote_style = Some(quote_style);
     }
 
+    let preserve_quotes = session.args.contains("--preserve-quotes");
+
+    workspace_settings
+        .languages
+        .javascript
+        .format
+        .preserve_quotes = preserve_quotes;
+
     let line_width = session
         .args
         .opt_value_from_str("--line-width")

@@ -75,7 +75,10 @@ impl<'token> FormatLiteralStringToken<'token> {
         debug_assert_eq!(token.kind(), JS_STRING_LITERAL);
 
         let chosen_quote_style = context.quote_style();
-        let mut string_cleaner = LiteralStringNormaliser::new(self, chosen_quote_style);
+        let preserve_quotes = context.preserve_quotes();
+
+        let mut string_cleaner =
+            LiteralStringNormaliser::new(self, chosen_quote_style, preserve_quotes);
 
         let content = string_cleaner.normalise_text(context.source_type().into());
         let normalized_text_width = content.width();
@@ -210,6 +213,8 @@ struct LiteralStringNormaliser<'token> {
     token: &'token FormatLiteralStringToken<'token>,
     /// The quote that was set inside the configuration
     chosen_quote: QuoteStyle,
+    /// Respect the input use of quotes in object properties.
+    preserve_quotes: bool,
 }
 
 /// Convenience enum to map [rome_js_syntax::SourceType] by just reading
@@ -231,10 +236,15 @@ impl From<SourceType> for SourceFileKind {
 }
 
 impl<'token> LiteralStringNormaliser<'token> {
-    pub fn new(token: &'token FormatLiteralStringToken<'_>, chosen_quote: QuoteStyle) -> Self {
+    pub fn new(
+        token: &'token FormatLiteralStringToken<'_>,
+        chosen_quote: QuoteStyle,
+        preserve_quotes: bool,
+    ) -> Self {
         Self {
             token,
             chosen_quote,
+            preserve_quotes,
         }
     }
 
@@ -277,6 +287,10 @@ impl<'token> LiteralStringNormaliser<'token> {
 
     /// We can change the text only if there are alphanumeric or alphabetic characters, depending on the file source
     fn can_remove_quotes(&self, file_source: SourceFileKind) -> bool {
+        if self.preserve_quotes {
+            return false;
+        }
+
         let text_to_check = self.raw_content();
         // Text here is quoteless. If it's empty, it means it is an empty string and we can't
         // do any transformation
@@ -633,12 +647,14 @@ mod tests {
     fn assert_borrowed_token(
         input: &str,
         quote: QuoteStyle,
+        preserve_quotes: bool,
         as_token: AsToken,
         source: SourceFileKind,
     ) {
         let token = generate_syntax_token(input);
         let string_token = as_token.into_token(&token);
-        let mut string_cleaner = LiteralStringNormaliser::new(&string_token, quote);
+        let mut string_cleaner =
+            LiteralStringNormaliser::new(&string_token, quote, preserve_quotes);
         let content = string_cleaner.normalise_text(source);
         assert_eq!(content, Cow::Borrowed(input))
     }
@@ -647,12 +663,14 @@ mod tests {
         input: &str,
         output: &str,
         quote: QuoteStyle,
+        preserve_quotes: bool,
         as_token: AsToken,
         source: SourceFileKind,
     ) {
         let token = generate_syntax_token(input);
         let string_token = as_token.into_token(&token);
-        let mut string_cleaner = LiteralStringNormaliser::new(&string_token, quote);
+        let mut string_cleaner =
+            LiteralStringNormaliser::new(&string_token, quote, preserve_quotes);
         let content = string_cleaner.normalise_text(source);
         let owned: Cow<str> = Cow::Owned(output.to_string());
         assert_eq!(content, owned)
@@ -661,15 +679,23 @@ mod tests {
     #[test]
     fn string_borrowed() {
         let quote = QuoteStyle::Double;
+        let preserve_quotes = false;
         let inputs = [r#""content""#, r#""content with single ' quote ""#];
         for input in inputs {
-            assert_borrowed_token(input, quote, AsToken::String, SourceFileKind::JavaScript)
+            assert_borrowed_token(
+                input,
+                quote,
+                preserve_quotes,
+                AsToken::String,
+                SourceFileKind::JavaScript,
+            )
         }
     }
 
     #[test]
     fn string_owned() {
         let quote = QuoteStyle::Double;
+        let preserve_quotes = false;
         let inputs = [
             (r#"" content '' \"\"\" ""#, r#"' content \'\' """ '"#),
             (r#"" content \"\"\"\" '' ""#, r#"' content """" \'\' '"#),
@@ -682,6 +708,7 @@ mod tests {
                 input,
                 output,
                 quote,
+                preserve_quotes,
                 AsToken::String,
                 SourceFileKind::JavaScript,
             )
@@ -691,21 +718,30 @@ mod tests {
     #[test]
     fn directive_borrowed() {
         let quote = QuoteStyle::Double;
+        let preserve_quotes = false;
         let inputs = [r#""use strict '""#];
         for input in inputs {
-            assert_borrowed_token(input, quote, AsToken::Directive, SourceFileKind::JavaScript)
+            assert_borrowed_token(
+                input,
+                quote,
+                preserve_quotes,
+                AsToken::Directive,
+                SourceFileKind::JavaScript,
+            )
         }
     }
 
     #[test]
     fn directive_owned() {
         let quote = QuoteStyle::Double;
+        let preserve_quotes = false;
         let inputs = [(r#"' use strict '"#, r#"" use strict ""#)];
         for (input, output) in inputs {
             assert_owned_token(
                 input,
                 output,
                 quote,
+                preserve_quotes,
                 AsToken::Directive,
                 SourceFileKind::JavaScript,
             )
@@ -715,21 +751,30 @@ mod tests {
     #[test]
     fn member_borrowed() {
         let quote = QuoteStyle::Double;
+        let preserve_quotes = false;
         let inputs = [r#""cant @ be moved""#, r#""1674""#, r#""33n""#];
         for input in inputs {
-            assert_borrowed_token(input, quote, AsToken::Member, SourceFileKind::TypeScript)
+            assert_borrowed_token(
+                input,
+                quote,
+                preserve_quotes,
+                AsToken::Member,
+                SourceFileKind::TypeScript,
+            )
         }
     }
 
     #[test]
     fn member_owned() {
         let quote = QuoteStyle::Double;
+        let preserve_quotes = false;
         let inputs = [(r#""string""#, r#"string"#)];
         for (input, output) in inputs {
             assert_owned_token(
                 input,
                 output,
                 quote,
+                preserve_quotes,
                 AsToken::Member,
                 SourceFileKind::TypeScript,
             )

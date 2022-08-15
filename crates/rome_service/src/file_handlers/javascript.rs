@@ -36,6 +36,7 @@ use std::fmt::Debug;
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct JsFormatSettings {
     pub quote_style: Option<QuoteStyle>,
+    pub preserve_quotes: bool,
 }
 
 #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
@@ -62,6 +63,7 @@ impl Language for JsLanguage {
             .with_indent_style(global.indent_style.unwrap_or_default())
             .with_line_width(global.line_width.unwrap_or_default())
             .with_quote_style(language.quote_style.unwrap_or_default())
+            .with_preserve_quotes(language.preserve_quotes)
     }
 }
 

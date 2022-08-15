@@ -83,6 +83,7 @@ pub struct JavascriptFormatter {
     /// The style for quotes. Defaults to double.
     #[serde(with = "PlainQuoteStyle")]
     pub quote_style: QuoteStyle,
+    pub preserve_quotes: bool,
 }
 
 #[derive(Deserialize, Serialize, Debug, Eq, PartialEq)]
