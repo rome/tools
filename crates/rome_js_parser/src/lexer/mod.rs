@@ -1530,10 +1530,20 @@ impl<'src> Lexer<'src> {
             "this flag was already used",
         )
     }
-
     #[inline]
     #[allow(clippy::many_single_char_names)]
     fn read_regex(&mut self) -> JsSyntaxKind {
+        bitflags! {
+            struct RegexFlag: u8 {
+                const G = 1 << 0;
+                const I = 1 << 1;
+                const M = 1 << 2;
+                const S = 1 << 3;
+                const U = 1 << 4;
+                const Y = 1 << 5;
+                const D = 1 << 6;
+            }
+        }
         let current = unsafe { self.current_unchecked() };
         if current != b'/' {
             return self.lex_token();
@@ -1555,53 +1565,52 @@ impl<'src> Lexer<'src> {
                 }
                 b'/' => {
                     if !in_class {
-                        let (mut g, mut i, mut m, mut s, mut u, mut y, mut d) =
-                            (false, false, false, false, false, false, false);
+                        let mut flag = RegexFlag::empty();
 
                         while let Some(next) = self.next_byte_bounded() {
                             let chr_start = self.position;
                             match next {
                                 b'g' => {
-                                    if g {
+                                    if flag.contains(RegexFlag::G) {
                                         self.diagnostics.push(self.flag_err('g'));
                                     }
-                                    g = true;
+                                    flag |= RegexFlag::G;
                                 }
                                 b'i' => {
-                                    if i {
+                                    if flag.contains(RegexFlag::I) {
                                         self.diagnostics.push(self.flag_err('i'));
                                     }
-                                    i = true;
+                                    flag |= RegexFlag::I;
                                 }
                                 b'm' => {
-                                    if m {
+                                    if flag.contains(RegexFlag::M) {
                                         self.diagnostics.push(self.flag_err('m'));
                                     }
-                                    m = true;
+                                    flag |= RegexFlag::M;
                                 }
                                 b's' => {
-                                    if s {
+                                    if flag.contains(RegexFlag::S) {
                                         self.diagnostics.push(self.flag_err('s'));
                                     }
-                                    s = true;
+                                    flag |= RegexFlag::S;
                                 }
                                 b'u' => {
-                                    if u {
+                                    if flag.contains(RegexFlag::U) {
                                         self.diagnostics.push(self.flag_err('u'));
                                     }
-                                    u = true;
+                                    flag |= RegexFlag::U;
                                 }
                                 b'y' => {
-                                    if y {
+                                    if flag.contains(RegexFlag::Y) {
                                         self.diagnostics.push(self.flag_err('y'));
                                     }
-                                    y = true;
+                                    flag |= RegexFlag::Y;
                                 }
                                 b'd' => {
-                                    if d {
+                                    if flag.contains(RegexFlag::D) {
                                         self.diagnostics.push(self.flag_err('d'));
                                     }
-                                    d = true;
+                                    flag |= RegexFlag::D;
                                 }
                                 _ if self.cur_ident_part().is_some() => {
                                     self.diagnostics.push(
