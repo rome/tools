@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 242
 expression: empty_block.ts
 ---
 # Input
@@ -13,6 +12,7 @@ type X = {};
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Preserve quotes: false
 -----
 interface X {}
 type X = {};

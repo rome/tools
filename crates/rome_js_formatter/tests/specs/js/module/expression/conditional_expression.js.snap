@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 259
 expression: conditional_expression.js
 ---
 # Input
@@ -21,6 +20,7 @@ somethingThatsAReallyLongPropName ? somethingThatsAReallyLongPropName : somethin
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Preserve quotes: false
 -----
 a ? b : c;
 d ? (e + f) : (g + h);

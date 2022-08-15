@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 242
 expression: literal_expression.js
-
 ---
 # Input
 "a"
@@ -19,6 +17,7 @@ null
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Preserve quotes: false
 -----
 "a";
 1;

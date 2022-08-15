@@ -13,6 +13,7 @@ expression: number.js
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Preserve quotes: false
 -----
 1.23e4;
 1000e3; // FIXME handle number with scientific notation #1294

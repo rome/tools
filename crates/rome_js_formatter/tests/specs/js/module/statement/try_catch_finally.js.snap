@@ -37,6 +37,7 @@ try {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Preserve quotes: false
 -----
 try {
 	var foo = 4;

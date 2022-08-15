@@ -22,6 +22,7 @@ import a, * as b from "foo"
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Preserve quotes: false
 -----
 import hey from "hey";
 import hey from "hey";

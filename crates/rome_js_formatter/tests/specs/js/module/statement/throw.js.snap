@@ -14,6 +14,7 @@ throw false
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Preserve quotes: false
 -----
 throw "Something";
 

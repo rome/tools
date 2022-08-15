@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 257
 expression: call_expression.ts
 ---
 # Input
@@ -35,6 +34,7 @@ export class Task {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Preserve quotes: false
 -----
 app.get("/", (req, res): void => {
 	res.send("Hello World!");

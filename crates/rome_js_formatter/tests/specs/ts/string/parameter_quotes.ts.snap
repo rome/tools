@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 257
 expression: parameter_quotes.ts
 ---
 # Input
@@ -47,6 +46,7 @@ const Y = {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Preserve quotes: false
 -----
 import * as f from "f";
 
@@ -88,6 +88,7 @@ const Y = {
 Indent style: Tab
 Line width: 80
 Quote style: Single Quotes
+Preserve quotes: false
 -----
 import * as f from 'f';
 

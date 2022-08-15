@@ -14,6 +14,7 @@ import name2 = require('other_source')
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Preserve quotes: false
 -----
 import name = require("module_source");
 

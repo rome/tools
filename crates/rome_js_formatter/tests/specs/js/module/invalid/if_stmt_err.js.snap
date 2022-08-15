@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 259
 expression: if_stmt_err.js
 ---
 # Input
@@ -28,6 +27,7 @@ if (false) {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Preserve quotes: false
 -----
 function test() {
 	let x = 10;

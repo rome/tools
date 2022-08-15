@@ -89,6 +89,7 @@ statement /* comment */;
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Preserve quotes: false
 -----
 import {
 	func, // trailing comma removal

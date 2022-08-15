@@ -14,6 +14,7 @@ let abcde = "very long value that will cause a line break", fghij = "this should
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Preserve quotes: false
 -----
 let x = y;
 

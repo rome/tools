@@ -19,6 +19,7 @@ for await ( const a of b ) {}
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Preserve quotes: false
 -----
 for (a of b) {
 }

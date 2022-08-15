@@ -15,6 +15,7 @@ var express = require("express")
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Preserve quotes: false
 -----
 #!/usr/bin/env node
 

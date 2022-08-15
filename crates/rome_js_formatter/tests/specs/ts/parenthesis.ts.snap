@@ -13,6 +13,7 @@ const a = !(c && b) as boolean;
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Preserve quotes: false
 -----
 const a = (c && b) as boolean;
 const a = <any>(c && b) as boolean;

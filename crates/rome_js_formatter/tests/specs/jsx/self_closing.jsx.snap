@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 223
 expression: self_closing.jsx
-
 ---
 # Input
 <Foo />;
@@ -28,6 +26,7 @@ expression: self_closing.jsx
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Preserve quotes: false
 -----
 <Foo />;
 

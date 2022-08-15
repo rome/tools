@@ -28,6 +28,7 @@ const middleware = options => (req, res, next) => {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Preserve quotes: false
 -----
 const fn = (b) => (c) => (d) => {
 	return 3;

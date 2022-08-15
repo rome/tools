@@ -77,6 +77,7 @@ else     if (true &&  false) {}
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Preserve quotes: false
 -----
 if (a);
 if (a);

@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 259
 expression: call_expression.js
 ---
 # Input
@@ -59,6 +58,7 @@ test.expect(t => {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Preserve quotes: false
 -----
 useEffect(() => {}, [a, b]);
 

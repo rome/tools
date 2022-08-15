@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 244
 expression: fragment.jsx
 ---
 # Input
@@ -13,6 +12,7 @@ expression: fragment.jsx
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Preserve quotes: false
 -----
 <></>;
 

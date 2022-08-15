@@ -29,6 +29,7 @@ export  declare  class   E {  }
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Preserve quotes: false
 -----
 export type A = string;
 
