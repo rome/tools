@@ -158,7 +158,7 @@ mod tests {
 }
 
 /// Series of errors encountered when running rules on a file
-#[derive(Debug, PartialEq, Clone)]
+#[derive(Debug, PartialEq,Eq, Clone)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum RuleError {
     /// The rule with the specified name replaced the root of the file with a node that is not a valid root for that language.
