@@ -31,4 +31,15 @@ Preserve quotes: false
 'use preferred quote';
 "keep quotes and escpaes \" ";
 'keep quotes and escpaes \' ';
+## Output 3
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Preserve quotes: true
+-----
+"use preferred quote";
+"use preferred quote";
+"keep quotes and escpaes \" ";
+'keep quotes and escpaes \' ';
 
