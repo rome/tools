@@ -709,12 +709,14 @@ where
 {
     Dedent {
         content: Argument::new(content),
+        mode: DedentMode::OneLevel,
     }
 }
 
 #[derive(Copy, Clone)]
 pub struct Dedent<'a, Context> {
     content: Argument<'a, Context>,
+    mode: DedentMode,
 }
 
 impl<Context> Format<Context> for Dedent<'_, Context> {
@@ -728,13 +730,66 @@ impl<Context> Format<Context> for Dedent<'_, Context> {
         }
 
         let content = buffer.into_vec();
-        f.write_element(FormatElement::Dedent(content.into_boxed_slice()))
+        f.write_element(FormatElement::Dedent {
+            content: content.into_boxed_slice(),
+            mode: self.mode,
+        })
     }
 }
 
 impl<Context> std::fmt::Debug for Dedent<'_, Context> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_tuple("Dedent").field(&"{{content}}").finish()
+    }
+}
+
+/// It resets the indent document so that the content will be printed at the start of the line.
+///
+/// # Examples
+///
+/// ```
+/// use rome_formatter::{format, format_args};
+/// use rome_formatter::prelude::*;
+///
+/// let block = format!(SimpleFormatContext::default(), [
+///     text("root"),
+///     indent(&format_args![
+///         hard_line_break(),
+///         text("indent level 1"),
+///         indent(&format_args![
+///             hard_line_break(),
+///             text("indent level 2"),
+///             align(2, &format_args![
+///                 hard_line_break(),
+///                 text("two space align"),
+///                 dedent_root(&format_args![
+///                     hard_line_break(),
+///                     text("starts at the beginning of the line")
+///                 ]),
+///             ]),
+///             hard_line_break(),
+///             text("end indent level 2"),
+///         ])
+///  ]),
+/// ]).unwrap();
+///
+/// assert_eq!(
+///     "root\n\tindent level 1\n\t\tindent level 2\n\t\t  two space align\nstarts at the beginning of the line\n\t\tend indent level 2",
+///     block.print().as_code()
+/// );
+/// ```
+///
+/// ## Prettier
+///
+/// This resembles the behaviour of Prettier's `align(Number.NEGATIVE_INFINITY, content)` IR element.
+#[inline]
+pub fn dedent_root<Content, Context>(content: &Content) -> Dedent<Context>
+where
+    Content: Format<Context>,
+{
+    Dedent {
+        content: Argument::new(content),
+        mode: DedentMode::Root,
     }
 }
 

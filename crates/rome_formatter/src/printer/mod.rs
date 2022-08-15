@@ -3,7 +3,7 @@ mod printer_options;
 pub use printer_options::*;
 
 use crate::format_element::{
-    Align, ConditionalGroupContent, Group, LineMode, PrintMode, VerbatimKind,
+    Align, ConditionalGroupContent, DedentMode, Group, LineMode, PrintMode, VerbatimKind,
 };
 use crate::intersperse::Intersperse;
 use crate::{FormatElement, GroupId, IndentStyle, Printed, SourceMarker, TextRange};
@@ -185,8 +185,12 @@ impl<'a> Printer<'a> {
                 );
             }
 
-            FormatElement::Dedent(content) => {
-                queue.extend_with_args(content.iter(), args.decrement_indent());
+            FormatElement::Dedent { content, mode } => {
+                let args = match mode {
+                    DedentMode::OneLevel => args.decrement_indent(),
+                    DedentMode::Root => args.reset_indent(),
+                };
+                queue.extend_with_args(content.iter(), args);
             }
 
             FormatElement::Align(Align { content, count }) => {
@@ -581,6 +585,11 @@ impl PrintElementArgs {
         self
     }
 
+    pub fn reset_indent(mut self) -> Self {
+        self.indent = Indention::default();
+        self
+    }
+
     pub fn set_indent_align(mut self, count: NonZeroU8) -> Self {
         self.indent = self.indent.set_align(count);
         self
@@ -869,7 +878,13 @@ fn fits_element_on_line<'a, 'rest>(
             args.increment_indent_level(options.indent_style()),
         ),
 
-        FormatElement::Dedent(content) => queue.extend(content.iter(), args.decrement_indent()),
+        FormatElement::Dedent { content, mode } => {
+            let args = match mode {
+                DedentMode::OneLevel => args.decrement_indent(),
+                DedentMode::Root => args.reset_indent(),
+            };
+            queue.extend(content.iter(), args)
+        }
 
         FormatElement::Align(Align { content, count }) => {
             queue.extend(content.iter(), args.set_indent_align(*count))
