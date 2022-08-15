@@ -918,10 +918,6 @@ impl ParameterContext {
         self == &ParameterContext::Setter
     }
 
-    pub fn is_implementation(&self) -> bool {
-        self == &ParameterContext::Implementation
-    }
-
     pub fn is_parameter_property(&self) -> bool {
         self == &ParameterContext::ParameterProperty
     }
@@ -978,29 +974,24 @@ pub(crate) fn parse_formal_parameter(
             false
         };
 
+        // test ts ts_parameter_option_binding_pattern
+        // declare namespace A {
+        //   export class Ajv {
+        //     errorsText(errors?: string[] | null | undefined, { separator, dataVar }?: ErrorsTextOptions): string;
+        //   }
+        // }
         if valid
             && matches!(
                 binding_kind,
                 JS_OBJECT_BINDING_PATTERN | JS_ARRAY_BINDING_PATTERN
             )
+            && parameter_context.is_parameter_property()
         {
-            if parameter_context.is_parameter_property() {
-                valid = false;
-                p.error(
-                    p.err_builder(
-                        "A parameter property may not be declared using a binding pattern.",
-                    )
+            valid = false;
+            p.error(
+                p.err_builder("A parameter property may not be declared using a binding pattern.")
                     .primary(binding_range, ""),
-                );
-            } else if parameter_context.is_implementation() && is_optional {
-                valid = false;
-                p.error(
-					p.err_builder(
-						"A binding pattern parameter cannot be optional in an implementation signature.",
-					)
-						.primary(binding_range, ""),
-				);
-            }
+            );
         }
 
         TypeScript
