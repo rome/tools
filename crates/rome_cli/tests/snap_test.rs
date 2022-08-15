@@ -44,7 +44,7 @@ impl CliSnapshot {
                 let _ = write!(content, "## `{name}`\n\n");
                 let _ = write!(content, "```{extension}");
                 content.push('\n');
-                content.push_str(&*file_content);
+                content.push_str(&**file_content);
                 content.push('\n');
                 content.push_str("```");
                 content.push_str("\n\n")
@@ -65,7 +65,7 @@ impl CliSnapshot {
             content.push_str("# Emitted Messages\n\n");
 
             for message in &self.messages {
-                let message_content = &*message;
+                let message_content = &**message;
                 // There are some logs that print the timing, and we can't snapshot that message
                 // otherwise at each run we invalid the previous snapshot.
                 //

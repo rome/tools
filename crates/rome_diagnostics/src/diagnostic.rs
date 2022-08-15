@@ -9,7 +9,7 @@ use rome_text_edit::*;
 
 /// A diagnostic message that can give information
 /// like errors or warnings.
-#[derive(Debug, Clone, PartialEq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(
     feature = "serde",
     derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
@@ -453,7 +453,7 @@ impl Diagnostic {
 
 /// Everything that can be added to a diagnostic, like
 /// a suggestion that will be displayed under the actual error.
-#[derive(Debug, Clone, PartialEq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(
     feature = "serde",
     derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
@@ -465,7 +465,7 @@ pub struct SubDiagnostic {
 }
 
 /// A note or help that is displayed under the diagnostic.
-#[derive(Debug, Clone, PartialEq, Hash)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(
     feature = "serde",
     derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)

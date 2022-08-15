@@ -408,7 +408,7 @@ impl Printed {
 /// Public return type of the formatter
 pub type FormatResult<F> = Result<F, FormatError>;
 
-#[derive(Debug, PartialEq, Copy, Clone)]
+#[derive(Debug, PartialEq, Eq, Copy, Clone)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 /// Series of errors encountered during formatting
 pub enum FormatError {
