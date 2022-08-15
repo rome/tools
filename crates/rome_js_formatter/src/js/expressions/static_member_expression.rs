@@ -1,5 +1,6 @@
 use crate::prelude::*;
 
+use crate::js::expressions::computed_member_expression::JsAnyComputedMemberLike;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
     JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAnyName, JsAssignmentExpression,
@@ -16,6 +17,7 @@ impl FormatNodeRule<JsStaticMemberExpression> for FormatJsStaticMemberExpression
     }
 }
 
+#[derive(Debug, Copy, Clone)]
 enum StaticMemberLikeLayout {
     /// Forces that there's no line break between the object, operator, and member
     NoBreak,
@@ -106,6 +108,7 @@ impl JsAnyStaticMemberLike {
                 }
 
                 JsAnyStaticMemberLike::can_cast(parent.kind())
+                    || JsAnyComputedMemberLike::can_cast(parent.kind())
             }
             None => false,
         };
@@ -114,10 +117,10 @@ impl JsAnyStaticMemberLike {
             return Ok(StaticMemberLikeLayout::NoBreak);
         }
 
-        let first_non_static_member_ancestor = self
-            .syntax()
-            .ancestors()
-            .find(|parent| !JsAnyStaticMemberLike::can_cast(parent.kind()));
+        let first_non_static_member_ancestor = self.syntax().ancestors().find(|parent| {
+            !JsAnyStaticMemberLike::can_cast(parent.kind())
+                || JsAnyComputedMemberLike::can_cast(parent.kind())
+        });
 
         let layout = match first_non_static_member_ancestor.and_then(JsAnyExpression::cast) {
             Some(JsAnyExpression::JsNewExpression(_)) => StaticMemberLikeLayout::NoBreak,
