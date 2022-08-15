@@ -918,11 +918,6 @@ impl ParameterContext {
         self == &ParameterContext::Setter
     }
 
-    // Comment for now, maybe it would be used in the future
-    // pub fn is_implementation(&self) -> bool {
-    //     self == &ParameterContext::Implementation
-    // }
-
     pub fn is_parameter_property(&self) -> bool {
         self == &ParameterContext::ParameterProperty
     }
