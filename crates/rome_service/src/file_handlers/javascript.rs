@@ -4,7 +4,7 @@ use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
 use rome_js_analyze::utils::rename::RenameError;
 use rome_js_analyze::{analyze, analyze_with_inspect_matcher, RuleError};
-use rome_js_formatter::context::QuoteStyle;
+use rome_js_formatter::context::{QuoteProperties, QuoteStyle};
 use rome_js_formatter::{context::JsFormatContext, format_node};
 use rome_js_parser::Parse;
 use rome_js_semantic::semantic_model;
@@ -36,7 +36,7 @@ use std::fmt::Debug;
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct JsFormatSettings {
     pub quote_style: Option<QuoteStyle>,
-    pub preserve_quotes: bool,
+    pub quote_properties: Option<QuoteProperties>,
 }
 
 #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
@@ -63,7 +63,7 @@ impl Language for JsLanguage {
             .with_indent_style(global.indent_style.unwrap_or_default())
             .with_line_width(global.line_width.unwrap_or_default())
             .with_quote_style(language.quote_style.unwrap_or_default())
-            .with_preserve_quotes(language.preserve_quotes)
+            .with_quote_properties(language.quote_properties.unwrap_or_default())
     }
 }
 

@@ -101,13 +101,21 @@ pub(crate) fn apply_format_settings_from_cli(
         workspace_settings.languages.javascript.format.quote_style = Some(quote_style);
     }
 
-    let preserve_quotes = session.args.contains("--preserve-quotes");
+    let quote_properties = session
+        .args
+        .opt_value_from_str("--quote-properties")
+        .map_err(|source| Termination::ParseError {
+            argument: "--quote-properties",
+            source,
+        })?;
 
-    workspace_settings
-        .languages
-        .javascript
-        .format
-        .preserve_quotes = preserve_quotes;
+    if let Some(quote_properties) = quote_properties {
+        workspace_settings
+            .languages
+            .javascript
+            .format
+            .quote_properties = Some(quote_properties);
+    }
 
     let line_width = session
         .args

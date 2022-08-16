@@ -34,6 +34,7 @@ impl WorkspaceSettings {
             .and_then(|j| j.formatter.as_ref());
         if let Some(formatter) = formatter {
             self.languages.javascript.format.quote_style = Some(formatter.quote_style);
+            self.languages.javascript.format.quote_properties = Some(formatter.quote_properties);
         }
 
         // linter part

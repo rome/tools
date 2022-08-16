@@ -3,8 +3,8 @@
 		{
 			"quote_style": "Single"
 		},
-    {
-      "preserve_quotes": true
-    }
+		{
+			"quote_properties": "Preserve"
+		}
 	]
 }

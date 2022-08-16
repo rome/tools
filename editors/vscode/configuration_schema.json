@@ -107,6 +107,15 @@
     "JavascriptFormatter": {
       "type": "object",
       "properties": {
+        "quoteProperties": {
+          "description": "When properties in objects are quoted. Defaults to as-needed.",
+          "default": "asNeeded",
+          "allOf": [
+            {
+              "$ref": "#/definitions/QuoteProperties"
+            }
+          ]
+        },
         "quoteStyle": {
           "description": "The style for quotes. Defaults to double.",
           "default": "double",
@@ -179,6 +188,13 @@
       "enum": [
         "tab",
         "space"
+      ]
+    },
+    "QuoteProperties": {
+      "type": "string",
+      "enum": [
+        "asNeeded",
+        "preserve"
       ]
     },
     "QuoteStyle": {

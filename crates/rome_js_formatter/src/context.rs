@@ -21,8 +21,8 @@ pub struct JsFormatContext {
     /// The style for quotes. Defaults to double.
     quote_style: QuoteStyle,
 
-    /// Respect the input use of quotes in object properties.
-    preserve_quotes: bool,
+    /// When properties in objects are quoted. Defaults to as-needed.
+    quote_properties: QuoteProperties,
 
     /// Information relative to the current file
     source_type: SourceType,
@@ -54,8 +54,8 @@ impl JsFormatContext {
         self
     }
 
-    pub fn with_preserve_quotes(mut self, preserve_quotes: bool) -> Self {
-        self.preserve_quotes = preserve_quotes;
+    pub fn with_quote_properties(mut self, quote_properties: QuoteProperties) -> Self {
+        self.quote_properties = quote_properties;
         self
     }
 
@@ -72,8 +72,8 @@ impl JsFormatContext {
         self.quote_style
     }
 
-    pub fn preserve_quotes(&self) -> bool {
-        self.preserve_quotes
+    pub fn quote_properties(&self) -> QuoteProperties {
+        self.quote_properties
     }
 
     pub fn source_type(&self) -> SourceType {
@@ -126,7 +126,7 @@ impl fmt::Display for JsFormatContext {
         writeln!(f, "Indent style: {}", self.indent_style)?;
         writeln!(f, "Line width: {}", self.line_width.value())?;
         writeln!(f, "Quote style: {}", self.quote_style)?;
-        writeln!(f, "Preserve quotes: {}", self.preserve_quotes)
+        writeln!(f, "Quote properties: {}", self.quote_properties)
     }
 }
 
@@ -269,6 +269,44 @@ impl QuoteStyle {
         match self {
             QuoteStyle::Double => QuoteStyle::Single,
             QuoteStyle::Single => QuoteStyle::Double,
+        }
+    }
+}
+
+#[derive(Debug, Eq, PartialEq, Clone, Copy)]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
+pub enum QuoteProperties {
+    AsNeeded,
+    Preserve,
+}
+
+impl Default for QuoteProperties {
+    fn default() -> Self {
+        Self::AsNeeded
+    }
+}
+
+impl FromStr for QuoteProperties {
+    type Err = &'static str;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        match s {
+            "as-needed" | "AsNeeded" => Ok(Self::AsNeeded),
+            "preserve" | "Preserve" => Ok(Self::Preserve),
+            // TODO: replace this error with a diagnostic
+            _ => Err("Value not supported for QuoteProperties"),
+        }
+    }
+}
+
+impl fmt::Display for QuoteProperties {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            QuoteProperties::AsNeeded => write!(f, "As needed"),
+            QuoteProperties::Preserve => write!(f, "Preserve"),
         }
     }
 }

@@ -39,12 +39,12 @@ const CHECK: Markup = markup! {
 
 const FORMAT_OPTIONS: Markup = markup! {
     "
-    "<Dim>"--indent-style <tabs|space>"</Dim>"   Determine whether the formatter should use tabs or spaces for indentation (default: tabs)
-    "<Dim>"--indent-size <number>"</Dim>"        If the indentation style is set to spaces, determine how many spaces should be used for indentation (default: 2)
-    "<Dim>"--line-width <number>"</Dim>"         Determine how many characters the formatter is allowed to print in a single line (default: 80)
-    "<Dim>"--quote-style <single|double>"</Dim>" Determine whether the formatter should use single or double quotes for strings (default: double)
-    "<Dim>"--preserve-quotes"</Dim>"             Determine whether the formatter should preserve quotes in object properties (default: false)
-    "<Dim>"--stdin-file-path <string>"</Dim>"     Mandatory argument to use when piping content via standard input, e.g. echo 'let a;' | rome format --stdin-filepath file.js
+    "<Dim>"--indent-style <tabs|space>"</Dim>"             Determine whether the formatter should use tabs or spaces for indentation (default: tabs)
+    "<Dim>"--indent-size <number>"</Dim>"                  If the indentation style is set to spaces, determine how many spaces should be used for indentation (default: 2)
+    "<Dim>"--line-width <number>"</Dim>"                   Determine how many characters the formatter is allowed to print in a single line (default: 80)
+    "<Dim>"--quote-style <single|double>"</Dim>"           Determine whether the formatter should use single or double quotes for strings (default: double)
+    "<Dim>"--quote-properties <as-needed|preserve>"</Dim>" Determine whether the formatter should preserve quotes in object properties (default: as-needed)
+    "<Dim>"--stdin-file-path <string>"</Dim>"              Mandatory argument to use when piping content via standard input, e.g. echo 'let a;' | rome format --stdin-filepath file.js
 "
 };
 

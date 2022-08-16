@@ -1,4 +1,4 @@
-use crate::context::QuoteStyle;
+use crate::context::{QuoteProperties, QuoteStyle};
 use crate::prelude::*;
 use crate::utils::string_utils::CharSignal::AlreadyPrinted;
 use rome_js_syntax::JsSyntaxKind::JS_STRING_LITERAL;
@@ -75,10 +75,10 @@ impl<'token> FormatLiteralStringToken<'token> {
         debug_assert_eq!(token.kind(), JS_STRING_LITERAL);
 
         let chosen_quote_style = context.quote_style();
-        let preserve_quotes = context.preserve_quotes();
+        let chosen_quote_properties = context.quote_properties();
 
         let mut string_cleaner =
-            LiteralStringNormaliser::new(self, chosen_quote_style, preserve_quotes);
+            LiteralStringNormaliser::new(self, chosen_quote_style, chosen_quote_properties);
 
         let content = string_cleaner.normalise_text(context.source_type().into());
         let normalized_text_width = content.width();
@@ -212,9 +212,9 @@ struct LiteralStringNormaliser<'token> {
     /// The current token
     token: &'token FormatLiteralStringToken<'token>,
     /// The quote that was set inside the configuration
-    chosen_quote: QuoteStyle,
-    /// Respect the input use of quotes in object properties.
-    preserve_quotes: bool,
+    chosen_quote_style: QuoteStyle,
+    /// When properties in objects are quoted that was set inside the configuration
+    chosen_quote_properties: QuoteProperties,
 }
 
 /// Convenience enum to map [rome_js_syntax::SourceType] by just reading
@@ -238,18 +238,20 @@ impl From<SourceType> for SourceFileKind {
 impl<'token> LiteralStringNormaliser<'token> {
     pub fn new(
         token: &'token FormatLiteralStringToken<'_>,
-        chosen_quote: QuoteStyle,
-        preserve_quotes: bool,
+        chosen_quote_style: QuoteStyle,
+        chosen_quote_properties: QuoteProperties,
     ) -> Self {
         Self {
             token,
-            chosen_quote,
-            preserve_quotes,
+            chosen_quote_style,
+            chosen_quote_properties,
         }
     }
 
     fn normalise_text(&mut self, file_source: SourceFileKind) -> Cow<'token, str> {
-        let string_information = self.token.compute_string_information(self.chosen_quote);
+        let string_information = self
+            .token
+            .compute_string_information(self.chosen_quote_style);
         match self.token.parent_kind {
             StringLiteralParentKind::Expression => {
                 self.normalise_string_literal(string_information)
@@ -287,7 +289,7 @@ impl<'token> LiteralStringNormaliser<'token> {
 
     /// We can change the text only if there are alphanumeric or alphabetic characters, depending on the file source
     fn can_remove_quotes(&self, file_source: SourceFileKind) -> bool {
-        if self.preserve_quotes {
+        if self.chosen_quote_properties == QuoteProperties::Preserve {
             return false;
         }
 
@@ -647,14 +649,14 @@ mod tests {
     fn assert_borrowed_token(
         input: &str,
         quote: QuoteStyle,
-        preserve_quotes: bool,
+        quote_properties: QuoteProperties,
         as_token: AsToken,
         source: SourceFileKind,
     ) {
         let token = generate_syntax_token(input);
         let string_token = as_token.into_token(&token);
         let mut string_cleaner =
-            LiteralStringNormaliser::new(&string_token, quote, preserve_quotes);
+            LiteralStringNormaliser::new(&string_token, quote, quote_properties);
         let content = string_cleaner.normalise_text(source);
         assert_eq!(content, Cow::Borrowed(input))
     }
@@ -663,14 +665,14 @@ mod tests {
         input: &str,
         output: &str,
         quote: QuoteStyle,
-        preserve_quotes: bool,
+        quote_properties: QuoteProperties,
         as_token: AsToken,
         source: SourceFileKind,
     ) {
         let token = generate_syntax_token(input);
         let string_token = as_token.into_token(&token);
         let mut string_cleaner =
-            LiteralStringNormaliser::new(&string_token, quote, preserve_quotes);
+            LiteralStringNormaliser::new(&string_token, quote, quote_properties);
         let content = string_cleaner.normalise_text(source);
         let owned: Cow<str> = Cow::Owned(output.to_string());
         assert_eq!(content, owned)
@@ -679,13 +681,13 @@ mod tests {
     #[test]
     fn string_borrowed() {
         let quote = QuoteStyle::Double;
-        let preserve_quotes = false;
+        let quote_properties = QuoteProperties::AsNeeded;
         let inputs = [r#""content""#, r#""content with single ' quote ""#];
         for input in inputs {
             assert_borrowed_token(
                 input,
                 quote,
-                preserve_quotes,
+                quote_properties,
                 AsToken::String,
                 SourceFileKind::JavaScript,
             )
@@ -695,7 +697,7 @@ mod tests {
     #[test]
     fn string_owned() {
         let quote = QuoteStyle::Double;
-        let preserve_quotes = false;
+        let quote_properties = QuoteProperties::AsNeeded;
         let inputs = [
             (r#"" content '' \"\"\" ""#, r#"' content \'\' """ '"#),
             (r#"" content \"\"\"\" '' ""#, r#"' content """" \'\' '"#),
@@ -708,7 +710,7 @@ mod tests {
                 input,
                 output,
                 quote,
-                preserve_quotes,
+                quote_properties,
                 AsToken::String,
                 SourceFileKind::JavaScript,
             )
@@ -718,13 +720,13 @@ mod tests {
     #[test]
     fn directive_borrowed() {
         let quote = QuoteStyle::Double;
-        let preserve_quotes = false;
+        let quote_properties = QuoteProperties::AsNeeded;
         let inputs = [r#""use strict '""#];
         for input in inputs {
             assert_borrowed_token(
                 input,
                 quote,
-                preserve_quotes,
+                quote_properties,
                 AsToken::Directive,
                 SourceFileKind::JavaScript,
             )
@@ -734,14 +736,14 @@ mod tests {
     #[test]
     fn directive_owned() {
         let quote = QuoteStyle::Double;
-        let preserve_quotes = false;
+        let quote_properties = QuoteProperties::AsNeeded;
         let inputs = [(r#"' use strict '"#, r#"" use strict ""#)];
         for (input, output) in inputs {
             assert_owned_token(
                 input,
                 output,
                 quote,
-                preserve_quotes,
+                quote_properties,
                 AsToken::Directive,
                 SourceFileKind::JavaScript,
             )
@@ -751,13 +753,13 @@ mod tests {
     #[test]
     fn member_borrowed() {
         let quote = QuoteStyle::Double;
-        let preserve_quotes = false;
+        let quote_properties = QuoteProperties::AsNeeded;
         let inputs = [r#""cant @ be moved""#, r#""1674""#, r#""33n""#];
         for input in inputs {
             assert_borrowed_token(
                 input,
                 quote,
-                preserve_quotes,
+                quote_properties,
                 AsToken::Member,
                 SourceFileKind::TypeScript,
             )
@@ -767,14 +769,14 @@ mod tests {
     #[test]
     fn member_owned() {
         let quote = QuoteStyle::Double;
-        let preserve_quotes = false;
+        let quote_properties = QuoteProperties::AsNeeded;
         let inputs = [(r#""string""#, r#"string"#)];
         for (input, output) in inputs {
             assert_owned_token(
                 input,
                 output,
                 quote,
-                preserve_quotes,
+                quote_properties,
                 AsToken::Member,
                 SourceFileKind::TypeScript,
             )
