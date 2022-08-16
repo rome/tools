@@ -7,7 +7,7 @@ repository = "https://github.com/rome/tools"
 license = "MIT"
 
 [package.metadata.wasm-pack.profile.dev]
-# wasm-opt = ['-O1']
+wasm-opt = ['-O1']
 
 [lib]
 crate-type = ["cdylib"]

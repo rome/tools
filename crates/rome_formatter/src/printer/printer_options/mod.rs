@@ -7,7 +7,7 @@ pub struct PrinterOptions {
     pub tab_width: u8,
 
     /// What's the max width of a line. Defaults to 80
-    pub print_width: LineWidth,
+    pub print_width: PrintWidth,
 
     /// The type of line ending to apply to the printed input
     pub line_ending: LineEnding,
@@ -16,8 +16,40 @@ pub struct PrinterOptions {
     pub indent_style: IndentStyle,
 }
 
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+pub struct PrintWidth(u32);
+
+impl PrintWidth {
+    pub fn new(width: u32) -> Self {
+        Self(width)
+    }
+
+    /// Creates a print width that avoids ever breaking content because it exceeds the print width.
+    pub fn infinite() -> Self {
+        Self(u32::MAX)
+    }
+}
+
+impl Default for PrintWidth {
+    fn default() -> Self {
+        LineWidth::default().into()
+    }
+}
+
+impl From<LineWidth> for PrintWidth {
+    fn from(width: LineWidth) -> Self {
+        Self(u16::from(width) as u32)
+    }
+}
+
+impl From<PrintWidth> for usize {
+    fn from(width: PrintWidth) -> Self {
+        width.0 as usize
+    }
+}
+
 impl PrinterOptions {
-    pub fn with_print_width(mut self, width: LineWidth) -> Self {
+    pub fn with_print_width(mut self, width: PrintWidth) -> Self {
         self.print_width = width;
         self
     }
@@ -69,7 +101,7 @@ impl Default for PrinterOptions {
     fn default() -> Self {
         PrinterOptions {
             tab_width: 2,
-            print_width: LineWidth::default(),
+            print_width: PrintWidth::default(),
             indent_style: Default::default(),
             line_ending: LineEnding::LineFeed,
         }

@@ -18,7 +18,7 @@ output
 `;
 
 // don't break
-const bar =`but where will ${this.fanta} wrap ${baz} ${"hello"} template literal? ${bar.ff.sss} long long long long ${foo.[3]} long long long long long long`;
+const bar =`but where will ${this.fanta} wrap ${baz} ${"hello"} template literal? ${bar.ff.sss} long long long long ${foo[3]} long long long long long long`;
 
 const foo = `but where will ${a && b && bar || c && d && g} wrap long long long long long long`;
 
@@ -26,7 +26,7 @@ const foo = `but where will ${lorem && loremlorem && loremlorem || loremc && lor
 
 const a = `
 let expression_is_simple = is_plain_expression(&expression)?;
-${loooooong || loooooong || loooooong || loooooong || loooooong || loooooong || loooooong || loooooong }       
+${loooooong || loooooong || loooooong || loooooong || loooooong || loooooong || loooooong || loooooong }
 let expression_is_simple = is_plain_expression(&expression)?;
 `;
 

@@ -777,7 +777,7 @@ impl FormatContext for IrFormatContext {
     fn as_print_options(&self) -> PrinterOptions {
         PrinterOptions {
             tab_width: 2,
-            print_width: self.line_width(),
+            print_width: self.line_width().into(),
             line_ending: LineEnding::LineFeed,
             indent_style: IndentStyle::Space(2),
         }

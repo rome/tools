@@ -296,11 +296,11 @@ const StyledDiv = styled.div`
  const TomatoButton = Button.extend`
 -  color: tomato;
 +	color  : tomato  ;
-+
-+border-color : tomato
-+    ;
  
 -  border-color: tomato;
++border-color : tomato
++    ;
++
  `;
  
  Button.extend.attr({})`
@@ -404,84 +404,50 @@ const StyledDiv = styled.div`
  `;
  
  const Single2 = styled.div`
-@@ -198,11 +196,12 @@
-   height: 40px;
+@@ -199,8 +197,7 @@
    width: 40px;
  
--  ${(props) =>
+   ${(props) =>
 -    (props.complete || props.inProgress) &&
 -    css`
-+  ${
-+  (props) =>
 +    (props.complete || props.inProgress) && css`
        border-color: rgba(var(--green-rgb), 0.15);
--    `}
-+    `
-+}
+     `}
  
-   div {
-     background-color: var(--purpleTT);
-@@ -211,39 +210,44 @@
-     color: var(--purpleTT);
+@@ -212,15 +209,13 @@
      display: inline-flex;
  
--    ${(props) =>
+     ${(props) =>
 -      props.complete &&
 -      css`
-+    ${
-+  (props) =>
-+    props.complete && css`
++      props.complete && css`
          background-color: var(--green);
          border-width: 7px;
--      `}
-+      `
-+}
+       `}
  
--    ${(props) =>
+     ${(props) =>
 -      (props.complete || props.inProgress) &&
 -      css`
-+    ${
-+  (props) =>
-+    (props.complete || props.inProgress) && css`
++      (props.complete || props.inProgress) && css`
          border-color: var(--green);
--      `}
-+      `
-+}
+       `}
    }
- `;
- 
- const A = styled.a`
+@@ -230,11 +225,10 @@
    display: inline-block;
    color: #fff;
--  ${(props) =>
+   ${(props) =>
 -    props.a &&
 -    css`
 -      display: none;
 -    `}
 -  height: 30px;
-+  ${
-+  (props) =>
 +    props.a && css`
 +    display: none;
-+  `
-+}
++  `}
 +   height: 30px;
  `;
  
  const Foo = styled.p`
-   max-width: 980px;
--  ${mediaBreakpointOnlyXs`
-+  ${
-+  mediaBreakpointOnlyXs`
-     && {
-       font-size: 0.8rem;
-     }
--  `}
-+  `
-+}
- 
-   &.bottom {
-     margin-top: 3rem;
 ```
 
 # Output
@@ -685,12 +651,10 @@ const bar = styled.div`
   height: 40px;
   width: 40px;
 
-  ${
-  (props) =>
+  ${(props) =>
     (props.complete || props.inProgress) && css`
       border-color: rgba(var(--green-rgb), 0.15);
-    `
-}
+    `}
 
   div {
     background-color: var(--purpleTT);
@@ -699,44 +663,36 @@ const bar = styled.div`
     color: var(--purpleTT);
     display: inline-flex;
 
-    ${
-  (props) =>
-    props.complete && css`
+    ${(props) =>
+      props.complete && css`
         background-color: var(--green);
         border-width: 7px;
-      `
-}
+      `}
 
-    ${
-  (props) =>
-    (props.complete || props.inProgress) && css`
+    ${(props) =>
+      (props.complete || props.inProgress) && css`
         border-color: var(--green);
-      `
-}
+      `}
   }
 `;
 
 const A = styled.a`
   display: inline-block;
   color: #fff;
-  ${
-  (props) =>
+  ${(props) =>
     props.a && css`
     display: none;
-  `
-}
+  `}
    height: 30px;
 `;
 
 const Foo = styled.p`
   max-width: 980px;
-  ${
-  mediaBreakpointOnlyXs`
+  ${mediaBreakpointOnlyXs`
     && {
       font-size: 0.8rem;
     }
-  `
-}
+  `}
 
   &.bottom {
     margin-top: 3rem;
