@@ -474,7 +474,6 @@ pub enum TriviaPrintMode {
     Trim,
 }
 
-
 /// Formats the leading trivia (comments, skipped token trivia) of a token
 pub fn format_leading_trivia<L: Language>(token: &SyntaxToken<L>) -> FormatLeadingTrivia<L> {
     FormatLeadingTrivia {

@@ -193,7 +193,6 @@ pub enum QuoteStyle {
     Single,
 }
 
-
 impl FromStr for QuoteStyle {
     type Err = &'static str;
 

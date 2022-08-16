@@ -181,7 +181,7 @@ impl<T> FormatAstSeparatedListExtension for T where T: AstSeparatedList<Language
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Default)]
 pub enum TrailingSeparator {
     /// A trailing separator is allowed and preferred
-	#[default]
+    #[default]
     Allowed,
 
     /// A trailing separator is not allowed

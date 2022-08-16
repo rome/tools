@@ -76,7 +76,7 @@ use std::str::FromStr;
 #[derive(Default)]
 pub enum IndentStyle {
     /// Tab
-	#[default]
+    #[default]
     Tab,
     /// Space, with its quantity
     Space(u8),
@@ -95,7 +95,6 @@ impl IndentStyle {
         matches!(self, IndentStyle::Space(_))
     }
 }
-
 
 impl FromStr for IndentStyle {
     type Err = &'static str;

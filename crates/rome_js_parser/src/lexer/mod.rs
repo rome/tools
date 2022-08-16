@@ -73,7 +73,7 @@ fn is_id_continue(c: char) -> bool {
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Default)]
 pub enum LexContext {
     /// Default context for if the lexer isn't in any specific other context
-	#[default]
+    #[default]
     Regular,
 
     /// For lexing the elements of a JS template literal or TS template type.
@@ -93,7 +93,6 @@ pub enum LexContext {
     /// that isn't `'` or `"`.
     JsxAttributeValue,
 }
-
 
 impl LexContext {
     /// Returns true if this is [LexContext::Regular]

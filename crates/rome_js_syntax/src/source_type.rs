@@ -7,7 +7,7 @@ use std::path::Path;
 /// Defaults to the latest stable ECMAScript standard.
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Default)]
 pub enum LanguageVersion {
-	#[default]
+    #[default]
     ES2022,
 
     /// The next, not yet finalized ECMAScript version
@@ -29,7 +29,7 @@ pub enum ModuleKind {
     Script,
 
     /// AN ECMAScript [Module](https://tc39.es/ecma262/multipage/ecmascript-language-scripts-and-modules.html#sec-modules)
-	#[default]
+    #[default]
     Module,
 }
 
@@ -42,11 +42,10 @@ impl ModuleKind {
     }
 }
 
-
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Default)]
 pub enum LanguageVariant {
     /// Standard JavaScript or TypeScript syntax without any extensions
-	#[default]
+    #[default]
     Standard,
 
     /// Allows JSX syntax inside a JavaScript or TypeScript file
@@ -64,14 +63,12 @@ impl LanguageVariant {
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq, Default)]
 pub enum Language {
-	   #[default]
+    #[default]
     JavaScript,
 
     /// TypeScript source with or without JSX.
     /// `definition_file` must be true for `d.ts` files.
-    TypeScript {
-        definition_file: bool,
-    },
+    TypeScript { definition_file: bool },
 }
 
 impl Language {
@@ -82,7 +79,6 @@ impl Language {
         matches!(self, Language::TypeScript { .. })
     }
 }
-
 
 #[derive(Clone, Copy, Debug, Default)]
 pub struct SourceType {
