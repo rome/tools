@@ -3,6 +3,7 @@
   "version": "0.8.0-next",
   "main": "dist/index.js",
   "scripts": {
+    "test": "node tests/workspace.mjs",
     "tsc": "tsc"
   },
   "homepage": "https://rome.tools",
