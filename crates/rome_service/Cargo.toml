@@ -20,6 +20,7 @@ rome_fs = { path = "../rome_fs", features = ["serde"] }
 rome_js_analyze = { path = "../rome_js_analyze", features = ["serde"] }
 rome_js_syntax = { path = "../rome_js_syntax", features = ["serde"] }
 rome_js_parser = { path = "../rome_js_parser" }
+rome_js_factory = { path = "../rome_js_factory", optional = true }
 rome_js_formatter = { path = "../rome_js_formatter", features = ["serde"] }
 rome_js_semantic = { path = "../rome_js_semantic" }
 rome_rowan = { path = "../rome_rowan", features = ["serde"] }
@@ -28,4 +29,4 @@ indexmap = { version = "1.9.1", features = ["serde"] }
 schemars = { version = "0.8.10", features = ["indexmap1"], optional = true }
 
 [features]
-schemars = ["dep:schemars", "rome_formatter/serde"]
+schemars = ["dep:schemars", "rome_formatter/serde", "rome_js_factory"]
