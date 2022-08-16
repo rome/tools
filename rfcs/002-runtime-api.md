@@ -188,9 +188,9 @@ const rome = new Rome({
         }
     }
 });
-const ast = rome.parse(content); // not part of this paragraph
-const new_content = rome.format(content); // not part of this paragraph
-const diagnostics = rome.check(content);  // not part of this paragraph
+const ast = rome.parseContent(content); // not part of this paragraph
+const new_content = rome.formatContent(content); // not part of this paragraph
+const diagnostics = rome.checkContent(content);  // not part of this paragraph
 ```
 
 The first parameter of the instance should be a personalized configuration. The configuration
@@ -289,11 +289,11 @@ for (const [file_name, result] of result) {
 > that we plan to deliver ASAP
 
 ```js
-import { Rome, FileType } from "rome";
+import { Rome } from "rome";
 
 const rome = new Rome();
 const content = "function f()  { return   {}}";
-const result = rome.formatContent(content, { fileType:  FileType.Js });
+const result = rome.formatContent(content, { filePath: "example.js" });
 console.log(result.code); // formatted content
 console.log(result.errors); // possible parse errors
 ```
@@ -304,16 +304,16 @@ Which will translate to
 echo "function f()  { return   {}}" | rome format --file-type=js
 ```
 
-`FileType` is required to tell Rome how it should parse the file.
+`filePath` is required to tell Rome how it should parse the file.
 
 ### Format range
 
 ```js
-import { Rome, FileType } from "rome";
+import { Rome } from "rome";
 
 const rome = new Rome();
 const content = "function f()  { return   {}}";
-const result = rome.formatContent(content, { fileType: FileType.Js, range: [7, 10] });
+const result = rome.formatContent(content, { filePath: "example.js", range: [7, 10] });
 console.log(result.code); // formatted content
 console.log(result.errors); // possible parse errors
 ```
@@ -336,7 +336,7 @@ console.log(result.code); // formatted content
 console.log(result.errors); // possible parse errors
 console.log(result.ir); // the IR emitted by Rome
 const content = "function f()  { return   {}}";
-const result2 = rome.formatContent(content, { fileType: FileType.Js, range: [7, 10], debug: true });
+const result2 = rome.formatContent(content, { filePath: "example.js", range: [7, 10], debug: true });
 console.log(result2.ir); // the IR emitted by the call formatContent
 ```
 
@@ -361,11 +361,11 @@ console.log(result.errors); // diagnostics emitted while lint the files
 ### Lint content
 
 ```js
-import { Rome, FileType } from "rome";
+import { Rome } from "rome";
 
 const rome = new Rome();
 const content = "function f()  { return   {}}";
-const result = rome.lintContent(content, { fileType: FileType.Js });
+const result = rome.lintContent(content, { filePath: "example.js" });
 console.log(result.errors); // diagnostics emitted while lint the files
 ```
 
@@ -376,17 +376,6 @@ Allows to parse a file, and return the CST and AST emitted by the parsing phase.
 > **Note**: nowadays, the CLI doesn't a command to parse files, this could be perfect occasion
 > to actually implement it.
 
-### Parse files
-
-```js
-import { Rome } from "rome";
-
-const rome = new Rome();
-const result = rome.parseFiles(["./path/to/file.js", ""]);
-console.log(result.ast); // AST as string
-console.log(result.cst); // CST as string
-console.log(result.errors); // possible parse errors
-```
 
 > **Note**: The reason why `cst` and `ast` are emitted as strings is mostly because we don't have TypeScript file types
 for our nodes. If we are able to generate TypeScript types for our AST, then `ast` could be
@@ -395,11 +384,11 @@ for our nodes. If we are able to generate TypeScript types for our AST, then `as
 ### Parse content
 
 ```js
-import { Rome, FileType } from "rome";
+import { Rome } from "rome";
 
 const rome = new Rome();
 const content = "function f()  { return   {}}";
-const result = rome.parseContent(content, { fileType: FileType.Js });
+const result = rome.parseContent(content, { filePath: "example.js" });
 console.log(result.ast); // AST as string
 console.log(result.cst); // CST as string
 console.log(result.errors); // possible parse errors
