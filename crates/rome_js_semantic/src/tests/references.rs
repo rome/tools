@@ -122,6 +122,10 @@ assert_semantics! {
     ok_scope_function_expression_read, "var f/*#F1*/ = function f/*#F2*/() {console.log(f/*READ F2*/);}; f/*READ F1*/();",
     ok_scope_function_expression_read1 ,"var f/*#F1*/ = function () {console.log(f/*READ F1*/);}",
     ok_scope_function_expression_read2, "let f/*#F1*/ = 1; let g = function f/*#F2*/() {console.log(2, f/*READ F2*/);}; console.log(f/*READ F1*/);",
+    ok_read_self_invoking_function,
+        r#"(function f/*#F*/(){console.log(1)})/*READ F*/()"#,
+    ok_read_self_invoking_function2,
+        r#"(1,2,3,function f/*#F*/(){console.log(1)})/*READ F*/()"#,
 }
 
 // Imports
