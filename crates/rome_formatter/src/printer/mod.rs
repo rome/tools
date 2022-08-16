@@ -942,7 +942,7 @@ fn fits_element_on_line<'a, 'rest>(
                 state.line_width += char_width as usize;
             }
 
-            if state.line_width > options.print_width.value().into() {
+            if state.line_width > options.print_width.into() {
                 return Fits::No;
             }
 
@@ -1080,8 +1080,8 @@ impl<'a, 'rest> MeasureQueue<'a, 'rest> {
 #[cfg(test)]
 mod tests {
     use crate::prelude::*;
-    use crate::printer::{LineEnding, Printer, PrinterOptions};
-    use crate::{format_args, write, FormatState, IndentStyle, LineWidth, Printed, VecBuffer};
+    use crate::printer::{LineEnding, PrintWidth, Printer, PrinterOptions};
+    use crate::{format_args, write, FormatState, IndentStyle, Printed, VecBuffer};
 
     fn format(root: &dyn Format<()>) -> Printed {
         format_with_options(
@@ -1230,7 +1230,7 @@ two lines`,
         let options = PrinterOptions {
             indent_style: IndentStyle::Tab,
             tab_width: 4,
-            print_width: LineWidth::try_from(19).unwrap(),
+            print_width: PrintWidth::new(19),
             ..PrinterOptions::default()
         };
 
@@ -1315,7 +1315,7 @@ two lines`,
 
         let document = buffer.into_element();
 
-        let printed = Printer::new(PrinterOptions::default().with_print_width(LineWidth(10)))
+        let printed = Printer::new(PrinterOptions::default().with_print_width(PrintWidth::new(10)))
             .print(&document);
 
         assert_eq!(

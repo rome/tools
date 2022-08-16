@@ -27,13 +27,10 @@ pub(crate) use member_chain::format_call_expression;
 pub(crate) use object_like::JsObjectLike;
 pub(crate) use object_pattern_like::JsObjectPatternLike;
 pub(crate) use parens::starts_with_no_lookahead_token;
-use rome_formatter::{format_args, normalize_newlines, write, Buffer, VecBuffer};
-use rome_js_syntax::{
-    JsAnyExpression, JsAnyFunction, JsAnyStatement, JsInitializerClause, JsLanguage,
-    JsTemplateElement, Modifiers, TsTemplateElement, TsType,
-};
+use rome_formatter::{format_args, write, Buffer, VecBuffer};
+use rome_js_syntax::{JsAnyExpression, JsAnyStatement, JsInitializerClause, JsLanguage, Modifiers};
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
-use rome_rowan::{AstNode, AstNodeList, Direction, SyntaxResult};
+use rome_rowan::{AstNode, AstNodeList, Direction};
 pub(crate) use simple::*;
 use std::fmt::Debug;
 pub(crate) use string_utils::*;
@@ -211,151 +208,6 @@ where
     nodes_and_modifiers.sort_unstable_by_key(|node| Modifiers::from(node));
 
     nodes_and_modifiers
-}
-
-/// Utility to format
-pub(crate) fn format_template_chunk(chunk: JsSyntaxToken, f: &mut JsFormatter) -> FormatResult<()> {
-    // Per https://tc39.es/ecma262/multipage/ecmascript-language-lexical-grammar.html#sec-static-semantics-trv:
-    // In template literals, the '\r' and '\r\n' line terminators are normalized to '\n'
-
-    write!(
-        f,
-        [format_replaced(
-            &chunk,
-            &syntax_token_cow_slice(
-                normalize_newlines(chunk.text_trimmed(), ['\r']),
-                &chunk,
-                chunk.text_trimmed_range().start(),
-            )
-        )]
-    )
-}
-
-/// Function to format template literals and template literal types
-pub(crate) fn format_template_literal(
-    literal: TemplateElement,
-    formatter: &mut JsFormatter,
-) -> FormatResult<()> {
-    write!(formatter, [literal])
-}
-
-pub(crate) enum TemplateElement {
-    Js(JsTemplateElement),
-    Ts(TsTemplateElement),
-}
-
-impl Format<JsFormatContext> for TemplateElement {
-    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        let expression_is_plain = self.is_plain_expression()?;
-        let has_comments = self.has_comments();
-        let should_hard_group = expression_is_plain && !has_comments;
-
-        let content = format_with(|f| {
-            match self {
-                TemplateElement::Js(template) => {
-                    write!(f, [template.expression().format()])?;
-                }
-                TemplateElement::Ts(template) => {
-                    write!(f, [template.ty().format()])?;
-                }
-            }
-
-            write!(f, [line_suffix_boundary()])
-        });
-
-        if should_hard_group {
-            write!(
-                f,
-                [
-                    self.dollar_curly_token().format(),
-                    content,
-                    self.r_curly_token().format()
-                ]
-            )
-        } else {
-            write!(
-                f,
-                [format_delimited(
-                    &self.dollar_curly_token()?,
-                    &content,
-                    &self.r_curly_token()?
-                )
-                .soft_block_indent()]
-            )
-        }
-    }
-}
-
-impl TemplateElement {
-    fn dollar_curly_token(&self) -> SyntaxResult<JsSyntaxToken> {
-        match self {
-            TemplateElement::Js(template) => template.dollar_curly_token(),
-            TemplateElement::Ts(template) => template.dollar_curly_token(),
-        }
-    }
-
-    fn r_curly_token(&self) -> SyntaxResult<JsSyntaxToken> {
-        match self {
-            TemplateElement::Js(template) => template.r_curly_token(),
-            TemplateElement::Ts(template) => template.r_curly_token(),
-        }
-    }
-
-    /// We want to break the template element only when we have articulated expressions inside it.
-    ///
-    /// We a plain expression is when it's one of the following:
-    /// - `loreum ${this.something} ipsum`
-    /// - `loreum ${a.b.c} ipsum`
-    /// - `loreum ${a} ipsum`
-    fn is_plain_expression(&self) -> FormatResult<bool> {
-        match self {
-            TemplateElement::Js(template_element) => {
-                let current_expression = template_element.expression()?;
-                match current_expression {
-                    JsAnyExpression::JsStaticMemberExpression(_)
-                    | JsAnyExpression::JsComputedMemberExpression(_)
-                    | JsAnyExpression::JsIdentifierExpression(_)
-                    | JsAnyExpression::JsAnyLiteralExpression(_)
-                    | JsAnyExpression::JsCallExpression(_) => Ok(true),
-
-                    JsAnyExpression::JsParenthesizedExpression(expression) => {
-                        // binary and logical expression have their own grouping inside parenthesis,
-                        // so we mark the current parenthesized expression as not plain
-                        match expression.expression()? {
-                            JsAnyExpression::JsLogicalExpression(_)
-                            | JsAnyExpression::JsBinaryExpression(_) => Ok(false),
-                            _ => Ok(true),
-                        }
-                    }
-
-                    _ => {
-                        if let Some(function) =
-                            JsAnyFunction::cast(current_expression.syntax().clone())
-                        {
-                            Ok(is_simple_function_expression(function)?)
-                        } else {
-                            Ok(false)
-                        }
-                    }
-                }
-            }
-            TemplateElement::Ts(template_element) => {
-                let is_mapped_type = matches!(template_element.ty()?, TsType::TsMappedType(_));
-                Ok(!is_mapped_type)
-            }
-        }
-    }
-
-    fn has_comments(&self) -> bool {
-        match self {
-            TemplateElement::Js(template_element) => {
-                template_element.syntax().has_comments_descendants()
-            }
-            TemplateElement::Ts(template_element) => {
-                template_element.syntax().has_comments_descendants()
-            }
-        }
-    }
 }
 
 /// This enum is used to extract a precedence from certain nodes. By comparing the precedence

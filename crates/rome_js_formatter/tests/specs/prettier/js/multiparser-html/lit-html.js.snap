@@ -115,7 +115,7 @@ ${ foo}:${bar};
 ```diff
 --- Prettier
 +++ Rome
-@@ -14,48 +14,64 @@
+@@ -14,48 +14,63 @@
  
    render() {
      return html`
@@ -175,11 +175,10 @@ ${ foo}:${bar};
      <h3>Bar List</h3>
 -    ${bars.map((bar) => html` <p>${bar}</p> `)}
 +    ${bars.map(
-+    (bar) =>
-+      html`
++      (bar) => html`
 +       <p>${bar}</p>
 +    `,
-+  )}
++    )}
    `;
  }
  
@@ -199,7 +198,7 @@ ${ foo}:${bar};
  
  const closingScriptTagShouldBeEscapedProperly = /* HTML */ `
    <script>
-@@ -63,31 +79,26 @@
+@@ -63,31 +78,26 @@
    </script>
  `;
  
@@ -311,11 +310,10 @@ function HelloWorld() {
   return html`
     <h3>Bar List</h3>
     ${bars.map(
-    (bar) =>
-      html`
+      (bar) => html`
        <p>${bar}</p>
     `,
-  )}
+    )}
   `;
 }
 
@@ -360,6 +358,6 @@ ${foo}:${bar};
 
 # Lines exceeding max width of 80 characters
 ```
-   82: const closingScriptTag2 = /* HTML */ `<script>const  scriptTag='<\\/script>'; <\/script>`;
+   81: const closingScriptTag2 = /* HTML */ `<script>const  scriptTag='<\\/script>'; <\/script>`;
 ```
 

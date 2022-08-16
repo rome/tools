@@ -20,15 +20,13 @@ const yesFrame = (
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,7 +1,6 @@
--const yesFrame = (
--  ...args: Interpolation<ThemedStyledProps<{}, Theme>>[]
--) => css`
+@@ -1,7 +1,7 @@
+ const yesFrame = (
+   ...args: Interpolation<ThemedStyledProps<{}, Theme>>[]
+ ) => css`
 -  ${ChatRoot}[data-frame="yes"] & {
 -    ${css({}, ...args)}
 -  }
-+const yesFrame = (...args: Interpolation<ThemedStyledProps<{}, Theme>>[]) =>
-+  css`
 +    ${ChatRoot}[data-frame="yes"] & {
 +        ${css({}, ...args)}
 +    }
@@ -38,8 +36,9 @@ const yesFrame = (
 # Output
 
 ```js
-const yesFrame = (...args: Interpolation<ThemedStyledProps<{}, Theme>>[]) =>
-  css`
+const yesFrame = (
+  ...args: Interpolation<ThemedStyledProps<{}, Theme>>[]
+) => css`
     ${ChatRoot}[data-frame="yes"] & {
         ${css({}, ...args)}
     }

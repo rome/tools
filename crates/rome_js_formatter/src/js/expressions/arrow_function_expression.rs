@@ -3,8 +3,8 @@ use rome_formatter::{format_args, write};
 
 use crate::utils::{is_simple_expression, resolve_expression, starts_with_no_lookahead_token};
 use rome_js_syntax::{
-    JsAnyArrowFunctionParameters, JsAnyExpression, JsAnyFunctionBody, JsArrowFunctionExpression,
-    JsArrowFunctionExpressionFields,
+    JsAnyArrowFunctionParameters, JsAnyExpression, JsAnyFunctionBody, JsAnyTemplateElement,
+    JsArrowFunctionExpression, JsArrowFunctionExpressionFields, JsTemplate,
 };
 
 #[derive(Debug, Clone, Default)]
@@ -99,6 +99,9 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                     false,
                     !starts_with_no_lookahead_token(conditional.clone().into())?,
                 ),
+                JsTemplate(template) => {
+                    (is_multiline_template_starting_on_same_line(template), false)
+                }
                 expr => (is_simple_expression(expr)?, false),
             },
         };
@@ -124,4 +127,60 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
             )
         }
     }
+}
+
+/// Returns `true` if the template contains any new lines inside of its text chunks.
+fn template_literal_contains_new_line(template: &JsTemplate) -> bool {
+    template.elements().iter().any(|element| match element {
+        JsAnyTemplateElement::JsTemplateChunkElement(chunk) => chunk
+            .template_chunk_token()
+            .map_or(false, |chunk| chunk.text().contains('\n')),
+        JsAnyTemplateElement::JsTemplateElement(_) => false,
+    })
+}
+
+/// Returns `true` for a template that starts on the same line as the previous token and contains a line break.
+///
+///
+/// # Examples
+//
+/// ```javascript
+/// "test" + `
+///   some content
+/// `;
+/// ```
+///
+/// Returns `true` because the template starts on the same line as the `+` token and its text contains a line break.
+///
+/// ```javascript
+/// "test" + `no line break`
+/// ```
+///
+/// Returns `false` because the template text contains no line break.
+///
+/// ```javascript
+/// "test" +
+///     `template
+///     with line break`;
+/// ```
+///
+/// Returns `false` because the template isn't on the same line as the '+' token.
+fn is_multiline_template_starting_on_same_line(template: &JsTemplate) -> bool {
+    let contains_new_line = template_literal_contains_new_line(template);
+
+    let starts_on_same_line = template.syntax().first_token().map_or(false, |token| {
+        for piece in token.leading_trivia().pieces() {
+            if let Some(comment) = piece.as_comments() {
+                if comment.has_newline() {
+                    return false;
+                }
+            } else if piece.is_newline() {
+                return false;
+            }
+        }
+
+        true
+    });
+
+    contains_new_line && starts_on_same_line
 }

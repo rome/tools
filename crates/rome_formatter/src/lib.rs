@@ -270,7 +270,7 @@ impl FormatContext for SimpleFormatContext {
     fn as_print_options(&self) -> PrinterOptions {
         PrinterOptions::default()
             .with_indent(self.indent_style)
-            .with_print_width(self.line_width)
+            .with_print_width(self.line_width.into())
     }
 }
 
