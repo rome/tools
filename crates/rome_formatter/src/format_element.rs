@@ -40,9 +40,9 @@ pub enum FormatElement {
     /// Nesting (Aligns)[FormatElement::Align] has the effect that all except the most inner align are handled as (Indent)[FormatElement::Indent].
     Align(Align),
 
-    /// Reduces the indention of the specified content by one. Reverse operation of `Indent` and can be used to
-    /// *undo` an `Align` for nested content.
-    Dedent(Content),
+    /// Reduces the indention of the specified content either by one level or to the root, depending on the mode.
+    /// Reverse operation of `Indent` and can be used to *undo* an `Align` for nested content.
+    Dedent { content: Content, mode: DedentMode },
 
     /// Creates a logical group where its content is either consistently printed:
     /// * on a single line: Omitting `LineMode::Soft` line breaks and printing spaces for `LineMode::SoftOrSpace`
@@ -161,7 +161,11 @@ impl std::fmt::Debug for FormatElement {
             FormatElement::Space => write!(fmt, "Space"),
             FormatElement::Line(content) => fmt.debug_tuple("Line").field(content).finish(),
             FormatElement::Indent(content) => fmt.debug_tuple("Indent").field(content).finish(),
-            FormatElement::Dedent(content) => fmt.debug_tuple("Dedent").field(content).finish(),
+            FormatElement::Dedent { content, mode } => fmt
+                .debug_struct("Dedent")
+                .field("content", content)
+                .field("mode", mode)
+                .finish(),
             FormatElement::Align(Align { count, content }) => fmt
                 .debug_struct("Align")
                 .field("count", count)
@@ -332,6 +336,15 @@ impl PrintMode {
     pub const fn is_expanded(&self) -> bool {
         matches!(self, PrintMode::Expanded)
     }
+}
+
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+pub enum DedentMode {
+    /// Reduces the indent by a level (if the current indent is > 0)
+    Level,
+
+    /// Reduces the indent to the root
+    Root,
 }
 
 /// Provides the printer with different representations for the same element so that the printer
@@ -660,7 +673,7 @@ impl FormatElement {
             | FormatElement::Verbatim(Verbatim { content, .. })
             | FormatElement::Label(Label { content, .. })
             | FormatElement::Indent(content)
-            | FormatElement::Dedent(content)
+            | FormatElement::Dedent { content, .. }
             | FormatElement::Align(Align { content, .. }) => {
                 content.iter().any(FormatElement::will_break)
             }
@@ -801,8 +814,13 @@ impl Format<IrFormatContext> for FormatElement {
             FormatElement::Indent(content) => {
                 write!(f, [text("indent("), content.as_ref(), text(")")])
             }
-            FormatElement::Dedent(content) => {
-                write!(f, [text("dedent("), content.as_ref(), text(")")])
+            FormatElement::Dedent { content, mode } => {
+                let label = match mode {
+                    DedentMode::Level => "dedent",
+                    DedentMode::Root => "dedentRoot",
+                };
+
+                write!(f, [text(label), text("("), content.as_ref(), text(")")])
             }
             FormatElement::Align(Align { content, count }) => {
                 write!(
