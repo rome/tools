@@ -58,7 +58,6 @@ OPTIONS:
     --indent-size <number>        If the indentation style is set to spaces, determine how many spaces should be used for indentation (default: 2)
     --line-width <number>         Determine how many characters the formatter is allowed to print in a single line (default: 80)
     --quote-style <single|double> Determine whether the formatter should use single or double quotes for strings (default: double)
-    --preserve-quotes             Determine whether the formatter should preserve quotes in object properties (default: false)
 ```
 
 ### Suppression
