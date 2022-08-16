@@ -709,7 +709,7 @@ where
 {
     Dedent {
         content: Argument::new(content),
-        mode: DedentMode::OneLevel,
+        mode: DedentMode::Level,
     }
 }
 
@@ -762,7 +762,7 @@ impl<Context> std::fmt::Debug for Dedent<'_, Context> {
 ///             align(2, &format_args![
 ///                 hard_line_break(),
 ///                 text("two space align"),
-///                 dedent_root(&format_args![
+///                 dedent_to_root(&format_args![
 ///                     hard_line_break(),
 ///                     text("starts at the beginning of the line")
 ///                 ]),
@@ -783,7 +783,7 @@ impl<Context> std::fmt::Debug for Dedent<'_, Context> {
 ///
 /// This resembles the behaviour of Prettier's `align(Number.NEGATIVE_INFINITY, content)` IR element.
 #[inline]
-pub fn dedent_root<Content, Context>(content: &Content) -> Dedent<Context>
+pub fn dedent_to_root<Content, Context>(content: &Content) -> Dedent<Context>
 where
     Content: Format<Context>,
 {

@@ -187,7 +187,7 @@ impl<'a> Printer<'a> {
 
             FormatElement::Dedent { content, mode } => {
                 let args = match mode {
-                    DedentMode::OneLevel => args.decrement_indent(),
+                    DedentMode::Level => args.decrement_indent(),
                     DedentMode::Root => args.reset_indent(),
                 };
                 queue.extend_with_args(content.iter(), args);
@@ -880,7 +880,7 @@ fn fits_element_on_line<'a, 'rest>(
 
         FormatElement::Dedent { content, mode } => {
             let args = match mode {
-                DedentMode::OneLevel => args.decrement_indent(),
+                DedentMode::Level => args.decrement_indent(),
                 DedentMode::Root => args.reset_indent(),
             };
             queue.extend(content.iter(), args)

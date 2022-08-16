@@ -340,8 +340,8 @@ impl PrintMode {
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 pub enum DedentMode {
-    /// Reduces the indent by one level
-    OneLevel,
+    /// Reduces the indent by a level (if the current indent is > 0)
+    Level,
 
     /// Reduces the indent to the root
     Root,
@@ -815,17 +815,12 @@ impl Format<IrFormatContext> for FormatElement {
                 write!(f, [text("indent("), content.as_ref(), text(")")])
             }
             FormatElement::Dedent { content, mode } => {
-                write!(
-                    f,
-                    [
-                        text("dedent("),
-                        dynamic_text(&std::format!("{mode:?}"), TextSize::default()),
-                        text(","),
-                        space(),
-                        content.as_ref(),
-                        text(")")
-                    ]
-                )
+                let label = match mode {
+                    DedentMode::Level => "dedent",
+                    DedentMode::Root => "dedentRoot",
+                };
+
+                write!(f, [text(label), text("("), content.as_ref(), text(")")])
             }
             FormatElement::Align(Align { content, count }) => {
                 write!(
