@@ -24,7 +24,9 @@ impl PrintWidth {
         Self(width)
     }
 
-    /// Creates a print width that avoids ever breaking content because it exceeds the print width.
+    /// Returns a print width that guarantees that any content, regardless of its width, fits on the line.
+    ///
+    /// This has the effect that the printer never prints a line break for any soft line break.
     pub fn infinite() -> Self {
         Self(u32::MAX)
     }

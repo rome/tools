@@ -29,9 +29,9 @@ pub(crate) enum AnyTemplateElementList {
 impl Format<JsFormatContext> for AnyTemplateElementList {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         let layout = if self.is_simple() {
-            TemplateElementLayout::Simple
+            TemplateElementLayout::SingleLine
         } else {
-            TemplateElementLayout::Normal
+            TemplateElementLayout::Fit
         };
 
         let mut indention = TemplateElementIndention::default();
@@ -82,6 +82,11 @@ impl Format<JsFormatContext> for AnyTemplateElementList {
 }
 
 impl AnyTemplateElementList {
+    /// Returns `true` for `JsTemplate` if all elements are simple expressions that should be printed on a single line.
+    ///
+    /// Simple expressions are:
+    /// * Identifiers: `this`, `a`
+    /// * Members: `a.b`, `a[b]`, `a.b[c].d`, `a.b[5]`, `a.b["test"]`
     fn is_simple(&self) -> bool {
         match self {
             AnyTemplateElementList::JsTemplateElementList(list) => {
@@ -119,15 +124,17 @@ impl AnyTemplateElementList {
 
 #[derive(Debug, Copy, Clone)]
 pub enum TemplateElementLayout {
-    /// Applied when all expressions are identifier, `this`, static member expressions, or computed member expressions with number or string literals.
-    /// Formats every expression without any line breaks.
-    Simple,
-    Normal,
+    /// Applied when all expressions are identifiers, `this`, static member expressions, or computed member expressions with number or string literals.
+    /// Formats the expressions on a single line, even if their width otherwise would exceed the print width.
+    SingleLine,
+
+    /// Tries to format the expression on a single line but may break the expression if the line otherwise exceeds the print width.
+    Fit,
 }
 
 impl Default for TemplateElementLayout {
     fn default() -> Self {
-        TemplateElementLayout::Normal
+        TemplateElementLayout::Fit
     }
 }
 

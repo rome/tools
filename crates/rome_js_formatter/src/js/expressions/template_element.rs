@@ -43,10 +43,10 @@ declare_node_union! {
 pub struct TemplateElementOptions {
     pub(crate) layout: TemplateElementLayout,
 
-    // The indention to use for this element
+    /// The indention to use for this element
     pub(crate) indention: TemplateElementIndention,
 
-    // Does the last template chunk (text element) end with a new line?
+    /// Does the last template chunk (text element) end with a new line?
     pub(crate) after_new_line: bool,
 }
 
@@ -75,7 +75,16 @@ impl Format<JsFormatContext> for FormatTemplateElement {
         });
 
         let format_inner = format_with(|f: &mut JsFormatter| match self.options.layout {
-            TemplateElementLayout::Simple => {
+            TemplateElementLayout::SingleLine => {
+                // The goal is to print the expression on a single line, even if it exceeds the configured print width.
+                //
+                // Ideally, it would be possible to use a custom buffer that drops all soft line breaks
+                // (or converts them to spaces). However, this isn't straightforward with our
+                // nested IR (but would be with a flat ir).
+                //
+                // That's why we write the expression into a temporary buffer and print it
+                // with a printer that uses a print width so large, that the expression never exceeds
+                // the print width.
                 let mut buffer = VecBuffer::new(f.state_mut());
                 write!(buffer, [format_expression])?;
                 let root = buffer.into_element();
@@ -94,7 +103,7 @@ impl Format<JsFormatContext> for FormatTemplateElement {
                     )]
                 )
             }
-            TemplateElementLayout::Normal => {
+            TemplateElementLayout::Fit => {
                 use JsAnyExpression::*;
 
                 let expression = self.element.expression();
@@ -184,6 +193,7 @@ impl AnyTemplateElement {
     }
 }
 
+/// Writes `content` with the specified `indention`.
 fn write_with_indention<Content>(
     content: &Content,
     indention: TemplateElementIndention,
@@ -200,8 +210,8 @@ where
         return write!(f, [content]);
     }
 
+    // Adds as many nested `indent` elements until it reaches the desired indent level.
     let format_indented = format_with(|f| {
-        // Nest indents to get to the same indention level
         if level == 0 {
             write!(f, [content])
         } else {
@@ -219,8 +229,8 @@ where
         }
     });
 
+    // Adds any necessary `align` for spaces not covered by indent level.
     let format_aligned = format_with(|f| {
-        // Add any potential spaces in the end
         if spaces == 0 {
             write!(f, [format_indented])
         } else {

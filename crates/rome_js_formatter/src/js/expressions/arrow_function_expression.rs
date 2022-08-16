@@ -139,6 +139,32 @@ fn template_literal_contains_new_line(template: &JsTemplate) -> bool {
     })
 }
 
+/// Returns `true` for a template that starts on the same line as the previous token and contains a line break.
+///
+///
+/// # Examples
+//
+/// ```javascript
+/// "test" + `
+///   some content
+/// `;
+/// ```
+///
+/// Returns `true` because the template starts on the same line as the `+` token and its text contains a line break.
+///
+/// ```javascript
+/// "test" + `no line break`
+/// ```
+///
+/// Returns `false` because the template text contains no line break.
+///
+/// ```javascript
+/// "test" +
+///     `template
+///     with line break`;
+/// ```
+///
+/// Returns `false` because the template isn't on the same line as the '+' token.
 fn is_multiline_template_starting_on_same_line(template: &JsTemplate) -> bool {
     let contains_new_line = template_literal_contains_new_line(template);
 
