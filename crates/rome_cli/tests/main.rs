@@ -1401,6 +1401,63 @@ mod configuration {
     }
 }
 
+mod reporter_json {
+    use super::*;
+    use crate::snap_test::markup_to_string;
+    use crate::UNFORMATTED;
+    use pico_args::Arguments;
+    use rome_console::markup;
+    use rome_fs::FileSystemExt;
+
+    #[test]
+    fn reports_formatter_write() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("format.js");
+        fs.insert(file_path.into(), UNFORMATTED.as_bytes());
+
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![
+                std::ffi::OsString::from("format"),
+                std::ffi::OsString::from("--write"),
+                std::ffi::OsString::from("--json"),
+                file_path.as_os_str().into(),
+            ]),
+        );
+
+        eprintln!("{:?}", console.out_buffer);
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut file = fs
+            .open(file_path)
+            .expect("formatting target file was removed by the CLI");
+
+        let mut content = String::new();
+        file.read_to_string(&mut content)
+            .expect("failed to read file from memory FS");
+
+        assert_eq!(content, FORMATTED);
+
+        assert_eq!(console.out_buffer.len(), 1);
+
+        let message = console
+            .out_buffer
+            .get(0)
+            .expect("Console should have written a message");
+
+        let content = markup_to_string(markup! {
+            {message.content}
+        });
+
+        assert!(content.contains("\"filesWritten\":1"));
+        assert!(content.contains("\"newContent\":\"statement();\\n\""));
+    }
+}
+
 /// Create an [App] instance using the provided [FileSystem] and [Console]
 /// instance, and using an in-process "remote" instance of the workspace
 fn run_cli<'app>(

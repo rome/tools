@@ -7,8 +7,18 @@ use rome_service::workspace::{
 };
 use std::path::PathBuf;
 
+/// Useful information during the traversal of files and virtual content
 #[derive(Clone)]
-pub(crate) enum ExecutionMode {
+pub(crate) struct Execution {
+    /// How the information should be collected and reported
+    report_mode: ReportMode,
+
+    /// The modality of execution of the traversal
+    traversal_mode: TraversalMode,
+}
+
+#[derive(Clone)]
+pub(crate) enum TraversalMode {
     /// This mode is enabled when running the command `rome check`
     Check {
         /// The maximum number of diagnostics that can be printed in console
@@ -35,19 +45,53 @@ pub(crate) enum ExecutionMode {
     },
 }
 
-impl ExecutionMode {
+/// Tells to the execution of the traversal how the information should be reported
+#[derive(Clone, Default)]
+pub(crate) enum ReportMode {
+    /// Reports information straight to the console, it's the default mode
+    #[default]
+    Terminal,
+    /// Reports information in JSON format
+    Json,
+}
+
+impl Execution {
+    pub(crate) fn new(mode: TraversalMode) -> Self {
+        Self {
+            report_mode: ReportMode::default(),
+            traversal_mode: mode,
+        }
+    }
+
+    /// Creates an instance of [Execution] by passing [traversal mode](TraversalMode) and [report mode](ReportMode)
+    pub(crate) fn with_report(traversal_mode: TraversalMode, report_mode: ReportMode) -> Self {
+        Self {
+            traversal_mode,
+            report_mode,
+        }
+    }
+
+    /// Tells if the reporting is happening straight to terminal
+    pub(crate) fn should_report_to_terminal(&self) -> bool {
+        matches!(self.report_mode, ReportMode::Terminal)
+    }
+
+    pub(crate) fn traversal_mode(&self) -> &TraversalMode {
+        &self.traversal_mode
+    }
+
     pub(crate) fn get_max_diagnostics(&self) -> Option<u16> {
-        match self {
-            ExecutionMode::Check {
+        match self.traversal_mode {
+            TraversalMode::Check {
                 max_diagnostics, ..
-            } => Some(*max_diagnostics),
+            } => Some(max_diagnostics),
             _ => None,
         }
     }
 
     /// `true` only when running the traversal in [TraversalMode::Check] and `should_fix` is `true`
     pub(crate) fn as_fix_file_mode(&self) -> Option<&FixFileMode> {
-        if let ExecutionMode::Check { fix_file_mode, .. } = self {
+        if let TraversalMode::Check { fix_file_mode, .. } = &self.traversal_mode {
             fix_file_mode.as_ref()
         } else {
             None
@@ -55,20 +99,20 @@ impl ExecutionMode {
     }
 
     pub(crate) fn is_ci(&self) -> bool {
-        matches!(self, ExecutionMode::CI { .. })
+        matches!(self.traversal_mode, TraversalMode::CI { .. })
     }
 
     pub(crate) fn is_check(&self) -> bool {
-        matches!(self, ExecutionMode::Check { .. })
+        matches!(self.traversal_mode, TraversalMode::Check { .. })
     }
 
     pub(crate) fn is_format(&self) -> bool {
-        matches!(self, ExecutionMode::Format { .. })
+        matches!(self.traversal_mode, TraversalMode::Format { .. })
     }
 
     pub(crate) fn as_stdin_file(&self) -> Option<&(PathBuf, String)> {
-        match self {
-            ExecutionMode::Format { stdin, .. } => stdin.as_ref(),
+        match &self.traversal_mode {
+            TraversalMode::Format { stdin, .. } => stdin.as_ref(),
             _ => None,
         }
     }
@@ -76,10 +120,7 @@ impl ExecutionMode {
 
 /// Based on the [mode](ExecutionMode), the function might launch a traversal of the file system
 /// or handles the stdin file.
-pub(crate) fn execute_mode(
-    mode: ExecutionMode,
-    mut session: CliSession,
-) -> Result<(), Termination> {
+pub(crate) fn execute_mode(mode: Execution, mut session: CliSession) -> Result<(), Termination> {
     // don't do any traversal if there's some content coming from stdin
     if let Some((path, content)) = mode.as_stdin_file() {
         let workspace = &*session.app.workspace;

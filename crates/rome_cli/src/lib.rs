@@ -12,11 +12,16 @@ mod commands;
 mod execute;
 mod metrics;
 mod panic;
+mod stats;
 mod termination;
 mod traversal;
 
-pub(crate) use execute::{execute_mode, ExecutionMode};
+pub(crate) use execute::{execute_mode, Execution, TraversalMode};
 pub use panic::setup_panic_handler;
+pub use stats::{
+    formatter::{FormatterStatDetail, FormatterStatSummary, FormatterStats},
+    StatDiagnostic, StatDiff, StatErrorKind, StatKind, Stats,
+};
 pub use termination::Termination;
 
 /// Global context for an execution of the CLI

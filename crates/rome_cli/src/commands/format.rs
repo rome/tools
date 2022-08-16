@@ -2,7 +2,8 @@ use rome_formatter::IndentStyle;
 use rome_service::{load_config, settings::WorkspaceSettings, workspace::UpdateSettingsParams};
 use std::path::PathBuf;
 
-use crate::{execute_mode, CliSession, ExecutionMode, Termination};
+use crate::execute::ReportMode;
+use crate::{execute_mode, CliSession, Execution, Termination, TraversalMode};
 
 /// Handler for the "format" command of the Rome CLI
 pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
@@ -39,6 +40,23 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
         None
     };
 
+    let execution = if session.args.contains("--json") {
+        Execution::with_report(
+            TraversalMode::Format {
+                ignore_errors,
+                write: is_write,
+                stdin,
+            },
+            ReportMode::Json,
+        )
+    } else {
+        Execution::new(TraversalMode::Format {
+            ignore_errors,
+            write: is_write,
+            stdin,
+        })
+    };
+
     session
         .app
         .workspace
@@ -46,14 +64,7 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
             settings: workspace_settings,
         })?;
 
-    execute_mode(
-        ExecutionMode::Format {
-            ignore_errors,
-            write: is_write,
-            stdin,
-        },
-        session,
-    )
+    execute_mode(execution, session)
 }
 
 /// Read the formatting options for the command line arguments and inject them
