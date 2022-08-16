@@ -14,7 +14,7 @@ expression: directives.js
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Preserve quotes: false
+Quote properties: As needed
 -----
 "use preferred quote";
 "use preferred quote";
@@ -25,7 +25,7 @@ Preserve quotes: false
 Indent style: Tab
 Line width: 80
 Quote style: Single Quotes
-Preserve quotes: false
+Quote properties: As needed
 -----
 'use preferred quote';
 'use preferred quote';
@@ -36,7 +36,7 @@ Preserve quotes: false
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Preserve quotes: true
+Quote properties: Preserve
 -----
 "use preferred quote";
 "use preferred quote";

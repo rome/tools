@@ -30,7 +30,7 @@ import loooooooooooooooooooong7, { loooooooooooooooooooong8, loooooooooooooooooo
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Preserve quotes: false
+Quote properties: As needed
 -----
 import { hey } from "hey";
 import { hey } from "hey";

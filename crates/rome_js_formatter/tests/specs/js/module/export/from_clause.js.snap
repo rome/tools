@@ -15,7 +15,7 @@ export * as something_bad_will_happen from "something_bad_might_not_happen" asse
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Preserve quotes: false
+Quote properties: As needed
 -----
 export * from "hey";
 

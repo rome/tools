@@ -46,7 +46,7 @@ const Y = {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Preserve quotes: false
+Quote properties: As needed
 -----
 import * as f from "f";
 
@@ -88,7 +88,7 @@ const Y = {
 Indent style: Tab
 Line width: 80
 Quote style: Single Quotes
-Preserve quotes: false
+Quote properties: As needed
 -----
 import * as f from 'f';
 
@@ -130,7 +130,7 @@ const Y = {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Preserve quotes: true
+Quote properties: Preserve
 -----
 import * as f from "f";
 

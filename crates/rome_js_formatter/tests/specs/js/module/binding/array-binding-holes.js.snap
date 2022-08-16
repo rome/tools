@@ -12,7 +12,7 @@ function foo([foo, /* not used */, /* not used */]) {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
-Preserve quotes: false
+Quote properties: As needed
 -----
 function foo([foo, /* not used */ , /* not used */]) {}
 
