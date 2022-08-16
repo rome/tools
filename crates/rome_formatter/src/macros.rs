@@ -67,7 +67,8 @@ macro_rules! format_args {
 #[macro_export]
 macro_rules! write {
     ($dst:expr, [$($arg:expr),+ $(,)?]) => {{
-        $dst.write_fmt($crate::format_args!($($arg),+))
+        let result = $dst.write_fmt($crate::format_args!($($arg),+));
+        result
     }}
 }
 
@@ -103,7 +104,8 @@ macro_rules! dbg_write {
             );
             count += 1;
         });
-        inspect.write_fmt($crate::format_args!($($arg),+))
+        let result = inspect.write_fmt($crate::format_args!($($arg),+));
+        result
     }}
 }
 
