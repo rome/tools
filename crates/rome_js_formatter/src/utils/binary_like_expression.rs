@@ -526,8 +526,7 @@ impl FlattenedBinaryExpressionPart {
             FlattenedBinaryExpressionPart::Right { parent } => {
                 let right = JsAnyBinaryLikeLeftExpression::JsAnyExpression(parent.right()?);
 
-                write!(f, [format_sub_expression(parent.operator()?, &right)])?;
-                Ok(())
+                write!(f, [format_sub_expression(parent.operator()?, &right)])
             }
             FlattenedBinaryExpressionPart::Left { expression } => {
                 write!(f, [expression])
