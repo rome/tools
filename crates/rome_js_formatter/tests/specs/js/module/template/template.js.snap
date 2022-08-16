@@ -22,9 +22,11 @@ output
 output
 `;
 
-// don't break
+// Single Line
 const bar =`but where will ${this.fanta} wrap ${baz} ${"hello"} template literal? ${bar.ff.sss} long long long long ${foo[3]} long long long long long long`;
 
+
+// Fit
 const foo = `but where will ${a && b && bar || c && d && g} wrap long long long long long long`;
 
 const foo = `but where will ${lorem && loremlorem && loremlorem || loremc && lorem && loremlorem} wrap long long long long long long`;
@@ -85,13 +87,14 @@ output
 output
 `;
 
-// don't break
+// Single Line
 const bar = `but where will ${
 	this.fanta
 } wrap ${baz} ${"hello"} template literal? ${bar.ff.sss} long long long long ${
 	foo[3]
 } long long long long long long`;
 
+// Fit
 const foo = `but where will ${
 	(a && b && bar) || (c && d && g)
 } wrap long long long long long long`;

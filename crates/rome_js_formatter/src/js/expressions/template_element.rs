@@ -210,18 +210,18 @@ where
         return write!(f, [content]);
     }
 
-    // Adds as many nested `indent` elements until it reaches the desired indent level.
+    // Adds as many nested `indent` elements until it reaches the desired indention level.
     let format_indented = format_with(|f| {
         if level == 0 {
             write!(f, [content])
         } else {
             let mut buffer = VecBuffer::new(f.state_mut());
 
-            write!(buffer, [indent(content)])?;
+            write!(buffer, [content])?;
 
             let mut indented = buffer.into_element();
 
-            for _ in 1..level {
+            for _ in 0..level {
                 indented = FormatElement::Indent(vec![indented].into_boxed_slice());
             }
 
