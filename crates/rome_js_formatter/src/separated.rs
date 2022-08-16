@@ -178,9 +178,10 @@ pub trait FormatAstSeparatedListExtension: AstSeparatedList<Language = JsLanguag
 
 impl<T> FormatAstSeparatedListExtension for T where T: AstSeparatedList<Language = JsLanguage> {}
 
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Default)]
 pub enum TrailingSeparator {
     /// A trailing separator is allowed and preferred
+	#[default]
     Allowed,
 
     /// A trailing separator is not allowed
@@ -192,12 +193,6 @@ pub enum TrailingSeparator {
     /// A trailing separator might be present, but the consumer
     /// decides to remove it
     Omit,
-}
-
-impl Default for TrailingSeparator {
-    fn default() -> Self {
-        TrailingSeparator::Allowed
-    }
 }
 
 #[derive(Debug, Default, Copy, Clone, Eq, PartialEq)]

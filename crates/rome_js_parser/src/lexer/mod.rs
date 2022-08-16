@@ -70,9 +70,10 @@ fn is_id_continue(c: char) -> bool {
 }
 
 /// Context in which the lexer should lex the next token
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Default)]
 pub enum LexContext {
     /// Default context for if the lexer isn't in any specific other context
+	#[default]
     Regular,
 
     /// For lexing the elements of a JS template literal or TS template type.
@@ -93,11 +94,6 @@ pub enum LexContext {
     JsxAttributeValue,
 }
 
-impl Default for LexContext {
-    fn default() -> Self {
-        LexContext::Regular
-    }
-}
 
 impl LexContext {
     /// Returns true if this is [LexContext::Regular]

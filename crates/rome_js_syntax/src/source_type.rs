@@ -5,8 +5,9 @@ use std::path::Path;
 /// The versions are ordered in increasing order; The newest version comes last.
 ///
 /// Defaults to the latest stable ECMAScript standard.
-#[derive(Debug, Copy, Clone, Eq, PartialEq, Ord, PartialOrd)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Default)]
 pub enum LanguageVersion {
+	#[default]
     ES2022,
 
     /// The next, not yet finalized ECMAScript version
@@ -20,20 +21,15 @@ impl LanguageVersion {
     }
 }
 
-impl Default for LanguageVersion {
-    fn default() -> Self {
-        Self::latest()
-    }
-}
-
 /// Is the source file an ECMAScript Module or Script.
 /// Changes the parsing semantic.
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Default)]
 pub enum ModuleKind {
     /// An ECMAScript [Script](https://tc39.es/ecma262/multipage/ecmascript-language-scripts-and-modules.html#sec-scripts)
     Script,
 
     /// AN ECMAScript [Module](https://tc39.es/ecma262/multipage/ecmascript-language-scripts-and-modules.html#sec-modules)
+	#[default]
     Module,
 }
 
@@ -46,15 +42,11 @@ impl ModuleKind {
     }
 }
 
-impl Default for ModuleKind {
-    fn default() -> Self {
-        ModuleKind::Module
-    }
-}
 
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Default)]
 pub enum LanguageVariant {
     /// Standard JavaScript or TypeScript syntax without any extensions
+	#[default]
     Standard,
 
     /// Allows JSX syntax inside a JavaScript or TypeScript file
@@ -70,14 +62,9 @@ impl LanguageVariant {
     }
 }
 
-impl Default for LanguageVariant {
-    fn default() -> Self {
-        LanguageVariant::Standard
-    }
-}
-
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Default)]
 pub enum Language {
+	   #[default]
     JavaScript,
 
     /// TypeScript source with or without JSX.
@@ -96,11 +83,6 @@ impl Language {
     }
 }
 
-impl Default for Language {
-    fn default() -> Self {
-        Language::JavaScript
-    }
-}
 
 #[derive(Clone, Copy, Debug, Default)]
 pub struct SourceType {

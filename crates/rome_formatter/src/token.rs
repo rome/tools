@@ -467,17 +467,13 @@ where
 
 /// Determines if the whitespace separating comment trivia
 /// from their associated tokens should be printed or trimmed
-#[derive(Copy, Clone, Debug, Eq, PartialEq)]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, Default)]
 pub enum TriviaPrintMode {
+    #[default]
     Full,
     Trim,
 }
 
-impl Default for TriviaPrintMode {
-    fn default() -> Self {
-        Self::Full
-    }
-}
 
 /// Formats the leading trivia (comments, skipped token trivia) of a token
 pub fn format_leading_trivia<L: Language>(token: &SyntaxToken<L>) -> FormatLeadingTrivia<L> {

@@ -69,18 +69,13 @@ where
     s.serialize_u16(line_width.value())
 }
 
-#[derive(Deserialize, Serialize, Debug, Eq, PartialEq)]
+#[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Default)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase")]
 pub enum PlainIndentStyle {
     /// Tab
+    #[default]
     Tab,
     /// Space
     Space,
-}
-
-impl Default for PlainIndentStyle {
-    fn default() -> Self {
-        Self::Tab
-    }
 }

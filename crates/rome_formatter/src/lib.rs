@@ -73,8 +73,10 @@ use std::str::FromStr;
     feature = "serde",
     derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
+#[derive(Default)]
 pub enum IndentStyle {
     /// Tab
+	#[default]
     Tab,
     /// Space, with its quantity
     Space(u8),
@@ -94,11 +96,6 @@ impl IndentStyle {
     }
 }
 
-impl Default for IndentStyle {
-    fn default() -> Self {
-        Self::Tab
-    }
-}
 
 impl FromStr for IndentStyle {
     type Err = &'static str;
