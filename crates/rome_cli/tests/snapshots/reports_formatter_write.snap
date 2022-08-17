@@ -13,7 +13,7 @@ statement();
 # Emitted Messages
 
 ```block
-{"formatter":{"summary":{"filesCompared":null,"filesWritten":1},"details":{}},"diagnostics":{}}
+chore:{"formatter":{"summary":{"filesCompared":null,"filesWritten":1},"files":{}},"diagnostics":{}}
 ```
 
 

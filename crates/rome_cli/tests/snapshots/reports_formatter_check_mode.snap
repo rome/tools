@@ -12,7 +12,7 @@ expression: content
 # Emitted Messages
 
 ```block
-{"formatter":{"summary":{"filesCompared":1,"filesWritten":null},"details":{"format.js":{"formattedContent":"statement();\n"}}},"diagnostics":{"format.js":{"diff":{"severity":"Error","before":"  statement(  )  ","after":"statement();\n"}}}}
+{"formatter":{"summary":{"filesCompared":1,"filesWritten":null},"files":{"format.js":{"formattedContent":"statement();\n"}}},"diagnostics":{"format.js":{"diff":{"severity":"Error","before":"  statement(  )  ","after":"statement();\n"}}}}
 ```
 
 
