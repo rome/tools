@@ -9,12 +9,6 @@ import { javascript } from "@codemirror/lang-javascript";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
-//@ts-expect-error
-import { ReactComponent as SuccessIcon } from "../assets/success.svg";
-//@ts-expect-error
-import { ReactComponent as FailedIcon } from "../assets/failed.svg";
-//@ts-expect-error
-import { ReactComponent as CopyIcon } from "../assets/copy.svg";
 import { useCallback, useEffect, useState } from "react";
 import MermaidGraph from "./MermaidGraph";
 
@@ -52,30 +46,16 @@ export default function DesktopPlayground({
 		}
 	}, [formatter_ir]);
 
-	const copyToClipboard = async () => {
-		if (!navigator.clipboard) {
-			setClipboardStatus("failed");
-			console.error(
-				"Your browser does not support clipboard, could not copy the text",
-			);
-		}
-		try {
-			await navigator.clipboard.writeText(formatter_ir);
-			setClipboardStatus("success");
-		} catch (err: any) {
-			setClipboardStatus("failed");
-			console.error(err.toString());
-		}
-	};
-
 	const onUpdate = useCallback((viewUpdate: ViewUpdate) => {
 		const cursorPosition = viewUpdate.state.selection.ranges[0]?.from ?? 0;
 		setPlaygroundState(
 			(state) =>
-				state.cursorPosition !== cursorPosition ? {
-					...state,
-					cursorPosition,
-				} : state,
+				state.cursorPosition !== cursorPosition
+					? {
+							...state,
+							cursorPosition,
+					  }
+					: state,
 		);
 	}, []);
 	const onChange = useCallback((value) => {

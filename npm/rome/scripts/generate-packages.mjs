@@ -20,7 +20,7 @@ function generatePackage(platform, arch) {
 	fs.rmSync(packageRoot, { recursive: true, force: true });
 
 	// Create the package directory
-	console.log("Create directory " + packageRoot);
+	console.log(`Create directory ${packageRoot}`);
 	fs.mkdirSync(packageRoot);
 
 	// Generate the package.json manifest
@@ -34,7 +34,7 @@ function generatePackage(platform, arch) {
 	});
 
 	const manifestPath = resolve(packageRoot, "package.json");
-	console.log("Create manifest " + manifestPath);
+	console.log(`Create manifest ${manifestPath}`);
 	fs.writeFileSync(manifestPath, manifest);
 
 	// Copy the CLI binary
@@ -42,25 +42,24 @@ function generatePackage(platform, arch) {
 	const binarySource = resolve(REPO_ROOT, `rome-${platform}-${arch}${ext}`);
 	const binaryTarget = resolve(packageRoot, `rome${ext}`);
 
-	console.log("Copy binary " + binaryTarget);
+	console.log(`Copy binary ${binaryTarget}`);
 	fs.copyFileSync(binarySource, binaryTarget);
 }
 
 function writeManifest() {
-	rootManifest["optionalDependencies"] =
-		Object.fromEntries(
-			PLATFORMS.flatMap(
-				(platform) =>
-					ARCHITECTURES.map(
-						(arch) => [
-							`@rometools/cli-${platform}-${arch}`,
-							rootManifest.version,
-						],
-					),
-			),
-		);
+	rootManifest["optionalDependencies"] = Object.fromEntries(
+		PLATFORMS.flatMap(
+			(platform) =>
+				ARCHITECTURES.map(
+					(arch) => [
+						`@rometools/cli-${platform}-${arch}`,
+						rootManifest.version,
+					],
+				),
+		),
+	);
 
-	console.log("Update manifest " + MANIFEST_PATH);
+	console.log(`Update manifest ${MANIFEST_PATH}`);
 	const content = JSON.stringify(rootManifest);
 	fs.writeFileSync(MANIFEST_PATH, content);
 }
