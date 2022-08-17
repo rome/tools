@@ -1,0 +1,44 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 147
+expression: content
+---
+## `rome.json`
+
+```json
+{
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": true,
+    "indentStyle": "tab",
+    "indentSize": 2,
+    "lineWidth": 80
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+        "js": {
+            "noDeadCode": "off",
+            "useSimplifiedLogicExpression": "warn",
+            "noCatchAssign": "error",
+            "noLabelVar": {
+                "level": "warn"
+            },
+            "useTemplate": {
+                "level": "error"
+            }
+        }
+    }
+  },
+  "javascript": {
+    "globals": ["$"],
+    "formatter": {
+      "quoteStyle": "double"
+    }
+  }
+}
+```
+
+# Emitted Messages
+
+

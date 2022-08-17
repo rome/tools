@@ -1,0 +1,416 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 147
+expression: content
+---
+## `check.js`
+
+```js
+
+for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+
+```
+
+# Emitted Messages
+
+```block
+error[js/useBlockStatements]: Block statements are preferred in this position.
+  ┌─ check.js:2:1
+  │
+2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  │ ^^^^^^^^^^^^
+
+Suggested fix: Wrap the statement with a `JsBlockStatement`
+    | @@ -1,5 +1,5 @@
+0 0 |   
+1   | - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  1 | + for(;true;) {}for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+2 2 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+3 3 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+4 4 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+
+
+```
+
+```block
+error[js/useWhile]: Use while loops instead of for loops.
+  ┌─ check.js:2:1
+  │
+2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  │ ^^^^^^^^^^^
+
+Suggested fix: Use a while loop
+    | @@ -1,5 +1,5 @@
+0 0 |   
+1   | - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  1 | + while (true);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+2 2 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+3 3 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+4 4 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+
+
+```
+
+```block
+error[js/useBlockStatements]: Block statements are preferred in this position.
+  ┌─ check.js:2:13
+  │
+2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  │             ^^^^^^^^^^^^
+
+Suggested fix: Wrap the statement with a `JsBlockStatement`
+    | @@ -1,5 +1,5 @@
+0 0 |   
+1   | - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  1 | + for(;true;);for(;true;) {}for(;true;);for(;true;);for(;true;);for(;true;);
+2 2 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+3 3 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+4 4 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+
+
+```
+
+```block
+error[js/useWhile]: Use while loops instead of for loops.
+  ┌─ check.js:2:13
+  │
+2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  │             ^^^^^^^^^^^
+
+Suggested fix: Use a while loop
+    | @@ -1,5 +1,5 @@
+0 0 |   
+1   | - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  1 | + for(;true;);while (true);for(;true;);for(;true;);for(;true;);for(;true;);
+2 2 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+3 3 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+4 4 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+
+
+```
+
+```block
+error[js/useBlockStatements]: Block statements are preferred in this position.
+  ┌─ check.js:2:25
+  │
+2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  │                         ^^^^^^^^^^^^
+
+Suggested fix: Wrap the statement with a `JsBlockStatement`
+    | @@ -1,5 +1,5 @@
+0 0 |   
+1   | - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  1 | + for(;true;);for(;true;);for(;true;) {}for(;true;);for(;true;);for(;true;);
+2 2 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+3 3 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+4 4 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+
+
+```
+
+```block
+error[js/useWhile]: Use while loops instead of for loops.
+  ┌─ check.js:2:25
+  │
+2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  │                         ^^^^^^^^^^^
+
+Suggested fix: Use a while loop
+    | @@ -1,5 +1,5 @@
+0 0 |   
+1   | - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  1 | + for(;true;);for(;true;);while (true);for(;true;);for(;true;);for(;true;);
+2 2 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+3 3 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+4 4 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+
+
+```
+
+```block
+error[js/useBlockStatements]: Block statements are preferred in this position.
+  ┌─ check.js:2:37
+  │
+2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  │                                     ^^^^^^^^^^^^
+
+Suggested fix: Wrap the statement with a `JsBlockStatement`
+    | @@ -1,5 +1,5 @@
+0 0 |   
+1   | - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  1 | + for(;true;);for(;true;);for(;true;);for(;true;) {}for(;true;);for(;true;);
+2 2 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+3 3 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+4 4 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+
+
+```
+
+```block
+error[js/useWhile]: Use while loops instead of for loops.
+  ┌─ check.js:2:37
+  │
+2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  │                                     ^^^^^^^^^^^
+
+Suggested fix: Use a while loop
+    | @@ -1,5 +1,5 @@
+0 0 |   
+1   | - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  1 | + for(;true;);for(;true;);for(;true;);while (true);for(;true;);for(;true;);
+2 2 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+3 3 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+4 4 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+
+
+```
+
+```block
+error[js/useBlockStatements]: Block statements are preferred in this position.
+  ┌─ check.js:2:49
+  │
+2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  │                                                 ^^^^^^^^^^^^
+
+Suggested fix: Wrap the statement with a `JsBlockStatement`
+    | @@ -1,5 +1,5 @@
+0 0 |   
+1   | - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  1 | + for(;true;);for(;true;);for(;true;);for(;true;);for(;true;) {}for(;true;);
+2 2 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+3 3 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+4 4 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+
+
+```
+
+```block
+error[js/useWhile]: Use while loops instead of for loops.
+  ┌─ check.js:2:49
+  │
+2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  │                                                 ^^^^^^^^^^^
+
+Suggested fix: Use a while loop
+    | @@ -1,5 +1,5 @@
+0 0 |   
+1   | - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  1 | + for(;true;);for(;true;);for(;true;);for(;true;);while (true);for(;true;);
+2 2 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+3 3 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+4 4 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+
+
+```
+
+```block
+error[js/useBlockStatements]: Block statements are preferred in this position.
+  ┌─ check.js:2:61
+  │
+2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  │                                                             ^^^^^^^^^^^^
+
+Suggested fix: Wrap the statement with a `JsBlockStatement`
+    | @@ -1,5 +1,5 @@
+0 0 |   
+1   | - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  1 | + for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;) {}
+2 2 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+3 3 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+4 4 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+
+
+```
+
+```block
+error[js/useWhile]: Use while loops instead of for loops.
+  ┌─ check.js:2:61
+  │
+2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  │                                                             ^^^^^^^^^^^
+
+Suggested fix: Use a while loop
+    | @@ -1,5 +1,5 @@
+0 0 |   
+1   | - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  1 | + for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);while (true);
+2 2 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+3 3 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+4 4 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+
+
+```
+
+```block
+error[js/useBlockStatements]: Block statements are preferred in this position.
+  ┌─ check.js:3:1
+  │
+3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  │ ^^^^^^^^^^^^
+
+Suggested fix: Wrap the statement with a `JsBlockStatement`
+    | @@ -1,6 +1,6 @@
+0 0 |   
+1 1 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+2   | - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  2 | + for(;true;) {}for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+3 3 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+4 4 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+5 5 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+
+
+```
+
+```block
+error[js/useWhile]: Use while loops instead of for loops.
+  ┌─ check.js:3:1
+  │
+3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  │ ^^^^^^^^^^^
+
+Suggested fix: Use a while loop
+    | @@ -1,6 +1,6 @@
+0 0 |   
+1 1 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+2   | - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  2 | + while (true);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+3 3 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+4 4 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+5 5 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+
+
+```
+
+```block
+error[js/useBlockStatements]: Block statements are preferred in this position.
+  ┌─ check.js:3:13
+  │
+3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  │             ^^^^^^^^^^^^
+
+Suggested fix: Wrap the statement with a `JsBlockStatement`
+    | @@ -1,6 +1,6 @@
+0 0 |   
+1 1 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+2   | - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  2 | + for(;true;);for(;true;) {}for(;true;);for(;true;);for(;true;);for(;true;);
+3 3 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+4 4 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+5 5 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+
+
+```
+
+```block
+error[js/useWhile]: Use while loops instead of for loops.
+  ┌─ check.js:3:13
+  │
+3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  │             ^^^^^^^^^^^
+
+Suggested fix: Use a while loop
+    | @@ -1,6 +1,6 @@
+0 0 |   
+1 1 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+2   | - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  2 | + for(;true;);while (true);for(;true;);for(;true;);for(;true;);for(;true;);
+3 3 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+4 4 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+5 5 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+
+
+```
+
+```block
+error[js/useBlockStatements]: Block statements are preferred in this position.
+  ┌─ check.js:3:25
+  │
+3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  │                         ^^^^^^^^^^^^
+
+Suggested fix: Wrap the statement with a `JsBlockStatement`
+    | @@ -1,6 +1,6 @@
+0 0 |   
+1 1 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+2   | - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  2 | + for(;true;);for(;true;);for(;true;) {}for(;true;);for(;true;);for(;true;);
+3 3 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+4 4 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+5 5 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+
+
+```
+
+```block
+error[js/useWhile]: Use while loops instead of for loops.
+  ┌─ check.js:3:25
+  │
+3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  │                         ^^^^^^^^^^^
+
+Suggested fix: Use a while loop
+    | @@ -1,6 +1,6 @@
+0 0 |   
+1 1 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+2   | - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  2 | + for(;true;);for(;true;);while (true);for(;true;);for(;true;);for(;true;);
+3 3 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+4 4 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+5 5 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+
+
+```
+
+```block
+error[js/useBlockStatements]: Block statements are preferred in this position.
+  ┌─ check.js:3:37
+  │
+3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  │                                     ^^^^^^^^^^^^
+
+Suggested fix: Wrap the statement with a `JsBlockStatement`
+    | @@ -1,6 +1,6 @@
+0 0 |   
+1 1 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+2   | - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  2 | + for(;true;);for(;true;);for(;true;);for(;true;) {}for(;true;);for(;true;);
+3 3 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+4 4 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+5 5 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+
+
+```
+
+```block
+error[js/useWhile]: Use while loops instead of for loops.
+  ┌─ check.js:3:37
+  │
+3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  │                                     ^^^^^^^^^^^
+
+Suggested fix: Use a while loop
+    | @@ -1,6 +1,6 @@
+0 0 |   
+1 1 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+2   | - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  2 | + for(;true;);for(;true;);for(;true;);while (true);for(;true;);for(;true;);
+3 3 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+4 4 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+5 5 |   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+
+
+```
+
+```block
+The number of diagnostics exceeds the number allowed by Rome.
+Diagnostics not shown: 76.
+```
+
+

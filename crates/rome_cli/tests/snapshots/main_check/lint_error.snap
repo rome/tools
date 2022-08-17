@@ -1,0 +1,45 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 147
+expression: content
+---
+## `check.js`
+
+```js
+for(;true;);
+
+```
+
+# Emitted Messages
+
+```block
+error[js/useBlockStatements]: Block statements are preferred in this position.
+  ┌─ check.js:1:1
+  │
+1 │ for(;true;);
+  │ ^^^^^^^^^^^^
+
+Suggested fix: Wrap the statement with a `JsBlockStatement`
+    | @@ -1 +1 @@
+0   | - for(;true;);
+  0 | + for(;true;) {}
+
+
+```
+
+```block
+error[js/useWhile]: Use while loops instead of for loops.
+  ┌─ check.js:1:1
+  │
+1 │ for(;true;);
+  │ ^^^^^^^^^^^
+
+Suggested fix: Use a while loop
+    | @@ -1 +1 @@
+0   | - for(;true;);
+  0 | + while (true);
+
+
+```
+
+
