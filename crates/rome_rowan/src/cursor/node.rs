@@ -603,6 +603,16 @@ impl PreorderWithTokens {
             WalkEvent::Leave(parent) => WalkEvent::Leave(parent),
         })
     }
+
+    pub fn until_next_token(&mut self) -> Option<SyntaxToken> {
+        loop {
+            match self.next() {
+                Some(crate::WalkEvent::Enter(NodeOrToken::Token(t))) => break Some(t),
+                None => break None,
+                _ => continue,
+            }
+        }
+    }
 }
 
 impl Iterator for PreorderWithTokens {

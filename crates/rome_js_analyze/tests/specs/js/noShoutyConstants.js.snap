@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 97
 expression: noShoutyConstants.js
 ---
 # Input
@@ -12,6 +11,10 @@ const FOO2 = "FOO2", a = "FOO3", FOO4 = "FOO4";
 
 console.log(FOO, FOO4);
 
+let foo = "foo";
+
+const A = "A";
+export default A;
 ```
 
 # Diagnostics
@@ -28,7 +31,7 @@ warning[js/noShoutyConstants]: Redundant constant declaration.
   │             --- Used here.
 
 Suggested fix: Use the constant value directly
-    | @@ -1,6 +2,5 @@
+    | @@ -1,9 +2,8 @@
 0   | - const FOO = "FOO";
 1   | - console.log(FOO, FOO2);
 2 0 |   
@@ -38,6 +41,9 @@ Suggested fix: Use the constant value directly
 4 4 |   
 5   | - console.log(FOO, FOO4);
   5 | + console.log("FOO", FOO4);
+6 6 |   
+7 7 |   let foo = "foo";
+8 8 |   
 
 =  note: You should avoid declaring constants with a string that's the same
     value as the variable name. It introduces a level of unnecessary
@@ -57,7 +63,7 @@ warning[js/noShoutyConstants]: Redundant constant declaration.
   │       -------------
 
 Suggested fix: Use the constant value directly
-    | @@ -1,6 +1,6 @@
+    | @@ -1,7 +1,7 @@
 0 0 |   const FOO = "FOO";
 1   | - console.log(FOO, FOO2);
   1 | + console.log(FOO, "FOO2");
@@ -66,6 +72,7 @@ Suggested fix: Use the constant value directly
   3 | + const a = "FOO3", FOO4 = "FOO4";
 4 4 |   
 5 5 |   console.log(FOO, FOO4);
+6 6 |   
 
 =  note: You should avoid declaring constants with a string that's the same
     value as the variable name. It introduces a level of unnecessary
@@ -85,7 +92,7 @@ warning[js/noShoutyConstants]: Redundant constant declaration.
   │                  ---- Used here.
 
 Suggested fix: Use the constant value directly
-    | @@ -1,6 +1,6 @@
+    | @@ -1,9 +1,9 @@
 0 0 |   const FOO = "FOO";
 1 1 |   console.log(FOO, FOO2);
 2 2 |   
@@ -94,6 +101,9 @@ Suggested fix: Use the constant value directly
 4 4 |   
 5   | - console.log(FOO, FOO4);
   5 | + console.log(FOO, "FOO4");
+6 6 |   
+7 7 |   let foo = "foo";
+8 8 |   
 
 =  note: You should avoid declaring constants with a string that's the same
     value as the variable name. It introduces a level of unnecessary
