@@ -1,0 +1,15 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 147
+expression: content
+---
+## `format.js`
+
+```js
+statement();
+
+```
+
+# Emitted Messages
+
+

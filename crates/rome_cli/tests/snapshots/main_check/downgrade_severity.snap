@@ -1,0 +1,44 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 147
+expression: content
+---
+## `rome.json`
+
+```json
+{
+  "linter": {
+    "rules": {
+        "recommended": true,
+        "js": {
+            "recommended": true,      
+            "noDebugger": "warn"
+        }
+    }
+  }
+}
+```
+
+## `file.js`
+
+```js
+debugger;
+```
+
+# Emitted Messages
+
+```block
+warning[js/noDebugger]: This is an unexpected use of the debugger statement.
+  ┌─ file.js:1:1
+  │
+1 │ debugger;
+  │ ---------
+
+Suggested fix: Remove debugger statement
+    | @@ -1 +0,0 @@
+0   | - debugger;
+
+
+```
+
+
