@@ -1504,6 +1504,7 @@ impl<Context> Format<Context> for ExpandParent {
 /// ```
 /// use rome_formatter::{format_args, format, LineWidth};
 /// use rome_formatter::prelude::*;
+/// use rome_formatter::printer::PrintWidth;
 ///
 /// let context = SimpleFormatContext {
 ///     line_width: LineWidth::try_from(20).unwrap(),
@@ -1525,10 +1526,6 @@ impl<Context> Format<Context> for ExpandParent {
 ///     ])
 /// ]).unwrap();
 ///
-/// let options = PrinterOptions {
-///     print_width: LineWidth::try_from(20).unwrap(),
-///     ..PrinterOptions::default()
-/// };
 /// assert_eq!(
 ///     "[\n\t'A somewhat longer string to force a line break',\n\t2,\n\t3,\n]",
 ///     elements.print().as_code()

@@ -37,16 +37,32 @@ ExampleStory.getFragment('story')}
 ```diff
 --- Prettier
 +++ Rome
-@@ -9,7 +9,7 @@
+@@ -3,27 +3,25 @@
+   a
+ }
+ 
+-${
+-  a // comment
++${a // comment
+ }
  
  ${b /* comment */}
  
--${/* comment */ c /* comment */}
-+${ /* comment */ c /* comment */}
+ ${/* comment */ c /* comment */}
  
- ${
-   // comment
-@@ -23,7 +23,8 @@
+-${
+-  // comment
+-  d //comment
++${d // comment //comment
+ }
+ 
+-${
++${ExampleStory.getFragment(
+   // $FlowFixMe found when converting React.createClass to ES6
+-  ExampleStory.getFragment("story")
+-}
++  "story",
++)}
  `;
  
  <div>
@@ -67,23 +83,20 @@ ExampleStory.getFragment('story')}
   a
 }
 
-${
-  a // comment
+${a // comment
 }
 
 ${b /* comment */}
 
-${ /* comment */ c /* comment */}
+${/* comment */ c /* comment */}
 
-${
-  // comment
-  d //comment
+${d // comment //comment
 }
 
-${
+${ExampleStory.getFragment(
   // $FlowFixMe found when converting React.createClass to ES6
-  ExampleStory.getFragment("story")
-}
+  "story",
+)}
 `;
 
 <div>

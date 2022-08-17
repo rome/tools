@@ -44,22 +44,14 @@ module.exports = class A extends B {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,4 +1,5 @@
--aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee.ffffffff.gggggggg2 = class extends (
-+aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee
-+  .ffffffff.gggggggg2 = class extends (
-   aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee.ffffffff.gggggggg1
- ) {
-   method() {
-@@ -12,17 +13,15 @@
+@@ -12,17 +12,14 @@
    }
  };
  
 -aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee.ffffffff.gggggggg2 = class extends (
 -  bar
 -) {
-+aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee
-+  .ffffffff.gggggggg2 = class extends bar {
++aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee.ffffffff.gggggggg2 = class extends bar {
    method() {
      console.log("foo");
    }
@@ -78,8 +70,7 @@ module.exports = class A extends B {
 # Output
 
 ```js
-aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee
-  .ffffffff.gggggggg2 = class extends (
+aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee.ffffffff.gggggggg2 = class extends (
   aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee.ffffffff.gggggggg1
 ) {
   method() {
@@ -93,8 +84,7 @@ foo = class extends bar {
   }
 };
 
-aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee
-  .ffffffff.gggggggg2 = class extends bar {
+aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee.ffffffff.gggggggg2 = class extends bar {
   method() {
     console.log("foo");
   }
@@ -115,4 +105,9 @@ module.exports = class A extends B {
 ```
 
 
+# Lines exceeding max width of 80 characters
+```
+    1: aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee.ffffffff.gggggggg2 = class extends (
+   15: aaaaaaaa.bbbbbbbb.cccccccc.dddddddd.eeeeeeee.ffffffff.gggggggg2 = class extends bar {
+```
 

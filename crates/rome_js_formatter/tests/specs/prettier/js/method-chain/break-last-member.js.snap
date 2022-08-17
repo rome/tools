@@ -33,18 +33,7 @@ const {
 ```diff
 --- Prettier
 +++ Rome
-@@ -3,22 +3,17 @@
- weNeedToReachTheEightyCharacterLimitXXXXXXXXXXXXXXXXX.someNode
-   .childrenInAnArray[0];
- superSupersuperSupersuperSupersuperSupersuperSuperLong.exampleOfOrderOfGetterAndSetterReordered;
--superSupersuperSupersuperSupersuperSupersuperSuperLong
--  .exampleOfOrderOfGetterAndSetterReordered[0];
-+superSupersuperSupersuperSupersuperSupersuperSuperLong.exampleOfOrderOfGetterAndSetterReordered[
-+  0
-+];
- 
- expect(
-   findDOMNode(component.instance()).getElementsByClassName(styles.inner)[0]
+@@ -11,14 +11,8 @@
      .style.paddingRight,
  ).toBe("1000px");
  
@@ -71,9 +60,8 @@ SomeVeryLongUpperCaseConstant.someVeryLongCallExpression()
 weNeedToReachTheEightyCharacterLimitXXXXXXXXXXXXXXXXX.someNode
   .childrenInAnArray[0];
 superSupersuperSupersuperSupersuperSupersuperSuperLong.exampleOfOrderOfGetterAndSetterReordered;
-superSupersuperSupersuperSupersuperSupersuperSuperLong.exampleOfOrderOfGetterAndSetterReordered[
-  0
-];
+superSupersuperSupersuperSupersuperSupersuperSuperLong
+  .exampleOfOrderOfGetterAndSetterReordered[0];
 
 expect(
   findDOMNode(component.instance()).getElementsByClassName(styles.inner)[0]
@@ -104,6 +92,5 @@ const {
 # Lines exceeding max width of 80 characters
 ```
     5: superSupersuperSupersuperSupersuperSupersuperSuperLong.exampleOfOrderOfGetterAndSetterReordered;
-    6: superSupersuperSupersuperSupersuperSupersuperSuperLong.exampleOfOrderOfGetterAndSetterReordered[
 ```
 

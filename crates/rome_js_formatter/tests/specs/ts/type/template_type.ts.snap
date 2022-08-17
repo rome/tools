@@ -19,14 +19,14 @@ Quote properties: As needed
 type TemplateType = `
     text
     ${
-	| "lorem"
-	| "ipsum"
-	| "dolor"
-	| "sit"
-	| "amet"
-	| "consectetur"
-	| "adipiscing"
-	| "elit"
-	| "sed"}
+			| "lorem"
+			| "ipsum"
+			| "dolor"
+			| "sit"
+			| "amet"
+			| "consectetur"
+			| "adipiscing"
+			| "elit"
+			| "sed"}
 `;
 

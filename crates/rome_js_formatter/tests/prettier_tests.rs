@@ -399,15 +399,44 @@ impl DiffReport {
     ) {
         match env::var("REPORT_PRETTIER") {
             Ok(value) if value == "1" => {
-                self.state.lock().push(DiffReportItem {
-                    file_name,
-                    rome_formatted_result: rome_formatted_result.to_owned(),
-                    prettier_formatted_result: prettier_formatted_result.to_owned(),
-                });
+                if !Self::is_ignored(file_name) {
+                    self.state.lock().push(DiffReportItem {
+                        file_name,
+                        rome_formatted_result: rome_formatted_result.to_owned(),
+                        prettier_formatted_result: prettier_formatted_result.to_owned(),
+                    });
+                }
             }
             _ => {}
         }
     }
+
+    fn is_ignored(file_name: &str) -> bool {
+        let patterns = [
+            "arrows-bind",
+            "async-do-expressions",
+            "async-do-expressions.js",
+            "decimal.js",
+            "do-expressions.js",
+            "export-default-from",
+            "function-bind.js",
+            "module-blocks",
+            "partial-application",
+            "pipeline",
+            "record",
+            "throw-expressions.js",
+            "v8intrinsic.js",
+            "v8_intrinsic",
+            "bind-expressions",
+            "destructuring-private-fields",
+            "/do/",
+            "export-extension",
+            "js/tuple",
+        ];
+
+        patterns.iter().any(|pattern| file_name.contains(pattern))
+    }
+
     fn print(&self) {
         if let Some(report) = rome_rowan::check_live() {
             panic!("\n{report}")
@@ -522,19 +551,59 @@ impl DiffReport {
                 writeln!(report, "{diff}").unwrap();
                 writeln!(report, "```").unwrap()
             }
+            writeln!(report).unwrap();
             writeln!(
                 report,
                 "**Prettier Similarity**: {:.2}%",
                 single_file_compatibility * 100_f64
             )
             .unwrap();
+            writeln!(report).unwrap();
+            writeln!(report).unwrap();
         }
-        // extra two space force markdown render insert a new line
-        report = format!(
-            "**File Based Average Prettier Similarity**: {:.2}%  \n**Line Based Average Prettier Similarity**: {:.2}%  \nthe definition of similarity you could found here: https://github.com/rome/tools/issues/2555#issuecomment-1124787893\n",
+
+        let mut header = String::from("# Overall Metrics\n\n");
+
+        writeln!(
+            header,
+            "**Average compatibility**: {:.2}",
             report_metric_data.file_based_average_prettier_similarity * 100_f64,
+        )
+        .unwrap();
+
+        header.push_str(
+            r#"
+<details>
+	<summary>Definition</summary>
+
+	$$average = \frac\{\sum_{file}^\{files}compatibility_\{file}}\{files}$$
+</details>
+
+"#,
+        );
+
+        write!(
+            header,
+            "**Compatible lines**: {:.2}",
             report_metric_data.line_based_average_prettier_similarity * 100_f64
-        ) + &report;
+        )
+        .unwrap();
+
+        header.push_str(
+            r#"
+<details>
+	<summary>Definition</summary>
+
+	$$average = \frac{\sum_{file}^{files}matching\_lines_{file}}{max(lines_{rome}, lines_{prettier})}$$
+</details>
+
+
+[Metric definition discussion](https://github.com/rome/tools/issues/2555#issuecomment-1124787893)
+            "#,
+        );
+
+        let report = format!("{header}\n\n{report}");
+
         write(report_filename, report).unwrap();
     }
 

@@ -94,36 +94,6 @@ const Bar = styled.div`
    } with expr`,
  );
  
-@@ -78,10 +94,12 @@
- 
- // https://github.com/prettier/prettier/issues/821#issue-210557749
- f(
--  `${{
--    a: 4,
--    b: 9,
--  }}`,
-+  `${
-+    {
-+      a: 4,
-+      b: 9,
-+    }
-+  }`,
- );
- 
- // https://github.com/prettier/prettier/issues/1183#issue-220863505
-@@ -107,8 +125,10 @@
- 
- // https://github.com/prettier/prettier/issues/1626#issue-229655106
- const Bar = styled.div`
--  color: ${(props) =>
-+  color: ${
-+  (props) =>
-     props.highlight.length > 0
-       ? palette(["text", "dark", "tertiary"])(props)
--      : palette(["text", "dark", "primary"])(props)} !important;
-+      : palette(["text", "dark", "primary"])(props)
-+} !important;
- `;
 ```
 
 # Output
@@ -225,12 +195,10 @@ const env = ${JSON.stringify(
 
 // https://github.com/prettier/prettier/issues/821#issue-210557749
 f(
-  `${
-    {
-      a: 4,
-      b: 9,
-    }
-  }`,
+  `${{
+    a: 4,
+    b: 9,
+  }}`,
 );
 
 // https://github.com/prettier/prettier/issues/1183#issue-220863505
@@ -256,12 +224,10 @@ const makeBody = (store, assets, html) =>
 
 // https://github.com/prettier/prettier/issues/1626#issue-229655106
 const Bar = styled.div`
-  color: ${
-  (props) =>
+  color: ${(props) =>
     props.highlight.length > 0
       ? palette(["text", "dark", "tertiary"])(props)
-      : palette(["text", "dark", "primary"])(props)
-} !important;
+      : palette(["text", "dark", "primary"])(props)} !important;
 `;
 ```
 

@@ -1,0 +1,33 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 145
+expression: content
+---
+## `rome.json`
+
+```json
+{
+  "formatter": {
+    "enabled": false
+  }
+}
+
+```
+
+## `file.js`
+
+```js
+
+function f() {
+return { something }
+}
+
+```
+
+# Emitted Messages
+
+```block
+file.js: error[IO]: unhandled file type
+```
+
+

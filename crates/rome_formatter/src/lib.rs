@@ -73,8 +73,10 @@ use std::str::FromStr;
     feature = "serde",
     derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
+#[derive(Default)]
 pub enum IndentStyle {
     /// Tab
+    #[default]
     Tab,
     /// Space, with its quantity
     Space(u8),
@@ -91,12 +93,6 @@ impl IndentStyle {
     /// Returns `true` if this is an [IndentStyle::Space].
     pub const fn is_space(&self) -> bool {
         matches!(self, IndentStyle::Space(_))
-    }
-}
-
-impl Default for IndentStyle {
-    fn default() -> Self {
-        Self::Tab
     }
 }
 
@@ -270,7 +266,7 @@ impl FormatContext for SimpleFormatContext {
     fn as_print_options(&self) -> PrinterOptions {
         PrinterOptions::default()
             .with_indent(self.indent_style)
-            .with_print_width(self.line_width)
+            .with_print_width(self.line_width.into())
     }
 }
 

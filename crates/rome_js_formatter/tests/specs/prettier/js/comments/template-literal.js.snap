@@ -25,32 +25,37 @@ d //comment
 ```diff
 --- Prettier
 +++ Rome
-@@ -5,7 +5,7 @@
+@@ -1,14 +1,11 @@
+ `
+-${
+-  a // comment
++${a // comment
+ }
  
  ${b /* comment */}
  
--${/* comment */ c /* comment */}
-+${ /* comment */ c /* comment */}
+ ${/* comment */ c /* comment */}
  
- ${
-   // comment
+-${
+-  // comment
+-  d //comment
++${d // comment //comment
+ };
+ `;
 ```
 
 # Output
 
 ```js
 `
-${
-  a // comment
+${a // comment
 }
 
 ${b /* comment */}
 
-${ /* comment */ c /* comment */}
+${/* comment */ c /* comment */}
 
-${
-  // comment
-  d //comment
+${d // comment //comment
 };
 `;
 ```

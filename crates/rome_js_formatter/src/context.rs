@@ -117,7 +117,7 @@ impl FormatContext for JsFormatContext {
     fn as_print_options(&self) -> PrinterOptions {
         PrinterOptions::default()
             .with_indent(self.indent_style)
-            .with_print_width(self.line_width)
+            .with_print_width(self.line_width.into())
     }
 }
 
@@ -173,7 +173,10 @@ impl CommentStyle<JsLanguage> for JsCommentStyle {
     fn is_group_start_token(&self, kind: JsSyntaxKind) -> bool {
         matches!(
             kind,
-            JsSyntaxKind::L_PAREN | JsSyntaxKind::L_BRACK | JsSyntaxKind::L_CURLY
+            JsSyntaxKind::L_PAREN
+                | JsSyntaxKind::L_BRACK
+                | JsSyntaxKind::L_CURLY
+                | JsSyntaxKind::DOLLAR_CURLY
         )
     }
 
@@ -196,15 +199,11 @@ impl CommentStyle<JsLanguage> for JsCommentStyle {
     feature = "serde",
     derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
+#[derive(Default)]
 pub enum QuoteStyle {
+    #[default]
     Double,
     Single,
-}
-
-impl Default for QuoteStyle {
-    fn default() -> Self {
-        Self::Double
-    }
 }
 
 impl FromStr for QuoteStyle {

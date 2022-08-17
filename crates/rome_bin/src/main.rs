@@ -17,13 +17,12 @@ mod service;
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
 fn main() -> Result<(), Termination> {
-    let mut args = Arguments::from_env();
+    let args = Arguments::from_env();
 
-    if args.contains("__print_socket") {
-        print_server_socket()
-    } else if args.contains("__run_server") {
-        run_server_session()
-    } else {
-        run_cli_session(args)
+    let subcommand = args.clone().subcommand();
+    match subcommand.as_ref().map(Option::as_deref) {
+        Ok(Some("__print_socket")) => print_server_socket(),
+        Ok(Some("__run_server")) => run_server_session(),
+        _ => run_cli_session(args),
     }
 }

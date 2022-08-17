@@ -74,30 +74,29 @@ expr1 = html`
 ```diff
 --- Prettier
 +++ Rome
-@@ -2,9 +2,9 @@
- html`
+@@ -3,56 +3,43 @@
    <div>
      ${
--      this.set && this.set.artist
+       this.set && this.set.artist
 -      /* avoid console errors if `this.set` is undefined */
 -    }
-+  this.set && this.set.artist
-+  /* avoid console errors if `this.set` is undefined */
-+}
++/* avoid console errors if `this.set` is undefined */}
    </div>
  `;
  
-@@ -13,36 +13,32 @@
-   /* comment */
+-html`${
+-  foo
+-  /* comment */
++html`${foo
++/* comment */
  }`;
  html`
 -  ${
 -    foo
 -    /* comment */
 -  }
-+${
-+  foo
-+  /* comment */
++${foo
++/* comment */
 +}
  `;
  
@@ -107,18 +106,16 @@ expr1 = html`
 -    /* comment */
 -  }
 -`;
-+graphql`${
-+  foo
-+  /* comment */
++graphql`${foo
++/* comment */
 +}`;
  graphql`
 -  ${
 -    foo
 -    /* comment */
 -  }
-+${
-+  foo
-+  /* comment */
++${foo
++/* comment */
 +}
  `;
  
@@ -128,37 +125,41 @@ expr1 = html`
 -    /* comment */
 -  }
 -`;
-+css`${
-+  foo
-+  /* comment */
++css`${foo
++/* comment */
 +}`;
  css`
 -  ${
 -    foo
 -    /* comment */
 -  }
-+${
-+  foo
-+  /* comment */
++${foo
++/* comment */
 +}
  `;
  
- markdown`${
-@@ -59,9 +55,10 @@
- // https://github.com/prettier/prettier/pull/9278#issuecomment-700589195
- expr1 = html`
-   <div>
--    ${x(
--      foo, // fg
--      bar,
+-markdown`${
+-  foo
+-  /* comment */
++markdown`${foo
++/* comment */
+ }`;
+ markdown`
+-${
+-  foo
+-  /* comment */
++${foo
++/* comment */
+ }
+ `;
+ 
+@@ -62,6 +49,5 @@
+     ${x(
+       foo, // fg
+       bar,
 -    )}
 -  </div>
-+    ${
-+  x(
-+    foo, // fg
-+    bar,
-+  )
-+}</div>
++    )}</div>
  `;
 ```
 
@@ -169,65 +170,54 @@ expr1 = html`
 html`
   <div>
     ${
-  this.set && this.set.artist
-  /* avoid console errors if `this.set` is undefined */
-}
+      this.set && this.set.artist
+/* avoid console errors if `this.set` is undefined */}
   </div>
 `;
 
-html`${
-  foo
-  /* comment */
+html`${foo
+/* comment */
 }`;
 html`
-${
-  foo
-  /* comment */
+${foo
+/* comment */
 }
 `;
 
-graphql`${
-  foo
-  /* comment */
+graphql`${foo
+/* comment */
 }`;
 graphql`
-${
-  foo
-  /* comment */
+${foo
+/* comment */
 }
 `;
 
-css`${
-  foo
-  /* comment */
+css`${foo
+/* comment */
 }`;
 css`
-${
-  foo
-  /* comment */
+${foo
+/* comment */
 }
 `;
 
-markdown`${
-  foo
-  /* comment */
+markdown`${foo
+/* comment */
 }`;
 markdown`
-${
-  foo
-  /* comment */
+${foo
+/* comment */
 }
 `;
 
 // https://github.com/prettier/prettier/pull/9278#issuecomment-700589195
 expr1 = html`
   <div>
-    ${
-  x(
-    foo, // fg
-    bar,
-  )
-}</div>
+    ${x(
+      foo, // fg
+      bar,
+    )}</div>
 `;
 ```
 

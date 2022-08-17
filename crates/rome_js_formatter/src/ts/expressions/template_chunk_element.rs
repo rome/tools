@@ -1,7 +1,7 @@
 use crate::prelude::*;
-use crate::utils::format_template_chunk;
 
-use rome_js_syntax::{TsTemplateChunkElement, TsTemplateChunkElementFields};
+use crate::js::expressions::template_chunk_element::AnyTemplateChunkElement;
+use rome_js_syntax::TsTemplateChunkElement;
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsTemplateChunkElement;
@@ -12,11 +12,6 @@ impl FormatNodeRule<TsTemplateChunkElement> for FormatTsTemplateChunkElement {
         node: &TsTemplateChunkElement,
         formatter: &mut JsFormatter,
     ) -> FormatResult<()> {
-        let TsTemplateChunkElementFields {
-            template_chunk_token,
-        } = node.as_fields();
-
-        let chunk = template_chunk_token?;
-        format_template_chunk(chunk, formatter)
+        AnyTemplateChunkElement::from(node.clone()).fmt(formatter)
     }
 }

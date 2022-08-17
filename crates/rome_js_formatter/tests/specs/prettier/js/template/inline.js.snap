@@ -45,7 +45,7 @@ editTitle += `${iconHTML({ class: "reply-to-glyph" })}`;
 ```diff
 --- Prettier
 +++ Rome
-@@ -10,11 +10,14 @@
+@@ -10,9 +10,11 @@
    `\n\n Pattern matches ${total} ${pluralizeTest} but that's long`,
  );
  
@@ -57,12 +57,8 @@ editTitle += `${iconHTML({ class: "reply-to-glyph" })}`;
 +`,
 +);
  
--() => `
-+() =>
-+  `
+ () => `
    a
- `;
- 
 ```
 
 # Output
@@ -86,8 +82,7 @@ this._pipe.write(
 `,
 );
 
-() =>
-  `
+() => `
   a
 `;
 

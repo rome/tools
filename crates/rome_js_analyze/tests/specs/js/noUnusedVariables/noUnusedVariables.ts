@@ -28,3 +28,8 @@ class C {
 	f(a: number);
 }
 console.log(new C());
+
+function f(fn: (title: string) => boolean) {
+	console.log(fn);
+}
+f();

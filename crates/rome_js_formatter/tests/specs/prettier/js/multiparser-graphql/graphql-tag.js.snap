@@ -233,30 +233,30 @@ fragment another on User { name
 +# comment
 +${one}${two}  ${three}
 +${four}
-+
+ 
+-  ${five}
+-  # comment
+-  ${six}
 +${five}
 +# comment
 +${six}
-+
+ 
+-  # comment
+-  ${seven}
+-  # comment
 +# comment
 +${seven}
 +# comment
 +
 +${eight}
- 
--  ${five}
--  # comment
--  ${six}
++
 +  # comment with trailing whitespace      
  
--  # comment
--  ${seven}
--  # comment
- 
 -  ${eight}
-+# blank line above this comment
  
 -  # comment with trailing whitespace
++# blank line above this comment
++
  
 -  # blank line above this comment
  `;
@@ -344,20 +344,18 @@ fragment another on User { name
 +    
 +	
 +${USER_DETAILS_FRAGMENT}
-+
+ 
+-  ${FRIENDS_FRAGMENT}
 +   # Comment    
 +   # that continues on a new line
 +
 +    
 +   # and has a blank line in the middle
- 
--  ${FRIENDS_FRAGMENT}
++
 +    ${FRIENDS_FRAGMENT}
    ${generateFragment({
--    totally: "a good idea",
--  })}
-+  totally: "a good idea",
-+})}
+     totally: "a good idea",
+   })}
  
 -  ${fragment}
 -  #comment
@@ -514,8 +512,8 @@ ${USER_DETAILS_FRAGMENT}
 
     ${FRIENDS_FRAGMENT}
   ${generateFragment({
-  totally: "a good idea",
-})}
+    totally: "a good idea",
+  })}
 
 ${fragment}#comment
 

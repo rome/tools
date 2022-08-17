@@ -1,10 +1,24 @@
 use crate::prelude::*;
-use crate::utils::{format_template_literal, TemplateElement};
+use rome_formatter::FormatRuleWithOptions;
 
+use crate::js::expressions::template_element::{
+    AnyTemplateElement, FormatTemplateElement, TemplateElementOptions,
+};
 use rome_js_syntax::TsTemplateElement;
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatTsTemplateElement;
+pub struct FormatTsTemplateElement {
+    options: TemplateElementOptions,
+}
+
+impl FormatRuleWithOptions<TsTemplateElement> for FormatTsTemplateElement {
+    type Options = TemplateElementOptions;
+
+    fn with_options(mut self, options: Self::Options) -> Self {
+        self.options = options;
+        self
+    }
+}
 
 impl FormatNodeRule<TsTemplateElement> for FormatTsTemplateElement {
     fn fmt_fields(
@@ -12,6 +26,7 @@ impl FormatNodeRule<TsTemplateElement> for FormatTsTemplateElement {
         node: &TsTemplateElement,
         formatter: &mut JsFormatter,
     ) -> FormatResult<()> {
-        format_template_literal(TemplateElement::Ts(node.clone()), formatter)
+        let element = AnyTemplateElement::from(node.clone());
+        FormatTemplateElement::new(element, self.options).fmt(formatter)
     }
 }

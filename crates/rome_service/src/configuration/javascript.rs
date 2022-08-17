@@ -88,18 +88,13 @@ pub struct JavascriptFormatter {
     pub quote_properties: QuoteProperties,
 }
 
-#[derive(Deserialize, Serialize, Debug, Eq, PartialEq)]
+#[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Default)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", remote = "QuoteStyle")]
 pub enum PlainQuoteStyle {
+    #[default]
     Double,
     Single,
-}
-
-impl Default for PlainQuoteStyle {
-    fn default() -> Self {
-        Self::Double
-    }
 }
 
 #[derive(Deserialize, Default, Serialize, Debug, Eq, PartialEq)]
