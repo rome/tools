@@ -154,14 +154,10 @@ function name(
 	group,
 ) /* comment */ {}
 
-4 + /* plus trailing */
-3 * 2 /* 2 trailing */;
+4 + /* plus trailing */ 3 * 2 /* 2 trailing */;
 
-/* leading of opening */ (
-	/* trailing of opening */
-	4 + 3
-	/* leading of closing */
-) /* trailing of closing */;
+/* leading of opening */ /* trailing of opening */ 4 + 3
+/* leading of closing */ /* trailing of closing */;
 
 [3 /* trailing num */ /* trailing sep */];
 

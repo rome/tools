@@ -2,7 +2,6 @@ pub(crate) mod array;
 mod assignment_like;
 mod binary_like_expression;
 mod conditional;
-mod simple;
 pub mod string_utils;
 
 pub(crate) mod format_class;
@@ -17,10 +16,9 @@ mod typescript;
 
 pub(crate) use crate::parentheses::resolve_left_most_expression;
 use crate::prelude::*;
-pub(crate) use assignment_like::{should_break_after_operator, JsAnyAssignmentLike};
+pub(crate) use assignment_like::JsAnyAssignmentLike;
 pub(crate) use binary_like_expression::{
-    binary_argument_needs_parens, format_binary_like_expression, needs_binary_like_parentheses,
-    JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression,
+    needs_binary_like_parentheses, JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression,
 };
 pub(crate) use conditional::JsAnyConditional;
 pub(crate) use member_chain::get_member_chain;
@@ -30,7 +28,6 @@ use rome_formatter::{format_args, write, Buffer, VecBuffer};
 use rome_js_syntax::{JsAnyExpression, JsAnyStatement, JsInitializerClause, JsLanguage, Modifiers};
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList, Direction};
-pub(crate) use simple::*;
 pub(crate) use string_utils::*;
 pub(crate) use typescript::should_hug_type;
 
@@ -206,71 +203,6 @@ where
     nodes_and_modifiers.sort_unstable_by_key(|node| Modifiers::from(node));
 
     nodes_and_modifiers
-}
-
-/// This enum is used to extract a precedence from certain nodes. By comparing the precedence
-/// of two nodes, it's possible to change the way certain node should be formatted.
-///
-/// A use case, for example, is when comparing a node with its parent. If the parent has a lower
-/// precedence, then the node can change its formatting.
-#[derive(Debug, Ord, PartialOrd, Eq, PartialEq)]
-pub(crate) enum FormatPrecedence {
-    /// No precedence given to these nodes
-    None,
-
-    /// Low priority
-    Low,
-
-    /// High priority
-    High,
-}
-
-impl FormatPrecedence {
-    /// Use this function when you want to extract the precedence of the current node
-    /// based on whether it can parenthesised or not.
-    ///
-    /// This function is useful when we want to compare a node against its parent. If the parent has
-    /// lower precedence, it means that we can remove the parenthesis from the current node.
-    ///
-    /// An example can be:
-    ///
-    /// ```js
-    /// let a = ("simple expression") + " or not";
-    /// ```
-    ///
-    /// In this case, we have a parenthesised expression and its parent is a binary expression.
-    /// The first one will have [FormatPrecedence::Low] as priority and the second has
-    /// [FormatPrecedence::None] as priority. In this case, the parenthesis can be omitted.
-    pub fn with_precedence_for_parenthesis(node: Option<&JsSyntaxNode>) -> Self {
-        node.map_or(FormatPrecedence::None, |node| match node.kind() {
-            JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION => FormatPrecedence::Low,
-
-            JsSyntaxKind::TS_AS_EXPRESSION
-            | JsSyntaxKind::TS_NON_NULL_ASSERTION_EXPRESSION
-            | JsSyntaxKind::TS_TYPE_ASSERTION_EXPRESSION
-            | JsSyntaxKind::JS_UNARY_EXPRESSION
-            | JsSyntaxKind::JS_LOGICAL_EXPRESSION
-            | JsSyntaxKind::JS_BINARY_EXPRESSION
-            | JsSyntaxKind::JS_TEMPLATE
-            | JsSyntaxKind::JS_SPREAD
-            | JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION
-            | JsSyntaxKind::JS_STATIC_MEMBER_ASSIGNMENT
-            | JsSyntaxKind::JS_CALL_EXPRESSION
-            | JsSyntaxKind::JS_NEW_EXPRESSION
-            | JsSyntaxKind::JS_CONDITIONAL_EXPRESSION
-            | JsSyntaxKind::JS_EXTENDS_CLAUSE
-            | JsSyntaxKind::TS_IMPLEMENTS_CLAUSE
-            | JsSyntaxKind::JS_AWAIT_EXPRESSION
-            | JsSyntaxKind::JS_YIELD_ARGUMENT
-            | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
-            | JsSyntaxKind::JS_EXPRESSION_STATEMENT
-            | JsSyntaxKind::JS_RETURN_STATEMENT
-            | JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION
-            | JsSyntaxKind::JS_COMPUTED_MEMBER_ASSIGNMENT => FormatPrecedence::High,
-
-            _ => FormatPrecedence::None,
-        })
-    }
 }
 
 /// Format a some code followed by an optional semicolon, and performs

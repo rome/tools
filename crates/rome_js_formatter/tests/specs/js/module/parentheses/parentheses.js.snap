@@ -54,12 +54,12 @@ const foo = { ...(a || b) };
 
 async function* f() {
 	await (a || b);
-	yield (a && b);
+	yield a && b;
 }
 
-const a = () => (({})?.() && a);
+const a = () => ({})?.() && a;
 
-(list || list2)?.[(list || list2)];
+(list || list2)?.[list || list2];
 
 
 ## Lines exceeding width of 80 characters

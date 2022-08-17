@@ -35,17 +35,15 @@ foo && (baz ?? baz);
 ```diff
 --- Prettier
 +++ Rome
-@@ -4,8 +4,8 @@
+@@ -4,7 +4,7 @@
  
  foo ? bar ?? foo : baz;
  
 -foo ?? bar ?? baz;
--foo ?? bar ?? baz;
 +foo ?? (bar ?? baz);
-+(foo ?? bar) ?? baz;
+ foo ?? bar ?? baz;
  
  // Mixing ?? and (&& or ||) requires parens
- // It's a syntax error without it.
 ```
 
 # Output
@@ -58,7 +56,7 @@ const x = (foo, bar = foo ?? bar) => {};
 foo ? bar ?? foo : baz;
 
 foo ?? (bar ?? baz);
-(foo ?? bar) ?? baz;
+foo ?? bar ?? baz;
 
 // Mixing ?? and (&& or ||) requires parens
 // It's a syntax error without it.

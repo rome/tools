@@ -1,5 +1,4 @@
 use crate::context::TabWidth;
-use crate::js::expressions::parenthesized_expression::is_expression_handling_parens;
 use crate::prelude::*;
 use rome_formatter::write;
 use rome_js_syntax::{
@@ -102,20 +101,11 @@ impl Format<JsFormatContext> for ChainEntry {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         let parentheses = self.top_most_parentheses();
 
-        let handles_parens = JsAnyExpression::cast(self.member().syntax().clone())
-            .map_or(false, |expression| {
-                is_expression_handling_parens(&expression)
-            });
-
         if let Some(parentheses) = parentheses {
             let mut current = parentheses.clone();
 
             loop {
-                if handles_parens {
-                    write!(f, [format_removed(&current.l_paren_token()?)])?;
-                } else {
-                    write!(f, [current.l_paren_token().format()])?;
-                }
+                write!(f, [format_removed(&current.l_paren_token()?)])?;
 
                 match current.expression()? {
                     JsAnyExpression::JsParenthesizedExpression(inner) => {
@@ -132,11 +122,7 @@ impl Format<JsFormatContext> for ChainEntry {
             let mut current = parentheses.clone();
 
             loop {
-                if handles_parens {
-                    write!(f, [format_removed(&current.r_paren_token()?)])?;
-                } else {
-                    write!(f, [current.r_paren_token().format()])?;
-                }
+                write!(f, [format_removed(&current.r_paren_token()?)])?;
 
                 match current.expression()? {
                     JsAnyExpression::JsParenthesizedExpression(inner) => {

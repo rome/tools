@@ -25,16 +25,14 @@ room = room.map((row, rowIndex) => (
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,17 +1,21 @@
+@@ -1,17 +1,19 @@
  const funnelSnapshotCard =
--  (report === MY_OVERVIEW && !ReportGK.xar_metrics_active_capitol_v2) ||
--  (report === COMPANY_OVERVIEW &&
+   (report === MY_OVERVIEW && !ReportGK.xar_metrics_active_capitol_v2) ||
+   (report === COMPANY_OVERVIEW &&
 -    !ReportGK.xar_metrics_active_capitol_v2_company_metrics) ? (
 -    <ReportMetricsFunnelSnapshotCard metrics={metrics} />
 -  ) : null;
-+  (report === MY_OVERVIEW && !ReportGK.xar_metrics_active_capitol_v2) || (
-+    report === COMPANY_OVERVIEW && !ReportGK.xar_metrics_active_capitol_v2_company_metrics
-+  )
++    !ReportGK.xar_metrics_active_capitol_v2_company_metrics)
 +    ? <ReportMetricsFunnelSnapshotCard metrics={metrics} />
 +    : null;
  
@@ -51,12 +49,10 @@ room = room.map((row, rowIndex) => (
 +  (row, rowIndex) =>
 +    row.map(
 +      (col, colIndex) =>
-+        (
-+          rowIndex === 0 ||
-+            colIndex === 0 ||
-+            rowIndex === height ||
-+            colIndex === width
-+        )
++        rowIndex === 0 ||
++        colIndex === 0 ||
++        rowIndex === height ||
++        colIndex === width
 +          ? 1
 +          : 0,
 +    ),
@@ -67,9 +63,9 @@ room = room.map((row, rowIndex) => (
 
 ```js
 const funnelSnapshotCard =
-  (report === MY_OVERVIEW && !ReportGK.xar_metrics_active_capitol_v2) || (
-    report === COMPANY_OVERVIEW && !ReportGK.xar_metrics_active_capitol_v2_company_metrics
-  )
+  (report === MY_OVERVIEW && !ReportGK.xar_metrics_active_capitol_v2) ||
+  (report === COMPANY_OVERVIEW &&
+    !ReportGK.xar_metrics_active_capitol_v2_company_metrics)
     ? <ReportMetricsFunnelSnapshotCard metrics={metrics} />
     : null;
 
@@ -77,12 +73,10 @@ room = room.map(
   (row, rowIndex) =>
     row.map(
       (col, colIndex) =>
-        (
-          rowIndex === 0 ||
-            colIndex === 0 ||
-            rowIndex === height ||
-            colIndex === width
-        )
+        rowIndex === 0 ||
+        colIndex === 0 ||
+        rowIndex === height ||
+        colIndex === width
           ? 1
           : 0,
     ),
@@ -90,8 +84,4 @@ room = room.map(
 ```
 
 
-# Lines exceeding max width of 80 characters
-```
-    3:     report === COMPANY_OVERVIEW && !ReportGK.xar_metrics_active_capitol_v2_company_metrics
-```
 

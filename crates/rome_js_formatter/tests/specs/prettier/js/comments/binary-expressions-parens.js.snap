@@ -23,34 +23,28 @@ Math.min(
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,9 +1,9 @@
+@@ -1,7 +1,7 @@
  Math.min(
--  /* $FlowFixMe(>=0.38.0 site=www) - Flow error detected during the
+   /* $FlowFixMe(>=0.38.0 site=www) - Flow error detected during the
 -   * deployment of v0.38.0. To see the error, remove this comment and
 -   * run flow */
--  document.body.scrollHeight -
--    (window.scrollY + window.innerHeight) -
--    devsite_footer_height,
-+  (
-+    /* $FlowFixMe(>=0.38.0 site=www) - Flow error detected during the
 +     * deployment of v0.38.0. To see the error, remove this comment and
 +     * run flow */
-+    document.body.scrollHeight - (window.scrollY + window.innerHeight)
-+  ) - devsite_footer_height,
-   0,
- );
+   document.body.scrollHeight -
+     (window.scrollY + window.innerHeight) -
+     devsite_footer_height,
 ```
 
 # Output
 
 ```js
 Math.min(
-  (
-    /* $FlowFixMe(>=0.38.0 site=www) - Flow error detected during the
+  /* $FlowFixMe(>=0.38.0 site=www) - Flow error detected during the
      * deployment of v0.38.0. To see the error, remove this comment and
      * run flow */
-    document.body.scrollHeight - (window.scrollY + window.innerHeight)
-  ) - devsite_footer_height,
+  document.body.scrollHeight -
+    (window.scrollY + window.innerHeight) -
+    devsite_footer_height,
   0,
 );
 ```

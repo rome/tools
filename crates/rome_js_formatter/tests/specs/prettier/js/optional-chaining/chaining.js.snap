@@ -96,7 +96,7 @@ new (foo?.())();
 ```diff
 --- Prettier
 +++ Rome
-@@ -10,20 +10,20 @@
+@@ -10,14 +10,14 @@
  a?.b.c(++x).d;
  a?.b[3].c?.(x).d;
  a?.b.c;
@@ -114,13 +114,6 @@ new (foo?.())();
  
  a?.b?.c.d?.e;
  (a ? b : c)?.d;
- 
- (list || list2)?.length;
--(list || list2)?.[list || list2];
-+(list || list2)?.[(list || list2)];
- 
- async function HelloWorld() {
-   var x = (await foo.bar.blah)?.hi;
 @@ -37,18 +37,18 @@
  a?.[b?.c]?.d();
  
@@ -146,19 +139,17 @@ new (foo?.())();
  
  a?.[b ? c : d];
  
-@@ -59,28 +59,26 @@
+@@ -59,28 +59,28 @@
  (function () {})?.();
  (() => f)?.();
  (() => f)?.x;
 -(a?.(x)).x;
--(
 +a?.(x).x;
-+(aaaaaaaaaaaaaaaaaaaaaaaa &&
+ (
    aaaaaaaaaaaaaaaaaaaaaaaa &&
--  aaaaaaaaaaaaaaaaaaaaaaaa &&
--  aaaaaaaaaaaaaaaaaaaaaaaa
--)?.();
-+  aaaaaaaaaaaaaaaaaaaaaaaa)?.();
+   aaaaaaaaaaaaaaaaaaaaaaaa &&
+   aaaaaaaaaaaaaaaaaaaaaaaa
+ )?.();
  
 -let f = () => ({}?.());
 -let g = () => ({}?.b);
@@ -177,13 +168,13 @@ new (foo?.())();
 -({ a: 1 }?.entries());
 +let f = () => ({})?.();
 +let g = () => ({})?.b;
-+a = () => (({})?.() && a);
-+a = () => (({})?.()() && a);
-+a = () => (({})?.().b && a);
-+a = () => (({})?.b && a);
-+a = () => (({})?.b() && a);
-+(a) => (({})?.()?.b && 0);
-+(a) => (({})?.b?.b && 0);
++a = () => ({})?.() && a;
++a = () => ({})?.()() && a;
++a = () => ({})?.().b && a;
++a = () => ({})?.b && a;
++a = () => ({})?.b() && a;
++(a) => ({})?.()?.b && 0;
++(a) => ({})?.b?.b && 0;
 +(x) => ({})?.()();
 +(x) => ({})?.().b;
 +(x) => ({})?.b();
@@ -223,7 +214,7 @@ a?.b?.c.d?.e;
 (a ? b : c)?.d;
 
 (list || list2)?.length;
-(list || list2)?.[(list || list2)];
+(list || list2)?.[list || list2];
 
 async function HelloWorld() {
   var x = (await foo.bar.blah)?.hi;
@@ -260,19 +251,21 @@ a?.[b ? c : d];
 (() => f)?.();
 (() => f)?.x;
 a?.(x).x;
-(aaaaaaaaaaaaaaaaaaaaaaaa &&
+(
   aaaaaaaaaaaaaaaaaaaaaaaa &&
-  aaaaaaaaaaaaaaaaaaaaaaaa)?.();
+  aaaaaaaaaaaaaaaaaaaaaaaa &&
+  aaaaaaaaaaaaaaaaaaaaaaaa
+)?.();
 
 let f = () => ({})?.();
 let g = () => ({})?.b;
-a = () => (({})?.() && a);
-a = () => (({})?.()() && a);
-a = () => (({})?.().b && a);
-a = () => (({})?.b && a);
-a = () => (({})?.b() && a);
-(a) => (({})?.()?.b && 0);
-(a) => (({})?.b?.b && 0);
+a = () => ({})?.() && a;
+a = () => ({})?.()() && a;
+a = () => ({})?.().b && a;
+a = () => ({})?.b && a;
+a = () => ({})?.b() && a;
+(a) => ({})?.()?.b && 0;
+(a) => ({})?.b?.b && 0;
 (x) => ({})?.()();
 (x) => ({})?.().b;
 (x) => ({})?.b();
