@@ -1,0 +1,29 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 147
+expression: content
+---
+## `rome.json`
+
+```json
+{
+  "linter": {
+    "rules": {
+        "recommended": true,
+        "js": {
+            "noDebugger": "off"
+        }
+    }
+  }
+}
+```
+
+## `fix.js`
+
+```js
+debugger;
+```
+
+# Emitted Messages
+
+

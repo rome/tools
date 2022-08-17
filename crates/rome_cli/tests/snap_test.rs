@@ -136,6 +136,8 @@ pub fn assert_cli_snapshot(
 
     let content = cli_snapshot.emit_content_snapshot();
 
+    let module_path = String::from(module_path);
+    let module_path = module_path.replace("::", "_");
     let snapshot_path = PathBuf::from("snapshots").join(module_path);
 
     insta::with_settings!({

@@ -1,0 +1,38 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 147
+expression: content
+---
+## `rome.json`
+
+```json
+{
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
+    }
+  }
+}
+```
+
+# Emitted Messages
+
+```block
+Files created:
+
+	- rome.json: Your project configuration. Documentation: https://rome.tools/#project-configuration 
+
+What's next?
+
+	1. Setup an editor extension
+		Get live errors as you type and format when you save. Learn more:https://rome.tools/#install-official-rome-vs-code-extension 
+	2. Try a command
+		rome check is used to validate your code, verify formatting, and check for lint errors. Run rome --help for a full list of commands and flags
+	3. Read documentation 
+		Our website serves as a comprehensive source of guides and documentation: https://rome.tools/ 
+	4. Get involved in the community
+		Ask questions, get support, or contribute by participating on GitHub (https://github.com/rome/tools), or our community Discord (https://discord.gg/rome)
+```
+
+

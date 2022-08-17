@@ -1,0 +1,16 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 147
+expression: content
+---
+## `fix.js`
+
+```js
+let a = 4;
+console.log(a);
+
+```
+
+# Emitted Messages
+
+
