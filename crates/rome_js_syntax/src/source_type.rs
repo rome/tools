@@ -5,9 +5,8 @@ use std::path::Path;
 /// The versions are ordered in increasing order; The newest version comes last.
 ///
 /// Defaults to the latest stable ECMAScript standard.
-#[derive(Debug, Copy, Clone, Eq, PartialEq, Ord, PartialOrd, Default)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Ord, PartialOrd)]
 pub enum LanguageVersion {
-    #[default]
     ES2022,
 
     /// The next, not yet finalized ECMAScript version
@@ -18,6 +17,12 @@ impl LanguageVersion {
     /// Returns the latest finalized ECMAScript version
     pub const fn latest() -> Self {
         LanguageVersion::ES2022
+    }
+}
+
+impl Default for LanguageVersion {
+    fn default() -> Self {
+        Self::latest()
     }
 }
 
