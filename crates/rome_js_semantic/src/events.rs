@@ -429,22 +429,16 @@ impl SemanticEventExtractor {
         let call = node.clone().cast::<JsCallExpression>()?;
         let callee = call.callee().ok()?;
 
-        match callee.syntax().kind() {
-            JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION => {
-                let expr = callee.as_js_parenthesized_expression()?;
-                let range = expr.syntax().text_range();
-                match result_of(expr) {
-                    Some(JsAnyExpression::JsFunctionExpression(expr)) => {
-                        let id = expr.id()?;
-                        self.stash.push_back(SemanticEvent::Read {
-                            range,
-                            declared_at: id.syntax().text_range(),
-                        });
-                    }
-                    _ => {}
-                }
+        if let JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION = callee.syntax().kind() {
+            let expr = callee.as_js_parenthesized_expression()?;
+            let range = expr.syntax().text_range();
+            if let Some(JsAnyExpression::JsFunctionExpression(expr)) = result_of(expr) {
+                let id = expr.id()?;
+                self.stash.push_back(SemanticEvent::Read {
+                    range,
+                    declared_at: id.syntax().text_range(),
+                });
             }
-            _ => {}
         }
 
         Some(())
