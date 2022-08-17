@@ -1,10 +1,12 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    JsAnyArrayBindingPatternElement, JsAnyBinding, JsAnyBindingPattern, JsAnyFunction,
-    JsAnyObjectBindingPatternMember, JsAnyParameter, JsIdentifierBinding, JsAnyFormalParameter,
+    JsAnyArrayBindingPatternElement, JsAnyBinding, JsAnyBindingPattern, JsAnyFormalParameter,
+    JsAnyObjectBindingPatternMember, JsAnyParameter, JsArrowFunctionExpression,
+    JsFunctionDeclaration, JsFunctionExportDefaultDeclaration, JsFunctionExpression,
+    JsIdentifierBinding, JsMethodClassMember, JsMethodObjectMember,
 };
-use rome_rowan::AstNode;
+use rome_rowan::{declare_node_union, AstNode};
 use rustc_hash::FxHashSet;
 
 declare_rule! {
@@ -41,7 +43,7 @@ declare_rule! {
 impl Rule for NoDupeArgs {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = Ast<JsAnyFunction>;
+    type Query = Ast<JsAnyFunctionAndMethod>;
     type State = JsIdentifierBinding;
     type Signals = Vec<Self::State>;
 
@@ -50,14 +52,22 @@ impl Rule for NoDupeArgs {
         Some(vec![])
             .and_then(|mut identifier_binding_vec: Vec<Self::State>| {
                 let args = match function {
-                    JsAnyFunction::JsArrowFunctionExpression(func) => {
+                    JsAnyFunctionAndMethod::JsArrowFunctionExpression(func) => {
                         func.parameters().ok()?.as_js_parameters()?.clone()
                     }
-                    JsAnyFunction::JsFunctionDeclaration(func) => func.parameters().ok()?,
-                    JsAnyFunction::JsFunctionExportDefaultDeclaration(func) => {
+                    JsAnyFunctionAndMethod::JsFunctionDeclaration(func) => {
                         func.parameters().ok()?
                     }
-                    JsAnyFunction::JsFunctionExpression(func) => func.parameters().ok()?,
+                    JsAnyFunctionAndMethod::JsFunctionExportDefaultDeclaration(func) => {
+                        func.parameters().ok()?
+                    }
+                    JsAnyFunctionAndMethod::JsFunctionExpression(func) => func.parameters().ok()?,
+                    JsAnyFunctionAndMethod::JsMethodClassMember(member) => {
+                        member.parameters().ok()?
+                    }
+                    JsAnyFunctionAndMethod::JsMethodObjectMember(member) => {
+                        member.parameters().ok()?
+                    }
                 };
                 let mut set = FxHashSet::default();
                 // Traversing the parameters of the function in preorder and checking for duplicates,
@@ -189,4 +199,9 @@ fn track_binding(
     } else {
         binding_set.insert(binding_text);
     }
+}
+
+declare_node_union! {
+    /// A union of all possible FunctionLike `JsAstNode` in the JS grammar.
+    pub(crate) JsAnyFunctionAndMethod = JsArrowFunctionExpression| JsFunctionDeclaration| JsFunctionExportDefaultDeclaration | JsFunctionExpression | JsMethodClassMember | JsMethodObjectMember
 }

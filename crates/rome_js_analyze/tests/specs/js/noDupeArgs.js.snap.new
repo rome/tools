@@ -1,0 +1,196 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 97
+expression: noDupeArgs.js
+---
+# Input
+```js
+// valid
+function a(a, b, c) {}
+var j = function (j, b, c) {};
+function k({ k, b }, { c, d }) {}
+function l([, l]) {}
+function foo([[a, b], [c, d]]) {}
+function test(a = function (a) {}) {}
+// invalid
+function b(a, b, b) {}
+
+function c(a, a, a) {}
+
+const d = (a, b, a) => {};
+
+function e(a, b, a, b) {}
+
+var f = function (a, b, b) {};
+
+class G {
+	ggg(a, a, a) {}
+}
+
+let objectMethods = {
+	method(a, b, c, c) {
+
+	}
+}
+
+var h = function (a, b, a) {};
+
+export default function (a, b, a, a) {}
+function f({ test: res = 3 }, res) {}
+
+export function f2(a, b, c = (a, b, b) => {}) {}
+
+```
+
+# Diagnostics
+```
+warning[js/noDupeArgs]: Duplicate argument name
+  ┌─ noDupeArgs.js:9:18
+  │
+9 │ function b(a, b, b) {}
+  │                  -
+
+
+```
+
+```
+warning[js/noDupeArgs]: Duplicate argument name
+   ┌─ noDupeArgs.js:11:15
+   │
+11 │ function c(a, a, a) {}
+   │               -
+
+
+```
+
+```
+warning[js/noDupeArgs]: Duplicate argument name
+   ┌─ noDupeArgs.js:11:18
+   │
+11 │ function c(a, a, a) {}
+   │                  -
+
+
+```
+
+```
+warning[js/noDupeArgs]: Duplicate argument name
+   ┌─ noDupeArgs.js:13:18
+   │
+13 │ const d = (a, b, a) => {};
+   │                  -
+
+
+```
+
+```
+warning[js/noDupeArgs]: Duplicate argument name
+   ┌─ noDupeArgs.js:15:18
+   │
+15 │ function e(a, b, a, b) {}
+   │                  -
+
+
+```
+
+```
+warning[js/noDupeArgs]: Duplicate argument name
+   ┌─ noDupeArgs.js:15:21
+   │
+15 │ function e(a, b, a, b) {}
+   │                     -
+
+
+```
+
+```
+warning[js/noDupeArgs]: Duplicate argument name
+   ┌─ noDupeArgs.js:17:25
+   │
+17 │ var f = function (a, b, b) {};
+   │                         -
+
+
+```
+
+```
+warning[js/noDupeArgs]: Duplicate argument name
+   ┌─ noDupeArgs.js:20:9
+   │
+20 │     ggg(a, a, a) {}
+   │            -
+
+
+```
+
+```
+warning[js/noDupeArgs]: Duplicate argument name
+   ┌─ noDupeArgs.js:20:12
+   │
+20 │     ggg(a, a, a) {}
+   │               -
+
+
+```
+
+```
+warning[js/noDupeArgs]: Duplicate argument name
+   ┌─ noDupeArgs.js:24:18
+   │
+24 │     method(a, b, c, c) {
+   │                     -
+
+
+```
+
+```
+warning[js/noDupeArgs]: Duplicate argument name
+   ┌─ noDupeArgs.js:29:25
+   │
+29 │ var h = function (a, b, a) {};
+   │                         -
+
+
+```
+
+```
+warning[js/noDupeArgs]: Duplicate argument name
+   ┌─ noDupeArgs.js:31:32
+   │
+31 │ export default function (a, b, a, a) {}
+   │                                -
+
+
+```
+
+```
+warning[js/noDupeArgs]: Duplicate argument name
+   ┌─ noDupeArgs.js:31:35
+   │
+31 │ export default function (a, b, a, a) {}
+   │                                   -
+
+
+```
+
+```
+warning[js/noDupeArgs]: Duplicate argument name
+   ┌─ noDupeArgs.js:32:31
+   │
+32 │ function f({ test: res = 3 }, res) {}
+   │                               ---
+
+
+```
+
+```
+warning[js/noDupeArgs]: Duplicate argument name
+   ┌─ noDupeArgs.js:34:37
+   │
+34 │ export function f2(a, b, c = (a, b, b) => {}) {}
+   │                                     -
+
+
+```
+
+
