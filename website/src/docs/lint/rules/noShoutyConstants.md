@@ -39,3 +39,10 @@ console.log(FOO);
 
 </code></pre>{% endraw %}
 
+### Valid
+
+```jsx
+export const FOO = "FOO";
+console.log(FOO);
+```
+

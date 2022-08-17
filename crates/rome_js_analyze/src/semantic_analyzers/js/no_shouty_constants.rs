@@ -4,11 +4,11 @@ use rome_analyze::{
 };
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_semantic::{AllReferencesExtensions, Reference};
+use rome_js_semantic::{AllReferencesExtensions, IsExportedCanBeQueried, Reference};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsIdentifierBinding, JsIdentifierExpression,
     JsStringLiteralExpression, JsVariableDeclaration, JsVariableDeclarator,
-    JsVariableDeclaratorList,
+    JsVariableDeclaratorList, SyntaxNodeText, TextSize,
 };
 use rome_rowan::{AstNode, BatchMutationExt, SyntaxNodeCast};
 
@@ -23,6 +23,12 @@ declare_rule! {
     /// const FOO = "FOO";
     /// console.log(FOO);
     /// ```
+    ///
+    /// ### Valid
+    /// ```js
+    /// export const FOO = "FOO";
+    /// console.log(FOO);
+    /// ```
     pub(crate) NoShoutyConstants {
         version: "0.7.0",
         name: "noShoutyConstants",
@@ -31,13 +37,25 @@ declare_rule! {
 }
 
 /// Check for
-/// a = "a" (true)
+/// A = "A" (true)
 /// a = "b" (false)
-fn is_id_and_string_literal_inner_text_equal(
+/// export const A = "A" (false)
+fn is_shouty_constants(
     declarator: &JsVariableDeclarator,
+    ctx: &RuleContext<NoShoutyConstants>,
 ) -> Option<(JsIdentifierBinding, JsStringLiteralExpression)> {
+    let model = ctx.model();
+
     let id = declarator.id().ok()?;
     let id = id.as_js_any_binding()?.as_js_identifier_binding()?;
+    // For example,
+    // ```js
+    // export const ACTION_TYPE = "ACTION_TYPE";
+    // ```
+    // this is a common pattern when we write `redux`
+    if id.is_exported(model) {
+        return None;
+    }
     let id_text = id.syntax().text_trimmed();
 
     let expression = declarator.initializer()?.expression().ok()?;
@@ -46,11 +64,27 @@ fn is_id_and_string_literal_inner_text_equal(
         .as_js_string_literal_expression()?;
     let literal_text = literal.inner_string_text();
 
-    if id_text == literal_text {
+    if id_text.len() == literal_text.len()
+        && is_upper_case_of_source(id_text, literal_text).unwrap_or(false)
+    {
         Some((id.clone(), literal.clone()))
     } else {
         None
     }
+}
+
+/// second param(target) is the upper-case version of its first param (source).
+fn is_upper_case_of_source(source: SyntaxNodeText, text: SyntaxNodeText) -> Option<bool> {
+    let len = source.len();
+    let len: u32 = len.try_into().ok()?;
+    for i in 0..len as usize {
+        let source_char = source.char_at(TextSize::from(i as u32))?;
+        let text_char = text.char_at(TextSize::from(i as u32))?;
+        if source_char.to_ascii_uppercase() != text_char {
+            return Some(false);
+        }
+    }
+    Some(true)
 }
 
 pub struct State {
@@ -72,8 +106,7 @@ impl Rule for NoShoutyConstants {
             .parent::<JsVariableDeclaration>()?;
 
         if declaration.is_const() {
-            if let Some((binding, literal)) = is_id_and_string_literal_inner_text_equal(declarator)
-            {
+            if let Some((binding, literal)) = is_shouty_constants(declarator, ctx) {
                 return Some(State {
                     literal,
                     references: binding.all_references(ctx.model()).collect(),

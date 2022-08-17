@@ -12,6 +12,11 @@ const FOO2 = "FOO2", a = "FOO3", FOO4 = "FOO4";
 
 console.log(FOO, FOO4);
 
+const foo3 = "FOO3";
+// Valid
+export const ADD_TYPE = "ADD_TYPE";
+const lib = "lib"
+
 ```
 
 # Diagnostics
@@ -28,7 +33,7 @@ warning[js/noShoutyConstants]: Redundant constant declaration.
   │             --- Used here.
 
 Suggested fix: Use the constant value directly
-    | @@ -1,6 +2,5 @@
+    | @@ -1,9 +2,8 @@
 0   | - const FOO = "FOO";
 1   | - console.log(FOO, FOO2);
 2 0 |   
@@ -38,6 +43,9 @@ Suggested fix: Use the constant value directly
 4 4 |   
 5   | - console.log(FOO, FOO4);
   5 | + console.log("FOO", FOO4);
+6 6 |   
+7 7 |   const foo3 = "FOO3";
+8 8 |   // Valid
 
 =  note: You should avoid declaring constants with a string that's the same
     value as the variable name. It introduces a level of unnecessary
@@ -57,7 +65,7 @@ warning[js/noShoutyConstants]: Redundant constant declaration.
   │       -------------
 
 Suggested fix: Use the constant value directly
-    | @@ -1,6 +1,6 @@
+    | @@ -1,7 +1,7 @@
 0 0 |   const FOO = "FOO";
 1   | - console.log(FOO, FOO2);
   1 | + console.log(FOO, "FOO2");
@@ -66,6 +74,7 @@ Suggested fix: Use the constant value directly
   3 | + const a = "FOO3", FOO4 = "FOO4";
 4 4 |   
 5 5 |   console.log(FOO, FOO4);
+6 6 |   
 
 =  note: You should avoid declaring constants with a string that's the same
     value as the variable name. It introduces a level of unnecessary
@@ -85,7 +94,7 @@ warning[js/noShoutyConstants]: Redundant constant declaration.
   │                  ---- Used here.
 
 Suggested fix: Use the constant value directly
-    | @@ -1,6 +1,6 @@
+    | @@ -1,9 +1,9 @@
 0 0 |   const FOO = "FOO";
 1 1 |   console.log(FOO, FOO2);
 2 2 |   
@@ -94,6 +103,34 @@ Suggested fix: Use the constant value directly
 4 4 |   
 5   | - console.log(FOO, FOO4);
   5 | + console.log(FOO, "FOO4");
+6 6 |   
+7 7 |   const foo3 = "FOO3";
+8 8 |   // Valid
+
+=  note: You should avoid declaring constants with a string that's the same
+    value as the variable name. It introduces a level of unnecessary
+    indirection when it's only two additional characters to inline.
+
+
+```
+
+```
+warning[js/noShoutyConstants]: Redundant constant declaration.
+  ┌─ noShoutyConstants.js:8:7
+  │
+8 │ const foo3 = "FOO3";
+  │       -------------
+
+Suggested fix: Use the constant value directly
+    | @@ -4,8 +4,6 @@
+3 3 |   const FOO2 = "FOO2", a = "FOO3", FOO4 = "FOO4";
+4 4 |   
+5 5 |   console.log(FOO, FOO4);
+6   | - 
+7   | - const foo3 = "FOO3";
+8 6 |   // Valid
+9 7 |   export const ADD_TYPE = "ADD_TYPE";
+10 8 |   const lib = "lib"
 
 =  note: You should avoid declaring constants with a string that's the same
     value as the variable name. It introduces a level of unnecessary
