@@ -6,7 +6,7 @@
         "postinstall": "node scripts/postinstall.js",
         "tsc": "tsc --noEmit",
         "format": "cargo rome-cli-dev format ./ --write",
-        "ci": "cargo rome-cli-dev ci ./src && pnpm test:ci && tsc --noEmit",
+        "ci": "cargo rome-cli-dev ci ./src && tsc --noEmit",
         "check": "cargo rome-cli-dev check ./src && tsc --noEmit",
         "build:wasm-dev": "wasm-pack build --out-dir ../../npm/wasm-nodejs --target nodejs --dev --scope rometools ../../crates/rome_wasm",
         "build:wasm": "wasm-pack build --out-dir ../../npm/wasm-nodejs --target nodejs --release --scope rometools ../../crates/rome_wasm",
@@ -40,6 +40,7 @@
         "vitest": "^0.22.0",
         "vite": "^3.0.8",
         "@rometools/wasm-nodejs": "../wasm-nodejs",
+        "@rometools/backend-jsonrpc": "../backend-jsonrpc",
         "wasm-pack": "^0.10.3"
     }
 }

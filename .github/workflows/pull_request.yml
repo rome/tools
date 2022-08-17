@@ -116,9 +116,13 @@ jobs:
           run_install: |
             args: [--prefix npm/backend-jsonrpc]
       - name: Build TypeScript code
-        run: pnpm --prefix npm/backend-jsonrpc run build
+        run: |
+          pnpm --prefix npm/backend-jsonrpc run build
+          pnpm --prefix npm/rome run build
       - name: Run JS tests
-        run: pnpm --prefix npm/backend-jsonrpc test:ci
+        run: |
+          pnpm --prefix npm/backend-jsonrpc test:ci
+          pnpm --prefix npm/rome test:ci
 
   documentation:
     name: Documentation

@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { Rome } from "../src/index";
 
-describe("Rome formatter", () => {
+describe("Rome WebAssembly formatter", () => {
 	it("should not format files", async () => {
 		const rome = await Rome.create();
 

@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "vitest",
-    "test:ci": "vitest --run",
+    "test:ci": "pnpm build && vitest --run",
     "tsc": "tsc --noEmit",
     "build": "tsc"
   },
