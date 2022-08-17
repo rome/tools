@@ -8,6 +8,7 @@ on:
     paths: # Only run when changes are made to js code
       - 'website/**'
       - 'editors/**'
+      - 'crates/**'
 
 env:
   RUST_LOG: info
