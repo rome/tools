@@ -20,16 +20,16 @@ if (binName) {
 	let binPath;
 	try {
 		binPath = require.resolve(binName);
-	} catch (err) {
+	} catch {
 		console.warn(
-			`The Rome CLI postinstall script failed to resolve the binary file "${binName}". ` + "Running Rome from the npm package will probably not work correctly.",
+			`The Rome CLI postinstall script failed to resolve the binary file "${binName}". Running Rome from the npm package will probably not work correctly.`,
 		);
 	}
 
 	if (binPath) {
 		try {
 			require("fs").chmodSync(binPath, 0o755);
-		} catch (err) {
+		} catch {
 			console.warn(
 				"The Rome CLI postinstall script failed to set execution permissions to the native binary. " + "Running Rome from the npm package will probably not work correctly.",
 			);

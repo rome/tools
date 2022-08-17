@@ -114,7 +114,7 @@ class SyntaxTreeProvider
 
 	provideDocumentLinks(
 		document: TextDocument,
-		token: CancellationToken,
+		// token: CancellationToken,
 	): ProviderResult<DocumentLink[]> {
 		const doc = this.documents.get(document.uri.toString());
 		if (doc) {

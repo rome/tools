@@ -4,6 +4,7 @@ interface MermaidGraphProps {
 	graph: string;
 }
 
+// rome-ignore lint(js/noUnusedVariables): false positive
 export default memo(function MermaidGraph({ graph }: MermaidGraphProps) {
 	if (graph === "") {
 		return null;

@@ -18,16 +18,11 @@ jobs:
     name: Check JS Files
     runs-on: ubuntu-latest
     steps:
-      - name: Install Rome
-        uses: rome/setup-rome@v0.4
-        with:
-          version: preview
-
       - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Run Rome Format
-        run: rome ci editors website
+        run: cargo rome-cli-dev ci editors website npm/rome
   type-check:
     name: Type-check JS Files
     runs-on: ubuntu-latest

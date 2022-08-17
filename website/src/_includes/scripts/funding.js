@@ -312,8 +312,9 @@ document.addEventListener("keydown", function (e) {
 	}
 
 	// Select active step
-	const focusableElements =
-		detailsForm.hidden ? reviewFormFocusableElements : detailsFormFocusableElements;
+	const focusableElements = detailsForm.hidden
+		? reviewFormFocusableElements
+		: detailsFormFocusableElements;
 	const firstFocusableElement = focusableElements[0];
 	const lastFocusableElement = focusableElements[focusableElements.length - 1];
 
@@ -365,7 +366,8 @@ reviewForm.addEventListener("submit", (e) => {
 	const data = {
 		public: document.querySelector("input[name=public]").checked,
 		publicName: document.querySelector("input[name=public-name]").value,
-		publicComment: document.querySelector("textarea[name=public-comment]").value,
+		publicComment: document.querySelector("textarea[name=public-comment]")
+			.value,
 		tip: getTip(),
 		tierPrice: selectedTier.price,
 		email: emailInput.value,
