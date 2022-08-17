@@ -141,7 +141,7 @@ impl SemanticEvent {
 ///         WalkEvent::Leave(node) => extractor.leave(&node),
 ///         _ => {}
 ///     }
-///
+///     
 ///     while let Some(e) = extractor.pop() {
 ///         dbg!(e);
 ///     }
