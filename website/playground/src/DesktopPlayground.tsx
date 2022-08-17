@@ -89,22 +89,19 @@ export default function DesktopPlayground({
 				settings={settings}
 				setPlaygroundState={setPlaygroundState}
 			/>
-			<div className="box-border flex divide-x divide-slate-300 grow">
-				<div className="w-1/2 p-5 h-full">
+			<div className="box-border flex divide-x divide-slate-300 flex-1 overflow-auto">
 					<CodeMirror
 						value={code}
-						className="h-full"
+						className="h-full overflow-y-hidden w-1/2 p-5 h-full"
 						height="100%"
 						extensions={extensions}
 						placeholder="Enter your code here"
 						onUpdate={onUpdate}
 						onChange={onChange}
 					/>
-				</div>
-				<div className="w-1/2 p-5">
 					<Tabs
-						className="h-full flex flex-col"
-						selectedTabPanelClassName="grow react-tabs__tab-panel--selected"
+						className="w-1/2 p-5 flex flex-col"
+						selectedTabPanelClassName="flex-1 react-tabs__tab-panel--selected overflow-y-auto"
 					>
 						<TabList>
 							<Tab selectedClassName="bg-slate-300">Formatter</Tab>
@@ -126,10 +123,10 @@ export default function DesktopPlayground({
 							<div className="h-1/2 flex flex-col">
 								<h1>Rome</h1>
 								<CodeMirror
-									className="grow"
 									value={formatted_code}
 									extensions={extensions}
 									placeholder="Rome Output"
+									className="flex-1 overflow-y-auto"
 									height="100%"
 									readOnly={true}
 								/>
@@ -140,7 +137,7 @@ export default function DesktopPlayground({
 									value={prettierOutput.code}
 									extensions={extensions}
 									placeholder="Prettier Output"
-									className="grow"
+									className="flex-1 overflow-y-auto"
 									height="100%"
 									readOnly={true}
 								/>
@@ -182,7 +179,6 @@ export default function DesktopPlayground({
 						</TabPanel>
 						<TabPanel><MermaidGraph graph={control_flow_graph} /></TabPanel>
 					</Tabs>
-				</div>
 			</div>
 		</div>
 	);
