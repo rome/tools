@@ -24,3 +24,7 @@ export default function (a, b, a, a) {}
 function f({test: res = 3}, res) {
 
 }
+
+export function f2(a, b, c = (a, b, b) => {}) {
+
+}

@@ -2,7 +2,7 @@ use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleCategory, 
 use rome_console::markup;
 use rome_js_syntax::{
     JsAnyArrayBindingPatternElement, JsAnyBinding, JsAnyBindingPattern, JsAnyFunction,
-    JsAnyObjectBindingPatternMember, JsAnyParameter, JsIdentifierBinding,
+    JsAnyObjectBindingPatternMember, JsAnyParameter, JsIdentifierBinding, JsAnyFormalParameter,
 };
 use rome_rowan::AstNode;
 use rustc_hash::FxHashSet;
@@ -48,7 +48,7 @@ impl Rule for NoDupeArgs {
     fn run(ctx: &RuleContext<Self>) -> Vec<Self::State> {
         let function = ctx.query();
         Some(vec![])
-            .and_then(|mut ret: Vec<Self::State>| {
+            .and_then(|mut identifier_binding_vec: Vec<Self::State>| {
                 let args = match function {
                     JsAnyFunction::JsArrowFunctionExpression(func) => {
                         func.parameters().ok()?.as_js_parameters()?.clone()
@@ -64,10 +64,10 @@ impl Rule for NoDupeArgs {
                 // reuse the `HashSet` and `Vec` to avoid extra allocations.
                 for parameter in args.items().into_iter() {
                     let parameter = parameter.ok()?;
-                    traverse_parameter(parameter, &mut set, &mut ret);
+                    traverse_parameter(parameter, &mut set, &mut identifier_binding_vec);
                 }
 
-                Some(ret)
+                Some(identifier_binding_vec)
             })
             .unwrap_or_default()
     }
@@ -85,19 +85,19 @@ impl Rule for NoDupeArgs {
 
 /// Traverse the parameter recursively and check if it is duplicated.
 fn traverse_parameter(
-    p: JsAnyParameter,
-    set: &mut FxHashSet<String>,
-    res: &mut Vec<JsIdentifierBinding>,
+    parameter: JsAnyParameter,
+    binding_set: &mut FxHashSet<String>,
+    identifier_vec: &mut Vec<JsIdentifierBinding>,
 ) -> Option<()> {
-    match p {
+    match parameter {
         JsAnyParameter::JsAnyFormalParameter(p) => match p {
-            rome_js_syntax::JsAnyFormalParameter::JsFormalParameter(parameter) => {
-                traverse_binding(parameter.binding().ok()?, set, res);
+            JsAnyFormalParameter::JsFormalParameter(parameter) => {
+                traverse_binding(parameter.binding().ok()?, binding_set, identifier_vec);
             }
-            rome_js_syntax::JsAnyFormalParameter::JsUnknownParameter(_) => {}
+            JsAnyFormalParameter::JsUnknownParameter(_) => {}
         },
         JsAnyParameter::JsRestParameter(rest_parameter) => {
-            traverse_binding(rest_parameter.binding().ok()?, set, res);
+            traverse_binding(rest_parameter.binding().ok()?, binding_set, identifier_vec);
         }
         JsAnyParameter::TsThisParameter(_) => {}
     }
@@ -106,13 +106,13 @@ fn traverse_parameter(
 
 fn traverse_binding(
     binding: JsAnyBindingPattern,
-    set: &mut FxHashSet<String>,
-    res: &mut Vec<JsIdentifierBinding>,
+    binding_set: &mut FxHashSet<String>,
+    identifier_vec: &mut Vec<JsIdentifierBinding>,
 ) -> Option<()> {
     match binding {
         JsAnyBindingPattern::JsAnyBinding(inner_binding) => match inner_binding {
             JsAnyBinding::JsIdentifierBinding(id_binding) => {
-                check_binding(id_binding, set, res);
+                track_binding(id_binding, binding_set, identifier_vec);
             }
             JsAnyBinding::JsUnknownBinding(_) => {}
         },
@@ -121,20 +121,20 @@ fn traverse_binding(
                 let ele = ele.ok()?;
                 match ele {
                     JsAnyArrayBindingPatternElement::JsAnyBindingPattern(pattern) => {
-                        traverse_binding(pattern, set, res);
+                        traverse_binding(pattern, binding_set, identifier_vec);
                     }
                     JsAnyArrayBindingPatternElement::JsArrayBindingPatternRestElement(
                         binding_rest,
                     ) => {
                         let binding_pattern = binding_rest.pattern().ok()?;
-                        traverse_binding(binding_pattern, set, res);
+                        traverse_binding(binding_pattern, binding_set, identifier_vec);
                     }
                     JsAnyArrayBindingPatternElement::JsArrayHole(_) => {}
                     JsAnyArrayBindingPatternElement::JsBindingPatternWithDefault(
                         binding_with_default,
                     ) => {
                         let pattern = binding_with_default.pattern().ok()?;
-                        traverse_binding(pattern, set, res);
+                        traverse_binding(pattern, binding_set, identifier_vec);
                     }
                 }
             }
@@ -144,17 +144,17 @@ fn traverse_binding(
                 let prop = prop.ok()?;
                 match prop {
                     JsAnyObjectBindingPatternMember::JsIdentifierBinding(id_binding) => {
-                        check_binding(id_binding, set, res);
+                        track_binding(id_binding, binding_set, identifier_vec);
                     }
                     JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(pattern) => {
                         let pattern = pattern.pattern().ok()?;
-                        traverse_binding(pattern, set, res);
+                        traverse_binding(pattern, binding_set, identifier_vec);
                     }
                     JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(rest) => {
                         let pattern = rest.binding().ok()?;
                         match pattern {
                             JsAnyBinding::JsIdentifierBinding(binding) => {
-                                check_binding(binding, set, res);
+                                track_binding(binding, binding_set, identifier_vec);
                             }
                             JsAnyBinding::JsUnknownBinding(_) => {}
                         }
@@ -163,7 +163,7 @@ fn traverse_binding(
                         shorthand_binding,
                     ) => match shorthand_binding.identifier().ok()? {
                         JsAnyBinding::JsIdentifierBinding(id_binding) => {
-                            check_binding(id_binding, set, res)
+                            track_binding(id_binding, binding_set, identifier_vec)
                         }
                         JsAnyBinding::JsUnknownBinding(_) => {}
                     },
@@ -176,15 +176,17 @@ fn traverse_binding(
 }
 
 #[inline]
-fn check_binding(
+/// If the name of binding has been seen in set, then we push the `JsIdentifierBinding` into `identifier_vec`.
+/// Else we mark the name of binding as seen.
+fn track_binding(
     id_binding: JsIdentifierBinding,
-    set: &mut FxHashSet<String>,
-    res: &mut Vec<JsIdentifierBinding>,
+    binding_set: &mut FxHashSet<String>,
+    identifier_vec: &mut Vec<JsIdentifierBinding>,
 ) {
     let binding_text = id_binding.text();
-    if set.contains(&binding_text) {
-        res.push(id_binding);
+    if binding_set.contains(&binding_text) {
+        identifier_vec.push(id_binding);
     } else {
-        set.insert(binding_text);
+        binding_set.insert(binding_text);
     }
 }
