@@ -1,23 +1,30 @@
-interface FormatDebugOptions {
+interface FormatFilesDebugOptions extends FormatFilesOptions {
 	/**
 	 * If `true`, you'll be able to inspect the IR of the formatter
 	 */
 	debug: boolean;
 }
 
-interface FormatFilesOptions extends FormatDebugOptions {
+interface FormatContentDebugOptions extends FormatFilesOptions {
+	/**
+	 * If `true`, you'll be able to inspect the IR of the formatter
+	 */
+	debug: boolean;
+}
+
+interface FormatFilesOptions {
 	/**
 	 * Writes the new content to disk
 	 */
 	write: boolean;
 }
 
-interface FormatContentOptions extends FormatDebugOptions {
+interface FormatContentOptions {
 	/**
 	 * A virtual path of the file. You should add the extension,
 	 * so Rome knows how to parse the content
 	 */
-	filePath: String;
+	filePath: string;
 	/**
 	 * The range where to format the content
 	 */
@@ -26,11 +33,18 @@ interface FormatContentOptions extends FormatDebugOptions {
 
 interface FormatResult {
 	// Not final
-	content: String;
+	content: string;
 	// Not final
-	errors: String[];
+	errors: string[];
+}
+
+interface FormatDebugResult {
+	// Not final
+	content: string;
+	// Not final
+	errors: string[];
 	// Available when in debug mode
-	ir: String | null;
+	ir: string | null;
 }
 
 interface ParseOptions {
@@ -38,50 +52,71 @@ interface ParseOptions {
 	 * A virtual path of the file. You should add the extension,
 	 * so Rome knows how to parse the content
 	 */
-	filePath: String;
+	filePath: string;
 }
 
 interface ParseResult {
 	/**
 	 * The CST of the code
 	 */
-	cst: String;
+	cst: string;
 	/**
 	 * The AST of the code
 	 */
-	ast: String;
+	ast: string;
 	// Not final
-	errors: String[];
+	errors: string[];
+}
+
+function isFormatFilesDebug(options: any): options is FormatFilesDebugOptions  {
+	return options.debug !== undefined
+}
+
+function isFormatContentDebug(options: any): options is FormatContentDebugOptions  {
+	return options.debug !== undefined
 }
 
 export class Rome {
 	async formatFiles(
-		paths: String[],
-		options: Partial<FormatFilesOptions> | undefined = undefined,
-	): Promise<FormatResult> {
+		paths: string[],
+		options?: Partial<FormatFilesOptions>,
+	): Promise<FormatResult | FormatDebugResult> {
 		paths;
 
+		if (isFormatFilesDebug(options)) {
+			return {
+				content: "",
+				errors: [],
+				ir: "",
+			};
+		}
 		return {
 			content: "",
 			errors: [],
-			ir: options?.debug ? "" : null,
 		};
+
 	}
 
 	async formatContent(
-		content: String,
-		options: Partial<FormatContentOptions> | undefined = undefined,
-	): Promise<FormatResult> {
+		content: string,
+		options?: Partial<FormatContentOptions>,
+	): Promise<FormatResult | FormatDebugResult> {
 		content;
+		if (isFormatContentDebug(options)) {
+			return {
+				content: "",
+				errors: [],
+				ir: "",
+			};
+		}
 		return {
 			content: "",
 			errors: [],
-			ir: options?.debug ? "" : null,
 		};
 	}
 
 	async parseContent(
-		content: String,
+		content: string,
 		options: ParseOptions,
 	): Promise<ParseResult> {
 		content;
