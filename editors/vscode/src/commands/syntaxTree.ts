@@ -143,9 +143,9 @@ export function syntaxTree(session: Session): Command {
 	return async () => {
 		const document = await workspace.openTextDocument(provider.uri);
 		provider.eventEmitter.fire(provider.uri);
-		void await window.showTextDocument(document, {
+		void (await window.showTextDocument(document, {
 			viewColumn: ViewColumn.Two,
 			preserveFocus: true,
-		});
+		}));
 	};
 }

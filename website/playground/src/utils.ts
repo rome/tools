@@ -58,13 +58,13 @@ export function usePlaygroundState(
 			searchParams.get("lineWidth") ?? defaultRomeConfig.lineWidth,
 		),
 		indentStyle:
-			(
-				searchParams.get("indentStyle") as IndentStyle
-			) ?? defaultRomeConfig.indentStyle,
+			(searchParams.get(
+				"indentStyle",
+			) as IndentStyle) ?? defaultRomeConfig.indentStyle,
 		quoteStyle:
-			(
-				searchParams.get("quoteStyle") as QuoteStyle
-			) ?? defaultRomeConfig.quoteStyle,
+			(searchParams.get(
+				"quoteStyle",
+			) as QuoteStyle) ?? defaultRomeConfig.quoteStyle,
 		indentWidth: parseInt(
 			searchParams.get("indentWidth") ?? defaultRomeConfig.indentWidth,
 		),
@@ -74,9 +74,9 @@ export function usePlaygroundState(
 			) === "true" || defaultRomeConfig.isTypeScript,
 		isJsx: searchParams.get("jsx") === "true" || defaultRomeConfig.isJsx,
 		sourceType:
-			(
-				searchParams.get("sourceType") as SourceType
-			) ?? defaultRomeConfig.sourceType,
+			(searchParams.get(
+				"sourceType",
+			) as SourceType) ?? defaultRomeConfig.sourceType,
 		cursorPosition: 0,
 	});
 	const [playgroundState, setPlaygroundState] = useState(initState());
