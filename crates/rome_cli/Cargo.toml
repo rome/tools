@@ -26,7 +26,7 @@ thiserror = "1.0.30"
 rayon = "1.5.1"
 
 [dev-dependencies]
-insta = "1.17.1"
+insta = "1.18.2"
 tokio = { version = "1.15.0", features = ["io-util"] }
 rome_lsp = { path = "../rome_lsp" }
 rome_bin = { path = "../rome_bin" }

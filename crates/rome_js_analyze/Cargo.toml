@@ -23,5 +23,5 @@ serde = { version = "1.0.136", features = ["derive"], optional = true }
 tests_macros = { path = "../tests_macros" }
 rome_text_edit = { path = "../rome_text_edit" }
 rome_js_parser = { path = "../rome_js_parser", features = ["tests"] }
-insta = { version = "1.10.0", features = ["glob"] }
+insta = { version = "1.18.2", features = ["glob"] }
 countme = { version = "3.0.0", features = ["enable"] }
