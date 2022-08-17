@@ -186,15 +186,11 @@ impl CommentStyle<JsLanguage> for JsCommentStyle {
     feature = "serde",
     derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
 )]
+#[derive(Default)]
 pub enum QuoteStyle {
+    #[default]
     Double,
     Single,
-}
-
-impl Default for QuoteStyle {
-    fn default() -> Self {
-        Self::Double
-    }
 }
 
 impl FromStr for QuoteStyle {
