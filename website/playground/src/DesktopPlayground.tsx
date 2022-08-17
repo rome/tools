@@ -89,96 +89,98 @@ export default function DesktopPlayground({
 				settings={settings}
 				setPlaygroundState={setPlaygroundState}
 			/>
-			<div className="box-border flex divide-x divide-slate-300 flex-1 overflow-auto">
-					<CodeMirror
-						value={code}
-						className="h-full overflow-y-hidden w-1/2 p-5 h-full"
-						height="100%"
-						extensions={extensions}
-						placeholder="Enter your code here"
-						onUpdate={onUpdate}
-						onChange={onChange}
-					/>
-					<Tabs
-						className="w-1/2 p-5 flex flex-col"
-						selectedTabPanelClassName="flex-1 react-tabs__tab-panel--selected overflow-y-auto"
-					>
-						<TabList>
-							<Tab selectedClassName="bg-slate-300">Formatter</Tab>
-							<Tab selectedClassName="bg-slate-300">CST</Tab>
-							<Tab selectedClassName="bg-slate-300">AST</Tab>
-							<Tab selectedClassName="bg-slate-300">Rome IR</Tab>
-							<Tab selectedClassName="bg-slate-300">Prettier IR</Tab>
-							<Tab disabled={errors === ""} selectedClassName="bg-slate-300">
-								Diagnostics
-							</Tab>
-							<Tab
-								disabled={control_flow_graph === ""}
-								selectedClassName="bg-slate-300"
-							>
-								Control Flow Graph
-							</Tab>
-						</TabList>
-						<TabPanel>
-							<div className="h-1/2 flex flex-col">
-								<h1>Rome</h1>
-								<CodeMirror
-									value={formatted_code}
-									extensions={extensions}
-									placeholder="Rome Output"
-									className="flex-1 overflow-y-auto"
-									height="100%"
-									readOnly={true}
-								/>
-							</div>
-							<div className="h-1/2 flex flex-col">
-								<h1>Prettier</h1>
-								<CodeMirror
-									value={prettierOutput.code}
-									extensions={extensions}
-									placeholder="Prettier Output"
-									className="flex-1 overflow-y-auto"
-									height="100%"
-									readOnly={true}
-								/>
-							</div>
-						</TabPanel>
-						<TabPanel><TreeView tree={cst} /></TabPanel>
-						<TabPanel>
+			<div
+				className="box-border flex divide-x divide-slate-300 flex-1 overflow-auto"
+			>
+				<CodeMirror
+					value={code}
+					className="h-full overflow-y-hidden w-1/2 p-5 h-full"
+					height="100%"
+					extensions={extensions}
+					placeholder="Enter your code here"
+					onUpdate={onUpdate}
+					onChange={onChange}
+				/>
+				<Tabs
+					className="w-1/2 p-5 flex flex-col"
+					selectedTabPanelClassName="flex-1 react-tabs__tab-panel--selected overflow-y-auto"
+				>
+					<TabList>
+						<Tab selectedClassName="bg-slate-300">Formatter</Tab>
+						<Tab selectedClassName="bg-slate-300">CST</Tab>
+						<Tab selectedClassName="bg-slate-300">AST</Tab>
+						<Tab selectedClassName="bg-slate-300">Rome IR</Tab>
+						<Tab selectedClassName="bg-slate-300">Prettier IR</Tab>
+						<Tab disabled={errors === ""} selectedClassName="bg-slate-300">
+							Diagnostics
+						</Tab>
+						<Tab
+							disabled={control_flow_graph === ""}
+							selectedClassName="bg-slate-300"
+						>
+							Control Flow Graph
+						</Tab>
+					</TabList>
+					<TabPanel>
+						<div className="h-1/2 flex flex-col">
+							<h1>Rome</h1>
 							<CodeMirror
-								value={ast}
-								extensions={romeAstCodeMirrorExtension}
-								className="h-full"
+								value={formatted_code}
+								extensions={extensions}
+								placeholder="Rome Output"
+								className="flex-1 overflow-y-auto"
 								height="100%"
 								readOnly={true}
 							/>
-						</TabPanel>
-						<TabPanel>
+						</div>
+						<div className="h-1/2 flex flex-col">
+							<h1>Prettier</h1>
 							<CodeMirror
-								value={formatter_ir}
-								extensions={romeFormatterIrCodeMirrorExtension}
-								className="h-full"
+								value={prettierOutput.code}
+								extensions={extensions}
+								placeholder="Prettier Output"
+								className="flex-1 overflow-y-auto"
 								height="100%"
 								readOnly={true}
 							/>
-						</TabPanel>
-						<TabPanel>
-							<CodeMirror
-								value={prettierOutput.ir}
-								extensions={romeFormatterIrCodeMirrorExtension}
-								className="h-full"
-								height="100%"
-								readOnly={true}
-							/>
-						</TabPanel>
-						<TabPanel>
-							<div
-								className="overflow-scroll whitespace-pre-wrap text-red-500 text-xs error-panel h-full"
-								dangerouslySetInnerHTML={{ __html: errors }}
-							/>
-						</TabPanel>
-						<TabPanel><MermaidGraph graph={control_flow_graph} /></TabPanel>
-					</Tabs>
+						</div>
+					</TabPanel>
+					<TabPanel><TreeView tree={cst} /></TabPanel>
+					<TabPanel>
+						<CodeMirror
+							value={ast}
+							extensions={romeAstCodeMirrorExtension}
+							className="h-full"
+							height="100%"
+							readOnly={true}
+						/>
+					</TabPanel>
+					<TabPanel>
+						<CodeMirror
+							value={formatter_ir}
+							extensions={romeFormatterIrCodeMirrorExtension}
+							className="h-full"
+							height="100%"
+							readOnly={true}
+						/>
+					</TabPanel>
+					<TabPanel>
+						<CodeMirror
+							value={prettierOutput.ir}
+							extensions={romeFormatterIrCodeMirrorExtension}
+							className="h-full"
+							height="100%"
+							readOnly={true}
+						/>
+					</TabPanel>
+					<TabPanel>
+						<div
+							className="overflow-scroll whitespace-pre-wrap text-red-500 text-xs error-panel h-full"
+							dangerouslySetInnerHTML={{ __html: errors }}
+						/>
+					</TabPanel>
+					<TabPanel><MermaidGraph graph={control_flow_graph} /></TabPanel>
+				</Tabs>
 			</div>
 		</div>
 	);
