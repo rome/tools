@@ -116,6 +116,8 @@ jobs:
           version: 7
           run_install: |
             args: [--prefix npm/backend-jsonrpc]
+      - name: Build TypeScript code
+        run: pnpm --prefix npm/backend-jsonrpc run tsc
       - name: Run JS tests
         run: pnpm --prefix npm/backend-jsonrpc test
 
