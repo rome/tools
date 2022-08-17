@@ -165,8 +165,6 @@ mod check {
             Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
         );
 
-        eprintln!("{:?}", console.out_buffer);
-
         assert!(result.is_err());
 
         let messages = &console.out_buffer;
@@ -626,8 +624,6 @@ mod ci {
             Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
         );
 
-        eprintln!("{:?}", console.out_buffer);
-
         match result {
             Err(Termination::CheckError) => {}
             _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
@@ -691,8 +687,6 @@ mod format {
                 file_path.as_os_str().into(),
             ]),
         );
-
-        eprintln!("{:?}", console.out_buffer);
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
@@ -1403,11 +1397,47 @@ mod configuration {
 
 mod reporter_json {
     use super::*;
-    use crate::snap_test::markup_to_string;
     use crate::UNFORMATTED;
     use pico_args::Arguments;
-    use rome_console::markup;
     use rome_fs::FileSystemExt;
+
+    #[test]
+    fn reports_formatter_check_mode() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("format.js");
+        fs.insert(file_path.into(), UNFORMATTED.as_bytes());
+
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![
+                std::ffi::OsString::from("format"),
+                std::ffi::OsString::from("--json"),
+                file_path.as_os_str().into(),
+            ]),
+        );
+
+        eprintln!("{:?}", console.out_buffer);
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut file = fs
+            .open(file_path)
+            .expect("formatting target file was removed by the CLI");
+
+        let mut content = String::new();
+        file.read_to_string(&mut content)
+            .expect("failed to read file from memory FS");
+
+        assert_eq!(content, UNFORMATTED);
+
+        assert_eq!(console.out_buffer.len(), 1);
+
+        drop(file);
+        assert_cli_snapshot("reports_formatter_check_mode", fs, console);
+    }
 
     #[test]
     fn reports_formatter_write() {
@@ -1428,8 +1458,6 @@ mod reporter_json {
             ]),
         );
 
-        eprintln!("{:?}", console.out_buffer);
-
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
         let mut file = fs
@@ -1444,17 +1472,9 @@ mod reporter_json {
 
         assert_eq!(console.out_buffer.len(), 1);
 
-        let message = console
-            .out_buffer
-            .get(0)
-            .expect("Console should have written a message");
+        drop(file);
 
-        let content = markup_to_string(markup! {
-            {message.content}
-        });
-
-        assert!(content.contains("\"filesWritten\":1"));
-        assert!(content.contains("\"newContent\":\"statement();\\n\""));
+        assert_cli_snapshot("reports_formatter_write", fs, console);
     }
 }
 

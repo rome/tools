@@ -1,0 +1,18 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 138
+expression: content
+---
+## `format.js`
+
+```js
+  statement(  )  
+```
+
+# Emitted Messages
+
+```block
+{"formatter":{"summary":{"filesCompared":1,"filesWritten":null},"details":{"format.js":{"formattedContent":"statement();\n"}}},"diagnostics":{"format.js":{"diff":{"severity":"Error","before":"  statement(  )  ","after":"statement();\n"}}}}
+```
+
+

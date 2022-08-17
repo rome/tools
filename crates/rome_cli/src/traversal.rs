@@ -143,7 +143,6 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
         } else if let Some(mut stats) = stats {
             if let TraversalMode::Format { write, .. } = execution.traversal_mode() {
                 let mut summary = FormatterStatSummary::default();
-                summary.set_duration(duration);
                 if *write {
                     summary.self_files_written(count);
                 } else {
@@ -677,15 +676,15 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
             if output != input {
                 if write {
                     file.set_content(output.as_bytes()).with_file_id(file_id)?;
+                } else {
                     if !ctx.execution.should_report_to_terminal() {
                         ctx.push_format_stat(
                             path.display().to_string(),
                             FormatterStatDetail {
-                                new_content: Some(output),
+                                formatted_content: Some(output.clone()),
                             },
                         )
                     }
-                } else {
                     // Returning the diff message will discard the content of
                     // diagnostics, meaning those would not be printed so they
                     // have to be manually sent through the console channel

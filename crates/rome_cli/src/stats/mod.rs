@@ -10,8 +10,11 @@ use std::collections::HashMap;
 
 #[derive(Debug, Default, Serialize)]
 pub struct Stats {
+    /// Information relative to the formatter
     formatter: FormatterStats,
-    errors: HashMap<String, StatErrorKind>,
+
+    /// Diagnostics tracked during a generic traversal
+    diagnostics: HashMap<String, StatErrorKind>,
 }
 
 #[derive(Debug, Serialize)]
@@ -59,13 +62,14 @@ impl Stats {
                 self.formatter.insert_stat_detail(path, stat);
             }
             StatKind::Error(path, error) => {
-                self.errors.insert(path, error);
+                self.diagnostics.insert(path, error);
             }
         }
     }
 
+    /// It tracks a generic diagnostic
     pub fn push_error(&mut self, path: String, err: StatErrorKind) {
-        self.errors.insert(path, err);
+        self.diagnostics.insert(path, err);
     }
 
     pub fn set_formatter_summary(&mut self, summary: FormatterStatSummary) {

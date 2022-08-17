@@ -1,6 +1,5 @@
 use serde::Serialize;
 use std::collections::HashMap;
-use std::time::Duration;
 
 #[derive(Debug, Default, Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -25,8 +24,6 @@ impl FormatterStats {
 #[derive(Debug, Default, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FormatterStatSummary {
-    /// how long it took to run the formatter
-    duration: Option<Duration>,
     /// how many files were compared
     files_compared: Option<usize>,
     /// how many files were written
@@ -34,10 +31,6 @@ pub struct FormatterStatSummary {
 }
 
 impl FormatterStatSummary {
-    pub(crate) fn set_duration(&mut self, duration: Duration) {
-        self.duration = Some(duration);
-    }
-
     pub(crate) fn set_files_compared(&mut self, files_compared: usize) {
         self.files_compared = Some(files_compared)
     }
@@ -51,5 +44,5 @@ impl FormatterStatSummary {
 #[serde(rename_all = "camelCase")]
 pub struct FormatterStatDetail {
     /// The new content emitted by the formatter
-    pub new_content: Option<String>,
+    pub formatted_content: Option<String>,
 }
