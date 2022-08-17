@@ -42,7 +42,9 @@ async function testWorkspace() {
 	workspace.destroy();
 }
 
-testWorkspace().catch((err) => {
+testWorkspace().then(() => {
+	process.exit(0);
+}, (err) => {
 	console.error(err);
 	process.exit(1);
 });
