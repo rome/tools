@@ -68,12 +68,14 @@ interface ParseResult {
 	errors: string[];
 }
 
-function isFormatFilesDebug(options: any): options is FormatFilesDebugOptions  {
-	return options.debug !== undefined
+function isFormatFilesDebug(options: any): options is FormatFilesDebugOptions {
+	return options.debug !== undefined;
 }
 
-function isFormatContentDebug(options: any): options is FormatContentDebugOptions  {
-	return options.debug !== undefined
+function isFormatContentDebug(
+	options: any,
+): options is FormatContentDebugOptions {
+	return options.debug !== undefined;
 }
 
 export class Rome {
@@ -94,7 +96,6 @@ export class Rome {
 			content: "",
 			errors: [],
 		};
-
 	}
 
 	async formatContent(
