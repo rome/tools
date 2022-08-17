@@ -1,7 +1,7 @@
 use crate::{
-    CliSession, Execution, FormatterStatDetail, FormatterStatSummary, Termination, TraversalMode,
+    CliSession, Execution, FormatterReportFileDetail, FormatterReportSummary, Report,
+    ReportDiagnostic, ReportDiff, ReportErrorKind, ReportKind, Termination, TraversalMode,
 };
-use crate::{StatDiagnostic, StatDiff, StatErrorKind, StatKind, Stats};
 use crossbeam::channel::{unbounded, Receiver, Sender};
 use rome_console::{
     codespan::Locus,
@@ -67,11 +67,11 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
 
     let mut has_errors = None;
     let mut duration = None;
-    let mut stats = None;
+    let mut report = None;
     let send_stats_from_messages = send_stats_from_traversal.clone();
     rayon::scope(|s| {
         s.spawn(|_| {
-            stats = Some(collect_stats(recv_stats));
+            report = Some(collect_stats(recv_stats));
         });
 
         s.spawn(|_| {
@@ -140,18 +140,18 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
                     });
                 }
             }
-        } else if let Some(mut stats) = stats {
+        } else if let Some(mut report) = report {
             if let TraversalMode::Format { write, .. } = execution.traversal_mode() {
-                let mut summary = FormatterStatSummary::default();
+                let mut summary = FormatterReportSummary::default();
                 if *write {
                     summary.self_files_written(count);
                 } else {
                     summary.set_files_compared(count);
                 }
-                stats.set_formatter_summary(summary);
+                report.set_formatter_summary(summary);
             }
 
-            let to_print = stats.as_serialized_stats()?;
+            let to_print = report.as_serialized_stats()?;
             console.log(markup! {
                 {to_print}
             });
@@ -197,7 +197,7 @@ struct ProcessMessagesOptions<'ctx> {
     /// Receiver channel that expects info when a message is sent
     recv_msgs: Receiver<Message>,
     /// Sender of stats
-    send_stats: Sender<StatKind>,
+    send_stats: Sender<ReportKind>,
 }
 
 /// This thread receives [Message]s from the workers through the `recv_msgs`
@@ -257,9 +257,9 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
                     });
                 } else {
                     send_stats
-                        .send(StatKind::Error(
+                        .send(ReportKind::Error(
                             file_name.unwrap().to_string(),
-                            StatErrorKind::Diagnostic(StatDiagnostic {
+                            ReportErrorKind::Diagnostic(ReportDiagnostic {
                                 code: Some(err.code.to_string()),
                                 title: err.message,
                                 severity: err.severity,
@@ -305,9 +305,9 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
 
                         if !mode.should_report_to_terminal() {
                             send_stats
-                                .send(StatKind::Error(
+                                .send(ReportKind::Error(
                                     name.to_string(),
-                                    StatErrorKind::Diagnostic(StatDiagnostic {
+                                    ReportErrorKind::Diagnostic(ReportDiagnostic {
                                         code: diag.code,
                                         title: String::from("test here"),
                                         severity: diag.severity,
@@ -366,9 +366,9 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
                     });
                 } else {
                     send_stats
-                        .send(StatKind::Error(
+                        .send(ReportKind::Error(
                             file_name.to_string(),
-                            StatErrorKind::Diff(StatDiff {
+                            ReportErrorKind::Diff(ReportDiff {
                                 before: old.to_string(),
                                 after: new.to_string(),
                                 severity: Severity::Error,
@@ -397,13 +397,13 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
     has_errors
 }
 
-fn collect_stats(receiver: Receiver<StatKind>) -> Stats {
-    let mut statistics = Stats::default();
+fn collect_stats(receiver: Receiver<ReportKind>) -> Report {
+    let mut report = Report::default();
     while let Ok(stat) = receiver.recv() {
-        statistics.push_detail_stat(stat);
+        report.push_detail_report(stat);
     }
 
-    statistics
+    report
 }
 
 /// Context object shared between directory traversal tasks
@@ -423,7 +423,7 @@ struct TraversalOptions<'ctx, 'app> {
     /// Channel sending messages to the display thread
     messages: Sender<Message>,
     /// Channel sending stats to the stats thread
-    stats: Sender<StatKind>,
+    stats: Sender<ReportKind>,
 }
 
 impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
@@ -439,8 +439,8 @@ impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
         })
     }
 
-    fn push_format_stat(&self, path: String, stat: FormatterStatDetail) {
-        self.stats.send(StatKind::Formatter(path, stat)).ok();
+    fn push_format_stat(&self, path: String, stat: FormatterReportFileDetail) {
+        self.stats.send(ReportKind::Formatter(path, stat)).ok();
     }
 
     fn can_lint(&self, rome_path: &RomePath) -> bool {
@@ -680,7 +680,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
                     if !ctx.execution.should_report_to_terminal() {
                         ctx.push_format_stat(
                             path.display().to_string(),
-                            FormatterStatDetail {
+                            FormatterReportFileDetail {
                                 formatted_content: Some(output.clone()),
                             },
                         )

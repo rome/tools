@@ -1,44 +1,47 @@
 pub mod formatter;
 
-use crate::stats::formatter::FormatterStatDetail;
-use crate::FormatterStatSummary;
-use formatter::FormatterStats;
+use crate::reports::formatter::{FormatterReportFileDetail, FormatterReportSummary};
+use formatter::FormatterReport;
 use rome_console::codespan::Severity;
 use rome_service::RomeError;
 use serde::Serialize;
 use std::collections::HashMap;
 
 #[derive(Debug, Default, Serialize)]
-pub struct Stats {
+pub struct Report {
     /// Information relative to the formatter
-    formatter: FormatterStats,
+    formatter: FormatterReport,
 
     /// Diagnostics tracked during a generic traversal
-    diagnostics: HashMap<String, StatErrorKind>,
+    ///
+    /// The key is the path of the file where the diagnostics occurred
+    diagnostics: HashMap<String, ReportErrorKind>,
 }
 
 #[derive(Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
-pub enum StatErrorKind {
-    Diagnostic(StatDiagnostic),
-    Diff(StatDiff),
+pub enum ReportErrorKind {
+    Diagnostic(ReportDiagnostic),
+    Diff(ReportDiff),
 }
 
+/// Information computed from a [diagnostic][rome_diagnostics::Diagnostic]
 #[derive(Debug, Serialize)]
-pub struct StatDiagnostic {
+pub struct ReportDiagnostic {
     pub severity: Severity,
     pub code: Option<String>,
     pub title: String,
 }
 
+/// Information computed from a diff result
 #[derive(Debug, Serialize)]
-pub struct StatDiff {
+pub struct ReportDiff {
     pub severity: Severity,
     pub before: String,
     pub after: String,
 }
 
-impl Default for StatDiagnostic {
+impl Default for ReportDiagnostic {
     fn default() -> Self {
         Self {
             severity: Severity::Error,
@@ -49,30 +52,30 @@ impl Default for StatDiagnostic {
 }
 
 #[derive(Debug)]
-pub enum StatKind {
-    Formatter(String, FormatterStatDetail),
-    Error(String, StatErrorKind),
+pub enum ReportKind {
+    Formatter(String, FormatterReportFileDetail),
+    Error(String, ReportErrorKind),
 }
 
-impl Stats {
+impl Report {
     /// Creates or updates a stat
-    pub fn push_detail_stat(&mut self, stat: StatKind) {
+    pub fn push_detail_report(&mut self, stat: ReportKind) {
         match stat {
-            StatKind::Formatter(path, stat) => {
-                self.formatter.insert_stat_detail(path, stat);
+            ReportKind::Formatter(path, stat) => {
+                self.formatter.insert_file_content(path, stat);
             }
-            StatKind::Error(path, error) => {
+            ReportKind::Error(path, error) => {
                 self.diagnostics.insert(path, error);
             }
         }
     }
 
     /// It tracks a generic diagnostic
-    pub fn push_error(&mut self, path: String, err: StatErrorKind) {
+    pub fn push_error(&mut self, path: String, err: ReportErrorKind) {
         self.diagnostics.insert(path, err);
     }
 
-    pub fn set_formatter_summary(&mut self, summary: FormatterStatSummary) {
+    pub fn set_formatter_summary(&mut self, summary: FormatterReportSummary) {
         self.formatter.set_summary(summary);
     }
 
