@@ -1,0 +1,31 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 137
+expression: content
+---
+## `rome.json`
+
+```json
+{
+  "formatter": {
+    "enabled": true,
+    "lineWidth": 160,
+    "indentStyle": "space",
+    "indentSize": 6
+  }
+}
+
+```
+
+## `file.js`
+
+```js
+function f() {
+      return { something };
+}
+
+```
+
+# Emitted Messages
+
+

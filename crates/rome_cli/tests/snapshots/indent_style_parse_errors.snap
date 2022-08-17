@@ -1,0 +1,6 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 137
+expression: content
+---
+
