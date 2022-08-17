@@ -127,7 +127,7 @@ mod check {
             _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
         }
 
-        assert_cli_snapshot("parse_error", fs, console);
+        assert_cli_snapshot(module_path!(), "parse_error", fs, console);
     }
 
     #[test]
@@ -149,7 +149,7 @@ mod check {
             _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
         }
 
-        assert_cli_snapshot("lint_error", fs, console);
+        assert_cli_snapshot(module_path!(), "lint_error", fs, console);
     }
 
     #[test]
@@ -189,7 +189,7 @@ mod check {
                     && content.contains("76")
             }));
 
-        assert_cli_snapshot("maximum_diagnostics", fs, console);
+        assert_cli_snapshot(module_path!(), "maximum_diagnostics", fs, console);
     }
 
     #[test]
@@ -220,7 +220,7 @@ mod check {
 
         assert_eq!(buffer, FIX_AFTER);
 
-        assert_cli_snapshot("apply_ok", fs, console);
+        assert_cli_snapshot(module_path!(), "apply_ok", fs, console);
     }
 
     #[test]
@@ -245,7 +245,7 @@ mod check {
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
-        assert_cli_snapshot("apply_noop", fs, console);
+        assert_cli_snapshot(module_path!(), "apply_noop", fs, console);
     }
 
     #[test]
@@ -278,7 +278,7 @@ mod check {
             _ => panic!("expected an error, but found none"),
         }
 
-        assert_cli_snapshot("apply_suggested_error", fs, console);
+        assert_cli_snapshot(module_path!(), "apply_suggested_error", fs, console);
     }
 
     #[test]
@@ -309,7 +309,7 @@ mod check {
 
         assert_eq!(buffer, APPLY_SUGGESTED_AFTER);
 
-        assert_cli_snapshot("apply_suggested", fs, console);
+        assert_cli_snapshot(module_path!(), "apply_suggested", fs, console);
     }
 
     #[test]
@@ -343,7 +343,12 @@ mod check {
 
         assert_eq!(buffer, FIX_BEFORE);
 
-        assert_cli_snapshot("no_lint_if_linter_is_disabled_when_run_apply", fs, console);
+        assert_cli_snapshot(
+            module_path!(),
+            "no_lint_if_linter_is_disabled_when_run_apply",
+            fs,
+            console,
+        );
     }
 
     #[test]
@@ -373,7 +378,7 @@ mod check {
 
         assert_eq!(buffer, FIX_BEFORE);
 
-        assert_cli_snapshot("no_lint_if_linter_is_disabled", fs, console);
+        assert_cli_snapshot(module_path!(), "no_lint_if_linter_is_disabled", fs, console);
     }
 
     #[test]
@@ -407,7 +412,7 @@ mod check {
 
         assert_eq!(buffer, NO_DEBUGGER_AFTER);
 
-        assert_cli_snapshot("should_disable_a_rule", fs, console);
+        assert_cli_snapshot(module_path!(), "should_disable_a_rule", fs, console);
     }
 
     #[test]
@@ -444,7 +449,7 @@ mod check {
 
         assert_eq!(buffer, JS_ERRORS_AFTER);
 
-        assert_cli_snapshot("should_disable_a_rule_group", fs, console);
+        assert_cli_snapshot(module_path!(), "should_disable_a_rule_group", fs, console);
     }
 
     #[test]
@@ -482,7 +487,7 @@ mod check {
             1
         );
 
-        assert_cli_snapshot("downgrade_severity", fs, console);
+        assert_cli_snapshot(module_path!(), "downgrade_severity", fs, console);
     }
 
     #[test]
@@ -520,7 +525,7 @@ mod check {
             1
         );
 
-        assert_cli_snapshot("upgrade_severity", fs, console);
+        assert_cli_snapshot(module_path!(), "upgrade_severity", fs, console);
     }
 }
 
@@ -560,7 +565,7 @@ mod ci {
 
         drop(file);
 
-        assert_cli_snapshot("ci_ok", fs, console);
+        assert_cli_snapshot(module_path!(), "ci_ok", fs, console);
     }
 
     #[test]
@@ -582,7 +587,7 @@ mod ci {
             _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
         }
 
-        assert_cli_snapshot("formatting_error", fs, console);
+        assert_cli_snapshot(module_path!(), "formatting_error", fs, console);
     }
 
     #[test]
@@ -604,7 +609,7 @@ mod ci {
             _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
         }
 
-        assert_cli_snapshot("ci_parse_error", fs, console);
+        assert_cli_snapshot(module_path!(), "ci_parse_error", fs, console);
     }
 
     #[test]
@@ -628,7 +633,7 @@ mod ci {
             _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
         }
 
-        assert_cli_snapshot("ci_lint_error", fs, console);
+        assert_cli_snapshot(module_path!(), "ci_lint_error", fs, console);
     }
 }
 
@@ -666,7 +671,7 @@ mod format {
         assert_eq!(content, UNFORMATTED);
 
         drop(file);
-        assert_cli_snapshot("formatter_print", fs, console);
+        assert_cli_snapshot(module_path!(), "formatter_print", fs, console);
     }
 
     #[test]
@@ -704,7 +709,7 @@ mod format {
         assert_eq!(console.out_buffer.len(), 1);
 
         drop(file);
-        assert_cli_snapshot("formatter_write", fs, console);
+        assert_cli_snapshot(module_path!(), "formatter_write", fs, console);
     }
 
     // Ensures lint warnings are not printed in format mode
@@ -745,7 +750,7 @@ mod format {
         );
 
         drop(file);
-        assert_cli_snapshot("formatter_lint_warning", fs, console);
+        assert_cli_snapshot(module_path!(), "formatter_lint_warning", fs, console);
     }
 
     #[test]
@@ -771,7 +776,7 @@ mod format {
             ),
         }
 
-        assert_cli_snapshot("indent_style_parse_errors", fs, console);
+        assert_cli_snapshot(module_path!(), "indent_style_parse_errors", fs, console);
     }
 
     #[test]
@@ -797,7 +802,12 @@ mod format {
             ),
         }
 
-        assert_cli_snapshot("indent_size_parse_errors_negative", fs, console);
+        assert_cli_snapshot(
+            module_path!(),
+            "indent_size_parse_errors_negative",
+            fs,
+            console,
+        );
     }
 
     #[test]
@@ -823,7 +833,12 @@ mod format {
             ),
         }
 
-        assert_cli_snapshot("indent_size_parse_errors_overflow", fs, console);
+        assert_cli_snapshot(
+            module_path!(),
+            "indent_size_parse_errors_overflow",
+            fs,
+            console,
+        );
     }
 
     #[test]
@@ -849,7 +864,12 @@ mod format {
             ),
         }
 
-        assert_cli_snapshot("line_width_parse_errors_negative", fs, console);
+        assert_cli_snapshot(
+            module_path!(),
+            "line_width_parse_errors_negative",
+            fs,
+            console,
+        );
     }
 
     #[test]
@@ -875,7 +895,12 @@ mod format {
             ),
         }
 
-        assert_cli_snapshot("line_width_parse_errors_overflow", fs, console);
+        assert_cli_snapshot(
+            module_path!(),
+            "line_width_parse_errors_overflow",
+            fs,
+            console,
+        );
     }
 
     #[test]
@@ -911,7 +936,7 @@ mod format {
         assert_eq!(content, CUSTOM_FORMAT_AFTER);
 
         drop(file);
-        assert_cli_snapshot("format_with_configuration", fs, console);
+        assert_cli_snapshot(module_path!(), "format_with_configuration", fs, console);
     }
 
     #[test]
@@ -947,7 +972,7 @@ mod format {
         assert_eq!(content, CUSTOM_FORMAT_BEFORE);
 
         drop(file);
-        assert_cli_snapshot("format_is_disabled", fs, console);
+        assert_cli_snapshot(module_path!(), "format_is_disabled", fs, console);
     }
 
     #[test]
@@ -982,7 +1007,7 @@ mod format {
 
         assert_eq!(content, "function f() {\n\treturn {};\n}\n");
 
-        assert_cli_snapshot("format_stdin_successfully", fs, console);
+        assert_cli_snapshot(module_path!(), "format_stdin_successfully", fs, console);
     }
 
     #[test]
@@ -1009,7 +1034,7 @@ mod format {
             }
         }
 
-        assert_cli_snapshot("format_stdin_with_errors", fs, console);
+        assert_cli_snapshot(module_path!(), "format_stdin_with_errors", fs, console);
     }
 
     #[test]
@@ -1047,7 +1072,7 @@ mod format {
 
         assert_eq!(content, "function f() {return{}}".to_string());
 
-        assert_cli_snapshot("does_not_format_if_disabled", fs, console);
+        assert_cli_snapshot(module_path!(), "does_not_format_if_disabled", fs, console);
     }
 }
 
@@ -1233,7 +1258,7 @@ mod init {
 
         drop(file);
 
-        assert_cli_snapshot("creates_config_file", fs, console);
+        assert_cli_snapshot(module_path!(), "creates_config_file", fs, console);
     }
 }
 
@@ -1265,7 +1290,7 @@ mod configuration {
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
-        assert_cli_snapshot("correct_root", fs, console);
+        assert_cli_snapshot(module_path!(), "correct_root", fs, console);
     }
 
     #[test]
@@ -1284,7 +1309,7 @@ mod configuration {
 
         assert!(result.is_err(), "run_cli returned {result:?}");
 
-        assert_cli_snapshot("line_width_error", fs, console);
+        assert_cli_snapshot(module_path!(), "line_width_error", fs, console);
     }
 
     #[test]
@@ -1303,7 +1328,7 @@ mod configuration {
 
         assert!(result.is_err(), "run_cli returned {result:?}");
 
-        assert_cli_snapshot("incorrect_rule_name", fs, console);
+        assert_cli_snapshot(module_path!(), "incorrect_rule_name", fs, console);
     }
 
     #[test]
@@ -1322,7 +1347,7 @@ mod configuration {
 
         assert!(result.is_err(), "run_cli returned {result:?}");
 
-        assert_cli_snapshot("incorrect_globals", fs, console);
+        assert_cli_snapshot(module_path!(), "incorrect_globals", fs, console);
     }
 
     #[test]

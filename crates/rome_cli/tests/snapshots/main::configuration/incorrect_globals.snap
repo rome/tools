@@ -1,0 +1,19 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 145
+expression: content
+---
+## `rome.json`
+
+```json
+{
+  "linter": {
+    "enabled": false
+  },
+  "javascript": {
+    "globals": [false]
+  }
+}
+```
+
+

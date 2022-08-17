@@ -1,0 +1,16 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 145
+expression: content
+---
+## `rome.json`
+
+```json
+{
+  "formatter": {
+    "lineWidth": 500
+  }
+}
+```
+
+
