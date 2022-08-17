@@ -83,25 +83,29 @@ export default function DesktopPlayground({
 	}, []);
 
 	return (
-		<div className="divide-y divide-slate-300">
+		<div className="divide-y divide-slate-300 h-screen flex flex-col">
 			<h1 className="p-4 text-xl">Rome Playground</h1>
 			<SettingsMenu
 				settings={settings}
 				setPlaygroundState={setPlaygroundState}
 			/>
-			<div className="box-border flex h-screen divide-x divide-slate-300">
-				<div className="w-1/2 p-5">
+			<div className="box-border flex divide-x divide-slate-300 grow">
+				<div className="w-1/2 p-5 h-full">
 					<CodeMirror
 						value={code}
-						height="70vh"
+						className="h-full"
+						height="100%"
 						extensions={extensions}
 						placeholder="Enter your code here"
 						onUpdate={onUpdate}
 						onChange={onChange}
 					/>
 				</div>
-				<div className="w-1/2 p-5 flex flex-col">
-					<Tabs>
+				<div className="w-1/2 p-5">
+					<Tabs
+						className="h-full flex flex-col"
+						selectedTabPanelClassName="grow react-tabs__tab-panel--selected"
+					>
 						<TabList>
 							<Tab selectedClassName="bg-slate-300">Formatter</Tab>
 							<Tab selectedClassName="bg-slate-300">CST</Tab>
@@ -119,29 +123,36 @@ export default function DesktopPlayground({
 							</Tab>
 						</TabList>
 						<TabPanel>
-							<h1>Rome</h1>
-							<CodeMirror
-								value={formatted_code}
-								extensions={extensions}
-								placeholder="Rome Output"
-								height="30vh"
-								readOnly={true}
-							/>
-							<h1>Prettier</h1>
-							<CodeMirror
-								value={prettierOutput.code}
-								extensions={extensions}
-								placeholder="Prettier Output"
-								height="30vh"
-								readOnly={true}
-							/>
+							<div className="h-1/2 flex flex-col">
+								<h1>Rome</h1>
+								<CodeMirror
+									className="grow"
+									value={formatted_code}
+									extensions={extensions}
+									placeholder="Rome Output"
+									height="100%"
+									readOnly={true}
+								/>
+							</div>
+							<div className="h-1/2 flex flex-col">
+								<h1>Prettier</h1>
+								<CodeMirror
+									value={prettierOutput.code}
+									extensions={extensions}
+									placeholder="Prettier Output"
+									className="grow"
+									height="100%"
+									readOnly={true}
+								/>
+							</div>
 						</TabPanel>
 						<TabPanel><TreeView tree={cst} /></TabPanel>
 						<TabPanel>
 							<CodeMirror
 								value={ast}
 								extensions={romeAstCodeMirrorExtension}
-								height="70vh"
+								className="h-full"
+								height="100%"
 								readOnly={true}
 							/>
 						</TabPanel>
@@ -149,16 +160,23 @@ export default function DesktopPlayground({
 							<CodeMirror
 								value={formatter_ir}
 								extensions={romeFormatterIrCodeMirrorExtension}
-								height="70vh"
+								className="h-full"
+								height="100%"
 								readOnly={true}
 							/>
 						</TabPanel>
 						<TabPanel>
-							<pre className="h-screen overflow-scroll">{prettierOutput.ir}</pre>
+							<CodeMirror
+								value={prettierOutput.ir}
+								extensions={romeFormatterIrCodeMirrorExtension}
+								className="h-full"
+								height="100%"
+								readOnly={true}
+							/>
 						</TabPanel>
 						<TabPanel>
 							<div
-								className="h-screen overflow-scroll whitespace-pre-wrap text-red-500 text-xs error-panel"
+								className="overflow-scroll whitespace-pre-wrap text-red-500 text-xs error-panel h-full"
 								dangerouslySetInnerHTML={{ __html: errors }}
 							/>
 						</TabPanel>
