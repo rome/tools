@@ -1,6 +1,6 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 137
+assertion_line: 145
 expression: content
 ---
 ## `rome.json`
@@ -11,7 +11,7 @@ expression: content
     "rules": {
         "recommended": true,
         "js": {
-            "recommended": false
+            "noDebugger": "off"
         }
     }
   }
@@ -21,12 +21,7 @@ expression: content
 ## `fix.js`
 
 ```js
-try {
-    !a && !b;
-} catch (err) {
-    err = 24;
-}
-
+debugger;
 ```
 
 # Emitted Messages

@@ -95,7 +95,12 @@ pub fn markup_to_string(markup: Markup) -> String {
 }
 
 /// Function used to snapshot a session test of the a CLI run.
-pub fn assert_cli_snapshot(test_name: &str, fs: MemoryFileSystem, console: BufferConsole) {
+pub fn assert_cli_snapshot(
+    module_path: &str,
+    test_name: &str,
+    fs: MemoryFileSystem,
+    console: BufferConsole,
+) {
     let mut cli_snapshot = CliSnapshot::default();
     let config_path = PathBuf::from("rome.json");
     let configuration = fs.read(&config_path).ok();
@@ -131,9 +136,13 @@ pub fn assert_cli_snapshot(test_name: &str, fs: MemoryFileSystem, console: Buffe
 
     let content = cli_snapshot.emit_content_snapshot();
 
+    let snapshot_path = PathBuf::from("snapshots").join(module_path);
+
     insta::with_settings!({
         prepend_module_to_snapshot => false,
+        snapshot_path => snapshot_path
     }, {
         insta::assert_snapshot!(test_name, content);
+
     });
 }

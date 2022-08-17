@@ -26,7 +26,7 @@ rome_js_factory = { path = "../rome_js_factory" }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 tests_macros = { path = "../tests_macros" }
-insta = { version="1.17.0", features = ["glob"] }
+insta = { version="1.18.2", features = ["glob"] }
 rome_diagnostics = { path = "../rome_diagnostics" }
 countme = { version = "3.0.0", features = ["enable"] }
 parking_lot = "0.12.0"

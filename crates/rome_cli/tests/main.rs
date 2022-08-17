@@ -94,13 +94,14 @@ mod check {
     #[test]
     fn ok() {
         let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
 
         let file_path = Path::new("check.js");
         fs.insert(file_path.into(), FORMATTED.as_bytes());
 
         let result = run_cli(
-            DynRef::Owned(Box::new(fs)),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
         );
 
@@ -110,13 +111,14 @@ mod check {
     #[test]
     fn parse_error() {
         let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
 
         let file_path = Path::new("check.js");
         fs.insert(file_path.into(), PARSE_ERROR.as_bytes());
 
         let result = run_cli(
-            DynRef::Owned(Box::new(fs)),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
         );
 
@@ -124,18 +126,21 @@ mod check {
             Err(Termination::CheckError) => {}
             _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
         }
+
+        assert_cli_snapshot(module_path!(), "parse_error", fs, console);
     }
 
     #[test]
     fn lint_error() {
         let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
 
         let file_path = Path::new("check.js");
         fs.insert(file_path.into(), LINT_ERROR.as_bytes());
 
         let result = run_cli(
-            DynRef::Owned(Box::new(fs)),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
         );
 
@@ -143,6 +148,8 @@ mod check {
             Err(Termination::CheckError) => {}
             _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
         }
+
+        assert_cli_snapshot(module_path!(), "lint_error", fs, console);
     }
 
     #[test]
@@ -182,7 +189,7 @@ mod check {
                     && content.contains("76")
             }));
 
-        assert_cli_snapshot("maximum_diagnostics", fs, console);
+        assert_cli_snapshot(module_path!(), "maximum_diagnostics", fs, console);
     }
 
     #[test]
@@ -213,7 +220,7 @@ mod check {
 
         assert_eq!(buffer, FIX_AFTER);
 
-        assert_cli_snapshot("apply_ok", fs, console);
+        assert_cli_snapshot(module_path!(), "apply_ok", fs, console);
     }
 
     #[test]
@@ -238,7 +245,7 @@ mod check {
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
 
-        assert_cli_snapshot("apply_noop", fs, console);
+        assert_cli_snapshot(module_path!(), "apply_noop", fs, console);
     }
 
     #[test]
@@ -271,7 +278,7 @@ mod check {
             _ => panic!("expected an error, but found none"),
         }
 
-        assert_cli_snapshot("apply_suggested_error", fs, console);
+        assert_cli_snapshot(module_path!(), "apply_suggested_error", fs, console);
     }
 
     #[test]
@@ -302,7 +309,7 @@ mod check {
 
         assert_eq!(buffer, APPLY_SUGGESTED_AFTER);
 
-        assert_cli_snapshot("apply_suggested", fs, console);
+        assert_cli_snapshot(module_path!(), "apply_suggested", fs, console);
     }
 
     #[test]
@@ -336,7 +343,12 @@ mod check {
 
         assert_eq!(buffer, FIX_BEFORE);
 
-        assert_cli_snapshot("no_lint_if_linter_is_disabled_when_run_apply", fs, console);
+        assert_cli_snapshot(
+            module_path!(),
+            "no_lint_if_linter_is_disabled_when_run_apply",
+            fs,
+            console,
+        );
     }
 
     #[test]
@@ -366,7 +378,7 @@ mod check {
 
         assert_eq!(buffer, FIX_BEFORE);
 
-        assert_cli_snapshot("no_lint_if_linter_is_disabled", fs, console);
+        assert_cli_snapshot(module_path!(), "no_lint_if_linter_is_disabled", fs, console);
     }
 
     #[test]
@@ -400,7 +412,7 @@ mod check {
 
         assert_eq!(buffer, NO_DEBUGGER_AFTER);
 
-        assert_cli_snapshot("should_disable_a_rule", fs, console);
+        assert_cli_snapshot(module_path!(), "should_disable_a_rule", fs, console);
     }
 
     #[test]
@@ -437,7 +449,7 @@ mod check {
 
         assert_eq!(buffer, JS_ERRORS_AFTER);
 
-        assert_cli_snapshot("should_disable_a_rule_group", fs, console);
+        assert_cli_snapshot(module_path!(), "should_disable_a_rule_group", fs, console);
     }
 
     #[test]
@@ -475,7 +487,7 @@ mod check {
             1
         );
 
-        assert_cli_snapshot("downgrade_severity", fs, console);
+        assert_cli_snapshot(module_path!(), "downgrade_severity", fs, console);
     }
 
     #[test]
@@ -513,7 +525,7 @@ mod check {
             1
         );
 
-        assert_cli_snapshot("upgrade_severity", fs, console);
+        assert_cli_snapshot(module_path!(), "upgrade_severity", fs, console);
     }
 }
 
@@ -524,11 +536,10 @@ mod ci {
     #[test]
     fn ok() {
         let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
 
         let file_path = Path::new("ci.js");
         fs.insert(file_path.into(), FORMATTED.as_bytes());
-
-        let mut console = BufferConsole::default();
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
@@ -551,18 +562,23 @@ mod ci {
         if console.out_buffer.len() != 1 {
             panic!("unexpected console content: {:#?}", console.out_buffer);
         }
+
+        drop(file);
+
+        assert_cli_snapshot(module_path!(), "ci_ok", fs, console);
     }
 
     #[test]
     fn formatting_error() {
         let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
 
         let file_path = Path::new("ci.js");
         fs.insert(file_path.into(), UNFORMATTED.as_bytes());
 
         let result = run_cli(
-            DynRef::Owned(Box::new(fs)),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
         );
 
@@ -570,18 +586,21 @@ mod ci {
             Err(Termination::CheckError) => {}
             _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
         }
+
+        assert_cli_snapshot(module_path!(), "formatting_error", fs, console);
     }
 
     #[test]
-    fn parse_error() {
+    fn ci_parse_error() {
         let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
 
         let file_path = Path::new("ci.js");
         fs.insert(file_path.into(), PARSE_ERROR.as_bytes());
 
         let result = run_cli(
-            DynRef::Owned(Box::new(fs)),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
         );
 
@@ -589,10 +608,12 @@ mod ci {
             Err(Termination::CheckError) => {}
             _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
         }
+
+        assert_cli_snapshot(module_path!(), "ci_parse_error", fs, console);
     }
 
     #[test]
-    fn lint_error() {
+    fn ci_lint_error() {
         let mut fs = MemoryFileSystem::default();
 
         let file_path = Path::new("ci.js");
@@ -612,7 +633,7 @@ mod ci {
             _ => panic!("run_cli returned {result:?} for a failed CI check, expected an error"),
         }
 
-        assert_cli_snapshot("lint_error", fs, console);
+        assert_cli_snapshot(module_path!(), "ci_lint_error", fs, console);
     }
 }
 
@@ -626,13 +647,14 @@ mod format {
     #[test]
     fn print() {
         let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
 
         let file_path = Path::new("format.js");
         fs.insert(file_path.into(), UNFORMATTED.as_bytes());
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![OsString::from("format"), file_path.as_os_str().into()]),
         );
 
@@ -647,6 +669,9 @@ mod format {
             .expect("failed to read file from memory FS");
 
         assert_eq!(content, UNFORMATTED);
+
+        drop(file);
+        assert_cli_snapshot(module_path!(), "formatter_print", fs, console);
     }
 
     #[test]
@@ -682,6 +707,9 @@ mod format {
         assert_eq!(content, FORMATTED);
 
         assert_eq!(console.out_buffer.len(), 1);
+
+        drop(file);
+        assert_cli_snapshot(module_path!(), "formatter_write", fs, console);
     }
 
     // Ensures lint warnings are not printed in format mode
@@ -720,13 +748,19 @@ mod format {
             "console {:#?}",
             console.out_buffer
         );
+
+        drop(file);
+        assert_cli_snapshot(module_path!(), "formatter_lint_warning", fs, console);
     }
 
     #[test]
     fn indent_style_parse_errors() {
+        let mut console = BufferConsole::default();
+        let mut fs = MemoryFileSystem::default();
+
         let result = run_cli(
-            DynRef::Owned(Box::new(MemoryFileSystem::default())),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("--indent-style"),
@@ -741,13 +775,18 @@ mod format {
                 "run_cli returned {result:?} for an invalid argument value, expected an error"
             ),
         }
+
+        assert_cli_snapshot(module_path!(), "indent_style_parse_errors", fs, console);
     }
 
     #[test]
     fn indent_size_parse_errors_negative() {
+        let mut console = BufferConsole::default();
+        let mut fs = MemoryFileSystem::default();
+
         let result = run_cli(
-            DynRef::Owned(Box::new(MemoryFileSystem::default())),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("--indent-size"),
@@ -762,13 +801,23 @@ mod format {
                 "run_cli returned {result:?} for an invalid argument value, expected an error"
             ),
         }
+
+        assert_cli_snapshot(
+            module_path!(),
+            "indent_size_parse_errors_negative",
+            fs,
+            console,
+        );
     }
 
     #[test]
     fn indent_size_parse_errors_overflow() {
+        let mut console = BufferConsole::default();
+        let mut fs = MemoryFileSystem::default();
+
         let result = run_cli(
-            DynRef::Owned(Box::new(MemoryFileSystem::default())),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("--indent-size"),
@@ -783,13 +832,23 @@ mod format {
                 "run_cli returned {result:?} for an invalid argument value, expected an error"
             ),
         }
+
+        assert_cli_snapshot(
+            module_path!(),
+            "indent_size_parse_errors_overflow",
+            fs,
+            console,
+        );
     }
 
     #[test]
     fn line_width_parse_errors_negative() {
+        let mut console = BufferConsole::default();
+        let mut fs = MemoryFileSystem::default();
+
         let result = run_cli(
-            DynRef::Owned(Box::new(MemoryFileSystem::default())),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("--line-width"),
@@ -804,13 +863,23 @@ mod format {
                 "run_cli returned {result:?} for an invalid argument value, expected an error"
             ),
         }
+
+        assert_cli_snapshot(
+            module_path!(),
+            "line_width_parse_errors_negative",
+            fs,
+            console,
+        );
     }
 
     #[test]
     fn line_width_parse_errors_overflow() {
+        let mut console = BufferConsole::default();
+        let mut fs = MemoryFileSystem::default();
+
         let result = run_cli(
-            DynRef::Owned(Box::new(MemoryFileSystem::default())),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("--line-width"),
@@ -825,10 +894,18 @@ mod format {
                 "run_cli returned {result:?} for an invalid argument value, expected an error"
             ),
         }
+
+        assert_cli_snapshot(
+            module_path!(),
+            "line_width_parse_errors_overflow",
+            fs,
+            console,
+        );
     }
 
     #[test]
     fn format_with_configuration() {
+        let mut console = BufferConsole::default();
         let mut fs = MemoryFileSystem::default();
         let file_path = Path::new("rome.json");
         fs.insert(file_path.into(), CONFIG_FORMAT.as_bytes());
@@ -838,7 +915,7 @@ mod format {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("file.js"),
@@ -857,11 +934,15 @@ mod format {
             .expect("failed to read file from memory FS");
 
         assert_eq!(content, CUSTOM_FORMAT_AFTER);
+
+        drop(file);
+        assert_cli_snapshot(module_path!(), "format_with_configuration", fs, console);
     }
 
     #[test]
     fn format_is_disabled() {
         let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
         let file_path = Path::new("rome.json");
         fs.insert(file_path.into(), CONFIG_DISABLED_FORMATTER.as_bytes());
 
@@ -870,7 +951,7 @@ mod format {
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("file.js"),
@@ -889,6 +970,9 @@ mod format {
             .expect("failed to read file from memory FS");
 
         assert_eq!(content, CUSTOM_FORMAT_BEFORE);
+
+        drop(file);
+        assert_cli_snapshot(module_path!(), "format_is_disabled", fs, console);
     }
 
     #[test]
@@ -923,7 +1007,7 @@ mod format {
 
         assert_eq!(content, "function f() {\n\treturn {};\n}\n");
 
-        assert_cli_snapshot("format_stdin_successfully", fs, console);
+        assert_cli_snapshot(module_path!(), "format_stdin_successfully", fs, console);
     }
 
     #[test]
@@ -950,7 +1034,7 @@ mod format {
             }
         }
 
-        assert_cli_snapshot("format_stdin_with_errors", fs, console);
+        assert_cli_snapshot(module_path!(), "format_stdin_with_errors", fs, console);
     }
 
     #[test]
@@ -988,7 +1072,7 @@ mod format {
 
         assert_eq!(content, "function f() {return{}}".to_string());
 
-        assert_cli_snapshot("does_not_format_if_disabled", fs, console);
+        assert_cli_snapshot(module_path!(), "does_not_format_if_disabled", fs, console);
     }
 }
 
@@ -997,9 +1081,12 @@ mod help {
 
     #[test]
     fn unknown_command() {
+        let mut console = BufferConsole::default();
+        let mut fs = MemoryFileSystem::default();
+
         let result = run_cli(
-            DynRef::Owned(Box::new(MemoryFileSystem::default())),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![OsString::from("unknown"), OsString::from("--help")]),
         );
 
@@ -1018,9 +1105,12 @@ mod main {
 
     #[test]
     fn unknown_command() {
+        let mut console = BufferConsole::default();
+        let mut fs = MemoryFileSystem::default();
+
         let result = run_cli(
-            DynRef::Owned(Box::new(MemoryFileSystem::default())),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![OsString::from("unknown")]),
         );
 
@@ -1032,9 +1122,12 @@ mod main {
 
     #[test]
     fn unexpected_argument() {
+        let mut console = BufferConsole::default();
+        let mut fs = MemoryFileSystem::default();
+
         let result = run_cli(
-            DynRef::Owned(Box::new(MemoryFileSystem::default())),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![
                 OsString::from("format"),
                 OsString::from("--unknown"),
@@ -1052,9 +1145,12 @@ mod main {
 
     #[test]
     fn empty_arguments() {
+        let mut console = BufferConsole::default();
+        let mut fs = MemoryFileSystem::default();
+
         let result = run_cli(
-            DynRef::Owned(Box::new(MemoryFileSystem::default())),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![OsString::from("format")]),
         );
 
@@ -1066,9 +1162,12 @@ mod main {
 
     #[test]
     fn missing_argument() {
+        let mut console = BufferConsole::default();
+        let mut fs = MemoryFileSystem::default();
+
         let result = run_cli(
-            DynRef::Owned(Box::new(MemoryFileSystem::default())),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![OsString::from("format"), OsString::from("--write")]),
         );
 
@@ -1080,9 +1179,12 @@ mod main {
 
     #[test]
     fn incorrect_value() {
+        let mut console = BufferConsole::default();
+        let mut fs = MemoryFileSystem::default();
+
         let result = run_cli(
-            DynRef::Owned(Box::new(MemoryFileSystem::default())),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![
                 OsString::from("check"),
                 OsString::from("--max-diagnostics=foo"),
@@ -1099,9 +1201,12 @@ mod main {
 
     #[test]
     fn overflow_value() {
+        let mut console = BufferConsole::default();
+        let mut fs = MemoryFileSystem::default();
+
         let result = run_cli(
-            DynRef::Owned(Box::new(MemoryFileSystem::default())),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![
                 OsString::from("check"),
                 OsString::from("--max-diagnostics=500"),
@@ -1131,10 +1236,11 @@ mod init {
     #[test]
     fn creates_config_file() {
         let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![OsString::from("init")]),
         );
         assert!(result.is_ok(), "run_cli returned {result:?}");
@@ -1149,6 +1255,10 @@ mod init {
         file.read_to_string(&mut content)
             .expect("failed to read file from memory FS");
         assert_eq!(content, CONFIG_INIT_DEFAULT);
+
+        drop(file);
+
+        assert_cli_snapshot(module_path!(), "creates_config_file", fs, console);
     }
 }
 
@@ -1168,101 +1278,89 @@ mod configuration {
     #[test]
     fn correct_root() {
         let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
         let file_path = Path::new("rome.json");
         fs.insert(file_path.into(), CONFIG_ALL_FIELDS.as_bytes());
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![OsString::from("format"), OsString::from("file.js")]),
         );
 
         assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        assert_cli_snapshot(module_path!(), "correct_root", fs, console);
     }
 
     #[test]
     fn line_width_error() {
         let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
 
         let file_path = Path::new("rome.json");
         fs.insert(file_path.into(), CONFIG_BAD_LINE_WIDTH.as_bytes());
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![OsString::from("format"), OsString::from("file.js")]),
         );
 
         assert!(result.is_err(), "run_cli returned {result:?}");
 
-        match result {
-            Err(error) => {
-                assert!(error
-                    .to_string()
-                    .contains("The line width exceeds the maximum value (320)"),)
-            }
-            _ => panic!("expected an error, but found none"),
-        }
+        assert_cli_snapshot(module_path!(), "line_width_error", fs, console);
     }
 
     #[test]
     fn incorrect_rule_name() {
         let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
 
         let file_path = Path::new("rome.json");
         fs.insert(file_path.into(), CONFIG_LINTER_WRONG_RULE.as_bytes());
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![OsString::from("check"), OsString::from("file.js")]),
         );
 
         assert!(result.is_err(), "run_cli returned {result:?}");
 
-        match result {
-            Err(error) => {
-                assert!(error.to_string().contains("Invalid rule name `foo_rule`"),)
-            }
-            _ => panic!("expected an error, but found none"),
-        }
+        assert_cli_snapshot(module_path!(), "incorrect_rule_name", fs, console);
     }
 
     #[test]
     fn incorrect_globals() {
         let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
 
         let file_path = Path::new("rome.json");
         fs.insert(file_path.into(), CONFIG_INCORRECT_GLOBALS.as_bytes());
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![OsString::from("check"), OsString::from("file.js")]),
         );
 
         assert!(result.is_err(), "run_cli returned {result:?}");
 
-        match result {
-            Err(error) => {
-                assert!(error
-                    .to_string()
-                    .contains("invalid type: boolean `false`, expected a string"),)
-            }
-            _ => panic!("expected an error, but found none"),
-        }
+        assert_cli_snapshot(module_path!(), "incorrect_globals", fs, console);
     }
 
     #[test]
     fn ignore_globals() {
         let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
 
         let file_path = Path::new("rome.json");
         fs.insert(file_path.into(), CONFIG_INCORRECT_GLOBALS_V2.as_bytes());
 
         let result = run_cli(
             DynRef::Borrowed(&mut fs),
-            DynRef::Owned(Box::new(BufferConsole::default())),
+            DynRef::Borrowed(&mut console),
             Arguments::from_vec(vec![OsString::from("check"), OsString::from("file.js")]),
         );
 
