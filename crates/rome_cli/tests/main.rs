@@ -904,6 +904,39 @@ mod format {
     }
 
     #[test]
+    fn quote_properties_parse_errors_letter_case() {
+        let mut console = BufferConsole::default();
+        let mut fs = MemoryFileSystem::default();
+
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![
+                OsString::from("format"),
+                OsString::from("--quote-properties"),
+                OsString::from("As-needed"),
+                OsString::from("file.js"),
+            ]),
+        );
+
+        match result {
+            Err(Termination::ParseError { argument, .. }) => {
+                assert_eq!(argument, "--quote-properties")
+            }
+            _ => panic!(
+                "run_cli returned {result:?} for an invalid argument value, expected an error"
+            ),
+        }
+
+        assert_cli_snapshot(
+            module_path!(),
+            "quote_properties_parse_errors_letter_case",
+            fs,
+            console,
+        );
+    }
+
+    #[test]
     fn format_with_configuration() {
         let mut console = BufferConsole::default();
         let mut fs = MemoryFileSystem::default();
