@@ -1436,7 +1436,7 @@ mod reporter_json {
         assert_eq!(console.out_buffer.len(), 1);
 
         drop(file);
-        assert_cli_snapshot("reports_formatter_check_mode", fs, console);
+        assert_cli_snapshot(module_path!(), "reports_formatter_check_mode", fs, console);
     }
 
     #[test]
@@ -1474,7 +1474,7 @@ mod reporter_json {
 
         drop(file);
 
-        assert_cli_snapshot("reports_formatter_write", fs, console);
+        assert_cli_snapshot(module_path!(), "reports_formatter_write", fs, console);
     }
 }
 
