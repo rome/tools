@@ -102,16 +102,11 @@ impl Default for PlainQuoteStyle {
     }
 }
 
-#[derive(Deserialize, Serialize, Debug, Eq, PartialEq)]
+#[derive(Deserialize, Default, Serialize, Debug, Eq, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(rename_all = "camelCase", remote = "QuoteProperties")]
 pub enum PlainQuoteProperties {
+    #[default]
     AsNeeded,
     Preserve,
-}
-
-impl Default for PlainQuoteProperties {
-    fn default() -> Self {
-        Self::AsNeeded
-    }
 }
