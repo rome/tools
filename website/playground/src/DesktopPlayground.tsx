@@ -122,8 +122,8 @@ export default function DesktopPlayground({
 						</Tab>
 					</TabList>
 					<TabPanel>
-						<div className="h-1/2 flex flex-col">
-							<h1>Rome</h1>
+						<div className="h-1/2 flex flex-col pb-4">
+							<h1 className="text-lg font-medium pb-2">Rome</h1>
 							<CodeMirror
 								value={formatted_code}
 								extensions={extensions}
@@ -134,7 +134,7 @@ export default function DesktopPlayground({
 							/>
 						</div>
 						<div className="h-1/2 flex flex-col">
-							<h1>Prettier</h1>
+							<h1 className="text-lg font-medium pb-2">Prettier</h1>
 							<CodeMirror
 								value={prettierOutput.code}
 								extensions={extensions}
