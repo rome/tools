@@ -5,12 +5,12 @@ use rome_js_syntax::{
     JsAnyExportClause, JsAnyExpression, JsAnyFormalParameter, JsAnyImportClause,
     JsAnyLiteralExpression, JsAnyModuleItem, JsAnyName, JsAnyNamedImport,
     JsAnyNamedImportSpecifier, JsAnyObjectMember, JsAnyObjectMemberName, JsAnyParameter,
-    JsAnyStatement, TsAnyName, TsAnyReturnType, TsAnyTypeMember, TsType, T,
+    JsAnyStatement, TriviaPieceKind, TsAnyName, TsAnyReturnType, TsAnyTypeMember, TsType, T,
 };
 use rome_rowan::AstNode;
 use rome_service::workspace_types::{generate_type, methods, ModuleQueue};
 use xtask::{project_root, Mode, Result};
-use xtask_codegen::update;
+use xtask_codegen::{to_camel_case, update};
 
 pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
     let bindings_path = project_root().join("npm/backend-jsonrpc/src/workspace.ts");
@@ -25,10 +25,12 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
         let params = generate_type(&mut declarations, &mut queue, &method.params);
         let result = generate_type(&mut declarations, &mut queue, &method.result);
 
+        let camel_case = to_camel_case(method.name);
+
         member_definitions.push(TsAnyTypeMember::TsMethodSignatureTypeMember(
             make::ts_method_signature_type_member(
                 JsAnyObjectMemberName::JsLiteralMemberName(make::js_literal_member_name(
-                    make::ident(method.name),
+                    make::ident(&camel_case),
                 )),
                 make::js_parameters(
                     make::token(T!['(']),
@@ -72,7 +74,7 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
         member_declarations.push(JsAnyObjectMember::JsMethodObjectMember(
             make::js_method_object_member(
                 JsAnyObjectMemberName::JsLiteralMemberName(make::js_literal_member_name(
-                    make::ident(method.name),
+                    make::ident(&camel_case),
                 )),
                 make::js_parameters(
                     make::token(T!['(']),
@@ -116,7 +118,7 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
                                     make::js_call_arguments(
                                         make::token(T!['(']),
                                         make::js_call_argument_list(
-                                            vec![
+                                            [
                                                 JsAnyCallArgument::JsAnyExpression(
                                                     JsAnyExpression::JsAnyLiteralExpression(
                                                         JsAnyLiteralExpression::JsStringLiteralExpression(make::js_string_literal_expression(make::js_string_literal(&format!("rome/{}", method.name)))),
@@ -148,9 +150,17 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
         ));
     }
 
+    let leading_comment = [
+        (
+            TriviaPieceKind::SingleLineComment,
+            "// Generated file, do not edit by hand, see `xtask/codegen`",
+        ),
+        (TriviaPieceKind::Newline, "\n"),
+    ];
+
     let mut items = vec![JsAnyModuleItem::JsImport(
         make::js_import(
-            make::token(T![import]),
+            make::token(T![import]).with_leading_trivia(leading_comment.into_iter()),
             JsAnyImportClause::JsImportNamedClause(
                 make::js_import_named_clause(
                     JsAnyNamedImport::JsNamedImportSpecifiers(make::js_named_import_specifiers(

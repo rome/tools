@@ -1,3 +1,4 @@
+// Generated file, do not edit by hand, see `xtask/codegen`
 import type { Transport } from "./transport";
 export interface SupportsFeatureParams {
 	feature: FeatureName;
@@ -222,67 +223,67 @@ export interface RenameResult {
 	range: TextRangeSchema;
 }
 export interface Workspace {
-	supports_feature(params: SupportsFeatureParams): Promise<boolean>;
-	update_settings(params: UpdateSettingsParams): Promise<void>;
-	open_file(params: OpenFileParams): Promise<void>;
-	change_file(params: ChangeFileParams): Promise<void>;
-	close_file(params: CloseFileParams): Promise<void>;
-	get_syntax_tree(params: GetSyntaxTreeParams): Promise<GetSyntaxTreeResult>;
-	get_control_flow_graph(params: GetControlFlowGraphParams): Promise<string>;
-	get_formatter_ir(params: GetFormatterIRParams): Promise<string>;
-	pull_diagnostics(
+	supportsFeature(params: SupportsFeatureParams): Promise<boolean>;
+	updateSettings(params: UpdateSettingsParams): Promise<void>;
+	openFile(params: OpenFileParams): Promise<void>;
+	changeFile(params: ChangeFileParams): Promise<void>;
+	closeFile(params: CloseFileParams): Promise<void>;
+	getSyntaxTree(params: GetSyntaxTreeParams): Promise<GetSyntaxTreeResult>;
+	getControlFlowGraph(params: GetControlFlowGraphParams): Promise<string>;
+	getFormatterIr(params: GetFormatterIRParams): Promise<string>;
+	pullDiagnostics(
 		params: PullDiagnosticsParams,
 	): Promise<PullDiagnosticsResult>;
-	pull_actions(params: PullActionsParams): Promise<PullActionsResult>;
-	format_file(params: FormatFileParams): Promise<Printed>;
-	format_range(params: FormatRangeParams): Promise<Printed>;
-	format_on_type(params: FormatOnTypeParams): Promise<Printed>;
-	fix_file(params: FixFileParams): Promise<FixFileResult>;
+	pullActions(params: PullActionsParams): Promise<PullActionsResult>;
+	formatFile(params: FormatFileParams): Promise<Printed>;
+	formatRange(params: FormatRangeParams): Promise<Printed>;
+	formatOnType(params: FormatOnTypeParams): Promise<Printed>;
+	fixFile(params: FixFileParams): Promise<FixFileResult>;
 	rename(params: RenameParams): Promise<RenameResult>;
 	destroy(): void;
 }
 export function createWorkspace(transport: Transport): Workspace {
 	return {
-		supports_feature(params) {
+		supportsFeature(params) {
 			return transport.request("rome/supports_feature", params);
 		},
-		update_settings(params) {
+		updateSettings(params) {
 			return transport.request("rome/update_settings", params);
 		},
-		open_file(params) {
+		openFile(params) {
 			return transport.request("rome/open_file", params);
 		},
-		change_file(params) {
+		changeFile(params) {
 			return transport.request("rome/change_file", params);
 		},
-		close_file(params) {
+		closeFile(params) {
 			return transport.request("rome/close_file", params);
 		},
-		get_syntax_tree(params) {
+		getSyntaxTree(params) {
 			return transport.request("rome/get_syntax_tree", params);
 		},
-		get_control_flow_graph(params) {
+		getControlFlowGraph(params) {
 			return transport.request("rome/get_control_flow_graph", params);
 		},
-		get_formatter_ir(params) {
+		getFormatterIr(params) {
 			return transport.request("rome/get_formatter_ir", params);
 		},
-		pull_diagnostics(params) {
+		pullDiagnostics(params) {
 			return transport.request("rome/pull_diagnostics", params);
 		},
-		pull_actions(params) {
+		pullActions(params) {
 			return transport.request("rome/pull_actions", params);
 		},
-		format_file(params) {
+		formatFile(params) {
 			return transport.request("rome/format_file", params);
 		},
-		format_range(params) {
+		formatRange(params) {
 			return transport.request("rome/format_range", params);
 		},
-		format_on_type(params) {
+		formatOnType(params) {
 			return transport.request("rome/format_on_type", params);
 		},
-		fix_file(params) {
+		fixFile(params) {
 			return transport.request("rome/fix_file", params);
 		},
 		rename(params) {

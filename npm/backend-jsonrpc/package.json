@@ -1,13 +1,14 @@
 {
   "name": "@rometools/backend-jsonrpc",
-  "version": "0.8.0-next",
+  "version": "0.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "test": "node tests/workspace.mjs",
+    "test": "vitest",
+    "test:ci": "vitest --run",
     "tsc": "tsc"
   },
   "homepage": "https://rome.tools",
-  "author": "Sebastian McKenzie",
+  "author": "Rome Tools Developers and Contributors",
   "bugs": "https://github.com/rome/tools/issues",
   "description": "Bindings to the JSON-RPC Workspace API of the Rome daemon",
   "keywords": [
@@ -23,6 +24,8 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^18.7.2",
-    "typescript": "^4.7.4"
+    "typescript": "^4.7.4",
+    "vite": "^3.0.8",
+    "vitest": "^0.22.0"
   }
 }

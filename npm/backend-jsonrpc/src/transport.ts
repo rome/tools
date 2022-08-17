@@ -1,4 +1,8 @@
-import type { Socket } from "node:net";
+interface Socket {
+	on(event: "data", fn: (data: Buffer) => void): void;
+	write(data: Buffer): void;
+	destroy(): void;
+}
 
 enum ReaderStateKind {
 	Header,
@@ -89,8 +93,21 @@ interface PendingRequest {
 	reject(error: any): void;
 }
 
+const MIME_JSONRPC = "application/vscode-jsonrpc";
+
+/**
+ * Implements the Rome daemon server JSON-RPC protocol over a Socket instance
+ */
 export class Transport {
+	/**
+	 * Counter incremented for each outgoing request to generate a unique ID
+	 */
 	private nextRequestId = 0;
+
+	/**
+	 * Storage for the promise resolver functions of pending requests,
+	 * keyed by ID of the request
+	 */
 	private pendingRequests: Map<number, PendingRequest> = new Map();
 
 	constructor(private socket: Socket) {
@@ -99,6 +116,13 @@ export class Transport {
 		});
 	}
 
+	/**
+	 * Send a request to the remote server
+	 * 
+	 * @param method Name of the remote method to call
+	 * @param params Parameters object the remote method should be called with
+	 * @return Promise resolving with the value returned by the remote method, or rejecting with an RPC error if the remote call failed
+	 */
 	request(method: string, params: any): Promise<any> {
 		return new Promise((resolve, reject) => {
 			const id = this.nextRequestId++;
@@ -112,6 +136,12 @@ export class Transport {
 		});
 	}
 
+	/**
+	 * Send a notification message to the remote server
+	 * 
+	 * @param method Name of the remote method to call
+	 * @param params Parameters object the remote method should be called with
+	 */
 	notify(method: string, params: any) {
 		this.sendMessage({
 			jsonrpc: "2.0",
@@ -120,6 +150,9 @@ export class Transport {
 		});
 	}
 
+	/**
+	 * Destroy the internal socket instance for this Transport
+	 */
 	destroy() {
 		this.socket.destroy();
 	}
@@ -128,7 +161,7 @@ export class Transport {
 		const body = Buffer.from(JSON.stringify(message));
 		const headers = Buffer.from(
 			`Content-Length: ${body.length}\r\n` +
-				`Content-Type: application/vscode-jsonrpc;charset=utf-8\r\n` +
+				`Content-Type: ${MIME_JSONRPC};charset=utf-8\r\n` +
 				`\r\n`,
 		);
 		this.socket.write(Buffer.concat([headers, body]));
@@ -203,9 +236,9 @@ export class Transport {
 				break;
 			}
 			case "Content-Type": {
-				if (!headerValue.startsWith("application/vscode-jsonrpc")) {
+				if (!headerValue.startsWith(MIME_JSONRPC)) {
 					throw new Error(
-						`invalid value for Content-Type expected \"application/vscode-jsonrpc\", got "${headerValue}"`,
+						`invalid value for Content-Type expected "${MIME_JSONRPC}", got "${headerValue}"`,
 					);
 				}
 

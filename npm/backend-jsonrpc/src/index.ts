@@ -9,7 +9,7 @@ import { createWorkspace as wrapTransport, type Workspace } from "./workspace";
  * 
  * @returns A Workspace client, or null if the underlying platform is not supported
  */
-export function createWorkspace(): Promise<Workspace> | null {
+export async function createWorkspace(): Promise<Workspace | null> {
 	const command = getCommand();
 	if (!command) {
 		return null;
@@ -18,6 +18,14 @@ export function createWorkspace(): Promise<Workspace> | null {
 	return createWorkspaceWithBinary(command);
 }
 
+/**
+ * Create an instance of the Workspace client connected to a remote daemon
+ * instance through the JSON-RPC protocol, using the provided command to spawn
+ * the daemon if necessary
+ * 
+ * @param command Path to the Rome binary distribution
+ * @returns A Workspace client, or null if the underlying platform is not supported
+ */
 export async function createWorkspaceWithBinary(
 	command: string,
 ): Promise<Workspace> {

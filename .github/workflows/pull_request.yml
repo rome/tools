@@ -119,7 +119,7 @@ jobs:
       - name: Build TypeScript code
         run: pnpm --prefix npm/backend-jsonrpc run tsc
       - name: Run JS tests
-        run: pnpm --prefix npm/backend-jsonrpc test
+        run: pnpm --prefix npm/backend-jsonrpc test:ci
 
   documentation:
     name: Documentation

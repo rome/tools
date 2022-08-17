@@ -1,5 +1,5 @@
-import { spawn } from "node:child_process";
-import { connect, type Socket } from "node:net";
+import { spawn } from "child_process";
+import { connect, type Socket } from "net";
 
 function getSocket(command: string): Promise<string> {
 	return new Promise((resolve, reject) => {
@@ -24,6 +24,12 @@ function getSocket(command: string): Promise<string> {
 	});
 }
 
+/**
+ * Ensure the Rome daemon server is running and create a Socket connected to the RPC channel
+ * 
+ * @param command Path to the Rome daemon binary
+ * @returns Socket instance connected to the daemon
+ */
 export async function createSocket(command: string): Promise<Socket> {
 	const path = await getSocket(command);
 	const socket = connect(path);
