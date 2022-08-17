@@ -73,7 +73,7 @@ fn is_shouty_constants(
     }
 }
 
-/// second param(target) is the upper-case version of its first param (source).
+/// Checking if second param(target) is the upper-case version of its first param (source).
 fn is_upper_case_of_source(source: SyntaxNodeText, text: SyntaxNodeText) -> Option<bool> {
     let len = source.len();
     let len: u32 = len.try_into().ok()?;
