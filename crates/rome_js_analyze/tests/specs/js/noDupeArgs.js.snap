@@ -115,6 +115,36 @@ warning[js/noDupeArgs]: Duplicate argument name
 
 ```
 warning[js/noDupeArgs]: Duplicate argument name
+   ┌─ noDupeArgs.js:20:9
+   │
+20 │     ggg(a, a, a) {}
+   │            -
+
+
+```
+
+```
+warning[js/noDupeArgs]: Duplicate argument name
+   ┌─ noDupeArgs.js:20:12
+   │
+20 │     ggg(a, a, a) {}
+   │               -
+
+
+```
+
+```
+warning[js/noDupeArgs]: Duplicate argument name
+   ┌─ noDupeArgs.js:24:18
+   │
+24 │     method(a, b, c, c) {
+   │                     -
+
+
+```
+
+```
+warning[js/noDupeArgs]: Duplicate argument name
    ┌─ noDupeArgs.js:29:25
    │
 29 │ var h = function (a, b, a) {};
