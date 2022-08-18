@@ -34,7 +34,7 @@ impl NeedsParentheses for JsAssignmentExpression {
             JsSyntaxKind::JS_COMPUTED_MEMBER_NAME => false,
 
             JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION => {
-                is_arrow_function_body(self.syntax(), &parent)
+                is_arrow_function_body(self.syntax(), parent)
             }
             JsSyntaxKind::JS_FOR_STATEMENT => {
                 let for_statement = JsForStatement::unwrap_cast(parent.clone());

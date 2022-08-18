@@ -86,7 +86,7 @@
 ///! `something()()().then()`;
 ///! 2. as many as [rome_js_syntax::JsComputedMemberExpression] we can find, this cover cases like
 ///! `something()()[1][3].then()`;
-///! 3. as many as consecutive [rome_js_syntax::JsStaticMemberExpression] or [rome_js_syntax::JsComputedExpression], this cover cases like
+///! 3. as many as consecutive [rome_js_syntax::JsStaticMemberExpression] or [rome_js_syntax::JsComputedMemberExpression], this cover cases like
 ///! `this.items[0].then()`
 ///!
 ///! The rest of the groups are essentially a sequence of `[StaticMemberExpression , CallExpression]`.
