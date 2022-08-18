@@ -57,7 +57,7 @@ function updateWasmPackage(target) {
 	manifest["name"] = packageName;
 	manifest["version"] = version;
 
-	console.log("Update manifest " + manifestPath);
+	console.log(`Update manifest ${manifestPath}`);
 	fs.writeFileSync(manifestPath, JSON.stringify(manifest));
 }
 
