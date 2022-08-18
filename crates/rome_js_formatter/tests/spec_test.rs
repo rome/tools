@@ -1,7 +1,7 @@
 use rome_formatter::LineWidth;
 use rome_formatter::{IndentStyle, Printed};
 use rome_fs::RomePath;
-use rome_js_formatter::context::{JsFormatContext, QuoteStyle};
+use rome_js_formatter::context::{JsFormatContext, QuoteProperties, QuoteStyle};
 use rome_js_formatter::format_node;
 use rome_js_parser::parse;
 use rome_js_syntax::{ModuleKind, SourceType};
@@ -49,6 +49,21 @@ impl From<SerializableQuoteStyle> for QuoteStyle {
     }
 }
 
+#[derive(Debug, Eq, PartialEq, Clone, Copy, Deserialize, Serialize)]
+pub enum SerializableQuoteProperties {
+    AsNeeded,
+    Preserve,
+}
+
+impl From<SerializableQuoteProperties> for QuoteProperties {
+    fn from(test: SerializableQuoteProperties) -> Self {
+        match test {
+            SerializableQuoteProperties::AsNeeded => QuoteProperties::AsNeeded,
+            SerializableQuoteProperties::Preserve => QuoteProperties::Preserve,
+        }
+    }
+}
+
 #[derive(Debug, Deserialize, Serialize, Clone, Copy)]
 pub struct SerializableFormatContext {
     /// The indent style.
@@ -59,6 +74,9 @@ pub struct SerializableFormatContext {
 
     // The style for quotes. Defaults to double.
     pub quote_style: Option<SerializableQuoteStyle>,
+
+    /// When properties in objects are quoted. Defaults to as-needed.
+    pub quote_properties: Option<SerializableQuoteProperties>,
 }
 
 impl From<SerializableFormatContext> for JsFormatContext {
@@ -76,6 +94,10 @@ impl From<SerializableFormatContext> for JsFormatContext {
             .with_quote_style(
                 test.quote_style
                     .map_or_else(|| QuoteStyle::Double, |value| value.into()),
+            )
+            .with_quote_properties(
+                test.quote_properties
+                    .map_or_else(|| QuoteProperties::AsNeeded, |value| value.into()),
             )
     }
 }

@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 257
 expression: class.js
 ---
 # Input
@@ -82,6 +81,7 @@ export class Task {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 class Foo extends Boar {
 	static {

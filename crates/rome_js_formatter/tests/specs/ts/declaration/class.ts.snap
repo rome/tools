@@ -70,6 +70,7 @@ abstract class Test1 {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 class Test {
 	name: string;

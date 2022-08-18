@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 259
 expression: property_object_member.js
 ---
 # Input
@@ -100,6 +99,7 @@ const fluidObject = {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 const neverBreakAfterColonObject = {
 	"this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-1": require(),

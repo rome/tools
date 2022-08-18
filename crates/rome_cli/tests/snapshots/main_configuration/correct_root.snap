@@ -33,7 +33,8 @@ expression: content
   "javascript": {
     "globals": ["$"],
     "formatter": {
-      "quoteStyle": "double"
+      "quoteStyle": "double",
+      "quoteProperties": "asNeeded"
     }
   }
 }

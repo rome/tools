@@ -51,7 +51,8 @@ pub const CONFIG_ALL_FIELDS: &str = r#"{
   "javascript": {
     "globals": ["$"],
     "formatter": {
-      "quoteStyle": "double"
+      "quoteStyle": "double",
+      "quoteProperties": "asNeeded"
     }
   }
 }"#;

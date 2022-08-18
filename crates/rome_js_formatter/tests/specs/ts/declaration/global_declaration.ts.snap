@@ -17,6 +17,7 @@ declare module "./test"
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 declare module "./test" {
 	global {

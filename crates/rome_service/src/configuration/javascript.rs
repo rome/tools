@@ -1,5 +1,5 @@
 use indexmap::IndexSet;
-use rome_js_formatter::context::QuoteStyle;
+use rome_js_formatter::context::{QuoteProperties, QuoteStyle};
 use serde::de::{SeqAccess, Visitor};
 use serde::ser::SerializeSeq;
 use serde::{Deserialize, Serialize};
@@ -83,6 +83,9 @@ pub struct JavascriptFormatter {
     /// The style for quotes. Defaults to double.
     #[serde(with = "PlainQuoteStyle")]
     pub quote_style: QuoteStyle,
+    /// When properties in objects are quoted. Defaults to as-needed.
+    #[serde(with = "PlainQuoteProperties")]
+    pub quote_properties: QuoteProperties,
 }
 
 #[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Default)]
@@ -92,4 +95,13 @@ pub enum PlainQuoteStyle {
     #[default]
     Double,
     Single,
+}
+
+#[derive(Deserialize, Default, Serialize, Debug, Eq, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[serde(rename_all = "camelCase", remote = "QuoteProperties")]
+pub enum PlainQuoteProperties {
+    #[default]
+    AsNeeded,
+    Preserve,
 }

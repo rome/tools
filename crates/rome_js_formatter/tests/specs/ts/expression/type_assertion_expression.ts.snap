@@ -17,6 +17,7 @@ var d = <Error>
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 let x = <const>"hello";
 let y = <string>x;

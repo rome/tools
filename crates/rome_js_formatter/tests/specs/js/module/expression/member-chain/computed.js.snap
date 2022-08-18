@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 257
 expression: computed.js
 ---
 # Input
@@ -17,6 +16,7 @@ nock(/test/)
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 nock(/test/)
 	.matchHeader("Accept", "application/json")[httpMethodNock(method)]("/foo")

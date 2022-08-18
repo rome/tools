@@ -1,8 +1,6 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 242
 expression: newlines.js
-
 ---
 # Input
 "directive";
@@ -91,6 +89,7 @@ const object = {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 "directive";
 // comment

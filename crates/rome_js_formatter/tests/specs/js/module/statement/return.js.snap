@@ -17,6 +17,7 @@ function f2() {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 function f1() {
 	return 1;

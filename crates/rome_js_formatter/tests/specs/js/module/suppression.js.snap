@@ -39,6 +39,7 @@ function () {}
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 // rome-ignore format: the following if should print inline
 if(true) statement();

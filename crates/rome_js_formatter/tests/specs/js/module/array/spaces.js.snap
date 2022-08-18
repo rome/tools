@@ -16,6 +16,7 @@ let e = [2,2,1,3];
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 let a = [,];
 let b = [, ,];

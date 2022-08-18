@@ -38,6 +38,7 @@ runtimeAgent.getProperties(
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 Seq(typeDef.interface.groups).forEach(
 	(group) =>

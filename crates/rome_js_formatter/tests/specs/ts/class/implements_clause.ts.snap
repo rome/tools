@@ -13,6 +13,7 @@ class LongClassName implements Interface1, Interface2, Interface3, Interface4, I
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 class ClassName implements Interface {}
 

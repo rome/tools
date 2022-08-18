@@ -11,6 +11,7 @@ export default (1 - 43);
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 export default (1 - 43);
 
