@@ -1,5 +1,4 @@
-use ascii_table::{AsciiTable, Column};
-use colored::Colorize;
+use ascii_table::{Align, AsciiTable};
 use std::collections::{HashMap, HashSet};
 
 use crate::{Outcome, TestResult, TestResults};
@@ -159,24 +158,22 @@ pub fn emit_compare(
         );
     } else {
         let mut table = AsciiTable::default();
-        let mut counter = 0usize;
-
-        let mut create_column = |name: colored::ColoredString| {
-            let column = Column {
-                header: name.to_string(),
-                align: ascii_table::Align::Center,
-                ..Column::default()
-            };
-            table.columns.insert(counter, column);
-            counter += 1;
-        };
 
         println!("{} conformance changes:", test_suite);
 
-        create_column("Tests result".into());
-        create_column("main branch".green());
-        create_column("PR".yellow());
-        create_column("Difference".cyan());
+        table
+            .column(0)
+            .set_header("Tests result")
+            .set_align(Align::Left);
+        table
+            .column(1)
+            .set_header("main branch")
+            .set_align(Align::Right);
+        table.column(2).set_header("PR").set_align(Align::Right);
+        table
+            .column(3)
+            .set_header("Difference")
+            .set_align(Align::Right);
 
         let passed_diff = base_passed - new_passed;
         let failed_diff = base_failed - new_failed;
