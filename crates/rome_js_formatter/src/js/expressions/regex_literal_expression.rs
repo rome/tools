@@ -1,8 +1,9 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use rome_js_syntax::JsRegexLiteralExpression;
-use rome_js_syntax::JsRegexLiteralExpressionFields;
+use crate::parentheses::{ExpressionNode, NeedsParentheses};
+use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsRegexLiteralExpressionFields};
+use rome_js_syntax::{JsRegexLiteralExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsRegexLiteralExpression;
@@ -39,5 +40,32 @@ impl FormatNodeRule<JsRegexLiteralExpression> for FormatJsRegexLiteralExpression
         );
 
         write!(f, [format_replaced(&value_token, &sorted_regex_literal)])
+    }
+
+    fn needs_parentheses(&self, item: &JsRegexLiteralExpression) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl NeedsParentheses for JsRegexLiteralExpression {
+    #[inline(always)]
+    fn needs_parentheses(&self) -> bool {
+        false
+    }
+    #[inline(always)]
+    fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
+        false
+    }
+}
+
+impl ExpressionNode for JsRegexLiteralExpression {
+    #[inline]
+    fn resolve(&self) -> JsAnyExpression {
+        JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::from(self.clone()))
+    }
+
+    #[inline]
+    fn into_resolved(self) -> JsAnyExpression {
+        JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::from(self))
     }
 }

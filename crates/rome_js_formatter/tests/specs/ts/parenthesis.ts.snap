@@ -16,6 +16,6 @@ Quote style: Double Quotes
 Quote properties: As needed
 -----
 const a = (c && b) as boolean;
-const a = <any>(c && b) as boolean;
+const a = (<any>(c && b)) as boolean;
 const a = !(c && b) as boolean;
 

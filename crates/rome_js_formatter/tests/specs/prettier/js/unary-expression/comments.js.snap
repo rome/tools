@@ -298,8 +298,30 @@ async function bar2() {
 ```diff
 --- Prettier
 +++ Rome
-@@ -14,33 +14,33 @@
- );
+@@ -1,283 +1,218 @@
+ !x;
+-!(x /* foo */);
+-!(/* foo */ x);
+-!(
+-  /* foo */
+-  x
+-);
+-!(
+-  x
+-  /* foo */
+-);
+-!(
+-  x // foo
+-);
++!x /* foo */;
++! /* foo */ x;
++!
++/* foo */
++x;
++!x
++/* foo */
++;
++!x; // foo
  
  !(x + y);
 -!((x + y) /* foo */);
@@ -342,32 +364,216 @@ async function bar2() {
  );
  
  ![1, 2, 3];
-@@ -144,18 +144,18 @@
- );
+-!([1, 2, 3] /* foo */);
+-!(/* foo */ [1, 2, 3]);
+-!(
+-  /* foo */
+-  [1, 2, 3]
+-);
+-!(
+-  [1, 2, 3]
+-  /* foo */
+-);
+-!(
+-  [1, 2, 3] // foo
+-);
++![1, 2, 3] /* foo */;
++! /* foo */ [1, 2, 3];
++!
++/* foo */
++[1, 2, 3];
++![1, 2, 3]
++/* foo */
++;
++![1, 2, 3]; // foo
+ 
+ !{ a: 1, b: 2 };
+-!({ a: 1, b: 2 } /* foo */);
+-!(/* foo */ { a: 1, b: 2 });
+-!(
+-  /* foo */
+-  { a: 1, b: 2 }
+-);
+-!(
+-  { a: 1, b: 2 }
+-  /* foo */
+-);
+-!(
+-  { a: 1, b: 2 } // foo
+-);
++!{ a: 1, b: 2 } /* foo */;
++! /* foo */ { a: 1, b: 2 };
++!
++/* foo */
++{ a: 1, b: 2 };
++!{ a: 1, b: 2 }
++/* foo */
++;
++!{ a: 1, b: 2 }; // foo
+ 
+ !function () {
+   return x;
+ };
+-!(
+-  function () {
+-    return x;
+-  } /* foo */
+-);
+-!(
+-  /* foo */ function () {
+-    return x;
+-  }
+-);
+-!(
+-  /* foo */
+-  function () {
+-    return x;
+-  }
+-);
+-!(
+-  function () {
+-    return x;
+-  }
+-  /* foo */
+-);
+-!(
+-  function () {
+-    return x;
+-  } // foo
+-);
++!function () {
++  return x;
++} /* foo */;
++!
++/* foo */ function () {
++  return x;
++};
++!
++/* foo */
++function () {
++  return x;
++};
++!function () {
++  return x;
++}
++/* foo */
++;
++!function () {
++  return x;
++}; // foo
+ 
+ !+3;
+-!(+3 /* foo */);
+-!(/* foo */ +3);
+-!(
+-  /* foo */
+-  +3
+-);
+-!(
+-  +3
+-  /* foo */
+-);
+-!(
+-  +3 // foo
+-);
++!+3 /* foo */;
++! /* foo */ +3;
++!
++/* foo */
+++3;
++!+3
++/* foo */
++;
++!+3; // foo
+ 
+-!+(
+-  /* foo */
+-  3
+-);
+-!(/* foo */ +(3 /* foo */));
+-!(+(3 /* foo */) /* foo */);
+-!(
+-  /* foo */
+-  +(
+-    /* foo */
+-    3
+-  )
+-);
+-!(
+-  +(
+-    3
+-    /* foo */
+-  )
+-  /* foo */
+-);
+-!(
+-  +(3 /* foo */) // foo
+-);
++!+
++/* foo */
++3;
++! /* foo */ +3 /* foo */;
++!+3 /* foo */ /* foo */;
++!
++/* foo */
+++
++/* foo */
++3;
++!+3
++/* foo */
++/* foo */
++;
++!+3 /* foo */
++// foo
++;
  
  !(x = y);
 -!((x = y) /* foo */);
 -!(/* foo */ (x = y));
-+!(x = y /* foo */);
-+!(/* foo */ x = y);
- !(
-   /* foo */
+-!(
+-  /* foo */
 -  (x = y)
-+  x = y
- );
- !(
+-);
+-!(
 -  (x = y)
-+  x = y
-   /* foo */
- );
- !(
+-  /* foo */
+-);
+-!(
 -  (x = y) // foo
-+  x = y // foo
- );
+-);
++!(x = y) /* foo */;
++! /* foo */ (x = y);
++!
++/* foo */
++(x = y);
++!(x = y)
++/* foo */
++;
++!(x = y); // foo
  
  !x.y;
-@@ -174,19 +174,15 @@
- );
+-!(x.y /* foo */);
+-!(/* foo */ x.y);
+-!(
+-  /* foo */
+-  x.y
+-);
+-!(
+-  x.y
+-  /* foo */
+-);
+-!(
+-  x.y // foo
+-);
++!x.y /* foo */;
++! /* foo */ x.y;
++!
++/* foo */
++x.y;
++!x.y
++/* foo */
++;
++!x.y; // foo
  
  !(x ? y : z);
 -!((x ? y : z) /* foo */);
@@ -394,92 +600,151 @@ async function bar2() {
 +!(x ? y : z); // foo
  
  !x();
- !(x() /* foo */);
-@@ -219,14 +215,14 @@
- );
+-!(x() /* foo */);
+-!(/* foo */ x());
+-!(
+-  /* foo */
+-  x()
+-);
+-!(
+-  x()
+-  /* foo */
+-);
+-!(
+-  x() // foo
+-);
++!x() /* foo */;
++! /* foo */ x();
++!
++/* foo */
++x();
++!x()
++/* foo */
++;
++!x(); // foo
+ 
+ !new x();
+-!(new x() /* foo */);
+-!(/* foo */ new x());
+-!(
+-  /* foo */
+-  new x()
+-);
+-!(
+-  new x()
+-  /* foo */
+-);
+-!(
+-  new x() // foo
+-);
++!new x() /* foo */;
++! /* foo */ new x();
++!
++/* foo */
++new x();
++!new x()
++/* foo */
++;
++!new x(); // foo
  
  !(x, y);
 -!((x, y) /* foo */);
 -!(/* foo */ (x, y));
-+!(x, y /* foo */);
-+!(/* foo */ x, y);
- !(
-   /* foo */
+-!(
+-  /* foo */
 -  (x, y)
-+  x, y
- );
- !(
+-);
+-!(
 -  (x, y)
-+  x, y
-   /* foo */
- );
- !(
-@@ -234,50 +230,51 @@
- );
+-  /* foo */
+-);
+-!(
+-  x.y // foo
+-);
++!(x, y) /* foo */;
++! /* foo */ (x, y);
++!
++/* foo */
++(x, y);
++!(x, y)
++/* foo */
++;
++!x.y; // foo
  
  !(() => 3);
 -!((() => 3) /* foo */);
 -!(/* foo */ (() => 3));
-+!(() => 3 /* foo */);
-+!(/* foo */ () => 3);
- !(
-   /* foo */
+-!(
+-  /* foo */
 -  (() => 3)
-+  () => 3
- );
- !(
+-);
+-!(
 -  (() => 3)
-+  () => 3
-   /* foo */
- );
- !(
+-  /* foo */
+-);
+-!(
 -  (() => 3) // foo
-+  () =>
-+    3 // foo
- );
+-);
++!(() => 3) /* foo */;
++! /* foo */ (() => 3);
++!
++/* foo */
++(() => 3);
++!(() => 3)
++/* foo */
++;
++!(() => 3); // foo
  
  function* bar() {
    !(yield x);
 -  !((yield x) /* foo */);
 -  !(/* foo */ (yield x));
-+  !(yield x /* foo */);
-+  !(/* foo */ yield x);
-   !(
-     /* foo */
+-  !(
+-    /* foo */
 -    (yield x)
-+    yield x
-   );
-   !(
+-  );
+-  !(
 -    (yield x)
-+    yield x
-     /* foo */
-   );
-   !(
+-    /* foo */
+-  );
+-  !(
 -    (yield x) // foo
-+    yield x // foo
-   );
+-  );
++  !(yield x) /* foo */;
++  ! /* foo */ (yield x);
++  !
++  /* foo */
++  (yield x);
++  !(yield x)
++  /* foo */
++  ;
++  !(yield x); // foo
  }
  
  async function bar2() {
    !(await x);
 -  !((await x) /* foo */);
 -  !(/* foo */ (await x));
-+  !(await x /* foo */);
-+  !(/* foo */ await x);
-   !(
-     /* foo */
+-  !(
+-    /* foo */
 -    (await x)
-+    await x
-   );
-   !(
+-  );
+-  !(
 -    (await x)
-+    await x
-     /* foo */
-   );
-   !(
+-    /* foo */
+-  );
+-  !(
 -    (await x) // foo
-+    await x // foo
-   );
+-  );
++  !(await x) /* foo */;
++  ! /* foo */ (await x);
++  !
++  /* foo */
++  (await x);
++  !(await x)
++  /* foo */
++  ;
++  !(await x); // foo
  }
 ```
 
@@ -487,19 +752,15 @@ async function bar2() {
 
 ```js
 !x;
-!(x /* foo */);
-!(/* foo */ x);
-!(
-  /* foo */
-  x
-);
-!(
-  x
-  /* foo */
-);
-!(
-  x // foo
-);
+!x /* foo */;
+! /* foo */ x;
+!
+/* foo */
+x;
+!x
+/* foo */
+;
+!x; // foo
 
 !(x + y);
 !(x + y /* foo */);
@@ -532,134 +793,101 @@ async function bar2() {
 );
 
 ![1, 2, 3];
-!([1, 2, 3] /* foo */);
-!(/* foo */ [1, 2, 3]);
-!(
-  /* foo */
-  [1, 2, 3]
-);
-!(
-  [1, 2, 3]
-  /* foo */
-);
-!(
-  [1, 2, 3] // foo
-);
+![1, 2, 3] /* foo */;
+! /* foo */ [1, 2, 3];
+!
+/* foo */
+[1, 2, 3];
+![1, 2, 3]
+/* foo */
+;
+![1, 2, 3]; // foo
 
 !{ a: 1, b: 2 };
-!({ a: 1, b: 2 } /* foo */);
-!(/* foo */ { a: 1, b: 2 });
-!(
-  /* foo */
-  { a: 1, b: 2 }
-);
-!(
-  { a: 1, b: 2 }
-  /* foo */
-);
-!(
-  { a: 1, b: 2 } // foo
-);
+!{ a: 1, b: 2 } /* foo */;
+! /* foo */ { a: 1, b: 2 };
+!
+/* foo */
+{ a: 1, b: 2 };
+!{ a: 1, b: 2 }
+/* foo */
+;
+!{ a: 1, b: 2 }; // foo
 
 !function () {
   return x;
 };
-!(
-  function () {
-    return x;
-  } /* foo */
-);
-!(
-  /* foo */ function () {
-    return x;
-  }
-);
-!(
-  /* foo */
-  function () {
-    return x;
-  }
-);
-!(
-  function () {
-    return x;
-  }
-  /* foo */
-);
-!(
-  function () {
-    return x;
-  } // foo
-);
+!function () {
+  return x;
+} /* foo */;
+!
+/* foo */ function () {
+  return x;
+};
+!
+/* foo */
+function () {
+  return x;
+};
+!function () {
+  return x;
+}
+/* foo */
+;
+!function () {
+  return x;
+}; // foo
 
 !+3;
-!(+3 /* foo */);
-!(/* foo */ +3);
-!(
-  /* foo */
-  +3
-);
-!(
-  +3
-  /* foo */
-);
-!(
-  +3 // foo
-);
+!+3 /* foo */;
+! /* foo */ +3;
+!
+/* foo */
++3;
+!+3
+/* foo */
+;
+!+3; // foo
 
-!+(
-  /* foo */
-  3
-);
-!(/* foo */ +(3 /* foo */));
-!(+(3 /* foo */) /* foo */);
-!(
-  /* foo */
-  +(
-    /* foo */
-    3
-  )
-);
-!(
-  +(
-    3
-    /* foo */
-  )
-  /* foo */
-);
-!(
-  +(3 /* foo */) // foo
-);
+!+
+/* foo */
+3;
+! /* foo */ +3 /* foo */;
+!+3 /* foo */ /* foo */;
+!
+/* foo */
++
+/* foo */
+3;
+!+3
+/* foo */
+/* foo */
+;
+!+3 /* foo */
+// foo
+;
 
 !(x = y);
-!(x = y /* foo */);
-!(/* foo */ x = y);
-!(
-  /* foo */
-  x = y
-);
-!(
-  x = y
-  /* foo */
-);
-!(
-  x = y // foo
-);
+!(x = y) /* foo */;
+! /* foo */ (x = y);
+!
+/* foo */
+(x = y);
+!(x = y)
+/* foo */
+;
+!(x = y); // foo
 
 !x.y;
-!(x.y /* foo */);
-!(/* foo */ x.y);
-!(
-  /* foo */
-  x.y
-);
-!(
-  x.y
-  /* foo */
-);
-!(
-  x.y // foo
-);
+!x.y /* foo */;
+! /* foo */ x.y;
+!
+/* foo */
+x.y;
+!x.y
+/* foo */
+;
+!x.y; // foo
 
 !(x ? y : z);
 !(x ? y : z) /* foo */;
@@ -673,98 +901,73 @@ async function bar2() {
 !(x ? y : z); // foo
 
 !x();
-!(x() /* foo */);
-!(/* foo */ x());
-!(
-  /* foo */
-  x()
-);
-!(
-  x()
-  /* foo */
-);
-!(
-  x() // foo
-);
+!x() /* foo */;
+! /* foo */ x();
+!
+/* foo */
+x();
+!x()
+/* foo */
+;
+!x(); // foo
 
 !new x();
-!(new x() /* foo */);
-!(/* foo */ new x());
-!(
-  /* foo */
-  new x()
-);
-!(
-  new x()
-  /* foo */
-);
-!(
-  new x() // foo
-);
+!new x() /* foo */;
+! /* foo */ new x();
+!
+/* foo */
+new x();
+!new x()
+/* foo */
+;
+!new x(); // foo
 
 !(x, y);
-!(x, y /* foo */);
-!(/* foo */ x, y);
-!(
-  /* foo */
-  x, y
-);
-!(
-  x, y
-  /* foo */
-);
-!(
-  x.y // foo
-);
+!(x, y) /* foo */;
+! /* foo */ (x, y);
+!
+/* foo */
+(x, y);
+!(x, y)
+/* foo */
+;
+!x.y; // foo
 
 !(() => 3);
-!(() => 3 /* foo */);
-!(/* foo */ () => 3);
-!(
-  /* foo */
-  () => 3
-);
-!(
-  () => 3
-  /* foo */
-);
-!(
-  () =>
-    3 // foo
-);
+!(() => 3) /* foo */;
+! /* foo */ (() => 3);
+!
+/* foo */
+(() => 3);
+!(() => 3)
+/* foo */
+;
+!(() => 3); // foo
 
 function* bar() {
   !(yield x);
-  !(yield x /* foo */);
-  !(/* foo */ yield x);
-  !(
-    /* foo */
-    yield x
-  );
-  !(
-    yield x
-    /* foo */
-  );
-  !(
-    yield x // foo
-  );
+  !(yield x) /* foo */;
+  ! /* foo */ (yield x);
+  !
+  /* foo */
+  (yield x);
+  !(yield x)
+  /* foo */
+  ;
+  !(yield x); // foo
 }
 
 async function bar2() {
   !(await x);
-  !(await x /* foo */);
-  !(/* foo */ await x);
-  !(
-    /* foo */
-    await x
-  );
-  !(
-    await x
-    /* foo */
-  );
-  !(
-    await x // foo
-  );
+  !(await x) /* foo */;
+  ! /* foo */ (await x);
+  !
+  /* foo */
+  (await x);
+  !(await x)
+  /* foo */
+  ;
+  !(await x); // foo
 }
 ```
 

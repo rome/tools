@@ -45,10 +45,8 @@ async () => {
 class Foo extends (+Bar) {}
 class Foo extends (Bar ?? Baz) {}
 const foo = class extends (Bar ?? Baz) {};
-(1);
-(
-	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-);
+1;
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;
 
 (b + c)``;
 
@@ -59,12 +57,12 @@ async function* f() {
 	yield (a && b);
 }
 
-const a = () => ({}?.() && a);
+const a = () => (({})?.() && a);
 
 (list || list2)?.[(list || list2)];
 
 
 ## Lines exceeding width of 80 characters
 
-   12: 	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+   11: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;
 

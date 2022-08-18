@@ -1,15 +1,16 @@
 use crate::prelude::*;
 use crate::utils::{
-    binary_argument_needs_parens, is_simple_expression, resolve_expression, FormatPrecedence,
+    binary_argument_needs_parens, is_simple_expression, FormatPrecedence,
     JsAnyBinaryLikeLeftExpression,
 };
 use rome_formatter::write;
 
 use crate::utils::JsAnyBinaryLikeExpression;
 
+use crate::parentheses::{ExpressionNode, NeedsParentheses};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsParenthesizedExpression,
-    JsParenthesizedExpressionFields, JsSyntaxKind,
+    JsAnyExpression, JsParenthesizedExpression, JsParenthesizedExpressionFields, JsSyntaxKind,
+    JsSyntaxNode,
 };
 use rome_rowan::{AstNode, SyntaxResult};
 
@@ -28,26 +29,22 @@ impl FormatNodeRule<JsParenthesizedExpression> for FormatJsParenthesizedExpressi
             r_paren_token,
         } = node.as_fields();
 
-        let parenthesis_can_be_omitted = parenthesis_can_be_omitted(node)?;
-
         let expression = expression?;
 
-        if is_simple_parenthesized_expression(node)? {
-            if parenthesis_can_be_omitted {
-                write!(f, [format_removed(&l_paren_token?)])?;
-            } else {
-                write![f, [l_paren_token.format()]]?;
-            };
+        if is_expression_handling_parens(&expression) {
+            return write!(
+                f,
+                [
+                    format_removed(&l_paren_token?),
+                    expression.format(),
+                    format_removed(&r_paren_token?)
+                ]
+            );
+        }
 
-            write![f, [expression.format()]]?;
+        let parenthesis_can_be_omitted = parenthesis_can_be_omitted(node, &expression)?;
 
-            if parenthesis_can_be_omitted {
-                write!(f, [format_removed(&r_paren_token?)])?;
-            } else {
-                write![f, [r_paren_token.format()]]?;
-            }
-        } else if parenthesis_can_be_omitted {
-            // we mimic the format delimited utility function
+        if parenthesis_can_be_omitted {
             write![
                 f,
                 [
@@ -55,61 +52,29 @@ impl FormatNodeRule<JsParenthesizedExpression> for FormatJsParenthesizedExpressi
                     expression.format(),
                     format_removed(&r_paren_token?),
                 ]
-            ]?;
+            ]
+        } else if is_simple_parenthesized_expression(node)? {
+            write![
+                f,
+                [
+                    l_paren_token.format(),
+                    expression.format(),
+                    r_paren_token.format()
+                ]
+            ]
         } else {
-            match expression {
-                // if the expression inside the parenthesis is a stringLiteralExpression, we should leave it as is rather than
-                // add extra soft_block_indent, for example:
-                // ```js
-                // ("escaped carriage return \
-                // ");
-                // ```
-                // if we add soft_block_indent, we will get:
-                // ```js
-                // (
-                // "escaped carriage return \
-                // "
-                // );
-                // ```
-                // which will not match prettier's formatting behavior, if we add this extra branch to handle this case, it become:
-                // ```js
-                // ("escaped carriage return \
-                // ");
-                // ```
-                // this is what we want
-                JsAnyExpression::JsAnyLiteralExpression(
-                    JsAnyLiteralExpression::JsStringLiteralExpression(_),
-                ) => {
-                    write![
-                        f,
-                        [
-                            l_paren_token.format(),
-                            expression.format(),
-                            r_paren_token.format(),
-                        ]
-                    ]
-                }
-                JsAnyExpression::JsxTagExpression(expression) => {
-                    write![
-                        f,
-                        [
-                            format_removed(&l_paren_token?),
-                            expression.format(),
-                            format_removed(&r_paren_token?),
-                        ]
-                    ]
-                }
-                _ => write![
-                    f,
-                    [
-                        format_delimited(&l_paren_token?, &expression.format(), &r_paren_token?,)
-                            .soft_block_indent()
-                    ]
-                ],
-            }?;
+            write![
+                f,
+                [
+                    format_delimited(&l_paren_token?, &expression.format(), &r_paren_token?,)
+                        .soft_block_indent()
+                ]
+            ]
         }
+    }
 
-        Ok(())
+    fn needs_parentheses(&self, item: &JsParenthesizedExpression) -> bool {
+        item.needs_parentheses()
     }
 }
 
@@ -131,10 +96,32 @@ fn is_simple_parenthesized_expression(node: &JsParenthesizedExpression) -> Synta
     Ok(true)
 }
 
-fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<bool> {
-    let parent = node.syntax().parent();
+// Allow list of nodes that use the new `need_parens` formatting to determine if parentheses are necessary or not.
+pub(crate) fn is_expression_handling_parens(expression: &JsAnyExpression) -> bool {
+    use JsAnyExpression::*;
 
-    let expression = resolve_expression(node.expression()?);
+    if let JsAnyExpression::JsParenthesizedExpression(inner) = expression {
+        if let Ok(inner) = inner.expression() {
+            is_expression_handling_parens(&inner)
+        } else {
+            false
+        }
+    } else {
+        !matches!(
+            expression,
+            JsInstanceofExpression(_)
+                | JsBinaryExpression(_)
+                | JsInExpression(_)
+                | JsLogicalExpression(_)
+        )
+    }
+}
+
+fn parenthesis_can_be_omitted(
+    node: &JsParenthesizedExpression,
+    expression: &JsAnyExpression,
+) -> SyntaxResult<bool> {
+    let parent = node.syntax().parent();
 
     if let Some(parent) = &parent {
         match parent.kind() {
@@ -142,45 +129,14 @@ fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<
             JsSyntaxKind::JS_RETURN_STATEMENT | JsSyntaxKind::JS_THROW_STATEMENT => {
                 return Ok(true)
             }
-            JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION => {
-                // Nested parentheses can always be removed
-                return Ok(true);
-            }
+            JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION => return Ok(true),
             _ => {
                 // fall through
             }
         }
-
-        if let JsAnyExpression::JsConditionalExpression(_) = &expression {
-            // The formatting of conditional expression makes sure to insert parens if needed
-            return Ok(true);
-        }
     }
 
-    // if expression is a StringLiteralExpression, we need to check it before precedence comparison, here is an example:
-    // ```js
-    // a[("test")]
-    // ```
-    // if we use precedence comparison, we will get:
-    // parent_precedence should be `High` due to the parenthesized_expression's parent is ComputedMemberExpression,
-    // and node_precedence should be `Low` due to expression is StringLiteralExpression. `parent_precedence > node_precedence` will return false,
-    // the parenthesis will not be omitted.
-    // But the expected behavior is that the parenthesis will be omitted. The code above should be formatted as:
-    // ```js
-    // a["test"]
-    // ```
-    // So we need to add extra branch to handle this case.
-    if matches!(
-        expression,
-        JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::JsStringLiteralExpression(
-            _
-        ))
-    ) {
-        return Ok(!matches!(
-            parent.map(|p| p.kind()),
-            Some(JsSyntaxKind::JS_EXPRESSION_STATEMENT)
-        ));
-    }
+    let expression = expression.resolve();
 
     let parent_precedence = FormatPrecedence::with_precedence_for_parenthesis(parent.as_ref());
 
@@ -189,19 +145,38 @@ fn parenthesis_can_be_omitted(node: &JsParenthesizedExpression) -> SyntaxResult<
     }
 
     if let Some(parent) = parent {
-        if let Some(binary_like) = JsAnyBinaryLikeExpression::cast(parent) {
-            let operator = binary_like.operator()?;
-            let is_right = expression.syntax() == binary_like.right()?.syntax();
-
-            if !binary_argument_needs_parens(
-                operator,
-                &JsAnyBinaryLikeLeftExpression::from(expression),
-                is_right,
-            )? {
-                return Ok(true);
-            }
+        if JsAnyBinaryLikeExpression::can_cast(parent.kind())
+            && !binary_argument_needs_parens(&JsAnyBinaryLikeLeftExpression::from(expression))
+        {
+            return Ok(true);
         }
     }
 
     Ok(false)
+}
+
+impl NeedsParentheses for JsParenthesizedExpression {
+    #[inline(always)]
+    fn needs_parentheses(&self) -> bool {
+        false
+    }
+
+    #[inline(always)]
+    fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
+        false
+    }
+}
+
+impl ExpressionNode for JsParenthesizedExpression {
+    fn resolve(&self) -> JsAnyExpression {
+        let inner = self.expression();
+
+        inner.unwrap_or_else(|_| self.clone().into())
+    }
+
+    fn into_resolved(self) -> JsAnyExpression {
+        let inner = self.expression();
+
+        inner.unwrap_or_else(|_| self.into())
+    }
 }

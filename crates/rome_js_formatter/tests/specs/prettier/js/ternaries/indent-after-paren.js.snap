@@ -305,81 +305,55 @@ fn?.[
 ```diff
 --- Prettier
 +++ Rome
-@@ -210,54 +210,56 @@
+@@ -210,54 +210,44 @@
  )(Fooooooooooo.Fooooooooooo);
  
  bifornCringerMoshedPerplexSawder =
 -  askTrovenaBeenaDependsRowans +
 -  (glimseGlyphsHazardNoopsTieTie === 0
--    ? averredBathersBoxroomBuggyNurl
--    : anodyneCondosMalateOverateRetinol)[AnnularCooeedSplicesWalksWayWay];
-+  askTrovenaBeenaDependsRowans + (
-+    (glimseGlyphsHazardNoopsTieTie === 0
-+      ? averredBathersBoxroomBuggyNurl
-+      : anodyneCondosMalateOverateRetinol)[AnnularCooeedSplicesWalksWayWay]
-+  );
++  askTrovenaBeenaDependsRowans + (glimseGlyphsHazardNoopsTieTie === 0
+     ? averredBathersBoxroomBuggyNurl
+     : anodyneCondosMalateOverateRetinol)[AnnularCooeedSplicesWalksWayWay];
  
  bifornCringerMoshedPerplexSawder =
 -  askTrovenaBeenaDependsRowans +
 -  (glimseGlyphsHazardNoopsTieTie === 0 &&
 -  kochabCooieGameOnOboleUnweave === Math.PI
--    ? averredBathersBoxroomBuggyNurl
--    : anodyneCondosMalateOverateRetinol)[AnnularCooeedSplicesWalksWayWay];
-+  askTrovenaBeenaDependsRowans + (
-+    (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
-+      ? averredBathersBoxroomBuggyNurl
-+      : anodyneCondosMalateOverateRetinol)[AnnularCooeedSplicesWalksWayWay]
-+  );
++  askTrovenaBeenaDependsRowans + (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+     ? averredBathersBoxroomBuggyNurl
+     : anodyneCondosMalateOverateRetinol)[AnnularCooeedSplicesWalksWayWay];
  
  bifornCringerMoshedPerplexSawder =
 -  askTrovenaBeenaDependsRowans +
 -  (glimseGlyphsHazardNoopsTieTie === 0
--    ? averredBathersBoxroomBuggyNurl
--    : anodyneCondosMalateOverateRetinol
--  ).Fooooooooooo.Fooooooooooo;
-+  askTrovenaBeenaDependsRowans + (
-+    (glimseGlyphsHazardNoopsTieTie === 0
-+      ? averredBathersBoxroomBuggyNurl
-+      : anodyneCondosMalateOverateRetinol
-+    ).Fooooooooooo.Fooooooooooo
-+  );
++  askTrovenaBeenaDependsRowans + (glimseGlyphsHazardNoopsTieTie === 0
+     ? averredBathersBoxroomBuggyNurl
+     : anodyneCondosMalateOverateRetinol
+   ).Fooooooooooo.Fooooooooooo;
  
  bifornCringerMoshedPerplexSawder =
 -  askTrovenaBeenaDependsRowans +
 -  (glimseGlyphsHazardNoopsTieTie === 0 &&
 -  kochabCooieGameOnOboleUnweave === Math.PI
--    ? averredBathersBoxroomBuggyNurl
--    : anodyneCondosMalateOverateRetinol
--  ).Fooooooooooo.Fooooooooooo;
-+  askTrovenaBeenaDependsRowans + (
-+    (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
-+      ? averredBathersBoxroomBuggyNurl
-+      : anodyneCondosMalateOverateRetinol
-+    ).Fooooooooooo.Fooooooooooo
-+  );
++  askTrovenaBeenaDependsRowans + (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+     ? averredBathersBoxroomBuggyNurl
+     : anodyneCondosMalateOverateRetinol
+   ).Fooooooooooo.Fooooooooooo;
  
  bifornCringerMoshedPerplexSawder =
 -  askTrovenaBeenaDependsRowans +
 -  (glimseGlyphsHazardNoopsTieTie === 0
--    ? averredBathersBoxroomBuggyNurl
--    : anodyneCondosMalateOverateRetinol)(Fooooooooooo.Fooooooooooo);
-+  askTrovenaBeenaDependsRowans + (
-+    (glimseGlyphsHazardNoopsTieTie === 0
-+      ? averredBathersBoxroomBuggyNurl
-+      : anodyneCondosMalateOverateRetinol)(Fooooooooooo.Fooooooooooo)
-+  );
++  askTrovenaBeenaDependsRowans + (glimseGlyphsHazardNoopsTieTie === 0
+     ? averredBathersBoxroomBuggyNurl
+     : anodyneCondosMalateOverateRetinol)(Fooooooooooo.Fooooooooooo);
  
  bifornCringerMoshedPerplexSawder =
 -  askTrovenaBeenaDependsRowans +
 -  (glimseGlyphsHazardNoopsTieTie === 0 &&
 -    kochabCooieGameOnOboleUnweave === Math.PI
--    ? averredBathersBoxroomBuggyNurl
--    : anodyneCondosMalateOverateRetinol)(Fooooooooooo.Fooooooooooo);
-+  askTrovenaBeenaDependsRowans + (
-+    (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
-+      ? averredBathersBoxroomBuggyNurl
-+      : anodyneCondosMalateOverateRetinol)(Fooooooooooo.Fooooooooooo)
-+  );
++  askTrovenaBeenaDependsRowans + (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+     ? averredBathersBoxroomBuggyNurl
+     : anodyneCondosMalateOverateRetinol)(Fooooooooooo.Fooooooooooo);
  
  bifornCringerMoshedPerplexSawder = (
 -  glimseGlyphsHazardNoopsTieTie === 0 &&
@@ -396,7 +370,7 @@ fn?.[
  
  foo = (
    coooooooooooooooooooooooooooooooooooooooooooooooooooond
-@@ -280,8 +282,9 @@
+@@ -280,8 +270,9 @@
  
  const decorated = (arg, ignoreRequestError) => {
    return (
@@ -625,48 +599,36 @@ foo36 = new (
 )(Fooooooooooo.Fooooooooooo);
 
 bifornCringerMoshedPerplexSawder =
-  askTrovenaBeenaDependsRowans + (
-    (glimseGlyphsHazardNoopsTieTie === 0
-      ? averredBathersBoxroomBuggyNurl
-      : anodyneCondosMalateOverateRetinol)[AnnularCooeedSplicesWalksWayWay]
-  );
+  askTrovenaBeenaDependsRowans + (glimseGlyphsHazardNoopsTieTie === 0
+    ? averredBathersBoxroomBuggyNurl
+    : anodyneCondosMalateOverateRetinol)[AnnularCooeedSplicesWalksWayWay];
 
 bifornCringerMoshedPerplexSawder =
-  askTrovenaBeenaDependsRowans + (
-    (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
-      ? averredBathersBoxroomBuggyNurl
-      : anodyneCondosMalateOverateRetinol)[AnnularCooeedSplicesWalksWayWay]
-  );
+  askTrovenaBeenaDependsRowans + (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+    ? averredBathersBoxroomBuggyNurl
+    : anodyneCondosMalateOverateRetinol)[AnnularCooeedSplicesWalksWayWay];
 
 bifornCringerMoshedPerplexSawder =
-  askTrovenaBeenaDependsRowans + (
-    (glimseGlyphsHazardNoopsTieTie === 0
-      ? averredBathersBoxroomBuggyNurl
-      : anodyneCondosMalateOverateRetinol
-    ).Fooooooooooo.Fooooooooooo
-  );
+  askTrovenaBeenaDependsRowans + (glimseGlyphsHazardNoopsTieTie === 0
+    ? averredBathersBoxroomBuggyNurl
+    : anodyneCondosMalateOverateRetinol
+  ).Fooooooooooo.Fooooooooooo;
 
 bifornCringerMoshedPerplexSawder =
-  askTrovenaBeenaDependsRowans + (
-    (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
-      ? averredBathersBoxroomBuggyNurl
-      : anodyneCondosMalateOverateRetinol
-    ).Fooooooooooo.Fooooooooooo
-  );
+  askTrovenaBeenaDependsRowans + (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+    ? averredBathersBoxroomBuggyNurl
+    : anodyneCondosMalateOverateRetinol
+  ).Fooooooooooo.Fooooooooooo;
 
 bifornCringerMoshedPerplexSawder =
-  askTrovenaBeenaDependsRowans + (
-    (glimseGlyphsHazardNoopsTieTie === 0
-      ? averredBathersBoxroomBuggyNurl
-      : anodyneCondosMalateOverateRetinol)(Fooooooooooo.Fooooooooooo)
-  );
+  askTrovenaBeenaDependsRowans + (glimseGlyphsHazardNoopsTieTie === 0
+    ? averredBathersBoxroomBuggyNurl
+    : anodyneCondosMalateOverateRetinol)(Fooooooooooo.Fooooooooooo);
 
 bifornCringerMoshedPerplexSawder =
-  askTrovenaBeenaDependsRowans + (
-    (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
-      ? averredBathersBoxroomBuggyNurl
-      : anodyneCondosMalateOverateRetinol)(Fooooooooooo.Fooooooooooo)
-  );
+  askTrovenaBeenaDependsRowans + (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+    ? averredBathersBoxroomBuggyNurl
+    : anodyneCondosMalateOverateRetinol)(Fooooooooooo.Fooooooooooo);
 
 bifornCringerMoshedPerplexSawder = (
   glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
@@ -767,9 +729,9 @@ fn?.[
 
 # Lines exceeding max width of 80 characters
 ```
-  221:     (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
-  236:     (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
-  251:     (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
-  257:   glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+  218:   askTrovenaBeenaDependsRowans + (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+  229:   askTrovenaBeenaDependsRowans + (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+  240:   askTrovenaBeenaDependsRowans + (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+  245:   glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
 ```
 

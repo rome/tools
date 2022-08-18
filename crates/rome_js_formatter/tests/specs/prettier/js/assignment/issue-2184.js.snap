@@ -17,25 +17,29 @@ const areaPercentageDiff = (
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,4 +1,3 @@
- const areaPercentageDiff = (
+@@ -1,4 +1,4 @@
+-const areaPercentageDiff = (
 -  topRankedZoneFit.areaPercentageRemaining -
 -  previousZoneFitNow.areaPercentageRemaining
-+  topRankedZoneFit.areaPercentageRemaining - previousZoneFitNow.areaPercentageRemaining
- ).toFixed(2);
+-).toFixed(2);
++const areaPercentageDiff =
++  (topRankedZoneFit.areaPercentageRemaining - previousZoneFitNow.areaPercentageRemaining).toFixed(
++    2,
++  );
 ```
 
 # Output
 
 ```js
-const areaPercentageDiff = (
-  topRankedZoneFit.areaPercentageRemaining - previousZoneFitNow.areaPercentageRemaining
-).toFixed(2);
+const areaPercentageDiff =
+  (topRankedZoneFit.areaPercentageRemaining - previousZoneFitNow.areaPercentageRemaining).toFixed(
+    2,
+  );
 ```
 
 
 # Lines exceeding max width of 80 characters
 ```
-    2:   topRankedZoneFit.areaPercentageRemaining - previousZoneFitNow.areaPercentageRemaining
+    2:   (topRankedZoneFit.areaPercentageRemaining - previousZoneFitNow.areaPercentageRemaining).toFixed(
 ```
 

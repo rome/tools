@@ -1,4 +1,5 @@
 use crate::builders::{format_close_delimiter, format_open_delimiter};
+use crate::parentheses::ExpressionNode;
 use crate::prelude::*;
 use crate::utils::{is_call_like_expression, write_arguments_multi_line};
 use rome_formatter::{format_args, write};
@@ -43,21 +44,20 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
             let first_argument = first_argument?;
             let second_argument = second_argument?;
 
-            let is_framework_test_call = if let Some(call_expression) =
-                node.syntax().parent().and_then(JsCallExpression::cast)
-            {
-                let callee = call_expression.callee()?;
+            let is_framework_test_call =
+                if let Some(call_expression) = node.parent::<JsCallExpression>() {
+                    let callee = call_expression.callee()?;
 
-                is_framework_test_call(IsTestFrameworkCallPayload {
-                    first_argument: &first_argument,
-                    second_argument: &second_argument,
-                    third_argument: &third_argument,
-                    arguments_len,
-                    callee: &callee,
-                })?
-            } else {
-                false
-            };
+                    is_framework_test_call(IsTestFrameworkCallPayload {
+                        first_argument: &first_argument,
+                        second_argument: &second_argument,
+                        third_argument: &third_argument,
+                        arguments_len,
+                        callee: &callee,
+                    })?
+                } else {
+                    false
+                };
 
             let is_react_hook_with_deps_array =
                 is_react_hook_with_deps_array(&first_argument, &second_argument)?
@@ -104,20 +104,16 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                 .map(|e| e.memoized())
                 .collect();
 
-            let mut any_breaks = false;
             let an_argument_breaks =
                 separated
                     .iter_mut()
                     .enumerate()
                     .any(|(index, element)| match element.inspect(f) {
                         Ok(element) => {
-                            if element.will_break() {
-                                any_breaks = true;
-                                should_group_first_argument && index > 0
-                                    || (should_group_last_argument && index < args.len() - 1)
-                            } else {
-                                false
-                            }
+                            let in_relevant_range = should_group_first_argument && index > 0
+                                || (should_group_last_argument && index < args.len() - 1);
+
+                            in_relevant_range && element.will_break()
                         }
                         Err(_) => false,
                     });
@@ -168,10 +164,6 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                 return write!(f, [all_arguments_expanded]);
             }
 
-            if any_breaks {
-                write!(f, [expand_parent()])?;
-            }
-
             let edge_arguments_do_not_break = format_with(|f| {
                 // `should_group_first_argument` and `should_group_last_argument` are mutually exclusive
                 // which means that if one is `false`, then the other is `true`.
@@ -212,9 +204,9 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                         l_leading_trivia,
                         l_paren,
                         l_trailing_trivia,
-                        group(&format_args![format_with(|f| {
+                        group(&format_with(|f| {
                             write_arguments_multi_line(separated.iter(), f)
-                        })]),
+                        })),
                         r_leading_trivia,
                         r_paren,
                         r_trailing_trivia
@@ -228,19 +220,19 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                 f,
                 [
                     l_leading_trivia,
-                    &group(&format_args![
+                    group(&format_args![
                         l_paren,
                         l_trailing_trivia,
-                        &soft_block_indent(&format_with(|f| {
+                        soft_block_indent(&format_with(|f| {
                             let separated = args
                                 .format_separated(JsSyntaxKind::COMMA)
                                 .with_trailing_separator(TrailingSeparator::Omit)
                                 .nodes_grouped();
                             write_arguments_multi_line(separated, f)
-                        }),),
+                        })),
                         r_leading_trivia,
                         r_paren,
-                    ],),
+                    ]),
                     r_trailing_trivia
                 ]
             )
@@ -260,38 +252,39 @@ fn should_group_first_argument(list: &JsCallArgumentList) -> SyntaxResult<bool> 
 
     let has_comments = first.syntax().has_comments_direct();
 
-    let is_function_like = if let JsAnyCallArgument::JsAnyExpression(expression) = first {
-        match expression {
-            JsAnyExpression::JsFunctionExpression(_) => true,
-            JsAnyExpression::JsArrowFunctionExpression(arrow) => {
-                matches!(arrow.body()?, JsAnyFunctionBody::JsFunctionBody(_))
-            }
-            _ => false,
+    let is_function_like = match resolve_call_argument_expression(&first) {
+        Some(JsAnyExpression::JsFunctionExpression(_)) => true,
+        Some(JsAnyExpression::JsArrowFunctionExpression(arrow)) => {
+            matches!(arrow.body()?, JsAnyFunctionBody::JsFunctionBody(_))
         }
-    } else {
-        false
+        _ => false,
     };
 
-    let second_arg_is_function_like = matches!(
-        second,
-        JsAnyCallArgument::JsAnyExpression(
-            JsAnyExpression::JsFunctionExpression(_)
-                | JsAnyExpression::JsArrowFunctionExpression(_)
-                | JsAnyExpression::JsConditionalExpression(_)
-        )
-    );
-    Ok(!has_comments
-        && is_function_like
-        && !second_arg_is_function_like
-        && !could_group_argument(&second, false)?)
+    let (second_arg_is_function_like, can_group) = match resolve_call_argument_expression(&second) {
+        Some(second_expression) => {
+            let second_arg_is_function_like = matches!(
+                &second_expression,
+                JsAnyExpression::JsFunctionExpression(_)
+                    | JsAnyExpression::JsArrowFunctionExpression(_)
+                    | JsAnyExpression::JsConditionalExpression(_)
+            );
+            (
+                second_arg_is_function_like,
+                could_group_expression_argument(&second_expression, false)?,
+            )
+        }
+        None => (false, false),
+    };
+
+    Ok(!has_comments && is_function_like && !second_arg_is_function_like && !can_group)
 }
 
 /// Checks if the last group requires grouping
 fn should_group_last_argument(list: &JsCallArgumentList) -> SyntaxResult<bool> {
     let list_len = list.len();
-    let mut iter = list.iter().rev();
-    let last = iter.next();
-    let penultimate = iter.next();
+    let mut iter = list.iter();
+    let last = iter.next_back();
+    let penultimate = iter.next_back();
 
     if let Some(last) = last {
         let last = last?;
@@ -303,6 +296,7 @@ fn should_group_last_argument(list: &JsCallArgumentList) -> SyntaxResult<bool> {
                 || !JsArrayExpression::can_cast(penultimate.syntax().kind())
                 || !JsArrowFunctionExpression::can_cast(last.syntax().kind());
 
+            // TODO implement no poor printed array
             let _no_poor_printed_array =
                 !list_len > 1 && JsArrayExpression::can_cast(last.syntax().kind());
             different_kind && no_array_and_arrow_function
@@ -310,63 +304,64 @@ fn should_group_last_argument(list: &JsCallArgumentList) -> SyntaxResult<bool> {
             true
         };
 
-        Ok(!last.syntax().has_comments_direct()
-            && could_group_argument(&last, false)?
-            && check_with_penultimate)
+        let can_group = match &last {
+            JsAnyCallArgument::JsAnyExpression(expression) => {
+                could_group_expression_argument(expression, false)?
+            }
+            _ => false,
+        };
+
+        Ok(!last.syntax().has_comments_direct() && can_group && check_with_penultimate)
     } else {
         Ok(false)
     }
 }
 
 /// Checks if the current argument could be grouped
-fn could_group_argument(
-    argument: &JsAnyCallArgument,
+fn could_group_expression_argument(
+    argument: &JsAnyExpression,
     is_arrow_recursion: bool,
 ) -> SyntaxResult<bool> {
-    let result = if let JsAnyCallArgument::JsAnyExpression(argument) = argument {
-        match argument {
-            JsAnyExpression::JsObjectExpression(object_expression) => {
-                object_expression.members().len() > 0
-                    || object_expression
-                        .syntax()
-                        .first_or_last_token_have_comments()
-            }
+    let result = match argument.resolve() {
+        JsAnyExpression::JsObjectExpression(object_expression) => {
+            object_expression.members().len() > 0
+                || object_expression
+                    .syntax()
+                    .first_or_last_token_have_comments()
+        }
 
-            JsAnyExpression::JsArrayExpression(array_expression) => {
-                array_expression.elements().len() > 0
-                    || array_expression
-                        .syntax()
-                        .first_or_last_token_have_comments()
-            }
-            JsAnyExpression::TsTypeAssertionExpression(assertion_expression) => {
-                could_group_argument(
-                    &JsAnyCallArgument::JsAnyExpression(assertion_expression.expression()?),
-                    false,
-                )?
-            }
+        JsAnyExpression::JsArrayExpression(array_expression) => {
+            array_expression.elements().len() > 0
+                || array_expression
+                    .syntax()
+                    .first_or_last_token_have_comments()
+        }
+        JsAnyExpression::TsTypeAssertionExpression(assertion_expression) => {
+            could_group_expression_argument(&assertion_expression.expression()?, false)?
+        }
 
-            JsAnyExpression::TsAsExpression(as_expression) => could_group_argument(
-                &JsAnyCallArgument::JsAnyExpression(as_expression.expression()?),
-                false,
-            )?,
-            JsAnyExpression::JsArrowFunctionExpression(arrow_function) => {
-                let body = arrow_function.body()?;
-                let return_type_annotation = arrow_function.return_type_annotation();
+        JsAnyExpression::TsAsExpression(as_expression) => {
+            could_group_expression_argument(&as_expression.expression()?, false)?
+        }
+        JsAnyExpression::JsArrowFunctionExpression(arrow_function) => {
+            let body = arrow_function.body()?;
+            let return_type_annotation = arrow_function.return_type_annotation();
 
-                // Handles cases like:
-                //
-                // app.get("/", (req, res): void => {
-                //     res.send("Hello World!");
-                // });
-                //
-                // export class Thing implements OtherThing {
-                //   do: (type: Type) => Provider<Prop> = memoize(
-                //     (type: ObjectType): Provider<Opts> => {}
-                //   );
-                // }
-                let can_group_type = !return_type_annotation.and_then(|rty| rty.ty().ok()).map_or(
-                    false,
-                    |any_type| {
+            // Handles cases like:
+            //
+            // app.get("/", (req, res): void => {
+            //     res.send("Hello World!");
+            // });
+            //
+            // export class Thing implements OtherThing {
+            //   do: (type: Type) => Provider<Prop> = memoize(
+            //     (type: ObjectType): Provider<Opts> => {}
+            //   );
+            // }
+            let can_group_type =
+                !return_type_annotation
+                    .and_then(|rty| rty.ty().ok())
+                    .map_or(false, |any_type| {
                         TsReferenceType::can_cast(any_type.syntax().kind())
                             || if let JsAnyFunctionBody::JsFunctionBody(function_body) = &body {
                                 function_body
@@ -376,61 +371,53 @@ fn could_group_argument(
                             } else {
                                 true
                             }
-                    },
+                    });
+
+            let expression_body = match &body {
+                JsAnyFunctionBody::JsFunctionBody(_) => None,
+                JsAnyFunctionBody::JsAnyExpression(expression) => Some(expression.resolve()),
+            };
+
+            let body_is_delimited = matches!(body, JsAnyFunctionBody::JsFunctionBody(_))
+                || matches!(
+                    expression_body,
+                    Some(
+                        JsAnyExpression::JsObjectExpression(_)
+                            | JsAnyExpression::JsArrayExpression(_)
+                    )
                 );
 
-                let body_is_delimited = matches!(
-                    body,
-                    JsAnyFunctionBody::JsFunctionBody(_)
-                        | JsAnyFunctionBody::JsAnyExpression(JsAnyExpression::JsObjectExpression(
-                            _
-                        ))
-                        | JsAnyFunctionBody::JsAnyExpression(JsAnyExpression::JsArrayExpression(_))
-                );
+            if let Some(any_expression) = expression_body {
+                let is_nested_arrow_function =
+                    if let JsAnyExpression::JsArrowFunctionExpression(arrow_function_expression) =
+                        &any_expression
+                    {
+                        arrow_function_expression
+                            .body()
+                            .ok()
+                            .and_then(|body| body.as_js_any_expression().cloned())
+                            .and_then(|body| could_group_expression_argument(&body, true).ok())
+                            .unwrap_or(false)
+                    } else {
+                        false
+                    };
 
-                if let JsAnyFunctionBody::JsAnyExpression(any_expression) = body.clone() {
-                    let is_nested_arrow_function =
-                        if let JsAnyExpression::JsArrowFunctionExpression(
-                            arrow_function_expression,
-                        ) = &any_expression
-                        {
-                            arrow_function_expression
-                                .body()
-                                .ok()
-                                .and_then(|body| body.as_js_any_expression().cloned())
-                                .and_then(|body| {
-                                    could_group_argument(
-                                        &JsAnyCallArgument::JsAnyExpression(body),
-                                        true,
-                                    )
-                                    .ok()
-                                })
-                                .unwrap_or(false)
-                        } else {
-                            false
-                        };
-
-                    body_is_delimited
-                        && is_nested_arrow_function
-                        && can_group_type
-                        && (!is_arrow_recursion
-                            && (is_call_like_expression(&any_expression)
-                                || matches!(
-                                    body,
-                                    JsAnyFunctionBody::JsAnyExpression(
-                                        JsAnyExpression::JsConditionalExpression(_)
-                                    )
-                                )))
-                } else {
-                    body_is_delimited && can_group_type
-                }
+                body_is_delimited
+                    && is_nested_arrow_function
+                    && can_group_type
+                    && (!is_arrow_recursion
+                        && (is_call_like_expression(&any_expression)
+                            || matches!(
+                                any_expression,
+                                JsAnyExpression::JsConditionalExpression(_)
+                            )))
+            } else {
+                body_is_delimited && can_group_type
             }
-
-            JsAnyExpression::JsFunctionExpression(_) => true,
-            _ => false,
         }
-    } else {
-        false
+
+        JsAnyExpression::JsFunctionExpression(_) => true,
+        _ => false,
     };
 
     Ok(result)
@@ -445,9 +432,14 @@ fn is_react_hook_with_deps_array(
     first_argument: &JsAnyCallArgument,
     second_argument: &JsAnyCallArgument,
 ) -> SyntaxResult<bool> {
-    let first_node_matches = if let JsAnyCallArgument::JsAnyExpression(
-        JsAnyExpression::JsArrowFunctionExpression(arrow_function),
-    ) = first_argument
+    let first_expression = match first_argument {
+        JsAnyCallArgument::JsAnyExpression(expression) => Some(expression.resolve()),
+        _ => None,
+    };
+
+    let first_node_matches = if let Some(JsAnyExpression::JsArrowFunctionExpression(
+        arrow_function,
+    )) = first_expression
     {
         let no_parameters = arrow_function.parameters()?.is_empty();
         let body = arrow_function.body()?;
@@ -528,9 +520,19 @@ fn is_framework_test_call(payload: IsTestFrameworkCallPayload) -> SyntaxResult<b
         arguments_len,
         callee,
     } = payload;
+    let first_argument_expression = resolve_call_argument_expression(first_argument);
+    let second_argument_expression = resolve_call_argument_expression(second_argument);
+    let third_argument_expression =
+        third_argument
+            .as_ref()
+            .and_then(|third_argument| match third_argument {
+                Ok(argument) => resolve_call_argument_expression(argument),
+                _ => None,
+            });
+
     let first_argument_is_literal_like = matches!(
-        first_argument,
-        JsAnyCallArgument::JsAnyExpression(
+        first_argument_expression,
+        Some(
             JsAnyExpression::JsAnyLiteralExpression(
                 JsAnyLiteralExpression::JsStringLiteralExpression(_)
             ) | JsAnyExpression::JsTemplate(_)
@@ -538,35 +540,31 @@ fn is_framework_test_call(payload: IsTestFrameworkCallPayload) -> SyntaxResult<b
     );
 
     if first_argument_is_literal_like && contains_a_test_pattern(callee)? {
-        // if the third argument is not a numeric literal, we bail
-        // example: `it("name", () => { ... }, 2500)`
-        if let Some(Ok(third_argument)) = third_argument {
-            if !matches!(
-                third_argument,
-                JsAnyCallArgument::JsAnyExpression(JsAnyExpression::JsAnyLiteralExpression(
-                    JsAnyLiteralExpression::JsNumberLiteralExpression(_)
-                ))
-            ) {
-                return Ok(false);
-            }
-        }
-
         if arguments_len == 2 {
             Ok(matches!(
-                second_argument,
-                JsAnyCallArgument::JsAnyExpression(
+                second_argument_expression,
+                Some(
                     JsAnyExpression::JsArrowFunctionExpression(_)
                         | JsAnyExpression::JsFunctionExpression(_)
                 )
             ))
         } else {
-            let result = match second_argument {
-                JsAnyCallArgument::JsAnyExpression(JsAnyExpression::JsFunctionExpression(node)) => {
+            // if the third argument is not a numeric literal, we bail
+            // example: `it("name", () => { ... }, 2500)`
+            if !matches!(
+                third_argument_expression,
+                Some(JsAnyExpression::JsAnyLiteralExpression(
+                    JsAnyLiteralExpression::JsNumberLiteralExpression(_)
+                ))
+            ) {
+                return Ok(false);
+            }
+
+            let result = match second_argument_expression {
+                Some(JsAnyExpression::JsFunctionExpression(node)) => {
                     node.parameters()?.items().len() <= 1
                 }
-                JsAnyCallArgument::JsAnyExpression(JsAnyExpression::JsArrowFunctionExpression(
-                    node,
-                )) => {
+                Some(JsAnyExpression::JsArrowFunctionExpression(node)) => {
                     let body = node.body()?;
                     let has_enough_parameters = node.parameters()?.len() <= 1;
                     matches!(body, JsAnyFunctionBody::JsFunctionBody(_)) && has_enough_parameters
@@ -577,6 +575,15 @@ fn is_framework_test_call(payload: IsTestFrameworkCallPayload) -> SyntaxResult<b
         }
     } else {
         Ok(false)
+    }
+}
+
+pub(super) fn resolve_call_argument_expression(
+    argument: &JsAnyCallArgument,
+) -> Option<JsAnyExpression> {
+    match argument {
+        JsAnyCallArgument::JsAnyExpression(expression) => Some(expression.resolve()),
+        _ => None,
     }
 }
 
@@ -665,24 +672,33 @@ fn matches_test_call(callee: &JsAnyExpression) -> SyntaxResult<Vec<SyntaxTokenTe
     const MAX_DEPTH: u8 = 5;
     let mut test_call = Vec::with_capacity(MAX_DEPTH as usize);
     let mut current_node = callee.clone();
-    for _ in 0..MAX_DEPTH {
-        if let JsAnyExpression::JsIdentifierExpression(identifier) = &current_node {
-            let value_token = identifier.name()?.value_token()?;
-            let value = value_token.token_text_trimmed();
-            test_call.push(value);
-            break;
-        } else if let JsAnyExpression::JsStaticMemberExpression(member_expression) = &current_node {
-            match member_expression.member()? {
-                JsAnyName::JsName(name) => {
-                    let value = name.value_token()?;
-                    test_call.push(value.token_text_trimmed());
-                    current_node = member_expression.object()?;
+    let mut i = 0;
+
+    while i < MAX_DEPTH {
+        i += 1;
+        current_node = match current_node {
+            JsAnyExpression::JsIdentifierExpression(identifier) => {
+                let value_token = identifier.name()?.value_token()?;
+                let value = value_token.token_text_trimmed();
+                test_call.push(value);
+                break;
+            }
+            JsAnyExpression::JsStaticMemberExpression(member_expression) => {
+                match member_expression.member()? {
+                    JsAnyName::JsName(name) => {
+                        let value = name.value_token()?;
+                        test_call.push(value.token_text_trimmed());
+                        member_expression.object()?
+                    }
+                    _ => break,
                 }
-                _ => break,
-            };
-        } else {
-            break;
-        }
+            }
+            JsAnyExpression::JsParenthesizedExpression(parenthesized) => {
+                i -= 1; // Don't increment the depth
+                parenthesized.expression()?
+            }
+            _ => break,
+        };
     }
     test_call.reverse();
     Ok(test_call)
@@ -745,6 +761,15 @@ mod test {
     #[test]
     fn matches_static_member_expression_deep() {
         let call_expression = extract_call_expression("test.describe.parallel.only();");
+        assert_eq!(
+            contains_a_test_pattern(&call_expression.callee().unwrap()),
+            Ok(true)
+        );
+    }
+
+    #[test]
+    fn matches_parentheses() {
+        let call_expression = extract_call_expression("(test.describe.parallel).only();");
         assert_eq!(
             contains_a_test_pattern(&call_expression.callee().unwrap()),
             Ok(true)

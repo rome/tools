@@ -25,7 +25,7 @@ room = room.map((row, rowIndex) => (
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,17 +1,22 @@
+@@ -1,17 +1,21 @@
  const funnelSnapshotCard =
 -  (report === MY_OVERVIEW && !ReportGK.xar_metrics_active_capitol_v2) ||
 -  (report === COMPANY_OVERVIEW &&
@@ -46,8 +46,9 @@ room = room.map((row, rowIndex) => (
 -    colIndex === width
 -      ? 1
 -      : 0,
+-  ),
 +room = room.map(
-+  (row, rowIndex) => (
++  (row, rowIndex) =>
 +    row.map(
 +      (col, colIndex) =>
 +        (
@@ -58,8 +59,7 @@ room = room.map((row, rowIndex) => (
 +        )
 +          ? 1
 +          : 0,
-+    )
-   ),
++    ),
  );
 ```
 
@@ -74,7 +74,7 @@ const funnelSnapshotCard =
     : null;
 
 room = room.map(
-  (row, rowIndex) => (
+  (row, rowIndex) =>
     row.map(
       (col, colIndex) =>
         (
@@ -85,8 +85,7 @@ room = room.map(
         )
           ? 1
           : 0,
-    )
-  ),
+    ),
 );
 ```
 

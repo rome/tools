@@ -21,5 +21,5 @@ Quote properties: As needed
 -----
 let x = <const>"hello";
 let y = <string>x;
-var d = <Error>({ name: "foo", message: "bar" });
+var d = <Error>{ name: "foo", message: "bar" };
 

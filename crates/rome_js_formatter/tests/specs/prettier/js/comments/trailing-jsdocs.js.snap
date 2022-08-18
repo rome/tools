@@ -35,14 +35,10 @@ const CONNECTION_STATUS = exports.CONNECTION_STATUS = {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,27 +1,22 @@
--const CONNECTION_STATUS = (exports.CONNECTION_STATUS = {
-+const CONNECTION_STATUS = exports.CONNECTION_STATUS = {
-   CLOSED: Object.freeze({ kind: "CLOSED" }),
-   CONNECTED: Object.freeze({ kind: "CONNECTED" }),
+@@ -4,24 +4,19 @@
    CONNECTING: Object.freeze({ kind: "CONNECTING" }),
    NOT_CONNECTED: Object.freeze({ kind: "NOT_CONNECTED" }),
--});
+ });
 -
 -/* A comment */
 -/**
@@ -64,7 +60,6 @@ const CONNECTION_STATUS = exports.CONNECTION_STATUS = {
 -/**
 - * A single unit of data exchanged between the peers of a `ReactiveSocket`.
 - */
-+};
 +/* A comment */ /**
 +* A type that can be written to a buffer.
 +*/ /**
@@ -86,12 +81,12 @@ const CONNECTION_STATUS = exports.CONNECTION_STATUS = {
 # Output
 
 ```js
-const CONNECTION_STATUS = exports.CONNECTION_STATUS = {
+const CONNECTION_STATUS = (exports.CONNECTION_STATUS = {
   CLOSED: Object.freeze({ kind: "CLOSED" }),
   CONNECTED: Object.freeze({ kind: "CONNECTED" }),
   CONNECTING: Object.freeze({ kind: "CONNECTING" }),
   NOT_CONNECTED: Object.freeze({ kind: "NOT_CONNECTED" }),
-};
+});
 /* A comment */ /**
 * A type that can be written to a buffer.
 */ /**

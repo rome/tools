@@ -11,28 +11,26 @@ mod member_chain;
 mod object;
 mod object_like;
 mod object_pattern_like;
-mod parens;
 #[cfg(test)]
 mod quickcheck_utils;
 mod typescript;
 
+pub(crate) use crate::parentheses::resolve_left_most_expression;
 use crate::prelude::*;
 pub(crate) use assignment_like::{should_break_after_operator, JsAnyAssignmentLike};
 pub(crate) use binary_like_expression::{
-    binary_argument_needs_parens, format_binary_like_expression, JsAnyBinaryLikeExpression,
-    JsAnyBinaryLikeLeftExpression,
+    binary_argument_needs_parens, format_binary_like_expression, needs_binary_like_parentheses,
+    JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression,
 };
-pub(crate) use conditional::{resolve_expression, JsAnyConditional};
-pub(crate) use member_chain::format_call_expression;
+pub(crate) use conditional::JsAnyConditional;
+pub(crate) use member_chain::get_member_chain;
 pub(crate) use object_like::JsObjectLike;
 pub(crate) use object_pattern_like::JsObjectPatternLike;
-pub(crate) use parens::starts_with_no_lookahead_token;
 use rome_formatter::{format_args, write, Buffer, VecBuffer};
 use rome_js_syntax::{JsAnyExpression, JsAnyStatement, JsInitializerClause, JsLanguage, Modifiers};
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList, Direction};
 pub(crate) use simple::*;
-use std::fmt::Debug;
 pub(crate) use string_utils::*;
 pub(crate) use typescript::should_hug_type;
 

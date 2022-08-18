@@ -1,5 +1,6 @@
 use crate::{cursor, Language, SyntaxToken};
 use std::fmt;
+use std::fmt::Formatter;
 use std::marker::PhantomData;
 use text_size::{TextRange, TextSize};
 
@@ -640,5 +641,22 @@ fn print_debug_str<S: AsRef<str>>(text: S, f: &mut fmt::Formatter<'_>) -> fmt::R
             }
         }
         write!(f, "")
+    }
+}
+
+impl<L: Language> std::fmt::Debug for SyntaxTrivia<L> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        write!(f, "[")?;
+        let mut first_piece = true;
+
+        for piece in self.pieces() {
+            if !first_piece {
+                write!(f, ", ")?;
+            }
+            first_piece = false;
+            write!(f, "{:?}", piece)?;
+        }
+
+        write!(f, "]")
     }
 }

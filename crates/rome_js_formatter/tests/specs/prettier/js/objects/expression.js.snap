@@ -37,79 +37,57 @@ const a3 = {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,25 +1,29 @@
- () => ({}``);
+@@ -1,10 +1,12 @@
+-() => ({}``);
 -({}``);
 -a = () => ({}.x);
-+({})``;
-+a = () => ({}).x;
- ({} && a, b);
+-({} && a, b);
 -({}::b, 0);
 -({}::b()``[""].c++ && 0 ? 0 : 0, 0);
+-({}(), 0);
++() => ({})``;
++({})``;
++a = () => ({}).x;
++({}) && a, b;
 +({}
 +::b, 0)
 +({}
 +::b()``[''].c++ && 0 ? 0 : 0, 0)
- ({}(), 0);
++({})(), 0;
  ({} = 0);
--({} = 0), 1;
-+(({} = 0), 1);
+ ({} = 0), 1;
  
- const a1 = {
-   someKey: (shortName, shortName),
- };
- 
- const a2 = {
--  someKey:
--    (longLongLongLongLongLongLongLongLongLongLongLongLongLongName, shortName),
-+  someKey: (
-+    longLongLongLongLongLongLongLongLongLongLongLongLongLongName, shortName
-+  ),
- };
- 
- const a3 = {
--  someKey:
--    (longLongLongLongLongLongLongLongLongLongLongLongLongLongName,
-+  someKey: (
-+    longLongLongLongLongLongLongLongLongLongLongLongLongLongName,
-     longLongLongLongLongLongLongLongLongLongLongLongLongLongName,
--    longLongLongLongLongLongLongLongLongLongLongLongLongLongName),
-+    longLongLongLongLongLongLongLongLongLongLongLongLongLongName
-+  ),
- };
 ```
 
 # Output
 
 ```js
-() => ({}``);
+() => ({})``;
 ({})``;
 a = () => ({}).x;
-({} && a, b);
+({}) && a, b;
 ({}
 ::b, 0)
 ({}
 ::b()``[''].c++ && 0 ? 0 : 0, 0)
-({}(), 0);
+({})(), 0;
 ({} = 0);
-(({} = 0), 1);
+({} = 0), 1;
 
 const a1 = {
   someKey: (shortName, shortName),
 };
 
 const a2 = {
-  someKey: (
-    longLongLongLongLongLongLongLongLongLongLongLongLongLongName, shortName
-  ),
+  someKey:
+    (longLongLongLongLongLongLongLongLongLongLongLongLongLongName, shortName),
 };
 
 const a3 = {
-  someKey: (
+  someKey:
+    (longLongLongLongLongLongLongLongLongLongLongLongLongLongName,
     longLongLongLongLongLongLongLongLongLongLongLongLongLongName,
-    longLongLongLongLongLongLongLongLongLongLongLongLongLongName,
-    longLongLongLongLongLongLongLongLongLongLongLongLongLongName
-  ),
+    longLongLongLongLongLongLongLongLongLongLongLongLongLongName),
 };
 ```
 

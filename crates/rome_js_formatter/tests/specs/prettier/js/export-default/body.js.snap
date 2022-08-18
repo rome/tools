@@ -5,8 +5,7 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
 # Input
 
 ```js
-new class {};
-new Ctor(class {});
+export default (class {}[1] = 1);
 ```
 
 
@@ -15,17 +14,15 @@ new Ctor(class {});
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,2 +1,2 @@
--new (class {})();
-+new class {}();
- new Ctor(class {});
+@@ -1 +1 @@
+-export default (class {}[1] = 1);
++export default ((class {})[1] = 1);
 ```
 
 # Output
 
 ```js
-new class {}();
-new Ctor(class {});
+export default ((class {})[1] = 1);
 ```
 
 

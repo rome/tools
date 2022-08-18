@@ -1,14 +1,57 @@
 use crate::prelude::*;
-use crate::utils::format_call_expression;
 
-use rome_js_syntax::JsCallExpression;
-use rome_rowan::AstNode;
+use crate::parentheses::{ExpressionNode, NeedsParentheses};
+use crate::utils::get_member_chain;
+use rome_js_syntax::{JsAnyExpression, JsCallExpression, JsSyntaxKind, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsCallExpression;
 
 impl FormatNodeRule<JsCallExpression> for FormatJsCallExpression {
-    fn fmt_fields(&self, node: &JsCallExpression, formatter: &mut JsFormatter) -> FormatResult<()> {
-        format_call_expression(node.syntax(), formatter)
+    fn fmt_fields(&self, node: &JsCallExpression, f: &mut JsFormatter) -> FormatResult<()> {
+        let member_chain = get_member_chain(node, f)?;
+
+        member_chain.fmt(f)
+    }
+
+    fn needs_parentheses(&self, item: &JsCallExpression) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl NeedsParentheses for JsCallExpression {
+    fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
+        matches!(parent.kind(), JsSyntaxKind::JS_NEW_EXPRESSION)
+    }
+}
+
+impl ExpressionNode for JsCallExpression {
+    #[inline]
+    fn resolve(&self) -> JsAnyExpression {
+        self.clone().into()
+    }
+
+    #[inline]
+    fn into_resolved(self) -> JsAnyExpression {
+        self.into()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+
+    use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
+    use rome_js_syntax::JsCallExpression;
+
+    #[test]
+    fn needs_parentheses() {
+        assert_needs_parentheses!("new (call())()", JsCallExpression);
+
+        assert_not_needs_parentheses!("a?.()!.c", JsCallExpression);
+        assert_not_needs_parentheses!("(a?.())!.c", JsCallExpression);
+
+        assert_not_needs_parentheses!("(call())()", JsCallExpression[1]);
+        assert_not_needs_parentheses!("getLogger().error(err);", JsCallExpression[0]);
+        assert_not_needs_parentheses!("getLogger().error(err);", JsCallExpression[1]);
     }
 }

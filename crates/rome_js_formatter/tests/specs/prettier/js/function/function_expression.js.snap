@@ -24,36 +24,36 @@ new function() {};
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,5 +1,5 @@
+@@ -1,4 +1,4 @@
 -(function () {}.length);
--typeof function () {};
 +(function () {}).length;
-+typeof (function () {});
+ typeof function () {};
  export default (function () {})();
  (function () {})()``;
- (function () {})``;
-@@ -8,4 +8,4 @@
+@@ -6,6 +6,6 @@
+ new (function () {})();
+ (function () {});
  a = function f() {} || b;
- (function () {} && a);
+-(function () {} && a);
++((function () {}) && a);
  a + function () {};
--new (function () {})();
-+new function () {}();
+ new (function () {})();
 ```
 
 # Output
 
 ```js
 (function () {}).length;
-typeof (function () {});
+typeof function () {};
 export default (function () {})();
 (function () {})()``;
 (function () {})``;
 new (function () {})();
 (function () {});
 a = function f() {} || b;
-(function () {} && a);
+((function () {}) && a);
 a + function () {};
-new function () {}();
+new (function () {})();
 ```
 
 

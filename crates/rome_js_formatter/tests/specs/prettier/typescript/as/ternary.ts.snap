@@ -53,43 +53,23 @@ bifornCringerMoshedPerplexSawder =
 ```diff
 --- Prettier
 +++ Rome
-@@ -29,22 +29,23 @@
- }
- 
- function foo() {
--  void ((
--    coooooooooooooooooooooooooooooooooooooooooooooooooooond
-+  void (
-+    (coooooooooooooooooooooooooooooooooooooooooooooooooooond
-       ? baaaaaaaaaaaaaaaaaaaaar
--      : baaaaaaaaaaaaaaaaaaaaaz
--  ) as Fooooooooooo);
-+      : baaaaaaaaaaaaaaaaaaaaaz) as Fooooooooooo
-+  );
+@@ -37,14 +37,11 @@
  }
  
  bifornCringerMoshedPerplexSawder =
 -  askTrovenaBeenaDependsRowans +
 -  ((glimseGlyphsHazardNoopsTieTie === 0
--    ? averredBathersBoxroomBuggyNurl
--    : anodyneCondosMalateOverateRetinol) as AnnularCooeedSplicesWalksWayWay);
-+  askTrovenaBeenaDependsRowans + (
-+    (glimseGlyphsHazardNoopsTieTie === 0
-+      ? averredBathersBoxroomBuggyNurl
-+      : anodyneCondosMalateOverateRetinol) as AnnularCooeedSplicesWalksWayWay
-+  );
++  askTrovenaBeenaDependsRowans + ((glimseGlyphsHazardNoopsTieTie === 0
+     ? averredBathersBoxroomBuggyNurl
+     : anodyneCondosMalateOverateRetinol) as AnnularCooeedSplicesWalksWayWay);
  
  bifornCringerMoshedPerplexSawder =
 -  askTrovenaBeenaDependsRowans +
 -  ((glimseGlyphsHazardNoopsTieTie === 0 &&
 -  kochabCooieGameOnOboleUnweave === Math.PI
--    ? averredBathersBoxroomBuggyNurl
--    : anodyneCondosMalateOverateRetinol) as AnnularCooeedSplicesWalksWayWay);
-+  askTrovenaBeenaDependsRowans + (
-+    (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
-+      ? averredBathersBoxroomBuggyNurl
-+      : anodyneCondosMalateOverateRetinol) as AnnularCooeedSplicesWalksWayWay
-+  );
++  askTrovenaBeenaDependsRowans + ((glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+     ? averredBathersBoxroomBuggyNurl
+     : anodyneCondosMalateOverateRetinol) as AnnularCooeedSplicesWalksWayWay);
 ```
 
 # Output
@@ -126,31 +106,27 @@ function foo() {
 }
 
 function foo() {
-  void (
-    (coooooooooooooooooooooooooooooooooooooooooooooooooooond
+  void ((
+    coooooooooooooooooooooooooooooooooooooooooooooooooooond
       ? baaaaaaaaaaaaaaaaaaaaar
-      : baaaaaaaaaaaaaaaaaaaaaz) as Fooooooooooo
-  );
+      : baaaaaaaaaaaaaaaaaaaaaz
+  ) as Fooooooooooo);
 }
 
 bifornCringerMoshedPerplexSawder =
-  askTrovenaBeenaDependsRowans + (
-    (glimseGlyphsHazardNoopsTieTie === 0
-      ? averredBathersBoxroomBuggyNurl
-      : anodyneCondosMalateOverateRetinol) as AnnularCooeedSplicesWalksWayWay
-  );
+  askTrovenaBeenaDependsRowans + ((glimseGlyphsHazardNoopsTieTie === 0
+    ? averredBathersBoxroomBuggyNurl
+    : anodyneCondosMalateOverateRetinol) as AnnularCooeedSplicesWalksWayWay);
 
 bifornCringerMoshedPerplexSawder =
-  askTrovenaBeenaDependsRowans + (
-    (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
-      ? averredBathersBoxroomBuggyNurl
-      : anodyneCondosMalateOverateRetinol) as AnnularCooeedSplicesWalksWayWay
-  );
+  askTrovenaBeenaDependsRowans + ((glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+    ? averredBathersBoxroomBuggyNurl
+    : anodyneCondosMalateOverateRetinol) as AnnularCooeedSplicesWalksWayWay);
 ```
 
 
 # Lines exceeding max width of 80 characters
 ```
-   48:     (glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+   45:   askTrovenaBeenaDependsRowans + ((glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
 ```
 

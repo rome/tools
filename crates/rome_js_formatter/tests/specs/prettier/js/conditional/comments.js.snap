@@ -122,35 +122,31 @@ c */? foo : bar : bar;
    4 === util.inspect.length
 -    ? // node <= 0.8.x
 -      function (v, colors) {
-+    ? (function (v, colors) {
++    ? function (v, colors) {
 +        // node <= 0.8.x
          return util.inspect(v, void 0, void 0, colors);
--      }
+       }
 -    : // node > 0.8.x
 -      function (v, colors) {
-+      })
-+    : (function (v, colors) {
++    : function (v, colors) {
 +        // node > 0.8.x
          return util.inspect(v, { colors: colors });
--      };
-+      });
+       };
  
  var inspect =
    4 === util.inspect.length
 -    ? // node <= 0.8.x
 -      function (v, colors) {
-+    ? (function (v, colors) {
++    ? function (v, colors) {
 +        // node <= 0.8.x
          return util.inspect(v, void 0, void 0, colors);
--      }
+       }
 -    : // node > 0.8.x
 -      function (v, colors) {
-+      })
-+    : (function (v, colors) {
++    : function (v, colors) {
 +        // node > 0.8.x
          return util.inspect(v, { colors: colors });
--      };
-+      });
+       };
  
  const extractTextPluginOptions = shouldUseRelativeAssetPaths
 -  ? // Making sure that the publicPath goes back to to build folder.
@@ -234,25 +230,25 @@ c */? foo : bar : bar;
 ```js
 var inspect =
   4 === util.inspect.length
-    ? (function (v, colors) {
+    ? function (v, colors) {
         // node <= 0.8.x
         return util.inspect(v, void 0, void 0, colors);
-      })
-    : (function (v, colors) {
+      }
+    : function (v, colors) {
         // node > 0.8.x
         return util.inspect(v, { colors: colors });
-      });
+      };
 
 var inspect =
   4 === util.inspect.length
-    ? (function (v, colors) {
+    ? function (v, colors) {
         // node <= 0.8.x
         return util.inspect(v, void 0, void 0, colors);
-      })
-    : (function (v, colors) {
+      }
+    : function (v, colors) {
         // node > 0.8.x
         return util.inspect(v, { colors: colors });
-      });
+      };
 
 const extractTextPluginOptions = shouldUseRelativeAssetPaths
   // Making sure that the publicPath goes back to to build folder.

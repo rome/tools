@@ -1,8 +1,9 @@
 use crate::prelude::*;
-use crate::utils::{FormatWithSemicolon, JsAnyBinaryLikeExpression};
+use crate::utils::{FormatWithSemicolon, JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression};
 
 use rome_formatter::{format_args, write};
 
+use crate::parentheses::get_expression_left_side;
 use rome_js_syntax::{
     JsAnyExpression, JsReturnStatement, JsReturnStatementFields, JsSequenceExpression,
 };
@@ -79,8 +80,11 @@ impl Format<JsFormatContext> for FormatReturnOrThrowArgument<'_> {
 }
 
 /// Tests if the passed in argument has any leading comments. This is the case if
-/// * the argument's first token has a leading comment
-/// * the argument is a parenthesized expression and the inner expression has a leading comment.
+/// * the argument has any leading comment
+/// * the argument's left side has any leading comment (see [get_expression_left_side]).
+///
+/// Traversing the left nodes is necessary in case the first node is parenthesized because
+/// parentheses will be removed (and be re-added by the return statement, but only if the argument breaks)
 fn has_argument_leading_comments(argument: &JsAnyExpression) -> SyntaxResult<bool> {
     if matches!(argument, JsAnyExpression::JsxTagExpression(_)) {
         // JSX formatting takes care of adding parens
@@ -91,11 +95,14 @@ fn has_argument_leading_comments(argument: &JsAnyExpression) -> SyntaxResult<boo
         return Ok(true);
     }
 
-    let result = match argument {
-        JsAnyExpression::JsParenthesizedExpression(inner) => {
-            has_argument_leading_comments(&inner.expression()?)?
+    let result = match get_expression_left_side(argument) {
+        Some(JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression)) => {
+            has_argument_leading_comments(&expression)?
         }
-        _ => false,
+        Some(JsAnyBinaryLikeLeftExpression::JsPrivateName(name)) => {
+            name.syntax().has_leading_comments()
+        }
+        None => false,
     };
 
     Ok(result)

@@ -151,31 +151,37 @@ function x() {
    ];
  
    const testArrayLiteral2 = <
-@@ -112,8 +108,8 @@
+@@ -111,9 +107,9 @@
+   const fitsObjLiteral = <PermissionsChecker<any> | undefined>{ a: "test" };
    const fitsArrayLiteral = <PermissionsChecker<any> | undefined>["t1", "t2"];
  
-   const breakAfterCast = <PermissionsChecker<any> | undefined>(
+-  const breakAfterCast = <PermissionsChecker<any> | undefined>(
 -    (<any>permissions)[receiverType]
 -  );
-+    <any>permissions
-+  )[receiverType];
++  const breakAfterCast = <PermissionsChecker<any> | undefined>(<
++    any
++  >permissions)[receiverType];
  
    const stillTooLong = <
      PermissionsChecker<object> | undefined | number | string | boolean
-@@ -130,10 +126,8 @@
+@@ -129,11 +125,11 @@
+     | never
    >(<any>permissions)[receiverType];
  
-   const stillTooLong3 = <PermissionsChecker<object> | undefined>(
+-  const stillTooLong3 = <PermissionsChecker<object> | undefined>(
 -    (<any>permissions.someMethodWithLongName(parameter1, parameter2))[
 -      receiverTypeLongName
 -    ]
 -  );
-+    <any>permissions.someMethodWithLongName(parameter1, parameter2)
-+  )[receiverTypeLongName];
++  const stillTooLong3 = <PermissionsChecker<object> | undefined>(<
++    any
++  >permissions.someMethodWithLongName(parameter1, parameter2))[
++    receiverTypeLongName
++  ];
  
    const stillTooLong4 = <
      | PermissionsChecker<object>
-@@ -163,9 +157,7 @@
+@@ -163,9 +159,7 @@
    >{ prop1: "myPropVal" };
  
    const testArrayLiteral = <PermissionsChecker<any> | undefined>[
@@ -300,9 +306,9 @@ function x() {
   const fitsObjLiteral = <PermissionsChecker<any> | undefined>{ a: "test" };
   const fitsArrayLiteral = <PermissionsChecker<any> | undefined>["t1", "t2"];
 
-  const breakAfterCast = <PermissionsChecker<any> | undefined>(
-    <any>permissions
-  )[receiverType];
+  const breakAfterCast = <PermissionsChecker<any> | undefined>(<
+    any
+  >permissions)[receiverType];
 
   const stillTooLong = <
     PermissionsChecker<object> | undefined | number | string | boolean
@@ -318,9 +324,11 @@ function x() {
     | never
   >(<any>permissions)[receiverType];
 
-  const stillTooLong3 = <PermissionsChecker<object> | undefined>(
-    <any>permissions.someMethodWithLongName(parameter1, parameter2)
-  )[receiverTypeLongName];
+  const stillTooLong3 = <PermissionsChecker<object> | undefined>(<
+    any
+  >permissions.someMethodWithLongName(parameter1, parameter2))[
+    receiverTypeLongName
+  ];
 
   const stillTooLong4 = <
     | PermissionsChecker<object>

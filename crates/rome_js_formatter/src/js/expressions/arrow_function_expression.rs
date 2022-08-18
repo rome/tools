@@ -1,10 +1,15 @@
 use crate::prelude::*;
 use rome_formatter::{format_args, write};
 
-use crate::utils::{is_simple_expression, resolve_expression, starts_with_no_lookahead_token};
+use crate::parentheses::{
+    is_binary_like_left_or_right, is_conditional_test,
+    update_or_lower_expression_needs_parentheses, ExpressionNode, NeedsParentheses,
+};
+use crate::utils::{resolve_left_most_expression, JsAnyBinaryLikeLeftExpression};
 use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyExpression, JsAnyFunctionBody, JsAnyTemplateElement,
-    JsArrowFunctionExpression, JsArrowFunctionExpressionFields, JsTemplate,
+    JsArrowFunctionExpression, JsArrowFunctionExpressionFields, JsSyntaxKind, JsSyntaxNode,
+    JsTemplate,
 };
 
 #[derive(Debug, Clone, Default)]
@@ -28,36 +33,37 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
             body,
         } = node.as_fields();
 
-        if let Some(async_token) = async_token {
-            write!(f, [async_token.format(), space()])?;
-        }
-
-        write!(f, [type_parameters.format()])?;
-
-        match parameters? {
-            JsAnyArrowFunctionParameters::JsAnyBinding(binding) => write!(
-                f,
-                [format_parenthesize(
-                    binding.syntax().first_token().as_ref(),
-                    &format_args![binding.format(), if_group_breaks(&text(",")),],
-                    binding.syntax().last_token().as_ref(),
-                )
-                .grouped_with_soft_block_indent()]
-            )?,
-            JsAnyArrowFunctionParameters::JsParameters(params) => {
-                write![f, [group(&params.format())]]?
+        let format_signature = format_with(|f| {
+            if let Some(async_token) = &async_token {
+                write!(f, [async_token.format(), space()])?;
             }
-        }
 
-        write![
-            f,
-            [
-                return_type_annotation.format(),
-                space(),
-                fat_arrow_token.format(),
-                space()
+            write!(f, [type_parameters.format()])?;
+
+            match parameters.as_ref()? {
+                JsAnyArrowFunctionParameters::JsAnyBinding(binding) => write!(
+                    f,
+                    [format_parenthesize(
+                        binding.syntax().first_token().as_ref(),
+                        &format_args![binding.format(), if_group_breaks(&text(",")),],
+                        binding.syntax().last_token().as_ref(),
+                    )
+                    .grouped_with_soft_block_indent()]
+                )?,
+                JsAnyArrowFunctionParameters::JsParameters(params) => {
+                    write![f, [group(&params.format())]]?
+                }
+            }
+
+            write![
+                f,
+                [
+                    return_type_annotation.format(),
+                    space(),
+                    fat_arrow_token.format(),
+                ]
             ]
-        ]?;
+        });
 
         let body = body?;
 
@@ -78,54 +84,143 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
         // Therefore if our body is an arrow self, array, or object, we
         // do not have a soft line break after the arrow because the body is
         // going to get broken anyways.
-        let (body_has_soft_line_break, should_add_parens) = match &body {
-            JsFunctionBody(_) => (true, false),
-            JsAnyExpression(expr) => match expr {
+        let body_has_soft_line_break = match &body {
+            JsFunctionBody(_) => true,
+            JsAnyExpression(expr) => match expr.resolve() {
                 JsArrowFunctionExpression(_)
                 | JsArrayExpression(_)
                 | JsObjectExpression(_)
-                | JsxTagExpression(_) => (true, false),
-                JsParenthesizedExpression(expression) => {
-                    let resolved = resolve_expression(expression.expression()?);
-
-                    match resolved {
-                        JsConditionalExpression(conditional) => {
-                            (false, !starts_with_no_lookahead_token(conditional.into())?)
-                        }
-                        _ => (true, false),
-                    }
+                | JsParenthesizedExpression(_)
+                | JsxTagExpression(_) => true,
+                JsTemplate(template) => is_multiline_template_starting_on_same_line(&template),
+                JsSequenceExpression(_) => {
+                    return write!(
+                        f,
+                        [group(&format_args![
+                            format_signature,
+                            group(&format_args![
+                                space(),
+                                text("("),
+                                soft_block_indent(&body.format()),
+                                text(")")
+                            ])
+                        ])]
+                    );
                 }
-                JsConditionalExpression(conditional) => (
-                    false,
-                    !starts_with_no_lookahead_token(conditional.clone().into())?,
-                ),
-                JsTemplate(template) => {
-                    (is_multiline_template_starting_on_same_line(template), false)
-                }
-                expr => (is_simple_expression(expr)?, false),
+                _ => false,
             },
         };
 
-        if body_has_soft_line_break {
-            write![f, [body.format()]]
+        // Add parentheses to avoid confusion between `a => b ? c : d` and `a <= b ? c : d`
+        // but only if the body isn't an object/function or class expression because parentheses are always required in that
+        // case and added by the object expression itself
+        let should_add_parens = match &body {
+            JsAnyExpression(expression) => {
+                let resolved = expression.resolve();
+
+                let is_conditional = matches!(resolved, JsConditionalExpression(_));
+                let are_parentheses_mandatory = matches!(
+                    resolve_left_most_expression(expression),
+                    JsAnyBinaryLikeLeftExpression::JsAnyExpression(
+                        JsObjectExpression(_) | JsFunctionExpression(_) | JsClassExpression(_)
+                    )
+                );
+
+                is_conditional && !are_parentheses_mandatory
+            }
+            _ => false,
+        };
+
+        if body_has_soft_line_break && !should_add_parens {
+            write![f, [format_signature, space(), body.format()]]
         } else {
             write!(
                 f,
-                [group(&soft_line_indent_or_space(&format_with(|f| {
-                    if should_add_parens {
-                        write!(f, [if_group_fits_on_line(&text("("))])?;
-                    }
+                [
+                    format_signature,
+                    group(&soft_line_indent_or_space(&format_with(|f| {
+                        if should_add_parens {
+                            write!(f, [if_group_fits_on_line(&text("("))])?;
+                        }
 
-                    write!(f, [body.format()])?;
+                        write!(f, [body.format()])?;
 
-                    if should_add_parens {
-                        write!(f, [if_group_fits_on_line(&text(")"))])?;
-                    }
+                        if should_add_parens {
+                            write!(f, [if_group_fits_on_line(&text(")"))])?;
+                        }
 
-                    Ok(())
-                })))]
+                        Ok(())
+                    })))
+                ]
             )
         }
+    }
+
+    fn needs_parentheses(&self, item: &JsArrowFunctionExpression) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl NeedsParentheses for JsArrowFunctionExpression {
+    fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
+        match parent.kind() {
+            JsSyntaxKind::TS_AS_EXPRESSION
+            | JsSyntaxKind::JS_UNARY_EXPRESSION
+            | JsSyntaxKind::JS_AWAIT_EXPRESSION
+            | JsSyntaxKind::TS_TYPE_ASSERTION_EXPRESSION => true,
+
+            _ => {
+                is_conditional_test(self.syntax(), parent)
+                    || update_or_lower_expression_needs_parentheses(self.syntax(), parent)
+                    || is_binary_like_left_or_right(self.syntax(), parent)
+            }
+        }
+    }
+}
+
+impl ExpressionNode for JsArrowFunctionExpression {
+    #[inline]
+    fn resolve(&self) -> JsAnyExpression {
+        self.clone().into()
+    }
+
+    #[inline]
+    fn into_resolved(self) -> JsAnyExpression {
+        self.into()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+
+    use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
+    use rome_js_syntax::{JsArrowFunctionExpression, SourceType};
+
+    #[test]
+    fn needs_parentheses() {
+        assert_needs_parentheses!("new (a => test)()`", JsArrowFunctionExpression);
+        assert_needs_parentheses!("(a => test)()", JsArrowFunctionExpression);
+        assert_needs_parentheses!("(a => test).member", JsArrowFunctionExpression);
+        assert_needs_parentheses!("(a => test)[member]", JsArrowFunctionExpression);
+        assert_not_needs_parentheses!("object[a => a]", JsArrowFunctionExpression);
+        assert_needs_parentheses!("(a => a) as Function", JsArrowFunctionExpression);
+        assert_needs_parentheses!("(a => a)!", JsArrowFunctionExpression);
+        assert_needs_parentheses!("(a => a)`template`", JsArrowFunctionExpression);
+        assert_needs_parentheses!("+(a => a)", JsArrowFunctionExpression);
+        assert_needs_parentheses!("(a => a) && b", JsArrowFunctionExpression);
+        assert_needs_parentheses!("(a => a) instanceof b", JsArrowFunctionExpression);
+        assert_needs_parentheses!("(a => a) in b", JsArrowFunctionExpression);
+        assert_needs_parentheses!("(a => a) + b", JsArrowFunctionExpression);
+        assert_needs_parentheses!("await (a => a)", JsArrowFunctionExpression);
+        assert_needs_parentheses!(
+            "<Function>(a => a)",
+            JsArrowFunctionExpression,
+            SourceType::ts()
+        );
+        assert_needs_parentheses!("(a => a) ? b : c", JsArrowFunctionExpression);
+        assert_not_needs_parentheses!("a ? b => b : c", JsArrowFunctionExpression);
+        assert_not_needs_parentheses!("a ? b : c => c", JsArrowFunctionExpression);
+        assert_needs_parentheses!("class Test extends (a => a) {}", JsArrowFunctionExpression);
     }
 }
 

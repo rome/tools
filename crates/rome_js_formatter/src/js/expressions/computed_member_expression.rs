@@ -1,9 +1,11 @@
 use crate::prelude::*;
 
+use crate::js::expressions::static_member_expression::member_chain_callee_needs_parens;
+use crate::parentheses::{ExpressionNode, NeedsParentheses};
 use rome_formatter::{format_args, write};
-use rome_js_syntax::JsSyntaxToken;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsComputedMemberAssignment, JsComputedMemberExpression,
+    JsAnyExpression, JsAnyLiteralExpression, JsComputedMemberAssignment,
+    JsComputedMemberExpression, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
 };
 use rome_rowan::{declare_node_union, SyntaxResult};
 
@@ -17,6 +19,10 @@ impl FormatNodeRule<JsComputedMemberExpression> for FormatJsComputedMemberExpres
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
         JsAnyComputedMemberLike::from(node.clone()).fmt(f)
+    }
+
+    fn needs_parentheses(&self, item: &JsComputedMemberExpression) -> bool {
+        item.needs_parentheses()
     }
 }
 
@@ -102,5 +108,48 @@ impl JsAnyComputedMemberLike {
                 assignment.r_brack_token()
             }
         }
+    }
+}
+
+impl NeedsParentheses for JsComputedMemberExpression {
+    fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
+        if self.is_optional_chain() && matches!(parent.kind(), JsSyntaxKind::JS_NEW_EXPRESSION) {
+            return true;
+        }
+
+        member_chain_callee_needs_parens(self.clone().into(), parent)
+    }
+}
+
+impl ExpressionNode for JsComputedMemberExpression {
+    #[inline]
+    fn resolve(&self) -> JsAnyExpression {
+        self.clone().into()
+    }
+
+    #[inline]
+    fn into_resolved(self) -> JsAnyExpression {
+        self.into()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+
+    use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
+    use rome_js_syntax::JsComputedMemberExpression;
+
+    #[test]
+    fn needs_parentheses() {
+        assert_needs_parentheses!("new (test()[a])()", JsComputedMemberExpression);
+        assert_needs_parentheses!("new (test().a[b])()", JsComputedMemberExpression);
+        assert_needs_parentheses!(
+            "new (test()`template`[index])()",
+            JsComputedMemberExpression
+        );
+        assert_needs_parentheses!("new (test()![member])()", JsComputedMemberExpression);
+
+        assert_needs_parentheses!("new (a?.b[c])()", JsComputedMemberExpression);
+        assert_not_needs_parentheses!("new (test[a])()", JsComputedMemberExpression);
     }
 }

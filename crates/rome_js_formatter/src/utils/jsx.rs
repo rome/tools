@@ -1,7 +1,8 @@
 use crate::context::QuoteStyle;
+use crate::parentheses::NeedsParentheses;
 use crate::prelude::*;
 use rome_formatter::{format_args, write};
-use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsxAnyChild, JsxChildList};
+use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsxAnyChild, JsxChildList, JsxTagExpression};
 
 /// Checks if the children of an element contain meaningful text. See [is_meaningful_jsx_text] for
 /// definition of meaningful JSX text.
@@ -69,44 +70,27 @@ pub enum WrapState {
     ///  );
     /// ```
     WrapOnBreak,
-    /// For a JSX element that must always be wrapped in parentheses.
-    /// For instance, a JSX element inside a static member expression
-    /// should always be wrapped:
-    /// ```jsx
-    /// (<div>Badlands</div>).property
-    /// ```
-    AlwaysWrap,
 }
 
 /// Checks if a JSX Element should be wrapped in parentheses. Returns a [WrapState] which
 /// indicates when the element should be wrapped in parentheses.
-pub fn get_wrap_state(node: &JsSyntaxNode) -> WrapState {
+pub fn get_wrap_state(node: &JsxTagExpression) -> WrapState {
     // We skip the first item because the first item in ancestors is the node itself, i.e.
     // the JSX Element in this case.
-    let mut ancestors = node.ancestors().skip(1);
+    let parent = node.resolve_parent();
 
-    ancestors
-        .next()
-        .map(|parent| {
-            let parent_kind = parent.kind();
-            if parent_kind == JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION {
-                return get_wrap_state(&parent);
-            }
-
-            match parent_kind {
-                JsSyntaxKind::JS_ARRAY_EXPRESSION
-                | JsSyntaxKind::JSX_ATTRIBUTE
-                | JsSyntaxKind::JSX_ELEMENT
-                | JsSyntaxKind::JSX_EXPRESSION_CHILD
-                | JsSyntaxKind::JSX_FRAGMENT
-                | JsSyntaxKind::JS_EXPRESSION_STATEMENT
-                | JsSyntaxKind::JS_CALL_ARGUMENT_LIST => WrapState::NoWrap,
-                JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION
-                | JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION => WrapState::AlwaysWrap,
-                _ => WrapState::WrapOnBreak,
-            }
-        })
-        .unwrap_or(WrapState::NoWrap)
+    parent.map_or(WrapState::NoWrap, |parent| match parent.kind() {
+        JsSyntaxKind::JS_ARRAY_EXPRESSION
+        | JsSyntaxKind::JSX_ATTRIBUTE
+        | JsSyntaxKind::JSX_ELEMENT
+        | JsSyntaxKind::JSX_EXPRESSION_CHILD
+        | JsSyntaxKind::JSX_FRAGMENT
+        | JsSyntaxKind::JS_EXPRESSION_STATEMENT
+        | JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION
+        | JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION
+        | JsSyntaxKind::JS_CALL_ARGUMENT_LIST => WrapState::NoWrap,
+        _ => WrapState::WrapOnBreak,
+    })
 }
 
 /// This is a very special situation where we're returning a JsxElement

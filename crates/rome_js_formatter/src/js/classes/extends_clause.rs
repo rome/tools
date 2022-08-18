@@ -1,5 +1,6 @@
 use crate::prelude::*;
 
+use crate::parentheses::resolve_parent;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::JsExtendsClauseFields;
 use rome_js_syntax::JsSyntaxKind::JS_ASSIGNMENT_EXPRESSION;
@@ -31,6 +32,7 @@ impl FormatNodeRule<JsExtendsClause> for FormatJsExtendsClause {
             if node
                 .syntax()
                 .parent()
+                .and_then(|node| resolve_parent(&node))
                 .map_or(false, |p| p.kind() == JS_ASSIGNMENT_EXPRESSION)
             {
                 if super_class.syntax().has_leading_comments() || has_trailing_comments {

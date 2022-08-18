@@ -166,29 +166,6 @@ a
          ? "-record"
          : medals[0].unique
          ? "-unique"
-@@ -74,16 +72,16 @@
-     }
-   >
-     {medals[0].record
--      ? i18n("Record")
-+      ? (i18n("Record"))
-       : medals[0].unique
--      ? i18n("Unique")
-+      ? (i18n("Unique"))
-       : medals[0].type === 0
--      ? i18n("Silver")
-+      ? (i18n("Silver"))
-       : medals[0].type === 1
--      ? i18n("Gold")
-+      ? (i18n("Gold"))
-       : medals[0].type === 2
--      ? i18n("Platinum")
--      : i18n("Theme")}
-+      ? (i18n("Platinum"))
-+      : (i18n("Theme"))}
-   </div>
- );
- 
 ```
 
 # Output
@@ -268,16 +245,16 @@ const foo = (
     }
   >
     {medals[0].record
-      ? (i18n("Record"))
+      ? i18n("Record")
       : medals[0].unique
-      ? (i18n("Unique"))
+      ? i18n("Unique")
       : medals[0].type === 0
-      ? (i18n("Silver"))
+      ? i18n("Silver")
       : medals[0].type === 1
-      ? (i18n("Gold"))
+      ? i18n("Gold")
       : medals[0].type === 2
-      ? (i18n("Platinum"))
-      : (i18n("Theme"))}
+      ? i18n("Platinum")
+      : i18n("Theme")}
   </div>
 );
 

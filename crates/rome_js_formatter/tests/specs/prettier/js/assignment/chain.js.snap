@@ -40,23 +40,7 @@ a=b=c;
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,21 +1,17 @@
- let bifornCringerMoshedPerplexSawder =
--  (askTrovenaBeenaDependsRowans =
--  glimseGlyphsHazardNoopsTieTie =
--  averredBathersBoxroomBuggyNurl =
--  anodyneCondosMalateOverateRetinol =
--  annularCooeedSplicesWalksWayWay =
--    kochabCooieGameOnOboleUnweave);
-+  askTrovenaBeenaDependsRowans =
-+    glimseGlyphsHazardNoopsTieTie =
-+    averredBathersBoxroomBuggyNurl =
-+    anodyneCondosMalateOverateRetinol =
-+    annularCooeedSplicesWalksWayWay =
-+      kochabCooieGameOnOboleUnweave;
- 
- bifornCringerMoshedPerplexSawder =
-   askTrovenaBeenaDependsRowans =
+@@ -11,11 +11,7 @@
    glimseGlyphsHazardNoopsTieTie =
    x =
    averredBathersBoxroomBuggyNurl =
@@ -88,12 +72,12 @@ a=b=c;
 
 ```js
 let bifornCringerMoshedPerplexSawder =
-  askTrovenaBeenaDependsRowans =
-    glimseGlyphsHazardNoopsTieTie =
-    averredBathersBoxroomBuggyNurl =
-    anodyneCondosMalateOverateRetinol =
-    annularCooeedSplicesWalksWayWay =
-      kochabCooieGameOnOboleUnweave;
+  (askTrovenaBeenaDependsRowans =
+  glimseGlyphsHazardNoopsTieTie =
+  averredBathersBoxroomBuggyNurl =
+  anodyneCondosMalateOverateRetinol =
+  annularCooeedSplicesWalksWayWay =
+    kochabCooieGameOnOboleUnweave);
 
 bifornCringerMoshedPerplexSawder =
   askTrovenaBeenaDependsRowans =

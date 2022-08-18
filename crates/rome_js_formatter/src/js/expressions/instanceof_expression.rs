@@ -1,7 +1,10 @@
 use crate::prelude::*;
-use crate::utils::{format_binary_like_expression, JsAnyBinaryLikeExpression};
+use crate::utils::{
+    format_binary_like_expression, needs_binary_like_parentheses, JsAnyBinaryLikeExpression,
+};
 
-use rome_js_syntax::JsInstanceofExpression;
+use crate::parentheses::{ExpressionNode, NeedsParentheses};
+use rome_js_syntax::{JsAnyExpression, JsInstanceofExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsInstanceofExpression;
@@ -16,5 +19,71 @@ impl FormatNodeRule<JsInstanceofExpression> for FormatJsInstanceofExpression {
             JsAnyBinaryLikeExpression::JsInstanceofExpression(node.clone()),
             formatter,
         )
+    }
+}
+
+impl NeedsParentheses for JsInstanceofExpression {
+    fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
+        needs_binary_like_parentheses(&JsAnyBinaryLikeExpression::from(self.clone()), parent)
+    }
+}
+
+impl ExpressionNode for JsInstanceofExpression {
+    #[inline]
+    fn resolve(&self) -> JsAnyExpression {
+        self.clone().into()
+    }
+
+    #[inline]
+    fn into_resolved(self) -> JsAnyExpression {
+        self.into()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
+    use rome_js_syntax::{JsInstanceofExpression, SourceType};
+
+    #[test]
+    fn needs_parentheses() {
+        assert_needs_parentheses!(
+            "class X extends (a instanceof b) {}",
+            JsInstanceofExpression
+        );
+
+        assert_needs_parentheses!("(a instanceof B) as number", JsInstanceofExpression);
+        assert_needs_parentheses!("<number>(a instanceof B)", JsInstanceofExpression);
+        assert_needs_parentheses!("!(a instanceof B)", JsInstanceofExpression);
+        assert_needs_parentheses!("await (a instanceof B)", JsInstanceofExpression);
+        assert_needs_parentheses!("(a instanceof B)!", JsInstanceofExpression);
+
+        assert_needs_parentheses!("(a instanceof B)()", JsInstanceofExpression);
+        assert_needs_parentheses!("(a instanceof B)?.()", JsInstanceofExpression);
+        assert_needs_parentheses!("new (a instanceof B)()", JsInstanceofExpression);
+        assert_needs_parentheses!("(a instanceof B)`template`", JsInstanceofExpression);
+        assert_needs_parentheses!("[...(a instanceof B)]", JsInstanceofExpression);
+        assert_needs_parentheses!("({...(a instanceof B)})", JsInstanceofExpression);
+        assert_needs_parentheses!(
+            "<test {...(a instanceof B)} />",
+            JsInstanceofExpression,
+            SourceType::tsx()
+        );
+        assert_needs_parentheses!(
+            "<test>{...(a instanceof B)}</test>",
+            JsInstanceofExpression,
+            SourceType::tsx()
+        );
+
+        assert_needs_parentheses!("(a instanceof B).member", JsInstanceofExpression);
+        assert_needs_parentheses!("(a instanceof B)[member]", JsInstanceofExpression);
+        assert_not_needs_parentheses!("object[a instanceof B]", JsInstanceofExpression);
+
+        assert_needs_parentheses!("(a instanceof B) + c", JsInstanceofExpression);
+
+        assert_not_needs_parentheses!("a instanceof B > c", JsInstanceofExpression);
+        assert_not_needs_parentheses!("a instanceof B in c", JsInstanceofExpression);
+        assert_not_needs_parentheses!("a instanceof B instanceof c", JsInstanceofExpression[0]);
+        assert_not_needs_parentheses!("a instanceof B instanceof c", JsInstanceofExpression[1]);
     }
 }

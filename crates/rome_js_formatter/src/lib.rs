@@ -258,7 +258,7 @@ use rome_rowan::AstNode;
 use rome_rowan::SyntaxResult;
 use rome_rowan::TextRange;
 
-use crate::builders::format_suppressed_node;
+use crate::builders::{format_parenthesize, format_suppressed_node};
 use crate::context::JsFormatContext;
 use crate::cst::FormatJsSyntaxNode;
 use std::iter::FusedIterator;
@@ -412,16 +412,29 @@ where
         let syntax = node.syntax();
 
         if f.context().comments().is_suppressed(syntax) {
-            write!(f, [format_suppressed_node(syntax)])?;
+            write!(f, [format_suppressed_node(syntax)])
+        } else if self.needs_parentheses(node) {
+            write!(
+                f,
+                [format_parenthesize(
+                    node.syntax().first_token().as_ref(),
+                    &format_once(|f| self.fmt_fields(node, f)),
+                    node.syntax().last_token().as_ref(),
+                )]
+            )
         } else {
-            self.fmt_fields(node, f)?;
-        };
-
-        Ok(())
+            self.fmt_fields(node, f)
+        }
     }
 
     /// Formats the node's fields.
     fn fmt_fields(&self, item: &N, f: &mut JsFormatter) -> FormatResult<()>;
+
+    /// Returns whether the node requires parens.
+    fn needs_parentheses(&self, item: &N) -> bool {
+        let _ = item;
+        false
+    }
 }
 
 /// Format implementation specific to JavaScript tokens.
@@ -687,6 +700,7 @@ mod check_reformat;
 mod generated;
 pub(crate) mod builders;
 pub mod context;
+mod parentheses;
 pub(crate) mod separated;
 
 #[cfg(test)]
@@ -704,7 +718,7 @@ mod test {
 test.expect(t => {
 	t.true(a);
 }, false);
-        "#;
+"#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
         let result = format_node(JsFormatContext::default(), &tree.syntax())

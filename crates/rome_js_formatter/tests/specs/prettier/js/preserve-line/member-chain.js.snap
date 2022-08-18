@@ -72,7 +72,7 @@ const sel = this.connections
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,59 +1,41 @@
+@@ -1,59 +1,39 @@
  fooBar
    .doSomething("Hello World")
    .doAnotherThing("Foo", { foo: bar })
@@ -115,20 +115,19 @@ const sel = this.connections
 -helloWorld
 -
 -  .text()
--
--  .then((t) => t);
 +helloWorld.text().then((t) => t);
  
- (
-   veryLongVeryLongVeryLong ||
--  anotherVeryLongVeryLongVeryLong ||
+-  .then((t) => t);
+-
+-(
+-  veryLongVeryLongVeryLong ||
++(veryLongVeryLongVeryLong ||
+   anotherVeryLongVeryLongVeryLong ||
 -  veryVeryVeryLongError
 -)
-+    anotherVeryLongVeryLongVeryLong ||
-+    veryVeryVeryLongError
-+).map((tickets) => TicketRecord.createFromSomeLongString()).filter(
-+  (obj) => !!obj,
-+);
++  veryVeryVeryLongError).map(
++  (tickets) => TicketRecord.createFromSomeLongString(),
++).filter((obj) => !!obj);
  
 -  .map((tickets) => TicketRecord.createFromSomeLongString())
 -
@@ -176,13 +175,11 @@ foo.bar.baz
 
 helloWorld.text().then((t) => t);
 
-(
-  veryLongVeryLongVeryLong ||
-    anotherVeryLongVeryLongVeryLong ||
-    veryVeryVeryLongError
-).map((tickets) => TicketRecord.createFromSomeLongString()).filter(
-  (obj) => !!obj,
-);
+(veryLongVeryLongVeryLong ||
+  anotherVeryLongVeryLongVeryLong ||
+  veryVeryVeryLongError).map(
+  (tickets) => TicketRecord.createFromSomeLongString(),
+).filter((obj) => !!obj);
 
 const sel = this.connections.concat(
   this.activities.concat(this.operators),
