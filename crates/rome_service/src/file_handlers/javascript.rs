@@ -3,7 +3,7 @@ use rome_diagnostics::{Applicability, CodeSuggestion, Diagnostic};
 use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
 use rome_js_analyze::utils::rename::RenameError;
-use rome_js_analyze::{analyze, analyze_with_inspect_matcher, RuleError};
+use rome_js_analyze::{analyze, analyze_with_inspect_matcher, metadata, RuleError};
 use rome_js_formatter::context::{QuoteProperties, QuoteStyle};
 use rome_js_formatter::{context::JsFormatContext, format_node};
 use rome_js_parser::Parse;
@@ -240,12 +240,25 @@ fn code_actions(
 
     let mut actions = Vec::new();
 
-    let enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = rules {
+    let mut enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = rules {
         let enabled: IndexSet<RuleFilter> = rules.as_enabled_rules();
         Some(enabled.into_iter().collect())
     } else {
         None
     };
+
+    // The rules in the assist category do not have configuration entries,
+    // always add them all to the enabled rules list
+    if let Some(enabled_rules) = &mut enabled_rules {
+        let actions_filter = AnalysisFilter {
+            categories: RuleCategories::ACTION,
+            ..AnalysisFilter::default()
+        };
+
+        for meta in metadata(actions_filter) {
+            enabled_rules.push(RuleFilter::Rule(meta.group, meta.rule.name));
+        }
+    }
 
     let mut filter = match &enabled_rules {
         Some(rules) => AnalysisFilter::from_enabled_rules(Some(rules.as_slice())),
