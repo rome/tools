@@ -23,6 +23,25 @@ declare_rule! {
     /// const FOO = "FOO";
     /// console.log(FOO);
     /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// let FOO = "FOO";
+    /// console.log(FOO);
+    /// ```
+    ///
+    /// ```js
+    /// export const FOO = "FOO";
+    /// console.log(FOO);
+    /// ```
+    ///
+    /// ```js
+    /// function f(FOO = "FOO") {
+    ///     return FOO;
+    /// }
+    /// ```
+    ///
     pub(crate) NoShoutyConstants {
         version: "0.7.0",
         name: "noShoutyConstants",
