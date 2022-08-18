@@ -56,16 +56,15 @@
 use crate::prelude::*;
 use rome_formatter::{format_args, write, Buffer, CommentStyle, CstFormatContext};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyFunctionBody, JsAnyInProperty, JsArrowFunctionExpression,
-    JsBinaryExpression, JsBinaryOperator, JsDoWhileStatement, JsIfStatement, JsInExpression,
-    JsInstanceofExpression, JsLogicalExpression, JsLogicalOperator, JsParenthesizedExpression,
-    JsPrivateName, JsSwitchStatement, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, JsUnaryExpression,
-    JsWhileStatement, OperatorPrecedence,
+    JsAnyExpression, JsAnyInProperty, JsBinaryExpression, JsBinaryOperator, JsDoWhileStatement,
+    JsIfStatement, JsInExpression, JsInstanceofExpression, JsLogicalExpression, JsLogicalOperator,
+    JsParenthesizedExpression, JsPrivateName, JsSwitchStatement, JsSyntaxKind, JsSyntaxNode,
+    JsSyntaxToken, JsUnaryExpression, JsWhileStatement, OperatorPrecedence,
 };
 
 use crate::parentheses::{
-    is_callee, is_member_object, is_spread, is_tag, resolve_parent, ExpressionNode,
-    NeedsParentheses,
+    is_arrow_function_body, is_callee, is_member_object, is_spread, is_tag, resolve_parent,
+    ExpressionNode, NeedsParentheses,
 };
 
 use crate::context::JsCommentStyle;
@@ -294,11 +293,10 @@ impl BinaryLeftOrRightSide {
                 _ => false,
             },
             BinaryLeftOrRightSide::Right { parent, .. } => {
-                if let Ok(right) = parent.right().map(|right| right.into_resolved()) {
-                    matches!(right, JsAnyExpression::JsxTagExpression(_))
-                } else {
-                    false
-                }
+                matches!(
+                    parent.right().map(JsAnyExpression::into_resolved),
+                    Ok(JsAnyExpression::JsxTagExpression(_))
+                )
             }
         }
     }
@@ -376,7 +374,7 @@ impl Format<JsFormatContext> for BinaryLeftOrRightSide {
 
                 // Doesn't match prettier that only distinguishes between logical and binary
                 let parent_has_same_kind = parent.as_ref().map_or(false, |parent| {
-                    is_same_binary_expression_kind(binary_like_expression, &parent)
+                    is_same_binary_expression_kind(binary_like_expression, parent)
                 });
 
                 let left_has_same_kind =
@@ -422,16 +420,14 @@ impl Format<JsFormatContext> for BinaryLeftOrRightSide {
                     }
                 };
 
-                let should_group = {
-                    !(*inside_parenthesis
+                let should_group = !(parent_has_same_kind
+                    || left_has_same_kind
+                    || right_has_same_kind
+                    || (*inside_parenthesis
                         && matches!(
                             binary_like_expression,
                             JsAnyBinaryLikeExpression::JsLogicalExpression(_)
-                        ))
-                        && !parent_has_same_kind
-                        && !left_has_same_kind
-                        && !right_has_same_kind
-                };
+                        )));
 
                 if !should_break && should_group {
                     write!(f, [group(&operator_and_right_expression)])?;
@@ -586,22 +582,10 @@ impl JsAnyBinaryLikeExpression {
             JsSyntaxKind::JS_TEMPLATE_ELEMENT => true,
             JsSyntaxKind::JS_FOR_STATEMENT => true,
             JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION => {
-                let arrow = JsArrowFunctionExpression::unwrap_cast(parent.clone());
-
-                arrow
-                    .body()
-                    .ok()
-                    .and_then(|body| match body {
-                        JsAnyFunctionBody::JsAnyExpression(expression) => {
-                            Some(expression.into_resolved_syntax())
-                        }
-                        JsAnyFunctionBody::JsFunctionBody(_) => None,
-                    })
-                    .as_ref()
-                    == Some(self.syntax())
+                is_arrow_function_body(self.syntax(), parent)
             }
             JsSyntaxKind::JS_CONDITIONAL_EXPRESSION => {
-                let grand_parent = resolve_parent(&parent);
+                let grand_parent = resolve_parent(parent);
 
                 grand_parent.map_or(false, |grand_parent| {
                     !matches!(

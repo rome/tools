@@ -23,14 +23,14 @@ impl FormatNodeRule<JsParenthesizedExpression> for FormatJsParenthesizedExpressi
 
         let expression = expression?;
 
-        return write!(
+        write!(
             f,
             [
                 format_removed(&l_paren_token?),
                 expression.format(),
                 format_removed(&r_paren_token?)
             ]
-        );
+        )
     }
 
     fn needs_parentheses(&self, item: &JsParenthesizedExpression) -> bool {
