@@ -37,18 +37,14 @@ impl FormatNodeRule<JsParenthesizedAssignment> for FormatJsParenthesizedAssignme
 impl AssignmentNode for JsParenthesizedAssignment {
     #[inline]
     fn resolve(&self) -> JsAnyAssignmentPattern {
-        let assignment = self
-            .assignment()
-            .map_or_else(|_| self.clone().into(), |assignment| assignment.into());
+        let assignment = self.assignment().unwrap_or_else(|_| self.clone().into());
 
         JsAnyAssignmentPattern::JsAnyAssignment(assignment)
     }
 
     #[inline]
     fn into_resolved(self) -> JsAnyAssignmentPattern {
-        let assignment = self
-            .assignment()
-            .map_or_else(|_| self.into(), |assignment| assignment.into());
+        let assignment = self.assignment().unwrap_or_else(|_| self.into());
 
         JsAnyAssignmentPattern::JsAnyAssignment(assignment)
     }
