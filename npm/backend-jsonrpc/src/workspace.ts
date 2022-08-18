@@ -45,6 +45,7 @@ export interface Rules {
 	ts?: Ts;
 }
 export interface JsFormatSettings {
+	quote_properties?: QuoteProperties;
 	quote_style?: QuoteStyle;
 }
 export interface JsLinterSettings {
@@ -62,6 +63,7 @@ export interface Regex {
 export interface Ts {
 	recommended?: boolean;
 }
+export type QuoteProperties = "AsNeeded" | "Preserve";
 export type QuoteStyle = "Double" | "Single";
 export interface OpenFileParams {
 	content: string;
