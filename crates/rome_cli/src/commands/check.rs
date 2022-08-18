@@ -18,7 +18,6 @@ pub(crate) fn check(mut session: CliSession) -> Result<(), Termination> {
             source,
         })?;
 
-    dbg!(&max_diagnostics);
     let max_diagnostics = if let Some(max_diagnostics) = max_diagnostics {
         if max_diagnostics > MAXIMUM_DISPLAYABLE_DIAGNOSTICS {
             return Err(Termination::OverflowNumberArgument(
