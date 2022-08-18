@@ -241,8 +241,6 @@
 //! If tests that are inside the `ok/` folder fail or if tests that are inside the `err/`
 //! folder don't emit, the whole test suite will fail.
 
-extern crate core;
-
 mod cst;
 mod js;
 mod jsx;

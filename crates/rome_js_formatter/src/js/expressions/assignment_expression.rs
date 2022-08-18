@@ -2,13 +2,14 @@ use crate::prelude::*;
 use crate::utils::JsAnyAssignmentLike;
 
 use crate::parentheses::{
-    is_first_in_statement, ExpressionNode, FirstInStatementMode, NeedsParentheses,
+    is_arrow_function_body, is_first_in_statement, ExpressionNode, FirstInStatementMode,
+    NeedsParentheses,
 };
 use rome_formatter::write;
 
 use rome_js_syntax::{
-    JsAnyAssignmentPattern, JsAnyExpression, JsAnyForInitializer, JsAnyFunctionBody,
-    JsArrowFunctionExpression, JsAssignmentExpression, JsForStatement, JsSyntaxKind, JsSyntaxNode,
+    JsAnyAssignmentPattern, JsAnyExpression, JsAnyForInitializer, JsAssignmentExpression,
+    JsForStatement, JsSyntaxKind, JsSyntaxNode,
 };
 use rome_rowan::AstNode;
 
@@ -33,14 +34,7 @@ impl NeedsParentheses for JsAssignmentExpression {
             JsSyntaxKind::JS_COMPUTED_MEMBER_NAME => false,
 
             JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION => {
-                let arrow = JsArrowFunctionExpression::unwrap_cast(parent.clone());
-
-                match arrow.body() {
-                    Ok(JsAnyFunctionBody::JsAnyExpression(expression)) => {
-                        &expression.resolve_syntax() == self.syntax()
-                    }
-                    _ => false,
-                }
+                is_arrow_function_body(self.syntax(), &parent)
             }
             JsSyntaxKind::JS_FOR_STATEMENT => {
                 let for_statement = JsForStatement::unwrap_cast(parent.clone());

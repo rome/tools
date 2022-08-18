@@ -1,3 +1,49 @@
+//! JavaScript supports parenthesizing expressions, assignments, and TypeScript types.
+//! Parenthesizing an expression can be desired to change the precedence of an expression or to ease
+//! readability.
+//!
+//! Rome is opinionated about which parentheses to keep or where to insert parentheses.
+//! It removes parentheses that aren't necessary to keep the same semantics as in the source document, nor aren't improving readability.
+//! Rome also inserts parentheses around nodes where we believe that they're helpful to improve readability.
+//!
+//! The [NeedsParentheses] trait forms the foundation of Rome's parentheses formatting and is implemented
+//! by all nodes supporting parentheses (expressions, assignments, and types). The trait's main method
+//! is the [`needs_parentheses`](NeedsParentheses::needs_parentheses)
+//! method that implements the rules when a node requires parentheses.
+//! A node requires parentheses to:
+//! * improve readability: `a << b << 3` is harder to read than `(a << b) << 3`
+//! * form valid syntax: `class A extends 3 + 3 {}` isn't valid, but `class A extends (3 + 3) {}` is
+//! * preserve operator precedence: `(a + 3) * 4` has a different meaning than `a + 3 * 4`
+//!
+//! The challenge of formatting parenthesized nodes is that a tree with parentheses and a tree without
+//! parentheses (that have the same semantics) must result in the same output. For example,
+//! formatting `(a + 3) + 5` must yield the same formatted output as `a + 3 + 5` or `a + (3 + 5)` or even
+//! `(((a + 3) + 5))` even though all these trees differ by the number of parenthesized expressions.
+//!
+//! There are two measures taken by Rome to ensure formatting is stable regardless of the number of parenthesized nodes in a tree:
+//!
+//! ## Removing and adding of parentheses
+//! The [FormatNodeRule](rome_js_formatter::FormatNodeRule) always inserts parentheses around a node if the rules `needs_parentheses` method
+//! returns `true`. This by itself would result in the formatter adding an extra pair of parentheses with every format pass for nodes where parentheses are necessary.
+//! This is why the [rome_js_formatter::FormatJsParenthesizedExpression] rule always removes the parentheses and relies on the
+//! [FormatNodeRule](rome_js_formatter::FormatNodeRule) to add the parentheses again when necessary.
+//!
+//! ## Testing for a a child or parent node.
+//!
+//! There are many places where a formatting rule applies different formatting depending on the type of a
+//! child node or parent node. The decision taken by these rules shouldn't differ just because a node happens to be parenthesized
+//! because doing so would yield different results if the formatter removes the parentheses in the first pass.
+//!
+//! The [NeedsParentheses] trait offers a [`resolve_parent`](NeedsParentheses::resolve_parent] method
+//! that returns the first parent of a node that isn't parenthesized.
+//! For example, calling [JsSyntaxNode::parent] on the `a` identifier in `(a).b` returns the [JsParenthesizedExpression](rome_js_syntax::JsParenthesizedExpression)
+//! but calling [`resolve_parent`](NeedsParentheses::resolve_parent] returns the [JsStaticMemberExpression](rome_js_syntax::JsStaticMemberExpression).
+//!
+//! This module further offers node specific traits like [ExpressionNode] that implement additional methods to resolve a node.
+//! Calling [`resolve`](ExpressionNode::resolve) returns the node itself if it isn't a [JsParenthesizedExpression](rome_js_syntax::JsParenthesizedExpression)
+//! or traverses down the parenthesized expression and returns the first non [JsParenthesizedExpression](rome_js_syntax::JsParenthesizedExpression) node.
+//! For example, calling resolve on `a` returns `a` but calling resolve on `((a))` also returns `a`.
+
 use crate::utils::{JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression};
 
 use rome_js_syntax::{
@@ -25,6 +71,7 @@ pub trait NeedsParentheses: AstNode<Language = JsLanguage> {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool;
 }
 
+/// Trait implemented by all JavaScript expressions.
 pub trait ExpressionNode: NeedsParentheses {
     /// Resolves an expression to the first non parenthesized expression.
     fn resolve(&self) -> JsAnyExpression;
@@ -691,6 +738,24 @@ pub(crate) fn is_conditional_test(node: &JsSyntaxNode, parent: &JsSyntaxNode) ->
                 .map(ExpressionNode::into_resolved_syntax)
                 .as_ref()
                 == Ok(node)
+        }
+        _ => false,
+    }
+}
+
+pub(crate) fn is_arrow_function_body(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bool {
+    debug_assert_is_expression(node);
+
+    match parent.kind() {
+        JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION => {
+            let arrow = JsArrowFunctionExpression::unwrap_cast(parent.clone());
+
+            match arrow.body() {
+                Ok(JsAnyFunctionBody::JsAnyExpression(expression)) => {
+                    &expression.resolve_syntax() == node
+                }
+                _ => false,
+            }
         }
         _ => false,
     }
