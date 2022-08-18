@@ -5,7 +5,7 @@ interface FormatFilesDebugOptions extends FormatFilesOptions {
 	debug: boolean;
 }
 
-interface FormatContentDebugOptions extends FormatFilesOptions {
+interface FormatContentDebugOptions extends FormatContentOptions {
 	/**
 	 * If `true`, you'll be able to inspect the IR of the formatter
 	 */
@@ -16,7 +16,7 @@ interface FormatFilesOptions {
 	/**
 	 * Writes the new content to disk
 	 */
-	write: boolean;
+	write?: boolean;
 }
 
 interface FormatContentOptions {
@@ -28,7 +28,7 @@ interface FormatContentOptions {
 	/**
 	 * The range where to format the content
 	 */
-	range: [number, number];
+	range?: [number, number];
 }
 
 interface FormatResult {
@@ -68,24 +68,35 @@ interface ParseResult {
 	errors: string[];
 }
 
-function isFormatFilesDebug(options: any): options is FormatFilesDebugOptions {
-	return options.debug !== undefined;
+function isFormatFilesDebug(
+	options: FormatFilesOptions | FormatFilesDebugOptions,
+): options is FormatFilesDebugOptions {
+	return "debug" in options && options.debug !== undefined;
 }
 
 function isFormatContentDebug(
 	options: any,
 ): options is FormatContentDebugOptions {
-	return options.debug !== undefined;
+	return options?.debug !== undefined;
 }
 
 export class Rome {
+	async formatFiles(paths: string[]): Promise<FormatResult>;
 	async formatFiles(
 		paths: string[],
-		options?: Partial<FormatFilesOptions>,
+		options?: FormatFilesOptions,
+	): Promise<FormatResult>;
+	async formatFiles(
+		paths: string[],
+		options?: FormatFilesDebugOptions,
+	): Promise<FormatDebugResult>;
+	async formatFiles(
+		paths: string[],
+		options?: FormatFilesOptions | FormatFilesDebugOptions,
 	): Promise<FormatResult | FormatDebugResult> {
 		paths;
 
-		if (isFormatFilesDebug(options)) {
+		if (options && isFormatFilesDebug(options)) {
 			return {
 				content: "",
 				errors: [],
@@ -100,9 +111,18 @@ export class Rome {
 
 	async formatContent(
 		content: string,
-		options?: Partial<FormatContentOptions>,
+		options: FormatContentOptions,
+	): Promise<FormatResult>;
+	async formatContent(
+		content: string,
+		options: FormatContentDebugOptions,
+	): Promise<FormatDebugResult>;
+	async formatContent(
+		content: string,
+		options: FormatContentOptions | FormatContentDebugOptions,
 	): Promise<FormatResult | FormatDebugResult> {
 		content;
+		options.filePath;
 		if (isFormatContentDebug(options)) {
 			return {
 				content: "",
