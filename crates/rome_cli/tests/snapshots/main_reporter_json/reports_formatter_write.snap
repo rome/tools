@@ -1,6 +1,6 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 138
+assertion_line: 148
 expression: content
 ---
 ## `format.js`
@@ -13,7 +13,7 @@ statement();
 # Emitted Messages
 
 ```block
-chore:{"formatter":{"summary":{"filesCompared":null,"filesWritten":1},"files":{}},"diagnostics":{}}
+{"formatter":{"summary":{"filesCompared":null,"filesWritten":1},"files":{}},"diagnostics":{}}
 ```
 
 

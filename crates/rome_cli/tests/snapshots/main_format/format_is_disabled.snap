@@ -1,6 +1,6 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 147
+assertion_line: 148
 expression: content
 ---
 ## `rome.json`
@@ -28,6 +28,10 @@ return { something }
 
 ```block
 file.js: error[IO]: unhandled file type
+```
+
+```block
+Skipped 1 files
 ```
 
 
