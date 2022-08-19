@@ -3,8 +3,6 @@ import { Dispatch, SetStateAction } from "react";
 export enum IndentStyle { Tab = "tab", Space = "space" }
 export enum SourceType { Module = "module", Script = "script" }
 export enum QuoteStyle { Double = "double", Single = "single" }
-
-// rome-ignore lint(js/noUnusedVariables): false positive
 export enum LoadingState { Loading, Success, Error }
 
 export interface RomeOutput {

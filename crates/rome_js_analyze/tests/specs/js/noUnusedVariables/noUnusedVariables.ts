@@ -33,3 +33,5 @@ function f(fn: (title: string) => boolean) {
 	console.log(fn);
 }
 f();
+
+export type Command = (...args: any[]) => unknown;

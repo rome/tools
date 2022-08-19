@@ -1,6 +1,6 @@
 use rome_js_syntax::{
     JsAnyRoot, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier,
-    JsSyntaxNode, TextRange, TextSize,
+    JsSyntaxNode, TextRange, TextSize, TsIdentifierBinding,
 };
 use rome_rowan::{AstNode, SyntaxTokenText};
 use rust_lapper::{Interval, Lapper};
@@ -21,6 +21,7 @@ pub trait IsDeclarationAstNode: AstNode<Language = JsLanguage> {
 }
 
 impl IsDeclarationAstNode for JsIdentifierBinding {}
+impl IsDeclarationAstNode for TsIdentifierBinding {}
 
 /// Marker trait that groups all "AstNode" that have declarations
 pub trait HasDeclarationAstNode: AstNode<Language = JsLanguage> {
@@ -40,6 +41,15 @@ pub trait IsExportedCanBeQueried: AstNode<Language = JsLanguage> {
 }
 
 impl IsExportedCanBeQueried for JsIdentifierBinding {
+    type Result = bool;
+
+    fn is_exported(&self, model: &SemanticModel) -> Self::Result {
+        let range = self.syntax().text_range();
+        model.data.is_exported(range)
+    }
+}
+
+impl IsExportedCanBeQueried for TsIdentifierBinding {
     type Result = bool;
 
     fn is_exported(&self, model: &SemanticModel) -> Self::Result {
@@ -850,7 +860,7 @@ pub fn semantic_model(root: &JsAnyRoot) -> SemanticModel {
 #[cfg(test)]
 mod test {
     use super::*;
-    use rome_js_syntax::{JsReferenceIdentifier, JsSyntaxKind, SourceType};
+    use rome_js_syntax::{JsReferenceIdentifier, JsSyntaxKind, SourceType, TsIdentifierBinding};
     use rome_rowan::SyntaxNodeCast;
 
     #[test]
@@ -1001,7 +1011,7 @@ mod test {
 
     /// Finds the last time a token named "name" is used and see if its node is marked as exported
     fn assert_is_exported(is_exported: bool, name: &str, code: &str) {
-        let r = rome_js_parser::parse(code, 0, SourceType::js_module());
+        let r = rome_js_parser::parse(code, 0, SourceType::tsx());
         let model = semantic_model(&r.tree());
 
         let node = r
@@ -1016,7 +1026,21 @@ mod test {
                 let binding = JsIdentifierBinding::cast(node).unwrap();
                 // These do the same thing, but with different APIs
                 assert!(
-                    is_exported == model.is_exported(binding.node()),
+                    is_exported == model.is_exported(&binding),
+                    "at \"{}\"",
+                    code
+                );
+                assert!(
+                    is_exported == binding.is_exported(&model),
+                    "at \"{}\"",
+                    code
+                );
+            }
+            JsSyntaxKind::TS_IDENTIFIER_BINDING => {
+                let binding = TsIdentifierBinding::cast(node).unwrap();
+                // These do the same thing, but with different APIs
+                assert!(
+                    is_exported == model.is_exported(&binding),
                     "at \"{}\"",
                     code
                 );
@@ -1040,8 +1064,8 @@ mod test {
                     code
                 );
             }
-            _ => {
-                panic!("This node cannot be exported!");
+            x => {
+                panic!("This node cannot be exported! {:?}", x);
             }
         };
     }
@@ -1085,5 +1109,36 @@ mod test {
         assert_is_exported(true, "A", "class A{} module.exports = A");
         assert_is_exported(true, "A", "class A{} exports = A");
         assert_is_exported(true, "A", "class A{} exports.A = A");
+
+        // Interfaces
+        assert_is_exported(false, "A", "interface A{}");
+        assert_is_exported(true, "A", "export interface A{}");
+        assert_is_exported(true, "A", "export default interface A{}");
+        assert_is_exported(true, "A", "interface A{} export default A");
+        assert_is_exported(true, "A", "interface A{} export {A}");
+        assert_is_exported(true, "A", "interface A{} export {A as B}");
+        assert_is_exported(true, "A", "interface A{} module.exports = A");
+        assert_is_exported(true, "A", "interface A{} exports = A");
+        assert_is_exported(true, "A", "interface A{} exports.A = A");
+
+        // Type Aliases
+        assert_is_exported(false, "A", "type A = number;");
+        assert_is_exported(true, "A", "export type A = number;");
+        assert_is_exported(true, "A", "type A = number; export default A");
+        assert_is_exported(true, "A", "type A = number; export {A}");
+        assert_is_exported(true, "A", "type A = number; export {A as B}");
+        assert_is_exported(true, "A", "type A = number; module.exports = A");
+        assert_is_exported(true, "A", "type A = number; exports = A");
+        assert_is_exported(true, "A", "type A = number; exports.A = A");
+
+        // Enums
+        assert_is_exported(false, "A", "enum A {};");
+        assert_is_exported(true, "A", "export enum A {};");
+        assert_is_exported(true, "A", "enum A {}; export default A");
+        assert_is_exported(true, "A", "enum A {}; export {A}");
+        assert_is_exported(true, "A", "enum A {}; export {A as B}");
+        assert_is_exported(true, "A", "enum A {}; module.exports = A");
+        assert_is_exported(true, "A", "enum A {}; exports = A");
+        assert_is_exported(true, "A", "enum A {}; exports.A = A");
     }
 }
