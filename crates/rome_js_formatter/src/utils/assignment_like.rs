@@ -848,14 +848,16 @@ pub(crate) fn should_break_after_operator(right: &JsAnyExpression) -> SyntaxResu
         right if JsAnyBinaryLikeExpression::can_cast(right.syntax().kind()) => {
             let binary_like = JsAnyBinaryLikeExpression::unwrap_cast(right.syntax().clone());
 
-            !binary_like.should_inline()
+            !binary_like.should_inline_logical_expression()
         }
 
         JsAnyExpression::JsSequenceExpression(_) => true,
 
         JsAnyExpression::JsConditionalExpression(conditional) => {
-            JsAnyBinaryLikeExpression::cast(conditional.test()?.into_syntax())
-                .map_or(false, |expression| !expression.should_inline())
+            JsAnyBinaryLikeExpression::cast(conditional.test()?.into_resolved_syntax())
+                .map_or(false, |expression| {
+                    !expression.should_inline_logical_expression()
+                })
         }
 
         _ => false,

@@ -13,7 +13,6 @@ Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
 -----
-2 > (4 + ((4 * 24) % 3)) << 23 instanceof Number in data || (
-	a in status instanceof String + 15 && foo && bar && lorem instanceof String
-);
+2 > (4 + ((4 * 24) % 3)) << 23 instanceof Number in data ||
+	(a in status instanceof String + 15 && foo && bar && lorem instanceof String);
 

@@ -404,44 +404,13 @@ const StyledDiv = styled.div`
  `;
  
  const Single2 = styled.div`
-@@ -199,8 +197,7 @@
-   width: 40px;
- 
+@@ -232,9 +230,9 @@
    ${(props) =>
--    (props.complete || props.inProgress) &&
--    css`
-+    (props.complete || props.inProgress) && css`
-       border-color: rgba(var(--green-rgb), 0.15);
-     `}
- 
-@@ -212,15 +209,13 @@
-     display: inline-flex;
- 
-     ${(props) =>
--      props.complete &&
--      css`
-+      props.complete && css`
-         background-color: var(--green);
-         border-width: 7px;
-       `}
- 
-     ${(props) =>
--      (props.complete || props.inProgress) &&
--      css`
-+      (props.complete || props.inProgress) && css`
-         border-color: var(--green);
-       `}
-   }
-@@ -230,11 +225,10 @@
-   display: inline-block;
-   color: #fff;
-   ${(props) =>
--    props.a &&
--    css`
+     props.a &&
+     css`
 -      display: none;
 -    `}
 -  height: 30px;
-+    props.a && css`
 +    display: none;
 +  `}
 +   height: 30px;
@@ -652,7 +621,8 @@ const bar = styled.div`
   width: 40px;
 
   ${(props) =>
-    (props.complete || props.inProgress) && css`
+    (props.complete || props.inProgress) &&
+    css`
       border-color: rgba(var(--green-rgb), 0.15);
     `}
 
@@ -664,13 +634,15 @@ const bar = styled.div`
     display: inline-flex;
 
     ${(props) =>
-      props.complete && css`
+      props.complete &&
+      css`
         background-color: var(--green);
         border-width: 7px;
       `}
 
     ${(props) =>
-      (props.complete || props.inProgress) && css`
+      (props.complete || props.inProgress) &&
+      css`
         border-color: var(--green);
       `}
   }
@@ -680,7 +652,8 @@ const A = styled.a`
   display: inline-block;
   color: #fff;
   ${(props) =>
-    props.a && css`
+    props.a &&
+    css`
     display: none;
   `}
    height: 30px;

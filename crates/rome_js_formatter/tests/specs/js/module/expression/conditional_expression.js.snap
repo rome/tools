@@ -23,7 +23,7 @@ Quote style: Double Quotes
 Quote properties: As needed
 -----
 a ? b : c;
-d ? (e + f) : (g + h);
+d ? e + f : g + h;
 
 somethingThatsAReallyLongPropName
 	? somethingThatsAReallyLongPropName

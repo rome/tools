@@ -31,7 +31,8 @@ if (binName) {
 			require("fs").chmodSync(binPath, 0o755);
 		} catch {
 			console.warn(
-				"The Rome CLI postinstall script failed to set execution permissions to the native binary. " + "Running Rome from the npm package will probably not work correctly.",
+				"The Rome CLI postinstall script failed to set execution permissions to the native binary. " +
+					"Running Rome from the npm package will probably not work correctly.",
 			);
 		}
 	}

@@ -557,7 +557,8 @@ for (const elem of saveElements) {
 // Show custom input if we hydrated it with a value that doesn't correspond with a button
 
 if (
-	tipInput.value !== "" && !document.querySelector(
+	tipInput.value !== "" &&
+	!document.querySelector(
 		`.add-donation-buttons[data-price="${tipInput.value}"]`,
 	)
 ) {
