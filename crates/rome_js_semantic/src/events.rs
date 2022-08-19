@@ -6,7 +6,7 @@ use rome_js_syntax::{
     JsAnyAssignment, JsAnyAssignmentPattern, JsAssignmentExpression, JsForVariableDeclaration,
     JsIdentifierAssignment, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier, JsSyntaxKind,
     JsSyntaxNode, JsSyntaxToken, JsVariableDeclaration, JsVariableDeclarator,
-    JsVariableDeclaratorList, JsxReferenceIdentifier, TextRange, TextSize,
+    JsVariableDeclaratorList, JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding,
 };
 use rome_rowan::{syntax::Preorder, AstNode, SyntaxNodeCast, SyntaxTokenText};
 
@@ -214,8 +214,8 @@ impl SemanticEventExtractor {
         use rome_js_syntax::JsSyntaxKind::*;
 
         match node.kind() {
-            JS_IDENTIFIER_BINDING => {
-                self.enter_js_identifier_binding(node);
+            JS_IDENTIFIER_BINDING | TS_IDENTIFIER_BINDING => {
+                self.enter_identifier_binding(node);
             }
             JS_REFERENCE_IDENTIFIER | JSX_REFERENCE_IDENTIFIER => {
                 self.enter_reference_identifier(node);
@@ -250,7 +250,7 @@ impl SemanticEventExtractor {
         }
     }
 
-    fn is_var(binding: &JsIdentifierBinding) -> Option<bool> {
+    fn is_var(binding: &impl AstNode<Language = JsLanguage>) -> Option<bool> {
         let declarator = binding.parent::<JsVariableDeclarator>()?;
 
         use JsSyntaxKind::*;
@@ -272,17 +272,33 @@ impl SemanticEventExtractor {
         Some(is_var)
     }
 
-    fn enter_js_identifier_binding(&mut self, node: &JsSyntaxNode) -> Option<()> {
-        debug_assert!(matches!(node.kind(), JsSyntaxKind::JS_IDENTIFIER_BINDING));
-
-        let binding = node.clone().cast::<JsIdentifierBinding>()?;
-        let name_token = binding.name_token().ok()?;
-
+    fn enter_identifier_binding(&mut self, node: &JsSyntaxNode) -> Option<()> {
         use JsSyntaxKind::*;
+        debug_assert!(matches!(
+            node.kind(),
+            JS_IDENTIFIER_BINDING | TS_IDENTIFIER_BINDING
+        ));
+
+        let (name_token, is_var) = match node.kind() {
+            JS_IDENTIFIER_BINDING => {
+                let binding = node.clone().cast::<JsIdentifierBinding>()?;
+                let name_token = binding.name_token().ok()?;
+                let is_var = Self::is_var(&binding);
+                (name_token, is_var)
+            }
+            TS_IDENTIFIER_BINDING => {
+                let binding = node.clone().cast::<TsIdentifierBinding>()?;
+                let name_token = binding.name_token().ok()?;
+                let is_var = Self::is_var(&binding);
+                (name_token, is_var)
+            }
+            _ => return None,
+        };
+
         let parent = node.parent()?;
         match parent.kind() {
             JS_VARIABLE_DECLARATOR => {
-                if let Some(true) = Self::is_var(&binding) {
+                if let Some(true) = is_var {
                     let hoisted_scope_id = self.scope_index_to_hoist_declarations(0);
                     self.push_binding_into_scope(hoisted_scope_id, &name_token);
                 } else {
@@ -301,11 +317,23 @@ impl SemanticEventExtractor {
             }
             JS_CLASS_DECLARATION | JS_CLASS_EXPORT_DEFAULT_DECLARATION => {
                 self.push_binding_into_scope(None, &name_token);
-                self.export_class_declaration(node, &parent);
+                self.export_declaration(node, &parent);
             }
             JS_CLASS_EXPRESSION => {
                 self.push_binding_into_scope(None, &name_token);
                 self.export_class_expression(node, &parent);
+            }
+            TS_TYPE_ALIAS_DECLARATION => {
+                self.push_binding_into_scope(None, &name_token);
+                self.export_declaration(node, &parent);
+            }
+            TS_ENUM_DECLARATION => {
+                self.push_binding_into_scope(None, &name_token);
+                self.export_declaration(node, &parent);
+            }
+            TS_INTERFACE_DECLARATION => {
+                self.push_binding_into_scope(None, &name_token);
+                self.export_declaration(node, &parent);
             }
             _ => {
                 self.push_binding_into_scope(None, &name_token);
@@ -665,16 +693,16 @@ impl SemanticEventExtractor {
         }
     }
 
-    // Check if a class is exported and raise the [Exported] event.
-    fn export_class_declaration(
-        &mut self,
-        binding: &JsSyntaxNode,
-        class_declaration: &JsSyntaxNode,
-    ) {
+    // Check if a class, type alias is exported and raise the [Exported] event.
+    fn export_declaration(&mut self, binding: &JsSyntaxNode, declaration: &JsSyntaxNode) {
         use JsSyntaxKind::*;
         debug_assert!(matches!(
-            class_declaration.kind(),
-            JS_CLASS_DECLARATION | JS_CLASS_EXPORT_DEFAULT_DECLARATION
+            declaration.kind(),
+            JS_CLASS_DECLARATION
+                | JS_CLASS_EXPORT_DEFAULT_DECLARATION
+                | TS_TYPE_ALIAS_DECLARATION
+                | TS_ENUM_DECLARATION
+                | TS_INTERFACE_DECLARATION
         ));
 
         // export can only exist in the global scope
@@ -683,7 +711,7 @@ impl SemanticEventExtractor {
         }
 
         let is_exported = matches!(
-            class_declaration.parent().map(|p| p.kind()),
+            declaration.parent().map(|p| p.kind()),
             Some(JS_EXPORT | JS_EXPORT_DEFAULT_DECLARATION_CLAUSE)
         );
         if is_exported {
