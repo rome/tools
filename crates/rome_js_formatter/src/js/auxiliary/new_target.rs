@@ -1,8 +1,8 @@
 use crate::prelude::*;
 
-use crate::parentheses::{ExpressionNode, NeedsParentheses};
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
-use rome_js_syntax::{JsAnyExpression, NewTargetFields};
+use rome_js_syntax::{NewTargetFields};
 use rome_js_syntax::{JsSyntaxNode, NewTarget};
 
 #[derive(Debug, Clone, Default)]
@@ -38,16 +38,5 @@ impl NeedsParentheses for NewTarget {
 
     fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
         false
-    }
-}
-
-impl ExpressionNode for NewTarget {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }

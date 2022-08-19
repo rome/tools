@@ -1,10 +1,10 @@
 use crate::prelude::*;
 
-use crate::parentheses::{ExpressionNode, NeedsParentheses};
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::{format_args, write};
-use rome_js_syntax::JsSyntaxKind::{JS_PARENTHESIZED_EXPRESSION, JS_SEQUENCE_EXPRESSION};
+use rome_js_syntax::JsSyntaxKind::JS_SEQUENCE_EXPRESSION;
 use rome_js_syntax::{
-    JsAnyExpression, JsSequenceExpression, JsSequenceExpressionFields, JsSyntaxKind, JsSyntaxNode,
+    JsSequenceExpression, JsSequenceExpressionFields, JsSyntaxKind, JsSyntaxNode,
 };
 use rome_rowan::AstNode;
 
@@ -26,7 +26,7 @@ impl FormatNodeRule<JsSequenceExpression> for FormatJsSequenceExpression {
         for parent in node.syntax().ancestors().skip(1) {
             if parent.kind() == JS_SEQUENCE_EXPRESSION {
                 is_nested = true;
-            } else if parent.kind() != JS_PARENTHESIZED_EXPRESSION {
+            } else {
                 first_non_sequence_or_paren_parent = Some(parent);
                 break;
             }
@@ -86,18 +86,6 @@ impl NeedsParentheses for JsSequenceExpression {
             // Handled as part of the arrow function formatting
             JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
         )
-    }
-}
-
-impl ExpressionNode for JsSequenceExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }
 

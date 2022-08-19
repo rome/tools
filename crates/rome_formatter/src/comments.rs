@@ -1,4 +1,3 @@
-use crate::CstFormatContext;
 use rome_rowan::{
     Direction, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxTriviaPieceComments,
     WalkEvent,
@@ -158,10 +157,10 @@ pub struct Comments<L: Language> {
 
 impl<L: Language> Comments<L> {
     /// Extracts all the suppressions from `root` and its child nodes.
-    pub fn from_node<Context>(root: &SyntaxNode<L>, context: &Context) -> Self
-    where
-        Context: CstFormatContext<Language = L>,
-    {
+    pub fn from_node<FormatLanguage: crate::FormatLanguage<SyntaxLanguage = L>>(
+        root: &SyntaxNode<L>,
+        language: &FormatLanguage,
+    ) -> Self {
         let mut suppressed_nodes = HashSet::new();
         let mut current_node = None;
 
@@ -190,7 +189,7 @@ impl<L: Language> Comments<L> {
                             .pieces()
                             .filter_map(|piece| piece.as_comments())
                         {
-                            if context.comment_style().is_suppression(comment.text()) {
+                            if language.comment_style().is_suppression(comment.text()) {
                                 suppressed_nodes.insert(current_node);
                                 break;
                             }

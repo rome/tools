@@ -1,10 +1,10 @@
 use crate::prelude::*;
 use crate::utils::{needs_binary_like_parentheses, JsAnyBinaryLikeExpression};
 
-use crate::parentheses::{ExpressionNode, NeedsParentheses};
+use crate::parentheses::NeedsParentheses;
 
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyStatement, JsForStatement, JsInExpression, JsSyntaxNode,
+    JsAnyStatement, JsForStatement, JsInExpression, JsSyntaxNode,
 };
 use rome_rowan::AstNode;
 
@@ -28,18 +28,6 @@ impl NeedsParentheses for JsInExpression {
         }
 
         needs_binary_like_parentheses(&JsAnyBinaryLikeExpression::from(self.clone()), parent)
-    }
-}
-
-impl ExpressionNode for JsInExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }
 

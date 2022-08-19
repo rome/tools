@@ -1,9 +1,7 @@
 use crate::prelude::*;
 
-use crate::parentheses::{ExpressionNode, NeedsParentheses};
-use rome_js_syntax::{
-    JsAnyExpression, JsParenthesizedExpression, JsSyntaxNode, JsUnknownExpression,
-};
+use crate::parentheses::NeedsParentheses;
+use rome_js_syntax::{JsSyntaxNode, JsUnknownExpression};
 use rome_rowan::AstNode;
 
 #[derive(Debug, Clone, Default)]
@@ -24,26 +22,13 @@ impl FormatNodeRule<JsUnknownExpression> for FormatJsUnknownExpression {
 }
 
 impl NeedsParentheses for JsUnknownExpression {
+    #[inline]
     fn needs_parentheses(&self) -> bool {
-        // Keep parens if it is parenthesized.
-        self.syntax().parent().map_or(false, |parent| {
-            JsParenthesizedExpression::can_cast(parent.kind())
-        })
+        false
     }
 
+    #[inline]
     fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
         self.needs_parentheses()
-    }
-}
-
-impl ExpressionNode for JsUnknownExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }

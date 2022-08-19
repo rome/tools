@@ -64,7 +64,7 @@ impl Format<JsFormatContext> for FormatReturnOrThrowArgument<'_> {
                     last_token.as_ref()
                 )]
             )
-        } else if is_binary_or_sequence_argument(argument)? {
+        } else if is_binary_or_sequence_argument(argument) {
             write!(
                 f,
                 [group(&format_args![
@@ -108,14 +108,7 @@ fn has_argument_leading_comments(argument: &JsAnyExpression) -> SyntaxResult<boo
     Ok(result)
 }
 
-fn is_binary_or_sequence_argument(argument: &JsAnyExpression) -> SyntaxResult<bool> {
-    if JsSequenceExpression::can_cast(argument.syntax().kind())
+fn is_binary_or_sequence_argument(argument: &JsAnyExpression) -> bool {
+    JsSequenceExpression::can_cast(argument.syntax().kind())
         || JsAnyBinaryLikeExpression::can_cast(argument.syntax().kind())
-    {
-        Ok(true)
-    } else if let JsAnyExpression::JsParenthesizedExpression(inner) = argument {
-        is_binary_or_sequence_argument(&inner.expression()?)
-    } else {
-        Ok(false)
-    }
 }

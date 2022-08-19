@@ -1,5 +1,4 @@
 use crate::builders::{format_close_delimiter, format_open_delimiter};
-use crate::parentheses::ExpressionNode;
 use crate::prelude::*;
 use crate::utils::{is_call_like_expression, write_arguments_multi_line};
 use rome_formatter::{format_args, write};
@@ -252,7 +251,7 @@ fn should_group_first_argument(list: &JsCallArgumentList) -> SyntaxResult<bool> 
 
     let has_comments = first.syntax().has_comments_direct();
 
-    let is_function_like = match resolve_call_argument_expression(&first) {
+    let is_function_like = match first.as_js_any_expression() {
         Some(JsAnyExpression::JsFunctionExpression(_)) => true,
         Some(JsAnyExpression::JsArrowFunctionExpression(arrow)) => {
             matches!(arrow.body()?, JsAnyFunctionBody::JsFunctionBody(_))
@@ -260,7 +259,7 @@ fn should_group_first_argument(list: &JsCallArgumentList) -> SyntaxResult<bool> 
         _ => false,
     };
 
-    let (second_arg_is_function_like, can_group) = match resolve_call_argument_expression(&second) {
+    let (second_arg_is_function_like, can_group) = match second.as_js_any_expression() {
         Some(second_expression) => {
             let second_arg_is_function_like = matches!(
                 &second_expression,
@@ -322,7 +321,7 @@ fn could_group_expression_argument(
     argument: &JsAnyExpression,
     is_arrow_recursion: bool,
 ) -> SyntaxResult<bool> {
-    let result = match argument.resolve() {
+    let result = match argument {
         JsAnyExpression::JsObjectExpression(object_expression) => {
             object_expression.members().len() > 0
                 || object_expression
@@ -375,7 +374,7 @@ fn could_group_expression_argument(
 
             let expression_body = match &body {
                 JsAnyFunctionBody::JsFunctionBody(_) => None,
-                JsAnyFunctionBody::JsAnyExpression(expression) => Some(expression.resolve()),
+                JsAnyFunctionBody::JsAnyExpression(expression) => Some(expression),
             };
 
             let body_is_delimited = matches!(body, JsAnyFunctionBody::JsFunctionBody(_))
@@ -406,7 +405,7 @@ fn could_group_expression_argument(
                     && is_nested_arrow_function
                     && can_group_type
                     && (!is_arrow_recursion
-                        && (is_call_like_expression(&any_expression)
+                        && (is_call_like_expression(any_expression)
                             || matches!(
                                 any_expression,
                                 JsAnyExpression::JsConditionalExpression(_)
@@ -433,7 +432,7 @@ fn is_react_hook_with_deps_array(
     second_argument: &JsAnyCallArgument,
 ) -> SyntaxResult<bool> {
     let first_expression = match first_argument {
-        JsAnyCallArgument::JsAnyExpression(expression) => Some(expression.resolve()),
+        JsAnyCallArgument::JsAnyExpression(expression) => Some(expression),
         _ => None,
     };
 
@@ -520,13 +519,13 @@ fn is_framework_test_call(payload: IsTestFrameworkCallPayload) -> SyntaxResult<b
         arguments_len,
         callee,
     } = payload;
-    let first_argument_expression = resolve_call_argument_expression(first_argument);
-    let second_argument_expression = resolve_call_argument_expression(second_argument);
+    let first_argument_expression = first_argument.as_js_any_expression();
+    let second_argument_expression = second_argument.as_js_any_expression();
     let third_argument_expression =
         third_argument
             .as_ref()
             .and_then(|third_argument| match third_argument {
-                Ok(argument) => resolve_call_argument_expression(argument),
+                Ok(argument) => argument.as_js_any_expression(),
                 _ => None,
             });
 
@@ -575,15 +574,6 @@ fn is_framework_test_call(payload: IsTestFrameworkCallPayload) -> SyntaxResult<b
         }
     } else {
         Ok(false)
-    }
-}
-
-pub(super) fn resolve_call_argument_expression(
-    argument: &JsAnyCallArgument,
-) -> Option<JsAnyExpression> {
-    match argument {
-        JsAnyCallArgument::JsAnyExpression(expression) => Some(expression.resolve()),
-        _ => None,
     }
 }
 
@@ -692,10 +682,6 @@ fn matches_test_call(callee: &JsAnyExpression) -> SyntaxResult<Vec<SyntaxTokenTe
                     }
                     _ => break,
                 }
-            }
-            JsAnyExpression::JsParenthesizedExpression(parenthesized) => {
-                i -= 1; // Don't increment the depth
-                parenthesized.expression()?
             }
             _ => break,
         };

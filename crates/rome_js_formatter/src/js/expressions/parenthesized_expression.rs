@@ -1,9 +1,9 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::parentheses::{ExpressionNode, NeedsParentheses};
+use crate::parentheses::NeedsParentheses;
 use rome_js_syntax::{
-    JsAnyExpression, JsParenthesizedExpression, JsParenthesizedExpressionFields, JsSyntaxNode,
+    JsParenthesizedExpression, JsParenthesizedExpressionFields, JsSyntaxNode,
 };
 
 #[derive(Debug, Clone, Default)]
@@ -26,9 +26,9 @@ impl FormatNodeRule<JsParenthesizedExpression> for FormatJsParenthesizedExpressi
         write!(
             f,
             [
-                format_removed(&l_paren_token?),
+                l_paren_token.format(),
                 expression.format(),
-                format_removed(&r_paren_token?)
+                r_paren_token.format()
             ]
         )
     }
@@ -47,19 +47,5 @@ impl NeedsParentheses for JsParenthesizedExpression {
     #[inline(always)]
     fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
         false
-    }
-}
-
-impl ExpressionNode for JsParenthesizedExpression {
-    fn resolve(&self) -> JsAnyExpression {
-        let inner = self.expression();
-
-        inner.unwrap_or_else(|_| self.clone().into())
-    }
-
-    fn into_resolved(self) -> JsAnyExpression {
-        let inner = self.expression();
-
-        inner.unwrap_or_else(|_| self.into())
     }
 }

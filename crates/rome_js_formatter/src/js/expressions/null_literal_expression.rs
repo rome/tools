@@ -1,8 +1,8 @@
 use crate::prelude::*;
 
-use crate::parentheses::{ExpressionNode, NeedsParentheses};
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
-use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsNullLiteralExpressionFields};
+use rome_js_syntax::{JsNullLiteralExpressionFields};
 use rome_js_syntax::{JsNullLiteralExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
@@ -28,17 +28,5 @@ impl NeedsParentheses for JsNullLiteralExpression {
     #[inline(always)]
     fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
         false
-    }
-}
-
-impl ExpressionNode for JsNullLiteralExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::from(self.clone()))
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::from(self))
     }
 }

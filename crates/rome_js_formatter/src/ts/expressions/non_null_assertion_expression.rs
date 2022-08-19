@@ -1,9 +1,9 @@
 use crate::prelude::*;
 
 use crate::js::expressions::static_member_expression::member_chain_callee_needs_parens;
-use crate::parentheses::{ExpressionNode, NeedsParentheses};
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
-use rome_js_syntax::{JsAnyExpression, JsSyntaxKind, TsNonNullAssertionExpressionFields};
+use rome_js_syntax::{JsSyntaxKind, TsNonNullAssertionExpressionFields};
 use rome_js_syntax::{JsSyntaxNode, TsNonNullAssertionExpression};
 
 #[derive(Debug, Clone, Default)]
@@ -32,17 +32,5 @@ impl NeedsParentheses for TsNonNullAssertionExpression {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         matches!(parent.kind(), JsSyntaxKind::JS_EXTENDS_CLAUSE)
             || member_chain_callee_needs_parens(self.clone().into(), parent)
-    }
-}
-
-impl ExpressionNode for TsNonNullAssertionExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }

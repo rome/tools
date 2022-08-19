@@ -165,7 +165,6 @@ fn is_simple_member_expression(expression: JsAnyExpression) -> SyntaxResult<bool
                     break;
                 }
             }
-            JsAnyExpression::JsParenthesizedExpression(expression) => expression.expression()?,
             JsAnyExpression::JsIdentifierExpression(_) | JsAnyExpression::JsThisExpression(_) => {
                 return Ok(true);
             }

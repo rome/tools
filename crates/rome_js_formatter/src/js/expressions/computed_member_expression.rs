@@ -1,7 +1,7 @@
 use crate::prelude::*;
 
 use crate::js::expressions::static_member_expression::member_chain_callee_needs_parens;
-use crate::parentheses::{ExpressionNode, NeedsParentheses};
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsComputedMemberAssignment,
@@ -118,18 +118,6 @@ impl NeedsParentheses for JsComputedMemberExpression {
         }
 
         member_chain_callee_needs_parens(self.clone().into(), parent)
-    }
-}
-
-impl ExpressionNode for JsComputedMemberExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }
 

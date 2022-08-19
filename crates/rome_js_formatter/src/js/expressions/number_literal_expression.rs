@@ -1,8 +1,8 @@
 use crate::prelude::*;
 
-use crate::parentheses::{is_member_object, ExpressionNode, NeedsParentheses};
+use crate::parentheses::{is_member_object, NeedsParentheses};
 use rome_formatter::write;
-use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsNumberLiteralExpression};
+use rome_js_syntax::{JsNumberLiteralExpression};
 use rome_js_syntax::{JsNumberLiteralExpressionFields, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
@@ -28,18 +28,6 @@ impl FormatNodeRule<JsNumberLiteralExpression> for FormatJsNumberLiteralExpressi
 impl NeedsParentheses for JsNumberLiteralExpression {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         is_member_object(self.syntax(), parent)
-    }
-}
-
-impl ExpressionNode for JsNumberLiteralExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::from(self.clone()))
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::from(self))
     }
 }
 

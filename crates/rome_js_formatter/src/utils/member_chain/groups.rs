@@ -1,7 +1,7 @@
 use crate::context::TabWidth;
 use crate::parentheses::NeedsParentheses;
 use crate::prelude::*;
-use crate::utils::member_chain::chain_member::{ChainEntry, ChainMember};
+use crate::utils::member_chain::chain_member::ChainMember;
 use rome_formatter::write;
 use rome_js_syntax::JsCallExpression;
 use rome_rowan::SyntaxResult;
@@ -32,14 +32,14 @@ impl MemberChainGroupsBuilder {
     }
 
     /// starts a new group
-    pub fn start_group(&mut self, flatten_item: ChainEntry) {
-        debug_assert!(self.current_group.entries.is_empty());
-        self.current_group.entries.push(flatten_item);
+    pub fn start_group(&mut self, flatten_item: ChainMember) {
+        debug_assert!(self.current_group.members.is_empty());
+        self.current_group.members.push(flatten_item);
     }
 
     /// continues of starts a new group
-    pub fn start_or_continue_group(&mut self, flatten_item: ChainEntry) {
-        if self.current_group.entries.is_empty() {
+    pub fn start_or_continue_group(&mut self, flatten_item: ChainMember) {
+        if self.current_group.members.is_empty() {
             self.start_group(flatten_item);
         } else {
             self.continue_group(flatten_item);
@@ -47,14 +47,14 @@ impl MemberChainGroupsBuilder {
     }
 
     /// adds the passed element to the current group
-    pub fn continue_group(&mut self, flatten_item: ChainEntry) {
-        debug_assert!(!self.current_group.entries.is_empty());
-        self.current_group.entries.push(flatten_item);
+    pub fn continue_group(&mut self, flatten_item: ChainMember) {
+        debug_assert!(!self.current_group.members.is_empty());
+        self.current_group.members.push(flatten_item);
     }
 
     /// clears the current group, and adds a new group to the groups
     pub fn close_group(&mut self) {
-        if !self.current_group.entries.is_empty() {
+        if !self.current_group.members.is_empty() {
             let mut elements = MemberChainGroup::default();
             std::mem::swap(&mut elements, &mut self.current_group);
             self.groups.push(elements);
@@ -62,7 +62,7 @@ impl MemberChainGroupsBuilder {
     }
 
     pub(super) fn finish(self) -> MemberChainGroups {
-        debug_assert!(self.current_group.entries().is_empty());
+        debug_assert!(self.current_group.members().is_empty());
 
         MemberChainGroups {
             groups: self.groups,
@@ -98,7 +98,7 @@ impl MemberChainGroups {
         Ok(!self.groups.len() >= 1
             && self.should_not_wrap(head_group)?
             && !self.groups[0]
-                .entries
+                .members
                 .first()
                 .map_or(false, |item| item.has_trailing_comments()))
     }
@@ -107,7 +107,7 @@ impl MemberChainGroups {
     pub fn has_comments(&self) -> SyntaxResult<bool> {
         let mut has_leading_comments = false;
 
-        let flat_groups = self.groups.iter().flat_map(|item| item.entries.iter());
+        let flat_groups = self.groups.iter().flat_map(|item| item.members.iter());
         for item in flat_groups {
             if item.has_leading_comments()? {
                 has_leading_comments = true;
@@ -118,13 +118,13 @@ impl MemberChainGroups {
         let has_trailing_comments = self
             .groups
             .iter()
-            .flat_map(|item| item.entries.iter())
+            .flat_map(|item| item.members.iter())
             .any(|item| item.has_trailing_comments());
 
         let cutoff_has_leading_comments = if self.groups.len() >= self.cutoff as usize {
             let group = self.groups.get(self.cutoff as usize);
             if let Some(group) = group {
-                let first_item = group.entries.first();
+                let first_item = group.members.first();
                 if let Some(first_item) = first_item {
                     first_item.has_leading_comments()?
                 } else {
@@ -145,9 +145,9 @@ impl MemberChainGroups {
     pub fn get_call_expressions(&self) -> impl Iterator<Item = &JsCallExpression> {
         self.groups
             .iter()
-            .flat_map(|group| group.entries.iter())
+            .flat_map(|group| group.members.iter())
             .filter_map(|item| {
-                if let ChainMember::CallExpression(call_expression, ..) = item.member() {
+                if let ChainMember::CallExpression(call_expression, ..) = item {
                     Some(call_expression)
                 } else {
                     None
@@ -163,16 +163,16 @@ impl MemberChainGroups {
             // SAFETY: guarded by the previous check
             let group = &self.groups[0];
             group
-                .entries
+                .members
                 .first()
-                .map_or(false, |item| item.member().is_computed_expression())
+                .map_or(false, |item| item.is_computed_expression())
         } else {
             false
         };
 
-        if first_group.entries().len() == 1 {
+        if first_group.members().len() == 1 {
             // SAFETY: access is guarded by the previous check
-            let first_node = first_group.entries().first().unwrap().member();
+            let first_node = first_group.members().first().unwrap();
 
             return Ok(first_node.is_this_expression()
                 || (first_node.is_identifier_expression()
@@ -186,11 +186,9 @@ impl MemberChainGroups {
         let last_node_is_factory = self
             .groups
             .iter()
-            .flat_map(|group| group.entries.iter())
+            .flat_map(|group| group.members.iter())
             .last()
-            .map_or(false, |item| {
-                item.member().is_factory(false).unwrap_or(false)
-            });
+            .map_or(false, |item| item.is_factory(false).unwrap_or(false));
 
         Ok(last_node_is_factory || has_computed_property)
     }
@@ -233,44 +231,44 @@ impl Format<JsFormatContext> for MemberChainGroups {
 
 #[derive(Debug, Clone, Default)]
 pub(super) struct MemberChainGroup {
-    entries: Vec<ChainEntry>,
+    members: Vec<ChainMember>,
 }
 
 impl MemberChainGroup {
-    pub(super) fn into_entries(self) -> Vec<ChainEntry> {
-        self.entries
+    pub(super) fn into_members(self) -> Vec<ChainMember> {
+        self.members
     }
 
-    fn entries(&self) -> &[ChainEntry] {
-        &self.entries
+    fn members(&self) -> &[ChainMember] {
+        &self.members
     }
 
-    pub(super) fn expand_group(&mut self, group: impl IntoIterator<Item = ChainEntry>) {
-        self.entries.extend(group)
+    pub(super) fn expand_group(&mut self, group: impl IntoIterator<Item = ChainMember>) {
+        self.members.extend(group)
     }
 
     pub(super) fn has_comments(&self) -> bool {
-        self.entries.iter().any(|item| item.has_trailing_comments())
+        self.members.iter().any(|item| item.has_trailing_comments())
     }
 }
 
-impl From<Vec<ChainEntry>> for MemberChainGroup {
-    fn from(entries: Vec<ChainEntry>) -> Self {
-        Self { entries }
+impl From<Vec<ChainMember>> for MemberChainGroup {
+    fn from(entries: Vec<ChainMember>) -> Self {
+        Self { members: entries }
     }
 }
 
 impl Format<JsFormatContext> for MemberChainGroup {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        let last = self.entries.last();
+        let last = self.members.last();
 
-        let needs_parens = last.map_or(false, |last| match last.member() {
+        let needs_parens = last.map_or(false, |last| match last {
             ChainMember::StaticMember(member) => member.needs_parentheses(),
             ChainMember::ComputedMember(member) => member.needs_parentheses(),
             _ => false,
         });
 
-        let format_entries = format_with(|f| f.join().entries(self.entries.iter()).finish());
+        let format_entries = format_with(|f| f.join().entries(self.members.iter()).finish());
 
         if needs_parens {
             write!(f, [text("("), format_entries, text(")")])

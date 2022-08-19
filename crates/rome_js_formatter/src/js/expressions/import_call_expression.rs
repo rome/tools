@@ -1,8 +1,8 @@
 use crate::prelude::*;
 
-use crate::parentheses::{ExpressionNode, NeedsParentheses};
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
-use rome_js_syntax::{JsAnyExpression, JsImportCallExpressionFields};
+use rome_js_syntax::{JsImportCallExpressionFields};
 use rome_js_syntax::{JsImportCallExpression, JsSyntaxKind, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
@@ -26,17 +26,5 @@ impl FormatNodeRule<JsImportCallExpression> for FormatJsImportCallExpression {
 impl NeedsParentheses for JsImportCallExpression {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         matches!(parent.kind(), JsSyntaxKind::JS_NEW_EXPRESSION)
-    }
-}
-
-impl ExpressionNode for JsImportCallExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }

@@ -106,9 +106,9 @@ mod chain_member;
 mod groups;
 mod simple_argument;
 
-use crate::parentheses::NeedsParentheses;
+
 use crate::prelude::*;
-use crate::utils::member_chain::chain_member::{ChainEntry, ChainMember};
+use crate::utils::member_chain::chain_member::ChainMember;
 use crate::utils::member_chain::groups::{
     MemberChainGroup, MemberChainGroups, MemberChainGroupsBuilder,
 };
@@ -194,9 +194,10 @@ pub(crate) fn get_member_chain(
     f: &mut JsFormatter,
 ) -> SyntaxResult<MemberChain> {
     let mut chain_members = vec![];
-    let parent_is_expression_statement = call_expression.resolve_parent().map_or(false, |parent| {
-        JsExpressionStatement::can_cast(parent.kind())
-    });
+    let parent_is_expression_statement =
+        call_expression.syntax().parent().map_or(false, |parent| {
+            JsExpressionStatement::can_cast(parent.kind())
+        });
 
     let root = flatten_member_chain(
         &mut chain_members,
@@ -210,7 +211,7 @@ pub(crate) fn get_member_chain(
     // will be used later to decide on how to format it
     let calls_count = chain_members
         .iter()
-        .filter(|item| item.member().is_loose_call_expression())
+        .filter(|item| item.is_loose_call_expression())
         .count();
 
     // as explained before, the first group is particular, so we calculate it
@@ -235,7 +236,7 @@ pub(crate) fn get_member_chain(
     if let Some(group_to_merge) = rest_of_groups.should_merge_with_first_group(&head_group) {
         let group_to_merge = group_to_merge
             .into_iter()
-            .flat_map(|group| group.into_entries());
+            .flat_map(|group| group.into_members());
         head_group.expand_group(group_to_merge);
     }
 
@@ -249,7 +250,7 @@ pub(crate) fn get_member_chain(
 /// Retrieves the index where we want to calculate the first group.
 /// The first group gathers inside it all those nodes that are not a sequence of something like:
 /// `[ StaticMemberExpression -> AnyNode + JsCallExpression ]`
-fn compute_first_group_index(flatten_items: &[ChainEntry]) -> usize {
+fn compute_first_group_index(flatten_items: &[ChainMember]) -> usize {
     flatten_items
         .iter()
         .enumerate()
@@ -257,7 +258,7 @@ fn compute_first_group_index(flatten_items: &[ChainEntry]) -> usize {
         .skip(1)
         // we now find the index, all items before this index will belong to the first group
         .find_map(|(index, item)| {
-            let should_skip = match item.member() {
+            let should_skip = match item {
                 // This where we apply the first two points explained in the description of the main public function.
                 // We want to keep iterating over the items until we have call expressions or computed expressions:
                 // - `something()()()()`
@@ -298,7 +299,7 @@ fn compute_first_group_index(flatten_items: &[ChainEntry]) -> usize {
                 ChainMember::StaticMember(_) => {
                     let next_flatten_item = &flatten_items[index + 1];
                     matches!(
-                        next_flatten_item.member(),
+                        next_flatten_item,
                         ChainMember::StaticMember(_) | ChainMember::ComputedMember(_)
                     )
                 }
@@ -319,7 +320,7 @@ fn compute_first_group_index(flatten_items: &[ChainEntry]) -> usize {
 
 /// computes groups coming after the first group
 fn compute_groups(
-    flatten_items: impl Iterator<Item = ChainEntry>,
+    flatten_items: impl Iterator<Item = ChainMember>,
     in_expression_statement: bool,
     f: &JsFormatter,
 ) -> MemberChainGroups {
@@ -327,9 +328,9 @@ fn compute_groups(
     let mut groups_builder =
         MemberChainGroupsBuilder::new(in_expression_statement, f.context().tab_width());
     for item in flatten_items {
-        let has_trailing_comments = item.member().syntax().has_trailing_comments();
+        let has_trailing_comments = item.syntax().has_trailing_comments();
 
-        match item.member() {
+        match item {
             ChainMember::StaticMember(_) => {
                 // if we have seen a JsCallExpression, we want to close the group.
                 // The resultant group will be something like: [ . , then, () ];
@@ -345,7 +346,7 @@ fn compute_groups(
                 }
             }
             ChainMember::CallExpression(_) => {
-                let is_loose_call_expression = item.member().is_loose_call_expression();
+                let is_loose_call_expression = item.is_loose_call_expression();
                 groups_builder.start_or_continue_group(item);
                 if is_loose_call_expression {
                     has_seen_call_expression = true;
@@ -374,14 +375,14 @@ fn compute_groups(
 /// This function tries to flatten the AST. It stores nodes and its formatted version
 /// inside an vector of [FlattenItem]. The first element of the vector is the last one.
 fn flatten_member_chain(
-    queue: &mut Vec<ChainEntry>,
+    queue: &mut Vec<ChainMember>,
     node: JsAnyExpression,
     comments: &Comments<JsLanguage>,
-) -> SyntaxResult<ChainEntry> {
+) -> SyntaxResult<ChainMember> {
     use JsAnyExpression::*;
 
     if comments.is_suppressed(node.syntax()) {
-        return Ok(ChainEntry::Member(ChainMember::Node(node.into_syntax())));
+        return Ok(ChainMember::Node(node.into_syntax()));
     }
 
     match node {
@@ -390,16 +391,14 @@ fn flatten_member_chain(
             let left = flatten_member_chain(queue, callee, comments)?;
             queue.push(left);
 
-            Ok(ChainEntry::Member(ChainMember::CallExpression(
-                call_expression,
-            )))
+            Ok(ChainMember::CallExpression(call_expression))
         }
         JsStaticMemberExpression(static_member) => {
             let object = static_member.object()?;
             let left = flatten_member_chain(queue, object, comments)?;
             queue.push(left);
 
-            Ok(ChainEntry::Member(ChainMember::StaticMember(static_member)))
+            Ok(ChainMember::StaticMember(static_member))
         }
 
         JsComputedMemberExpression(computed_expression) => {
@@ -408,21 +407,9 @@ fn flatten_member_chain(
             let left = flatten_member_chain(queue, object, comments)?;
             queue.push(left);
 
-            Ok(ChainEntry::Member(ChainMember::ComputedMember(
-                computed_expression,
-            )))
+            Ok(ChainMember::ComputedMember(computed_expression))
         }
-        JsParenthesizedExpression(parenthesized) => {
-            let inner = flatten_member_chain(queue, parenthesized.expression()?, comments)?;
-
-            Ok(ChainEntry::Parenthesized {
-                member: inner.into_member(),
-                top_most_parentheses: parenthesized,
-            })
-        }
-        expression => Ok(ChainEntry::Member(ChainMember::Node(
-            expression.into_syntax(),
-        ))),
+        expression => Ok(ChainMember::Node(expression.into_syntax())),
     }
 }
 

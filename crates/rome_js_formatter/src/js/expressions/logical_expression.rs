@@ -1,8 +1,8 @@
 use crate::prelude::*;
 use crate::utils::{needs_binary_like_parentheses, JsAnyBinaryLikeExpression};
 
-use crate::parentheses::{ExpressionNode, NeedsParentheses};
-use rome_js_syntax::{JsAnyExpression, JsLogicalExpression, JsSyntaxNode};
+use crate::parentheses::NeedsParentheses;
+use rome_js_syntax::{JsLogicalExpression, JsSyntaxNode};
 use rome_rowan::AstNode;
 
 #[derive(Debug, Clone, Default)]
@@ -36,18 +36,6 @@ impl NeedsParentheses for JsLogicalExpression {
         }
 
         needs_binary_like_parentheses(&JsAnyBinaryLikeExpression::from(self.clone()), parent)
-    }
-}
-
-impl ExpressionNode for JsLogicalExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }
 

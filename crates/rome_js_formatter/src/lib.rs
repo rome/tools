@@ -249,20 +249,22 @@ mod ts;
 pub mod utils;
 
 use rome_formatter::prelude::*;
-use rome_formatter::{write, CstFormatContext};
+use rome_formatter::{write, Comments, CstFormatContext, Format, FormatLanguage};
 use rome_formatter::{Buffer, FormatOwnedWithRule, FormatRefWithRule, Formatted, Printed};
 use rome_js_syntax::{
     JsAnyDeclaration, JsAnyStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
 };
-use rome_rowan::AstNode;
 use rome_rowan::SyntaxResult;
 use rome_rowan::TextRange;
+use rome_rowan::{AstNode, SyntaxNode};
 
 use crate::builders::{format_parenthesize, format_suppressed_node};
-use crate::context::JsFormatContext;
+use crate::context::{JsCommentStyle, JsFormatContext};
 use crate::cst::FormatJsSyntaxNode;
+use crate::preprocessor::preprocess;
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
+use std::rc::Rc;
 
 pub(crate) type JsFormatter<'buf> = Formatter<'buf, JsFormatContext>;
 
@@ -473,6 +475,175 @@ impl IntoFormat<JsFormatContext> for JsSyntaxToken {
     }
 }
 
+struct JsFormatLanguage {
+    context: JsFormatContext,
+}
+impl JsFormatLanguage {
+    fn new(context: JsFormatContext) -> Self {
+        Self { context }
+    }
+}
+
+impl FormatLanguage for JsFormatLanguage {
+    type SyntaxLanguage = JsLanguage;
+    type Context = JsFormatContext;
+    type CommentStyle = JsCommentStyle;
+    type FormatRule = FormatJsSyntaxNode;
+
+    fn comment_style(&self) -> Self::CommentStyle {
+        JsCommentStyle
+    }
+
+    fn transform(
+        &self,
+        root: &SyntaxNode<Self::SyntaxLanguage>,
+    ) -> SyntaxNode<Self::SyntaxLanguage> {
+        preprocess(root)
+
+        //
+        //
+        // for node in root
+        //     .descendants()
+        //     .filter_map(JsParenthesizedExpression::cast)
+        // {
+        //     match (
+        //         node.l_paren_token(),
+        //         node.expression(),
+        //         node.r_paren_token(),
+        //     ) {
+        //         (Ok(l_paren_token), Ok(inner), Ok(r_paren_token)) => {
+        //             // Don't remove parentheses if the left or right parens has any skipped token trivia attached
+        //             // or the inner node is an unknown node (Rome can't know if an unknown needs parentheses or not)
+        //             if l_paren_token.leading_trivia().has_skipped()
+        //                 || r_paren_token.leading_trivia().has_skipped()
+        //                 || inner.syntax().kind().is_unknown()
+        //             {
+        //                 continue;
+        //             }
+        //
+        //             match (
+        //                 l_paren_token.prev_token(),
+        //                 inner.syntax().first_token(),
+        //                 inner.syntax().last_token(),
+        //                 r_paren_token.next_token(),
+        //             ) {
+        //                 (prev_token, Some(first_token), Some(last_token), Some(next_token)) => {
+        //                     let l_leading_trivia = l_paren_token.leading_trivia();
+        //                     let l_trailing_trivia = l_paren_token.trailing_trivia();
+        //
+        //                     if !l_leading_trivia.is_empty() && !l_trailing_trivia.is_empty() {
+        //                         match prev_token {
+        //                             Some(prev_token) if l_leading_trivia.is_empty() => {
+        //                                 let new_prev_token = prev_token.with_trailing_trivia(
+        //                                     prev_token
+        //                                         .trailing_trivia()
+        //                                         .pieces()
+        //                                         .chain(l_trailing_trivia.pieces())
+        //                                         .collect::<Vec<_>>()
+        //                                         .iter()
+        //                                         .map(|piece| (piece.kind(), piece.text())),
+        //                                 );
+        //
+        //                                 mutation.replace_element_discard_trivia(
+        //                                     SyntaxElement::Token(prev_token),
+        //                                     SyntaxElement::Token(new_prev_token),
+        //                                 );
+        //                             }
+        //                             _ => {
+        //                                 first_token.with_leading_trivia(
+        //                                     l_leading_trivia
+        //                                         .pieces()
+        //                                         .chain(l_trailing_trivia.pieces())
+        //                                         .chain(first_token.leading_trivia().pieces())
+        //                                         .collect::<Vec<_>>()
+        //                                         .iter()
+        //                                         .map(|piece| (piece.kind(), piece.text())),
+        //                                 );
+        //                             }
+        //                         }
+        //                     }
+        //
+        //                     let r_leading_trivia = r_paren_token.leading_trivia();
+        //                     let r_trailing_trivia = r_paren_token.trailing_trivia();
+        //
+        //                     // how does this fuckery work:
+        //                     // if first == last token
+        //                     // it may change leading/trailing trivia
+        //                     // if first != last: Two individual tokens
+        //
+        //                     // Now, fuckery level 100: What if nested:
+        //                     // Keep a vec of all concatenated leading / trailing pieces (for l_paren, and r_paren separately)
+        //                     // Otherwise apply the same logic
+        //
+        //                     // Issue, how to avoid re-visiting the same parenthesized expressions multiple times?
+        //                     // Handle parens in exit event of  non paren node?
+        //
+        //                     if !r_leading_trivia.is_empty() || !r_trailing_trivia.is_empty() {
+        //                         if r_leading_trivia.is_empty() {
+        //                             let new_last_token = last_token.with_trailing_trivia(
+        //                                 last_token
+        //                                     .trailing_trivia()
+        //                                     .pieces()
+        //                                     .chain(r_trailing_trivia.pieces())
+        //                                     .collect::<Vec<_>>()
+        //                                     .iter()
+        //                                     .map(|piece| (piece.kind(), piece.text())),
+        //                             );
+        //                             mutation.replace_element_discard_trivia(
+        //                                 SyntaxElement::Token(last_token),
+        //                                 SyntaxElement::Token(new_last_token),
+        //                             );
+        //                         } else {
+        //                             next_token.with_leading_trivia(
+        //                                 r_leading_trivia
+        //                                     .pieces()
+        //                                     .chain(r_trailing_trivia.pieces())
+        //                                     .chain(next_token.leading_trivia().pieces())
+        //                                     .collect::<Vec<_>>()
+        //                                     .iter()
+        //                                     .map(|piece| (piece.kind(), piece.text())),
+        //                             );
+        //                         }
+        //                     }
+        //
+        //                     mutation.replace_element_discard_trivia(
+        //                         SyntaxElement::Node(node.into_syntax()),
+        //                         SyntaxElement::Node(inner.into_syntax()),
+        //                     );
+        //                 }
+        //                 _ => continue,
+        //             }
+        //         }
+        //         _ => {}
+        //     }
+        // }
+    }
+
+    fn is_range_formatting_node(&self, node: &SyntaxNode<Self::SyntaxLanguage>) -> bool {
+        let kind = node.kind();
+
+        // Do not format variable declaration nodes, format the whole statement instead
+        if matches!(kind, JsSyntaxKind::JS_VARIABLE_DECLARATION) {
+            return false;
+        }
+
+        JsAnyStatement::can_cast(kind)
+            || JsAnyDeclaration::can_cast(kind)
+            || matches!(
+                kind,
+                JsSyntaxKind::JS_DIRECTIVE | JsSyntaxKind::JS_EXPORT | JsSyntaxKind::JS_IMPORT
+            )
+    }
+
+    fn context(&self) -> &Self::Context {
+        &self.context
+    }
+
+    fn into_context(self, comments: Comments<Self::SyntaxLanguage>) -> Self::Context {
+        self.context.with_comments(Rc::new(comments))
+    }
+}
+
 /// Formats a range within a file, supported by Rome
 ///
 /// This runs a simple heuristic to determine the initial indentation
@@ -489,28 +660,8 @@ pub fn format_range(
     root: &JsSyntaxNode,
     range: TextRange,
 ) -> FormatResult<Printed> {
-    rome_formatter::format_range::<_, FormatJsSyntaxNode, _>(
-        context,
-        root,
-        range,
-        is_range_formatting_root,
-    )
-}
-
-fn is_range_formatting_root(node: &JsSyntaxNode) -> bool {
-    let kind = node.kind();
-
-    // Do not format variable declaration nodes, format the whole statement instead
-    if matches!(kind, JsSyntaxKind::JS_VARIABLE_DECLARATION) {
-        return false;
-    }
-
-    JsAnyStatement::can_cast(kind)
-        || JsAnyDeclaration::can_cast(kind)
-        || matches!(
-            kind,
-            JsSyntaxKind::JS_DIRECTIVE | JsSyntaxKind::JS_EXPORT | JsSyntaxKind::JS_IMPORT
-        )
+    let language = JsFormatLanguage::new(context);
+    rome_formatter::format_range(root, range, language)
 }
 
 /// Formats a JavaScript (and its super languages) file based on its features.
@@ -520,7 +671,8 @@ pub fn format_node(
     context: JsFormatContext,
     root: &JsSyntaxNode,
 ) -> FormatResult<Formatted<JsFormatContext>> {
-    rome_formatter::format_node(context, &root.format())
+    let language = JsFormatLanguage::new(context);
+    rome_formatter::format_node(root, language)
 }
 
 /// Formats a single node within a file, supported by Rome.
@@ -534,7 +686,8 @@ pub fn format_node(
 ///
 /// It returns a [Formatted] result
 pub fn format_sub_tree(context: JsFormatContext, root: &JsSyntaxNode) -> FormatResult<Printed> {
-    rome_formatter::format_sub_tree(context, &root.format())
+    let language = JsFormatLanguage::new(context);
+    rome_formatter::format_sub_tree(root, language)
 }
 
 #[cfg(test)]
@@ -701,6 +854,7 @@ mod generated;
 pub(crate) mod builders;
 pub mod context;
 mod parentheses;
+mod preprocessor;
 pub(crate) mod separated;
 
 #[cfg(test)]
@@ -710,27 +864,27 @@ mod test {
     use rome_js_parser::parse;
     use rome_js_syntax::{SourceType, TextRange, TextSize};
 
-    #[ignore]
     #[test]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-test.expect(t => {
-	t.true(a);
-}, false);
+((
+    a)
+    /* comment */
+    );
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
         let result = format_node(JsFormatContext::default(), &tree.syntax())
             .unwrap()
             .print();
-        check_reformat(CheckReformatParams {
-            root: &tree.syntax(),
-            text: result.as_code(),
-            source_type: syntax,
-            file_name: "quick_test",
-            format_context: JsFormatContext::default(),
-        });
+        // check_reformat(CheckReformatParams {
+        //     root: &tree.syntax(),
+        //     text: result.as_code(),
+        //     source_type: syntax,
+        //     file_name: "quick_test",
+        //     format_context: JsFormatContext::default(),
+        // });
         assert_eq!(
             result.as_code(),
             "type B8 = /*1*/ (C);\ntype B9 = (/*1*/ C);\ntype B10 = /*1*/ /*2*/ C;\n"

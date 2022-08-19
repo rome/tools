@@ -225,6 +225,7 @@ pub trait CstFormatContext: FormatContext {
     type Style: CommentStyle<Self::Language>;
 
     /// Customizes how comments are formatted
+    #[deprecated]
     fn comment_style(&self) -> Self::Style;
 
     /// Returns a ref counted [Comments].
@@ -793,32 +794,63 @@ where
     })
 }
 
+pub trait FormatLanguage {
+    type SyntaxLanguage: Language;
+    type Context: CstFormatContext<Language = Self::SyntaxLanguage>;
+    type CommentStyle: CommentStyle<Self::SyntaxLanguage>;
+    type FormatRule: FormatRule<SyntaxNode<Self::SyntaxLanguage>, Context = Self::Context> + Default;
+
+    /// Customizes how comments are formatted
+    fn comment_style(&self) -> Self::CommentStyle;
+
+    fn transform(
+        &self,
+        root: &SyntaxNode<Self::SyntaxLanguage>,
+    ) -> SyntaxNode<Self::SyntaxLanguage> {
+        root.clone()
+    }
+
+    /// Because this function is language-agnostic, it must be provided with a
+    /// `predicate` function that's used to select appropriate "root nodes" for the
+    /// range formatting process: for instance in JavaScript the predicate returns
+    /// true for statement and declaration nodes, to ensure the entire statement
+    /// gets formatted instead of the smallest sub-expression that fits the range
+    fn is_range_formatting_node(&self, _node: &SyntaxNode<Self::SyntaxLanguage>) -> bool {
+        true
+    }
+
+    fn context(&self) -> &Self::Context;
+
+    fn into_context(self, comments: Comments<Self::SyntaxLanguage>) -> Self::Context;
+}
+
 /// Formats a syntax node file based on its features.
 ///
 /// It returns a [Formatted] result, which the user can use to override a file.
-pub fn format_node<
-    Context: CstFormatContext,
-    N: FormatWithRule<Context, Item = SyntaxNode<Context::Language>>,
->(
-    context: Context,
-    root: &N,
-) -> FormatResult<Formatted<Context>> {
+pub fn format_node<L: FormatLanguage>(
+    root: &SyntaxNode<L::SyntaxLanguage>,
+    language: L,
+) -> FormatResult<Formatted<L::Context>> {
     tracing::trace_span!("format_node").in_scope(move || {
-        let suppressions = Comments::from_node(root.item(), &context);
-        let context = context.with_comments(Rc::new(suppressions));
+        let root = language.transform(root);
 
+        let comments = Comments::from_node(&root, &language);
+
+        let format_node = FormatRefWithRule::new(&root, L::FormatRule::default());
+
+        let context = language.into_context(comments);
         let mut state = FormatState::new(context);
         let mut buffer = VecBuffer::new(&mut state);
 
-        write!(&mut buffer, [root])?;
+        write!(buffer, [format_node])?;
 
         let document = buffer.into_element();
 
-        state.assert_formatted_all_tokens(root.item());
+        state.assert_formatted_all_tokens(&root);
         state
             .context()
             .comments()
-            .assert_checked_all_suppressions(root.item());
+            .assert_checked_all_suppressions(&root);
 
         Ok(Formatted::new(document, state.into_context()))
     })
@@ -864,12 +896,6 @@ where
 
 /// Formats a range within a file, supported by Rome
 ///
-/// Because this function is language-agnostic, it must be provided with a
-/// `predicate` function that's used to select appropriate "root nodes" for the
-/// range formatting process: for instance in JavaScript the predicate returns
-/// true for statement and declaration nodes, to ensure the entire statement
-/// gets formatted instead of the smallest sub-expression that fits the range
-///
 /// This runs a simple heuristic to determine the initial indentation
 /// level of the node based on the provided [FormatContext], which
 /// must match currently the current initial of the file. Additionally,
@@ -879,17 +905,11 @@ where
 ///
 /// It returns a [Formatted] result with a range corresponding to the
 /// range of the input that was effectively overwritten by the formatter
-pub fn format_range<Context, R, P>(
-    context: Context,
-    root: &SyntaxNode<Context::Language>,
+pub fn format_range<Language: FormatLanguage>(
+    root: &SyntaxNode<Language::SyntaxLanguage>,
     mut range: TextRange,
-    mut predicate: P,
-) -> FormatResult<Printed>
-where
-    Context: CstFormatContext,
-    R: FormatRule<SyntaxNode<Context::Language>, Context = Context> + Default,
-    P: FnMut(&SyntaxNode<Context::Language>) -> bool,
-{
+    language: Language,
+) -> FormatResult<Printed> {
     if range.is_empty() {
         return Ok(Printed::new(
             String::new(),
@@ -980,11 +1000,11 @@ where
     // the language implementation) in the ancestors of the start and end tokens
     let start_node = start_token
         .ancestors()
-        .find(&mut predicate)
+        .find(|node| language.is_range_formatting_node(node))
         .unwrap_or_else(|| root.clone());
     let end_node = end_token
         .ancestors()
-        .find(predicate)
+        .find(|node| language.is_range_formatting_node(node))
         .unwrap_or_else(|| root.clone());
 
     let common_root = if start_node == end_node {
@@ -1037,10 +1057,7 @@ where
 
     // Perform the actual formatting of the root node with
     // an appropriate indentation level
-    let mut printed = format_sub_tree(
-        context,
-        &FormatRefWithRule::<_, R>::new(common_root, R::default()),
-    )?;
+    let mut printed = format_sub_tree(common_root, language)?;
 
     // This finds the closest marker to the beginning of the source
     // starting before or at said starting point, and the closest
@@ -1119,17 +1136,13 @@ where
 /// even if it's a mismatch from the rest of the block the selection is in
 ///
 /// It returns a [Formatted] result
-pub fn format_sub_tree<
-    C: CstFormatContext,
-    N: FormatWithRule<C, Item = SyntaxNode<C::Language>>,
->(
-    context: C,
-    root: &N,
+pub fn format_sub_tree<L: FormatLanguage>(
+    root: &SyntaxNode<L::SyntaxLanguage>,
+    language: L,
 ) -> FormatResult<Printed> {
-    let syntax = root.item();
     // Determine the initial indentation level for the printer by inspecting the trivia pieces
     // of each token from the first token of the common root towards the start of the file
-    let mut tokens = std::iter::successors(syntax.first_token(), |token| token.prev_token());
+    let mut tokens = std::iter::successors(root.first_token(), |token| token.prev_token());
 
     // From the iterator of tokens, build an iterator of trivia pieces (once again the iterator is
     // reversed, starting from the last trailing trivia towards the first leading trivia).
@@ -1165,7 +1178,7 @@ pub fn format_sub_tree<
             // of indentation type detection yet. Unfortunately this
             // may not actually match the current content of the file
             let length = trivia.text().len() as u16;
-            match context.indent_style() {
+            match language.context().indent_style() {
                 IndentStyle::Tab => length,
                 IndentStyle::Space(width) => length / u16::from(width),
             }
@@ -1175,13 +1188,13 @@ pub fn format_sub_tree<
         None => 0,
     };
 
-    let formatted = format_node(context, root)?;
+    let formatted = format_node(root, language)?;
     let mut printed = formatted.print_with_indent(initial_indent);
     let sourcemap = printed.take_sourcemap();
     let verbatim_ranges = printed.take_verbatim_ranges();
     Ok(Printed::new(
         printed.into_code(),
-        Some(syntax.text_range()),
+        Some(root.text_range()),
         sourcemap,
         verbatim_ranges,
     ))

@@ -50,64 +50,23 @@ use rome_js_syntax::{
     JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAnyFunctionBody,
     JsAnyLiteralExpression, JsArrowFunctionExpression, JsAssignmentExpression, JsBinaryExpression,
     JsBinaryOperator, JsComputedMemberAssignment, JsComputedMemberExpression,
-    JsConditionalExpression, JsLanguage, JsSequenceExpression, JsSyntaxKind, JsSyntaxNode,
+    JsConditionalExpression, JsLanguage, JsParenthesizedExpression, JsSequenceExpression,
+    JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
 };
-use rome_rowan::AstNode;
+use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 
 /// Node that may be parenthesized to ensure it forms valid syntax or to improve readability
 pub trait NeedsParentheses: AstNode<Language = JsLanguage> {
     fn needs_parentheses(&self) -> bool {
-        self.resolve_parent()
+        self.syntax()
+            .parent()
             .map_or(false, |parent| self.needs_parentheses_with_parent(&parent))
-    }
-
-    fn resolve_parent(&self) -> Option<JsSyntaxNode> {
-        resolve_parent(self.syntax())
     }
 
     /// Returns `true` if this node requires parentheses to form valid syntax or improve readability.
     ///
     /// Returns `false` if the parentheses can be omitted safely without changing semantics.
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool;
-}
-
-/// Trait implemented by all JavaScript expressions.
-pub trait ExpressionNode: NeedsParentheses {
-    /// Resolves an expression to the first non parenthesized expression.
-    fn resolve(&self) -> JsAnyExpression;
-
-    /// Consumes `self` and returns the first expression that isn't a parenthesized expression.
-    fn into_resolved(self) -> JsAnyExpression;
-
-    /// Resolves an expression to the first non parenthesized expression and returns its [JsSyntaxNode].
-    fn resolve_syntax(&self) -> JsSyntaxNode {
-        self.resolve().into_syntax()
-    }
-
-    /// Consumes `self` and returns the [JsSyntaxNode] of the first expression that isn't a parenthesized expression.
-    fn into_resolved_syntax(self) -> JsSyntaxNode {
-        self.into_resolved().into_syntax()
-    }
-}
-
-/// Resolves to the first parent that isn't a parenthesized expression, assignment, or type.
-pub(crate) fn resolve_parent(node: &JsSyntaxNode) -> Option<JsSyntaxNode> {
-    let mut current = node.parent();
-
-    while let Some(parent) = current {
-        if matches!(
-            parent.kind(),
-            JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION
-                | JsSyntaxKind::JS_PARENTHESIZED_ASSIGNMENT
-                | JsSyntaxKind::TS_PARENTHESIZED_TYPE
-        ) {
-            current = parent.parent();
-        } else {
-            return Some(parent);
-        }
-    }
-
-    None
 }
 
 impl NeedsParentheses for JsAnyLiteralExpression {
@@ -152,38 +111,6 @@ impl NeedsParentheses for JsAnyLiteralExpression {
             JsAnyLiteralExpression::JsStringLiteralExpression(string) => {
                 string.needs_parentheses_with_parent(parent)
             }
-        }
-    }
-}
-
-impl ExpressionNode for JsAnyLiteralExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        match self {
-            JsAnyLiteralExpression::JsBigIntLiteralExpression(big_int) => big_int.resolve(),
-            JsAnyLiteralExpression::JsBooleanLiteralExpression(boolean) => boolean.resolve(),
-            JsAnyLiteralExpression::JsNullLiteralExpression(null_literal) => null_literal.resolve(),
-            JsAnyLiteralExpression::JsNumberLiteralExpression(number_literal) => {
-                number_literal.resolve()
-            }
-            JsAnyLiteralExpression::JsRegexLiteralExpression(regex) => regex.resolve(),
-            JsAnyLiteralExpression::JsStringLiteralExpression(string) => string.resolve(),
-        }
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        match self {
-            JsAnyLiteralExpression::JsBigIntLiteralExpression(big_int) => big_int.into_resolved(),
-            JsAnyLiteralExpression::JsBooleanLiteralExpression(boolean) => boolean.into_resolved(),
-            JsAnyLiteralExpression::JsNullLiteralExpression(null_literal) => {
-                null_literal.into_resolved()
-            }
-            JsAnyLiteralExpression::JsNumberLiteralExpression(number_literal) => {
-                number_literal.into_resolved()
-            }
-            JsAnyLiteralExpression::JsRegexLiteralExpression(regex) => regex.into_resolved(),
-            JsAnyLiteralExpression::JsStringLiteralExpression(string) => string.into_resolved(),
         }
     }
 }
@@ -334,98 +261,6 @@ impl NeedsParentheses for JsAnyExpression {
     }
 }
 
-impl ExpressionNode for JsAnyExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        match self {
-            JsAnyExpression::ImportMeta(meta) => meta.resolve(),
-            JsAnyExpression::JsAnyLiteralExpression(literal) => literal.resolve(),
-            JsAnyExpression::JsArrayExpression(array) => array.resolve(),
-            JsAnyExpression::JsArrowFunctionExpression(arrow) => arrow.resolve(),
-            JsAnyExpression::JsAssignmentExpression(assignment) => assignment.resolve(),
-            JsAnyExpression::JsAwaitExpression(await_expression) => await_expression.resolve(),
-            JsAnyExpression::JsBinaryExpression(binary) => binary.resolve(),
-            JsAnyExpression::JsCallExpression(call) => call.resolve(),
-            JsAnyExpression::JsClassExpression(class) => class.resolve(),
-            JsAnyExpression::JsComputedMemberExpression(member) => member.resolve(),
-            JsAnyExpression::JsConditionalExpression(conditional) => conditional.resolve(),
-            JsAnyExpression::JsFunctionExpression(function) => function.resolve(),
-            JsAnyExpression::JsIdentifierExpression(identifier) => identifier.resolve(),
-            JsAnyExpression::JsImportCallExpression(import_call) => import_call.resolve(),
-            JsAnyExpression::JsInExpression(in_expression) => in_expression.resolve(),
-            JsAnyExpression::JsInstanceofExpression(instanceof) => instanceof.resolve(),
-            JsAnyExpression::JsLogicalExpression(logical) => logical.resolve(),
-            JsAnyExpression::JsNewExpression(new) => new.resolve(),
-            JsAnyExpression::JsObjectExpression(object) => object.resolve(),
-            JsAnyExpression::JsParenthesizedExpression(parenthesized) => parenthesized.resolve(),
-            JsAnyExpression::JsPostUpdateExpression(update) => update.resolve(),
-            JsAnyExpression::JsPreUpdateExpression(update) => update.resolve(),
-            JsAnyExpression::JsSequenceExpression(sequence) => sequence.resolve(),
-            JsAnyExpression::JsStaticMemberExpression(member) => member.resolve(),
-            JsAnyExpression::JsSuperExpression(sup) => sup.resolve(),
-            JsAnyExpression::JsTemplate(template) => template.resolve(),
-            JsAnyExpression::JsThisExpression(this) => this.resolve(),
-            JsAnyExpression::JsUnaryExpression(unary) => unary.resolve(),
-            JsAnyExpression::JsUnknownExpression(unknown) => unknown.resolve(),
-            JsAnyExpression::JsYieldExpression(yield_expression) => yield_expression.resolve(),
-            JsAnyExpression::JsxTagExpression(jsx) => jsx.resolve(),
-            JsAnyExpression::NewTarget(target) => target.resolve(),
-            JsAnyExpression::TsAsExpression(as_expression) => as_expression.resolve(),
-            JsAnyExpression::TsNonNullAssertionExpression(non_null) => non_null.resolve(),
-            JsAnyExpression::TsTypeAssertionExpression(type_assertion) => type_assertion.resolve(),
-        }
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        match self {
-            JsAnyExpression::ImportMeta(meta) => meta.into_resolved(),
-            JsAnyExpression::JsAnyLiteralExpression(literal) => literal.into_resolved(),
-            JsAnyExpression::JsArrayExpression(array) => array.into_resolved(),
-            JsAnyExpression::JsArrowFunctionExpression(arrow) => arrow.into_resolved(),
-            JsAnyExpression::JsAssignmentExpression(assignment) => assignment.into_resolved(),
-            JsAnyExpression::JsAwaitExpression(await_expression) => {
-                await_expression.into_resolved()
-            }
-            JsAnyExpression::JsBinaryExpression(binary) => binary.into_resolved(),
-            JsAnyExpression::JsCallExpression(call) => call.into_resolved(),
-            JsAnyExpression::JsClassExpression(class) => class.into_resolved(),
-            JsAnyExpression::JsComputedMemberExpression(member) => member.into_resolved(),
-            JsAnyExpression::JsConditionalExpression(conditional) => conditional.into_resolved(),
-            JsAnyExpression::JsFunctionExpression(function) => function.into_resolved(),
-            JsAnyExpression::JsIdentifierExpression(identifier) => identifier.into_resolved(),
-            JsAnyExpression::JsImportCallExpression(import_call) => import_call.into_resolved(),
-            JsAnyExpression::JsInExpression(in_expression) => in_expression.into_resolved(),
-            JsAnyExpression::JsInstanceofExpression(instanceof) => instanceof.into_resolved(),
-            JsAnyExpression::JsLogicalExpression(logical) => logical.into_resolved(),
-            JsAnyExpression::JsNewExpression(new) => new.into_resolved(),
-            JsAnyExpression::JsObjectExpression(object) => object.into_resolved(),
-            JsAnyExpression::JsParenthesizedExpression(parenthesized) => {
-                parenthesized.into_resolved()
-            }
-            JsAnyExpression::JsPostUpdateExpression(update) => update.into_resolved(),
-            JsAnyExpression::JsPreUpdateExpression(update) => update.into_resolved(),
-            JsAnyExpression::JsSequenceExpression(sequence) => sequence.into_resolved(),
-            JsAnyExpression::JsStaticMemberExpression(member) => member.into_resolved(),
-            JsAnyExpression::JsSuperExpression(sup) => sup.into_resolved(),
-            JsAnyExpression::JsTemplate(template) => template.into_resolved(),
-            JsAnyExpression::JsThisExpression(this) => this.into_resolved(),
-            JsAnyExpression::JsUnaryExpression(unary) => unary.into_resolved(),
-            JsAnyExpression::JsUnknownExpression(unknown) => unknown.into_resolved(),
-            JsAnyExpression::JsYieldExpression(yield_expression) => {
-                yield_expression.into_resolved()
-            }
-            JsAnyExpression::JsxTagExpression(jsx) => jsx.into_resolved(),
-            JsAnyExpression::NewTarget(target) => target.into_resolved(),
-            JsAnyExpression::TsAsExpression(as_expression) => as_expression.into_resolved(),
-            JsAnyExpression::TsNonNullAssertionExpression(non_null) => non_null.into_resolved(),
-            JsAnyExpression::TsTypeAssertionExpression(type_assertion) => {
-                type_assertion.into_resolved()
-            }
-        }
-    }
-}
-
 /// Returns the left most expression of `expression`.
 ///
 /// For example, returns `a` for `(a ? b : c) + d` because it first resolves the
@@ -458,7 +293,6 @@ pub(crate) fn get_expression_left_side(
     use JsAnyExpression::*;
 
     let left_expression = match expression {
-        JsParenthesizedExpression(parenthesized) => parenthesized.expression().ok(),
         JsSequenceExpression(sequence) => sequence.left().ok(),
         JsStaticMemberExpression(member) => member.object().ok(),
         JsComputedMemberExpression(member) => member.object().ok(),
@@ -499,15 +333,13 @@ pub(crate) fn is_first_in_statement(node: JsSyntaxNode, mode: FirstInStatementMo
                 return true;
             }
 
-            JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION
-            | JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION
+            JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION
             | JsSyntaxKind::JS_STATIC_MEMBER_ASSIGNMENT
             | JsSyntaxKind::JS_TEMPLATE
             | JsSyntaxKind::JS_CALL_EXPRESSION
             | JsSyntaxKind::JS_NEW_EXPRESSION
             | JsSyntaxKind::TS_AS_EXPRESSION
-            | JsSyntaxKind::TS_NON_NULL_ASSERTION_EXPRESSION
-            | JsSyntaxKind::JS_PARENTHESIZED_ASSIGNMENT => parent,
+            | JsSyntaxKind::TS_NON_NULL_ASSERTION_EXPRESSION => parent,
             JsSyntaxKind::JS_SEQUENCE_EXPRESSION => {
                 let sequence = JsSequenceExpression::unwrap_cast(parent);
 
@@ -640,11 +472,7 @@ pub(crate) fn unary_like_expression_needs_parentheses(
             let binary = JsBinaryExpression::unwrap_cast(parent.clone());
 
             matches!(binary.operator(), Ok(JsBinaryOperator::Exponent))
-                && binary
-                    .left()
-                    .map(ExpressionNode::into_resolved_syntax)
-                    .as_ref()
-                    == Ok(expression)
+                && binary.left().map(AstNode::into_syntax).as_ref() == Ok(expression)
         }
         _ => update_or_lower_expression_needs_parentheses(expression, parent),
     }
@@ -689,7 +517,7 @@ pub(crate) fn is_member_object(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bo
 
             member_expression
                 .object()
-                .map(ExpressionNode::into_resolved_syntax)
+                .map(AstNode::into_syntax)
                 .as_ref()
                 == Ok(node)
         }
@@ -699,7 +527,7 @@ pub(crate) fn is_member_object(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bo
 
             member_assignment
                 .object()
-                .map(ExpressionNode::into_resolved_syntax)
+                .map(AstNode::into_syntax)
                 .as_ref()
                 == Ok(node)
         }
@@ -733,11 +561,7 @@ pub(crate) fn is_conditional_test(node: &JsSyntaxNode, parent: &JsSyntaxNode) ->
         JsSyntaxKind::JS_CONDITIONAL_EXPRESSION => {
             let conditional = JsConditionalExpression::unwrap_cast(parent.clone());
 
-            conditional
-                .test()
-                .map(ExpressionNode::into_resolved_syntax)
-                .as_ref()
-                == Ok(node)
+            conditional.test().map(AstNode::into_syntax).as_ref() == Ok(node)
         }
         _ => false,
     }
@@ -751,9 +575,7 @@ pub(crate) fn is_arrow_function_body(node: &JsSyntaxNode, parent: &JsSyntaxNode)
             let arrow = JsArrowFunctionExpression::unwrap_cast(parent.clone());
 
             match arrow.body() {
-                Ok(JsAnyFunctionBody::JsAnyExpression(expression)) => {
-                    &expression.resolve_syntax() == node
-                }
+                Ok(JsAnyFunctionBody::JsAnyExpression(expression)) => expression.syntax() == node,
                 _ => false,
             }
         }
@@ -780,6 +602,36 @@ pub(crate) fn is_spread(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bool {
             | JsSyntaxKind::JS_SPREAD
             | JsSyntaxKind::JSX_SPREAD_ATTRIBUTE
     )
+}
+
+declare_node_union! {
+    pub(crate) JsAnyParenthesizedNode = JsParenthesizedExpression
+}
+
+impl JsAnyParenthesizedNode {
+    pub(crate) fn l_paren_token(&self) -> SyntaxResult<JsSyntaxToken> {
+        match self {
+            JsAnyParenthesizedNode::JsParenthesizedExpression(expression) => {
+                expression.l_paren_token()
+            }
+        }
+    }
+
+    pub(crate) fn inner(&self) -> SyntaxResult<JsSyntaxNode> {
+        match self {
+            JsAnyParenthesizedNode::JsParenthesizedExpression(expression) => {
+                expression.expression().map(AstNode::into_syntax)
+            }
+        }
+    }
+
+    pub(crate) fn r_paren_token(&self) -> SyntaxResult<JsSyntaxToken> {
+        match self {
+            JsAnyParenthesizedNode::JsParenthesizedExpression(expression) => {
+                expression.r_paren_token()
+            }
+        }
+    }
 }
 
 /// Returns `true` if `parent` is a [JsAnyBinaryLikeExpression] and `node` is the `left` or `right` of that expression.
@@ -948,7 +800,7 @@ fn debug_assert_is_expression(node: &JsSyntaxNode) {
 
 fn debug_assert_is_parent(node: &JsSyntaxNode, parent: &JsSyntaxNode) {
     debug_assert!(
-        resolve_parent(node).as_ref() == Some(parent),
+        node.parent().as_ref() == Some(parent),
         "Node {node:#?} is not a child of ${parent:#?}"
     )
 }

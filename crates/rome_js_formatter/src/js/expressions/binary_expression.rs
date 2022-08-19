@@ -1,8 +1,8 @@
 use crate::prelude::*;
 use crate::utils::{needs_binary_like_parentheses, JsAnyBinaryLikeExpression};
 
-use crate::parentheses::{ExpressionNode, NeedsParentheses};
-use rome_js_syntax::{JsAnyExpression, JsBinaryExpression, JsSyntaxNode};
+use crate::parentheses::NeedsParentheses;
+use rome_js_syntax::{JsBinaryExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsBinaryExpression;
@@ -24,18 +24,6 @@ impl FormatNodeRule<JsBinaryExpression> for FormatJsBinaryExpression {
 impl NeedsParentheses for JsBinaryExpression {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         needs_binary_like_parentheses(&JsAnyBinaryLikeExpression::from(self.clone()), parent)
-    }
-}
-
-impl ExpressionNode for JsBinaryExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }
 

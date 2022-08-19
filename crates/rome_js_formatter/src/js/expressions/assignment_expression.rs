@@ -2,13 +2,12 @@ use crate::prelude::*;
 use crate::utils::JsAnyAssignmentLike;
 
 use crate::parentheses::{
-    is_arrow_function_body, is_first_in_statement, ExpressionNode, FirstInStatementMode,
-    NeedsParentheses,
+    is_arrow_function_body, is_first_in_statement, FirstInStatementMode, NeedsParentheses,
 };
 use rome_formatter::write;
 
 use rome_js_syntax::{
-    JsAnyAssignmentPattern, JsAnyExpression, JsAnyForInitializer, JsAssignmentExpression,
+    JsAnyAssignmentPattern, JsAnyForInitializer, JsAssignmentExpression,
     JsForStatement, JsSyntaxKind, JsSyntaxNode,
 };
 use rome_rowan::AstNode;
@@ -40,15 +39,12 @@ impl NeedsParentheses for JsAssignmentExpression {
                 let for_statement = JsForStatement::unwrap_cast(parent.clone());
                 let is_initializer = match for_statement.initializer() {
                     Some(JsAnyForInitializer::JsAnyExpression(expression)) => {
-                        &expression.resolve_syntax() == self.syntax()
+                        expression.syntax() == self.syntax()
                     }
                     None | Some(_) => false,
                 };
 
-                let is_update = for_statement
-                    .update()
-                    .map(ExpressionNode::into_resolved_syntax)
-                    .as_ref()
+                let is_update = for_statement.update().map(AstNode::into_syntax).as_ref()
                     == Some(self.syntax());
 
                 !(is_initializer || is_update)
@@ -68,8 +64,7 @@ impl NeedsParentheses for JsAssignmentExpression {
 
                 for ancestor in parent.ancestors().skip(1) {
                     match ancestor.kind() {
-                        JsSyntaxKind::JS_SEQUENCE_EXPRESSION
-                        | JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION => child = ancestor,
+                        JsSyntaxKind::JS_SEQUENCE_EXPRESSION => child = ancestor,
                         JsSyntaxKind::JS_FOR_STATEMENT => {
                             let for_statement = JsForStatement::unwrap_cast(ancestor);
 
@@ -95,18 +90,6 @@ impl NeedsParentheses for JsAssignmentExpression {
 
             _ => true,
         }
-    }
-}
-
-impl ExpressionNode for JsAssignmentExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }
 

@@ -1,8 +1,8 @@
 use crate::prelude::*;
 use crate::utils::{needs_binary_like_parentheses, JsAnyBinaryLikeExpression};
 
-use crate::parentheses::{ExpressionNode, NeedsParentheses};
-use rome_js_syntax::{JsAnyExpression, JsInstanceofExpression, JsSyntaxNode};
+use crate::parentheses::NeedsParentheses;
+use rome_js_syntax::{JsInstanceofExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsInstanceofExpression;
@@ -24,18 +24,6 @@ impl FormatNodeRule<JsInstanceofExpression> for FormatJsInstanceofExpression {
 impl NeedsParentheses for JsInstanceofExpression {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         needs_binary_like_parentheses(&JsAnyBinaryLikeExpression::from(self.clone()), parent)
-    }
-}
-
-impl ExpressionNode for JsInstanceofExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }
 

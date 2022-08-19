@@ -3,7 +3,7 @@ use rome_formatter::{format_args, write};
 
 use crate::parentheses::{
     is_binary_like_left_or_right, is_conditional_test,
-    update_or_lower_expression_needs_parentheses, ExpressionNode, NeedsParentheses,
+    update_or_lower_expression_needs_parentheses, NeedsParentheses,
 };
 use crate::utils::{resolve_left_most_expression, JsAnyBinaryLikeLeftExpression};
 use rome_js_syntax::{
@@ -86,13 +86,12 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
         // going to get broken anyways.
         let body_has_soft_line_break = match &body {
             JsFunctionBody(_) => true,
-            JsAnyExpression(expr) => match expr.resolve() {
+            JsAnyExpression(expr) => match expr {
                 JsArrowFunctionExpression(_)
                 | JsArrayExpression(_)
                 | JsObjectExpression(_)
-                | JsParenthesizedExpression(_)
                 | JsxTagExpression(_) => true,
-                JsTemplate(template) => is_multiline_template_starting_on_same_line(&template),
+                JsTemplate(template) => is_multiline_template_starting_on_same_line(template),
                 JsSequenceExpression(_) => {
                     return write!(
                         f,
@@ -116,9 +115,7 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
         // case and added by the object expression itself
         let should_add_parens = match &body {
             JsAnyExpression(expression) => {
-                let resolved = expression.resolve();
-
-                let is_conditional = matches!(resolved, JsConditionalExpression(_));
+                let is_conditional = matches!(expression, JsConditionalExpression(_));
                 let are_parentheses_mandatory = matches!(
                     resolve_left_most_expression(expression),
                     JsAnyBinaryLikeLeftExpression::JsAnyExpression(
@@ -175,18 +172,6 @@ impl NeedsParentheses for JsArrowFunctionExpression {
                     || is_binary_like_left_or_right(self.syntax(), parent)
             }
         }
-    }
-}
-
-impl ExpressionNode for JsArrowFunctionExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }
 

@@ -1,11 +1,11 @@
 use crate::prelude::*;
 
 use crate::parentheses::{
-    is_binary_like_left_or_right, is_callee, is_member_object, ExpressionNode, NeedsParentheses,
+    is_binary_like_left_or_right, is_callee, is_member_object, NeedsParentheses,
 };
 use crate::ts::expressions::type_assertion_expression::type_cast_like_needs_parens;
 use rome_formatter::write;
-use rome_js_syntax::{JsAnyExpression, TsAsExpressionFields};
+use rome_js_syntax::{TsAsExpressionFields};
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, TsAsExpression};
 
 #[derive(Debug, Clone, Default)]
@@ -32,7 +32,7 @@ impl FormatNodeRule<TsAsExpression> for FormatTsAsExpression {
             ]
         });
 
-        let parent = node.resolve_parent();
+        let parent = node.syntax().parent();
 
         let is_callee_or_object = parent.map_or(false, |parent| {
             is_callee(node.syntax(), &parent) || is_member_object(node.syntax(), &parent)
@@ -60,18 +60,6 @@ impl NeedsParentheses for TsAsExpression {
                     || is_binary_like_left_or_right(self.syntax(), parent)
             }
         }
-    }
-}
-
-impl ExpressionNode for TsAsExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }
 
