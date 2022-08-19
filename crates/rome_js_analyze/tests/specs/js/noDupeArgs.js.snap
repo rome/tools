@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 97
 expression: noDupeArgs.js
 ---
 # Input
@@ -65,16 +64,6 @@ warning[js/noDupeArgs]: Duplicate argument name
 
 ```
 warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:11:18
-   │
-11 │ function c(a, a, a) {}
-   │                  -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
    ┌─ noDupeArgs.js:13:18
    │
 13 │ const d = (a, b, a) => {};
@@ -95,16 +84,6 @@ warning[js/noDupeArgs]: Duplicate argument name
 
 ```
 warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:15:21
-   │
-15 │ function e(a, b, a, b) {}
-   │                     -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
    ┌─ noDupeArgs.js:17:25
    │
 17 │ var f = function (a, b, b) {};
@@ -119,16 +98,6 @@ warning[js/noDupeArgs]: Duplicate argument name
    │
 20 │     ggg(a, a, a) {}
    │            -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:20:12
-   │
-20 │     ggg(a, a, a) {}
-   │               -
 
 
 ```
@@ -159,16 +128,6 @@ warning[js/noDupeArgs]: Duplicate argument name
    │
 31 │ export default function (a, b, a, a) {}
    │                                -
-
-
-```
-
-```
-warning[js/noDupeArgs]: Duplicate argument name
-   ┌─ noDupeArgs.js:31:35
-   │
-31 │ export default function (a, b, a, a) {}
-   │                                   -
 
 
 ```
