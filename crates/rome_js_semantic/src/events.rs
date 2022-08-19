@@ -277,7 +277,7 @@ impl SemanticEventExtractor {
         debug_assert!(matches!(
             node.kind(),
             JS_IDENTIFIER_BINDING | TS_IDENTIFIER_BINDING
-        ));
+        ), "specified node is not a identifier binding (JS_IDENTIFIER_BINDING, TS_IDENTIFIER_BINDING)");
 
         let (name_token, is_var) = match node.kind() {
             JS_IDENTIFIER_BINDING => {
@@ -344,10 +344,13 @@ impl SemanticEventExtractor {
     }
 
     fn enter_reference_identifier(&mut self, node: &JsSyntaxNode) -> Option<()> {
-        debug_assert!(matches!(
-            node.kind(),
-            JsSyntaxKind::JS_REFERENCE_IDENTIFIER | JsSyntaxKind::JSX_REFERENCE_IDENTIFIER
-        ));
+        debug_assert!(
+            matches!(
+                node.kind(),
+                JsSyntaxKind::JS_REFERENCE_IDENTIFIER | JsSyntaxKind::JSX_REFERENCE_IDENTIFIER
+            ),
+            "specified node is not a reference identifier (JS_REFERENCE_IDENTIFIER, JSX_REFERENCE_IDENTIFIER)"
+        );
 
         let (name, is_exported) = match node.kind() {
             JsSyntaxKind::JS_REFERENCE_IDENTIFIER => {
@@ -377,6 +380,11 @@ impl SemanticEventExtractor {
     }
 
     fn enter_js_identifier_assignment(&mut self, node: &JsSyntaxNode) -> Option<()> {
+        debug_assert!(
+            matches!(node.kind(), JsSyntaxKind::JS_IDENTIFIER_ASSIGNMENT),
+            "specified node is not a identifier assignment (JS_IDENTIFIER_ASSIGNMENT)"
+        );
+
         let reference = node.clone().cast::<JsIdentifierAssignment>()?;
         let name_token = reference.name_token().ok()?;
         let name = name_token.token_text_trimmed();
