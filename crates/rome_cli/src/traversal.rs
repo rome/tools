@@ -56,7 +56,7 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
 
     let (interner, recv_files) = AtomicInterner::new();
     let (send_msgs, recv_msgs) = unbounded();
-    let (send_stats_from_traversal, recv_stats) = unbounded();
+    let (sender_reports_from_traversal, receiver_reports) = unbounded();
 
     let processed = AtomicUsize::new(0);
     let skipped = AtomicUsize::new(0);
@@ -68,10 +68,10 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
     let mut has_errors = None;
     let mut duration = None;
     let mut report = None;
-    let send_stats_from_messages = send_stats_from_traversal.clone();
+    let sender_reports_from_messages = sender_reports_from_traversal.clone();
     rayon::scope(|s| {
         s.spawn(|_| {
-            report = Some(collect_stats(recv_stats));
+            report = Some(collect_reports(receiver_reports));
         });
 
         s.spawn(|_| {
@@ -80,7 +80,7 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
                 console,
                 recv_files,
                 recv_msgs,
-                send_stats: send_stats_from_messages,
+                sender_reports: sender_reports_from_messages,
             }));
         });
         s.spawn(|_| {
@@ -97,7 +97,7 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
                     processed: &processed,
                     skipped: &skipped,
                     messages: send_msgs,
-                    stats: send_stats_from_traversal,
+                    sender_reports: sender_reports_from_traversal,
                 },
             ));
         })
@@ -151,7 +151,7 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
                 report.set_formatter_summary(summary);
             }
 
-            let to_print = report.as_serialized_stats()?;
+            let to_print = report.as_serialized_reports()?;
             console.log(markup! {
                 {to_print}
             });
@@ -196,8 +196,8 @@ struct ProcessMessagesOptions<'ctx> {
     recv_files: Receiver<(usize, PathBuf)>,
     /// Receiver channel that expects info when a message is sent
     recv_msgs: Receiver<Message>,
-    /// Sender of stats
-    send_stats: Sender<ReportKind>,
+    /// Sender of reports
+    sender_reports: Sender<ReportKind>,
 }
 
 /// This thread receives [Message]s from the workers through the `recv_msgs`
@@ -208,7 +208,7 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
         console,
         recv_files,
         recv_msgs,
-        send_stats,
+        sender_reports,
     } = options;
 
     let mut has_errors = false;
@@ -256,7 +256,7 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
                         }}
                     });
                 } else {
-                    send_stats
+                    sender_reports
                         .send(ReportKind::Error(
                             file_name.unwrap().to_string(),
                             ReportErrorKind::Diagnostic(ReportDiagnostic {
@@ -304,7 +304,7 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
                         }
 
                         if !mode.should_report_to_terminal() {
-                            send_stats
+                            sender_reports
                                 .send(ReportKind::Error(
                                     name.to_string(),
                                     ReportErrorKind::Diagnostic(ReportDiagnostic {
@@ -365,7 +365,7 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
                         {diff}
                     });
                 } else {
-                    send_stats
+                    sender_reports
                         .send(ReportKind::Error(
                             file_name.to_string(),
                             ReportErrorKind::Diff(ReportDiff {
@@ -397,7 +397,7 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
     has_errors
 }
 
-fn collect_stats(receiver: Receiver<ReportKind>) -> Report {
+fn collect_reports(receiver: Receiver<ReportKind>) -> Report {
     let mut report = Report::default();
     while let Ok(stat) = receiver.recv() {
         report.push_detail_report(stat);
@@ -422,8 +422,8 @@ struct TraversalOptions<'ctx, 'app> {
     skipped: &'ctx AtomicUsize,
     /// Channel sending messages to the display thread
     messages: Sender<Message>,
-    /// Channel sending stats to the stats thread
-    stats: Sender<ReportKind>,
+    /// Channel sending reports to the reports thread
+    sender_reports: Sender<ReportKind>,
 }
 
 impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
@@ -440,7 +440,9 @@ impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
     }
 
     fn push_format_stat(&self, path: String, stat: FormatterReportFileDetail) {
-        self.stats.send(ReportKind::Formatter(path, stat)).ok();
+        self.sender_reports
+            .send(ReportKind::Formatter(path, stat))
+            .ok();
     }
 
     fn can_lint(&self, rome_path: &RomePath) -> bool {

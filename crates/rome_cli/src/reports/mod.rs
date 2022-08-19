@@ -79,7 +79,7 @@ impl Report {
         self.formatter.set_summary(summary);
     }
 
-    pub fn as_serialized_stats(&self) -> Result<String, RomeError> {
+    pub fn as_serialized_reports(&self) -> Result<String, RomeError> {
         serde_json::to_string(&self).map_err(|_| RomeError::NotFound)
     }
 }
