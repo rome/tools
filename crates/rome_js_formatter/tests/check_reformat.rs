@@ -54,7 +54,7 @@ pub fn check_reformat(params: CheckReformatParams) {
         let pretty_reformat_ir = format!("{}", input_format_element.into_format_element());
 
         // Print a diff of the Formatter IR emitted for the input and the output
-        let diff = similar_asserts::Diff::from_str(
+        let diff = similar_asserts::SimpleDiff::from_str(
             &pretty_input_ir,
             &pretty_reformat_ir,
             "input",
@@ -63,6 +63,6 @@ pub fn check_reformat(params: CheckReformatParams) {
 
         println!("{diff}");
 
-        similar_asserts::assert_str_eq!(text, printed.as_code());
+        similar_asserts::assert_eq!(text, printed.as_code());
     }
 }
