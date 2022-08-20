@@ -108,7 +108,7 @@
       "type": "object",
       "properties": {
         "quoteProperties": {
-          "description": "When properties in objects are quoted. Defaults to as-needed.",
+          "description": "When properties in objects are quoted. Defaults to asNeeded.",
           "default": "asNeeded",
           "allOf": [
             {
