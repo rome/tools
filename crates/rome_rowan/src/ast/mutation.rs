@@ -95,12 +95,9 @@ where
         let next_last = next_node.syntax().last_token();
 
         if let (Some(prev_last), Some(next_last)) = (prev_last, next_last) {
-            let pieces: Vec<_> = prev_last.trailing_trivia().pieces().collect();
-
             next_node = next_node.replace_token_discard_trivia(
                 next_last.clone(),
-                next_last
-                    .with_trailing_trivia(pieces.iter().map(|piece| (piece.kind(), piece.text()))),
+                next_last.with_trailing_trivia_pieces(prev_last.trailing_trivia().pieces()),
             )?;
         }
 
@@ -130,22 +127,14 @@ where
     where
         Self: Sized,
     {
-        let leading_trivia: Vec<_> = prev_token.leading_trivia().pieces().collect();
-        let trailing_trivia: Vec<_> = prev_token.trailing_trivia().pieces().collect();
+        let leading_trivia = prev_token.leading_trivia().pieces();
+        let trailing_trivia = prev_token.trailing_trivia().pieces();
 
         self.replace_token_discard_trivia(
             prev_token,
             next_token
-                .with_leading_trivia(
-                    leading_trivia
-                        .iter()
-                        .map(|piece| (piece.kind(), piece.text())),
-                )
-                .with_trailing_trivia(
-                    trailing_trivia
-                        .iter()
-                        .map(|piece| (piece.kind(), piece.text())),
-                ),
+                .with_leading_trivia_pieces(leading_trivia)
+                .with_trailing_trivia_pieces(trailing_trivia),
         )
     }
 

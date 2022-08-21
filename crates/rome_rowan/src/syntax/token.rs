@@ -2,8 +2,8 @@ use crate::green::{GreenToken, GreenTrivia};
 use crate::syntax::SyntaxTrivia;
 use crate::syntax_token_text::SyntaxTokenText;
 use crate::{
-    cursor, Direction, Language, NodeOrToken, SyntaxElement, SyntaxKind, SyntaxNode, TriviaPiece,
-    TriviaPieceKind,
+    cursor, Direction, Language, NodeOrToken, SyntaxElement, SyntaxKind, SyntaxNode,
+    SyntaxTriviaPiece, TriviaPiece, TriviaPieceKind,
 };
 use std::fmt;
 use std::marker::PhantomData;
@@ -189,12 +189,13 @@ impl<L: Language> SyntaxToken<L> {
 
     /// Return a new version of this token with its leading trivia replaced with `trivia`
     #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
-    pub fn with_leading_trivia<'a, I>(self, trivia: I) -> Self
+    pub fn with_leading_trivia<'a, I>(&self, trivia: I) -> Self
     where
-        I: Iterator<Item = (TriviaPieceKind, &'a str)> + ExactSizeIterator,
+        I: IntoIterator<Item = (TriviaPieceKind, &'a str)>,
+        I::IntoIter: ExactSizeIterator,
     {
         let mut token_text = String::new();
-        let trivia = trivia.map(|(kind, text)| {
+        let trivia = trivia.into_iter().map(|(kind, text)| {
             token_text.push_str(text);
             TriviaPiece::new(kind, TextSize::of(text))
         });
@@ -216,11 +217,42 @@ impl<L: Language> SyntaxToken<L> {
         }
     }
 
+    /// Return a new version of this token with its leading trivia replaced with `trivia`
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn with_leading_trivia_pieces<'a, I>(&self, trivia: I) -> Self
+    where
+        I: IntoIterator<Item = SyntaxTriviaPiece<L>>,
+        I::IntoIter: ExactSizeIterator,
+    {
+        let mut token_text = String::new();
+        let trivia = trivia.into_iter().map(|piece| {
+            token_text.push_str(piece.text());
+            piece.into_raw_piece()
+        });
+
+        let leading = GreenTrivia::new(trivia);
+
+        // Copy over token text and trailing trivia
+        let leading_len = self.raw.green().leading_trivia().text_len();
+        token_text.push_str(&self.text()[usize::from(leading_len)..]);
+
+        Self {
+            raw: cursor::SyntaxToken::new_detached(GreenToken::with_trivia(
+                self.kind().to_raw(),
+                &token_text,
+                leading,
+                self.green_token().trailing_trivia().clone(),
+            )),
+            _p: PhantomData,
+        }
+    }
+
     /// Return a new version of this token with its trailing trivia replaced with `trivia`
     #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
-    pub fn with_trailing_trivia<'a, I>(self, trivia: I) -> Self
+    pub fn with_trailing_trivia<'a, I>(&self, trivia: I) -> Self
     where
-        I: Iterator<Item = (TriviaPieceKind, &'a str)> + ExactSizeIterator,
+        I: IntoIterator<Item = (TriviaPieceKind, &'a str)>,
+        I::IntoIter: ExactSizeIterator,
     {
         let mut token_text = String::new();
 
@@ -228,9 +260,40 @@ impl<L: Language> SyntaxToken<L> {
         let trailing_len = self.green_token().trailing_trivia().text_len();
         token_text.push_str(&self.text()[..usize::from(self.text().text_len() - trailing_len)]);
 
-        let trivia = trivia.map(|(kind, text)| {
+        let trivia = trivia.into_iter().map(|(kind, text)| {
             token_text.push_str(text);
             TriviaPiece::new(kind, TextSize::of(text))
+        });
+
+        let trailing = GreenTrivia::new(trivia);
+
+        Self {
+            raw: cursor::SyntaxToken::new_detached(GreenToken::with_trivia(
+                self.kind().to_raw(),
+                &token_text,
+                self.green_token().leading_trivia().clone(),
+                trailing,
+            )),
+            _p: PhantomData,
+        }
+    }
+
+    /// Return a new version of this token with its trailing trivia replaced with `trivia`
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn with_trailing_trivia_pieces<I>(&self, trivia: I) -> Self
+    where
+        I: IntoIterator<Item = SyntaxTriviaPiece<L>>,
+        I::IntoIter: ExactSizeIterator,
+    {
+        let mut token_text = String::new();
+
+        // copy over leading trivia and token text
+        let trailing_len = self.green_token().trailing_trivia().text_len();
+        token_text.push_str(&self.text()[..usize::from(self.text().text_len() - trailing_len)]);
+
+        let trivia = trivia.into_iter().map(|piece| {
+            token_text.push_str(piece.text());
+            piece.into_raw_piece()
         });
 
         let trailing = GreenTrivia::new(trivia);
