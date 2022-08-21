@@ -24,9 +24,8 @@ console.log(a.foo());
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,11 +1,12 @@
+@@ -1,11 +1,11 @@
  var a =
-+  window
    /**
 -   * bla bla bla
 -   * @type {string |
@@ -41,8 +40,7 @@ console.log(a.foo());
 +* bla bla bla
 + */
    //2
--  (window["s"]).toString();
-+  ["s"].toString();
+   (window["s"]).toString();
  console.log(a.foo());
 ```
 
@@ -50,7 +48,6 @@ console.log(a.foo());
 
 ```js
 var a =
-  window
   /**
  * bla bla bla
  * @type {string |
@@ -59,7 +56,7 @@ var a =
 * bla bla bla
  */
   //2
-  ["s"].toString();
+  (window["s"]).toString();
 console.log(a.foo());
 ```
 

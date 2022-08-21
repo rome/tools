@@ -248,6 +248,16 @@ pub mod prelude;
 mod ts;
 pub mod utils;
 
+#[cfg(test)]
+mod check_reformat;
+#[rustfmt::skip]
+mod generated;
+pub(crate) mod builders;
+pub mod context;
+mod parentheses;
+mod preprocessor;
+pub(crate) mod separated;
+
 use rome_formatter::prelude::*;
 use rome_formatter::{write, Comments, CstFormatContext, Format, FormatLanguage};
 use rome_formatter::{Buffer, FormatOwnedWithRule, FormatRefWithRule, Formatted, Printed};
@@ -499,124 +509,6 @@ impl FormatLanguage for JsFormatLanguage {
         root: &SyntaxNode<Self::SyntaxLanguage>,
     ) -> SyntaxNode<Self::SyntaxLanguage> {
         preprocess(root)
-
-        //
-        //
-        // for node in root
-        //     .descendants()
-        //     .filter_map(JsParenthesizedExpression::cast)
-        // {
-        //     match (
-        //         node.l_paren_token(),
-        //         node.expression(),
-        //         node.r_paren_token(),
-        //     ) {
-        //         (Ok(l_paren_token), Ok(inner), Ok(r_paren_token)) => {
-        //             // Don't remove parentheses if the left or right parens has any skipped token trivia attached
-        //             // or the inner node is an unknown node (Rome can't know if an unknown needs parentheses or not)
-        //             if l_paren_token.leading_trivia().has_skipped()
-        //                 || r_paren_token.leading_trivia().has_skipped()
-        //                 || inner.syntax().kind().is_unknown()
-        //             {
-        //                 continue;
-        //             }
-        //
-        //             match (
-        //                 l_paren_token.prev_token(),
-        //                 inner.syntax().first_token(),
-        //                 inner.syntax().last_token(),
-        //                 r_paren_token.next_token(),
-        //             ) {
-        //                 (prev_token, Some(first_token), Some(last_token), Some(next_token)) => {
-        //                     let l_leading_trivia = l_paren_token.leading_trivia();
-        //                     let l_trailing_trivia = l_paren_token.trailing_trivia();
-        //
-        //                     if !l_leading_trivia.is_empty() && !l_trailing_trivia.is_empty() {
-        //                         match prev_token {
-        //                             Some(prev_token) if l_leading_trivia.is_empty() => {
-        //                                 let new_prev_token = prev_token.with_trailing_trivia(
-        //                                     prev_token
-        //                                         .trailing_trivia()
-        //                                         .pieces()
-        //                                         .chain(l_trailing_trivia.pieces())
-        //                                         .collect::<Vec<_>>()
-        //                                         .iter()
-        //                                         .map(|piece| (piece.kind(), piece.text())),
-        //                                 );
-        //
-        //                                 mutation.replace_element_discard_trivia(
-        //                                     SyntaxElement::Token(prev_token),
-        //                                     SyntaxElement::Token(new_prev_token),
-        //                                 );
-        //                             }
-        //                             _ => {
-        //                                 first_token.with_leading_trivia(
-        //                                     l_leading_trivia
-        //                                         .pieces()
-        //                                         .chain(l_trailing_trivia.pieces())
-        //                                         .chain(first_token.leading_trivia().pieces())
-        //                                         .collect::<Vec<_>>()
-        //                                         .iter()
-        //                                         .map(|piece| (piece.kind(), piece.text())),
-        //                                 );
-        //                             }
-        //                         }
-        //                     }
-        //
-        //                     let r_leading_trivia = r_paren_token.leading_trivia();
-        //                     let r_trailing_trivia = r_paren_token.trailing_trivia();
-        //
-        //                     // how does this fuckery work:
-        //                     // if first == last token
-        //                     // it may change leading/trailing trivia
-        //                     // if first != last: Two individual tokens
-        //
-        //                     // Now, fuckery level 100: What if nested:
-        //                     // Keep a vec of all concatenated leading / trailing pieces (for l_paren, and r_paren separately)
-        //                     // Otherwise apply the same logic
-        //
-        //                     // Issue, how to avoid re-visiting the same parenthesized expressions multiple times?
-        //                     // Handle parens in exit event of  non paren node?
-        //
-        //                     if !r_leading_trivia.is_empty() || !r_trailing_trivia.is_empty() {
-        //                         if r_leading_trivia.is_empty() {
-        //                             let new_last_token = last_token.with_trailing_trivia(
-        //                                 last_token
-        //                                     .trailing_trivia()
-        //                                     .pieces()
-        //                                     .chain(r_trailing_trivia.pieces())
-        //                                     .collect::<Vec<_>>()
-        //                                     .iter()
-        //                                     .map(|piece| (piece.kind(), piece.text())),
-        //                             );
-        //                             mutation.replace_element_discard_trivia(
-        //                                 SyntaxElement::Token(last_token),
-        //                                 SyntaxElement::Token(new_last_token),
-        //                             );
-        //                         } else {
-        //                             next_token.with_leading_trivia(
-        //                                 r_leading_trivia
-        //                                     .pieces()
-        //                                     .chain(r_trailing_trivia.pieces())
-        //                                     .chain(next_token.leading_trivia().pieces())
-        //                                     .collect::<Vec<_>>()
-        //                                     .iter()
-        //                                     .map(|piece| (piece.kind(), piece.text())),
-        //                             );
-        //                         }
-        //                     }
-        //
-        //                     mutation.replace_element_discard_trivia(
-        //                         SyntaxElement::Node(node.into_syntax()),
-        //                         SyntaxElement::Node(inner.into_syntax()),
-        //                     );
-        //                 }
-        //                 _ => continue,
-        //             }
-        //         }
-        //         _ => {}
-        //     }
-        // }
     }
 
     fn is_range_formatting_node(&self, node: &SyntaxNode<Self::SyntaxLanguage>) -> bool {
@@ -693,12 +585,15 @@ pub fn format_sub_tree(context: JsFormatContext, root: &JsSyntaxNode) -> FormatR
 #[cfg(test)]
 mod tests {
 
-    use super::format_range;
+    use super::{format_node, format_range};
 
     use crate::context::JsFormatContext;
     use rome_formatter::IndentStyle;
-    use rome_js_parser::parse_script;
+    use rome_js_parser::{parse, parse_script};
+    use rome_js_syntax::SourceType;
     use rome_rowan::{TextRange, TextSize};
+
+    use crate::check_reformat::{check_reformat, CheckReformatParams};
 
     #[test]
     fn test_range_formatting() {
@@ -845,46 +740,28 @@ function() {
         assert_eq!(result.as_code(), "");
         assert_eq!(result.range(), Some(TextRange::new(range_start, range_end)));
     }
-}
 
-#[cfg(test)]
-mod check_reformat;
-#[rustfmt::skip]
-mod generated;
-pub(crate) mod builders;
-pub mod context;
-mod parentheses;
-mod preprocessor;
-pub(crate) mod separated;
-
-#[cfg(test)]
-mod test {
-    use crate::check_reformat::{check_reformat, CheckReformatParams};
-    use crate::{format_node, format_range, JsFormatContext};
-    use rome_js_parser::parse;
-    use rome_js_syntax::{SourceType, TextRange, TextSize};
-
+    #[ignore]
     #[test]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-((
-    a)
-    /* comment */
-    );
+test.expect(t => {
+	t.true(a);
+}, false);
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
         let result = format_node(JsFormatContext::default(), &tree.syntax())
             .unwrap()
             .print();
-        // check_reformat(CheckReformatParams {
-        //     root: &tree.syntax(),
-        //     text: result.as_code(),
-        //     source_type: syntax,
-        //     file_name: "quick_test",
-        //     format_context: JsFormatContext::default(),
-        // });
+        check_reformat(CheckReformatParams {
+            root: &tree.syntax(),
+            text: result.as_code(),
+            source_type: syntax,
+            file_name: "quick_test",
+            format_context: JsFormatContext::default(),
+        });
         assert_eq!(
             result.as_code(),
             "type B8 = /*1*/ (C);\ntype B9 = (/*1*/ C);\ntype B10 = /*1*/ /*2*/ C;\n"

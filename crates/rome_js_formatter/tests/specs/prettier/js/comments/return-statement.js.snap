@@ -151,17 +151,6 @@ function inlineComment() {
  }
  
  function excessiveEverything() {
-@@ -103,8 +105,8 @@
- 
- function sequenceExpressionInside() {
-   return (
--    // Reason for a
--    a, b
-+    a, // Reason for a
-+    b
-   );
- }
- 
 @@ -116,5 +118,7 @@
  }
  
@@ -283,8 +272,8 @@ function excessiveEverything() {
 
 function sequenceExpressionInside() {
   return (
-    a, // Reason for a
-    b
+    // Reason for a
+    a, b
   );
 }
 

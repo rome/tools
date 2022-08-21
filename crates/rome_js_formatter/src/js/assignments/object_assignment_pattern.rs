@@ -1,8 +1,8 @@
-use crate::parentheses::{AssignmentNode, NeedsParentheses};
+use crate::parentheses::NeedsParentheses;
 use crate::prelude::*;
 use crate::utils::JsObjectPatternLike;
 use rome_formatter::write;
-use rome_js_syntax::{JsAnyAssignmentPattern, JsObjectAssignmentPattern, JsSyntaxNode};
+use rome_js_syntax::{JsObjectAssignmentPattern, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsObjectAssignmentPattern;
@@ -18,18 +18,6 @@ impl FormatNodeRule<JsObjectAssignmentPattern> for FormatJsObjectAssignmentPatte
 
     fn needs_parentheses(&self, item: &JsObjectAssignmentPattern) -> bool {
         item.needs_parentheses()
-    }
-}
-
-impl AssignmentNode for JsObjectAssignmentPattern {
-    #[inline]
-    fn resolve(&self) -> JsAnyAssignmentPattern {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyAssignmentPattern {
-        self.into()
     }
 }
 

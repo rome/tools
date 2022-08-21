@@ -1,9 +1,9 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::parentheses::{AssignmentNode, NeedsParentheses};
-use rome_js_syntax::{JsAnyAssignment, JsForOfStatement, JsIdentifierAssignmentFields};
-use rome_js_syntax::{JsAnyAssignmentPattern, JsIdentifierAssignment, JsSyntaxNode};
+use crate::parentheses::NeedsParentheses;
+use rome_js_syntax::{JsForOfStatement, JsIdentifierAssignmentFields};
+use rome_js_syntax::{JsIdentifierAssignment, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsIdentifierAssignment;
@@ -17,18 +17,6 @@ impl FormatNodeRule<JsIdentifierAssignment> for FormatJsIdentifierAssignment {
 
     fn needs_parentheses(&self, item: &JsIdentifierAssignment) -> bool {
         item.needs_parentheses()
-    }
-}
-
-impl AssignmentNode for JsIdentifierAssignment {
-    #[inline]
-    fn resolve(&self) -> JsAnyAssignmentPattern {
-        JsAnyAssignmentPattern::JsAnyAssignment(JsAnyAssignment::from(self.clone()))
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyAssignmentPattern {
-        JsAnyAssignmentPattern::JsAnyAssignment(JsAnyAssignment::from(self))
     }
 }
 

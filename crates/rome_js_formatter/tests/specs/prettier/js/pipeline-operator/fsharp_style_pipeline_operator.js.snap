@@ -62,7 +62,7 @@ const f = x |> (f) => f |> f;
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,34 +1,57 @@
+@@ -1,34 +1,55 @@
  promise
    |> await
 -  |> (x) => doubleSay(x, ", ")
@@ -104,24 +104,24 @@ const f = x |> (f) => f |> f;
 +  |> j => j.data.user
  
 -const f = (x) => x |> (y) => y + 1 |> (z) => z * y;
-+const f = (x) => (x |> (y)
++const f = (x) => (x |> y
 +=> y + 1)
 +  |> (z) => z * y
  
 -const _f = (x) => x |> (y) => y + 1 |> (z) => z * y;
 +const _f = (x) => x
-+  |> (y)
++  |> y
 +=> y + 1
 +  |> (z) => z * y
  
 -const g = (x) => x |> (y) => (y + 1 |> (z) => z * y);
 +const g = (x) => x
-+  |> (y)
++  |> y
 +=> (y + 1 |> (z) => z * y)
  
 -const _g = (x) => x |> ((y) => (y + 1 |> (z) => z * y));
 +const _g = (x) => x
-+  |> (y => (y + 1 |> (z)
++  |> (y => (y + 1 |> z
 +=> z * y))
  
 -const __g = (x) =>
@@ -130,16 +130,14 @@ const f = x |> (f) => f |> f;
 -    return y + 1 |> (z) => z * y;
 -  });
 +const __g = (x) => x
-+  |> (
-+    y => {
-+      return (y + 1 |> (z) => z * y);
++  |> y => {
++      return (y + 1 |> z => z * y);
 +    }
-+  )
  
 -const f = x + ((f) => f |> f);
 -const f = x |> (f) => f |> f;
-+const f = x + ((f) => (f |> f));
-+const f = x |> (f)
++const f = x + (f) => f |> f;
++const f = x |> f
 +=> f |> f
 ```
 
@@ -176,32 +174,30 @@ const user = url
   |> await
   |> j => j.data.user
 
-const f = (x) => (x |> (y)
+const f = (x) => (x |> y
 => y + 1)
   |> (z) => z * y
 
 const _f = (x) => x
-  |> (y)
+  |> y
 => y + 1
   |> (z) => z * y
 
 const g = (x) => x
-  |> (y)
+  |> y
 => (y + 1 |> (z) => z * y)
 
 const _g = (x) => x
-  |> (y => (y + 1 |> (z)
+  |> (y => (y + 1 |> z
 => z * y))
 
 const __g = (x) => x
-  |> (
-    y => {
-      return (y + 1 |> (z) => z * y);
+  |> y => {
+      return (y + 1 |> z => z * y);
     }
-  )
 
-const f = x + ((f) => (f |> f));
-const f = x |> (f)
+const f = x + (f) => f |> f;
+const f = x |> f
 => f |> f
 ```
 

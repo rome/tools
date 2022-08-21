@@ -1,9 +1,7 @@
 use crate::js::expressions::static_member_expression::JsAnyStaticMemberLike;
-use crate::parentheses::{AssignmentNode, NeedsParentheses};
+use crate::parentheses::NeedsParentheses;
 use crate::prelude::*;
-use rome_js_syntax::{
-    JsAnyAssignment, JsAnyAssignmentPattern, JsStaticMemberAssignment, JsSyntaxNode,
-};
+use rome_js_syntax::{JsStaticMemberAssignment, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsStaticMemberAssignment;
@@ -15,18 +13,6 @@ impl FormatNodeRule<JsStaticMemberAssignment> for FormatJsStaticMemberAssignment
 
     fn needs_parentheses(&self, item: &JsStaticMemberAssignment) -> bool {
         item.needs_parentheses()
-    }
-}
-
-impl AssignmentNode for JsStaticMemberAssignment {
-    #[inline]
-    fn resolve(&self) -> JsAnyAssignmentPattern {
-        JsAnyAssignmentPattern::JsAnyAssignment(JsAnyAssignment::from(self.clone()))
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyAssignmentPattern {
-        JsAnyAssignmentPattern::JsAnyAssignment(JsAnyAssignment::from(self))
     }
 }
 

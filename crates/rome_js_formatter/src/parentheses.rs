@@ -50,8 +50,8 @@ use rome_js_syntax::{
     JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAnyFunctionBody,
     JsAnyLiteralExpression, JsArrowFunctionExpression, JsAssignmentExpression, JsBinaryExpression,
     JsBinaryOperator, JsComputedMemberAssignment, JsComputedMemberExpression,
-    JsConditionalExpression, JsLanguage, JsParenthesizedExpression, JsSequenceExpression,
-    JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
+    JsConditionalExpression, JsLanguage, JsParenthesizedAssignment, JsParenthesizedExpression,
+    JsSequenceExpression, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
 };
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 
@@ -605,31 +605,32 @@ pub(crate) fn is_spread(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bool {
 }
 
 declare_node_union! {
-    pub(crate) JsAnyParenthesizedNode = JsParenthesizedExpression
+    pub(crate) JsAnyParenthesized = JsParenthesizedExpression | JsParenthesizedAssignment
 }
 
-impl JsAnyParenthesizedNode {
+impl JsAnyParenthesized {
     pub(crate) fn l_paren_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            JsAnyParenthesizedNode::JsParenthesizedExpression(expression) => {
-                expression.l_paren_token()
-            }
+            JsAnyParenthesized::JsParenthesizedExpression(expression) => expression.l_paren_token(),
+            JsAnyParenthesized::JsParenthesizedAssignment(assignment) => assignment.l_paren_token(),
         }
     }
 
     pub(crate) fn inner(&self) -> SyntaxResult<JsSyntaxNode> {
         match self {
-            JsAnyParenthesizedNode::JsParenthesizedExpression(expression) => {
+            JsAnyParenthesized::JsParenthesizedExpression(expression) => {
                 expression.expression().map(AstNode::into_syntax)
+            }
+            JsAnyParenthesized::JsParenthesizedAssignment(assignment) => {
+                assignment.assignment().map(AstNode::into_syntax)
             }
         }
     }
 
     pub(crate) fn r_paren_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
-            JsAnyParenthesizedNode::JsParenthesizedExpression(expression) => {
-                expression.r_paren_token()
-            }
+            JsAnyParenthesized::JsParenthesizedExpression(expression) => expression.r_paren_token(),
+            JsAnyParenthesized::JsParenthesizedAssignment(assignment) => assignment.r_paren_token(),
         }
     }
 }
@@ -640,53 +641,6 @@ pub(crate) fn is_binary_like_left_or_right(node: &JsSyntaxNode, parent: &JsSynta
     debug_assert_is_parent(node, parent);
 
     JsAnyBinaryLikeExpression::can_cast(parent.kind())
-}
-
-/// Trait implemented by all JavaScript assignments.
-pub trait AssignmentNode: NeedsParentheses {
-    /// Resolves an assignment to the first non parenthesized assignment.
-    fn resolve(&self) -> JsAnyAssignmentPattern;
-
-    /// Consumes `self` and returns the first assignment that isn't a parenthesized assignment.
-    fn into_resolved(self) -> JsAnyAssignmentPattern;
-
-    /// Resolves an assignment to the first non parenthesized assignment and returns its [JsSyntaxNode].
-    fn resolve_syntax(&self) -> JsSyntaxNode {
-        self.resolve().into_syntax()
-    }
-
-    /// Consumes `self` and returns the [JsSyntaxNode] of the first assignment  that isn't a assignment expression.
-    fn into_resolved_syntax(self) -> JsSyntaxNode {
-        self.into_resolved().into_syntax()
-    }
-}
-
-impl AssignmentNode for JsAnyAssignment {
-    fn resolve(&self) -> JsAnyAssignmentPattern {
-        match self {
-            JsAnyAssignment::JsComputedMemberAssignment(assignment) => assignment.resolve(),
-            JsAnyAssignment::JsIdentifierAssignment(assignment) => assignment.resolve(),
-            JsAnyAssignment::JsParenthesizedAssignment(assignment) => assignment.resolve(),
-            JsAnyAssignment::JsStaticMemberAssignment(assignment) => assignment.resolve(),
-            JsAnyAssignment::JsUnknownAssignment(assignment) => assignment.resolve(),
-            JsAnyAssignment::TsAsAssignment(assignment) => assignment.resolve(),
-            JsAnyAssignment::TsNonNullAssertionAssignment(assignment) => assignment.resolve(),
-            JsAnyAssignment::TsTypeAssertionAssignment(assignment) => assignment.resolve(),
-        }
-    }
-
-    fn into_resolved(self) -> JsAnyAssignmentPattern {
-        match self {
-            JsAnyAssignment::JsComputedMemberAssignment(assignment) => assignment.into_resolved(),
-            JsAnyAssignment::JsIdentifierAssignment(assignment) => assignment.into_resolved(),
-            JsAnyAssignment::JsParenthesizedAssignment(assignment) => assignment.into_resolved(),
-            JsAnyAssignment::JsStaticMemberAssignment(assignment) => assignment.into_resolved(),
-            JsAnyAssignment::JsUnknownAssignment(assignment) => assignment.into_resolved(),
-            JsAnyAssignment::TsAsAssignment(assignment) => assignment.into_resolved(),
-            JsAnyAssignment::TsNonNullAssertionAssignment(assignment) => assignment.into_resolved(),
-            JsAnyAssignment::TsTypeAssertionAssignment(assignment) => assignment.into_resolved(),
-        }
-    }
 }
 
 impl NeedsParentheses for JsAnyAssignment {
@@ -741,28 +695,6 @@ impl NeedsParentheses for JsAnyAssignment {
     }
 }
 
-impl AssignmentNode for JsAnyAssignmentPattern {
-    fn resolve(&self) -> JsAnyAssignmentPattern {
-        match self {
-            JsAnyAssignmentPattern::JsAnyAssignment(assignment) => assignment.resolve(),
-            JsAnyAssignmentPattern::JsArrayAssignmentPattern(assignment) => assignment.resolve(),
-            JsAnyAssignmentPattern::JsObjectAssignmentPattern(assignment) => assignment.resolve(),
-        }
-    }
-
-    fn into_resolved(self) -> JsAnyAssignmentPattern {
-        match self {
-            JsAnyAssignmentPattern::JsAnyAssignment(assignment) => assignment.into_resolved(),
-            JsAnyAssignmentPattern::JsArrayAssignmentPattern(assignment) => {
-                assignment.into_resolved()
-            }
-            JsAnyAssignmentPattern::JsObjectAssignmentPattern(assignment) => {
-                assignment.into_resolved()
-            }
-        }
-    }
-}
-
 impl NeedsParentheses for JsAnyAssignmentPattern {
     fn needs_parentheses(&self) -> bool {
         match self {
@@ -808,6 +740,7 @@ fn debug_assert_is_parent(node: &JsSyntaxNode, parent: &JsSyntaxNode) {
 #[cfg(test)]
 pub(crate) mod tests {
     use super::NeedsParentheses;
+    use crate::preprocess;
     use rome_js_syntax::{JsLanguage, SourceType};
     use rome_rowan::AstNode;
 
@@ -827,7 +760,8 @@ pub(crate) mod tests {
         );
 
         let root = parse.syntax();
-        let matching_nodes: Vec<_> = root.descendants().filter_map(T::cast).collect();
+        let transformed = preprocess(&root);
+        let matching_nodes: Vec<_> = transformed.descendants().filter_map(T::cast).collect();
 
         let node = if let Some(index) = index {
             matching_nodes.get(index).unwrap_or_else(|| {
@@ -867,7 +801,8 @@ pub(crate) mod tests {
         );
 
         let root = parse.syntax();
-        let matching_nodes: Vec<_> = root.descendants().filter_map(T::cast).collect();
+        let transformed = preprocess(&root);
+        let matching_nodes: Vec<_> = transformed.descendants().filter_map(T::cast).collect();
 
         let node = if let Some(index) = index {
             matching_nodes.get(index).unwrap_or_else(|| {

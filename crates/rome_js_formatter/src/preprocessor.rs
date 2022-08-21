@@ -1,220 +1,256 @@
+use crate::parentheses::JsAnyParenthesized;
 use rome_js_syntax::{
-    JsAnyExpression, JsLanguage, JsParenthesizedExpression, JsSyntaxNode, JsSyntaxToken,
+    JsAnyAssignment, JsAnyExpression, JsLanguage, JsLogicalExpression, JsSyntaxKind, JsSyntaxNode,
 };
-use rome_rowan::{AstNode, BatchMutation, SyntaxKind, SyntaxTriviaPiece};
-use std::collections::HashMap;
-use std::iter::FusedIterator;
+use rome_rowan::syntax::SyntaxTrivia;
+use rome_rowan::{
+    AstNode, Language, SyntaxKind, SyntaxNode, SyntaxSlot, SyntaxToken, SyntaxTriviaPiece,
+    SyntaxTriviaPieceComments,
+};
+use std::iter::{once, FusedIterator};
 
 pub(super) fn preprocess(root: &JsSyntaxNode) -> JsSyntaxNode {
-    let mut mutation = BatchMutation::new(root.clone());
-    // tracks all changed tokens where the key is the token in the original tree and the value is the
-    // updated token. Necessary, because removing parentheses may require adding leading/trailing trivia
-    // to the same node: `(a) /* leading */ + (/* trailing 2*/ b)` Both comments should be merged with the `+` tokens trivia.
-    let mut tokens: HashMap<JsSyntaxToken, JsSyntaxToken> = HashMap::new();
-
-    let mut prev_token_trailing = Vec::new();
-    let mut first_inner_leading = Vec::new();
-    let mut last_inner_trailing = Vec::new();
-    let mut next_token_leading = Vec::new();
-
-    let mut parentheses: Option<JsParenthesizedExpression> = None;
-    let mut prev_token: Option<JsSyntaxToken> = None;
-    let mut next_token: Option<JsSyntaxToken> = None;
-
-    for node in root.descendants() {
-        match get_left_paren_inner_and_right_paren(node) {
-            Ok((l_paren, inner, r_paren, parenthesized)) => {
-                let l_paren_leading = l_paren.leading_trivia();
-                let l_paren_trailing = l_paren.trailing_trivia();
-
-                if parentheses.is_none() {
-                    debug_assert!(prev_token_trailing.is_empty());
-                    debug_assert!(first_inner_leading.is_empty());
-                    debug_assert!(last_inner_trailing.is_empty());
-                    debug_assert!(next_token_leading.is_empty());
-                    debug_assert!(prev_token.is_none());
-                    debug_assert!(next_token.is_none());
-
-                    prev_token = l_paren.prev_token();
-                    next_token = r_paren.next_token();
-                    parentheses = Some(parenthesized);
-                }
-
-                if first_inner_leading.is_empty() && l_paren_leading.is_empty() {
-                    prev_token_trailing.extend(l_paren_trailing.pieces());
-                } else {
-                    first_inner_leading
-                        .extend(l_paren_leading.pieces().chain(l_paren_trailing.pieces()));
-                }
-
-                let r_paren_leading = r_paren.leading_trivia();
-                let r_paren_trailing = r_paren.trailing_trivia();
-
-                if next_token_leading.is_empty() && r_paren_leading.is_empty() {
-                    last_inner_trailing.extend(r_paren_trailing.pieces());
-                } else {
-                    next_token_leading
-                        .extend(r_paren_leading.pieces().chain(r_paren_trailing.pieces()))
-                }
-            }
-            Err(node) => {
-                let parenthesized = parentheses.take();
-                let prev_token = prev_token.take();
-                let next_token = next_token.take();
-
-                if !prev_token_trailing.is_empty() {
-                    debug_assert!(parenthesized.is_some());
-
-                    match prev_token {
-                        Some(prev_token) => {
-                            let new_prev_token = tokens.get(&prev_token).unwrap_or(&prev_token);
-
-                            let new_prev_token =
-                                new_prev_token.with_trailing_trivia_pieces(chain_pieces(
-                                    new_prev_token.trailing_trivia().pieces(),
-                                    prev_token_trailing.drain(..),
-                                ));
-
-                            tokens.insert(prev_token, new_prev_token);
-                        }
-                        None => {
-                            // No previous token, everything becomes the leading of the inner token.
-                            // May happen if the parenthesized expression is at the start of the program.
-                            first_inner_leading.append(&mut prev_token_trailing);
-                        }
-                    }
-                }
-
-                let mut new_node = node;
-
-                if !first_inner_leading.is_empty() {
-                    debug_assert!(parenthesized.is_some());
-
-                    match new_node.first_token() {
-                        Some(first_token) => {
-                            let new_first_token =
-                                tokens.remove(&first_token).unwrap_or(first_token.clone());
-
-                            let new_first_token =
-                                new_first_token.with_leading_trivia_pieces(chain_pieces(
-                                    new_first_token.trailing_trivia().pieces(),
-                                    first_inner_leading.drain(..),
-                                ));
-
-                            new_node = new_node
-                                .replace_child(first_token.into(), new_first_token.into())
-                                .unwrap();
-                        }
-                        None => {
-                            // The only case this can happen is if we have `()` which isn't valid code.
-                            // Make the trivia the leading trivia of the next token (doesn't change order because `prev_token` will also be None).
-                            next_token_leading.append(&mut first_inner_leading);
-                        }
-                    }
-                }
-
-                if !last_inner_trailing.is_empty() {
-                    debug_assert!(parenthesized.is_some());
-
-                    match new_node.last_token() {
-                        Some(last_token) => {
-                            let new_last_token =
-                                tokens.remove(&last_token).unwrap_or(last_token.clone());
-
-                            let new_last_token =
-                                new_last_token.with_trailing_trivia_pieces(chain_pieces(
-                                    new_last_token.trailing_trivia().pieces(),
-                                    last_inner_trailing.drain(..),
-                                ));
-
-                            new_node = new_node
-                                .replace_child(last_token.into(), new_last_token.into())
-                                .unwrap();
-                        }
-                        None => {
-                            // This happens if the expression is `()` which isn't valid code.
-                            // Make the trivia the leading trivia of the next token (which hopefully will exist).
-                            next_token_leading.append(&mut last_inner_trailing);
-                        }
-                    }
-                }
-
-                if !next_token_leading.is_empty() {
-                    debug_assert!(parenthesized.is_some());
-
-                    match next_token {
-                        Some(next_token) => {
-                            let new_next_token = tokens.get(&next_token).unwrap_or(&next_token);
-                            let new_next_token =
-                                new_next_token.with_leading_trivia_pieces(chain_pieces(
-                                    next_token_leading.drain(..),
-                                    new_next_token.leading_trivia().pieces(),
-                                ));
-
-                            tokens.insert(next_token, new_next_token);
-                        }
-                        None => {
-                            panic!("Missing `EOF` token.");
-                        }
-                    }
-                }
-
-                if let Some(parenthesized) = parenthesized {
-                    mutation.replace_element_discard_trivia(
-                        parenthesized.into_syntax().into(),
-                        new_node.into(),
-                    );
-                }
-            }
-        }
-    }
-
-    for (old, new) in tokens.into_iter() {
-        mutation.replace_element_discard_trivia(old.into(), new.into())
-    }
-
-    mutation.commit()
+    rewrite(root.clone(), &mut JsFormatSyntaxRewriter::default())
 }
 
-fn get_left_paren_inner_and_right_paren(
-    node: JsSyntaxNode,
-) -> Result<
-    (
-        JsSyntaxToken,
-        JsAnyExpression,
-        JsSyntaxToken,
-        JsParenthesizedExpression,
-    ),
-    JsSyntaxNode,
-> {
-    match JsParenthesizedExpression::try_cast(node) {
-        Ok(parenthesized) => match (
+#[derive(Default)]
+struct JsFormatSyntaxRewriter;
+
+impl JsFormatSyntaxRewriter {
+    /// Replaces parenthesized expression that:
+    /// * have no syntax error: has no missing required child or no skipped token trivia attached to the left or right paren
+    /// * inner expression isn't an unknown node
+    /// * no closure or type cast type cast comment
+    ///
+    /// with the inner expression.
+    fn visit_parenthesized(
+        &mut self,
+        parenthesized: JsAnyParenthesized,
+    ) -> VisitNodeSignal<JsLanguage> {
+        let (l_paren, inner, r_paren) = match (
             parenthesized.l_paren_token(),
-            parenthesized.expression(),
+            parenthesized.inner(),
             parenthesized.r_paren_token(),
         ) {
-            (Ok(l_paren), Ok(expression), Ok(r_paren)) => {
+            (Ok(l_paren), Ok(inner), Ok(r_paren)) => {
+                let prev_token = l_paren.prev_token();
+
                 // Keep parentheses around unknown expressions. Rome can't know the precedence.
-                if expression.syntax().kind().is_unknown()
+                if inner.kind().is_unknown()
                     // Don't remove parentheses if they have skipped trivia. We don't know for certain what the intended syntax is.
-                    || l_paren.leading_trivia().has_skipped()
+                    // Nor if there's a leading type cast comment
+                    || has_type_cast_comment_or_skipped(&l_paren.leading_trivia())
+                    || prev_token.map_or(false, |prev_token| has_type_cast_comment_or_skipped(&prev_token.trailing_trivia()))
                     || r_paren.leading_trivia().has_skipped()
                 {
-                    Err(parenthesized.into_syntax())
-                } else if expression.syntax().first_token().is_none() {
-                    // This should never happen but we need to be sure.
-                    Err(parenthesized.into_syntax())
+                    return VisitNodeSignal::Traverse(parenthesized.into_syntax());
                 } else {
-                    Ok((l_paren, expression, r_paren, parenthesized))
+                    (l_paren, inner, r_paren)
                 }
             }
             _ => {
                 // At least one missing child, handle as a regular node
-                Err(parenthesized.into_syntax())
+                return VisitNodeSignal::Traverse(parenthesized.into_syntax());
             }
-        },
-        Err(node) => Err(node),
+        };
+
+        let inner = rewrite(inner, self);
+
+        match inner.first_token() {
+            None => {
+                // This can only happen if we have `()` which is highly unlikely to ever be the case.
+                // Return the parenthesized expression as is. This will be formatted as verbatim
+
+                let updated = match parenthesized {
+                    JsAnyParenthesized::JsParenthesizedExpression(expression) => {
+                        // SAFETY: Safe because the rewriter never rewrites an expression to a non expression.
+                        expression
+                            .with_expression(JsAnyExpression::unwrap_cast(inner))
+                            .into_syntax()
+                    }
+                    JsAnyParenthesized::JsParenthesizedAssignment(assignment) => {
+                        // SAFETY: Safe because the rewriter never rewrites an assignment to a non assignment.
+                        assignment
+                            .with_assignment(JsAnyAssignment::unwrap_cast(inner))
+                            .into_syntax()
+                    }
+                };
+
+                VisitNodeSignal::Replace(updated)
+            }
+
+            Some(first_token) => {
+                let l_paren_trivia = chain_pieces(
+                    l_paren.leading_trivia().pieces(),
+                    l_paren.trailing_trivia().pieces(),
+                );
+
+                let new_leading = chain_pieces(
+                    l_paren_trivia,
+                    first_token
+                        .leading_trivia()
+                        .pieces()
+                        // TODO: This requires source map support
+                        .skip_while(|piece| piece.is_newline() || piece.is_whitespace())
+                        .collect::<Vec<_>>()
+                        .into_iter(),
+                );
+
+                let new_first = first_token.with_leading_trivia_pieces(new_leading);
+
+                // SAFETY: Calling `unwrap` is safe because we know that `inner_first` is part of the `inner` subtree.
+                let updated = inner
+                    .replace_child(first_token.into(), new_first.into())
+                    .unwrap();
+
+                let r_paren_trivia = chain_pieces(
+                    r_paren.leading_trivia().pieces(),
+                    r_paren.trailing_trivia().pieces(),
+                );
+
+                // SAFETY: Calling `unwrap` is safe because `last_token` only returns `None` if a node's subtree
+                // doesn't contain ANY token, but we know that the subtree contains at least the first token.
+                let last_token = updated.last_token().unwrap();
+                let new_last = last_token.with_trailing_trivia_pieces(chain_pieces(
+                    last_token.trailing_trivia().pieces(),
+                    r_paren_trivia,
+                ));
+
+                // SAFETY: Calling `unwrap` is safe because we know that `last_token` is part of the `updated` subtree.
+                VisitNodeSignal::Replace(
+                    updated
+                        .replace_child(last_token.into(), new_last.into())
+                        .unwrap(),
+                )
+            }
+        }
     }
+
+    /// Re-balances right-recursive logical expressions with the same operator to be left recursive (relies on the parentheses removal)
+    ///
+    /// ```javascript
+    /// a && (b && c)
+    /// ```
+    ///
+    /// has the tree (parentheses omitted)
+    ///
+    /// ```text
+    ///   &&
+    /// a    &&
+    ///    b    c
+    /// ```
+    ///
+    /// This transform re-balances the tree so that it becomes left-recursive
+    ///
+    /// ```text
+    ///     &&
+    ///  &&    c
+    /// a  b
+    /// ```
+    ///
+    /// This is required so that the binary like expression formatting only has to resolve left recursive expressions.
+    fn visit_logical_expression(
+        &mut self,
+        logical: JsLogicalExpression,
+    ) -> VisitNodeSignal<JsLanguage> {
+        match (logical.left(), logical.operator_token(), logical.right()) {
+            (Ok(left), Ok(operator), Ok(right)) => {
+                // SAFETY: Safe because the rewriter never rewrites an expression to a non expression.
+                let left = JsAnyExpression::unwrap_cast(rewrite(left.into_syntax(), self));
+                let operator = self.visit_token(operator);
+                // SAFETY: Safe because the rewriter never rewrites an expression to a non expression.
+                let right = JsAnyExpression::unwrap_cast(rewrite(right.into_syntax(), self));
+
+                let updated = match right {
+                    JsAnyExpression::JsLogicalExpression(right_logical) => {
+                        match (
+                            right_logical.left(),
+                            right_logical.operator_token(),
+                            right_logical.right(),
+                        ) {
+                            (Ok(right_left), Ok(right_operator), Ok(right_right))
+                                if right_operator.kind() == operator.kind() =>
+                            {
+                                logical
+                                    .with_left(
+                                        rome_js_factory::make::js_logical_expression(
+                                            left, operator, right_left,
+                                        )
+                                        .into(),
+                                    )
+                                    .with_operator_token_token(right_operator)
+                                    .with_right(right_right)
+                            }
+
+                            // Don't re-balance a logical expression that has syntax errors
+                            _ => logical
+                                .with_left(left)
+                                .with_operator_token_token(operator)
+                                .with_right(right_logical.into()),
+                        }
+                    }
+
+                    // Don't re-balance logical expressions with different operators
+                    right => logical
+                        .with_left(left)
+                        .with_operator_token_token(operator)
+                        .with_right(right),
+                };
+
+                VisitNodeSignal::Replace(updated.into_syntax())
+            }
+            _ => VisitNodeSignal::Traverse(logical.into_syntax()),
+        }
+    }
+}
+
+impl SyntaxRewriter for JsFormatSyntaxRewriter {
+    type Language = JsLanguage;
+
+    fn visit_node(&mut self, node: JsSyntaxNode) -> VisitNodeSignal<Self::Language> {
+        match node.kind() {
+            kind if JsAnyParenthesized::can_cast(kind) => {
+                let parenthesized = JsAnyParenthesized::unwrap_cast(node);
+
+                self.visit_parenthesized(parenthesized)
+            }
+            JsSyntaxKind::JS_LOGICAL_EXPRESSION => {
+                let logical = JsLogicalExpression::unwrap_cast(node);
+
+                self.visit_logical_expression(logical)
+            }
+            _ => VisitNodeSignal::Traverse(node),
+        }
+    }
+}
+
+fn has_type_cast_comment_or_skipped(trivia: &SyntaxTrivia<JsLanguage>) -> bool {
+    trivia.pieces().any(|piece| {
+        if let Some(comment) = piece.as_comments() {
+            is_type_comment(&comment)
+        } else {
+            piece.is_skipped()
+        }
+    })
+}
+
+/// Returns `true` if `comment` is a [Closure type comment](https://github.com/google/closure-compiler/wiki/Types-in-the-Closure-Type-System)
+/// or [TypeScript type comment](https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html#type)
+fn is_type_comment(comment: &SyntaxTriviaPieceComments<JsLanguage>) -> bool {
+    let text = comment.text();
+
+    // Must be a `/**` comment
+    if !text.starts_with("/**") {
+        return false;
+    }
+
+    text.trim_start_matches("/**")
+        .trim_end_matches("*/")
+        .split_whitespace()
+        .any(|word| match word.strip_prefix("@type") {
+            Some(after) => after.is_empty() || after.starts_with('{'),
+            None => false,
+        })
 }
 
 fn chain_pieces<F, S>(first: F, second: S) -> ChainTriviaPiecesIterator<F, S>
@@ -312,4 +348,62 @@ where
             None => self.second.len(),
         }
     }
+}
+
+pub fn rewrite<R>(root: SyntaxNode<R::Language>, rewriter: &mut R) -> SyntaxNode<R::Language>
+where
+    R: SyntaxRewriter,
+{
+    match rewriter.visit_node(root) {
+        VisitNodeSignal::Replace(updated) => updated,
+        VisitNodeSignal::Traverse(mut parent) => {
+            for slot in parent.slots() {
+                match slot {
+                    SyntaxSlot::Node(node) => {
+                        let updated = rewrite(node.clone(), rewriter);
+
+                        if updated != node {
+                            parent = parent.splice_slots(
+                                node.index()..=node.index(),
+                                once(Some(updated.into())),
+                            );
+                        }
+                    }
+                    SyntaxSlot::Token(token) => {
+                        let updated = rewriter.visit_token(token.clone());
+
+                        if updated != token {
+                            parent = parent.splice_slots(
+                                token.index()..=token.index(),
+                                once(Some(updated.into())),
+                            );
+                        }
+                    }
+                    SyntaxSlot::Empty => {
+                        // Nothing to visit
+                    }
+                }
+            }
+
+            parent
+        }
+    }
+}
+
+pub trait SyntaxRewriter {
+    type Language: Language;
+
+    fn visit_node(&mut self, node: SyntaxNode<Self::Language>) -> VisitNodeSignal<Self::Language> {
+        VisitNodeSignal::Traverse(node)
+    }
+
+    fn visit_token(&mut self, token: SyntaxToken<Self::Language>) -> SyntaxToken<Self::Language> {
+        token
+    }
+}
+
+#[derive(Debug, Clone)]
+pub enum VisitNodeSignal<L: Language> {
+    Replace(SyntaxNode<L>),
+    Traverse(SyntaxNode<L>),
 }

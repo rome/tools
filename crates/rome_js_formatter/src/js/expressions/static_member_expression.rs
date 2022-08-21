@@ -1,7 +1,7 @@
 use crate::prelude::*;
 
 use crate::js::expressions::computed_member_expression::JsAnyComputedMemberLike;
-use crate::parentheses::{AssignmentNode, NeedsParentheses};
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
     JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAnyName, JsAssignmentExpression,
@@ -133,7 +133,7 @@ impl JsAnyStaticMemberLike {
             Some(JsAnyExpression::JsNewExpression(_)) => StaticMemberLikeLayout::NoBreak,
             Some(JsAnyExpression::JsAssignmentExpression(assignment)) => {
                 if matches!(
-                    assignment.left()?.resolve(),
+                    assignment.left()?,
                     JsAnyAssignmentPattern::JsAnyAssignment(
                         JsAnyAssignment::JsIdentifierAssignment(_)
                     )

@@ -74,14 +74,17 @@ function foo4() {
 ```diff
 --- Prettier
 +++ Rome
-@@ -3,34 +3,32 @@
+@@ -3,34 +3,35 @@
  function c(/* comment */ argA, argB, argC) {} // comment
  call((/*object*/ row) => {});
  KEYPAD_NUMBERS.map(
 -  (
 -    num, // Buttons 0-9
 -  ) => <div />,
-+  (num) => <div />, // Buttons 0-9
++  (num) => (
++    // Buttons 0-9
++    <div />
++  ),
  );
  
 -function f1 /* f */() {}
@@ -120,7 +123,7 @@ function foo4() {
  }
  class C2 {
    f(/* args */) {}
-@@ -39,11 +37,12 @@
+@@ -39,11 +40,12 @@
    f() /* returns */ {}
  }
  class C4 {
@@ -146,7 +149,10 @@ function b() {} // comment
 function c(/* comment */ argA, argB, argC) {} // comment
 call((/*object*/ row) => {});
 KEYPAD_NUMBERS.map(
-  (num) => <div />, // Buttons 0-9
+  (num) => (
+    // Buttons 0-9
+    <div />
+  ),
 );
 
 function f1 /* f */ () {}

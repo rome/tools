@@ -1,9 +1,9 @@
 use crate::prelude::*;
-use rome_formatter::write;
+use rome_formatter::{format_args, write};
 
 use crate::parentheses::{unary_like_expression_needs_parentheses, NeedsParentheses};
 
-use rome_js_syntax::{JsSyntaxNode};
+use rome_js_syntax::JsSyntaxNode;
 use rome_js_syntax::{JsSyntaxKind, JsUnaryExpression};
 use rome_js_syntax::{JsUnaryExpressionFields, JsUnaryOperator};
 
@@ -32,7 +32,18 @@ impl FormatNodeRule<JsUnaryExpression> for FormatJsUnaryExpression {
             write!(f, [space()])?;
         }
 
-        write![f, [argument.format(),]]
+        if argument.syntax().has_leading_comments() {
+            write!(
+                f,
+                [group(&format_args![
+                    format_inserted(JsSyntaxKind::L_PAREN),
+                    soft_block_indent(&argument.format()),
+                    format_inserted(JsSyntaxKind::R_PAREN)
+                ])]
+            )
+        } else {
+            write![f, [argument.format()]]
+        }
     }
 
     fn needs_parentheses(&self, item: &JsUnaryExpression) -> bool {

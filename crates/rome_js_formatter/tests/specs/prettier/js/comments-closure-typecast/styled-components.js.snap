@@ -26,9 +26,8 @@ top: ${p => p.overlap === 'next' && 0};
 @@ -1,10 +1,10 @@
  const OverlapWrapper =
    /** @type {import('styled-components').ThemedStyledFunction<'div',null,{overlap: boolean}>} */
--  (styled.div)`
+   (styled.div)`
 -    position: relative;
-+  styled.div`
 +position:relative;
      > {
 -      position: absolute;
@@ -48,7 +47,7 @@ top: ${p => p.overlap === 'next' && 0};
 ```js
 const OverlapWrapper =
   /** @type {import('styled-components').ThemedStyledFunction<'div',null,{overlap: boolean}>} */
-  styled.div`
+  (styled.div)`
 position:relative;
     > {
   position: absolute;

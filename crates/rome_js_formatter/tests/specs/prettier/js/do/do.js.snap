@@ -67,7 +67,7 @@ function foo() {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,55 +1,61 @@
+@@ -1,55 +1,60 @@
  const envSpecific = {
 -  domain: do {
 -    if (env === "production") "https://abc.mno.com/";
@@ -106,8 +106,9 @@ function foo() {
  };
  
  function foo() {
-   return (
-     <nav>
+-  return (
+-    <nav>
++  return <nav>
        <Home />
 -      {do {
 -        if (loggedIn) {
@@ -125,7 +126,8 @@ function foo() {
 -      }}
 +      }
      </nav>
-   );
+-  );
++  ;
  }
  
 -(do {});
@@ -189,8 +191,7 @@ do {
 };
 
 function foo() {
-  return (
-    <nav>
+  return <nav>
       <Home />
       {
         do {
@@ -202,7 +203,7 @@ function foo() {
         }
       }
     </nav>
-  );
+  ;
 }
 
 (

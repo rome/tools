@@ -754,15 +754,6 @@ mod test {
     }
 
     #[test]
-    fn matches_parentheses() {
-        let call_expression = extract_call_expression("(test.describe.parallel).only();");
-        assert_eq!(
-            contains_a_test_pattern(&call_expression.callee().unwrap()),
-            Ok(true)
-        );
-    }
-
-    #[test]
     fn doesnt_static_member_expression_deep() {
         let call_expression = extract_call_expression("test.describe.parallel.only.AHAHA();");
         assert_eq!(
