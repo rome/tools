@@ -99,32 +99,60 @@ pub struct Lexer<'a> {
     none_trivia_cursor: usize,
     /// We collect all index of non-trivia in the `token_with_span` ahead of time.
     non_trivia_index_list: Vec<usize>,
+    error_token_range_list: Vec<TextRange>,
 }
 
 #[allow(unused)]
 impl<'a> Lexer<'a> {
     pub fn new(source: &'a str, file_id: usize) -> Self {
-        let lexer = LogosLexer::new(source);
+        let mut lexer = LogosLexer::new(source).peekable();
         let mut tokens_with_span = vec![];
         let mut non_trivia_index_list = vec![];
-        for (i, (kind, range)) in lexer.into_iter().enumerate() {
+        let mut error_token_range_list = vec![];
+        let mut i = 0;
+        while let Some((kind, range)) = lexer.next() {
+            let (start, end, kind) = match kind {
+                TokenKind::Whitespace | TokenKind::NewLine => (range.start, range.end, kind),
+                TokenKind::Error => {
+                    // Because `logos` has a badly error recover strategy, we need to merge continuous error tokens.
+                    let mut end = range.end;
+                    loop {
+                        match lexer.peek() {
+                            Some((TokenKind::Error, inner_loop_range)) => {
+                                end = inner_loop_range.end;
+                                lexer.next();
+                            }
+                            _ => {
+                                break;
+                            }
+                        }
+                    }
+                    error_token_range_list.push(TextRange::new(
+                        (range.start as u32).into(),
+                        (end as u32).into(),
+                    ));
+                    (range.start, end, kind)
+                }
+                _ => {
+                    non_trivia_index_list.push(i);
+                    (range.start, range.end, kind)
+                }
+            };
+
             tokens_with_span.push((
                 (&kind).into(),
-                TextRange::new(
-                    TextSize::from(range.start as u32),
-                    TextSize::from(range.end as u32),
-                ),
+                TextRange::new(TextSize::from(start as u32), TextSize::from(end as u32)),
             ));
-            if !matches!(kind, TokenKind::Whitespace | TokenKind::NewLine) {
-                non_trivia_index_list.push(i);
-            }
+            i += 1;
         }
+
         Self {
             tokens_with_span,
             source,
             file_id,
             none_trivia_cursor: 0,
             non_trivia_index_list,
+            error_token_range_list,
         }
     }
 
@@ -204,8 +232,13 @@ impl<'a> Lexer<'a> {
 
     /// Get all diagnostics of lexing phase.
     pub fn finish(self) -> Vec<Diagnostic> {
-        // self.inner.finish()
-        vec![]
+        self.error_token_range_list
+            .into_iter()
+            .map(|range| {
+                Diagnostic::error(self.file_id, self.source, "Lexing error")
+                    .primary(range, "Unexpected token")
+            })
+            .collect()
     }
 
     /// Get index of `tokens_with_span` vector of latest none trivia token.
@@ -359,22 +392,11 @@ mod test_lexer {
                 vec![(JsonSyntaxKind::ERROR_TOKEN, "-")],
                 vec![(JsonSyntaxKind::ERROR_TOKEN, "\"hi")],
                 vec![
-                    (ERROR_TOKEN, "\""),
-                    (ERROR_TOKEN, "\\"),
+                    (ERROR_TOKEN, "\"\\"),
                     (JSON_NUMBER_LITERAL, "0"),
                     (ERROR_TOKEN, "\""),
                 ],
-                vec![
-                    (ERROR_TOKEN, "u"),
-                    (ERROR_TOKEN, "n"),
-                    (ERROR_TOKEN, "d"),
-                    (ERROR_TOKEN, "e"),
-                    (ERROR_TOKEN, "f"),
-                    (ERROR_TOKEN, "i"),
-                    (ERROR_TOKEN, "n"),
-                    (ERROR_TOKEN, "e"),
-                    (ERROR_TOKEN, "d"),
-                ],
+                vec![(ERROR_TOKEN, "undefined")],
             ],
         );
     }
