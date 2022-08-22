@@ -125,8 +125,7 @@ impl JsAnyStaticMemberLike {
 
         let first_non_static_member_ancestor = self.syntax().ancestors().find(|parent| {
             !(JsAnyStaticMemberLike::can_cast(parent.kind())
-                || JsAnyComputedMemberLike::can_cast(parent.kind())
-                || JsParenthesizedAssignment::can_cast(parent.kind()))
+                || JsAnyComputedMemberLike::can_cast(parent.kind()))
         });
 
         let layout = match first_non_static_member_ancestor.and_then(JsAnyExpression::cast) {

@@ -106,7 +106,6 @@ mod chain_member;
 mod groups;
 mod simple_argument;
 
-
 use crate::prelude::*;
 use crate::utils::member_chain::chain_member::ChainMember;
 use crate::utils::member_chain::groups::{

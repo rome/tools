@@ -5,7 +5,7 @@ use crate::parentheses::{
 };
 use crate::ts::expressions::type_assertion_expression::type_cast_like_needs_parens;
 use rome_formatter::write;
-use rome_js_syntax::{TsAsExpressionFields};
+use rome_js_syntax::TsAsExpressionFields;
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, TsAsExpression};
 
 #[derive(Debug, Clone, Default)]

@@ -2,7 +2,7 @@ use crate::prelude::*;
 
 use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
-use rome_js_syntax::{JsArrayExpressionFields};
+use rome_js_syntax::JsArrayExpressionFields;
 use rome_js_syntax::{JsArrayExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]

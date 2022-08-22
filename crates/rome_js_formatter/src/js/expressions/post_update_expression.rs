@@ -2,7 +2,7 @@ use crate::prelude::*;
 use rome_formatter::write;
 
 use crate::parentheses::{unary_like_expression_needs_parentheses, NeedsParentheses};
-use rome_js_syntax::{JsPostUpdateExpressionFields};
+use rome_js_syntax::JsPostUpdateExpressionFields;
 use rome_js_syntax::{JsPostUpdateExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]

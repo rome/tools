@@ -2,7 +2,7 @@ use crate::prelude::*;
 
 use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
-use rome_js_syntax::{NewTargetFields};
+use rome_js_syntax::NewTargetFields;
 use rome_js_syntax::{JsSyntaxNode, NewTarget};
 
 #[derive(Debug, Clone, Default)]

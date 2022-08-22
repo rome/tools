@@ -5,7 +5,7 @@ use crate::prelude::*;
 use crate::utils::string_utils::ToAsciiLowercaseCow;
 
 use crate::parentheses::NeedsParentheses;
-use rome_js_syntax::{JsBigIntLiteralExpressionFields};
+use rome_js_syntax::JsBigIntLiteralExpressionFields;
 use rome_js_syntax::{JsBigIntLiteralExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]

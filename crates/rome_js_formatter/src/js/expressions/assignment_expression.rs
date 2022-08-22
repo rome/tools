@@ -7,8 +7,8 @@ use crate::parentheses::{
 use rome_formatter::write;
 
 use rome_js_syntax::{
-    JsAnyAssignmentPattern, JsAnyForInitializer, JsAssignmentExpression,
-    JsForStatement, JsSyntaxKind, JsSyntaxNode,
+    JsAnyAssignmentPattern, JsAnyForInitializer, JsAssignmentExpression, JsForStatement,
+    JsSyntaxKind, JsSyntaxNode,
 };
 use rome_rowan::AstNode;
 

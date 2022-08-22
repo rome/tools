@@ -2,7 +2,7 @@ use crate::prelude::*;
 
 use crate::parentheses::{is_member_object, NeedsParentheses};
 use rome_formatter::write;
-use rome_js_syntax::{JsNumberLiteralExpression};
+use rome_js_syntax::JsNumberLiteralExpression;
 use rome_js_syntax::{JsNumberLiteralExpressionFields, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]

@@ -1,4 +1,4 @@
-use crate::parentheses::{get_expression_left_side};
+use crate::parentheses::get_expression_left_side;
 use crate::prelude::*;
 use crate::utils::member_chain::is_member_call_chain;
 use crate::utils::object::write_member_name;

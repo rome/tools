@@ -3,9 +3,7 @@ use crate::utils::{needs_binary_like_parentheses, JsAnyBinaryLikeExpression};
 
 use crate::parentheses::NeedsParentheses;
 
-use rome_js_syntax::{
-    JsAnyStatement, JsForStatement, JsInExpression, JsSyntaxNode,
-};
+use rome_js_syntax::{JsAnyStatement, JsForStatement, JsInExpression, JsSyntaxNode};
 use rome_rowan::AstNode;
 
 #[derive(Debug, Clone, Default)]

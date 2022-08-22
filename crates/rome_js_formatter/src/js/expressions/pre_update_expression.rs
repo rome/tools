@@ -3,8 +3,7 @@ use crate::prelude::*;
 
 use rome_formatter::write;
 use rome_js_syntax::{
-    JsPreUpdateExpression, JsPreUpdateOperator, JsSyntaxNode, JsUnaryExpression,
-    JsUnaryOperator,
+    JsPreUpdateExpression, JsPreUpdateOperator, JsSyntaxNode, JsUnaryExpression, JsUnaryOperator,
 };
 use rome_js_syntax::{JsPreUpdateExpressionFields, JsSyntaxKind};
 

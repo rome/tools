@@ -3,8 +3,7 @@ use crate::prelude::*;
 use crate::utils::jsx::{get_wrap_state, WrapState};
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
-    JsBinaryExpression, JsBinaryOperator, JsSyntaxKind, JsSyntaxNode,
-    JsxTagExpression,
+    JsBinaryExpression, JsBinaryOperator, JsSyntaxKind, JsSyntaxNode, JsxTagExpression,
 };
 use rome_rowan::AstNode;
 

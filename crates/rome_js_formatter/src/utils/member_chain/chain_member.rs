@@ -4,8 +4,8 @@ use rome_formatter::write;
 use rome_js_syntax::{
     JsAnyExpression, JsCallExpression, JsCallExpressionFields, JsComputedMemberExpression,
     JsComputedMemberExpressionFields, JsIdentifierExpression, JsImportCallExpression,
-    JsNewExpression, JsStaticMemberExpression,
-    JsStaticMemberExpressionFields, JsSyntaxNode, JsThisExpression,
+    JsNewExpression, JsStaticMemberExpression, JsStaticMemberExpressionFields, JsSyntaxNode,
+    JsThisExpression,
 };
 use rome_rowan::{AstNode, SyntaxResult};
 use std::fmt::Debug;

@@ -1,7 +1,7 @@
 use crate::prelude::*;
 
 use crate::parentheses::NeedsParentheses;
-use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsUnknownAssignment};
+use rome_js_syntax::{JsSyntaxNode, JsUnknownAssignment};
 use rome_rowan::AstNode;
 
 #[derive(Debug, Clone, Default)]
@@ -22,9 +22,13 @@ impl FormatNodeRule<JsUnknownAssignment> for FormatJsUnknownAssignment {
 }
 
 impl NeedsParentheses for JsUnknownAssignment {
+    #[inline]
+    fn needs_parentheses(&self) -> bool {
+        false
+    }
+
+    #[inline]
     fn needs_parentheses_with_parent(&self, _: &JsSyntaxNode) -> bool {
-        self.syntax().parent().map_or(false, |parent| {
-            parent.kind() == JsSyntaxKind::JS_PARENTHESIZED_ASSIGNMENT
-        })
+        false
     }
 }

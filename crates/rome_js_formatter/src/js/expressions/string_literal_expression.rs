@@ -3,7 +3,7 @@ use crate::prelude::*;
 use crate::utils::{FormatLiteralStringToken, StringLiteralParentKind};
 
 use crate::parentheses::NeedsParentheses;
-use rome_js_syntax::{JsStringLiteralExpressionFields};
+use rome_js_syntax::JsStringLiteralExpressionFields;
 use rome_js_syntax::{JsExpressionStatement, JsSyntaxKind};
 use rome_js_syntax::{JsStringLiteralExpression, JsSyntaxNode};
 use rome_rowan::AstNode;

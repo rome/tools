@@ -740,7 +740,7 @@ fn debug_assert_is_parent(node: &JsSyntaxNode, parent: &JsSyntaxNode) {
 #[cfg(test)]
 pub(crate) mod tests {
     use super::NeedsParentheses;
-    use crate::preprocess;
+    use crate::{rewrite, JsFormatSyntaxRewriter};
     use rome_js_syntax::{JsLanguage, SourceType};
     use rome_rowan::AstNode;
 
@@ -760,7 +760,7 @@ pub(crate) mod tests {
         );
 
         let root = parse.syntax();
-        let transformed = preprocess(&root);
+        let transformed = rewrite(root, &mut JsFormatSyntaxRewriter::default());
         let matching_nodes: Vec<_> = transformed.descendants().filter_map(T::cast).collect();
 
         let node = if let Some(index) = index {
@@ -801,7 +801,7 @@ pub(crate) mod tests {
         );
 
         let root = parse.syntax();
-        let transformed = preprocess(&root);
+        let transformed = rewrite(root, &mut JsFormatSyntaxRewriter::default());
         let matching_nodes: Vec<_> = transformed.descendants().filter_map(T::cast).collect();
 
         let node = if let Some(index) = index {

@@ -2,7 +2,7 @@ use crate::prelude::*;
 use rome_formatter::write;
 
 use crate::parentheses::NeedsParentheses;
-use rome_js_syntax::{JsRegexLiteralExpressionFields};
+use rome_js_syntax::JsRegexLiteralExpressionFields;
 use rome_js_syntax::{JsRegexLiteralExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]

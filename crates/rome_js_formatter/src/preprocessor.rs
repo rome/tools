@@ -9,12 +9,8 @@ use rome_rowan::{
 };
 use std::iter::{once, FusedIterator};
 
-pub(super) fn preprocess(root: &JsSyntaxNode) -> JsSyntaxNode {
-    rewrite(root.clone(), &mut JsFormatSyntaxRewriter::default())
-}
-
 #[derive(Default)]
-struct JsFormatSyntaxRewriter;
+pub(super) struct JsFormatSyntaxRewriter;
 
 impl JsFormatSyntaxRewriter {
     /// Replaces parenthesized expression that:
@@ -57,10 +53,9 @@ impl JsFormatSyntaxRewriter {
         let inner = rewrite(inner, self);
 
         match inner.first_token() {
+            // This can only happen if we have `()` which is highly unlikely to ever be the case.
+            // Return the parenthesized expression as is. This will be formatted as verbatim
             None => {
-                // This can only happen if we have `()` which is highly unlikely to ever be the case.
-                // Return the parenthesized expression as is. This will be formatted as verbatim
-
                 let updated = match parenthesized {
                     JsAnyParenthesized::JsParenthesizedExpression(expression) => {
                         // SAFETY: Safe because the rewriter never rewrites an expression to a non expression.
@@ -85,17 +80,18 @@ impl JsFormatSyntaxRewriter {
                     l_paren.trailing_trivia().pieces(),
                 );
 
-                let new_leading = chain_pieces(
-                    l_paren_trivia,
-                    first_token
-                        .leading_trivia()
-                        .pieces()
-                        // TODO: This requires source map support
-                        .skip_while(|piece| piece.is_newline() || piece.is_whitespace())
-                        .collect::<Vec<_>>()
-                        .into_iter(),
-                );
+                let mut leading_trivia = first_token.leading_trivia().pieces().peekable();
 
+                // The leading whitespace before the opening parens replaces the whitespace before the node.
+                while let Some(trivia) = leading_trivia.peek() {
+                    if trivia.is_whitespace() || trivia.is_newline() {
+                        leading_trivia.next();
+                    } else {
+                        break;
+                    }
+                }
+
+                let new_leading = chain_pieces(l_paren_trivia, leading_trivia);
                 let new_first = first_token.with_leading_trivia_pieces(new_leading);
 
                 // SAFETY: Calling `unwrap` is safe because we know that `inner_first` is part of the `inner` subtree.
@@ -155,6 +151,10 @@ impl JsFormatSyntaxRewriter {
     ) -> VisitNodeSignal<JsLanguage> {
         match (logical.left(), logical.operator_token(), logical.right()) {
             (Ok(left), Ok(operator), Ok(right)) => {
+                let left_key = left.syntax().key();
+                let operator_key = operator.key();
+                let right_key = right.syntax().key();
+
                 // SAFETY: Safe because the rewriter never rewrites an expression to a non expression.
                 let left = JsAnyExpression::unwrap_cast(rewrite(left.into_syntax(), self));
                 let operator = self.visit_token(operator);
@@ -191,10 +191,21 @@ impl JsFormatSyntaxRewriter {
                     }
 
                     // Don't re-balance logical expressions with different operators
-                    right => logical
-                        .with_left(left)
-                        .with_operator_token_token(operator)
-                        .with_right(right),
+                    // Avoid updating the node if none of the children have changed to avoid
+                    // re-spinning all parents.
+                    right => {
+                        if left.syntax().key() != left_key
+                            || operator.key() != operator_key
+                            || right.syntax().key() != right_key
+                        {
+                            logical
+                                .with_left(left)
+                                .with_operator_token_token(operator)
+                                .with_right(right)
+                        } else {
+                            logical
+                        }
+                    }
                 };
 
                 VisitNodeSignal::Replace(updated.into_syntax())
@@ -350,44 +361,50 @@ where
     }
 }
 
+#[inline]
 pub fn rewrite<R>(root: SyntaxNode<R::Language>, rewriter: &mut R) -> SyntaxNode<R::Language>
 where
     R: SyntaxRewriter,
 {
     match rewriter.visit_node(root) {
         VisitNodeSignal::Replace(updated) => updated,
-        VisitNodeSignal::Traverse(mut parent) => {
-            for slot in parent.slots() {
-                match slot {
-                    SyntaxSlot::Node(node) => {
-                        let updated = rewrite(node.clone(), rewriter);
+        VisitNodeSignal::Traverse(node) => traverse(node, rewriter),
+    }
+}
 
-                        if updated != node {
-                            parent = parent.splice_slots(
-                                node.index()..=node.index(),
-                                once(Some(updated.into())),
-                            );
-                        }
-                    }
-                    SyntaxSlot::Token(token) => {
-                        let updated = rewriter.visit_token(token.clone());
+fn traverse<R>(mut parent: SyntaxNode<R::Language>, rewriter: &mut R) -> SyntaxNode<R::Language>
+where
+    R: SyntaxRewriter,
+{
+    for slot in parent.slots() {
+        match slot {
+            SyntaxSlot::Node(node) => {
+                let original_key = node.key();
+                let index = node.index();
 
-                        if updated != token {
-                            parent = parent.splice_slots(
-                                token.index()..=token.index(),
-                                once(Some(updated.into())),
-                            );
-                        }
-                    }
-                    SyntaxSlot::Empty => {
-                        // Nothing to visit
-                    }
+                let updated = rewrite(node, rewriter);
+
+                if updated.key() != original_key {
+                    parent = parent.splice_slots(index..=index, once(Some(updated.into())));
                 }
             }
+            SyntaxSlot::Token(token) => {
+                let original_key = token.key();
+                let index = token.index();
 
-            parent
+                let updated = rewriter.visit_token(token);
+
+                if updated.key() != original_key {
+                    parent = parent.splice_slots(index..=index, once(Some(updated.into())));
+                }
+            }
+            SyntaxSlot::Empty => {
+                // Nothing to visit
+            }
         }
     }
+
+    parent
 }
 
 pub trait SyntaxRewriter {

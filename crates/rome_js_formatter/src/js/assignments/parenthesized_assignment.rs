@@ -22,9 +22,9 @@ impl FormatNodeRule<JsParenthesizedAssignment> for FormatJsParenthesizedAssignme
         write![
             f,
             [
-                format_removed(&l_paren_token?),
+                l_paren_token.format(),
                 assignment.format(),
-                format_removed(&r_paren_token?),
+                r_paren_token.format(),
             ]
         ]
     }

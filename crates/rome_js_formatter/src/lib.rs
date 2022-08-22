@@ -271,7 +271,7 @@ use rome_rowan::{AstNode, SyntaxNode};
 use crate::builders::{format_parenthesize, format_suppressed_node};
 use crate::context::{JsCommentStyle, JsFormatContext};
 use crate::cst::FormatJsSyntaxNode;
-use crate::preprocessor::preprocess;
+use crate::preprocessor::{rewrite, JsFormatSyntaxRewriter};
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
 use std::rc::Rc;
@@ -508,7 +508,8 @@ impl FormatLanguage for JsFormatLanguage {
         &self,
         root: &SyntaxNode<Self::SyntaxLanguage>,
     ) -> SyntaxNode<Self::SyntaxLanguage> {
-        preprocess(root)
+        let mut rewriter = JsFormatSyntaxRewriter::default();
+        rewrite(root.clone(), &mut rewriter)
     }
 
     fn is_range_formatting_node(&self, node: &SyntaxNode<Self::SyntaxLanguage>) -> bool {

@@ -269,7 +269,7 @@ fn should_group_first_argument(list: &JsCallArgumentList) -> SyntaxResult<bool> 
             );
             (
                 second_arg_is_function_like,
-                could_group_expression_argument(&second_expression, false)?,
+                could_group_expression_argument(second_expression, false)?,
             )
         }
         None => (false, false),
