@@ -4,10 +4,10 @@ use rome_js_syntax::{
 };
 use rome_rowan::syntax::SyntaxTrivia;
 use rome_rowan::{
-    AstNode, Language, SyntaxKind, SyntaxNode, SyntaxSlot, SyntaxToken, SyntaxTriviaPiece,
-    SyntaxTriviaPieceComments,
+    AstNode, SyntaxKind, SyntaxRewriter, SyntaxTriviaPiece, SyntaxTriviaPieceComments,
+    VisitNodeSignal,
 };
-use std::iter::{once, FusedIterator};
+use std::iter::FusedIterator;
 
 #[derive(Default)]
 pub(super) struct JsFormatSyntaxRewriter;
@@ -50,7 +50,7 @@ impl JsFormatSyntaxRewriter {
             }
         };
 
-        let inner = rewrite(inner, self);
+        let inner = self.transform(inner);
 
         match inner.first_token() {
             // This can only happen if we have `()` which is highly unlikely to ever be the case.
@@ -156,10 +156,10 @@ impl JsFormatSyntaxRewriter {
                 let right_key = right.syntax().key();
 
                 // SAFETY: Safe because the rewriter never rewrites an expression to a non expression.
-                let left = JsAnyExpression::unwrap_cast(rewrite(left.into_syntax(), self));
+                let left = JsAnyExpression::unwrap_cast(self.transform(left.into_syntax()));
                 let operator = self.visit_token(operator);
                 // SAFETY: Safe because the rewriter never rewrites an expression to a non expression.
-                let right = JsAnyExpression::unwrap_cast(rewrite(right.into_syntax(), self));
+                let right = JsAnyExpression::unwrap_cast(self.transform(right.into_syntax()));
 
                 let updated = match right {
                     JsAnyExpression::JsLogicalExpression(right_logical) => {
@@ -359,68 +359,4 @@ where
             None => self.second.len(),
         }
     }
-}
-
-#[inline]
-pub fn rewrite<R>(root: SyntaxNode<R::Language>, rewriter: &mut R) -> SyntaxNode<R::Language>
-where
-    R: SyntaxRewriter,
-{
-    match rewriter.visit_node(root) {
-        VisitNodeSignal::Replace(updated) => updated,
-        VisitNodeSignal::Traverse(node) => traverse(node, rewriter),
-    }
-}
-
-fn traverse<R>(mut parent: SyntaxNode<R::Language>, rewriter: &mut R) -> SyntaxNode<R::Language>
-where
-    R: SyntaxRewriter,
-{
-    for slot in parent.slots() {
-        match slot {
-            SyntaxSlot::Node(node) => {
-                let original_key = node.key();
-                let index = node.index();
-
-                let updated = rewrite(node, rewriter);
-
-                if updated.key() != original_key {
-                    parent = parent.splice_slots(index..=index, once(Some(updated.into())));
-                }
-            }
-            SyntaxSlot::Token(token) => {
-                let original_key = token.key();
-                let index = token.index();
-
-                let updated = rewriter.visit_token(token);
-
-                if updated.key() != original_key {
-                    parent = parent.splice_slots(index..=index, once(Some(updated.into())));
-                }
-            }
-            SyntaxSlot::Empty => {
-                // Nothing to visit
-            }
-        }
-    }
-
-    parent
-}
-
-pub trait SyntaxRewriter {
-    type Language: Language;
-
-    fn visit_node(&mut self, node: SyntaxNode<Self::Language>) -> VisitNodeSignal<Self::Language> {
-        VisitNodeSignal::Traverse(node)
-    }
-
-    fn visit_token(&mut self, token: SyntaxToken<Self::Language>) -> SyntaxToken<Self::Language> {
-        token
-    }
-}
-
-#[derive(Debug, Clone)]
-pub enum VisitNodeSignal<L: Language> {
-    Replace(SyntaxNode<L>),
-    Traverse(SyntaxNode<L>),
 }
