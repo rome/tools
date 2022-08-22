@@ -97,9 +97,8 @@ impl Rule for NoImplicitBoolean {
         let last_token_of_name_syntax = name_syntax.last_token()?;
         // drop the trailing trivia of name_syntax, at CST level it means
         // clean the trailing trivia of last token of name_syntax
-        let next_last_token_of_name_syntax = last_token_of_name_syntax
-            .clone()
-            .with_trailing_trivia(std::iter::empty());
+        let next_last_token_of_name_syntax =
+            last_token_of_name_syntax.with_trailing_trivia(std::iter::empty());
 
         let next_name = name.replace_token_discard_trivia(
             last_token_of_name_syntax,

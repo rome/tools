@@ -131,58 +131,58 @@ where
         prev_element: SyntaxElement<L>,
         next_element: SyntaxElement<L>,
     ) {
-        let (prev_leading, prev_trailing): (Vec<_>, Vec<_>) = match &prev_element {
+        let (prev_leading_trivia, prev_trailing_trivia) = match &prev_element {
             SyntaxElement::Node(node) => (
-                node.first_token()
-                    .map(|token| token.leading_trivia().pieces().collect())
-                    .unwrap_or_default(),
-                node.last_token()
-                    .map(|token| token.trailing_trivia().pieces().collect())
-                    .unwrap_or_default(),
+                node.first_token().map(|token| token.leading_trivia()),
+                node.last_token().map(|token| token.trailing_trivia()),
             ),
-            SyntaxElement::Token(token) => (
-                token.leading_trivia().pieces().collect(),
-                token.trailing_trivia().pieces().collect(),
-            ),
+            SyntaxElement::Token(token) => {
+                (Some(token.leading_trivia()), Some(token.trailing_trivia()))
+            }
         };
 
         let next_element = match next_element {
             SyntaxElement::Node(mut node) => {
                 if let Some(token) = node.first_token() {
-                    let new_token = token.clone().with_leading_trivia(
-                        prev_leading
-                            .iter()
-                            .map(|piece| (piece.kind(), piece.text())),
-                    );
+                    let new_token = match prev_leading_trivia {
+                        Some(prev_leading_trivia) => {
+                            token.with_leading_trivia_pieces(prev_leading_trivia.pieces())
+                        }
+                        None => token.with_leading_trivia_pieces(empty()),
+                    };
 
                     node = node.replace_child(token.into(), new_token.into()).unwrap();
                 }
 
                 if let Some(token) = node.last_token() {
-                    let new_token = token.clone().with_trailing_trivia(
-                        prev_trailing
-                            .iter()
-                            .map(|piece| (piece.kind(), piece.text())),
-                    );
+                    let new_token = match prev_trailing_trivia {
+                        Some(prev_trailing_trivia) => {
+                            token.with_trailing_trivia_pieces(prev_trailing_trivia.pieces())
+                        }
+                        None => token.with_trailing_trivia_pieces(empty()),
+                    };
 
                     node = node.replace_child(token.into(), new_token.into()).unwrap();
                 }
 
                 SyntaxElement::Node(node)
             }
-            SyntaxElement::Token(token) => SyntaxElement::Token(
-                token
-                    .with_leading_trivia(
-                        prev_leading
-                            .iter()
-                            .map(|piece| (piece.kind(), piece.text())),
-                    )
-                    .with_trailing_trivia(
-                        prev_trailing
-                            .iter()
-                            .map(|piece| (piece.kind(), piece.text())),
-                    ),
-            ),
+            SyntaxElement::Token(token) => {
+                let new_token = match prev_leading_trivia {
+                    Some(prev_leading_trivia) => {
+                        token.with_leading_trivia_pieces(prev_leading_trivia.pieces())
+                    }
+                    None => token.with_leading_trivia_pieces(empty()),
+                };
+
+                let new_token = match prev_trailing_trivia {
+                    Some(prev_trailing_trivia) => {
+                        new_token.with_trailing_trivia_pieces(prev_trailing_trivia.pieces())
+                    }
+                    None => new_token.with_trailing_trivia_pieces(empty()),
+                };
+                SyntaxElement::Token(new_token)
+            }
         };
 
         self.push_change(prev_element, Some(next_element))
