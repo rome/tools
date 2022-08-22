@@ -351,15 +351,7 @@ mod test_lexer {
     fn test_illegals() {
         use JsonSyntaxKind::*;
         assert_lexing_kind_and_content(
-            vec![
-                "012",
-                "2e",
-                "1.",
-                "-",
-                r#""hi"#,
-                r#""\0""#,
-                "undefined",
-            ],
+            vec!["012", "2e", "1.", "-", r#""hi"#, r#""\0""#, "undefined"],
             vec![
                 vec![(JSON_NUMBER_LITERAL, "0"), (JSON_NUMBER_LITERAL, "12")],
                 vec![(JSON_NUMBER_LITERAL, "2"), (ERROR_TOKEN, "e")],
