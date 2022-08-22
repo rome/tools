@@ -357,7 +357,6 @@ mod test_lexer {
                 "1.",
                 "-",
                 r#""hi"#,
-                // r#""\u00G0""#,
                 r#""\0""#,
                 "undefined",
             ],
@@ -367,7 +366,6 @@ mod test_lexer {
                 vec![(JSON_NUMBER_LITERAL, "1"), (ERROR_TOKEN, ".")],
                 vec![(JsonSyntaxKind::ERROR_TOKEN, "-")],
                 vec![(JsonSyntaxKind::ERROR_TOKEN, "\"hi")],
-                // vec![(JsonSyntaxKind::ERROR_TOKEN, "\"\"")],
                 vec![
                     (ERROR_TOKEN, "\""),
                     (ERROR_TOKEN, "\\"),
