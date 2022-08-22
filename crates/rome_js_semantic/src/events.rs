@@ -3,10 +3,11 @@
 use std::collections::{HashMap, VecDeque};
 
 use rome_js_syntax::{
-    JsAnyAssignment, JsAnyAssignmentPattern, JsAssignmentExpression, JsForVariableDeclaration,
-    JsIdentifierAssignment, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier, JsSyntaxKind,
-    JsSyntaxNode, JsSyntaxToken, JsVariableDeclaration, JsVariableDeclarator,
-    JsVariableDeclaratorList, JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding,
+    JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAssignmentExpression,
+    JsCallExpression, JsForVariableDeclaration, JsIdentifierAssignment, JsIdentifierBinding,
+    JsLanguage, JsParenthesizedExpression, JsReferenceIdentifier, JsSyntaxKind, JsSyntaxNode,
+    JsSyntaxToken, JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList,
+    JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding,
 };
 use rome_rowan::{syntax::Preorder, AstNode, SyntaxNodeCast, SyntaxTokenText};
 
@@ -197,6 +198,26 @@ struct Scope {
     hoisting: ScopeHoisting,
 }
 
+/// Returns the node that defines the result of the expression
+fn result_of(expr: &JsParenthesizedExpression) -> Option<JsAnyExpression> {
+    let mut expr = Some(JsAnyExpression::JsParenthesizedExpression(expr.clone()));
+    loop {
+        match expr {
+            Some(JsAnyExpression::JsParenthesizedExpression(e)) => {
+                expr = e.expression().ok();
+            }
+            Some(JsAnyExpression::JsSequenceExpression(e)) => {
+                expr = e.right().ok();
+            }
+            Some(JsAnyExpression::JsAssignmentExpression(e)) => {
+                expr = e.right().ok();
+            }
+            Some(expr) => return Some(expr),
+            None => return None,
+        }
+    }
+}
+
 impl SemanticEventExtractor {
     pub fn new() -> Self {
         Self {
@@ -223,6 +244,9 @@ impl SemanticEventExtractor {
             JS_IDENTIFIER_ASSIGNMENT => {
                 self.enter_js_identifier_assignment(node);
             }
+            JS_CALL_EXPRESSION => {
+                self.enter_js_call_expression(node);
+            }
 
             JS_MODULE | JS_SCRIPT => self.push_scope(
                 node.text_range(),
@@ -246,6 +270,7 @@ impl SemanticEventExtractor {
             | JS_CATCH_CLAUSE => {
                 self.push_scope(node.text_range(), ScopeHoisting::HoistDeclarationsToParent);
             }
+
             _ => {}
         }
     }
@@ -394,6 +419,27 @@ impl SemanticEventExtractor {
         references.push(Reference::Write {
             range: node.text_range(),
         });
+
+        Some(())
+    }
+
+    fn enter_js_call_expression(&mut self, node: &JsSyntaxNode) -> Option<()> {
+        debug_assert!(matches!(node.kind(), JsSyntaxKind::JS_CALL_EXPRESSION));
+
+        let call = node.clone().cast::<JsCallExpression>()?;
+        let callee = call.callee().ok()?;
+
+        if let JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION = callee.syntax().kind() {
+            let expr = callee.as_js_parenthesized_expression()?;
+            let range = expr.syntax().text_range();
+            if let Some(JsAnyExpression::JsFunctionExpression(expr)) = result_of(expr) {
+                let id = expr.id()?;
+                self.stash.push_back(SemanticEvent::Read {
+                    range,
+                    declared_at: id.syntax().text_range(),
+                });
+            }
+        }
 
         Some(())
     }

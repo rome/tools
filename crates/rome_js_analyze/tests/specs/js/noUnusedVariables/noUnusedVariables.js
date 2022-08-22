@@ -46,3 +46,5 @@ export { exported_function_2 };
 let value;
 function Button() {}
 console.log(<Button att={value}/>);
+
+(function f(){})()
