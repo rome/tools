@@ -1,4 +1,5 @@
 use crate::green::{GreenToken, GreenTrivia};
+use crate::syntax::element::SyntaxElementKey;
 use crate::syntax::SyntaxTrivia;
 use crate::syntax_token_text::SyntaxTokenText;
 use crate::{
@@ -7,7 +8,6 @@ use crate::{
 };
 use std::fmt;
 use std::marker::PhantomData;
-use std::ptr::NonNull;
 use text_size::{TextLen, TextRange, TextSize};
 
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -50,8 +50,9 @@ impl<L: Language> SyntaxToken<L> {
         self.raw.green().to_owned()
     }
 
-    pub fn key(&self) -> (NonNull<()>, TextSize) {
-        self.raw.key()
+    pub fn key(&self) -> SyntaxElementKey {
+        let (node_data, offset) = self.raw.key();
+        SyntaxElementKey::new(node_data, offset)
     }
 
     pub fn kind(&self) -> L::Kind {
@@ -66,7 +67,7 @@ impl<L: Language> SyntaxToken<L> {
         self.raw.text_trimmed_range()
     }
 
-    pub fn index(&self) -> usize {
+    pub(crate) fn index(&self) -> usize {
         self.raw.index()
     }
 
