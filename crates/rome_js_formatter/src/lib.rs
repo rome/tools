@@ -255,8 +255,8 @@ mod generated;
 pub(crate) mod builders;
 pub mod context;
 mod parentheses;
-mod preprocessor;
 pub(crate) mod separated;
+mod syntax_rewriter;
 
 use rome_formatter::prelude::*;
 use rome_formatter::{write, Comments, CstFormatContext, Format, FormatLanguage};
@@ -271,7 +271,7 @@ use rome_rowan::{AstNode, SyntaxNode};
 use crate::builders::{format_parenthesize, format_suppressed_node};
 use crate::context::{JsCommentStyle, JsFormatContext};
 use crate::cst::FormatJsSyntaxNode;
-use crate::preprocessor::{rewrite, JsFormatSyntaxRewriter};
+use crate::syntax_rewriter::{rewrite, JsFormatSyntaxRewriter};
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
 use std::rc::Rc;
