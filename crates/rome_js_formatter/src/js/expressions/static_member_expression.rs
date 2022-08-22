@@ -1,12 +1,12 @@
 use crate::prelude::*;
 
 use crate::js::expressions::computed_member_expression::JsAnyComputedMemberLike;
-use crate::parentheses::{resolve_parent, ExpressionNode, NeedsParentheses};
+use crate::parentheses::{resolve_parent, AssignmentNode, ExpressionNode, NeedsParentheses};
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
     JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAnyName, JsAssignmentExpression,
-    JsInitializerClause, JsParenthesizedExpression, JsStaticMemberAssignment,
-    JsStaticMemberExpression, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
+    JsInitializerClause, JsParenthesizedAssignment, JsParenthesizedExpression,
+    JsStaticMemberAssignment, JsStaticMemberExpression, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
 };
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 
@@ -126,14 +126,15 @@ impl JsAnyStaticMemberLike {
         let first_non_static_member_ancestor = self.syntax().ancestors().find(|parent| {
             !(JsAnyStaticMemberLike::can_cast(parent.kind())
                 || JsAnyComputedMemberLike::can_cast(parent.kind())
-                || JsParenthesizedExpression::can_cast(parent.kind()))
+                || JsParenthesizedExpression::can_cast(parent.kind())
+                || JsParenthesizedAssignment::can_cast(parent.kind()))
         });
 
         let layout = match first_non_static_member_ancestor.and_then(JsAnyExpression::cast) {
             Some(JsAnyExpression::JsNewExpression(_)) => StaticMemberLikeLayout::NoBreak,
             Some(JsAnyExpression::JsAssignmentExpression(assignment)) => {
                 if matches!(
-                    assignment.left()?,
+                    assignment.left()?.resolve(),
                     JsAnyAssignmentPattern::JsAnyAssignment(
                         JsAnyAssignment::JsIdentifierAssignment(_)
                     )

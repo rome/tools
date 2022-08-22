@@ -47,10 +47,10 @@
 use crate::utils::{JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression};
 
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyFunctionBody, JsAnyLiteralExpression, JsArrowFunctionExpression,
-    JsAssignmentExpression, JsBinaryExpression, JsBinaryOperator, JsComputedMemberAssignment,
-    JsComputedMemberExpression, JsConditionalExpression, JsLanguage, JsSequenceExpression,
-    JsSyntaxKind, JsSyntaxNode,
+    JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAnyFunctionBody,
+    JsAnyLiteralExpression, JsArrowFunctionExpression, JsAssignmentExpression, JsBinaryExpression,
+    JsBinaryOperator, JsComputedMemberAssignment, JsComputedMemberExpression,
+    JsConditionalExpression, JsLanguage, JsSequenceExpression, JsSyntaxKind, JsSyntaxNode,
 };
 use rome_rowan::AstNode;
 
@@ -788,6 +788,155 @@ pub(crate) fn is_binary_like_left_or_right(node: &JsSyntaxNode, parent: &JsSynta
     debug_assert_is_parent(node, parent);
 
     JsAnyBinaryLikeExpression::can_cast(parent.kind())
+}
+
+/// Trait implemented by all JavaScript assignments.
+pub trait AssignmentNode: NeedsParentheses {
+    /// Resolves an assignment to the first non parenthesized assignment.
+    fn resolve(&self) -> JsAnyAssignmentPattern;
+
+    /// Consumes `self` and returns the first assignment that isn't a parenthesized assignment.
+    fn into_resolved(self) -> JsAnyAssignmentPattern;
+
+    /// Resolves an assignment to the first non parenthesized assignment and returns its [JsSyntaxNode].
+    fn resolve_syntax(&self) -> JsSyntaxNode {
+        self.resolve().into_syntax()
+    }
+
+    /// Consumes `self` and returns the [JsSyntaxNode] of the first assignment  that isn't a assignment expression.
+    fn into_resolved_syntax(self) -> JsSyntaxNode {
+        self.into_resolved().into_syntax()
+    }
+}
+
+impl AssignmentNode for JsAnyAssignment {
+    fn resolve(&self) -> JsAnyAssignmentPattern {
+        match self {
+            JsAnyAssignment::JsComputedMemberAssignment(assignment) => assignment.resolve(),
+            JsAnyAssignment::JsIdentifierAssignment(assignment) => assignment.resolve(),
+            JsAnyAssignment::JsParenthesizedAssignment(assignment) => assignment.resolve(),
+            JsAnyAssignment::JsStaticMemberAssignment(assignment) => assignment.resolve(),
+            JsAnyAssignment::JsUnknownAssignment(assignment) => assignment.resolve(),
+            JsAnyAssignment::TsAsAssignment(assignment) => assignment.resolve(),
+            JsAnyAssignment::TsNonNullAssertionAssignment(assignment) => assignment.resolve(),
+            JsAnyAssignment::TsTypeAssertionAssignment(assignment) => assignment.resolve(),
+        }
+    }
+
+    fn into_resolved(self) -> JsAnyAssignmentPattern {
+        match self {
+            JsAnyAssignment::JsComputedMemberAssignment(assignment) => assignment.into_resolved(),
+            JsAnyAssignment::JsIdentifierAssignment(assignment) => assignment.into_resolved(),
+            JsAnyAssignment::JsParenthesizedAssignment(assignment) => assignment.into_resolved(),
+            JsAnyAssignment::JsStaticMemberAssignment(assignment) => assignment.into_resolved(),
+            JsAnyAssignment::JsUnknownAssignment(assignment) => assignment.into_resolved(),
+            JsAnyAssignment::TsAsAssignment(assignment) => assignment.into_resolved(),
+            JsAnyAssignment::TsNonNullAssertionAssignment(assignment) => assignment.into_resolved(),
+            JsAnyAssignment::TsTypeAssertionAssignment(assignment) => assignment.into_resolved(),
+        }
+    }
+}
+
+impl NeedsParentheses for JsAnyAssignment {
+    fn needs_parentheses(&self) -> bool {
+        match self {
+            JsAnyAssignment::JsComputedMemberAssignment(assignment) => {
+                assignment.needs_parentheses()
+            }
+            JsAnyAssignment::JsIdentifierAssignment(assignment) => assignment.needs_parentheses(),
+            JsAnyAssignment::JsParenthesizedAssignment(assignment) => {
+                assignment.needs_parentheses()
+            }
+            JsAnyAssignment::JsStaticMemberAssignment(assignment) => assignment.needs_parentheses(),
+            JsAnyAssignment::JsUnknownAssignment(assignment) => assignment.needs_parentheses(),
+            JsAnyAssignment::TsAsAssignment(assignment) => assignment.needs_parentheses(),
+            JsAnyAssignment::TsNonNullAssertionAssignment(assignment) => {
+                assignment.needs_parentheses()
+            }
+            JsAnyAssignment::TsTypeAssertionAssignment(assignment) => {
+                assignment.needs_parentheses()
+            }
+        }
+    }
+
+    fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
+        match self {
+            JsAnyAssignment::JsComputedMemberAssignment(assignment) => {
+                assignment.needs_parentheses_with_parent(parent)
+            }
+            JsAnyAssignment::JsIdentifierAssignment(assignment) => {
+                assignment.needs_parentheses_with_parent(parent)
+            }
+            JsAnyAssignment::JsParenthesizedAssignment(assignment) => {
+                assignment.needs_parentheses_with_parent(parent)
+            }
+            JsAnyAssignment::JsStaticMemberAssignment(assignment) => {
+                assignment.needs_parentheses_with_parent(parent)
+            }
+            JsAnyAssignment::JsUnknownAssignment(assignment) => {
+                assignment.needs_parentheses_with_parent(parent)
+            }
+            JsAnyAssignment::TsAsAssignment(assignment) => {
+                assignment.needs_parentheses_with_parent(parent)
+            }
+            JsAnyAssignment::TsNonNullAssertionAssignment(assignment) => {
+                assignment.needs_parentheses_with_parent(parent)
+            }
+            JsAnyAssignment::TsTypeAssertionAssignment(assignment) => {
+                assignment.needs_parentheses_with_parent(parent)
+            }
+        }
+    }
+}
+
+impl AssignmentNode for JsAnyAssignmentPattern {
+    fn resolve(&self) -> JsAnyAssignmentPattern {
+        match self {
+            JsAnyAssignmentPattern::JsAnyAssignment(assignment) => assignment.resolve(),
+            JsAnyAssignmentPattern::JsArrayAssignmentPattern(assignment) => assignment.resolve(),
+            JsAnyAssignmentPattern::JsObjectAssignmentPattern(assignment) => assignment.resolve(),
+        }
+    }
+
+    fn into_resolved(self) -> JsAnyAssignmentPattern {
+        match self {
+            JsAnyAssignmentPattern::JsAnyAssignment(assignment) => assignment.into_resolved(),
+            JsAnyAssignmentPattern::JsArrayAssignmentPattern(assignment) => {
+                assignment.into_resolved()
+            }
+            JsAnyAssignmentPattern::JsObjectAssignmentPattern(assignment) => {
+                assignment.into_resolved()
+            }
+        }
+    }
+}
+
+impl NeedsParentheses for JsAnyAssignmentPattern {
+    fn needs_parentheses(&self) -> bool {
+        match self {
+            JsAnyAssignmentPattern::JsAnyAssignment(assignment) => assignment.needs_parentheses(),
+            JsAnyAssignmentPattern::JsArrayAssignmentPattern(assignment) => {
+                assignment.needs_parentheses()
+            }
+            JsAnyAssignmentPattern::JsObjectAssignmentPattern(assignment) => {
+                assignment.needs_parentheses()
+            }
+        }
+    }
+
+    fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
+        match self {
+            JsAnyAssignmentPattern::JsAnyAssignment(assignment) => {
+                assignment.needs_parentheses_with_parent(parent)
+            }
+            JsAnyAssignmentPattern::JsArrayAssignmentPattern(assignment) => {
+                assignment.needs_parentheses_with_parent(parent)
+            }
+            JsAnyAssignmentPattern::JsObjectAssignmentPattern(assignment) => {
+                assignment.needs_parentheses_with_parent(parent)
+            }
+        }
+    }
 }
 
 fn debug_assert_is_expression(node: &JsSyntaxNode) {

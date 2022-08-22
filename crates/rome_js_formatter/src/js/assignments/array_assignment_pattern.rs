@@ -1,7 +1,8 @@
+use crate::parentheses::{AssignmentNode, NeedsParentheses};
 use crate::prelude::*;
 use rome_formatter::write;
-use rome_js_syntax::JsArrayAssignmentPattern;
-use rome_js_syntax::JsArrayAssignmentPatternFields;
+use rome_js_syntax::{JsAnyAssignmentPattern, JsArrayAssignmentPattern};
+use rome_js_syntax::{JsArrayAssignmentPatternFields, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsArrayAssignmentPattern;
@@ -21,5 +22,33 @@ impl FormatNodeRule<JsArrayAssignmentPattern> for FormatJsArrayAssignmentPattern
                     .soft_block_indent()
             ]
         )
+    }
+
+    fn needs_parentheses(&self, item: &JsArrayAssignmentPattern) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl AssignmentNode for JsArrayAssignmentPattern {
+    #[inline]
+    fn resolve(&self) -> JsAnyAssignmentPattern {
+        self.clone().into()
+    }
+
+    #[inline]
+    fn into_resolved(self) -> JsAnyAssignmentPattern {
+        self.into()
+    }
+}
+
+impl NeedsParentheses for JsArrayAssignmentPattern {
+    #[inline]
+    fn needs_parentheses(&self) -> bool {
+        false
+    }
+
+    #[inline]
+    fn needs_parentheses_with_parent(&self, _: &JsSyntaxNode) -> bool {
+        false
     }
 }
