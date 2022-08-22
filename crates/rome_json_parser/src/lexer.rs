@@ -4,7 +4,7 @@ use logos::Logos;
 use rome_diagnostics::Diagnostic;
 use rome_json_syntax::{JsonSyntaxKind, TextRange, TextSize, T};
 
-#[derive(Logos, Debug, PartialEq, Clone, Copy)]
+#[derive(Logos, Debug, PartialEq, Eq, Clone, Copy)]
 pub enum TokenKind {
     #[token("{")]
     LeftBrace,
@@ -47,10 +47,6 @@ pub enum TokenKind {
 
     #[error]
     Error,
-    // Root,
-
-    // Array,
-    // Object,
 }
 
 impl From<&TokenKind> for JsonSyntaxKind {
@@ -225,6 +221,10 @@ impl<'a> Lexer<'a> {
         *(self.non_trivia_index_list.get(self.none_trivia_cursor + 1))
             .unwrap_or(&self.tokens_with_span.len())
     }
+
+    pub fn tokens_with_span(&self) -> &[(JsonSyntaxKind, TextRange)] {
+        self.tokens_with_span.as_ref()
+    }
 }
 
 pub struct LogosLexer<'a> {
@@ -250,31 +250,9 @@ impl<'a> Iterator for LogosLexer<'a> {
     }
 }
 
-// test('lexer', function (t) {
-// })
-
-// function attr (attribute, arr) {
-//   return arr.map(function (elem) {
-//     return elem[attribute]
-//   })
-// }
-
-// function testCase (t, json, result) {
-//   t.deepEqual(attr('type', lexer(json)), attr('type', result), json + ' types')
-//   t.deepEqual(attr('value', lexer(json)), attr('value', result), json + ' values')
-//   t.deepEqual(attr('raw', lexer(json)), attr('raw', result), json + ' raw')
-// }
-
-// function expectError (t, json, message) {
-//   try {
-//     var result = lexer(json)
-//   } catch (e) {
-//     return t.equal(e.message, 'Parsing error: ' + message, json)
-//   }
-//   t.fail('Did not throw: ' + json + ' ' + JSON.stringify(result))
-// }
 #[cfg(test)]
 mod test_lexer {
+
     use super::*;
 
     fn lexing_kind(content: &str) -> Vec<JsonSyntaxKind> {
@@ -288,11 +266,17 @@ mod test_lexer {
     }
 
     fn lexing_kind_and_content(content: &str) -> Vec<(JsonSyntaxKind, &str)> {
-        let mut lexer = Lexer::new(content, 0);
+        let lexer = Lexer::new(content, 0);
         let mut tokens = vec![];
-        while !matches!(lexer.current_token_kind(), JsonSyntaxKind::EOF) {
-            tokens.push((lexer.current_token_kind(), lexer.current_token_slice()));
-            lexer.advance();
+        for (token, span) in lexer
+            .tokens_with_span
+            .iter()
+            .take_while(|(k, _)| k != &JsonSyntaxKind::EOF)
+        {
+            tokens.push((
+                *token,
+                &content[u32::from(span.start()) as usize..u32::from(span.end()) as usize],
+            ));
         }
         tokens
     }
@@ -439,83 +423,63 @@ mod test_lexer {
         assert_lexing_kind_and_content(
             vec![
                 r#"{"a":"b"}"#,
-                r#"\t\t\n\t{"a":  \t  "b"}"#,
+                "\t\t\n\t{\"a\":  \t  \"b\"}",
                 r#"{"a" : "b"}"#,
-                r#"\t{"a" : "b"\n}\t"#,
+                "\t{\"a\" : \"b\"\n}\t",
                 r#"{"a":{"b":1}}"#,
             ],
             vec![
-                vec![(L_BRACK, "["), (R_BRACK, "]")],
-                vec![(L_BRACK, "["), (JSON_NUMBER_LITERAL, "1"), (R_BRACK, "]")],
                 vec![
-                    (L_BRACK, "["),
-                    (JSON_NUMBER_LITERAL, "1"),
-                    (T![,], ","),
-                    (JSON_NUMBER_LITERAL, "2"),
-                    (R_BRACK, "]"),
+                    (T!['{'], "{"),
+                    (JSON_STRING_LITERAL, "\"a\""),
+                    (T![:], ":"),
+                    (JSON_STRING_LITERAL, "\"b\""),
+                    (T!['}'], "}"),
                 ],
                 vec![
-                    (L_BRACK, "["),
-                    (T![true], "true"),
-                    (T![,], ","),
-                    (JSON_NUMBER_LITERAL, "2"),
-                    (T![,], ","),
-                    (JSON_STRING_LITERAL, r#""3""#),
-                    (R_BRACK, "]"),
+                    (WHITESPACE, "\t\t"),
+                    (NEWLINE, "\n"),
+                    (WHITESPACE, "\t"),
+                    (T!['{'], "{"),
+                    (JSON_STRING_LITERAL, "\"a\""),
+                    (T![:], ":"),
+                    (WHITESPACE, "  \t  "),
+                    (JSON_STRING_LITERAL, "\"b\""),
+                    (T!['}'], "}"),
+                ],
+                vec![
+                    (T!['{'], "{"),
+                    (JSON_STRING_LITERAL, "\"a\""),
+                    (WHITESPACE, " "),
+                    (T![:], ":"),
+                    (WHITESPACE, " "),
+                    (JSON_STRING_LITERAL, "\"b\""),
+                    (T!['}'], "}"),
+                ],
+                vec![
+                    (WHITESPACE, "\t"),
+                    (T!['{'], "{"),
+                    (JSON_STRING_LITERAL, "\"a\""),
+                    (WHITESPACE, " "),
+                    (T![:], ":"),
+                    (WHITESPACE, " "),
+                    (JSON_STRING_LITERAL, "\"b\""),
+                    (NEWLINE, "\n"),
+                    (T!['}'], "}"),
+                    (WHITESPACE, "\t"),
+                ],
+                vec![
+                    (T!['{'], "{"),
+                    (JSON_STRING_LITERAL, "\"a\""),
+                    (T![:], ":"),
+                    (T!['{'], "{"),
+                    (JSON_STRING_LITERAL, "\"b\""),
+                    (T![:], ":"),
+                    (JSON_NUMBER_LITERAL, "1"),
+                    (T!['}'], "}"),
+                    (T!['}'], "}"),
                 ],
             ],
         );
     }
 }
-
-//   t.test('objects', function (t) {
-//     testCase(t, '{"a":"b"}', [
-//       { type: 'punctuator', value: '{', raw: '{' },
-//       { type: 'string', value: 'a', raw: '"a"' },
-//       { type: 'punctuator', value: ':', raw: ':' },
-//       { type: 'string', value: 'b', raw: '"b"' },
-//       { type: 'punctuator', value: '}', raw: '}' }
-//     ])
-//     testCase(t, '\t\t\n\t{"a":  \t  "b"}', [
-//       { type: 'whitespace', value: '\t\t\n\t', raw: '\t\t\n\t' },
-//       { type: 'punctuator', value: '{', raw: '{' },
-//       { type: 'string', value: 'a', raw: '"a"' },
-//       { type: 'punctuator', value: ':', raw: ':' },
-//       { type: 'whitespace', value: '  \t  ', raw: '  \t  ' },
-//       { type: 'string', value: 'b', raw: '"b"' },
-//       { type: 'punctuator', value: '}', raw: '}' }
-//     ])
-//     testCase(t, '{"a" : "b"}', [
-//       { type: 'punctuator', value: '{', raw: '{' },
-//       { type: 'string', value: 'a', raw: '"a"' },
-//       { type: 'whitespace', value: ' ', raw: ' ' },
-//       { type: 'punctuator', value: ':', raw: ':' },
-//       { type: 'whitespace', value: ' ', raw: ' ' },
-//       { type: 'string', value: 'b', raw: '"b"' },
-//       { type: 'punctuator', value: '}', raw: '}' }
-//     ])
-//     testCase(t, '\t{"a" : "b"\n}\t', [
-//       { type: 'whitespace', value: '\t', raw: '\t' },
-//       { type: 'punctuator', value: '{', raw: '{' },
-//       { type: 'string', value: 'a', raw: '"a"' },
-//       { type: 'whitespace', value: ' ', raw: ' ' },
-//       { type: 'punctuator', value: ':', raw: ':' },
-//       { type: 'whitespace', value: ' ', raw: ' ' },
-//       { type: 'string', value: 'b', raw: '"b"' },
-//       { type: 'whitespace', value: '\n', raw: '\n' },
-//       { type: 'punctuator', value: '}', raw: '}' },
-//       { type: 'whitespace', value: '\t', raw: '\t' }
-//     ])
-//     testCase(t, '{"a":{"b":1}}', [
-//       { type: 'punctuator', value: '{', raw: '{' },
-//       { type: 'string', value: 'a', raw: '"a"' },
-//       { type: 'punctuator', value: ':', raw: ':' },
-//       { type: 'punctuator', value: '{', raw: '{' },
-//       { type: 'string', value: 'b', raw: '"b"' },
-//       { type: 'punctuator', value: ':', raw: ':' },
-//       { type: 'number', value: 1, raw: '1' },
-//       { type: 'punctuator', value: '}', raw: '}' },
-//       { type: 'punctuator', value: '}', raw: '}' }
-//     ])
-//     t.end()
-//   })
