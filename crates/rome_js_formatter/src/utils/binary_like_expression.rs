@@ -275,12 +275,12 @@ impl BinaryLeftOrRightSide {
     #[allow(unused)]
     fn is_jsx(&self) -> bool {
         match self {
-            BinaryLeftOrRightSide::Left { parent, .. } => match parent.left() {
-                Ok(JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression)) => {
-                    matches!(expression, JsAnyExpression::JsxTagExpression(_))
-                }
-                _ => false,
-            },
+            BinaryLeftOrRightSide::Left { parent, .. } => matches!(
+                parent.left(),
+                Ok(JsAnyBinaryLikeLeftExpression::JsAnyExpression(
+                    JsAnyExpression::JsxTagExpression(_),
+                ))
+            ),
             BinaryLeftOrRightSide::Right { parent, .. } => {
                 matches!(parent.right(), Ok(JsAnyExpression::JsxTagExpression(_)))
             }

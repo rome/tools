@@ -5,8 +5,8 @@ use crate::parentheses::NeedsParentheses;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
     JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAnyName, JsAssignmentExpression,
-    JsInitializerClause, JsParenthesizedAssignment, JsStaticMemberAssignment,
-    JsStaticMemberExpression, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
+    JsInitializerClause, JsStaticMemberAssignment, JsStaticMemberExpression, JsSyntaxKind,
+    JsSyntaxNode, JsSyntaxToken,
 };
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 
