@@ -136,7 +136,7 @@ pub trait SyntaxRewriter {
     /// * [VisitNodeSignal::Traverse]: Recourse into `node` so that [`visit_node`](SyntaxRewriter::visit_node)
     /// gets called for all children of `node`. The `node` will only be replaced if any node in its subtree changes.
     /// * [VisitNodeSignal::Replace]: Replaces `node` with the node specified in the [`Replace`](VisitNodeSignal::Replace) variant.
-    ///  It's your responsibility to call [`traverse`](SyntaxRewriter::traverse) for any child of `node` for which you want the rewritter
+    ///  It's your responsibility to call [`traverse`](SyntaxRewriter::transform) for any child of `node` for which you want the rewritter
     ///  to recurse into its content.
     fn visit_node(&mut self, node: SyntaxNode<Self::Language>) -> VisitNodeSignal<Self::Language> {
         VisitNodeSignal::Traverse(node)
