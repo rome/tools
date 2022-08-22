@@ -219,7 +219,7 @@ impl<L: Language> SyntaxToken<L> {
 
     /// Return a new version of this token with its leading trivia replaced with `trivia`
     #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
-    pub fn with_leading_trivia_pieces<'a, I>(&self, trivia: I) -> Self
+    pub fn with_leading_trivia_pieces<I>(&self, trivia: I) -> Self
     where
         I: IntoIterator<Item = SyntaxTriviaPiece<L>>,
         I::IntoIter: ExactSizeIterator,
