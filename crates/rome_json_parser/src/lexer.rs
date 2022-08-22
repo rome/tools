@@ -116,16 +116,9 @@ impl<'a> Lexer<'a> {
                 TokenKind::Error => {
                     // Because `logos` has a badly error recover strategy, we need to merge continuous error tokens.
                     let mut end = range.end;
-                    loop {
-                        match lexer.peek() {
-                            Some((TokenKind::Error, inner_loop_range)) => {
-                                end = inner_loop_range.end;
-                                lexer.next();
-                            }
-                            _ => {
-                                break;
-                            }
-                        }
+                    while let Some((TokenKind::Error, inner_loop_range)) = lexer.peek() {
+                        end = inner_loop_range.end;
+                        lexer.next();
                     }
                     error_token_range_list.push(TextRange::new(
                         (range.start as u32).into(),
