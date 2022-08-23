@@ -5,7 +5,7 @@ use rome_fs::RomePath;
 use rome_js_analyze::utils::rename::RenameError;
 use rome_js_analyze::{analyze, analyze_with_inspect_matcher, metadata, RuleError};
 use rome_js_formatter::context::{QuoteProperties, QuoteStyle};
-use rome_js_formatter::{context::JsFormatContext, format_node};
+use rome_js_formatter::{context::JsFormatOptions, format_node};
 use rome_js_parser::Parse;
 use rome_js_semantic::semantic_model;
 use rome_js_syntax::{
@@ -47,19 +47,19 @@ pub struct JsLinterSettings {
 
 impl Language for JsLanguage {
     type FormatSettings = JsFormatSettings;
-    type FormatContext = JsFormatContext;
+    type FormatOptions = JsFormatOptions;
     type LinterSettings = JsLinterSettings;
 
     fn lookup_settings(languages: &LanguagesSettings) -> &LanguageSettings<Self> {
         &languages.javascript
     }
 
-    fn resolve_format_context(
+    fn resolve_format_options(
         global: &FormatSettings,
         language: &JsFormatSettings,
         path: &RomePath,
-    ) -> JsFormatContext {
-        JsFormatContext::new(path.as_path().try_into().unwrap_or_default())
+    ) -> JsFormatOptions {
+        JsFormatOptions::new(path.as_path().try_into().unwrap_or_default())
             .with_indent_style(global.indent_style.unwrap_or_default())
             .with_line_width(global.line_width.unwrap_or_default())
             .with_quote_style(language.quote_style.unwrap_or_default())

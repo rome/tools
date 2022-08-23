@@ -1,4 +1,4 @@
-use crate::{format_node, JsFormatContext};
+use crate::{format_node, JsFormatOptions};
 use rome_diagnostics::{file::SimpleFiles, termcolor, Emitter};
 use rome_js_parser::parse;
 use rome_js_syntax::{JsSyntaxNode, SourceType};
@@ -8,7 +8,7 @@ pub struct CheckReformatParams<'a> {
     pub text: &'a str,
     pub source_type: SourceType,
     pub file_name: &'a str,
-    pub format_context: JsFormatContext,
+    pub options: JsFormatOptions,
 }
 
 /// Perform a second pass of formatting on a file, printing a diff if the
@@ -19,7 +19,7 @@ pub fn check_reformat(params: CheckReformatParams) {
         text,
         source_type,
         file_name,
-        format_context: context,
+        options,
     } = params;
 
     let re_parse = parse(text, 0, source_type);
@@ -44,11 +44,11 @@ pub fn check_reformat(params: CheckReformatParams) {
         )
     }
 
-    let formatted = format_node(context.clone(), &re_parse.syntax()).unwrap();
+    let formatted = format_node(options.clone(), &re_parse.syntax()).unwrap();
     let printed = formatted.print();
 
     if text != printed.as_code() {
-        let input_formatted = format_node(context, root).unwrap().into_format_element();
+        let input_formatted = format_node(options, root).unwrap().into_format_element();
 
         let pretty_input_ir = format!("{input_formatted}");
         let pretty_reformat_ir = format!("{}", formatted.into_format_element());

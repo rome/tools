@@ -35,6 +35,7 @@ pub mod prelude;
 #[cfg(debug_assertions)]
 pub mod printed_tokens;
 pub mod printer;
+mod source_map;
 pub mod token;
 
 use crate::formatter::Formatter;
@@ -63,6 +64,7 @@ use rome_rowan::{
     Language, RawSyntaxKind, SyntaxElement, SyntaxError, SyntaxKind, SyntaxNode, SyntaxResult,
     SyntaxToken, SyntaxTriviaPieceComments, TextRange, TextSize, TokenAtOffset,
 };
+pub use source_map::{TransformSourceMap, TransformSourceMapBuilder};
 use std::error::Error;
 use std::num::ParseIntError;
 use std::rc::Rc;
@@ -206,6 +208,12 @@ impl From<LineWidth> for u16 {
 /// Defines the common formatting options. Implementations can define additional options that
 /// are specific to formatting a specific object.
 pub trait FormatContext {
+    type Options: FormatOptions;
+
+    fn options(&self) -> &Self::Options;
+}
+
+pub trait FormatOptions {
     /// The indent style.
     fn indent_style(&self) -> IndentStyle;
 
@@ -245,17 +253,16 @@ pub trait CstFormatContext: FormatContext {
     /// ```
     fn comments(&self) -> Rc<Comments<Self::Language>>;
 
-    /// Consumes `self` and returns a new context with the provided extracted (`comments`)[Comments].
-    fn with_comments(self, comments: Rc<Comments<Self::Language>>) -> Self;
+    fn source_map(&self) -> &TransformSourceMap;
 }
 
 #[derive(Debug, Default, Eq, PartialEq)]
-pub struct SimpleFormatContext {
+pub struct SimpleFormatOptions {
     pub indent_style: IndentStyle,
     pub line_width: LineWidth,
 }
 
-impl FormatContext for SimpleFormatContext {
+impl FormatOptions for SimpleFormatOptions {
     fn indent_style(&self) -> IndentStyle {
         self.indent_style
     }
@@ -268,6 +275,25 @@ impl FormatContext for SimpleFormatContext {
         PrinterOptions::default()
             .with_indent(self.indent_style)
             .with_print_width(self.line_width.into())
+    }
+}
+
+#[derive(Debug, Default, Eq, PartialEq)]
+pub struct SimpleFormatContext {
+    options: SimpleFormatOptions,
+}
+
+impl SimpleFormatContext {
+    pub fn new(options: SimpleFormatOptions) -> Self {
+        Self { options }
+    }
+}
+
+impl FormatContext for SimpleFormatContext {
+    type Options = SimpleFormatOptions;
+
+    fn options(&self) -> &Self::Options {
+        &self.options
     }
 }
 
@@ -311,11 +337,13 @@ where
     Context: FormatContext,
 {
     pub fn print(&self) -> Printed {
-        Printer::new(self.context.as_print_options()).print(&self.root)
+        let print_options = self.context.options().as_print_options();
+        Printer::new(print_options).print(&self.root)
     }
 
     pub fn print_with_indent(&self, indent: u16) -> Printed {
-        Printer::new(self.context.as_print_options()).print_with_indent(&self.root, indent)
+        let print_options = self.context.options().as_print_options();
+        Printer::new(print_options).print_with_indent(&self.root, indent)
     }
 }
 
@@ -788,10 +816,7 @@ where
 
     buffer.write_fmt(arguments)?;
 
-    Ok(Formatted {
-        root: buffer.into_element(),
-        context: state.into_context(),
-    })
+    Ok(Formatted::new(buffer.into_element(), state.into_context()))
 }
 
 pub trait FormatLanguage {
@@ -806,8 +831,9 @@ pub trait FormatLanguage {
     fn transform(
         &self,
         root: &SyntaxNode<Self::SyntaxLanguage>,
-    ) -> SyntaxNode<Self::SyntaxLanguage> {
-        root.clone()
+    ) -> (SyntaxNode<Self::SyntaxLanguage>, TransformSourceMap) {
+        let source_map = TransformSourceMap::empty(root);
+        (root.clone(), source_map)
     }
 
     /// Because this function is language-agnostic, it must be provided with a
@@ -819,9 +845,13 @@ pub trait FormatLanguage {
         true
     }
 
-    fn context(&self) -> &Self::Context;
+    fn options(&self) -> &<Self::Context as FormatContext>::Options;
 
-    fn into_context(self, comments: Comments<Self::SyntaxLanguage>) -> Self::Context;
+    fn create_context(
+        self,
+        comments: Comments<Self::SyntaxLanguage>,
+        source_map: TransformSourceMap,
+    ) -> Self::Context;
 }
 
 /// Formats a syntax node file based on its features.
@@ -832,13 +862,13 @@ pub fn format_node<L: FormatLanguage>(
     language: L,
 ) -> FormatResult<Formatted<L::Context>> {
     tracing::trace_span!("format_node").in_scope(move || {
-        let root = language.transform(root);
+        let (root, source_map) = language.transform(root);
 
         let comments = Comments::from_node(&root, &language);
 
         let format_node = FormatRefWithRule::new(&root, L::FormatRule::default());
 
-        let context = language.into_context(comments);
+        let context = language.create_context(comments, source_map);
         let mut state = FormatState::new(context);
         let mut buffer = VecBuffer::new(&mut state);
 
@@ -1178,7 +1208,7 @@ pub fn format_sub_tree<L: FormatLanguage>(
             // of indentation type detection yet. Unfortunately this
             // may not actually match the current content of the file
             let length = trivia.text().len() as u16;
-            match language.context().indent_style() {
+            match language.options().indent_style() {
                 IndentStyle::Tab => length,
                 IndentStyle::Space(width) => length / u16::from(width),
             }
@@ -1190,12 +1220,16 @@ pub fn format_sub_tree<L: FormatLanguage>(
 
     let formatted = format_node(root, language)?;
     let mut printed = formatted.print_with_indent(initial_indent);
-    let sourcemap = printed.take_sourcemap();
+    let markers = formatted
+        .context()
+        .source_map()
+        .map_markers(printed.sourcemap());
+
     let verbatim_ranges = printed.take_verbatim_ranges();
     Ok(Printed::new(
         printed.into_code(),
         Some(root.text_range()),
-        sourcemap,
+        markers,
         verbatim_ranges,
     ))
 }
@@ -1220,9 +1254,9 @@ impl<L: Language, Context> Format<Context> for SyntaxTriviaPieceComments<L> {
 /// This structure is different from [crate::Formatter] in that the formatting infrastructure
 /// creates a new [crate::Formatter] for every [crate::write!] call, whereas this structure stays alive
 /// for the whole process of formatting a root with [crate::format!].
-#[derive(Default)]
 pub struct FormatState<Context> {
     context: Context,
+
     group_id_builder: UniqueGroupIdBuilder,
 
     /// `true` if the last formatted output is an inline comment that may need a space between the next token or comment.

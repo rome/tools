@@ -259,7 +259,9 @@ pub(crate) mod separated;
 mod syntax_rewriter;
 
 use rome_formatter::prelude::*;
-use rome_formatter::{write, Comments, CstFormatContext, Format, FormatLanguage};
+use rome_formatter::{
+    write, Comments, CstFormatContext, Format, FormatLanguage, TransformSourceMap,
+};
 use rome_formatter::{Buffer, FormatOwnedWithRule, FormatRefWithRule, Formatted, Printed};
 use rome_js_syntax::{
     JsAnyDeclaration, JsAnyStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
@@ -269,12 +271,11 @@ use rome_rowan::{AstNode, SyntaxNode};
 use rome_rowan::{SyntaxResult, SyntaxRewriter};
 
 use crate::builders::{format_parenthesize, format_suppressed_node};
-use crate::context::{JsCommentStyle, JsFormatContext};
+use crate::context::{JsCommentStyle, JsFormatContext, JsFormatOptions};
 use crate::cst::FormatJsSyntaxNode;
 use crate::syntax_rewriter::JsFormatSyntaxRewriter;
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
-use std::rc::Rc;
 
 pub(crate) type JsFormatter<'buf> = Formatter<'buf, JsFormatContext>;
 
@@ -486,11 +487,11 @@ impl IntoFormat<JsFormatContext> for JsSyntaxToken {
 }
 
 struct JsFormatLanguage {
-    context: JsFormatContext,
+    options: JsFormatOptions,
 }
 impl JsFormatLanguage {
-    fn new(context: JsFormatContext) -> Self {
-        Self { context }
+    fn new(options: JsFormatOptions) -> Self {
+        Self { options }
     }
 }
 
@@ -507,9 +508,11 @@ impl FormatLanguage for JsFormatLanguage {
     fn transform(
         &self,
         root: &SyntaxNode<Self::SyntaxLanguage>,
-    ) -> SyntaxNode<Self::SyntaxLanguage> {
-        let mut rewriter = JsFormatSyntaxRewriter::default();
-        rewriter.transform(root.clone())
+    ) -> (SyntaxNode<Self::SyntaxLanguage>, TransformSourceMap) {
+        let mut rewriter = JsFormatSyntaxRewriter::new(root);
+        let transformed = rewriter.transform(root.clone());
+
+        (transformed, rewriter.finish())
     }
 
     fn is_range_formatting_node(&self, node: &SyntaxNode<Self::SyntaxLanguage>) -> bool {
@@ -528,12 +531,16 @@ impl FormatLanguage for JsFormatLanguage {
             )
     }
 
-    fn context(&self) -> &Self::Context {
-        &self.context
+    fn options(&self) -> &JsFormatOptions {
+        &self.options
     }
 
-    fn into_context(self, comments: Comments<Self::SyntaxLanguage>) -> Self::Context {
-        self.context.with_comments(Rc::new(comments))
+    fn create_context(
+        self,
+        comments: Comments<Self::SyntaxLanguage>,
+        source_map: TransformSourceMap,
+    ) -> Self::Context {
+        JsFormatContext::new(source_map, comments).with_options(self.options)
     }
 }
 
@@ -549,11 +556,11 @@ impl FormatLanguage for JsFormatLanguage {
 /// It returns a [Formatted] result with a range corresponding to the
 /// range of the input that was effectively overwritten by the formatter
 pub fn format_range(
-    context: JsFormatContext,
+    options: JsFormatOptions,
     root: &JsSyntaxNode,
     range: TextRange,
 ) -> FormatResult<Printed> {
-    let language = JsFormatLanguage::new(context);
+    let language = JsFormatLanguage::new(options);
     rome_formatter::format_range(root, range, language)
 }
 
@@ -561,10 +568,10 @@ pub fn format_range(
 ///
 /// It returns a [Formatted] result, which the user can use to override a file.
 pub fn format_node(
-    context: JsFormatContext,
+    options: JsFormatOptions,
     root: &JsSyntaxNode,
 ) -> FormatResult<Formatted<JsFormatContext>> {
-    let language = JsFormatLanguage::new(context);
+    let language = JsFormatLanguage::new(options);
     rome_formatter::format_node(root, language)
 }
 
@@ -578,7 +585,7 @@ pub fn format_node(
 /// even if it's a mismatch from the rest of the block the selection is in
 ///
 /// It returns a [Formatted] result
-pub fn format_sub_tree(context: JsFormatContext, root: &JsSyntaxNode) -> FormatResult<Printed> {
+pub fn format_sub_tree(context: JsFormatOptions, root: &JsSyntaxNode) -> FormatResult<Printed> {
     let language = JsFormatLanguage::new(context);
     rome_formatter::format_sub_tree(root, language)
 }
@@ -588,7 +595,7 @@ mod tests {
 
     use super::{format_node, format_range};
 
-    use crate::context::JsFormatContext;
+    use crate::context::JsFormatOptions;
     use rome_formatter::IndentStyle;
     use rome_js_parser::{parse, parse_script};
     use rome_js_syntax::SourceType;
@@ -628,7 +635,7 @@ while(
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatContext::default().with_indent_style(IndentStyle::Space(4)),
+            JsFormatOptions::default().with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -660,7 +667,7 @@ function() {
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatContext::default().with_indent_style(IndentStyle::Space(4)),
+            JsFormatOptions::default().with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -691,7 +698,7 @@ function() {
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatContext::default().with_indent_style(IndentStyle::Space(4)),
+            JsFormatOptions::default().with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -710,7 +717,7 @@ function() {
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatContext::default().with_indent_style(IndentStyle::Space(4)),
+            JsFormatOptions::default().with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -732,7 +739,7 @@ function() {
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatContext::default().with_indent_style(IndentStyle::Space(4)),
+            JsFormatOptions::default().with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -742,18 +749,15 @@ function() {
         assert_eq!(result.range(), Some(TextRange::new(range_start, range_end)));
     }
 
-    #[ignore]
+    // #[ignore]
     #[test]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"
-test.expect(t => {
-	t.true(a);
-}, false);
+        let src = r#"((a))
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
-        let result = format_node(JsFormatContext::default(), &tree.syntax())
+        let result = format_node(JsFormatOptions::default(), &tree.syntax())
             .unwrap()
             .print();
         check_reformat(CheckReformatParams {
@@ -761,7 +765,7 @@ test.expect(t => {
             text: result.as_code(),
             source_type: syntax,
             file_name: "quick_test",
-            format_context: JsFormatContext::default(),
+            options: JsFormatOptions::default(),
         });
         assert_eq!(
             result.as_code(),
@@ -777,7 +781,7 @@ test.expect(t => {
         let tree = parse(src, 0, syntax);
 
         let result = format_range(
-            JsFormatContext::default(),
+            JsFormatOptions::default(),
             &tree.syntax(),
             TextRange::new(TextSize::from(0), TextSize::of(src) + TextSize::from(5)),
         );

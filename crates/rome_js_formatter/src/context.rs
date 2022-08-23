@@ -1,6 +1,7 @@
 use rome_formatter::printer::PrinterOptions;
 use rome_formatter::{
-    CommentKind, CommentStyle, Comments, CstFormatContext, FormatContext, IndentStyle, LineWidth,
+    CommentKind, CommentStyle, Comments, CstFormatContext, FormatContext, FormatOptions,
+    IndentStyle, LineWidth, TransformSourceMap,
 };
 use rome_js_syntax::suppression::{parse_suppression_comment, SuppressionCategory};
 use rome_js_syntax::{JsLanguage, JsSyntaxKind, SourceType};
@@ -11,7 +12,7 @@ use std::rc::Rc;
 use std::str::FromStr;
 
 #[derive(Debug, Clone, Default)]
-pub struct JsFormatContext {
+pub struct JsFormatOptions {
     /// The indent style.
     indent_style: IndentStyle,
 
@@ -26,16 +27,13 @@ pub struct JsFormatContext {
 
     /// Information related to the current file
     source_type: SourceType,
-
-    /// The comments of the nodes and tokens in the program.
-    comments: Rc<Comments<JsLanguage>>,
 }
 
-impl JsFormatContext {
+impl JsFormatOptions {
     pub fn new(source_type: SourceType) -> Self {
         Self {
             source_type,
-            ..JsFormatContext::default()
+            ..JsFormatOptions::default()
         }
     }
 
@@ -64,10 +62,6 @@ impl JsFormatContext {
         self
     }
 
-    pub fn line_width(&self) -> LineWidth {
-        self.line_width
-    }
-
     pub fn quote_style(&self) -> QuoteStyle {
         self.quote_style
     }
@@ -78,6 +72,67 @@ impl JsFormatContext {
 
     pub fn source_type(&self) -> SourceType {
         self.source_type
+    }
+
+    pub fn tab_width(&self) -> TabWidth {
+        match self.indent_style {
+            IndentStyle::Tab => 2.into(),
+            IndentStyle::Space(quantities) => quantities.into(),
+        }
+    }
+}
+
+impl FormatOptions for JsFormatOptions {
+    fn indent_style(&self) -> IndentStyle {
+        self.indent_style
+    }
+
+    fn line_width(&self) -> LineWidth {
+        self.line_width
+    }
+
+    fn as_print_options(&self) -> PrinterOptions {
+        PrinterOptions::default()
+            .with_indent(self.indent_style)
+            .with_print_width(self.line_width.into())
+    }
+}
+
+impl fmt::Display for JsFormatOptions {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        writeln!(f, "Indent style: {}", self.indent_style)?;
+        writeln!(f, "Line width: {}", self.line_width.value())?;
+        writeln!(f, "Quote style: {}", self.quote_style)?;
+        writeln!(f, "Quote properties: {}", self.quote_properties)
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct JsFormatContext {
+    options: JsFormatOptions,
+
+    /// The comments of the nodes and tokens in the program.
+    comments: Rc<Comments<JsLanguage>>,
+
+    source_map: TransformSourceMap,
+}
+
+impl JsFormatContext {
+    pub fn new(source_map: TransformSourceMap, comments: Comments<JsLanguage>) -> Self {
+        Self {
+            source_map,
+            comments: Rc::new(comments),
+            options: JsFormatOptions::default(),
+        }
+    }
+
+    pub fn options(&self) -> &JsFormatOptions {
+        &self.options
+    }
+
+    pub fn with_options(mut self, options: JsFormatOptions) -> Self {
+        self.options = options;
+        self
     }
 }
 
@@ -96,37 +151,11 @@ impl From<TabWidth> for u8 {
     }
 }
 
-impl JsFormatContext {
-    pub fn tab_width(&self) -> TabWidth {
-        match self.indent_style {
-            IndentStyle::Tab => 2.into(),
-            IndentStyle::Space(quantities) => quantities.into(),
-        }
-    }
-}
-
 impl FormatContext for JsFormatContext {
-    fn indent_style(&self) -> IndentStyle {
-        self.indent_style
-    }
+    type Options = JsFormatOptions;
 
-    fn line_width(&self) -> LineWidth {
-        self.line_width
-    }
-
-    fn as_print_options(&self) -> PrinterOptions {
-        PrinterOptions::default()
-            .with_indent(self.indent_style)
-            .with_print_width(self.line_width.into())
-    }
-}
-
-impl fmt::Display for JsFormatContext {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        writeln!(f, "Indent style: {}", self.indent_style)?;
-        writeln!(f, "Line width: {}", self.line_width.value())?;
-        writeln!(f, "Quote style: {}", self.quote_style)?;
-        writeln!(f, "Quote properties: {}", self.quote_properties)
+    fn options(&self) -> &Self::Options {
+        &self.options
     }
 }
 
@@ -142,9 +171,8 @@ impl CstFormatContext for JsFormatContext {
         self.comments.clone()
     }
 
-    fn with_comments(mut self, comments: Rc<Comments<JsLanguage>>) -> Self {
-        self.comments = comments;
-        self
+    fn source_map(&self) -> &TransformSourceMap {
+        &self.source_map
     }
 }
 

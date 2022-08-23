@@ -62,15 +62,14 @@ const result2 = [4, 9].map( x => x |> inc |> double )
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,50 +1,49 @@
- a |> b |> c;
+@@ -2,49 +2,48 @@
  
--a |> (b |> c);
-+a |> b |> c;
+ a |> (b |> c);
  
 -(a |> b) || c;
- a |> b || c;
-+a |> b || c;
+-a |> b || c;
++a |> b) || c;
++a |> (b || c);
  
 -let result = "hello" |> doubleSay |> capitalize |> exclaim;
 +let result = "hello"
@@ -85,9 +84,9 @@ const result2 = [4, 9].map( x => x |> inc |> double )
 -  |> ((_) => add(7, _))
 -  |> ((_) => subtract(2, _))
 -  |> ((_) => boundScore(0, 100, _));
-+  |> _ => add(7, _)
-+  |> _ => subtract(2, _)
-+  |> _ => boundScore(0, 100, _);
++  |> (_ => add(7, _))
++  |> (_ => subtract(2, _))
++  |> (_ => boundScore(0, 100, _));
  
  function createPerson(attrs) {
    attrs
@@ -98,9 +97,10 @@ const result2 = [4, 9].map( x => x |> inc |> double )
      |> Person.insertIntoDatabase;
  }
  
- foo |> bar ?? baz;
+-foo |> bar ?? baz;
 -(foo |> bar) ?? baz;
-+foo |> bar ?? baz;
++foo |> (bar ?? baz);
++foo |> bar) ?? baz;
  
 -const result =
 -  [1, 2, 3]
@@ -135,9 +135,9 @@ const result2 = [4, 9].map( x => x |> inc |> double )
 -  |> ((_) => _.reduce((a, b) => a + b))
 -  |> ((sum) => sum + 1);
 +const result = [5,10]
-+  |> _ => _.map(x => x * 2)
-+  |> _ => _.reduce( (a,b) => a + b )
-+  |> sum => sum + 1
++  |> (_ => _.map(x => x * 2))
++  |> (_ => _.reduce( (a,b) => a + b ))
++  |> (sum => sum + 1
  
 -const result2 = [4, 9].map((x) => x |> inc |> double);
 +const result2 = [4, 9].map( x => x |> inc |> double )
@@ -148,10 +148,10 @@ const result2 = [4, 9].map( x => x |> inc |> double )
 ```js
 a |> b |> c;
 
-a |> b |> c;
+a |> (b |> c);
 
-a |> b || c;
-a |> b || c;
+a |> b) || c;
+a |> (b || c);
 
 let result = "hello"
   |> doubleSay
@@ -160,9 +160,9 @@ let result = "hello"
 
 let newScore = person.score
   |> double
-  |> _ => add(7, _)
-  |> _ => subtract(2, _)
-  |> _ => boundScore(0, 100, _);
+  |> (_ => add(7, _))
+  |> (_ => subtract(2, _))
+  |> (_ => boundScore(0, 100, _));
 
 function createPerson(attrs) {
   attrs
@@ -171,8 +171,8 @@ function createPerson(attrs) {
     |> Person.insertIntoDatabase;
 }
 
-foo |> bar ?? baz;
-foo |> bar ?? baz;
+foo |> (bar ?? baz);
+foo |> bar) ?? baz;
 
 const result = [1,2,3]
  |> map(a => a * 2)
@@ -190,9 +190,9 @@ const searchResults$ = fromEvent(document.querySelector('input'), 'input')
   |> share();
 
 const result = [5,10]
-  |> _ => _.map(x => x * 2)
-  |> _ => _.reduce( (a,b) => a + b )
-  |> sum => sum + 1
+  |> (_ => _.map(x => x * 2))
+  |> (_ => _.reduce( (a,b) => a + b ))
+  |> (sum => sum + 1
 
 const result2 = [4, 9].map( x => x |> inc |> double )
 ```

@@ -760,7 +760,7 @@ pub(crate) mod tests {
         );
 
         let root = parse.syntax();
-        let transformed = JsFormatSyntaxRewriter::default().transform(root);
+        let transformed = JsFormatSyntaxRewriter::new(&root).transform(root);
         let matching_nodes: Vec<_> = transformed.descendants().filter_map(T::cast).collect();
 
         let node = if let Some(index) = index {
@@ -801,7 +801,7 @@ pub(crate) mod tests {
         );
 
         let root = parse.syntax();
-        let transformed = JsFormatSyntaxRewriter::default().transform(root);
+        let transformed = JsFormatSyntaxRewriter::new(&root).transform(root);
         let matching_nodes: Vec<_> = transformed.descendants().filter_map(T::cast).collect();
 
         let node = if let Some(index) = index {

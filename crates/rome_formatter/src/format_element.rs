@@ -2,8 +2,8 @@ use crate::prelude::{dynamic_text, format_with};
 use crate::printer::LineEnding;
 use crate::{
     format, format_args, group, soft_block_indent, soft_line_break_or_space,
-    soft_line_indent_or_space, space, text, write, Buffer, Format, FormatContext, FormatResult,
-    Formatter, GroupId, IndentStyle, LineWidth, PrinterOptions, TextSize,
+    soft_line_indent_or_space, space, text, write, Buffer, Format, FormatContext, FormatOptions,
+    FormatResult, Formatter, GroupId, IndentStyle, LineWidth, PrinterOptions, TextSize,
 };
 use indexmap::IndexSet;
 #[cfg(target_pointer_width = "64")]
@@ -759,13 +759,9 @@ impl From<ConditionalGroupContent> for FormatElement {
     }
 }
 
-#[derive(Clone, Default, Debug)]
-struct IrFormatContext {
-    /// The interned elements that have been printed to this point
-    printed_interned_elements: IndexSet<Interned>,
-}
+struct IrFormatOptions;
 
-impl FormatContext for IrFormatContext {
+impl FormatOptions for IrFormatOptions {
     fn indent_style(&self) -> IndentStyle {
         IndentStyle::Space(2)
     }
@@ -781,6 +777,20 @@ impl FormatContext for IrFormatContext {
             line_ending: LineEnding::LineFeed,
             indent_style: IndentStyle::Space(2),
         }
+    }
+}
+
+#[derive(Clone, Default, Debug)]
+struct IrFormatContext {
+    /// The interned elements that have been printed to this point
+    printed_interned_elements: IndexSet<Interned>,
+}
+
+impl FormatContext for IrFormatContext {
+    type Options = IrFormatOptions;
+
+    fn options(&self) -> &IrFormatOptions {
+        &IrFormatOptions
     }
 }
 

@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use rome_formatter::printer::{PrintWidth, Printer};
-use rome_formatter::{format_args, write, FormatContext, FormatRuleWithOptions, VecBuffer};
+use rome_formatter::{format_args, write, FormatOptions, FormatRuleWithOptions, VecBuffer};
 
 use crate::context::TabWidth;
 use crate::js::lists::template_element_list::{TemplateElementIndention, TemplateElementLayout};
@@ -91,6 +91,7 @@ impl Format<JsFormatContext> for FormatTemplateElement {
 
                 let print_options = f
                     .context()
+                    .options()
                     .as_print_options()
                     .with_print_width(PrintWidth::infinite());
                 let printed = Printer::new(print_options).print(&root);
@@ -141,7 +142,7 @@ impl Format<JsFormatContext> for FormatTemplateElement {
                 write_with_indention(
                     &format_inner,
                     self.options.indention,
-                    f.context().tab_width(),
+                    f.context().options().tab_width(),
                     f,
                 )
             }

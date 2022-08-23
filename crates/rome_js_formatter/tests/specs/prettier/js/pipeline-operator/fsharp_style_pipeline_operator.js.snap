@@ -62,12 +62,13 @@ const f = x |> (f) => f |> f;
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,34 +1,55 @@
- promise
+@@ -1,34 +1,72 @@
+-promise
++se
    |> await
 -  |> (x) => doubleSay(x, ", ")
-+  |> x
-+=> doubleSay(x, ', ')
++  |> x => d
++ubleSay(x, ', ')
    |> capitalize
 -  |> (x) => x + "!"
 -  |> (x) => new User.Message(x)
@@ -76,128 +77,161 @@ const f = x |> (f) => f |> f;
 +  |> x => new User.Message(x)
 +  |> x => stream.write(x)
    |> await
--  |> console.log;
-+  |> console.log
+   |> console.log;
  
 -const result = "hello" |> doubleSay |> capitalize |> exclaim;
-+const result = "hello"
++co
++
++ result = "hello"
 +  |> doubleSay
 +  |> capitalize
 +  |> exclaim;
++
++con
++
++ newScore = person.score
++  |> double
++  |> n => a
++d(7, n)
++  |> n => boundScore(0, 100, n);
++
++co
++
++ user = url
++  |> api.get
++  |> await
++  |> r => r
++json()
++  |> await
++  |> j => j.data.user;
++
++co
++
++ f = (x) => (x |> (y) => y
+++ 1)
++  |> (z) => z * y
++
++con
  
 -const newScore =
 -  person.score |> double |> (n) => add(7, n) |> (n) => boundScore(0, 100, n);
-+const newScore = person.score
-+  |> double
-+  |> n
-+=> add(7, n)
-+  |> n => boundScore(0, 100, n)
++ _f = (x) => x
++  |> (y) => y
+++ 1
++  |> (z) => z * y
  
 -const user =
 -  url |> api.get |> await |> (r) => r.json() |> await |> (j) => j.data.user;
-+const user = url
-+  |> api.get
-+  |> await
-+  |> r
-+=> r.json()
-+  |> await
-+  |> j => j.data.user
++con
  
 -const f = (x) => x |> (y) => y + 1 |> (z) => z * y;
-+const f = (x) => (x |> y
-+=> y + 1)
-+  |> (z) => z * y
++ g = (x) => x
++  |> (y) => (
++ + 1 |> (z) => z * y)
  
 -const _f = (x) => x |> (y) => y + 1 |> (z) => z * y;
-+const _f = (x) => x
-+  |> y
-+=> y + 1
-+  |> (z) => z * y
++con
  
 -const g = (x) => x |> (y) => (y + 1 |> (z) => z * y);
-+const g = (x) => x
-+  |> y
-+=> (y + 1 |> (z) => z * y)
++ _g = (x) => x
++  |> (y => (y + 1 |> (z) => z
++* y))
  
 -const _g = (x) => x |> ((y) => (y + 1 |> (z) => z * y));
-+const _g = (x) => x
-+  |> (y => (y + 1 |> z
-+=> z * y))
++con
  
 -const __g = (x) =>
 -  x
 -  |> ((y) => {
 -    return y + 1 |> (z) => z * y;
 -  });
-+const __g = (x) => x
-+  |> y => {
-+      return (y + 1 |> z => z * y);
++ __g = (x) => x
++  |> (
++    y => {
++      return (y + 1 |> (z) => z * y);
 +    }
  
 -const f = x + ((f) => f |> f);
 -const f = x |> (f) => f |> f;
-+const f = x + (f) => f |> f;
-+const f = x |> f
++const f = x + ((f) => (f |> f));
++const f = x |> (f
 +=> f |> f
 ```
 
 # Output
 
 ```js
-promise
+se
   |> await
-  |> x
-=> doubleSay(x, ', ')
+  |> x => d
+ubleSay(x, ', ')
   |> capitalize
   |> x => x + '!'
   |> x => new User.Message(x)
   |> x => stream.write(x)
   |> await
-  |> console.log
+  |> console.log;
 
-const result = "hello"
+co
+
+ result = "hello"
   |> doubleSay
   |> capitalize
   |> exclaim;
 
-const newScore = person.score
-  |> double
-  |> n
-=> add(7, n)
-  |> n => boundScore(0, 100, n)
+con
 
-const user = url
+ newScore = person.score
+  |> double
+  |> n => a
+d(7, n)
+  |> n => boundScore(0, 100, n);
+
+co
+
+ user = url
   |> api.get
   |> await
-  |> r
-=> r.json()
+  |> r => r
+json()
   |> await
-  |> j => j.data.user
+  |> j => j.data.user;
 
-const f = (x) => (x |> y
-=> y + 1)
+co
+
+ f = (x) => (x |> (y) => y
++ 1)
   |> (z) => z * y
 
-const _f = (x) => x
-  |> y
-=> y + 1
+con
+
+ _f = (x) => x
+  |> (y) => y
++ 1
   |> (z) => z * y
 
-const g = (x) => x
-  |> y
-=> (y + 1 |> (z) => z * y)
+con
 
-const _g = (x) => x
-  |> (y => (y + 1 |> z
-=> z * y))
+ g = (x) => x
+  |> (y) => (
+ + 1 |> (z) => z * y)
 
-const __g = (x) => x
-  |> y => {
-      return (y + 1 |> z => z * y);
+con
+
+ _g = (x) => x
+  |> (y => (y + 1 |> (z) => z
+* y))
+
+con
+
+ __g = (x) => x
+  |> (
+    y => {
+      return (y + 1 |> (z) => z * y);
     }
 
-const f = x + (f) => f |> f;
-const f = x |> f
+const f = x + ((f) => (f |> f));
+const f = x |> (f
 => f |> f
 ```
 

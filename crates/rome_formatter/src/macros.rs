@@ -148,7 +148,7 @@ macro_rules! format {
 /// ## Examples
 ///
 /// ```
-/// use rome_formatter::{Formatted, LineWidth, format, format_args};
+/// use rome_formatter::{Formatted, LineWidth, format, format_args, SimpleFormatOptions};
 /// use rome_formatter::prelude::*;
 ///
 /// let formatted = format!(
@@ -216,7 +216,7 @@ macro_rules! format {
 /// // has some additional line breaks to make sure inner groups don't break
 /// assert_eq!(
 ///     "aVeryLongIdentifier([\n\t1, 2, 3\n])",
-///     Formatted::new(elements.clone(), SimpleFormatContext { line_width: 21.try_into().unwrap(), ..SimpleFormatContext::default() })
+///     Formatted::new(elements.clone(), SimpleFormatContext::new(SimpleFormatOptions { line_width: 21.try_into().unwrap(), ..SimpleFormatOptions::default() }))
 ///         .print()
 ///         .as_code()
 /// );
@@ -224,7 +224,7 @@ macro_rules! format {
 /// // Prints the last option as last resort
 /// assert_eq!(
 ///     "aVeryLongIdentifier(\n\t[\n\t\t1,\n\t\t2,\n\t\t3\n\t]\n)",
-///     Formatted::new(elements.clone(), SimpleFormatContext { line_width: 20.try_into().unwrap(), ..SimpleFormatContext::default() })
+///     Formatted::new(elements.clone(), SimpleFormatContext::new(SimpleFormatOptions { line_width: 20.try_into().unwrap(), ..SimpleFormatOptions::default() }))
 ///         .print()
 ///         .as_code()
 /// );
@@ -263,7 +263,7 @@ macro_rules! best_fitting {
 #[cfg(test)]
 mod tests {
     use crate::prelude::*;
-    use crate::{write, FormatState, VecBuffer};
+    use crate::{write, FormatState, SimpleFormatOptions, VecBuffer};
 
     struct TestFormat;
 
@@ -397,10 +397,10 @@ mod tests {
 
         let best_fitting_code = Formatted::new(
             formatted_best_fitting.into_format_element(),
-            SimpleFormatContext {
+            SimpleFormatContext::new(SimpleFormatOptions {
                 line_width: 30.try_into().unwrap(),
-                ..SimpleFormatContext::default()
-            },
+                ..SimpleFormatOptions::default()
+            }),
         )
         .print()
         .as_code()
@@ -408,10 +408,10 @@ mod tests {
 
         let normal_list_code = Formatted::new(
             formatted_normal_list.into_format_element(),
-            SimpleFormatContext {
+            SimpleFormatContext::new(SimpleFormatOptions {
                 line_width: 30.try_into().unwrap(),
-                ..SimpleFormatContext::default()
-            },
+                ..SimpleFormatOptions::default()
+            }),
         )
         .print()
         .as_code()

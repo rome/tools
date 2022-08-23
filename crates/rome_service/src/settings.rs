@@ -137,18 +137,18 @@ pub trait Language: rome_rowan::Language {
         + schemars::JsonSchema;
 
     /// Fully resolved formatter options type for this language
-    type FormatContext: rome_formatter::FormatContext;
+    type FormatOptions: rome_formatter::FormatOptions;
 
     /// Read the settings type for this language from the [LanguagesSettings] map
     fn lookup_settings(languages: &LanguagesSettings) -> &LanguageSettings<Self>;
 
     /// Resolve the formatter options from the global (workspace level),
     /// per-language and editor provided formatter settings
-    fn resolve_format_context(
+    fn resolve_format_options(
         global: &FormatSettings,
         language: &Self::FormatSettings,
         path: &RomePath,
-    ) -> Self::FormatContext;
+    ) -> Self::FormatOptions;
 }
 
 #[derive(Debug, Default, serde::Serialize, serde::Deserialize)]
@@ -194,11 +194,11 @@ impl<'a> AsRef<WorkspaceSettings> for SettingsHandle<'a> {
 
 impl<'a> SettingsHandle<'a> {
     /// Resolve the formatting context for the given language
-    pub(crate) fn format_context<L>(self, path: &RomePath) -> L::FormatContext
+    pub(crate) fn format_context<L>(self, path: &RomePath) -> L::FormatOptions
     where
         L: Language,
     {
-        L::resolve_format_context(
+        L::resolve_format_options(
             &self.inner.format,
             &L::lookup_settings(&self.inner.languages).format,
             path,

@@ -74,13 +74,13 @@ impl<'token> FormatLiteralStringToken<'token> {
         let token = self.token();
         debug_assert_eq!(token.kind(), JS_STRING_LITERAL);
 
-        let chosen_quote_style = context.quote_style();
-        let chosen_quote_properties = context.quote_properties();
+        let chosen_quote_style = context.options().quote_style();
+        let chosen_quote_properties = context.options().quote_properties();
 
         let mut string_cleaner =
             LiteralStringNormaliser::new(self, chosen_quote_style, chosen_quote_properties);
 
-        let content = string_cleaner.normalise_text(context.source_type().into());
+        let content = string_cleaner.normalise_text(context.options().source_type().into());
         let normalized_text_width = content.width();
 
         CleanedStringLiteralText {

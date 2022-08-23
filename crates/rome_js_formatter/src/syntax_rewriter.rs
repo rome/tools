@@ -1,18 +1,27 @@
 use crate::parentheses::JsAnyParenthesized;
+use crate::TextRange;
+use rome_formatter::{TransformSourceMap, TransformSourceMapBuilder};
 use rome_js_syntax::{
     JsAnyAssignment, JsAnyExpression, JsLanguage, JsLogicalExpression, JsSyntaxKind, JsSyntaxNode,
 };
 use rome_rowan::syntax::SyntaxTrivia;
 use rome_rowan::{
-    AstNode, SyntaxKind, SyntaxRewriter, SyntaxTriviaPiece, SyntaxTriviaPieceComments,
-    VisitNodeSignal,
+    AstNode, SyntaxKind, SyntaxRewriter, SyntaxToken, SyntaxTriviaPiece, SyntaxTriviaPieceComments,
+    TextSize, VisitNodeSignal,
 };
 use std::iter::FusedIterator;
 
-#[derive(Default)]
-pub(super) struct JsFormatSyntaxRewriter;
+pub(super) struct JsFormatSyntaxRewriter {
+    source_map: TransformSourceMapBuilder,
+}
 
 impl JsFormatSyntaxRewriter {
+    pub(super) fn new(root: &JsSyntaxNode) -> Self {
+        Self {
+            source_map: TransformSourceMapBuilder::new(root),
+        }
+    }
+
     /// Replaces parenthesized expression that:
     /// * have no syntax error: has no missing required child or no skipped token trivia attached to the left or right paren
     /// * inner expression isn't an unknown node
@@ -75,6 +84,9 @@ impl JsFormatSyntaxRewriter {
             }
 
             Some(first_token) => {
+                self.source_map
+                    .add_deleted_range(l_paren.text_trimmed_range());
+
                 let l_paren_trivia = chain_pieces(
                     l_paren.leading_trivia().pieces(),
                     l_paren.trailing_trivia().pieces(),
@@ -85,6 +97,7 @@ impl JsFormatSyntaxRewriter {
                 // The leading whitespace before the opening parens replaces the whitespace before the node.
                 while let Some(trivia) = leading_trivia.peek() {
                     if trivia.is_whitespace() || trivia.is_newline() {
+                        self.source_map.add_deleted_range(trivia.text_range());
                         leading_trivia.next();
                     } else {
                         break;
@@ -111,6 +124,9 @@ impl JsFormatSyntaxRewriter {
                     last_token.trailing_trivia().pieces(),
                     r_paren_trivia,
                 ));
+
+                self.source_map
+                    .add_deleted_range(r_paren.text_trimmed_range());
 
                 // SAFETY: Calling `unwrap` is safe because we know that `last_token` is part of the `updated` subtree.
                 VisitNodeSignal::Replace(
@@ -212,6 +228,10 @@ impl JsFormatSyntaxRewriter {
             }
             _ => VisitNodeSignal::Traverse(logical.into_syntax()),
         }
+    }
+
+    pub(crate) fn finish(self) -> TransformSourceMap {
+        self.source_map.finish()
     }
 }
 
@@ -358,5 +378,180 @@ where
             }
             None => self.second.len(),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+
+    use super::JsFormatSyntaxRewriter;
+    use rome_js_parser::parse_module;
+    use rome_js_syntax::{
+        JsArrayExpression, JsBinaryExpression, JsIdentifierExpression, JsLogicalExpression,
+        JsSequenceExpression, JsStringLiteralExpression, JsUnknownExpression,
+    };
+    use rome_rowan::{AstNode, SyntaxRewriter};
+
+    #[test]
+    fn single_parentheses_source_map_test() {
+        let src = "(a)";
+        let tree = parse_module(src, 0).syntax();
+
+        let mut rewriter = JsFormatSyntaxRewriter::new(&tree);
+        let transformed = rewriter.transform(tree);
+        let source_map = rewriter.finish();
+
+        let identifier = transformed
+            .descendants()
+            .find_map(JsIdentifierExpression::cast)
+            .unwrap();
+
+        assert_eq!(
+            source_map.resolve_text(identifier.syntax().text_trimmed_range()),
+            "(a)"
+        );
+    }
+
+    #[test]
+    fn nested_parentheses_source_map_test() {
+        let src = "((a))";
+        let tree = parse_module(src, 0).syntax();
+
+        let mut rewriter = JsFormatSyntaxRewriter::new(&tree);
+        let transformed = rewriter.transform(tree);
+        let source_map = rewriter.finish();
+
+        let identifier = transformed
+            .descendants()
+            .find_map(JsIdentifierExpression::cast)
+            .unwrap();
+
+        assert_eq!(
+            source_map.resolve_text(identifier.syntax().text_trimmed_range()),
+            "((a))"
+        );
+    }
+
+    #[test]
+    fn test_logical_expression_source_map() {
+        let src = "(a && (b && c))";
+        let tree = parse_module(src, 0).syntax();
+
+        let mut rewriter = JsFormatSyntaxRewriter::new(&tree);
+        let transformed = rewriter.transform(tree);
+        let source_map = rewriter.finish();
+
+        let logical_expressions: Vec<_> = transformed
+            .descendants()
+            .filter_map(JsLogicalExpression::cast)
+            .collect();
+
+        assert_eq!(2, logical_expressions.len());
+
+        assert_eq!(
+            source_map.resolve_text(logical_expressions[0].syntax().text_trimmed_range()),
+            "(a && (b && c))"
+        );
+
+        assert_eq!(
+            source_map.resolve_text(logical_expressions[1].syntax().text_trimmed_range()),
+            "a && (b"
+        );
+    }
+
+    #[test]
+    fn test_nested_nodes() {
+        let src = "(a + b)";
+        let tree = parse_module(src, 0).syntax();
+
+        let mut rewriter = JsFormatSyntaxRewriter::new(&tree);
+        let transformed = rewriter.transform(tree);
+        let source_map = rewriter.finish();
+
+        let identifiers: Vec<_> = transformed
+            .descendants()
+            .filter_map(JsIdentifierExpression::cast)
+            .collect();
+
+        assert_eq!(2, identifiers.len());
+        // Parentheses should be associated with the binary expression
+        assert_eq!(
+            source_map.resolve_text(identifiers[0].syntax().text_trimmed_range()),
+            "a"
+        );
+        assert_eq!(
+            source_map.resolve_text(identifiers[1].syntax().text_trimmed_range()),
+            "b"
+        );
+
+        let binary = transformed
+            .descendants()
+            .find_map(JsBinaryExpression::cast)
+            .unwrap();
+        assert_eq!(
+            source_map.resolve_text(binary.syntax().text_trimmed_range()),
+            "(a + b)"
+        )
+    }
+
+    #[test]
+    fn test_nested2() {
+        let src = "(interface, \"foo\");";
+
+        let tree = parse_module(src, 0).syntax();
+
+        let mut rewriter = JsFormatSyntaxRewriter::new(&tree);
+        let transformed = rewriter.transform(tree);
+        let source_map = rewriter.finish();
+
+        let string_literal = transformed
+            .descendants()
+            .find_map(JsStringLiteralExpression::cast)
+            .unwrap();
+
+        assert_eq!(
+            source_map.resolve_text(string_literal.syntax().text_trimmed_range()),
+            "\"foo\""
+        );
+
+        let sequence = transformed
+            .descendants()
+            .find_map(JsSequenceExpression::cast)
+            .unwrap();
+        assert_eq!(
+            source_map.resolve_text(sequence.syntax().text_trimmed_range()),
+            "(interface, \"foo\")"
+        );
+    }
+
+    #[test]
+    fn deep() {
+        let src = r#"[
+    (2*n)/(r-l), 0,            (r+l)/(r-l),  0,
+    0,           (2*n)/(t-b),  (t+b)/(t-b),  0,
+    0,           0,           -(f+n)/(f-n), -(2*f*n)/(f-n),
+    0,           0,           -1,            0,
+];"#;
+
+        let tree = parse_module(src, 0).syntax();
+
+        let mut rewriter = JsFormatSyntaxRewriter::new(&tree);
+        let transformed = rewriter.transform(tree);
+        let source_map = rewriter.finish();
+
+        let array = transformed
+            .descendants()
+            .find_map(JsArrayExpression::cast)
+            .unwrap();
+
+        assert_eq!(
+            source_map.resolve_text(array.syntax().text_trimmed_range()),
+            r#"[
+    (2*n)/(r-l), 0,            (r+l)/(r-l),  0,
+    0,           (2*n)/(t-b),  (t+b)/(t-b),  0,
+    0,           0,           -(f+n)/(f-n), -(2*f*n)/(f-n),
+    0,           0,           -1,            0,
+]"#
+        );
     }
 }
