@@ -1,4 +1,3 @@
-_
 # Jobs run on pull request
 name: Pull request
 on:
