@@ -204,6 +204,29 @@ A rule can be configured for multiple purposes:
 - turn the rule off;
 - pass possible options to customize the rule;
 
+#### Turn a rule on
+
+Rules that are recommended are enabled by default. Rules that are not recommended
+are not enabled, and they should be enabled via configuration.
+
+To enable rules, you need to change their diagnostics severity based on your needs:
+
+```json
+{
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "js": {
+        "rules": {
+          "noDeadCode": "error",
+          "useCamelCase": "warn"
+        }
+      }
+    }
+  }
+}
+```
+
 #### Turn a rule off
 
 Just add `"off"` as value inside its configuration. For example:
@@ -245,7 +268,7 @@ Just add `"warn"` as value of the rule. Example:
       },
       "regex": {
         "rules": {
-          "noMultipleSpacesInRegularExpressionLiterals": "warn"
+          "noMultipleSpacesInRegularExpressionLiterals": "error"
         }
       }
     }
