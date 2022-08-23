@@ -35,9 +35,6 @@
         "node": ">=14.*"
     },
     "license": "MIT",
-    "dependencies": {
-        "@rometools/backend-jsonrpc": "../backend-jsonrpc"
-    },
     "devDependencies": {
         "typescript": "^4.7.4",
         "vitest": "^0.22.0",
