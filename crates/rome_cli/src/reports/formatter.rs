@@ -24,18 +24,18 @@ impl FormatterReport {
 #[derive(Debug, Default, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct FormatterReportSummary {
-    /// how many files were compared
     files_compared: Option<usize>,
-    /// how many files were written
     files_written: Option<usize>,
 }
 
 impl FormatterReportSummary {
+    /// how many files were compared
     pub(crate) fn set_files_compared(&mut self, files_compared: usize) {
         self.files_compared = Some(files_compared)
     }
 
-    pub(crate) fn self_files_written(&mut self, files_written: usize) {
+    /// how many files were written
+    pub(crate) fn set_files_written(&mut self, files_written: usize) {
         self.files_written = Some(files_written)
     }
 }

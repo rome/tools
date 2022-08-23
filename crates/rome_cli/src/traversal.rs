@@ -144,7 +144,7 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
             if let TraversalMode::Format { write, .. } = execution.traversal_mode() {
                 let mut summary = FormatterReportSummary::default();
                 if *write {
-                    summary.self_files_written(count);
+                    summary.set_files_written(count);
                 } else {
                     summary.set_files_compared(count);
                 }

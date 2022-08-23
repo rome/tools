@@ -9,7 +9,7 @@ use std::collections::HashMap;
 
 #[derive(Debug, Default, Serialize)]
 pub struct Report {
-    /// Information relative to the formatter
+    /// Information related to the formatter
     formatter: FormatterReport,
 
     /// Diagnostics tracked during a generic traversal
@@ -28,16 +28,22 @@ pub enum ReportErrorKind {
 /// Information computed from a [diagnostic][rome_diagnostics::Diagnostic]
 #[derive(Debug, Serialize)]
 pub struct ReportDiagnostic {
+    /// Severity of the [diagnostic][rome_diagnostics::Diagnostic]
     pub severity: Severity,
+    /// The code of the [diagnostic][rome_diagnostics::Diagnostic]
     pub code: Option<String>,
+    /// The title of the [diagnostic][rome_diagnostics::Diagnostic]
     pub title: String,
 }
 
 /// Information computed from a diff result
 #[derive(Debug, Serialize)]
 pub struct ReportDiff {
+    /// The severity fo the diff
     pub severity: Severity,
+    /// How was the code before the command
     pub before: String,
+    /// How is the code after the command
     pub after: String,
 }
 
