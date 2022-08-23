@@ -23,18 +23,18 @@ describe("Rome formatter", () => {
 		expect(result.ir).toEqual("");
 	});
 
-	it("should not format content", async () => {
+	it("should format content", async () => {
 		const rome = new Rome();
 
-		let result = await rome.formatContent("function f() {}", {
+		let result = await rome.formatContent("function f   () {  }", {
 			filePath: "example.js",
 		});
 
-		expect(result.content).toEqual("");
+		expect(result.content).toEqual("function f() {}\n");
 		expect(result.errors).toEqual([]);
 	});
 
-	it("should not format content in debug mode", async () => {
+	it("should format content in debug mode", async () => {
 		const rome = new Rome();
 
 		let result = await rome.formatContent("function f() {}", {
@@ -42,35 +42,51 @@ describe("Rome formatter", () => {
 			debug: true,
 		});
 
-		expect(result.content).toEqual("");
+		expect(result.content).toEqual("function f() {}\n");
 		expect(result.errors).toEqual([]);
-		expect(result.ir).toEqual("");
+		expect(result.ir).toEqual('["function", " ", "f", group(["(", ")"]), " ", "{", "}", hard_line_break]');
 	});
 
 	it("should not format content with range", async () => {
 		const rome = new Rome();
 
-		let result = await rome.formatContent("function f() {}", {
+		let result = await rome.formatContent("let a   ; function g () {  }", {
 			filePath: "file.js",
-			range: [5, 10],
+			range: [20, 25],
 		});
 
-		expect(result.content).toEqual("");
+		expect(result.content).toEqual("function g() {}");
 		expect(result.errors).toEqual([]);
 	});
 
 	it("should not format content with range in debug mode", async () => {
 		const rome = new Rome();
 
-		let result = await rome.formatContent("function f() {}", {
+
+		let result = await rome.formatContent("let a   ; function g () {  }", {
 			filePath: "file.js",
-			range: [5, 10],
+			range: [20, 25],
 			debug: true,
 		});
 
-		expect(result.content).toEqual("");
+		console.log(result.ir);
+		expect(result.content).toEqual("function g() {}");
 		expect(result.errors).toEqual([]);
-		expect(result.ir).toEqual("");
+		expect(result.ir).toEqual(`[
+  "let",
+  " ",
+  group(["a"]),
+  ";",
+  hard_line_break,
+  "function",
+  " ",
+  "g",
+  group(["(", ")"]),
+  " ",
+  "{",
+  "}",
+  hard_line_break
+]`);
 	});
 });
 

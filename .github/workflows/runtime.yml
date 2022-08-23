@@ -40,6 +40,9 @@ jobs:
       - name: Install libraries
         working-directory: npm/rome
         run: pnpm i
+      - name: Compile WASM bindings
+        working-directory: npm/rome
+        run: pnpm build:wasm
       - name: CI checks
         working-directory: npm/rome
         run: pnpm ci
