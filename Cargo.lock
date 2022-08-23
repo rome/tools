@@ -1511,6 +1511,8 @@ dependencies = [
  "rome_fs",
  "rome_lsp",
  "rome_service",
+ "serde",
+ "serde_json",
  "thiserror",
  "tokio",
  "tracing",
