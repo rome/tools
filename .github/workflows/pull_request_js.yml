@@ -9,6 +9,7 @@ on:
       - 'website/**'
       - 'editors/**'
       - 'crates/**'
+      - 'npm/rome/**'
 
 env:
   RUST_LOG: info
