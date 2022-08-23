@@ -512,7 +512,7 @@ impl FormatLanguage for JsFormatLanguage {
         let mut rewriter = JsFormatSyntaxRewriter::new(root);
         let transformed = rewriter.transform(root.clone());
 
-        (transformed, rewriter.finish())
+        (dbg!(transformed), rewriter.finish())
     }
 
     fn is_range_formatting_node(&self, node: &SyntaxNode<Self::SyntaxLanguage>) -> bool {
@@ -753,23 +753,36 @@ function() {
     #[test]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"((a))
+        let src = r#"
+const __g = (x) => x
+  |> (
+    y => {
+      return (y + 1 |> (z) => z * y);
+    }
+  )
+
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
         let result = format_node(JsFormatOptions::default(), &tree.syntax())
             .unwrap()
             .print();
-        check_reformat(CheckReformatParams {
-            root: &tree.syntax(),
-            text: result.as_code(),
-            source_type: syntax,
-            file_name: "quick_test",
-            options: JsFormatOptions::default(),
-        });
+        // check_reformat(CheckReformatParams {
+        //     root: &tree.syntax(),
+        //     text: result.as_code(),
+        //     source_type: syntax,
+        //     file_name: "quick_test",
+        //     options: JsFormatOptions::default(),
+        // });
         assert_eq!(
             result.as_code(),
-            "type B8 = /*1*/ (C);\ntype B9 = (/*1*/ C);\ntype B10 = /*1*/ /*2*/ C;\n"
+            r#"const __g = (x) => x
+  |> (
+    y => {
+      return (y + 1 |> (z) => z * y);
+    }
+  )
+"#
         );
     }
 

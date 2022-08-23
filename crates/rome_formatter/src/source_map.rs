@@ -19,29 +19,6 @@ impl TransformSourceMap {
         }
     }
 
-    /// Resolves an absolute position in the transformed document into the absolut position of the source document.
-    fn resolve_position(&self, transformed_position: TextSize, start: bool) -> TextSize {
-        let position = self
-            .mappings
-            .partition_point(|mapping| mapping.transformed_start() <= transformed_position);
-
-        // If there's no mapping for the position, then the transformed and source position are identical.
-        if position == 0 {
-            return transformed_position;
-        }
-
-        // SAFETY: Safe because of the position == 0 check above
-        let start_mapping = self.mappings[position - 1];
-
-        let offset = if start {
-            start_mapping.source_start()
-        } else {
-            start_mapping.source_range.end()
-        };
-
-        transformed_position - start_mapping.transformed_start() + offset
-    }
-
     fn find_mapping(&self, transformed_position: TextSize) -> Option<&DeletedRange> {
         let index = self
             .mappings
@@ -60,6 +37,7 @@ impl TransformSourceMap {
     }
 
     pub fn resolve_range(&self, transformed_range: TextRange) -> TextRange {
+        dbg!(transformed_range);
         match self.find_mapping(transformed_range.start()) {
             Some(start_mapping) => {
                 let is_at_range_start =
@@ -75,12 +53,23 @@ impl TransformSourceMap {
                         .unwrap()
                 };
 
-                if is_at_range_start && transformed_range.end() == end_mapping.transformed_start() {
-                    TextRange::new(start_mapping.source_start(), end_mapping.source_end())
+                let mapping_range = TextRange::new(
+                    start_mapping.transformed_start(),
+                    end_mapping.transformed_start(),
+                );
+
+                dbg!(mapping_range);
+
+                if transformed_range.contains_range(mapping_range) && start_mapping != end_mapping {
+                    let end_offset = transformed_range.end() - mapping_range.end();
+                    TextRange::new(
+                        start_mapping.source_start(),
+                        end_mapping.source_end() + end_offset,
+                    )
                 } else {
                     TextRange::new(
-                        start_mapping.map_transformed_excluding(transformed_range.start()),
-                        end_mapping.map_transformed_excluding(transformed_range.end()),
+                        start_mapping.map_trimmed(transformed_range.start()),
+                        end_mapping.map_trimmed(transformed_range.end()),
                     )
                 }
             }
@@ -91,7 +80,7 @@ impl TransformSourceMap {
                     } else {
                         TextRange::new(
                             transformed_range.start(),
-                            end_mapping.map_transformed_excluding(transformed_range.end()),
+                            end_mapping.map_trimmed(transformed_range.end()),
                         )
                     }
                 }
@@ -168,15 +157,11 @@ impl DeletedRange {
         self.source_range.end()
     }
 
-    fn offset(&self) -> TextSize {
-        self.transformed_offset
-    }
-
     fn transformed_start(&self) -> TextSize {
         self.source_range.start() - self.transformed_offset
     }
 
-    fn map_transformed_excluding(&self, transformed_position: TextSize) -> TextSize {
+    fn map_trimmed(&self, transformed_position: TextSize) -> TextSize {
         transformed_position + self.transformed_offset + self.len()
     }
 }

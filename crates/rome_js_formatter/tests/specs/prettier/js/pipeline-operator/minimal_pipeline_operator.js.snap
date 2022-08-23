@@ -62,13 +62,11 @@ const result2 = [4, 9].map( x => x |> inc |> double )
 ```diff
 --- Prettier
 +++ Rome
-@@ -2,49 +2,48 @@
- 
+@@ -3,48 +3,47 @@
  a |> (b |> c);
  
--(a |> b) || c;
+ (a |> b) || c;
 -a |> b || c;
-+a |> b) || c;
 +a |> (b || c);
  
 -let result = "hello" |> doubleSay |> capitalize |> exclaim;
@@ -98,9 +96,8 @@ const result2 = [4, 9].map( x => x |> inc |> double )
  }
  
 -foo |> bar ?? baz;
--(foo |> bar) ?? baz;
 +foo |> (bar ?? baz);
-+foo |> bar) ?? baz;
+ (foo |> bar) ?? baz;
  
 -const result =
 -  [1, 2, 3]
@@ -150,7 +147,7 @@ a |> b |> c;
 
 a |> (b |> c);
 
-a |> b) || c;
+(a |> b) || c;
 a |> (b || c);
 
 let result = "hello"
@@ -172,7 +169,7 @@ function createPerson(attrs) {
 }
 
 foo |> (bar ?? baz);
-foo |> bar) ?? baz;
+(foo |> bar) ?? baz;
 
 const result = [1,2,3]
  |> map(a => a * 2)

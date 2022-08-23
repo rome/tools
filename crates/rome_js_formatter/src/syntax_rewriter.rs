@@ -6,8 +6,8 @@ use rome_js_syntax::{
 };
 use rome_rowan::syntax::SyntaxTrivia;
 use rome_rowan::{
-    AstNode, SyntaxKind, SyntaxRewriter, SyntaxToken, SyntaxTriviaPiece, SyntaxTriviaPieceComments,
-    TextSize, VisitNodeSignal,
+    AstNode, SyntaxKind, SyntaxRewriter, SyntaxTriviaPiece, SyntaxTriviaPieceComments,
+    VisitNodeSignal,
 };
 use std::iter::FusedIterator;
 
@@ -59,6 +59,8 @@ impl JsFormatSyntaxRewriter {
             }
         };
 
+        // Store away the inner offset because the new returned inner might be a detached node
+        let mut inner_offset = inner.text_range().start();
         let inner = self.transform(inner);
 
         match inner.first_token() {
@@ -97,7 +99,11 @@ impl JsFormatSyntaxRewriter {
                 // The leading whitespace before the opening parens replaces the whitespace before the node.
                 while let Some(trivia) = leading_trivia.peek() {
                     if trivia.is_whitespace() || trivia.is_newline() {
-                        self.source_map.add_deleted_range(trivia.text_range());
+                        // TODO add test case that triggers the case where inner offset is outdated.
+                        let trivia_len = trivia.text_len();
+                        self.source_map
+                            .add_deleted_range(TextRange::at(inner_offset, trivia_len));
+                        inner_offset += trivia_len;
                         leading_trivia.next();
                     } else {
                         break;
@@ -231,7 +237,7 @@ impl JsFormatSyntaxRewriter {
     }
 
     pub(crate) fn finish(self) -> TransformSourceMap {
-        self.source_map.finish()
+        dbg!(self.source_map.finish())
     }
 }
 
@@ -383,23 +389,19 @@ where
 
 #[cfg(test)]
 mod tests {
-
     use super::JsFormatSyntaxRewriter;
+    use rome_formatter::TransformSourceMap;
     use rome_js_parser::parse_module;
     use rome_js_syntax::{
-        JsArrayExpression, JsBinaryExpression, JsIdentifierExpression, JsLogicalExpression,
-        JsSequenceExpression, JsStringLiteralExpression, JsUnknownExpression,
+        JsArrayExpression, JsBinaryExpression, JsExpressionStatement, JsIdentifierExpression,
+        JsLogicalExpression, JsSequenceExpression, JsStringLiteralExpression, JsSyntaxNode,
+        JsUnknownExpression,
     };
     use rome_rowan::{AstNode, SyntaxRewriter};
 
     #[test]
     fn single_parentheses_source_map_test() {
-        let src = "(a)";
-        let tree = parse_module(src, 0).syntax();
-
-        let mut rewriter = JsFormatSyntaxRewriter::new(&tree);
-        let transformed = rewriter.transform(tree);
-        let source_map = rewriter.finish();
+        let (transformed, source_map) = source_map_test("(a)");
 
         let identifier = transformed
             .descendants()
@@ -414,12 +416,7 @@ mod tests {
 
     #[test]
     fn nested_parentheses_source_map_test() {
-        let src = "((a))";
-        let tree = parse_module(src, 0).syntax();
-
-        let mut rewriter = JsFormatSyntaxRewriter::new(&tree);
-        let transformed = rewriter.transform(tree);
-        let source_map = rewriter.finish();
+        let (transformed, source_map) = source_map_test("((a))");
 
         let identifier = transformed
             .descendants()
@@ -434,12 +431,7 @@ mod tests {
 
     #[test]
     fn test_logical_expression_source_map() {
-        let src = "(a && (b && c))";
-        let tree = parse_module(src, 0).syntax();
-
-        let mut rewriter = JsFormatSyntaxRewriter::new(&tree);
-        let transformed = rewriter.transform(tree);
-        let source_map = rewriter.finish();
+        let (transformed, source_map) = source_map_test("(a && (b && c))");
 
         let logical_expressions: Vec<_> = transformed
             .descendants()
@@ -455,18 +447,13 @@ mod tests {
 
         assert_eq!(
             source_map.resolve_text(logical_expressions[1].syntax().text_trimmed_range()),
-            "a && (b"
+            "(a && (b"
         );
     }
 
     #[test]
     fn test_nested_nodes() {
-        let src = "(a + b)";
-        let tree = parse_module(src, 0).syntax();
-
-        let mut rewriter = JsFormatSyntaxRewriter::new(&tree);
-        let transformed = rewriter.transform(tree);
-        let source_map = rewriter.finish();
+        let (transformed, source_map) = source_map_test("(a + b)");
 
         let identifiers: Vec<_> = transformed
             .descendants()
@@ -496,13 +483,7 @@ mod tests {
 
     #[test]
     fn test_nested2() {
-        let src = "(interface, \"foo\");";
-
-        let tree = parse_module(src, 0).syntax();
-
-        let mut rewriter = JsFormatSyntaxRewriter::new(&tree);
-        let transformed = rewriter.transform(tree);
-        let source_map = rewriter.finish();
+        let (transformed, source_map) = source_map_test("(interface, \"foo\");");
 
         let string_literal = transformed
             .descendants()
@@ -533,11 +514,7 @@ mod tests {
     0,           0,           -1,            0,
 ];"#;
 
-        let tree = parse_module(src, 0).syntax();
-
-        let mut rewriter = JsFormatSyntaxRewriter::new(&tree);
-        let transformed = rewriter.transform(tree);
-        let source_map = rewriter.finish();
+        let (transformed, source_map) = source_map_test(src);
 
         let array = transformed
             .descendants()
@@ -553,5 +530,32 @@ mod tests {
     0,           0,           -1,            0,
 ]"#
         );
+    }
+
+    #[test]
+    fn enclosing_node() {
+        let (transformed, source_map) = source_map_test("(a + b);");
+
+        dbg!(&transformed, &source_map);
+
+        let expression_statement = transformed
+            .descendants()
+            .find_map(JsExpressionStatement::cast)
+            .unwrap();
+
+        assert_eq!(
+            source_map.resolve_text(expression_statement.syntax().text_trimmed_range()),
+            "(a + b);"
+        );
+    }
+
+    fn source_map_test(input: &str) -> (JsSyntaxNode, TransformSourceMap) {
+        let tree = parse_module(input, 0).syntax();
+
+        let mut rewriter = JsFormatSyntaxRewriter::new(&tree);
+        let transformed = rewriter.transform(tree);
+        let source_map = rewriter.finish();
+
+        (transformed, source_map)
     }
 }
