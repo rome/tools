@@ -134,7 +134,7 @@ const result2 = [4, 9].map( x => x |> inc |> double )
 +const result = [5,10]
 +  |> (_ => _.map(x => x * 2))
 +  |> (_ => _.reduce( (a,b) => a + b ))
-+  |> (sum => sum + 1
++  |> (sum => sum + 1)
  
 -const result2 = [4, 9].map((x) => x |> inc |> double);
 +const result2 = [4, 9].map( x => x |> inc |> double )
@@ -189,7 +189,7 @@ const searchResults$ = fromEvent(document.querySelector('input'), 'input')
 const result = [5,10]
   |> (_ => _.map(x => x * 2))
   |> (_ => _.reduce( (a,b) => a + b ))
-  |> (sum => sum + 1
+  |> (sum => sum + 1)
 
 const result2 = [4, 9].map( x => x |> inc |> double )
 ```

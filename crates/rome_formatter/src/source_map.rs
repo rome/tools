@@ -1,5 +1,7 @@
+use crate::source_map::Mapping::Mapped;
 use crate::{SourceMarker, TextRange};
 use rome_rowan::{Language, SyntaxNode, SyntaxNodeText, TextSize};
+use schemars::Map;
 use std::ops::Sub;
 
 #[derive(Debug, Clone)]
@@ -7,7 +9,13 @@ pub struct TransformSourceMap {
     source_text: SyntaxNodeText,
 
     /// The mappings stored in increasing order
-    mappings: Vec<DeletedRange>,
+    deleted_ranges: Vec<DeletedRange>,
+}
+
+#[derive(Copy, Clone, Debug)]
+enum Position {
+    Start,
+    End,
 }
 
 impl TransformSourceMap {
@@ -15,22 +23,80 @@ impl TransformSourceMap {
     pub fn empty<L: Language>(source: &SyntaxNode<L>) -> Self {
         Self {
             source_text: source.text(),
-            mappings: Vec::new(),
+            deleted_ranges: Vec::new(),
+        }
+    }
+
+    fn find_mapping2(&self, transformed_offset: TextSize, position: Position) -> Mapping {
+        dbg!(transformed_offset, position);
+        let index = self
+            .deleted_ranges
+            .binary_search_by_key(&transformed_offset, |range| range.transformed_start());
+
+        match index {
+            // Transformed position directly falls onto a position where a deleted range starts or ends (depending on the position)
+            // For example when querying: `a` in `(a)` or (a + b)`, or `b`
+            Ok(index) => {
+                let range = self.deleted_ranges[index];
+
+                match position {
+                    Position::Start => Mapping::Adjacent {
+                        source_offset: range.source_start(),
+                        source_trimmed_offset: range.source_end(),
+                        index,
+                    },
+                    // `a)`, deleted range is right after the token. That's why `source_start` is the offset
+                    // that truncates the `)` and `source_end` includes it
+                    Position::End => Mapping::Adjacent {
+                        source_offset: range.source_end(),
+                        source_trimmed_offset: range.source_start(),
+                        index,
+                    },
+                }
+            }
+            // The position falls outside of a position that has a leading/trailing deleted range.
+            // For example, if you get the position of `+` in `(a + b)`.
+            // That means, the trimmed and non-trimmed offsets are the same
+            Err(index) => {
+                let range = if index == 0 {
+                    None
+                } else {
+                    self.deleted_ranges.get(index - 1)
+                };
+
+                dbg!(range);
+
+                match range {
+                    Some(range) => {
+                        let transformed_delta = transformed_offset - range.transformed_start();
+                        dbg!(transformed_delta);
+                        let source_offset = range.source_start() + range.len() + transformed_delta;
+
+                        Mapping::Mapped {
+                            source_offset,
+                            index,
+                        }
+                    }
+                    None => Mapping::Unmapped {
+                        source_offset: transformed_offset,
+                    },
+                }
+            }
         }
     }
 
     fn find_mapping(&self, transformed_position: TextSize) -> Option<&DeletedRange> {
         let index = self
-            .mappings
+            .deleted_ranges
             .binary_search_by_key(&transformed_position, |mapping| mapping.transformed_start());
 
         match index {
-            Ok(index) => Some(&self.mappings[index]),
+            Ok(index) => Some(&self.deleted_ranges[index]),
             Err(index) => {
                 if index == 0 {
                     None
                 } else {
-                    self.mappings.get(index - 1)
+                    self.deleted_ranges.get(index - 1)
                 }
             }
         }
@@ -38,54 +104,73 @@ impl TransformSourceMap {
 
     pub fn resolve_range(&self, transformed_range: TextRange) -> TextRange {
         dbg!(transformed_range);
-        match self.find_mapping(transformed_range.start()) {
-            Some(start_mapping) => {
-                let is_at_range_start =
-                    transformed_range.start() == start_mapping.transformed_start();
 
-                let end_mapping = if is_at_range_start {
-                    self.find_mapping(transformed_range.end()).unwrap()
-                } else if transformed_range.is_empty() {
-                    start_mapping
-                } else {
-                    // Find the mapping up to but not including the end position
-                    self.find_mapping(transformed_range.end().sub(TextSize::from(1)))
-                        .unwrap()
-                };
+        let start_mapping = self.find_mapping2(transformed_range.start(), Position::Start);
+        let end_mapping = self.find_mapping2(transformed_range.end(), Position::End);
 
-                let mapping_range = TextRange::new(
-                    start_mapping.transformed_start(),
-                    end_mapping.transformed_start(),
-                );
+        dbg!(start_mapping, end_mapping);
 
-                dbg!(mapping_range);
+        match (start_mapping, end_mapping) {
+            // `(a)`
+            (
+                Mapping::Adjacent {
+                    source_offset: start_offset,
+                    ..
+                },
+                Mapping::Adjacent {
+                    source_offset: end_offset,
+                    ..
+                },
+            ) => TextRange::new(start_offset, end_offset),
 
-                if transformed_range.contains_range(mapping_range) && start_mapping != end_mapping {
-                    let end_offset = transformed_range.end() - mapping_range.end();
-                    TextRange::new(
-                        start_mapping.source_start(),
-                        end_mapping.source_end() + end_offset,
-                    )
-                } else {
-                    TextRange::new(
-                        start_mapping.map_trimmed(transformed_range.start()),
-                        end_mapping.map_trimmed(transformed_range.end()),
-                    )
-                }
-            }
-            None => match self.find_mapping(transformed_range.end()) {
-                Some(end_mapping) => {
-                    if transformed_range.end() == end_mapping.transformed_start() {
-                        TextRange::new(transformed_range.start(), end_mapping.source_end())
-                    } else {
-                        TextRange::new(
-                            transformed_range.start(),
-                            end_mapping.map_trimmed(transformed_range.end()),
-                        )
-                    }
-                }
-                None => transformed_range,
-            },
+            (
+                Mapping::Unmapped {
+                    source_offset: start_offset,
+                },
+                Mapping::Adjacent {
+                    source_offset: end_offset,
+                    ..
+                },
+            ) => TextRange::new(start_offset, end_offset),
+
+            // A range that is adjacent to a deleted range and spawns more than one deleted range
+            // ```
+            // (b + c);
+            //  ^^^^^^^
+            // a + (b + c)
+            // ^^^^^^^^^^^
+            // ```
+            (
+                Mapping::Adjacent {
+                    source_offset: start_offset,
+                    index: start_index,
+                    ..
+                },
+                Mapping::Mapped {
+                    source_offset: end_offset,
+                    index: end_index,
+                },
+            ) if end_index - start_index > 1 => TextRange::new(start_offset, end_offset),
+            (
+                Mapping::Mapped {
+                    source_offset: start_offset,
+                    index: start_index,
+                },
+                Mapping::Adjacent {
+                    source_offset: end_offset,
+                    index: end_index,
+                    ..
+                },
+            ) if end_index > start_index => TextRange::new(start_offset, end_offset),
+
+            // ````
+            // (b + c)
+            //  ^ ^ ^
+            //
+            // a + (b + c) + d
+            // ^^^^^^^^^^^^^^^
+            // ```
+            (start, end) => TextRange::new(start.source_offset(), end.source_offset()),
         }
     }
 
@@ -96,7 +181,7 @@ impl TransformSourceMap {
     }
 
     pub(crate) fn map_markers(&self, markers: &[SourceMarker]) -> Vec<SourceMarker> {
-        if self.mappings.is_empty() {
+        if self.deleted_ranges.is_empty() {
             Vec::from(markers)
         } else {
             Vec::from(markers)
@@ -131,6 +216,55 @@ impl TransformSourceMap {
             // }
             //
             // result
+        }
+    }
+}
+
+#[derive(Copy, Clone, Debug)]
+enum Mapping {
+    /// A mapping that directly adjacent a deleted range.
+    ///
+    /// ## Examples
+    ///
+    /// Assuming a transform that removes parentheses.
+    ///
+    /// ```javascript
+    /// (a + b)
+    /// ```
+    ///
+    /// The identifier `a` is directly preceded by the deleted `(`, the identifier `b` is followed by the deleted `)`,
+    /// and the binary expression is enclosed by the deleted `(` and `)`. On the other hand, the `+` token isn't preceded by any
+    /// deleted range.
+    Adjacent {
+        /// The source offset for that position including the content of the deleted range.
+        source_offset: TextSize,
+
+        /// The source offset for that position excluding the content of the deleted range.
+        source_trimmed_offset: TextSize,
+
+        /// The index of the adjacent deleted range
+        index: usize,
+    },
+
+    /// A mapped position that isn't adjacent to a removed range
+    Mapped {
+        source_offset: TextSize,
+        index: usize,
+    },
+
+    /// A position that hasn't been mapped because it isn't preceded by any removed range.
+    Unmapped { source_offset: TextSize },
+}
+
+impl Mapping {
+    fn source_offset(&self) -> TextSize {
+        match self {
+            Mapping::Adjacent {
+                source_trimmed_offset: source_offset,
+                ..
+            } => *source_offset,
+            Mapping::Mapped { source_offset, .. } => *source_offset,
+            Mapping::Unmapped { source_offset } => *source_offset,
         }
     }
 }
@@ -221,7 +355,7 @@ impl TransformSourceMapBuilder {
 
         TransformSourceMap {
             source_text: self.source_text,
-            mappings: merged_mappings,
+            deleted_ranges: merged_mappings,
         }
     }
 }
