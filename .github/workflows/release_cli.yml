@@ -167,7 +167,10 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: wasm
-          path: ./npm/rome-wasm
+          path: |
+            ./npm/wasm-bundler
+            ./npm/wasm-nodejs
+            ./npm/wasm-web
           if-no-files-found: error
 
   publish:
