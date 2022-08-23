@@ -94,11 +94,11 @@ interface CurrentFile {
 }
 
 export class Rome {
-	private workspace: Workspace | null;
+	private workspace: Workspace;
 	private currentFile: CurrentFile;
 
-	constructor() {
-		this.workspace = null;
+	private constructor(workspace: Workspace) {
+		this.workspace = workspace;
 		this.currentFile = {
 			version: 0,
 			path: {
@@ -108,20 +108,17 @@ export class Rome {
 		};
 	}
 
-	private async loadWorkspace(): Promise<Workspace> {
-		// load the web assembly module
-		main();
-		return new Workspace();
-
+	/**
+	 * It creates a new instance of the class {Rome}
+	 */
+	public static async create(): Promise<Rome> {
+		return new Rome(await Rome.loadWorkspace());
 	}
 
-	private async getWorkspace(): Promise<Workspace> {
-		if (this.workspace == null) {
-			this.workspace = await this.loadWorkspace();
-			return Promise.resolve(this.workspace);
-		} else {
-			return Promise.reject();
-		}
+	private static async loadWorkspace(): Promise<Workspace> {
+		// load the web assembly module
+		main();
+		return Promise.resolve(new Workspace());
 	}
 
 	/**
@@ -191,19 +188,18 @@ export class Rome {
 		content: string,
 		options: FormatContentOptions | FormatContentDebugOptions,
 	): Promise<FormatResult | FormatDebugResult> {
-		const workspace = await this.getWorkspace();
 		const updated = this.updateCurrentFile({
 			path: options.filePath,
 			id: 1,
 		});
 		if (updated) {
-			await workspace.change_file({
+			await this.workspace.change_file({
 				content,
 				version: this.currentFile.version,
 				path: this.currentFile.path,
 			});
 		} else {
-			await workspace.open_file({
+			await this.workspace.open_file({
 				content,
 				version: this.currentFile.version,
 				path: this.currentFile.path,
@@ -212,21 +208,21 @@ export class Rome {
 
 		let code;
 		if (options.range) {
-			const result = await workspace.format_range({
+			const result = await this.workspace.format_range({
 				path: this.currentFile.path,
 				// @ts-expect-error Types are currently wrong for range, need to fix them
 				range: options.range,
 			});
 			code = result.code;
 		} else {
-			const result = await workspace.format_file({
+			const result = await this.workspace.format_file({
 				path: this.currentFile.path,
 			});
 			code = result.code;
 		}
 
 		if (isFormatContentDebug(options)) {
-			const ir = await workspace.get_formatter_ir({
+			const ir = await this.workspace.get_formatter_ir({
 				path: this.currentFile.path,
 			});
 			return {

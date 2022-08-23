@@ -3,7 +3,7 @@ import { Rome } from "../src/index";
 
 describe("Rome formatter", () => {
 	it("should not format files", async () => {
-		const rome = new Rome();
+		const rome = await Rome.create();
 
 		let result = await rome.formatFiles(["./path/to/file.js"]);
 
@@ -12,7 +12,7 @@ describe("Rome formatter", () => {
 	});
 
 	it("should not format files in debug mode", async () => {
-		const rome = new Rome();
+		const rome = await Rome.create();
 
 		let result = await rome.formatFiles(["./path/to/file.js"], {
 			debug: true,
@@ -24,7 +24,7 @@ describe("Rome formatter", () => {
 	});
 
 	it("should format content", async () => {
-		const rome = new Rome();
+		const rome = await Rome.create();
 
 		let result = await rome.formatContent("function f   () {  }", {
 			filePath: "example.js",
@@ -35,7 +35,7 @@ describe("Rome formatter", () => {
 	});
 
 	it("should format content in debug mode", async () => {
-		const rome = new Rome();
+		const rome = await Rome.create();
 
 		let result = await rome.formatContent("function f() {}", {
 			filePath: "example.js",
@@ -50,7 +50,7 @@ describe("Rome formatter", () => {
 	});
 
 	it("should not format content with range", async () => {
-		const rome = new Rome();
+		const rome = await Rome.create();
 
 		let result = await rome.formatContent("let a   ; function g () {  }", {
 			filePath: "file.js",
@@ -62,7 +62,7 @@ describe("Rome formatter", () => {
 	});
 
 	it("should not format content with range in debug mode", async () => {
-		const rome = new Rome();
+		const rome = await Rome.create();
 
 		let result = await rome.formatContent("let a   ; function g () {  }", {
 			filePath: "file.js",
@@ -95,7 +95,7 @@ describe("Rome formatter", () => {
 
 describe("Rome parser", () => {
 	it("should not parse content", async () => {
-		const rome = new Rome();
+		const rome = await Rome.create();
 
 		let result = await rome.parseContent("function f() {}", {
 			filePath: "example.js",
