@@ -128,7 +128,6 @@ impl Rule for NoUnusedVariables {
         }
 
         let all_references = binding.all_references(model);
-
         if all_references.count() == 0 {
             Some(())
         } else {
@@ -180,6 +179,9 @@ impl Rule for NoUnusedVariables {
         let symbol_type = match binding.syntax().parent().unwrap().kind() {
             JsSyntaxKind::JS_FORMAL_PARAMETER => "parameter",
             JsSyntaxKind::JS_FUNCTION_DECLARATION => "function",
+            JsSyntaxKind::JS_CLASS_DECLARATION => "class",
+            JsSyntaxKind::TS_INTERFACE_DECLARATION => "interface",
+            JsSyntaxKind::TS_TYPE_ALIAS_DECLARATION => "type alias",
             _ => "variable",
         };
 

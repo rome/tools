@@ -467,7 +467,7 @@ impl SemanticAssertions {
 
                 if let Some(declaration_at_range) = declaration_at_range {
                     unused_match = Some(format!(
-                        "{} == {}",
+                        "{} != {}",
                         &code[declaration_at_range], &code[decl.range]
                     ));
                     code[declaration_at_range] == code[decl.range]
