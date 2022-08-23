@@ -61,7 +61,13 @@ function updateWasmPackage(target) {
 	fs.writeFileSync(manifestPath, JSON.stringify(manifest));
 }
 
-function writeManifest() {
+function writeManifest(packagePath) {
+	const manifestPath = resolve(PACKAGES_ROOT, packagePath, "package.json");
+
+	const manifestData = JSON.parse(
+		fs.readFileSync(manifestPath).toString("utf-8"),
+	);
+
 	const nativePackages = PLATFORMS.flatMap(
 		(platform) =>
 			ARCHITECTURES.map(
@@ -73,13 +79,14 @@ function writeManifest() {
 		(target) => [`@rometools/wasm-${target}`, rootManifest.version],
 	);
 
-	rootManifest["optionalDependencies"] = Object.fromEntries(
+	manifestData["version"] = rootManifest.version;
+	manifestData["optionalDependencies"] = Object.fromEntries(
 		nativePackages.concat(wasmPackages),
 	);
 
-	console.log(`Update manifest ${MANIFEST_PATH}`);
-	const content = JSON.stringify(rootManifest);
-	fs.writeFileSync(MANIFEST_PATH, content);
+	console.log(`Update manifest ${manifestPath}`);
+	const content = JSON.stringify(manifestData);
+	fs.writeFileSync(manifestPath, content);
 }
 
 const PLATFORMS = ["win32", "darwin", "linux"];
@@ -96,4 +103,5 @@ for (const platform of PLATFORMS) {
 	}
 }
 
-writeManifest();
+writeManifest("rome");
+writeManifest("backend-jsonrpc");
