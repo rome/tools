@@ -18,7 +18,6 @@ rome_console = { path = "../rome_console" }
 pico-args = { version ="0.5.0", features=["eq-separator"] }
 tracing = { version = "0.1.31", default-features = false, features = ["std"] }
 tracing-subscriber = "0.3.6"
-parking_lot = "0.12.0"
 lazy_static = "1.4.0"
 hdrhistogram = { version = "7.5.0", default-features = false }
 crossbeam = "0.8.1"

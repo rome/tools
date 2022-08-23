@@ -45,6 +45,7 @@ impl LanguageServer for LSPServer {
         self.session
             .client_capabilities
             .write()
+            .unwrap()
             .replace(params.capabilities);
 
         let init = InitializeResult {
@@ -67,7 +68,11 @@ impl LanguageServer for LSPServer {
         match load_config(&self.session.fs) {
             Ok(Some(configuration)) => {
                 info!("Configuration found, and it is valid!");
-                self.session.configuration.write().replace(configuration);
+                self.session
+                    .configuration
+                    .write()
+                    .unwrap()
+                    .replace(configuration);
             }
             Err(err) => {
                 error!("Couldn't load the configuration file, reason:\n {}", err);
