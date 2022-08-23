@@ -1,6 +1,5 @@
 import { main, Workspace, RomePath } from "@rometools/wasm-nodejs";
 
-
 interface FormatFilesDebugOptions extends FormatFilesOptions {
 	/**
 	 * If `true`, you'll be able to inspect the IR of the formatter
@@ -90,28 +89,39 @@ function isFormatContentDebug(
 }
 
 interface CurrentFile {
-	version: number, path: RomePath
+	version: number;
+	path: RomePath;
 }
 
 export class Rome {
-	private workspace: Workspace
+	private workspace: Workspace | null;
 	private currentFile: CurrentFile;
 
 	constructor() {
-		// load the web assembly module
-		main();
-		this.workspace = new Workspace();
+		this.workspace = null;
 		this.currentFile = {
 			version: 0,
 			path: {
 				path: "",
-				id: 0
-			}
+				id: 0,
+			},
 		};
 	}
 
+	private async loadWorkspace(): Promise<Workspace> {
+		// load the web assembly module
+		main();
+		return new Workspace();
+
+	}
+
 	private async getWorkspace(): Promise<Workspace> {
-		return Promise.resolve(this.workspace)
+		if (this.workspace == null) {
+			this.workspace = await this.loadWorkspace();
+			return Promise.resolve(this.workspace);
+		} else {
+			return Promise.reject();
+		}
 	}
 
 	/**
@@ -126,19 +136,20 @@ export class Rome {
 			// same path, let's just update the version
 			this.currentFile = {
 				version: this.currentFile.version++,
-				...this.currentFile.path
-			}
+				path: {
+					...this.currentFile.path,
+				},
+			};
 			return true;
 		} else {
 			// no same path, let's create a new one
 			this.currentFile = {
 				version: 0,
-				path
-			}
+				path,
+			};
 			return false;
 		}
 	}
-
 
 	async formatFiles(paths: string[]): Promise<FormatResult>;
 	async formatFiles(
@@ -183,39 +194,39 @@ export class Rome {
 		const workspace = await this.getWorkspace();
 		const updated = this.updateCurrentFile({
 			path: options.filePath,
-			id: 1
+			id: 1,
 		});
 		if (updated) {
-			workspace.change_file({
+			await workspace.change_file({
 				content,
 				version: this.currentFile.version,
-				path: this.currentFile.path
-			})
+				path: this.currentFile.path,
+			});
 		} else {
 			await workspace.open_file({
 				content,
 				version: this.currentFile.version,
-				path: this.currentFile.path
+				path: this.currentFile.path,
 			});
 		}
 
 		let code;
 		if (options.range) {
-			const result = workspace.format_range({
+			const result = await workspace.format_range({
 				path: this.currentFile.path,
-				range: options.range
+				// @ts-expect-error Types are currently wrong for range, need to fix them
+				range: options.range,
 			});
 			code = result.code;
 		} else {
 			const result = await workspace.format_file({
-				path: this.currentFile.path
+				path: this.currentFile.path,
 			});
 			code = result.code;
 		}
 
-
 		if (isFormatContentDebug(options)) {
-			const ir = workspace.get_formatter_ir({
+			const ir = await workspace.get_formatter_ir({
 				path: this.currentFile.path,
 			});
 			return {

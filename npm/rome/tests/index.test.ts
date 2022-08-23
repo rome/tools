@@ -44,7 +44,9 @@ describe("Rome formatter", () => {
 
 		expect(result.content).toEqual("function f() {}\n");
 		expect(result.errors).toEqual([]);
-		expect(result.ir).toEqual('["function", " ", "f", group(["(", ")"]), " ", "{", "}", hard_line_break]');
+		expect(result.ir).toEqual(
+			'["function", " ", "f", group(["(", ")"]), " ", "{", "}", hard_line_break]',
+		);
 	});
 
 	it("should not format content with range", async () => {
@@ -62,7 +64,6 @@ describe("Rome formatter", () => {
 	it("should not format content with range in debug mode", async () => {
 		const rome = new Rome();
 
-
 		let result = await rome.formatContent("let a   ; function g () {  }", {
 			filePath: "file.js",
 			range: [20, 25],
@@ -72,7 +73,8 @@ describe("Rome formatter", () => {
 		console.log(result.ir);
 		expect(result.content).toEqual("function g() {}");
 		expect(result.errors).toEqual([]);
-		expect(result.ir).toEqual(`[
+		expect(result.ir).toEqual(
+			`[
   "let",
   " ",
   group(["a"]),
@@ -86,7 +88,8 @@ describe("Rome formatter", () => {
   "{",
   "}",
   hard_line_break
-]`);
+]`,
+		);
 	});
 });
 

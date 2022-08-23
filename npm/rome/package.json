@@ -7,9 +7,9 @@
         "tsc": "tsc --noEmit",
         "format": "cargo rome-cli-dev format ./ --write",
         "ci": "cargo rome-cli-dev ci ./src && pnpm test:ci && tsc --noEmit",
+        "check": "cargo rome-cli-dev check ./src && tsc --noEmit",
         "build:wasm-dev": "wasm-pack build --out-dir ../../npm/wasm-nodejs --target nodejs --dev --scope rometools ../../crates/rome_wasm",
         "build:wasm": "wasm-pack build --out-dir ../../npm/wasm-nodejs --target nodejs --release --scope rometools ../../crates/rome_wasm",
-        "check": "cargo rome-cli-dev check ./src && tsc --noEmit",
         "test": "vitest",
         "test:ci": "vitest --run",
         "build": "tsc "
