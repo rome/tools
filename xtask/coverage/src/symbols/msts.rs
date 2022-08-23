@@ -79,7 +79,11 @@ impl TestCase for SymbolsMicrosoftTestCase {
                 // We do the same below because TS classifies some string literals as symbols and we also
                 // filter them below.
                 match x {
-                    SemanticEvent::DeclarationFound { .. } | SemanticEvent::Read { .. } => {
+                    SemanticEvent::DeclarationFound { .. }
+                    | SemanticEvent::Read { .. }
+                    | SemanticEvent::HoistedRead { .. }
+                    | SemanticEvent::Write { .. }
+                    | SemanticEvent::HoistedWrite { .. } => {
                         let name = x.str(&code);
                         !name.contains('\"') && !name.contains('\'')
                     }
@@ -134,7 +138,7 @@ impl TestCase for SymbolsMicrosoftTestCase {
             }
         } else {
             for (expected, actual) in expected.symbols.iter().zip(actual) {
-                let are_names_eq = expected.name == actual.str(&code);
+                let are_names_eq = expected.name == actual.str(&code).trim();
                 if !are_names_eq {
                     return TestRunOutcome::IncorrectlyErrored {
                         files: t,

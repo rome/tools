@@ -256,10 +256,20 @@ impl SemanticEventExtractor {
             | JS_FUNCTION_EXPORT_DEFAULT_DECLARATION
             | JS_FUNCTION_EXPRESSION
             | JS_ARROW_FUNCTION_EXPRESSION
+            | JS_CLASS_DECLARATION
+            | JS_CLASS_EXPORT_DEFAULT_DECLARATION
+            | JS_CLASS_EXPRESSION
             | JS_CONSTRUCTOR_CLASS_MEMBER
+            | JS_METHOD_CLASS_MEMBER
             | JS_GETTER_CLASS_MEMBER
             | JS_SETTER_CLASS_MEMBER
-            | JS_FUNCTION_BODY => {
+            | JS_METHOD_OBJECT_MEMBER
+            | JS_GETTER_OBJECT_MEMBER
+            | JS_SETTER_OBJECT_MEMBER
+            | JS_FUNCTION_BODY
+            | TS_INTERFACE_DECLARATION
+            | TS_ENUM_DECLARATION
+            | TS_TYPE_ALIAS_DECLARATION => {
                 self.push_scope(
                     node.text_range(),
                     ScopeHoisting::DontHoistDeclarationsToParent,
@@ -267,7 +277,7 @@ impl SemanticEventExtractor {
             }
 
             JS_BLOCK_STATEMENT | JS_FOR_STATEMENT | JS_FOR_OF_STATEMENT | JS_FOR_IN_STATEMENT
-            | JS_CATCH_CLAUSE => {
+            | JS_SWITCH_STATEMENT | JS_CATCH_CLAUSE => {
                 self.push_scope(node.text_range(), ScopeHoisting::HoistDeclarationsToParent);
             }
 
@@ -341,23 +351,28 @@ impl SemanticEventExtractor {
                 self.export_function_expression(node, &parent);
             }
             JS_CLASS_DECLARATION | JS_CLASS_EXPORT_DEFAULT_DECLARATION => {
-                self.push_binding_into_scope(None, &name_token);
+                let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
+                self.push_binding_into_scope(hoisted_scope_id, &name_token);
                 self.export_declaration(node, &parent);
             }
             JS_CLASS_EXPRESSION => {
-                self.push_binding_into_scope(None, &name_token);
+                let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
+                self.push_binding_into_scope(hoisted_scope_id, &name_token);
                 self.export_class_expression(node, &parent);
             }
             TS_TYPE_ALIAS_DECLARATION => {
-                self.push_binding_into_scope(None, &name_token);
+                let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
+                self.push_binding_into_scope(hoisted_scope_id, &name_token);
                 self.export_declaration(node, &parent);
             }
             TS_ENUM_DECLARATION => {
-                self.push_binding_into_scope(None, &name_token);
+                let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
+                self.push_binding_into_scope(hoisted_scope_id, &name_token);
                 self.export_declaration(node, &parent);
             }
             TS_INTERFACE_DECLARATION => {
-                self.push_binding_into_scope(None, &name_token);
+                let hoisted_scope_id = self.scope_index_to_hoist_declarations(1);
+                self.push_binding_into_scope(hoisted_scope_id, &name_token);
                 self.export_declaration(node, &parent);
             }
             _ => {
@@ -456,15 +471,26 @@ impl SemanticEventExtractor {
             | JS_FUNCTION_EXPORT_DEFAULT_DECLARATION
             | JS_FUNCTION_EXPRESSION
             | JS_ARROW_FUNCTION_EXPRESSION
+            | JS_CLASS_DECLARATION
+            | JS_CLASS_EXPORT_DEFAULT_DECLARATION
+            | JS_CLASS_EXPRESSION
             | JS_CONSTRUCTOR_CLASS_MEMBER
+            | JS_METHOD_CLASS_MEMBER
             | JS_GETTER_CLASS_MEMBER
             | JS_SETTER_CLASS_MEMBER
+            | JS_METHOD_OBJECT_MEMBER
+            | JS_GETTER_OBJECT_MEMBER
+            | JS_SETTER_OBJECT_MEMBER
+            | JS_FUNCTION_BODY
+            | TS_INTERFACE_DECLARATION
+            | TS_ENUM_DECLARATION
+            | TS_TYPE_ALIAS_DECLARATION
             | JS_BLOCK_STATEMENT
             | JS_FOR_STATEMENT
             | JS_FOR_OF_STATEMENT
             | JS_FOR_IN_STATEMENT
-            | JS_CATCH_CLAUSE
-            | JS_FUNCTION_BODY => {
+            | JS_SWITCH_STATEMENT
+            | JS_CATCH_CLAUSE => {
                 self.pop_scope(node.text_range());
             }
             _ => {}
@@ -606,7 +632,7 @@ impl SemanticEventExtractor {
             self.scopes[0].hoisting,
             ScopeHoisting::DontHoistDeclarationsToParent
         ));
-        debug_assert!(!self.scopes.is_empty());
+        debug_assert!(self.scopes.len() > skip);
 
         let scope_id_hoisted_to = self
             .scopes
@@ -731,8 +757,8 @@ impl SemanticEventExtractor {
         use JsSyntaxKind::*;
         debug_assert!(matches!(class_expression.kind(), JS_CLASS_EXPRESSION));
 
-        // export can only exist in the global scope
-        if self.scopes.len() > 1 {
+        // scope[0] = global, scope[1] = the class expression itself
+        if self.scopes.len() != 2 {
             return;
         }
 
@@ -759,8 +785,8 @@ impl SemanticEventExtractor {
                 | TS_INTERFACE_DECLARATION
         ));
 
-        // export can only exist in the global scope
-        if self.scopes.len() > 1 {
+        // scope[0] = global, scope[1] = what is being exported
+        if self.scopes.len() != 2 {
             return;
         }
 
@@ -768,6 +794,7 @@ impl SemanticEventExtractor {
             declaration.parent().map(|p| p.kind()),
             Some(JS_EXPORT | JS_EXPORT_DEFAULT_DECLARATION_CLAUSE)
         );
+
         if is_exported {
             self.stash.push_back(SemanticEvent::Exported {
                 range: binding.text_range(),

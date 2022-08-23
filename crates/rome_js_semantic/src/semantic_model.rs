@@ -69,6 +69,7 @@ impl<T: HasDeclarationAstNode> IsExportedCanBeQueried for T {
 
 #[derive(Debug)]
 struct SemanticModelScopeData {
+    range: TextRange,
     parent: Option<usize>,
     children: Vec<usize>,
     bindings: Vec<TextRange>,
@@ -234,6 +235,14 @@ impl Scope {
     /// ```
     pub fn is_ancestor_of(&self, other: &Scope) -> bool {
         other.ancestors().any(|s| s == *self)
+    }
+
+    pub fn range(&self) -> &TextRange {
+        &self.data.scopes[self.id].range
+    }
+
+    pub fn syntax(&self) -> &JsSyntaxNode {
+        &self.data.node_by_range[self.range()]
     }
 }
 
@@ -427,6 +436,14 @@ impl SemanticModel {
         Self {
             data: Arc::new(data),
         }
+    }
+
+    /// Iterate all scopes
+    pub fn scopes(&self) -> impl Iterator<Item = Scope> + '_ {
+        self.data.scopes.iter().enumerate().map(|(id, _)| Scope {
+            data: self.data.clone(),
+            id,
+        })
     }
 
     /// Returns the global scope of the model
@@ -701,6 +718,7 @@ impl SemanticModelBuilder {
                 debug_assert!(scope_id == self.scopes.len());
 
                 self.scopes.push(SemanticModelScopeData {
+                    range,
                     parent: parent_scope_id,
                     children: vec![],
                     bindings: vec![],
