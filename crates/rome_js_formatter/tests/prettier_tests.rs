@@ -1,7 +1,7 @@
-use parking_lot::{const_mutex, Mutex};
 use rome_rowan::{TextRange, TextSize};
 use similar::{utils::diff_lines, Algorithm, ChangeTag, TextDiff};
 use std::fs::remove_file;
+use std::sync::Mutex;
 use std::{
     env,
     ffi::OsStr,
@@ -364,7 +364,7 @@ struct DiffReport {
 impl DiffReport {
     fn get() -> &'static Self {
         static REPORTER: DiffReport = DiffReport {
-            state: const_mutex(Vec::new()),
+            state: Mutex::new(Vec::new()),
         };
 
         // Use an atomic Once to register an exit callback the first time any
@@ -400,7 +400,7 @@ impl DiffReport {
         match env::var("REPORT_PRETTIER") {
             Ok(value) if value == "1" => {
                 if !Self::is_ignored(file_name) {
-                    self.state.lock().push(DiffReportItem {
+                    self.state.lock().unwrap().push(DiffReportItem {
                         file_name,
                         rome_formatted_result: rome_formatted_result.to_owned(),
                         prettier_formatted_result: prettier_formatted_result.to_owned(),
@@ -463,7 +463,7 @@ impl DiffReport {
     }
 
     fn report_prettier(&self, report_type: ReportType, report_filename: String) {
-        let mut state = self.state.lock();
+        let mut state = self.state.lock().unwrap();
         state.sort_by_key(|DiffReportItem { file_name, .. }| *file_name);
 
         let mut report_metric_data = PrettierCompatibilityMetricData::default();

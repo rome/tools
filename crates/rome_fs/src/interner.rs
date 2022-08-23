@@ -9,7 +9,7 @@ use std::{
 
 use crossbeam::channel::{unbounded, Receiver, Sender};
 use indexmap::IndexSet;
-use parking_lot::RwLock;
+use std::sync::RwLock;
 
 pub type FileId = usize;
 
@@ -23,7 +23,7 @@ pub struct IndexSetInterner {
 
 impl PathInterner for IndexSetInterner {
     fn intern_path(&self, path: PathBuf) -> FileId {
-        let (index, _) = self.storage.write().insert_full(path);
+        let (index, _) = self.storage.write().unwrap().insert_full(path);
         index
     }
 }

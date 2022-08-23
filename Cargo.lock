@@ -1500,7 +1500,6 @@ dependencies = [
  "hdrhistogram",
  "insta",
  "lazy_static",
- "parking_lot 0.12.1",
  "pico-args",
  "rayon",
  "rome_bin",
@@ -1522,7 +1521,6 @@ name = "rome_console"
 version = "0.0.0"
 dependencies = [
  "atty",
- "lazy_static",
  "rome_markup",
  "schemars",
  "serde",
@@ -1640,7 +1638,6 @@ dependencies = [
  "ctor",
  "iai",
  "insta",
- "parking_lot 0.12.1",
  "quickcheck",
  "quickcheck_macros",
  "rome_diagnostics",
@@ -1726,7 +1723,6 @@ dependencies = [
  "anyhow",
  "futures",
  "indexmap",
- "parking_lot 0.12.1",
  "rome_analyze",
  "rome_console",
  "rome_diagnostics",

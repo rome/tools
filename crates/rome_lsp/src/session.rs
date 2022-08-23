@@ -5,7 +5,6 @@ use crate::url_interner::UrlInterner;
 use crate::utils;
 use futures::stream::futures_unordered::FuturesUnordered;
 use futures::StreamExt;
-use parking_lot::RwLock;
 use rome_analyze::RuleCategories;
 use rome_diagnostics::file::FileId;
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
@@ -16,6 +15,7 @@ use rome_service::Workspace;
 use rome_service::{DynRef, RomeError};
 use std::collections::HashMap;
 use std::sync::Arc;
+use std::sync::RwLock;
 use tower_lsp::lsp_types;
 use tracing::{error, trace};
 
@@ -66,6 +66,7 @@ impl Session {
     pub(crate) fn document(&self, url: &lsp_types::Url) -> Result<Document, RomeError> {
         self.documents
             .read()
+            .unwrap()
             .get(url)
             .cloned()
             .ok_or(RomeError::NotFound)
@@ -75,18 +76,18 @@ impl Session {
     ///
     /// Used by [`handlers::text_document] to synchronize documents with the client.
     pub(crate) fn insert_document(&self, url: lsp_types::Url, document: Document) {
-        self.documents.write().insert(url, document);
+        self.documents.write().unwrap().insert(url, document);
     }
 
     /// Remove the [`Document`] matching the provided [`lsp_types::Url`]
     pub(crate) fn remove_document(&self, url: &lsp_types::Url) {
-        self.documents.write().remove(url);
+        self.documents.write().unwrap().remove(url);
     }
 
     /// Return the unique [FileId] associated with the url for this [Session].
     /// This will assign a new FileId if there isn't one for the provided url.
     pub(crate) fn file_id(&self, url: lsp_types::Url) -> FileId {
-        self.url_interner.write().intern(url)
+        self.url_interner.write().unwrap().intern(url)
     }
 
     pub(crate) fn file_path(&self, url: &lsp_types::Url) -> RomePath {
@@ -134,6 +135,7 @@ impl Session {
         let mut futures: FuturesUnordered<_> = self
             .documents
             .read()
+            .unwrap()
             .keys()
             .map(|url| self.update_diagnostics(url.clone()))
             .collect();
@@ -149,6 +151,7 @@ impl Session {
     pub(crate) fn can_register_did_change_configuration(&self) -> bool {
         self.client_capabilities
             .read()
+            .unwrap()
             .as_ref()
             .and_then(|c| c.workspace.as_ref())
             .and_then(|c| c.did_change_configuration)
@@ -170,7 +173,7 @@ impl Session {
                 .into_iter()
                 .next()
                 .and_then(|client_configuration| {
-                    let mut config = self.config.write();
+                    let mut config = self.config.write().unwrap();
 
                     config
                         .set_workspace_settings(client_configuration)
@@ -178,7 +181,7 @@ impl Session {
                             error!("Cannot set workspace settings: {}", err);
                         })
                         .ok()?;
-                    let mut configuration = self.configuration.write();
+                    let mut configuration = self.configuration.write().unwrap();
                     // This operation is intended, we want to consume the configuration because once it's read
                     // from the LSP, it's not needed anymore
                     let settings = config.as_workspace_settings(configuration.take());
