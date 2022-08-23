@@ -1,6 +1,9 @@
 pub mod formatter;
+pub(crate) mod linter;
+pub(crate) mod reporter;
 
 use crate::reports::formatter::{FormatterReportFileDetail, FormatterReportSummary};
+use crate::reports::reporter::Reporter;
 use formatter::FormatterReport;
 use rome_console::codespan::Severity;
 use rome_service::RomeError;
@@ -16,29 +19,6 @@ pub struct Report {
     ///
     /// The key is the path of the file where the diagnostics occurred
     diagnostics: HashMap<String, ReportErrorKind>,
-}
-
-#[derive(Debug, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub enum ReportErrorKind {
-    Diagnostic(ReportDiagnostic),
-    Diff(ReportDiff),
-}
-
-/// Information computed from a [diagnostic][rome_diagnostics::Diagnostic]
-#[derive(Debug, Serialize)]
-pub struct ReportDiagnostic {
-    pub severity: Severity,
-    pub code: Option<String>,
-    pub title: String,
-}
-
-/// Information computed from a diff result
-#[derive(Debug, Serialize)]
-pub struct ReportDiff {
-    pub severity: Severity,
-    pub before: String,
-    pub after: String,
 }
 
 impl Default for ReportDiagnostic {

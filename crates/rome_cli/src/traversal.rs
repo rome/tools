@@ -1,6 +1,7 @@
+use crate::reports::reporter::{ReportDiagnosticKind, Reporter, ReporterSummary};
 use crate::{
     CliSession, Execution, FormatterReportFileDetail, FormatterReportSummary, Report,
-    ReportDiagnostic, ReportDiff, ReportErrorKind, ReportKind, Termination, TraversalMode,
+    ReportDiagnostic, ReportDiff, ReportKind, Termination, TraversalMode,
 };
 use crossbeam::channel::{unbounded, Receiver, Sender};
 use rome_console::{
@@ -12,11 +13,12 @@ use rome_diagnostics::{
     file::{FileId, SimpleFile},
     Diagnostic, DiagnosticHeader, Severity, MAXIMUM_DISPLAYABLE_DIAGNOSTICS,
 };
+use rome_formatter::Arguments;
 use rome_fs::{AtomicInterner, FileSystem, OpenOptions, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
 use rome_service::{
     workspace::{FeatureName, FileGuard, OpenFileParams, RuleCategories, SupportsFeatureParams},
-    Workspace,
+    RomeError, Workspace,
 };
 use std::{
     collections::HashMap,
@@ -29,7 +31,11 @@ use std::{
     time::{Duration, Instant},
 };
 
-pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<(), Termination> {
+pub(crate) fn traverse<'ctx>(
+    execution: Execution,
+    mut session: CliSession,
+    mut reporter: Reporter,
+) -> Result<(), Termination> {
     // Check that at least one input file / directory was specified in the command line
     let mut inputs = vec![];
 
@@ -107,6 +113,17 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
     let skipped = skipped.load(Ordering::Relaxed);
 
     let to_terminal = execution.should_report_to_terminal();
+
+    let summary = ReporterSummary {
+        skipped,
+        count,
+        duration,
+    };
+
+    reporter.update_summary(summary);
+
+    reporter.report_diagnostics(console)?;
+    reporter.report_summary(console)?;
 
     if let Some(duration) = duration {
         if to_terminal {
@@ -259,7 +276,7 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
                     sender_reports
                         .send(ReportKind::Error(
                             file_name.unwrap().to_string(),
-                            ReportErrorKind::Diagnostic(ReportDiagnostic {
+                            ReportDiagnosticKind::Diagnostic(ReportDiagnostic {
                                 code: Some(err.code.to_string()),
                                 title: err.message,
                                 severity: err.severity,
@@ -307,7 +324,7 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
                             sender_reports
                                 .send(ReportKind::Error(
                                     name.to_string(),
-                                    ReportErrorKind::Diagnostic(ReportDiagnostic {
+                                    ReportDiagnosticKind::Diagnostic(ReportDiagnostic {
                                         code: diag.code,
                                         title: String::from("test here"),
                                         severity: diag.severity,
@@ -368,7 +385,7 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
                     sender_reports
                         .send(ReportKind::Error(
                             file_name.to_string(),
-                            ReportErrorKind::Diff(ReportDiff {
+                            ReportDiagnosticKind::Diff(ReportDiff {
                                 before: old.to_string(),
                                 after: new.to_string(),
                                 severity: Severity::Error,

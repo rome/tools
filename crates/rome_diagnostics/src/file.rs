@@ -144,7 +144,7 @@ pub trait Files {
 }
 
 /// A file database that contains only one file.
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, Eq, PartialEq, Hash)]
 pub struct SimpleFile {
     name: String,
     source: String,

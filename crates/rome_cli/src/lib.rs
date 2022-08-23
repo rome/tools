@@ -2,6 +2,8 @@
 //! to parse commands and arguments, redirect the execution of the commands and
 //! execute the traversal of directory and files, based on the command that were passed.
 
+extern crate core;
+
 pub use pico_args::Arguments;
 use rome_console::EnvConsole;
 use rome_flags::FeatureFlags;

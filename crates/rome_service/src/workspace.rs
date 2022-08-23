@@ -76,7 +76,7 @@ pub struct SupportsFeatureParams {
     pub feature: FeatureName,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(serde::Serialize, serde::Deserialize, PartialEq, Eq, Hash, Debug)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub enum FeatureName {
     Format,

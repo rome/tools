@@ -26,6 +26,7 @@ thiserror = "1.0.30"
 rayon = "1.5.1"
 serde = { version = "1.0.133", features = ["derive"] }
 serde_json = { version = "1.0.74" }
+indexmap = { version = "1.9.1", features = ["serde"] }
 
 [dev-dependencies]
 insta = "1.18.2"
