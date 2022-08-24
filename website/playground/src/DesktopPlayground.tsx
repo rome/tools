@@ -1,16 +1,15 @@
-import { PlaygroundProps } from "./types";
-import CodeMirror from "@uiw/react-codemirror";
+import { PlaygroundProps, RomeAstSyntacticData } from "./types";
+import CodeMirror, { ReactCodeMirrorRef } from "@uiw/react-codemirror";
 import type { ViewUpdate } from "@codemirror/view";
-// import { EditorView } from "@codemirror/view";
-// import { romeAst } from "../lang-rome-ast/dist/";
-import { romeAst } from "codemirror-lang-rome-ast";
+import { romeAst, parser } from "codemirror-lang-rome-ast";
 import { romeAst as RomeFormatterIr } from "lang-rome-formatter-ir";
 import { javascript } from "@codemirror/lang-javascript";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import MermaidGraph from "./MermaidGraph";
+import { EditorSelection } from "@codemirror/state";
 
 export default function DesktopPlayground({
 	setPlaygroundState,
@@ -29,7 +28,6 @@ export default function DesktopPlayground({
 	const [clipboardStatus, setClipboardStatus] = useState<
 		"success" | "failed" | "normal"
 	>("normal");
-
 	const extensions = [
 		javascript({
 			jsx: isJsx,
@@ -39,6 +37,9 @@ export default function DesktopPlayground({
 
 	const romeAstCodeMirrorExtension = [romeAst()];
 	const romeFormatterIrCodeMirrorExtension = [RomeFormatterIr()];
+	const romeAstSyntacticDataRef = useRef<RomeAstSyntacticData | null>(null);
+
+	const astPanelCodeMirrorRef = useRef<null | ReactCodeMirrorRef>(null);
 
 	useEffect(() => {
 		if (clipboardStatus !== "normal") {
@@ -58,6 +59,48 @@ export default function DesktopPlayground({
 					: state,
 		);
 	}, []);
+
+	useEffect(() => {
+		scrollAstNodeIntoView(settings.cursorPosition);
+	}, [settings.cursorPosition]);
+
+	// We update the syntactic data of `RomeJsAst` only AstSource(`Display` string of our original AstRepresentation) changed.
+	useEffect(() => {
+		let tree = parser.parse(ast);
+		let rangeMap = new Map();
+		romeAstSyntacticDataRef.current = {
+			ast: tree,
+			rangeMap,
+		};
+		tree.iterate({
+			enter(node) {
+				if (node.type.name === "SyntaxToken") {
+					let range = node.node.getChild("Range");
+					if (!range) {
+						return;
+					}
+					let current = range.firstChild;
+					// Checking if current node is broken
+					while (current) {
+						if (current.type.isError) {
+							return;
+						}
+						current = current.nextSibling;
+					}
+
+					const children = range.node.getChildren("Number");
+					let first = children.at(0)?.node;
+					let second = children.at(1)?.node;
+					if (first && second) {
+						let start = +ast.slice(first.from, first.to);
+						let end = +ast.slice(second.from, second.to);
+						rangeMap.set([start, end], [node.from, node.to]);
+					}
+				}
+			},
+		});
+	}, [ast]);
+
 	const onChange = useCallback((value) => {
 		setPlaygroundState((state) => ({ ...state, code: value }));
 	}, []);
@@ -129,6 +172,7 @@ export default function DesktopPlayground({
 					<TabPanel>
 						<CodeMirror
 							value={ast}
+							ref={astPanelCodeMirrorRef}
 							extensions={romeAstCodeMirrorExtension}
 							className="h-full"
 							height="100%"
@@ -164,4 +208,30 @@ export default function DesktopPlayground({
 			</div>
 		</div>
 	);
+
+	function scrollAstNodeIntoView(cursorPosition: number) {
+		if (astPanelCodeMirrorRef.current && romeAstSyntacticDataRef.current) {
+			let codemirror = astPanelCodeMirrorRef.current;
+			let syntacticData = romeAstSyntacticDataRef.current;
+			let { view } = codemirror;
+			let { rangeMap } = syntacticData;
+			for (let [sourceRange, displaySourceRange] of rangeMap.entries()) {
+				if (
+					cursorPosition >= sourceRange[0] &&
+					cursorPosition <= sourceRange[1]
+				) {
+					view?.dispatch({
+						scrollIntoView: true,
+						selection: EditorSelection.create([
+							EditorSelection.range(
+								displaySourceRange[0],
+								displaySourceRange[1],
+							),
+							EditorSelection.cursor(displaySourceRange[0]),
+						]),
+					});
+				}
+			}
+		}
+	}
 }
