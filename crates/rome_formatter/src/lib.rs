@@ -841,33 +841,55 @@ where
     Ok(Formatted::new(buffer.into_element(), state.into_context()))
 }
 
+pub enum TransformResult<L: Language> {
+    /// The node wasn't change
+    Original,
+    Transformed {
+        root: SyntaxNode<L>,
+        source_map: TransformSourceMap,
+    },
+}
+
+/// Entry point for formatting a [SyntaxNode] for a specific language.
 pub trait FormatLanguage {
     type SyntaxLanguage: Language;
+
+    /// The type of the formatting context
     type Context: CstFormatContext<Language = Self::SyntaxLanguage>;
+
+    /// The type specifying how to format comments.
     type CommentStyle: CommentStyle<Self::SyntaxLanguage>;
+
+    /// The rule type that can format a [SyntaxNode] of this language
     type FormatRule: FormatRule<SyntaxNode<Self::SyntaxLanguage>, Context = Self::Context> + Default;
 
     /// Customizes how comments are formatted
     fn comment_style(&self) -> Self::CommentStyle;
 
+    /// Performs an optional pre-processing of the tree. This can be useful to remove nodes
+    /// that otherwise complicate formatting.
+    ///
+    /// Return [None] if the tree shouldn't be processed. Return [Some] with the transformed
+    /// tree and the source map otherwise.
     fn transform(
         &self,
-        root: &SyntaxNode<Self::SyntaxLanguage>,
-    ) -> (SyntaxNode<Self::SyntaxLanguage>, Option<TransformSourceMap>) {
-        (root.clone(), None)
+        _root: &SyntaxNode<Self::SyntaxLanguage>,
+    ) -> Option<(SyntaxNode<Self::SyntaxLanguage>, TransformSourceMap)> {
+        None
     }
 
-    /// Because this function is language-agnostic, it must be provided with a
-    /// `predicate` function that's used to select appropriate "root nodes" for the
-    /// range formatting process: for instance in JavaScript the predicate returns
+    /// This is used to select appropriate "root nodes" for the
+    /// range formatting process: for instance in JavaScript the function returns
     /// true for statement and declaration nodes, to ensure the entire statement
     /// gets formatted instead of the smallest sub-expression that fits the range
     fn is_range_formatting_node(&self, _node: &SyntaxNode<Self::SyntaxLanguage>) -> bool {
         true
     }
 
+    /// Returns the formatting options
     fn options(&self) -> &<Self::Context as FormatContext>::Options;
 
+    /// Creates the [FormatContext] with the given `source map` and `comments`
     fn create_context(
         self,
         comments: Comments<Self::SyntaxLanguage>,
@@ -883,7 +905,10 @@ pub fn format_node<L: FormatLanguage>(
     language: L,
 ) -> FormatResult<Formatted<L::Context>> {
     tracing::trace_span!("format_node").in_scope(move || {
-        let (root, source_map) = language.transform(root);
+        let (root, source_map) = match language.transform(root) {
+            Some((root, source_map)) => (root, Some(source_map)),
+            None => (root.clone(), None),
+        };
 
         let comments = Comments::from_node(&root, &language);
 
