@@ -8,7 +8,7 @@
 //!
 //! The [NeedsParentheses] trait forms the foundation of Rome's parentheses formatting and is implemented
 //! by all nodes supporting parentheses (expressions, assignments, and types). The trait's main method
-//! is the [`needs_parentheses`](NeedsParentheses::needs_parentheses)
+//! is the [NeedsParentheses::needs_parentheses]
 //! method that implements the rules when a node requires parentheses.
 //! A node requires parentheses to:
 //! * improve readability: `a << b << 3` is harder to read than `(a << b) << 3`
@@ -24,7 +24,7 @@
 //!
 //! ## Removing parenthesized nodes
 //!
-//! The JavaScript formatter [pre-processes](rome_js_formatter:JsFormatSyntaxRewriter] the input CST and removes all parenthesized expressions, assignments, and types except if:
+//! The JavaScript formatter [pre-processes](crate:JsFormatSyntaxRewriter] the input CST and removes all parenthesized expressions, assignments, and types except if:
 //! * The parenthesized node has a syntax error (skipped token trivia, missing inner expression)
 //! * The node has a directly preceding closure type cast comment
 //! * The inner expression is an unknown node
@@ -34,8 +34,8 @@
 //! the formatter makes the same decisions for both trees.
 //!
 //! ## Parentheses insertion
-//! The parentheses that get removed by the pre-processing step are re-inserted by the [FormatNodeRule](rome_js_formatter::FormatNodeRule).
-//! The rule inserts parentheses for each node where [`needs_parentheses`](rome_js_formatter::FormatNodeRule::needs_parentheses] returns true.
+//! The parentheses that get removed by the pre-processing step are re-inserted by the [crate::FormatNodeRule].
+//! The rule inserts parentheses for each node where [crate::FormatNodeRule::needs_parentheses] returns true.
 
 use crate::utils::{JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression};
 

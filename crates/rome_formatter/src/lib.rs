@@ -841,15 +841,6 @@ where
     Ok(Formatted::new(buffer.into_element(), state.into_context()))
 }
 
-pub enum TransformResult<L: Language> {
-    /// The node wasn't change
-    Original,
-    Transformed {
-        root: SyntaxNode<L>,
-        source_map: TransformSourceMap,
-    },
-}
-
 /// Entry point for formatting a [SyntaxNode] for a specific language.
 pub trait FormatLanguage {
     type SyntaxLanguage: Language;
