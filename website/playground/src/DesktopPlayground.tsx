@@ -37,10 +37,9 @@ export default function DesktopPlayground({
 
 	const romeAstCodeMirrorExtension = [romeAst()];
 	const romeFormatterIrCodeMirrorExtension = [RomeFormatterIr()];
-	//
 	const romeAstSyntacticDataRef = useRef<RomeAstSyntacticData | null>(null);
 
-	const astPanelCodeMirrorRef = useRef(null as null | ReactCodeMirrorRef);
+	const astPanelCodeMirrorRef = useRef<null | ReactCodeMirrorRef>(null );
 
 	useEffect(() => {
 		if (clipboardStatus !== "normal") {
