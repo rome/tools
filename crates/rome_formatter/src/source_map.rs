@@ -2,6 +2,7 @@ use crate::source_map::Mapping::Mapped;
 use crate::{SourceMarker, TextRange};
 use rome_rowan::{Language, SyntaxNode, SyntaxNodeText, TextSize};
 use schemars::Map;
+use std::collections::HashMap;
 use std::ops::Sub;
 
 #[derive(Debug, Clone)]
@@ -10,10 +11,12 @@ pub struct TransformSourceMap {
 
     /// The mappings stored in increasing order
     deleted_ranges: Vec<DeletedRange>,
+
+    mapped_node_ranges: HashMap<TextSize, TrimmedNodeRangeMapping>,
 }
 
 #[derive(Copy, Clone, Debug)]
-enum Position {
+enum RangePosition {
     Start,
     End,
 }
@@ -24,89 +27,21 @@ impl TransformSourceMap {
         Self {
             source_text: source.text(),
             deleted_ranges: Vec::new(),
+            mapped_node_ranges: HashMap::default(),
         }
     }
 
-    fn find_mapping2(&self, transformed_offset: TextSize, position: Position) -> Mapping {
-        dbg!(transformed_offset, position);
-        let index = self
-            .deleted_ranges
-            .binary_search_by_key(&transformed_offset, |range| range.transformed_start());
-
-        match index {
-            // Transformed position directly falls onto a position where a deleted range starts or ends (depending on the position)
-            // For example when querying: `a` in `(a)` or (a + b)`, or `b`
-            Ok(index) => {
-                let range = self.deleted_ranges[index];
-
-                match position {
-                    Position::Start => Mapping::Adjacent {
-                        source_offset: range.source_start(),
-                        source_trimmed_offset: range.source_end(),
-                        index,
-                    },
-                    // `a)`, deleted range is right after the token. That's why `source_start` is the offset
-                    // that truncates the `)` and `source_end` includes it
-                    Position::End => Mapping::Adjacent {
-                        source_offset: range.source_end(),
-                        source_trimmed_offset: range.source_start(),
-                        index,
-                    },
-                }
-            }
-            // The position falls outside of a position that has a leading/trailing deleted range.
-            // For example, if you get the position of `+` in `(a + b)`.
-            // That means, the trimmed and non-trimmed offsets are the same
-            Err(index) => {
-                let range = if index == 0 {
-                    None
-                } else {
-                    self.deleted_ranges.get(index - 1)
-                };
-
-                dbg!(range);
-
-                match range {
-                    Some(range) => {
-                        let transformed_delta = transformed_offset - range.transformed_start();
-                        dbg!(transformed_delta);
-                        let source_offset = range.source_start() + range.len() + transformed_delta;
-
-                        Mapping::Mapped {
-                            source_offset,
-                            index,
-                        }
-                    }
-                    None => Mapping::Unmapped {
-                        source_offset: transformed_offset,
-                    },
-                }
-            }
-        }
+    /// Returns the text of the source document as it was before the transformation.
+    pub fn text(&self) -> &SyntaxNodeText {
+        &self.source_text
     }
 
-    fn find_mapping(&self, transformed_position: TextSize) -> Option<&DeletedRange> {
-        let index = self
-            .deleted_ranges
-            .binary_search_by_key(&transformed_position, |mapping| mapping.transformed_start());
-
-        match index {
-            Ok(index) => Some(&self.deleted_ranges[index]),
-            Err(index) => {
-                if index == 0 {
-                    None
-                } else {
-                    self.deleted_ranges.get(index - 1)
-                }
-            }
-        }
-    }
-
-    pub fn resolve_range(&self, transformed_range: TextRange) -> TextRange {
+    /// Maps a range of the transformed document to a range in the source document.
+    pub fn source_range(&self, transformed_range: TextRange) -> TextRange {
         dbg!(transformed_range);
 
-        let start_mapping = self.find_mapping2(transformed_range.start(), Position::Start);
-        let end_mapping = self.find_mapping2(transformed_range.end(), Position::End);
+        let start_mapping = self.source_mapping(transformed_range.start(), RangePosition::Start);
+        let end_mapping = self.source_mapping(transformed_range.end(), RangePosition::End);
 
         dbg!(start_mapping, end_mapping);
 
@@ -174,10 +109,93 @@ impl TransformSourceMap {
         }
     }
 
-    pub fn resolve_text(&self, transformed_range: TextRange) -> String {
-        let range = self.resolve_range(transformed_range);
+    /// Maps the trimmed range of the transformed node to the trimmed range in the source document.
+    pub fn trimmed_source_range<L: Language>(&self, node: &SyntaxNode<L>) -> TextRange {
+        let mut source_range = self.source_range(node.text_trimmed_range());
 
-        self.source_text.slice(range).to_string()
+        dbg!(source_range);
+
+        if let Some(mapping) = self.mapped_node_ranges.get(&source_range.start()) {
+            if source_range.contains_range(mapping.trimmed_node_range) {
+                source_range =
+                    TextRange::new(mapping.mapped_node_range.start(), source_range.end());
+            }
+        }
+
+        if let Some(mapping) = self.mapped_node_ranges.get(&source_range.end()) {
+            if source_range.contains_range(mapping.trimmed_node_range) {
+                source_range =
+                    TextRange::new(source_range.start(), mapping.mapped_node_range.end());
+            }
+        }
+
+        dbg!(source_range);
+
+        source_range
+    }
+
+    /// Returns the source text of the trimmed range of `node`.
+    pub fn trimmed_source_text<L: Language>(&self, node: &SyntaxNode<L>) -> SyntaxNodeText {
+        let range = self.trimmed_source_range(node);
+        self.source_text.slice(range)
+    }
+
+    fn source_mapping(&self, transformed_offset: TextSize, position: RangePosition) -> Mapping {
+        dbg!(transformed_offset, position);
+        let index = self
+            .deleted_ranges
+            .binary_search_by_key(&transformed_offset, |range| range.transformed_start());
+
+        match index {
+            // Transformed position directly falls onto a position where a deleted range starts or ends (depending on the position)
+            // For example when querying: `a` in `(a)` or (a + b)`, or `b`
+            Ok(index) => {
+                let range = self.deleted_ranges[index];
+
+                match position {
+                    RangePosition::Start => Mapping::Adjacent {
+                        source_offset: range.source_start(),
+                        source_trimmed_offset: range.source_end(),
+                        index,
+                    },
+                    // `a)`, deleted range is right after the token. That's why `source_start` is the offset
+                    // that truncates the `)` and `source_end` includes it
+                    RangePosition::End => Mapping::Adjacent {
+                        source_offset: range.source_end(),
+                        source_trimmed_offset: range.source_start(),
+                        index,
+                    },
+                }
+            }
+            // The position falls outside of a position that has a leading/trailing deleted range.
+            // For example, if you get the position of `+` in `(a + b)`.
+            // That means, the trimmed and non-trimmed offsets are the same
+            Err(index) => {
+                let range = if index == 0 {
+                    None
+                } else {
+                    self.deleted_ranges.get(index - 1)
+                };
+
+                dbg!(range);
+
+                match range {
+                    Some(range) => {
+                        let transformed_delta = transformed_offset - range.transformed_start();
+                        dbg!(transformed_delta);
+                        let source_offset = range.source_start() + range.len() + transformed_delta;
+
+                        Mapping::Mapped {
+                            source_offset,
+                            index,
+                        }
+                    }
+                    None => Mapping::Unmapped {
+                        source_offset: transformed_offset,
+                    },
+                }
+            }
+        }
     }
 
     pub(crate) fn map_markers(&self, markers: &[SourceMarker]) -> Vec<SourceMarker> {
@@ -269,6 +287,12 @@ impl Mapping {
     }
 }
 
+#[derive(Debug, Copy, Clone)]
+struct TrimmedNodeRangeMapping {
+    trimmed_node_range: TextRange,
+    mapped_node_range: TextRange,
+}
+
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 struct DeletedRange {
     /// The range in the position of the source document
@@ -306,6 +330,8 @@ pub struct TransformSourceMapBuilder {
 
     /// The mappings in increasing order by transformed offset.
     deleted_ranges: Vec<TextRange>,
+
+    mapped_node_ranges: HashMap<TextSize, TrimmedNodeRangeMapping>,
 }
 
 impl TransformSourceMapBuilder {
@@ -313,6 +339,7 @@ impl TransformSourceMapBuilder {
         Self {
             source_text: root.text(),
             deleted_ranges: Vec::new(),
+            mapped_node_ranges: HashMap::new(),
         }
     }
 
@@ -321,6 +348,17 @@ impl TransformSourceMapBuilder {
     /// Mappings must be added in increasing order.
     pub fn add_deleted_range(&mut self, source_range: TextRange) {
         self.deleted_ranges.push(source_range);
+    }
+
+    pub fn add_node_range_mapping(&mut self, source_range: TextRange, to_source_range: TextRange) {
+        let mapping = TrimmedNodeRangeMapping {
+            trimmed_node_range: source_range,
+            mapped_node_range: to_source_range,
+        };
+
+        self.mapped_node_ranges
+            .insert(source_range.start(), mapping);
+        self.mapped_node_ranges.insert(source_range.end(), mapping);
     }
 
     pub fn finish(mut self) -> TransformSourceMap {
@@ -356,6 +394,7 @@ impl TransformSourceMapBuilder {
         TransformSourceMap {
             source_text: self.source_text,
             deleted_ranges: merged_mappings,
+            mapped_node_ranges: self.mapped_node_ranges,
         }
     }
 }

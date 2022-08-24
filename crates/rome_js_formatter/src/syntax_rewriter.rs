@@ -59,6 +59,7 @@ impl JsFormatSyntaxRewriter {
             }
         };
 
+        let inner_trimmed_range = inner.text_trimmed_range();
         // Store away the inner offset because the new returned inner might be a detached node
         let mut inner_offset = inner.text_range().start();
         let inner = self.transform(inner);
@@ -86,6 +87,11 @@ impl JsFormatSyntaxRewriter {
             }
 
             Some(first_token) => {
+                self.source_map.add_node_range_mapping(
+                    inner_trimmed_range,
+                    parenthesized.syntax().text_trimmed_range(),
+                );
+
                 self.source_map
                     .add_deleted_range(l_paren.text_trimmed_range());
 
@@ -126,6 +132,10 @@ impl JsFormatSyntaxRewriter {
                 // SAFETY: Calling `unwrap` is safe because `last_token` only returns `None` if a node's subtree
                 // doesn't contain ANY token, but we know that the subtree contains at least the first token.
                 let last_token = updated.last_token().unwrap();
+
+                // TODO consider skipping the trailing whitespace of the node before the `)`?
+                // So that it is inline with the formatting of verbatim nodes?
+
                 let new_last = last_token.with_trailing_trivia_pieces(chain_pieces(
                     last_token.trailing_trivia().pieces(),
                     r_paren_trivia,
@@ -408,10 +418,7 @@ mod tests {
             .find_map(JsIdentifierExpression::cast)
             .unwrap();
 
-        assert_eq!(
-            source_map.resolve_text(identifier.syntax().text_trimmed_range()),
-            "(a)"
-        );
+        assert_eq!(source_map.trimmed_source_text(identifier.syntax()), "(a)");
     }
 
     #[test]
@@ -423,10 +430,7 @@ mod tests {
             .find_map(JsIdentifierExpression::cast)
             .unwrap();
 
-        assert_eq!(
-            source_map.resolve_text(identifier.syntax().text_trimmed_range()),
-            "((a))"
-        );
+        assert_eq!(source_map.trimmed_source_text(identifier.syntax()), "((a))");
     }
 
     #[test]
@@ -441,12 +445,12 @@ mod tests {
         assert_eq!(2, logical_expressions.len());
 
         assert_eq!(
-            source_map.resolve_text(logical_expressions[0].syntax().text_trimmed_range()),
+            source_map.trimmed_source_text(logical_expressions[0].syntax()),
             "(a && (b && c))"
         );
 
         assert_eq!(
-            source_map.resolve_text(logical_expressions[1].syntax().text_trimmed_range()),
+            source_map.trimmed_source_text(logical_expressions[1].syntax()),
             "(a && (b"
         );
     }
@@ -462,23 +466,14 @@ mod tests {
 
         assert_eq!(2, identifiers.len());
         // Parentheses should be associated with the binary expression
-        assert_eq!(
-            source_map.resolve_text(identifiers[0].syntax().text_trimmed_range()),
-            "a"
-        );
-        assert_eq!(
-            source_map.resolve_text(identifiers[1].syntax().text_trimmed_range()),
-            "b"
-        );
+        assert_eq!(source_map.trimmed_source_text(identifiers[0].syntax()), "a");
+        assert_eq!(source_map.trimmed_source_text(identifiers[1].syntax()), "b");
 
         let binary = transformed
             .descendants()
             .find_map(JsBinaryExpression::cast)
             .unwrap();
-        assert_eq!(
-            source_map.resolve_text(binary.syntax().text_trimmed_range()),
-            "(a + b)"
-        )
+        assert_eq!(source_map.trimmed_source_text(binary.syntax()), "(a + b)")
     }
 
     #[test]
@@ -491,7 +486,7 @@ mod tests {
             .unwrap();
 
         assert_eq!(
-            source_map.resolve_text(string_literal.syntax().text_trimmed_range()),
+            source_map.trimmed_source_text(string_literal.syntax()),
             "\"foo\""
         );
 
@@ -500,7 +495,7 @@ mod tests {
             .find_map(JsSequenceExpression::cast)
             .unwrap();
         assert_eq!(
-            source_map.resolve_text(sequence.syntax().text_trimmed_range()),
+            source_map.trimmed_source_text(sequence.syntax()),
             "(interface, \"foo\")"
         );
     }
@@ -522,7 +517,7 @@ mod tests {
             .unwrap();
 
         assert_eq!(
-            source_map.resolve_text(array.syntax().text_trimmed_range()),
+            source_map.trimmed_source_text(array.syntax()),
             r#"[
     (2*n)/(r-l), 0,            (r+l)/(r-l),  0,
     0,           (2*n)/(t-b),  (t+b)/(t-b),  0,
@@ -544,8 +539,39 @@ mod tests {
             .unwrap();
 
         assert_eq!(
-            source_map.resolve_text(expression_statement.syntax().text_trimmed_range()),
+            source_map.trimmed_source_text(expression_statement.syntax()),
             "(a + b);"
+        );
+    }
+
+    // Format verbatim queries the trailing whitespace which is why it is important that the rewriter
+    // removes any trailing whitespace.
+    // TODO: Isn't this a general problem. What if we refactor comments to not be part of the verbatim part.
+    // which is what prettier does. It then means that the rewriter should strip comments which isn't possible.
+    // This is not per se a source map problem, more a problem with how we decide if the () should be returned or not.
+    //
+    // The other alternative would be to move comments and whitespace outside of the parens but that requires access to the next
+    // token and has other negative affects.
+    //
+    // In this case it also becomes questionable what should happen with the whitespace as the whitespace would be included
+    // twice now and so would any potential comment that is in the mapped range. I guess we may need more specific
+    // source maps to map the trimmed range of a node back to its original trimmed position except that things are even more complicated
+    // if a node has skipped token trivia in which case we don't want the full trimmed, only the somewhat trimmed.
+    //
+    #[test]
+    fn trailing_whitespace() {
+        let (transformed, source_map) = source_map_test("(a + b   );");
+
+        dbg!(&transformed, &source_map);
+
+        let binary = transformed
+            .descendants()
+            .find_map(JsBinaryExpression::cast)
+            .unwrap();
+
+        assert_eq!(
+            source_map.trimmed_source_text(binary.syntax()),
+            "(a + b   )"
         );
     }
 

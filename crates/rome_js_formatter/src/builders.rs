@@ -207,11 +207,12 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
             .fmt(f)
         }
 
+        let trimmed_source_range = f.context().source_map().trimmed_source_range(self.node);
         let mut buffer = VecBuffer::new(f.state_mut());
 
         write!(
             buffer,
-            [format_with(|f| {
+            [format_with(|f: &mut JsFormatter| {
                 for leading_trivia in self
                     .node
                     .first_leading_trivia()
@@ -219,13 +220,24 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
                     .flat_map(|trivia| trivia.pieces())
                     .skip_while(skip_whitespace)
                 {
+                    let trivia_source_range = f
+                        .context()
+                        .source_map()
+                        .source_range(leading_trivia.text_range());
+
+                    if trivia_source_range.start() >= trimmed_source_range.start() {
+                        break;
+                    }
+
                     write_trivia_token(f, leading_trivia)?;
                 }
 
                 let original_source = f
                     .context()
                     .source_map()
-                    .resolve_text(self.node.text_trimmed_range());
+                    .text()
+                    .slice(trimmed_source_range)
+                    .to_string();
 
                 dynamic_text(
                     &normalize_newlines(&original_source, LINE_TERMINATORS),
@@ -233,17 +245,30 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
                 )
                 .fmt(f)?;
 
-                // Clippy false positive: SkipWhile does not implement DoubleEndedIterator
-                #[allow(clippy::needless_collect)]
-                let trailing_trivia: Vec<_> = self
+                let mut trailing_trivia = self
                     .node
                     .last_trailing_trivia()
                     .into_iter()
-                    .flat_map(|trivia| trivia.pieces().rev())
-                    .skip_while(skip_whitespace)
-                    .collect();
+                    .flat_map(|trivia| trivia.pieces());
 
-                for trailing_trivia in trailing_trivia.into_iter().rev() {
+                let mut trailing_back = trailing_trivia.by_ref().rev().peekable();
+
+                while let Some(trailing) = trailing_back.peek() {
+                    let is_whitespace = skip_whitespace(trailing);
+
+                    let trailing_source_range =
+                        f.context().source_map().source_range(trailing.text_range());
+                    let is_in_trimmed_range =
+                        trailing_source_range.start() < trimmed_source_range.end();
+
+                    if is_whitespace || is_in_trimmed_range {
+                        trailing_back.next();
+                    } else {
+                        break;
+                    }
+                }
+
+                for trailing_trivia in trailing_trivia {
                     write_trivia_token(f, trailing_trivia)?;
                 }
 
