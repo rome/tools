@@ -1,5 +1,5 @@
 use crate::green::GreenElement;
-use crate::syntax::element::SyntaxElement;
+use crate::syntax::element::{SyntaxElement, SyntaxElementKey};
 use crate::syntax::SyntaxTrivia;
 use crate::{
     cursor, Direction, GreenNode, Language, NodeOrToken, SyntaxKind, SyntaxList, SyntaxNodeText,
@@ -11,7 +11,6 @@ use std::any::TypeId;
 use std::fmt::{Debug, Formatter};
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
-use std::ptr::NonNull;
 use std::{fmt, ops};
 use text_size::{TextRange, TextSize};
 
@@ -51,8 +50,9 @@ impl<L: Language> SyntaxNode<L> {
         self.raw.green().to_owned()
     }
 
-    pub fn key(&self) -> (NonNull<()>, TextSize) {
-        self.raw.key()
+    pub fn key(&self) -> SyntaxElementKey {
+        let (node_data, offset) = self.raw.key();
+        SyntaxElementKey::new(node_data, offset)
     }
 
     /// Returns the element stored in the slot with the given index. Returns [None] if the slot is empty.
@@ -255,7 +255,7 @@ impl<L: Language> SyntaxNode<L> {
 
     /// Returns the index of this node inside of its parent
     #[inline]
-    pub(crate) fn index(&self) -> usize {
+    pub fn index(&self) -> usize {
         self.raw.index()
     }
 

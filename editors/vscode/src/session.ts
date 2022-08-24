@@ -3,7 +3,6 @@ import { Commands } from "./commands";
 import { LanguageClient } from "vscode-languageclient/node";
 import { isRomeEditor, RomeEditor } from "./utils";
 
-// rome-ignore lint(js/noUnusedVariables): false positive
 export type Command = (...args: any[]) => unknown;
 
 /**

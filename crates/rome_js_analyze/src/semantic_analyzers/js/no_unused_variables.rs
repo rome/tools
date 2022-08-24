@@ -75,13 +75,12 @@ declare_rule! {
 // It is ok in some Typescripts constructs for a parameter to be unused.
 fn is_typescript_unused_ok(binding: &JsIdentifierBinding) -> Option<()> {
     match binding.syntax().parent()?.kind() {
-        JsSyntaxKind::JS_FORMAL_PARAMETER => {
-            let parameter = binding.parent::<JsFormalParameter>()?;
-            match parameter.syntax().parent()?.kind() {
+        JsSyntaxKind::JS_FORMAL_PARAMETER | JsSyntaxKind::JS_REST_PARAMETER => {
+            let parameter = binding.syntax().parent()?;
+            let parent = parameter.parent()?;
+            match parent.kind() {
                 JsSyntaxKind::JS_PARAMETER_LIST => {
-                    let parameters = parameter
-                        .parent::<JsParameterList>()?
-                        .parent::<JsParameters>()?;
+                    let parameters = JsParameterList::cast(parent)?.parent::<JsParameters>()?;
                     match parameters.syntax().parent()?.kind() {
                         JsSyntaxKind::TS_METHOD_SIGNATURE_CLASS_MEMBER
                         | JsSyntaxKind::TS_CALL_SIGNATURE_TYPE_MEMBER
@@ -91,8 +90,7 @@ fn is_typescript_unused_ok(binding: &JsIdentifierBinding) -> Option<()> {
                     }
                 }
                 JsSyntaxKind::JS_CONSTRUCTOR_PARAMETER_LIST => {
-                    let parameters = parameter
-                        .parent::<JsConstructorParameterList>()?
+                    let parameters = JsConstructorParameterList::cast(parent)?
                         .parent::<JsConstructorParameters>()?;
                     match parameters.syntax().parent()?.kind() {
                         JsSyntaxKind::TS_CONSTRUCT_SIGNATURE_TYPE_MEMBER
@@ -130,7 +128,6 @@ impl Rule for NoUnusedVariables {
         }
 
         let all_references = binding.all_references(model);
-
         if all_references.count() == 0 {
             Some(())
         } else {
@@ -182,6 +179,9 @@ impl Rule for NoUnusedVariables {
         let symbol_type = match binding.syntax().parent().unwrap().kind() {
             JsSyntaxKind::JS_FORMAL_PARAMETER => "parameter",
             JsSyntaxKind::JS_FUNCTION_DECLARATION => "function",
+            JsSyntaxKind::JS_CLASS_DECLARATION => "class",
+            JsSyntaxKind::TS_INTERFACE_DECLARATION => "interface",
+            JsSyntaxKind::TS_TYPE_ALIAS_DECLARATION => "type alias",
             _ => "variable",
         };
 

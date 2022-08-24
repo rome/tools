@@ -198,8 +198,7 @@ impl RenameSymbolExtensions for BatchMutation<JsLanguage> {
             let scope = reference.scope();
             if scope
                 .ancestors()
-                .filter_map(|scope| scope.get_binding(new_name))
-                .next()
+                .find_map(|scope| scope.get_binding(new_name))
                 .is_some()
             {
                 return false;

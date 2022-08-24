@@ -141,20 +141,18 @@ const alsoGoodPrecision = 9007199254740993n;
 ```diff
 --- Prettier
 +++ Rome
-@@ -103,10 +103,10 @@
+@@ -103,9 +103,10 @@
  1n + 2;
  // ↪ TypeError: Cannot mix BigInt and other types, use explicit conversions
  
 -1n * 2 +
--  // ↪ TypeError: Cannot mix BigInt and other types, use explicit conversions
 +1n * 2
-+// ↪ TypeError: Cannot mix BigInt and other types, use explicit conversions
+   // ↪ TypeError: Cannot mix BigInt and other types, use explicit conversions
  
--  1n;
-++ 1n;
++  +
+   1n;
  // ↪ TypeError: Cannot convert a BigInt value to a number
  
- Number(1n);
 ```
 
 # Output
@@ -266,9 +264,10 @@ view[0];
 // ↪ TypeError: Cannot mix BigInt and other types, use explicit conversions
 
 1n * 2
-// ↪ TypeError: Cannot mix BigInt and other types, use explicit conversions
+  // ↪ TypeError: Cannot mix BigInt and other types, use explicit conversions
 
-+ 1n;
+  +
+  1n;
 // ↪ TypeError: Cannot convert a BigInt value to a number
 
 Number(1n);

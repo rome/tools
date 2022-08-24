@@ -77,6 +77,14 @@ Disallow the use of the <code>delete</code> operator
 Require the use of <code>===</code> and <code>!==</code>
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noDupeArgs">
+	<a href="/docs/lint/rules/noDupeArgs">noDupeArgs (since v0.9.0)</a>
+	<a class="header-anchor" href="#noDupeArgs"></a>
+	<span class="recommended">recommended</span>
+</h3>
+Disallow duplicate function arguments name.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noEmptyPattern">
 	<a href="/docs/lint/rules/noEmptyPattern">noEmptyPattern (since v0.7.0)</a>
 	<a class="header-anchor" href="#noEmptyPattern"></a>

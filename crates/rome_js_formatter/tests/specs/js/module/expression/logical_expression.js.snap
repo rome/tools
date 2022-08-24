@@ -186,7 +186,7 @@ while (
 	somethingsomethingsomethingsomethin
 ) {}
 
-(something && elsewhere && happy && thoughts);
+something && elsewhere && happy && thoughts;
 
 function a() {
 	return (
@@ -234,55 +234,51 @@ const a = x + y;
 }
 
 if (
-	(
-		somethingsomethingsomethingsomethin && somethingsomethingsomethingsomethin
-	) || (
-		somethingsomethingsomethingsomethin && somethingsomethingsomethingsomethin
-	)
+	(somethingsomethingsomethingsomethin &&
+		somethingsomethingsomethingsomethin) ||
+	(somethingsomethingsomethingsomethin && somethingsomethingsomethingsomethin)
 ) {
 }
 
-undefined === function () {
-	throw undefined;
-};
+undefined ===
+	function () {
+		throw undefined;
+	};
 
-const b = `${(
-	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar
-)}`;
+const b = `${
+	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo +
+	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar
+}`;
 
 const a =
-	(
-		aa &&
-			bb &&
-			something &&
-			elsewhere &&
-			happy &&
-			thoughts &&
-			somethingsomethingsomethingsomething
-	) || (
-		aa &&
-			bb &&
-			something &&
-			elsewhere &&
-			happy &&
-			thoughts &&
-			somethingsomethingsomethingsomething
-	);
+	(aa &&
+		bb &&
+		something &&
+		elsewhere &&
+		happy &&
+		thoughts &&
+		somethingsomethingsomethingsomething) ||
+	(aa &&
+		bb &&
+		something &&
+		elsewhere &&
+		happy &&
+		thoughts &&
+		somethingsomethingsomethingsomething);
 
-(
-	lorem && // foo
-	ipsum
-);
+lorem && // foo
+	ipsum;
 
-(
-	lorem && call_function(1, 3) // foo
-);
+lorem &&
+	call_function(
+		1,
+		3,
+	) // foo
+	;
 
-(
-	lorem &&
-		// foo
-		(3 + 6 == 9)
-);
+lorem &&
+	// foo
+	3 + 6 == 9;
 
 let a = a || (b && c);
 
@@ -313,13 +309,7 @@ a in
 	LongClassName in
 	LongClassName;
 
-(
-	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo instanceof String && veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar instanceof Number
-) || veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar instanceof Boolean;
-
-
-## Lines exceeding width of 80 characters
-
-  123: 	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo + veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar
-  190: 	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo instanceof String && veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar instanceof Number
+(veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongFoo instanceof String &&
+	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar instanceof Number) ||
+	veryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryVeryLongBar instanceof Boolean;
 

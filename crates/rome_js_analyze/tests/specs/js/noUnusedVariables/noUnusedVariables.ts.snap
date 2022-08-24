@@ -40,6 +40,8 @@ function f(fn: (title: string) => boolean) {
 }
 f();
 
+export type Command = (...args: any[]) => unknown;
+
 ```
 
 # Diagnostics

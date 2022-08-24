@@ -174,7 +174,8 @@ class Manager {
 			if (existing !== undefined) {
 				const recalculated = this.calculateHeading(i, []);
 				if (
-					recalculated.start === existing.start && recalculated.end === existing.end
+					recalculated.start === existing.start &&
+					recalculated.end === existing.end
 				) {
 					return;
 				}
@@ -703,7 +704,7 @@ for (const scroller of heroScrollers) {
 	}
 
 	function isOverflow(index) {
-		return (index - activeStartIndex) >= initialItems.length;
+		return index - activeStartIndex >= initialItems.length;
 	}
 
 	function setActiveIndex(newActiveIndex, smooth) {

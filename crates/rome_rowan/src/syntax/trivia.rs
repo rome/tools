@@ -224,6 +224,10 @@ pub struct SyntaxTriviaPiece<L: Language> {
 }
 
 impl<L: Language> SyntaxTriviaPiece<L> {
+    pub(crate) fn into_raw_piece(self) -> TriviaPiece {
+        self.trivia
+    }
+
     /// Returns the internal kind of this trivia piece
     pub fn kind(&self) -> TriviaPieceKind {
         self.trivia.kind()
@@ -626,6 +630,14 @@ impl<L: Language> SyntaxTrivia<L> {
 
     pub fn text_range(&self) -> TextRange {
         self.raw.text_range()
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.raw.len() == 0
+    }
+
+    pub fn has_skipped(&self) -> bool {
+        self.pieces().any(|piece| piece.is_skipped())
     }
 }
 

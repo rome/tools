@@ -149,7 +149,7 @@ a
  
  const message =
    i % 3 === 0 && i % 5 === 0
-@@ -60,13 +58,13 @@
+@@ -60,7 +58,8 @@
      ? 3 //'There was an issue with your CVC number'
      : true //state == 'invalid_expiry'
      ? 4 //'Expiry must be sometime in the past.'
@@ -159,13 +159,6 @@ a
  
  const foo = (
    <div
-     className={
--      "match-achievement-medal-type type" +
--      (medals[0].record
-+      "match-achievement-medal-type type" + (medals[0].record
-         ? "-record"
-         : medals[0].unique
-         ? "-unique"
 ```
 
 # Output
@@ -237,7 +230,8 @@ const paymentMessage2 =
 const foo = (
   <div
     className={
-      "match-achievement-medal-type type" + (medals[0].record
+      "match-achievement-medal-type type" +
+      (medals[0].record
         ? "-record"
         : medals[0].unique
         ? "-unique"

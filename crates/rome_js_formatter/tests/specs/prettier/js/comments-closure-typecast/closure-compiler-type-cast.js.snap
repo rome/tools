@@ -73,7 +73,7 @@ const style2 =/**
 ```diff
 --- Prettier
 +++ Rome
-@@ -9,35 +9,39 @@
+@@ -9,35 +9,35 @@
  };
  
  // preserve parens only for type casts
@@ -83,11 +83,7 @@ const style2 =/**
 +let value = /** @type {string} */ this.members[0].functionCall();
  
 -functionCall(1 + /** @type {string} */ (value), /** @type {!Foo} */ ({}));
-+functionCall(
-+  1 + /** @type {string} */
-+  value, /** @type {!Foo} */
-+  {},
-+);
++functionCall(1 + /** @type {string} */ value, /** @type {!Foo} */ {});
  
  function returnValue() {
 -  return /** @type {!Array.<string>} */ (["hello", "you"]);
@@ -129,7 +125,7 @@ const style2 =/**
  );
  
  const style = /** @type {{
-@@ -47,16 +51,16 @@
+@@ -47,16 +47,16 @@
    marginLeft: number,
    marginRight: number,
    marginBottom: number,
@@ -169,11 +165,7 @@ let object = {
 let assignment = /** @type {string} */ getValue();
 let value = /** @type {string} */ this.members[0].functionCall();
 
-functionCall(
-  1 + /** @type {string} */
-  value, /** @type {!Foo} */
-  {},
-);
+functionCall(1 + /** @type {string} */ value, /** @type {!Foo} */ {});
 
 function returnValue() {
   return /** @type {!Array.<string>} */ ["hello", "you"];

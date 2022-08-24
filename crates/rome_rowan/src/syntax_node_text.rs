@@ -1,9 +1,8 @@
-use std::fmt;
-
 use crate::{
     cursor::{SyntaxNode, SyntaxToken},
     Direction, TextRange, TextSize,
 };
+use std::fmt;
 
 #[derive(Clone)]
 pub struct SyntaxNodeText {
@@ -125,6 +124,74 @@ impl SyntaxNodeText {
                 let range = text_range.intersect(token_range)?;
                 Some((token, range - token_range.start()))
             })
+    }
+
+    pub fn chars(&self) -> impl Iterator<Item = char> {
+        let mut iter = SyntaxNodeTextChars {
+            range: self.range,
+            iter: self.node.preorder_with_tokens(Direction::Next),
+            token: None,
+            index: self.range.start().into(),
+        };
+        iter.advance_token();
+        iter
+    }
+}
+
+struct SyntaxNodeTextChars {
+    range: TextRange,
+    iter: crate::cursor::PreorderWithTokens,
+    token: Option<(SyntaxToken, TextRange)>,
+    index: usize,
+}
+
+impl SyntaxNodeTextChars {
+    fn advance_token(&mut self) {
+        loop {
+            self.token = self.iter.until_next_token().map(|x| {
+                let range = x.text_range();
+                (x, range)
+            });
+
+            let intersection = self
+                .token
+                .as_ref()
+                .and_then(|(_, range)| range.intersect(self.range));
+            if intersection.is_none() {
+                continue;
+            } else {
+                break;
+            }
+        }
+    }
+}
+
+impl Iterator for SyntaxNodeTextChars {
+    type Item = char;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        loop {
+            let end: usize = self.range.end().into();
+            if self.index >= end {
+                return None;
+            }
+
+            let (token, range) = self.token.as_ref()?;
+            let text = token.text();
+
+            let start: usize = range.start().into();
+            let next_char = text[self.index - start..].chars().next();
+            match next_char {
+                Some(chr) => {
+                    self.index += chr.len_utf8();
+                    break Some(chr);
+                }
+                None => {
+                    self.advance_token();
+                    continue;
+                }
+            }
+        }
     }
 }
 

@@ -96,15 +96,7 @@ tap.test("RecordImport.advance", (t) => {
 ```diff
 --- Prettier
 +++ Rome
-@@ -15,70 +15,73 @@
-       callback(
-         null,
-         batches.filter(
--          (batch) => batch.state !== "error" && batch.state !== "completed",
-+          (batch) => (batch.state !== "error" && batch.state !== "completed"),
-         ),
-       );
-     });
+@@ -22,63 +22,66 @@
    };
  
    mockFS((callback) => {
@@ -185,20 +177,20 @@ tap.test("RecordImport.advance", (t) => {
 +
 +                      t.ok(batch.getCurState().name(i18n));
                      });
--
++                  });
+ 
 -                    t.ok(batch.getCurState().name(i18n));
-                   });
--                });
- 
--                t.ok(batch.getCurState().name(i18n));
+-                  });
 +                  t.ok(batch.getCurState().name(i18n));
-+                });
+                 });
+-
+-                t.ok(batch.getCurState().name(i18n));
                });
--            });
- 
--            t.ok(batch.getCurState().name(i18n));
++
 +              t.ok(batch.getCurState().name(i18n));
-+            });
+             });
+-
+-            t.ok(batch.getCurState().name(i18n));
            });
 +
 +          t.ok(batch.getCurState().name(i18n));
@@ -233,7 +225,7 @@ tap.test("RecordImport.advance", (t) => {
       callback(
         null,
         batches.filter(
-          (batch) => (batch.state !== "error" && batch.state !== "completed"),
+          (batch) => batch.state !== "error" && batch.state !== "completed",
         ),
       );
     });

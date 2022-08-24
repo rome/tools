@@ -173,7 +173,7 @@ Enables Rome's formatter
 > Default: `true`
 
 
-#### `format.indentStyle`
+#### `formatter.indentStyle`
 
 The style of the indentation. It can be `"tab"` or `"space"`.
 
@@ -181,11 +181,11 @@ The style of the indentation. It can be `"tab"` or `"space"`.
 
 Rome's default is `"tab"`.
 
-#### `format.indentSize`
+#### `formatter.indentSize`
 
 How big the indentation should be.
 
-#### `format.lineWidth`
+#### `formatter.lineWidth`
 
 How many characters can be written on a single line.
 

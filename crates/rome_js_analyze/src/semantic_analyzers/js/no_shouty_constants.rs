@@ -23,6 +23,25 @@ declare_rule! {
     /// const FOO = "FOO";
     /// console.log(FOO);
     /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// let FOO = "FOO";
+    /// console.log(FOO);
+    /// ```
+    ///
+    /// ```js
+    /// export const FOO = "FOO";
+    /// console.log(FOO);
+    /// ```
+    ///
+    /// ```js
+    /// function f(FOO = "FOO") {
+    ///     return FOO;
+    /// }
+    /// ```
+    ///
     pub(crate) NoShoutyConstants {
         version: "0.7.0",
         name: "noShoutyConstants",
@@ -46,11 +65,16 @@ fn is_id_and_string_literal_inner_text_equal(
         .as_js_string_literal_expression()?;
     let literal_text = literal.inner_string_text();
 
-    if id_text == literal_text {
-        Some((id.clone(), literal.clone()))
-    } else {
-        None
+    for (from_id, from_literal) in id_text.chars().zip(literal_text.chars()) {
+        if from_id != from_literal {
+            return None;
+        }
+        if from_id.is_lowercase() || from_literal.is_lowercase() {
+            return None;
+        }
     }
+
+    Some((id.clone(), literal.clone()))
 }
 
 pub struct State {
@@ -74,6 +98,11 @@ impl Rule for NoShoutyConstants {
         if declaration.is_const() {
             if let Some((binding, literal)) = is_id_and_string_literal_inner_text_equal(declarator)
             {
+                let model = ctx.model();
+                if model.is_exported(&binding) {
+                    return None;
+                }
+
                 return Some(State {
                     literal,
                     references: binding.all_references(ctx.model()).collect(),

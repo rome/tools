@@ -5,9 +5,14 @@
     "scripts": {
         "postinstall": "node scripts/postinstall.js",
         "tsc": "tsc --noEmit",
-        "format": "cargo rome-cli-dev format ./src --write",
-        "check": "cargo rome-cli-dev check ./src"
+        "format": "cargo rome-cli-dev format ./ --write",
+        "ci": "cargo rome-cli-dev ci ./src && pnpm test:ci && tsc --noEmit",
+        "check": "cargo rome-cli-dev check ./src && tsc --noEmit",
+        "test": "vitest",
+        "test:ci": "vitest --run",
+        "build": "tsc "
     },
+    "main": "./dist/index.js",
     "homepage": "https://rome.tools",
     "author": "Sebastian McKenzie",
     "bugs": "https://github.com/rome/tools/issues",
@@ -29,6 +34,8 @@
     },
     "license": "MIT",
     "devDependencies": {
-        "typescript": "^4.7.4"
+        "typescript": "^4.7.4",
+        "vitest": "^0.22.0",
+        "vite": "^3.0.8"
     }
 }

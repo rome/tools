@@ -4,6 +4,7 @@ specifiers:
   '@codemirror/lang-javascript': ^6.0.1
   '@codemirror/state': 6.1.0
   '@codemirror/view': 6.1.0
+  '@rometools/wasm-web': ../../npm/wasm-web
   '@tailwindcss/forms': ^0.4.0
   '@types/node': ^18.0.6
   '@types/prettier': ^2.6.3
@@ -30,6 +31,7 @@ dependencies:
   '@codemirror/lang-javascript': 6.0.1
   '@codemirror/state': 6.1.0
   '@codemirror/view': 6.1.0
+  '@rometools/wasm-web': link:../../npm/wasm-web
   '@uiw/react-codemirror': 4.11.4_j45qn7k5iyiiecf3ysrf6hvqzq
   codemirror-lang-rome-ast: 0.0.6
   lang-rome-formatter-ir: 0.0.2

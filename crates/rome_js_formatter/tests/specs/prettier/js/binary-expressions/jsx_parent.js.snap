@@ -46,42 +46,15 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,8 +1,8 @@
- <div
-   src={
-     !isJellyfishEnabled &&
--    diffUpdateMessageInput != null &&
--    this.state.isUpdateMessageEmpty
-+      diffUpdateMessageInput != null &&
-+      this.state.isUpdateMessageEmpty
-   }
- />;
- 
-@@ -15,25 +15,22 @@
- <div
-   style={
-     !isJellyfishEnabled &&
--    diffUpdateMessageInput && {
--      fontSize: 14,
--      color: "#fff",
--    }
-+      diffUpdateMessageInput &&
-+      {
-+        fontSize: 14,
-+        color: "#fff",
-+      }
-   }
- />;
+@@ -24,16 +24,12 @@
  
  <div>
--  {!isJellyfishEnabled && diffUpdateMessageInput != null && (
+   {!isJellyfishEnabled && diffUpdateMessageInput != null && (
 -    <div>
 -      <span>Text</span>
 -    </div>
--  )}
-+  {!isJellyfishEnabled &&
-+    diffUpdateMessageInput != null &&
-+    <div><span>Text</span></div>}
++    <div><span>Text</span></div>
+   )}
  </div>;
  
  <div>
@@ -100,8 +73,8 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
 <div
   src={
     !isJellyfishEnabled &&
-      diffUpdateMessageInput != null &&
-      this.state.isUpdateMessageEmpty
+    diffUpdateMessageInput != null &&
+    this.state.isUpdateMessageEmpty
   }
 />;
 
@@ -114,18 +87,17 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
 <div
   style={
     !isJellyfishEnabled &&
-      diffUpdateMessageInput &&
-      {
-        fontSize: 14,
-        color: "#fff",
-      }
+    diffUpdateMessageInput && {
+      fontSize: 14,
+      color: "#fff",
+    }
   }
 />;
 
 <div>
-  {!isJellyfishEnabled &&
-    diffUpdateMessageInput != null &&
-    <div><span>Text</span></div>}
+  {!isJellyfishEnabled && diffUpdateMessageInput != null && (
+    <div><span>Text</span></div>
+  )}
 </div>;
 
 <div>

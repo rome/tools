@@ -63,13 +63,8 @@ foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
 ```diff
 --- Prettier
 +++ Rome
-@@ -11,13 +11,12 @@
- ).TSESTree!.BinaryExpression;
- 
- bifornCringerMoshedPerplexSawder = (
--  glimseGlyphsHazardNoopsTieTie === 0 &&
--  kochabCooieGameOnOboleUnweave === Math.PI
-+  glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+@@ -15,9 +15,9 @@
+   kochabCooieGameOnOboleUnweave === Math.PI
      ? averredBathersBoxroomBuggyNurl
      : anodyneCondosMalateOverateRetinol
 -).annularCooeedSplicesWalksWayWay
@@ -81,13 +76,8 @@ foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
  
  foo = (
    callNode.parent?.type === AST_NODE_TYPES.ChainExpression
-@@ -32,17 +31,15 @@
- ).TSESTree!.BinaryExpression!;
- 
- bifornCringerMoshedPerplexSawder = (
--  glimseGlyphsHazardNoopsTieTie === 0 &&
--  kochabCooieGameOnOboleUnweave === Math.PI
-+  glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+@@ -36,9 +36,9 @@
+   kochabCooieGameOnOboleUnweave === Math.PI
      ? averredBathersBoxroomBuggyNurl
      : anodyneCondosMalateOverateRetinol
 -).annularCooeedSplicesWalksWayWay
@@ -98,12 +88,7 @@ foo = (coooooooooooooooooooooooooooooooooooooooooooooooooooond
 +)!.annularCooeedSplicesWalksWayWay()!;
  
  bifornCringerMoshedPerplexSawder =
--  askTrovenaBeenaDependsRowans +
--  (glimseGlyphsHazardNoopsTieTie === 0
-+  askTrovenaBeenaDependsRowans + (glimseGlyphsHazardNoopsTieTie === 0
-     ? averredBathersBoxroomBuggyNurl
-     : anodyneCondosMalateOverateRetinol
-   ).Foo!.foo;
+   askTrovenaBeenaDependsRowans +
 ```
 
 # Output
@@ -122,7 +107,8 @@ foo = (
 ).TSESTree!.BinaryExpression;
 
 bifornCringerMoshedPerplexSawder = (
-  glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+  glimseGlyphsHazardNoopsTieTie === 0 &&
+  kochabCooieGameOnOboleUnweave === Math.PI
     ? averredBathersBoxroomBuggyNurl
     : anodyneCondosMalateOverateRetinol
 ).annularCooeedSplicesWalksWayWay.annularCooeedSplicesWalksWayWay(
@@ -142,7 +128,8 @@ foo = (
 ).TSESTree!.BinaryExpression!;
 
 bifornCringerMoshedPerplexSawder = (
-  glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
+  glimseGlyphsHazardNoopsTieTie === 0 &&
+  kochabCooieGameOnOboleUnweave === Math.PI
     ? averredBathersBoxroomBuggyNurl
     : anodyneCondosMalateOverateRetinol
 ).annularCooeedSplicesWalksWayWay.annularCooeedSplicesWalksWayWay(
@@ -150,7 +137,8 @@ bifornCringerMoshedPerplexSawder = (
 )!.annularCooeedSplicesWalksWayWay()!;
 
 bifornCringerMoshedPerplexSawder =
-  askTrovenaBeenaDependsRowans + (glimseGlyphsHazardNoopsTieTie === 0
+  askTrovenaBeenaDependsRowans +
+  (glimseGlyphsHazardNoopsTieTie === 0
     ? averredBathersBoxroomBuggyNurl
     : anodyneCondosMalateOverateRetinol
   ).Foo!.foo;
@@ -169,9 +157,4 @@ foo = (
 ```
 
 
-# Lines exceeding max width of 80 characters
-```
-   14:   glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
-   34:   glimseGlyphsHazardNoopsTieTie === 0 && kochabCooieGameOnOboleUnweave === Math.PI
-```
 

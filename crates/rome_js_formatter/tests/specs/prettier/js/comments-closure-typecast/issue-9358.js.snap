@@ -16,34 +16,35 @@ const fooooba3 = /** @type {Array.<fooo.barr.baaaaaaz>} */ (fooobaarbazzItems ||
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,9 +1,7 @@
+@@ -1,11 +1,6 @@
 -const fooooba1 = /** @type {Array.<fooo.barr.baaaaaaz>} */ (
 -  fooobaarbazzItems || foo
 -);
 -const fooooba2 = /** @type {Array.<fooo.barr.baaaaaaz>} */ (
 -  fooobaarbazzItems + foo
 -);
+-const fooooba3 = /** @type {Array.<fooo.barr.baaaaaaz>} */ (
+-  fooobaarbazzItems || foo
+-)
+-  ? foo
+-  : bar;
 +const fooooba1 = /** @type {Array.<fooo.barr.baaaaaaz>} */
-+  (fooobaarbazzItems || foo);
++  fooobaarbazzItems || foo;
 +const fooooba2 = /** @type {Array.<fooo.barr.baaaaaaz>} */
-+  (fooobaarbazzItems + foo);
- const fooooba3 = /** @type {Array.<fooo.barr.baaaaaaz>} */ (
-   fooobaarbazzItems || foo
- )
++  fooobaarbazzItems + foo;
++const fooooba3 = /** @type {Array.<fooo.barr.baaaaaaz>} */
++  fooobaarbazzItems || foo ? foo : bar;
 ```
 
 # Output
 
 ```js
 const fooooba1 = /** @type {Array.<fooo.barr.baaaaaaz>} */
-  (fooobaarbazzItems || foo);
+  fooobaarbazzItems || foo;
 const fooooba2 = /** @type {Array.<fooo.barr.baaaaaaz>} */
-  (fooobaarbazzItems + foo);
-const fooooba3 = /** @type {Array.<fooo.barr.baaaaaaz>} */ (
-  fooobaarbazzItems || foo
-)
-  ? foo
-  : bar;
+  fooobaarbazzItems + foo;
+const fooooba3 = /** @type {Array.<fooo.barr.baaaaaaz>} */
+  fooobaarbazzItems || foo ? foo : bar;
 ```
 
 

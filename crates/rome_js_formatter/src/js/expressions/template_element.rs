@@ -4,6 +4,7 @@ use rome_formatter::{format_args, write, FormatContext, FormatRuleWithOptions, V
 
 use crate::context::TabWidth;
 use crate::js::lists::template_element_list::{TemplateElementIndention, TemplateElementLayout};
+use crate::parentheses::ExpressionNode;
 use rome_js_syntax::{
     JsAnyExpression, JsSyntaxNode, JsSyntaxToken, JsTemplateElement, TsTemplateElement,
 };
@@ -106,7 +107,10 @@ impl Format<JsFormatContext> for FormatTemplateElement {
             TemplateElementLayout::Fit => {
                 use JsAnyExpression::*;
 
-                let expression = self.element.expression();
+                let expression = self
+                    .element
+                    .expression()
+                    .map(|expression| expression.resolve());
 
                 // It's preferred to break after/before `${` and `}` rather than breaking in the
                 // middle of some expressions.

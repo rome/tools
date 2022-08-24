@@ -3,9 +3,11 @@ use crate::assert_semantics;
 // Reads
 
 assert_semantics! {
-    ok_reference_read_global, "let a/*#A*/ = 1; let b = a/*READ A*/ + 1;",
+    ok_reference_read_global,
+        "let a/*#A*/ = 1; let b = a/*READ A*/ + 1;",
 
-    ok_reference_read_inner_scope, r#"function f(a/*#A1*/) {
+    ok_reference_read_inner_scope,
+        r#"function f(a/*#A1*/) {
     let b = a/*READ A1*/ + 1;
     console.log(b);
     if (true) {
@@ -17,6 +19,17 @@ assert_semantics! {
     console.log(b);
 }
 f(1);"#,
+
+    ok_reference_switch,
+        "let b = 1;
+        let a/*#A1*/ = 1;
+        switch (b) {
+            case 1: let a/*#A2*/ = 2; console.log(1, a/*READ A2*/);
+            case 2: let c/*#C*/ = 2; console.log(2, a/*READ A2*/, c/*READ C*/);
+            case 3: { let d/*#D*/ = 2; console.log(3, a/*READ A2*/, c/*READ C*/, d/*READ D*/); }
+            case 4: console.log(4, a/*READ A2*/, c/*READ C*/, d/*?*/);
+        }
+        console.log(5, a/*READ A1*/);",
 }
 
 // Read Hoisting
@@ -46,14 +59,14 @@ function f() {
 }
 f();"#,
 
-ok_hoisting_read_redeclaration_after_use, r#"var a/*#A1*/ = 1;
+    ok_hoisting_read_redeclaration_after_use, r#"var a/*#A1*/ = 1;
 function f() {
     console.log(a/*READ A2*/);
     var a/*#A2*/ = 10;
 }
 f();"#,
 
-        ok_hoisting_read_for_of, r#"function f() {
+    ok_hoisting_read_for_of, r#"function f() {
     for (var a/*#A*/ of [1,2,3]) {
         console.log(a/*READ A*/)
     }
@@ -76,7 +89,7 @@ function f() {
 }
 f()"#,
 
-ok_hoisting_read_let_after_reference_different_scope, r#"var a/*#A*/ = 1;
+    ok_hoisting_read_let_after_reference_different_scope, r#"var a/*#A*/ = 1;
 function f() {
     console.log(a/*READ A*/);
     if (true) {
@@ -84,6 +97,13 @@ function f() {
     }
 }
 f()"#,
+
+    ok_hoisting_inside_switch,
+    "var a/*#A1*/ = 1;
+switch (a) {
+    case 1: var a/*#A2*/ = 2;
+};
+console.log(a/*READ A2*/);",
 }
 
 // Write
@@ -117,11 +137,40 @@ f();",
 
 // Functions
 assert_semantics! {
-    ok_read_function, r#"function f/*#F*/() {} console.log(f/*READ F*/);"#,
-    ok_write_function, r#"function f/*#F*/() {} f/*WRITE F*/ = null;"#,
-    ok_scope_function_expression_read, "var f/*#F1*/ = function f/*#F2*/() {console.log(f/*READ F2*/);}; f/*READ F1*/();",
-    ok_scope_function_expression_read1 ,"var f/*#F1*/ = function () {console.log(f/*READ F1*/);}",
-    ok_scope_function_expression_read2, "let f/*#F1*/ = 1; let g = function f/*#F2*/() {console.log(2, f/*READ F2*/);}; console.log(f/*READ F1*/);",
+    ok_read_function,
+        r#"function f/*#F*/() {} console.log(f/*READ F*/);"#,
+    ok_write_function,
+        r#"function f/*#F*/() {} f/*WRITE F*/ = null;"#,
+    ok_read_self_invoking_function,
+        r#"(function f/*#F*/(){console.log(1)})/*READ F*/()"#,
+    ok_read_self_invoking_function2,
+        r#"(1,2,3,function f/*#F*/(){console.log(1)})/*READ F*/()"#,
+
+    ok_scope_function_expression_read,
+        "var f/*#F1*/ = function f/*#F2*/() {console.log(f/*READ F2*/);}; f/*READ F1*/();",
+    ok_scope_function_expression_read1 ,
+        "var f/*#F1*/ = function () {console.log(f/*READ F1*/);}",
+    ok_scope_function_expression_read2,
+        "let f/*#F1*/ = 1; let g = function f/*#F2*/() {console.log(2, f/*READ F2*/);}; console.log(f/*READ F1*/);",
+    ok_function_parameter,
+        "function t({ a/*#A*/ = 0, b/*#B*/ = a/*READ A*/ }, c = a/*READ A*/) { console.log(a/*READ A*/, b/*READ B*/); }",
+    ok_function_parameter_array,
+        "let b/*#B*/ = 5;
+let c/*#C*/ = 6;
+let d/*#D*/ = 7;
+function f({a/*#A*/} = {a: [b/*READ B*/,c/*READ C*/,d/*READ D*/]}) {
+    console.log(a/*READ A*/, b/*READ B*/);
+}
+f()",
+    ok_function_parameter_array_with_name_conflict,
+        "let b/*#B1*/ = 5;
+let c/*#C*/ = 6;
+let d/*#D*/ = 7;
+function f({a/*#A*/} = {a: [b/*READ B2*/,c/*READ C*/,d/*READ D*/]}, b/*#B2*/) {
+    var b/*#B3*/;
+    console.log(a/*READ A*/, b/*READ B3*/);
+}
+f()",
 }
 
 // Imports
@@ -134,7 +183,15 @@ assert_semantics! {
     ok_function_expression_read,"let f/*#F*/ = function g/*#G*/(){}; g/*?*/();",
 }
 
+// Exports
 assert_semantics! {
     ok_export_hoisted_variable,
         "var a/*#A1*/ = 2; export {a/*READ A2*/}; var a/*#A2*/ = 1;",
+}
+
+// Classes
+
+assert_semantics! {
+    ok_class_reference,
+        "class A/*#A*/ {} new A/*READ A*/();",
 }

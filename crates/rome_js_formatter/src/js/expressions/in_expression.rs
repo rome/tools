@@ -1,7 +1,5 @@
 use crate::prelude::*;
-use crate::utils::{
-    format_binary_like_expression, needs_binary_like_parentheses, JsAnyBinaryLikeExpression,
-};
+use crate::utils::{needs_binary_like_parentheses, JsAnyBinaryLikeExpression};
 
 use crate::parentheses::{ExpressionNode, NeedsParentheses};
 
@@ -15,10 +13,11 @@ pub struct FormatJsInExpression;
 
 impl FormatNodeRule<JsInExpression> for FormatJsInExpression {
     fn fmt_fields(&self, node: &JsInExpression, formatter: &mut JsFormatter) -> FormatResult<()> {
-        format_binary_like_expression(
-            JsAnyBinaryLikeExpression::JsInExpression(node.clone()),
-            formatter,
-        )
+        JsAnyBinaryLikeExpression::JsInExpression(node.clone()).fmt(formatter)
+    }
+
+    fn needs_parentheses(&self, item: &JsInExpression) -> bool {
+        item.needs_parentheses()
     }
 }
 

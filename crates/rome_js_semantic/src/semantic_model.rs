@@ -1,6 +1,6 @@
 use rome_js_syntax::{
     JsAnyRoot, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier,
-    JsSyntaxNode, TextRange, TextSize,
+    JsSyntaxNode, TextRange, TextSize, TsIdentifierBinding,
 };
 use rome_rowan::{AstNode, SyntaxTokenText};
 use rust_lapper::{Interval, Lapper};
@@ -21,6 +21,7 @@ pub trait IsDeclarationAstNode: AstNode<Language = JsLanguage> {
 }
 
 impl IsDeclarationAstNode for JsIdentifierBinding {}
+impl IsDeclarationAstNode for TsIdentifierBinding {}
 
 /// Marker trait that groups all "AstNode" that have declarations
 pub trait HasDeclarationAstNode: AstNode<Language = JsLanguage> {
@@ -48,6 +49,15 @@ impl IsExportedCanBeQueried for JsIdentifierBinding {
     }
 }
 
+impl IsExportedCanBeQueried for TsIdentifierBinding {
+    type Result = bool;
+
+    fn is_exported(&self, model: &SemanticModel) -> Self::Result {
+        let range = self.syntax().text_range();
+        model.data.is_exported(range)
+    }
+}
+
 impl<T: HasDeclarationAstNode> IsExportedCanBeQueried for T {
     type Result = Option<bool>;
 
@@ -59,6 +69,7 @@ impl<T: HasDeclarationAstNode> IsExportedCanBeQueried for T {
 
 #[derive(Debug)]
 struct SemanticModelScopeData {
+    range: TextRange,
     parent: Option<usize>,
     children: Vec<usize>,
     bindings: Vec<TextRange>,
@@ -224,6 +235,14 @@ impl Scope {
     /// ```
     pub fn is_ancestor_of(&self, other: &Scope) -> bool {
         other.ancestors().any(|s| s == *self)
+    }
+
+    pub fn range(&self) -> &TextRange {
+        &self.data.scopes[self.id].range
+    }
+
+    pub fn syntax(&self) -> &JsSyntaxNode {
+        &self.data.node_by_range[self.range()]
     }
 }
 
@@ -417,6 +436,14 @@ impl SemanticModel {
         Self {
             data: Arc::new(data),
         }
+    }
+
+    /// Iterate all scopes
+    pub fn scopes(&self) -> impl Iterator<Item = Scope> + '_ {
+        self.data.scopes.iter().enumerate().map(|(id, _)| Scope {
+            data: self.data.clone(),
+            id,
+        })
     }
 
     /// Returns the global scope of the model
@@ -691,6 +718,7 @@ impl SemanticModelBuilder {
                 debug_assert!(scope_id == self.scopes.len());
 
                 self.scopes.push(SemanticModelScopeData {
+                    range,
                     parent: parent_scope_id,
                     children: vec![],
                     bindings: vec![],
@@ -850,7 +878,7 @@ pub fn semantic_model(root: &JsAnyRoot) -> SemanticModel {
 #[cfg(test)]
 mod test {
     use super::*;
-    use rome_js_syntax::{JsReferenceIdentifier, JsSyntaxKind, SourceType};
+    use rome_js_syntax::{JsReferenceIdentifier, JsSyntaxKind, SourceType, TsIdentifierBinding};
     use rome_rowan::SyntaxNodeCast;
 
     #[test]
@@ -1001,7 +1029,7 @@ mod test {
 
     /// Finds the last time a token named "name" is used and see if its node is marked as exported
     fn assert_is_exported(is_exported: bool, name: &str, code: &str) {
-        let r = rome_js_parser::parse(code, 0, SourceType::js_module());
+        let r = rome_js_parser::parse(code, 0, SourceType::tsx());
         let model = semantic_model(&r.tree());
 
         let node = r
@@ -1016,7 +1044,21 @@ mod test {
                 let binding = JsIdentifierBinding::cast(node).unwrap();
                 // These do the same thing, but with different APIs
                 assert!(
-                    is_exported == model.is_exported(binding.node()),
+                    is_exported == model.is_exported(&binding),
+                    "at \"{}\"",
+                    code
+                );
+                assert!(
+                    is_exported == binding.is_exported(&model),
+                    "at \"{}\"",
+                    code
+                );
+            }
+            JsSyntaxKind::TS_IDENTIFIER_BINDING => {
+                let binding = TsIdentifierBinding::cast(node).unwrap();
+                // These do the same thing, but with different APIs
+                assert!(
+                    is_exported == model.is_exported(&binding),
                     "at \"{}\"",
                     code
                 );
@@ -1040,8 +1082,8 @@ mod test {
                     code
                 );
             }
-            _ => {
-                panic!("This node cannot be exported!");
+            x => {
+                panic!("This node cannot be exported! {:?}", x);
             }
         };
     }
@@ -1085,5 +1127,36 @@ mod test {
         assert_is_exported(true, "A", "class A{} module.exports = A");
         assert_is_exported(true, "A", "class A{} exports = A");
         assert_is_exported(true, "A", "class A{} exports.A = A");
+
+        // Interfaces
+        assert_is_exported(false, "A", "interface A{}");
+        assert_is_exported(true, "A", "export interface A{}");
+        assert_is_exported(true, "A", "export default interface A{}");
+        assert_is_exported(true, "A", "interface A{} export default A");
+        assert_is_exported(true, "A", "interface A{} export {A}");
+        assert_is_exported(true, "A", "interface A{} export {A as B}");
+        assert_is_exported(true, "A", "interface A{} module.exports = A");
+        assert_is_exported(true, "A", "interface A{} exports = A");
+        assert_is_exported(true, "A", "interface A{} exports.A = A");
+
+        // Type Aliases
+        assert_is_exported(false, "A", "type A = number;");
+        assert_is_exported(true, "A", "export type A = number;");
+        assert_is_exported(true, "A", "type A = number; export default A");
+        assert_is_exported(true, "A", "type A = number; export {A}");
+        assert_is_exported(true, "A", "type A = number; export {A as B}");
+        assert_is_exported(true, "A", "type A = number; module.exports = A");
+        assert_is_exported(true, "A", "type A = number; exports = A");
+        assert_is_exported(true, "A", "type A = number; exports.A = A");
+
+        // Enums
+        assert_is_exported(false, "A", "enum A {};");
+        assert_is_exported(true, "A", "export enum A {};");
+        assert_is_exported(true, "A", "enum A {}; export default A");
+        assert_is_exported(true, "A", "enum A {}; export {A}");
+        assert_is_exported(true, "A", "enum A {}; export {A as B}");
+        assert_is_exported(true, "A", "enum A {}; module.exports = A");
+        assert_is_exported(true, "A", "enum A {}; exports = A");
+        assert_is_exported(true, "A", "enum A {}; exports.A = A");
     }
 }

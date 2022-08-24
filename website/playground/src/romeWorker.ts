@@ -2,7 +2,7 @@ import init, {
 	DiagnosticPrinter,
 	RomePath,
 	Workspace,
-} from "../pkg/rome_playground";
+} from "@rometools/wasm-web";
 import {
 	SourceType,
 	LoadingState,
@@ -35,7 +35,7 @@ function getPathForType(
 		return PATH_SCRIPT;
 	}
 
-	return PATHS_MODULE[(Number(isTypeScript) * 2) + Number(isJsx)];
+	return PATHS_MODULE[Number(isTypeScript) * 2 + Number(isJsx)];
 }
 
 type CurrentFile = {

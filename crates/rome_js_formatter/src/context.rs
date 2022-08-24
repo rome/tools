@@ -24,7 +24,7 @@ pub struct JsFormatContext {
     /// When properties in objects are quoted. Defaults to as-needed.
     quote_properties: QuoteProperties,
 
-    /// Information relative to the current file
+    /// Information related to the current file
     source_type: SourceType,
 
     /// The comments of the nodes and tokens in the program.

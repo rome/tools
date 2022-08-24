@@ -82,32 +82,9 @@ var fnString = // Comment
 ```diff
 --- Prettier
 +++ Rome
-@@ -24,19 +24,20 @@
- 
- fnString =
-   /* inline */ "some" +
--  "long" +
--  "string" +
--  "some" +
--  "long" +
--  "string" +
--  "some" +
--  "long" +
--  "string" +
--  "some" +
--  "long" +
--  "string";
-+    "long" +
-+    "string" +
-+    "some" +
-+    "long" +
-+    "string" +
-+    "some" +
-+    "long" +
-+    "string" +
-+    "some" +
-+    "long" +
-+    "string";
+@@ -36,7 +36,8 @@
+   "long" +
+   "string";
  
 -fnString = // Comment0
 +fnString =
@@ -156,17 +133,17 @@ fnString =
 
 fnString =
   /* inline */ "some" +
-    "long" +
-    "string" +
-    "some" +
-    "long" +
-    "string" +
-    "some" +
-    "long" +
-    "string" +
-    "some" +
-    "long" +
-    "string";
+  "long" +
+  "string" +
+  "some" +
+  "long" +
+  "string" +
+  "some" +
+  "long" +
+  "string" +
+  "some" +
+  "long" +
+  "string";
 
 fnString =
   // Comment0

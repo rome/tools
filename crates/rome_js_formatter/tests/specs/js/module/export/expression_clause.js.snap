@@ -13,5 +13,5 @@ Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
 -----
-export default (1 - 43);
+export default 1 - 43;
 

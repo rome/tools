@@ -24,8 +24,7 @@ rome_rowan = { path = "../rome_rowan" }
 rome_console = { path = "../rome_console" }
 tokio = { version = "1.15.0", features = ["io-std"] }
 tower-lsp = { version = "0.17.0" }
-tracing = { version = "0.1.31", default-features = false, features = ["std"] }
-parking_lot = "0.12.0"
+tracing = { version = "0.1.31", default-features = false, features = ["std", "attributes"] }
 futures = "0.3"
 
 [dev-dependencies]

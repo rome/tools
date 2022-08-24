@@ -84,113 +84,101 @@ function bitwiseXor() {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,71 +1,71 @@
+@@ -1,71 +1,83 @@
  function addition() {
 -  0 +
--    // Comment
--    x;
 +  0
-+  // Comment
-+  + x;
+     // Comment
++    +
+     x;
  }
  
  function multiplication() {
 -  0 *
--    // Comment
--    x;
 +  0
-+  // Comment
-+  * x;
+     // Comment
++    *
+     x;
  }
  
  function division() {
 -  0 /
--    // Comment
--    x;
 +  0
-+  // Comment
-+  / x;
+     // Comment
++    /
+     x;
  }
  
  function substraction() {
 -  0 -
--    // Comment
--    x;
 +  0
-+  // Comment
-+  - x;
+     // Comment
++    -
+     x;
  }
  
  function remainder() {
 -  0 %
--    // Comment
--    x;
 +  0
-+  // Comment
-+  % x;
+     // Comment
++    %
+     x;
  }
  
  function exponentiation() {
 -  0 **
--    // Comment
--    x;
 +  0
-+  // Comment
-+  ** x;
+     // Comment
++    **
+     x;
  }
  
  function leftShift() {
 -  0 <<
--    // Comment
--    x;
 +  0
-+  // Comment
-+  << x;
+     // Comment
++    <<
+     x;
  }
  
  function rightShift() {
 -  0 >>
--    // Comment
--    x;
 +  0
-+  // Comment
-+  >> x;
+     // Comment
++    >>
+     x;
  }
  
  function unsignedRightShift() {
 -  0 >>>
--    // Comment
--    x;
 +  0
-+  // Comment
-+  >>> x;
+     // Comment
++    >>>
+     x;
  }
  
  function bitwiseAnd() {
 -  0 &
--    // Comment
--    x;
 +  0
-+  // Comment
-+  & x;
+     // Comment
++    &
+     x;
  }
  
  function bitwiseOr() {
 -  0 |
--    // Comment
--    x;
 +  0
-+  // Comment
-+  | x;
+     // Comment
++    |
+     x;
  }
  
  function bitwiseXor() {
 -  0 ^
--    // Comment
--    x;
 +  0
-+  // Comment
-+  ^ x;
+     // Comment
++    ^
+     x;
  }
 ```
 
@@ -199,74 +187,86 @@ function bitwiseXor() {
 ```js
 function addition() {
   0
-  // Comment
-  + x;
+    // Comment
+    +
+    x;
 }
 
 function multiplication() {
   0
-  // Comment
-  * x;
+    // Comment
+    *
+    x;
 }
 
 function division() {
   0
-  // Comment
-  / x;
+    // Comment
+    /
+    x;
 }
 
 function substraction() {
   0
-  // Comment
-  - x;
+    // Comment
+    -
+    x;
 }
 
 function remainder() {
   0
-  // Comment
-  % x;
+    // Comment
+    %
+    x;
 }
 
 function exponentiation() {
   0
-  // Comment
-  ** x;
+    // Comment
+    **
+    x;
 }
 
 function leftShift() {
   0
-  // Comment
-  << x;
+    // Comment
+    <<
+    x;
 }
 
 function rightShift() {
   0
-  // Comment
-  >> x;
+    // Comment
+    >>
+    x;
 }
 
 function unsignedRightShift() {
   0
-  // Comment
-  >>> x;
+    // Comment
+    >>>
+    x;
 }
 
 function bitwiseAnd() {
   0
-  // Comment
-  & x;
+    // Comment
+    &
+    x;
 }
 
 function bitwiseOr() {
   0
-  // Comment
-  | x;
+    // Comment
+    |
+    x;
 }
 
 function bitwiseXor() {
   0
-  // Comment
-  ^ x;
+    // Comment
+    ^
+    x;
 }
 ```
 

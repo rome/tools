@@ -14,6 +14,9 @@ mod file_handlers;
 pub mod settings;
 pub mod workspace;
 
+#[cfg(feature = "schemars")]
+pub mod workspace_types;
+
 pub use crate::configuration::{
     create_config, load_config, Configuration, ConfigurationError, RuleConfiguration, Rules,
 };

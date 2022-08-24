@@ -1,3 +1,5 @@
+#[cfg(feature = "schema")]
+mod generate_bindings;
 #[cfg(feature = "configuration")]
 mod generate_configuration;
 #[cfg(feature = "schema")]
@@ -6,6 +8,8 @@ mod generate_schema;
 use pico_args::Arguments;
 use xtask::{project_root, pushd, Mode, Result};
 
+#[cfg(feature = "schema")]
+use crate::generate_bindings::generate_workspace_bindings;
 #[cfg(feature = "configuration")]
 use crate::generate_configuration::generate_rules_configuration;
 #[cfg(feature = "schema")]
@@ -50,6 +54,11 @@ fn main() -> Result<()> {
             generate_configuration_schema(Mode::Overwrite)?;
             Ok(())
         }
+        #[cfg(feature = "schema")]
+        "bindings" => {
+            generate_workspace_bindings(Mode::Overwrite)?;
+            Ok(())
+        }
         "all" => {
             generate_tables()?;
             generate_grammar(args);
@@ -60,6 +69,8 @@ fn main() -> Result<()> {
             generate_rules_configuration(Mode::Overwrite)?;
             #[cfg(feature = "schema")]
             generate_configuration_schema(Mode::Overwrite)?;
+            #[cfg(feature = "schema")]
+            generate_workspace_bindings(Mode::Overwrite)?;
             Ok(())
         }
         _ => {
@@ -73,6 +84,7 @@ SUBCOMMANDS:
 	analyzer        Generate factory functions for the analyzer and the configuration of the analyzers
 	configuration   Generate the part of the configuration that depends on some metadata
 	schema          Generate the JSON schema for the Rome configuration file format
+	bindings        Generate TypeScript definitions for the JavaScript bindings to the Workspace API
 	grammar         Transforms ungram files into AST
 	formatter       Generates formatters for each language
 	test            Extracts parser inline comments into test files
