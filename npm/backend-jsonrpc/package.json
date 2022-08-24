@@ -5,7 +5,8 @@
   "scripts": {
     "test": "vitest",
     "test:ci": "vitest --run",
-    "tsc": "tsc"
+    "tsc": "tsc --noEmit",
+    "build": "tsc"
   },
   "homepage": "https://rome.tools",
   "author": "Rome Tools Developers and Contributors",

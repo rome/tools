@@ -8,6 +8,8 @@
         "format": "cargo rome-cli-dev format ./ --write",
         "ci": "cargo rome-cli-dev ci ./src && pnpm test:ci && tsc --noEmit",
         "check": "cargo rome-cli-dev check ./src && tsc --noEmit",
+        "build:wasm-dev": "wasm-pack build --out-dir ../../npm/wasm-nodejs --target nodejs --dev --scope rometools ../../crates/rome_wasm",
+        "build:wasm": "wasm-pack build --out-dir ../../npm/wasm-nodejs --target nodejs --release --scope rometools ../../crates/rome_wasm",
         "test": "vitest",
         "test:ci": "vitest --run",
         "build": "tsc "
@@ -36,6 +38,8 @@
     "devDependencies": {
         "typescript": "^4.7.4",
         "vitest": "^0.22.0",
-        "vite": "^3.0.8"
+        "vite": "^3.0.8",
+        "@rometools/wasm-nodejs": "../wasm-nodejs",
+        "wasm-pack": "^0.10.3"
     }
 }

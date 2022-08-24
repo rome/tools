@@ -1,3 +1,5 @@
+import { main, Workspace, RomePath } from "@rometools/wasm-nodejs";
+
 interface FormatFilesDebugOptions extends FormatFilesOptions {
 	/**
 	 * If `true`, you'll be able to inspect the IR of the formatter
@@ -32,19 +34,25 @@ interface FormatContentOptions {
 }
 
 interface FormatResult {
-	// Not final
+	/**
+	 * The new formatted content
+	 */
 	content: string;
 	// Not final
 	errors: string[];
 }
 
 interface FormatDebugResult {
-	// Not final
+	/**
+	 * The new formatted content
+	 */
 	content: string;
 	// Not final
 	errors: string[];
-	// Available when in debug mode
-	ir: string | null;
+	/**
+	 * The IR emitted by the formatter
+	 */
+	ir: string;
 }
 
 interface ParseOptions {
@@ -80,7 +88,31 @@ function isFormatContentDebug(
 	return options?.debug !== undefined;
 }
 
+interface CurrentFile {
+	version: number;
+	path: RomePath;
+}
+
 export class Rome {
+	private workspace: Workspace;
+
+	private constructor(workspace: Workspace) {
+		this.workspace = workspace;
+	}
+
+	/**
+	 * It creates a new instance of the class {Rome}
+	 */
+	public static async create(): Promise<Rome> {
+		return new Rome(await Rome.loadWorkspace());
+	}
+
+	private static async loadWorkspace(): Promise<Workspace> {
+		// load the web assembly module
+		main();
+		return Promise.resolve(new Workspace());
+	}
+
 	async formatFiles(paths: string[]): Promise<FormatResult>;
 	async formatFiles(
 		paths: string[],
@@ -121,17 +153,45 @@ export class Rome {
 		content: string,
 		options: FormatContentOptions | FormatContentDebugOptions,
 	): Promise<FormatResult | FormatDebugResult> {
-		content;
-		options.filePath;
+		const path: RomePath = {
+			id: 0,
+			path: options.filePath,
+		};
+		await this.workspace.open_file({
+			content,
+			version: 0,
+			path,
+		});
+
+		let code;
+		if (options.range) {
+			const result = await this.workspace.format_range({
+				path: path,
+				// @ts-expect-error Types are currently wrong for range, need to fix them
+				range: options.range,
+			});
+			code = result.code;
+		} else {
+			const result = await this.workspace.format_file({
+				path,
+			});
+			code = result.code;
+		}
+
 		if (isFormatContentDebug(options)) {
+			const ir = await this.workspace.get_formatter_ir({
+				path,
+			});
+			this.workspace.close_file({ path });
 			return {
-				content: "",
+				content: code,
 				errors: [],
-				ir: "",
+				ir,
 			};
 		}
+		this.workspace.close_file({ path });
 		return {
-			content: "",
+			content: code,
 			errors: [],
 		};
 	}

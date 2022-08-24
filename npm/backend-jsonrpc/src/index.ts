@@ -1,7 +1,7 @@
 import { getCommand } from "./command";
 import { createSocket } from "./socket";
 import { Transport } from "./transport";
-import { createWorkspace as wrapTransport, type Workspace } from "./workspace";
+import { createWorkspace as wrapTransport, type Workspace, type RomePath } from "./workspace";
 
 /**
  * Create an instance of the Workspace client connected to a remote daemon
@@ -42,3 +42,5 @@ export async function createWorkspaceWithBinary(
 
 	return wrapTransport(transport);
 }
+
+export * from "./workspace";
