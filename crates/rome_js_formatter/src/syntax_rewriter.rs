@@ -592,8 +592,8 @@ mod tests {
 
         assert_eq!(printed.as_code(), "(a * b * c) / 3;\n");
 
-        let mut markers = printed.into_sourcemap();
-        source_map.map_markers(&mut markers);
+        let mapped = source_map.map_printed(printed);
+        let markers = mapped.into_sourcemap();
 
         assert_eq!(
             markers,

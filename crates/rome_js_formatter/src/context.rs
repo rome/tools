@@ -114,15 +114,15 @@ pub struct JsFormatContext {
     /// The comments of the nodes and tokens in the program.
     comments: Rc<Comments<JsLanguage>>,
 
-    source_map: TransformSourceMap,
+    source_map: Option<TransformSourceMap>,
 }
 
 impl JsFormatContext {
-    pub fn new(source_map: TransformSourceMap, comments: Comments<JsLanguage>) -> Self {
+    pub fn new(options: JsFormatOptions, comments: Comments<JsLanguage>) -> Self {
         Self {
-            source_map,
             comments: Rc::new(comments),
-            options: JsFormatOptions::default(),
+            options,
+            source_map: None,
         }
     }
 
@@ -130,8 +130,8 @@ impl JsFormatContext {
         &self.options
     }
 
-    pub fn with_options(mut self, options: JsFormatOptions) -> Self {
-        self.options = options;
+    pub fn with_source_map(mut self, source_map: Option<TransformSourceMap>) -> Self {
+        self.source_map = source_map;
         self
     }
 }
@@ -157,6 +157,10 @@ impl FormatContext for JsFormatContext {
     fn options(&self) -> &Self::Options {
         &self.options
     }
+
+    fn source_map(&self) -> Option<&TransformSourceMap> {
+        self.source_map.as_ref()
+    }
 }
 
 impl CstFormatContext for JsFormatContext {
@@ -169,10 +173,6 @@ impl CstFormatContext for JsFormatContext {
 
     fn comments(&self) -> Rc<Comments<JsLanguage>> {
         self.comments.clone()
-    }
-
-    fn source_map(&self) -> &TransformSourceMap {
-        &self.source_map
     }
 }
 

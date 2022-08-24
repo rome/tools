@@ -22,27 +22,20 @@
 //!
 //! There are two measures taken by Rome to ensure formatting is stable regardless of the number of parenthesized nodes in a tree:
 //!
-//! ## Removing and adding of parentheses
-//! The [FormatNodeRule](rome_js_formatter::FormatNodeRule) always inserts parentheses around a node if the rules `needs_parentheses` method
-//! returns `true`. This by itself would result in the formatter adding an extra pair of parentheses with every format pass for nodes where parentheses are necessary.
-//! This is why the [rome_js_formatter::FormatJsParenthesizedExpression] rule always removes the parentheses and relies on the
-//! [FormatNodeRule](rome_js_formatter::FormatNodeRule) to add the parentheses again when necessary.
+//! ## Removing parenthesized nodes
 //!
-//! ## Testing for a a child or parent node.
+//! The JavaScript formatter [pre-processes](rome_js_formatter:JsFormatSyntaxRewriter] the input CST and removes all parenthesized expressions, assignments, and types except if:
+//! * The parenthesized node has a syntax error (skipped token trivia, missing inner expression)
+//! * The node has a directly preceding closure type cast comment
+//! * The inner expression is an unknown node
 //!
-//! There are many places where a formatting rule applies different formatting depending on the type of a
-//! child node or parent node. The decision taken by these rules shouldn't differ just because a node happens to be parenthesized
-//! because doing so would yield different results if the formatter removes the parentheses in the first pass.
+//! Removing the parenthesized nodes has the benefit that a input tree with parentheses and an input tree
+//! without parentheses have the same structure for as far as the formatter is concerned and thus,
+//! the formatter makes the same decisions for both trees.
 //!
-//! The [NeedsParentheses] trait offers a [`resolve_parent`](NeedsParentheses::resolve_parent] method
-//! that returns the first parent of a node that isn't parenthesized.
-//! For example, calling [JsSyntaxNode::parent] on the `a` identifier in `(a).b` returns the [JsParenthesizedExpression](rome_js_syntax::JsParenthesizedExpression)
-//! but calling [`resolve_parent`](NeedsParentheses::resolve_parent] returns the [JsStaticMemberExpression](rome_js_syntax::JsStaticMemberExpression).
-//!
-//! This module further offers node specific traits like [ExpressionNode] that implement additional methods to resolve a node.
-//! Calling [`resolve`](ExpressionNode::resolve) returns the node itself if it isn't a [JsParenthesizedExpression](rome_js_syntax::JsParenthesizedExpression)
-//! or traverses down the parenthesized expression and returns the first non [JsParenthesizedExpression](rome_js_syntax::JsParenthesizedExpression) node.
-//! For example, calling resolve on `a` returns `a` but calling resolve on `((a))` also returns `a`.
+//! ## Parentheses insertion
+//! The parentheses that get removed by the pre-processing step are re-inserted by the [FormatNodeRule](rome_js_formatter::FormatNodeRule).
+//! The rule inserts parentheses for each node where [`needs_parentheses`](rome_js_formatter::FormatNodeRule::needs_parentheses] returns true.
 
 use crate::utils::{JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression};
 

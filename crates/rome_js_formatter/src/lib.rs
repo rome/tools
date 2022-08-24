@@ -508,11 +508,11 @@ impl FormatLanguage for JsFormatLanguage {
     fn transform(
         &self,
         root: &SyntaxNode<Self::SyntaxLanguage>,
-    ) -> (SyntaxNode<Self::SyntaxLanguage>, TransformSourceMap) {
+    ) -> (SyntaxNode<Self::SyntaxLanguage>, Option<TransformSourceMap>) {
         let mut rewriter = JsFormatSyntaxRewriter::new(root);
         let transformed = rewriter.transform(root.clone());
 
-        (transformed, rewriter.finish())
+        (transformed, Some(rewriter.finish()))
     }
 
     fn is_range_formatting_node(&self, node: &SyntaxNode<Self::SyntaxLanguage>) -> bool {
@@ -538,9 +538,9 @@ impl FormatLanguage for JsFormatLanguage {
     fn create_context(
         self,
         comments: Comments<Self::SyntaxLanguage>,
-        source_map: TransformSourceMap,
+        source_map: Option<TransformSourceMap>,
     ) -> Self::Context {
-        JsFormatContext::new(source_map, comments).with_options(self.options)
+        JsFormatContext::new(self.options, comments).with_source_map(source_map)
     }
 }
 
@@ -749,32 +749,32 @@ function() {
         assert_eq!(result.range(), Some(TextRange::new(range_start, range_end)));
     }
 
-    // #[ignore]
+    #[ignore]
     #[test]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"(a + b)"#;
+        let src = r#"
+test.expect(t => {
+	t.true(a);
+}, false);
+"#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
-        let result = format_node(JsFormatOptions::default(), &tree.syntax())
+        let options = JsFormatOptions::default();
+
+        let result = format_node(options.clone(), &tree.syntax())
             .unwrap()
             .print();
-        // check_reformat(CheckReformatParams {
-        //     root: &tree.syntax(),
-        //     text: result.as_code(),
-        //     source_type: syntax,
-        //     file_name: "quick_test",
-        //     options: JsFormatOptions::default(),
-        // });
+        check_reformat(CheckReformatParams {
+            root: &tree.syntax(),
+            text: result.as_code(),
+            source_type: syntax,
+            file_name: "quick_test",
+            options,
+        });
         assert_eq!(
             result.as_code(),
-            r#"const __g = (x) => x
-  |> (
-    y => {
-      return (y + 1 |> (z) => z * y);
-    }
-  )
-"#
+            "type B8 = /*1*/ (C);\ntype B9 = (/*1*/ C);\ntype B10 = /*1*/ /*2*/ C;\n"
         );
     }
 

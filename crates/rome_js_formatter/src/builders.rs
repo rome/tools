@@ -2,10 +2,11 @@ use crate::prelude::*;
 use crate::AsFormat;
 use rome_formatter::token::{FormatInserted, FormatInsertedCloseParen, FormatInsertedOpenParen};
 use rome_formatter::{
-    format_args, write, Argument, Arguments, CstFormatContext, GroupId, PreambleBuffer, VecBuffer,
+    format_args, write, Argument, Arguments, CstFormatContext, FormatContext, GroupId,
+    PreambleBuffer, VecBuffer,
 };
 use rome_js_syntax::{JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
-use rome_rowan::{AstNode, Direction, Language, SyntaxElement, SyntaxTriviaPiece};
+use rome_rowan::{AstNode, Direction, Language, SyntaxElement, SyntaxTriviaPiece, TextRange};
 
 /// Formats a node using its [`AsFormat`] implementation but falls back to printing the node as
 /// it is in the source document if the formatting returns an [`FormatError`].
@@ -207,12 +208,22 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
             .fmt(f)
         }
 
-        let trimmed_source_range = f.context().source_map().trimmed_source_range(self.node);
+        let trimmed_source_range = f.context().source_map().map_or_else(
+            || self.node.text_trimmed_range(),
+            |source_map| source_map.trimmed_source_range(self.node),
+        );
+
         let mut buffer = VecBuffer::new(f.state_mut());
 
         write!(
             buffer,
             [format_with(|f: &mut JsFormatter| {
+                fn source_range(f: &JsFormatter, range: TextRange) -> TextRange {
+                    f.context()
+                        .source_map()
+                        .map_or_else(|| range, |source_map| source_map.source_range(range))
+                }
+
                 for leading_trivia in self
                     .node
                     .first_leading_trivia()
@@ -220,10 +231,7 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
                     .flat_map(|trivia| trivia.pieces())
                     .skip_while(skip_whitespace)
                 {
-                    let trivia_source_range = f
-                        .context()
-                        .source_map()
-                        .source_range(leading_trivia.text_range());
+                    let trivia_source_range = source_range(f, leading_trivia.text_range());
 
                     if trivia_source_range.start() >= trimmed_source_range.start() {
                         break;
@@ -235,8 +243,10 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
                 let original_source = f
                     .context()
                     .source_map()
-                    .text()
-                    .slice(trimmed_source_range)
+                    .map_or_else(
+                        || self.node.text_trimmed(),
+                        |source_map| source_map.text().slice(trimmed_source_range),
+                    )
                     .to_string();
 
                 dynamic_text(
@@ -256,8 +266,7 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
                 while let Some(trailing) = trailing_back.peek() {
                     let is_whitespace = skip_whitespace(trailing);
 
-                    let trailing_source_range =
-                        f.context().source_map().source_range(trailing.text_range());
+                    let trailing_source_range = source_range(f, trailing.text_range());
                     let is_in_trimmed_range =
                         trailing_source_range.start() < trimmed_source_range.end();
 

@@ -210,7 +210,15 @@ impl From<LineWidth> for u16 {
 pub trait FormatContext {
     type Options: FormatOptions;
 
+    /// Returns the formatting options
     fn options(&self) -> &Self::Options;
+
+    /// Returns [None] if the CST has not been pre-processed.
+    ///
+    /// Returns [Some] if the CST has been pre-processed to simplify formatting.
+    /// The source map can be used to map positions of the formatted nodes back to their original
+    /// source locations or to resolve the source text.
+    fn source_map(&self) -> Option<&TransformSourceMap>;
 }
 
 pub trait FormatOptions {
@@ -252,8 +260,6 @@ pub trait CstFormatContext: FormatContext {
     /// }
     /// ```
     fn comments(&self) -> Rc<Comments<Self::Language>>;
-
-    fn source_map(&self) -> &TransformSourceMap;
 }
 
 #[derive(Debug, Default, Eq, PartialEq)]
@@ -295,10 +301,14 @@ impl FormatContext for SimpleFormatContext {
     fn options(&self) -> &Self::Options {
         &self.options
     }
+
+    fn source_map(&self) -> Option<&TransformSourceMap> {
+        None
+    }
 }
 
 /// Lightweight sourcemap marker between source and output tokens
-#[derive(Debug, Clone, Eq, PartialEq)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
 #[cfg_attr(
     feature = "serde",
     derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
@@ -338,12 +348,23 @@ where
 {
     pub fn print(&self) -> Printed {
         let print_options = self.context.options().as_print_options();
-        Printer::new(print_options).print(&self.root)
+
+        let printed = Printer::new(print_options).print(&self.root);
+
+        match self.context.source_map() {
+            Some(source_map) => source_map.map_printed(printed),
+            None => printed,
+        }
     }
 
     pub fn print_with_indent(&self, indent: u16) -> Printed {
         let print_options = self.context.options().as_print_options();
-        Printer::new(print_options).print_with_indent(&self.root, indent)
+        let printed = Printer::new(print_options).print_with_indent(&self.root, indent);
+
+        match self.context.source_map() {
+            Some(source_map) => source_map.map_printed(printed),
+            None => printed,
+        }
     }
 }
 
@@ -396,7 +417,8 @@ impl Printed {
     }
 
     /// Returns a list of [SourceMarker] mapping byte positions
-    /// in the output string to the input source code
+    /// in the output string to the input source code.
+    /// It's not guaranteed that the markers are sorted by source position.
     pub fn sourcemap(&self) -> &[SourceMarker] {
         &self.sourcemap
     }
@@ -831,9 +853,8 @@ pub trait FormatLanguage {
     fn transform(
         &self,
         root: &SyntaxNode<Self::SyntaxLanguage>,
-    ) -> (SyntaxNode<Self::SyntaxLanguage>, TransformSourceMap) {
-        let source_map = TransformSourceMap::empty(root);
-        (root.clone(), source_map)
+    ) -> (SyntaxNode<Self::SyntaxLanguage>, Option<TransformSourceMap>) {
+        (root.clone(), None)
     }
 
     /// Because this function is language-agnostic, it must be provided with a
@@ -850,7 +871,7 @@ pub trait FormatLanguage {
     fn create_context(
         self,
         comments: Comments<Self::SyntaxLanguage>,
-        source_map: TransformSourceMap,
+        source_map: Option<TransformSourceMap>,
     ) -> Self::Context;
 }
 
@@ -1221,9 +1242,7 @@ pub fn format_sub_tree<L: FormatLanguage>(
     let formatted = format_node(root, language)?;
     let mut printed = formatted.print_with_indent(initial_indent);
     let verbatim_ranges = printed.take_verbatim_ranges();
-
-    let mut markers = printed.take_sourcemap();
-    formatted.context().source_map().map_markers(&mut markers);
+    let markers = printed.take_sourcemap();
 
     Ok(Printed::new(
         printed.into_code(),

@@ -1,7 +1,45 @@
-use crate::{SourceMarker, TextRange};
+use crate::{Printed, SourceMarker, TextRange};
 use rome_rowan::{Language, SyntaxNode, SyntaxNodeText, TextSize};
 use std::collections::HashMap;
 
+/// A source map for mapping positions of a pre-processed tree back to the locations in the source tree.
+///
+/// This is not a generic purpose source map but instead focused on supporting the case where
+/// a language removes or re-orders nodes that would otherwise complicate the formatting logic.
+/// A common use case for pre-processing is the removal all parenthesized nodes
+/// because parenthesized nodes complicate testing if a child or parent is of a specific kind as they need to be ignored.
+///
+/// This source map implementation only must support removing tokens or re-structuring nodes
+/// without changing the order of the tokens in the tree (requires no source map).
+///
+/// ## Position Mapping
+///
+/// The source map internally tracks all the ranges that have been deleted from the source code sorted by the start of the deleted range.
+/// It further stores the absolute count of deleted bytes preceding a range. The deleted range together
+/// with the absolute count allows to re-compute the source location for every transformed location
+/// and has the benefit that it requires significantly fewer memory
+/// than source maps that use a source to destination position marker for every token.
+///
+/// ## Map Node Ranges
+///
+/// Only having the deleted ranges to resolve the original text of a node isn't sufficient.
+/// Resolving the original text of a node is needed when formatting a node as verbatim, either because
+/// formatting the node failed because of a syntax error, or formatting is suppressed with a `rome-ignore format:` comment.
+///
+/// ```text
+/// // Source           // Transformed
+///  (a+b) + (c + d)   a + b + c + d;
+/// ```
+///
+/// Using the above example, the following source ranges should be returned when quering with the transformed ranges:
+///
+/// * `a` -> `a`: Should not include the leading `(`
+/// * `b` -> `b`: Should not include the trailing `)`
+/// * `a + b` -> `(a + b)`: Should include the leading `(` and trailing `)`.
+/// * `a + b + c + d -> `(a + b) + (c + d)`: Should include the leading `(` and `)` trailing `)` because the expression statement
+///   fully encloses the `a + b` and `c + d` nodes.
+///
+/// This is why the source map also tracks the mapped trimmed ranges for every node.
 #[derive(Debug, Clone)]
 pub struct TransformSourceMap {
     source_text: SyntaxNodeText,
@@ -9,25 +47,20 @@ pub struct TransformSourceMap {
     /// The mappings stored in increasing order
     deleted_ranges: Vec<DeletedRange>,
 
+    /// Key: Start or end position of node for which the trimmed range should be extended
+    /// Value: The trimmed range.
     mapped_node_ranges: HashMap<TextSize, TrimmedNodeRangeMapping>,
 }
 
 impl TransformSourceMap {
-    /// Creates a source map for a unchanged tree that has no mappings.
-    pub fn empty<L: Language>(source: &SyntaxNode<L>) -> Self {
-        Self {
-            source_text: source.text(),
-            deleted_ranges: Vec::new(),
-            mapped_node_ranges: HashMap::default(),
-        }
-    }
-
     /// Returns the text of the source document as it was before the transformation.
     pub fn text(&self) -> &SyntaxNodeText {
         &self.source_text
     }
 
     /// Maps a range of the transformed document to a range in the source document.
+    ///
+    /// Complexity: `O(log(n))`
     pub fn source_range(&self, transformed_range: TextRange) -> TextRange {
         TextRange::new(
             self.source_offset(transformed_range.start(), RangePosition::Start),
@@ -36,6 +69,8 @@ impl TransformSourceMap {
     }
 
     /// Maps the trimmed range of the transformed node to the trimmed range in the source document.
+    ///
+    /// Average Complexity: `O(log(n))`
     pub fn trimmed_source_range<L: Language>(&self, node: &SyntaxNode<L>) -> TextRange {
         let source_range = self.source_range(node.text_trimmed_range());
 
@@ -46,6 +81,7 @@ impl TransformSourceMap {
 
             let start_mapping = self.mapped_node_ranges.get(&mapped_range.start());
             if let Some(mapping) = start_mapping {
+                // If the queried node fully encloses the original range of the node, then extend the range
                 if mapped_range.contains_range(mapping.original_range) {
                     mapped_range =
                         TextRange::new(mapping.extended_range.start(), mapped_range.end());
@@ -55,6 +91,7 @@ impl TransformSourceMap {
 
             let end_mapping = self.mapped_node_ranges.get(&mapped_range.end());
             if let Some(mapping) = end_mapping {
+                // If the queried node fully encloses the original range of the node, then extend the range
                 if mapped_range.contains_range(mapping.original_range) {
                     mapped_range =
                         TextRange::new(mapped_range.start(), mapping.extended_range.end());
@@ -103,6 +140,12 @@ impl TransformSourceMap {
     ) -> TextSize {
         match deleted_range {
             Some(range) => {
+                debug_assert!(
+                    range.transformed_start() <= transformed_offset,
+                    "Transformed start {:?} must be less than or equal to transformed offset {:?}.",
+                    range.transformed_start(),
+                    transformed_offset
+                );
                 // Transformed position directly falls onto a position where a deleted range starts or ends (depending on the position)
                 // For example when querying: `a` in `(a)` or (a + b)`, or `b`
                 if range.transformed_start() == transformed_offset {
@@ -125,38 +168,95 @@ impl TransformSourceMap {
         }
     }
 
-    pub fn map_markers(&self, markers: &mut [SourceMarker]) {
-        if !self.deleted_ranges.is_empty() {
-            // Stores the index of the last result from the mapping search.
-            let mut current_range: Option<DeletedRange> = None;
-            let mut ranges = self.deleted_ranges.iter();
-            let mut next_range = ranges.next().copied();
+    /// Maps the source map information of `printed` from the transformed positions to the source positions.
+    pub fn map_printed(&self, mut printed: Printed) -> Printed {
+        self.map_markers(&mut printed.sourcemap);
+        self.map_verbatim_ranges(&mut printed.verbatim_ranges);
 
-            for marker in markers {
-                while let Some(range) = next_range {
-                    if range.transformed_start() > marker.source {
+        printed
+    }
+
+    /// Maps the printers source map marker to the source positions.
+    fn map_markers(&self, markers: &mut [SourceMarker]) {
+        if self.deleted_ranges.is_empty() {
+            return;
+        }
+
+        let mut previous_marker: Option<SourceMarker> = None;
+        let mut next_range_index = 0;
+
+        for marker in markers {
+            // It's not guaranteed that markers are sorted by source location (line suffix comments).
+            // It can, therefore, be necessary to navigate backwards again.
+            // In this case, do a binary search for the index of the next deleted range (`O(log(n)`).
+            let out_of_order_marker =
+                previous_marker.map_or(false, |previous| previous.source > marker.source);
+
+            if out_of_order_marker {
+                let index = self
+                    .deleted_ranges
+                    .binary_search_by_key(&marker.source, |range| range.transformed_start());
+
+                match index {
+                    // Direct match
+                    Ok(index) => {
+                        next_range_index = index + 1;
+                    }
+                    Err(index) => next_range_index = index,
+                }
+            } else {
+                // Find the range for this mapping. In most cases this is a no-op or only involves a single step
+                // because markers are most of the time in increasing source order.
+                while next_range_index < self.deleted_ranges.len() {
+                    let next_range = &self.deleted_ranges[next_range_index];
+
+                    if next_range.transformed_start() > marker.source {
                         break;
                     }
 
-                    current_range = std::mem::replace(&mut next_range, ranges.next().copied());
+                    next_range_index += 1;
                 }
-
-                let source = self.source_offset_with_range(
-                    marker.source,
-                    RangePosition::Start,
-                    current_range.as_ref(),
-                );
-
-                marker.source = source;
             }
+
+            previous_marker = Some(*marker);
+
+            let current_range = if next_range_index == 0 {
+                None
+            } else {
+                self.deleted_ranges.get(next_range_index - 1)
+            };
+
+            let source =
+                self.source_offset_with_range(marker.source, RangePosition::Start, current_range);
+
+            marker.source = source;
+        }
+    }
+
+    fn map_verbatim_ranges(&self, ranges: &mut [TextRange]) {
+        for range in ranges {
+            *range = self.source_range(*range)
         }
     }
 }
 
 #[derive(Debug, Copy, Clone)]
 struct TrimmedNodeRangeMapping {
-    /// The
+    /// The original trimmed range of the node.
+    ///
+    /// ```javascript
+    /// (a + b)
+    /// ```
+    ///
+    /// `1..6` `a + b`
     original_range: TextRange,
+
+    /// The range to which the trimmed range of the node should be extended
+    /// ```javascript
+    /// (a + b)
+    /// ```
+    ///
+    /// `0..7` for `a + b` if its range should also include the parenthesized range.
     extended_range: TextRange,
 }
 
