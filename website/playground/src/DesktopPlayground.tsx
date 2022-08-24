@@ -38,7 +38,7 @@ export default function DesktopPlayground({
 	const romeAstCodeMirrorExtension = [romeAst()];
 	const romeFormatterIrCodeMirrorExtension = [RomeFormatterIr()];
 	//
-	const romeAstSyntacticDataRef = useRef(null as RomeAstSyntacticData | null);
+	const romeAstSyntacticDataRef = useRef<RomeAstSyntacticData | null>(null);
 
 	const astPanelCodeMirrorRef = useRef(null as null | ReactCodeMirrorRef);
 
