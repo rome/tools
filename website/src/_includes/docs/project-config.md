@@ -207,7 +207,7 @@ A rule can be configured for multiple purposes:
 #### Turn a rule on
 
 Rules that are recommended are enabled by default. Rules that are not recommended
-are not enabled, and they should be enabled via configuration.
+are not enabled, but they should be enabled via configuration.
 
 To enable rules, you need to change their diagnostics severity based on your needs:
 
