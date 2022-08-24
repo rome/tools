@@ -40,7 +40,8 @@ export default function DesktopPlayground({
 	//
 	const romeAstSyntacticDataRef = useRef(null as RomeAstSyntacticData | null);
 
-	const codemirrorRef = useRef(null as null | ReactCodeMirrorRef);
+	const astPanelCodeMirrorRef = useRef(null as null | ReactCodeMirrorRef);
+
 	useEffect(() => {
 		if (clipboardStatus !== "normal") {
 			setClipboardStatus("normal");
@@ -172,7 +173,7 @@ export default function DesktopPlayground({
 					<TabPanel>
 						<CodeMirror
 							value={ast}
-							ref={codemirrorRef}
+							ref={astPanelCodeMirrorRef}
 							extensions={romeAstCodeMirrorExtension}
 							className="h-full"
 							height="100%"
@@ -210,8 +211,8 @@ export default function DesktopPlayground({
 	);
 
 	function scrollAstNodeIntoView(cursorPosition: number) {
-		if (codemirrorRef.current && romeAstSyntacticDataRef.current) {
-			let codemirror = codemirrorRef.current;
+		if (astPanelCodeMirrorRef.current && romeAstSyntacticDataRef.current) {
+			let codemirror = astPanelCodeMirrorRef.current;
 			let syntacticData = romeAstSyntacticDataRef.current;
 			let { view } = codemirror;
 			let { rangeMap } = syntacticData;
