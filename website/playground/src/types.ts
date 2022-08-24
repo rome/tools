@@ -75,8 +75,8 @@ export type PlaygroundSettings = Pick<
 >;
 
 export type Tree = ReturnType<typeof parser.parse>;
-type RangeMapKey = [number, number]
-type RangeMapValue = [number, number]
+type RangeMapKey = [number, number];
+type RangeMapValue = [number, number];
 export interface RomeAstSyntacticData {
 	ast: Tree;
 	// key is range of original `SyntaxToken`, value is the range string, like `20..20` corresponding range in
