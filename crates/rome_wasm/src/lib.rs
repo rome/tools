@@ -35,21 +35,25 @@ impl Workspace {
         }
     }
 
+    #[wasm_bindgen(js_name = supportsFeature)]
     pub fn supports_feature(&self, params: ISupportsFeatureParams) -> Result<bool, Error> {
         let params: SupportsFeatureParams = params.into_serde().map_err(into_error)?;
         Ok(self.inner.supports_feature(params))
     }
 
+    #[wasm_bindgen(js_name = updateSettings)]
     pub fn update_settings(&self, params: IUpdateSettingsParams) -> Result<(), Error> {
         let params: UpdateSettingsParams = params.into_serde().map_err(into_error)?;
         self.inner.update_settings(params).map_err(into_error)
     }
 
+    #[wasm_bindgen(js_name = openFile)]
     pub fn open_file(&self, params: IOpenFileParams) -> Result<(), Error> {
         let params: OpenFileParams = params.into_serde().map_err(into_error)?;
         self.inner.open_file(params).map_err(into_error)
     }
 
+    #[wasm_bindgen(js_name = getSyntaxTree)]
     pub fn get_syntax_tree(
         &self,
         params: IGetSyntaxTreeParams,
@@ -61,6 +65,7 @@ impl Workspace {
             .map_err(into_error)
     }
 
+    #[wasm_bindgen(js_name = getControlFlowGraph)]
     pub fn get_control_flow_graph(
         &self,
         params: IGetControlFlowGraphParams,
@@ -71,21 +76,25 @@ impl Workspace {
             .map_err(into_error)
     }
 
+    #[wasm_bindgen(js_name = getFormatterIr)]
     pub fn get_formatter_ir(&self, params: IGetFormatterIRParams) -> Result<String, Error> {
         let params: GetFormatterIRParams = params.into_serde().map_err(into_error)?;
         self.inner.get_formatter_ir(params).map_err(into_error)
     }
 
+    #[wasm_bindgen(js_name = changeFile)]
     pub fn change_file(&self, params: IChangeFileParams) -> Result<(), Error> {
         let params: ChangeFileParams = params.into_serde().map_err(into_error)?;
         self.inner.change_file(params).map_err(into_error)
     }
 
+    #[wasm_bindgen(js_name = closeFile)]
     pub fn close_file(&self, params: ICloseFileParams) -> Result<(), Error> {
         let params: CloseFileParams = params.into_serde().map_err(into_error)?;
         self.inner.close_file(params).map_err(into_error)
     }
 
+    #[wasm_bindgen(js_name = pullDiagnostics)]
     pub fn pull_diagnostics(
         &self,
         params: IPullDiagnosticsParams,
@@ -97,6 +106,7 @@ impl Workspace {
             .map_err(into_error)
     }
 
+    #[wasm_bindgen(js_name = pullActions)]
     pub fn pull_actions(&self, params: IPullActionsParams) -> Result<IPullActionsResult, Error> {
         let params: PullActionsParams = params.into_serde().map_err(into_error)?;
         let result = self.inner.pull_actions(params).map_err(into_error)?;
@@ -105,24 +115,28 @@ impl Workspace {
             .map_err(into_error)
     }
 
+    #[wasm_bindgen(js_name = formatFile)]
     pub fn format_file(&self, params: IFormatFileParams) -> Result<JsValue, Error> {
         let params: FormatFileParams = params.into_serde().map_err(into_error)?;
         let result = self.inner.format_file(params).map_err(into_error)?;
         JsValue::from_serde(&result).map_err(into_error)
     }
 
+    #[wasm_bindgen(js_name = formatRange)]
     pub fn format_range(&self, params: IFormatRangeParams) -> Result<JsValue, Error> {
         let params: FormatRangeParams = params.into_serde().map_err(into_error)?;
         let result = self.inner.format_range(params).map_err(into_error)?;
         JsValue::from_serde(&result).map_err(into_error)
     }
 
+    #[wasm_bindgen(js_name = formatOnType)]
     pub fn format_on_type(&self, params: IFormatOnTypeParams) -> Result<JsValue, Error> {
         let params: FormatOnTypeParams = params.into_serde().map_err(into_error)?;
         let result = self.inner.format_on_type(params).map_err(into_error)?;
         JsValue::from_serde(&result).map_err(into_error)
     }
 
+    #[wasm_bindgen(js_name = fixFile)]
     pub fn fix_file(&self, params: IFixFileParams) -> Result<IFixFileResult, Error> {
         let params: FixFileParams = params.into_serde().map_err(into_error)?;
         let result = self.inner.fix_file(params).map_err(into_error)?;
