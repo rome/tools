@@ -64,8 +64,7 @@ export default function DesktopPlayground({
 		scrollAstNodeIntoView(settings.cursorPosition);
 	}, [settings.cursorPosition]);
 
-	// We cached lezer ast of romeJsAst,
-	// so that we don't need to parse the grammar only cursorPosition changed.
+	// We update the syntactic data of `RomeJsAst` only AstSource(`Display` string of our original AstRepresentation) changed.
 	useEffect(() => {
 		let tree = parser.parse(ast);
 		let rangeMap = new Map();
