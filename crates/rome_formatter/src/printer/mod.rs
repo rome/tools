@@ -8,7 +8,7 @@ use crate::format_element::{
 use crate::intersperse::Intersperse;
 use crate::{FormatElement, GroupId, IndentStyle, Printed, SourceMarker, TextRange};
 
-use rome_rowan::TextSize;
+use rome_rowan::{TextLen, TextSize};
 use std::iter::{once, Rev};
 use std::num::NonZeroU8;
 
@@ -108,7 +108,7 @@ impl<'a> Printer<'a> {
 
                 // Insert source map markers before and after the token
                 //
-                // If the token has source position informations the start marker
+                // If the token has source position information the start marker
                 // will use the start position of the original token, and the end
                 // marker will use that position + the text length of the token
                 //
@@ -119,9 +119,9 @@ impl<'a> Printer<'a> {
                     self.state.source_position = *source;
                 }
 
-                self.state.source_markers.push(SourceMarker {
+                self.push_marker(SourceMarker {
                     source: self.state.source_position,
-                    dest: TextSize::of(&self.state.buffer),
+                    dest: self.state.buffer.text_len(),
                 });
 
                 self.print_str(token);
@@ -130,9 +130,9 @@ impl<'a> Printer<'a> {
                     self.state.source_position += TextSize::of(&**token);
                 }
 
-                self.state.source_markers.push(SourceMarker {
+                self.push_marker(SourceMarker {
                     source: self.state.source_position,
-                    dest: TextSize::of(&self.state.buffer),
+                    dest: self.state.buffer.text_len(),
                 });
             }
 
@@ -320,6 +320,16 @@ impl<'a> Printer<'a> {
                     .iter()
                     .map(|element| PrintElementCall::new(element, args)),
             ),
+        }
+    }
+
+    fn push_marker(&mut self, marker: SourceMarker) {
+        if let Some(last) = self.state.source_markers.last() {
+            if last != &marker {
+                self.state.source_markers.push(marker)
+            }
+        } else {
+            self.state.source_markers.push(marker);
         }
     }
 

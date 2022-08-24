@@ -378,6 +378,12 @@ impl Printed {
         self.sourcemap
     }
 
+    /// Takes the list of [SourceMarker] mapping byte positions in the output string
+    /// to the input source code.
+    pub fn take_sourcemap(&mut self) -> Vec<SourceMarker> {
+        std::mem::take(&mut self.sourcemap)
+    }
+
     /// Access the resulting code, borrowing the result
     pub fn as_code(&self) -> &str {
         &self.code
@@ -398,6 +404,11 @@ impl Printed {
     /// Ranges of the formatted code that have been formatted as verbatim.
     pub fn verbatim_ranges(&self) -> &[TextRange] {
         &self.verbatim_ranges
+    }
+
+    /// Takes the ranges of nodes that have been formatted as verbatim, replacing them with an empty list.
+    pub fn take_verbatim_ranges(&mut self) -> Vec<TextRange> {
+        std::mem::take(&mut self.verbatim_ranges)
     }
 }
 
@@ -1026,7 +1037,7 @@ where
 
     // Perform the actual formatting of the root node with
     // an appropriate indentation level
-    let formatted = format_sub_tree(
+    let mut printed = format_sub_tree(
         context,
         &FormatRefWithRule::<_, R>::new(common_root, R::default()),
     )?;
@@ -1038,8 +1049,8 @@ where
     let mut range_start = None;
     let mut range_end = None;
 
-    let sourcemap = Vec::from(formatted.sourcemap());
-    for marker in &sourcemap {
+    let sourcemap = printed.sourcemap();
+    for marker in sourcemap {
         // marker.source <= range.start()
         if let Some(start_dist) = range.start().checked_sub(marker.source) {
             range_start = match range_start {
@@ -1081,15 +1092,15 @@ where
         Some((end_marker, _)) => (end_marker.source, end_marker.dest),
         None => (
             common_root.text_range().end(),
-            TextSize::try_from(formatted.as_code().len()).expect("code length out of bounds"),
+            TextSize::try_from(printed.as_code().len()).expect("code length out of bounds"),
         ),
     };
 
     let input_range = TextRange::new(start_source, end_source);
     let output_range = TextRange::new(start_dest, end_dest);
-    let sourcemap = Vec::from(formatted.sourcemap());
-    let verbatim_ranges = Vec::from(formatted.verbatim_ranges());
-    let code = &formatted.into_code()[output_range];
+    let sourcemap = printed.take_sourcemap();
+    let verbatim_ranges = printed.take_verbatim_ranges();
+    let code = &printed.into_code()[output_range];
     Ok(Printed::new(
         code.into(),
         Some(input_range),
@@ -1165,9 +1176,9 @@ pub fn format_sub_tree<
     };
 
     let formatted = format_node(context, root)?;
-    let printed = formatted.print_with_indent(initial_indent);
-    let sourcemap = Vec::from(printed.sourcemap());
-    let verbatim_ranges = Vec::from(printed.verbatim_ranges());
+    let mut printed = formatted.print_with_indent(initial_indent);
+    let sourcemap = printed.take_sourcemap();
+    let verbatim_ranges = printed.take_verbatim_ranges();
     Ok(Printed::new(
         printed.into_code(),
         Some(syntax.text_range()),
