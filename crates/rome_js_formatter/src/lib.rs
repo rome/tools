@@ -753,13 +753,7 @@ function() {
     #[test]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"const __g = (x) => x
-  |> (
-    y => {
-      return (y + 1 |> (z) => z * y);
-    }
-  )
-"#;
+        let src = r#"(a + b)"#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
         let result = format_node(JsFormatOptions::default(), &tree.syntax())

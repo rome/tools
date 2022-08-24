@@ -87,7 +87,7 @@ impl JsFormatSyntaxRewriter {
             }
 
             Some(first_token) => {
-                self.source_map.add_node_range_mapping(
+                self.source_map.extend_trimmed_node_range(
                     inner_trimmed_range,
                     parenthesized.syntax().text_trimmed_range(),
                 );
@@ -400,13 +400,14 @@ where
 #[cfg(test)]
 mod tests {
     use super::JsFormatSyntaxRewriter;
-    use rome_formatter::TransformSourceMap;
+    use crate::{format_node, JsFormatOptions};
+    use rome_formatter::{SourceMarker, TransformSourceMap};
     use rome_js_parser::parse_module;
     use rome_js_syntax::{
         JsArrayExpression, JsBinaryExpression, JsExpressionStatement, JsIdentifierExpression,
         JsLogicalExpression, JsSequenceExpression, JsStringLiteralExpression, JsSyntaxNode,
     };
-    use rome_rowan::{AstNode, SyntaxRewriter};
+    use rome_rowan::{AstNode, SyntaxRewriter, TextSize};
 
     #[test]
     fn single_parentheses_source_map_test() {
@@ -541,20 +542,6 @@ mod tests {
         );
     }
 
-    // Format verbatim queries the trailing whitespace which is why it is important that the rewriter
-    // removes any trailing whitespace.
-    // TODO: Isn't this a general problem. What if we refactor comments to not be part of the verbatim part.
-    // which is what prettier does. It then means that the rewriter should strip comments which isn't possible.
-    // This is not per se a source map problem, more a problem with how we decide if the () should be returned or not.
-    //
-    // The other alternative would be to move comments and whitespace outside of the parens but that requires access to the next
-    // token and has other negative affects.
-    //
-    // In this case it also becomes questionable what should happen with the whitespace as the whitespace would be included
-    // twice now and so would any potential comment that is in the mapped range. I guess we may need more specific
-    // source maps to map the trimmed range of a node back to its original trimmed position except that things are even more complicated
-    // if a node has skipped token trivia in which case we don't want the full trimmed, only the somewhat trimmed.
-    //
     #[test]
     fn trailing_whitespace() {
         let (transformed, source_map) = source_map_test("(a + b   );");
@@ -570,6 +557,22 @@ mod tests {
         );
     }
 
+    #[test]
+    fn comments() {
+        let (transformed, source_map) =
+            source_map_test("/* outer */ (/* left */ a + b /* right */) /* outer end */;");
+
+        let binary = transformed
+            .descendants()
+            .find_map(JsBinaryExpression::cast)
+            .unwrap();
+
+        assert_eq!(
+            source_map.trimmed_source_text(binary.syntax()),
+            "(/* left */ a + b /* right */)"
+        );
+    }
+
     fn source_map_test(input: &str) -> (JsSyntaxNode, TransformSourceMap) {
         let tree = parse_module(input, 0).syntax();
 
@@ -578,5 +581,109 @@ mod tests {
         let source_map = rewriter.finish();
 
         (transformed, source_map)
+    }
+
+    #[test]
+    fn mappings() {
+        let (transformed, source_map) = source_map_test("(((a * b) * c)) / 3");
+
+        let formatted = format_node(JsFormatOptions::default(), &transformed).unwrap();
+        let printed = formatted.print();
+
+        assert_eq!(printed.as_code(), "(a * b * c) / 3;\n");
+
+        let mut markers = printed.into_sourcemap();
+        source_map.map_markers(&mut markers);
+
+        assert_eq!(
+            markers,
+            vec![
+                // `(`
+                SourceMarker {
+                    source: TextSize::from(3),
+                    dest: TextSize::from(0)
+                },
+                // `a`
+                SourceMarker {
+                    source: TextSize::from(3),
+                    dest: TextSize::from(1)
+                },
+                // ` `
+                SourceMarker {
+                    source: TextSize::from(4),
+                    dest: TextSize::from(2)
+                },
+                // `*`
+                SourceMarker {
+                    source: TextSize::from(5),
+                    dest: TextSize::from(3)
+                },
+                // ` `
+                SourceMarker {
+                    source: TextSize::from(6),
+                    dest: TextSize::from(4)
+                },
+                // `b`
+                SourceMarker {
+                    source: TextSize::from(7),
+                    dest: TextSize::from(5)
+                },
+                // ` `
+                SourceMarker {
+                    source: TextSize::from(9),
+                    dest: TextSize::from(6)
+                },
+                // `*`
+                SourceMarker {
+                    source: TextSize::from(10),
+                    dest: TextSize::from(7)
+                },
+                // ` `
+                SourceMarker {
+                    source: TextSize::from(11),
+                    dest: TextSize::from(8)
+                },
+                // `c`
+                SourceMarker {
+                    source: TextSize::from(12),
+                    dest: TextSize::from(9)
+                },
+                // `)`
+                SourceMarker {
+                    source: TextSize::from(15),
+                    dest: TextSize::from(10),
+                },
+                // ` `
+                SourceMarker {
+                    source: TextSize::from(15),
+                    dest: TextSize::from(11),
+                },
+                // `/`
+                SourceMarker {
+                    source: TextSize::from(16),
+                    dest: TextSize::from(12),
+                },
+                // ` `
+                SourceMarker {
+                    source: TextSize::from(17),
+                    dest: TextSize::from(13),
+                },
+                // `3`
+                SourceMarker {
+                    source: TextSize::from(18),
+                    dest: TextSize::from(14),
+                },
+                // `;`
+                SourceMarker {
+                    source: TextSize::from(19),
+                    dest: TextSize::from(15),
+                },
+                // `\n`
+                SourceMarker {
+                    source: TextSize::from(19),
+                    dest: TextSize::from(16),
+                },
+            ]
+        );
     }
 }

@@ -1220,12 +1220,11 @@ pub fn format_sub_tree<L: FormatLanguage>(
 
     let formatted = format_node(root, language)?;
     let mut printed = formatted.print_with_indent(initial_indent);
-    let markers = formatted
-        .context()
-        .source_map()
-        .map_markers(printed.sourcemap());
-
     let verbatim_ranges = printed.take_verbatim_ranges();
+
+    let mut markers = printed.take_sourcemap();
+    formatted.context().source_map().map_markers(&mut markers);
+
     Ok(Printed::new(
         printed.into_code(),
         Some(root.text_range()),
