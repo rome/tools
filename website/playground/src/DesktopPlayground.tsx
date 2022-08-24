@@ -1,20 +1,13 @@
-import { PlaygroundProps, RomeAstSyntacticData, Tree } from "./types";
+import { PlaygroundProps, RomeAstSyntacticData } from "./types";
 import CodeMirror, { ReactCodeMirrorRef } from "@uiw/react-codemirror";
 import type { ViewUpdate } from "@codemirror/view";
-// import { EditorView } from "@codemirror/view";
-// import { romeAst } from "../lang-rome-ast/dist/";
 import { romeAst, parser } from "codemirror-lang-rome-ast";
 import { romeAst as RomeFormatterIr } from "lang-rome-formatter-ir";
 import { javascript } from "@codemirror/lang-javascript";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
-import {
-	useCallback,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import MermaidGraph from "./MermaidGraph";
 import { EditorSelection } from "@codemirror/state";
 
@@ -35,7 +28,6 @@ export default function DesktopPlayground({
 	const [clipboardStatus, setClipboardStatus] = useState<
 		"success" | "failed" | "normal"
 	>("normal");
-	const [selectedIndex, setSelectedIndex] = useState(0);
 	const extensions = [
 		javascript({
 			jsx: isJsx,
@@ -59,10 +51,12 @@ export default function DesktopPlayground({
 		const cursorPosition = viewUpdate.state.selection.ranges[0]?.from ?? 0;
 		setPlaygroundState(
 			(state) =>
-				state.cursorPosition !== cursorPosition ? {
-					...state,
-					cursorPosition,
-				} : state,
+				state.cursorPosition !== cursorPosition
+					? {
+							...state,
+							cursorPosition,
+					  }
+					: state,
 		);
 	}, []);
 
@@ -224,12 +218,16 @@ export default function DesktopPlayground({
 			let { rangeMap } = syntacticData;
 			for (let [sourceRange, displaySourceRange] of rangeMap.entries()) {
 				if (
-					cursorPosition >= sourceRange[0] && cursorPosition <= sourceRange[1]
+					cursorPosition >= sourceRange[0] &&
+					cursorPosition <= sourceRange[1]
 				) {
 					view?.dispatch({
 						scrollIntoView: true,
 						selection: EditorSelection.create([
-							EditorSelection.range(displaySourceRange[0], displaySourceRange[1]),
+							EditorSelection.range(
+								displaySourceRange[0],
+								displaySourceRange[1],
+							),
 							EditorSelection.cursor(displaySourceRange[0]),
 						]),
 					});
