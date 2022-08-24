@@ -157,7 +157,7 @@ export class Rome {
 			id: 0,
 			path: options.filePath,
 		};
-		await this.workspace.open_file({
+		await this.workspace.openFile({
 			content,
 			version: 0,
 			path,
@@ -165,31 +165,31 @@ export class Rome {
 
 		let code;
 		if (options.range) {
-			const result = await this.workspace.format_range({
+			const result = await this.workspace.formatRange({
 				path: path,
-				// @ts-expect-error Types are currently wrong for range, need to fix them
+				// @ts-expect-error For some reason, passing the tuple works but. Need to understand what's going on
 				range: options.range,
 			});
 			code = result.code;
 		} else {
-			const result = await this.workspace.format_file({
+			const result = await this.workspace.formatFile({
 				path,
 			});
 			code = result.code;
 		}
 
 		if (isFormatContentDebug(options)) {
-			const ir = await this.workspace.get_formatter_ir({
+			const ir = await this.workspace.getFormatterIr({
 				path,
 			});
-			this.workspace.close_file({ path });
+			this.workspace.closeFile({ path });
 			return {
 				content: code,
 				errors: [],
 				ir,
 			};
 		}
-		this.workspace.close_file({ path });
+		this.workspace.closeFile({ path });
 		return {
 			content: code,
 			errors: [],

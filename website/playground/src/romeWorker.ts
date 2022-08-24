@@ -81,7 +81,7 @@ self.addEventListener("message", async (e) => {
 				cursorPosition,
 			} = playgroundState;
 
-			workspace.update_settings({
+			workspace.updateSettings({
 				settings: {
 					format: {
 						enabled: true,
@@ -106,14 +106,14 @@ self.addEventListener("message", async (e) => {
 
 			const path = getPathForType(sourceType, isTypeScript, isJsx);
 			if (currentFile?.path === path) {
-				workspace.change_file({
+				workspace.changeFile({
 					path,
 					version: currentFile.version++,
 					content: code,
 				});
 			} else {
 				if (currentFile) {
-					workspace.close_file({
+					workspace.closeFile({
 						path: currentFile.path,
 					});
 				}
@@ -123,25 +123,25 @@ self.addEventListener("message", async (e) => {
 					version: 0,
 				};
 
-				workspace.open_file({
+				workspace.openFile({
 					path,
 					version: currentFile.version++,
 					content: code,
 				});
 			}
 
-			const syntax_tree = workspace.get_syntax_tree({
+			const syntax_tree = workspace.getSyntaxTree({
 				path,
 			});
-			const control_flow_graph = workspace.get_control_flow_graph({
+			const control_flow_graph = workspace.getControlFlowGraph({
 				path,
 				cursor: cursorPosition,
 			});
-			const formatter_ir = workspace.get_formatter_ir({
+			const formatter_ir = workspace.getFormatterIr({
 				path,
 			});
 
-			const diagnostics = workspace.pull_diagnostics({
+			const diagnostics = workspace.pullDiagnostics({
 				path,
 				categories: ["Syntax", "Lint"],
 			});
@@ -151,7 +151,7 @@ self.addEventListener("message", async (e) => {
 				printer.print(diag);
 			}
 
-			const printed = workspace.format_file({
+			const printed = workspace.formatFile({
 				path,
 			});
 
