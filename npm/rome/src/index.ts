@@ -95,17 +95,9 @@ interface CurrentFile {
 
 export class Rome {
 	private workspace: Workspace;
-	private currentFile: CurrentFile;
 
 	private constructor(workspace: Workspace) {
 		this.workspace = workspace;
-		this.currentFile = {
-			version: 0,
-			path: {
-				path: "",
-				id: 0,
-			},
-		};
 	}
 
 	/**
@@ -119,33 +111,6 @@ export class Rome {
 		// load the web assembly module
 		main();
 		return Promise.resolve(new Workspace());
-	}
-
-	/**
-	 * It updates the current file. If `true`, the file was correctly updated.
-	 * If `false`, a new version will be created.
-	 * @param path
-	 * @param workspace
-	 * @private
-	 */
-	private updateCurrentFile(path: RomePath): boolean {
-		if (path.path === this.currentFile.path.path) {
-			// same path, let's just update the version
-			this.currentFile = {
-				version: this.currentFile.version++,
-				path: {
-					...this.currentFile.path,
-				},
-			};
-			return true;
-		} else {
-			// no same path, let's create a new one
-			this.currentFile = {
-				version: 0,
-				path,
-			};
-			return false;
-		}
 	}
 
 	async formatFiles(paths: string[]): Promise<FormatResult>;
@@ -188,49 +153,43 @@ export class Rome {
 		content: string,
 		options: FormatContentOptions | FormatContentDebugOptions,
 	): Promise<FormatResult | FormatDebugResult> {
-		const updated = this.updateCurrentFile({
+		const path: RomePath = {
+			id: 0,
 			path: options.filePath,
-			id: 1,
+		};
+		await this.workspace.change_file({
+			content,
+			version: 0,
+			path,
 		});
-		if (updated) {
-			await this.workspace.change_file({
-				content,
-				version: this.currentFile.version,
-				path: this.currentFile.path,
-			});
-		} else {
-			await this.workspace.open_file({
-				content,
-				version: this.currentFile.version,
-				path: this.currentFile.path,
-			});
-		}
 
 		let code;
 		if (options.range) {
 			const result = await this.workspace.format_range({
-				path: this.currentFile.path,
+				path: path,
 				// @ts-expect-error Types are currently wrong for range, need to fix them
 				range: options.range,
 			});
 			code = result.code;
 		} else {
 			const result = await this.workspace.format_file({
-				path: this.currentFile.path,
+				path,
 			});
 			code = result.code;
 		}
 
 		if (isFormatContentDebug(options)) {
 			const ir = await this.workspace.get_formatter_ir({
-				path: this.currentFile.path,
+				path,
 			});
+			this.workspace.close_file({ path });
 			return {
 				content: code,
 				errors: [],
 				ir,
 			};
 		}
+		this.workspace.close_file({ path });
 		return {
 			content: code,
 			errors: [],
