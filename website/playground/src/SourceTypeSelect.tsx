@@ -83,9 +83,7 @@ export default function SourceTypeSelect({
 						/>
 					</div>
 					<div className="ml-1 text-sm">
-						<label htmlFor="jsx" className="font-medium text-gray-700">
-							JSX
-						</label>
+						<label htmlFor="jsx" className="font-medium text-gray-700">JSX</label>
 						<span id="jsx-description" className="text-gray-500">
 							<span className="sr-only">JSX</span>
 						</span>

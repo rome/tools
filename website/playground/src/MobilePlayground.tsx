@@ -27,12 +27,10 @@ export function MobilePlayground({
 		const cursorPosition = viewUpdate.state.selection.ranges[0]?.from ?? 0;
 		setPlaygroundState(
 			(state) =>
-				state.cursorPosition !== cursorPosition
-					? {
-							...state,
-							cursorPosition,
-					  }
-					: state,
+				state.cursorPosition !== cursorPosition ? {
+					...state,
+					cursorPosition,
+				} : state,
 		);
 	}, []);
 	const onChange = useCallback((value) => {
@@ -58,9 +56,7 @@ export function MobilePlayground({
 					<Tab selectedClassName="bg-slate-300">AST</Tab>
 					<Tab selectedClassName="bg-slate-300">Rome IR</Tab>
 					<Tab selectedClassName="bg-slate-300">Prettier IR</Tab>
-					<Tab disabled={errors === ""} selectedClassName="bg-slate-300">
-						Errors
-					</Tab>
+					<Tab disabled={errors === ""} selectedClassName="bg-slate-300">Errors</Tab>
 					<Tab
 						disabled={control_flow_graph === ""}
 						selectedClassName="bg-slate-300"

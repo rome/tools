@@ -51,28 +51,32 @@ export function usePlaygroundState(
 	const searchParams = new URLSearchParams(window.location.search);
 	const initState = () => ({
 		code:
-			window.location.hash !== "#"
-				? decodeCode(window.location.hash.substring(1))
-				: "",
+			window.location.hash !== "#" ? decodeCode(
+				window.location.hash.substring(1),
+			) : "",
 		lineWidth: parseInt(
 			searchParams.get("lineWidth") ?? defaultRomeConfig.lineWidth,
 		),
 		indentStyle:
-			(searchParams.get("indentStyle") as IndentStyle) ??
-			defaultRomeConfig.indentStyle,
+			(
+				searchParams.get("indentStyle") as IndentStyle
+			) ?? defaultRomeConfig.indentStyle,
 		quoteStyle:
-			(searchParams.get("quoteStyle") as QuoteStyle) ??
-			defaultRomeConfig.quoteStyle,
+			(
+				searchParams.get("quoteStyle") as QuoteStyle
+			) ?? defaultRomeConfig.quoteStyle,
 		indentWidth: parseInt(
 			searchParams.get("indentWidth") ?? defaultRomeConfig.indentWidth,
 		),
 		isTypeScript:
-			searchParams.get("typescript") === "true" ||
-			defaultRomeConfig.isTypeScript,
+			searchParams.get(
+				"typescript",
+			) === "true" || defaultRomeConfig.isTypeScript,
 		isJsx: searchParams.get("jsx") === "true" || defaultRomeConfig.isJsx,
 		sourceType:
-			(searchParams.get("sourceType") as SourceType) ??
-			defaultRomeConfig.sourceType,
+			(
+				searchParams.get("sourceType") as SourceType
+			) ?? defaultRomeConfig.sourceType,
 		cursorPosition: 0,
 	});
 	const [playgroundState, setPlaygroundState] = useState(initState());
@@ -92,9 +96,8 @@ export function usePlaygroundState(
 			typescript: isTypeScript.toString(),
 			jsx: isJsx.toString(),
 		}).toString();
-		const url = `${window.location.protocol}//${window.location.host}${
-			window.location.pathname
-		}?${queryString}#${encodeCode(code)}`;
+		const url = `${window.location.protocol}//${window.location.host}${window
+			.location.pathname}?${queryString}#${encodeCode(code)}`;
 
 		window.history.replaceState({ path: url }, "", url);
 	}, [playgroundState]);
@@ -137,10 +140,8 @@ export function formatWithPrettier(
 		// @ts-ignore
 		let debug = prettier.__debug;
 		const document = debug.printToDoc(code, prettierOptions);
-		const formattedCode = debug.printDocToString(
-			document,
-			prettierOptions,
-		).formatted;
+		const formattedCode = debug.printDocToString(document, prettierOptions)
+			.formatted;
 		const ir = debug.formatDoc(document, {
 			parser: "babel",
 			plugins: [parserBabel],

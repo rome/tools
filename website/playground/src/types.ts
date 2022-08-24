@@ -1,9 +1,23 @@
 import { Dispatch, SetStateAction } from "react";
+import { parser } from "codemirror-lang-rome-ast";
 
-export enum IndentStyle { Tab = "tab", Space = "space" }
-export enum SourceType { Module = "module", Script = "script" }
-export enum QuoteStyle { Double = "double", Single = "single" }
-export enum LoadingState { Loading, Success, Error }
+export enum IndentStyle {
+	Tab = "tab",
+	Space = "space",
+}
+export enum SourceType {
+	Module = "module",
+	Script = "script",
+}
+export enum QuoteStyle {
+	Double = "double",
+	Single = "single",
+}
+export enum LoadingState {
+	Loading,
+	Success,
+	Error,
+}
 
 export interface RomeOutput {
 	ast: string;
@@ -59,3 +73,11 @@ export type PlaygroundSettings = Pick<
 		| "isTypeScript"
 		| "isJsx"
 >;
+
+export type Tree = ReturnType<typeof parser.parse>;
+export interface RomeAstSyntacticData {
+	ast: Tree;
+	// key is range of original `SyntaxToken`, value is the range string, like `20..20` corresponding range in
+	// `rome_xx_ast` `Display` string.
+	rangeMap: Map<[number, number], [number, number]>;
+}
