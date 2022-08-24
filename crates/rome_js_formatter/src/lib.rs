@@ -512,7 +512,7 @@ impl FormatLanguage for JsFormatLanguage {
         let mut rewriter = JsFormatSyntaxRewriter::new(root);
         let transformed = rewriter.transform(root.clone());
 
-        (dbg!(transformed), rewriter.finish())
+        (transformed, rewriter.finish())
     }
 
     fn is_range_formatting_node(&self, node: &SyntaxNode<Self::SyntaxLanguage>) -> bool {

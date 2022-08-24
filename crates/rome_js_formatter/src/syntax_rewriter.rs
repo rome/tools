@@ -247,7 +247,7 @@ impl JsFormatSyntaxRewriter {
     }
 
     pub(crate) fn finish(self) -> TransformSourceMap {
-        dbg!(self.source_map.finish())
+        self.source_map.finish()
     }
 }
 
@@ -405,7 +405,6 @@ mod tests {
     use rome_js_syntax::{
         JsArrayExpression, JsBinaryExpression, JsExpressionStatement, JsIdentifierExpression,
         JsLogicalExpression, JsSequenceExpression, JsStringLiteralExpression, JsSyntaxNode,
-        JsUnknownExpression,
     };
     use rome_rowan::{AstNode, SyntaxRewriter};
 
@@ -451,7 +450,7 @@ mod tests {
 
         assert_eq!(
             source_map.trimmed_source_text(logical_expressions[1].syntax()),
-            "(a && (b"
+            "a && (b"
         );
     }
 
@@ -531,8 +530,6 @@ mod tests {
     fn enclosing_node() {
         let (transformed, source_map) = source_map_test("(a + b);");
 
-        dbg!(&transformed, &source_map);
-
         let expression_statement = transformed
             .descendants()
             .find_map(JsExpressionStatement::cast)
@@ -561,8 +558,6 @@ mod tests {
     #[test]
     fn trailing_whitespace() {
         let (transformed, source_map) = source_map_test("(a + b   );");
-
-        dbg!(&transformed, &source_map);
 
         let binary = transformed
             .descendants()
