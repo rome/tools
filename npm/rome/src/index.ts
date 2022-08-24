@@ -157,7 +157,7 @@ export class Rome {
 			id: 0,
 			path: options.filePath,
 		};
-		await this.workspace.change_file({
+		await this.workspace.open_file({
 			content,
 			version: 0,
 			path,
