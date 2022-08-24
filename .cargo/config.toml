@@ -27,7 +27,6 @@ bench_analyzer = "run -p xtask_bench --release -- --feature analyzer"
 coverage = "run -p xtask_coverage --profile=release-with-debug --"
 rome-cli = "run -p rome_bin --release --"
 rome-cli-dev = "run -p rome_bin --"
-check_js = "rome-cli ci editors website npm/rome" # Same command with check_js CI
 
 [profile.release]
 lto = true
