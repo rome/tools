@@ -1,5 +1,7 @@
 use crate::{Execution, TraversalMode};
+use indexmap::IndexMap;
 use rome_console::{markup, Console, ConsoleExt};
+use rome_service::{ConfigurationError, RomeError};
 use serde::Serialize;
 use std::collections::HashMap;
 use std::time::Duration;
@@ -8,10 +10,10 @@ use std::time::Duration;
 #[serde(rename_all = "camelCase")]
 pub struct FormatterReport {
     /// Useful information of the execution
-    pub(crate) summary: FormatterReportSummary,
+    summary: FormatterReportSummary,
 
     /// The key is the path of the file
-    pub(crate) files: HashMap<String, FormatterReportFileDetail>,
+    files: IndexMap<String, FormatterReportFileDetail>,
 }
 
 impl FormatterReport {
@@ -22,18 +24,13 @@ impl FormatterReport {
     pub(crate) fn set_summary(&mut self, summary: FormatterReportSummary) {
         self.summary = summary;
     }
-}
 
-#[derive(Debug, Default, Serialize)]
-#[serde(rename_all = "camelCase")]
-pub struct FormatterReportSummary {
-    /// how many files were compared
-    pub(crate) count: usize,
-}
+    pub(crate) fn summary(&self) -> &FormatterReportSummary {
+        &self.summary
+    }
 
-impl FormatterReportSummary {
-    pub(crate) fn set_count(&mut self, count: usize) {
-        self.count = count
+    pub(crate) fn formatted(&self) -> &usize {
+        &self.summary.formatted
     }
 
     pub(crate) fn report_to_console(
@@ -45,17 +42,35 @@ impl FormatterReportSummary {
         if let TraversalMode::Format { write, .. } = execution.traversal_mode() {
             if *write {
                 console.log(markup! {
-                    <Info>"Formatted "{self.count}" files in "{duration}</Info>
+                    <Info>"Formatted "{self.formatted()}" files in "{duration}</Info>
                 });
             } else {
                 console.log(markup! {
-                    <Info>"Compared "{self.count}" files in "{duration}</Info>
+                    <Info>"Compared "{self.formatted()}" files in "{duration}</Info>
                 });
             }
         }
     }
 
-    pub(crate) fn report_to_json(&self, console: &mut dyn Console) {}
+    pub(crate) fn report_to_json(&self) -> Result<String, RomeError> {
+        let serialized = serde_json::to_string(&self)
+            .map_err(|_| RomeError::Configuration(ConfigurationError::SerializationError))?;
+
+        Ok(serialized)
+    }
+}
+
+#[derive(Debug, Default, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FormatterReportSummary {
+    /// how many files were compared
+    pub(crate) formatted: usize,
+}
+
+impl FormatterReportSummary {
+    pub(crate) fn set_count(&mut self, count: usize) {
+        self.formatted = count
+    }
 }
 
 #[derive(Debug, Default, Serialize)]

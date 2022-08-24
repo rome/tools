@@ -1,16 +1,15 @@
+pub(crate) mod check;
 pub mod formatter;
-pub(crate) mod linter;
-pub(crate) mod reporter;
+pub mod reporter;
 
-use crate::reports::formatter::{FormatterReportFileDetail, FormatterReportSummary};
-use crate::reports::reporter::Reporter;
+pub use crate::reports::formatter::{FormatterReportFileDetail, FormatterReportSummary};
+pub use crate::reports::reporter::{ReportDiagnostic, ReportDiagnosticKind};
 use formatter::FormatterReport;
-use rome_console::codespan::Severity;
 use rome_service::RomeError;
 use serde::Serialize;
 use std::collections::HashMap;
 
-#[derive(Debug, Default, Serialize)]
+#[derive(Default, Serialize)]
 pub struct Report {
     /// Information relative to the formatter
     formatter: FormatterReport,
@@ -18,23 +17,12 @@ pub struct Report {
     /// Diagnostics tracked during a generic traversal
     ///
     /// The key is the path of the file where the diagnostics occurred
-    diagnostics: HashMap<String, ReportErrorKind>,
+    diagnostics: HashMap<String, ReportDiagnosticKind>,
 }
 
-impl Default for ReportDiagnostic {
-    fn default() -> Self {
-        Self {
-            severity: Severity::Error,
-            code: None,
-            title: String::new(),
-        }
-    }
-}
-
-#[derive(Debug)]
 pub enum ReportKind {
     Formatter(String, FormatterReportFileDetail),
-    Error(String, ReportErrorKind),
+    Error(String, ReportDiagnosticKind),
 }
 
 impl Report {
@@ -51,7 +39,7 @@ impl Report {
     }
 
     /// It tracks a generic diagnostic
-    pub fn push_error(&mut self, path: String, err: ReportErrorKind) {
+    pub fn push_error(&mut self, path: String, err: ReportDiagnosticKind) {
         self.diagnostics.insert(path, err);
     }
 

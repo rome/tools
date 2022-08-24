@@ -2,8 +2,6 @@
 //! to parse commands and arguments, redirect the execution of the commands and
 //! execute the traversal of directory and files, based on the command that were passed.
 
-extern crate core;
-
 pub use pico_args::Arguments;
 use rome_console::EnvConsole;
 use rome_flags::FeatureFlags;
@@ -22,7 +20,7 @@ pub(crate) use execute::{execute_mode, Execution, TraversalMode};
 pub use panic::setup_panic_handler;
 pub use reports::{
     formatter::{FormatterReport, FormatterReportFileDetail, FormatterReportSummary},
-    Report, ReportDiagnostic, ReportDiff, ReportErrorKind, ReportKind,
+    Report, ReportDiagnostic, ReportKind,
 };
 pub use termination::Termination;
 

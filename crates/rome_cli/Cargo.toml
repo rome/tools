@@ -10,7 +10,7 @@ license = "MIT"
 
 [dependencies]
 rome_formatter = { path = "../rome_formatter" }
-rome_diagnostics = { path = "../rome_diagnostics" }
+rome_diagnostics = { path = "../rome_diagnostics", feature = ["serde"] }
 rome_service = { path = "../rome_service" }
 rome_flags = { path = "../rome_flags" }
 rome_fs = { path = "../rome_fs" }

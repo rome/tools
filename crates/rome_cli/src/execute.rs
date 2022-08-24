@@ -1,3 +1,4 @@
+use crate::reports::reporter::Reporter;
 use crate::traversal::traverse;
 use crate::{CliSession, Termination};
 use rome_console::{markup, ConsoleExt};

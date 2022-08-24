@@ -1,7 +1,7 @@
-use crate::reports::reporter::{ReportDiagnosticKind, Reporter, ReporterSummary};
+use crate::reports::reporter::{ReportDiagnosticKind, ReportDiff, Reporter, ReporterSummary};
 use crate::{
     CliSession, Execution, FormatterReportFileDetail, FormatterReportSummary, Report,
-    ReportDiagnostic, ReportDiff, ReportKind, Termination, TraversalMode,
+    ReportDiagnostic, ReportKind, Termination, TraversalMode,
 };
 use crossbeam::channel::{unbounded, Receiver, Sender};
 use rome_console::{
@@ -34,7 +34,6 @@ use std::{
 pub(crate) fn traverse<'ctx>(
     execution: Execution,
     mut session: CliSession,
-    mut reporter: Reporter,
 ) -> Result<(), Termination> {
     // Check that at least one input file / directory was specified in the command line
     let mut inputs = vec![];
@@ -60,6 +59,7 @@ pub(crate) fn traverse<'ctx>(
         });
     }
 
+    let mut reporter = Reporter::new_console(&execution);
     let (interner, recv_files) = AtomicInterner::new();
     let (send_msgs, recv_msgs) = unbounded();
     let (sender_reports_from_traversal, receiver_reports) = unbounded();
@@ -120,7 +120,7 @@ pub(crate) fn traverse<'ctx>(
         duration,
     };
 
-    reporter.update_summary(summary);
+    // reporter.update_formatter_summary(summary);
 
     reporter.report_diagnostics(console)?;
     reporter.report_summary(console)?;
@@ -161,9 +161,9 @@ pub(crate) fn traverse<'ctx>(
             if let TraversalMode::Format { write, .. } = execution.traversal_mode() {
                 let mut summary = FormatterReportSummary::default();
                 if *write {
-                    summary.self_files_written(count);
+                    // summary.self_files_written(count);
                 } else {
-                    summary.set_files_compared(count);
+                    // summary.set_files_compared(count);
                 }
                 report.set_formatter_summary(summary);
             }
@@ -276,7 +276,7 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
                     sender_reports
                         .send(ReportKind::Error(
                             file_name.unwrap().to_string(),
-                            ReportDiagnosticKind::Diagnostic(ReportDiagnostic {
+                            ReportDiagnosticKind::MinifiedDiagnostic(ReportDiagnostic {
                                 code: Some(err.code.to_string()),
                                 title: err.message,
                                 severity: err.severity,
@@ -324,11 +324,7 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
                             sender_reports
                                 .send(ReportKind::Error(
                                     name.to_string(),
-                                    ReportDiagnosticKind::Diagnostic(ReportDiagnostic {
-                                        code: diag.code,
-                                        title: String::from("test here"),
-                                        severity: diag.severity,
-                                    }),
+                                    ReportDiagnosticKind::ConsoleDiagnostic(diag),
                                 ))
                                 .ok();
                         }
