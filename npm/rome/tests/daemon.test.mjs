@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ClientKind, Rome } from "../dist";
+import { BackendKind, Rome } from "../dist";
 import { resolve } from "path";
 import { fileURLToPath } from "url";
 
@@ -7,23 +7,41 @@ const target = process.env.CI ? "target/release/rome" : "target/debug/rome";
 
 describe("Rome Deamon formatter", () => {
 	it("should not format files", async () => {
-		const rome = await Rome.create();
+		const pathToBinary = resolve(
+			fileURLToPath(import.meta.url),
+			"../../../..",
+			target,
+		);
+
+		const rome = await Rome.create({
+			backendKind: BackendKind.DAEMON,
+			pathToBinary,
+		});
 
 		let result = await rome.formatFiles(["./path/to/file.js"]);
 
 		expect(result.content).toEqual("");
-		expect(result.errors).toEqual([]);
+		expect(result.diagnostics).toEqual([]);
 	});
 
 	it("should not format files in debug mode", async () => {
-		const rome = await Rome.create();
+		const pathToBinary = resolve(
+			fileURLToPath(import.meta.url),
+			"../../../..",
+			target,
+		);
+
+		const rome = await Rome.create({
+			backendKind: BackendKind.DAEMON,
+			pathToBinary,
+		});
 
 		let result = await rome.formatFiles(["./path/to/file.js"], {
 			debug: true,
 		});
 
 		expect(result.content).toEqual("");
-		expect(result.errors).toEqual([]);
+		expect(result.diagnostics).toEqual([]);
 		expect(result.ir).toEqual("");
 	});
 
@@ -34,13 +52,39 @@ describe("Rome Deamon formatter", () => {
 			target,
 		);
 
-		const rome = await Rome.create(ClientKind.DAEMON, command);
+		const rome = await Rome.create({
+			backendKind: BackendKind.DAEMON,
+			pathToBinary: command,
+		});
 		let result = await rome.formatContent("function f   () {  }", {
 			filePath: "example.js",
 		});
 
 		expect(result.content).toEqual("function f() {}\n");
-		expect(result.errors).toEqual([]);
+		expect(result.diagnostics).toEqual([]);
+	});
+
+	it("should not format and have diagnostics", async () => {
+		const command = resolve(
+			fileURLToPath(import.meta.url),
+			"../../../..",
+			target,
+		);
+
+		const rome = await Rome.create({
+			backendKind: BackendKind.DAEMON,
+			pathToBinary: command,
+		});
+
+		let content = "function   () {  }";
+		let result = await rome.formatContent(content, {
+			filePath: "example.js",
+		});
+
+		expect(result.content).toEqual(content);
+		expect(result.diagnostics).toHaveLength(1);
+		expect(result.diagnostics[0].title[0].content).toContain("expected a name for the function in a function declaration, but found none");
+		expect(result.diagnostics).toMatchSnapshot("syntax error")
 	});
 
 	it("should format content in debug mode", async () => {
@@ -50,7 +94,10 @@ describe("Rome Deamon formatter", () => {
 			target,
 		);
 
-		const rome = await Rome.create(ClientKind.DAEMON, command);
+		const rome = await Rome.create({
+			backendKind: BackendKind.DAEMON,
+			pathToBinary: command,
+		});
 
 		let result = await rome.formatContent("function f() {}", {
 			filePath: "example.js",
@@ -58,7 +105,7 @@ describe("Rome Deamon formatter", () => {
 		});
 
 		expect(result.content).toEqual("function f() {}\n");
-		expect(result.errors).toEqual([]);
+		expect(result.diagnostics).toEqual([]);
 		expect(result.ir).toEqual(
 			'["function", " ", "f", group(["(", ")"]), " ", "{", "}", hard_line_break]',
 		);
@@ -71,14 +118,17 @@ describe("Rome Deamon formatter", () => {
 			target,
 		);
 
-		const rome = await Rome.create(ClientKind.DAEMON, command);
+		const rome = await Rome.create({
+			backendKind: BackendKind.DAEMON,
+			pathToBinary: command,
+		});
 		let result = await rome.formatContent("let a   ; function g () {  }", {
 			filePath: "file.js",
-			range: { start: 20, end: 25 },
+			range: [20, 25],
 		});
 
 		expect(result.content).toEqual("function g() {}");
-		expect(result.errors).toEqual([]);
+		expect(result.diagnostics).toEqual([]);
 	});
 
 	it("should not format content with range in debug mode", async () => {
@@ -88,15 +138,18 @@ describe("Rome Deamon formatter", () => {
 			target,
 		);
 
-		const rome = await Rome.create(ClientKind.DAEMON, command);
+		const rome = await Rome.create({
+			backendKind: BackendKind.DAEMON,
+			pathToBinary: command,
+		});
 		let result = await rome.formatContent("let a   ; function g () {  }", {
 			filePath: "file.js",
-			range: { start: 20, end: 25 },
+			range: [20, 25],
 			debug: true,
 		});
 
 		expect(result.content).toEqual("function g() {}");
-		expect(result.errors).toEqual([]);
+		expect(result.diagnostics).toEqual([]);
 		expect(result.ir).toEqual(
 			`[
   "let",

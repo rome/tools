@@ -8,8 +8,10 @@
         "format": "cargo rome-cli-dev format ./ --write",
         "ci": "cargo rome-cli-dev ci ./src && tsc --noEmit",
         "check": "cargo rome-cli-dev check ./src && tsc --noEmit",
-        "build:wasm-dev": "wasm-pack build --out-dir ../../npm/wasm-nodejs --target nodejs --dev --scope rometools ../../crates/rome_wasm",
-        "build:wasm": "wasm-pack build --out-dir ../../npm/wasm-nodejs --target nodejs --release --scope rometools ../../crates/rome_wasm",
+        "build:wasm-node-dev": "wasm-pack build --out-dir ../../npm/wasm-nodejs --target nodejs --dev --scope rometools ../../crates/rome_wasm",
+        "build:wasm-node": "wasm-pack build --out-dir ../../npm/wasm-nodejs --target nodejs --release --scope rometools ../../crates/rome_wasm",
+        "build:wasm-web-dev": "wasm-pack build --out-dir ../../npm/wasm-web --target web --dev --scope rometools ../../crates/rome_wasm",
+        "build:wasm-web": "wasm-pack build --out-dir ../../npm/wasm-web --target web --release --scope rometools ../../crates/rome_wasm",
         "test": "vitest",
         "test:ci": "vitest --run",
         "build": "tsc "
