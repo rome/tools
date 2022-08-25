@@ -20,10 +20,10 @@ pub struct JsFormatContext {
 }
 
 impl JsFormatContext {
-    pub fn new(options: JsFormatOptions) -> Self {
+    pub fn new(options: JsFormatOptions, comments: Comments<JsLanguage>) -> Self {
         Self {
             options,
-            ..JsFormatContext::default()
+            comments: Rc::new(comments),
         }
     }
 }
@@ -61,11 +61,6 @@ impl CstFormatContext for JsFormatContext {
 
     fn comments(&self) -> Rc<Comments<JsLanguage>> {
         self.comments.clone()
-    }
-
-    fn with_comments(mut self, comments: Rc<Comments<JsLanguage>>) -> Self {
-        self.comments = comments;
-        self
     }
 }
 

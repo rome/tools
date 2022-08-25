@@ -78,6 +78,7 @@ where
 
     // Insert a space if the previous token has any trailing comments and this is not a group
     // end token
+    #[allow(deprecated)]
     if is_last_content_inline_content && !f.context().comment_style().is_group_end_token(token_kind)
     {
         space().fmt(f)?;
@@ -676,6 +677,7 @@ where
                     TriviaPrintMode::Trim => 0,
                 });
 
+            #[allow(deprecated)]
             let comment_kind = f
                 .context()
                 .comment_style()
@@ -789,6 +791,7 @@ where
                 continue;
             }
 
+            #[allow(deprecated)]
             let kind = f
                 .context()
                 .comment_style()
@@ -800,6 +803,7 @@ where
                 if !is_single_line {
                     match self.token_kind {
                         // Don't write a space if this is a group start token and it isn't the first trailing comment
+                        #[allow(deprecated)]
                         Some(token)
                             if f.context().comment_style().is_group_start_token(token)
                                 && index == 0 => {}
