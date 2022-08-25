@@ -542,7 +542,6 @@ mod tests {
 
     use super::format_range;
 
-    
     use crate::JsFormatOptions;
     use rome_formatter::IndentStyle;
     use rome_js_parser::parse_script;

@@ -15,8 +15,8 @@ use std::{
 };
 
 use rome_diagnostics::{file::SimpleFiles, termcolor, Emitter};
-use rome_formatter::{IndentStyle};
-use rome_js_formatter::context::{JsFormatOptions};
+use rome_formatter::IndentStyle;
+use rome_js_formatter::context::JsFormatOptions;
 use rome_js_parser::parse;
 use rome_js_syntax::SourceType;
 use serde::Serialize;

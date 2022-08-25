@@ -1,4 +1,4 @@
-use rome_formatter::{LineWidth};
+use rome_formatter::LineWidth;
 use rome_formatter::{IndentStyle, Printed};
 use rome_fs::RomePath;
 use rome_js_formatter::context::{JsFormatOptions, QuoteProperties, QuoteStyle};

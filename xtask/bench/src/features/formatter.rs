@@ -2,7 +2,7 @@
 use crate::features::print_diff;
 use crate::BenchmarkSummary;
 use rome_formatter::Printed;
-use rome_js_formatter::context::{JsFormatOptions};
+use rome_js_formatter::context::JsFormatOptions;
 use rome_js_formatter::format_node;
 use rome_js_syntax::JsSyntaxNode;
 use std::fmt::{Display, Formatter};
