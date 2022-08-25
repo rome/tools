@@ -2,7 +2,7 @@
 use crate::features::print_diff;
 use crate::BenchmarkSummary;
 use rome_formatter::Printed;
-use rome_js_formatter::context::JsFormatContext;
+use rome_js_formatter::context::{JsFormatOptions};
 use rome_js_formatter::format_node;
 use rome_js_syntax::JsSyntaxNode;
 use std::fmt::{Display, Formatter};
@@ -31,7 +31,7 @@ pub fn run_format(root: &JsSyntaxNode) -> Printed {
         dhat::get_stats().unwrap()
     };
 
-    let formatted = format_node(JsFormatContext::default(), root).unwrap();
+    let formatted = format_node(JsFormatOptions::default(), root).unwrap();
 
     #[cfg(feature = "dhat-on")]
     let stats = {

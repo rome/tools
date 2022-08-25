@@ -6,7 +6,7 @@ use rome_js_factory::{
     make,
     syntax::{JsAnyDeclaration, JsAnyModuleItem, JsAnyStatement},
 };
-use rome_js_formatter::{context::JsFormatContext, format_node};
+use rome_js_formatter::{context::JsFormatOptions, format_node};
 use rome_rowan::AstNode;
 use rome_service::workspace_types::{generate_type, methods, ModuleQueue};
 
@@ -66,7 +66,7 @@ fn main() -> io::Result<()> {
 
     // Wasm-bindgen will paste the generated TS code as-is into the final .d.ts file,
     // ensure it looks good by running it through the formatter
-    let formatted = format_node(JsFormatContext::default(), module.syntax()).unwrap();
+    let formatted = format_node(JsFormatOptions::default(), module.syntax()).unwrap();
     let printed = formatted.print();
     let definitions = printed.into_code();
 

@@ -18,6 +18,14 @@ impl<'buf, Context> Formatter<'buf, Context> {
         Self { buffer }
     }
 
+    /// Returns the format options
+    pub fn options(&self) -> &Context::Options
+    where
+        Context: FormatContext,
+    {
+        self.context().options()
+    }
+
     /// Returns the Context specifying how to format the current CST
     pub fn context(&self) -> &Context {
         self.state().context()

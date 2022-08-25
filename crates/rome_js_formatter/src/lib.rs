@@ -259,7 +259,7 @@ use rome_rowan::SyntaxResult;
 use rome_rowan::TextRange;
 
 use crate::builders::{format_parenthesize, format_suppressed_node};
-use crate::context::JsFormatContext;
+use crate::context::{JsFormatContext, JsFormatOptions};
 use crate::cst::FormatJsSyntaxNode;
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
@@ -485,12 +485,12 @@ impl IntoFormat<JsFormatContext> for JsSyntaxToken {
 /// It returns a [Formatted] result with a range corresponding to the
 /// range of the input that was effectively overwritten by the formatter
 pub fn format_range(
-    context: JsFormatContext,
+    options: JsFormatOptions,
     root: &JsSyntaxNode,
     range: TextRange,
 ) -> FormatResult<Printed> {
     rome_formatter::format_range::<_, FormatJsSyntaxNode, _>(
-        context,
+        JsFormatContext::new(options),
         root,
         range,
         is_range_formatting_root,
@@ -517,10 +517,10 @@ fn is_range_formatting_root(node: &JsSyntaxNode) -> bool {
 ///
 /// It returns a [Formatted] result, which the user can use to override a file.
 pub fn format_node(
-    context: JsFormatContext,
+    options: JsFormatOptions,
     root: &JsSyntaxNode,
 ) -> FormatResult<Formatted<JsFormatContext>> {
-    rome_formatter::format_node(context, &root.format())
+    rome_formatter::format_node(JsFormatContext::new(options), &root.format())
 }
 
 /// Formats a single node within a file, supported by Rome.
@@ -533,8 +533,8 @@ pub fn format_node(
 /// even if it's a mismatch from the rest of the block the selection is in
 ///
 /// It returns a [Formatted] result
-pub fn format_sub_tree(context: JsFormatContext, root: &JsSyntaxNode) -> FormatResult<Printed> {
-    rome_formatter::format_sub_tree(context, &root.format())
+pub fn format_sub_tree(options: JsFormatOptions, root: &JsSyntaxNode) -> FormatResult<Printed> {
+    rome_formatter::format_sub_tree(JsFormatContext::new(options), &root.format())
 }
 
 #[cfg(test)]
@@ -542,7 +542,8 @@ mod tests {
 
     use super::format_range;
 
-    use crate::context::JsFormatContext;
+    
+    use crate::JsFormatOptions;
     use rome_formatter::IndentStyle;
     use rome_js_parser::parse_script;
     use rome_rowan::{TextRange, TextSize};
@@ -579,7 +580,7 @@ while(
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatContext::default().with_indent_style(IndentStyle::Space(4)),
+            JsFormatOptions::default().with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -611,7 +612,7 @@ function() {
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatContext::default().with_indent_style(IndentStyle::Space(4)),
+            JsFormatOptions::default().with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -642,7 +643,7 @@ function() {
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatContext::default().with_indent_style(IndentStyle::Space(4)),
+            JsFormatOptions::default().with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -661,7 +662,7 @@ function() {
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatContext::default().with_indent_style(IndentStyle::Space(4)),
+            JsFormatOptions::default().with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -683,7 +684,7 @@ function() {
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatContext::default().with_indent_style(IndentStyle::Space(4)),
+            JsFormatOptions::default().with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -706,7 +707,7 @@ pub(crate) mod separated;
 #[cfg(test)]
 mod test {
     use crate::check_reformat::{check_reformat, CheckReformatParams};
-    use crate::{format_node, format_range, JsFormatContext};
+    use crate::{format_node, format_range, JsFormatOptions};
     use rome_js_parser::parse;
     use rome_js_syntax::{SourceType, TextRange, TextSize};
 
@@ -721,7 +722,7 @@ test.expect(t => {
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
-        let result = format_node(JsFormatContext::default(), &tree.syntax())
+        let result = format_node(JsFormatOptions::default(), &tree.syntax())
             .unwrap()
             .print();
         check_reformat(CheckReformatParams {
@@ -729,7 +730,7 @@ test.expect(t => {
             text: result.as_code(),
             source_type: syntax,
             file_name: "quick_test",
-            format_context: JsFormatContext::default(),
+            options: JsFormatOptions::default(),
         });
         assert_eq!(
             result.as_code(),
@@ -745,7 +746,7 @@ test.expect(t => {
         let tree = parse(src, 0, syntax);
 
         let result = format_range(
-            JsFormatContext::default(),
+            JsFormatOptions::default(),
             &tree.syntax(),
             TextRange::new(TextSize::from(0), TextSize::of(src) + TextSize::from(5)),
         );

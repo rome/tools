@@ -2,8 +2,8 @@ use crate::prelude::{dynamic_text, format_with};
 use crate::printer::LineEnding;
 use crate::{
     format, format_args, group, soft_block_indent, soft_line_break_or_space,
-    soft_line_indent_or_space, space, text, write, Buffer, Format, FormatContext, FormatResult,
-    Formatter, GroupId, IndentStyle, LineWidth, PrinterOptions, TextSize,
+    soft_line_indent_or_space, space, text, write, Buffer, Format, FormatContext, FormatOptions,
+    FormatResult, Formatter, GroupId, IndentStyle, LineWidth, PrinterOptions, TextSize,
 };
 use indexmap::IndexSet;
 #[cfg(target_pointer_width = "64")]
@@ -766,6 +766,17 @@ struct IrFormatContext {
 }
 
 impl FormatContext for IrFormatContext {
+    type Options = IrFormatOptions;
+
+    fn options(&self) -> &Self::Options {
+        &IrFormatOptions
+    }
+}
+
+#[derive(Debug, Clone, Default)]
+struct IrFormatOptions;
+
+impl FormatOptions for IrFormatOptions {
     fn indent_style(&self) -> IndentStyle {
         IndentStyle::Space(2)
     }

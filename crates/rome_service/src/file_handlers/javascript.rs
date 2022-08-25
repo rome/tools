@@ -4,8 +4,8 @@ use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
 use rome_js_analyze::utils::rename::RenameError;
 use rome_js_analyze::{analyze, analyze_with_inspect_matcher, metadata, RuleError};
-use rome_js_formatter::context::{QuoteProperties, QuoteStyle};
-use rome_js_formatter::{context::JsFormatContext, format_node};
+use rome_js_formatter::context::{JsFormatOptions, QuoteProperties, QuoteStyle};
+use rome_js_formatter::{format_node};
 use rome_js_parser::Parse;
 use rome_js_semantic::semantic_model;
 use rome_js_syntax::{
@@ -47,19 +47,19 @@ pub struct JsLinterSettings {
 
 impl Language for JsLanguage {
     type FormatSettings = JsFormatSettings;
-    type FormatContext = JsFormatContext;
+    type FormatOptions = JsFormatOptions;
     type LinterSettings = JsLinterSettings;
 
     fn lookup_settings(languages: &LanguagesSettings) -> &LanguageSettings<Self> {
         &languages.javascript
     }
 
-    fn resolve_format_context(
+    fn resolve_format_options(
         global: &FormatSettings,
         language: &JsFormatSettings,
         path: &RomePath,
-    ) -> JsFormatContext {
-        JsFormatContext::new(path.as_path().try_into().unwrap_or_default())
+    ) -> JsFormatOptions {
+        JsFormatOptions::new(path.as_path().try_into().unwrap_or_default())
             .with_indent_style(global.indent_style.unwrap_or_default())
             .with_line_width(global.line_width.unwrap_or_default())
             .with_quote_style(language.quote_style.unwrap_or_default())
@@ -187,7 +187,7 @@ fn debug_formatter_ir(
     parse: AnyParse,
     settings: SettingsHandle,
 ) -> Result<String, RomeError> {
-    let context = settings.format_context::<JsLanguage>(rome_path);
+    let context = settings.format_options::<JsLanguage>(rome_path);
 
     let tree = parse.syntax();
     let formatted = format_node(context, &tree)?;
@@ -374,7 +374,7 @@ fn format(
     parse: AnyParse,
     settings: SettingsHandle,
 ) -> Result<Printed, RomeError> {
-    let context = settings.format_context::<JsLanguage>(rome_path);
+    let context = settings.format_options::<JsLanguage>(rome_path);
 
     let tree = parse.syntax();
     let formatted = format_node(context, &tree)?;
@@ -388,7 +388,7 @@ fn format_range(
     settings: SettingsHandle,
     range: TextRange,
 ) -> Result<Printed, RomeError> {
-    let context = settings.format_context::<JsLanguage>(rome_path);
+    let context = settings.format_options::<JsLanguage>(rome_path);
 
     let tree = parse.syntax();
     let printed = rome_js_formatter::format_range(context, &tree, range)?;
@@ -401,7 +401,7 @@ fn format_on_type(
     settings: SettingsHandle,
     offset: TextSize,
 ) -> Result<Printed, RomeError> {
-    let context = settings.format_context::<JsLanguage>(rome_path);
+    let options = settings.format_options::<JsLanguage>(rome_path);
 
     let tree = parse.syntax();
 
@@ -427,7 +427,7 @@ fn format_on_type(
         None => panic!("found a token with no parent"),
     };
 
-    let printed = rome_js_formatter::format_sub_tree(context, &root_node)?;
+    let printed = rome_js_formatter::format_sub_tree(options, &root_node)?;
     Ok(printed)
 }
 
