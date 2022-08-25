@@ -1,5 +1,5 @@
 use rome_js_factory::make;
-use rome_js_formatter::{context::JsFormatContext, format_node};
+use rome_js_formatter::{context::JsFormatOptions, format_node};
 use rome_js_syntax::{
     JsAnyBinding, JsAnyBindingPattern, JsAnyCallArgument, JsAnyDeclaration, JsAnyDeclarationClause,
     JsAnyExportClause, JsAnyExpression, JsAnyFormalParameter, JsAnyImportClause,
@@ -384,7 +384,7 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
     )
     .build();
 
-    let formatted = format_node(JsFormatContext::default(), module.syntax()).unwrap();
+    let formatted = format_node(JsFormatOptions::default(), module.syntax()).unwrap();
     let printed = formatted.print();
     let code = printed.into_code();
 

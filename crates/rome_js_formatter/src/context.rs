@@ -1,6 +1,7 @@
 use rome_formatter::printer::PrinterOptions;
 use rome_formatter::{
-    CommentKind, CommentStyle, Comments, CstFormatContext, FormatContext, IndentStyle, LineWidth,
+    CommentKind, CommentStyle, Comments, CstFormatContext, FormatContext, FormatOptions,
+    IndentStyle, LineWidth,
 };
 use rome_js_syntax::suppression::{parse_suppression_comment, SuppressionCategory};
 use rome_js_syntax::{JsLanguage, JsSyntaxKind, SourceType};
@@ -12,6 +13,64 @@ use std::str::FromStr;
 
 #[derive(Debug, Clone, Default)]
 pub struct JsFormatContext {
+    options: JsFormatOptions,
+
+    /// The comments of the nodes and tokens in the program.
+    comments: Rc<Comments<JsLanguage>>,
+}
+
+impl JsFormatContext {
+    pub fn new(options: JsFormatOptions) -> Self {
+        Self {
+            options,
+            ..JsFormatContext::default()
+        }
+    }
+}
+
+#[derive(Eq, PartialEq, Debug, Copy, Clone, Hash)]
+pub struct TabWidth(u8);
+
+impl From<u8> for TabWidth {
+    fn from(value: u8) -> Self {
+        TabWidth(value)
+    }
+}
+
+impl From<TabWidth> for u8 {
+    fn from(width: TabWidth) -> Self {
+        width.0
+    }
+}
+
+impl FormatContext for JsFormatContext {
+    type Options = JsFormatOptions;
+
+    fn options(&self) -> &Self::Options {
+        &self.options
+    }
+}
+
+impl CstFormatContext for JsFormatContext {
+    type Language = JsLanguage;
+    type Style = JsCommentStyle;
+
+    fn comment_style(&self) -> Self::Style {
+        JsCommentStyle
+    }
+
+    fn comments(&self) -> Rc<Comments<JsLanguage>> {
+        self.comments.clone()
+    }
+
+    fn with_comments(mut self, comments: Rc<Comments<JsLanguage>>) -> Self {
+        self.comments = comments;
+        self
+    }
+}
+
+#[derive(Debug, Clone, Default)]
+pub struct JsFormatOptions {
     /// The indent style.
     indent_style: IndentStyle,
 
@@ -26,16 +85,13 @@ pub struct JsFormatContext {
 
     /// Information related to the current file
     source_type: SourceType,
-
-    /// The comments of the nodes and tokens in the program.
-    comments: Rc<Comments<JsLanguage>>,
 }
 
-impl JsFormatContext {
+impl JsFormatOptions {
     pub fn new(source_type: SourceType) -> Self {
         Self {
             source_type,
-            ..JsFormatContext::default()
+            ..JsFormatOptions::default()
         }
     }
 
@@ -79,24 +135,7 @@ impl JsFormatContext {
     pub fn source_type(&self) -> SourceType {
         self.source_type
     }
-}
 
-#[derive(Eq, PartialEq, Debug, Copy, Clone, Hash)]
-pub struct TabWidth(u8);
-
-impl From<u8> for TabWidth {
-    fn from(value: u8) -> Self {
-        TabWidth(value)
-    }
-}
-
-impl From<TabWidth> for u8 {
-    fn from(width: TabWidth) -> Self {
-        width.0
-    }
-}
-
-impl JsFormatContext {
     pub fn tab_width(&self) -> TabWidth {
         match self.indent_style {
             IndentStyle::Tab => 2.into(),
@@ -105,7 +144,7 @@ impl JsFormatContext {
     }
 }
 
-impl FormatContext for JsFormatContext {
+impl FormatOptions for JsFormatOptions {
     fn indent_style(&self) -> IndentStyle {
         self.indent_style
     }
@@ -121,30 +160,12 @@ impl FormatContext for JsFormatContext {
     }
 }
 
-impl fmt::Display for JsFormatContext {
+impl fmt::Display for JsFormatOptions {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         writeln!(f, "Indent style: {}", self.indent_style)?;
         writeln!(f, "Line width: {}", self.line_width.value())?;
         writeln!(f, "Quote style: {}", self.quote_style)?;
         writeln!(f, "Quote properties: {}", self.quote_properties)
-    }
-}
-
-impl CstFormatContext for JsFormatContext {
-    type Language = JsLanguage;
-    type Style = JsCommentStyle;
-
-    fn comment_style(&self) -> Self::Style {
-        JsCommentStyle
-    }
-
-    fn comments(&self) -> Rc<Comments<JsLanguage>> {
-        self.comments.clone()
-    }
-
-    fn with_comments(mut self, comments: Rc<Comments<JsLanguage>>) -> Self {
-        self.comments = comments;
-        self
     }
 }
 

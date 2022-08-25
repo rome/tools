@@ -201,11 +201,16 @@ impl From<LineWidth> for u16 {
     }
 }
 
-/// Context configuring how an object gets formatted.
-///
-/// Defines the common formatting options. Implementations can define additional options that
-/// are specific to formatting a specific object.
+/// Context object storing data relevant when formatting an object.
 pub trait FormatContext {
+    type Options: FormatOptions;
+
+    /// Returns the formatting options
+    fn options(&self) -> &Self::Options;
+}
+
+/// Options customizing how the source code should be formatted.
+pub trait FormatOptions {
     /// The indent style.
     fn indent_style(&self) -> IndentStyle;
 
@@ -250,11 +255,30 @@ pub trait CstFormatContext: FormatContext {
 
 #[derive(Debug, Default, Eq, PartialEq)]
 pub struct SimpleFormatContext {
+    options: SimpleFormatOptions,
+}
+
+impl SimpleFormatContext {
+    pub fn new(options: SimpleFormatOptions) -> Self {
+        Self { options }
+    }
+}
+
+impl FormatContext for SimpleFormatContext {
+    type Options = SimpleFormatOptions;
+
+    fn options(&self) -> &Self::Options {
+        &self.options
+    }
+}
+
+#[derive(Debug, Default, Eq, PartialEq)]
+pub struct SimpleFormatOptions {
     pub indent_style: IndentStyle,
     pub line_width: LineWidth,
 }
 
-impl FormatContext for SimpleFormatContext {
+impl FormatOptions for SimpleFormatOptions {
     fn indent_style(&self) -> IndentStyle {
         self.indent_style
     }
@@ -310,11 +334,13 @@ where
     Context: FormatContext,
 {
     pub fn print(&self) -> Printed {
-        Printer::new(self.context.as_print_options()).print(&self.root)
+        let print_options = self.context.options().as_print_options();
+        Printer::new(print_options).print(&self.root)
     }
 
     pub fn print_with_indent(&self, indent: u16) -> Printed {
-        Printer::new(self.context.as_print_options()).print_with_indent(&self.root, indent)
+        let print_options = self.context.options().as_print_options();
+        Printer::new(print_options).print_with_indent(&self.root, indent)
     }
 }
 
@@ -1165,7 +1191,7 @@ pub fn format_sub_tree<
             // of indentation type detection yet. Unfortunately this
             // may not actually match the current content of the file
             let length = trivia.text().len() as u16;
-            match context.indent_style() {
+            match context.options().indent_style() {
                 IndentStyle::Tab => length,
                 IndentStyle::Space(width) => length / u16::from(width),
             }

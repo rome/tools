@@ -451,13 +451,7 @@ pub trait BufferExtensions: Buffer + Sized {
     /// use rome_formatter::{format, format_args, write, LineWidth};
     /// use rome_formatter::prelude::*;
     ///
-    /// let context = SimpleFormatContext {
-    ///     line_width: LineWidth::try_from(20).unwrap(),
-    ///     ..SimpleFormatContext::default()
-    /// };
-    ///
-    ///
-    /// let formatted = format!(context, [format_with(|f| {
+    /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
     ///
     ///     let element = format_with(|f| {
     ///         write!(f, [
@@ -508,13 +502,8 @@ pub trait BufferExtensions: Buffer + Sized {
     ///
     /// enum SomeLabelId {}
     ///
-    /// let context = SimpleFormatContext {
-    ///     line_width: LineWidth::try_from(20).unwrap(),
-    ///     ..SimpleFormatContext::default()
-    /// };
-    ///
     /// let formatted = format!(
-    ///     context,
+    ///     SimpleFormatContext::default(),
     ///     [format_with(|f| {
     ///         let mut buffer = f.inspect_is_labelled::<SomeLabelId>();
     ///

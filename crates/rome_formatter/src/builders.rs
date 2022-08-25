@@ -37,13 +37,13 @@ use std::ops::Deref;
 ///
 /// Soft line breaks are emitted if the enclosing `Group` doesn't fit on a single line
 /// ```
-/// use rome_formatter::{format, format_args, LineWidth};
+/// use rome_formatter::{format, format_args, LineWidth, SimpleFormatOptions};
 /// use rome_formatter::prelude::*;
 ///
-/// let context = SimpleFormatContext {
+/// let context = SimpleFormatContext::new(SimpleFormatOptions {
 ///     line_width: LineWidth::try_from(10).unwrap(),
-///     ..SimpleFormatContext::default()
-/// };
+///     ..SimpleFormatOptions::default()
+/// });
 ///
 /// let elements = format!(context, [
 ///     group(&format_args![
@@ -146,13 +146,13 @@ pub const fn empty_line() -> Line {
 ///
 /// The printer breaks the lines if the enclosing `Group` doesn't fit on a single line:
 /// ```
-/// use rome_formatter::{format_args, format, LineWidth};
+/// use rome_formatter::{format_args, format, LineWidth, SimpleFormatOptions};
 /// use rome_formatter::prelude::*;
 ///
-/// let context = SimpleFormatContext {
+/// let context = SimpleFormatContext::new(SimpleFormatOptions {
 ///     line_width: LineWidth::try_from(10).unwrap(),
-///     ..SimpleFormatContext::default()
-/// };
+///     ..SimpleFormatOptions::default()
+/// });
 ///
 /// let elements = format!(context, [
 ///     group(&format_args![
@@ -849,13 +849,13 @@ where
 ///
 /// ```
 /// use std::num::NonZeroU8;
-/// use rome_formatter::{format, format_args, IndentStyle};
+/// use rome_formatter::{format, format_args, IndentStyle, SimpleFormatOptions};
 /// use rome_formatter::prelude::*;
 ///
-/// let context = SimpleFormatContext {
+/// let context = SimpleFormatContext::new(SimpleFormatOptions {
 ///     indent_style: IndentStyle::Space(4),
-///     ..SimpleFormatContext::default()
-/// };
+///     ..SimpleFormatOptions::default()
+/// });
 ///
 /// let block = format!(context, [
 ///     text("a"),
@@ -980,13 +980,13 @@ pub fn block_indent<Context>(content: &impl Format<Context>) -> BlockIndent<Cont
 /// Indents the content by one level and puts in new lines if the enclosing `Group` doesn't fit on a single line
 ///
 /// ```
-/// use rome_formatter::{format, format_args, LineWidth};
+/// use rome_formatter::{format, format_args, LineWidth, SimpleFormatOptions};
 /// use rome_formatter::prelude::*;
 ///
-/// let context = SimpleFormatContext {
+/// let context = SimpleFormatContext::new(SimpleFormatOptions {
 ///     line_width: LineWidth::try_from(10).unwrap(),
-///     ..SimpleFormatContext::default()
-/// };
+///     ..SimpleFormatOptions::default()
+/// });
 ///
 /// let elements = format!(context, [
 ///     group(&format_args![
@@ -1048,13 +1048,13 @@ pub fn soft_block_indent<Context>(content: &impl Format<Context>) -> BlockIndent
 /// fit on a single line. Otherwise, just inserts a space.
 ///
 /// ```
-/// use rome_formatter::{format, format_args, LineWidth};
+/// use rome_formatter::{format, format_args, LineWidth, SimpleFormatOptions};
 /// use rome_formatter::prelude::*;
 ///
-/// let context = SimpleFormatContext {
+/// let context = SimpleFormatContext::new(SimpleFormatOptions {
 ///     line_width: LineWidth::try_from(10).unwrap(),
-///     ..SimpleFormatContext::default()
-/// };
+///     ..SimpleFormatOptions::default()
+/// });
 ///
 /// let elements = format!(context, [
 ///     group(&format_args![
@@ -1199,13 +1199,13 @@ impl<Context> std::fmt::Debug for BlockIndent<'_, Context> {
 ///
 /// The printer breaks the `Group` over multiple lines if its content doesn't fit on a single line
 /// ```
-/// use rome_formatter::{format, format_args, LineWidth};
+/// use rome_formatter::{format, format_args, LineWidth, SimpleFormatOptions};
 /// use rome_formatter::prelude::*;
 ///
-/// let context = SimpleFormatContext {
+/// let context = SimpleFormatContext::new(SimpleFormatOptions {
 ///     line_width: LineWidth::try_from(20).unwrap(),
-///     ..SimpleFormatContext::default()
-/// };
+///     ..SimpleFormatOptions::default()
+/// });
 ///
 /// let elements = format!(context, [
 ///     group(&format_args![
@@ -1502,14 +1502,14 @@ impl<Context> Format<Context> for ExpandParent {
 ///
 /// Prints the trailing comma for the last array element if the `Group` doesn't fit on a single line
 /// ```
-/// use rome_formatter::{format_args, format, LineWidth};
+/// use rome_formatter::{format_args, format, LineWidth, SimpleFormatOptions};
 /// use rome_formatter::prelude::*;
 /// use rome_formatter::printer::PrintWidth;
 ///
-/// let context = SimpleFormatContext {
+/// let context = SimpleFormatContext::new(SimpleFormatOptions {
 ///     line_width: LineWidth::try_from(20).unwrap(),
-///     ..SimpleFormatContext::default()
-/// };
+///     ..SimpleFormatOptions::default()
+/// });
 ///
 /// let elements = format!(context, [
 ///     group(&format_args![
@@ -1578,13 +1578,13 @@ where
 ///
 /// Omits the trailing comma for the last array element if the `Group` doesn't fit on a single line
 /// ```
-/// use rome_formatter::{format, format_args, LineWidth};
+/// use rome_formatter::{format, format_args, LineWidth, SimpleFormatOptions};
 /// use rome_formatter::prelude::*;
 ///
-/// let context = SimpleFormatContext {
+/// let context = SimpleFormatContext::new(SimpleFormatOptions {
 ///     line_width: LineWidth::try_from(20).unwrap(),
-///     ..SimpleFormatContext::default()
-/// };
+///     ..SimpleFormatOptions::default()
+/// });
 ///
 /// let formatted = format!(context, [
 ///     group(&format_args![
@@ -1637,13 +1637,13 @@ impl<Context> IfGroupBreaks<'_, Context> {
     /// The item `[4]` in this example fits on a single line but the trailing comma should still be printed
     ///
     /// ```
-    /// use rome_formatter::{format, format_args, write, LineWidth};
+    /// use rome_formatter::{format, format_args, write, LineWidth, SimpleFormatOptions};
     /// use rome_formatter::prelude::*;
     ///
-    /// let context = SimpleFormatContext {
+    /// let context = SimpleFormatContext::new(SimpleFormatOptions {
     ///     line_width: LineWidth::try_from(20).unwrap(),
-    ///     ..SimpleFormatContext::default()
-    /// };
+    ///     ..SimpleFormatOptions::default()
+    /// });
     ///
     /// let formatted = format!(context, [format_with(|f| {
     ///     let group_id = f.group_id("array");
