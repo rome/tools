@@ -41,10 +41,11 @@ jobs:
         working-directory: npm/rome
         run: pnpm i
       - name: Compile WASM bindings
-        working-directory: npm/rome
         run: |
-          pnpm build:wasm-node
-          pnpm i
+          pnpm --prefix npm/backend-jsonrpc i
+          pnpm --prefix npm/backend-jsonrpc run build
+          pnpm --prefix npm/rome i
+          pnpm --prefix npm/rome run build
       - name: CI checks
         working-directory: npm/rome
         run: pnpm ci
