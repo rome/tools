@@ -249,7 +249,7 @@ mod ts;
 pub mod utils;
 
 use rome_formatter::prelude::*;
-use rome_formatter::{write, CstFormatContext};
+use rome_formatter::{write, Comments, CstFormatContext, FormatLanguage};
 use rome_formatter::{Buffer, FormatOwnedWithRule, FormatRefWithRule, Formatted, Printed};
 use rome_js_syntax::{
     JsAnyDeclaration, JsAnyStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
@@ -259,7 +259,7 @@ use rome_rowan::SyntaxResult;
 use rome_rowan::TextRange;
 
 use crate::builders::{format_parenthesize, format_suppressed_node};
-use crate::context::{JsFormatContext, JsFormatOptions};
+use crate::context::{JsCommentStyle, JsFormatContext, JsFormatOptions};
 use crate::cst::FormatJsSyntaxNode;
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
@@ -473,6 +473,50 @@ impl IntoFormat<JsFormatContext> for JsSyntaxToken {
     }
 }
 
+struct JsFormatLanguage {
+    options: JsFormatOptions,
+}
+impl JsFormatLanguage {
+    fn new(options: JsFormatOptions) -> Self {
+        Self { options }
+    }
+}
+
+impl FormatLanguage for JsFormatLanguage {
+    type SyntaxLanguage = JsLanguage;
+    type Context = JsFormatContext;
+    type CommentStyle = JsCommentStyle;
+    type FormatRule = FormatJsSyntaxNode;
+
+    fn comment_style(&self) -> Self::CommentStyle {
+        JsCommentStyle
+    }
+
+    fn is_range_formatting_node(&self, node: &JsSyntaxNode) -> bool {
+        let kind = node.kind();
+
+        // Do not format variable declaration nodes, format the whole statement instead
+        if matches!(kind, JsSyntaxKind::JS_VARIABLE_DECLARATION) {
+            return false;
+        }
+
+        JsAnyStatement::can_cast(kind)
+            || JsAnyDeclaration::can_cast(kind)
+            || matches!(
+                kind,
+                JsSyntaxKind::JS_DIRECTIVE | JsSyntaxKind::JS_EXPORT | JsSyntaxKind::JS_IMPORT
+            )
+    }
+
+    fn options(&self) -> &JsFormatOptions {
+        &self.options
+    }
+
+    fn create_context(self, comments: Comments<Self::SyntaxLanguage>) -> Self::Context {
+        JsFormatContext::new(self.options, comments)
+    }
+}
+
 /// Formats a range within a file, supported by Rome
 ///
 /// This runs a simple heuristic to determine the initial indentation
@@ -489,28 +533,7 @@ pub fn format_range(
     root: &JsSyntaxNode,
     range: TextRange,
 ) -> FormatResult<Printed> {
-    rome_formatter::format_range::<_, FormatJsSyntaxNode, _>(
-        JsFormatContext::new(options),
-        root,
-        range,
-        is_range_formatting_root,
-    )
-}
-
-fn is_range_formatting_root(node: &JsSyntaxNode) -> bool {
-    let kind = node.kind();
-
-    // Do not format variable declaration nodes, format the whole statement instead
-    if matches!(kind, JsSyntaxKind::JS_VARIABLE_DECLARATION) {
-        return false;
-    }
-
-    JsAnyStatement::can_cast(kind)
-        || JsAnyDeclaration::can_cast(kind)
-        || matches!(
-            kind,
-            JsSyntaxKind::JS_DIRECTIVE | JsSyntaxKind::JS_EXPORT | JsSyntaxKind::JS_IMPORT
-        )
+    rome_formatter::format_range(root, range, JsFormatLanguage::new(options))
 }
 
 /// Formats a JavaScript (and its super languages) file based on its features.
@@ -520,7 +543,7 @@ pub fn format_node(
     options: JsFormatOptions,
     root: &JsSyntaxNode,
 ) -> FormatResult<Formatted<JsFormatContext>> {
-    rome_formatter::format_node(JsFormatContext::new(options), &root.format())
+    rome_formatter::format_node(root, JsFormatLanguage::new(options))
 }
 
 /// Formats a single node within a file, supported by Rome.
@@ -534,7 +557,7 @@ pub fn format_node(
 ///
 /// It returns a [Formatted] result
 pub fn format_sub_tree(options: JsFormatOptions, root: &JsSyntaxNode) -> FormatResult<Printed> {
-    rome_formatter::format_sub_tree(JsFormatContext::new(options), &root.format())
+    rome_formatter::format_sub_tree(root, JsFormatLanguage::new(options))
 }
 
 #[cfg(test)]
