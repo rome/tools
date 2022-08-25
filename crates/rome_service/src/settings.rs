@@ -69,9 +69,6 @@ impl WorkspaceSettings {
 pub struct FormatSettings {
     /// Enabled by default
     pub enabled: bool,
-    /// Stores whether formatting should be allowed to proceed if a given file
-    /// has syntax errors
-    pub format_with_errors: bool,
     pub indent_style: Option<IndentStyle>,
     pub line_width: Option<LineWidth>,
 }
@@ -80,7 +77,6 @@ impl Default for FormatSettings {
     fn default() -> Self {
         Self {
             enabled: true,
-            format_with_errors: false,
             indent_style: Some(IndentStyle::default()),
             line_width: Some(LineWidth::default()),
         }

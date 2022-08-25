@@ -46,7 +46,7 @@ pub enum RomeError {
     SourceFileNotSupported(RomePath),
     /// The formatter encountered an error while formatting the file
     FormatError(FormatError),
-    /// The file could not be formatted since it has syntax errors and `format_with_errors` is disabled
+    /// The file could not be formatted since it has syntax errors
     FormatWithErrorsDisabled,
     /// The file could not be analyzed because a rule caused an error.
     RuleError(RuleError),
@@ -94,7 +94,10 @@ impl Display for RomeError {
                 )
             }
             RomeError::FormatWithErrorsDisabled => {
-                write!(f, "the file could not be formatted since it has syntax errors and `format_with_errors` is disabled")
+                write!(
+                    f,
+                    "the file could not be formatted since it has syntax errors"
+                )
             }
             RomeError::CantReadDirectory(path) => {
                 write!(

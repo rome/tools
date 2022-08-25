@@ -19,7 +19,6 @@ export interface WorkspaceSettings {
 }
 export interface FormatSettings {
 	enabled: boolean;
-	format_with_errors: boolean;
 	indent_style?: IndentStyle;
 	line_width?: LineWidth;
 }

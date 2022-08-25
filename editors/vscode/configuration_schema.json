@@ -47,11 +47,6 @@
           "default": true,
           "type": "boolean"
         },
-        "formatWithErrors": {
-          "description": "Stores whether formatting should be allowed to proceed if a given file has syntax errors",
-          "default": false,
-          "type": "boolean"
-        },
         "indentSize": {
           "description": "The size of the indentation, 2 by default",
           "default": 2,

@@ -9,10 +9,6 @@ pub struct FormatterConfiguration {
     // if `false`, it disables the feature. `true` by default
     pub enabled: bool,
 
-    /// Stores whether formatting should be allowed to proceed if a given file
-    /// has syntax errors
-    pub format_with_errors: bool,
-
     /// The indent style.
     pub indent_style: PlainIndentStyle,
 
@@ -31,7 +27,6 @@ impl Default for FormatterConfiguration {
     fn default() -> Self {
         Self {
             enabled: true,
-            format_with_errors: false,
             indent_size: 2,
             indent_style: PlainIndentStyle::default(),
             line_width: LineWidth::default(),
@@ -49,7 +44,6 @@ impl From<FormatterConfiguration> for FormatSettings {
             enabled: conf.enabled,
             indent_style: Some(indent_style),
             line_width: Some(conf.line_width),
-            format_with_errors: conf.format_with_errors,
         }
     }
 }

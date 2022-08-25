@@ -213,7 +213,7 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings();
 
-        if !settings.as_ref().format.format_with_errors && parse.has_errors() {
+        if parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
         }
 
@@ -306,7 +306,7 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings();
 
-        if !settings.as_ref().format.format_with_errors && parse.has_errors() {
+        if parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
         }
 
@@ -323,7 +323,7 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings();
 
-        if !settings.as_ref().format.format_with_errors && parse.has_errors() {
+        if parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
         }
 
@@ -340,7 +340,7 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings();
 
-        if !settings.as_ref().format.format_with_errors && parse.has_errors() {
+        if parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
         }
 
