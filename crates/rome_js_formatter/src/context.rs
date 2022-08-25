@@ -12,6 +12,71 @@ use std::rc::Rc;
 use std::str::FromStr;
 
 #[derive(Debug, Clone, Default)]
+pub struct JsFormatContext {
+    options: JsFormatOptions,
+
+    /// The comments of the nodes and tokens in the program.
+    comments: Rc<Comments<JsLanguage>>,
+
+    source_map: Option<TransformSourceMap>,
+}
+
+impl JsFormatContext {
+    pub fn new(options: JsFormatOptions, comments: Comments<JsLanguage>) -> Self {
+        Self {
+            options,
+            comments: Rc::new(comments),
+            ..JsFormatContext::default()
+        }
+    }
+
+    pub fn with_source_map(mut self, source_map: Option<TransformSourceMap>) -> Self {
+        self.source_map = source_map;
+        self
+    }
+}
+
+#[derive(Eq, PartialEq, Debug, Copy, Clone, Hash)]
+pub struct TabWidth(u8);
+
+impl From<u8> for TabWidth {
+    fn from(value: u8) -> Self {
+        TabWidth(value)
+    }
+}
+
+impl From<TabWidth> for u8 {
+    fn from(width: TabWidth) -> Self {
+        width.0
+    }
+}
+
+impl FormatContext for JsFormatContext {
+    type Options = JsFormatOptions;
+
+    fn options(&self) -> &Self::Options {
+        &self.options
+    }
+
+    fn source_map(&self) -> Option<&TransformSourceMap> {
+        self.source_map.as_ref()
+    }
+}
+
+impl CstFormatContext for JsFormatContext {
+    type Language = JsLanguage;
+    type Style = JsCommentStyle;
+
+    fn comment_style(&self) -> Self::Style {
+        JsCommentStyle
+    }
+
+    fn comments(&self) -> Rc<Comments<JsLanguage>> {
+        self.comments.clone()
+    }
+}
+
+#[derive(Debug, Clone, Default)]
 pub struct JsFormatOptions {
     /// The indent style.
     indent_style: IndentStyle,
@@ -104,75 +169,6 @@ impl fmt::Display for JsFormatOptions {
         writeln!(f, "Line width: {}", self.line_width.value())?;
         writeln!(f, "Quote style: {}", self.quote_style)?;
         writeln!(f, "Quote properties: {}", self.quote_properties)
-    }
-}
-
-#[derive(Debug, Clone)]
-pub struct JsFormatContext {
-    options: JsFormatOptions,
-
-    /// The comments of the nodes and tokens in the program.
-    comments: Rc<Comments<JsLanguage>>,
-
-    source_map: Option<TransformSourceMap>,
-}
-
-impl JsFormatContext {
-    pub fn new(options: JsFormatOptions, comments: Comments<JsLanguage>) -> Self {
-        Self {
-            comments: Rc::new(comments),
-            options,
-            source_map: None,
-        }
-    }
-
-    pub fn options(&self) -> &JsFormatOptions {
-        &self.options
-    }
-
-    pub fn with_source_map(mut self, source_map: Option<TransformSourceMap>) -> Self {
-        self.source_map = source_map;
-        self
-    }
-}
-
-#[derive(Eq, PartialEq, Debug, Copy, Clone, Hash)]
-pub struct TabWidth(u8);
-
-impl From<u8> for TabWidth {
-    fn from(value: u8) -> Self {
-        TabWidth(value)
-    }
-}
-
-impl From<TabWidth> for u8 {
-    fn from(width: TabWidth) -> Self {
-        width.0
-    }
-}
-
-impl FormatContext for JsFormatContext {
-    type Options = JsFormatOptions;
-
-    fn options(&self) -> &Self::Options {
-        &self.options
-    }
-
-    fn source_map(&self) -> Option<&TransformSourceMap> {
-        self.source_map.as_ref()
-    }
-}
-
-impl CstFormatContext for JsFormatContext {
-    type Language = JsLanguage;
-    type Style = JsCommentStyle;
-
-    fn comment_style(&self) -> Self::Style {
-        JsCommentStyle
-    }
-
-    fn comments(&self) -> Rc<Comments<JsLanguage>> {
-        self.comments.clone()
     }
 }
 

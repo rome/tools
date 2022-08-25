@@ -90,7 +90,6 @@ impl Format<JsFormatContext> for FormatTemplateElement {
                 let root = buffer.into_element();
 
                 let print_options = f
-                    .context()
                     .options()
                     .as_print_options()
                     .with_print_width(PrintWidth::infinite());
@@ -142,7 +141,7 @@ impl Format<JsFormatContext> for FormatTemplateElement {
                 write_with_indention(
                     &format_inner,
                     self.options.indention,
-                    f.context().options().tab_width(),
+                    f.options().tab_width(),
                     f,
                 )
             }

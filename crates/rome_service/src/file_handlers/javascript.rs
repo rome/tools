@@ -187,7 +187,7 @@ fn debug_formatter_ir(
     parse: AnyParse,
     settings: SettingsHandle,
 ) -> Result<String, RomeError> {
-    let context = settings.format_context::<JsLanguage>(rome_path);
+    let context = settings.format_options::<JsLanguage>(rome_path);
 
     let tree = parse.syntax();
     let formatted = format_node(context, &tree)?;
@@ -374,7 +374,7 @@ fn format(
     parse: AnyParse,
     settings: SettingsHandle,
 ) -> Result<Printed, RomeError> {
-    let context = settings.format_context::<JsLanguage>(rome_path);
+    let context = settings.format_options::<JsLanguage>(rome_path);
 
     let tree = parse.syntax();
     let formatted = format_node(context, &tree)?;
@@ -388,7 +388,7 @@ fn format_range(
     settings: SettingsHandle,
     range: TextRange,
 ) -> Result<Printed, RomeError> {
-    let context = settings.format_context::<JsLanguage>(rome_path);
+    let context = settings.format_options::<JsLanguage>(rome_path);
 
     let tree = parse.syntax();
     let printed = rome_js_formatter::format_range(context, &tree, range)?;
@@ -401,7 +401,7 @@ fn format_on_type(
     settings: SettingsHandle,
     offset: TextSize,
 ) -> Result<Printed, RomeError> {
-    let context = settings.format_context::<JsLanguage>(rome_path);
+    let options = settings.format_options::<JsLanguage>(rome_path);
 
     let tree = parse.syntax();
 
@@ -427,7 +427,7 @@ fn format_on_type(
         None => panic!("found a token with no parent"),
     };
 
-    let printed = rome_js_formatter::format_sub_tree(context, &root_node)?;
+    let printed = rome_js_formatter::format_sub_tree(options, &root_node)?;
     Ok(printed)
 }
 

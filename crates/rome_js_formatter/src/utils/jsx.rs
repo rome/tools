@@ -152,7 +152,7 @@ pub struct JsxSpace {}
 
 impl Format<JsFormatContext> for JsxSpace {
     fn fmt(&self, formatter: &mut JsFormatter) -> FormatResult<()> {
-        let jsx_space = match formatter.context().options().quote_style() {
+        let jsx_space = match formatter.options().quote_style() {
             QuoteStyle::Double => "{\" \"}",
             QuoteStyle::Single => "{\' \'}",
         };

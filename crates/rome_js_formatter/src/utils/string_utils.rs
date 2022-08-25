@@ -1,4 +1,4 @@
-use crate::context::{QuoteProperties, QuoteStyle};
+use crate::context::{JsFormatOptions, QuoteProperties, QuoteStyle};
 use crate::prelude::*;
 use crate::utils::string_utils::CharSignal::AlreadyPrinted;
 use rome_js_syntax::JsSyntaxKind::JS_STRING_LITERAL;
@@ -70,17 +70,17 @@ impl<'token> FormatLiteralStringToken<'token> {
         self.token
     }
 
-    pub fn clean_text(&self, context: &JsFormatContext) -> CleanedStringLiteralText {
+    pub fn clean_text(&self, options: &JsFormatOptions) -> CleanedStringLiteralText {
         let token = self.token();
         debug_assert_eq!(token.kind(), JS_STRING_LITERAL);
 
-        let chosen_quote_style = context.options().quote_style();
-        let chosen_quote_properties = context.options().quote_properties();
+        let chosen_quote_style = options.quote_style();
+        let chosen_quote_properties = options.quote_properties();
 
         let mut string_cleaner =
             LiteralStringNormaliser::new(self, chosen_quote_style, chosen_quote_properties);
 
-        let content = string_cleaner.normalise_text(context.options().source_type().into());
+        let content = string_cleaner.normalise_text(options.source_type().into());
         let normalized_text_width = content.width();
 
         CleanedStringLiteralText {
@@ -119,7 +119,7 @@ impl Format<JsFormatContext> for CleanedStringLiteralText<'_> {
 
 impl Format<JsFormatContext> for FormatLiteralStringToken<'_> {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        let cleaned = self.clean_text(f.context());
+        let cleaned = self.clean_text(f.options());
 
         cleaned.fmt(f)
     }

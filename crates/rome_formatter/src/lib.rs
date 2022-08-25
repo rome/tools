@@ -203,10 +203,7 @@ impl From<LineWidth> for u16 {
     }
 }
 
-/// Context configuring how an object gets formatted.
-///
-/// Defines the common formatting options. Implementations can define additional options that
-/// are specific to formatting a specific object.
+/// Context object storing data relevant when formatting an object.
 pub trait FormatContext {
     type Options: FormatOptions;
 
@@ -221,6 +218,7 @@ pub trait FormatContext {
     fn source_map(&self) -> Option<&TransformSourceMap>;
 }
 
+/// Options customizing how the source code should be formatted.
 pub trait FormatOptions {
     /// The indent style.
     fn indent_style(&self) -> IndentStyle;
@@ -263,28 +261,6 @@ pub trait CstFormatContext: FormatContext {
 }
 
 #[derive(Debug, Default, Eq, PartialEq)]
-pub struct SimpleFormatOptions {
-    pub indent_style: IndentStyle,
-    pub line_width: LineWidth,
-}
-
-impl FormatOptions for SimpleFormatOptions {
-    fn indent_style(&self) -> IndentStyle {
-        self.indent_style
-    }
-
-    fn line_width(&self) -> LineWidth {
-        self.line_width
-    }
-
-    fn as_print_options(&self) -> PrinterOptions {
-        PrinterOptions::default()
-            .with_indent(self.indent_style)
-            .with_print_width(self.line_width.into())
-    }
-}
-
-#[derive(Debug, Default, Eq, PartialEq)]
 pub struct SimpleFormatContext {
     options: SimpleFormatOptions,
 }
@@ -304,6 +280,28 @@ impl FormatContext for SimpleFormatContext {
 
     fn source_map(&self) -> Option<&TransformSourceMap> {
         None
+    }
+}
+
+#[derive(Debug, Default, Eq, PartialEq)]
+pub struct SimpleFormatOptions {
+    pub indent_style: IndentStyle,
+    pub line_width: LineWidth,
+}
+
+impl FormatOptions for SimpleFormatOptions {
+    fn indent_style(&self) -> IndentStyle {
+        self.indent_style
+    }
+
+    fn line_width(&self) -> LineWidth {
+        self.line_width
+    }
+
+    fn as_print_options(&self) -> PrinterOptions {
+        PrinterOptions::default()
+            .with_indent(self.indent_style)
+            .with_print_width(self.line_width.into())
     }
 }
 

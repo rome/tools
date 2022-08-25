@@ -325,7 +325,7 @@ fn compute_groups(
 ) -> MemberChainGroups {
     let mut has_seen_call_expression = false;
     let mut groups_builder =
-        MemberChainGroupsBuilder::new(in_expression_statement, f.context().options().tab_width());
+        MemberChainGroupsBuilder::new(in_expression_statement, f.options().tab_width());
     for item in flatten_items {
         let has_trailing_comments = item.syntax().has_trailing_comments();
 

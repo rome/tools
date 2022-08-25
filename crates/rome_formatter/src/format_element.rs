@@ -760,6 +760,25 @@ impl From<ConditionalGroupContent> for FormatElement {
     }
 }
 
+#[derive(Clone, Default, Debug)]
+struct IrFormatContext {
+    /// The interned elements that have been printed to this point
+    printed_interned_elements: IndexSet<Interned>,
+}
+
+impl FormatContext for IrFormatContext {
+    type Options = IrFormatOptions;
+
+    fn options(&self) -> &Self::Options {
+        &IrFormatOptions
+    }
+
+    fn source_map(&self) -> Option<&TransformSourceMap> {
+        None
+    }
+}
+
+#[derive(Debug, Clone, Default)]
 struct IrFormatOptions;
 
 impl FormatOptions for IrFormatOptions {
@@ -778,24 +797,6 @@ impl FormatOptions for IrFormatOptions {
             line_ending: LineEnding::LineFeed,
             indent_style: IndentStyle::Space(2),
         }
-    }
-}
-
-#[derive(Clone, Default, Debug)]
-struct IrFormatContext {
-    /// The interned elements that have been printed to this point
-    printed_interned_elements: IndexSet<Interned>,
-}
-
-impl FormatContext for IrFormatContext {
-    type Options = IrFormatOptions;
-
-    fn options(&self) -> &IrFormatOptions {
-        &IrFormatOptions
-    }
-
-    fn source_map(&self) -> Option<&TransformSourceMap> {
-        None
     }
 }
 

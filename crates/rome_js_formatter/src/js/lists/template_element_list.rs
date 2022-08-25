@@ -68,7 +68,7 @@ impl Format<JsFormatContext> for AnyTemplateElementList {
                     let chunk_token = chunk.template_chunk_token()?;
                     let chunk_text = chunk_token.text();
 
-                    let tab_width = f.context().options().tab_width();
+                    let tab_width = f.options().tab_width();
 
                     indention =
                         TemplateElementIndention::after_last_new_line(chunk_text, tab_width);

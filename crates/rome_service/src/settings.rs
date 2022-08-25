@@ -194,7 +194,7 @@ impl<'a> AsRef<WorkspaceSettings> for SettingsHandle<'a> {
 
 impl<'a> SettingsHandle<'a> {
     /// Resolve the formatting context for the given language
-    pub(crate) fn format_context<L>(self, path: &RomePath) -> L::FormatOptions
+    pub(crate) fn format_options<L>(self, path: &RomePath) -> L::FormatOptions
     where
         L: Language,
     {

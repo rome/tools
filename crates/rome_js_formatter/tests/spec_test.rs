@@ -226,7 +226,8 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
         let root = parsed.syntax();
 
         // we ignore the error for now
-        let formatted = format_node(JsFormatOptions::default(), &root).unwrap();
+        let options = JsFormatOptions::default();
+        let formatted = format_node(options.clone(), &root).unwrap();
         let printed = formatted.print();
         let file_name = spec_input_file.file_name().unwrap().to_str().unwrap();
 
@@ -236,7 +237,7 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
                 text: printed.as_code(),
                 source_type,
                 file_name,
-                options: JsFormatOptions::default(),
+                options,
             });
         }
 

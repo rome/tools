@@ -379,7 +379,7 @@ impl JsAnyAssignmentLike {
 
                 let width = write_member_name(&name.into(), f)?;
                 let text_width_for_break =
-                    (u8::from(f.context().options().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
+                    (u8::from(f.options().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
                 Ok(width < text_width_for_break)
             }
             JsAnyAssignmentLike::JsAssignmentExpression(assignment) => {
@@ -399,7 +399,7 @@ impl JsAnyAssignmentLike {
 
                 let width = write_member_name(&member_name.into(), f)?;
                 let text_width_for_break =
-                    (u8::from(f.context().options().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
+                    (u8::from(f.options().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
                 Ok(width < text_width_for_break)
             }
             JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => {
@@ -436,9 +436,8 @@ impl JsAnyAssignmentLike {
                     false
                 } else {
                     let width = write_member_name(&name.into(), f)?;
-                    let text_width_for_break = (u8::from(f.context().options().tab_width())
-                        + MIN_OVERLAP_FOR_BREAK)
-                        as usize;
+                    let text_width_for_break =
+                        (u8::from(f.options().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
                     width < text_width_for_break
                 };
 
@@ -462,7 +461,7 @@ impl JsAnyAssignmentLike {
 
                 write!(f, [property_annotation.format()])?;
                 let text_width_for_break =
-                    (u8::from(f.context().options().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
+                    (u8::from(f.options().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
                 Ok(width < text_width_for_break)
             }
         }
@@ -1026,7 +1025,7 @@ fn is_poorly_breakable_member_or_call_chain(
     expression: &JsAnyExpression,
     f: &mut Formatter<JsFormatContext>,
 ) -> SyntaxResult<bool> {
-    let threshold = f.context().options().line_width().value() / 4;
+    let threshold = f.options().line_width().value() / 4;
 
     // Only call and member chains are poorly breakable
     // - `obj.member.prop`
