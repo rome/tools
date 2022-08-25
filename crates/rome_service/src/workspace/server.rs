@@ -214,7 +214,7 @@ impl Workspace for WorkspaceServer {
         let settings = self.settings();
 
         if parse.has_errors() {
-            return Err(RomeError::FormatWithErrorsDisabled);
+            return Err(RomeError::FormatFailed);
         }
 
         debug_formatter_ir(&params.path, parse, settings)
@@ -307,7 +307,7 @@ impl Workspace for WorkspaceServer {
         let settings = self.settings();
 
         if parse.has_errors() {
-            return Err(RomeError::FormatWithErrorsDisabled);
+            return Err(RomeError::FormatFailed);
         }
 
         format(&params.path, parse, settings)
@@ -324,7 +324,7 @@ impl Workspace for WorkspaceServer {
         let settings = self.settings();
 
         if parse.has_errors() {
-            return Err(RomeError::FormatWithErrorsDisabled);
+            return Err(RomeError::FormatFailed);
         }
 
         format_range(&params.path, parse, settings, params.range)
@@ -341,7 +341,7 @@ impl Workspace for WorkspaceServer {
         let settings = self.settings();
 
         if parse.has_errors() {
-            return Err(RomeError::FormatWithErrorsDisabled);
+            return Err(RomeError::FormatFailed);
         }
 
         format_on_type(&params.path, parse, settings, params.offset)

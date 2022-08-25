@@ -26,7 +26,7 @@ pub(crate) fn format(
 
     let printed = match result {
         Ok(printed) => printed,
-        Err(RomeError::FormatWithErrorsDisabled) => return Ok(None),
+        Err(RomeError::FormatFailed) => return Ok(None),
         Err(err) => return Err(Error::from(err)),
     };
 
@@ -78,7 +78,7 @@ pub(crate) fn format_range(
 
     let formatted = match result {
         Ok(formatted) => formatted,
-        Err(RomeError::FormatWithErrorsDisabled) => return Ok(None),
+        Err(RomeError::FormatFailed) => return Ok(None),
         Err(err) => return Err(Error::from(err)),
     };
 
@@ -134,7 +134,7 @@ pub(crate) fn format_on_type(
 
     let formatted = match result {
         Ok(formatted) => formatted,
-        Err(RomeError::FormatWithErrorsDisabled) => return Ok(None),
+        Err(RomeError::FormatFailed) => return Ok(None),
         Err(err) => return Err(Error::from(err)),
     };
 

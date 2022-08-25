@@ -47,7 +47,7 @@ pub enum RomeError {
     /// The formatter encountered an error while formatting the file
     FormatError(FormatError),
     /// The file could not be formatted since it has syntax errors
-    FormatWithErrorsDisabled,
+    FormatFailed,
     /// The file could not be analyzed because a rule caused an error.
     RuleError(RuleError),
     /// Thrown when Rome can't read a generic directory
@@ -93,7 +93,7 @@ impl Display for RomeError {
                     cause
                 )
             }
-            RomeError::FormatWithErrorsDisabled => {
+            RomeError::FormatFailed => {
                 write!(
                     f,
                     "the file could not be formatted since it has syntax errors"

@@ -27,7 +27,6 @@ pub const CONFIG_DISABLED_FORMATTER: &str = r#"{
 pub const CONFIG_ALL_FIELDS: &str = r#"{
   "formatter": {
     "enabled": true,
-    "formatWithErrors": true,
     "indentStyle": "tab",
     "indentSize": 2,
     "lineWidth": 80

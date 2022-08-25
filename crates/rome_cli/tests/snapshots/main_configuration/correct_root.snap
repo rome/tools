@@ -1,6 +1,6 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 147
+assertion_line: 148
 expression: content
 ---
 ## `rome.json`
@@ -9,7 +9,6 @@ expression: content
 {
   "formatter": {
     "enabled": true,
-    "formatWithErrors": true,
     "indentStyle": "tab",
     "indentSize": 2,
     "lineWidth": 80
