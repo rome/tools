@@ -320,7 +320,7 @@ impl JsAnyConditional {
                         .extends_type()
                         .map(AstNode::into_syntax)
                         .as_ref()
-                        == Ok(self.syntax())
+                        == Ok(node)
             }
         }
     }

@@ -1,8 +1,9 @@
 use crate::prelude::*;
 
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
-use rome_js_syntax::TsIndexedAccessType;
 use rome_js_syntax::TsIndexedAccessTypeFields;
+use rome_js_syntax::{JsSyntaxNode, TsIndexedAccessType};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsIndexedAccessType;
@@ -24,5 +25,15 @@ impl FormatNodeRule<TsIndexedAccessType> for FormatTsIndexedAccessType {
                 r_brack_token.format()
             ]
         ]
+    }
+
+    fn needs_parentheses(&self, item: &TsIndexedAccessType) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl NeedsParentheses for TsIndexedAccessType {
+    fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
+        false
     }
 }

@@ -3,6 +3,7 @@ use crate::TextRange;
 use rome_formatter::{TransformSourceMap, TransformSourceMapBuilder};
 use rome_js_syntax::{
     JsAnyAssignment, JsAnyExpression, JsLanguage, JsLogicalExpression, JsSyntaxKind, JsSyntaxNode,
+    TsType,
 };
 use rome_rowan::syntax::SyntaxTrivia;
 use rome_rowan::{
@@ -156,6 +157,9 @@ impl JsFormatSyntaxRewriter {
                         assignment
                             .with_assignment(JsAnyAssignment::unwrap_cast(inner))
                             .into_syntax()
+                    }
+                    JsAnyParenthesized::TsParenthesizedType(ty) => {
+                        ty.with_ty(TsType::unwrap_cast(inner)).into_syntax()
                     }
                 };
 

@@ -47,11 +47,11 @@ export type a =
 -  // prettier-ignore
 -  | qux1&qux2;
 +    // foo
-+    | foo1 & foo2
++    | (foo1 & foo2)
 +    // bar
-+    | bar1 & bar2
++    | (bar1 & bar2)
 +    // prettier-ignore
-+    | qux1 & qux2;
++    | (qux1 & qux2);
  
  export type a =
 -  // foo
@@ -63,13 +63,13 @@ export type a =
 -  // baz
 -  | (baz1 & baz2);
 +    // foo
-+    | foo1 & foo2
++    | (foo1 & foo2)
 +    // bar
-+    | bar1 & bar2
++    | (bar1 & bar2)
 +    // prettier-ignore
-+    | qux1 & qux2
++    | (qux1 & qux2)
 +    // baz
-+    | baz1 & baz2;
++    | (baz1 & baz2);
  
  export type a =
    // prettier-ignore
@@ -87,21 +87,21 @@ export type a =
 ```js
 export type a =
     // foo
-    | foo1 & foo2
+    | (foo1 & foo2)
     // bar
-    | bar1 & bar2
+    | (bar1 & bar2)
     // prettier-ignore
-    | qux1 & qux2;
+    | (qux1 & qux2);
 
 export type a =
     // foo
-    | foo1 & foo2
+    | (foo1 & foo2)
     // bar
-    | bar1 & bar2
+    | (bar1 & bar2)
     // prettier-ignore
-    | qux1 & qux2
+    | (qux1 & qux2)
     // baz
-    | baz1 & baz2;
+    | (baz1 & baz2);
 
 export type a =
   // prettier-ignore
