@@ -187,10 +187,10 @@ fn debug_formatter_ir(
     parse: AnyParse,
     settings: SettingsHandle,
 ) -> Result<String, RomeError> {
-    let context = settings.format_options::<JsLanguage>(rome_path);
+    let options = settings.format_options::<JsLanguage>(rome_path);
 
     let tree = parse.syntax();
-    let formatted = format_node(context, &tree)?;
+    let formatted = format_node(options, &tree)?;
 
     let root_element = formatted.into_format_element();
     Ok(root_element.to_string())
@@ -374,10 +374,10 @@ fn format(
     parse: AnyParse,
     settings: SettingsHandle,
 ) -> Result<Printed, RomeError> {
-    let context = settings.format_options::<JsLanguage>(rome_path);
+    let options = settings.format_options::<JsLanguage>(rome_path);
 
     let tree = parse.syntax();
-    let formatted = format_node(context, &tree)?;
+    let formatted = format_node(options, &tree)?;
     let printed = formatted.print();
     Ok(printed)
 }
@@ -388,10 +388,10 @@ fn format_range(
     settings: SettingsHandle,
     range: TextRange,
 ) -> Result<Printed, RomeError> {
-    let context = settings.format_options::<JsLanguage>(rome_path);
+    let options = settings.format_options::<JsLanguage>(rome_path);
 
     let tree = parse.syntax();
-    let printed = rome_js_formatter::format_range(context, &tree, range)?;
+    let printed = rome_js_formatter::format_range(options, &tree, range)?;
     Ok(printed)
 }
 
