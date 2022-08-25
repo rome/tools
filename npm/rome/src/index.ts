@@ -1,6 +1,6 @@
 import { NodeWasm } from "./nodeWasm";
 import { Deamon } from "./daemon";
-import {Diagnostic} from "@rometools/backend-jsonrpc";
+import { Diagnostic } from "@rometools/backend-jsonrpc";
 
 export interface FormatFilesDebugOptions extends FormatFilesOptions {
 	/**
@@ -232,11 +232,10 @@ export class Rome {
 					path: file.path,
 				});
 				code = result.code;
-
 			} catch {
 				const diagnostics = await this.backend.pullDiagnostics({
 					path: file.path,
-					categories: ["Syntax"]
+					categories: ["Syntax"],
 				});
 				return {
 					content: content,
@@ -244,7 +243,6 @@ export class Rome {
 				};
 			}
 		}
-
 
 		if (isFormatContentDebug(options)) {
 			const ir = await this.backend.workspace.getFormatterIr({

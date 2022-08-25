@@ -43,7 +43,7 @@ jobs:
       - name: Compile WASM bindings
         working-directory: npm/rome
         run: |
-          pnpm build:wasm
+          pnpm build:wasm-node
           pnpm i
       - name: CI checks
         working-directory: npm/rome

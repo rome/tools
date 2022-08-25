@@ -1,6 +1,8 @@
 import {
 	createWorkspace,
-	createWorkspaceWithBinary, Diagnostic, PullDiagnosticsParams,
+	createWorkspaceWithBinary,
+	Diagnostic,
+	PullDiagnosticsParams,
 	Workspace,
 } from "@rometools/backend-jsonrpc";
 
@@ -25,7 +27,9 @@ export class Deamon {
 		throw new Error("could not connect to the daemon");
 	}
 
-	public async pullDiagnostics(params: PullDiagnosticsParams): Promise<Diagnostic[]> {
+	public async pullDiagnostics(
+		params: PullDiagnosticsParams,
+	): Promise<Diagnostic[]> {
 		const result = await this.workspace.pullDiagnostics(params);
 		return result.diagnostics;
 	}

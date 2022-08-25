@@ -52,8 +52,10 @@ describe("Rome WebAssembly formatter", () => {
 
 		expect(result.content).toEqual(content);
 		expect(result.diagnostics).toHaveLength(1);
-		expect(result.diagnostics[0].title[0].content).toContain("expected a name for the function in a function declaration, but found none");
-		expect(result.diagnostics).toMatchSnapshot("syntax error")
+		expect(result.diagnostics[0].title[0].content).toContain(
+			"expected a name for the function in a function declaration, but found none",
+		);
+		expect(result.diagnostics).toMatchSnapshot("syntax error");
 	});
 
 	it("should format content in debug mode", async () => {
