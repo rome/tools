@@ -146,7 +146,7 @@ self.addEventListener("message", async (e) => {
 				categories: ["Syntax", "Lint"],
 			});
 
-			const printer = new DiagnosticPrinter(path.path, code);
+			const printer = new DiagnosticPrinter(path.path, code, 1);
 			for (const diag of diagnostics.diagnostics) {
 				printer.print(diag);
 			}
