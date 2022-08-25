@@ -143,11 +143,7 @@ export class Rome {
 				return new Rome(client);
 			}
 
-			case BackendKind.NODE: {
-				let client = await NodeWasm.createWorkspace();
-				return new Rome(client);
-			}
-
+			case BackendKind.NODE:
 			default: {
 				let client = await NodeWasm.createWorkspace();
 				return new Rome(client);
@@ -195,8 +191,8 @@ export class Rome {
 	/**
 	 * If formats some content.
 	 *
-	 * @param content The content to format
-	 * @param options Options needed when formatting some content
+	 * @param {String} content The content to format
+	 * @param {FormatContentOptions | FormatContentDebugOptions} options Options needed when formatting some content
 	 */
 	async formatContent(
 		content: string,
@@ -233,7 +229,7 @@ export class Rome {
 				});
 				code = result.code;
 			} catch {
-				const diagnostics = await this.backend.pullDiagnostics({
+				const { diagnostics } = await this.backend.workspace.pullDiagnostics({
 					path: file.path,
 					categories: ["Syntax"],
 				});
@@ -248,12 +244,21 @@ export class Rome {
 			const ir = await this.backend.workspace.getFormatterIr({
 				path: file.path,
 			});
+
+			await this.backend.workspace.closeFile({
+				path: file.path,
+			});
 			return {
 				content: code,
 				diagnostics: [],
 				ir,
 			};
 		}
+
+		await this.backend.workspace.closeFile({
+			path: file.path,
+		});
+
 		return {
 			content: code,
 			diagnostics: [],

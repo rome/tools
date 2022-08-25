@@ -1,10 +1,8 @@
-import {
-	Diagnostic,
-	main,
-	PullDiagnosticsParams,
-	Workspace,
-} from "@rometools/wasm-nodejs";
+import { main, Workspace } from "@rometools/wasm-nodejs";
 
+/**
+ * Class responsible to connect with the WebAssembly backend of Rome.
+ */
 export class NodeWasm {
 	public workspace: Workspace;
 	private constructor(workspace: Workspace) {
@@ -12,7 +10,7 @@ export class NodeWasm {
 	}
 
 	/**
-     * It creates a new instance of the class {Rome}
+     * It creates a new instance of a workspace connected to the WebAssembly backend
      */
 	public static async createWorkspace(): Promise<NodeWasm> {
 		return new NodeWasm(await NodeWasm.loadWorkspace());
@@ -22,12 +20,5 @@ export class NodeWasm {
 		// load the web assembly module
 		main();
 		return Promise.resolve(new Workspace());
-	}
-
-	public async pullDiagnostics(
-		params: PullDiagnosticsParams,
-	): Promise<Diagnostic[]> {
-		const result = await this.workspace.pullDiagnostics(params);
-		return result.diagnostics;
 	}
 }

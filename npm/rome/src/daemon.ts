@@ -1,17 +1,24 @@
 import {
 	createWorkspace,
 	createWorkspaceWithBinary,
-	Diagnostic,
-	PullDiagnosticsParams,
 	Workspace,
 } from "@rometools/backend-jsonrpc";
 
+/**
+ * Class responsible to communicate with the Rome daemon.
+ *
+ * A daemon is a long term server where multiple clients can communicate with it using JSON-RPC.
+ * A daemon is spawn via CLI.
+ */
 export class Deamon {
 	public workspace: Workspace;
 	private constructor(workspace: Workspace) {
 		this.workspace = workspace;
 	}
 
+	/**
+	 * It creates a new instance of a workspace connected to the Daemon
+	 */
 	public static async createWorkspace(pathToBinary?: string): Promise<Deamon> {
 		if (pathToBinary) {
 			let workspace = await createWorkspaceWithBinary(pathToBinary);
@@ -25,12 +32,5 @@ export class Deamon {
 			}
 		}
 		throw new Error("could not connect to the daemon");
-	}
-
-	public async pullDiagnostics(
-		params: PullDiagnosticsParams,
-	): Promise<Diagnostic[]> {
-		const result = await this.workspace.pullDiagnostics(params);
-		return result.diagnostics;
 	}
 }
