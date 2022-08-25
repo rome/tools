@@ -77,7 +77,7 @@ impl DiagnosticPrinter {
 
     /// It returns all diagnostics printed into a single string
     pub fn finish(self) -> Result<String, Error> {
-        let flat_buffer: Vec<_> = self.buffer.into_iter().flat_map(|b| b).collect();
+        let flat_buffer: Vec<_> = self.buffer.into_iter().flatten().collect();
         String::from_utf8(flat_buffer).map_err(into_error)
     }
 
