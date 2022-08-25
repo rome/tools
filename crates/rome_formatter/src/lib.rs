@@ -239,7 +239,7 @@ pub trait CstFormatContext: FormatContext {
     type Style: CommentStyle<Self::Language>;
 
     /// Customizes how comments are formatted
-    #[deprecated]
+    #[deprecated(note = "Prefer FormatLanguage::comment_style")]
     fn comment_style(&self) -> Self::Style;
 
     /// Returns a ref counted [Comments].
@@ -900,7 +900,6 @@ pub fn format_node<L: FormatLanguage>(
         };
 
         let comments = Comments::from_node(&root, &language);
-
         let format_node = FormatRefWithRule::new(&root, L::FormatRule::default());
 
         let context = language.create_context(comments, source_map);
@@ -1255,13 +1254,13 @@ pub fn format_sub_tree<L: FormatLanguage>(
 
     let formatted = format_node(root, language)?;
     let mut printed = formatted.print_with_indent(initial_indent);
+    let sourcemap = printed.take_sourcemap();
     let verbatim_ranges = printed.take_verbatim_ranges();
-    let markers = printed.take_sourcemap();
 
     Ok(Printed::new(
         printed.into_code(),
         Some(root.text_range()),
-        markers,
+        sourcemap,
         verbatim_ranges,
     ))
 }

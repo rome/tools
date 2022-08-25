@@ -515,7 +515,7 @@ impl FormatLanguage for JsFormatLanguage {
         Some((transformed, rewriter.finish()))
     }
 
-    fn is_range_formatting_node(&self, node: &SyntaxNode<Self::SyntaxLanguage>) -> bool {
+    fn is_range_formatting_node(&self, node: &JsSyntaxNode) -> bool {
         let kind = node.kind();
 
         // Do not format variable declaration nodes, format the whole statement instead
@@ -560,8 +560,7 @@ pub fn format_range(
     root: &JsSyntaxNode,
     range: TextRange,
 ) -> FormatResult<Printed> {
-    let language = JsFormatLanguage::new(options);
-    rome_formatter::format_range(root, range, language)
+    rome_formatter::format_range(root, range, JsFormatLanguage::new(options))
 }
 
 /// Formats a JavaScript (and its super languages) file based on its features.
@@ -571,8 +570,7 @@ pub fn format_node(
     options: JsFormatOptions,
     root: &JsSyntaxNode,
 ) -> FormatResult<Formatted<JsFormatContext>> {
-    let language = JsFormatLanguage::new(options);
-    rome_formatter::format_node(root, language)
+    rome_formatter::format_node(root, JsFormatLanguage::new(options))
 }
 
 /// Formats a single node within a file, supported by Rome.
@@ -585,9 +583,8 @@ pub fn format_node(
 /// even if it's a mismatch from the rest of the block the selection is in
 ///
 /// It returns a [Formatted] result
-pub fn format_sub_tree(context: JsFormatOptions, root: &JsSyntaxNode) -> FormatResult<Printed> {
-    let language = JsFormatLanguage::new(context);
-    rome_formatter::format_sub_tree(root, language)
+pub fn format_sub_tree(options: JsFormatOptions, root: &JsSyntaxNode) -> FormatResult<Printed> {
+    rome_formatter::format_sub_tree(root, JsFormatLanguage::new(options))
 }
 
 #[cfg(test)]

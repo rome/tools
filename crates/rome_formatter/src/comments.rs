@@ -157,10 +157,10 @@ pub struct Comments<L: Language> {
 
 impl<L: Language> Comments<L> {
     /// Extracts all the suppressions from `root` and its child nodes.
-    pub fn from_node<FormatLanguage: crate::FormatLanguage<SyntaxLanguage = L>>(
-        root: &SyntaxNode<L>,
-        language: &FormatLanguage,
-    ) -> Self {
+    pub fn from_node<FormatLanguage>(root: &SyntaxNode<L>, language: &FormatLanguage) -> Self
+    where
+        FormatLanguage: crate::FormatLanguage<SyntaxLanguage = L>,
+    {
         let mut suppressed_nodes = HashSet::new();
         let mut current_node = None;
 
