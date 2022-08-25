@@ -113,12 +113,13 @@ jobs:
       - uses: pnpm/action-setup@v2.1.0
         with:
           version: 7
-          run_install: |
-            args: [--prefix npm/backend-jsonrpc]
       - name: Build TypeScript code
         run: |
+          pnpm --prefix npm/backend-jsonrpc i
           pnpm --prefix npm/backend-jsonrpc run build
+          pnpm --prefix npm/rome i
           pnpm --prefix npm/rome run build
+          pnpm --prefix npm/rome i
       - name: Run JS tests
         run: |
           pnpm --prefix npm/backend-jsonrpc test:ci

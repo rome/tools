@@ -222,7 +222,7 @@ export class Rome {
 				path: file.path,
 				// TODO: investigate following error:
 				// Unknown Error: invalid type: map, expected a tuple of size 2
-				// @ts-expect-error The backend fails when passing an object, but it's ok when sending a tuple
+				// @ts-ignore The backend fails when passing an object, but it's ok when sending a tuple
 				range: options.range,
 			});
 			code = result.code;
