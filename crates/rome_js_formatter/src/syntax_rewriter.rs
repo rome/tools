@@ -105,7 +105,6 @@ impl JsFormatSyntaxRewriter {
                 // The leading whitespace before the opening parens replaces the whitespace before the node.
                 while let Some(trivia) = leading_trivia.peek() {
                     if trivia.is_whitespace() || trivia.is_newline() {
-                        // TODO add test case that triggers the case where inner offset is outdated.
                         let trivia_len = trivia.text_len();
                         self.source_map
                             .add_deleted_range(TextRange::at(inner_offset, trivia_len));
@@ -132,9 +131,6 @@ impl JsFormatSyntaxRewriter {
                 // SAFETY: Calling `unwrap` is safe because `last_token` only returns `None` if a node's subtree
                 // doesn't contain ANY token, but we know that the subtree contains at least the first token.
                 let last_token = updated.last_token().unwrap();
-
-                // TODO consider skipping the trailing whitespace of the node before the `)`?
-                // So that it is inline with the formatting of verbatim nodes?
 
                 let new_last = last_token.with_trailing_trivia_pieces(chain_pieces(
                     last_token.trailing_trivia().pieces(),
