@@ -12,7 +12,7 @@ rustc-hash = "1.1.0"
 hashbrown = { version = "0.12.3", features = [
     "inline-more",
 ], default-features = false }
-text-size = "1.1.0"
+rome_text_size = { path = "../rome_text_size"}
 memoffset = "0.6.5"
 countme = "3.0.0"
 serde = { version = "1.0.133", optional = true, default-features = false }
@@ -26,7 +26,7 @@ serde_json = "1.0.79"
 iai = "*"
 
 [features]
-serde = ["dep:serde", "schemars", "text-size/serde"]
+serde = ["dep:serde", "schemars", "rome_text_size/serde"]
 
 [[bench]]
 name = "mutation"

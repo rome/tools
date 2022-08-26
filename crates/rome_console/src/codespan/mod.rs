@@ -5,7 +5,7 @@ use std::io;
 
 use crate::fmt::{Display, Formatter};
 use crate::markup::MarkupBuf;
-use text_size::{TextRange, TextSize};
+use rome_text_size::{TextRange, TextSize};
 
 use self::render::{MultiLabel, Renderer, SingleLabel};
 
@@ -544,7 +544,7 @@ struct Line<'diagnostic> {
 
 #[cfg(test)]
 mod tests {
-    use text_size::{TextRange, TextSize};
+    use rome_text_size::{TextRange, TextSize};
 
     use crate::codespan::SourceFile;
     use crate::{self as rome_console, BufferConsole, ConsoleExt, LogLevel, Markup};

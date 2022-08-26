@@ -1,9 +1,9 @@
 use crate::arc::{HeaderSlice, ThinArc};
 use crate::TriviaPiece;
 use countme::Count;
+use rome_text_size::TextSize;
 use std::fmt;
 use std::fmt::Formatter;
-use text_size::TextSize;
 
 #[derive(PartialEq, Eq, Hash)]
 pub(crate) struct GreenTriviaHead {
@@ -121,7 +121,7 @@ mod tests {
     use crate::green::trivia::{GreenTrivia, GreenTriviaHead};
     use crate::syntax::TriviaPieceKind;
     use crate::TriviaPiece;
-    use text_size::TextSize;
+    use rome_text_size::TextSize;
 
     impl GreenTrivia {
         /// Creates a trivia with a single whitespace piece

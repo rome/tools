@@ -1,8 +1,8 @@
 use crate::syntax::SyntaxTrivia;
 use crate::{cursor, Language, NodeOrToken, SyntaxNode, SyntaxToken};
+use rome_text_size::{TextRange, TextSize};
 use std::iter;
 use std::ptr::NonNull;
-use text_size::{TextRange, TextSize};
 
 pub type SyntaxElement<L> = NodeOrToken<SyntaxNode<L>, SyntaxToken<L>>;
 

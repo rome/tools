@@ -4,13 +4,13 @@ use crate::{
     Direction, GreenNode, GreenNodeData, NodeOrToken, RawSyntaxKind, SyntaxNodeText, TokenAtOffset,
     WalkEvent,
 };
+use rome_text_size::{TextRange, TextSize};
 use std::hash::{Hash, Hasher};
 use std::iter::FusedIterator;
 use std::ops;
 use std::ptr::NonNull;
 use std::rc::Rc;
 use std::{fmt, iter};
-use text_size::{TextRange, TextSize};
 
 use super::{GreenElement, NodeKind, WeakGreenElement};
 
