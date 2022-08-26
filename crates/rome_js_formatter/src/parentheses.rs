@@ -50,9 +50,10 @@ use rome_js_syntax::{
     JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAnyFunctionBody,
     JsAnyLiteralExpression, JsArrowFunctionExpression, JsAssignmentExpression, JsBinaryExpression,
     JsBinaryOperator, JsComputedMemberAssignment, JsComputedMemberExpression,
-    JsConditionalExpression, JsLanguage, JsSequenceExpression, JsSyntaxKind, JsSyntaxNode,
+    JsConditionalExpression, JsLanguage, JsSequenceExpression, JsStaticMemberAssignment,
+    JsStaticMemberExpression, JsSyntaxKind, JsSyntaxNode,
 };
-use rome_rowan::AstNode;
+use rome_rowan::{match_ast, AstNode};
 
 /// Node that may be parenthesized to ensure it forms valid syntax or to improve readability
 pub trait NeedsParentheses: AstNode<Language = JsLanguage> {
@@ -635,18 +636,15 @@ pub(crate) fn unary_like_expression_needs_parentheses(
     ));
     debug_assert_is_parent(expression, parent);
 
-    match parent.kind() {
-        JsSyntaxKind::JS_BINARY_EXPRESSION => {
-            let binary = JsBinaryExpression::unwrap_cast(parent.clone());
-
-            matches!(binary.operator(), Ok(JsBinaryOperator::Exponent))
-                && binary
-                    .left()
-                    .map(ExpressionNode::into_resolved_syntax)
-                    .as_ref()
-                    == Ok(expression)
-        }
-        _ => update_or_lower_expression_needs_parentheses(expression, parent),
+    if let Some(binary) = JsBinaryExpression::cast_ref(parent) {
+        matches!(binary.operator(), Ok(JsBinaryOperator::Exponent))
+            && binary
+                .left()
+                .map(ExpressionNode::into_resolved_syntax)
+                .as_ref()
+                == Ok(expression)
+    } else {
+        update_or_lower_expression_needs_parentheses(expression, parent)
     }
 }
 
@@ -679,31 +677,27 @@ pub(crate) fn is_member_object(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bo
     debug_assert_is_expression(node);
     debug_assert_is_parent(node, parent);
 
-    match parent.kind() {
-        // Only allows expression in the `object` child.
-        JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION => true,
-        JsSyntaxKind::JS_STATIC_MEMBER_ASSIGNMENT => true,
-
-        JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION => {
-            let member_expression = JsComputedMemberExpression::unwrap_cast(parent.clone());
-
-            member_expression
-                .object()
-                .map(ExpressionNode::into_resolved_syntax)
-                .as_ref()
-                == Ok(node)
+    match_ast! {
+        match parent {
+            // Only allows expression in the `object` child.
+            JsStaticMemberExpression(_) => true,
+            JsStaticMemberAssignment(_) => true,
+            JsComputedMemberExpression(member_expression) => {
+                 member_expression
+                    .object()
+                    .map(ExpressionNode::into_resolved_syntax)
+                    .as_ref()
+                    == Ok(node)
+            },
+            JsComputedMemberAssignment(assignment) => {
+                assignment
+                    .object()
+                    .map(ExpressionNode::into_resolved_syntax)
+                    .as_ref()
+                    == Ok(node)
+            },
+            _ => false,
         }
-
-        JsSyntaxKind::JS_COMPUTED_MEMBER_ASSIGNMENT => {
-            let member_assignment = JsComputedMemberAssignment::unwrap_cast(parent.clone());
-
-            member_assignment
-                .object()
-                .map(ExpressionNode::into_resolved_syntax)
-                .as_ref()
-                == Ok(node)
-        }
-        _ => false,
     }
 }
 
@@ -729,35 +723,35 @@ pub(crate) fn is_callee(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bool {
 /// is_conditional_test(`b`, `a ? b : c`) -> false
 /// ```
 pub(crate) fn is_conditional_test(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bool {
-    match parent.kind() {
-        JsSyntaxKind::JS_CONDITIONAL_EXPRESSION => {
-            let conditional = JsConditionalExpression::unwrap_cast(parent.clone());
-
-            conditional
-                .test()
-                .map(ExpressionNode::into_resolved_syntax)
-                .as_ref()
-                == Ok(node)
+    match_ast! {
+        match parent {
+            JsConditionalExpression(conditional) => {
+                conditional
+                    .test()
+                    .map(ExpressionNode::into_resolved_syntax)
+                    .as_ref()
+                    == Ok(node)
+            },
+            _ => false
         }
-        _ => false,
     }
 }
 
 pub(crate) fn is_arrow_function_body(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bool {
     debug_assert_is_expression(node);
 
-    match parent.kind() {
-        JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION => {
-            let arrow = JsArrowFunctionExpression::unwrap_cast(parent.clone());
-
-            match arrow.body() {
-                Ok(JsAnyFunctionBody::JsAnyExpression(expression)) => {
-                    &expression.resolve_syntax() == node
+    match_ast! {
+        match parent {
+            JsArrowFunctionExpression(arrow) => {
+                match arrow.body() {
+                    Ok(JsAnyFunctionBody::JsAnyExpression(expression)) => {
+                        &expression.resolve_syntax() == node
+                    }
+                    _ => false,
                 }
-                _ => false,
-            }
+            },
+            _ => false
         }
-        _ => false,
     }
 }
 

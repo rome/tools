@@ -4,11 +4,12 @@ use crate::parentheses::{
 use crate::prelude::*;
 
 use rome_formatter::write;
+use rome_js_syntax::JsPreUpdateExpressionFields;
 use rome_js_syntax::{
     JsAnyExpression, JsPreUpdateExpression, JsPreUpdateOperator, JsSyntaxNode, JsUnaryExpression,
     JsUnaryOperator,
 };
-use rome_js_syntax::{JsPreUpdateExpressionFields, JsSyntaxKind};
+use rome_rowan::match_ast;
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsPreUpdateExpression;
@@ -30,18 +31,21 @@ impl FormatNodeRule<JsPreUpdateExpression> for FormatJsPreUpdateExpression {
 
 impl NeedsParentheses for JsPreUpdateExpression {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
-        match parent.kind() {
-            JsSyntaxKind::JS_UNARY_EXPRESSION => {
-                let unary = JsUnaryExpression::unwrap_cast(parent.clone());
-                let parent_operator = unary.operator();
-                let operator = self.operator();
+        match_ast! {
+            match parent {
+                JsUnaryExpression(unary) => {
+                    let parent_operator = unary.operator();
+                    let operator = self.operator();
 
-                (parent_operator == Ok(JsUnaryOperator::Plus)
-                    && operator == Ok(JsPreUpdateOperator::Increment))
-                    || (parent_operator == Ok(JsUnaryOperator::Minus)
-                        && operator == Ok(JsPreUpdateOperator::Decrement))
+                    (parent_operator == Ok(JsUnaryOperator::Plus)
+                        && operator == Ok(JsPreUpdateOperator::Increment))
+                        || (parent_operator == Ok(JsUnaryOperator::Minus)
+                            && operator == Ok(JsPreUpdateOperator::Decrement))
+                },
+                _ => {
+                    unary_like_expression_needs_parentheses(self.syntax(), parent)
+                }
             }
-            _ => unary_like_expression_needs_parentheses(self.syntax(), parent),
         }
     }
 }

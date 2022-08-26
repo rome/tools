@@ -124,6 +124,20 @@ pub trait AstNode: Clone {
     where
         Self: Sized;
 
+    /// Takes a reference of a syntax node and tries to cast it to this AST node.
+    ///
+    /// Only creates a clone of the syntax node if casting the node is possible.
+    fn cast_ref(syntax: &SyntaxNode<Self::Language>) -> Option<Self>
+    where
+        Self: Sized,
+    {
+        if Self::can_cast(syntax.kind()) {
+            Self::cast(syntax.clone())
+        } else {
+            None
+        }
+    }
+
     /// Tries to cast the passed syntax node to this AST node.
     ///
     /// # Returns
@@ -154,7 +168,7 @@ pub trait AstNode: Clone {
     /// ```
     fn try_cast(syntax: SyntaxNode<Self::Language>) -> Result<Self, SyntaxNode<Self::Language>> {
         if Self::can_cast(syntax.kind()) {
-            Ok(Self::unwrap_cast(syntax))
+            Ok(Self::cast(syntax).expect("Expected casted node because 'can_cast' returned true."))
         } else {
             Err(syntax)
         }
@@ -188,7 +202,8 @@ pub trait AstNode: Clone {
     /// ```
     fn try_cast_node<T: AstNode<Language = Self::Language>>(node: T) -> Result<Self, T> {
         if Self::can_cast(node.syntax().kind()) {
-            Ok(Self::unwrap_cast(node.into_syntax()))
+            Ok(Self::cast(node.into_syntax())
+                .expect("Expected casted node because 'can_cast' returned true."))
         } else {
             Err(node)
         }
