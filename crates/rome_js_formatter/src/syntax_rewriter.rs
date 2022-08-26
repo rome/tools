@@ -11,12 +11,18 @@ use rome_rowan::{
 };
 use std::iter::FusedIterator;
 
-pub(super) struct JsFormatSyntaxRewriter {
+pub(super) fn transform(root: JsSyntaxNode) -> (JsSyntaxNode, TransformSourceMap) {
+    let mut rewriter = JsFormatSyntaxRewriter::new(&root);
+    let transformed = rewriter.transform(root);
+    (transformed, rewriter.finish())
+}
+
+struct JsFormatSyntaxRewriter {
     source_map: TransformSourceMapBuilder,
 }
 
 impl JsFormatSyntaxRewriter {
-    pub(super) fn new(root: &JsSyntaxNode) -> Self {
+    fn new(root: &JsSyntaxNode) -> Self {
         Self {
             source_map: TransformSourceMapBuilder::new(root),
         }

@@ -733,9 +733,9 @@ fn debug_assert_is_parent(node: &JsSyntaxNode, parent: &JsSyntaxNode) {
 #[cfg(test)]
 pub(crate) mod tests {
     use super::NeedsParentheses;
-    use crate::JsFormatSyntaxRewriter;
+    use crate::transform;
     use rome_js_syntax::{JsLanguage, SourceType};
-    use rome_rowan::{AstNode, SyntaxRewriter};
+    use rome_rowan::AstNode;
 
     pub(crate) fn assert_needs_parentheses_impl<
         T: AstNode<Language = JsLanguage> + std::fmt::Debug + NeedsParentheses,
@@ -753,7 +753,7 @@ pub(crate) mod tests {
         );
 
         let root = parse.syntax();
-        let transformed = JsFormatSyntaxRewriter::new(&root).transform(root);
+        let (transformed, _) = transform(root);
         let matching_nodes: Vec<_> = transformed.descendants().filter_map(T::cast).collect();
 
         let node = if let Some(index) = index {
@@ -794,7 +794,7 @@ pub(crate) mod tests {
         );
 
         let root = parse.syntax();
-        let transformed = JsFormatSyntaxRewriter::new(&root).transform(root);
+        let (transformed, _) = transform(root);
         let matching_nodes: Vec<_> = transformed.descendants().filter_map(T::cast).collect();
 
         let node = if let Some(index) = index {
