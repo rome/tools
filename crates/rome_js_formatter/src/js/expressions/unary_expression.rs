@@ -5,9 +5,10 @@ use crate::parentheses::{
     unary_like_expression_needs_parentheses, ExpressionNode, NeedsParentheses,
 };
 
+use rome_js_syntax::JsUnaryExpression;
 use rome_js_syntax::{JsAnyExpression, JsSyntaxNode};
-use rome_js_syntax::{JsSyntaxKind, JsUnaryExpression};
 use rome_js_syntax::{JsUnaryExpressionFields, JsUnaryOperator};
+use rome_rowan::match_ast;
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsUnaryExpression;
@@ -44,16 +45,19 @@ impl FormatNodeRule<JsUnaryExpression> for FormatJsUnaryExpression {
 
 impl NeedsParentheses for JsUnaryExpression {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
-        match parent.kind() {
-            JsSyntaxKind::JS_UNARY_EXPRESSION => {
-                let parent_unary = JsUnaryExpression::unwrap_cast(parent.clone());
-                let parent_operator = parent_unary.operator();
-                let operator = self.operator();
+        match_ast! {
+            match parent {
+                JsUnaryExpression(parent_unary) => {
+                    let parent_operator = parent_unary.operator();
+                    let operator = self.operator();
 
-                matches!(operator, Ok(JsUnaryOperator::Plus | JsUnaryOperator::Minus))
-                    && parent_operator == operator
+                    matches!(operator, Ok(JsUnaryOperator::Plus | JsUnaryOperator::Minus))
+                        && parent_operator == operator
+                },
+                _ => {
+                    unary_like_expression_needs_parentheses(self.syntax(), parent)
+                }
             }
-            _ => unary_like_expression_needs_parentheses(self.syntax(), parent),
         }
     }
 }

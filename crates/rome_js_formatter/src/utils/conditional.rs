@@ -9,7 +9,7 @@ use rome_js_syntax::{
     JsThrowStatement, JsUnaryExpression, JsYieldArgument, TsAsExpression, TsConditionalType,
     TsNonNullAssertionExpression, TsType,
 };
-use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
+use rome_rowan::{declare_node_union, match_ast, AstNode, SyntaxResult};
 
 declare_node_union! {
     pub JsAnyConditional = JsConditionalExpression | TsConditionalType
@@ -439,98 +439,88 @@ impl JsAnyConditional {
         // expression, while skipping parenthesized expression.
         // The iteration "breaks" as soon as a non-member-chain node is found.
         for ancestor in ancestors {
-            let ancestor = match ancestor.kind() {
-                JsSyntaxKind::JS_CALL_EXPRESSION => {
-                    let call_expression = JsCallExpression::unwrap_cast(ancestor);
+            let ancestor = match_ast! {
+                match &ancestor {
+                    JsCallExpression(call_expression) => {
+                        if call_expression
+                            .callee()
+                            .map(ExpressionNode::into_resolved)
+                            .as_ref()
+                            == Ok(&expression)
+                        {
+                            Ancestor::MemberChain(call_expression.into())
+                        } else {
+                            Ancestor::Root(call_expression.into_syntax())
+                        }
+                    },
 
-                    if call_expression
-                        .callee()
-                        .map(ExpressionNode::into_resolved)
-                        .as_ref()
-                        == Ok(&expression)
-                    {
-                        Ancestor::MemberChain(call_expression.into())
-                    } else {
-                        Ancestor::Root(call_expression.into_syntax())
-                    }
+                    JsStaticMemberExpression(member_expression) => {
+                        if member_expression
+                            .object()
+                            .map(ExpressionNode::into_resolved)
+                            .as_ref()
+                            == Ok(&expression)
+                        {
+                            Ancestor::MemberChain(member_expression.into())
+                        } else {
+                            Ancestor::Root(member_expression.into_syntax())
+                        }
+                    },
+                    JsComputedMemberExpression(member_expression) => {
+                        if member_expression
+                            .object()
+                            .map(ExpressionNode::into_resolved)
+                            .as_ref()
+                            == Ok(&expression)
+                        {
+                            Ancestor::MemberChain(member_expression.into())
+                        } else {
+                            Ancestor::Root(member_expression.into_syntax())
+                        }
+                    },
+                    TsNonNullAssertionExpression(non_null_assertion) => {
+                        if non_null_assertion
+                            .expression()
+                            .map(ExpressionNode::into_resolved)
+                            .as_ref()
+                            == Ok(&expression)
+                        {
+                            Ancestor::MemberChain(non_null_assertion.into())
+                        } else {
+                            Ancestor::Root(non_null_assertion.into_syntax())
+                        }
+                    },
+                    JsNewExpression(new_expression) => {
+                        // Skip over new expressions
+                        if new_expression
+                            .callee()
+                            .map(ExpressionNode::into_resolved)
+                            .as_ref()
+                            == Ok(&expression)
+                        {
+                            parent = new_expression.resolve_parent();
+                            expression = new_expression.into();
+                            break;
+                        }
+
+                        Ancestor::Root(new_expression.into_syntax())
+                    },
+                    TsAsExpression(as_expression) => {
+                        if as_expression
+                            .expression()
+                            .map(ExpressionNode::into_resolved)
+                            .as_ref()
+                            == Ok(&expression)
+                        {
+                            parent = as_expression.resolve_parent();
+                            expression = as_expression.into();
+                            break;
+                        }
+
+                        Ancestor::Root(as_expression.into_syntax())
+                    },
+                    _ => Ancestor::Root(ancestor),
                 }
-
-                JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION => {
-                    let member_expression = JsStaticMemberExpression::unwrap_cast(ancestor);
-
-                    if member_expression
-                        .object()
-                        .map(ExpressionNode::into_resolved)
-                        .as_ref()
-                        == Ok(&expression)
-                    {
-                        Ancestor::MemberChain(member_expression.into())
-                    } else {
-                        Ancestor::Root(member_expression.into_syntax())
-                    }
-                }
-                JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION => {
-                    let member_expression = JsComputedMemberExpression::unwrap_cast(ancestor);
-
-                    if member_expression
-                        .object()
-                        .map(ExpressionNode::into_resolved)
-                        .as_ref()
-                        == Ok(&expression)
-                    {
-                        Ancestor::MemberChain(member_expression.into())
-                    } else {
-                        Ancestor::Root(member_expression.into_syntax())
-                    }
-                }
-                JsSyntaxKind::TS_NON_NULL_ASSERTION_EXPRESSION => {
-                    let non_null_assertion = TsNonNullAssertionExpression::unwrap_cast(ancestor);
-
-                    if non_null_assertion
-                        .expression()
-                        .map(ExpressionNode::into_resolved)
-                        .as_ref()
-                        == Ok(&expression)
-                    {
-                        Ancestor::MemberChain(non_null_assertion.into())
-                    } else {
-                        Ancestor::Root(non_null_assertion.into_syntax())
-                    }
-                }
-                JsSyntaxKind::JS_NEW_EXPRESSION => {
-                    let new_expression = JsNewExpression::unwrap_cast(ancestor);
-
-                    // Skip over new expressions
-                    if new_expression
-                        .callee()
-                        .map(ExpressionNode::into_resolved)
-                        .as_ref()
-                        == Ok(&expression)
-                    {
-                        parent = new_expression.resolve_parent();
-                        expression = new_expression.into();
-                        break;
-                    }
-
-                    Ancestor::Root(new_expression.into_syntax())
-                }
-                JsSyntaxKind::TS_AS_EXPRESSION => {
-                    let as_expression = TsAsExpression::unwrap_cast(ancestor.clone());
-
-                    if as_expression
-                        .expression()
-                        .map(ExpressionNode::into_resolved)
-                        .as_ref()
-                        == Ok(&expression)
-                    {
-                        parent = as_expression.resolve_parent();
-                        expression = as_expression.into();
-                        break;
-                    }
-
-                    Ancestor::Root(as_expression.into_syntax())
-                }
-                _ => Ancestor::Root(ancestor),
             };
 
             match ancestor {
