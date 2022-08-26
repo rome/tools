@@ -7,10 +7,13 @@ use std::collections::HashMap;
 ///
 /// This is not a generic purpose source map but instead focused on supporting the case where
 /// a language removes or re-orders nodes that would otherwise complicate the formatting logic.
-/// A common use case for pre-processing is the removal all parenthesized nodes
-/// because parenthesized nodes complicate testing if a child or parent is of a specific kind as they need to be ignored.
+/// A common use case for pre-processing is the removal of all parenthesized nodes.
+/// Removing parenthesized nodes simplifies the formatting logic when it has different behaviour
+/// depending if a child or parent is of a specific node kind. Performing such a test with parenthesized
+/// nodes present in the source code means that the formatting logic has to skip over all parenthesized nodes
+/// until it finds the first non-parenthesized node and then test if that node is of the expected kind.
 ///
-/// This source map implementation only must support removing tokens or re-structuring nodes
+/// This source map implementation supports removing tokens or re-structuring nodes
 /// without changing the order of the tokens in the tree (requires no source map).
 ///
 /// ## Position Mapping
@@ -37,7 +40,7 @@ use std::collections::HashMap;
 /// * `a` -> `a`: Should not include the leading `(`
 /// * `b` -> `b`: Should not include the trailing `)`
 /// * `a + b` -> `(a + b)`: Should include the leading `(` and trailing `)`.
-/// * `a + b + c + d -> `(a + b) + (c + d)`: Should include the leading `(` and `)` trailing `)` because the expression statement
+/// * `a + b + c + d` -> `(a + b) + (c + d)`: Should include the fist `(` token and the last `)` token because the expression statement
 ///   fully encloses the `a + b` and `c + d` nodes.
 ///
 /// This is why the source map also tracks the mapped trimmed ranges for every node.
@@ -68,7 +71,7 @@ impl TransformSourceMap {
             self.source_offset(transformed_range.end(), RangePosition::End),
         );
 
-        debug_assert!(range.end() <= self.source_text.len(), "Mapped range out of bounds. Is the passed range a transformed range and belongs to the same tree as the source map?");
+        debug_assert!(range.end() <= self.source_text.len(), "Mapped range out of bounds. Is the passed range a transformed range that belongs to the same tree as the source map?");
         range
     }
 
@@ -185,7 +188,15 @@ impl TransformSourceMap {
         }
     }
 
-    /// Maps the source map information of `printed` from the transformed positions to the source positions.
+    /// Maps the source code positions relative to the transformed tree of `printed` to the location
+    /// in the original, untransformed source code.
+    ///
+    /// The printer creates a source map that allows mapping positions from the newly formatted document
+    /// back to the locations of the tree. However, the source positions stored in [crate::FormatElement::Text]
+    /// are relative to the transformed tree and not the original tree passed to [crate::format_node].
+    ///
+    /// This function re-maps the positions from the positions in the transformed tree back to the positions
+    /// in the original, untransformed tree.
     pub fn map_printed(&self, mut printed: Printed) -> Printed {
         self.map_markers(&mut printed.sourcemap);
         self.map_verbatim_ranges(&mut printed.verbatim_ranges);
@@ -298,16 +309,16 @@ enum RangePosition {
 /// ```text
 /// DeletedRange {
 ///     source_range: 0..1,
-///     transformed_offset: 0,
+///     total_length_preceding_deleted_ranges: 0,
 /// },
 /// DeletedRange {
 ///     source_range: 6..7,
-///     transformed_offset: 1,
+///     total_length_preceding_deleted_ranges: 1,
 /// }
 /// ```
 ///
 /// The first range indicates that the range `0..1` for the `(` token has been removed. The second range
-/// indicates that the range `6..7` for the `)` has been removed and it stores that, up to this point,
+/// indicates that the range `6..7` for the `)` token has been removed and it stores that, up to this point,
 /// but not including, 1 more byte has been removed.
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 struct DeletedRange {
@@ -320,7 +331,7 @@ struct DeletedRange {
 
 impl DeletedRange {
     fn new(source_range: TextRange, total_length_preceding_deleted_ranges: TextSize) -> Self {
-        debug_assert!(source_range.start() >= total_length_preceding_deleted_ranges);
+        debug_assert!(source_range.start() >= total_length_preceding_deleted_ranges, "The total number of deleted bytes ({:?}) can not be larger than the offset from the start in the source document ({:?}). This is a bug in the source map implementation.", total_length_preceding_deleted_ranges, source_range.start());
 
         Self {
             source_range,
@@ -403,7 +414,7 @@ impl TransformSourceMapBuilder {
             .insert(original_range.end(), mapping);
     }
 
-    /// Creates a source map has a complexity of `O(log(n))` to look up a single offset mapping.
+    /// Creates a source map that performs single position lookups in `O(log(n))`.
     pub fn finish(mut self) -> TransformSourceMap {
         let mut merged_mappings = Vec::with_capacity(self.deleted_ranges.len());
 
