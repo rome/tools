@@ -15,6 +15,12 @@ pub(super) struct JsFormatSyntaxRewriter {
     source_map: TransformSourceMapBuilder,
 }
 
+// TODO
+// * Explain trivia handling in `visit_parenthesized` (and cherry pick changes from following branch)?
+// * Add some tests showing that parentheses and logical expressions are correctly transformed
+// * SourceMap:
+//   * rename `transformed_offset`?
+//   * add some basic unit tests testing the position lookup?
 impl JsFormatSyntaxRewriter {
     pub(super) fn new(root: &JsSyntaxNode) -> Self {
         Self {
