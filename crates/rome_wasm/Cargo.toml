@@ -17,8 +17,8 @@ crate-type = ["cdylib", "rlib"]
 default = ["console_error_panic_hook"]
 
 [dependencies]
-wasm-bindgen = { version = "0.2.79", features = ["serde-serialize"] }
-js-sys = "0.3.58"
+wasm-bindgen = { version = "0.2.82", features = ["serde-serialize"] }
+js-sys = "0.3.59"
 rome_service = { path = "../../crates/rome_service" }
 rome_console = { path = "../../crates/rome_console" }
 rome_diagnostics = { path = "../../crates/rome_diagnostics" }

@@ -1,27 +1,29 @@
-import { main, Workspace, RomePath } from "@rometools/wasm-nodejs";
+import { NodeWasm } from "./nodeWasm";
+import { Deamon } from "./daemon";
+import { Diagnostic } from "@rometools/backend-jsonrpc";
 
-interface FormatFilesDebugOptions extends FormatFilesOptions {
+export interface FormatFilesDebugOptions extends FormatFilesOptions {
 	/**
 	 * If `true`, you'll be able to inspect the IR of the formatter
 	 */
 	debug: boolean;
 }
 
-interface FormatContentDebugOptions extends FormatContentOptions {
+export interface FormatContentDebugOptions extends FormatContentOptions {
 	/**
 	 * If `true`, you'll be able to inspect the IR of the formatter
 	 */
 	debug: boolean;
 }
 
-interface FormatFilesOptions {
+export interface FormatFilesOptions {
 	/**
 	 * Writes the new content to disk
 	 */
 	write?: boolean;
 }
 
-interface FormatContentOptions {
+export interface FormatContentOptions {
 	/**
 	 * A virtual path of the file. You should add the extension,
 	 * so Rome knows how to parse the content
@@ -33,29 +35,33 @@ interface FormatContentOptions {
 	range?: [number, number];
 }
 
-interface FormatResult {
+export interface FormatResult {
 	/**
 	 * The new formatted content
 	 */
 	content: string;
-	// Not final
-	errors: string[];
+	/**
+	 * A series of errors encountered while executing an operation
+	 */
+	diagnostics: Diagnostic[];
 }
 
-interface FormatDebugResult {
+export interface FormatDebugResult {
 	/**
 	 * The new formatted content
 	 */
 	content: string;
-	// Not final
-	errors: string[];
+	/**
+	 * A series of errors encountered while executing an operation
+	 */
+	diagnostics: string[];
 	/**
 	 * The IR emitted by the formatter
 	 */
 	ir: string;
 }
 
-interface ParseOptions {
+export interface ParseOptions {
 	/**
 	 * A virtual path of the file. You should add the extension,
 	 * so Rome knows how to parse the content
@@ -63,7 +69,7 @@ interface ParseOptions {
 	filePath: string;
 }
 
-interface ParseResult {
+export interface ParseResult {
 	/**
 	 * The CST of the code
 	 */
@@ -72,8 +78,10 @@ interface ParseResult {
 	 * The AST of the code
 	 */
 	ast: string;
-	// Not final
-	errors: string[];
+	/**
+	 * A series of errors encountered while executing an operation
+	 */
+	diagnostics: string[];
 }
 
 function isFormatFilesDebug(
@@ -83,34 +91,64 @@ function isFormatFilesDebug(
 }
 
 function isFormatContentDebug(
-	options: any,
+	options: FormatContentOptions | FormatContentDebugOptions,
 ): options is FormatContentDebugOptions {
-	return options?.debug !== undefined;
+	return "debug" in options && options.debug !== undefined;
 }
 
-interface CurrentFile {
-	version: number;
-	path: RomePath;
+/**
+ * What kind of client Rome should use to communicate with the binary
+ */
+export enum BackendKind {
+	/**
+	 * Use this if you want to communicate with the WebAssembly client built for Node.JS
+	 */
+	NODE,
+	/**
+	 * Use this if you want to communicate with the Daemon
+	 */
+	DAEMON,
 }
+
+type Backend = NodeWasm | Deamon;
+
+export type RomeCreate =
+	| {
+		backendKind: BackendKind.NODE;
+	}
+	| {
+		backendKind: BackendKind.DAEMON;
+		pathToBinary?: string;
+	};
 
 export class Rome {
-	private workspace: Workspace;
+	private backend: Backend;
 
-	private constructor(workspace: Workspace) {
-		this.workspace = workspace;
+	private constructor(backend: Backend) {
+		this.backend = backend;
 	}
 
 	/**
-	 * It creates a new instance of the class {Rome}
+	 * It creates a new instance of the class {Rome}.
+	 *
+	 * When using the Daemon, an optional path to the Rome binary can be provided.
+	 * This is useful for debugging/test purpose.
+	 *
+	 * @param options
 	 */
-	public static async create(): Promise<Rome> {
-		return new Rome(await Rome.loadWorkspace());
-	}
+	public static async create(options: RomeCreate): Promise<Rome> {
+		switch (options.backendKind) {
+			case BackendKind.DAEMON: {
+				let client = await Deamon.connectToDaemon(options.pathToBinary);
+				return new Rome(client);
+			}
 
-	private static async loadWorkspace(): Promise<Workspace> {
-		// load the web assembly module
-		main();
-		return Promise.resolve(new Workspace());
+			case BackendKind.NODE:
+			default: {
+				let client = await NodeWasm.loadWebAssembly();
+				return new Rome(client);
+			}
+		}
 	}
 
 	async formatFiles(paths: string[]): Promise<FormatResult>;
@@ -131,13 +169,13 @@ export class Rome {
 		if (options && isFormatFilesDebug(options)) {
 			return {
 				content: "",
-				errors: [],
+				diagnostics: [],
 				ir: "",
 			};
 		}
 		return {
 			content: "",
-			errors: [],
+			diagnostics: [],
 		};
 	}
 
@@ -149,50 +187,81 @@ export class Rome {
 		content: string,
 		options: FormatContentDebugOptions,
 	): Promise<FormatDebugResult>;
+
+	/**
+	 * If formats some content.
+	 *
+	 * @param {String} content The content to format
+	 * @param {FormatContentOptions | FormatContentDebugOptions} options Options needed when formatting some content
+	 */
 	async formatContent(
 		content: string,
 		options: FormatContentOptions | FormatContentDebugOptions,
 	): Promise<FormatResult | FormatDebugResult> {
-		const path: RomePath = {
-			id: 0,
-			path: options.filePath,
-		};
-		await this.workspace.openFile({
-			content,
+		let code;
+		const file = {
 			version: 0,
-			path,
+			path: {
+				path: options.filePath,
+				id: 0,
+			},
+		};
+
+		await this.backend.workspace.openFile({
+			content,
+			version: file.version,
+			path: file.path,
 		});
 
-		let code;
 		if (options.range) {
-			const result = await this.workspace.formatRange({
-				path: path,
-				// @ts-expect-error For some reason, passing the tuple works but. Need to understand what's going on
+			const result = await this.backend.workspace.formatRange({
+				path: file.path,
+				// TODO: investigate following error:
+				// Unknown Error: invalid type: map, expected a tuple of size 2
+				// @ts-ignore The backend fails when passing an object, but it's ok when sending a tuple
 				range: options.range,
 			});
 			code = result.code;
 		} else {
-			const result = await this.workspace.formatFile({
-				path,
-			});
-			code = result.code;
+			try {
+				const result = await this.backend.workspace.formatFile({
+					path: file.path,
+				});
+				code = result.code;
+			} catch {
+				const { diagnostics } = await this.backend.workspace.pullDiagnostics({
+					path: file.path,
+					categories: ["Syntax"],
+				});
+				return {
+					content: content,
+					diagnostics,
+				};
+			}
 		}
 
 		if (isFormatContentDebug(options)) {
-			const ir = await this.workspace.getFormatterIr({
-				path,
+			const ir = await this.backend.workspace.getFormatterIr({
+				path: file.path,
 			});
-			this.workspace.closeFile({ path });
+
+			await this.backend.workspace.closeFile({
+				path: file.path,
+			});
 			return {
 				content: code,
-				errors: [],
+				diagnostics: [],
 				ir,
 			};
 		}
-		this.workspace.closeFile({ path });
+
+		await this.backend.workspace.closeFile({
+			path: file.path,
+		});
+
 		return {
 			content: code,
-			errors: [],
+			diagnostics: [],
 		};
 	}
 
@@ -205,7 +274,7 @@ export class Rome {
 		return {
 			ast: "",
 			cst: "",
-			errors: [],
+			diagnostics: [],
 		};
 	}
 }

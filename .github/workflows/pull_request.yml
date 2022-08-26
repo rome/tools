@@ -113,12 +113,21 @@ jobs:
       - uses: pnpm/action-setup@v2.1.0
         with:
           version: 7
-          run_install: |
-            args: [--prefix npm/backend-jsonrpc]
+      - name: Install wasm-pack
+        uses: jetli/wasm-pack-action@v0.3.0
+        with:
+          version: 'latest'
       - name: Build TypeScript code
-        run: pnpm --prefix npm/backend-jsonrpc run build
+        run: |
+          pnpm --prefix npm/backend-jsonrpc i
+          pnpm --prefix npm/backend-jsonrpc run build    
+          pnpm --prefix npm/rome run build:wasm-node
+          pnpm --prefix npm/rome i
+          pnpm --prefix npm/rome run build
       - name: Run JS tests
-        run: pnpm --prefix npm/backend-jsonrpc test:ci
+        run: |
+          pnpm --prefix npm/backend-jsonrpc test:ci
+          pnpm --prefix npm/rome test:ci
 
   documentation:
     name: Documentation
