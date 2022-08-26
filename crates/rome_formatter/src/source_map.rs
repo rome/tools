@@ -1,5 +1,6 @@
 use crate::{Printed, SourceMarker, TextRange};
 use rome_rowan::{Language, SyntaxNode, SyntaxNodeText, TextSize};
+use std::cmp::Ordering;
 use std::collections::HashMap;
 
 /// A source map for mapping positions of a pre-processed tree back to the locations in the source tree.
@@ -302,6 +303,15 @@ struct DeletedRange {
 }
 
 impl DeletedRange {
+    fn new(source_range: TextRange, transformed_offset: TextSize) -> Self {
+        debug_assert!(source_range.start() >= transformed_offset);
+
+        Self {
+            source_range,
+            transformed_offset,
+        }
+    }
+
     /// The number of deleted characters starting from [source offset](DeletedRange::source_start).
     fn len(&self) -> TextSize {
         self.source_range.len()
@@ -382,13 +392,17 @@ impl TransformSourceMapBuilder {
         let mut merged_mappings = Vec::with_capacity(self.deleted_ranges.len());
 
         if !self.deleted_ranges.is_empty() {
-            self.deleted_ranges.sort_by_key(|range| range.start());
+            self.deleted_ranges
+                .sort_by(|a, b| match a.start().cmp(&b.start()) {
+                    Ordering::Equal => a.end().cmp(&b.end()),
+                    ordering => ordering,
+                });
 
-            let mut last_mapping = DeletedRange {
+            let mut last_mapping = DeletedRange::new(
                 // SAFETY: Safe because of the not empty check above
-                source_range: self.deleted_ranges[0],
-                transformed_offset: TextSize::default(),
-            };
+                self.deleted_ranges[0],
+                TextSize::default(),
+            );
 
             let mut transformed_offset = last_mapping.len();
 
@@ -399,10 +413,7 @@ impl TransformSourceMapBuilder {
                 } else {
                     merged_mappings.push(last_mapping);
 
-                    last_mapping = DeletedRange {
-                        source_range: range,
-                        transformed_offset,
-                    };
+                    last_mapping = DeletedRange::new(range, transformed_offset);
                 }
                 transformed_offset += range.len();
             }

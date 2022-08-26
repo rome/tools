@@ -16,7 +16,6 @@ pub(super) struct JsFormatSyntaxRewriter {
 }
 
 // TODO
-// * Explain trivia handling in `visit_parenthesized` (and cherry pick changes from following branch)?
 // * Add some tests showing that parentheses and logical expressions are correctly transformed
 // * SourceMap:
 //   * rename `transformed_offset`?
@@ -34,6 +33,76 @@ impl JsFormatSyntaxRewriter {
     /// * no closure or type cast type cast comment
     ///
     /// with the inner expression.
+    ///
+    /// ## Trivia Overview
+    ///
+    /// We have to spend extra attention on the handling of the trivia attached to the left and right parentheses:
+    ///
+    /// ```javascript
+    /// statement;
+    /// /* leading l-paren */ ( /* trailing l-paren */
+    ///   /* leading a */ a + b /* trailing b */
+    ///   /* leading r-paren */ ) /* trailing r-paren */
+    /// ```
+    ///
+    /// The implementation pre-appends the left parenthesis's trivia to the leading trivia of the expression's first token,
+    /// and appends the right parenthesis's trivia to the trailing trivia of the expression's last token. So the trivia (ignoring whitespace)
+    /// after the transform for the above example is:
+    ///
+    /// * `a`: `/* leading l-paren */ /* trailing l-paren */ /* leading a */`
+    /// * `b`: `/* trailing b */ /* leading r-paren */ /* trailing r-paren */`
+    ///
+    /// The fact that the implementation appends the right parenthesis's leading trivia to the last token's trailing
+    /// trivia is slightly inconsistent with our [rome_rowan::SyntaxToken::trailing_trivia] definition as it can now happen that the
+    /// trailing trivia contains line breaks. In practice, this isn't a problem for the formatter.
+    ///
+    /// ## Leading Whitespace Trivia
+    ///
+    /// The formatter counts the new lines in a node's leading trivia to determine if it should e.g. insert an
+    /// empty new line between two statements. This is why it is necessary to remove any whitespace
+    /// between the left parentheses and the token to avoid the insertion of additional new lines if there was a line break
+    /// after the left parentheses or
+    ///
+    /// ```javascript
+    /// a
+    /// (
+    ///   Long &&
+    ///   Longer &&
+    /// )
+    /// ```
+    ///
+    /// would become
+    ///
+    /// ```
+    /// a
+    ///
+    /// (
+    ///   Long &&
+    ///   Longer &&
+    /// )
+    /// ```
+    ///
+    /// because the `Long` has two leading new lines after removing parentheses, the one after `a` and the one after the opening `(`.
+    ///
+    /// However, it is important to leave at least one leading new line in front of the token's leading trivia if there's a comment in the leading trivia because
+    /// because we want that leading comments that are preceded by a line break to be formatted on their own line.
+    ///
+    /// ```javascript
+    /// (
+    ///   // comment
+    ///   a
+    /// )
+    /// ```
+    ///
+    /// Keep the line break before the `// comment` or the formatter will format the comment on the same line as the `(` token
+    ///
+    /// ```javascript
+    /// ( // comment
+    /// a
+    /// )
+    /// ```
+    ///
+    /// Which may turn `//comment` into a trailing comment that then gets formatted differently on the next formatting pass, resulting in instability issues.
     fn visit_parenthesized(
         &mut self,
         parenthesized: JsAnyParenthesized,
@@ -107,10 +176,14 @@ impl JsFormatSyntaxRewriter {
                 );
 
                 let mut leading_trivia = first_token.leading_trivia().pieces().peekable();
+                let mut first_new_line = None;
 
                 // The leading whitespace before the opening parens replaces the whitespace before the node.
                 while let Some(trivia) = leading_trivia.peek() {
-                    if trivia.is_whitespace() || trivia.is_newline() {
+                    if trivia.is_newline() && first_new_line.is_none() {
+                        inner_offset += trivia.text_len();
+                        first_new_line = Some((inner_offset, leading_trivia.next().unwrap()));
+                    } else if trivia.is_whitespace() || trivia.is_newline() {
                         let trivia_len = trivia.text_len();
                         self.source_map
                             .add_deleted_range(TextRange::at(inner_offset, trivia_len));
@@ -120,6 +193,19 @@ impl JsFormatSyntaxRewriter {
                         break;
                     }
                 }
+
+                // Remove all leading new lines directly in front of the token but keep the leading new-line if it precedes a skipped token trivia or a comment.
+                if leading_trivia.peek().is_none() && first_new_line.is_some() {
+                    let (inner_offset, new_line) = first_new_line.take().unwrap();
+
+                    self.source_map
+                        .add_deleted_range(TextRange::at(inner_offset, new_line.text_len()));
+                }
+
+                let leading_trivia = chain_pieces(
+                    first_new_line.map(|(_, trivia)| trivia).into_iter(),
+                    leading_trivia,
+                );
 
                 let new_leading = chain_pieces(l_paren_trivia, leading_trivia);
                 let new_first = first_token.with_leading_trivia_pieces(new_leading);
