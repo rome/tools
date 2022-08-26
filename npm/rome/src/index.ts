@@ -139,13 +139,13 @@ export class Rome {
 	public static async create(options: RomeCreate): Promise<Rome> {
 		switch (options.backendKind) {
 			case BackendKind.DAEMON: {
-				let client = await Deamon.createWorkspace(options.pathToBinary);
+				let client = await Deamon.connectToDaemon(options.pathToBinary);
 				return new Rome(client);
 			}
 
 			case BackendKind.NODE:
 			default: {
-				let client = await NodeWasm.createWorkspace();
+				let client = await NodeWasm.loadWebAssembly();
 				return new Rome(client);
 			}
 		}

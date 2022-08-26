@@ -19,7 +19,7 @@ export class Deamon {
 	/**
 	 * It creates a new instance of a workspace connected to the Daemon
 	 */
-	public static async createWorkspace(pathToBinary?: string): Promise<Deamon> {
+	public static async connectToDaemon(pathToBinary?: string): Promise<Deamon> {
 		if (pathToBinary) {
 			let workspace = await createWorkspaceWithBinary(pathToBinary);
 			if (workspace) {
