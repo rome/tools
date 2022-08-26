@@ -1,7 +1,7 @@
 use crate::GreenToken;
+use rome_text_size::{TextRange, TextSize};
 use std::ops::Deref;
 use std::{borrow::Borrow, fmt::Formatter};
-use text_size::{TextRange, TextSize};
 
 /// Reference to the text of a SyntaxToken without having to worry about the lifetime of `&str`.
 #[derive(Eq, Clone)]

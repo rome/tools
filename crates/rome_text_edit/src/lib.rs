@@ -1,7 +1,7 @@
 //! Representation of a text edits.
 //!
 //! This is taken from [rust-analyzer's text_edit crate](https://rust-analyzer.github.io/rust-analyzer/text_edit/index.html)
-pub use text_size::{TextRange, TextSize};
+pub use rome_text_size::{TextRange, TextSize};
 
 /// `InsertDelete` -- a single "atomic" change to text
 ///
