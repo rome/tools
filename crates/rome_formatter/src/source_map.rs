@@ -63,17 +63,27 @@ impl TransformSourceMap {
     ///
     /// Complexity: `O(log(n))`
     pub fn source_range(&self, transformed_range: TextRange) -> TextRange {
-        TextRange::new(
+        let range = TextRange::new(
             self.source_offset(transformed_range.start(), RangePosition::Start),
             self.source_offset(transformed_range.end(), RangePosition::End),
-        )
+        );
+
+        debug_assert!(range.end() <= self.source_text.len(), "Mapped range out of bounds. Is the passed range a transformed range and belongs to the same tree as the source map?");
+        range
     }
 
     /// Maps the trimmed range of the transformed node to the trimmed range in the source document.
     ///
     /// Average Complexity: `O(log(n))`
     pub fn trimmed_source_range<L: Language>(&self, node: &SyntaxNode<L>) -> TextRange {
-        let source_range = self.source_range(node.text_trimmed_range());
+        self.trimmed_source_range_from_transformed_range(node.text_trimmed_range())
+    }
+
+    fn trimmed_source_range_from_transformed_range(
+        &self,
+        transformed_range: TextRange,
+    ) -> TextRange {
+        let source_range = self.source_range(transformed_range);
 
         let mut mapped_range = source_range;
 
@@ -111,6 +121,12 @@ impl TransformSourceMap {
     /// Returns the source text of the trimmed range of `node`.
     pub fn trimmed_source_text<L: Language>(&self, node: &SyntaxNode<L>) -> SyntaxNodeText {
         let range = self.trimmed_source_range(node);
+        self.source_text.slice(range)
+    }
+
+    #[cfg(test)]
+    fn trimmed_source_text_from_transformed_range(&self, range: TextRange) -> SyntaxNodeText {
+        let range = self.trimmed_source_range_from_transformed_range(range);
         self.source_text.slice(range)
     }
 
@@ -299,16 +315,16 @@ struct DeletedRange {
     source_range: TextRange,
 
     /// The accumulated count of all removed bytes up to (but not including) the start of this range.
-    transformed_offset: TextSize,
+    total_length_preceding_deleted_ranges: TextSize,
 }
 
 impl DeletedRange {
-    fn new(source_range: TextRange, transformed_offset: TextSize) -> Self {
-        debug_assert!(source_range.start() >= transformed_offset);
+    fn new(source_range: TextRange, total_length_preceding_deleted_ranges: TextSize) -> Self {
+        debug_assert!(source_range.start() >= total_length_preceding_deleted_ranges);
 
         Self {
             source_range,
-            transformed_offset,
+            total_length_preceding_deleted_ranges,
         }
     }
 
@@ -329,7 +345,7 @@ impl DeletedRange {
 
     /// Returns the byte position of [DeleteRange::source_start] in the transformed document.
     fn transformed_start(&self) -> TextSize {
-        self.source_range.start() - self.transformed_offset
+        self.source_range.start() - self.total_length_preceding_deleted_ranges
     }
 }
 
@@ -426,5 +442,157 @@ impl TransformSourceMapBuilder {
             deleted_ranges: merged_mappings,
             mapped_node_ranges: self.mapped_node_ranges,
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::{TextRange, TextSize, TransformSourceMapBuilder};
+    use rome_rowan::raw_language::{RawLanguageKind, RawSyntaxTreeBuilder};
+
+    #[test]
+    fn range_mapping() {
+        let mut cst_builder = RawSyntaxTreeBuilder::new();
+        cst_builder.start_node(RawLanguageKind::ROOT);
+        // The shape of the tree doesn't matter for the test case
+        cst_builder.token(RawLanguageKind::STRING_TOKEN, "(a + (((b + c)) + d)) + e");
+        cst_builder.finish_node();
+        let root = cst_builder.finish();
+
+        let mut builder = TransformSourceMapBuilder::new(&root);
+
+        // Add mappings for all removed parentheses.
+
+        // `(`
+        builder.add_deleted_range(TextRange::new(TextSize::from(0), TextSize::from(1)));
+
+        // `(((`
+        builder.add_deleted_range(TextRange::new(TextSize::from(5), TextSize::from(6)));
+        // Ranges can be added out of order
+        builder.add_deleted_range(TextRange::new(TextSize::from(7), TextSize::from(8)));
+        builder.add_deleted_range(TextRange::new(TextSize::from(6), TextSize::from(7)));
+
+        // `))`
+        builder.add_deleted_range(TextRange::new(TextSize::from(13), TextSize::from(14)));
+        builder.add_deleted_range(TextRange::new(TextSize::from(14), TextSize::from(15)));
+
+        // `))`
+        builder.add_deleted_range(TextRange::new(TextSize::from(19), TextSize::from(20)));
+        builder.add_deleted_range(TextRange::new(TextSize::from(20), TextSize::from(21)));
+
+        let source_map = builder.finish();
+
+        // The following mapping assume the tranformed string to be (including whitespace):
+        // "a + b + c + d + e";
+
+        // `a`
+        assert_eq!(
+            source_map.source_range(TextRange::new(TextSize::from(0), TextSize::from(1))),
+            TextRange::new(TextSize::from(1), TextSize::from(2))
+        );
+
+        // `b`
+        assert_eq!(
+            source_map.source_range(TextRange::new(TextSize::from(4), TextSize::from(5))),
+            TextRange::new(TextSize::from(8), TextSize::from(9))
+        );
+
+        // `c`
+        assert_eq!(
+            source_map.source_range(TextRange::new(TextSize::from(8), TextSize::from(9))),
+            TextRange::new(TextSize::from(12), TextSize::from(13))
+        );
+
+        // `d`
+        assert_eq!(
+            source_map.source_range(TextRange::new(TextSize::from(12), TextSize::from(13))),
+            TextRange::new(TextSize::from(18), TextSize::from(19))
+        );
+
+        // `e`
+        assert_eq!(
+            source_map.source_range(TextRange::new(TextSize::from(16), TextSize::from(17))),
+            TextRange::new(TextSize::from(24), TextSize::from(25))
+        );
+    }
+
+    #[test]
+    fn trimmed_range() {
+        // Build up a tree for `((a))`
+        // Don't mind the unknown nodes, it doesn't really matter what the nodes are.
+        let mut cst_builder = RawSyntaxTreeBuilder::new();
+        cst_builder.start_node(RawLanguageKind::ROOT);
+
+        cst_builder.start_node(RawLanguageKind::UNKNOWN);
+        cst_builder.token(RawLanguageKind::STRING_TOKEN, "(");
+
+        cst_builder.start_node(RawLanguageKind::UNKNOWN);
+        cst_builder.token(RawLanguageKind::UNKNOWN, "(");
+
+        cst_builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
+        cst_builder.token(RawLanguageKind::STRING_TOKEN, "a");
+        cst_builder.finish_node();
+
+        cst_builder.token(RawLanguageKind::UNKNOWN, ")");
+        cst_builder.finish_node();
+
+        cst_builder.token(RawLanguageKind::UNKNOWN, ")");
+        cst_builder.finish_node();
+
+        cst_builder.token(RawLanguageKind::UNKNOWN, ";");
+
+        cst_builder.finish_node();
+
+        let root = cst_builder.finish();
+
+        assert_eq!(&root.text(), "((a));");
+
+        let mut unknowns = root
+            .descendants()
+            .filter(|node| node.kind() == RawLanguageKind::UNKNOWN);
+
+        // `((a))`
+        let outer = unknowns.next().unwrap();
+
+        // `(a)`
+        let inner = unknowns.next().unwrap();
+
+        // `a`
+        let expression = root
+            .descendants()
+            .find(|node| node.kind() == RawLanguageKind::LITERAL_EXPRESSION)
+            .unwrap();
+
+        let mut builder = TransformSourceMapBuilder::new(&root);
+
+        // Add mappings for all removed parentheses.
+        builder.add_deleted_range(TextRange::new(TextSize::from(0), TextSize::from(2)));
+        builder.add_deleted_range(TextRange::new(TextSize::from(3), TextSize::from(5)));
+
+        // Extend `a` to the range of `(a)`
+        builder
+            .extend_trimmed_node_range(expression.text_trimmed_range(), inner.text_trimmed_range());
+        // Extend `(a)` to the range of `((a))`
+        builder.extend_trimmed_node_range(inner.text_trimmed_range(), outer.text_trimmed_range());
+
+        let source_map = builder.finish();
+
+        // Query `a`
+        assert_eq!(
+            source_map.trimmed_source_text_from_transformed_range(TextRange::new(
+                TextSize::from(0),
+                TextSize::from(1)
+            )),
+            "((a))"
+        );
+
+        // Query `a;` expression
+        assert_eq!(
+            source_map.trimmed_source_text_from_transformed_range(TextRange::new(
+                TextSize::from(0),
+                TextSize::from(2)
+            )),
+            "((a));"
+        );
     }
 }
