@@ -498,6 +498,35 @@ mod tests {
     use rome_rowan::{AstNode, SyntaxRewriter, TextSize};
 
     #[test]
+    fn rebalances_logical_expressions() {
+        let root = parse_module("a && (b && c)", 0).syntax();
+
+        let transformed = JsFormatSyntaxRewriter::new(&root).transform(root.clone());
+
+        // Changed the root tree
+        assert_ne!(&transformed, &root);
+
+        // Removes parentheses
+        assert_eq!(&transformed.text().to_string(), "a && b && c");
+
+        let mut logical_expressions: Vec<_> = transformed
+            .descendants()
+            .filter_map(JsLogicalExpression::cast)
+            .collect();
+
+        assert_eq!(logical_expressions.len(), 2);
+
+        let left = logical_expressions.pop().unwrap();
+        let top = logical_expressions.pop().unwrap();
+
+        assert_eq!(top.left().unwrap().syntax(), left.syntax());
+        assert_eq!(&top.right().unwrap().text(), "c");
+
+        assert_eq!(left.left().unwrap().text(), "a");
+        assert_eq!(left.right().unwrap().text(), "b");
+    }
+
+    #[test]
     fn single_parentheses_source_map_test() {
         let (transformed, source_map) = source_map_test("(a)");
 
