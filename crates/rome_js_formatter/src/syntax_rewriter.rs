@@ -15,11 +15,6 @@ pub(super) struct JsFormatSyntaxRewriter {
     source_map: TransformSourceMapBuilder,
 }
 
-// TODO
-// * Add some tests showing that parentheses and logical expressions are correctly transformed
-// * SourceMap:
-//   * rename `transformed_offset`?
-//   * add some basic unit tests testing the position lookup?
 impl JsFormatSyntaxRewriter {
     pub(super) fn new(root: &JsSyntaxNode) -> Self {
         Self {
@@ -73,7 +68,7 @@ impl JsFormatSyntaxRewriter {
     ///
     /// would become
     ///
-    /// ```
+    /// ```javascript
     /// a
     ///
     /// (
@@ -527,8 +522,34 @@ mod tests {
     }
 
     #[test]
-    fn single_parentheses_source_map_test() {
+    fn only_rebalances_logical_expressions_with_same_operator() {
+        let root = parse_module("a && (b || c)", 0).syntax();
+        let transformed = JsFormatSyntaxRewriter::new(&root).transform(root.clone());
+
+        // Removes parentheses
+        assert_eq!(&transformed.text().to_string(), "a && b || c");
+
+        let logical_expressions: Vec<_> = transformed
+            .descendants()
+            .filter_map(JsLogicalExpression::cast)
+            .collect();
+
+        assert_eq!(logical_expressions.len(), 2);
+
+        let top = logical_expressions.first().unwrap();
+        let right = logical_expressions.last().unwrap();
+
+        assert_eq!(top.left().unwrap().text(), "a");
+        assert_eq!(top.right().unwrap().syntax(), right.syntax());
+        assert_eq!(right.left().unwrap().text(), "b");
+        assert_eq!(right.right().unwrap().text(), "c");
+    }
+
+    #[test]
+    fn single_parentheses() {
         let (transformed, source_map) = source_map_test("(a)");
+
+        assert_eq!(&transformed.text(), "a");
 
         let identifier = transformed
             .descendants()
@@ -539,8 +560,10 @@ mod tests {
     }
 
     #[test]
-    fn nested_parentheses_source_map_test() {
+    fn nested_parentheses() {
         let (transformed, source_map) = source_map_test("((a))");
+
+        assert_eq!(&transformed.text(), "a");
 
         let identifier = transformed
             .descendants()
@@ -573,8 +596,10 @@ mod tests {
     }
 
     #[test]
-    fn test_nested_nodes() {
+    fn adjacent_nodes() {
         let (transformed, source_map) = source_map_test("(a + b)");
+
+        assert_eq!(&transformed.text(), "a + b");
 
         let identifiers: Vec<_> = transformed
             .descendants()
@@ -594,8 +619,10 @@ mod tests {
     }
 
     #[test]
-    fn test_nested2() {
+    fn intersecting_ranges() {
         let (transformed, source_map) = source_map_test("(interface, \"foo\");");
+
+        assert_eq!(&transformed.text(), "interface, \"foo\";");
 
         let string_literal = transformed
             .descendants()
@@ -648,6 +675,8 @@ mod tests {
     fn enclosing_node() {
         let (transformed, source_map) = source_map_test("(a + b);");
 
+        assert_eq!(&transformed.text(), "a + b;");
+
         let expression_statement = transformed
             .descendants()
             .find_map(JsExpressionStatement::cast)
@@ -663,6 +692,8 @@ mod tests {
     fn trailing_whitespace() {
         let (transformed, source_map) = source_map_test("(a + b   );");
 
+        assert_eq!(&transformed.text(), "a + b   ;");
+
         let binary = transformed
             .descendants()
             .find_map(JsBinaryExpression::cast)
@@ -675,9 +706,30 @@ mod tests {
     }
 
     #[test]
+    fn first_token_leading_whitespace() {
+        let (transformed, _) = source_map_test("a;\n(\n a + b);");
+
+        // Trims the leading whitespace in front of the expression's first token.
+        assert_eq!(&transformed.text(), "a;\na + b;");
+    }
+
+    #[test]
+    fn first_token_leading_whitespace_before_comment() {
+        let (transformed, _) = source_map_test("a;(\n\n/* comment */\n a + b);");
+
+        // Keeps at least one new line before a leading comment.
+        assert_eq!(&transformed.text(), "a;\n/* comment */\n a + b;");
+    }
+
+    #[test]
     fn comments() {
         let (transformed, source_map) =
             source_map_test("/* outer */ (/* left */ a + b /* right */) /* outer end */;");
+
+        assert_eq!(
+            &transformed.text(),
+            "/* outer */ /* left */ a + b /* right */ /* outer end */;"
+        );
 
         let binary = transformed
             .descendants()
