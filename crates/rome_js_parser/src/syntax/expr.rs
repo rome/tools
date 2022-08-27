@@ -780,6 +780,10 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     // test_err ts invalid_optional_chain_from_new_expressions
     // new Test<string>?.test();
     // new Test?.test();
+    // new A.b?.c()
+    // new (A.b)?.c()
+    // new (A.b?.()).c()
+    // new A.b?.()()
     if p.at(T!['(']) {
         parse_call_arguments(p).unwrap();
     }
