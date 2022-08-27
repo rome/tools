@@ -47,17 +47,6 @@ longfunctionWithCall1("bla", foo, (thing: string): complex<type<`
  
  longfunctionWithCall12(
    "bla",
-@@ -29,9 +33,7 @@
- longfunctionWithCall1(
-   "bla",
-   foo,
--  (
--    thing: string,
--  ): complex<
-+  (thing: string): complex<
-     type<`
- `>
-   > => {
 ```
 
 # Output
@@ -98,7 +87,9 @@ longfunctionWithCallBack(
 longfunctionWithCall1(
   "bla",
   foo,
-  (thing: string): complex<
+  (
+    thing: string,
+  ): complex<
     type<`
 `>
   > => {

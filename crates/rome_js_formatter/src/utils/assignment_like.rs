@@ -1,3 +1,4 @@
+use crate::js::auxiliary::initializer_clause::FormatJsInitializerClauseOptions;
 use crate::parentheses::get_expression_left_side;
 use crate::prelude::*;
 use crate::utils::member_chain::is_member_call_chain;
@@ -197,7 +198,7 @@ impl Format<JsFormatContext> for RightAssignmentLike {
 /// - Object property member
 /// - Variable declaration
 #[derive(Debug, Eq, PartialEq, Copy, Clone)]
-pub(crate) enum AssignmentLikeLayout {
+pub enum AssignmentLikeLayout {
     /// This is a special layout usually used for variable declarations.
     /// This layout is hit, usually, when a [variable declarator](JsVariableDeclarator) doesn't have initializer:
     /// ```js
@@ -504,29 +505,41 @@ impl JsAnyAssignmentLike {
         }
     }
 
-    fn write_right(&self, f: &mut JsFormatter) -> FormatResult<()> {
+    fn write_right(&self, f: &mut JsFormatter, layout: AssignmentLikeLayout) -> FormatResult<()> {
         match self {
             JsAnyAssignmentLike::JsPropertyObjectMember(property) => {
                 let value = property.value()?;
-                write!(f, [value.format()])
+                write!(f, [with_assignment_layout(&value, Some(layout))])
             }
             JsAnyAssignmentLike::JsAssignmentExpression(assignment) => {
                 let right = assignment.right()?;
-                write!(f, [space(), right.format()])
+                write!(f, [space(), with_assignment_layout(&right, Some(layout))])
             }
             JsAnyAssignmentLike::JsObjectAssignmentPatternProperty(property) => {
                 let pattern = property.pattern()?;
                 let init = property.init();
                 write!(f, [pattern.format()])?;
                 if let Some(init) = init {
-                    write!(f, [space(), init.format()])?;
+                    write!(
+                        f,
+                        [
+                            space(),
+                            init.format()
+                                .with_options(FormatJsInitializerClauseOptions {
+                                    assignment_layout: Some(layout)
+                                })
+                        ]
+                    )?;
                 }
                 Ok(())
             }
             JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => {
                 if let Some(initializer) = variable_declarator.initializer() {
                     let expression = initializer.expression()?;
-                    write!(f, [space(), expression.format()])?;
+                    write!(
+                        f,
+                        [space(), with_assignment_layout(&expression, Some(layout))]
+                    )?;
                 }
                 Ok(())
             }
@@ -537,7 +550,10 @@ impl JsAnyAssignmentLike {
             JsAnyAssignmentLike::JsPropertyClassMember(property_class_member) => {
                 if let Some(initializer) = property_class_member.value() {
                     let expression = initializer.expression()?;
-                    write!(f, [space(), expression.format()])?;
+                    write!(
+                        f,
+                        [space(), with_assignment_layout(&expression, Some(layout))]
+                    )?;
                 }
                 Ok(())
             }
@@ -911,7 +927,7 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
             let layout = self.layout(is_left_short, f)?;
 
             let left = format_once(|f| f.write_element(formatted_left));
-            let right = format_with(|f| self.write_right(f)).memoized();
+            let right = format_with(|f| self.write_right(f, layout)).memoized();
 
             let inner_content = format_with(|f| {
                 if matches!(
@@ -971,16 +987,7 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                     }
 
                     AssignmentLikeLayout::ChainTailArrowFunction => {
-                        let group_id = f.group_id("arrow_chain");
-
-                        write!(
-                            f,
-                            [
-                                space(),
-                                group(&indent(&format_args![hard_line_break(), right]))
-                                    .with_group_id(Some(group_id)),
-                            ]
-                        )
+                        write!(f, [space(), right])
                     }
                     AssignmentLikeLayout::SuppressedInitializer => {
                         self.write_suppressed_initializer(f)
@@ -1179,4 +1186,29 @@ fn is_complex_type_arguments(type_arguments: TsTypeArguments) -> SyntaxResult<bo
     // https://github.com/prettier/prettier/blob/a043ac0d733c4d53f980aa73807a63fc914f23bd/src/language-js/print/assignment.js#L454
 
     Ok(false)
+}
+
+/// Formats an expression and passes the assignment layout to its formatting function if the expressions
+/// formatting rule takes the layout as an option.
+pub(crate) struct WithAssignmentLayout<'a> {
+    expression: &'a JsAnyExpression,
+    layout: Option<AssignmentLikeLayout>,
+}
+
+pub(crate) fn with_assignment_layout(
+    expression: &JsAnyExpression,
+    layout: Option<AssignmentLikeLayout>,
+) -> WithAssignmentLayout {
+    WithAssignmentLayout { expression, layout }
+}
+
+impl Format<JsFormatContext> for WithAssignmentLayout<'_> {
+    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        match self.expression {
+            JsAnyExpression::JsArrowFunctionExpression(arrow) => {
+                arrow.format().with_options(self.layout).fmt(f)
+            }
+            expression => expression.format().fmt(f),
+        }
+    }
 }

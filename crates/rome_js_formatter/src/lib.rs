@@ -750,9 +750,9 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-test.expect(t => {
-	t.true(a);
-}, false);
+const getIconEngagementTypeFrom = (engagementTypes: Array<EngagementType>) =>
+	(iconEngagementType) =>
+		engagementTypes.includes(iconEngagementType);
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);

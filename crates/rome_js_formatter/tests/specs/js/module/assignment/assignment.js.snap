@@ -369,7 +369,8 @@ loreum = ipsum = arrayOfNumb = a = "test";
 lorem =
 	fff =
 	ee =
-		() => (fff) => () => (fefef) => () => fff;
+		() => (fff) => () => (fefef) => () =>
+			fff;
 
 // complex destructuring, break left hand
 a = {
