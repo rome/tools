@@ -3,7 +3,8 @@ mod printer_options;
 pub use printer_options::*;
 
 use crate::format_element::{
-    Align, ConditionalGroupContent, DedentMode, Group, LineMode, PrintMode, VerbatimKind,
+    Align, ConditionalGroupContent, DedentMode, Group, IndentIfBreak, LineMode, PrintMode,
+    VerbatimKind,
 };
 use crate::intersperse::Intersperse;
 use crate::{FormatElement, GroupId, IndentStyle, Printed, SourceMarker, TextRange};
@@ -209,6 +210,18 @@ impl<'a> Printer<'a> {
 
                 if &group_mode == mode {
                     queue.extend_with_args(content.iter(), args);
+                }
+            }
+
+            FormatElement::IndentIfBreaks(IndentIfBreak { content, group_id }) => {
+                let group_mode = self.state.group_modes.unwrap_print_mode(*group_id, element);
+
+                match group_mode {
+                    PrintMode::Flat => queue.extend_with_args(content.iter(), args),
+                    PrintMode::Expanded => queue.extend_with_args(
+                        content.iter(),
+                        args.increment_indent_level(self.options.indent_style),
+                    ),
                 }
             }
 
@@ -919,6 +932,21 @@ fn fits_element_on_line<'a, 'rest>(
 
             if group_mode == conditional.mode {
                 queue.extend(conditional.content.iter(), args);
+            }
+        }
+
+        FormatElement::IndentIfBreaks(indent) => {
+            let group_mode = state
+                .group_modes
+                .get_print_mode(indent.group_id)
+                .unwrap_or(args.mode);
+
+            match group_mode {
+                PrintMode::Flat => queue.extend(indent.content.iter(), args),
+                PrintMode::Expanded => queue.extend(
+                    indent.content.iter(),
+                    args.increment_indent_level(options.indent_style()),
+                ),
             }
         }
 

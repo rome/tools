@@ -150,13 +150,12 @@ impl Format<JsFormatContext> for JsAnyBinaryLikeExpression {
 
             if last_is_jsx {
                 // SAFETY: `last_is_jsx` is only true if parts is not empty
-                let jsx_element = parts.last().unwrap().memoized();
+                let jsx_element = parts.last().unwrap();
                 write!(
                     f,
                     [group(&format_args![
                         format_non_jsx_parts,
-                        if_group_breaks(&block_indent(&jsx_element)).with_group_id(Some(group_id)),
-                        if_group_fits_on_line(&jsx_element).with_group_id(Some(group_id))
+                        indent_if_break(&jsx_element, group_id),
                     ])]
                 )
             } else {
