@@ -16,6 +16,10 @@ use std::collections::HashMap;
 /// This source map implementation supports removing tokens or re-structuring nodes
 /// without changing the order of the tokens in the tree (requires no source map).
 ///
+/// The following section uses parentheses as a concrete example to explain the functionality of the source map.
+/// However, the source map implementation isn't restricted to removing parentheses only, it supports mapping
+/// transformed to source position for any use case where a transform deletes text from the source tree.
+///
 /// ## Position Mapping
 ///
 /// The source map internally tracks all the ranges that have been deleted from the source code sorted by the start of the deleted range.
