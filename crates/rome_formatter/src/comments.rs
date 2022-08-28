@@ -143,6 +143,21 @@ pub trait CommentStyle<L: Language> {
 /// Cloning `comments` is cheap as it only involves bumping a reference counter.
 #[derive(Debug, Default, Clone)]
 pub struct Comments<L: Language> {
+    /// The use of a [Rc] is necessary to achieve that [Comments] has a lifetime that is independent of the [crate::Formatter].
+    /// Having independent lifetimes is necessary to support the use case where a (formattable object)[Format]
+    /// iterates over all comments and writes them into the [crate::Formatter] (mutably borrowing the [crate::Formatter] and in turn its context).
+    ///
+    /// ```block
+    /// for leading in f.context().comments().leading_comments(node) {
+    ///     ^
+    ///     |- Borrows comments
+    ///   write!(f, [comment(leading.piece.text())])?;
+    ///          ^
+    ///          |- Mutably borrows the formatter, state, context, and comments (if comments aren't cloned)
+    /// }
+    /// ```
+    ///
+    /// Using an `Rc` here allows cheaply cloning [Comments] for these use cases.
     data: Rc<CommentsData<L>>,
 }
 
