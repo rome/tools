@@ -13,6 +13,10 @@ export enum QuoteStyle {
 	Double = "double",
 	Single = "single",
 }
+export enum QuoteProperties {
+	AsNeeded = "as-needed",
+	Preserve = "preserve",
+}
 export enum LoadingState {
 	Loading,
 	Success,
@@ -34,6 +38,7 @@ export interface PlaygroundState {
 	indentStyle: IndentStyle;
 	indentWidth: number;
 	quoteStyle: QuoteStyle;
+	quoteProperties: QuoteProperties;
 	sourceType: SourceType;
 	isTypeScript: boolean;
 	isJsx: boolean;
@@ -50,6 +55,7 @@ export const defaultRomeConfig: RomeConfiguration = {
 	indentWidth: "2",
 	indentStyle: IndentStyle.Tab,
 	quoteStyle: QuoteStyle.Double,
+	quoteProperties: QuoteProperties.AsNeeded,
 	sourceType: SourceType.Module,
 	isTypeScript: false,
 	isJsx: false,
@@ -69,6 +75,7 @@ export type PlaygroundSettings = Pick<
 		| "indentWidth"
 		| "indentStyle"
 		| "quoteStyle"
+		| "quoteProperties"
 		| "sourceType"
 		| "isTypeScript"
 		| "isJsx"

@@ -10,6 +10,7 @@ import {
 	IndentStyle,
 	RomeOutput,
 	QuoteStyle,
+	QuoteProperties,
 } from "./types";
 
 let workspace: Workspace | null = null;
@@ -75,6 +76,7 @@ self.addEventListener("message", async (e) => {
 				indentStyle,
 				indentWidth,
 				quoteStyle,
+				quoteProperties,
 				isTypeScript,
 				isJsx,
 				sourceType,
@@ -98,6 +100,10 @@ self.addEventListener("message", async (e) => {
 							format: {
 								quote_style:
 									quoteStyle === QuoteStyle.Double ? "Double" : "Single",
+								quote_properties:
+									quoteProperties === QuoteProperties.Preserve
+										? "Preserve"
+										: "AsNeeded",
 							},
 						},
 					},
