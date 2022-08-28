@@ -65,7 +65,6 @@ use rome_rowan::{
 };
 use std::error::Error;
 use std::num::ParseIntError;
-use std::rc::Rc;
 use std::str::FromStr;
 
 #[derive(Debug, Eq, PartialEq, Clone, Copy, Hash)]
@@ -248,7 +247,7 @@ pub trait CstFormatContext: FormatContext {
     ///          |- Mutably borrows the formatter, state, context (and comments, if they aren't wrapped by a Rc)
     /// }
     /// ```
-    fn comments(&self) -> Rc<Comments<Self::Language>>;
+    fn comments(&self) -> &Comments<Self::Language>;
 }
 
 #[derive(Debug, Default, Eq, PartialEq)]

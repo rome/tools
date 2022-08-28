@@ -59,8 +59,8 @@ impl CstFormatContext for JsFormatContext {
         JsCommentStyle
     }
 
-    fn comments(&self) -> Rc<Comments<JsLanguage>> {
-        self.comments.clone()
+    fn comments(&self) -> &Comments<JsLanguage> {
+        &self.comments
     }
 }
 
