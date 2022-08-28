@@ -9,3 +9,9 @@ let invalid2: Promise<Array<string>>;
 let invalid3: Array<Foo<Bar>>;
 let invalid4: Array<[number, number]>;
 
+// valid
+let valid5: Array<string & number>;
+let valid6: Array<() => string>;
+type valid7<T> = Array<T extends string ? string : number>
+type valid8 = Array<new (string, number) => string>
+// valid end

@@ -112,8 +112,14 @@ fn convert_to_array_type(type_arguments: TsTypeArguments) -> Option<TsType> {
             .filter_map(|param| {
                 let param = param.ok()?;
                 let element_type = match &param {
-                    TsType::TsUnionType(_) => None,
-                    TsType::TsTypeOperatorType(_) => None,
+                    // Intersection or higher types
+                    TsType::TsUnionType(_)
+                    | TsType::TsIntersectionType(_)
+                    | TsType::TsFunctionType(_)
+                    | TsType::TsConstructorType(_)
+                    | TsType::TsConditionalType(_)
+                    | TsType::TsTypeOperatorType(_) => None,
+
                     TsType::TsReferenceType(ty) if is_array_reference(ty).unwrap_or(false) => {
                         if let Some(type_arguments) = ty.type_arguments() {
                             convert_to_array_type(type_arguments)

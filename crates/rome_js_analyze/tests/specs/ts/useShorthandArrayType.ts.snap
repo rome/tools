@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 97
 expression: useShorthandArrayType.ts
 ---
 # Input
@@ -15,7 +16,12 @@ let invalid2: Promise<Array<string>>;
 let invalid3: Array<Foo<Bar>>;
 let invalid4: Array<[number, number]>;
 
-
+// valid
+let valid5: Array<string & number>;
+let valid6: Array<() => string>;
+type valid7<T> = Array<T extends string ? string : number>
+type valid8 = Array<new (string, number) => string>
+// valid end
 ```
 
 # Diagnostics
@@ -111,7 +117,7 @@ warning[ts/useShorthandArrayType]: Use shorthand T[] syntax instead of Array<T> 
   │               ---------------
 
 Suggested fix: Use shorthand T[] syntax to replace
-    | @@ -6,6 +6,6 @@
+    | @@ -6,7 +6,7 @@
 5 5 |   let valid: Array<foo>;
 6 6 |   let invalid1: Array<foo, Array<string>>;
 7 7 |   let invalid2: Promise<Array<string>>;
@@ -119,6 +125,7 @@ Suggested fix: Use shorthand T[] syntax to replace
   8 | + let invalid3: Foo<Bar>[];
 9 9 |   let invalid4: Array<[number, number]>;
 10 10 |   
+11 11 |   // valid
 
 
 ```
@@ -131,13 +138,15 @@ warning[ts/useShorthandArrayType]: Use shorthand T[] syntax instead of Array<T> 
    │               -----------------------
 
 Suggested fix: Use shorthand T[] syntax to replace
-      | @@ -7,5 +7,5 @@
+      | @@ -7,7 +7,7 @@
  6  6 |   let invalid1: Array<foo, Array<string>>;
  7  7 |   let invalid2: Promise<Array<string>>;
  8  8 |   let invalid3: Array<Foo<Bar>>;
  9    | - let invalid4: Array<[number, number]>;
     9 | + let invalid4: [number, number][];
 10 10 |   
+11 11 |   // valid
+12 12 |   let valid5: Array<string & number>;
 
 
 ```
