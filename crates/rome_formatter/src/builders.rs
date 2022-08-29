@@ -1714,6 +1714,126 @@ impl<Context> std::fmt::Debug for IfGroupBreaks<'_, Context> {
     }
 }
 
+/// Increases the indent level by one if the group with the specified id breaks.
+///
+/// This IR has the same semantics as using [if_group_breaks] and [if_group_fits_on_line] together.
+///
+/// ```
+/// # use rome_formatter::prelude::*;
+/// # use rome_formatter::write;
+/// # let format = format_with(|f: &mut Formatter<SimpleFormatContext>| {
+/// let id = f.group_id("head");
+///
+/// write!(f, [
+///     group(&text("Head")).with_group_id(Some(id)),
+///     if_group_breaks(&indent(&text("indented"))).with_group_id(Some(id)),
+///     if_group_fits_on_line(&text("indented")).with_group_id(Some(id))
+/// ])
+///
+/// # });
+/// ```
+///
+/// If you want to indent some content if the enclosing group breaks, use [`indent`].
+///
+/// Use [if_group_breaks] or [if_group_fits_on_line] if the fitting and breaking content differs more than just the
+/// indention level.
+///
+/// # Examples
+///
+/// Indent the body of an arrow function if the group wrapping the signature breaks:
+/// ```
+/// use rome_formatter::{format, format_args, LineWidth, SimpleFormatOptions, write};
+/// use rome_formatter::prelude::*;
+///
+/// let content = format_with(|f| {
+///     let group_id = f.group_id("header");
+///
+///     write!(f, [
+///         group(&text("(aLongHeaderThatBreaksForSomeReason) =>")).with_group_id(Some(group_id)),
+///         indent_if_group_breaks(&format_args![hard_line_break(), text("a => b")], group_id)
+///     ])
+/// });
+///
+/// let context = SimpleFormatContext::new(SimpleFormatOptions {
+///     line_width: LineWidth::try_from(20).unwrap(),
+///     ..SimpleFormatOptions::default()
+/// });
+///
+/// let formatted = format!(context, [content]).unwrap();
+///
+/// assert_eq!(
+///     "(aLongHeaderThatBreaksForSomeReason) =>\n\ta => b",
+///     formatted.print().as_code()
+/// );
+/// ```
+///
+/// It doesn't add an indent if the group wrapping the signature doesn't break:
+/// ```
+/// use rome_formatter::{format, format_args, LineWidth, SimpleFormatOptions, write};
+/// use rome_formatter::prelude::*;
+///
+/// let content = format_with(|f| {
+///     let group_id = f.group_id("header");
+///
+///     write!(f, [
+///         group(&text("(aLongHeaderThatBreaksForSomeReason) =>")).with_group_id(Some(group_id)),
+///         indent_if_group_breaks(&format_args![hard_line_break(), text("a => b")], group_id)
+///     ])
+/// });
+///
+/// let formatted = format!(SimpleFormatContext::default(), [content]).unwrap();
+///
+/// assert_eq!(
+///     "(aLongHeaderThatBreaksForSomeReason) =>\na => b",
+///     formatted.print().as_code()
+/// );
+/// ```
+#[inline]
+pub fn indent_if_group_breaks<Content, Context>(
+    content: &Content,
+    group_id: GroupId,
+) -> IndentIfGroupBreaks<Context>
+where
+    Content: Format<Context>,
+{
+    IndentIfGroupBreaks {
+        group_id,
+        content: Argument::new(content),
+    }
+}
+
+#[derive(Copy, Clone)]
+pub struct IndentIfGroupBreaks<'a, Context> {
+    content: Argument<'a, Context>,
+    group_id: GroupId,
+}
+
+impl<Context> Format<Context> for IndentIfGroupBreaks<'_, Context> {
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+        let mut buffer = VecBuffer::new(f.state_mut());
+
+        buffer.write_fmt(Arguments::from(&self.content))?;
+
+        if buffer.is_empty() {
+            return Ok(());
+        }
+
+        let content = buffer.into_vec();
+        f.write_element(FormatElement::IndentIfGroupBreaks(
+            format_element::IndentIfGroupBreaks::new(content.into_boxed_slice(), self.group_id),
+        ))
+    }
+}
+
+impl<Context> std::fmt::Debug for IndentIfGroupBreaks<'_, Context> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("IndentIfGroupBreaks")
+            .field("group_id", &self.group_id)
+            .field("content", &"{{content}}")
+            .finish()
+    }
+}
+
 /// Utility for formatting some content with an inline lambda function.
 #[derive(Copy, Clone)]
 pub struct FormatWith<Context, T> {

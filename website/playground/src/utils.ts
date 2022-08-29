@@ -1,11 +1,12 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import prettier from "prettier";
+import prettier, { Options } from "prettier";
 // @ts-ignore
 import parserBabel from "prettier/esm/parser-babel";
 import {
 	IndentStyle,
 	PlaygroundState,
 	QuoteStyle,
+	QuoteProperties,
 	RomeConfiguration,
 	SourceType,
 } from "./types";
@@ -63,6 +64,9 @@ export function usePlaygroundState(
 		quoteStyle:
 			(searchParams.get("quoteStyle") as QuoteStyle) ??
 			defaultRomeConfig.quoteStyle,
+		quoteProperties:
+			(searchParams.get("quoteProperties") as QuoteProperties) ??
+			defaultRomeConfig.quoteProperties,
 		indentWidth: parseInt(
 			searchParams.get("indentWidth") ?? defaultRomeConfig.indentWidth,
 		),
@@ -122,16 +126,18 @@ export function formatWithPrettier(
 		indentWidth: number;
 		language: "js" | "ts";
 		quoteStyle: QuoteStyle;
+		quoteProperties: QuoteProperties;
 	},
 ): { code: string; ir: string } {
 	try {
-		const prettierOptions = {
+		const prettierOptions: Options = {
 			useTabs: options.indentStyle === IndentStyle.Tab,
 			tabWidth: options.indentWidth,
 			printWidth: options.lineWidth,
 			parser: getPrettierParser(options.language),
 			plugins: [parserBabel],
 			singleQuote: options.quoteStyle === QuoteStyle.Single,
+			quoteProps: options.quoteProperties,
 		};
 
 		// @ts-ignore

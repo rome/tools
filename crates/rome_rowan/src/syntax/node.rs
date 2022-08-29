@@ -5,6 +5,7 @@ use crate::{
     cursor, Direction, GreenNode, Language, NodeOrToken, SyntaxKind, SyntaxList, SyntaxNodeText,
     SyntaxToken, TokenAtOffset, WalkEvent,
 };
+use rome_text_size::{TextRange, TextSize};
 #[cfg(feature = "serde")]
 use serde::Serialize;
 use std::any::TypeId;
@@ -12,7 +13,6 @@ use std::fmt::{Debug, Formatter};
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
 use std::{fmt, ops};
-use text_size::{TextRange, TextSize};
 
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct SyntaxNode<L: Language> {

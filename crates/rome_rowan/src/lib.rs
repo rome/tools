@@ -33,9 +33,9 @@ mod syntax_rewriter;
 mod syntax_token_text;
 mod tree_builder;
 
+pub use rome_text_size::{TextLen, TextRange, TextSize};
 #[cfg(feature = "serde")]
 pub use serde_impls::TextRangeSchema;
-pub use text_size::{TextLen, TextRange, TextSize};
 
 pub use crate::{
     ast::*,

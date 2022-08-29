@@ -59,6 +59,10 @@ pub enum FormatElement {
     /// is printed on a single line or multiple lines. See [crate::if_group_breaks] for examples.
     ConditionalGroupContent(ConditionalGroupContent),
 
+    /// Optimized version of [FormatElement::ConditionalGroupContent] for the case where some content
+    /// should be indented if the specified group breaks.
+    IndentIfGroupBreaks(IndentIfGroupBreaks),
+
     /// Concatenates multiple elements together. See [crate::Formatter::join_with] for examples.
     List(List),
 
@@ -177,6 +181,7 @@ impl std::fmt::Debug for FormatElement {
                 content.fmt(fmt)
             }
             FormatElement::ConditionalGroupContent(content) => content.fmt(fmt),
+            FormatElement::IndentIfGroupBreaks(content) => content.fmt(fmt),
             FormatElement::List(content) => {
                 write!(fmt, "List ")?;
                 content.fmt(fmt)
@@ -510,6 +515,19 @@ impl std::fmt::Debug for Label {
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
+pub struct IndentIfGroupBreaks {
+    pub(crate) content: Content,
+
+    pub(crate) group_id: GroupId,
+}
+
+impl IndentIfGroupBreaks {
+    pub fn new(content: Content, group_id: GroupId) -> Self {
+        Self { content, group_id }
+    }
+}
+
+#[derive(Debug, Clone, Eq, PartialEq)]
 pub struct ConditionalGroupContent {
     pub(crate) content: Content,
 
@@ -669,6 +687,7 @@ impl FormatElement {
             FormatElement::Line(line_mode) => matches!(line_mode, LineMode::Hard | LineMode::Empty),
             FormatElement::Group(Group { content, .. })
             | FormatElement::ConditionalGroupContent(ConditionalGroupContent { content, .. })
+            | FormatElement::IndentIfGroupBreaks(IndentIfGroupBreaks { content, .. })
             | FormatElement::Comment(content)
             | FormatElement::Fill(Fill { content, .. })
             | FormatElement::Verbatim(Verbatim { content, .. })
@@ -888,6 +907,30 @@ impl Format<IrFormatContext> for FormatElement {
                 }
 
                 write!(f, [text(")")])
+            }
+            FormatElement::IndentIfGroupBreaks(content) => {
+                write!(
+                    f,
+                    [
+                        text("indent_if_group_breaks("),
+                        group(&soft_block_indent(&format_args![
+                            content.content.as_ref(),
+                            text(","),
+                            soft_line_break_or_space(),
+                            text("{"),
+                            group(&format_args![soft_line_indent_or_space(&format_args![
+                                text("group-id:"),
+                                space(),
+                                dynamic_text(
+                                    &std::format!("{:?}", content.group_id),
+                                    TextSize::default()
+                                ),
+                                soft_line_break_or_space()
+                            ])]),
+                            text("}")
+                        ]))
+                    ]
+                )
             }
             FormatElement::ConditionalGroupContent(content) => {
                 match content.mode {

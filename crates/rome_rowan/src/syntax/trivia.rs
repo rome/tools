@@ -1,8 +1,8 @@
 use crate::{cursor, Language, SyntaxToken};
+use rome_text_size::{TextRange, TextSize};
 use std::fmt;
 use std::fmt::Formatter;
 use std::marker::PhantomData;
-use text_size::{TextRange, TextSize};
 
 #[derive(Clone, Copy, Eq, PartialEq, Hash, Debug)]
 pub enum TriviaPieceKind {

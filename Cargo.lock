@@ -1525,11 +1525,11 @@ dependencies = [
  "atty",
  "lazy_static",
  "rome_markup",
+ "rome_text_size",
  "schemars",
  "serde",
  "similar",
  "termcolor",
- "text-size",
  "trybuild",
  "unicode-width",
 ]
@@ -1764,11 +1764,11 @@ dependencies = [
  "quickcheck",
  "quickcheck_macros",
  "rome_text_edit",
+ "rome_text_size",
  "rustc-hash",
  "schemars",
  "serde",
  "serde_json",
- "text-size",
 ]
 
 [[package]]
@@ -1799,9 +1799,18 @@ dependencies = [
 name = "rome_text_edit"
 version = "0.0.0"
 dependencies = [
+ "rome_text_size",
  "schemars",
  "serde",
- "text-size",
+]
+
+[[package]]
+name = "rome_text_size"
+version = "0.0.0"
+dependencies = [
+ "serde",
+ "serde_test",
+ "static_assertions",
 ]
 
 [[package]]
@@ -1982,6 +1991,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "serde_test"
+version = "1.0.144"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6c7f3621491f256177206a7c2152c17f322c0d0b30af05359088172437d29e25"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "serde_yaml"
 version = "0.9.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2073,6 +2091,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "static_assertions"
+version = "1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a2eb9349b6444b326872e140eb1cf5e7c522154d69e7a0ffb0fb81c06b37543f"
+
+[[package]]
 name = "syn"
 version = "1.0.99"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2112,15 +2136,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
-]
-
-[[package]]
-name = "text-size"
-version = "1.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "288cb548dbe72b652243ea797201f3d481a0609a967980fcc5b2315ea811560a"
-dependencies = [
- "serde",
 ]
 
 [[package]]

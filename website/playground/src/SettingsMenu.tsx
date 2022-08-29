@@ -5,6 +5,7 @@ import SourceTypeSelect from "./SourceTypeSelect";
 import { PlaygroundSettings, PlaygroundState } from "./types";
 import { Dispatch, SetStateAction } from "react";
 import { createSetter } from "./utils";
+import QuotePropertiesSelect from "./QuotePropertiesSelect";
 
 interface Props {
 	settings: PlaygroundSettings;
@@ -18,6 +19,7 @@ export function SettingsMenu({
 		indentWidth,
 		indentStyle,
 		quoteStyle,
+		quoteProperties,
 		sourceType,
 		isTypeScript,
 		isJsx,
@@ -41,6 +43,13 @@ export function SettingsMenu({
 				<QuoteStyleSelect
 					quoteStyle={quoteStyle}
 					setQuoteStyle={createSetter(setPlaygroundState, "quoteStyle")}
+				/>
+				<QuotePropertiesSelect
+					quoteProperties={quoteProperties}
+					setQuoteProperties={createSetter(
+						setPlaygroundState,
+						"quoteProperties",
+					)}
 				/>
 				<SourceTypeSelect
 					isTypeScript={isTypeScript}

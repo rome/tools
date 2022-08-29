@@ -18,7 +18,7 @@ export default function SourceTypeSelect({
 	sourceType,
 }: Props) {
 	return (
-		<div className="p-5 sm:pr-0 sm:pt-0">
+		<div className="pl-5 pb-5">
 			<fieldset className="flex items-center">
 				<legend className="sr-only">File Type</legend>
 				<div className="relative flex items-start">

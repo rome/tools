@@ -1,5 +1,5 @@
 use rome_text_edit::Indel;
-use text_size::TextRange;
+use rome_text_size::TextRange;
 
 use crate::{AstNode, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxSlot, SyntaxToken};
 use std::{

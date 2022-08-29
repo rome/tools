@@ -6,9 +6,9 @@ use crate::{
     cursor, Direction, Language, NodeOrToken, SyntaxElement, SyntaxKind, SyntaxNode,
     SyntaxTriviaPiece, TriviaPiece, TriviaPieceKind,
 };
+use rome_text_size::{TextLen, TextRange, TextSize};
 use std::fmt;
 use std::marker::PhantomData;
-use text_size::{TextLen, TextRange, TextSize};
 
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct SyntaxToken<L: Language> {

@@ -1,7 +1,7 @@
 use std::io;
 use std::{io::Error, ops::Range};
 
-use text_size::{TextRange, TextSize};
+use rome_text_size::{TextRange, TextSize};
 
 use crate::fmt::Display;
 use crate::markup::MarkupBuf;
