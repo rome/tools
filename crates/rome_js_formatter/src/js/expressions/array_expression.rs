@@ -47,9 +47,9 @@ impl FormatNodeRule<JsArrayExpression> for FormatJsArrayExpression {
     }
 }
 
-/// Returns `true` for arrays containing at least two elements if
-/// * all elements are either object xor array expressions
-/// * each child array has at least two elements or each child object has at least two members.
+/// Returns `true` for arrays containing at least two elements if:
+/// * all elements are either object or array expressions
+/// * each child array expression has at least two elements, or each child object expression has at least two members.
 fn should_break(elements: &JsArrayElementList) -> SyntaxResult<bool> {
     if elements.len() < 2 {
         Ok(false)
