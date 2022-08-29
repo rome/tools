@@ -11,7 +11,10 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     let mut workspace_settings = WorkspaceSettings::default();
 
     if let Some(configuration) = configuration {
-        workspace_settings.merge_with_configuration(configuration);
+        session
+            .app
+            .workspace
+            .update_settings(UpdateSettingsParams { configuration })?;
     }
 
     apply_format_settings_from_cli(&mut session, &mut workspace_settings)?;
@@ -56,13 +59,6 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
             stdin,
         })
     };
-
-    session
-        .app
-        .workspace
-        .update_settings(UpdateSettingsParams {
-            settings: workspace_settings,
-        })?;
 
     execute_mode(execution, session)
 }

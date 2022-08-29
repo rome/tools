@@ -42,10 +42,8 @@ impl WorkspaceSettings {
             self.linter = LinterSettings::from(linter)
         }
 
-        let globals = configuration.javascript.map(|j| j.globals);
-        if let Some(globals) = globals {
-            self.languages.javascript.globals = globals;
-        }
+        let globals = configuration.javascript.and_then(|j| j.globals);
+        self.languages.javascript.globals = globals;
     }
 
     /// It retrieves the severity based on the `code` of the rule and the current configuration.
@@ -168,7 +166,7 @@ pub struct LanguageSettings<L: Language> {
         deserialize_with = "crate::configuration::deserialize_globals",
         serialize_with = "crate::configuration::serialize_globals"
     )]
-    pub globals: IndexSet<String>,
+    pub globals: Option<IndexSet<String>>,
 }
 
 /// Handle object holding a temporary lock on the workspace settings until

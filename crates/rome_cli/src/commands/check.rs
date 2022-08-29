@@ -32,17 +32,12 @@ pub(crate) fn check(mut session: CliSession) -> Result<(), Termination> {
     };
 
     if let Some(configuration) = configuration {
-        workspace_settings.merge_with_configuration(configuration)
+        session
+            .app
+            .workspace
+            .update_settings(UpdateSettingsParams { configuration })?;
     }
-
     apply_format_settings_from_cli(&mut session, &mut workspace_settings)?;
-
-    session
-        .app
-        .workspace
-        .update_settings(UpdateSettingsParams {
-            settings: workspace_settings,
-        })?;
 
     let apply = session.args.contains("--apply");
     let apply_suggested = session.args.contains("--apply-suggested");

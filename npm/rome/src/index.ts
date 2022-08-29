@@ -1,6 +1,10 @@
 import { NodeWasm } from "./nodeWasm";
 import { Deamon } from "./daemon";
-import { Diagnostic } from "@rometools/backend-jsonrpc";
+import { Diagnostic, Configuration } from "@rometools/backend-jsonrpc";
+import { createError } from "./utils";
+
+// Re-export of some useful types for users
+export type { Configuration };
 
 export interface FormatFilesDebugOptions extends FormatFilesOptions {
 	/**
@@ -122,10 +126,12 @@ export type RomeCreate =
 	};
 
 export class Rome {
-	private backend: Backend;
+	private readonly backend: Backend;
+	private readonly kind: BackendKind;
 
-	private constructor(backend: Backend) {
+	private constructor(backend: Backend, backendKind = BackendKind.NODE) {
 		this.backend = backend;
+		this.kind = backendKind;
 	}
 
 	/**
@@ -134,20 +140,44 @@ export class Rome {
 	 * When using the Daemon, an optional path to the Rome binary can be provided.
 	 * This is useful for debugging/test purpose.
 	 *
-	 * @param options
+	 * @param backendOptions
 	 */
-	public static async create(options: RomeCreate): Promise<Rome> {
-		switch (options.backendKind) {
-			case BackendKind.DAEMON: {
-				let client = await Deamon.connectToDaemon(options.pathToBinary);
-				return new Rome(client);
-			}
+	public static async create(backendOptions?: RomeCreate): Promise<Rome> {
+		if (backendOptions) {
+			switch (backendOptions.backendKind) {
+				case BackendKind.DAEMON: {
+					let client = await Deamon.connectToDaemon(
+						backendOptions.pathToBinary,
+					);
+					return new Rome(client, backendOptions.backendKind);
+				}
 
-			case BackendKind.NODE:
-			default: {
-				let client = await NodeWasm.loadWebAssembly();
-				return new Rome(client);
+				case BackendKind.NODE:
+				default: {
+					let client = await NodeWasm.loadWebAssembly();
+					return new Rome(client);
+				}
 			}
+		} else {
+			let client = await NodeWasm.loadWebAssembly();
+			return new Rome(client);
+		}
+	}
+
+	/**
+	 * Allows to apply a custom configuration.
+	 *
+	 * If fails when the configuration is incorrect.
+	 *
+	 * @param configuration
+	 */
+	public async applyConfiguration(configuration: Configuration): Promise<void> {
+		try {
+			await this.backend.workspace.updateSettings({
+				configuration,
+			});
+		} catch (e) {
+			throw createError(e, this.kind);
 		}
 	}
 

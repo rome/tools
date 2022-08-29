@@ -154,7 +154,7 @@ impl Workspace for WorkspaceServer {
     /// by another thread having previously panicked while holding the lock
     fn update_settings(&self, params: UpdateSettingsParams) -> Result<(), RomeError> {
         let mut settings = self.settings.write().unwrap();
-        *settings = params.settings;
+        settings.merge_with_configuration(params.configuration);
         Ok(())
     }
 

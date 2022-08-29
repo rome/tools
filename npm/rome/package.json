@@ -42,7 +42,6 @@
         "vitest": "^0.22.0",
         "vite": "^3.0.8",
         "@rometools/wasm-nodejs": "../wasm-nodejs",
-        "@rometools/backend-jsonrpc": "../backend-jsonrpc",
-        "wasm-pack": "^0.10.3"
+        "@rometools/backend-jsonrpc": "../backend-jsonrpc"
     }
 }

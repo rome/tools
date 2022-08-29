@@ -11,17 +11,12 @@ pub(crate) fn ci(mut session: CliSession) -> Result<(), Termination> {
     let mut workspace_settings = WorkspaceSettings::default();
 
     if let Some(configuration) = configuration {
-        workspace_settings.merge_with_configuration(configuration);
+        session
+            .app
+            .workspace
+            .update_settings(UpdateSettingsParams { configuration })?;
     }
-
     apply_format_settings_from_cli(&mut session, &mut workspace_settings)?;
-
-    session
-        .app
-        .workspace
-        .update_settings(UpdateSettingsParams {
-            settings: workspace_settings,
-        })?;
 
     execute_mode(Execution::new(TraversalMode::CI), session)
 }
