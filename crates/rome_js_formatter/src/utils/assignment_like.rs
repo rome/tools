@@ -936,7 +936,7 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                 }
             });
 
-            let right = format_with(|f| self.write_right(f)).memoized();
+            let right = format_with(|f| self.write_right(f));
 
             let inner_content = format_with(|f| {
                 write!(f, [left])?;
@@ -956,8 +956,7 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                                 group(&indent(&soft_line_break_or_space()),)
                                     .with_group_id(Some(group_id)),
                                 line_suffix_boundary(),
-                                if_group_breaks(&indent(&right)).with_group_id(Some(group_id)),
-                                if_group_fits_on_line(&right).with_group_id(Some(group_id)),
+                                indent_if_group_breaks(&right, group_id)
                             ]
                         ]
                     }
