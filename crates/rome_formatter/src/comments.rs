@@ -145,7 +145,7 @@ pub trait CommentStyle<L: Language> {
 pub struct Comments<L: Language> {
     /// The use of a [Rc] is necessary to achieve that [Comments] has a lifetime that is independent from the [crate::Formatter].
     /// Having independent lifetimes is necessary to support the use case where a (formattable object)[crate::Format]
-    /// iterates over all comments and writes them into the [crate::Formatter] (mutably borrowing the [crate::Formatter] and in turn its context).
+    /// iterates over all comments, and writes them into the [crate::Formatter] (mutably borrowing the [crate::Formatter] and in turn its context).
     ///
     /// ```block
     /// for leading in f.context().comments().leading_comments(node) {
@@ -157,7 +157,7 @@ pub struct Comments<L: Language> {
     /// }
     /// ```
     ///
-    /// Using an `Rc` here allows cheaply cloning [Comments] for these use cases.
+    /// Using an `Rc` here allows to cheaply clone [Comments] for these use cases.
     data: Rc<CommentsData<L>>,
 }
 
