@@ -31,9 +31,9 @@ impl FormatRule<JsArrayElementList> for FormatJsArrayElementList {
             return f
                 .fill()
                 .entries(
+                    &soft_line_break_or_space(),
                     node.format_separated(JsSyntaxKind::COMMA)
                         .with_group_id(self.group_id),
-                    &soft_line_break_or_space(),
                 )
                 .finish();
         }

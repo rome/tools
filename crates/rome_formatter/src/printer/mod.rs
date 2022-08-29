@@ -1316,39 +1316,39 @@ two lines`,
             .fill()
             // These all fit on the same line together
             .entry(
+                &soft_line_break_or_space(),
                 &format_args!(text("1"), text(",")),
-                &soft_line_break_or_space(),
             )
             .entry(
+                &soft_line_break_or_space(),
                 &format_args!(text("2"), text(",")),
-                &soft_line_break_or_space(),
             )
             .entry(
-                &format_args!(text("3"), text(",")),
                 &soft_line_break_or_space(),
+                &format_args!(text("3"), text(",")),
             )
             // This one fits on a line by itself,
             .entry(
-                &format_args!(text("723493294"), text(",")),
                 &soft_line_break_or_space(),
+                &format_args!(text("723493294"), text(",")),
             )
             // fits without breaking
             .entry(
+                &soft_line_break_or_space(),
                 &group(&format_args!(
                     text("["),
                     soft_block_indent(&text("5")),
                     text("],")
                 )),
-                &soft_line_break_or_space(),
             )
             // this one must be printed in expanded mode to fit
             .entry(
+                &soft_line_break_or_space(),
                 &group(&format_args!(
                     text("["),
                     soft_block_indent(&text("123456789")),
                     text("]"),
                 )),
-                &soft_line_break_or_space(),
             )
             .finish()
             .unwrap();
@@ -1372,16 +1372,16 @@ two lines`,
                 soft_block_indent(&format_with(|f| {
                     f.fill()
                         .entry(
+                            &soft_line_break_or_space(),
                             &format_args!(text("1"), text(",")),
-                            &soft_line_break_or_space(),
                         )
                         .entry(
+                            &soft_line_break_or_space(),
                             &format_args!(text("2"), text(",")),
-                            &soft_line_break_or_space(),
                         )
                         .entry(
-                            &format_args!(text("3"), if_group_breaks(&text(","))),
                             &soft_line_break_or_space(),
+                            &format_args!(text("3"), if_group_breaks(&text(","))),
                         )
                         .finish()
                 })),

@@ -138,10 +138,10 @@ impl<'buf, Context> Formatter<'buf, Context> {
     ///
     /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
     ///     f.fill()
-    ///         .entry(&text("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"), &soft_line_break_or_space())
-    ///         .entry(&text("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"), &soft_line_break_or_space())
-    ///         .entry(&text("cccccccccccccccccccccccccccccc"), &soft_line_break_or_space())
-    ///         .entry(&text("dddddddddddddddddddddddddddddd"), &soft_line_break_or_space())
+    ///         .entry(&soft_line_break_or_space(), &text("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"))
+    ///         .entry(&soft_line_break_or_space(), &text("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"))
+    ///         .entry(&soft_line_break_or_space(), &text("cccccccccccccccccccccccccccccc"))
+    ///         .entry(&soft_line_break_or_space(), &text("dddddddddddddddddddddddddddddd"))
     ///         .finish()
     /// })]).unwrap();
     ///
@@ -163,7 +163,7 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// ];
     ///
     /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
-    ///     f.fill().entries(entries.iter(), &soft_line_break()).finish()
+    ///     f.fill().entries(&soft_line_break(), entries.iter()).finish()
     /// })]).unwrap();
     ///
     /// assert_eq!(

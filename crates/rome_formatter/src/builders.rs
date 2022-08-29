@@ -1654,16 +1654,16 @@ impl<Context> IfGroupBreaks<'_, Context> {
     ///                 text("["),
     ///                 soft_block_indent(&format_with(|f| {
     ///                     f.fill()
-    ///                         .entry(&text("1,"), &soft_line_break_or_space())
-    ///                         .entry(&text("234568789,"), &soft_line_break_or_space())
-    ///                         .entry(&text("3456789,"), &soft_line_break_or_space())
-    ///                         .entry(&format_args!(
+    ///                         .entry(&soft_line_break_or_space(), &text("1,"))
+    ///                         .entry(&soft_line_break_or_space(), &text("234568789,"))
+    ///                         .entry(&soft_line_break_or_space(), &text("3456789,"))
+    ///                         .entry(&soft_line_break_or_space(), &format_args!(
     ///                             text("["),
     ///                             soft_block_indent(&text("4")),
     ///                             text("]"),
     ///                             if_group_breaks(&text(",")).with_group_id(Some(group_id))
-    ///                         ), &soft_line_break_or_space())
-    ///                         .finish()
+    ///                         ))
+    ///                     .finish()
     ///                 })),
     ///                 text("]")
     ///             ],
@@ -2054,13 +2054,13 @@ impl<'a, 'buf, Context> FillBuilder<'a, 'buf, Context> {
     }
 
     /// Adds an iterator of entries to the fill output. Uses the passed `separator` to separate any two items.
-    pub fn entries<F, I>(&mut self, entries: I, separator: &dyn Format<Context>) -> &mut Self
+    pub fn entries<F, I>(&mut self, separator: &dyn Format<Context>, entries: I) -> &mut Self
     where
         F: Format<Context>,
         I: IntoIterator<Item = F>,
     {
         for entry in entries {
-            self.entry(&entry, separator);
+            self.entry(separator, &entry);
         }
 
         self
@@ -2075,15 +2075,15 @@ impl<'a, 'buf, Context> FillBuilder<'a, 'buf, Context> {
     /// other APIs on ways: for example progressively format the items based on their type.
     pub fn flatten_entries<F, I>(
         &mut self,
-        entries: I,
         separator: &dyn Format<Context>,
+        entries: I,
     ) -> &mut Self
     where
         F: Format<Context>,
         I: IntoIterator<Item = F>,
     {
         for entry in entries {
-            self.flatten_entry(&entry, separator);
+            self.flatten_entry(separator, &entry);
         }
 
         self
@@ -2091,10 +2091,10 @@ impl<'a, 'buf, Context> FillBuilder<'a, 'buf, Context> {
 
     /// Adds a new entry to the fill output. If the entry is a [FormatElement::List],
     /// then adds the list's entries to the fill output instead of the list itself.
-    pub fn flatten_entry(
+    fn flatten_entry(
         &mut self,
-        entry: &dyn Format<Context>,
         separator: &dyn Format<Context>,
+        entry: &dyn Format<Context>,
     ) -> &mut Self {
         self.result = self.result.and_then(|_| {
             let mut buffer = VecBuffer::new(self.fmt.state_mut());
@@ -2120,11 +2120,11 @@ impl<'a, 'buf, Context> FillBuilder<'a, 'buf, Context> {
         self
     }
 
-    /// Adds a new entry to the fill output. Writes the separator if this isn't the first element in the list.
+    /// Adds a new entry to the fill output. The `separator` isn't written if this is the first element in the list.
     pub fn entry(
         &mut self,
-        entry: &dyn Format<Context>,
         separator: &dyn Format<Context>,
+        entry: &dyn Format<Context>,
     ) -> &mut Self {
         self.result = self.result.and_then(|_| {
             let mut buffer = VecBuffer::new(self.fmt.state_mut());
