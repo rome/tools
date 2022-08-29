@@ -137,11 +137,11 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// use rome_formatter::{format, format_args};
     ///
     /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
-    ///     f.fill(soft_line_break_or_space())
-    ///         .entry(&text("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"))
-    ///         .entry(&text("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"))
-    ///         .entry(&text("cccccccccccccccccccccccccccccc"))
-    ///         .entry(&text("dddddddddddddddddddddddddddddd"))
+    ///     f.fill()
+    ///         .entry(&soft_line_break_or_space(), &text("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"))
+    ///         .entry(&soft_line_break_or_space(), &text("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"))
+    ///         .entry(&soft_line_break_or_space(), &text("cccccccccccccccccccccccccccccc"))
+    ///         .entry(&soft_line_break_or_space(), &text("dddddddddddddddddddddddddddddd"))
     ///         .finish()
     /// })]).unwrap();
     ///
@@ -163,7 +163,7 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// ];
     ///
     /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
-    ///     f.fill(soft_line_break()).entries(entries.iter()).finish()
+    ///     f.fill().entries(&soft_line_break(), entries.iter()).finish()
     /// })]).unwrap();
     ///
     /// assert_eq!(
@@ -171,11 +171,8 @@ impl<'buf, Context> Formatter<'buf, Context> {
     ///     formatted.print().as_code()
     /// )
     /// ```
-    pub fn fill<'a, Separator>(&'a mut self, separator: Separator) -> FillBuilder<'a, 'buf, Context>
-    where
-        Separator: Format<Context>,
-    {
-        FillBuilder::new(self, separator)
+    pub fn fill<'a>(&'a mut self) -> FillBuilder<'a, 'buf, Context> {
+        FillBuilder::new(self)
     }
 
     /// Formats `content` into an interned element without writing it to the formatter's buffer.
