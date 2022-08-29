@@ -108,8 +108,8 @@ describe("Rome Deamon formatter", () => {
 
 		expect(result.content).toEqual("function f() {}\n");
 		expect(result.diagnostics).toEqual([]);
-		expect(result.ir).toEqual(
-			'["function", " ", "f", group(["(", ")"]), " ", "{", "}", hard_line_break]',
+		expect(result.ir).toMatchInlineSnapshot(
+			'"[\\"function\\", \\" \\", \\"f\\", group([\\"(\\", \\")\\"]), \\" \\", \\"{\\", \\"}\\", hard_line_break]"',
 		);
 	});
 
@@ -152,22 +152,22 @@ describe("Rome Deamon formatter", () => {
 
 		expect(result.content).toEqual("function g() {}");
 		expect(result.diagnostics).toEqual([]);
-		expect(result.ir).toEqual(
-			`[
-  "let",
-  " ",
-  group(["a"]),
-  ";",
-  hard_line_break,
-  "function",
-  " ",
-  "g",
-  group(["(", ")"]),
-  " ",
-  "{",
-  "}",
-  hard_line_break
-]`,
+		expect(result.ir).toMatchInlineSnapshot(
+			`
+			"[
+			  group([\\"let\\", \\" \\", \\"a\\"]),
+			  \\";\\",
+			  hard_line_break,
+			  \\"function\\",
+			  \\" \\",
+			  \\"g\\",
+			  group([\\"(\\", \\")\\"]),
+			  \\" \\",
+			  \\"{\\",
+			  \\"}\\",
+			  hard_line_break
+			]"
+		`,
 		);
 	});
 });
