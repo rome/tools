@@ -120,7 +120,7 @@ jobs:
       - name: Build TypeScript code
         run: |
           pnpm --prefix npm/backend-jsonrpc i
-          pnpm --prefix npm/backend-jsonrpc run build    
+          pnpm --prefix npm/backend-jsonrpc run build
           pnpm --prefix npm/rome run build:wasm-node
           pnpm --prefix npm/rome i
           pnpm --prefix npm/rome run build
@@ -175,7 +175,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: codegen-schema
-      - name: Run the schema codegen
+      - name: Run the bindings codegen
         uses: actions-rs/cargo@v1
         with:
           command: codegen-bindings

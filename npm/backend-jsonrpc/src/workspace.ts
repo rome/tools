@@ -13,38 +13,38 @@ export interface UpdateSettingsParams {
 	configuration: Configuration;
 }
 /**
-	* The configuration that is contained inside the file `rome.json` 
-	 */
+ * The configuration that is contained inside the file `rome.json`
+ */
 export interface Configuration {
 	/**
-	* The configuration of the formatter 
+	 * The configuration of the formatter
 	 */
 	formatter?: FormatterConfiguration;
 	/**
-	* Specific configuration for the JavaScript language 
+	 * Specific configuration for the JavaScript language
 	 */
 	javascript?: JavascriptConfiguration;
 	/**
-	* The configuration for the linter 
+	 * The configuration for the linter
 	 */
 	linter?: LinterConfiguration;
 }
 export interface FormatterConfiguration {
 	enabled?: boolean;
 	/**
-	* Stores whether formatting should be allowed to proceed if a given file has syntax errors 
+	 * Stores whether formatting should be allowed to proceed if a given file has syntax errors
 	 */
 	formatWithErrors?: boolean;
 	/**
-	* The size of the indentation, 2 by default 
+	 * The size of the indentation, 2 by default
 	 */
 	indentSize?: number;
 	/**
-	* The indent style. 
+	 * The indent style.
 	 */
 	indentStyle?: PlainIndentStyle;
 	/**
-	* What's the max width of a line. Defaults to 80. 
+	 * What's the max width of a line. Defaults to 80.
 	 */
 	lineWidth?: LineWidth;
 }
@@ -59,11 +59,11 @@ If defined here, they should not emit diagnostics.
 }
 export interface LinterConfiguration {
 	/**
-	* if `false`, it disables the feature and the linter won't be executed. `true` by default 
+	 * if `false`, it disables the feature and the linter won't be executed. `true` by default
 	 */
 	enabled?: boolean;
 	/**
-	* List of rules 
+	 * List of rules
 	 */
 	rules?: Rules;
 }
@@ -76,11 +76,11 @@ The allowed range of values is 1..=320
 export type LineWidth = number;
 export interface JavascriptFormatter {
 	/**
-	* When properties in objects are quoted. Defaults to asNeeded. 
+	 * When properties in objects are quoted. Defaults to asNeeded.
 	 */
 	quoteProperties?: QuoteProperties;
 	/**
-	* The style for quotes. Defaults to double. 
+	 * The style for quotes. Defaults to double.
 	 */
 	quoteStyle?: QuoteStyle;
 }
@@ -88,7 +88,7 @@ export interface Rules {
 	js?: Js;
 	jsx?: Jsx;
 	/**
-	* It enables the lint rules recommended by Rome. `true` by default. 
+	 * It enables the lint rules recommended by Rome. `true` by default.
 	 */
 	recommended?: boolean;
 	regex?: Regex;
@@ -98,25 +98,25 @@ export type QuoteProperties = "asNeeded" | "preserve";
 export type QuoteStyle = "double" | "single";
 export interface Js {
 	/**
-	* It enables the recommended rules for this group 
+	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
 }
 export interface Jsx {
 	/**
-	* It enables the recommended rules for this group 
+	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
 }
 export interface Regex {
 	/**
-	* It enables the recommended rules for this group 
+	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
 }
 export interface Ts {
 	/**
-	* It enables the recommended rules for this group 
+	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
 }
@@ -157,8 +157,8 @@ export interface PullDiagnosticsResult {
 	diagnostics: Diagnostic[];
 }
 /**
-	* A diagnostic message that can give information like errors or warnings. 
-	 */
+ * A diagnostic message that can give information like errors or warnings.
+ */
 export interface Diagnostic {
 	children: SubDiagnostic[];
 	code?: string;
@@ -173,16 +173,16 @@ export interface Diagnostic {
 	title: MarkupBuf;
 }
 /**
-	* Everything that can be added to a diagnostic, like a suggestion that will be displayed under the actual error. 
-	 */
+ * Everything that can be added to a diagnostic, like a suggestion that will be displayed under the actual error.
+ */
 export interface SubDiagnostic {
 	msg: MarkupBuf;
 	severity: Severity;
 	span: FileSpan;
 }
 /**
-	* A note or help that is displayed under the diagnostic. 
-	 */
+ * A note or help that is displayed under the diagnostic.
+ */
 export interface Footer {
 	msg: MarkupBuf;
 	severity: Severity;
@@ -194,8 +194,8 @@ These are ordered in the following way:
 	 */
 export type Severity = "Help" | "Note" | "Warning" | "Error" | "Bug";
 /**
-	* A Suggestion that is provided by rslint, and can be reported to the user, and can be automatically applied if it has the right [`Applicability`]. 
-	 */
+ * A Suggestion that is provided by rslint, and can be reported to the user, and can be automatically applied if it has the right [`Applicability`].
+ */
 export interface CodeSuggestion {
 	applicability: Applicability;
 	labels: TextRangeSchema[];
@@ -203,22 +203,22 @@ export interface CodeSuggestion {
 	span: FileSpan;
 	style: SuggestionStyle;
 	/**
-	* If the `FileId` is `None`, it's in the same file as his parent. 
+	 * If the `FileId` is `None`, it's in the same file as his parent.
 	 */
 	substitution: SuggestionChange;
 }
 export type DiagnosticTag = "Unnecessary" | "Deprecated" | "Both";
 export type MarkupBuf = MarkupNodeBuf[];
 /**
-	* A range that is indexed in a specific file. 
-	 */
+ * A range that is indexed in a specific file.
+ */
 export interface FileSpan {
 	file: number;
 	range: TextRangeSchema;
 }
 /**
-	* Indicates how a tool should manage this suggestion. 
-	 */
+ * Indicates how a tool should manage this suggestion.
+ */
 export type Applicability =
 	| "Always"
 	| "MaybeIncorrect"
@@ -241,14 +241,14 @@ Must not overlap with other `InDel`s
 	 */
 export interface Indel {
 	/**
-	* Refers to offsets in the original text 
+	 * Refers to offsets in the original text
 	 */
 	delete: TextRangeSchema;
 	insert: string;
 }
 /**
-	* Enumeration of all the supported markup elements 
-	 */
+ * Enumeration of all the supported markup elements
+ */
 export type MarkupElement =
 	| "Emphasis"
 	| "Dim"
@@ -282,15 +282,15 @@ export interface Printed {
 	verbatim_ranges: TextRangeSchema[];
 }
 /**
-	* Lightweight sourcemap marker between source and output tokens 
-	 */
+ * Lightweight sourcemap marker between source and output tokens
+ */
 export interface SourceMarker {
 	/**
-	* Position of the marker in the output code 
+	 * Position of the marker in the output code
 	 */
 	dest: number;
 	/**
-	* Position of the marker in the original source 
+	 * Position of the marker in the original source
 	 */
 	source: number;
 }
@@ -307,30 +307,30 @@ export interface FixFileParams {
 	path: RomePath;
 }
 /**
-	* Which fixes should be applied during the analyzing phase 
-	 */
+ * Which fixes should be applied during the analyzing phase
+ */
 export type FixFileMode = "SafeFixes" | "SafeAndSuggestedFixes";
 export interface FixFileResult {
 	/**
-	* List of all the code actions applied to the file 
+	 * List of all the code actions applied to the file
 	 */
 	actions: FixAction[];
 	/**
-	* New source code for the file with all fixes applied 
+	 * New source code for the file with all fixes applied
 	 */
 	code: string;
 	/**
-	* number of skipped suggested fixes 
+	 * number of skipped suggested fixes
 	 */
 	skipped_suggested_fixes: number;
 }
 export interface FixAction {
 	/**
-	* Source range at which this action was applied 
+	 * Source range at which this action was applied
 	 */
 	range: TextRangeSchema;
 	/**
-	* Name of the rule that emitted this code action 
+	 * Name of the rule that emitted this code action
 	 */
 	rule_name: string;
 }
@@ -341,11 +341,11 @@ export interface RenameParams {
 }
 export interface RenameResult {
 	/**
-	* List of text edit operations to apply on the source code 
+	 * List of text edit operations to apply on the source code
 	 */
 	indels: Indel[];
 	/**
-	* Range of source code modified by this rename operation 
+	 * Range of source code modified by this rename operation
 	 */
 	range: TextRangeSchema;
 }
