@@ -29,8 +29,9 @@ impl FormatRule<JsArrayElementList> for FormatJsArrayElementList {
         if !has_formatter_trivia(node.syntax()) && can_print_fill(node) {
             // Using format_separated is valid in this case as can_print_fill does not allow holes
             return f
-                .fill(soft_line_break_or_space())
+                .fill()
                 .entries(
+                    &soft_line_break_or_space(),
                     node.format_separated(JsSyntaxKind::COMMA)
                         .with_group_id(self.group_id),
                 )

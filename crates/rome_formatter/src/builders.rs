@@ -1653,17 +1653,17 @@ impl<Context> IfGroupBreaks<'_, Context> {
     ///             &format_args![
     ///                 text("["),
     ///                 soft_block_indent(&format_with(|f| {
-    ///                     f.fill(soft_line_break_or_space())
-    ///                         .entry(&text("1,"))
-    ///                         .entry(&text("234568789,"))
-    ///                         .entry(&text("3456789,"))
-    ///                         .entry(&format_args!(
+    ///                     f.fill()
+    ///                         .entry(&soft_line_break_or_space(), &text("1,"))
+    ///                         .entry(&soft_line_break_or_space(), &text("234568789,"))
+    ///                         .entry(&soft_line_break_or_space(), &text("3456789,"))
+    ///                         .entry(&soft_line_break_or_space(), &format_args!(
     ///                             text("["),
     ///                             soft_block_indent(&text("4")),
     ///                             text("]"),
     ///                             if_group_breaks(&text(",")).with_group_id(Some(group_id))
     ///                         ))
-    ///                         .finish()
+    ///                     .finish()
     ///                 })),
     ///                 text("]")
     ///             ],
@@ -2161,40 +2161,26 @@ pub fn get_lines_before<L: Language>(next_node: &SyntaxNode<L>) -> usize {
 pub struct FillBuilder<'fmt, 'buf, Context> {
     result: FormatResult<()>,
     fmt: &'fmt mut Formatter<'buf, Context>,
-
-    /// The separator to use to join the elements
-    separator: FormatElement,
     items: Vec<FormatElement>,
 }
 
 impl<'a, 'buf, Context> FillBuilder<'a, 'buf, Context> {
-    pub(crate) fn new<Separator>(
-        fmt: &'a mut Formatter<'buf, Context>,
-        separator: Separator,
-    ) -> Self
-    where
-        Separator: Format<Context>,
-    {
-        let mut buffer = VecBuffer::new(fmt.state_mut());
-        let result = write!(buffer, [separator]);
-        let separator = buffer.into_element();
-
+    pub(crate) fn new(fmt: &'a mut Formatter<'buf, Context>) -> Self {
         Self {
-            result,
+            result: Ok(()),
             fmt,
-            separator,
             items: vec![],
         }
     }
 
-    /// Adds an iterator of entries to the fill output.
-    pub fn entries<F, I>(&mut self, entries: I) -> &mut Self
+    /// Adds an iterator of entries to the fill output. Uses the passed `separator` to separate any two items.
+    pub fn entries<F, I>(&mut self, separator: &dyn Format<Context>, entries: I) -> &mut Self
     where
         F: Format<Context>,
         I: IntoIterator<Item = F>,
     {
         for entry in entries {
-            self.entry(&entry);
+            self.entry(separator, &entry);
         }
 
         self
@@ -2207,13 +2193,17 @@ impl<'a, 'buf, Context> FillBuilder<'a, 'buf, Context> {
     ///
     /// The usage of this method is highly discouraged and it's better to use
     /// other APIs on ways: for example progressively format the items based on their type.
-    pub fn flatten_entries<F, I>(&mut self, entries: I) -> &mut Self
+    pub fn flatten_entries<F, I>(
+        &mut self,
+        separator: &dyn Format<Context>,
+        entries: I,
+    ) -> &mut Self
     where
         F: Format<Context>,
         I: IntoIterator<Item = F>,
     {
         for entry in entries {
-            self.flatten_entry(&entry);
+            self.flatten_entry(separator, &entry);
         }
 
         self
@@ -2221,12 +2211,28 @@ impl<'a, 'buf, Context> FillBuilder<'a, 'buf, Context> {
 
     /// Adds a new entry to the fill output. If the entry is a [FormatElement::List],
     /// then adds the list's entries to the fill output instead of the list itself.
-    pub fn flatten_entry(&mut self, entry: &dyn Format<Context>) -> &mut Self {
+    fn flatten_entry(
+        &mut self,
+        separator: &dyn Format<Context>,
+        entry: &dyn Format<Context>,
+    ) -> &mut Self {
         self.result = self.result.and_then(|_| {
             let mut buffer = VecBuffer::new(self.fmt.state_mut());
             write!(buffer, [entry])?;
 
-            self.items.extend(buffer.into_vec());
+            let entries = buffer.into_vec();
+            self.items.reserve((entries.len() * 2).saturating_sub(1));
+
+            let mut buffer = VecBuffer::new(self.fmt.state_mut());
+            for item in entries.into_iter() {
+                if !self.items.is_empty() {
+                    write!(buffer, [separator])?;
+
+                    self.items.push(buffer.take_element());
+                }
+
+                self.items.push(item);
+            }
 
             Ok(())
         });
@@ -2234,17 +2240,22 @@ impl<'a, 'buf, Context> FillBuilder<'a, 'buf, Context> {
         self
     }
 
-    /// Adds a new entry to the fill output.
-    pub fn entry(&mut self, entry: &dyn Format<Context>) -> &mut Self {
+    /// Adds a new entry to the fill output. The `separator` isn't written if this is the first element in the list.
+    pub fn entry(
+        &mut self,
+        separator: &dyn Format<Context>,
+        entry: &dyn Format<Context>,
+    ) -> &mut Self {
         self.result = self.result.and_then(|_| {
             let mut buffer = VecBuffer::new(self.fmt.state_mut());
-            write!(buffer, [entry])?;
 
-            let item = buffer.into_element();
-
-            if !item.is_empty() {
-                self.items.push(item);
+            if !self.items.is_empty() {
+                write!(buffer, [separator])?;
+                self.items.push(buffer.take_element());
             }
+
+            write!(buffer, [entry])?;
+            self.items.push(buffer.into_element());
 
             Ok(())
         });
@@ -2260,10 +2271,9 @@ impl<'a, 'buf, Context> FillBuilder<'a, 'buf, Context> {
             match items.len() {
                 0 => Ok(()),
                 1 => self.fmt.write_element(items.pop().unwrap()),
-                _ => self.fmt.write_element(FormatElement::Fill(Fill {
-                    content: items.into_boxed_slice(),
-                    separator: Box::new(self.separator.clone()),
-                })),
+                _ => self
+                    .fmt
+                    .write_element(FormatElement::Fill(items.into_boxed_slice())),
             }
         })
     }

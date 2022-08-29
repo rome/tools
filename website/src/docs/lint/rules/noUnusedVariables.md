@@ -23,11 +23,6 @@ const a = 4;
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> const <span style="color: Tomato;">a</span> = 4;
   <span style="color: rgb(38, 148, 255);">│</span>       <span style="color: Tomato;">^</span>
 
-<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove this variable.</span>
-    | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
-0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">const a = 4;</span>
-  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;"></span>
-
 =  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 
 </code></pre>{% endraw %}
@@ -41,11 +36,6 @@ let a = 4;
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> let <span style="color: Tomato;">a</span> = 4;
   <span style="color: rgb(38, 148, 255);">│</span>     <span style="color: Tomato;">^</span>
-
-<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove this variable.</span>
-    | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
-0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">let a = 4;</span>
-  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;"></span>
 
 =  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 
@@ -61,12 +51,6 @@ function foo() {
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> function <span style="color: Tomato;">f</span><span style="color: Tomato;">o</span><span style="color: Tomato;">o</span>() {
   <span style="color: rgb(38, 148, 255);">│</span>          <span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span>
-
-<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove this function.</span>
-    | <span style="color: rgb(38, 148, 255);">@@ -1,2 +1 @@</span>
-0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">function foo() {</span>
-1   | <span style="color: Tomato;">- </span><span style="color: Tomato;">};</span>
-  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">;</span>
 
 =  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 
@@ -85,14 +69,6 @@ foo();
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> function foo(<span style="color: Tomato;">m</span><span style="color: Tomato;">y</span><span style="color: Tomato;">V</span><span style="color: Tomato;">a</span><span style="color: Tomato;">r</span>) {
   <span style="color: rgb(38, 148, 255);">│</span>              <span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span>
 
-<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove this parameter.</span>
-    | <span style="color: rgb(38, 148, 255);">@@ -1,4 +1,4 @@</span>
-0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">function foo(myVar) {</span>
-  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">function foo() {</span>
-1 1 |       console.log('foo');
-2 2 |   }
-3 3 |   foo();
-
 =  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 
 </code></pre>{% endraw %}
@@ -107,12 +83,6 @@ const foo = () => {
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> const <span style="color: Tomato;">f</span><span style="color: Tomato;">o</span><span style="color: Tomato;">o</span> = () =&gt; {
   <span style="color: rgb(38, 148, 255);">│</span>       <span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span>
-
-<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove this variable.</span>
-    | <span style="color: rgb(38, 148, 255);">@@ -1,2 +1 @@</span>
-0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">const foo = () =&gt; {</span>
-1   | <span style="color: Tomato;">- </span><span style="color: Tomato;">};</span>
-  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;"></span>
 
 =  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 
@@ -129,13 +99,6 @@ function foo() {
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> function <span style="color: Tomato;">f</span><span style="color: Tomato;">o</span><span style="color: Tomato;">o</span>() {
   <span style="color: rgb(38, 148, 255);">│</span>          <span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span>
-
-<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove this function.</span>
-    | <span style="color: rgb(38, 148, 255);">@@ -1,3 +1 @@</span>
-0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">function foo() {</span>
-1   | <span style="color: Tomato;">- </span><span style="color: Tomato;">    foo();</span>
-2   | <span style="color: Tomato;">- </span><span style="color: Tomato;">}</span>
-  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;"></span>
 
 =  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 
@@ -154,14 +117,6 @@ const foo = () => {
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> const <span style="color: Tomato;">f</span><span style="color: Tomato;">o</span><span style="color: Tomato;">o</span> = () =&gt; {
   <span style="color: rgb(38, 148, 255);">│</span>       <span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span>
 
-<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove this variable.</span>
-    | <span style="color: rgb(38, 148, 255);">@@ -1,4 +1 @@</span>
-0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">const foo = () =&gt; {</span>
-1   | <span style="color: Tomato;">- </span><span style="color: Tomato;">    foo();</span>
-2   | <span style="color: Tomato;">- </span><span style="color: Tomato;">    console.log(this);</span>
-3   | <span style="color: Tomato;">- </span><span style="color: Tomato;">};</span>
-  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;"></span>
-
 =  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 
 </code></pre>{% endraw %}
@@ -171,6 +126,20 @@ const foo = () => {
 ```jsx
 function foo(b) {
     console.log(b)
+};
+foo();
+```
+
+```jsx
+function foo(_unused) {
+};
+foo();
+```
+
+```jsx
+import React from 'react';
+function foo() {
+    return <div />;
 };
 foo();
 ```
