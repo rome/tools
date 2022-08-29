@@ -23,7 +23,7 @@ fn main() -> io::Result<()> {
 
     let module = make::js_module(
         make::js_directive_list(None),
-        make::js_module_item_list(items.into_iter().map(|decl| {
+        make::js_module_item_list(items.into_iter().map(|(decl, _)| {
             JsAnyModuleItem::JsAnyStatement(match decl {
                 JsAnyDeclaration::JsClassDeclaration(decl) => {
                     JsAnyStatement::JsClassDeclaration(decl)

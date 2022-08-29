@@ -34,3 +34,36 @@ export class Deamon {
 		throw new Error("could not connect to the daemon");
 	}
 }
+
+interface ErrorFromDaemon {
+	code: number;
+	data: string;
+	message: string;
+}
+
+/**
+ * Error generated when communicating with the daemon
+ */
+export class DaemonError extends Error {
+	/**
+	 * The code of the error
+	 */
+	code: number;
+	// @ematipico Not sure how to document it
+	data: string;
+	/**
+	 * The reason why there's been an error
+	 */
+	message: string;
+
+	private constructor({ code, data, message }: ErrorFromDaemon) {
+		super();
+		this.code = code;
+		this.data = data;
+		this.message = message;
+	}
+
+	static fromError(e: any): DaemonError {
+		return new DaemonError(e as ErrorFromDaemon);
+	}
+}

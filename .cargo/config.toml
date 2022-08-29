@@ -19,6 +19,7 @@ documentation = """
     -p rome_console \
     -p rome_*parser \
     -p rome_rowan
+    -p rome_bin
     --no-deps
 """
 bench_parser = "run -p xtask_bench --release -- --feature parser"

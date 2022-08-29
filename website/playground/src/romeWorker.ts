@@ -84,13 +84,14 @@ self.addEventListener("message", async (e) => {
 			} = playgroundState;
 
 			workspace.updateSettings({
-				settings: {
-					format: {
+
+				configuration: {
+					formatter: {
 						enabled: true,
-						format_with_errors: true,
-						line_width: lineWidth,
-						indent_style:
-							indentStyle === IndentStyle.Tab ? "Tab" : { Space: indentWidth },
+						formatWithErrors: true,
+						lineWidth: lineWidth,
+						indentStyle: indentStyle === IndentStyle.Tab ? "tab" : "space",
+						indentSize: indentWidth
 					},
 					linter: {
 						enabled: true,

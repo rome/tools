@@ -22,3 +22,23 @@ export class NodeWasm {
 		return Promise.resolve(new Workspace());
 	}
 }
+
+/**
+ * The error generated when communicating with WebAssembly
+ */
+export class WasmError extends Error {
+	/**
+	 * The stack trace of the error.
+	 *
+	 * It might be useful, but the first like of the stack trace contains the error
+	 */
+	public stackTrace: string;
+	private constructor(stackTrace: string) {
+		super();
+		this.stackTrace = stackTrace;
+	}
+
+	static fromError(e: any): WasmError {
+		return new WasmError(e as string);
+	}
+}

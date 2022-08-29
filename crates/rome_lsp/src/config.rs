@@ -1,5 +1,3 @@
-use rome_service::configuration::Configuration;
-use rome_service::settings;
 use serde::{Deserialize, Serialize};
 use serde_json::{Error, Value};
 use tracing::trace;
@@ -35,23 +33,5 @@ impl Config {
             self.settings
         );
         Ok(())
-    }
-
-    /// Convert the current configuration to an instance of [settings::WorkspaceSettings]
-    ///
-    /// If the configuration file is found we use it with its defaults, otherwise
-    /// we use the settings coming from the client
-    pub(crate) fn as_workspace_settings(
-        &self,
-        configuration: Option<Configuration>,
-    ) -> settings::WorkspaceSettings {
-        let mut settings = settings::WorkspaceSettings::default();
-
-        if let Some(configuration) = configuration {
-            trace!("Applying configuration coming from the configuration file");
-            settings.merge_with_configuration(configuration);
-        }
-
-        settings
     }
 }

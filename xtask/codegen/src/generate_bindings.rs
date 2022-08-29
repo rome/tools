@@ -188,9 +188,18 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
         .build(),
     )];
 
-    items.extend(declarations.into_iter().map(|decl| {
+    items.extend(declarations.into_iter().map(|(decl, description)| {
+        let mut export = make::token(T![export]);
+        if let Some(description) = description {
+            let comment = format!("/**\n\t* {} \n\t */\n", description);
+            let trivia = vec![
+                (TriviaPieceKind::MultiLineComment, comment.as_str()),
+                (TriviaPieceKind::Newline, "\n"),
+            ];
+            export = export.with_leading_trivia(trivia);
+        }
         JsAnyModuleItem::JsExport(make::js_export(
-            make::token(T![export]),
+            export,
             JsAnyExportClause::JsAnyDeclarationClause(match decl {
                 JsAnyDeclaration::JsClassDeclaration(decl) => {
                     JsAnyDeclarationClause::JsClassDeclaration(decl)
