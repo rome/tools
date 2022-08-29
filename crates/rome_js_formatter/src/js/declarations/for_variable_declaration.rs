@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-use rome_formatter::write;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::JsForVariableDeclaration;
 use rome_js_syntax::JsForVariableDeclarationFields;
 
@@ -14,6 +14,13 @@ impl FormatNodeRule<JsForVariableDeclaration> for FormatJsForVariableDeclaration
             declarator,
         } = node.as_fields();
 
-        write![f, [kind_token.format(), space(), declarator.format(),]]
+        write![
+            f,
+            [group(&format_args![
+                kind_token.format(),
+                space(),
+                declarator.format()
+            ])]
+        ]
     }
 }

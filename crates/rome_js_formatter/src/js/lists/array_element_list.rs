@@ -1,11 +1,10 @@
 use crate::prelude::*;
-use rome_formatter::{FormatRuleWithOptions, GroupId};
-use std::convert::Infallible;
+use rome_formatter::{write, FormatRuleWithOptions, GroupId};
 
 use crate::utils::array::write_array_node;
 
-use crate::utils::has_formatter_trivia;
-use rome_js_syntax::{JsAnyExpression, JsArrayElementList, JsSyntaxKind};
+use crate::utils::{has_token_trailing_line_comment, has_trailing_line_comment};
+use rome_js_syntax::{JsArrayElementList, JsSyntaxKind};
 use rome_rowan::{AstNode, AstSeparatedList};
 
 #[derive(Debug, Clone, Default)]
@@ -26,20 +25,62 @@ impl FormatRule<JsArrayElementList> for FormatJsArrayElementList {
     type Context = JsFormatContext;
 
     fn fmt(&self, node: &JsArrayElementList, f: &mut JsFormatter) -> FormatResult<()> {
-        if !has_formatter_trivia(node.syntax()) && can_print_fill(node) {
-            // Using format_separated is valid in this case as can_print_fill does not allow holes
-            return f
-                .fill()
-                .entries(
-                    &soft_line_break_or_space(),
+        let layout = if can_print_fill(node) {
+            ArrayLayout::Fill
+        } else {
+            ArrayLayout::OnePerLine
+        };
+
+        match layout {
+            ArrayLayout::Fill => {
+                let mut filler = f.fill();
+
+                // Using format_separated is valid in this case as can_print_fill does not allow holes
+                for (element, formatted) in node.iter().zip(
                     node.format_separated(JsSyntaxKind::COMMA)
                         .with_group_id(self.group_id),
-                )
-                .finish();
-        }
+                ) {
+                    filler.entry(
+                        &format_once(|f| {
+                            if get_lines_before(element?.syntax()) > 1 {
+                                write!(f, [empty_line()])
+                            } else {
+                                write!(f, [soft_line_break_or_space()])
+                            }
+                        }),
+                        &formatted,
+                    );
+                }
 
-        write_array_node(node, f)
+                filler.finish()
+            }
+            ArrayLayout::OnePerLine => write_array_node(node, f),
+        }
     }
+}
+
+#[derive(Copy, Clone)]
+enum ArrayLayout {
+    /// Tries to fit as many array elements on a single line as possible.
+    ///
+    /// ```javascript
+    /// [
+    ///     1, 2, 3,
+    ///     5, 6,
+    /// ]
+    /// ```
+    Fill,
+
+    /// Prints every element on a single line if the whole array expression exceeds the line width, or any
+    /// of its elements gets printed in *expanded* mode.
+    /// ```javascript
+    /// [
+    ///     a.b(),
+    ///     4,
+    ///     3,
+    /// ]
+    /// ```
+    OnePerLine,
 }
 
 /// Returns true if the provided JsArrayElementList could
@@ -54,39 +95,58 @@ fn can_print_fill(list: &JsArrayElementList) -> bool {
     use rome_js_syntax::JsAnyExpression::*;
     use rome_js_syntax::JsUnaryOperator::*;
 
-    list.iter().all(|item| match item {
-        Ok(JsAnyExpression(JsUnaryExpression(expr))) => {
-            match expr.operator() {
-                Ok(Plus | Minus | BitwiseNot | LogicalNot) => {}
-                _ => return false,
-            }
-
-            if let Ok(expr) = expr.argument() {
-                is_short_literal(&expr)
-            } else {
-                false
-            }
-        }
-        Ok(JsAnyExpression(expr)) => is_short_literal(&expr),
-        _ => false,
-    })
-}
-
-/// Returns true if the provided expression is a literal with 10 or less characters
-fn is_short_literal(expr: &JsAnyExpression) -> bool {
-    match expr {
-        JsAnyExpression::JsAnyLiteralExpression(lit) => {
-            let token_len = lit
-                .syntax()
-                .text_trimmed()
-                .try_fold_chunks::<_, _, Infallible>(0, |sum, chunk| {
-                    // Count actual characters instead of byte length
-                    Ok(sum + chunk.chars().count())
-                })
-                .expect("the above fold operation is infallible");
-
-            token_len <= 10
-        }
-        _ => false,
+    if list.is_empty() {
+        return false;
     }
+
+    list.elements().all(|item| {
+        let separator_has_trailing = item.trailing_separator().map_or(true, |separator| {
+            separator.map_or(false, |separator| {
+                has_token_trailing_line_comment(separator)
+            })
+        });
+
+        if separator_has_trailing {
+            return false;
+        }
+
+        let syntax = match item.into_node() {
+            Ok(JsAnyExpression(JsAnyLiteralExpression(
+                rome_js_syntax::JsAnyLiteralExpression::JsNumberLiteralExpression(literal),
+            ))) => literal.into_syntax(),
+
+            Ok(JsAnyExpression(JsUnaryExpression(expr))) => {
+                let signed = matches!(expr.operator(), Ok(Plus | Minus));
+                let argument = expr.argument();
+
+                match argument {
+                    Ok(JsAnyLiteralExpression(
+                        rome_js_syntax::JsAnyLiteralExpression::JsNumberLiteralExpression(literal),
+                    )) => {
+                        let has_operator_comments = expr
+                            .operator_token()
+                            .map_or(false, |operator| operator.has_trailing_comments());
+
+                        if signed
+                            && !literal.syntax().has_leading_comments()
+                            && !has_operator_comments
+                        {
+                            literal.into_syntax()
+                        } else {
+                            return false;
+                        }
+                    }
+                    _ => {
+                        return false;
+                    }
+                }
+            }
+
+            _ => {
+                return false;
+            }
+        };
+
+        !has_trailing_line_comment(&syntax)
+    })
 }

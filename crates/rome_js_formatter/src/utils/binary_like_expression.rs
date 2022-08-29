@@ -54,7 +54,8 @@
 //! and right side of each Right side.
 
 use crate::prelude::*;
-use rome_formatter::{format_args, write, Buffer, CommentStyle, CstFormatContext};
+use crate::utils::{has_token_trailing_line_comment, has_trailing_line_comment};
+use rome_formatter::{format_args, write, Buffer, CstFormatContext};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyInProperty, JsBinaryExpression, JsBinaryOperator, JsDoWhileStatement,
     JsIfStatement, JsInExpression, JsInstanceofExpression, JsLogicalExpression, JsLogicalOperator,
@@ -66,7 +67,6 @@ use crate::parentheses::{
     is_arrow_function_body, is_callee, is_member_object, is_spread, is_tag, NeedsParentheses,
 };
 
-use crate::context::JsCommentStyle;
 use crate::js::expressions::static_member_expression::JsAnyStaticMemberLike;
 use crate::utils::assignment_like::has_leading_own_line_comment;
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
@@ -976,17 +976,4 @@ mod tests {
             Some(VisitEvent::Exit(JsAnyBinaryLikeExpression::from(root)))
         );
     }
-}
-
-fn has_trailing_line_comment(node: &JsSyntaxNode) -> bool {
-    node.last_token()
-        .map_or(false, |token| has_token_trailing_line_comment(&token))
-}
-
-fn has_token_trailing_line_comment(token: &JsSyntaxToken) -> bool {
-    token
-        .trailing_trivia()
-        .pieces()
-        .filter_map(|piece| piece.as_comments())
-        .any(|comment| JsCommentStyle.get_comment_kind(&comment).is_line())
 }

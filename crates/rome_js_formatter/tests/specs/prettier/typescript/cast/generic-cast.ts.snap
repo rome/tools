@@ -140,18 +140,7 @@ function x() {
      | undefined
    >someExistingConfigMap.mergeDeep(
      fallbackOptions.someMethodWithLongName(param1, param2),
-@@ -79,9 +77,7 @@
-   >{ property1: "myPropertyVal" };
- 
-   const testArrayLiteral = <Immutable.Map<string, any>>[
--    "first",
--    "second",
--    "third",
-+    "first", "second", "third",
-   ];
- 
-   const testArrayLiteral2 = <
-@@ -111,9 +107,9 @@
+@@ -111,9 +109,9 @@
    const fitsObjLiteral = <PermissionsChecker<any> | undefined>{ a: "test" };
    const fitsArrayLiteral = <PermissionsChecker<any> | undefined>["t1", "t2"];
  
@@ -164,7 +153,7 @@ function x() {
  
    const stillTooLong = <
      PermissionsChecker<object> | undefined | number | string | boolean
-@@ -129,11 +125,11 @@
+@@ -129,11 +127,11 @@
      | never
    >(<any>permissions)[receiverType];
  
@@ -181,17 +170,6 @@ function x() {
  
    const stillTooLong4 = <
      | PermissionsChecker<object>
-@@ -163,9 +159,7 @@
-   >{ prop1: "myPropVal" };
- 
-   const testArrayLiteral = <PermissionsChecker<any> | undefined>[
--    "first",
--    "second",
--    "third",
-+    "first", "second", "third",
-   ];
- 
-   const testArrayLiteral2 = <
 ```
 
 # Output
@@ -276,7 +254,9 @@ function y() {
   >{ property1: "myPropertyVal" };
 
   const testArrayLiteral = <Immutable.Map<string, any>>[
-    "first", "second", "third",
+    "first",
+    "second",
+    "third",
   ];
 
   const testArrayLiteral2 = <
@@ -358,7 +338,9 @@ function x() {
   >{ prop1: "myPropVal" };
 
   const testArrayLiteral = <PermissionsChecker<any> | undefined>[
-    "first", "second", "third",
+    "first",
+    "second",
+    "third",
   ];
 
   const testArrayLiteral2 = <
