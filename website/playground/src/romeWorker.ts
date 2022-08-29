@@ -84,28 +84,25 @@ self.addEventListener("message", async (e) => {
 			} = playgroundState;
 
 			workspace.updateSettings({
-
 				configuration: {
 					formatter: {
 						enabled: true,
 						formatWithErrors: true,
 						lineWidth: lineWidth,
 						indentStyle: indentStyle === IndentStyle.Tab ? "tab" : "space",
-						indentSize: indentWidth
+						indentSize: indentWidth,
 					},
 					linter: {
 						enabled: true,
 					},
-					languages: {
-						javascript: {
-							format: {
-								quote_style:
-									quoteStyle === QuoteStyle.Double ? "Double" : "Single",
-								quote_properties:
-									quoteProperties === QuoteProperties.Preserve
-										? "Preserve"
-										: "AsNeeded",
-							},
+					javascript: {
+						formatter: {
+							quoteStyle:
+								quoteStyle === QuoteStyle.Double ? "double" : "single",
+							quoteProperties:
+								quoteProperties === QuoteProperties.Preserve
+									? "preserve"
+									: "asNeeded",
 						},
 					},
 				},

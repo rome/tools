@@ -96,14 +96,14 @@ describe("Rome WebAssembly formatContent", () => {
 		);
 	});
 
-	it("should format content with custom configuration (8 spaces)", async () => {
+	it("should format content with custom configuration (8 spaces, single quotes, preserve quotes)", async () => {
 		const rome = await Rome.create({
 			backendKind: BackendKind.NODE,
 		});
 
-		let content = "function   f() { return {}  }";
+		let content = `function   f() { return { "foo": 'bar' }  }`;
 		let formatted = `function f() {
-        return {};
+        return { 'foo': 'bar' };
 }
 `;
 
@@ -111,6 +111,12 @@ describe("Rome WebAssembly formatContent", () => {
 			formatter: {
 				indentStyle: "space",
 				indentSize: 8,
+			},
+			javascript: {
+				formatter: {
+					quoteStyle: "single",
+					quoteProperties: "preserve",
+				},
 			},
 		});
 
