@@ -38,7 +38,7 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
     ) -> FormatResult<()> {
         let layout = ArrowFunctionLayout::for_arrow(
             node.clone(),
-            &f.context().comments(),
+            f.context().comments(),
             self.assignment_layout,
         )?;
 
@@ -161,7 +161,7 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
 }
 
 /// writes the arrow function type parameters, parameters, and return type annotation
-fn format_signature<'a>(arrow: &'a JsArrowFunctionExpression) -> impl Format<JsFormatContext> + 'a {
+fn format_signature(arrow: &JsArrowFunctionExpression) -> impl Format<JsFormatContext> + '_ {
     format_with(|f| {
         if let Some(async_token) = arrow.async_token() {
             write!(f, [async_token.format(), space()])?;
@@ -251,12 +251,12 @@ enum ArrowFunctionLayout {
     ///
     /// ```javascript
     /// const x =
-    /// 	(a): string =>
-    /// 	(b) =>
-    /// 	(c) =>
-    /// 	(d) =>
-    /// 	(e) =>
-    /// 		f;
+    ///   (a): string =>
+    ///   (b) =>
+    ///   (c) =>
+    ///   (d) =>
+    ///   (e) =>
+    ///     f;
     /// ```
     Chain(ArrowChain),
 }
