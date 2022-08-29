@@ -55,7 +55,7 @@ export interface JavascriptConfiguration {
 
 If defined here, they should not emit diagnostics. 
 	 */
-	globals: string[];
+	globals?: string[];
 }
 export interface LinterConfiguration {
 	/**

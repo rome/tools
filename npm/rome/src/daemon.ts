@@ -49,8 +49,12 @@ export class DaemonError extends Error {
 	 * The code of the error
 	 */
 	code: number;
-	// @ematipico Not sure how to document it
-	data: string;
+	/**
+	 * A better representation of the error, which might contain the stack trace of the error.
+	 *
+	 * This is useful for debug purpose
+	 */
+	data?: any;
 	/**
 	 * The reason why there's been an error
 	 */
