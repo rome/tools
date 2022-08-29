@@ -52,17 +52,6 @@ warning[js/noUnusedVariables]: This parameter is unused.
 4 │     constructor(a: number) {}
   │                 -
 
-Suggested fix: Remove this parameter.
-    | @@ -1,7 +1,7 @@
-0 0 |   // Invalid
-1 1 |   
-2 2 |   class D {
-3   | - 	constructor(a: number) {}
-  3 | + 	constructor() {}
-4 4 |   	f(a: number) {}
-5 5 |   	set a(a: number) {}
-6 6 |   }
-
 =  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 
 
@@ -74,17 +63,6 @@ warning[js/noUnusedVariables]: This parameter is unused.
   │
 5 │     f(a: number) {}
   │       -
-
-Suggested fix: Remove this parameter.
-    | @@ -2,7 +2,7 @@
-1 1 |   
-2 2 |   class D {
-3 3 |   	constructor(a: number) {}
-4   | - 	f(a: number) {}
-  4 | + 	f() {}
-5 5 |   	set a(a: number) {}
-6 6 |   }
-7 7 |   console.log(new D());
 
 =  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 
