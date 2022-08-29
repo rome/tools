@@ -144,7 +144,7 @@ pub trait CommentStyle<L: Language> {
 #[derive(Debug, Default, Clone)]
 pub struct Comments<L: Language> {
     /// The use of a [Rc] is necessary to achieve that [Comments] has a lifetime that is independent of the [crate::Formatter].
-    /// Having independent lifetimes is necessary to support the use case where a (formattable object)[Format]
+    /// Having independent lifetimes is necessary to support the use case where a (formattable object)[crate::Format]
     /// iterates over all comments and writes them into the [crate::Formatter] (mutably borrowing the [crate::Formatter] and in turn its context).
     ///
     /// ```block
