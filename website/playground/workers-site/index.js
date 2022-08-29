@@ -26,9 +26,9 @@ async function handleEvent(event) {
 	let options = {};
 
 	/**
-   * You can add custom logic to how we fetch your assets
-   * by configuring the function `mapRequestToAsset`
-   */
+	 * You can add custom logic to how we fetch your assets
+	 * by configuring the function `mapRequestToAsset`
+	 */
 	// options.mapRequestToAsset = handlePrefix(/^\/docs/)
 
 	try {

@@ -386,12 +386,12 @@ class Manager {
 	}
 
 	/**
-	* Intercept link clicks, if they are just hashes on the current page then
-	* just scroll
-	*
-	* @param {MouseEvent} event
-	* @param {HTMLElement} target
-	*/
+	 * Intercept link clicks, if they are just hashes on the current page then
+	 * just scroll
+	 *
+	 * @param {MouseEvent} event
+	 * @param {HTMLElement} target
+	 */
 	handleAnchorClick(event, target) {
 		let href = target.getAttribute("href");
 		if (href === undefined) {

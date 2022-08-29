@@ -10,8 +10,8 @@ export class NodeWasm {
 	}
 
 	/**
-     * It creates a new instance of a workspace connected to the WebAssembly backend
-     */
+	 * It creates a new instance of a workspace connected to the WebAssembly backend
+	 */
 	public static async loadWebAssembly(): Promise<NodeWasm> {
 		return new NodeWasm(await NodeWasm.loadWorkspace());
 	}
