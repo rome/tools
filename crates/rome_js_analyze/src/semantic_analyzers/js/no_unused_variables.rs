@@ -62,6 +62,20 @@ declare_rule! {
     /// };
     /// foo();
     /// ```
+    ///
+    /// ```js
+    /// function foo(_unused) {
+    /// };
+    /// foo();
+    /// ```
+    ///
+    /// ```jsx
+    /// import React from 'react';
+    /// function foo() {
+    ///     return <div />;
+    /// };
+    /// foo();
+    /// ```
     pub(crate) NoUnusedVariables {
         version: "0.9.0",
         name: "noUnusedVariables",
