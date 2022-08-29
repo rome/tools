@@ -208,7 +208,7 @@ onClick={() => {}}>
    }
  </div>;
  
-@@ -62,19 +60,21 @@
+@@ -62,13 +60,15 @@
  <div>
    {/**
     * JSDoc-y comment in JSX. I wonder what will happen to it?
@@ -222,19 +222,11 @@ onClick={() => {}}>
 +  /**
     * Another JSDoc comment in JSX.
 -   */}
-+  */
++   */
 +  }
  </div>;
  
  <div
-   /**
--   * Handles clicks.
--   */
-+ * Handles clicks.
-+*/
-   onClick={() => {}}
- ></div>;
- 
 @@ -90,20 +90,15 @@
    {foo}
  </div>;
@@ -334,14 +326,14 @@ onClick={() => {}}>
   {
   /**
    * Another JSDoc comment in JSX.
-  */
+   */
   }
 </div>;
 
 <div
   /**
- * Handles clicks.
-*/
+   * Handles clicks.
+   */
   onClick={() => {}}
 ></div>;
 

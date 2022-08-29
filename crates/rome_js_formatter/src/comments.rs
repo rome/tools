@@ -1,0 +1,134 @@
+use crate::prelude::*;
+use rome_formatter::{format_args, write};
+use rome_formatter::{CommentKind, CommentStyle, SourceComment};
+use rome_js_syntax::suppression::{parse_suppression_comment, SuppressionCategory};
+use rome_js_syntax::{JsLanguage, JsSyntaxKind};
+use rome_rowan::{SyntaxTriviaPieceComments, TextLen};
+
+#[derive(Default)]
+pub struct FormatJsLeadingComment;
+
+impl FormatRule<SourceComment<JsLanguage>> for FormatJsLeadingComment {
+    type Context = JsFormatContext;
+
+    fn fmt(
+        &self,
+        comment: &SourceComment<JsLanguage>,
+        f: &mut Formatter<Self::Context>,
+    ) -> FormatResult<()> {
+        if is_doc_comment(comment.piece()) {
+            let mut source_offset = comment.piece().text_range().start();
+
+            for (index, line) in comment.piece().text().lines().enumerate() {
+                if index == 0 {
+                    write!(f, [dynamic_text(line.trim_end(), source_offset)])?;
+                } else {
+                    write!(
+                        f,
+                        [align(
+                            1,
+                            &format_args![
+                                hard_line_break(),
+                                dynamic_text(line.trim(), source_offset)
+                            ]
+                        )]
+                    )?;
+                }
+                source_offset += line.text_len();
+            }
+
+            Ok(())
+        } else {
+            write!(f, [comment.piece()])
+        }
+    }
+}
+
+/// Returns `true` if `comment` is a multi line block comment:
+///
+/// # Examples
+///
+/// ## Doc Comments
+///
+/// ```javascript
+/// /**
+///  * Multiline doc comment
+///  */
+///
+///  /*
+///   * With single star
+///   */
+/// ```
+///
+/// ## Non Doc Comments
+///
+/// ```javascript
+/// /** has no line break */
+///
+/// /*
+///  *
+///  this line doesn't start with a star
+///  */
+/// ```
+///
+fn is_doc_comment(comment: &SyntaxTriviaPieceComments<JsLanguage>) -> bool {
+    if !comment.has_newline() {
+        return false;
+    }
+
+    let text = comment.text();
+
+    text.lines().enumerate().all(|(index, line)| {
+        if index == 0 {
+            line.starts_with("/*")
+        } else {
+            line.trim_start().starts_with('*')
+        }
+    })
+}
+
+#[derive(Eq, PartialEq, Copy, Clone, Debug, Default)]
+pub struct JsCommentStyle;
+
+impl CommentStyle<JsLanguage> for JsCommentStyle {
+    fn is_suppression(&self, text: &str) -> bool {
+        parse_suppression_comment(text)
+            .flat_map(|suppression| suppression.categories)
+            .any(|(category, _)| category == SuppressionCategory::Format)
+    }
+
+    fn get_comment_kind(&self, comment: &SyntaxTriviaPieceComments<JsLanguage>) -> CommentKind {
+        if comment.text().starts_with("/*") {
+            if comment.has_newline() {
+                CommentKind::Block
+            } else {
+                CommentKind::InlineBlock
+            }
+        } else {
+            CommentKind::Line
+        }
+    }
+
+    fn is_group_start_token(&self, kind: JsSyntaxKind) -> bool {
+        matches!(
+            kind,
+            JsSyntaxKind::L_PAREN
+                | JsSyntaxKind::L_BRACK
+                | JsSyntaxKind::L_CURLY
+                | JsSyntaxKind::DOLLAR_CURLY
+        )
+    }
+
+    fn is_group_end_token(&self, kind: JsSyntaxKind) -> bool {
+        matches!(
+            kind,
+            JsSyntaxKind::R_BRACK
+                | JsSyntaxKind::R_CURLY
+                | JsSyntaxKind::R_PAREN
+                | JsSyntaxKind::COMMA
+                | JsSyntaxKind::SEMICOLON
+                | JsSyntaxKind::DOT
+                | JsSyntaxKind::EOF
+        )
+    }
+}

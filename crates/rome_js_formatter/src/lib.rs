@@ -253,6 +253,7 @@ mod check_reformat;
 #[rustfmt::skip]
 mod generated;
 pub(crate) mod builders;
+mod comments;
 pub mod context;
 mod parentheses;
 pub(crate) mod separated;
@@ -271,7 +272,8 @@ use rome_rowan::TextRange;
 use rome_rowan::{AstNode, SyntaxNode};
 
 use crate::builders::{format_parenthesize, format_suppressed_node};
-use crate::context::{JsCommentStyle, JsFormatContext, JsFormatOptions};
+use crate::comments::JsCommentStyle;
+use crate::context::{JsFormatContext, JsFormatOptions};
 use crate::cst::FormatJsSyntaxNode;
 use crate::syntax_rewriter::transform;
 use std::iter::FusedIterator;

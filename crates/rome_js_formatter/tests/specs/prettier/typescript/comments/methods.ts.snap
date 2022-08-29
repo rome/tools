@@ -62,71 +62,7 @@ export class Point {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,49 +1,49 @@
- export class Point {
-   /**
--   * Does something.
--   */
-+ * Does something.
-+ */
-   foo() {}
- 
-   /**
--   * Does something else.
--   */
-+     * Does something else.
-+     */
-   bar() {}
- 
-   /**
--   * Does
--   * something
--   * much
--   * better
--   * than
--   * the
--   * rest.
--   */
-+                 * Does
-+                 * something
-+                 * much
-+                 * better
-+                 * than
-+                 * the
-+                 * rest.
-+                 */
-   baz() {}
- 
-   /**
--   * Buzz-Fizz.
--   * Note: This is indented too far.
--   */
-+       * Buzz-Fizz.
-+       * Note: This is indented too far.
-+       */
-   fizzBuzz() {}
- 
-   /**
--   * Turns the given string into pig-latin.
--   */
-+       * Turns the given string into pig-latin.
-+       */
-   pigLatinize(value: string) {
-     /**
--     * This is a block comment inside of a method.
--     */
-+ * This is a block comment inside of a method.
-+ */
-   }
- 
-   /**
--   * One
--   * Two
-+        * One
-+ * Two
-    * Three
--   * Four
-+* Four 
+@@ -43,7 +43,7 @@
     */
    mismatchedIndentation() {}
  
@@ -142,46 +78,46 @@ export class Point {
 ```js
 export class Point {
   /**
- * Does something.
- */
+   * Does something.
+   */
   foo() {}
 
   /**
-     * Does something else.
-     */
+   * Does something else.
+   */
   bar() {}
 
   /**
-                 * Does
-                 * something
-                 * much
-                 * better
-                 * than
-                 * the
-                 * rest.
-                 */
+   * Does
+   * something
+   * much
+   * better
+   * than
+   * the
+   * rest.
+   */
   baz() {}
 
   /**
-       * Buzz-Fizz.
-       * Note: This is indented too far.
-       */
+   * Buzz-Fizz.
+   * Note: This is indented too far.
+   */
   fizzBuzz() {}
 
   /**
-       * Turns the given string into pig-latin.
-       */
+   * Turns the given string into pig-latin.
+   */
   pigLatinize(value: string) {
     /**
- * This is a block comment inside of a method.
- */
+     * This is a block comment inside of a method.
+     */
   }
 
   /**
-        * One
- * Two
+   * One
+   * Two
    * Three
-* Four 
+   * Four
    */
   mismatchedIndentation() {}
 

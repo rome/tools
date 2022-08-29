@@ -1,11 +1,10 @@
+use crate::comments::{FormatJsLeadingComment, JsCommentStyle};
 use rome_formatter::printer::PrinterOptions;
 use rome_formatter::{
-    CommentKind, CommentStyle, Comments, CstFormatContext, FormatContext, FormatOptions,
-    IndentStyle, LineWidth, TransformSourceMap,
+    Comments, CstFormatContext, FormatContext, FormatOptions, IndentStyle, LineWidth,
+    TransformSourceMap,
 };
-use rome_js_syntax::suppression::{parse_suppression_comment, SuppressionCategory};
-use rome_js_syntax::{JsLanguage, JsSyntaxKind, SourceType};
-use rome_rowan::SyntaxTriviaPieceComments;
+use rome_js_syntax::{JsLanguage, SourceType};
 use std::fmt;
 use std::fmt::Debug;
 use std::rc::Rc;
@@ -66,6 +65,7 @@ impl FormatContext for JsFormatContext {
 impl CstFormatContext for JsFormatContext {
     type Language = JsLanguage;
     type Style = JsCommentStyle;
+    type LeadingCommentRule = FormatJsLeadingComment;
 
     fn comment_style(&self) -> Self::Style {
         JsCommentStyle
@@ -169,52 +169,6 @@ impl fmt::Display for JsFormatOptions {
         writeln!(f, "Line width: {}", self.line_width.value())?;
         writeln!(f, "Quote style: {}", self.quote_style)?;
         writeln!(f, "Quote properties: {}", self.quote_properties)
-    }
-}
-
-#[derive(Eq, PartialEq, Copy, Clone, Debug, Default)]
-pub struct JsCommentStyle;
-
-impl CommentStyle<JsLanguage> for JsCommentStyle {
-    fn is_suppression(&self, text: &str) -> bool {
-        parse_suppression_comment(text)
-            .flat_map(|suppression| suppression.categories)
-            .any(|(category, _)| category == SuppressionCategory::Format)
-    }
-
-    fn get_comment_kind(&self, comment: &SyntaxTriviaPieceComments<JsLanguage>) -> CommentKind {
-        if comment.text().starts_with("/*") {
-            if comment.has_newline() {
-                CommentKind::Block
-            } else {
-                CommentKind::InlineBlock
-            }
-        } else {
-            CommentKind::Line
-        }
-    }
-
-    fn is_group_start_token(&self, kind: JsSyntaxKind) -> bool {
-        matches!(
-            kind,
-            JsSyntaxKind::L_PAREN
-                | JsSyntaxKind::L_BRACK
-                | JsSyntaxKind::L_CURLY
-                | JsSyntaxKind::DOLLAR_CURLY
-        )
-    }
-
-    fn is_group_end_token(&self, kind: JsSyntaxKind) -> bool {
-        matches!(
-            kind,
-            JsSyntaxKind::R_BRACK
-                | JsSyntaxKind::R_CURLY
-                | JsSyntaxKind::R_PAREN
-                | JsSyntaxKind::COMMA
-                | JsSyntaxKind::SEMICOLON
-                | JsSyntaxKind::DOT
-                | JsSyntaxKind::EOF
-        )
     }
 }
 

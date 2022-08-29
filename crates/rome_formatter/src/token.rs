@@ -1,8 +1,8 @@
 use crate::comments::CommentStyle;
 use crate::prelude::*;
 use crate::{
-    format_args, write, Argument, Arguments, CommentKind, CstFormatContext, GroupId, LastTokenKind,
-    SourceComment,
+    format_args, write, Argument, Arguments, CommentKind, CstFormatContext, FormatRefWithRule,
+    GroupId, LastTokenKind, SourceComment,
 };
 use rome_rowan::{Language, SyntaxToken, SyntaxTriviaPiece};
 
@@ -682,6 +682,7 @@ where
                 .context()
                 .comment_style()
                 .get_comment_kind(comment.piece());
+
             last_inline_comment = comment_kind.is_inline() && lines_after == 0;
 
             let format_content = format_with(|f| {
@@ -691,7 +692,10 @@ where
                     write!(f, [space()])?;
                 };
 
-                write!(f, [comment.piece()])?;
+                let format_comment =
+                    FormatRefWithRule::new(comment, C::LeadingCommentRule::default());
+
+                write!(f, [format_comment])?;
 
                 match comment_kind {
                     CommentKind::Line => match lines_after {
