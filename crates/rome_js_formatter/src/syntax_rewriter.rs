@@ -402,9 +402,9 @@ where
 /// This is the same as Rust's [Chain] iterator but implements [ExactSizeIterator].
 /// Rust doesn't implement [ExactSizeIterator] because adding the sizes of both pieces may overflow.
 ///
-/// Implementing [ExactSizeIterator] in our case is safe because our ranges are limited to [u32], which in turn
-/// guarantees that a tree can never have more than 2^32 tokens or pieces and adding a `u32 + u32` is safely in the range
-/// of a `usize`.
+/// Implementing [ExactSizeIterator] in our case is safe because this may only overflow if
+/// a source document has more than 2^32 trivia which isn't possible because our source documents are limited to 2^32
+/// length.
 struct ChainTriviaPiecesIterator<F, S> {
     first: Option<F>,
     second: S,

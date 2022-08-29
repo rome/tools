@@ -1,7 +1,7 @@
 use crate::{Printed, SourceMarker, TextRange};
 use rome_rowan::{Language, SyntaxNode, SyntaxNodeText, TextSize};
+use rustc_hash::FxHashMap;
 use std::cmp::Ordering;
-use std::collections::HashMap;
 
 /// A source map for mapping positions of a pre-processed tree back to the locations in the source tree.
 ///
@@ -57,7 +57,7 @@ pub struct TransformSourceMap {
 
     /// Key: Start or end position of node for which the trimmed range should be extended
     /// Value: The trimmed range.
-    mapped_node_ranges: HashMap<TextSize, TrimmedNodeRangeMapping>,
+    mapped_node_ranges: FxHashMap<TextSize, TrimmedNodeRangeMapping>,
 }
 
 impl TransformSourceMap {
@@ -375,7 +375,7 @@ pub struct TransformSourceMapBuilder {
 
     /// The keys are a position in the source map where a trimmed node starts or ends.
     /// The values are the metadata about a trimmed node range
-    mapped_node_ranges: HashMap<TextSize, TrimmedNodeRangeMapping>,
+    mapped_node_ranges: FxHashMap<TextSize, TrimmedNodeRangeMapping>,
 }
 
 impl TransformSourceMapBuilder {
@@ -384,7 +384,7 @@ impl TransformSourceMapBuilder {
         Self {
             source_text: root.text(),
             deleted_ranges: Vec::new(),
-            mapped_node_ranges: HashMap::new(),
+            mapped_node_ranges: FxHashMap::default(),
         }
     }
 

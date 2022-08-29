@@ -1584,6 +1584,7 @@ dependencies = [
  "cfg-if",
  "indexmap",
  "rome_rowan",
+ "rustc-hash",
  "schemars",
  "serde",
  "tracing",
