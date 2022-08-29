@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write};
+use rome_formatter::write;
 use rome_formatter::{CommentKind, CommentStyle, SourceComment};
 use rome_js_syntax::suppression::{parse_suppression_comment, SuppressionCategory};
 use rome_js_syntax::{JsLanguage, JsSyntaxKind};
@@ -19,25 +19,33 @@ impl FormatRule<SourceComment<JsLanguage>> for FormatJsLeadingComment {
         if is_doc_comment(comment.piece()) {
             let mut source_offset = comment.piece().text_range().start();
 
-            for (index, line) in comment.piece().text().lines().enumerate() {
-                if index == 0 {
-                    write!(f, [dynamic_text(line.trim_end(), source_offset)])?;
-                } else {
-                    write!(
-                        f,
-                        [align(
-                            1,
-                            &format_args![
-                                hard_line_break(),
-                                dynamic_text(line.trim(), source_offset)
-                            ]
-                        )]
-                    )?;
-                }
-                source_offset += line.text_len();
-            }
+            let mut lines = comment.piece().text().lines();
 
-            Ok(())
+            // SAFETY: Safe, `is_doc_comment` only returns `true` for multiline comments
+            let first_line = lines.next().unwrap();
+            write!(f, [dynamic_text(first_line.trim_end(), source_offset)])?;
+
+            source_offset += first_line.text_len();
+
+            // Indent the remaining lines by one space so that all `*` are aligned.
+            write!(
+                f,
+                [align(
+                    1,
+                    &format_once(|f| {
+                        for line in lines {
+                            write!(
+                                f,
+                                [hard_line_break(), dynamic_text(line.trim(), source_offset)]
+                            )?;
+
+                            source_offset += line.text_len();
+                        }
+
+                        Ok(())
+                    })
+                )]
+            )
         } else {
             write!(f, [comment.piece()])
         }
