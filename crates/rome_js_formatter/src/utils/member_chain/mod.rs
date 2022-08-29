@@ -201,7 +201,7 @@ pub(crate) fn get_member_chain(
     let root = flatten_member_chain(
         &mut chain_members,
         call_expression.clone().into(),
-        &f.context().comments(),
+        f.context().comments(),
     )?;
 
     chain_members.push(root);
