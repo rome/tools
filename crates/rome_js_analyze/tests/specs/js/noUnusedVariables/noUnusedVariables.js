@@ -1,3 +1,5 @@
+import React from 'react';
+
 const a = 1;
 const b = 2,
 	c = 3;
@@ -47,4 +49,8 @@ let value;
 function Button() {}
 console.log(<Button att={value}/>);
 
-(function f(){})()
+(function f(_a){})()
+
+new (class C {
+
+})

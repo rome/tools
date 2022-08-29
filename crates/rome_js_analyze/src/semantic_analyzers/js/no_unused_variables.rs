@@ -1,16 +1,13 @@
-use crate::{semantic_services::Semantic, utils::batch::JsBatchMutation, JsRuleAction};
-use rome_analyze::{
-    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
-};
+use crate::semantic_services::Semantic;
+use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
-use rome_diagnostics::Applicability;
 use rome_js_semantic::{AllReferencesExtensions, SemanticScopeExtensions};
 use rome_js_syntax::{
-    JsCatchDeclaration, JsConstructorParameterList, JsConstructorParameters, JsFormalParameter,
-    JsFunctionDeclaration, JsIdentifierBinding, JsParameterList, JsParameters, JsSyntaxKind,
+    JsClassExpression, JsConstructorParameterList, JsConstructorParameters, JsFunctionDeclaration,
+    JsFunctionExpression, JsIdentifierBinding, JsParameterList, JsParameters, JsSyntaxKind,
     JsVariableDeclarator,
 };
-use rome_rowan::{AstNode, BatchMutationExt};
+use rome_rowan::AstNode;
 
 declare_rule! {
     /// Disallow unused variables.
@@ -62,6 +59,20 @@ declare_rule! {
     /// ```js
     /// function foo(b) {
     ///     console.log(b)
+    /// };
+    /// foo();
+    /// ```
+    ///
+    /// ```js
+    /// function foo(_unused) {
+    /// };
+    /// foo();
+    /// ```
+    ///
+    /// ```jsx
+    /// import React from 'react';
+    /// function foo() {
+    ///     return <div />;
     /// };
     /// foo();
     /// ```
@@ -117,12 +128,28 @@ impl Rule for NoUnusedVariables {
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let binding = ctx.query();
-        let model = ctx.model();
+        let name = binding.name_token().ok()?;
+        let name = name.token_text_trimmed();
+        let name = name.text();
+
+        // Old code import React but do not used directly
+        // only indirectly after transpiling JSX.
+        if name.starts_with('_') || name == "React" {
+            return None;
+        }
+
+        // Ignore expressions
+        if binding.parent::<JsFunctionExpression>().is_some()
+            || binding.parent::<JsClassExpression>().is_some()
+        {
+            return None;
+        }
 
         if is_typescript_unused_ok(binding).is_some() {
             return None;
         }
 
+        let model = ctx.model();
         if model.is_exported(binding) {
             return None;
         }
@@ -197,44 +224,5 @@ impl Rule for NoUnusedVariables {
         );
 
         Some(diag)
-    }
-
-    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
-        let root = ctx.root();
-        let binding = ctx.query();
-
-        let mut batch = root.begin();
-
-        // Try to remove node
-        let removed = if let Some(declaration) = binding.parent::<JsFunctionDeclaration>() {
-            batch.remove_node(declaration);
-            true
-        } else if let Some(variable_declarator) = binding.parent::<JsVariableDeclarator>() {
-            batch.remove_js_variable_declarator(&variable_declarator)
-        } else if let Some(formal_parameter) = binding.parent::<JsFormalParameter>() {
-            batch.remove_js_formal_parameter(&formal_parameter)
-        } else if let Some(catch_declaration) = binding.parent::<JsCatchDeclaration>() {
-            batch.remove_node(catch_declaration);
-            true
-        } else {
-            false
-        };
-
-        if removed {
-            let symbol_type = match binding.syntax().parent().unwrap().kind() {
-                JsSyntaxKind::JS_FORMAL_PARAMETER => "parameter",
-                JsSyntaxKind::JS_FUNCTION_DECLARATION => "function",
-                _ => "variable",
-            };
-
-            Some(JsRuleAction {
-                category: ActionCategory::QuickFix,
-                applicability: Applicability::MaybeIncorrect,
-                message: markup! { "Remove this " {symbol_type} "." }.to_owned(),
-                mutation: batch,
-            })
-        } else {
-            None
-        }
     }
 }
