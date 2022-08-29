@@ -3,7 +3,7 @@ mod printer_options;
 pub use printer_options::*;
 
 use crate::format_element::{
-    Align, ConditionalGroupContent, DedentMode, Group, IndentIfBreak, LineMode, PrintMode,
+    Align, ConditionalGroupContent, DedentMode, Group, IndentIfGroupBreaks, LineMode, PrintMode,
     VerbatimKind,
 };
 use crate::intersperse::Intersperse;
@@ -213,7 +213,7 @@ impl<'a> Printer<'a> {
                 }
             }
 
-            FormatElement::IndentIfBreaks(IndentIfBreak { content, group_id }) => {
+            FormatElement::IndentIfGroupBreaks(IndentIfGroupBreaks { content, group_id }) => {
                 let group_mode = self.state.group_modes.unwrap_print_mode(*group_id, element);
 
                 match group_mode {
@@ -935,7 +935,7 @@ fn fits_element_on_line<'a, 'rest>(
             }
         }
 
-        FormatElement::IndentIfBreaks(indent) => {
+        FormatElement::IndentIfGroupBreaks(indent) => {
             let group_mode = state
                 .group_modes
                 .get_print_mode(indent.group_id)

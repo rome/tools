@@ -956,7 +956,7 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                                 group(&indent(&soft_line_break_or_space()),)
                                     .with_group_id(Some(group_id)),
                                 line_suffix_boundary(),
-                                indent_if_break(&right, group_id)
+                                indent_if_group_breaks(&right, group_id)
                             ]
                         ]
                     }

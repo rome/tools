@@ -155,7 +155,7 @@ impl Format<JsFormatContext> for JsAnyBinaryLikeExpression {
                     f,
                     [group(&format_args![
                         format_non_jsx_parts,
-                        indent_if_break(&jsx_element, group_id),
+                        indent_if_group_breaks(&jsx_element, group_id),
                     ])]
                 )
             } else {

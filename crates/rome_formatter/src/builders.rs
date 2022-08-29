@@ -1750,7 +1750,7 @@ impl<Context> std::fmt::Debug for IfGroupBreaks<'_, Context> {
 ///
 ///     write!(f, [
 ///         group(&text("(aLongHeaderThatBreaksForSomeReason) =>")).with_group_id(Some(group_id)),
-///         indent_if_break(&format_args![hard_line_break(), text("a => b")], group_id)
+///         indent_if_group_breaks(&format_args![hard_line_break(), text("a => b")], group_id)
 ///     ])
 /// });
 ///
@@ -1777,7 +1777,7 @@ impl<Context> std::fmt::Debug for IfGroupBreaks<'_, Context> {
 ///
 ///     write!(f, [
 ///         group(&text("(aLongHeaderThatBreaksForSomeReason) =>")).with_group_id(Some(group_id)),
-///         indent_if_break(&format_args![hard_line_break(), text("a => b")], group_id)
+///         indent_if_group_breaks(&format_args![hard_line_break(), text("a => b")], group_id)
 ///     ])
 /// });
 ///
@@ -1789,26 +1789,26 @@ impl<Context> std::fmt::Debug for IfGroupBreaks<'_, Context> {
 /// );
 /// ```
 #[inline]
-pub fn indent_if_break<Content, Context>(
+pub fn indent_if_group_breaks<Content, Context>(
     content: &Content,
     group_id: GroupId,
-) -> IndentIfBreak<Context>
+) -> IndentIfBreakBreaks<Context>
 where
     Content: Format<Context>,
 {
-    IndentIfBreak {
+    IndentIfBreakBreaks {
         group_id,
         content: Argument::new(content),
     }
 }
 
 #[derive(Copy, Clone)]
-pub struct IndentIfBreak<'a, Context> {
+pub struct IndentIfBreakBreaks<'a, Context> {
     content: Argument<'a, Context>,
     group_id: GroupId,
 }
 
-impl<Context> Format<Context> for IndentIfBreak<'_, Context> {
+impl<Context> Format<Context> for IndentIfBreakBreaks<'_, Context> {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         let mut buffer = VecBuffer::new(f.state_mut());
 
@@ -1819,15 +1819,15 @@ impl<Context> Format<Context> for IndentIfBreak<'_, Context> {
         }
 
         let content = buffer.into_vec();
-        f.write_element(FormatElement::IndentIfBreaks(
-            format_element::IndentIfBreak::new(content.into_boxed_slice(), self.group_id),
+        f.write_element(FormatElement::IndentIfGroupBreaks(
+            format_element::IndentIfGroupBreaks::new(content.into_boxed_slice(), self.group_id),
         ))
     }
 }
 
-impl<Context> std::fmt::Debug for IndentIfBreak<'_, Context> {
+impl<Context> std::fmt::Debug for IndentIfBreakBreaks<'_, Context> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("IndentIfBreak")
+        f.debug_struct("IndentIfGroupBreaks")
             .field("group_id", &self.group_id)
             .field("content", &"{{content}}")
             .finish()

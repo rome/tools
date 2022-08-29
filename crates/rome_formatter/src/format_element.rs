@@ -60,7 +60,7 @@ pub enum FormatElement {
 
     /// Optimized version of [FormatElement::ConditionalGroupContent] for the case where some content
     /// should be indented if the specified group breaks.
-    IndentIfBreaks(IndentIfBreak),
+    IndentIfGroupBreaks(IndentIfGroupBreaks),
 
     /// Concatenates multiple elements together. See [crate::Formatter::join_with] for examples.
     List(List),
@@ -180,7 +180,7 @@ impl std::fmt::Debug for FormatElement {
                 content.fmt(fmt)
             }
             FormatElement::ConditionalGroupContent(content) => content.fmt(fmt),
-            FormatElement::IndentIfBreaks(content) => content.fmt(fmt),
+            FormatElement::IndentIfGroupBreaks(content) => content.fmt(fmt),
             FormatElement::List(content) => {
                 write!(fmt, "List ")?;
                 content.fmt(fmt)
@@ -514,13 +514,13 @@ impl std::fmt::Debug for Label {
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
-pub struct IndentIfBreak {
+pub struct IndentIfGroupBreaks {
     pub(crate) content: Content,
 
     pub(crate) group_id: GroupId,
 }
 
-impl IndentIfBreak {
+impl IndentIfGroupBreaks {
     pub fn new(content: Content, group_id: GroupId) -> Self {
         Self { content, group_id }
     }
@@ -686,7 +686,7 @@ impl FormatElement {
             FormatElement::Line(line_mode) => matches!(line_mode, LineMode::Hard | LineMode::Empty),
             FormatElement::Group(Group { content, .. })
             | FormatElement::ConditionalGroupContent(ConditionalGroupContent { content, .. })
-            | FormatElement::IndentIfBreaks(IndentIfBreak { content, .. })
+            | FormatElement::IndentIfGroupBreaks(IndentIfGroupBreaks { content, .. })
             | FormatElement::Comment(content)
             | FormatElement::Fill(Fill { content, .. })
             | FormatElement::Verbatim(Verbatim { content, .. })
@@ -903,11 +903,11 @@ impl Format<IrFormatContext> for FormatElement {
 
                 write!(f, [text(")")])
             }
-            FormatElement::IndentIfBreaks(content) => {
+            FormatElement::IndentIfGroupBreaks(content) => {
                 write!(
                     f,
                     [
-                        text("indent_if_break("),
+                        text("indent_if_group_breaks("),
                         group(&soft_block_indent(&format_args![
                             content.content.as_ref(),
                             text(","),
