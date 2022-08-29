@@ -7,23 +7,23 @@ interface Props {
 
 export default function QuoteStyleSelect({ setQuoteStyle, quoteStyle }: Props) {
 	return (
-		<div className="pl-5">
+		<div className="pl-5 pb-5">
 			<fieldset>
-				<legend className="sr-only">File Type</legend>
+				<legend className="sr-only">Quote Style</legend>
 				<div className="relative flex items-start">
 					<div className="">
 						<label
 							htmlFor="quoteStyle"
 							className="block text-sm font-medium text-gray-700"
 						>
-							Quote Type
+							Quote Style
 						</label>
-						<span id="quote-type-description" className="text-gray-500">
-							<span className="sr-only">Quote type</span>
+						<span id="quote-style-description" className="text-gray-500">
+							<span className="sr-only">Quote style</span>
 						</span>
 						<select
 							id="quoteStyle"
-							aria-describedby="quote-type-description"
+							aria-describedby="quote-style-description"
 							name="quoteStyle"
 							value={quoteStyle ?? ""}
 							onChange={(e) => setQuoteStyle(e.target.value as QuoteStyle)}
