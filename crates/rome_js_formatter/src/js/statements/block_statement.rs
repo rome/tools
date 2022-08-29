@@ -18,7 +18,7 @@ impl FormatNodeRule<JsBlockStatement> for FormatJsBlockStatement {
             r_curly_token,
         } = node.as_fields();
 
-        if is_non_collapsable_empty_block(node, &f.context().comments()) {
+        if is_non_collapsable_empty_block(node, f.context().comments()) {
             for stmt in statements
                 .iter()
                 .filter_map(|stmt| JsEmptyStatement::cast(stmt.into_syntax()))

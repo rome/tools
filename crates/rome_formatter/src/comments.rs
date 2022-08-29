@@ -5,6 +5,7 @@ use rome_rowan::{
 #[cfg(debug_assertions)]
 use std::cell::RefCell;
 use std::collections::HashSet;
+use std::rc::Rc;
 
 #[derive(Copy, Clone, Eq, PartialEq, Debug)]
 pub enum CommentKind {
@@ -138,21 +139,26 @@ pub trait CommentStyle<L: Language> {
 /// * whether a node should be formatted as is because it has a leading suppression comment.
 /// * a node's leading and trailing comments
 /// * the dangling comments of a token
+///
+/// Cloning `comments` is cheap as it only involves bumping a reference counter.
 #[derive(Debug, Default, Clone)]
 pub struct Comments<L: Language> {
-    /// Stores the nodes that have at least one leading suppression comment.
-    suppressed_nodes: HashSet<SyntaxNode<L>>,
-
-    /// Stores all nodes for which [Comments::is_suppressed] has been called.
-    /// This index of nodes that have been checked if they have a suppression comments is used to
-    /// detect format implementations that manually format a child node without previously checking if
-    /// the child has a suppression comment.
+    /// The use of a [Rc] is necessary to achieve that [Comments] has a lifetime that is independent from the [crate::Formatter].
+    /// Having independent lifetimes is necessary to support the use case where a (formattable object)[crate::Format]
+    /// iterates over all comments, and writes them into the [crate::Formatter] (mutably borrowing the [crate::Formatter] and in turn its context).
     ///
-    /// The implementation refrains from snapshotting the checked nodes because a node gets formatted
-    /// as verbatim if its formatting fails which has the same result as formatting it as suppressed node
-    /// (thus, guarantees that the formatting isn't changed).
-    #[cfg(debug_assertions)]
-    checked_suppressions: RefCell<HashSet<SyntaxNode<L>>>,
+    /// ```block
+    /// for leading in f.context().comments().leading_comments(node) {
+    ///     ^
+    ///     |- Borrows comments
+    ///   write!(f, [comment(leading.piece.text())])?;
+    ///          ^
+    ///          |- Mutably borrows the formatter, state, context, and comments (if comments aren't cloned)
+    /// }
+    /// ```
+    ///
+    /// Using an `Rc` here allows to cheaply clone [Comments] for these use cases.
+    data: Rc<CommentsData<L>>,
 }
 
 impl<L: Language> Comments<L> {
@@ -202,10 +208,14 @@ impl<L: Language> Comments<L> {
             }
         }
 
-        Self {
+        let data = CommentsData {
             suppressed_nodes,
             #[cfg(debug_assertions)]
             checked_suppressions: RefCell::default(),
+        };
+
+        Self {
+            data: Rc::new(data),
         }
     }
 
@@ -225,7 +235,7 @@ impl<L: Language> Comments<L> {
     /// call expression is nested inside of the expression statement.
     pub fn is_suppressed(&self, node: &SyntaxNode<L>) -> bool {
         self.mark_suppression_checked(node);
-        self.suppressed_nodes.contains(node)
+        self.data.suppressed_nodes.contains(node)
     }
 
     /// Marks that it isn't necessary for the given node to check if it has been suppressed or not.
@@ -233,7 +243,7 @@ impl<L: Language> Comments<L> {
     pub fn mark_suppression_checked(&self, node: &SyntaxNode<L>) {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
-                let mut checked_nodes = self.checked_suppressions.borrow_mut();
+                let mut checked_nodes = self.data.checked_suppressions.borrow_mut();
                 checked_nodes.insert(node.clone());
             } else {
                 let _ = node;
@@ -250,7 +260,7 @@ impl<L: Language> Comments<L> {
     pub(crate) fn assert_checked_all_suppressions(&self, root: &SyntaxNode<L>) {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
-                let checked_nodes = self.checked_suppressions.borrow();
+                let checked_nodes = self.data.checked_suppressions.borrow();
                 for node in root.descendants() {
                     if node.kind().is_list() || node.kind().is_root() {
                         continue;
@@ -273,4 +283,21 @@ Node:
             }
         }
     }
+}
+
+#[derive(Debug, Default)]
+struct CommentsData<L: Language> {
+    /// Stores the nodes that have at least one leading suppression comment.
+    suppressed_nodes: HashSet<SyntaxNode<L>>,
+
+    /// Stores all nodes for which [Comments::is_suppressed] has been called.
+    /// This index of nodes that have been checked if they have a suppression comments is used to
+    /// detect format implementations that manually format a child node without previously checking if
+    /// the child has a suppression comment.
+    ///
+    /// The implementation refrains from snapshotting the checked nodes because a node gets formatted
+    /// as verbatim if its formatting fails which has the same result as formatting it as suppressed node
+    /// (thus, guarantees that the formatting isn't changed).
+    #[cfg(debug_assertions)]
+    checked_suppressions: RefCell<HashSet<SyntaxNode<L>>>,
 }

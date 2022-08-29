@@ -65,7 +65,6 @@ use rome_rowan::{
 };
 use std::error::Error;
 use std::num::ParseIntError;
-use std::rc::Rc;
 use std::str::FromStr;
 
 #[derive(Debug, Eq, PartialEq, Clone, Copy, Hash)]
@@ -233,22 +232,8 @@ pub trait CstFormatContext: FormatContext {
     #[deprecated(note = "Prefer FormatLanguage::comment_style")]
     fn comment_style(&self) -> Self::Style;
 
-    /// Returns a ref counted [Comments].
-    ///
-    /// The use of a [Rc] is necessary to achieve that [Comments] has a lifetime that is independent of the [crate::Formatter].
-    /// Having independent lifetimes is necessary to support the use case where a (formattable object)[Format]
-    /// iterates over all comments and writes them into the [crate::Formatter] (mutably borrowing the [crate::Formatter] and in turn this context).
-    ///
-    /// ```block
-    /// for leading in f.context().comments().leading_comments(node) {
-    ///     ^
-    ///     |- Borrows comments
-    ///   write!(f, [comment(leading.piece.text())])?;
-    ///          ^
-    ///          |- Mutably borrows the formatter, state, context (and comments, if they aren't wrapped by a Rc)
-    /// }
-    /// ```
-    fn comments(&self) -> Rc<Comments<Self::Language>>;
+    /// Returns a reference to the program's comments.
+    fn comments(&self) -> &Comments<Self::Language>;
 }
 
 #[derive(Debug, Default, Eq, PartialEq)]
