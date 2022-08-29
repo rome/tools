@@ -44,9 +44,9 @@ use rome_js_syntax::{
     JsAnyLiteralExpression, JsArrowFunctionExpression, JsAssignmentExpression, JsBinaryExpression,
     JsBinaryOperator, JsComputedMemberAssignment, JsComputedMemberExpression,
     JsConditionalExpression, JsLanguage, JsParenthesizedAssignment, JsParenthesizedExpression,
-    JsSequenceExpression, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, TsConditionalType,
-    TsIndexedAccessType, TsIntersectionTypeElementList, TsParenthesizedType, TsType,
-    TsUnionTypeVariantList,
+    JsSequenceExpression, JsStaticMemberAssignment, JsStaticMemberExpression, JsSyntaxKind,
+    JsSyntaxNode, JsSyntaxToken, TsConditionalType, TsIndexedAccessType,
+    TsIntersectionTypeElementList, TsParenthesizedType, TsType, TsUnionTypeVariantList,
 };
 use rome_rowan::{declare_node_union, match_ast, AstNode, AstSeparatedList, SyntaxResult};
 
