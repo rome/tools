@@ -54,24 +54,6 @@ fn should_break(elements: &JsArrayElementList) -> SyntaxResult<bool> {
     if elements.len() < 2 {
         Ok(false)
     } else {
-        //         const elementType = element && element.type;
-        //         if (
-        //           elementType !== "ArrayExpression" &&
-        //           elementType !== "ObjectExpression"
-        //         ) {
-        //           return false;
-        //         }
-        //
-        //         const nextElement = elements[i + 1];
-        //         if (nextElement && elementType !== nextElement.type) {
-        //           return false;
-        //         }
-        //
-        //         const itemsKey =
-        //           elementType === "ArrayExpression" ? "elements" : "properties";
-        //
-        //         return element[itemsKey] && element[itemsKey].length > 1;
-
         let mut elements = elements.iter().peekable();
 
         while let Some(element) = elements.next() {

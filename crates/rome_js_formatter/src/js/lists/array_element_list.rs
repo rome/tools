@@ -52,7 +52,7 @@ impl FormatRule<JsArrayElementList> for FormatJsArrayElementList {
                     );
                 }
 
-                return filler.finish();
+                filler.finish()
             }
             ArrayLayout::OnePerLine => write_array_node(node, f),
         }
