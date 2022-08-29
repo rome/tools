@@ -56,13 +56,7 @@ this.getAttribute(function(s) /*string*/ {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,12 +1,11 @@
- let example = [
--  "FOO",
--  "BAR",
-+  "FOO", "BAR",
-   // Comment
- ];
+@@ -6,7 +6,7 @@
  
  foo(
    {},
@@ -71,7 +65,7 @@ this.getAttribute(function(s) /*string*/ {
  );
  
  o = {
-@@ -16,7 +15,6 @@
+@@ -16,7 +16,6 @@
  
  o = {
    state,
@@ -79,7 +73,7 @@ this.getAttribute(function(s) /*string*/ {
    // Comment
  };
  
-@@ -35,7 +33,8 @@
+@@ -35,7 +34,8 @@
    a;
  }
  
@@ -95,7 +89,8 @@ this.getAttribute(function(s) /*string*/ {
 
 ```js
 let example = [
-  "FOO", "BAR",
+  "FOO",
+  "BAR",
   // Comment
 ];
 

@@ -16,6 +16,7 @@ mod typescript;
 
 pub(crate) use crate::parentheses::resolve_left_most_expression;
 use crate::prelude::*;
+use crate::JsCommentStyle;
 pub(crate) use assignment_like::JsAnyAssignmentLike;
 pub(crate) use binary_like_expression::{
     needs_binary_like_parentheses, JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression,
@@ -24,10 +25,10 @@ pub(crate) use conditional::JsAnyConditional;
 pub(crate) use member_chain::get_member_chain;
 pub(crate) use object_like::JsObjectLike;
 pub(crate) use object_pattern_like::JsObjectPatternLike;
-use rome_formatter::{format_args, write, Buffer, VecBuffer};
+use rome_formatter::{format_args, write, Buffer, CommentStyle, VecBuffer};
 use rome_js_syntax::{JsAnyExpression, JsAnyStatement, JsInitializerClause, JsLanguage, Modifiers};
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
-use rome_rowan::{AstNode, AstNodeList, Direction};
+use rome_rowan::{AstNode, AstNodeList};
 pub(crate) use string_utils::*;
 pub(crate) use typescript::should_hug_type;
 
@@ -98,42 +99,6 @@ impl Format<JsFormatContext> for FormatInterpreterToken<'_> {
             Ok(())
         }
     }
-}
-
-/// Returns true if this node contains "printable" trivias: comments
-/// or empty lines (2 consecutive newlines only separated by whitespace)
-pub(crate) fn has_formatter_trivia(node: &JsSyntaxNode) -> bool {
-    let mut line_count = 0;
-
-    for token in node.descendants_tokens(Direction::Next) {
-        for trivia in token.leading_trivia().pieces() {
-            if trivia.is_comments() {
-                return true;
-            } else if trivia.is_newline() {
-                line_count += 1;
-                if line_count >= 2 {
-                    return true;
-                }
-            }
-        }
-
-        // This is where the token would be,
-        // reset the consecutive newline counter
-        line_count = 0;
-
-        for trivia in token.trailing_trivia().pieces() {
-            if trivia.is_comments() {
-                return true;
-            } else if trivia.is_newline() {
-                line_count += 1;
-                if line_count >= 2 {
-                    return true;
-                }
-            }
-        }
-    }
-
-    false
 }
 
 /// Returns true if this node contains newlines in trivias.
@@ -282,4 +247,17 @@ where
     }
 
     join_with.finish()
+}
+
+pub(crate) fn has_trailing_line_comment(node: &JsSyntaxNode) -> bool {
+    node.last_token()
+        .map_or(false, |token| has_token_trailing_line_comment(&token))
+}
+
+pub(crate) fn has_token_trailing_line_comment(token: &JsSyntaxToken) -> bool {
+    token
+        .trailing_trivia()
+        .pieces()
+        .filter_map(|piece| piece.as_comments())
+        .any(|comment| JsCommentStyle.get_comment_kind(&comment).is_line())
 }
