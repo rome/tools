@@ -62,8 +62,9 @@ pub enum FormatElement {
     List(List),
 
     /// Concatenates multiple elements together with a given separator printed in either
-    /// flat or expanded mode to fill the print width. See [crate::Formatter::fill].
-    Fill(Fill),
+    /// flat or expanded mode to fill the print width. Expect that the content is a list of alternating
+    /// [element, separator] See [crate::Formatter::fill].
+    Fill(Content),
 
     /// A text that should be printed as is, see [crate::text] for documentation and examples.
     Text(Text),
@@ -244,26 +245,6 @@ impl Deref for List {
 
     fn deref(&self) -> &Self::Target {
         &self.content
-    }
-}
-
-/// Fill is a list of [FormatElement]s along with a separator.
-///
-/// The printer prints this list delimited by a separator, wrapping the list when it
-/// reaches the specified `line_width`.
-#[derive(Clone, Debug, PartialEq, Eq)]
-pub struct Fill {
-    pub(super) content: Content,
-    pub(super) separator: Box<FormatElement>,
-}
-
-impl Fill {
-    pub fn content(&self) -> &[FormatElement] {
-        &self.content
-    }
-
-    pub fn separator(&self) -> &FormatElement {
-        &self.separator
     }
 }
 
@@ -669,7 +650,7 @@ impl FormatElement {
             FormatElement::Group(Group { content, .. })
             | FormatElement::ConditionalGroupContent(ConditionalGroupContent { content, .. })
             | FormatElement::Comment(content)
-            | FormatElement::Fill(Fill { content, .. })
+            | FormatElement::Fill(content)
             | FormatElement::Verbatim(Verbatim { content, .. })
             | FormatElement::Label(Label { content, .. })
             | FormatElement::Indent(content)
@@ -933,18 +914,8 @@ impl Format<IrFormatContext> for FormatElement {
                     ]
                 )
             }
-            FormatElement::Fill(fill) => {
-                write!(
-                    f,
-                    [
-                        text("fill("),
-                        fill.separator.as_ref(),
-                        text(","),
-                        space(),
-                        fill.content(),
-                        text(")")
-                    ]
-                )
+            FormatElement::Fill(content) => {
+                write!(f, [text("fill("), content.as_ref(), text(")")])
             }
 
             FormatElement::BestFitting(best_fitting) => {

@@ -5,7 +5,6 @@ pub use printer_options::*;
 use crate::format_element::{
     Align, ConditionalGroupContent, DedentMode, Group, LineMode, PrintMode, VerbatimKind,
 };
-use crate::intersperse::Intersperse;
 use crate::{FormatElement, GroupId, IndentStyle, Printed, SourceMarker, TextRange};
 
 use rome_rowan::{TextLen, TextSize};
@@ -170,8 +169,8 @@ impl<'a> Printer<'a> {
                 }
             }
 
-            FormatElement::Fill(fill) => {
-                self.print_fill(queue, fill.content(), fill.separator(), args);
+            FormatElement::Fill(content) => {
+                self.print_fill(queue, content, args);
             }
 
             FormatElement::List(list) => {
@@ -378,7 +377,6 @@ impl<'a> Printer<'a> {
         &mut self,
         queue: &mut ElementCallQueue<'a>,
         content: &'a [FormatElement],
-        separator: &'a FormatElement,
         args: PrintElementArgs,
     ) {
         let empty_rest = ElementCallQueue::default();
@@ -411,50 +409,64 @@ impl<'a> Printer<'a> {
         );
 
         // Process remaining items
-        for next_item in items {
-            // A line break in expanded mode is always necessary if the current item didn't fit.
-            // otherwise see if both contents fit on the line.
-            let current_and_next_fit = current_fits
-                && fits_on_line(
-                    [separator, next_item],
-                    args.with_print_mode(PrintMode::Flat),
-                    &empty_rest,
-                    self,
-                );
+        loop {
+            match (items.next(), items.next()) {
+                (Some(separator), Some(next_item)) => {
+                    // A line break in expanded mode is always necessary if the current item didn't fit.
+                    // otherwise see if both contents fit on the line.
+                    let current_and_next_fit = current_fits
+                        && fits_on_line(
+                            [separator, next_item],
+                            args.with_print_mode(PrintMode::Flat),
+                            &empty_rest,
+                            self,
+                        );
 
-            if current_and_next_fit {
-                // Print Space and next item on the same line
-                self.print_all(
-                    queue,
-                    &[separator, next_item],
-                    args.with_print_mode(PrintMode::Flat),
-                );
-            } else {
-                // Print the separator and then check again if the next item fits on the line now
-                self.print_all(
-                    queue,
-                    &[separator],
-                    args.with_print_mode(PrintMode::Expanded),
-                );
+                    if current_and_next_fit {
+                        // Print Space and next item on the same line
+                        self.print_all(
+                            queue,
+                            &[separator, next_item],
+                            args.with_print_mode(PrintMode::Flat),
+                        );
+                    } else {
+                        // Print the separator and then check again if the next item fits on the line now
+                        self.print_all(
+                            queue,
+                            &[separator],
+                            args.with_print_mode(PrintMode::Expanded),
+                        );
 
-                let next_fits = fits_on_line(
-                    [next_item],
-                    args.with_print_mode(PrintMode::Flat),
-                    &empty_rest,
-                    self,
-                );
+                        let next_fits = fits_on_line(
+                            [next_item],
+                            args.with_print_mode(PrintMode::Flat),
+                            &empty_rest,
+                            self,
+                        );
 
-                if next_fits {
-                    self.print_all(queue, &[next_item], args.with_print_mode(PrintMode::Flat));
-                } else {
-                    self.print_all(
-                        queue,
-                        &[next_item],
-                        args.with_print_mode(PrintMode::Expanded),
-                    );
+                        if next_fits {
+                            self.print_all(
+                                queue,
+                                &[next_item],
+                                args.with_print_mode(PrintMode::Flat),
+                            );
+                        } else {
+                            self.print_all(
+                                queue,
+                                &[next_item],
+                                args.with_print_mode(PrintMode::Expanded),
+                            );
+                        }
+
+                        current_fits = next_fits;
+                    }
                 }
-
-                current_fits = next_fits;
+                (Some(_), _) => {
+                    // Don't print a trailing separator
+                }
+                (None, _) => {
+                    break;
+                }
             }
         }
     }
@@ -924,10 +936,10 @@ fn fits_element_on_line<'a, 'rest>(
 
         FormatElement::List(list) => queue.extend(list.iter(), args),
 
-        FormatElement::Fill(fill) => queue.queue.0.extend(
-            Intersperse::new(fill.content().iter().rev(), fill.separator())
-                .map(|t| PrintElementCall::new(t, args)),
-        ),
+        FormatElement::Fill(content) => queue
+            .queue
+            .0
+            .extend(content.iter().rev().map(|t| PrintElementCall::new(t, args))),
 
         FormatElement::Text(token) => {
             let indent = std::mem::take(&mut state.pending_indent);
@@ -1109,7 +1121,7 @@ mod tests {
 
         write!(&mut buffer, [root]).unwrap();
 
-        Printer::new(options).print(&buffer.into_element())
+        Printer::new(options).print(&dbg!(buffer.into_element()))
     }
 
     #[test]
@@ -1301,25 +1313,43 @@ two lines`,
         let mut formatter = Formatter::new(&mut buffer);
 
         formatter
-            .fill(&soft_line_break_or_space())
+            .fill()
             // These all fit on the same line together
-            .entry(&format_args!(text("1"), text(",")))
-            .entry(&format_args!(text("2"), text(",")))
-            .entry(&format_args!(text("3"), text(",")))
+            .entry(
+                &format_args!(text("1"), text(",")),
+                &soft_line_break_or_space(),
+            )
+            .entry(
+                &format_args!(text("2"), text(",")),
+                &soft_line_break_or_space(),
+            )
+            .entry(
+                &format_args!(text("3"), text(",")),
+                &soft_line_break_or_space(),
+            )
             // This one fits on a line by itself,
-            .entry(&format_args!(text("723493294"), text(",")))
+            .entry(
+                &format_args!(text("723493294"), text(",")),
+                &soft_line_break_or_space(),
+            )
             // fits without breaking
-            .entry(&group(&format_args!(
-                text("["),
-                soft_block_indent(&text("5")),
-                text("],")
-            )))
+            .entry(
+                &group(&format_args!(
+                    text("["),
+                    soft_block_indent(&text("5")),
+                    text("],")
+                )),
+                &soft_line_break_or_space(),
+            )
             // this one must be printed in expanded mode to fit
-            .entry(&group(&format_args!(
-                text("["),
-                soft_block_indent(&text("123456789")),
-                text("]"),
-            )))
+            .entry(
+                &group(&format_args!(
+                    text("["),
+                    soft_block_indent(&text("123456789")),
+                    text("]"),
+                )),
+                &soft_line_break_or_space(),
+            )
             .finish()
             .unwrap();
 
@@ -1340,10 +1370,19 @@ two lines`,
             group(&format_args![
                 text("["),
                 soft_block_indent(&format_with(|f| {
-                    f.fill(soft_line_break_or_space())
-                        .entry(&format_args!(text("1"), text(",")))
-                        .entry(&format_args!(text("2"), text(",")))
-                        .entry(&format_args!(text("3"), if_group_breaks(&text(","))))
+                    f.fill()
+                        .entry(
+                            &format_args!(text("1"), text(",")),
+                            &soft_line_break_or_space(),
+                        )
+                        .entry(
+                            &format_args!(text("2"), text(",")),
+                            &soft_line_break_or_space(),
+                        )
+                        .entry(
+                            &format_args!(text("3"), if_group_breaks(&text(","))),
+                            &soft_line_break_or_space(),
+                        )
                         .finish()
                 })),
                 text("]")

@@ -12,8 +12,8 @@ impl FormatRule<JsxChildList> for FormatJsxChildList {
     fn fmt(&self, node: &JsxChildList, formatter: &mut JsFormatter) -> FormatResult<()> {
         if contains_meaningful_jsx_text(node) {
             formatter
-                .fill(soft_line_break())
-                .flatten_entries(node.iter().formatted())
+                .fill()
+                .flatten_entries(node.iter().formatted(), &soft_line_break())
                 .finish()
         } else {
             formatter
