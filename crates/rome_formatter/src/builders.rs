@@ -1792,23 +1792,23 @@ impl<Context> std::fmt::Debug for IfGroupBreaks<'_, Context> {
 pub fn indent_if_group_breaks<Content, Context>(
     content: &Content,
     group_id: GroupId,
-) -> IndentIfBreakBreaks<Context>
+) -> IndentIfGroupBreaks<Context>
 where
     Content: Format<Context>,
 {
-    IndentIfBreakBreaks {
+    IndentIfGroupBreaks {
         group_id,
         content: Argument::new(content),
     }
 }
 
 #[derive(Copy, Clone)]
-pub struct IndentIfBreakBreaks<'a, Context> {
+pub struct IndentIfGroupBreaks<'a, Context> {
     content: Argument<'a, Context>,
     group_id: GroupId,
 }
 
-impl<Context> Format<Context> for IndentIfBreakBreaks<'_, Context> {
+impl<Context> Format<Context> for IndentIfGroupBreaks<'_, Context> {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         let mut buffer = VecBuffer::new(f.state_mut());
 
@@ -1825,7 +1825,7 @@ impl<Context> Format<Context> for IndentIfBreakBreaks<'_, Context> {
     }
 }
 
-impl<Context> std::fmt::Debug for IndentIfBreakBreaks<'_, Context> {
+impl<Context> std::fmt::Debug for IndentIfGroupBreaks<'_, Context> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("IndentIfGroupBreaks")
             .field("group_id", &self.group_id)
