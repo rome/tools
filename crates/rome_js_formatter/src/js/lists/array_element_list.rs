@@ -71,7 +71,8 @@ enum ArrayLayout {
     /// ```
     Fill,
 
-    /// Prints every element on a single line if the whole array expression exceeds the line width
+    /// Prints every element on a single line if the whole array expression exceeds the line width, or any
+    /// of its elements gets printed in *expanded* mode.
     /// ```javascript
     /// [
     ///     a.b(),
