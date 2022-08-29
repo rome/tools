@@ -1,7 +1,7 @@
 use rome_formatter::printer::PrinterOptions;
 use rome_formatter::{
     CommentKind, CommentStyle, Comments, CstFormatContext, FormatContext, FormatOptions,
-    IndentStyle, LineWidth,
+    IndentStyle, LineWidth, TransformSourceMap,
 };
 use rome_js_syntax::suppression::{parse_suppression_comment, SuppressionCategory};
 use rome_js_syntax::{JsLanguage, JsSyntaxKind, SourceType};
@@ -17,6 +17,8 @@ pub struct JsFormatContext {
 
     /// The comments of the nodes and tokens in the program.
     comments: Rc<Comments<JsLanguage>>,
+
+    source_map: Option<TransformSourceMap>,
 }
 
 impl JsFormatContext {
@@ -24,7 +26,13 @@ impl JsFormatContext {
         Self {
             options,
             comments: Rc::new(comments),
+            ..JsFormatContext::default()
         }
+    }
+
+    pub fn with_source_map(mut self, source_map: Option<TransformSourceMap>) -> Self {
+        self.source_map = source_map;
+        self
     }
 }
 
@@ -48,6 +56,10 @@ impl FormatContext for JsFormatContext {
 
     fn options(&self) -> &Self::Options {
         &self.options
+    }
+
+    fn source_map(&self) -> Option<&TransformSourceMap> {
+        self.source_map.as_ref()
     }
 }
 
@@ -113,10 +125,6 @@ impl JsFormatOptions {
     pub fn with_source_type(mut self, source_type: SourceType) -> Self {
         self.source_type = source_type;
         self
-    }
-
-    pub fn line_width(&self) -> LineWidth {
-        self.line_width
     }
 
     pub fn quote_style(&self) -> QuoteStyle {

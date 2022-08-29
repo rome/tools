@@ -35,6 +35,7 @@ pub mod prelude;
 #[cfg(debug_assertions)]
 pub mod printed_tokens;
 pub mod printer;
+mod source_map;
 pub mod token;
 
 use crate::formatter::Formatter;
@@ -63,6 +64,7 @@ use rome_rowan::{
     Language, RawSyntaxKind, SyntaxElement, SyntaxError, SyntaxKind, SyntaxNode, SyntaxResult,
     SyntaxToken, SyntaxTriviaPieceComments, TextRange, TextSize, TokenAtOffset,
 };
+pub use source_map::{TransformSourceMap, TransformSourceMapBuilder};
 use std::error::Error;
 use std::num::ParseIntError;
 use std::str::FromStr;
@@ -206,6 +208,13 @@ pub trait FormatContext {
 
     /// Returns the formatting options
     fn options(&self) -> &Self::Options;
+
+    /// Returns [None] if the CST has not been pre-processed.
+    ///
+    /// Returns [Some] if the CST has been pre-processed to simplify formatting.
+    /// The source map can be used to map positions of the formatted nodes back to their original
+    /// source locations or to resolve the source text.
+    fn source_map(&self) -> Option<&TransformSourceMap>;
 }
 
 /// Options customizing how the source code should be formatted.
@@ -253,6 +262,10 @@ impl FormatContext for SimpleFormatContext {
     fn options(&self) -> &Self::Options {
         &self.options
     }
+
+    fn source_map(&self) -> Option<&TransformSourceMap> {
+        None
+    }
 }
 
 #[derive(Debug, Default, Eq, PartialEq)]
@@ -278,7 +291,7 @@ impl FormatOptions for SimpleFormatOptions {
 }
 
 /// Lightweight sourcemap marker between source and output tokens
-#[derive(Debug, Clone, Eq, PartialEq)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
 #[cfg_attr(
     feature = "serde",
     derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
@@ -318,12 +331,23 @@ where
 {
     pub fn print(&self) -> Printed {
         let print_options = self.context.options().as_print_options();
-        Printer::new(print_options).print(&self.root)
+
+        let printed = Printer::new(print_options).print(&self.root);
+
+        match self.context.source_map() {
+            Some(source_map) => source_map.map_printed(printed),
+            None => printed,
+        }
     }
 
     pub fn print_with_indent(&self, indent: u16) -> Printed {
         let print_options = self.context.options().as_print_options();
-        Printer::new(print_options).print_with_indent(&self.root, indent)
+        let printed = Printer::new(print_options).print_with_indent(&self.root, indent);
+
+        match self.context.source_map() {
+            Some(source_map) => source_map.map_printed(printed),
+            None => printed,
+        }
     }
 }
 
@@ -376,7 +400,8 @@ impl Printed {
     }
 
     /// Returns a list of [SourceMarker] mapping byte positions
-    /// in the output string to the input source code
+    /// in the output string to the input source code.
+    /// It's not guaranteed that the markers are sorted by source position.
     pub fn sourcemap(&self) -> &[SourceMarker] {
         &self.sourcemap
     }
@@ -796,10 +821,7 @@ where
 
     buffer.write_fmt(arguments)?;
 
-    Ok(Formatted {
-        root: buffer.into_element(),
-        context: state.into_context(),
-    })
+    Ok(Formatted::new(buffer.into_element(), state.into_context()))
 }
 
 /// Entry point for formatting a [SyntaxNode] for a specific language.
@@ -818,6 +840,18 @@ pub trait FormatLanguage {
     /// Customizes how comments are formatted
     fn comment_style(&self) -> Self::CommentStyle;
 
+    /// Performs an optional pre-processing of the tree. This can be useful to remove nodes
+    /// that otherwise complicate formatting.
+    ///
+    /// Return [None] if the tree shouldn't be processed. Return [Some] with the transformed
+    /// tree and the source map otherwise.
+    fn transform(
+        &self,
+        _root: &SyntaxNode<Self::SyntaxLanguage>,
+    ) -> Option<(SyntaxNode<Self::SyntaxLanguage>, TransformSourceMap)> {
+        None
+    }
+
     /// This is used to select appropriate "root nodes" for the
     /// range formatting process: for instance in JavaScript the function returns
     /// true for statement and declaration nodes, to ensure the entire statement
@@ -830,7 +864,11 @@ pub trait FormatLanguage {
     fn options(&self) -> &<Self::Context as FormatContext>::Options;
 
     /// Creates the [FormatContext] with the given `source map` and `comments`
-    fn create_context(self, comments: Comments<Self::SyntaxLanguage>) -> Self::Context;
+    fn create_context(
+        self,
+        comments: Comments<Self::SyntaxLanguage>,
+        source_map: Option<TransformSourceMap>,
+    ) -> Self::Context;
 }
 
 /// Formats a syntax node file based on its features.
@@ -841,22 +879,27 @@ pub fn format_node<L: FormatLanguage>(
     language: L,
 ) -> FormatResult<Formatted<L::Context>> {
     tracing::trace_span!("format_node").in_scope(move || {
-        let comments = Comments::from_node(root, &language);
-        let format_node = FormatRefWithRule::new(root, L::FormatRule::default());
+        let (root, source_map) = match language.transform(root) {
+            Some((root, source_map)) => (root, Some(source_map)),
+            None => (root.clone(), None),
+        };
 
-        let context = language.create_context(comments);
+        let comments = Comments::from_node(&root, &language);
+        let format_node = FormatRefWithRule::new(&root, L::FormatRule::default());
+
+        let context = language.create_context(comments, source_map);
         let mut state = FormatState::new(context);
         let mut buffer = VecBuffer::new(&mut state);
 
-        write!(&mut buffer, [format_node])?;
+        write!(buffer, [format_node])?;
 
         let document = buffer.into_element();
 
-        state.assert_formatted_all_tokens(root);
+        state.assert_formatted_all_tokens(&root);
         state
             .context()
             .comments()
-            .assert_checked_all_suppressions(root);
+            .assert_checked_all_suppressions(&root);
 
         Ok(Formatted::new(document, state.into_context()))
     })
@@ -1198,6 +1241,7 @@ pub fn format_sub_tree<L: FormatLanguage>(
     let mut printed = formatted.print_with_indent(initial_indent);
     let sourcemap = printed.take_sourcemap();
     let verbatim_ranges = printed.take_verbatim_ranges();
+
     Ok(Printed::new(
         printed.into_code(),
         Some(root.text_range()),
@@ -1226,9 +1270,9 @@ impl<L: Language, Context> Format<Context> for SyntaxTriviaPieceComments<L> {
 /// This structure is different from [crate::Formatter] in that the formatting infrastructure
 /// creates a new [crate::Formatter] for every [crate::write!] call, whereas this structure stays alive
 /// for the whole process of formatting a root with [crate::format!].
-#[derive(Default)]
 pub struct FormatState<Context> {
     context: Context,
+
     group_id_builder: UniqueGroupIdBuilder,
 
     /// `true` if the last formatted output is an inline comment that may need a space between the next token or comment.

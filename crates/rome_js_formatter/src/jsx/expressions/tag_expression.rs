@@ -1,11 +1,11 @@
-use crate::parentheses::{is_callee, is_tag, ExpressionNode, NeedsParentheses};
+use crate::parentheses::{is_callee, is_tag, NeedsParentheses};
 use crate::prelude::*;
 use crate::utils::jsx::{get_wrap_state, WrapState};
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
-    JsAnyExpression, JsBinaryExpression, JsBinaryOperator, JsSyntaxKind, JsSyntaxNode,
-    JsxTagExpression,
+    JsBinaryExpression, JsBinaryOperator, JsSyntaxKind, JsSyntaxNode, JsxTagExpression,
 };
+use rome_rowan::AstNode;
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsxTagExpression;
@@ -36,11 +36,7 @@ impl NeedsParentheses for JsxTagExpression {
             JsSyntaxKind::JS_BINARY_EXPRESSION => {
                 let binary = JsBinaryExpression::unwrap_cast(parent.clone());
 
-                let is_left = binary
-                    .left()
-                    .map(ExpressionNode::into_resolved_syntax)
-                    .as_ref()
-                    == Ok(self.syntax());
+                let is_left = binary.left().map(AstNode::into_syntax).as_ref() == Ok(self.syntax());
                 matches!(binary.operator(), Ok(JsBinaryOperator::LessThan)) && is_left
             }
             JsSyntaxKind::TS_AS_EXPRESSION
@@ -56,17 +52,5 @@ impl NeedsParentheses for JsxTagExpression {
             | JsSyntaxKind::JSX_SPREAD_CHILD => true,
             _ => is_callee(self.syntax(), parent) || is_tag(self.syntax(), parent),
         }
-    }
-}
-
-impl ExpressionNode for JsxTagExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }

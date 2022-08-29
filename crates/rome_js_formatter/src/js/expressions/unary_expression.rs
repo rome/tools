@@ -1,12 +1,10 @@
 use crate::prelude::*;
-use rome_formatter::write;
+use rome_formatter::{format_args, write};
 
-use crate::parentheses::{
-    unary_like_expression_needs_parentheses, ExpressionNode, NeedsParentheses,
-};
+use crate::parentheses::{unary_like_expression_needs_parentheses, NeedsParentheses};
 
-use rome_js_syntax::JsUnaryExpression;
-use rome_js_syntax::{JsAnyExpression, JsSyntaxNode};
+use rome_js_syntax::JsSyntaxNode;
+use rome_js_syntax::{JsSyntaxKind, JsUnaryExpression};
 use rome_js_syntax::{JsUnaryExpressionFields, JsUnaryOperator};
 use rome_rowan::match_ast;
 
@@ -35,7 +33,18 @@ impl FormatNodeRule<JsUnaryExpression> for FormatJsUnaryExpression {
             write!(f, [space()])?;
         }
 
-        write![f, [argument.format(),]]
+        if argument.syntax().has_leading_comments() {
+            write!(
+                f,
+                [group(&format_args![
+                    format_inserted(JsSyntaxKind::L_PAREN),
+                    soft_block_indent(&argument.format()),
+                    format_inserted(JsSyntaxKind::R_PAREN)
+                ])]
+            )
+        } else {
+            write![f, [argument.format()]]
+        }
     }
 
     fn needs_parentheses(&self, item: &JsUnaryExpression) -> bool {
@@ -59,18 +68,6 @@ impl NeedsParentheses for JsUnaryExpression {
                 }
             }
         }
-    }
-}
-
-impl ExpressionNode for JsUnaryExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }
 

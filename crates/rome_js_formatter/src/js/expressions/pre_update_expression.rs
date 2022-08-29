@@ -1,13 +1,10 @@
-use crate::parentheses::{
-    unary_like_expression_needs_parentheses, ExpressionNode, NeedsParentheses,
-};
+use crate::parentheses::{unary_like_expression_needs_parentheses, NeedsParentheses};
 use crate::prelude::*;
 
 use rome_formatter::write;
 use rome_js_syntax::JsPreUpdateExpressionFields;
 use rome_js_syntax::{
-    JsAnyExpression, JsPreUpdateExpression, JsPreUpdateOperator, JsSyntaxNode, JsUnaryExpression,
-    JsUnaryOperator,
+    JsPreUpdateExpression, JsPreUpdateOperator, JsSyntaxNode, JsUnaryExpression, JsUnaryOperator,
 };
 use rome_rowan::match_ast;
 
@@ -47,18 +44,6 @@ impl NeedsParentheses for JsPreUpdateExpression {
                 }
             }
         }
-    }
-}
-
-impl ExpressionNode for JsPreUpdateExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }
 

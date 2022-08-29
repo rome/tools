@@ -4,138 +4,11 @@ use rome_formatter::write;
 use rome_js_syntax::{
     JsAnyExpression, JsCallExpression, JsCallExpressionFields, JsComputedMemberExpression,
     JsComputedMemberExpressionFields, JsIdentifierExpression, JsImportCallExpression,
-    JsNewExpression, JsParenthesizedExpression, JsStaticMemberExpression,
-    JsStaticMemberExpressionFields, JsSyntaxNode, JsThisExpression,
+    JsNewExpression, JsStaticMemberExpression, JsStaticMemberExpressionFields, JsSyntaxNode,
+    JsThisExpression,
 };
 use rome_rowan::{AstNode, SyntaxResult};
 use std::fmt::Debug;
-
-/// One entry in a member chain.
-#[derive(Clone, Debug)]
-pub(crate) enum ChainEntry {
-    /// A member that is parenthesized in the source document
-    Parenthesized {
-        /// The chain member
-        member: ChainMember,
-        /// The top most ancestor of the chain member that is a parenthesized expression.
-        ///
-        /// ```text
-        /// (a.b).c()
-        ///  ^^^ -> member
-        /// ^----^ -> top_most_parentheses
-        ///
-        /// ((a.b)).c()
-        ///   ^^^ -> member
-        /// ^-----^ -> top most parentheses (skips inner parentheses node)
-        /// ```
-        top_most_parentheses: JsParenthesizedExpression,
-    },
-    Member(ChainMember),
-}
-
-impl ChainEntry {
-    /// Returns the inner member
-    pub fn member(&self) -> &ChainMember {
-        match self {
-            ChainEntry::Parenthesized { member, .. } => member,
-            ChainEntry::Member(member) => member,
-        }
-    }
-
-    /// Returns the top most parentheses node if any
-    pub fn top_most_parentheses(&self) -> Option<&JsParenthesizedExpression> {
-        match self {
-            ChainEntry::Parenthesized {
-                top_most_parentheses,
-                ..
-            } => Some(top_most_parentheses),
-            ChainEntry::Member(_) => None,
-        }
-    }
-
-    pub fn into_member(self) -> ChainMember {
-        match self {
-            ChainEntry::Parenthesized { member, .. } => member,
-            ChainEntry::Member(member) => member,
-        }
-    }
-
-    pub(crate) fn has_trailing_comments(&self) -> bool {
-        self.nodes().any(|node| node.has_trailing_comments())
-    }
-
-    /// Returns true if the member any of it's ancestor parentheses nodes has any leading comments.
-    pub(crate) fn has_leading_comments(&self) -> SyntaxResult<bool> {
-        let has_operator_comment = match self.member() {
-            ChainMember::StaticMember(node) => node.operator_token()?.has_leading_comments(),
-            _ => false,
-        };
-
-        Ok(self.nodes().any(|node| node.has_leading_comments()) || has_operator_comment)
-    }
-
-    fn nodes(&self) -> impl Iterator<Item = JsSyntaxNode> {
-        let first = match self {
-            ChainEntry::Parenthesized {
-                top_most_parentheses,
-                ..
-            } => top_most_parentheses.syntax().clone(),
-            ChainEntry::Member(member) => member.syntax().clone(),
-        };
-
-        let is_parenthesized = matches!(self, ChainEntry::Parenthesized { .. });
-
-        std::iter::successors(Some(first), move |previous| {
-            if is_parenthesized {
-                JsParenthesizedExpression::cast(previous.clone()).and_then(|parenthesized| {
-                    parenthesized.expression().map(AstNode::into_syntax).ok()
-                })
-            } else {
-                None
-            }
-        })
-    }
-}
-
-impl Format<JsFormatContext> for ChainEntry {
-    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        let parentheses = self.top_most_parentheses();
-
-        if let Some(parentheses) = parentheses {
-            let mut current = parentheses.clone();
-
-            loop {
-                write!(f, [format_removed(&current.l_paren_token()?)])?;
-
-                match current.expression()? {
-                    JsAnyExpression::JsParenthesizedExpression(inner) => {
-                        current = inner;
-                    }
-                    _ => break,
-                }
-            }
-        }
-
-        write!(f, [self.member()])?;
-
-        if let Some(parentheses) = parentheses {
-            let mut current = parentheses.clone();
-
-            loop {
-                write!(f, [format_removed(&current.r_paren_token()?)])?;
-
-                match current.expression()? {
-                    JsAnyExpression::JsParenthesizedExpression(inner) => {
-                        current = inner;
-                    }
-                    _ => break,
-                }
-            }
-        }
-
-        Ok(())
-    }
-}
 
 /// Data structure that holds the node with its formatted version
 #[derive(Clone, Debug)]
@@ -152,6 +25,20 @@ pub(crate) enum ChainMember {
 }
 
 impl ChainMember {
+    pub(crate) fn has_trailing_comments(&self) -> bool {
+        self.syntax().has_trailing_comments()
+    }
+
+    /// Returns true if the member any of it's ancestor parentheses nodes has any leading comments.
+    pub(crate) fn has_leading_comments(&self) -> SyntaxResult<bool> {
+        let has_operator_comment = match self {
+            ChainMember::StaticMember(node) => node.operator_token()?.has_leading_comments(),
+            _ => false,
+        };
+
+        Ok(self.syntax().has_leading_comments() || has_operator_comment)
+    }
+
     /// checks if the current node is a [rome_js_syntax::JsCallExpression],  [rome_js_syntax::JsImportExpression] or a [rome_js_syntax::JsNewExpression]
     pub fn is_loose_call_expression(&self) -> bool {
         match self {

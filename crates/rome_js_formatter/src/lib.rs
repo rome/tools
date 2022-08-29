@@ -248,19 +248,32 @@ pub mod prelude;
 mod ts;
 pub mod utils;
 
+#[cfg(test)]
+mod check_reformat;
+#[rustfmt::skip]
+mod generated;
+pub(crate) mod builders;
+pub mod context;
+mod parentheses;
+pub(crate) mod separated;
+mod syntax_rewriter;
+
 use rome_formatter::prelude::*;
-use rome_formatter::{write, Comments, CstFormatContext, FormatLanguage};
+use rome_formatter::{
+    write, Comments, CstFormatContext, Format, FormatLanguage, TransformSourceMap,
+};
 use rome_formatter::{Buffer, FormatOwnedWithRule, FormatRefWithRule, Formatted, Printed};
 use rome_js_syntax::{
     JsAnyDeclaration, JsAnyStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
 };
-use rome_rowan::AstNode;
 use rome_rowan::SyntaxResult;
 use rome_rowan::TextRange;
+use rome_rowan::{AstNode, SyntaxNode};
 
 use crate::builders::{format_parenthesize, format_suppressed_node};
 use crate::context::{JsCommentStyle, JsFormatContext, JsFormatOptions};
 use crate::cst::FormatJsSyntaxNode;
+use crate::syntax_rewriter::transform;
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
 
@@ -492,6 +505,13 @@ impl FormatLanguage for JsFormatLanguage {
         JsCommentStyle
     }
 
+    fn transform(
+        &self,
+        root: &SyntaxNode<Self::SyntaxLanguage>,
+    ) -> Option<(SyntaxNode<Self::SyntaxLanguage>, TransformSourceMap)> {
+        Some(transform(root.clone()))
+    }
+
     fn is_range_formatting_node(&self, node: &JsSyntaxNode) -> bool {
         let kind = node.kind();
 
@@ -512,8 +532,12 @@ impl FormatLanguage for JsFormatLanguage {
         &self.options
     }
 
-    fn create_context(self, comments: Comments<Self::SyntaxLanguage>) -> Self::Context {
-        JsFormatContext::new(self.options, comments)
+    fn create_context(
+        self,
+        comments: Comments<Self::SyntaxLanguage>,
+        source_map: Option<TransformSourceMap>,
+    ) -> Self::Context {
+        JsFormatContext::new(self.options, comments).with_source_map(source_map)
     }
 }
 
@@ -563,12 +587,15 @@ pub fn format_sub_tree(options: JsFormatOptions, root: &JsSyntaxNode) -> FormatR
 #[cfg(test)]
 mod tests {
 
-    use super::format_range;
+    use super::{format_node, format_range};
 
-    use crate::JsFormatOptions;
+    use crate::context::JsFormatOptions;
     use rome_formatter::IndentStyle;
-    use rome_js_parser::parse_script;
+    use rome_js_parser::{parse, parse_script};
+    use rome_js_syntax::SourceType;
     use rome_rowan::{TextRange, TextSize};
+
+    use crate::check_reformat::{check_reformat, CheckReformatParams};
 
     #[test]
     fn test_range_formatting() {
@@ -715,23 +742,6 @@ function() {
         assert_eq!(result.as_code(), "");
         assert_eq!(result.range(), Some(TextRange::new(range_start, range_end)));
     }
-}
-
-#[cfg(test)]
-mod check_reformat;
-#[rustfmt::skip]
-mod generated;
-pub(crate) mod builders;
-pub mod context;
-mod parentheses;
-pub(crate) mod separated;
-
-#[cfg(test)]
-mod test {
-    use crate::check_reformat::{check_reformat, CheckReformatParams};
-    use crate::{format_node, format_range, JsFormatOptions};
-    use rome_js_parser::parse;
-    use rome_js_syntax::{SourceType, TextRange, TextSize};
 
     #[ignore]
     #[test]
@@ -744,7 +754,9 @@ test.expect(t => {
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
-        let result = format_node(JsFormatOptions::default(), &tree.syntax())
+        let options = JsFormatOptions::default();
+
+        let result = format_node(options.clone(), &tree.syntax())
             .unwrap()
             .print();
         check_reformat(CheckReformatParams {
@@ -752,7 +764,7 @@ test.expect(t => {
             text: result.as_code(),
             source_type: syntax,
             file_name: "quick_test",
-            options: JsFormatOptions::default(),
+            options,
         });
         assert_eq!(
             result.as_code(),

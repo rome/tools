@@ -1,9 +1,9 @@
 use crate::prelude::*;
 
-use crate::parentheses::{ExpressionNode, NeedsParentheses};
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
+use rome_js_syntax::ImportMetaFields;
 use rome_js_syntax::{ImportMeta, JsSyntaxNode};
-use rome_js_syntax::{ImportMetaFields, JsAnyExpression};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatImportMeta;
@@ -41,17 +41,5 @@ impl NeedsParentheses for ImportMeta {
 
     fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
         false
-    }
-}
-
-impl ExpressionNode for ImportMeta {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }

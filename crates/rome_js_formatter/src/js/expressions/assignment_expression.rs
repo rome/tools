@@ -2,15 +2,14 @@ use crate::prelude::*;
 use crate::utils::JsAnyAssignmentLike;
 
 use crate::parentheses::{
-    is_arrow_function_body, is_first_in_statement, ExpressionNode, FirstInStatementMode,
-    NeedsParentheses,
+    is_arrow_function_body, is_first_in_statement, FirstInStatementMode, NeedsParentheses,
 };
 use rome_formatter::write;
 
 use rome_js_syntax::{
-    JsAnyAssignmentPattern, JsAnyExpression, JsAnyForInitializer, JsArrowFunctionExpression,
-    JsAssignmentExpression, JsComputedMemberName, JsExpressionStatement, JsForStatement,
-    JsSequenceExpression, JsSyntaxKind, JsSyntaxNode,
+    JsAnyAssignmentPattern, JsAnyForInitializer, JsArrowFunctionExpression, JsAssignmentExpression,
+    JsComputedMemberName, JsExpressionStatement, JsForStatement, JsSequenceExpression,
+    JsSyntaxKind, JsSyntaxNode,
 };
 use rome_rowan::{match_ast, AstNode};
 
@@ -42,14 +41,14 @@ impl NeedsParentheses for JsAssignmentExpression {
                 JsForStatement(for_statement) => {
                      let is_initializer = match for_statement.initializer() {
                         Some(JsAnyForInitializer::JsAnyExpression(expression)) => {
-                            &expression.resolve_syntax() == self.syntax()
+                            expression.syntax() == self.syntax()
                         }
                         None | Some(_) => false,
                     };
 
                     let is_update = for_statement
                         .update()
-                        .map(ExpressionNode::into_resolved_syntax)
+                        .map(AstNode::into_syntax)
                         .as_ref()
                         == Some(self.syntax());
 
@@ -99,18 +98,6 @@ impl NeedsParentheses for JsAssignmentExpression {
                 }
             }
         }
-    }
-}
-
-impl ExpressionNode for JsAssignmentExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }
 

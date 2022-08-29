@@ -1,7 +1,7 @@
 use crate::prelude::*;
-use rome_formatter::write;
+use rome_formatter::{format_args, write};
 
-use crate::parentheses::{ExpressionNode, NeedsParentheses};
+use crate::parentheses::NeedsParentheses;
 use rome_js_syntax::{
     JsAnyExpression, JsParenthesizedExpression, JsParenthesizedExpressionFields, JsSyntaxNode,
 };
@@ -21,16 +21,35 @@ impl FormatNodeRule<JsParenthesizedExpression> for FormatJsParenthesizedExpressi
             r_paren_token,
         } = node.as_fields();
 
+        let l_paren_token = l_paren_token?;
         let expression = expression?;
 
-        write!(
-            f,
-            [
-                format_removed(&l_paren_token?),
-                expression.format(),
-                format_removed(&r_paren_token?)
-            ]
-        )
+        let should_hug = !(expression.syntax().has_comments_direct()
+            || l_paren_token.has_trailing_comments())
+            && (matches!(
+                expression,
+                JsAnyExpression::JsObjectExpression(_) | JsAnyExpression::JsArrayExpression(_)
+            ));
+
+        if should_hug {
+            write!(
+                f,
+                [
+                    l_paren_token.format(),
+                    expression.format(),
+                    r_paren_token.format()
+                ]
+            )
+        } else {
+            write!(
+                f,
+                [group(&format_args![
+                    l_paren_token.format(),
+                    soft_block_indent(&expression.format()),
+                    r_paren_token.format()
+                ])]
+            )
+        }
     }
 
     fn needs_parentheses(&self, item: &JsParenthesizedExpression) -> bool {
@@ -47,19 +66,5 @@ impl NeedsParentheses for JsParenthesizedExpression {
     #[inline(always)]
     fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
         false
-    }
-}
-
-impl ExpressionNode for JsParenthesizedExpression {
-    fn resolve(&self) -> JsAnyExpression {
-        let inner = self.expression();
-
-        inner.unwrap_or_else(|_| self.clone().into())
-    }
-
-    fn into_resolved(self) -> JsAnyExpression {
-        let inner = self.expression();
-
-        inner.unwrap_or_else(|_| self.into())
     }
 }

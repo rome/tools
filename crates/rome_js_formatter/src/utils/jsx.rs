@@ -1,5 +1,5 @@
 use crate::context::QuoteStyle;
-use crate::parentheses::NeedsParentheses;
+
 use crate::prelude::*;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsxAnyChild, JsxChildList, JsxTagExpression};
@@ -77,7 +77,7 @@ pub enum WrapState {
 pub fn get_wrap_state(node: &JsxTagExpression) -> WrapState {
     // We skip the first item because the first item in ancestors is the node itself, i.e.
     // the JSX Element in this case.
-    let parent = node.resolve_parent();
+    let parent = node.syntax().parent();
 
     parent.map_or(WrapState::NoWrap, |parent| match parent.kind() {
         JsSyntaxKind::JS_ARRAY_EXPRESSION
@@ -111,16 +111,6 @@ pub fn is_jsx_inside_arrow_function_inside_call_inside_expression_child(
     // We skip the first item because the first item in ancestors is the node itself, i.e.
     // the JSX Element in this case.
     let mut ancestors = node.ancestors().skip(2).peekable();
-
-    // This matching should work with or without parentheses around the JSX element
-    // therefore we ignore parenthesized expressions.
-    if ancestors
-        .peek()
-        .map(|a| a.kind() == JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION)
-        .unwrap_or(false)
-    {
-        ancestors.next();
-    }
 
     let required_ancestors = [
         JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION,

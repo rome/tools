@@ -3,10 +3,10 @@ use rome_formatter::write;
 
 use crate::parentheses::{
     is_binary_like_left_or_right, is_callee, is_conditional_test, is_member_object, is_spread,
-    update_or_lower_expression_needs_parentheses, ExpressionNode, NeedsParentheses,
+    update_or_lower_expression_needs_parentheses, NeedsParentheses,
 };
 
-use rome_js_syntax::{JsAnyExpression, JsAwaitExpression, JsSyntaxNode};
+use rome_js_syntax::{JsAwaitExpression, JsSyntaxNode};
 use rome_js_syntax::{JsAwaitExpressionFields, JsSyntaxKind};
 
 #[derive(Debug, Clone, Default)]
@@ -22,7 +22,7 @@ impl FormatNodeRule<JsAwaitExpression> for FormatJsAwaitExpression {
         let format_inner =
             format_with(|f| write![f, [await_token.format(), space(), argument.format()]]);
 
-        let parent = node.resolve_parent();
+        let parent = node.syntax().parent();
 
         if let Some(parent) = parent {
             if is_callee(node.syntax(), &parent) || is_member_object(node.syntax(), &parent) {
@@ -78,18 +78,6 @@ pub(super) fn await_or_yield_needs_parens(parent: &JsSyntaxNode, node: &JsSyntax
                 || is_spread(expression, parent)
                 || is_binary_like_left_or_right(node, parent)
         }
-    }
-}
-
-impl ExpressionNode for JsAwaitExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }
 

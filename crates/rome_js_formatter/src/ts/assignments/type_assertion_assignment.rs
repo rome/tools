@@ -1,11 +1,8 @@
 use crate::prelude::*;
 use rome_formatter::write;
-use rome_js_syntax::{
-    JsAnyAssignment, JsAnyAssignmentPattern, JsSyntaxKind, JsSyntaxNode,
-    TsTypeAssertionAssignmentFields,
-};
+use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, TsTypeAssertionAssignmentFields};
 
-use crate::parentheses::{AssignmentNode, NeedsParentheses};
+use crate::parentheses::NeedsParentheses;
 use rome_js_syntax::TsTypeAssertionAssignment;
 
 #[derive(Debug, Clone, Default)]
@@ -36,18 +33,6 @@ impl FormatNodeRule<TsTypeAssertionAssignment> for FormatTsTypeAssertionAssignme
 
     fn needs_parentheses(&self, item: &TsTypeAssertionAssignment) -> bool {
         item.needs_parentheses()
-    }
-}
-
-impl AssignmentNode for TsTypeAssertionAssignment {
-    #[inline]
-    fn resolve(&self) -> JsAnyAssignmentPattern {
-        JsAnyAssignmentPattern::JsAnyAssignment(JsAnyAssignment::from(self.clone()))
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyAssignmentPattern {
-        JsAnyAssignmentPattern::JsAnyAssignment(JsAnyAssignment::from(self))
     }
 }
 

@@ -1,8 +1,8 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use crate::parentheses::{ExpressionNode, NeedsParentheses};
-use rome_js_syntax::{JsAnyExpression, JsSuperExpressionFields};
+use crate::parentheses::NeedsParentheses;
+use rome_js_syntax::JsSuperExpressionFields;
 use rome_js_syntax::{JsSuperExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
@@ -28,17 +28,5 @@ impl NeedsParentheses for JsSuperExpression {
     #[inline(always)]
     fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
         false
-    }
-}
-
-impl ExpressionNode for JsSuperExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }

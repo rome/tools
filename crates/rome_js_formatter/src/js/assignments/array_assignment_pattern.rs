@@ -1,7 +1,7 @@
-use crate::parentheses::{AssignmentNode, NeedsParentheses};
+use crate::parentheses::NeedsParentheses;
 use crate::prelude::*;
 use rome_formatter::write;
-use rome_js_syntax::{JsAnyAssignmentPattern, JsArrayAssignmentPattern};
+use rome_js_syntax::JsArrayAssignmentPattern;
 use rome_js_syntax::{JsArrayAssignmentPatternFields, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
@@ -26,18 +26,6 @@ impl FormatNodeRule<JsArrayAssignmentPattern> for FormatJsArrayAssignmentPattern
 
     fn needs_parentheses(&self, item: &JsArrayAssignmentPattern) -> bool {
         item.needs_parentheses()
-    }
-}
-
-impl AssignmentNode for JsArrayAssignmentPattern {
-    #[inline]
-    fn resolve(&self) -> JsAnyAssignmentPattern {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyAssignmentPattern {
-        self.into()
     }
 }
 

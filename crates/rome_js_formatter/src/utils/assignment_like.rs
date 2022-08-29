@@ -1,11 +1,9 @@
-use crate::parentheses::{
-    get_expression_left_side, resolve_parent, ExpressionNode, NeedsParentheses,
-};
+use crate::parentheses::get_expression_left_side;
 use crate::prelude::*;
 use crate::utils::member_chain::is_member_call_chain;
 use crate::utils::object::write_member_name;
 use crate::utils::{JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression};
-use rome_formatter::{format_args, write, CstFormatContext, VecBuffer};
+use rome_formatter::{format_args, write, CstFormatContext, FormatOptions, VecBuffer};
 use rome_js_syntax::{
     JsAnyAssignmentPattern, JsAnyBindingPattern, JsAnyCallArgument, JsAnyClassMemberName,
     JsAnyExpression, JsAnyFunctionBody, JsAnyObjectAssignmentPatternMember,
@@ -588,7 +586,7 @@ impl JsAnyAssignmentLike {
                 return Ok(AssignmentLikeLayout::SuppressedInitializer);
             }
         }
-        let right_expression = right.as_expression().map(ExpressionNode::into_resolved);
+        let right_expression = right.as_expression();
 
         if let Some(layout) = self.chain_formatting_layout(right_expression.as_ref())? {
             return Ok(layout);
@@ -621,9 +619,6 @@ impl JsAnyAssignmentLike {
         let right_expression = iter::successors(right_expression, |expression| match expression {
             JsAnyExpression::JsUnaryExpression(unary) => unary.argument().ok(),
             JsAnyExpression::TsNonNullAssertionExpression(assertion) => assertion.expression().ok(),
-            JsAnyExpression::JsParenthesizedExpression(parenthesized) => {
-                parenthesized.expression().ok()
-            }
             _ => None,
         })
         .last();
@@ -693,14 +688,14 @@ impl JsAnyAssignmentLike {
         let upper_chain_is_eligible =
             // First, we check if the current node is an assignment expression
             if let JsAnyAssignmentLike::JsAssignmentExpression(assignment) = self {
-                assignment.resolve_parent().map_or(false, |parent| {
+                assignment.syntax().parent().map_or(false, |parent| {
                     // Then we check if the parent is assignment expression or variable declarator
                     if matches!(
                         parent.kind(),
                         JsSyntaxKind::JS_ASSIGNMENT_EXPRESSION
                             | JsSyntaxKind::JS_INITIALIZER_CLAUSE
                     ) {
-                        let great_parent_kind = resolve_parent(&parent).map(|n| n.kind());
+                        let great_parent_kind = parent.parent().map(|n| n.kind());
                         // Finally, we check the great parent.
                         // The great parent triggers the eligibility when
                         // - the current node that we were inspecting is not a "tail"
@@ -731,7 +726,7 @@ impl JsAnyAssignmentLike {
                         match this_body {
                             JsAnyFunctionBody::JsAnyExpression(expression) => {
                                 if matches!(
-                                    expression.resolve(),
+                                    expression,
                                     JsAnyExpression::JsArrowFunctionExpression(_)
                                 ) {
                                     Some(AssignmentLikeLayout::ChainTailArrowFunction)
@@ -835,13 +830,11 @@ pub(crate) fn should_break_after_operator(right: &JsAnyExpression) -> SyntaxResu
         break;
     }
 
-    let right = right.resolve();
-
     let result = match right {
         // head is a long chain, meaning that right -> right are both assignment expressions
         JsAnyExpression::JsAssignmentExpression(assignment) => {
             matches!(
-                assignment.right()?.resolve(),
+                assignment.right()?,
                 JsAnyExpression::JsAssignmentExpression(_)
             )
         }
@@ -854,7 +847,7 @@ pub(crate) fn should_break_after_operator(right: &JsAnyExpression) -> SyntaxResu
         JsAnyExpression::JsSequenceExpression(_) => true,
 
         JsAnyExpression::JsConditionalExpression(conditional) => {
-            JsAnyBinaryLikeExpression::cast(conditional.test()?.into_resolved_syntax())
+            JsAnyBinaryLikeExpression::cast(conditional.test()?.into_syntax())
                 .map_or(false, |expression| {
                     !expression.should_inline_logical_expression()
                 })
@@ -1063,7 +1056,6 @@ fn is_poorly_breakable_member_or_call_chain(
                 is_chain = true;
                 Some(node.object()?)
             }
-            JsAnyExpression::JsParenthesizedExpression(node) => Some(node.expression()?),
             JsAnyExpression::JsIdentifierExpression(_) | JsAnyExpression::JsThisExpression(_) => {
                 is_chain_head_simple = true;
                 break;
@@ -1121,7 +1113,7 @@ fn is_short_argument(argument: JsAnyCallArgument, threshold: u16) -> SyntaxResul
     }
 
     if let JsAnyCallArgument::JsAnyExpression(expression) = argument {
-        let is_short_argument = match expression.resolve() {
+        let is_short_argument = match expression {
             JsAnyExpression::JsThisExpression(_) => true,
             JsAnyExpression::JsIdentifierExpression(identifier) => {
                 identifier.name()?.value_token()?.text_trimmed().len() <= threshold as usize

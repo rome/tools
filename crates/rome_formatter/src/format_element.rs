@@ -4,6 +4,7 @@ use crate::{
     format, format_args, group, soft_block_indent, soft_line_break_or_space,
     soft_line_indent_or_space, space, text, write, Buffer, Format, FormatContext, FormatOptions,
     FormatResult, Formatter, GroupId, IndentStyle, LineWidth, PrinterOptions, TextSize,
+    TransformSourceMap,
 };
 use indexmap::IndexSet;
 #[cfg(target_pointer_width = "64")]
@@ -770,6 +771,10 @@ impl FormatContext for IrFormatContext {
 
     fn options(&self) -> &Self::Options {
         &IrFormatOptions
+    }
+
+    fn source_map(&self) -> Option<&TransformSourceMap> {
+        None
     }
 }
 

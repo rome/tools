@@ -1,8 +1,8 @@
 use crate::prelude::*;
 use crate::utils::{needs_binary_like_parentheses, JsAnyBinaryLikeExpression};
 
-use crate::parentheses::{ExpressionNode, NeedsParentheses};
-use rome_js_syntax::{JsAnyExpression, JsLogicalExpression, JsSyntaxNode};
+use crate::parentheses::NeedsParentheses;
+use rome_js_syntax::{JsLogicalExpression, JsSyntaxNode};
 use rome_rowan::AstNode;
 
 #[derive(Debug, Clone, Default)]
@@ -25,29 +25,10 @@ impl FormatNodeRule<JsLogicalExpression> for FormatJsLogicalExpression {
 impl NeedsParentheses for JsLogicalExpression {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         if let Some(parent) = JsLogicalExpression::cast(parent.clone()) {
-            return if parent.operator() != self.operator() {
-                true
-            } else {
-                // TODO: Parentheses should never be needed for the same operators BUT this is causing a re-formatting
-                // issue if a logical expression has an in-balanced tree. See issue-7024.js for a test case..
-                // The way prettier solves this is by re-balancing the tree before formatting, something, Rome' doesn't yet support.
-                Ok(self.syntax()) != parent.left().map(AstNode::into_syntax).as_ref()
-            };
+            parent.operator() != self.operator()
+        } else {
+            needs_binary_like_parentheses(&JsAnyBinaryLikeExpression::from(self.clone()), parent)
         }
-
-        needs_binary_like_parentheses(&JsAnyBinaryLikeExpression::from(self.clone()), parent)
-    }
-}
-
-impl ExpressionNode for JsLogicalExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }
 

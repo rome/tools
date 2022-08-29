@@ -8,7 +8,7 @@
 //!
 //! The [NeedsParentheses] trait forms the foundation of Rome's parentheses formatting and is implemented
 //! by all nodes supporting parentheses (expressions, assignments, and types). The trait's main method
-//! is the [`needs_parentheses`](NeedsParentheses::needs_parentheses)
+//! is the [NeedsParentheses::needs_parentheses]
 //! method that implements the rules when a node requires parentheses.
 //! A node requires parentheses to:
 //! * improve readability: `a << b << 3` is harder to read than `(a << b) << 3`
@@ -22,27 +22,20 @@
 //!
 //! There are two measures taken by Rome to ensure formatting is stable regardless of the number of parenthesized nodes in a tree:
 //!
-//! ## Removing and adding of parentheses
-//! The [FormatNodeRule](rome_js_formatter::FormatNodeRule) always inserts parentheses around a node if the rules `needs_parentheses` method
-//! returns `true`. This by itself would result in the formatter adding an extra pair of parentheses with every format pass for nodes where parentheses are necessary.
-//! This is why the [rome_js_formatter::FormatJsParenthesizedExpression] rule always removes the parentheses and relies on the
-//! [FormatNodeRule](rome_js_formatter::FormatNodeRule) to add the parentheses again when necessary.
+//! ## Removing parenthesized nodes
 //!
-//! ## Testing for a a child or parent node.
+//! The JavaScript formatter [pre-processes](crate:JsFormatSyntaxRewriter] the input CST and removes all parenthesized expressions, assignments, and types except if:
+//! * The parenthesized node has a syntax error (skipped token trivia, missing inner expression)
+//! * The node has a directly preceding closure type cast comment
+//! * The inner expression is an unknown node
 //!
-//! There are many places where a formatting rule applies different formatting depending on the type of a
-//! child node or parent node. The decision taken by these rules shouldn't differ just because a node happens to be parenthesized
-//! because doing so would yield different results if the formatter removes the parentheses in the first pass.
+//! Removing the parenthesized nodes has the benefit that a input tree with parentheses and an input tree
+//! without parentheses have the same structure for as far as the formatter is concerned and thus,
+//! the formatter makes the same decisions for both trees.
 //!
-//! The [NeedsParentheses] trait offers a [`resolve_parent`](NeedsParentheses::resolve_parent] method
-//! that returns the first parent of a node that isn't parenthesized.
-//! For example, calling [JsSyntaxNode::parent] on the `a` identifier in `(a).b` returns the [JsParenthesizedExpression](rome_js_syntax::JsParenthesizedExpression)
-//! but calling [`resolve_parent`](NeedsParentheses::resolve_parent] returns the [JsStaticMemberExpression](rome_js_syntax::JsStaticMemberExpression).
-//!
-//! This module further offers node specific traits like [ExpressionNode] that implement additional methods to resolve a node.
-//! Calling [`resolve`](ExpressionNode::resolve) returns the node itself if it isn't a [JsParenthesizedExpression](rome_js_syntax::JsParenthesizedExpression)
-//! or traverses down the parenthesized expression and returns the first non [JsParenthesizedExpression](rome_js_syntax::JsParenthesizedExpression) node.
-//! For example, calling resolve on `a` returns `a` but calling resolve on `((a))` also returns `a`.
+//! ## Parentheses insertion
+//! The parentheses that get removed by the pre-processing step are re-inserted by the [crate::FormatNodeRule].
+//! The rule inserts parentheses for each node where [crate::FormatNodeRule::needs_parentheses] returns true.
 
 use crate::utils::{JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression};
 
@@ -50,65 +43,24 @@ use rome_js_syntax::{
     JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAnyFunctionBody,
     JsAnyLiteralExpression, JsArrowFunctionExpression, JsAssignmentExpression, JsBinaryExpression,
     JsBinaryOperator, JsComputedMemberAssignment, JsComputedMemberExpression,
-    JsConditionalExpression, JsLanguage, JsSequenceExpression, JsStaticMemberAssignment,
-    JsStaticMemberExpression, JsSyntaxKind, JsSyntaxNode,
+    JsConditionalExpression, JsLanguage, JsParenthesizedAssignment, JsParenthesizedExpression,
+    JsSequenceExpression, JsStaticMemberAssignment, JsStaticMemberExpression, JsSyntaxKind,
+    JsSyntaxNode, JsSyntaxToken,
 };
-use rome_rowan::{match_ast, AstNode};
+use rome_rowan::{declare_node_union, match_ast, AstNode, SyntaxResult};
 
 /// Node that may be parenthesized to ensure it forms valid syntax or to improve readability
 pub trait NeedsParentheses: AstNode<Language = JsLanguage> {
     fn needs_parentheses(&self) -> bool {
-        self.resolve_parent()
+        self.syntax()
+            .parent()
             .map_or(false, |parent| self.needs_parentheses_with_parent(&parent))
-    }
-
-    fn resolve_parent(&self) -> Option<JsSyntaxNode> {
-        resolve_parent(self.syntax())
     }
 
     /// Returns `true` if this node requires parentheses to form valid syntax or improve readability.
     ///
     /// Returns `false` if the parentheses can be omitted safely without changing semantics.
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool;
-}
-
-/// Trait implemented by all JavaScript expressions.
-pub trait ExpressionNode: NeedsParentheses {
-    /// Resolves an expression to the first non parenthesized expression.
-    fn resolve(&self) -> JsAnyExpression;
-
-    /// Consumes `self` and returns the first expression that isn't a parenthesized expression.
-    fn into_resolved(self) -> JsAnyExpression;
-
-    /// Resolves an expression to the first non parenthesized expression and returns its [JsSyntaxNode].
-    fn resolve_syntax(&self) -> JsSyntaxNode {
-        self.resolve().into_syntax()
-    }
-
-    /// Consumes `self` and returns the [JsSyntaxNode] of the first expression that isn't a parenthesized expression.
-    fn into_resolved_syntax(self) -> JsSyntaxNode {
-        self.into_resolved().into_syntax()
-    }
-}
-
-/// Resolves to the first parent that isn't a parenthesized expression, assignment, or type.
-pub(crate) fn resolve_parent(node: &JsSyntaxNode) -> Option<JsSyntaxNode> {
-    let mut current = node.parent();
-
-    while let Some(parent) = current {
-        if matches!(
-            parent.kind(),
-            JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION
-                | JsSyntaxKind::JS_PARENTHESIZED_ASSIGNMENT
-                | JsSyntaxKind::TS_PARENTHESIZED_TYPE
-        ) {
-            current = parent.parent();
-        } else {
-            return Some(parent);
-        }
-    }
-
-    None
 }
 
 impl NeedsParentheses for JsAnyLiteralExpression {
@@ -153,38 +105,6 @@ impl NeedsParentheses for JsAnyLiteralExpression {
             JsAnyLiteralExpression::JsStringLiteralExpression(string) => {
                 string.needs_parentheses_with_parent(parent)
             }
-        }
-    }
-}
-
-impl ExpressionNode for JsAnyLiteralExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        match self {
-            JsAnyLiteralExpression::JsBigIntLiteralExpression(big_int) => big_int.resolve(),
-            JsAnyLiteralExpression::JsBooleanLiteralExpression(boolean) => boolean.resolve(),
-            JsAnyLiteralExpression::JsNullLiteralExpression(null_literal) => null_literal.resolve(),
-            JsAnyLiteralExpression::JsNumberLiteralExpression(number_literal) => {
-                number_literal.resolve()
-            }
-            JsAnyLiteralExpression::JsRegexLiteralExpression(regex) => regex.resolve(),
-            JsAnyLiteralExpression::JsStringLiteralExpression(string) => string.resolve(),
-        }
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        match self {
-            JsAnyLiteralExpression::JsBigIntLiteralExpression(big_int) => big_int.into_resolved(),
-            JsAnyLiteralExpression::JsBooleanLiteralExpression(boolean) => boolean.into_resolved(),
-            JsAnyLiteralExpression::JsNullLiteralExpression(null_literal) => {
-                null_literal.into_resolved()
-            }
-            JsAnyLiteralExpression::JsNumberLiteralExpression(number_literal) => {
-                number_literal.into_resolved()
-            }
-            JsAnyLiteralExpression::JsRegexLiteralExpression(regex) => regex.into_resolved(),
-            JsAnyLiteralExpression::JsStringLiteralExpression(string) => string.into_resolved(),
         }
     }
 }
@@ -335,98 +255,6 @@ impl NeedsParentheses for JsAnyExpression {
     }
 }
 
-impl ExpressionNode for JsAnyExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        match self {
-            JsAnyExpression::ImportMeta(meta) => meta.resolve(),
-            JsAnyExpression::JsAnyLiteralExpression(literal) => literal.resolve(),
-            JsAnyExpression::JsArrayExpression(array) => array.resolve(),
-            JsAnyExpression::JsArrowFunctionExpression(arrow) => arrow.resolve(),
-            JsAnyExpression::JsAssignmentExpression(assignment) => assignment.resolve(),
-            JsAnyExpression::JsAwaitExpression(await_expression) => await_expression.resolve(),
-            JsAnyExpression::JsBinaryExpression(binary) => binary.resolve(),
-            JsAnyExpression::JsCallExpression(call) => call.resolve(),
-            JsAnyExpression::JsClassExpression(class) => class.resolve(),
-            JsAnyExpression::JsComputedMemberExpression(member) => member.resolve(),
-            JsAnyExpression::JsConditionalExpression(conditional) => conditional.resolve(),
-            JsAnyExpression::JsFunctionExpression(function) => function.resolve(),
-            JsAnyExpression::JsIdentifierExpression(identifier) => identifier.resolve(),
-            JsAnyExpression::JsImportCallExpression(import_call) => import_call.resolve(),
-            JsAnyExpression::JsInExpression(in_expression) => in_expression.resolve(),
-            JsAnyExpression::JsInstanceofExpression(instanceof) => instanceof.resolve(),
-            JsAnyExpression::JsLogicalExpression(logical) => logical.resolve(),
-            JsAnyExpression::JsNewExpression(new) => new.resolve(),
-            JsAnyExpression::JsObjectExpression(object) => object.resolve(),
-            JsAnyExpression::JsParenthesizedExpression(parenthesized) => parenthesized.resolve(),
-            JsAnyExpression::JsPostUpdateExpression(update) => update.resolve(),
-            JsAnyExpression::JsPreUpdateExpression(update) => update.resolve(),
-            JsAnyExpression::JsSequenceExpression(sequence) => sequence.resolve(),
-            JsAnyExpression::JsStaticMemberExpression(member) => member.resolve(),
-            JsAnyExpression::JsSuperExpression(sup) => sup.resolve(),
-            JsAnyExpression::JsTemplate(template) => template.resolve(),
-            JsAnyExpression::JsThisExpression(this) => this.resolve(),
-            JsAnyExpression::JsUnaryExpression(unary) => unary.resolve(),
-            JsAnyExpression::JsUnknownExpression(unknown) => unknown.resolve(),
-            JsAnyExpression::JsYieldExpression(yield_expression) => yield_expression.resolve(),
-            JsAnyExpression::JsxTagExpression(jsx) => jsx.resolve(),
-            JsAnyExpression::NewTarget(target) => target.resolve(),
-            JsAnyExpression::TsAsExpression(as_expression) => as_expression.resolve(),
-            JsAnyExpression::TsNonNullAssertionExpression(non_null) => non_null.resolve(),
-            JsAnyExpression::TsTypeAssertionExpression(type_assertion) => type_assertion.resolve(),
-        }
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        match self {
-            JsAnyExpression::ImportMeta(meta) => meta.into_resolved(),
-            JsAnyExpression::JsAnyLiteralExpression(literal) => literal.into_resolved(),
-            JsAnyExpression::JsArrayExpression(array) => array.into_resolved(),
-            JsAnyExpression::JsArrowFunctionExpression(arrow) => arrow.into_resolved(),
-            JsAnyExpression::JsAssignmentExpression(assignment) => assignment.into_resolved(),
-            JsAnyExpression::JsAwaitExpression(await_expression) => {
-                await_expression.into_resolved()
-            }
-            JsAnyExpression::JsBinaryExpression(binary) => binary.into_resolved(),
-            JsAnyExpression::JsCallExpression(call) => call.into_resolved(),
-            JsAnyExpression::JsClassExpression(class) => class.into_resolved(),
-            JsAnyExpression::JsComputedMemberExpression(member) => member.into_resolved(),
-            JsAnyExpression::JsConditionalExpression(conditional) => conditional.into_resolved(),
-            JsAnyExpression::JsFunctionExpression(function) => function.into_resolved(),
-            JsAnyExpression::JsIdentifierExpression(identifier) => identifier.into_resolved(),
-            JsAnyExpression::JsImportCallExpression(import_call) => import_call.into_resolved(),
-            JsAnyExpression::JsInExpression(in_expression) => in_expression.into_resolved(),
-            JsAnyExpression::JsInstanceofExpression(instanceof) => instanceof.into_resolved(),
-            JsAnyExpression::JsLogicalExpression(logical) => logical.into_resolved(),
-            JsAnyExpression::JsNewExpression(new) => new.into_resolved(),
-            JsAnyExpression::JsObjectExpression(object) => object.into_resolved(),
-            JsAnyExpression::JsParenthesizedExpression(parenthesized) => {
-                parenthesized.into_resolved()
-            }
-            JsAnyExpression::JsPostUpdateExpression(update) => update.into_resolved(),
-            JsAnyExpression::JsPreUpdateExpression(update) => update.into_resolved(),
-            JsAnyExpression::JsSequenceExpression(sequence) => sequence.into_resolved(),
-            JsAnyExpression::JsStaticMemberExpression(member) => member.into_resolved(),
-            JsAnyExpression::JsSuperExpression(sup) => sup.into_resolved(),
-            JsAnyExpression::JsTemplate(template) => template.into_resolved(),
-            JsAnyExpression::JsThisExpression(this) => this.into_resolved(),
-            JsAnyExpression::JsUnaryExpression(unary) => unary.into_resolved(),
-            JsAnyExpression::JsUnknownExpression(unknown) => unknown.into_resolved(),
-            JsAnyExpression::JsYieldExpression(yield_expression) => {
-                yield_expression.into_resolved()
-            }
-            JsAnyExpression::JsxTagExpression(jsx) => jsx.into_resolved(),
-            JsAnyExpression::NewTarget(target) => target.into_resolved(),
-            JsAnyExpression::TsAsExpression(as_expression) => as_expression.into_resolved(),
-            JsAnyExpression::TsNonNullAssertionExpression(non_null) => non_null.into_resolved(),
-            JsAnyExpression::TsTypeAssertionExpression(type_assertion) => {
-                type_assertion.into_resolved()
-            }
-        }
-    }
-}
-
 /// Returns the left most expression of `expression`.
 ///
 /// For example, returns `a` for `(a ? b : c) + d` because it first resolves the
@@ -459,7 +287,6 @@ pub(crate) fn get_expression_left_side(
     use JsAnyExpression::*;
 
     let left_expression = match expression {
-        JsParenthesizedExpression(parenthesized) => parenthesized.expression().ok(),
         JsSequenceExpression(sequence) => sequence.left().ok(),
         JsStaticMemberExpression(member) => member.object().ok(),
         JsComputedMemberExpression(member) => member.object().ok(),
@@ -500,15 +327,13 @@ pub(crate) fn is_first_in_statement(node: JsSyntaxNode, mode: FirstInStatementMo
                 return true;
             }
 
-            JsSyntaxKind::JS_PARENTHESIZED_EXPRESSION
-            | JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION
+            JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION
             | JsSyntaxKind::JS_STATIC_MEMBER_ASSIGNMENT
             | JsSyntaxKind::JS_TEMPLATE
             | JsSyntaxKind::JS_CALL_EXPRESSION
             | JsSyntaxKind::JS_NEW_EXPRESSION
             | JsSyntaxKind::TS_AS_EXPRESSION
-            | JsSyntaxKind::TS_NON_NULL_ASSERTION_EXPRESSION
-            | JsSyntaxKind::JS_PARENTHESIZED_ASSIGNMENT => parent,
+            | JsSyntaxKind::TS_NON_NULL_ASSERTION_EXPRESSION => parent,
             JsSyntaxKind::JS_SEQUENCE_EXPRESSION => {
                 let sequence = JsSequenceExpression::unwrap_cast(parent);
 
@@ -638,11 +463,7 @@ pub(crate) fn unary_like_expression_needs_parentheses(
 
     if let Some(binary) = JsBinaryExpression::cast_ref(parent) {
         matches!(binary.operator(), Ok(JsBinaryOperator::Exponent))
-            && binary
-                .left()
-                .map(ExpressionNode::into_resolved_syntax)
-                .as_ref()
-                == Ok(expression)
+            && binary.left().map(AstNode::into_syntax).as_ref() == Ok(expression)
     } else {
         update_or_lower_expression_needs_parentheses(expression, parent)
     }
@@ -685,14 +506,14 @@ pub(crate) fn is_member_object(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bo
             JsComputedMemberExpression(member_expression) => {
                  member_expression
                     .object()
-                    .map(ExpressionNode::into_resolved_syntax)
+                    .map(AstNode::into_syntax)
                     .as_ref()
                     == Ok(node)
             },
             JsComputedMemberAssignment(assignment) => {
                 assignment
                     .object()
-                    .map(ExpressionNode::into_resolved_syntax)
+                    .map(AstNode::into_syntax)
                     .as_ref()
                     == Ok(node)
             },
@@ -728,7 +549,7 @@ pub(crate) fn is_conditional_test(node: &JsSyntaxNode, parent: &JsSyntaxNode) ->
             JsConditionalExpression(conditional) => {
                 conditional
                     .test()
-                    .map(ExpressionNode::into_resolved_syntax)
+                    .map(AstNode::into_syntax)
                     .as_ref()
                     == Ok(node)
             },
@@ -745,7 +566,7 @@ pub(crate) fn is_arrow_function_body(node: &JsSyntaxNode, parent: &JsSyntaxNode)
             JsArrowFunctionExpression(arrow) => {
                 match arrow.body() {
                     Ok(JsAnyFunctionBody::JsAnyExpression(expression)) => {
-                        &expression.resolve_syntax() == node
+                        expression.syntax() == node
                     }
                     _ => false,
                 }
@@ -776,59 +597,43 @@ pub(crate) fn is_spread(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bool {
     )
 }
 
+declare_node_union! {
+    pub(crate) JsAnyParenthesized = JsParenthesizedExpression | JsParenthesizedAssignment
+}
+
+impl JsAnyParenthesized {
+    pub(crate) fn l_paren_token(&self) -> SyntaxResult<JsSyntaxToken> {
+        match self {
+            JsAnyParenthesized::JsParenthesizedExpression(expression) => expression.l_paren_token(),
+            JsAnyParenthesized::JsParenthesizedAssignment(assignment) => assignment.l_paren_token(),
+        }
+    }
+
+    pub(crate) fn inner(&self) -> SyntaxResult<JsSyntaxNode> {
+        match self {
+            JsAnyParenthesized::JsParenthesizedExpression(expression) => {
+                expression.expression().map(AstNode::into_syntax)
+            }
+            JsAnyParenthesized::JsParenthesizedAssignment(assignment) => {
+                assignment.assignment().map(AstNode::into_syntax)
+            }
+        }
+    }
+
+    pub(crate) fn r_paren_token(&self) -> SyntaxResult<JsSyntaxToken> {
+        match self {
+            JsAnyParenthesized::JsParenthesizedExpression(expression) => expression.r_paren_token(),
+            JsAnyParenthesized::JsParenthesizedAssignment(assignment) => assignment.r_paren_token(),
+        }
+    }
+}
+
 /// Returns `true` if `parent` is a [JsAnyBinaryLikeExpression] and `node` is the `left` or `right` of that expression.
 pub(crate) fn is_binary_like_left_or_right(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bool {
     debug_assert_is_expression(node);
     debug_assert_is_parent(node, parent);
 
     JsAnyBinaryLikeExpression::can_cast(parent.kind())
-}
-
-/// Trait implemented by all JavaScript assignments.
-pub trait AssignmentNode: NeedsParentheses {
-    /// Resolves an assignment to the first non parenthesized assignment.
-    fn resolve(&self) -> JsAnyAssignmentPattern;
-
-    /// Consumes `self` and returns the first assignment that isn't a parenthesized assignment.
-    fn into_resolved(self) -> JsAnyAssignmentPattern;
-
-    /// Resolves an assignment to the first non parenthesized assignment and returns its [JsSyntaxNode].
-    fn resolve_syntax(&self) -> JsSyntaxNode {
-        self.resolve().into_syntax()
-    }
-
-    /// Consumes `self` and returns the [JsSyntaxNode] of the first assignment  that isn't a assignment expression.
-    fn into_resolved_syntax(self) -> JsSyntaxNode {
-        self.into_resolved().into_syntax()
-    }
-}
-
-impl AssignmentNode for JsAnyAssignment {
-    fn resolve(&self) -> JsAnyAssignmentPattern {
-        match self {
-            JsAnyAssignment::JsComputedMemberAssignment(assignment) => assignment.resolve(),
-            JsAnyAssignment::JsIdentifierAssignment(assignment) => assignment.resolve(),
-            JsAnyAssignment::JsParenthesizedAssignment(assignment) => assignment.resolve(),
-            JsAnyAssignment::JsStaticMemberAssignment(assignment) => assignment.resolve(),
-            JsAnyAssignment::JsUnknownAssignment(assignment) => assignment.resolve(),
-            JsAnyAssignment::TsAsAssignment(assignment) => assignment.resolve(),
-            JsAnyAssignment::TsNonNullAssertionAssignment(assignment) => assignment.resolve(),
-            JsAnyAssignment::TsTypeAssertionAssignment(assignment) => assignment.resolve(),
-        }
-    }
-
-    fn into_resolved(self) -> JsAnyAssignmentPattern {
-        match self {
-            JsAnyAssignment::JsComputedMemberAssignment(assignment) => assignment.into_resolved(),
-            JsAnyAssignment::JsIdentifierAssignment(assignment) => assignment.into_resolved(),
-            JsAnyAssignment::JsParenthesizedAssignment(assignment) => assignment.into_resolved(),
-            JsAnyAssignment::JsStaticMemberAssignment(assignment) => assignment.into_resolved(),
-            JsAnyAssignment::JsUnknownAssignment(assignment) => assignment.into_resolved(),
-            JsAnyAssignment::TsAsAssignment(assignment) => assignment.into_resolved(),
-            JsAnyAssignment::TsNonNullAssertionAssignment(assignment) => assignment.into_resolved(),
-            JsAnyAssignment::TsTypeAssertionAssignment(assignment) => assignment.into_resolved(),
-        }
-    }
 }
 
 impl NeedsParentheses for JsAnyAssignment {
@@ -883,28 +688,6 @@ impl NeedsParentheses for JsAnyAssignment {
     }
 }
 
-impl AssignmentNode for JsAnyAssignmentPattern {
-    fn resolve(&self) -> JsAnyAssignmentPattern {
-        match self {
-            JsAnyAssignmentPattern::JsAnyAssignment(assignment) => assignment.resolve(),
-            JsAnyAssignmentPattern::JsArrayAssignmentPattern(assignment) => assignment.resolve(),
-            JsAnyAssignmentPattern::JsObjectAssignmentPattern(assignment) => assignment.resolve(),
-        }
-    }
-
-    fn into_resolved(self) -> JsAnyAssignmentPattern {
-        match self {
-            JsAnyAssignmentPattern::JsAnyAssignment(assignment) => assignment.into_resolved(),
-            JsAnyAssignmentPattern::JsArrayAssignmentPattern(assignment) => {
-                assignment.into_resolved()
-            }
-            JsAnyAssignmentPattern::JsObjectAssignmentPattern(assignment) => {
-                assignment.into_resolved()
-            }
-        }
-    }
-}
-
 impl NeedsParentheses for JsAnyAssignmentPattern {
     fn needs_parentheses(&self) -> bool {
         match self {
@@ -942,7 +725,7 @@ fn debug_assert_is_expression(node: &JsSyntaxNode) {
 
 fn debug_assert_is_parent(node: &JsSyntaxNode, parent: &JsSyntaxNode) {
     debug_assert!(
-        resolve_parent(node).as_ref() == Some(parent),
+        node.parent().as_ref() == Some(parent),
         "Node {node:#?} is not a child of ${parent:#?}"
     )
 }
@@ -950,6 +733,7 @@ fn debug_assert_is_parent(node: &JsSyntaxNode, parent: &JsSyntaxNode) {
 #[cfg(test)]
 pub(crate) mod tests {
     use super::NeedsParentheses;
+    use crate::transform;
     use rome_js_syntax::{JsLanguage, SourceType};
     use rome_rowan::AstNode;
 
@@ -969,7 +753,8 @@ pub(crate) mod tests {
         );
 
         let root = parse.syntax();
-        let matching_nodes: Vec<_> = root.descendants().filter_map(T::cast).collect();
+        let (transformed, _) = transform(root);
+        let matching_nodes: Vec<_> = transformed.descendants().filter_map(T::cast).collect();
 
         let node = if let Some(index) = index {
             matching_nodes.get(index).unwrap_or_else(|| {
@@ -1009,7 +794,8 @@ pub(crate) mod tests {
         );
 
         let root = parse.syntax();
-        let matching_nodes: Vec<_> = root.descendants().filter_map(T::cast).collect();
+        let (transformed, _) = transform(root);
+        let matching_nodes: Vec<_> = transformed.descendants().filter_map(T::cast).collect();
 
         let node = if let Some(index) = index {
             matching_nodes.get(index).unwrap_or_else(|| {

@@ -1,9 +1,7 @@
 use crate::prelude::*;
 
-use crate::parentheses::{AssignmentNode, NeedsParentheses};
-use rome_js_syntax::{
-    JsAnyAssignment, JsAnyAssignmentPattern, JsSyntaxKind, JsSyntaxNode, JsUnknownAssignment,
-};
+use crate::parentheses::NeedsParentheses;
+use rome_js_syntax::{JsSyntaxNode, JsUnknownAssignment};
 use rome_rowan::AstNode;
 
 #[derive(Debug, Clone, Default)]
@@ -23,22 +21,14 @@ impl FormatNodeRule<JsUnknownAssignment> for FormatJsUnknownAssignment {
     }
 }
 
-impl AssignmentNode for JsUnknownAssignment {
-    #[inline]
-    fn resolve(&self) -> JsAnyAssignmentPattern {
-        JsAnyAssignmentPattern::JsAnyAssignment(JsAnyAssignment::from(self.clone()))
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyAssignmentPattern {
-        JsAnyAssignmentPattern::JsAnyAssignment(JsAnyAssignment::from(self))
-    }
-}
-
 impl NeedsParentheses for JsUnknownAssignment {
+    #[inline]
+    fn needs_parentheses(&self) -> bool {
+        false
+    }
+
+    #[inline]
     fn needs_parentheses_with_parent(&self, _: &JsSyntaxNode) -> bool {
-        self.syntax().parent().map_or(false, |parent| {
-            parent.kind() == JsSyntaxKind::JS_PARENTHESIZED_ASSIGNMENT
-        })
+        false
     }
 }

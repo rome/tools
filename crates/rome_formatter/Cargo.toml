@@ -15,6 +15,7 @@ serde = { version = "1.0.136", features = ["derive"], optional = true }
 cfg-if = "1.0.0"
 indexmap = "1.8.2"
 schemars = { version = "0.8.10", optional = true }
+rustc-hash = "1.1.0"
 
 [features]
 serde = ["dep:serde", "schemars", "rome_rowan/serde"]

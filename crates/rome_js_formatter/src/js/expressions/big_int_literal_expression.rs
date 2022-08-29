@@ -4,8 +4,8 @@ use std::borrow::Cow;
 use crate::prelude::*;
 use crate::utils::string_utils::ToAsciiLowercaseCow;
 
-use crate::parentheses::{ExpressionNode, NeedsParentheses};
-use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsBigIntLiteralExpressionFields};
+use crate::parentheses::NeedsParentheses;
+use rome_js_syntax::JsBigIntLiteralExpressionFields;
 use rome_js_syntax::{JsBigIntLiteralExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
@@ -37,18 +37,6 @@ impl FormatNodeRule<JsBigIntLiteralExpression> for FormatJsBigIntLiteralExpressi
 
     fn needs_parentheses(&self, item: &JsBigIntLiteralExpression) -> bool {
         item.needs_parentheses()
-    }
-}
-
-impl ExpressionNode for JsBigIntLiteralExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::from(self.clone()))
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        JsAnyExpression::JsAnyLiteralExpression(JsAnyLiteralExpression::from(self))
     }
 }
 

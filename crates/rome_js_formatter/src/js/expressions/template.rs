@@ -2,7 +2,7 @@ use crate::prelude::*;
 use rome_formatter::write;
 
 use crate::js::expressions::static_member_expression::member_chain_callee_needs_parens;
-use crate::parentheses::{ExpressionNode, NeedsParentheses};
+use crate::parentheses::NeedsParentheses;
 use rome_js_syntax::{JsAnyExpression, JsSyntaxNode, JsTemplate, TsTemplateLiteralType};
 use rome_js_syntax::{JsSyntaxToken, TsTypeArguments};
 use rome_rowan::{declare_node_union, SyntaxResult};
@@ -91,17 +91,5 @@ impl NeedsParentheses for JsTemplate {
         } else {
             false
         }
-    }
-}
-
-impl ExpressionNode for JsTemplate {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }

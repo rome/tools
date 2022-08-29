@@ -1,12 +1,12 @@
 use crate::prelude::*;
 
 use crate::js::expressions::computed_member_expression::JsAnyComputedMemberLike;
-use crate::parentheses::{resolve_parent, AssignmentNode, ExpressionNode, NeedsParentheses};
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
     JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAnyName, JsAssignmentExpression,
-    JsInitializerClause, JsParenthesizedAssignment, JsParenthesizedExpression,
-    JsStaticMemberAssignment, JsStaticMemberExpression, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
+    JsInitializerClause, JsStaticMemberAssignment, JsStaticMemberExpression, JsSyntaxKind,
+    JsSyntaxNode, JsSyntaxToken,
 };
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 
@@ -85,8 +85,8 @@ impl JsAnyStaticMemberLike {
     }
 
     fn layout(&self) -> SyntaxResult<StaticMemberLikeLayout> {
-        let parent = resolve_parent(self.syntax());
-        let object = self.object()?.resolve();
+        let parent = self.syntax().parent();
+        let object = self.object()?;
 
         let is_nested = match &parent {
             Some(parent) => {
@@ -125,16 +125,14 @@ impl JsAnyStaticMemberLike {
 
         let first_non_static_member_ancestor = self.syntax().ancestors().find(|parent| {
             !(JsAnyStaticMemberLike::can_cast(parent.kind())
-                || JsAnyComputedMemberLike::can_cast(parent.kind())
-                || JsParenthesizedExpression::can_cast(parent.kind())
-                || JsParenthesizedAssignment::can_cast(parent.kind()))
+                || JsAnyComputedMemberLike::can_cast(parent.kind()))
         });
 
         let layout = match first_non_static_member_ancestor.and_then(JsAnyExpression::cast) {
             Some(JsAnyExpression::JsNewExpression(_)) => StaticMemberLikeLayout::NoBreak,
             Some(JsAnyExpression::JsAssignmentExpression(assignment)) => {
                 if matches!(
-                    assignment.left()?.resolve(),
+                    assignment.left()?,
                     JsAnyAssignmentPattern::JsAnyAssignment(
                         JsAnyAssignment::JsIdentifierAssignment(_)
                     )
@@ -176,25 +174,12 @@ pub(crate) fn member_chain_callee_needs_parens(
                     JsComputedMemberExpression(member) => member.object().ok(),
                     JsTemplate(template) => template.tag(),
                     TsNonNullAssertionExpression(assertion) => assertion.expression().ok(),
-                    JsParenthesizedExpression(expression) => expression.expression().ok(),
                     _ => None,
                 });
 
             object_chain.any(|object| matches!(object, JsCallExpression(_)))
         }
         _ => false,
-    }
-}
-
-impl ExpressionNode for JsStaticMemberExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }
 

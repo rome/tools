@@ -1,10 +1,8 @@
 use crate::prelude::*;
 
-use crate::parentheses::{
-    is_callee, is_member_object, is_spread, is_tag, ExpressionNode, NeedsParentheses,
-};
+use crate::parentheses::{is_callee, is_member_object, is_spread, is_tag, NeedsParentheses};
 use rome_formatter::write;
-use rome_js_syntax::{JsAnyExpression, JsSyntaxNode};
+use rome_js_syntax::JsSyntaxNode;
 use rome_js_syntax::{JsSyntaxKind, TsTypeAssertionExpression, TsTypeAssertionExpressionFields};
 
 #[derive(Debug, Clone, Default)]
@@ -44,18 +42,6 @@ impl NeedsParentheses for TsTypeAssertionExpression {
             JsSyntaxKind::TS_AS_EXPRESSION => true,
             _ => type_cast_like_needs_parens(self.syntax(), parent),
         }
-    }
-}
-
-impl ExpressionNode for TsTypeAssertionExpression {
-    #[inline]
-    fn resolve(&self) -> JsAnyExpression {
-        self.clone().into()
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyExpression {
-        self.into()
     }
 }
 

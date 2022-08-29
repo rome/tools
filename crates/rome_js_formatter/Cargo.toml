@@ -11,6 +11,7 @@ license = "MIT"
 [dependencies]
 cfg-if = "1.0.0"
 rome_js_syntax = { path = "../rome_js_syntax" }
+rome_js_factory = { path = "../rome_js_factory" }
 rome_formatter = { path = "../rome_formatter" }
 rome_rowan = { path = "../rome_rowan" }
 tracing = { version = "0.1.31", default-features = false, features = ["std"] }

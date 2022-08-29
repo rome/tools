@@ -1,13 +1,11 @@
 use crate::prelude::*;
-use crate::utils::{FormatWithSemicolon, JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression};
+use crate::utils::{FormatWithSemicolon, JsAnyBinaryLikeExpression};
 
 use rome_formatter::{format_args, write};
 
-use crate::parentheses::get_expression_left_side;
 use rome_js_syntax::{
-    JsAnyExpression, JsReturnStatement, JsReturnStatementFields, JsSequenceExpression,
+    JsAnyExpression, JsReturnStatement, JsReturnStatementFields, JsSequenceExpression, JsSyntaxKind,
 };
-use rome_rowan::SyntaxResult;
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsReturnStatement;
@@ -52,19 +50,16 @@ impl Format<JsFormatContext> for FormatReturnOrThrowArgument<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         let argument = self.0;
 
-        if has_argument_leading_comments(argument)? {
-            let syntax = argument.syntax();
-            let first_token = syntax.first_token();
-            let last_token = syntax.last_token();
+        if has_argument_leading_comments(argument) {
             write!(
                 f,
-                [format_parenthesize(
-                    first_token.as_ref(),
+                [
+                    format_inserted(JsSyntaxKind::L_PAREN),
                     &block_indent(&argument.format()),
-                    last_token.as_ref()
-                )]
+                    format_inserted(JsSyntaxKind::R_PAREN)
+                ]
             )
-        } else if is_binary_or_sequence_argument(argument)? {
+        } else if is_binary_or_sequence_argument(argument) {
             write!(
                 f,
                 [group(&format_args![
@@ -85,37 +80,16 @@ impl Format<JsFormatContext> for FormatReturnOrThrowArgument<'_> {
 ///
 /// Traversing the left nodes is necessary in case the first node is parenthesized because
 /// parentheses will be removed (and be re-added by the return statement, but only if the argument breaks)
-fn has_argument_leading_comments(argument: &JsAnyExpression) -> SyntaxResult<bool> {
+fn has_argument_leading_comments(argument: &JsAnyExpression) -> bool {
     if matches!(argument, JsAnyExpression::JsxTagExpression(_)) {
         // JSX formatting takes care of adding parens
-        return Ok(false);
+        return false;
     }
 
-    if argument.syntax().has_leading_comments() {
-        return Ok(true);
-    }
-
-    let result = match get_expression_left_side(argument) {
-        Some(JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression)) => {
-            has_argument_leading_comments(&expression)?
-        }
-        Some(JsAnyBinaryLikeLeftExpression::JsPrivateName(name)) => {
-            name.syntax().has_leading_comments()
-        }
-        None => false,
-    };
-
-    Ok(result)
+    argument.syntax().has_leading_comments()
 }
 
-fn is_binary_or_sequence_argument(argument: &JsAnyExpression) -> SyntaxResult<bool> {
-    if JsSequenceExpression::can_cast(argument.syntax().kind())
+fn is_binary_or_sequence_argument(argument: &JsAnyExpression) -> bool {
+    JsSequenceExpression::can_cast(argument.syntax().kind())
         || JsAnyBinaryLikeExpression::can_cast(argument.syntax().kind())
-    {
-        Ok(true)
-    } else if let JsAnyExpression::JsParenthesizedExpression(inner) = argument {
-        is_binary_or_sequence_argument(&inner.expression()?)
-    } else {
-        Ok(false)
-    }
 }

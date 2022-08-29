@@ -1,7 +1,7 @@
-use crate::parentheses::{AssignmentNode, NeedsParentheses};
+use crate::parentheses::NeedsParentheses;
 use crate::prelude::*;
 use rome_formatter::write;
-use rome_js_syntax::{JsAnyAssignmentPattern, JsParenthesizedAssignment};
+use rome_js_syntax::JsParenthesizedAssignment;
 use rome_js_syntax::{JsParenthesizedAssignmentFields, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
@@ -22,31 +22,15 @@ impl FormatNodeRule<JsParenthesizedAssignment> for FormatJsParenthesizedAssignme
         write![
             f,
             [
-                format_removed(&l_paren_token?),
+                l_paren_token.format(),
                 assignment.format(),
-                format_removed(&r_paren_token?),
+                r_paren_token.format(),
             ]
         ]
     }
 
     fn needs_parentheses(&self, item: &JsParenthesizedAssignment) -> bool {
         item.needs_parentheses()
-    }
-}
-
-impl AssignmentNode for JsParenthesizedAssignment {
-    #[inline]
-    fn resolve(&self) -> JsAnyAssignmentPattern {
-        let assignment = self.assignment().unwrap_or_else(|_| self.clone().into());
-
-        JsAnyAssignmentPattern::JsAnyAssignment(assignment)
-    }
-
-    #[inline]
-    fn into_resolved(self) -> JsAnyAssignmentPattern {
-        let assignment = self.assignment().unwrap_or_else(|_| self.into());
-
-        JsAnyAssignmentPattern::JsAnyAssignment(assignment)
     }
 }
 
