@@ -1,6 +1,6 @@
 use std::{
     convert::Infallible,
-    env,
+    env, fs,
     io::{self, ErrorKind},
     path::PathBuf,
     time::Duration,
@@ -63,7 +63,16 @@ fn spawn_daemon() -> io::Result<Child> {
 pub(crate) async fn open_socket() -> io::Result<Option<UnixStream>> {
     match try_connect().await {
         Ok(socket) => Ok(Some(socket)),
-        Err(err) if err.kind() == ErrorKind::NotFound => Ok(None),
+        Err(err)
+            // The OS will return `ConnectionRefused` if the socket file exists
+            // but no server process is listening on it
+            if matches!(
+                err.kind(),
+                ErrorKind::NotFound | ErrorKind::ConnectionRefused
+            ) =>
+        {
+            Ok(None)
+        }
         Err(err) => Err(err),
     }
 }
@@ -72,14 +81,27 @@ pub(crate) async fn open_socket() -> io::Result<Option<UnixStream>> {
 /// print the global socket name in the standard output
 pub(crate) async fn print_socket() -> io::Result<()> {
     let mut current_child: Option<Child> = None;
+    let mut last_error = None;
 
-    loop {
+    // Try to initialize the connection a few times
+    for _ in 0..10 {
         // Try to open a connection on the global socket
-        match open_socket().await {
+        match try_connect().await {
             // The connection is open and ready => exit to printing the socket name
-            Ok(Some(_)) => break,
+            Ok(_) => {
+                println!("{}", get_socket_name().display());
+                return Ok(());
+            }
+
             // There's no process listening on the global socket
-            Ok(None) => {
+            Err(err)
+                if matches!(
+                    err.kind(),
+                    ErrorKind::NotFound | ErrorKind::ConnectionRefused
+                ) =>
+            {
+                last_error = Some(err);
+
                 if let Some(current_child) = &mut current_child {
                     // If we have a handle to the daemon process, wait for a few
                     // milliseconds for it to exit, or retry the connection
@@ -100,18 +122,32 @@ pub(crate) async fn print_socket() -> io::Result<()> {
                     time::sleep(Duration::from_millis(50)).await;
                 }
             }
+
             Err(err) => return Err(err),
         }
     }
 
-    println!("{}", get_socket_name().display());
-    Ok(())
+    // If the connection couldn't be opened after 10 tries fail with the last
+    // error message from the OS, or a generic error message otherwise
+    Err(last_error.unwrap_or_else(|| {
+        io::Error::new(
+            io::ErrorKind::Other,
+            "could not connect to the daemon socket",
+        )
+    }))
 }
 
 /// Start listening on the global socket and accepting connections with the
 /// provided [ServerFactory]
 pub(crate) async fn run_daemon(factory: ServerFactory) -> io::Result<Infallible> {
-    let listener = UnixListener::bind(get_socket_name())?;
+    let path = get_socket_name();
+
+    // Try to remove the socket file if it already exists
+    if path.exists() {
+        fs::remove_file(&path)?;
+    }
+
+    let listener = UnixListener::bind(path)?;
 
     loop {
         let (stream, _) = listener.accept().await?;
