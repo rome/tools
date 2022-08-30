@@ -237,6 +237,9 @@ pub trait CstFormatContext: FormatContext {
     type Language: Language;
     type Style: CommentStyle<Self::Language>;
 
+    /// Rule for formatting leading comments.
+    type LeadingCommentRule: FormatRule<SourceComment<Self::Language>, Context = Self> + Default;
+
     /// Customizes how comments are formatted
     #[deprecated(note = "Prefer FormatLanguage::comment_style")]
     fn comment_style(&self) -> Self::Style;

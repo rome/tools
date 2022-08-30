@@ -43,49 +43,14 @@ if(true) {
 ```diff
 --- Prettier
 +++ Rome
-@@ -4,27 +4,26 @@
- 
- if (true) {
-   /*
--   * Oh no
--   */
-+     * Oh no
-+     */
+@@ -7,7 +7,6 @@
+    * Oh no
+    */
  }
 -
  /** first line
-- * second line
-- * third line */
-+* second line
-+   * third line */
- 
- /* first line
-- * second line
-- * third line */
-+* second line
-+   * third line */
- 
- /*! first line
-- *second line
-- *  third line */
-+*second line
-+   *  third line */
- 
- /*!
-- * Extracted from vue codebase
-- * https://github.com/vuejs/vue/blob/cfd73c2386623341fdbb3ac636c4baf84ea89c2c/src/compiler/parser/html-parser.js
-- * HTML Parser By John Resig (ejohn.org)
-- * Modified by Juriy "kangax" Zaytsev
-- * Original code by Erik Arvidsson, Mozilla Public License
-- * http://erik.eae.net/simplehtmlparser/simplehtmlparser.js
-- */
-+* Extracted from vue codebase
-+* https://github.com/vuejs/vue/blob/cfd73c2386623341fdbb3ac636c4baf84ea89c2c/src/compiler/parser/html-parser.js
-+* HTML Parser By John Resig (ejohn.org)
-+* Modified by Juriy "kangax" Zaytsev
-+* Original code by Erik Arvidsson, Mozilla Public License
-+* http://erik.eae.net/simplehtmlparser/simplehtmlparser.js
-+*/
+  * second line
+  * third line */
 ```
 
 # Output
@@ -97,34 +62,34 @@ if(true) {
 
 if (true) {
   /*
-     * Oh no
-     */
+   * Oh no
+   */
 }
 /** first line
-* second line
-   * third line */
+ * second line
+ * third line */
 
 /* first line
-* second line
-   * third line */
+ * second line
+ * third line */
 
 /*! first line
-*second line
-   *  third line */
+ *second line
+ *  third line */
 
 /*!
-* Extracted from vue codebase
-* https://github.com/vuejs/vue/blob/cfd73c2386623341fdbb3ac636c4baf84ea89c2c/src/compiler/parser/html-parser.js
-* HTML Parser By John Resig (ejohn.org)
-* Modified by Juriy "kangax" Zaytsev
-* Original code by Erik Arvidsson, Mozilla Public License
-* http://erik.eae.net/simplehtmlparser/simplehtmlparser.js
-*/
+ * Extracted from vue codebase
+ * https://github.com/vuejs/vue/blob/cfd73c2386623341fdbb3ac636c4baf84ea89c2c/src/compiler/parser/html-parser.js
+ * HTML Parser By John Resig (ejohn.org)
+ * Modified by Juriy "kangax" Zaytsev
+ * Original code by Erik Arvidsson, Mozilla Public License
+ * http://erik.eae.net/simplehtmlparser/simplehtmlparser.js
+ */
 ```
 
 
 # Lines exceeding max width of 80 characters
 ```
-   24: * https://github.com/vuejs/vue/blob/cfd73c2386623341fdbb3ac636c4baf84ea89c2c/src/compiler/parser/html-parser.js
+   24:  * https://github.com/vuejs/vue/blob/cfd73c2386623341fdbb3ac636c4baf84ea89c2c/src/compiler/parser/html-parser.js
 ```
 
