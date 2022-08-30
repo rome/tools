@@ -7,6 +7,12 @@ class D {
 }
 console.log(new D());
 
+function unused_overloaded(): number;
+function unused_overloaded(s: string): string;
+function unused_overloaded(s?: string) {
+  return s;
+}
+
 // Valid
 
 interface A {
@@ -35,3 +41,10 @@ function f(fn: (title: string) => boolean) {
 f();
 
 export type Command = (...args: any[]) => unknown;
+
+function used_overloaded(): number;
+function used_overloaded(s: string): string;
+function used_overloaded(s?: string) {
+  return s;
+}
+used_overloaded();
