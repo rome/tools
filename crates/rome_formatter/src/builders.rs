@@ -1253,7 +1253,7 @@ impl<Context> Group<'_, Context> {
     ///
     /// The formatter writes a [FormatElement::ExpandParent], forcing any enclosing group to expand, if `should_expand` is `true``.
     /// It also omits the enclosing [FormatElement::Group] because the group would be forced to expand anyway.
-    /// The [FormatElement:Group] only gets written if the `group id` specified with [Group::with_group_id] isn't [None]
+    /// The [FormatElement:Group] only gets written if the `group_id` specified with [Group::with_group_id] isn't [None]
     /// because other IR elements may reference the group with that group id and the printer may panic
     /// if no group with the given id is present in the document.
     pub fn should_expand(mut self, should_expand: bool) -> Self {
