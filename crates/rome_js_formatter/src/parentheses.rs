@@ -875,7 +875,7 @@ fn debug_assert_is_expression(node: &JsSyntaxNode) {
     )
 }
 
-fn debug_assert_is_parent(node: &JsSyntaxNode, parent: &JsSyntaxNode) {
+pub(crate) fn debug_assert_is_parent(node: &JsSyntaxNode, parent: &JsSyntaxNode) {
     debug_assert!(
         node.parent().as_ref() == Some(parent),
         "Node {node:#?} is not a child of ${parent:#?}"

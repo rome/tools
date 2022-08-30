@@ -17,7 +17,9 @@ mod typescript;
 pub(crate) use crate::parentheses::resolve_left_most_expression;
 use crate::prelude::*;
 use crate::JsCommentStyle;
-pub(crate) use assignment_like::JsAnyAssignmentLike;
+pub(crate) use assignment_like::{
+    with_assignment_layout, AssignmentLikeLayout, JsAnyAssignmentLike,
+};
 pub(crate) use binary_like_expression::{
     needs_binary_like_parentheses, JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression,
 };

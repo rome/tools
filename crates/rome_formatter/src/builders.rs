@@ -1231,6 +1231,7 @@ pub fn group<Context>(content: &impl Format<Context>) -> Group<Context> {
     Group {
         content: Argument::new(content),
         group_id: None,
+        should_expand: false,
     }
 }
 
@@ -1238,6 +1239,7 @@ pub fn group<Context>(content: &impl Format<Context>) -> Group<Context> {
 pub struct Group<'a, Context> {
     content: Argument<'a, Context>,
     group_id: Option<GroupId>,
+    should_expand: bool,
 }
 
 impl<Context> Group<'_, Context> {
@@ -1245,14 +1247,37 @@ impl<Context> Group<'_, Context> {
         self.group_id = group_id;
         self
     }
+
+    /// Setting the value to `true` forces the group and its enclosing group to expand regardless if it otherwise would fit on the
+    /// line or contains any hard line breaks.
+    ///
+    /// The formatter writes a [FormatElement::ExpandParent], forcing any enclosing group to expand, if `should_expand` is `true`.
+    /// It also omits the enclosing [FormatElement::Group] because the group would be forced to expand anyway.
+    /// The [FormatElement:Group] only gets written if the `group_id` specified with [Group::with_group_id] isn't [None]
+    /// because other IR elements may reference the group with that group id and the printer may panic
+    /// if no group with the given id is present in the document.
+    pub fn should_expand(mut self, should_expand: bool) -> Self {
+        self.should_expand = should_expand;
+        self
+    }
 }
 
 impl<Context> Format<Context> for Group<'_, Context> {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        let mut buffer = GroupBuffer::new(f);
-        buffer.write_fmt(Arguments::from(&self.content))?;
-        let content = buffer.into_vec();
+        if self.group_id.is_none() && self.should_expand {
+            write!(f, [expand_parent()])?;
+            return f.write_fmt(Arguments::from(&self.content));
+        }
 
+        let mut buffer = GroupBuffer::new(f);
+
+        buffer.write_fmt(Arguments::from(&self.content))?;
+
+        if self.should_expand {
+            write!(buffer, [expand_parent()])?;
+        }
+
+        let content = buffer.into_vec();
         if content.is_empty() && self.group_id.is_none() {
             return Ok(());
         }
@@ -1269,6 +1294,7 @@ impl<Context> std::fmt::Debug for Group<'_, Context> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("GroupElements")
             .field("group_id", &self.group_id)
+            .field("should_expand", &self.should_expand)
             .field("content", &"{{content}}")
             .finish()
     }
