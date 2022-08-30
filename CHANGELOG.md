@@ -4,23 +4,23 @@
 
 ### CLI
 
-- added `--stdin-file-path` argument, needed when formatting from standard input
-- you can now format content from standard input when using the command `rome format`:
+- Added `--stdin-file-path` argument, needed when formatting from standard input.
+- You can now format content from standard input when using the command `rome format`:
 ```shell
 echo "function f() { return {} }" | rome format --stdin-file-path example.js
 ```
-- added `--apply-suggested` argument to the `rome check` command, to apply suggested and safe fixes
+- Added `--apply-suggested` argument to the `rome check` command, to apply suggested and safe fixes.
 
 ### Linter
 
-- now all rules will emit an error, check the website if you want to [change the severity of a rule](https://rome.tools/#configure-a-rule)
-- added `js/noExtraBooleanCast` lint rule
-- added `js/noDupeArgs` lint rule
-- added `js/noShadowRestrictedNames` lint rule
-- added `js/inlineVariable` code action
-- fixed issues in the rule `js/noUnusedVariables` [#3124](https://github.com/rome/tools/pull/3124) [#3060](https://github.com/rome/tools/pull/3060) [#3004](https://github.com/rome/tools/pull/3004)
-- fixed issues in the rule `js/noNegationElse` [#2999](https://github.com/rome/tools/issues/2999)
-- fixed issues in the rule `js/noShoutyConstants` [#3077](https://github.com/rome/tools/issues/3077)
+- Now all rules will emit an error, check the website if you want to [change the severity of a rule](https://rome.tools/#configure-a-rule).
+- Added `js/noExtraBooleanCast` lint rule.
+- Added `js/noDupeArgs` lint rule.
+- Added `js/noShadowRestrictedNames` lint rule.
+- Added `js/inlineVariable` code action.
+- Fixed issues in the rule `js/noUnusedVariables`. [#3124](https://github.com/rome/tools/pull/3124) [#3060](https://github.com/rome/tools/pull/3060) [#3004](https://github.com/rome/tools/pull/3004)
+- Fixed issues in the rule `js/noNegationElse`. [#2999](https://github.com/rome/tools/issues/2999)
+- Fixed issues in the rule `js/noShoutyConstants`. [#3077](https://github.com/rome/tools/issues/3077)
 
 ### Formatter
 
@@ -43,7 +43,7 @@ Greatly increased the compatibility with Prettier, here's an highlight of what w
 
 ### Configuration
 
-- **BREAKING CHANGE**: removed the second `"rules"` field from a field group
+- **BREAKING CHANGE**: removed the second `"rules"` field from a field group.
 ```diff
 {
   "linter": {
