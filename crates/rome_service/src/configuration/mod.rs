@@ -121,7 +121,7 @@ pub fn load_config(
 ) -> Result<Option<Configuration>, RomeError> {
     let config_name = file_system.config_name();
     let configuration_path = if let Some(base_path) = base_path {
-        PathBuf::from(base_path).join(config_name)
+        base_path.join(config_name)
     } else {
         PathBuf::from(config_name)
     };
