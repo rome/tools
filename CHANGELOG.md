@@ -1,5 +1,65 @@
 # Rome changelog
 
+## 0.9.0
+
+### CLI
+
+- added `--stdin-file-path` argument, needed when formatting from standard input
+- you can now format content from standard input when using the command `rome format`:
+```shell
+echo "function f() { return {} }" | rome format --stdin-file-path example.js
+```
+- added `--apply-suggested` argument to the `rome check` command, to apply suggested and safe fixes
+
+### Linter
+
+- now all rules will emit an error, check the website if you want to [change the severity of a rule](https://rome.tools/#configure-a-rule)
+- added `js/noExtraBooleanCast` lint rule
+- added `js/noDupeArgs` lint rule
+- added `js/noShadowRestrictedNames` lint rule
+- added `js/inlineVariable` code action
+- fixed issues in the rule `js/noUnusedVariables` 
+- fixed issues in the rule `js/noNegationElse` #2999
+- fixed issues in the rule `js/noShoutyConstants` #3077
+
+### Formatter
+
+Greatly increased the compatibility with Prettier, here's an highlight of what we improved
+
+##### `throw` and `return` arguments
+
+##### Templates
+
+##### Arrow functions
+
+##### Conditional expressions
+
+##### Parenthesis
+
+##### Arrays
+
+##### Loops
+
+
+### Configuration
+
+- **BREAKING CHANGE**: removed the second `"rules"` field from a field group
+```diff
+{
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "js": {
++        "noDebugger": "off"
+-        "rules": {
+-          "noDebugger": "off"
+-        },
+      }
+    }
+  }
+}
+```
+
 ## 0.8.0
 
 ### CLI

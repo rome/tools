@@ -52,12 +52,14 @@ USAGE:
     INPUTS can be one or more filesystem path, each pointing to a single file or an entire directory to be searched recursively for supported files
 
 OPTIONS:
-    --write                       Write the output of the formatter to the files instead of printing the diff to the console
-    --skip-errors                 Skip over files containing syntax errors instead of returning an error
-    --indent-style <tabs|space>   Determine whether the formatter should use tabs or spaces for indentation (default: tabs)
-    --indent-size <number>        If the indentation style is set to spaces, determine how many spaces should be used for indentation (default: 2)
-    --line-width <number>         Determine how many characters the formatter is allowed to print in a single line (default: 80)
-    --quote-style <single|double> Determine whether the formatter should use single or double quotes for strings (default: double)
+    --write                                  Write the output of the formatter to the files instead of printing the diff to the console
+    --skip-errors                            Skip over files containing syntax errors instead of returning an error
+    --indent-style <tabs|space>              Determine whether the formatter should use tabs or spaces for indentation (default: tabs)
+    --indent-size <number>                   If the indentation style is set to spaces, determine how many spaces should be used for indentation (default: 2)
+    --line-width <number>                    Determine how many characters the formatter is allowed to print in a single line (default: 80)
+    --quote-style <single|double>            Determine whether the formatter should use single or double quotes for strings (default: double)
+    --quote-properties <as-needed|preserve>  Determine whether the formatter should preserve quotes in object properties (default: as-needed)
+    --stdin-file-path <string>                Mandatory argument to use when piping content via standard input, e.g. echo 'let a;' | rome format --stdin-file-path file.js
 ```
 
 ### Suppression
@@ -198,7 +200,51 @@ function a(b, c) {
 }
 ```
 
-Please check our [playground] and its result
+#### Object expressions, function expressions, or class expressions at the beginning of a statement.
+
+```javascript
+// input
+{}.b
+
+// Prettier
+({}.b)
+
+// Rome
+({}).b 
+```
+
+Prettier parenthesizes the whole expression whereas Rome parenthesizes the 
+object/function/class expression only.
+
+The main reason for diverging is that parenthesizing the whole expression requires that the logic is 
+implemented in any expression that starts with another child expression 
+(tagged template, binary expressions, computed member/assignment, sequence, conditional, etc. ) 
+and it requires traversing the first expression until it reaches an object expression or any expression 
+that doesn't start with another expression. 
+
+This is rather expensive and Rome's approach avoids the expensive traversal except for 
+object/function and class expressions, of which there should be fewer.
+
+
+#### Parenthesized optional chain
+
+```javascript
+// Input
+(a?.b).c
+a?.b.c
+
+// Prettier
+(a?.b).c
+a?.b.c
+
+// Rome
+a?.b.c
+a?.b.c
+```
+
+Prettier keeps the parentheses if they were present in the source document but never adds them 
+if they were missing. 
+
 
 #### Migration from other formatters
 

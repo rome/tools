@@ -60,9 +60,7 @@ Example:
     "enabled": true,
     "rules": {
       "js": {
-        "rules": {
-          "noDebugger": "off"
-        }
+        "noDebugger": "off"
       }
     }
   }
@@ -92,9 +90,7 @@ Example:
     "enabled": true,
     "rules": {
       "ts": {
-        "rules": {
-          "useShorthandArrayType": "off"
-        }
+        "useShorthandArrayType": "off"
       }
     }
   }
@@ -124,9 +120,7 @@ Example:
     "enabled": true,
     "rules": {
       "jsx": {
-        "rules": {
-          "noCommentText": "off"
-        }
+        "noCommentText": "off"
       }
     }
   }
@@ -156,9 +150,7 @@ Example:
     "enabled": true,
     "rules": {
       "regex": {
-        "rules": {
-          "noMultipleSpacesInRegularExpressionLiterals": "off"
-        }
+        "noMultipleSpacesInRegularExpressionLiterals": "off"
       }
     }
   }
@@ -197,6 +189,13 @@ The type of quote used when representing string literals. It can be `single` or 
 
 > Default: `double`
 
+#### `javascript.formatter.quoteProperties`
+
+When properties inside objects should be quoted. It can be `asNeeded` or `preserve`.
+
+> Default: `asNeeded`
+
+
 ### Configure a rule
 
 A rule can be configured for multiple purposes:
@@ -217,10 +216,8 @@ To enable rules, you need to change their diagnostics severity based on your nee
     "enabled": true,
     "rules": {
       "js": {
-        "rules": {
-          "noDeadCode": "error",
-          "useCamelCase": "warn"
-        }
+        "noDeadCode": "error",
+        "useCamelCase": "warn"
       }
     }
   }
@@ -237,14 +234,10 @@ Just add `"off"` as value inside its configuration. For example:
     "enabled": true,
     "rules": {
       "jsx": {
-        "rules": {
-          "noCommentText": "off"
-        }
+        "noCommentText": "off"
       },
       "regex": {
-        "rules": {
-          "noMultipleSpacesInRegularExpressionLiterals": "off"
-        }
+        "noMultipleSpacesInRegularExpressionLiterals": "off"
       }
     }
   }
@@ -262,14 +255,10 @@ Just add `"warn"` as value of the rule. Example:
     "enabled": true,
     "rules": {
       "jsx": {
-        "rules": {
-          "noCommentText": "warn"
-        }
+        "noCommentText": "warn"
       },
       "regex": {
-        "rules": {
-          "noMultipleSpacesInRegularExpressionLiterals": "error"
-        }
+        "noMultipleSpacesInRegularExpressionLiterals": "error"
       }
     }
   }
@@ -290,11 +279,9 @@ by shaping the value of the rule in a different way.
     "enabled": true,
     "rules": {
       "jsx": {
-        "rules": {
-          "noCommentText": {
-            "level": "warn",
-            "options": {}
-          }
+        "noCommentText": {
+          "level": "warn",
+          "options": {}
         }
       }
     }

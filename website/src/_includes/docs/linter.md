@@ -25,6 +25,8 @@ rome check --help
 Which will show you the options available at the moment:
 
 ```shell
+Rome Check: Run the linter on a set of files
+
 USAGE:
     rome check <INPUTS...>
 
@@ -32,6 +34,7 @@ USAGE:
 
 OPTIONS:
     --apply                       Apply safe fixes
+    --apply-suggested             Apply safe and suggested fixes
     --max-diagnostics             Cap the amount of diagnostics displayed - default 20
 
 ```
