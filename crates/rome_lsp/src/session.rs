@@ -11,13 +11,15 @@ use rome_fs::{FileSystem, OsFileSystem, RomePath};
 use rome_service::configuration::Configuration;
 use rome_service::workspace::UpdateSettingsParams;
 use rome_service::workspace::{FeatureName, PullDiagnosticsParams, SupportsFeatureParams};
-use rome_service::Workspace;
+use rome_service::{load_config, Workspace};
 use rome_service::{DynRef, RomeError};
 use std::collections::HashMap;
+use std::path::PathBuf;
 use std::sync::Arc;
 use std::sync::RwLock;
 use tower_lsp::lsp_types;
-use tracing::{error, trace};
+use tower_lsp::lsp_types::Url;
+use tracing::{error, info, trace};
 
 /// Represents the state of an LSP server session.
 pub(crate) struct Session {
@@ -37,6 +39,8 @@ pub(crate) struct Session {
     /// The configuration coming from `rome.json` file
     pub(crate) configuration: RwLock<Option<Configuration>>,
 
+    pub(crate) root_uri: RwLock<Option<Url>>,
+
     documents: RwLock<HashMap<lsp_types::Url, Document>>,
     url_interner: RwLock<UrlInterner>,
 }
@@ -48,6 +52,7 @@ impl Session {
         let url_interner = Default::default();
         let config = RwLock::new(Config::new());
         let configuration = RwLock::new(None);
+        let root_uri = RwLock::new(None);
         Self {
             client,
             client_capabilities,
@@ -57,6 +62,7 @@ impl Session {
             config,
             fs: DynRef::Owned(Box::new(OsFileSystem)),
             configuration,
+            root_uri,
         }
     }
 
@@ -159,6 +165,23 @@ impl Session {
             == Some(true)
     }
 
+    /// This function attempts to read the configuration from the root URI
+    pub(crate) async fn update_configuration(&self) {
+        let root_uri = self.root_uri.read().unwrap();
+        let base_path = root_uri.as_ref().map(|uri| PathBuf::from(uri.path()));
+
+        match load_config(&self.fs, base_path) {
+            Ok(Some(configuration)) => {
+                info!("Configuration found, and it is valid!");
+                self.configuration.write().unwrap().replace(configuration);
+            }
+            Err(err) => {
+                error!("Couldn't load the configuration file, reason:\n {}", err);
+            }
+            _ => {}
+        };
+    }
+
     /// Requests "workspace/configuration" from client and updates Session config
     pub(crate) async fn fetch_client_configuration(&self) {
         let item = lsp_types::ConfigurationItem {
@@ -191,9 +214,13 @@ impl Session {
                             &configuration
                         );
 
-                        self.workspace
-                            .update_settings(UpdateSettingsParams { configuration })
-                            .ok()?;
+                        let result = self
+                            .workspace
+                            .update_settings(UpdateSettingsParams { configuration });
+
+                        if let Err(error) = result {
+                            error!("{:?}", &error)
+                        }
                     }
 
                     Some(())

@@ -1,12 +1,11 @@
-use std::sync::Arc;
-
 use crate::capabilities::server_capabilities;
 use crate::requests::syntax_tree::{SyntaxTreePayload, SYNTAX_TREE_REQUEST};
 use crate::session::Session;
 use crate::utils::into_lsp_error;
 use crate::{handlers, requests};
 use futures::future::ready;
-use rome_service::{load_config, workspace, Workspace};
+use rome_service::{workspace, Workspace};
+use std::sync::Arc;
 use tokio::io::{AsyncRead, AsyncWrite};
 use tower_lsp::jsonrpc::Result as LspResult;
 use tower_lsp::{lsp_types::*, ClientSocket};
@@ -48,6 +47,10 @@ impl LanguageServer for LSPServer {
             .unwrap()
             .replace(params.capabilities);
 
+        if let Some(uri) = params.root_uri {
+            self.session.root_uri.write().unwrap().replace(uri);
+        }
+
         let init = InitializeResult {
             capabilities: server_capabilities(),
             server_info: Some(ServerInfo {
@@ -65,21 +68,7 @@ impl LanguageServer for LSPServer {
 
         info!("Attempting to load the configuration from 'rome.json' file");
 
-        match load_config(&self.session.fs) {
-            Ok(Some(configuration)) => {
-                info!("Configuration found, and it is valid!");
-                self.session
-                    .configuration
-                    .write()
-                    .unwrap()
-                    .replace(configuration);
-            }
-            Err(err) => {
-                error!("Couldn't load the configuration file, reason:\n {}", err);
-            }
-            _ => {}
-        };
-
+        self.session.update_configuration().await;
         self.session.fetch_client_configuration().await;
 
         let msg = format!("Server initialized with PID: {}", std::process::id());

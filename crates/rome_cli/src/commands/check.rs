@@ -7,7 +7,7 @@ use rome_service::workspace::{FixFileMode, UpdateSettingsParams};
 
 /// Handler for the "check" command of the Rome CLI
 pub(crate) fn check(mut session: CliSession) -> Result<(), Termination> {
-    let configuration = load_config(&session.app.fs)?;
+    let configuration = load_config(&session.app.fs, None)?;
     let mut workspace_settings = WorkspaceSettings::default();
 
     let max_diagnostics: Option<u16> = session

@@ -12,6 +12,7 @@ use serde::{Deserialize, Serialize};
 use std::fmt::{Debug, Display, Formatter};
 use std::io::ErrorKind;
 use std::path::PathBuf;
+use tracing::{error, info};
 
 mod formatter;
 mod javascript;
@@ -113,12 +114,21 @@ impl Display for ConfigurationError {
 
 /// This function is responsible to load the rome configuration.
 ///
-/// The `file_system` will read the configuration file
+/// The `file_system` will read the configuration file. A base path can be passed
 pub fn load_config(
     file_system: &DynRef<dyn FileSystem>,
+    base_path: Option<PathBuf>,
 ) -> Result<Option<Configuration>, RomeError> {
     let config_name = file_system.config_name();
-    let configuration_path = PathBuf::from(config_name);
+    let configuration_path = if let Some(base_path) = base_path {
+        PathBuf::from(base_path).join(config_name)
+    } else {
+        PathBuf::from(config_name)
+    };
+    info!(
+        "Attempting to load the configuration file at path {:?}",
+        configuration_path
+    );
     let options = OpenOptions::default().read(true).write(true);
     let file = file_system.open_with_options(&configuration_path, options);
     match file {
@@ -140,6 +150,11 @@ pub fn load_config(
             if err.kind() != ErrorKind::NotFound {
                 return Err(RomeError::CantReadFile(configuration_path));
             }
+            error!(
+                "Could not find the file configuration at {:?}",
+                configuration_path.display()
+            );
+            error!("Reason: {:?}", err);
             Ok(None)
         }
     }
