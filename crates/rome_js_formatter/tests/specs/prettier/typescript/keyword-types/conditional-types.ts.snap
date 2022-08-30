@@ -1,8 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
-assertion_line: 271
-info:
-  test_file: typescript/keyword-types/conditional-types.ts
 ---
 
 # Input
@@ -30,26 +27,14 @@ export type UnwrappedResultRow<T> = {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,8 +1,14 @@
- export type UnwrappedResultRow<T> = {
--  [P in keyof T]: T[P] extends Req<infer a>
--    ? a
--    : T[P] extends Opt<infer b>
--    ? b
+@@ -3,6 +3,7 @@
+     ? a
+     : T[P] extends Opt<infer b>
+     ? b
 -    : // TEST
--      never;
-+  [P in keyof T]: (
-+    T[P] extends Req<infer a>
-+      ? (a)
-+      : (
-+          T[P] extends Opt<infer b>
-+            ? (b)
-+            : (
-+                // TEST
-+                never
-+              )
-+        )
-+  );
++    :
++      // TEST
+       never;
  };
 ```
 
@@ -57,18 +42,13 @@ export type UnwrappedResultRow<T> = {
 
 ```js
 export type UnwrappedResultRow<T> = {
-  [P in keyof T]: (
-    T[P] extends Req<infer a>
-      ? (a)
-      : (
-          T[P] extends Opt<infer b>
-            ? (b)
-            : (
-                // TEST
-                never
-              )
-        )
-  );
+  [P in keyof T]: T[P] extends Req<infer a>
+    ? a
+    : T[P] extends Opt<infer b>
+    ? b
+    :
+      // TEST
+      never;
 };
 ```
 

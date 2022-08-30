@@ -65,142 +65,103 @@ let foo: (
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,26 +1,52 @@
+@@ -1,26 +1,39 @@
 -let foo: // comment
--any;
++let foo:
++// comment
+ any;
 -let foo: // comment
--null;
++let foo:
++// comment
+ null;
 -let foo: // comment
--this;
++let foo:
++// comment
+ this;
 -let foo: // comment
--number;
++let foo:
++// comment
+ number;
 -let foo: // comment
--void;
++let foo:
++// comment
+ void;
 -let foo: // comment
--boolean;
++let foo:
++// comment
+ boolean;
 -let foo: // comment
--bigint;
++let foo:
++// comment
+ bigint;
 -let foo: // comment
--symbol;
++let foo:
++// comment
+ symbol;
 -let foo: // comment
--string;
++let foo:
++// comment
+ string;
 -let foo: // comment
--never;
++let foo:
++// comment
+ never;
 -let foo: // comment
--object;
++let foo:
++// comment
+ object;
 -let foo: // comment
--undefined;
++let foo:
++// comment
+ undefined;
 -let foo: // comment
--unknown;
-+let foo: (
-+  // comment
-+  any
-+);
-+let foo: (
-+  // comment
-+  null
-+);
-+let foo: (
-+  // comment
-+  this
-+);
-+let foo: (
-+  // comment
-+  number
-+);
-+let foo: (
-+  // comment
-+  void
-+);
-+let foo: (
-+  // comment
-+  boolean
-+);
-+let foo: (
-+  // comment
-+  bigint
-+);
-+let foo: (
-+  // comment
-+  symbol
-+);
-+let foo: (
-+  // comment
-+  string
-+);
-+let foo: (
-+  // comment
-+  never
-+);
-+let foo: (
-+  // comment
-+  object
-+);
-+let foo: (
-+  // comment
-+  undefined
-+);
-+let foo: (
-+  // comment
-+  unknown
-+);
++let foo:
++// comment
+ unknown;
 ```
 
 # Output
 
 ```js
-let foo: (
-  // comment
-  any
-);
-let foo: (
-  // comment
-  null
-);
-let foo: (
-  // comment
-  this
-);
-let foo: (
-  // comment
-  number
-);
-let foo: (
-  // comment
-  void
-);
-let foo: (
-  // comment
-  boolean
-);
-let foo: (
-  // comment
-  bigint
-);
-let foo: (
-  // comment
-  symbol
-);
-let foo: (
-  // comment
-  string
-);
-let foo: (
-  // comment
-  never
-);
-let foo: (
-  // comment
-  object
-);
-let foo: (
-  // comment
-  undefined
-);
-let foo: (
-  // comment
-  unknown
-);
+let foo:
+// comment
+any;
+let foo:
+// comment
+null;
+let foo:
+// comment
+this;
+let foo:
+// comment
+number;
+let foo:
+// comment
+void;
+let foo:
+// comment
+boolean;
+let foo:
+// comment
+bigint;
+let foo:
+// comment
+symbol;
+let foo:
+// comment
+string;
+let foo:
+// comment
+never;
+let foo:
+// comment
+object;
+let foo:
+// comment
+undefined;
+let foo:
+// comment
+unknown;
 ```
 
 

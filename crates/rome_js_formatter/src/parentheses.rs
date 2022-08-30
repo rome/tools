@@ -45,9 +45,10 @@ use rome_js_syntax::{
     JsBinaryOperator, JsComputedMemberAssignment, JsComputedMemberExpression,
     JsConditionalExpression, JsLanguage, JsParenthesizedAssignment, JsParenthesizedExpression,
     JsSequenceExpression, JsStaticMemberAssignment, JsStaticMemberExpression, JsSyntaxKind,
-    JsSyntaxNode, JsSyntaxToken,
+    JsSyntaxNode, JsSyntaxToken, TsConditionalType, TsIndexedAccessType,
+    TsIntersectionTypeElementList, TsParenthesizedType, TsType, TsUnionTypeVariantList,
 };
-use rome_rowan::{declare_node_union, match_ast, AstNode, SyntaxResult};
+use rome_rowan::{declare_node_union, match_ast, AstNode, AstSeparatedList, SyntaxResult};
 
 /// Node that may be parenthesized to ensure it forms valid syntax or to improve readability
 pub trait NeedsParentheses: AstNode<Language = JsLanguage> {
@@ -597,8 +598,76 @@ pub(crate) fn is_spread(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bool {
     )
 }
 
+/// Returns `true` if a TS primary type needs parentheses
+pub(crate) fn operator_type_or_higher_needs_parens(
+    node: &JsSyntaxNode,
+    parent: &JsSyntaxNode,
+) -> bool {
+    debug_assert_is_parent(node, parent);
+
+    match parent.kind() {
+        JsSyntaxKind::TS_ARRAY_TYPE
+        | JsSyntaxKind::TS_TYPE_OPERATOR_TYPE
+        | JsSyntaxKind::TS_REST_TUPLE_TYPE_ELEMENT
+        | JsSyntaxKind::TS_OPTIONAL_TUPLE_TYPE_ELEMENT => true,
+        JsSyntaxKind::TS_INDEXED_ACCESS_TYPE => {
+            let indexed = TsIndexedAccessType::unwrap_cast(parent.clone());
+
+            indexed.object_type().map(AstNode::into_syntax).as_ref() == Ok(node)
+        }
+        _ => false,
+    }
+}
+
+/// Tests if `node` is the check type of a [TsConditionalType]
+///
+/// ```javascript
+/// type s = A extends string ? string : number //  true for `A`, false for `string` and `number`
+/// ```
+pub(crate) fn is_check_type(node: &JsSyntaxNode, parent: &JsSyntaxNode) -> bool {
+    debug_assert_is_parent(node, parent);
+
+    match parent.kind() {
+        JsSyntaxKind::TS_CONDITIONAL_TYPE => {
+            let conditional = TsConditionalType::unwrap_cast(parent.clone());
+
+            conditional.check_type().map(AstNode::into_syntax).as_ref() == Ok(node)
+        }
+        _ => false,
+    }
+}
+
+/// Returns `true` if node is in a union or intersection type with more than one variant
+///
+/// ```javascript
+/// type A = &string // -> false for `string` because `string` is the only variant
+/// type B = string & number // -> true for `string` or `number`
+/// type C = |string // -> false
+/// type D = string | number // -> true
+/// ```
+pub(crate) fn is_in_many_type_union_or_intersection_list(
+    node: &JsSyntaxNode,
+    parent: &JsSyntaxNode,
+) -> bool {
+    debug_assert_is_parent(node, parent);
+
+    match parent.kind() {
+        JsSyntaxKind::TS_UNION_TYPE_VARIANT_LIST => {
+            let list = TsUnionTypeVariantList::unwrap_cast(parent.clone());
+
+            list.len() > 1
+        }
+        JsSyntaxKind::TS_INTERSECTION_TYPE_ELEMENT_LIST => {
+            let list = TsIntersectionTypeElementList::unwrap_cast(parent.clone());
+
+            list.len() > 1
+        }
+        _ => false,
+    }
+}
+
 declare_node_union! {
-    pub(crate) JsAnyParenthesized = JsParenthesizedExpression | JsParenthesizedAssignment
+    pub(crate) JsAnyParenthesized = JsParenthesizedExpression | JsParenthesizedAssignment | TsParenthesizedType
 }
 
 impl JsAnyParenthesized {
@@ -606,6 +675,7 @@ impl JsAnyParenthesized {
         match self {
             JsAnyParenthesized::JsParenthesizedExpression(expression) => expression.l_paren_token(),
             JsAnyParenthesized::JsParenthesizedAssignment(assignment) => assignment.l_paren_token(),
+            JsAnyParenthesized::TsParenthesizedType(ty) => ty.l_paren_token(),
         }
     }
 
@@ -617,6 +687,7 @@ impl JsAnyParenthesized {
             JsAnyParenthesized::JsParenthesizedAssignment(assignment) => {
                 assignment.assignment().map(AstNode::into_syntax)
             }
+            JsAnyParenthesized::TsParenthesizedType(ty) => ty.ty().map(AstNode::into_syntax),
         }
     }
 
@@ -624,6 +695,7 @@ impl JsAnyParenthesized {
         match self {
             JsAnyParenthesized::JsParenthesizedExpression(expression) => expression.r_paren_token(),
             JsAnyParenthesized::JsParenthesizedAssignment(assignment) => assignment.r_paren_token(),
+            JsAnyParenthesized::TsParenthesizedType(ty) => ty.r_paren_token(),
         }
     }
 }
@@ -712,6 +784,86 @@ impl NeedsParentheses for JsAnyAssignmentPattern {
             JsAnyAssignmentPattern::JsObjectAssignmentPattern(assignment) => {
                 assignment.needs_parentheses_with_parent(parent)
             }
+        }
+    }
+}
+
+impl NeedsParentheses for TsType {
+    fn needs_parentheses(&self) -> bool {
+        match self {
+            TsType::TsAnyType(ty) => ty.needs_parentheses(),
+            TsType::TsArrayType(ty) => ty.needs_parentheses(),
+            TsType::TsBigIntLiteralType(ty) => ty.needs_parentheses(),
+            TsType::TsBigintType(ty) => ty.needs_parentheses(),
+            TsType::TsBooleanLiteralType(ty) => ty.needs_parentheses(),
+            TsType::TsBooleanType(ty) => ty.needs_parentheses(),
+            TsType::TsConditionalType(ty) => ty.needs_parentheses(),
+            TsType::TsConstructorType(ty) => ty.needs_parentheses(),
+            TsType::TsFunctionType(ty) => ty.needs_parentheses(),
+            TsType::TsImportType(ty) => ty.needs_parentheses(),
+            TsType::TsIndexedAccessType(ty) => ty.needs_parentheses(),
+            TsType::TsInferType(ty) => ty.needs_parentheses(),
+            TsType::TsIntersectionType(ty) => ty.needs_parentheses(),
+            TsType::TsMappedType(ty) => ty.needs_parentheses(),
+            TsType::TsNeverType(ty) => ty.needs_parentheses(),
+            TsType::TsNonPrimitiveType(ty) => ty.needs_parentheses(),
+            TsType::TsNullLiteralType(ty) => ty.needs_parentheses(),
+            TsType::TsNumberLiteralType(ty) => ty.needs_parentheses(),
+            TsType::TsNumberType(ty) => ty.needs_parentheses(),
+            TsType::TsObjectType(ty) => ty.needs_parentheses(),
+            TsType::TsParenthesizedType(ty) => ty.needs_parentheses(),
+            TsType::TsReferenceType(ty) => ty.needs_parentheses(),
+            TsType::TsStringLiteralType(ty) => ty.needs_parentheses(),
+            TsType::TsStringType(ty) => ty.needs_parentheses(),
+            TsType::TsSymbolType(ty) => ty.needs_parentheses(),
+            TsType::TsTemplateLiteralType(ty) => ty.needs_parentheses(),
+            TsType::TsThisType(ty) => ty.needs_parentheses(),
+            TsType::TsTupleType(ty) => ty.needs_parentheses(),
+            TsType::TsTypeOperatorType(ty) => ty.needs_parentheses(),
+            TsType::TsTypeofType(ty) => ty.needs_parentheses(),
+            TsType::TsUndefinedType(ty) => ty.needs_parentheses(),
+            TsType::TsUnionType(ty) => ty.needs_parentheses(),
+            TsType::TsUnknownType(ty) => ty.needs_parentheses(),
+            TsType::TsVoidType(ty) => ty.needs_parentheses(),
+        }
+    }
+
+    fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
+        match self {
+            TsType::TsAnyType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsArrayType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsBigIntLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsBigintType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsBooleanLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsBooleanType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsConditionalType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsConstructorType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsFunctionType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsImportType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsIndexedAccessType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsInferType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsIntersectionType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsMappedType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsNeverType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsNonPrimitiveType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsNullLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsNumberLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsNumberType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsObjectType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsParenthesizedType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsReferenceType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsStringLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsStringType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsSymbolType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsTemplateLiteralType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsThisType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsTupleType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsTypeOperatorType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsTypeofType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsUndefinedType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsUnionType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsUnknownType(ty) => ty.needs_parentheses_with_parent(parent),
+            TsType::TsVoidType(ty) => ty.needs_parentheses_with_parent(parent),
         }
     }
 }

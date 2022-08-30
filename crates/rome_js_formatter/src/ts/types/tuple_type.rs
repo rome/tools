@@ -1,7 +1,8 @@
 use crate::prelude::*;
 
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
-use rome_js_syntax::{TsTupleType, TsTupleTypeFields};
+use rome_js_syntax::{JsSyntaxNode, TsTupleType, TsTupleTypeFields};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsTupleType;
@@ -21,5 +22,15 @@ impl FormatNodeRule<TsTupleType> for FormatTsTupleType {
                     .soft_block_indent()
             ]
         )
+    }
+
+    fn needs_parentheses(&self, item: &TsTupleType) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl NeedsParentheses for TsTupleType {
+    fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
+        false
     }
 }

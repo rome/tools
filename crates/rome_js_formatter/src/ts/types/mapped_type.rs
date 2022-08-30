@@ -1,8 +1,9 @@
 use crate::prelude::*;
 use crate::utils::FormatWithSemicolon;
 
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::{format_args, write};
-use rome_js_syntax::{TsMappedType, TsMappedTypeFields};
+use rome_js_syntax::{JsSyntaxNode, TsMappedType, TsMappedTypeFields};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsMappedType;
@@ -52,5 +53,15 @@ impl FormatNodeRule<TsMappedType> for FormatTsMappedType {
             )
             .block_indent()]
         )
+    }
+
+    fn needs_parentheses(&self, item: &TsMappedType) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl NeedsParentheses for TsMappedType {
+    fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
+        false
     }
 }

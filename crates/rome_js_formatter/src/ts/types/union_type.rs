@@ -1,8 +1,12 @@
+use crate::parentheses::NeedsParentheses;
 use crate::prelude::*;
-use crate::ts::types::intersection_type::FormatTypeSetLeadingSeparator;
-use rome_formatter::{write, Buffer};
-use rome_js_syntax::TsUnionTypeFields;
+use crate::ts::types::intersection_type::{
+    union_or_intersection_type_needs_parentheses, FormatTypeSetLeadingSeparator,
+    TsIntersectionOrUnionTypeList,
+};
+use rome_formatter::{format_args, write, Buffer};
 use rome_js_syntax::{JsSyntaxKind, TsUnionType};
+use rome_js_syntax::{JsSyntaxNode, TsUnionTypeFields};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsUnionType;
@@ -13,6 +17,24 @@ impl FormatNodeRule<TsUnionType> for FormatTsUnionType {
             leading_separator_token,
             types,
         } = node.as_fields();
+
+        let body = format_with(|f| {
+            write!(
+                f,
+                [
+                    soft_line_break(),
+                    FormatTypeSetLeadingSeparator {
+                        separator: JsSyntaxKind::PIPE,
+                        leading_separator: leading_separator_token.as_ref()
+                    },
+                    types.format()
+                ]
+            )
+        });
+
+        if node.needs_parentheses() {
+            return write!(f, [group(&format_args![indent(&body), soft_line_break()])]);
+        }
 
         let should_indent = {
             let parent_kind = node.syntax().parent().map(|p| p.kind());
@@ -30,19 +52,6 @@ impl FormatNodeRule<TsUnionType> for FormatTsUnionType {
             )
         };
 
-        let body = format_with(|f| {
-            write!(
-                f,
-                [
-                    soft_line_break(),
-                    FormatTypeSetLeadingSeparator {
-                        separator: JsSyntaxKind::PIPE,
-                        leading_separator: leading_separator_token.as_ref()
-                    },
-                    types.format()
-                ]
-            )
-        });
         write![
             f,
             [group(&format_with(|f| {
@@ -53,5 +62,19 @@ impl FormatNodeRule<TsUnionType> for FormatTsUnionType {
                 }
             }))]
         ]
+    }
+
+    fn needs_parentheses(&self, item: &TsUnionType) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl NeedsParentheses for TsUnionType {
+    fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
+        union_or_intersection_type_needs_parentheses(
+            self.syntax(),
+            parent,
+            &TsIntersectionOrUnionTypeList::TsUnionTypeVariantList(self.types()),
+        )
     }
 }

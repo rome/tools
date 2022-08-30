@@ -1,8 +1,9 @@
 use crate::prelude::*;
 
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
-use rome_js_syntax::TsTemplateLiteralType;
 use rome_js_syntax::TsTemplateLiteralTypeFields;
+use rome_js_syntax::{JsSyntaxNode, TsTemplateLiteralType};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsTemplateLiteralType;
@@ -23,5 +24,15 @@ impl FormatNodeRule<TsTemplateLiteralType> for FormatTsTemplateLiteralType {
                 r_tick_token.format(),
             ]
         ]
+    }
+
+    fn needs_parentheses(&self, item: &TsTemplateLiteralType) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl NeedsParentheses for TsTemplateLiteralType {
+    fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
+        false
     }
 }

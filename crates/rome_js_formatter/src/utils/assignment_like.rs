@@ -903,36 +903,25 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
             // 4. we write the left node inside the main buffer based on the layout
             let mut buffer = VecBuffer::new(f.state_mut());
             let is_left_short = self.write_left(&mut Formatter::new(&mut buffer))?;
-            let formatted_element = buffer.into_element();
+            let formatted_left = buffer.into_element();
 
             // Compare name only if we are in a position of computing it.
             // If not (for example, left is not an identifier), then let's fallback to false,
             // so we can continue the chain of checks
             let layout = self.layout(is_left_short, f)?;
 
-            let left = format_once(|f| {
+            let left = format_once(|f| f.write_element(formatted_left));
+            let right = format_with(|f| self.write_right(f)).memoized();
+
+            let inner_content = format_with(|f| {
                 if matches!(
                     &layout,
                     AssignmentLikeLayout::BreakLeftHandSide | AssignmentLikeLayout::OnlyLeft
                 ) {
-                    write!(
-                        f,
-                        [&format_once(|f| { f.write_element(formatted_element) })]
-                    )
+                    write!(f, [left])?;
                 } else {
-                    write!(
-                        f,
-                        [group(&format_once(|f| {
-                            f.write_element(formatted_element)
-                        }))]
-                    )
+                    write!(f, [group(&left)])?;
                 }
-            });
-
-            let right = format_with(|f| self.write_right(f));
-
-            let inner_content = format_with(|f| {
-                write!(f, [left])?;
 
                 if layout != AssignmentLikeLayout::SuppressedInitializer {
                     self.write_operator(f)?;

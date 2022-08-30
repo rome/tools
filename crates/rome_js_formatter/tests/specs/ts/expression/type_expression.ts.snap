@@ -181,7 +181,7 @@ type TupleD = [
 	...name: string[],
 ];
 
-type PA = (string);
+type PA = string;
 
 type FunctionType = <
 	Aaaaaaaaaaaaaaaaaaaaa,

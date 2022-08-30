@@ -1,8 +1,9 @@
 use crate::prelude::*;
 use crate::utils::{FormatLiteralStringToken, StringLiteralParentKind};
 
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
-use rome_js_syntax::{TsStringLiteralType, TsStringLiteralTypeFields};
+use rome_js_syntax::{JsSyntaxNode, TsStringLiteralType, TsStringLiteralTypeFields};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsStringLiteralType;
@@ -18,5 +19,15 @@ impl FormatNodeRule<TsStringLiteralType> for FormatTsStringLiteralType {
                 StringLiteralParentKind::Expression
             )]
         )
+    }
+
+    fn needs_parentheses(&self, item: &TsStringLiteralType) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl NeedsParentheses for TsStringLiteralType {
+    fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
+        false
     }
 }
