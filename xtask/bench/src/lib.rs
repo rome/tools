@@ -52,6 +52,15 @@ impl Display for FeatureToBenchmark {
     }
 }
 
+impl FeatureToBenchmark {
+    fn measure_time(&self) -> Duration {
+        match self {
+            FeatureToBenchmark::Formatter => Duration::new(30, 0),
+            _ => Duration::new(10, 0),
+        }
+    }
+}
+
 /// If groups the summary by their category and creates a small interface
 /// where each bench result can create their summary
 pub enum BenchmarkSummary {
@@ -139,7 +148,7 @@ pub fn run(args: RunArgs) {
                 if args.criterion {
                     let mut criterion = criterion::Criterion::default()
                         .without_plots()
-                        .measurement_time(Duration::new(10, 0));
+                        .measurement_time(args.feature.measure_time());
                     if let Some(ref baseline) = args.baseline {
                         criterion = criterion.save_baseline(baseline.to_string());
                     }

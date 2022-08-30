@@ -790,7 +790,7 @@ impl FormatOptions for IrFormatOptions {
         LineWidth(80)
     }
 
-    fn as_print_options(&self) -> PrinterOptions {
+    fn as_printer_options(&self) -> PrinterOptions {
         PrinterOptions {
             tab_width: 2,
             print_width: self.line_width().into(),

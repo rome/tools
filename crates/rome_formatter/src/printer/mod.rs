@@ -17,30 +17,38 @@ use std::num::NonZeroU8;
 pub struct Printer<'a> {
     options: PrinterOptions,
     state: PrinterState<'a>,
+    /// Whether the printer should generate mappings for the token positions.
+    generate_source_map: bool,
+}
+
+/// Options that parametrize [Printer::print]
+#[derive(Debug, Default)]
+pub struct PrintOptions {
+    /// If true, then the printer generates source map information that allows mapping between
+    /// the token position in the source document and the position in the printed document.
+    pub generate_source_map: bool,
+
+    /// Start indention level
+    pub indent: u16,
 }
 
 impl<'a> Printer<'a> {
     pub fn new(options: PrinterOptions) -> Self {
         Self {
             options,
-            state: PrinterState::default(),
+            ..Printer::default()
         }
     }
 
-    /// Prints the passed in element as well as all its content
-    pub fn print(self, element: &'a FormatElement) -> Printed {
-        self.print_with_indent(element, 0)
-    }
-
-    /// Prints the passed in element as well as all its content,
-    /// starting at the specified indentation level
-    pub fn print_with_indent(mut self, element: &'a FormatElement, indent: u16) -> Printed {
+    /// Prints the passed in element as well as all its content.
+    pub fn print(mut self, element: &'a FormatElement, options: PrintOptions) -> Printed {
         tracing::debug_span!("Printer::print").in_scope(move || {
+            self.generate_source_map = options.generate_source_map;
             let mut queue = ElementCallQueue::default();
 
             queue.enqueue(PrintElementCall::new(
                 element,
-                PrintElementArgs::new(Indention::Level(indent)),
+                PrintElementArgs::new(Indention::Level(options.indent)),
             ));
 
             while let Some(print_element_call) = queue.dequeue() {
@@ -336,6 +344,10 @@ impl<'a> Printer<'a> {
     }
 
     fn push_marker(&mut self, marker: SourceMarker) {
+        if !self.generate_source_map {
+            return;
+        }
+
         if let Some(last) = self.state.source_markers.last() {
             if last != &marker {
                 self.state.source_markers.push(marker)

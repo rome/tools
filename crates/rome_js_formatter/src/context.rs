@@ -156,7 +156,7 @@ impl FormatOptions for JsFormatOptions {
         self.line_width
     }
 
-    fn as_print_options(&self) -> PrinterOptions {
+    fn as_printer_options(&self) -> PrinterOptions {
         PrinterOptions::default()
             .with_indent(self.indent_style)
             .with_print_width(self.line_width.into())

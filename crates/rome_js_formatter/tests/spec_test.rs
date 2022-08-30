@@ -1,3 +1,4 @@
+use rome_formatter::printer::PrintOptions;
 use rome_formatter::{FormatOptions, LineWidth};
 use rome_formatter::{IndentStyle, Printed};
 use rome_fs::RomePath;
@@ -228,7 +229,10 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
         // we ignore the error for now
         let options = JsFormatOptions::default();
         let formatted = format_node(options.clone(), &root).unwrap();
-        let printed = formatted.print();
+        let printed = formatted.print_with_options(PrintOptions {
+            generate_source_map: true,
+            ..PrintOptions::default()
+        });
         let file_name = spec_input_file.file_name().unwrap().to_str().unwrap();
 
         if !has_errors {
@@ -258,7 +262,10 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
                     // inject it here
                     format_options = format_options.with_source_type(source_type);
                     let formatted = format_node(format_options.clone(), &root).unwrap();
-                    let printed = formatted.print();
+                    let printed = formatted.print_with_options(PrintOptions {
+                        generate_source_map: true,
+                        ..PrintOptions::default()
+                    });
 
                     if !has_errors {
                         check_reformat::check_reformat(check_reformat::CheckReformatParams {

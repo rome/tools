@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::printer::{PrintWidth, Printer};
+use rome_formatter::printer::{PrintOptions, PrintWidth, Printer};
 use rome_formatter::{format_args, write, FormatOptions, FormatRuleWithOptions, VecBuffer};
 
 use crate::context::TabWidth;
@@ -89,11 +89,11 @@ impl Format<JsFormatContext> for FormatTemplateElement {
                 write!(buffer, [format_expression])?;
                 let root = buffer.into_element();
 
-                let print_options = f
+                let printer_options = f
                     .options()
-                    .as_print_options()
+                    .as_printer_options()
                     .with_print_width(PrintWidth::infinite());
-                let printed = Printer::new(print_options).print(&root);
+                let printed = Printer::new(printer_options).print(&root, PrintOptions::default());
 
                 write!(
                     f,

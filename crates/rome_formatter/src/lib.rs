@@ -45,7 +45,7 @@ use std::any::TypeId;
 
 #[cfg(debug_assertions)]
 use crate::printed_tokens::PrintedTokens;
-use crate::printer::{Printer, PrinterOptions};
+use crate::printer::{PrintOptions, Printer, PrinterOptions};
 pub use arguments::{Argument, Arguments};
 pub use buffer::{
     Buffer, BufferExtensions, BufferSnapshot, HasLabelBuffer, Inspect, PreambleBuffer, VecBuffer,
@@ -226,7 +226,7 @@ pub trait FormatOptions {
     fn line_width(&self) -> LineWidth;
 
     /// Derives the print options from the these format options
-    fn as_print_options(&self) -> PrinterOptions;
+    fn as_printer_options(&self) -> PrinterOptions;
 }
 
 /// The [CstFormatContext] is an extension of the CST unaware [FormatContext] and must be implemented
@@ -286,7 +286,7 @@ impl FormatOptions for SimpleFormatOptions {
         self.line_width
     }
 
-    fn as_print_options(&self) -> PrinterOptions {
+    fn as_printer_options(&self) -> PrinterOptions {
         PrinterOptions::default()
             .with_indent(self.indent_style)
             .with_print_width(self.line_width.into())
@@ -333,19 +333,12 @@ where
     Context: FormatContext,
 {
     pub fn print(&self) -> Printed {
-        let print_options = self.context.options().as_print_options();
-
-        let printed = Printer::new(print_options).print(&self.root);
-
-        match self.context.source_map() {
-            Some(source_map) => source_map.map_printed(printed),
-            None => printed,
-        }
+        self.print_with_options(PrintOptions::default())
     }
 
-    pub fn print_with_indent(&self, indent: u16) -> Printed {
-        let print_options = self.context.options().as_print_options();
-        let printed = Printer::new(print_options).print_with_indent(&self.root, indent);
+    pub fn print_with_options(&self, options: PrintOptions) -> Printed {
+        let printer_options = self.context.options().as_printer_options();
+        let printed = Printer::new(printer_options).print(&self.root, options);
 
         match self.context.source_map() {
             Some(source_map) => source_map.map_printed(printed),
@@ -404,7 +397,7 @@ impl Printed {
 
     /// Returns a list of [SourceMarker] mapping byte positions
     /// in the output string to the input source code.
-    /// It's not guaranteed that the markers are sorted by source position.
+    /// The markers are sorted by their [`dest`](SourceMarker::dest] position in ascending order.
     pub fn sourcemap(&self) -> &[SourceMarker] {
         &self.sourcemap
     }
@@ -1241,7 +1234,12 @@ pub fn format_sub_tree<L: FormatLanguage>(
     };
 
     let formatted = format_node(root, language)?;
-    let mut printed = formatted.print_with_indent(initial_indent);
+
+    let mut printed = formatted.print_with_options(PrintOptions {
+        indent: initial_indent,
+        generate_source_map: true,
+    });
+
     let sourcemap = printed.take_sourcemap();
     let verbatim_ranges = printed.take_verbatim_ranges();
 

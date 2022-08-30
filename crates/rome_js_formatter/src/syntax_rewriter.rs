@@ -494,6 +494,7 @@ where
 mod tests {
     use super::JsFormatSyntaxRewriter;
     use crate::{format_node, JsFormatOptions};
+    use rome_formatter::printer::PrintOptions;
     use rome_formatter::{SourceMarker, TransformSourceMap};
     use rome_js_parser::parse_module;
     use rome_js_syntax::{
@@ -767,7 +768,10 @@ mod tests {
         let (transformed, source_map) = source_map_test("(((a * b) * c)) / 3");
 
         let formatted = format_node(JsFormatOptions::default(), &transformed).unwrap();
-        let printed = formatted.print();
+        let printed = formatted.print_with_options(PrintOptions {
+            generate_source_map: true,
+            ..PrintOptions::default()
+        });
 
         assert_eq!(printed.as_code(), "(a * b * c) / 3;\n");
 
