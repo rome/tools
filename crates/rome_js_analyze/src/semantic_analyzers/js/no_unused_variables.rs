@@ -76,6 +76,15 @@ declare_rule! {
     /// };
     /// foo();
     /// ```
+    ///
+    /// ```ts
+    /// function used_overloaded(): number;
+    /// function used_overloaded(s: string): string;
+    /// function used_overloaded(s?: string) {
+    ///     return s;
+    /// }
+    /// used_overloaded();
+    /// ```
     pub(crate) NoUnusedVariables {
         version: "0.9.0",
         name: "noUnusedVariables",
@@ -96,7 +105,8 @@ fn is_typescript_unused_ok(binding: &JsIdentifierBinding) -> Option<()> {
                         JsSyntaxKind::TS_METHOD_SIGNATURE_CLASS_MEMBER
                         | JsSyntaxKind::TS_CALL_SIGNATURE_TYPE_MEMBER
                         | JsSyntaxKind::TS_METHOD_SIGNATURE_TYPE_MEMBER
-                        | JsSyntaxKind::TS_FUNCTION_TYPE => Some(()),
+                        | JsSyntaxKind::TS_FUNCTION_TYPE
+                        | JsSyntaxKind::TS_DECLARE_FUNCTION_DECLARATION => Some(()),
                         _ => None,
                     }
                 }
@@ -115,6 +125,7 @@ fn is_typescript_unused_ok(binding: &JsIdentifierBinding) -> Option<()> {
             }
         }
         JsSyntaxKind::TS_INDEX_SIGNATURE_PARAMETER => Some(()),
+        JsSyntaxKind::TS_DECLARE_FUNCTION_DECLARATION => Some(()),
         _ => None,
     }
 }

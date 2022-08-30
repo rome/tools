@@ -171,6 +171,13 @@ function f({a/*#A*/} = {a: [b/*READ B2*/,c/*READ C*/,d/*READ D*/]}, b/*#B2*/) {
     console.log(a/*READ A*/, b/*READ B3*/);
 }
 f()",
+    ok_function_overloading,
+        "function overloaded/*#A*/(): number;
+        function overloaded/*#B*/(s: string): string;
+        function overloaded/*#C*/(s?: string) {
+            return s;
+        }
+        overloaded/*READ C*/();",
 }
 
 // Imports
