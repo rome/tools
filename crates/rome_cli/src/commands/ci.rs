@@ -7,7 +7,7 @@ use super::format::apply_format_settings_from_cli;
 
 /// Handler for the "ci" command of the Rome CLI
 pub(crate) fn ci(mut session: CliSession) -> Result<(), Termination> {
-    let configuration = load_config(&session.app.fs)?;
+    let configuration = load_config(&session.app.fs, None)?;
     let mut workspace_settings = WorkspaceSettings::default();
 
     if let Some(configuration) = configuration {

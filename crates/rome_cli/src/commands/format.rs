@@ -7,7 +7,7 @@ use crate::{execute_mode, CliSession, Execution, Termination, TraversalMode};
 
 /// Handler for the "format" command of the Rome CLI
 pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
-    let configuration = load_config(&session.app.fs)?;
+    let configuration = load_config(&session.app.fs, None)?;
     let mut workspace_settings = WorkspaceSettings::default();
 
     if let Some(configuration) = configuration {
