@@ -1248,12 +1248,14 @@ impl<Context> Group<'_, Context> {
         self
     }
 
-    /// Setting the value to `true` forces the group to expand regardless if it otherwise would fit on the
+    /// Setting the value to `true` forces the group and its enclosing group to expand regardless if it otherwise would fit on the
     /// line or contains any hard line breaks.
     ///
-    /// It omits the group if `should_expand` is true and instead writes an [FormatElement::ExpandParent] to
-    /// force any enclosing group to break as well **except** if the group has a group id, in which case the group
-    /// gets emitted but its first containing element is a [FormatElement::ExpandParent] to force it into expanded mode.
+    /// The formatter writes a [FormatElement::ExpandParent], forcing any enclosing group to expand, if `should_expand` is true.
+    /// It also omits the enclosing [FormatElement::Group] because the group would be forced to expand anyway.
+    /// The [FormatElement:Group] only gets written if the `group id` specified with [Group::with_group_id] isn't [None]
+    /// because other IR elements may reference the group with that group id and the printer may panic
+    /// if no group with the given id is present in the document.
     pub fn should_expand(mut self, should_expand: bool) -> Self {
         self.should_expand = should_expand;
         self
@@ -1292,7 +1294,7 @@ impl<Context> std::fmt::Debug for Group<'_, Context> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.debug_struct("GroupElements")
             .field("group_id", &self.group_id)
-            .field("should_break", &self.should_expand)
+            .field("should_expand", &self.should_expand)
             .field("content", &"{{content}}")
             .finish()
     }
