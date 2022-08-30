@@ -1251,7 +1251,7 @@ impl<Context> Group<'_, Context> {
     /// Setting the value to `true` forces the group and its enclosing group to expand regardless if it otherwise would fit on the
     /// line or contains any hard line breaks.
     ///
-    /// The formatter writes a [FormatElement::ExpandParent], forcing any enclosing group to expand, if `should_expand` is true.
+    /// The formatter writes a [FormatElement::ExpandParent], forcing any enclosing group to expand, if `should_expand` is `true``.
     /// It also omits the enclosing [FormatElement::Group] because the group would be forced to expand anyway.
     /// The [FormatElement:Group] only gets written if the `group id` specified with [Group::with_group_id] isn't [None]
     /// because other IR elements may reference the group with that group id and the printer may panic
