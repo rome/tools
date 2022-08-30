@@ -26,15 +26,17 @@ Rome can be used as a language server by following the instructions below.
 
 ## Language Server and VS Code Extension Development
 
-The Rome language server is the binary crate `rome_lsp` which can be built using:
-```
-cargo build --bin rome_lsp
+The Rome language server is the binary crate `rome` which can be built using the command:
+
+```bash
+cargo build --bin rome
 ```
 If benchmarking the language server, be sure to build with the `--release` flag.
 
 The VS Code extension can be installed from the [Marketplace](https://marketplace.visualstudio.com/items?itemName=rome.rome) and can be used with a development build of the language server by setting the `"rome.lspBin"` VS Code setting to the path of the binary:
+
 ```json
-	"rome.lspBin": "/path/to/rome/target/debug/rome_lsp"
+	"rome.lspBin": "/path/to/rome/target/debug/rome"
 ```
 
 To instead build the VS Code extension from source, navigate to the `editors/vscode` directory and run:
@@ -57,6 +59,22 @@ The `"rome.lspBin"` VS Code setting will still need to be set as described above
 If files specific to your local development environment should be ignored, please add these files to a global git ignore file rather than to a git ignore file within Rome.
 
 You can find more information on this process [here](https://help.github.com/en/github/using-git/ignoring-files#configuring-ignored-files-for-all-repositories-on-your-computer).
+
+## Node.js development
+
+The package `npm/rome` offers some runtime API, that rely on different backends:
+- `wasm-nodejs`
+- `backend-jsonrpc`
+
+For testing and developing, you need to build these packages, following the steps:
+1. install [wasm-pack](https://rustwasm.github.io/wasm-pack/installer/) globally;
+2. run the `build` command inside the package `backend-jsonrpc`;
+3. run the `build:wasm-node-dev` command inside the package `rome` (folder `npm/rome`);
+4. run `pnpm i` inside the package `rome` (folder `npm/rome`), this will link the WebAssembly bindings and the
+JSON-RPC bindings;
+
+The tests are run against the compiled files, which means that you need to run the 
+`build` command after you implemented features/bug fixes.
 
 ## Website
 
