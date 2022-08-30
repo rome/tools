@@ -56,30 +56,48 @@ impl FormatRule<SourceComment<JsLanguage>> for FormatJsLeadingComment {
 ///
 /// # Examples
 ///
-/// ## Doc Comments
-///
-/// ```javascript
-/// /**
-///  * Multiline doc comment
-///  */
-///
-///  /*
-///   * With single star
-///   */
 /// ```
+/// # use rome_js_parser::parse_module;
+/// # use rome_js_syntax::JsLanguage;
+/// # use rome_rowan::{Direction, SyntaxTriviaPieceComments};
+///  use rome_js_formatter::comments::is_doc_comment;
 ///
-/// ## Non Doc Comments
+/// # fn parse_comment(source: &str) -> SyntaxTriviaPieceComments<JsLanguage> {
+/// #     let root = parse_module(source, 0).tree();
+/// #     root
+/// #        .eof_token()
+/// #        .expect("Root to have an EOF token")
+/// #        .leading_trivia()
+/// #        .pieces()
+/// #        .filter_map(|piece| piece.as_comments())
+/// #        .next()
+/// #        .expect("Source to contain a comment.")
+/// # }
 ///
-/// ```javascript
-/// /** has no line break */
+/// assert!(is_doc_comment(&parse_comment(r#"
+///     /**
+///      * Multiline doc comment
+///      */
+/// "#)));
 ///
+/// assert!(is_doc_comment(&parse_comment(r#"
+///     /*
+///      * Single star
+///      */
+/// "#)));
+///
+///
+/// // Non doc-comments
+/// assert!(!is_doc_comment(&parse_comment(r#"/** has no line break */"#)));
+///
+/// assert!(!is_doc_comment(&parse_comment(r#"
 /// /*
 ///  *
 ///  this line doesn't start with a star
 ///  */
+/// "#)));
 /// ```
-///
-fn is_doc_comment(comment: &SyntaxTriviaPieceComments<JsLanguage>) -> bool {
+pub fn is_doc_comment(comment: &SyntaxTriviaPieceComments<JsLanguage>) -> bool {
     if !comment.has_newline() {
         return false;
     }
