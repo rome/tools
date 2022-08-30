@@ -18,9 +18,9 @@ echo "function f() { return {} }" | rome format --stdin-file-path example.js
 - added `js/noDupeArgs` lint rule
 - added `js/noShadowRestrictedNames` lint rule
 - added `js/inlineVariable` code action
-- fixed issues in the rule `js/noUnusedVariables` 
-- fixed issues in the rule `js/noNegationElse` #2999
-- fixed issues in the rule `js/noShoutyConstants` #3077
+- fixed issues in the rule `js/noUnusedVariables` [#3124](https://github.com/rome/tools/pull/3124) [#3060](https://github.com/rome/tools/pull/3060) [#3004](https://github.com/rome/tools/pull/3004)
+- fixed issues in the rule `js/noNegationElse` [#2999](https://github.com/rome/tools/issues/2999)
+- fixed issues in the rule `js/noShoutyConstants` [#3077](https://github.com/rome/tools/issues/3077)
 
 ### Formatter
 
