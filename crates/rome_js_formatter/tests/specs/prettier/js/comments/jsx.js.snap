@@ -133,7 +133,7 @@ onClick={() => {}}>
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,26 +1,24 @@
+@@ -1,24 +1,26 @@
 -<div>{/* comment */}</div>;
 +<div>
 +  {
@@ -150,27 +150,25 @@ onClick={() => {}}>
  </div>;
  
  <div>
--  {
+   {
 -    a
 -    /* comment
 -     */
--  }
-+  {a /* comment
-+*/}
++    a /* comment
++*/
+   }
  </div>;
  
  <div>
 -  {
 -    /* comment
 -     */
--    a
--  }
 +  {/* comment
-+*/ a}
++*/
+     a
+   }
  </div>;
- 
- <div>{/* comment */}</div>;
-@@ -29,29 +27,29 @@
+@@ -29,29 +31,29 @@
  
  <div>
    {
@@ -208,7 +206,7 @@ onClick={() => {}}>
    }
  </div>;
  
-@@ -62,13 +60,15 @@
+@@ -62,13 +64,15 @@
  <div>
    {/**
     * JSDoc-y comment in JSX. I wonder what will happen to it?
@@ -227,7 +225,7 @@ onClick={() => {}}>
  </div>;
  
  <div
-@@ -90,20 +90,15 @@
+@@ -90,9 +94,8 @@
    {foo}
  </div>;
  
@@ -239,19 +237,6 @@ onClick={() => {}}>
  >
    {foo}
  </div>;
- 
- <div // comment
--  id="foo"
-->
-+id="foo">
-   {children}
- </div>;
- 
--<Wrapper>
--  {}
--  <Component />
--</Wrapper>;
-+<Wrapper>{}<Component /></Wrapper>;
 ```
 
 # Output
@@ -271,13 +256,17 @@ onClick={() => {}}>
 </div>;
 
 <div>
-  {a /* comment
-*/}
+  {
+    a /* comment
+*/
+  }
 </div>;
 
 <div>
   {/* comment
-*/ a}
+*/
+    a
+  }
 </div>;
 
 <div>{/* comment */}</div>;
@@ -356,17 +345,21 @@ onClick={() => {}}>
 </div>;
 
 <div // comment
-id="foo">
+  id="foo"
+>
   {children}
 </div>;
 
-<Wrapper>{}<Component /></Wrapper>;
+<Wrapper>
+  {}
+  <Component />
+</Wrapper>;
 ```
 
 
 # Lines exceeding max width of 80 characters
 ```
-   52:   // Some very v  ery very very merry (xmas) very very long line to break line width limit
-   57:   {/*<div>  Some very v  ery very very long line to break line width limit </div>*/}
+   56:   // Some very v  ery very very merry (xmas) very very long line to break line width limit
+   61:   {/*<div>  Some very v  ery very very long line to break line width limit </div>*/}
 ```
 

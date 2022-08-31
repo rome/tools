@@ -224,6 +224,12 @@ pub enum LineMode {
     Empty,
 }
 
+impl LineMode {
+    pub const fn is_hard(&self) -> bool {
+        matches!(self, LineMode::Hard)
+    }
+}
+
 /// A token used to gather a list of elements; see [crate::Formatter::join_with].
 #[derive(Clone, Default, Eq, PartialEq)]
 pub struct List {

@@ -1,9 +1,10 @@
 use crate::parentheses::{is_callee, is_tag, NeedsParentheses};
 use crate::prelude::*;
 use crate::utils::jsx::{get_wrap_state, WrapState};
-use rome_formatter::{format_args, write};
+use rome_formatter::{write};
 use rome_js_syntax::{
-    JsBinaryExpression, JsBinaryOperator, JsSyntaxKind, JsSyntaxNode, JsxTagExpression,
+    JsArrowFunctionExpression, JsBinaryExpression, JsBinaryOperator, JsCallArgumentList,
+    JsCallExpression, JsSyntaxKind, JsSyntaxNode, JsxExpressionChild, JsxTagExpression,
 };
 use rome_rowan::AstNode;
 
@@ -12,22 +13,75 @@ pub struct FormatJsxTagExpression;
 
 impl FormatNodeRule<JsxTagExpression> for FormatJsxTagExpression {
     fn fmt_fields(&self, node: &JsxTagExpression, f: &mut JsFormatter) -> FormatResult<()> {
-        match get_wrap_state(node) {
-            WrapState::WrapOnBreak => write![
-                f,
-                [group(&format_args![
-                    if_group_breaks(&text("(")),
-                    soft_block_indent(&format_args![node.tag().format()]),
-                    if_group_breaks(&text(")"))
-                ])]
-            ],
-            WrapState::NoWrap => write![f, [node.tag().format()]],
+        let wrap = get_wrap_state(node);
+
+        match wrap {
+            WrapState::NoWrap => {
+                write![f, [node.tag().format()]]
+            }
+            WrapState::WrapOnBreak => {
+                let should_expand = should_expand(node);
+                let needs_parentheses = node.needs_parentheses();
+
+                let format_inner = format_with(|f| {
+                    if !needs_parentheses {
+                        write!(f, [if_group_breaks(&text("("))])?;
+                    }
+
+                    write!(f, [soft_block_indent(&node.tag().format())])?;
+
+                    if !needs_parentheses {
+                        write!(f, [if_group_breaks(&text(")"))])?;
+                    }
+
+                    Ok(())
+                });
+
+                write!(f, [group(&format_inner).should_expand(should_expand)])
+            }
         }
     }
 
     fn needs_parentheses(&self, item: &JsxTagExpression) -> bool {
         item.needs_parentheses()
     }
+}
+
+/// This is a very special situation where we're returning a JsxElement
+/// from an arrow function that's passed as an argument to a function,
+/// which is itself inside a JSX expression child.
+///
+/// If you're wondering why this is the only other case, it's because
+/// Prettier defines it to be that way.
+///
+/// ```jsx
+///  let bar = <div>
+///    {foo(() => <div> the quick brown fox jumps over the lazy dog </div>)}
+///  </div>;
+/// ```
+pub fn should_expand(expression: &JsxTagExpression) -> bool {
+    let arrow = match expression.syntax().parent() {
+        Some(parent) if JsArrowFunctionExpression::can_cast(parent.kind()) => parent,
+        _ => return false,
+    };
+
+    let call = match arrow.parent() {
+        // Argument
+        Some(grand_parent) if JsCallArgumentList::can_cast(grand_parent.kind()) => {
+            let maybe_call_expression = grand_parent.grand_parent();
+
+            match maybe_call_expression {
+                Some(call) if JsCallExpression::can_cast(call.kind()) => call,
+                _ => return false,
+            }
+        }
+        // Callee
+        Some(grand_parent) if JsCallExpression::can_cast(grand_parent.kind()) => grand_parent,
+        _ => return false,
+    };
+
+    call.parent()
+        .map_or(false, |parent| JsxExpressionChild::can_cast(parent.kind()))
 }
 
 impl NeedsParentheses for JsxTagExpression {

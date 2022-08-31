@@ -18,14 +18,18 @@ const els = items.map(item => (
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,5 +1,3 @@
+@@ -1,5 +1,7 @@
 -const els = items.map((item) => (
 -  <div className="whatever">
 -    <span>{children}</span>
 -  </div>
 -));
 +const els = items.map(
-+  (item) => <div className="whatever"><span>{children}</span></div>,
++  (item) => (
++    <div className="whatever">
++      <span>{children}</span>
++    </div>
++  ),
 +);
 ```
 
@@ -33,7 +37,11 @@ const els = items.map(item => (
 
 ```js
 const els = items.map(
-  (item) => <div className="whatever"><span>{children}</span></div>,
+  (item) => (
+    <div className="whatever">
+      <span>{children}</span>
+    </div>
+  ),
 );
 ```
 

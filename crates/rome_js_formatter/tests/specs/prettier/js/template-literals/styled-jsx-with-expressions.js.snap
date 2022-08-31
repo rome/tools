@@ -54,10 +54,8 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,42 +1,47 @@
--<style jsx>{`
-+<style jsx>
-+  {`
+@@ -1,27 +1,27 @@
+ <style jsx>{`
    div {
 -    display: ${expr};
 +  display: ${expr};
@@ -98,40 +96,28 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
    }
    @font-face {
      ${expr}
-   }
--`}</style>;
-+`}
-+</style>;
+@@ -30,13 +30,12 @@
  
--<style jsx>{`
-+<style jsx>
-+  {`
+ <style jsx>{`
    div {
 -    animation: linear ${seconds}s ease-out;
 +  animation: linear ${seconds}s ease-out;
    }
--`}</style>;
-+`}
-+</style>;
+ `}</style>;
  
--<style jsx>{`
-+<style jsx>
-+  {`
+ <style jsx>{`
    div {
 -    animation: 3s ease-in 1s ${(foo) => foo.getIterations()} reverse both paused
 -      slidein;
 +  animation: 3s ease-in 1s ${(foo) => foo.getIterations()} reverse both paused slidein;
    }
--`}</style>;
-+`}
-+</style>;
+ `}</style>;
 ```
 
 # Output
 
 ```js
-<style jsx>
-  {`
+<style jsx>{`
   div {
   display: ${expr};
     color: ${expr};
@@ -159,29 +145,24 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
   @font-face {
     ${expr}
   }
-`}
-</style>;
+`}</style>;
 
-<style jsx>
-  {`
+<style jsx>{`
   div {
   animation: linear ${seconds}s ease-out;
   }
-`}
-</style>;
+`}</style>;
 
-<style jsx>
-  {`
+<style jsx>{`
   div {
   animation: 3s ease-in 1s ${(foo) => foo.getIterations()} reverse both paused slidein;
   }
-`}
-</style>;
+`}</style>;
 ```
 
 
 # Lines exceeding max width of 80 characters
 ```
-   44:   animation: 3s ease-in 1s ${(foo) => foo.getIterations()} reverse both paused slidein;
+   39:   animation: 3s ease-in 1s ${(foo) => foo.getIterations()} reverse both paused slidein;
 ```
 

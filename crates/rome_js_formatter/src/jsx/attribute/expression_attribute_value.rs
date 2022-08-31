@@ -1,8 +1,10 @@
 use crate::prelude::*;
 
-use rome_formatter::write;
+use crate::utils::JsAnyBinaryLikeExpression;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::{
-    JsAnyExpression, JsxExpressionAttributeValue, JsxExpressionAttributeValueFields,
+    JsAnyExpression, JsSyntaxNode, JsxAnyTag, JsxChildList, JsxExpressionAttributeValue,
+    JsxExpressionAttributeValueFields,
 };
 
 #[derive(Debug, Clone, Default)]
@@ -19,58 +21,100 @@ impl FormatNodeRule<JsxExpressionAttributeValue> for FormatJsxExpressionAttribut
             expression,
             r_curly_token,
         } = node.as_fields();
-        write!(
-            f,
-            [group(&format_with(|f| {
-                write!(f, [l_curly_token.format()])?;
 
-                let expression = expression.as_ref()?;
+        let expression = expression?;
 
-                // When the inner expression for a prop is an object, array, or call expression, we want to combine the
-                // delimiters of the expression (`{`, `}`, `[`, `]`, or `(`, `)`) with the delimiters of the JSX
-                // attribute (`{`, `}`), so that we don't end up with redundant indents. Therefore we do not
-                // soft indent the expression
-                //
-                // Good:
-                // ```jsx
-                //  <ColorPickerPage
-                //     colors={[
-                //        "blue",
-                //        "brown",
-                //        "green",
-                //        "orange",
-                //        "purple",
-                //     ]} />
-                // ```
-                //
-                // Bad:
-                // ```jsx
-                //  <ColorPickerPage
-                //     colors={
-                //       [
-                //         "blue",
-                //          "brown",
-                //         "green",
-                //         "orange",
-                //         "purple",
-                //       ]
-                //     } />
-                // ```
-                //
-                if matches!(
-                    expression,
-                    JsAnyExpression::JsObjectExpression(_)
-                        | JsAnyExpression::JsArrayExpression(_)
-                        | JsAnyExpression::JsCallExpression(_)
-                        | JsAnyExpression::JsArrowFunctionExpression(_)
-                ) {
-                    write!(f, [expression.format()])?;
-                } else {
-                    write!(f, [soft_block_indent(&expression.format())])?;
-                };
+        let should_inline = should_inline_jsx_expression(&expression, node.syntax().parent());
 
-                write!(f, [line_suffix_boundary(), r_curly_token.format()])
-            }))]
-        )
+        if should_inline {
+            write!(
+                f,
+                [
+                    l_curly_token.format(),
+                    expression.format(),
+                    line_suffix_boundary(),
+                    r_curly_token.format()
+                ]
+            )
+        } else {
+            write!(
+                f,
+                [group(&format_args![
+                    l_curly_token.format(),
+                    soft_block_indent(&expression.format()),
+                    line_suffix_boundary(),
+                    r_curly_token.format()
+                ])]
+            )
+        }
+    }
+}
+
+/// Tests if an expression inside of a [JsxExpressionChild] or [JsxExpressionAttributeValue] should be inlined.
+/// Good:
+/// ```jsx
+///  <ColorPickerPage
+///     colors={[
+///        "blue",
+///        "brown",
+///        "green",
+///        "orange",
+///        "purple",
+///     ]} />
+/// ```
+///
+/// Bad:
+/// ```jsx
+///  <ColorPickerPage
+///     colors={
+///       [
+///         "blue",
+///          "brown",
+///         "green",
+///         "orange",
+///         "purple",
+///       ]
+///     } />
+/// ```
+pub(crate) fn should_inline_jsx_expression(
+    expression: &JsAnyExpression,
+    parent: Option<JsSyntaxNode>,
+) -> bool {
+    use JsAnyExpression::*;
+
+    if expression.syntax().has_comments_direct() {
+        return false;
+    }
+
+    match expression {
+        JsArrayExpression(_)
+        | JsObjectExpression(_)
+        | JsArrowFunctionExpression(_)
+        | JsCallExpression(_)
+        | JsNewExpression(_)
+        | JsImportCallExpression(_)
+        | ImportMeta(_)
+        | JsFunctionExpression(_)
+        | JsTemplate(_) => true,
+        JsAwaitExpression(await_expression) => match await_expression.argument() {
+            Ok(JsxTagExpression(argument)) => {
+                matches!(argument.tag(), Ok(JsxAnyTag::JsxElement(_)))
+                    && should_inline_jsx_expression(
+                        &argument.into(),
+                        Some(await_expression.syntax().clone()),
+                    )
+            }
+            _ => false,
+        },
+        _ => {
+            // Don't indent conditional expressions only inside of children.
+            if matches!(expression, JsConditionalExpression(_))
+                || JsAnyBinaryLikeExpression::can_cast(expression.syntax().kind())
+            {
+                parent.map_or(false, |parent| JsxChildList::can_cast(parent.kind()))
+            } else {
+                false
+            }
+        }
     }
 }

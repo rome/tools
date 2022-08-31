@@ -37,7 +37,7 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
 ```diff
 --- Prettier
 +++ Rome
-@@ -2,23 +2,7 @@
+@@ -2,23 +2,15 @@
  (<a />).property;
  (<a />)["computed"];
  (<a />)["computed"]();
@@ -61,10 +61,18 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
 -    <a>foo</a>
 -  </div>
 -)["computed"]();
-+(<div><a>foo</a></div>).method();
-+(<div><a>foo</a></div>).property;
-+(<div><a>foo</a></div>)["computed"];
-+(<div><a>foo</a></div>)["computed"]();
++(<div>
++  <a>foo</a>
++</div>).method();
++(<div>
++  <a>foo</a>
++</div>).property;
++(<div>
++  <a>foo</a>
++</div>)["computed"];
++(<div>
++  <a>foo</a>
++</div>)["computed"]();
 ```
 
 # Output
@@ -74,10 +82,18 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
 (<a />).property;
 (<a />)["computed"];
 (<a />)["computed"]();
-(<div><a>foo</a></div>).method();
-(<div><a>foo</a></div>).property;
-(<div><a>foo</a></div>)["computed"];
-(<div><a>foo</a></div>)["computed"]();
+(<div>
+  <a>foo</a>
+</div>).method();
+(<div>
+  <a>foo</a>
+</div>).property;
+(<div>
+  <a>foo</a>
+</div>)["computed"];
+(<div>
+  <a>foo</a>
+</div>)["computed"]();
 ```
 
 

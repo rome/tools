@@ -4,6 +4,7 @@ expression: fragment.jsx
 ---
 # Input
 <></>
+<> </>
 
 =============================
 # Outputs
@@ -14,5 +15,7 @@ Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
 -----
-<></>;
+<></>
+<>
+</>
 
