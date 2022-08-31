@@ -54,6 +54,17 @@ npm run install-extension
 
 The `"rome.lspBin"` VS Code setting will still need to be set as described above.
 
+When the extension is running, it will connect to a daemon server - or it will bootstrap one.
+
+When you apply changes to the binary, you need to do two things:
+- compile the binary
+- kill the daemon process, so you can spawn a new server session
+with the new changes
+
+When the daemon is running, it's possible to inspect its logs in the folder `rome-logs`, placed
+in the temporary folder of the operative system.
+
+
 ### User files
 
 If files specific to your local development environment should be ignored, please add these files to a global git ignore file rather than to a git ignore file within Rome.
@@ -62,9 +73,9 @@ You can find more information on this process [here](https://help.github.com/en/
 
 ## Node.js development
 
-The package `npm/rome` offers some runtime API, that rely on different backends:
-- `wasm-nodejs`
-- `backend-jsonrpc`
+The npm module npm/rome contains Rome's Node JS API that supports different backends:
+- `wasm-nodejs` (WebAssembly)
+- `backend-jsonrpc` (Connection to the daemon)
 
 For testing and developing, you need to build these packages, following the steps:
 1. install [wasm-pack](https://rustwasm.github.io/wasm-pack/installer/) globally;
