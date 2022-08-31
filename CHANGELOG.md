@@ -4,23 +4,24 @@
 
 ### CLI
 
-- Added `--stdin-file-path` argument, needed when formatting from standard input.
 - You can now format content from standard input when using the command `rome format`:
 ```shell
 echo "function f() { return {} }" | rome format --stdin-file-path example.js
 ```
+the argument  `--stdin-file-path` is mandatory when from standard in. The path should represent a 
+file name with their extension.
 - Added `--apply-suggested` argument to the `rome check` command, to apply suggested and safe fixes.
 
 ### Linter
 
-- Now all rules will emit an error, check the website if you want to [change the severity of a rule](https://rome.tools/#configure-a-rule).
-- Added `js/noExtraBooleanCast` lint rule.
-- Added `js/noDupeArgs` lint rule.
-- Added `js/noShadowRestrictedNames` lint rule.
+- Changed the default severity for recommended rules to "error". You can [change the severity in the rome.json](https://rome.tools/#configure-a-rule).
+- Added [`js/noExtraBooleanCast`](https://rome.tools/docs/lint/rules/noExtraBooleanCast/) lint rule.
+- Added [`js/noDupeArgs`](https://rome.tools/docs/lint/rules/noDupeArgs/) lint rule.
+- Added [`js/noShadowRestrictedNames`](https://rome.tools/docs/lint/rules/noShadowRestrictedNames/) lint rule.
 - Added `js/inlineVariable` code action.
-- Fixed issues in the rule `js/noUnusedVariables`. [#3124](https://github.com/rome/tools/pull/3124) [#3060](https://github.com/rome/tools/pull/3060) [#3004](https://github.com/rome/tools/pull/3004)
-- Fixed issues in the rule `js/noNegationElse`. [#2999](https://github.com/rome/tools/issues/2999)
-- Fixed issues in the rule `js/noShoutyConstants`. [#3077](https://github.com/rome/tools/issues/3077)
+- Applied various stability fixes to the rule [`js/noUnusedVariables`](https://rome.tools/docs/lint/rules/noUnusedVariables/). [#3124](https://github.com/rome/tools/pull/3124) [#3060](https://github.com/rome/tools/pull/3060) [#3004](https://github.com/rome/tools/pull/3004)
+- Fixed how the suggestion is applied [`js/noNegationElse`](https://rome.tools/docs/lint/rules/noNegationElse/). [#2999](https://github.com/rome/tools/issues/2999)
+- Fixed false positive in the rule [`js/noShoutyConstants`](https://rome.tools/docs/lint/rules/noShoutyConstants/). [#3077](https://github.com/rome/tools/issues/3077)
 
 ### Formatter
 
