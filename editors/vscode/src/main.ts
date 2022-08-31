@@ -19,7 +19,7 @@ import { setContextValue } from "./utils";
 import { Session } from "./session";
 import { syntaxTree } from "./commands/syntaxTree";
 import { Commands } from "./commands";
-import { StatusBar } from "./status_bar";
+import { StatusBar } from "./statusBar";
 
 let client: LanguageClient;
 

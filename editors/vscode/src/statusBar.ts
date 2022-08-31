@@ -2,6 +2,15 @@ import { StatusBarAlignment, StatusBarItem, ThemeColor, window } from "vscode";
 import { State } from "vscode-languageclient";
 import { Commands } from "./commands";
 
+/**
+ * Enumeration of all the status the extension can display
+ *
+ * The string value of the enum is the ThemeIcon ID to be displayer in the status
+ * bar item when this status is active
+ *
+ * See https://code.visualstudio.com/api/references/icons-in-labels#icon-listing
+ * for a list of available icons
+ */
 enum Status {
 	Pending = "refresh",
 	Ready = "check",
