@@ -48,10 +48,10 @@ export async function activate(context: ExtensionContext) {
 	const traceOutputChannel = window.createOutputChannel("Rome Trace");
 
 	const documentSelector: DocumentFilter[] = [
-		{ scheme: "file", language: "javascript" },
-		{ scheme: "file", language: "typescript" },
-		{ scheme: "file", language: "javascriptreact" },
-		{ scheme: "file", language: "typescriptreact" },
+		{ language: "javascript" },
+		{ language: "typescript" },
+		{ language: "javascriptreact" },
+		{ language: "typescriptreact" },
 	];
 
 	const clientOptions: LanguageClientOptions = {

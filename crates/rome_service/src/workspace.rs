@@ -64,6 +64,7 @@ use rome_text_edit::Indel;
 use std::{borrow::Cow, panic::RefUnwindSafe, sync::Arc};
 
 pub use self::client::WorkspaceTransport;
+pub use crate::file_handlers::Language;
 
 mod client;
 pub(crate) mod server;
@@ -94,6 +95,7 @@ pub struct OpenFileParams {
     pub path: RomePath,
     pub content: String,
     pub version: i32,
+    pub language_hint: Language,
 }
 
 #[derive(serde::Serialize, serde::Deserialize)]

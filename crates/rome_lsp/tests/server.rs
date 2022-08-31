@@ -274,6 +274,76 @@ async fn document_lifecycle() -> Result<()> {
 }
 
 #[tokio::test]
+async fn document_no_extension() -> Result<()> {
+    let factory = ServerFactory::default();
+    let (service, client) = factory.create().into_inner();
+    let (stream, sink) = client.split();
+    let mut server = Server::new(service);
+
+    let reader = tokio::spawn(client_handler(stream, sink));
+
+    server.initialize().await?;
+    server.initialized().await?;
+
+    server
+        .notify(
+            "textDocument/didOpen",
+            DidOpenTextDocumentParams {
+                text_document: TextDocumentItem {
+                    uri: Url::parse("test://workspace/document")?,
+                    language_id: String::from("javascript"),
+                    version: 0,
+                    text: String::from("statement()"),
+                },
+            },
+        )
+        .await?;
+
+    let res: Option<Vec<TextEdit>> = server
+        .request(
+            "textDocument/formatting",
+            "formatting",
+            DocumentFormattingParams {
+                text_document: TextDocumentIdentifier {
+                    uri: Url::parse("test://workspace/document")?,
+                },
+                options: FormattingOptions {
+                    tab_size: 4,
+                    insert_spaces: false,
+                    properties: HashMap::default(),
+                    trim_trailing_whitespace: None,
+                    insert_final_newline: None,
+                    trim_final_newlines: None,
+                },
+                work_done_progress_params: WorkDoneProgressParams {
+                    work_done_token: None,
+                },
+            },
+        )
+        .await?
+        .context("formatting returned None")?;
+
+    let edits = res.context("formatting did not return an edit list")?;
+    assert!(!edits.is_empty(), "formatting returned an empty edit list");
+
+    server
+        .notify(
+            "textDocument/didClose",
+            DidCloseTextDocumentParams {
+                text_document: TextDocumentIdentifier {
+                    uri: Url::parse("test://workspace/document")?,
+                },
+            },
+        )
+        .await?;
+
+    server.shutdown().await?;
+    reader.abort();
+
+    Ok(())
+}
+
+#[tokio::test]
 async fn pull_quick_fixes() -> Result<()> {
     let factory = ServerFactory::default();
     let (service, client) = factory.create().into_inner();

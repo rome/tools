@@ -26,7 +26,7 @@ use super::{
     AnalyzerCapabilities, DebugCapabilities, ExtensionHandler, FormatterCapabilities, Mime,
     ParserCapabilities,
 };
-use crate::file_handlers::FixAllParams;
+use crate::file_handlers::{FixAllParams, Language as LanguageId};
 use indexmap::IndexSet;
 use rome_console::codespan::Severity;
 use std::borrow::Cow;
@@ -106,11 +106,16 @@ impl ExtensionHandler for JsFileHandler {
     }
 }
 
-fn parse(rome_path: &RomePath, text: &str) -> AnyParse {
+fn parse(rome_path: &RomePath, language_hint: LanguageId, text: &str) -> AnyParse {
     let file_id = rome_path.file_id();
 
     let source_type =
-        SourceType::try_from(rome_path.as_path()).unwrap_or_else(|_| SourceType::js_module());
+        SourceType::try_from(rome_path.as_path()).unwrap_or_else(|_| match language_hint {
+            LanguageId::JavaScriptReact => SourceType::jsx(),
+            LanguageId::TypeScript => SourceType::ts(),
+            LanguageId::TypeScriptReact => SourceType::tsx(),
+            _ => SourceType::js_module(),
+        });
 
     let parse = rome_js_parser::parse(text, file_id, source_type);
     AnyParse::from(parse)
