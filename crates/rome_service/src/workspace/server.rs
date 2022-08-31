@@ -122,7 +122,7 @@ impl WorkspaceServer {
         self.features.get_capabilities(path, language)
     }
 
-    /// Return an error ffactory function for unsupported features at a given path
+    /// Return an error factory function for unsupported features at a given path
     fn build_capability_error<'a>(&'a self, path: &'a RomePath) -> impl FnOnce() -> RomeError + 'a {
         move || {
             let language_hint = self
