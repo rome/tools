@@ -95,6 +95,7 @@ pub struct OpenFileParams {
     pub path: RomePath,
     pub content: String,
     pub version: i32,
+    #[serde(default)]
     pub language_hint: Language,
 }
 
