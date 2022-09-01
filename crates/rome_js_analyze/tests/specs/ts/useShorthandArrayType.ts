@@ -15,3 +15,10 @@ let valid6: Array<() => string>;
 type valid7<T> = Array<T extends string ? string : number>
 type valid8 = Array<new (string, number) => string>
 // valid end
+
+//parenthesized type
+let valid8: Array<(string & number)>;
+// infer type
+type valid9<T> = T extends Array<infer R> ? R : any;
+// mapped type
+type valid10<T> = { [K in keyof T]: T[K] };

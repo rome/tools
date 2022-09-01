@@ -118,7 +118,9 @@ fn convert_to_array_type(type_arguments: TsTypeArguments) -> Option<TsType> {
                     | TsType::TsFunctionType(_)
                     | TsType::TsConstructorType(_)
                     | TsType::TsConditionalType(_)
-                    | TsType::TsTypeOperatorType(_) => None,
+                    | TsType::TsTypeOperatorType(_)
+                    | TsType::TsInferType(_)
+                    | TsType::TsMappedType(_) => None,
 
                     TsType::TsReferenceType(ty) if is_array_reference(ty).unwrap_or(false) => {
                         if let Some(type_arguments) = ty.type_arguments() {
