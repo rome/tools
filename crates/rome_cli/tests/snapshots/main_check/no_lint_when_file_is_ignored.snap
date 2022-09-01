@@ -6,20 +6,19 @@ expression: content
 
 ```json
 {
-  "formatter": {
-    "enabled": false
+  "linter": {
+    "enabled": true,
+    "ignore": ["test.js"]
   }
 }
 
 ```
 
-## `file.js`
+## `test.js`
 
 ```js
 
-function f() {
-return { something }
-}
+if(a != -0) {}
 
 ```
 

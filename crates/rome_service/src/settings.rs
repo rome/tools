@@ -77,6 +77,8 @@ pub struct FormatSettings {
     pub format_with_errors: bool,
     pub indent_style: Option<IndentStyle>,
     pub line_width: Option<LineWidth>,
+    /// List of paths/files to matcher
+    pub ignored_files: IndexSet<String>,
 }
 
 impl Default for FormatSettings {
@@ -86,6 +88,7 @@ impl Default for FormatSettings {
             format_with_errors: false,
             indent_style: Some(IndentStyle::default()),
             line_width: Some(LineWidth::default()),
+            ignored_files: IndexSet::default(),
         }
     }
 }
@@ -98,6 +101,9 @@ pub struct LinterSettings {
 
     /// List of rules
     pub rules: Option<Rules>,
+
+    /// List of paths/files to matcher
+    pub ignored_files: IndexSet<String>,
 }
 
 impl Default for LinterSettings {
@@ -105,6 +111,7 @@ impl Default for LinterSettings {
         Self {
             enabled: true,
             rules: Some(Rules::default()),
+            ignored_files: IndexSet::default(),
         }
     }
 }

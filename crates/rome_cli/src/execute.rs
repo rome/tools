@@ -128,11 +128,13 @@ pub(crate) fn execute_mode(mode: Execution, mut session: CliSession) -> Result<(
         let rome_path = RomePath::new(path, 0);
 
         if mode.is_format() {
-            let can_format = workspace.supports_feature(SupportsFeatureParams {
-                path: rome_path.clone(),
-                feature: FeatureName::Format,
-            })?;
-            if can_format {
+            let unsupported_format_reason = workspace
+                .supports_feature(SupportsFeatureParams {
+                    path: rome_path.clone(),
+                    feature: FeatureName::Format,
+                })?
+                .reason;
+            if unsupported_format_reason.is_none() {
                 workspace.open_file(OpenFileParams {
                     path: rome_path.clone(),
                     version: 0,

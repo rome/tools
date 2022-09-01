@@ -1,4 +1,5 @@
 use crate::settings::FormatSettings;
+use indexmap::IndexSet;
 use rome_formatter::{IndentStyle, LineWidth};
 use serde::{Deserialize, Serialize};
 
@@ -25,6 +26,15 @@ pub struct FormatterConfiguration {
         serialize_with = "serialize_line_width"
     )]
     pub line_width: LineWidth,
+
+    /// A list of Unix shell style patterns. The formatter will ignore files/folders that will
+    /// match these patterns.
+    #[serde(
+        skip_serializing_if = "Option::is_none",
+        deserialize_with = "crate::deserialize_set_of_strings",
+        serialize_with = "crate::serialize_set_of_strings"
+    )]
+    pub ignore: Option<IndexSet<String>>,
 }
 
 impl Default for FormatterConfiguration {
@@ -35,6 +45,7 @@ impl Default for FormatterConfiguration {
             indent_size: 2,
             indent_style: PlainIndentStyle::default(),
             line_width: LineWidth::default(),
+            ignore: None,
         }
     }
 }
@@ -50,6 +61,7 @@ impl From<FormatterConfiguration> for FormatSettings {
             indent_style: Some(indent_style),
             line_width: Some(conf.line_width),
             format_with_errors: conf.format_with_errors,
+            ignored_files: conf.ignore.unwrap_or_default(),
         }
     }
 }

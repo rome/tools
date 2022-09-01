@@ -213,7 +213,7 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
         })
         .unwrap();
 
-    if can_format {
+    if can_format.reason.is_none() {
         let mut snapshot_content = SnapshotContent::default();
         let buffer = rome_path.get_buffer_from_file();
         let mut source_type: SourceType = rome_path.as_path().try_into().unwrap();

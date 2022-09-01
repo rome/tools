@@ -3,6 +3,7 @@ mod rules;
 
 pub use crate::configuration::linter::rules::Rules;
 use crate::settings::LinterSettings;
+use indexmap::IndexSet;
 use rome_console::codespan::Severity;
 pub use rules::*;
 #[cfg(feature = "schemars")]
@@ -19,6 +20,15 @@ pub struct LinterConfiguration {
     /// List of rules
     #[serde(skip_serializing_if = "Option::is_none")]
     pub rules: Option<Rules>,
+
+    /// A list of Unix shell style patterns. The formatter will ignore files/folders that will
+    /// match these patterns.
+    #[serde(
+        skip_serializing_if = "Option::is_none",
+        deserialize_with = "crate::deserialize_set_of_strings",
+        serialize_with = "crate::serialize_set_of_strings"
+    )]
+    pub ignore: Option<IndexSet<String>>,
 }
 
 impl Default for LinterConfiguration {
@@ -26,6 +36,7 @@ impl Default for LinterConfiguration {
         Self {
             enabled: true,
             rules: Some(Rules::default()),
+            ignore: None,
         }
     }
 }
@@ -35,6 +46,7 @@ impl From<LinterConfiguration> for LinterSettings {
         Self {
             enabled: conf.enabled,
             rules: conf.rules,
+            ignored_files: conf.ignore.unwrap_or_default(),
         }
     }
 }

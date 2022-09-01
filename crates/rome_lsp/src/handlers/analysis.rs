@@ -28,11 +28,11 @@ pub(crate) fn code_actions(
     let url = params.text_document.uri.clone();
     let rome_path = session.file_path(&url);
 
-    let linter_enabled = &session.workspace.supports_feature(SupportsFeatureParams {
+    let unsupported_lint = &session.workspace.supports_feature(SupportsFeatureParams {
         path: rome_path,
         feature: FeatureName::Lint,
     })?;
-    if !linter_enabled {
+    if unsupported_lint.reason.is_some() {
         return Ok(Some(Vec::new()));
     }
 

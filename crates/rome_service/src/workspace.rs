@@ -76,7 +76,41 @@ pub struct SupportsFeatureParams {
     pub feature: FeatureName,
 }
 
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize, Default)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+pub struct SupportsFeatureResult {
+    pub reason: Option<UnsupportedReason>,
+}
+
+impl SupportsFeatureResult {
+    fn ignored() -> Self {
+        Self {
+            reason: Some(UnsupportedReason::Ignored),
+        }
+    }
+
+    fn disabled() -> Self {
+        Self {
+            reason: Some(UnsupportedReason::FeatureNotEnabled),
+        }
+    }
+
+    fn incapable() -> Self {
+        Self {
+            reason: Some(UnsupportedReason::FileNotSupported),
+        }
+    }
+}
+
+#[derive(serde::Serialize, serde::Deserialize, Eq, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+pub enum UnsupportedReason {
+    Ignored,
+    FeatureNotEnabled,
+    FileNotSupported,
+}
+
+#[derive(serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub enum FeatureName {
     Format,
@@ -257,9 +291,13 @@ pub struct RenameResult {
 
 pub trait Workspace: Send + Sync + RefUnwindSafe {
     /// Checks whether a certain feature is supported. There are different conditions:
-    /// - Rome doesn't recognize a file, so it can provide the feature;
+    /// - Rome doesn't recognize a file, so it can't provide the feature;
     /// - the feature is disabled inside the configuration;
-    fn supports_feature(&self, params: SupportsFeatureParams) -> Result<bool, RomeError>;
+    /// - the file is ignored
+    fn supports_feature(
+        &self,
+        params: SupportsFeatureParams,
+    ) -> Result<SupportsFeatureResult, RomeError>;
 
     /// Update the global settings for this workspace
     fn update_settings(&self, params: UpdateSettingsParams) -> Result<(), RomeError>;
@@ -415,7 +453,7 @@ impl<'app, W: Workspace + ?Sized> Drop for FileGuard<'app, W> {
                 path: self.path.clone(),
             })
             // `close_file` can only error if the file was already closed, in
-            // this case it's generally better to silently ignore the error
+            // this case it's generally better to silently matcher the error
             // than panic (especially in a drop handler)
             .ok();
     }

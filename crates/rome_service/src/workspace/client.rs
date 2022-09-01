@@ -7,6 +7,7 @@ use rome_formatter::Printed;
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 use serde_json::json;
 
+use crate::workspace::SupportsFeatureResult;
 use crate::{RomeError, TransportError, Workspace};
 
 use super::{
@@ -89,7 +90,10 @@ impl<T> Workspace for WorkspaceClient<T>
 where
     T: WorkspaceTransport + RefUnwindSafe + Send + Sync,
 {
-    fn supports_feature(&self, params: SupportsFeatureParams) -> Result<bool, RomeError> {
+    fn supports_feature(
+        &self,
+        params: SupportsFeatureParams,
+    ) -> Result<SupportsFeatureResult, RomeError> {
         self.request("rome/supports_feature", params)
     }
 
