@@ -8,7 +8,7 @@
 ```shell
 echo "function f() { return {} }" | rome format --stdin-file-path example.js
 ```
-the argument  `--stdin-file-path` is mandatory when from standard in. The path should represent a 
+the argument  `--stdin-file-path` is mandatory when from standard in. The path should represent a
 file name with their extension.
 - Added `--apply-suggested` argument to the `rome check` command, to apply suggested and safe fixes.
 
@@ -25,21 +25,19 @@ file name with their extension.
 
 ### Formatter
 
-Greatly increased the compatibility with Prettier, here's an highlight of what we improved
+Significantly improved formatting and prettier compatibility of:
 
-##### `throw` and `return` arguments
-
-##### Templates
-
-##### Arrow functions
-
-##### Conditional expressions
-
-##### Parenthesis
-
-##### Arrays
-
-##### Loops
+* JSX [#3144](https://github.com/rome/tools/pull/3144)
+* Conditional expression and conditional types [#2427](https://github.com/rome/tools/issues/2427)
+* Function signatures [#2993](https://github.com/rome/tools/pull/2993), [#2990](https://github.com/rome/tools/pull/2990)
+* Return and throw statements [#2986](https://github.com/rome/tools/pull/2986)
+* Logical and binary expressions [#3079](https://github.com/rome/tools/pull/3079)
+* Templates [#3063](https://github.com/rome/tools/pull/3063)
+* Arrow expression chains [#3122](https://github.com/rome/tools/pull/3122)
+* Member expression assignments [#3061](https://github.com/rome/tools/pull/3061)
+* Array expressions [#3126](https://github.com/rome/tools/pull/3126)
+* Parenthesized expressions and types, including inserting parentheses to improve readability [#3057](https://github.com/rome/tools/pull/3057), [#3083](https://github.com/rome/tools/pull/3083), [#3108](https://github.com/rome/tools/pull/3108)
+* Doc comments [#3129](https://github.com/rome/tools/pull/3129)
 
 
 ### Configuration
@@ -66,12 +64,12 @@ Greatly increased the compatibility with Prettier, here's an highlight of what w
 ### CLI
 
 - Added `--max-diagnostics` argument to the command `rome check`.
-- The maximum number of diagnostics printed is now 20, use `--max-diagnostics` to change the default. 
+- The maximum number of diagnostics printed is now 20, use `--max-diagnostics` to change the default.
 - Added a new command `rome init`.
 
 ### Configuration
 
-- You can create a configuration file called `rome.json` to customize Rome's default options. 
+- You can create a configuration file called `rome.json` to customize Rome's default options.
 This will work from both CLI and LSP.
 
 ### Linter
@@ -96,7 +94,7 @@ from the LSP.
 
 ### VSCode
 
-- **BREAKING CHANGE**: Removed the majority of settings that were available in the extension, use the 
+- **BREAKING CHANGE**: Removed the majority of settings that were available in the extension, use the
 configuration file `rome.json` to change the Rome's defaults.
 - The extension now allows to rename variables;
 
@@ -119,7 +117,7 @@ configuration file `rome.json` to change the Rome's defaults.
 
 ### Linter
 
-- Added the new `--apply` argument to the `rome check` command; 
+- Added the new `--apply` argument to the `rome check` command;
 - New rules added to the linter, check the [website](https://rome.tools/docs/lint/rules/);
 
 ## 0.6.1
@@ -133,10 +131,10 @@ Fixes a regression introduced in the `rome format` command ([#2670](https://gith
 - BREAKING CHANGES: the command `rome format --ci` has been removed, use `rome ci` instead.
 
 #### Improved the compatibility with Prettier (check [#2403](https://github.com/rome/tools/issues/2403) for more details)
-  
+
 - TypeScript's formatting is better in line with what Prettier does.
 - Better formatting of string literals.
-Removing unnecessary quotes in string literals and quotes from member names. 
+Removing unnecessary quotes in string literals and quotes from member names.
 Correctly choose the correct quote based on quantity of quotes inside a literal:
   ```js
   // original code
@@ -145,18 +143,18 @@ Correctly choose the correct quote based on quantity of quotes inside a literal:
   }
   let b = "cool isn\'t it";
   let c = "\"content\" ' ";
-  
+
   // formatted code
   let a = {
     something: 3
   }
-  let b = "cool isn't it";   
+  let b = "cool isn't it";
   let c = '"content" \' ';
   ```
 - Better formatting of various statements
 - Improved the performance of the formatter an average of 20%-30%! Check the relevant
 PRs [1](https://github.com/rome/tools/pull/2456), [2](https://github.com/rome/tools/pull/2638), [3](https://github.com/rome/tools/pull/2612), [4](https://github.com/rome/tools/pull/2462), [5](https://github.com/rome/tools/pull/2634) if you're interested in what the team did.
-  
+
 To reach better compatibility with Prettier, the team had to revise the foundation of our printer,
 which caused some regressions around how comments are printed. These are known issues that we
 plan to close by next release.
@@ -173,7 +171,7 @@ Refer to the [website](https://rome.tools/#linter) to learn how to start using i
 - BREAKING CHANGES: the `format` command doesn't write on disk by default. Now the command prints on terminal.
 
     **Migration**: add the `--write` argument when calling `rome format`
-    
+
     ```shell
     rome format --write
     ```
