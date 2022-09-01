@@ -122,9 +122,20 @@ export interface Ts {
 }
 export interface OpenFileParams {
 	content: string;
+	language_hint?: Language;
 	path: RomePath;
 	version: number;
 }
+/**
+ * Supported languages by Rome
+ */
+export type Language =
+	| "JavaScript"
+	| "JavaScriptReact"
+	| "TypeScript"
+	| "TypeScriptReact"
+	| "Json"
+	| "Unknown";
 export interface ChangeFileParams {
 	content: string;
 	path: RomePath;

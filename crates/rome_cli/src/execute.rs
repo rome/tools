@@ -3,7 +3,7 @@ use crate::{CliSession, Termination};
 use rome_console::{markup, ConsoleExt};
 use rome_fs::RomePath;
 use rome_service::workspace::{
-    FeatureName, FixFileMode, FormatFileParams, OpenFileParams, SupportsFeatureParams,
+    FeatureName, FixFileMode, FormatFileParams, Language, OpenFileParams, SupportsFeatureParams,
 };
 use std::path::PathBuf;
 
@@ -137,6 +137,7 @@ pub(crate) fn execute_mode(mode: Execution, mut session: CliSession) -> Result<(
                     path: rome_path.clone(),
                     version: 0,
                     content: content.into(),
+                    language_hint: Language::default(),
                 })?;
                 let printed = workspace.format_file(FormatFileParams { path: rome_path })?;
 

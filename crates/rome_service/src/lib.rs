@@ -5,6 +5,7 @@ use rome_js_analyze::utils::rename::RenameError;
 use rome_js_analyze::RuleError;
 use serde::{Deserialize, Serialize};
 use std::error::Error;
+use std::ffi::OsStr;
 use std::fmt::{self, Debug, Display, Formatter};
 use std::ops::{Deref, DerefMut};
 use std::path::PathBuf;
@@ -21,6 +22,7 @@ pub use crate::configuration::{
     create_config, load_config, Configuration, ConfigurationError, RuleConfiguration, Rules,
 };
 pub use crate::file_handlers::JsFormatSettings;
+use crate::file_handlers::Language;
 pub use crate::workspace::Workspace;
 
 /// This is the main entrypoint of the application.
@@ -41,9 +43,9 @@ pub enum RomeError {
     DirtyWorkspace,
     /// The file does not exist in the [Workspace]
     NotFound,
-    /// A file is not supported. It contains the extension of the file
+    /// A file is not supported. It contains the language and path of the file
     /// Use this error if Rome is trying to process a file that Rome can't understand
-    SourceFileNotSupported(RomePath),
+    SourceFileNotSupported(Language, RomePath),
     /// The formatter encountered an error while formatting the file
     FormatError(FormatError),
     /// The file could not be formatted since it has syntax errors and `format_with_errors` is disabled
@@ -71,15 +73,21 @@ impl Debug for RomeError {
 impl Display for RomeError {
     fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
         match self {
-            RomeError::SourceFileNotSupported(path) => {
-                let ext = path.extension().and_then(|ext| ext.to_str());
-
-                if let Some(ext) = ext {
-                    write!(f, "Rome doesn't support the file extension {ext:?} yet")
+            RomeError::SourceFileNotSupported(language, path) => {
+                if *language != Language::Unknown {
+                    write!(
+                        f,
+                        "Rome doesn't support this feature for the language {language:?}"
+                    )
+                } else if let Some(ext) = path.extension().and_then(OsStr::to_str) {
+                    write!(
+                        f,
+                        "Rome could not determine the language for the file extension {ext:?}"
+                    )
                 } else {
                     write!(
                         f,
-                        "Rome can't process the file because it doesn't have a clear extension"
+                        "Rome could not determine the language for the file {path:?} because it doesn't have a clear extension"
                     )
                 }
             }

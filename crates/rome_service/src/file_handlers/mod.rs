@@ -23,32 +23,79 @@ use crate::workspace::FixFileMode;
 pub use javascript::JsFormatSettings;
 
 /// Supported languages by Rome
-#[derive(Debug, PartialEq)]
-pub(crate) enum Language {
-    /// JavaScript, TypeScript, JSX, TSX
+#[derive(Clone, Copy, Debug, Eq, PartialEq, Default, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+pub enum Language {
+    /// JavaScript
     JavaScript,
+    /// JSX
+    JavaScriptReact,
+    /// TypeScript
+    TypeScript,
+    /// TSX
+    TypeScriptReact,
     /// JSON
     Json,
     /// Any language that is not supported
+    #[default]
     Unknown,
 }
 
-impl From<&str> for Language {
-    fn from(s: &str) -> Self {
+impl Language {
+    /// Returns the language corresponding to this file extension
+    pub fn from_extension(s: &str) -> Self {
         match s.to_lowercase().as_str() {
-            "js" | "ts" | "jsx" | "tsx" | "mjs" | "cjs" | "cts" | "mts" => Language::JavaScript,
+            "js" | "mjs" | "cjs" => Language::JavaScript,
+            "jsx" => Language::JavaScriptReact,
+            "ts" | "mts" | "cts" => Language::TypeScript,
+            "tsx" => Language::TypeScriptReact,
             "json" => Language::Json,
             _ => Language::Unknown,
         }
     }
-}
 
-impl From<&OsStr> for Language {
-    fn from(s: &OsStr) -> Self {
-        match s.to_str().unwrap() {
-            "js" | "ts" | "jsx" | "tsx" | "mjs" | "cjs" | "cts" | "mts" => Language::JavaScript,
+    /// Returns the language corresponding to this language ID
+    ///
+    /// See https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocumentItem
+    /// for a list of language identifiers
+    pub fn from_language_id(s: &str) -> Self {
+        match s.to_lowercase().as_str() {
+            "javascript" => Language::JavaScript,
+            "typescript" => Language::TypeScript,
+            "javascriptreact" => Language::JavaScriptReact,
+            "typescriptreact" => Language::TypeScriptReact,
             "json" => Language::Json,
             _ => Language::Unknown,
+        }
+    }
+
+    /// Returns the language if it's not unknown, otherwise returns `other`.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use rome_service::workspace::Language;
+    /// let x = Language::JavaScript;
+    /// let y = Language::Unknown;
+    /// assert_eq!(x.or(y), Language::JavaScript);
+    ///
+    /// let x = Language::Unknown;
+    /// let y = Language::JavaScript;
+    /// assert_eq!(x.or(y), Language::JavaScript);
+    ///
+    /// let x = Language::JavaScript;
+    /// let y = Language::Json;
+    /// assert_eq!(x.or(y), Language::JavaScript);
+    ///
+    /// let x = Language::Unknown;
+    /// let y = Language::Unknown;
+    /// assert_eq!(x.or(y), Language::Unknown);
+    /// ```
+    pub fn or(self, other: Language) -> Language {
+        if self != Language::Unknown {
+            self
+        } else {
+            other
         }
     }
 }
@@ -89,7 +136,7 @@ pub(crate) struct Capabilities {
     pub(crate) formatter: FormatterCapabilities,
 }
 
-type Parse = fn(&RomePath, &str) -> AnyParse;
+type Parse = fn(&RomePath, Language, &str) -> AnyParse;
 
 #[derive(Default)]
 pub(crate) struct ParserCapabilities {
@@ -186,17 +233,25 @@ impl Features {
     }
 
     /// Return a [Language] from a string
-    fn get_language(rome_path: &RomePath) -> Language {
-        match rome_path.extension() {
-            Some(file_extension) => file_extension.into(),
-            None => Language::Unknown,
-        }
+    pub(crate) fn get_language(rome_path: &RomePath) -> Language {
+        rome_path
+            .extension()
+            .and_then(OsStr::to_str)
+            .map(Language::from_extension)
+            .unwrap_or_default()
     }
 
     /// Returns the [Capabilities] associated with a [RomePath]
-    pub(crate) fn get_capabilities(&self, rome_path: &RomePath) -> Capabilities {
-        match Self::get_language(rome_path) {
-            Language::JavaScript => self.js.capabilities(),
+    pub(crate) fn get_capabilities(
+        &self,
+        rome_path: &RomePath,
+        language_hint: Language,
+    ) -> Capabilities {
+        match Self::get_language(rome_path).or(language_hint) {
+            Language::JavaScript
+            | Language::JavaScriptReact
+            | Language::TypeScript
+            | Language::TypeScriptReact => self.js.capabilities(),
             Language::Json => self.json.capabilities(),
             Language::Unknown => self.unknown.capabilities(),
         }

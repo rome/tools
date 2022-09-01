@@ -15,7 +15,9 @@ use rome_diagnostics::{
 use rome_fs::{AtomicInterner, FileSystem, OpenOptions, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
 use rome_service::{
-    workspace::{FeatureName, FileGuard, OpenFileParams, RuleCategories, SupportsFeatureParams},
+    workspace::{
+        FeatureName, FileGuard, Language, OpenFileParams, RuleCategories, SupportsFeatureParams,
+    },
     Workspace,
 };
 use std::{
@@ -571,6 +573,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
                 path: rome_path,
                 version: 0,
                 content: input.clone(),
+                language_hint: Language::default(),
             },
         )
         .with_file_id_and_code(file_id, "IO")?;

@@ -1,5 +1,5 @@
 use std::fmt::Display;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 /// Enum of the different ECMAScript standard versions.
 /// The versions are ordered in increasing order; The newest version comes last.
@@ -177,15 +177,15 @@ impl TryFrom<&Path> for SourceType {
     fn try_from(path: &Path) -> Result<Self, Self::Error> {
         let file_name = path
             .file_name()
-            .expect("Can't read the file name")
+            .ok_or_else(|| SourceTypeError::MissingFileName(path.into()))?
             .to_str()
-            .expect("Can't read the file name");
+            .ok_or_else(|| SourceTypeError::MissingFileName(path.into()))?;
 
         let extension = path
             .extension()
-            .expect("Can't read the file extension")
+            .ok_or_else(|| SourceTypeError::MissingFileExtension(path.into()))?
             .to_str()
-            .expect("Can't read the file extension");
+            .ok_or_else(|| SourceTypeError::MissingFileExtension(path.into()))?;
 
         compute_source_type_from_path_or_extension(file_name, extension)
     }
@@ -194,6 +194,10 @@ impl TryFrom<&Path> for SourceType {
 /// Errors around the construct of the source type
 #[derive(Debug)]
 pub enum SourceTypeError {
+    /// The path has no file name
+    MissingFileName(PathBuf),
+    /// The path has no file extension
+    MissingFileExtension(PathBuf),
     /// The source type is unknown
     UnknownExtension(String),
 }
@@ -203,6 +207,12 @@ impl std::error::Error for SourceTypeError {}
 impl Display for SourceTypeError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
+            SourceTypeError::MissingFileName(path) => {
+                write!(f, "The path {path:?} has no file name")
+            }
+            SourceTypeError::MissingFileExtension(path) => {
+                write!(f, "The path {path:?} has no file extension")
+            }
             SourceTypeError::UnknownExtension(extension) => {
                 write!(f, "The parser can't parse the extension '{extension}' yet")
             }

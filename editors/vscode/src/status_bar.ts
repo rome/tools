@@ -1,0 +1,115 @@
+import { StatusBarAlignment, StatusBarItem, ThemeColor, window } from "vscode";
+import { State } from "vscode-languageclient";
+import { Commands } from "./commands";
+
+enum Status {
+	Pending = "refresh",
+	Ready = "check",
+	Inactive = "eye-closed",
+	Warning = "warning",
+	Error = "error",
+}
+
+export class StatusBar {
+	private statusBarItem: StatusBarItem;
+
+	private serverState: State = State.Starting;
+	private isActive: boolean = false;
+
+	constructor() {
+		this.statusBarItem = window.createStatusBarItem(
+			"rome.status",
+			StatusBarAlignment.Right,
+			-1,
+		);
+
+		this.statusBarItem.name = "Rome";
+		this.statusBarItem.command = Commands.ServerStatus;
+		this.update();
+	}
+
+	public setServerState(state: State) {
+		this.serverState = state;
+		this.update();
+	}
+
+	public setActive(isActive: boolean) {
+		this.isActive = isActive;
+		this.update();
+	}
+
+	private update() {
+		let status: Status;
+		if (this.serverState === State.Running) {
+			if (this.isActive) {
+				status = Status.Ready;
+			} else {
+				status = Status.Inactive;
+			}
+		} else if (this.serverState === State.Starting) {
+			status = Status.Pending;
+		} else {
+			status = Status.Error;
+		}
+
+		this.statusBarItem.text = `$(${status}) Rome`;
+
+		switch (status) {
+			case Status.Pending: {
+				this.statusBarItem.tooltip = "Rome is initializing ...";
+				break;
+			}
+			case Status.Ready: {
+				this.statusBarItem.tooltip = "Rome is active";
+				break;
+			}
+			case Status.Inactive: {
+				this.statusBarItem.tooltip =
+					"The current file is not supported or ignored by Rome";
+				break;
+			}
+			// @ts-expect-error Reserved for future use
+			case Status.Warning: {
+				this.statusBarItem.tooltip = undefined;
+				break;
+			}
+			case Status.Error: {
+				this.statusBarItem.tooltip = "Rome encountered a fatal error";
+				break;
+			}
+		}
+
+		switch (status) {
+			case Status.Error: {
+				this.statusBarItem.color = new ThemeColor(
+					"statusBarItem.errorForeground",
+				);
+				this.statusBarItem.backgroundColor = new ThemeColor(
+					"statusBarItem.errorBackground",
+				);
+				break;
+			}
+			// @ts-expect-error Reserved for future use
+			case Status.Warning: {
+				this.statusBarItem.color = new ThemeColor(
+					"statusBarItem.warningForeground",
+				);
+				this.statusBarItem.backgroundColor = new ThemeColor(
+					"statusBarItem.warningBackground",
+				);
+				break;
+			}
+			default: {
+				this.statusBarItem.color = undefined;
+				this.statusBarItem.backgroundColor = undefined;
+				break;
+			}
+		}
+
+		this.statusBarItem.show();
+	}
+
+	public hide() {
+		this.statusBarItem.hide();
+	}
+}
