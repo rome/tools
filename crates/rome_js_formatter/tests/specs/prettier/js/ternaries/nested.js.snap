@@ -108,7 +108,7 @@ a
 ```diff
 --- Prettier
 +++ Rome
-@@ -12,24 +12,24 @@
+@@ -12,24 +12,22 @@
    : value4;
  
  const StorybookLoader = ({ match }) =>
@@ -140,18 +140,16 @@ a
 +    ? <LoaderStorybook />
 +    : match.params.storyId === "deal-list"
 +    ? <DealListStory />
-+    : (
-+        <Message>
-+          <Title>{"Missing story book"}</Title>
-+          <Content>
-+            <BackButton />
-+          </Content>
-+        </Message>
-+      );
++    : <Message>
++        <Title>{"Missing story book"}</Title>
++        <Content>
++          <BackButton />
++        </Content>
++      </Message>;
  
  const message =
    i % 3 === 0 && i % 5 === 0
-@@ -60,7 +60,8 @@
+@@ -60,7 +58,8 @@
      ? 3 //'There was an issue with your CVC number'
      : true //state == 'invalid_expiry'
      ? 4 //'Expiry must be sometime in the past.'
@@ -190,14 +188,12 @@ const StorybookLoader = ({ match }) =>
     ? <LoaderStorybook />
     : match.params.storyId === "deal-list"
     ? <DealListStory />
-    : (
-        <Message>
-          <Title>{"Missing story book"}</Title>
-          <Content>
-            <BackButton />
-          </Content>
-        </Message>
-      );
+    : <Message>
+        <Title>{"Missing story book"}</Title>
+        <Content>
+          <BackButton />
+        </Content>
+      </Message>;
 
 const message =
   i % 3 === 0 && i % 5 === 0

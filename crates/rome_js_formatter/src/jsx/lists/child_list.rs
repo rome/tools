@@ -4,8 +4,8 @@ use crate::utils::jsx::{
     JsxRawSpace, JsxSpace,
 };
 use crate::JsFormatter;
-use rome_formatter::{format_args, write, CstFormatContext, FormatRuleWithOptions, VecBuffer};
-use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression, JsxAnyChild, JsxChildList};
+use rome_formatter::{format_args, write, FormatRuleWithOptions, VecBuffer};
+use rome_js_syntax::{JsxAnyChild, JsxChildList};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsxChildList {
@@ -74,9 +74,6 @@ impl FormatRule<JsxChildList> for FormatJsxChildList {
                                 child,
                                 JsxAnyChild::JsxSelfClosingElement(_)
                             ),
-                        }),
-                        None => Some(WordSeparator::EndOfText {
-                            is_next_self_closing: false,
                         }),
 
                         _ => None,
@@ -216,6 +213,8 @@ impl FormatJsxChildList {
     /// [JsxText] and [JsxExpressionChild] and instead, formats the nodes itself.
     #[cfg(debug_assertions)]
     fn disarm_debug_assertions(&self, node: &JsxChildList, f: &mut JsFormatter) {
+        use rome_formatter::CstFormatContext;
+        use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression};
         use JsxAnyChild::*;
 
         for child in node {

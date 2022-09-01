@@ -2,10 +2,7 @@ use crate::prelude::*;
 
 use crate::jsx::tag::opening_element::JsxAnyOpeningElement;
 
-use rome_js_syntax::{
-    JsxSelfClosingElement,
-};
-
+use rome_js_syntax::JsxSelfClosingElement;
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsxSelfClosingElement;

@@ -36,6 +36,10 @@ a = <div>ab<br/></div>;
 // A Word not right before a self-closing element inserts a soft line break.
 a = <div>ab<pre>text</pre></div>;
 
+// whitespaces
+c = <div>a{' '}{' '}{' '}{' '}{' '}{' '}{' '}{' '}b{' '}{' '}{' '}{' '}{' '}{' '}</div>;
+
+c2 = <div>a{' '}{' '}{' '}{' '}{' '}{' '}{' '}{' '}<div></div>content{' '}{' '}{' '}{' '}{' '}{' '}</div>;
 
 <div><div></div><a> jumps over the lazy dog </a></div>;
 

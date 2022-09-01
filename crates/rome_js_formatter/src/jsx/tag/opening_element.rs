@@ -1,9 +1,9 @@
 use crate::prelude::*;
 
-use rome_formatter::{write};
+use rome_formatter::write;
 use rome_js_syntax::{
-    JsSyntaxToken, JsxAnyAttribute, JsxAnyAttributeValue, JsxAnyElementName, JsxAttributeList, JsxOpeningElement, JsxSelfClosingElement, JsxString,
-    TsTypeArguments,
+    JsSyntaxToken, JsxAnyAttribute, JsxAnyAttributeValue, JsxAnyElementName, JsxAttributeList,
+    JsxOpeningElement, JsxSelfClosingElement, JsxString, TsTypeArguments,
 };
 use rome_rowan::{declare_node_union, SyntaxResult};
 
@@ -209,6 +209,7 @@ enum OpeningElementLayout {
     IndentAttributes { name_has_comments: bool },
 }
 
+/// Returns `true` if this is an attribute with a [JsxString] initializer that does not contain any new line characters.
 fn is_single_line_string_literal_attribute(attribute: &JsxAnyAttribute) -> bool {
     as_string_literal_attribute_value(attribute).map_or(false, |string| {
         string
@@ -217,6 +218,7 @@ fn is_single_line_string_literal_attribute(attribute: &JsxAnyAttribute) -> bool 
     })
 }
 
+/// Returns `true` if this is an attribute with a [JsxString] initializer that contains at least one new line character.
 fn is_multiline_string_literal_attribute(attribute: &JsxAnyAttribute) -> bool {
     as_string_literal_attribute_value(attribute).map_or(false, |string| {
         string
@@ -225,6 +227,8 @@ fn is_multiline_string_literal_attribute(attribute: &JsxAnyAttribute) -> bool {
     })
 }
 
+/// Returns `Some` if the initializer value of this attribute is a [JsxString].
+/// Returns [None] otherwise.
 fn as_string_literal_attribute_value(attribute: &JsxAnyAttribute) -> Option<JsxString> {
     use JsxAnyAttribute::*;
     use JsxAnyAttributeValue::*;

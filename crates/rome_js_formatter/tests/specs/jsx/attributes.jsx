@@ -50,5 +50,3 @@
 <div className={asdf
 	/* comment */ asdf } />;
 
-
-

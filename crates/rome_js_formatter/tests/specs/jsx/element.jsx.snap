@@ -41,6 +41,10 @@ a = <div>ab<br/></div>;
 // A Word not right before a self-closing element inserts a soft line break.
 a = <div>ab<pre>text</pre></div>;
 
+// whitespaces
+c = <div>a{' '}{' '}{' '}{' '}{' '}{' '}{' '}{' '}b{' '}{' '}{' '}{' '}{' '}{' '}</div>;
+
+c2 = <div>a{' '}{' '}{' '}{' '}{' '}{' '}{' '}{' '}<div></div>content{' '}{' '}{' '}{' '}{' '}{' '}</div>;
 
 <div><div></div><a> jumps over the lazy dog </a></div>;
 
@@ -274,6 +278,15 @@ a = (
 	</div>
 );
 
+// whitespaces
+c = <div>a b </div>;
+
+c2 = (
+	<div>
+		a <div></div>content{" "}
+	</div>
+);
+
 <div>
 	<div></div>
 	<a> jumps over the lazy dog </a>
@@ -475,9 +488,9 @@ let a = <a>{/* comment */ " "}</a>;
     2: <div tooltip="A very long tooltip text that would otherwise make the attribute break onto the same line but it is not because of the single string layout"></div>;
     7: 		tooltip="A very long tooltip text that would otherwise make the attribute break
    14: 	<ASuperLongComponentNameThatWouldBreakButDoesntSinceTheComponent></ASuperLongComponentNameThatWouldBreakButDoesntSinceTheComponent>
-  117: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-  138: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-  151: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-  176: 				<pre className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs">
-  225: 		Uncle Boonmee Who Can Recall His Past Lives dir. Apichatpong Weerasethakul{" "}
+  126: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+  147: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+  160: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+  185: 				<pre className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs">
+  234: 		Uncle Boonmee Who Can Recall His Past Lives dir. Apichatpong Weerasethakul{" "}
 

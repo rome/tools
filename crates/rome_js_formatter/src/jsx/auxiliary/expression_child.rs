@@ -3,9 +3,7 @@ use crate::prelude::*;
 use crate::prelude::{format_args, write};
 
 use rome_formatter::{group, FormatResult};
-use rome_js_syntax::{
-    JsxExpressionChild, JsxExpressionChildFields,
-};
+use rome_js_syntax::{JsxExpressionChild, JsxExpressionChildFields};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsxExpressionChild;

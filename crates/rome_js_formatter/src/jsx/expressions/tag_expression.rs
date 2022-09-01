@@ -1,7 +1,7 @@
 use crate::parentheses::{is_callee, is_tag, NeedsParentheses};
 use crate::prelude::*;
 use crate::utils::jsx::{get_wrap_state, WrapState};
-use rome_formatter::{write};
+use rome_formatter::write;
 use rome_js_syntax::{
     JsArrowFunctionExpression, JsBinaryExpression, JsBinaryOperator, JsCallArgumentList,
     JsCallExpression, JsSyntaxKind, JsSyntaxNode, JsxExpressionChild, JsxTagExpression,

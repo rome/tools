@@ -2,8 +2,8 @@ use crate::context::QuoteStyle;
 use crate::prelude::*;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsSyntaxKind, JsxAnyChild, JsxExpressionChild,
-    JsxTagExpression, TextLen,
+    JsAnyExpression, JsAnyLiteralExpression, JsComputedMemberExpression, JsStaticMemberExpression,
+    JsSyntaxKind, JsxAnyChild, JsxExpressionChild, JsxTagExpression, TextLen,
 };
 use rome_rowan::{SyntaxResult, SyntaxTokenText, TextRange, TextSize};
 use std::iter::{FusedIterator, Peekable};
@@ -41,6 +41,7 @@ pub fn is_meaningful_jsx_text(text: &str) -> bool {
 
 /// Indicates that an element should always be wrapped in parentheses, should be wrapped
 /// only when it's line broken, or should not be wrapped at all.
+#[derive(Copy, Clone, Debug)]
 pub(crate) enum WrapState {
     /// For a JSX element that is never wrapped in parentheses.
     /// For instance, a JSX element that is another element's attribute
@@ -75,9 +76,27 @@ pub(crate) fn get_wrap_state(node: &JsxTagExpression) -> WrapState {
         | JsSyntaxKind::JSX_EXPRESSION_CHILD
         | JsSyntaxKind::JSX_FRAGMENT
         | JsSyntaxKind::JS_EXPRESSION_STATEMENT
-        | JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION
-        | JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION
-        | JsSyntaxKind::JS_CALL_ARGUMENT_LIST => WrapState::NoWrap,
+        | JsSyntaxKind::JS_CALL_ARGUMENT_LIST
+        | JsSyntaxKind::JS_EXPRESSION_SNIPPED
+        | JsSyntaxKind::JS_CONDITIONAL_EXPRESSION => WrapState::NoWrap,
+        JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION => {
+            let member = JsStaticMemberExpression::unwrap_cast(parent);
+
+            if member.is_optional_chain() {
+                WrapState::NoWrap
+            } else {
+                WrapState::WrapOnBreak
+            }
+        }
+        JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION => {
+            let member = JsComputedMemberExpression::unwrap_cast(parent);
+
+            if member.is_optional_chain() {
+                WrapState::NoWrap
+            } else {
+                WrapState::WrapOnBreak
+            }
+        }
         _ => WrapState::WrapOnBreak,
     })
 }

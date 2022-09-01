@@ -2,7 +2,7 @@ use crate::prelude::*;
 
 use crate::jsx::tag::element::JsxAnyTagWithChildren;
 use rome_formatter::write;
-use rome_js_syntax::{JsxFragment};
+use rome_js_syntax::JsxFragment;
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsxFragment;
