@@ -3,7 +3,6 @@ use crate::prelude::*;
 use rome_formatter::write;
 use rome_js_syntax::{
     JsAnyExpression, JsxExpressionAttributeValue, JsxExpressionAttributeValueFields,
-    TriviaPieceKind,
 };
 
 #[derive(Debug, Clone, Default)]
@@ -70,19 +69,7 @@ impl FormatNodeRule<JsxExpressionAttributeValue> for FormatJsxExpressionAttribut
                     write!(f, [soft_block_indent(&expression.format())])?;
                 };
 
-                write!(f, [line_suffix_boundary(),])?;
-
-                // format if `}` has a `Skipped` leading trivia
-                // <div className={asdf asdf} />;
-                let r_curly_token_ref = r_curly_token.as_ref()?;
-                if matches!(
-                    r_curly_token_ref.leading_trivia().first().map(|t| t.kind()),
-                    Some(TriviaPieceKind::Skipped)
-                ) {
-                    write!(f, [space(), r_curly_token.format()])
-                } else {
-                    write!(f, [r_curly_token.format()])
-                }
+                write!(f, [line_suffix_boundary(), r_curly_token.format()])
             }))]
         )
     }

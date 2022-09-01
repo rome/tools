@@ -328,7 +328,7 @@ where
     // If this isn't the first token than format all comments that are before the first skipped token
     // trivia or line break as the trailing trivia of the previous token (which these comments will
     // become if the document gets formatted a second time).
-    if let Some(last_token) = last_token {
+    if let Some(last_token) = last_token.as_ref() {
         let mut trailing_comments = vec![];
 
         while let Some(piece) = pieces.peek() {
@@ -343,10 +343,12 @@ where
             pieces.next();
         }
 
-        FormatTrailingTrivia::new(trailing_comments.into_iter(), last_token).fmt(f)?;
+        FormatTrailingTrivia::new(trailing_comments.into_iter(), *last_token).fmt(f)?;
     }
 
-    write_leading_trivia(pieces, token, TriviaPrintMode::Full, f)?;
+    write_leading_trivia(pieces, token, TriviaPrintMode::Full, f, || {
+        token.prev_token()
+    })?;
 
     Ok(())
 }
@@ -513,22 +515,23 @@ where
             self.token,
             self.trim_mode,
             f,
-        )?;
-
-        Ok(())
+            || self.token.prev_token(),
+        )
     }
 }
 
-fn write_leading_trivia<I, L, C>(
+fn write_leading_trivia<I, L, C, F>(
     pieces: I,
     token: &SyntaxToken<L>,
     trim_mode: TriviaPrintMode,
     f: &mut Formatter<C>,
+    previous_token: F,
 ) -> FormatResult<()>
 where
     I: IntoIterator<Item = SyntaxTriviaPiece<L>>,
     L: Language,
     C: CstFormatContext<Language = L>,
+    F: FnOnce() -> Option<SyntaxToken<L>>,
 {
     let mut lines_before = 0;
     let mut comments = Vec::new();
@@ -568,6 +571,16 @@ where
                 lines_before_token: lines_before,
             }
             .fmt(f)?;
+
+            let has_preceding_whitespace = previous_token()
+                .and_then(|token| token.trailing_trivia().pieces().last())
+                .map_or(false, |piece| piece.is_newline() || piece.is_whitespace());
+
+            // Maintain a leading whitespace in front of the skipped token trivia
+            // if the previous token has a trailing whitespace (and there's no comment between the two tokens).
+            if comments.is_empty() && has_preceding_whitespace {
+                write!(f, [space()])?;
+            }
 
             comments.clear();
             lines_before = 0;
