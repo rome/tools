@@ -990,9 +990,15 @@ impl Format<IrFormatContext> for FormatElement {
                         [
                             dynamic_text(&std::format!("<interned {index}>"), TextSize::default()),
                             space(),
-                            &interned.0.as_ref()
                         ]
-                    )
+                    )?;
+
+                    match interned.0.as_ref() {
+                        element @ FormatElement::Text(_) | element @ FormatElement::Space => {
+                            write!(f, [text("\""), element, text("\"")])
+                        }
+                        element => element.fmt(f),
+                    }
                 } else {
                     write!(
                         f,
@@ -1023,13 +1029,9 @@ impl<'a> Format<IrFormatContext> for &'a [FormatElement] {
                                 matches!(element, FormatElement::Text(_) | FormatElement::Space);
 
                             if print_as_str {
-                                write!(f, [text("\"")])?;
-                            }
-
-                            write!(f, [group(&element)])?;
-
-                            if print_as_str {
-                                write!(f, [text("\"")])?;
+                                write!(f, [text("\""), &element, text("\"")])?;
+                            } else {
+                                write!(f, [group(&element)])?;
                             }
 
                             if index < len - 1 {

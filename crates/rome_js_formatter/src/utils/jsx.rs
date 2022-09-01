@@ -293,7 +293,9 @@ pub(crate) enum JsxChild {
     /// and contains a new line).
     ///
     /// ```javascript
-    ///
+    /// <div>
+    ///     a
+    /// </div>
     /// ```
     Newline,
 
