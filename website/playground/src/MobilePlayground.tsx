@@ -119,8 +119,12 @@ export function MobilePlayground({
 						}}
 					/>
 				</TabPanel>
-				<TabPanel><TreeView tree={cst} /></TabPanel>
-				<TabPanel><TreeView tree={ast} /></TabPanel>
+				<TabPanel>
+					<TreeView tree={cst} />
+				</TabPanel>
+				<TabPanel>
+					<TreeView tree={ast} />
+				</TabPanel>
 				<TabPanel>
 					<pre className="h-screen overflow-y-scroll">{formatter_ir}</pre>
 				</TabPanel>
@@ -128,13 +132,13 @@ export function MobilePlayground({
 					<pre className="h-screen overflow-y-scroll">{prettierOutput.ir}</pre>
 				</TabPanel>
 				<TabPanel>
-					<pre
-						className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs"
-					>
+					<pre className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs">
 						{errors}
 					</pre>
 				</TabPanel>
-				<TabPanel><MermaidGraph graph={control_flow_graph} /></TabPanel>
+				<TabPanel>
+					<MermaidGraph graph={control_flow_graph} />
+				</TabPanel>
 			</Tabs>
 		</div>
 	);

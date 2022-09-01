@@ -70,11 +70,10 @@ pub(crate) fn get_wrap_state(node: &JsxTagExpression) -> WrapState {
     let parent = node.syntax().parent();
 
     parent.map_or(WrapState::NoWrap, |parent| match parent.kind() {
-        JsSyntaxKind::JS_ARRAY_EXPRESSION
+        JsSyntaxKind::JS_ARRAY_ELEMENT_LIST
         | JsSyntaxKind::JSX_ATTRIBUTE
-        | JsSyntaxKind::JSX_ELEMENT
+        | JsSyntaxKind::JSX_EXPRESSION_ATTRIBUTE_VALUE
         | JsSyntaxKind::JSX_EXPRESSION_CHILD
-        | JsSyntaxKind::JSX_FRAGMENT
         | JsSyntaxKind::JS_EXPRESSION_STATEMENT
         | JsSyntaxKind::JS_CALL_ARGUMENT_LIST
         | JsSyntaxKind::JS_EXPRESSION_SNIPPED

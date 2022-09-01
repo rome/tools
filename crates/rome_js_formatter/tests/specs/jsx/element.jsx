@@ -193,3 +193,12 @@ let a = <a>{ /* comment */ " " /* comment */ }</a>;
 let a = <a>{  " "
 	/* comment */ }</a>;
 let a = <a>{ /* comment */ " " }</a>;
+
+// in array
+const breadcrumbItems = [
+	(
+		<Breadcrumb.Item key="home">
+			<Link to="/">Home</Link>
+		</Breadcrumb.Item>
+	),
+].concat(extraBreadcrumbItems);

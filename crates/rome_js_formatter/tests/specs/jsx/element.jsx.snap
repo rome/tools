@@ -199,6 +199,15 @@ let a = <a>{  " "
 	/* comment */ }</a>;
 let a = <a>{ /* comment */ " " }</a>;
 
+// in array
+const breadcrumbItems = [
+	(
+		<Breadcrumb.Item key="home">
+			<Link to="/">Home</Link>
+		</Breadcrumb.Item>
+	),
+].concat(extraBreadcrumbItems);
+
 =============================
 # Outputs
 ## Output 1
@@ -481,6 +490,13 @@ let a = (
 	</a>
 );
 let a = <a>{/* comment */ " "}</a>;
+
+// in array
+const breadcrumbItems = [
+	<Breadcrumb.Item key="home">
+		<Link to="/">Home</Link>
+	</Breadcrumb.Item>,
+].concat(extraBreadcrumbItems);
 
 
 ## Lines exceeding width of 80 characters

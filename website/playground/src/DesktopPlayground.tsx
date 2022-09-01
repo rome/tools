@@ -112,9 +112,7 @@ export default function DesktopPlayground({
 				settings={settings}
 				setPlaygroundState={setPlaygroundState}
 			/>
-			<div
-				className="box-border flex divide-x divide-slate-300 flex-1 overflow-auto"
-			>
+			<div className="box-border flex divide-x divide-slate-300 flex-1 overflow-auto">
 				<CodeMirror
 					value={code}
 					className="h-full overflow-y-hidden w-1/2 p-5 h-full"
@@ -168,7 +166,9 @@ export default function DesktopPlayground({
 							/>
 						</div>
 					</TabPanel>
-					<TabPanel><TreeView tree={cst} /></TabPanel>
+					<TabPanel>
+						<TreeView tree={cst} />
+					</TabPanel>
 					<TabPanel>
 						<CodeMirror
 							value={ast}
@@ -203,7 +203,9 @@ export default function DesktopPlayground({
 							dangerouslySetInnerHTML={{ __html: errors }}
 						/>
 					</TabPanel>
-					<TabPanel><MermaidGraph graph={control_flow_graph} /></TabPanel>
+					<TabPanel>
+						<MermaidGraph graph={control_flow_graph} />
+					</TabPanel>
 				</Tabs>
 			</div>
 		</div>
