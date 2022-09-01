@@ -97,7 +97,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: build
-          args: -p rome_bin --release
+          args: -p rome_cli --release
 
       - name: Install Node.js
         uses: actions/setup-node@v3

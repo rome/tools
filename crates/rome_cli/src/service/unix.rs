@@ -34,6 +34,7 @@ fn spawn_daemon() -> io::Result<Child> {
     let binary = env::current_exe()?;
 
     let mut cmd = Command::new(binary);
+    cmd.arg("daemon");
     cmd.arg("__run_server");
 
     // Create a new session for the process and make it the leader, this will
@@ -77,9 +78,8 @@ pub(crate) async fn open_socket() -> io::Result<Option<UnixStream>> {
     }
 }
 
-/// Ensure the server daemon is running and ready to receive connections and
-/// print the global socket name in the standard output
-pub(crate) async fn print_socket() -> io::Result<()> {
+/// Ensure the server daemon is running and ready to receive connections
+pub(crate) async fn ensure_daemon() -> io::Result<()>  {
     let mut current_child: Option<Child> = None;
     let mut last_error = None;
 
@@ -87,9 +87,8 @@ pub(crate) async fn print_socket() -> io::Result<()> {
     for _ in 0..10 {
         // Try to open a connection on the global socket
         match try_connect().await {
-            // The connection is open and ready => exit to printing the socket name
+            // The connection is open and ready
             Ok(_) => {
-                println!("{}", get_socket_name().display());
                 return Ok(());
             }
 
@@ -135,6 +134,14 @@ pub(crate) async fn print_socket() -> io::Result<()> {
             "could not connect to the daemon socket",
         )
     }))
+}
+
+/// Ensure the server daemon is running and ready to receive connections and
+/// print the global socket name in the standard output
+pub(crate) async fn print_socket() -> io::Result<()> {
+    ensure_daemon().await?;
+    println!("{}", get_socket_name().display());
+    Ok(())
 }
 
 /// Start listening on the global socket and accepting connections with the

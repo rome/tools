@@ -13,6 +13,7 @@ mod execute;
 mod metrics;
 mod panic;
 mod reports;
+mod service;
 mod termination;
 mod traversal;
 
@@ -22,6 +23,7 @@ pub use reports::{
     formatter::{FormatterReport, FormatterReportFileDetail, FormatterReportSummary},
     Report, ReportDiagnostic, ReportDiff, ReportErrorKind, ReportKind,
 };
+pub use service::{open_transport, SocketTransport};
 pub use termination::Termination;
 
 /// Global context for an execution of the CLI
@@ -75,9 +77,10 @@ impl<'app> CliSession<'app> {
             Some("check") if !is_empty => crate::commands::check::check(self),
             Some("ci") if !is_empty => crate::commands::ci::ci(self),
             Some("format") if !is_empty => crate::commands::format::format(self),
+            Some("daemon") if !is_empty => crate::commands::daemon::daemon(self),
 
             // Print the help for known commands called without any arguments, and exit with an error
-            Some(cmd @ ("check" | "ci" | "format")) => {
+            Some(cmd @ ("check" | "ci" | "format" | "daemon")) => {
                 crate::commands::help::help(self, Some(cmd))?;
                 Err(Termination::EmptyArguments)
             }

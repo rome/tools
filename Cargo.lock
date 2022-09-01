@@ -1475,34 +1475,18 @@ dependencies = [
 ]
 
 [[package]]
-name = "rome_bin"
-version = "0.0.0"
-dependencies = [
- "anyhow",
- "libc",
- "mimalloc",
- "rome_cli",
- "rome_lsp",
- "rome_service",
- "tokio",
- "tower-lsp",
- "tracing",
- "tracing-appender",
- "tracing-subscriber",
- "tracing-tree",
-]
-
-[[package]]
 name = "rome_cli"
 version = "0.0.0"
 dependencies = [
+ "anyhow",
  "crossbeam",
  "hdrhistogram",
  "insta",
  "lazy_static",
+ "libc",
+ "mimalloc",
  "pico-args",
  "rayon",
- "rome_bin",
  "rome_console",
  "rome_diagnostics",
  "rome_flags",
@@ -1515,7 +1499,9 @@ dependencies = [
  "thiserror",
  "tokio",
  "tracing",
+ "tracing-appender",
  "tracing-subscriber",
+ "tracing-tree",
 ]
 
 [[package]]

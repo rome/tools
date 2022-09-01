@@ -3,7 +3,7 @@ import { connect, type Socket } from "net";
 
 function getSocket(command: string): Promise<string> {
 	return new Promise((resolve, reject) => {
-		const process = spawn(command, ["__print_socket"], {
+		const process = spawn(command, ["daemon", "__print_socket"], {
 			stdio: "pipe",
 		});
 
@@ -26,7 +26,7 @@ function getSocket(command: string): Promise<string> {
 
 /**
  * Ensure the Rome daemon server is running and create a Socket connected to the RPC channel
- * 
+ *
  * @param command Path to the Rome daemon binary
  * @returns Socket instance connected to the daemon
  */

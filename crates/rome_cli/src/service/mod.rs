@@ -19,18 +19,18 @@ mod windows;
 #[cfg(windows)]
 use self::windows::open_socket;
 #[cfg(windows)]
-pub(crate) use self::windows::{print_socket, run_daemon};
+pub(crate) use self::windows::{ensure_daemon, print_socket, run_daemon};
 
 #[cfg(unix)]
 mod unix;
 #[cfg(unix)]
 use self::unix::open_socket;
 #[cfg(unix)]
-pub(crate) use self::unix::{print_socket, run_daemon};
+pub(crate) use self::unix::{ensure_daemon, print_socket, run_daemon};
 
 /// Tries to open a connection to a running daemon instance, returning a
 /// [WorkspaceTransport] instance if the socket is currently active
-pub(crate) fn open_transport(runtime: Runtime) -> io::Result<Option<impl WorkspaceTransport>> {
+pub fn open_transport(runtime: Runtime) -> io::Result<Option<impl WorkspaceTransport>> {
     match runtime.block_on(open_socket()) {
         Ok(Some(socket)) => Ok(Some(SocketTransport::open(runtime, socket))),
         Ok(None) => Ok(None),

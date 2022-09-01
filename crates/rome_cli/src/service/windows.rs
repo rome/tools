@@ -46,6 +46,7 @@ fn spawn_daemon() -> io::Result<()> {
     let binary = env::current_exe()?;
 
     let mut cmd = Command::new(binary);
+    cmd.arg("daemon");
     cmd.arg("__run_server");
 
     cmd.creation_flags(CREATE_NEW_PROCESS_GROUP);
@@ -65,9 +66,8 @@ pub(crate) async fn open_socket() -> io::Result<Option<NamedPipeClient>> {
     }
 }
 
-/// Ensure the server daemon is running and ready to receive connections and
-/// print the global pipe name in the standard output
-pub(crate) async fn print_socket() -> io::Result<()> {
+/// Ensure the server daemon is running and ready to receive connections
+pub(crate) async fn ensure_daemon() -> io::Result<()> {
     loop {
         match open_socket().await {
             Ok(Some(_)) => break,
@@ -79,6 +79,13 @@ pub(crate) async fn print_socket() -> io::Result<()> {
         }
     }
 
+    Ok(())
+}
+
+/// Ensure the server daemon is running and ready to receive connections and
+/// print the global pipe name in the standard output
+pub(crate) async fn print_socket() -> io::Result<()> {
+    ensure_daemon().await?;
     println!("{PIPE_NAME}");
     Ok(())
 }

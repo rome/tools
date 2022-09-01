@@ -79,6 +79,17 @@ const INIT: Markup = markup! {
 
 };
 
+const DAEMON: Markup = markup! {
+"Rome Daemon: manages the Rome daemon server process
+
+"<Emphasis>"USAGE:"</Emphasis>"
+    rome daemon [SUBCOMMAND]
+
+"<Emphasis>"SUBCOMMANDS:"</Emphasis>"
+    - "<Emphasis>"start"</Emphasis>"
+    - "<Emphasis>"stop"</Emphasis>
+};
+
 pub(crate) fn help(mut session: CliSession, command: Option<&str>) -> Result<(), Termination> {
     match command {
         Some("help") | None => {
@@ -99,6 +110,10 @@ pub(crate) fn help(mut session: CliSession, command: Option<&str>) -> Result<(),
         }
         Some("init") => {
             session.app.console.log(INIT);
+            Ok(())
+        }
+        Some("daemon") => {
+            session.app.console.log(DAEMON);
             Ok(())
         }
 

@@ -1,11 +1,21 @@
-use rome_cli::{setup_panic_handler, Arguments, CliSession, Termination};
+//! This is the main binary of Rome.
+//!
+//! If you're curious about how to use it, check Rome's [website]
+//!
+//! [website]: https://rome.tools
+
+use rome_cli::{open_transport, setup_panic_handler, Arguments, CliSession, Termination};
 use rome_service::workspace;
 use tokio::runtime::Runtime;
 
-use crate::service::open_transport;
+#[cfg(target_os = "windows")]
+#[global_allocator]
+static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
-pub fn run_cli_session(args: Arguments) -> Result<(), Termination> {
+fn main() -> Result<(), Termination> {
     setup_panic_handler();
+
+    let args = Arguments::from_env();
 
     // Try to open a connection to an existing Rome server socket, or create an
     // in-process Workspace server instance if no daemon process is found

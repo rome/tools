@@ -63,33 +63,33 @@ use rome_rowan::TextRangeSchema;
 use rome_text_edit::Indel;
 use std::{borrow::Cow, panic::RefUnwindSafe, sync::Arc};
 
-pub use self::client::WorkspaceTransport;
+pub use self::client::{WorkspaceClient, WorkspaceTransport};
 pub use crate::file_handlers::Language;
 
 mod client;
 pub(crate) mod server;
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct SupportsFeatureParams {
     pub path: RomePath,
     pub feature: FeatureName,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub enum FeatureName {
     Format,
     Lint,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct UpdateSettingsParams {
     pub configuration: Configuration,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct OpenFileParams {
     pub path: RomePath,
@@ -99,20 +99,20 @@ pub struct OpenFileParams {
     pub language_hint: Language,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct GetSyntaxTreeParams {
     pub path: RomePath,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct GetSyntaxTreeResult {
     pub cst: String,
     pub ast: String,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct GetControlFlowGraphParams {
     pub path: RomePath,
@@ -120,13 +120,13 @@ pub struct GetControlFlowGraphParams {
     pub cursor: TextSize,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct GetFormatterIRParams {
     pub path: RomePath,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct ChangeFileParams {
     pub path: RomePath,
@@ -134,26 +134,26 @@ pub struct ChangeFileParams {
     pub version: i32,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct CloseFileParams {
     pub path: RomePath,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct PullDiagnosticsParams {
     pub path: RomePath,
     pub categories: RuleCategories,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct PullDiagnosticsResult {
     pub diagnostics: Vec<Diagnostic>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct PullActionsParams {
     pub path: RomePath,
@@ -161,13 +161,13 @@ pub struct PullActionsParams {
     pub range: TextRange,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct PullActionsResult {
     pub actions: Vec<CodeAction>,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct CodeAction {
     pub category: ActionCategory,
@@ -175,13 +175,13 @@ pub struct CodeAction {
     pub suggestion: CodeSuggestion,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct FormatFileParams {
     pub path: RomePath,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct FormatRangeParams {
     pub path: RomePath,
@@ -189,7 +189,7 @@ pub struct FormatRangeParams {
     pub range: TextRange,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct FormatOnTypeParams {
     pub path: RomePath,
@@ -197,7 +197,7 @@ pub struct FormatOnTypeParams {
     pub offset: TextSize,
 }
 
-#[derive(Clone, Copy, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, Copy, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 /// Which fixes should be applied during the analyzing phase
 pub enum FixFileMode {
@@ -207,7 +207,7 @@ pub enum FixFileMode {
     SafeAndSuggestedFixes,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct FixFileParams {
     pub path: RomePath,
@@ -236,7 +236,7 @@ pub struct FixAction {
     pub range: TextRange,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct RenameParams {
     pub path: RomePath,
@@ -245,7 +245,7 @@ pub struct RenameParams {
     pub new_name: String,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct RenameResult {
     /// Range of source code modified by this rename operation

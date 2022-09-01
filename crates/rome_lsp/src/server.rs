@@ -7,6 +7,7 @@ use futures::future::ready;
 use rome_service::{workspace, Workspace};
 use std::sync::Arc;
 use tokio::io::{AsyncRead, AsyncWrite};
+use tokio::sync::Notify;
 use tower_lsp::jsonrpc::Result as LspResult;
 use tower_lsp::{lsp_types::*, ClientSocket};
 use tower_lsp::{Client, LanguageServer, LspService, Server};
@@ -17,9 +18,9 @@ pub struct LSPServer {
 }
 
 impl LSPServer {
-    fn new(client: Client, workspace: Arc<dyn Workspace>) -> Self {
+    fn new(client: Client, workspace: Arc<dyn Workspace>, cancellation: Arc<Notify>) -> Self {
         Self {
-            session: Session::new(client, workspace),
+            session: Session::new(client, workspace, cancellation),
         }
     }
 
@@ -159,6 +160,9 @@ impl LanguageServer for LSPServer {
 /// for each incoming connection accepted by the server
 #[derive(Default)]
 pub struct ServerFactory {
+    /// Synchronisation primitve used to broadcast a shutdown signal to all
+    /// active connections
+    cancellation: Arc<Notify>,
     /// Optional [Workspace] instance shared between all clients. Currently
     /// this field is always [None] (meaning each connection will get its own
     /// workspace) until we figure out how to handle concurrent access to the
@@ -193,9 +197,18 @@ impl ServerFactory {
             .clone()
             .unwrap_or_else(workspace::server_sync);
 
-        let mut builder = LspService::build(move |client| LSPServer::new(client, workspace));
+        let mut builder = LspService::build(move |client| {
+            LSPServer::new(client, workspace, self.cancellation.clone())
+        });
 
         builder = builder.custom_method(SYNTAX_TREE_REQUEST, LSPServer::syntax_tree_request);
+
+        // "shutdown" is not part of the Workspace API
+        builder = builder.custom_method("rome/shutdown", |server: &LSPServer, (): ()| {
+            tracing::info!("Sending shutdown signal");
+            server.session.broadcast_shutdown();
+            ready(Ok(Some(())))
+        });
 
         // supports_feature is special because it returns a bool instead of a Result
         builder = builder.custom_method("rome/supports_feature", |server: &LSPServer, params| {
@@ -219,6 +232,11 @@ impl ServerFactory {
 
         let (service, socket) = builder.finish();
         ServerConnection { socket, service }
+    }
+
+    /// Return a handle to the cancellation token for this server process
+    pub fn cancellation(&self) -> Arc<Notify> {
+        self.cancellation.clone()
     }
 }
 
