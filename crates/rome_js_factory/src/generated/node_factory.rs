@@ -6091,14 +6091,37 @@ pub fn ts_type_parameters(
         ],
     ))
 }
-pub fn ts_typeof_type(typeof_token: SyntaxToken, expression_name: TsAnyName) -> TsTypeofType {
-    TsTypeofType::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::TS_TYPEOF_TYPE,
-        [
-            Some(SyntaxElement::Token(typeof_token)),
-            Some(SyntaxElement::Node(expression_name.into_syntax())),
-        ],
-    ))
+pub fn ts_typeof_type(
+    typeof_token: SyntaxToken,
+    expression_name: TsAnyName,
+) -> TsTypeofTypeBuilder {
+    TsTypeofTypeBuilder {
+        typeof_token,
+        expression_name,
+        type_arguments: None,
+    }
+}
+pub struct TsTypeofTypeBuilder {
+    typeof_token: SyntaxToken,
+    expression_name: TsAnyName,
+    type_arguments: Option<TsTypeArguments>,
+}
+impl TsTypeofTypeBuilder {
+    pub fn with_type_arguments(mut self, type_arguments: TsTypeArguments) -> Self {
+        self.type_arguments = Some(type_arguments);
+        self
+    }
+    pub fn build(self) -> TsTypeofType {
+        TsTypeofType::unwrap_cast(SyntaxNode::new_detached(
+            JsSyntaxKind::TS_TYPEOF_TYPE,
+            [
+                Some(SyntaxElement::Token(self.typeof_token)),
+                Some(SyntaxElement::Node(self.expression_name.into_syntax())),
+                self.type_arguments
+                    .map(|token| SyntaxElement::Node(token.into_syntax())),
+            ],
+        ))
+    }
 }
 pub fn ts_undefined_type(undefined_token: SyntaxToken) -> TsUndefinedType {
     TsUndefinedType::unwrap_cast(SyntaxNode::new_detached(

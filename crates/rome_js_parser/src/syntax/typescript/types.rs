@@ -517,6 +517,7 @@ pub(crate) fn parse_ts_name(p: &mut Parser) -> ParsedSyntax {
 // test ts ts_typeof_type
 // let a = "test";
 // type B = typeof a;
+// type T21 = typeof Array<string>; 
 fn parse_ts_typeof_type(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![typeof]) {
         return Absent;
@@ -525,6 +526,7 @@ fn parse_ts_typeof_type(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     p.expect(T![typeof]);
     parse_ts_name(p).or_add_diagnostic(p, expected_identifier);
+    parse_ts_type_arguments(p).ok();
 
     Present(m.complete(p, TS_TYPEOF_TYPE))
 }
@@ -1246,7 +1248,7 @@ pub(crate) fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyn
         p.re_lex(ReLexContext::TypeArgumentLessThan);
         let arguments = parse_ts_type_arguments_impl(p, false);
 
-        if p.last() == Some(T![>]) && matches!(p.cur(), T!['('] | BACKTICK) {
+        if p.last() == Some(T![>]) && can_follow_type_arguments_in_expr(p.cur()) {
             Ok(Present(arguments))
         } else {
             Err(())
@@ -1255,6 +1257,39 @@ pub(crate) fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyn
     .unwrap_or(Absent)
 }
 
+#[inline]
+pub fn can_follow_type_arguments_in_expr(cur_kind: JsSyntaxKind) -> bool {
+    match cur_kind {
+        T!['(']
+        | BACKTICK
+         // These tokens can't follow in a call expression, nor can they start an
+        // expression. So, consider the type argument list part of an instantiation
+        // expression.
+        | T![,]
+        | T![.]
+        | T![?.]
+        | T![')']
+        | T![']']
+        | T![:]
+        | T![;]
+        | T![?]
+        | T![==]
+        | T![===]
+        | T![!=]
+        | T![!==]
+        | T![&&]
+        | T![||]
+        | T![??]
+        | T![^]
+        | T![&]
+        | T![|]
+        | T!['}']
+        | EOF => true,
+        _ => false,
+    }
+}
+
+// test ts ts_type_arguments
 pub(crate) fn parse_ts_type_arguments(p: &mut Parser) -> ParsedSyntax {
     // test ts ts_type_arguments_left_shift
     // type A<T> = T;

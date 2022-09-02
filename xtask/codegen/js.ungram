@@ -1848,6 +1848,7 @@ TsAnyTypePredicateParameterName =
 TsTypeofType =
 	'typeof'
 	expression_name: TsAnyName
+	type_arguments: TsTypeArguments?
 
 TsConstructorType =
 	'abstract'?

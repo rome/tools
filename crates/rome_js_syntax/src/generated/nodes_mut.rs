@@ -5740,6 +5740,12 @@ impl TsTypeofType {
                 .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
     }
+    pub fn with_type_arguments(self, element: Option<TsTypeArguments>) -> Self {
+        Self::unwrap_cast(self.syntax.splice_slots(
+            2usize..=2usize,
+            once(element.map(|element| element.into_syntax().into())),
+        ))
+    }
 }
 impl TsUndefinedType {
     pub fn with_undefined_token(self, element: SyntaxToken) -> Self {

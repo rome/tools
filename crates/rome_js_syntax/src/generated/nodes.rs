@@ -11705,6 +11705,7 @@ impl TsTypeofType {
         TsTypeofTypeFields {
             typeof_token: self.typeof_token(),
             expression_name: self.expression_name(),
+            type_arguments: self.type_arguments(),
         }
     }
     pub fn typeof_token(&self) -> SyntaxResult<SyntaxToken> {
@@ -11713,6 +11714,7 @@ impl TsTypeofType {
     pub fn expression_name(&self) -> SyntaxResult<TsAnyName> {
         support::required_node(&self.syntax, 1usize)
     }
+    pub fn type_arguments(&self) -> Option<TsTypeArguments> { support::node(&self.syntax, 2usize) }
 }
 #[cfg(feature = "serde")]
 impl Serialize for TsTypeofType {
@@ -11727,6 +11729,7 @@ impl Serialize for TsTypeofType {
 pub struct TsTypeofTypeFields {
     pub typeof_token: SyntaxResult<SyntaxToken>,
     pub expression_name: SyntaxResult<TsAnyName>,
+    pub type_arguments: Option<TsTypeArguments>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsUndefinedType {
@@ -24307,6 +24310,10 @@ impl std::fmt::Debug for TsTypeofType {
             .field(
                 "expression_name",
                 &support::DebugSyntaxResult(self.expression_name()),
+            )
+            .field(
+                "type_arguments",
+                &support::DebugOptionalElement(self.type_arguments()),
             )
             .finish()
     }
