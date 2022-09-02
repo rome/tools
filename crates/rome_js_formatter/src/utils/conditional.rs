@@ -512,11 +512,11 @@ enum ConditionalLayout {
     ///
     /// ```javascript
     /// outerCondition
-    /// 	? consequent
-    /// 	: nestedAlternate +
-    /// 	  binary + // <- notice how the content is aligned to the `: `
-    /// 	? consequentOfnestedAlternate
-    /// 	: alternateOfNestedAlternate;
+    ///     ? consequent
+    ///     : nestedAlternate +
+    ///       binary + // <- notice how the content is aligned to the `: `
+    ///     ? consequentOfnestedAlternate
+    ///     : alternateOfNestedAlternate;
     /// ```
     NestedAlternate { parent: JsAnyConditional },
 
@@ -539,10 +539,10 @@ enum ConditionalLayout {
     ///
     /// ```javascript
     /// condition1
-    /// 	? condition2
-    /// 		? consequent2 // <-- consequent and alternate gets indented
-    /// 		: alternate2
-    /// 	: alternate1;
+    ///     ? condition2
+    ///         ? consequent2 // <-- consequent and alternate gets indented
+    ///         : alternate2
+    ///     : alternate1;
     /// ```
     NestedConsequent { parent: JsAnyConditional },
 
