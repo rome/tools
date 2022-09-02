@@ -775,7 +775,9 @@ pub mod derived_property {
         ('𰀀', '𱍊'),
         ('\u{e0100}', '\u{e01ef}'),
     ];
-    pub fn ID_Continue(c: char) -> bool { super::bsearch_range_table(c, ID_Continue_table) }
+    pub fn ID_Continue(c: char) -> bool {
+        super::bsearch_range_table(c, ID_Continue_table)
+    }
     pub const ID_Start_table: &[(char, char)] = &[
         ('A', 'Z'),
         ('a', 'z'),
@@ -1426,5 +1428,7 @@ pub mod derived_property {
         ('丽', '𪘀'),
         ('𰀀', '𱍊'),
     ];
-    pub fn ID_Start(c: char) -> bool { super::bsearch_range_table(c, ID_Start_table) }
+    pub fn ID_Start(c: char) -> bool {
+        super::bsearch_range_table(c, ID_Start_table)
+    }
 }
