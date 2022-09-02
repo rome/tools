@@ -1,11 +1,12 @@
+use std::{panic::catch_unwind, sync::Arc};
+
 use crate::capabilities::server_capabilities;
 use crate::requests::syntax_tree::{SyntaxTreePayload, SYNTAX_TREE_REQUEST};
 use crate::session::Session;
-use crate::utils::into_lsp_error;
+use crate::utils::{into_lsp_error, panic_to_lsp_error};
 use crate::{handlers, requests};
 use futures::future::ready;
 use rome_service::{workspace, Workspace};
-use std::sync::Arc;
 use tokio::io::{AsyncRead, AsyncWrite};
 use tokio::sync::Notify;
 use tower_lsp::jsonrpc::Result as LspResult;
@@ -177,13 +178,14 @@ macro_rules! workspace_method {
         $builder = $builder.custom_method(
             concat!("rome/", stringify!($method)),
             |server: &LSPServer, params| {
-                ready(
-                    server
-                        .session
-                        .workspace
-                        .$method(params)
-                        .map_err(into_lsp_error),
-                )
+                let workspace = &server.session.workspace;
+                let result = catch_unwind(move || workspace.$method(params));
+
+                ready(match result {
+                    Ok(Ok(result)) => Ok(result),
+                    Ok(Err(err)) => Err(into_lsp_error(err)),
+                    Err(err) => Err(panic_to_lsp_error(err)),
+                })
             },
         );
     };

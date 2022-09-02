@@ -3,50 +3,27 @@ use std::env;
 use rome_lsp::ServerFactory;
 use rome_service::workspace::WorkspaceClient;
 use tokio::runtime::Runtime;
-use tracing::{debug_span, Instrument};
-use tracing_subscriber::{prelude::*, registry, EnvFilter, Layer};
+use tracing::{debug_span, metadata::LevelFilter, Instrument, Metadata};
+use tracing_subscriber::{
+    layer::{Context, Filter},
+    prelude::*,
+    registry, Layer,
+};
 use tracing_tree::HierarchicalLayer;
 
 use crate::{
     open_transport,
-    service::{ensure_daemon, print_socket, run_daemon},
-    CliSession, Termination,
+    service::{self, ensure_daemon, run_daemon},
+    Termination,
 };
 
-/// Handler for the "daemon" command of the Rome CLI
-pub(crate) fn daemon(mut session: CliSession) -> Result<(), Termination> {
-    let subcommand = session
-        .args
-        .subcommand()
-        .map_err(|source| Termination::ParseError {
-            argument: "daemon <command>",
-            source,
-        })?;
-
-    match subcommand.as_deref() {
-        Some("start") => start_server(),
-        Some("stop") => stop_server(),
-
-        // Internal private commands
-        Some("__run_server") => run_server_session(),
-        Some("__print_socket") => print_server_socket(),
-
-        // Print the general help if no subcommand was specified / the subcommand is `help`
-        None | Some("help") => crate::commands::help::help(session, Some("daemon")),
-
-        Some(cmd) => Err(Termination::UnknownCommand {
-            command: format!("daemon {cmd}"),
-        }),
-    }
-}
-
-fn start_server() -> Result<(), Termination> {
+pub(crate) fn start() -> Result<(), Termination> {
     let rt = Runtime::new()?;
     rt.block_on(ensure_daemon())?;
     Ok(())
 }
 
-fn stop_server() -> Result<(), Termination> {
+pub(crate) fn stop() -> Result<(), Termination> {
     let rt = Runtime::new()?;
 
     if let Some(transport) = open_transport(rt)? {
@@ -58,7 +35,7 @@ fn stop_server() -> Result<(), Termination> {
     Ok(())
 }
 
-fn run_server_session() -> Result<(), Termination> {
+pub(crate) fn run_server() -> Result<(), Termination> {
     setup_tracing_subscriber();
 
     let rt = Runtime::new()?;
@@ -70,7 +47,7 @@ fn run_server_session() -> Result<(), Termination> {
         tokio::select! {
             res = run_daemon(factory).instrument(span) => {
                 match res {
-                    Ok(_) => unreachable!(),
+                    Ok(never) => match never {},
                     Err(err) => Err(err.into()),
                 }
             }
@@ -82,9 +59,9 @@ fn run_server_session() -> Result<(), Termination> {
     })
 }
 
-fn print_server_socket() -> Result<(), Termination> {
+pub(crate) fn print_socket() -> Result<(), Termination> {
     let rt = Runtime::new()?;
-    rt.block_on(print_socket())?;
+    rt.block_on(service::print_socket())?;
     Ok(())
 }
 
@@ -95,11 +72,6 @@ fn print_server_socket() -> Result<(), Termination> {
 /// `rome-logs/server.log.yyyy-MM-dd-HH` files inside the system temporary
 /// directory)
 fn setup_tracing_subscriber() {
-    /// This filter enables:
-    /// - All spans and events at level info or higher
-    /// - All spans and events in the `rome_lsp` and `rome_js_parser` crates
-    const LOGGING_FILTER: &str = "info,rome_lsp=trace,rome_js_parser=trace";
-
     let logs_dir = env::temp_dir().join("rome-logs");
     let file_appender = tracing_appender::rolling::hourly(logs_dir, "server.log");
 
@@ -112,7 +84,28 @@ fn setup_tracing_subscriber() {
                 .with_targets(true)
                 .with_ansi(false)
                 .with_writer(file_appender)
-                .with_filter(EnvFilter::new(LOGGING_FILTER)),
+                .with_filter(LoggingFilter),
         )
         .init();
+}
+
+/// Tracing filter enabling:
+/// - All spans and events at level info or higher
+/// - All spans and events at level debug in crates whose name starts with `rome`
+struct LoggingFilter;
+
+impl<S> Filter<S> for LoggingFilter {
+    fn enabled(&self, meta: &Metadata<'_>, _cx: &Context<'_, S>) -> bool {
+        let filter = if meta.target().starts_with("rome") {
+            LevelFilter::DEBUG
+        } else {
+            LevelFilter::INFO
+        };
+
+        meta.level() <= &filter
+    }
+
+    fn max_level_hint(&self) -> Option<LevelFilter> {
+        Some(LevelFilter::DEBUG)
+    }
 }

@@ -14,6 +14,7 @@ use tokio::{
     net::windows::named_pipe::{ClientOptions, NamedPipeClient, NamedPipeServer, ServerOptions},
     time,
 };
+use tracing::Instrument;
 
 /// Name of the global named pipe used to communicate with the server daemon
 const PIPE_NAME: &str = r"\\.\pipe\rome-service";
@@ -46,7 +47,6 @@ fn spawn_daemon() -> io::Result<()> {
     let binary = env::current_exe()?;
 
     let mut cmd = Command::new(binary);
-    cmd.arg("daemon");
     cmd.arg("__run_server");
 
     cmd.creation_flags(CREATE_NEW_PROCESS_GROUP);
@@ -103,7 +103,8 @@ pub(crate) async fn run_daemon(factory: ServerFactory) -> io::Result<Infallible>
         swap(&mut prev_server, &mut next_server);
 
         let connection = factory.create();
-        tokio::spawn(run_server(connection, next_server));
+        let span = tracing::trace_span!("run_server");
+        tokio::spawn(run_server(connection, next_server).instrument(span.or_current()));
     }
 }
 

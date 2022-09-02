@@ -198,6 +198,14 @@ impl Server {
         )
         .await
     }
+
+    /// Basic implementation of the `rome/shutdown` request for tests
+    async fn rome_shutdown(&mut self) -> Result<()> {
+        self.request::<_, ()>("rome/shutdown", "_rome_shutdown", ())
+            .await?
+            .context("rome/shutdown returned None")?;
+        Ok(())
+    }
 }
 
 /// Basic handler for requests and notifications coming from the server for tests
@@ -518,6 +526,30 @@ async fn format_with_syntax_errors() -> Result<()> {
     server.close_document().await?;
 
     server.shutdown().await?;
+    reader.abort();
+
+    Ok(())
+}
+
+#[tokio::test]
+async fn server_shutdown() -> Result<()> {
+    let factory = ServerFactory::default();
+    let (service, client) = factory.create().into_inner();
+    let (stream, sink) = client.split();
+    let mut server = Server::new(service);
+
+    let reader = tokio::spawn(client_handler(stream, sink));
+
+    server.initialize().await?;
+    server.initialized().await?;
+
+    let cancellation = factory.cancellation();
+    let cancellation = cancellation.notified();
+
+    server.rome_shutdown().await?;
+
+    cancellation.await;
+
     reader.abort();
 
     Ok(())

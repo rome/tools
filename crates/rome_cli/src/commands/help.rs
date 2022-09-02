@@ -19,6 +19,7 @@ const MAIN: Markup = markup! {
 
 "<Emphasis>"OPTIONS:"</Emphasis>"
     "<Dim>"--no-colors"</Dim>"      Disable the formatting of markup (print everything as plain text)
+    "<Dim>"--use-server"</Dim>"     Connect to a running instance of the Rome daemon server
 "
 };
 
@@ -79,15 +80,18 @@ const INIT: Markup = markup! {
 
 };
 
-const DAEMON: Markup = markup! {
-"Rome Daemon: manages the Rome daemon server process
+const START: Markup = markup! {
+"Rome start: Start the Rome daemon server process
 
 "<Emphasis>"USAGE:"</Emphasis>"
-    rome daemon [SUBCOMMAND]
+    rome start"
+};
 
-"<Emphasis>"SUBCOMMANDS:"</Emphasis>"
-    - "<Emphasis>"start"</Emphasis>"
-    - "<Emphasis>"stop"</Emphasis>
+const STOP: Markup = markup! {
+"Rome stop: Stop the Rome daemon server process
+
+"<Emphasis>"USAGE:"</Emphasis>"
+    rome stop"
 };
 
 pub(crate) fn help(mut session: CliSession, command: Option<&str>) -> Result<(), Termination> {
@@ -112,8 +116,12 @@ pub(crate) fn help(mut session: CliSession, command: Option<&str>) -> Result<(),
             session.app.console.log(INIT);
             Ok(())
         }
-        Some("daemon") => {
-            session.app.console.log(DAEMON);
+        Some("start") => {
+            session.app.console.log(START);
+            Ok(())
+        }
+        Some("stop") => {
+            session.app.console.log(STOP);
             Ok(())
         }
 

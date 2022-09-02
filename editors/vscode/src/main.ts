@@ -153,7 +153,7 @@ async function fileExists(path: Uri) {
 
 function getSocket(command: string): Promise<string> {
 	return new Promise((resolve, reject) => {
-		const process = spawn(command, ["daemon", "__print_socket"], {
+		const process = spawn(command, ["__print_socket"], {
 			stdio: "pipe",
 		});
 

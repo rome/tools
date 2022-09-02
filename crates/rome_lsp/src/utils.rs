@@ -1,3 +1,4 @@
+use std::any::Any;
 use std::collections::HashMap;
 use std::fmt::{Debug, Display};
 
@@ -199,5 +200,25 @@ pub(crate) fn into_lsp_error(msg: impl Display + Debug) -> LspError {
     error!("Error: {}", msg);
     error.message = msg.to_string();
     error.data = Some(format!("{msg:?}").into());
+    error
+}
+
+pub(crate) fn panic_to_lsp_error(err: Box<dyn Any + Send>) -> LspError {
+    let mut error = LspError::internal_error();
+
+    match err.downcast::<String>() {
+        Ok(msg) => {
+            error.message = *msg;
+        }
+        Err(err) => match err.downcast::<&str>() {
+            Ok(msg) => {
+                error.message = msg.to_string();
+            }
+            Err(_) => {
+                error.message = String::from("Rome encountered an unknown error");
+            }
+        },
+    }
+
     error
 }

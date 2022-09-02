@@ -13,6 +13,7 @@ use tokio::{
     process::{Child, Command},
     time,
 };
+use tracing::Instrument;
 
 /// Returns the filesystem path of the global socket used to communicate with
 /// the server daemon
@@ -34,7 +35,6 @@ fn spawn_daemon() -> io::Result<Child> {
     let binary = env::current_exe()?;
 
     let mut cmd = Command::new(binary);
-    cmd.arg("daemon");
     cmd.arg("__run_server");
 
     // Create a new session for the process and make it the leader, this will
@@ -79,7 +79,7 @@ pub(crate) async fn open_socket() -> io::Result<Option<UnixStream>> {
 }
 
 /// Ensure the server daemon is running and ready to receive connections
-pub(crate) async fn ensure_daemon() -> io::Result<()>  {
+pub(crate) async fn ensure_daemon() -> io::Result<()> {
     let mut current_child: Option<Child> = None;
     let mut last_error = None;
 
@@ -159,7 +159,8 @@ pub(crate) async fn run_daemon(factory: ServerFactory) -> io::Result<Infallible>
     loop {
         let (stream, _) = listener.accept().await?;
         let connection = factory.create();
-        tokio::spawn(run_server(connection, stream));
+        let span = tracing::trace_span!("run_server");
+        tokio::spawn(run_server(connection, stream).instrument(span.or_current()));
     }
 }
 

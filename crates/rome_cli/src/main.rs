@@ -15,14 +15,18 @@ static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 fn main() -> Result<(), Termination> {
     setup_panic_handler();
 
-    let args = Arguments::from_env();
+    let mut args = Arguments::from_env();
 
-    // Try to open a connection to an existing Rome server socket, or create an
-    // in-process Workspace server instance if no daemon process is found
-    let runtime = Runtime::new()?;
-    let workspace = match open_transport(runtime)? {
-        Some(transport) => workspace::client(transport)?,
-        None => workspace::server(),
+    // If the `--use-server` CLI flag is set, try to open a connection to an
+    // existing Rome server socket
+    let workspace = if args.contains("--use-server") {
+        let runtime = Runtime::new()?;
+        match open_transport(runtime)? {
+            Some(transport) => workspace::client(transport)?,
+            None => return Err(Termination::ServerNotRunning),
+        }
+    } else {
+        workspace::server()
     };
 
     CliSession::new(&*workspace, args).run()
