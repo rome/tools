@@ -17,7 +17,7 @@ impl FormatNodeRule<TsConditionalType> for FormatTsConditionalType {
         node: &TsConditionalType,
         formatter: &mut JsFormatter,
     ) -> FormatResult<()> {
-        JsAnyConditional::from(node.clone()).fmt(formatter)
+        JsAnyConditional::from(node.clone()).format().fmt(formatter)
     }
 
     fn needs_parentheses(&self, item: &TsConditionalType) -> bool {

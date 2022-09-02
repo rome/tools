@@ -23,7 +23,7 @@ pub(crate) use assignment_like::{
 pub(crate) use binary_like_expression::{
     needs_binary_like_parentheses, JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression,
 };
-pub(crate) use conditional::JsAnyConditional;
+pub(crate) use conditional::{ConditionalJsxChain, JsAnyConditional};
 pub(crate) use member_chain::get_member_chain;
 pub(crate) use object_like::JsObjectLike;
 pub(crate) use object_pattern_like::JsObjectPatternLike;

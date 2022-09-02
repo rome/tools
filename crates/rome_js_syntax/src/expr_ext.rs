@@ -4,13 +4,31 @@ use crate::{
     JsAnyExpression, JsAnyLiteralExpression, JsArrayExpression, JsArrayHole,
     JsAssignmentExpression, JsBinaryExpression, JsCallExpression, JsComputedMemberExpression,
     JsLiteralMemberName, JsLogicalExpression, JsNumberLiteralExpression, JsObjectExpression,
-    JsRegexLiteralExpression, JsStaticMemberExpression, JsStringLiteralExpression, JsSyntaxKind,
-    JsSyntaxToken, JsTemplate, JsUnaryExpression, OperatorPrecedence, T,
+    JsReferenceIdentifier, JsRegexLiteralExpression, JsStaticMemberExpression,
+    JsStringLiteralExpression, JsSyntaxKind, JsSyntaxToken, JsTemplate, JsUnaryExpression,
+    OperatorPrecedence, T,
 };
 use crate::{JsPreUpdateExpression, JsSyntaxKind::*};
 use rome_rowan::{
     AstNode, AstSeparatedList, NodeOrToken, SyntaxNodeText, SyntaxResult, TextRange, TextSize,
 };
+
+impl JsReferenceIdentifier {
+    /// Returns `true` if this identifier refers to the `undefined` symbol.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_factory::make::{js_reference_identifier, ident};
+    ///
+    /// assert!(js_reference_identifier(ident("undefined")).is_undefined());
+    /// assert!(!js_reference_identifier(ident("x")).is_undefined());
+    /// ```
+    pub fn is_undefined(&self) -> bool {
+        self.value_token()
+            .map_or(false, |name| name.text_trimmed() == "undefined")
+    }
+}
 
 impl JsLiteralMemberName {
     /// Returns the name of the member as a syntax text

@@ -108,48 +108,7 @@ a
 ```diff
 --- Prettier
 +++ Rome
-@@ -12,24 +12,22 @@
-   : value4;
- 
- const StorybookLoader = ({ match }) =>
--  match.params.storyId === "button" ? (
--    <ButtonStorybook />
--  ) : match.params.storyId === "color" ? (
--    <ColorBook />
--  ) : match.params.storyId === "typography" ? (
--    <TypographyBook />
--  ) : match.params.storyId === "loading" ? (
--    <LoaderStorybook />
--  ) : match.params.storyId === "deal-list" ? (
--    <DealListStory />
--  ) : (
--    <Message>
--      <Title>{"Missing story book"}</Title>
--      <Content>
--        <BackButton />
--      </Content>
--    </Message>
--  );
-+  match.params.storyId === "button"
-+    ? <ButtonStorybook />
-+    : match.params.storyId === "color"
-+    ? <ColorBook />
-+    : match.params.storyId === "typography"
-+    ? <TypographyBook />
-+    : match.params.storyId === "loading"
-+    ? <LoaderStorybook />
-+    : match.params.storyId === "deal-list"
-+    ? <DealListStory />
-+    : <Message>
-+        <Title>{"Missing story book"}</Title>
-+        <Content>
-+          <BackButton />
-+        </Content>
-+      </Message>;
- 
- const message =
-   i % 3 === 0 && i % 5 === 0
-@@ -60,7 +58,8 @@
+@@ -60,7 +60,8 @@
      ? 3 //'There was an issue with your CVC number'
      : true //state == 'invalid_expiry'
      ? 4 //'Expiry must be sometime in the past.'
@@ -178,22 +137,24 @@ const value = condition1
   : value4;
 
 const StorybookLoader = ({ match }) =>
-  match.params.storyId === "button"
-    ? <ButtonStorybook />
-    : match.params.storyId === "color"
-    ? <ColorBook />
-    : match.params.storyId === "typography"
-    ? <TypographyBook />
-    : match.params.storyId === "loading"
-    ? <LoaderStorybook />
-    : match.params.storyId === "deal-list"
-    ? <DealListStory />
-    : <Message>
-        <Title>{"Missing story book"}</Title>
-        <Content>
-          <BackButton />
-        </Content>
-      </Message>;
+  match.params.storyId === "button" ? (
+    <ButtonStorybook />
+  ) : match.params.storyId === "color" ? (
+    <ColorBook />
+  ) : match.params.storyId === "typography" ? (
+    <TypographyBook />
+  ) : match.params.storyId === "loading" ? (
+    <LoaderStorybook />
+  ) : match.params.storyId === "deal-list" ? (
+    <DealListStory />
+  ) : (
+    <Message>
+      <Title>{"Missing story book"}</Title>
+      <Content>
+        <BackButton />
+      </Content>
+    </Message>
+  );
 
 const message =
   i % 3 === 0 && i % 5 === 0

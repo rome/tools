@@ -1,5 +1,6 @@
 use crate::prelude::*;
-use crate::utils::JsAnyConditional;
+use crate::utils::{ConditionalJsxChain, JsAnyConditional};
+use rome_formatter::FormatRuleWithOptions;
 
 use crate::parentheses::{
     is_binary_like_left_or_right, is_conditional_test, is_spread,
@@ -8,7 +9,18 @@ use crate::parentheses::{
 use rome_js_syntax::{JsConditionalExpression, JsSyntaxKind, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatJsConditionalExpression;
+pub struct FormatJsConditionalExpression {
+    jsx_chain: ConditionalJsxChain,
+}
+
+impl FormatRuleWithOptions<JsConditionalExpression> for FormatJsConditionalExpression {
+    type Options = ConditionalJsxChain;
+
+    fn with_options(mut self, options: Self::Options) -> Self {
+        self.jsx_chain = options;
+        self
+    }
+}
 
 impl FormatNodeRule<JsConditionalExpression> for FormatJsConditionalExpression {
     fn fmt_fields(
@@ -16,7 +28,10 @@ impl FormatNodeRule<JsConditionalExpression> for FormatJsConditionalExpression {
         node: &JsConditionalExpression,
         formatter: &mut JsFormatter,
     ) -> FormatResult<()> {
-        JsAnyConditional::from(node.clone()).fmt(formatter)
+        JsAnyConditional::from(node.clone())
+            .format()
+            .with_options(self.jsx_chain)
+            .fmt(formatter)
     }
 
     fn needs_parentheses(&self, item: &JsConditionalExpression) -> bool {
