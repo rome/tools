@@ -141,7 +141,6 @@ impl FormatRule<JsAnyConditional> for FormatJsAnyConditionalRule {
                 _ => {
                     // Add an extra level of indent to nested consequences.
                     if layout.is_nested_consequent() {
-                        // if f.context().indent_style().is_tab() {
                         // This may look silly but the `dedent` is to remove the outer `align` added by the parent's formatting of the consequent.
                         // The `indent` is necessary to indent the content by one level with a tab.
                         // Adding an `indent` without the `dedent` would result in the `outer` align being converted
