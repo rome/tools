@@ -2,8 +2,9 @@ use crate::jsx::attribute::expression_attribute_value::should_inline_jsx_express
 use crate::prelude::*;
 use crate::prelude::{format_args, write};
 
+use crate::utils::JsAnyBinaryLikeExpression;
 use rome_formatter::{group, FormatResult};
-use rome_js_syntax::{JsxExpressionChild, JsxExpressionChildFields};
+use rome_js_syntax::{JsAnyExpression, JsxExpressionChild, JsxExpressionChildFields};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsxExpressionChild;
@@ -17,7 +18,13 @@ impl FormatNodeRule<JsxExpressionChild> for FormatJsxExpressionChild {
         } = node.as_fields();
 
         let should_inline = expression.as_ref().map_or(true, |expression| {
-            should_inline_jsx_expression(expression, node.syntax().parent())
+            if matches!(expression, JsAnyExpression::JsConditionalExpression(_))
+                || JsAnyBinaryLikeExpression::can_cast(expression.syntax().kind())
+            {
+                true
+            } else {
+                should_inline_jsx_expression(expression)
+            }
         });
 
         if should_inline {

@@ -163,6 +163,15 @@ enum ElementLayout {
     /// ```
     Template(JsxExpressionChild),
 
-    /// Default layout used if there's no special formatting for the children
+    /// Default layout used for all elements that have children and [ElementLayout::Template] does not apply.
+    ///
+    /// ```javascript
+    ///<Element2>
+    ///   Some more content
+    ///   <Sub />
+    ///   <Sub />
+    ///   <Sub />
+    /// </Element2>;
+    /// ```
     Default,
 }

@@ -1,10 +1,8 @@
 use crate::prelude::*;
 
-use crate::utils::JsAnyBinaryLikeExpression;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
-    JsAnyExpression, JsSyntaxNode, JsxAnyTag, JsxChildList, JsxExpressionAttributeValue,
-    JsxExpressionAttributeValueFields,
+    JsAnyExpression, JsxAnyTag, JsxExpressionAttributeValue, JsxExpressionAttributeValueFields,
 };
 
 #[derive(Debug, Clone, Default)]
@@ -24,7 +22,7 @@ impl FormatNodeRule<JsxExpressionAttributeValue> for FormatJsxExpressionAttribut
 
         let expression = expression?;
 
-        let should_inline = should_inline_jsx_expression(&expression, node.syntax().parent());
+        let should_inline = should_inline_jsx_expression(&expression);
 
         if should_inline {
             write!(
@@ -76,10 +74,7 @@ impl FormatNodeRule<JsxExpressionAttributeValue> for FormatJsxExpressionAttribut
 ///       ]
 ///     } />
 /// ```
-pub(crate) fn should_inline_jsx_expression(
-    expression: &JsAnyExpression,
-    parent: Option<JsSyntaxNode>,
-) -> bool {
+pub(crate) fn should_inline_jsx_expression(expression: &JsAnyExpression) -> bool {
     use JsAnyExpression::*;
 
     if expression.syntax().has_comments_direct() {
@@ -99,22 +94,10 @@ pub(crate) fn should_inline_jsx_expression(
         JsAwaitExpression(await_expression) => match await_expression.argument() {
             Ok(JsxTagExpression(argument)) => {
                 matches!(argument.tag(), Ok(JsxAnyTag::JsxElement(_)))
-                    && should_inline_jsx_expression(
-                        &argument.into(),
-                        Some(await_expression.syntax().clone()),
-                    )
+                    && should_inline_jsx_expression(&argument.into())
             }
             _ => false,
         },
-        _ => {
-            // Don't indent conditional expressions only inside of children.
-            if matches!(expression, JsConditionalExpression(_))
-                || JsAnyBinaryLikeExpression::can_cast(expression.syntax().kind())
-            {
-                parent.map_or(false, |parent| JsxChildList::can_cast(parent.kind()))
-            } else {
-                false
-            }
-        }
+        _ => false,
     }
 }

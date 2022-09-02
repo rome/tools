@@ -494,6 +494,9 @@ impl<'a> Printer<'a> {
                     break;
                 }
                 (None, Some(_)) => {
+                    // Unreachable for iterators implementing [FusedIterator] which slice.iter implements.
+                    // Reaching this means that the first `iter.next()` returned `None` but calling `iter.next()`
+                    // again returns `Some`
                     unreachable!()
                 }
             }
