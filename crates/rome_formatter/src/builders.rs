@@ -2212,60 +2212,6 @@ impl<'a, 'buf, Context> FillBuilder<'a, 'buf, Context> {
         self
     }
 
-    /// Adds an iterator of entries to the fill output, flattening any [FormatElement::List]
-    /// entries by adding the list's elements to the fill output.
-    ///
-    /// ## Warning
-    ///
-    /// The usage of this method is highly discouraged and it's better to use
-    /// other APIs on ways: for example progressively format the items based on their type.
-    pub fn flatten_entries<F, I>(
-        &mut self,
-        separator: &dyn Format<Context>,
-        entries: I,
-    ) -> &mut Self
-    where
-        F: Format<Context>,
-        I: IntoIterator<Item = F>,
-    {
-        for entry in entries {
-            self.flatten_entry(separator, &entry);
-        }
-
-        self
-    }
-
-    /// Adds a new entry to the fill output. If the entry is a [FormatElement::List],
-    /// then adds the list's entries to the fill output instead of the list itself.
-    fn flatten_entry(
-        &mut self,
-        separator: &dyn Format<Context>,
-        entry: &dyn Format<Context>,
-    ) -> &mut Self {
-        self.result = self.result.and_then(|_| {
-            let mut buffer = VecBuffer::new(self.fmt.state_mut());
-            write!(buffer, [entry])?;
-
-            let entries = buffer.into_vec();
-            self.items.reserve((entries.len() * 2).saturating_sub(1));
-
-            let mut buffer = VecBuffer::new(self.fmt.state_mut());
-            for item in entries.into_iter() {
-                if !self.items.is_empty() {
-                    write!(buffer, [separator])?;
-
-                    self.items.push(buffer.take_element());
-                }
-
-                self.items.push(item);
-            }
-
-            Ok(())
-        });
-
-        self
-    }
-
     /// Adds a new entry to the fill output. The `separator` isn't written if this is the first element in the list.
     pub fn entry(
         &mut self,

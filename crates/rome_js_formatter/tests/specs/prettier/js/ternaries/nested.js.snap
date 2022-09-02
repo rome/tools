@@ -140,12 +140,12 @@ a
 +    ? <LoaderStorybook />
 +    : match.params.storyId === "deal-list"
 +    ? <DealListStory />
-+    : (
-+        <Message>
-+          <Title>{"Missing story book"}</Title>
-+          <Content><BackButton /></Content>
-+        </Message>
-+      );
++    : <Message>
++        <Title>{"Missing story book"}</Title>
++        <Content>
++          <BackButton />
++        </Content>
++      </Message>;
  
  const message =
    i % 3 === 0 && i % 5 === 0
@@ -188,12 +188,12 @@ const StorybookLoader = ({ match }) =>
     ? <LoaderStorybook />
     : match.params.storyId === "deal-list"
     ? <DealListStory />
-    : (
-        <Message>
-          <Title>{"Missing story book"}</Title>
-          <Content><BackButton /></Content>
-        </Message>
-      );
+    : <Message>
+        <Title>{"Missing story book"}</Title>
+        <Content>
+          <BackButton />
+        </Content>
+      </Message>;
 
 const message =
   i % 3 === 0 && i % 5 === 0

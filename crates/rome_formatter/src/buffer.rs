@@ -164,10 +164,11 @@ pub struct VecBuffer<'a, Context> {
 
 impl<'a, Context> VecBuffer<'a, Context> {
     pub fn new(state: &'a mut FormatState<Context>) -> Self {
-        Self {
-            state,
-            elements: vec![],
-        }
+        Self::new_with_vec(state, Vec::new())
+    }
+
+    pub fn new_with_vec(state: &'a mut FormatState<Context>, elements: Vec<FormatElement>) -> Self {
+        Self { state, elements }
     }
 
     /// Creates a buffer with the specified capacity

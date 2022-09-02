@@ -84,7 +84,18 @@ foo({}
 ```diff
 --- Prettier
 +++ Rome
-@@ -64,5 +64,5 @@
+@@ -39,7 +39,9 @@
+   .takeUntil(exit);
+ 
+ // Comments disappear inside of JSX
+-<div>{/* Some comment */}</div>;
++<div>
++  {/* Some comment */}
++</div>;
+ 
+ // Comments in JSX tag are placed in a non optimal way
+ <div
+@@ -64,5 +66,5 @@
  // The closing paren is printed on the same line as the comment
  foo(
    {},
@@ -137,7 +148,9 @@ Observable.of(process)
   .takeUntil(exit);
 
 // Comments disappear inside of JSX
-<div>{/* Some comment */}</div>;
+<div>
+  {/* Some comment */}
+</div>;
 
 // Comments in JSX tag are placed in a non optimal way
 <div

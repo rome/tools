@@ -3,6 +3,49 @@ source: crates/rome_js_formatter/tests/spec_test.rs
 expression: element.jsx
 ---
 # Input
+// Single string attribute
+<div tooltip="A very long tooltip text that would otherwise make the attribute break onto the same line but it is not because of the single string layout"></div>;
+
+// Not single string because of the new line
+a = <div tooltip="A very long tooltip text that would otherwise make the attribute break
+					onto the same line but it is not because of the single string layout"></div>;
+
+// Inline
+a = <ASuperLongComponentNameThatWouldBreakButDoesntSinceTheComponent></ASuperLongComponentNameThatWouldBreakButDoesntSinceTheComponent>;
+
+// IndentAttributes
+a = <ASuperLongComponentNameThatWouldBreakButDoesntSinceTheComponent a b  c d></ASuperLongComponentNameThatWouldBreakButDoesntSinceTheComponent>;
+
+// Empty
+a = <div></div>;
+<>
+
+
+</>;
+
+// Not empty
+a = <div> </div>;
+
+// Template
+a = <div>{`A Long Tempalte String That uses ${5 + 4} that will eventually break across multiple lines ${40 / 3 * 45}`}</div>;
+
+// Meaningful text after self closing element adds a hard line break
+a = <div><pre className="h-screen overflow-y-scroll" />adefg</div>;
+
+// Meaningful text after a non-self closing element should add a soft line break
+b = a = <div><pre className="h-screen overflow-y-scroll">a</pre>abcd</div>;
+
+// A word right before a self-closing element inserts a hard line break
+a = <div>ab<br/></div>;
+
+// A Word not right before a self-closing element inserts a soft line break.
+a = <div>ab<pre>text</pre></div>;
+
+// whitespaces
+c = <div>a{' '}{' '}{' '}{' '}{' '}{' '}{' '}{' '}b{' '}{' '}{' '}{' '}{' '}{' '}</div>;
+
+c2 = <div>a{' '}{' '}{' '}{' '}{' '}{' '}{' '}{' '}<div></div>content{' '}{' '}{' '}{' '}{' '}{' '}</div>;
+
 <div><div></div><a> jumps over the lazy dog </a></div>;
 
 const Essay = () => <div>The films of Wong Kar-Wai exemplify the synthesis of French New Wave cinema—specifically the unrelenting
@@ -133,14 +176,14 @@ function MapoTofuRecipe() {
 let component = <div> La Haine dir. Mathieu Kassovitz </div>;
 
 let component = (
- <div> Uncle Boonmee Who Can Recall His Past Lives dir. Apichatpong Weerasethakul </div>
+	<div> Uncle Boonmee Who Can Recall His Past Lives dir. Apichatpong Weerasethakul </div>
 );
 
 (<div>Badlands</div>).property;
 
- let bar = <div>
-   {foo(() => <div> the quick brown fox jumps over the lazy dog and then jumps over the lazy cat and then over the lazy fish. </div>)}
- </div>;
+let bar = <div>
+	{foo(() => <div> the quick brown fox jumps over the lazy dog and then jumps over the lazy cat and then over the lazy fish. </div>)}
+</div>;
 
 <Component // here is a comment
 	className={bar} index={0} name="Component" // here is another comment
@@ -156,6 +199,15 @@ let a = <a>{  " "
 	/* comment */ }</a>;
 let a = <a>{ /* comment */ " " }</a>;
 
+// in array
+const breadcrumbItems = [
+	(
+		<Breadcrumb.Item key="home">
+			<Link to="/">Home</Link>
+		</Breadcrumb.Item>
+	),
+].concat(extraBreadcrumbItems);
+
 =============================
 # Outputs
 ## Output 1
@@ -165,11 +217,96 @@ Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
 -----
-<div><div></div><a> jumps over the lazy dog </a></div>;
+// Single string attribute
+<div tooltip="A very long tooltip text that would otherwise make the attribute break onto the same line but it is not because of the single string layout"></div>;
+
+// Not single string because of the new line
+a = (
+	<div
+		tooltip="A very long tooltip text that would otherwise make the attribute break
+					onto the same line but it is not because of the single string layout"
+	></div>
+);
+
+// Inline
+a = (
+	<ASuperLongComponentNameThatWouldBreakButDoesntSinceTheComponent></ASuperLongComponentNameThatWouldBreakButDoesntSinceTheComponent>
+);
+
+// IndentAttributes
+a = (
+	<ASuperLongComponentNameThatWouldBreakButDoesntSinceTheComponent
+		a
+		b
+		c
+		d
+	></ASuperLongComponentNameThatWouldBreakButDoesntSinceTheComponent>
+);
+
+// Empty
+a = <div></div>;
+<></>;
+
+// Not empty
+a = <div> </div>;
+
+// Template
+a = (
+	<div>{`A Long Tempalte String That uses ${
+		5 + 4
+	} that will eventually break across multiple lines ${(40 / 3) * 45}`}</div>
+);
+
+// Meaningful text after self closing element adds a hard line break
+a = (
+	<div>
+		<pre className="h-screen overflow-y-scroll" />
+		adefg
+	</div>
+);
+
+// Meaningful text after a non-self closing element should add a soft line break
+b = a = (
+	<div>
+		<pre className="h-screen overflow-y-scroll">a</pre>abcd
+	</div>
+);
+
+// A word right before a self-closing element inserts a hard line break
+a = (
+	<div>
+		ab
+		<br />
+	</div>
+);
+
+// A Word not right before a self-closing element inserts a soft line break.
+a = (
+	<div>
+		ab<pre>text</pre>
+	</div>
+);
+
+// whitespaces
+c = <div>a b </div>;
+
+c2 = (
+	<div>
+		a <div></div>content{" "}
+	</div>
+);
+
+<div>
+	<div></div>
+	<a> jumps over the lazy dog </a>
+</div>;
 
 const Essay = () => (
 	<div>
-		The films of Wong Kar-Wai exemplify the synthesis of French New Wave cinema—specifically the unrelenting experimental technique and fascination with American/western culture—with more conventional melodramatic, romantic narratives.
+		The films of Wong Kar-Wai exemplify the synthesis of French New Wave
+		cinema—specifically the unrelenting experimental technique and fascination
+		with American/western culture—with more conventional melodramatic, romantic
+		narratives.
 	</div>
 );
 
@@ -264,9 +401,7 @@ function Tabs() {
 				<pre className="h-screen overflow-y-scroll">{prettierOutput.ir}</pre>
 			</TabPanel>
 			<TabPanel>
-				<pre
-					className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs"
-				>
+				<pre className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs">
 					{errors}
 				</pre>
 			</TabPanel>
@@ -295,10 +430,14 @@ function LoginForm() {
 function MapoTofuRecipe() {
 	return (
 		<ul>
-			Mapo tofu recipe<li>2 packets soft or silken tofu</li>
-			<li>1 tablespoon minced garlic</li><li>1 tablespoon minced ginger </li>
-			<li>2 tablespoons doubanjiang</li><li>1 tablespoon douchi</li>
-			<li>1 tablespoon corn or potato starch</li><li>2 scallions or jiu cai</li>
+			Mapo tofu recipe
+			<li>2 packets soft or silken tofu</li>
+			<li>1 tablespoon minced garlic</li>
+			<li>1 tablespoon minced ginger </li>
+			<li>2 tablespoons doubanjiang</li>
+			<li>1 tablespoon douchi</li>
+			<li>1 tablespoon corn or potato starch</li>
+			<li>2 scallions or jiu cai</li>
 			<li>6 ounces of ground beef or pork</li>
 		</ul>
 	);
@@ -310,7 +449,8 @@ let component = <div> La Haine dir. Mathieu Kassovitz </div>;
 
 let component = (
 	<div>
-		Uncle Boonmee Who Can Recall His Past Lives dir. Apichatpong Weerasethakul
+		{" "}
+		Uncle Boonmee Who Can Recall His Past Lives dir. Apichatpong Weerasethakul{" "}
 	</div>
 );
 
@@ -321,7 +461,9 @@ let bar = (
 		{foo(
 			() => (
 				<div>
-					the quick brown fox jumps over the lazy dog and then jumps over the lazy cat and then over the lazy fish.
+					{" "}
+					the quick brown fox jumps over the lazy dog and then jumps over the
+					lazy cat and then over the lazy fish.{" "}
 				</div>
 			),
 		)}
@@ -342,19 +484,29 @@ let b = <a> </a>;
 let a = <a>{/* comment */ " " /* comment */}</a>;
 let a = (
 	<a>
-		{" "
+		{
+			" "
 		/* comment */}
 	</a>
 );
 let a = <a>{/* comment */ " "}</a>;
 
+// in array
+const breadcrumbItems = [
+	<Breadcrumb.Item key="home">
+		<Link to="/">Home</Link>
+	</Breadcrumb.Item>,
+].concat(extraBreadcrumbItems);
+
 
 ## Lines exceeding width of 80 characters
 
-    5: 		The films of Wong Kar-Wai exemplify the synthesis of French New Wave cinema—specifically the unrelenting experimental technique and fascination with American/western culture—with more conventional melodramatic, romantic narratives.
-   41: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-   62: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-   75: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-  101: 					className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs"
-  157: 					the quick brown fox jumps over the lazy dog and then jumps over the lazy cat and then over the lazy fish.
+    2: <div tooltip="A very long tooltip text that would otherwise make the attribute break onto the same line but it is not because of the single string layout"></div>;
+    7: 		tooltip="A very long tooltip text that would otherwise make the attribute break
+   14: 	<ASuperLongComponentNameThatWouldBreakButDoesntSinceTheComponent></ASuperLongComponentNameThatWouldBreakButDoesntSinceTheComponent>
+  126: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+  147: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+  160: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+  185: 				<pre className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs">
+  234: 		Uncle Boonmee Who Can Recall His Past Lives dir. Apichatpong Weerasethakul{" "}
 

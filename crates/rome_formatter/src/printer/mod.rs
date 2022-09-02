@@ -474,11 +474,30 @@ impl<'a> Printer<'a> {
                         current_fits = next_fits;
                     }
                 }
-                (Some(_), _) => {
-                    // Don't print a trailing separator
+                // Trailing separator
+                (Some(separator), _) => {
+                    let print_mode = if current_fits
+                        && fits_on_line(
+                            [separator],
+                            args.with_print_mode(PrintMode::Flat),
+                            &empty_rest,
+                            self,
+                        ) {
+                        PrintMode::Flat
+                    } else {
+                        PrintMode::Expanded
+                    };
+
+                    self.print_all(queue, &[separator], args.with_print_mode(print_mode));
                 }
-                (None, _) => {
+                (None, None) => {
                     break;
+                }
+                (None, Some(_)) => {
+                    // Unreachable for iterators implementing [FusedIterator] which slice.iter implements.
+                    // Reaching this means that the first `iter.next()` returned `None` but calling `iter.next()`
+                    // again returns `Some`
+                    unreachable!()
                 }
             }
         }

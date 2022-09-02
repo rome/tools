@@ -61,65 +61,8 @@ const Query: FunctionComponent<QueryProps> = ({
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,10 +1,6 @@
- const MyComponent: React.VoidFunctionComponent<MyComponentProps> = ({ x }) => {
-   const a = useA();
--  return (
--    <div>
--      x = {x}; a = {a}
--    </div>
--  );
-+  return <div>x = {x}; a = {a}</div>;
- };
- 
- const MyComponent2: React.VoidFunctionComponent<MyComponent2Props> = ({
-@@ -12,22 +8,14 @@
-   y,
- }) => {
-   const a = useA();
--  return (
--    <div>
--      x = {x}; y = {y}; a = {a}
--    </div>
--  );
-+  return <div>x = {x}; y = {y}; a = {a}</div>;
- };
- 
- const MyComponentWithLongName1: React.VoidFunctionComponent<
-   MyComponentWithLongNameProps
- > = ({ x, y }) => {
-   const a = useA();
--  return (
--    <div>
--      x = {x}; y = {y}; a = {a}
--    </div>
--  );
-+  return <div>x = {x}; y = {y}; a = {a}</div>;
- };
- 
- const MyComponentWithLongName2: React.VoidFunctionComponent<
-@@ -41,29 +29,23 @@
-   anotherPropWithLongName4,
- }) => {
-   const a = useA();
--  return (
--    <div>
--      x = {x}; y = {y}; a = {a}
--    </div>
--  );
-+  return <div>x = {x}; y = {y}; a = {a}</div>;
- };
- 
- const MyGenericComponent: React.VoidFunctionComponent<
-   MyGenericComponentProps<number>
- > = ({ x, y }) => {
-   const a = useA();
--  return (
--    <div>
--      x = {x}; y = {y}; a = {a}
--    </div>
--  );
-+  return <div>x = {x}; y = {y}; a = {a}</div>;
+@@ -59,11 +59,13 @@
+   );
  };
  
 -export const ExportToExcalidrawPlus: React.FC<{
@@ -144,7 +87,11 @@ const Query: FunctionComponent<QueryProps> = ({
 ```js
 const MyComponent: React.VoidFunctionComponent<MyComponentProps> = ({ x }) => {
   const a = useA();
-  return <div>x = {x}; a = {a}</div>;
+  return (
+    <div>
+      x = {x}; a = {a}
+    </div>
+  );
 };
 
 const MyComponent2: React.VoidFunctionComponent<MyComponent2Props> = ({
@@ -152,14 +99,22 @@ const MyComponent2: React.VoidFunctionComponent<MyComponent2Props> = ({
   y,
 }) => {
   const a = useA();
-  return <div>x = {x}; y = {y}; a = {a}</div>;
+  return (
+    <div>
+      x = {x}; y = {y}; a = {a}
+    </div>
+  );
 };
 
 const MyComponentWithLongName1: React.VoidFunctionComponent<
   MyComponentWithLongNameProps
 > = ({ x, y }) => {
   const a = useA();
-  return <div>x = {x}; y = {y}; a = {a}</div>;
+  return (
+    <div>
+      x = {x}; y = {y}; a = {a}
+    </div>
+  );
 };
 
 const MyComponentWithLongName2: React.VoidFunctionComponent<
@@ -173,14 +128,22 @@ const MyComponentWithLongName2: React.VoidFunctionComponent<
   anotherPropWithLongName4,
 }) => {
   const a = useA();
-  return <div>x = {x}; y = {y}; a = {a}</div>;
+  return (
+    <div>
+      x = {x}; y = {y}; a = {a}
+    </div>
+  );
 };
 
 const MyGenericComponent: React.VoidFunctionComponent<
   MyGenericComponentProps<number>
 > = ({ x, y }) => {
   const a = useA();
-  return <div>x = {x}; y = {y}; a = {a}</div>;
+  return (
+    <div>
+      x = {x}; y = {y}; a = {a}
+    </div>
+  );
 };
 
 export const ExportToExcalidrawPlus: React.FC<

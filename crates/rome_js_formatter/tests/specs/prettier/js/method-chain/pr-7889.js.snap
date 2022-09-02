@@ -24,14 +24,18 @@ const Profile2 = view.with({ name }).as((props) => (
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,11 +1,7 @@
+@@ -1,11 +1,15 @@
 -const Profile = view.with({ name: (state) => state.name }).as((props) => (
 -  <div>
 -    <h1>Hello, {props.name}</h1>
 -  </div>
 -));
 +const Profile = view.with({ name: (state) => state.name }).as(
-+  (props) => <div><h1>Hello, {props.name}</h1></div>,
++  (props) => (
++    <div>
++      <h1>Hello, {props.name}</h1>
++    </div>
++  ),
 +);
  
 -const Profile2 = view.with({ name }).as((props) => (
@@ -40,7 +44,11 @@ const Profile2 = view.with({ name }).as((props) => (
 -  </div>
 -));
 +const Profile2 = view.with({ name }).as(
-+  (props) => <div><h1>Hello, {props.name}</h1></div>,
++  (props) => (
++    <div>
++      <h1>Hello, {props.name}</h1>
++    </div>
++  ),
 +);
 ```
 
@@ -48,11 +56,19 @@ const Profile2 = view.with({ name }).as((props) => (
 
 ```js
 const Profile = view.with({ name: (state) => state.name }).as(
-  (props) => <div><h1>Hello, {props.name}</h1></div>,
+  (props) => (
+    <div>
+      <h1>Hello, {props.name}</h1>
+    </div>
+  ),
 );
 
 const Profile2 = view.with({ name }).as(
-  (props) => <div><h1>Hello, {props.name}</h1></div>,
+  (props) => (
+    <div>
+      <h1>Hello, {props.name}</h1>
+    </div>
+  ),
 );
 ```
 

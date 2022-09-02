@@ -38,7 +38,8 @@ impl PrintedTokens {
                     descendant_offset if descendant_offset < *offset => {
                         panic!("token has not been seen by the formatter: {descendant:#?}.\
                         \nUse `format_replaced` if you want to replace a token from the formatted output.\
-                        \nUse `format_removed` if you to remove a token from the formatted output")
+                        \nUse `format_removed` if you want to remove a token from the formatted output.\n\
+                        parent: {:#?}", descendant.parent())
                     }
                     descendant_offset if descendant_offset > *offset => {
                         panic!("tracked offset {offset:?} doesn't match any token of {root:#?}. Have you passed a token from another tree?");

@@ -94,57 +94,44 @@ margin: 0;
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,97 +1,85 @@
--<style jsx>{`
+@@ -1,27 +1,20 @@
+ <style jsx>{`
 -  /* a comment */
 -  div :global(.react-select) {
 -    color: red;
 -    display: none;
 -  }
--`}</style>;
-+<style jsx>
-+  {`
 +	/* a comment */
 +	div :global(.react-select) {
 +		color: red; display: none
 +	}
-+`}
-+</style>;
+ `}</style>;
  
  <div>
--  <style jsx>{`
+   <style jsx>{`
 -    /* a comment */
 -    div :global(.react-select) {
 -      color: red;
 -      display: none;
 -    }
 -  `}</style>
-+  <style jsx>
-+    {`
 +	/* a comment */
 +div :global(.react-select) {
 +color: red; display: none
-+}`}
-+  </style>
++}`}</style>
  </div>;
  
--<div>
+ <div>
 -  <style jsx>{`
 -    div {
 -      color: red;
 -    }
 -  `}</style>
--</div>;
-+<div><style jsx>{`div{color:red}`}</style></div>;
++  <style jsx>{`div{color:red}`}</style>
+ </div>;
  
  <div>
--  <style jsx>{`This is invalid css. 
-+  <style jsx>
-+    {`This is invalid css. 
-       Shouldn't fail.
--            Shouldn't be formatted.`}</style>
-+            Shouldn't be formatted.`}
-+  </style>
+@@ -31,67 +24,58 @@
  </div>;
  
  const header = css`
@@ -256,33 +243,29 @@ margin: 0;
 # Output
 
 ```js
-<style jsx>
-  {`
+<style jsx>{`
 	/* a comment */
 	div :global(.react-select) {
 		color: red; display: none
 	}
-`}
-</style>;
+`}</style>;
 
 <div>
-  <style jsx>
-    {`
+  <style jsx>{`
 	/* a comment */
 div :global(.react-select) {
 color: red; display: none
-}`}
-  </style>
+}`}</style>
 </div>;
 
-<div><style jsx>{`div{color:red}`}</style></div>;
+<div>
+  <style jsx>{`div{color:red}`}</style>
+</div>;
 
 <div>
-  <style jsx>
-    {`This is invalid css. 
+  <style jsx>{`This is invalid css. 
       Shouldn't fail.
-            Shouldn't be formatted.`}
-  </style>
+            Shouldn't be formatted.`}</style>
 </div>;
 
 const header = css`

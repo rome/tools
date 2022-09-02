@@ -49,7 +49,7 @@ const value = (bifornCringerMoshedPerplexSawder
 ```diff
 --- Prettier
 +++ Rome
-@@ -22,19 +22,6 @@
+@@ -22,19 +22,17 @@
    bifornCringerMoshedPerplexSawder
      ? askTrovenaBeenaDependsRowans
      : glimseGlyphsHazardNoopsTieTie
@@ -70,8 +70,19 @@ const value = (bifornCringerMoshedPerplexSawder
 -  </Element2>
 -);
 +)
-+  ? <Element><Sub /><Sub /><Sub /><Sub /><Sub /><Sub /></Element>
-+  : <Element2><Sub /><Sub /><Sub /></Element2>;
++  ? <Element>
++      <Sub />
++      <Sub />
++      <Sub />
++      <Sub />
++      <Sub />
++      <Sub />
++    </Element>
++  : <Element2>
++      <Sub />
++      <Sub />
++      <Sub />
++    </Element2>;
 ```
 
 # Output
@@ -102,8 +113,19 @@ const value = (
     ? askTrovenaBeenaDependsRowans
     : glimseGlyphsHazardNoopsTieTie
 )
-  ? <Element><Sub /><Sub /><Sub /><Sub /><Sub /><Sub /></Element>
-  : <Element2><Sub /><Sub /><Sub /></Element2>;
+  ? <Element>
+      <Sub />
+      <Sub />
+      <Sub />
+      <Sub />
+      <Sub />
+      <Sub />
+    </Element>
+  : <Element2>
+      <Sub />
+      <Sub />
+      <Sub />
+    </Element2>;
 ```
 
 
