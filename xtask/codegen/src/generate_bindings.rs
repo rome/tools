@@ -5,7 +5,8 @@ use rome_js_syntax::{
     JsAnyExportClause, JsAnyExpression, JsAnyFormalParameter, JsAnyImportClause,
     JsAnyLiteralExpression, JsAnyModuleItem, JsAnyName, JsAnyNamedImport,
     JsAnyNamedImportSpecifier, JsAnyObjectMember, JsAnyObjectMemberName, JsAnyParameter,
-    JsAnyStatement, TriviaPieceKind, TsAnyName, TsAnyReturnType, TsAnyTypeMember, TsType, T,
+    JsAnyStatement, SourceType, TriviaPieceKind, TsAnyName, TsAnyReturnType, TsAnyTypeMember,
+    TsType, T,
 };
 use rome_rowan::AstNode;
 use rome_service::workspace_types::{generate_type, methods, ModuleQueue};
@@ -393,7 +394,7 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
     )
     .build();
 
-    let formatted = format_node(JsFormatOptions::default(), module.syntax()).unwrap();
+    let formatted = format_node(JsFormatOptions::new(SourceType::ts()), module.syntax()).unwrap();
     let printed = formatted.print();
     let code = printed.into_code();
 

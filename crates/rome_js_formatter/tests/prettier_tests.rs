@@ -66,7 +66,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
     let has_errors = parsed.has_errors();
     let syntax = parsed.syntax();
 
-    let options = JsFormatOptions::default().with_indent_style(IndentStyle::Space(2));
+    let options = JsFormatOptions::new(source_type).with_indent_style(IndentStyle::Space(2));
 
     let result = match (range_start_index, range_end_index) {
         (Some(start), Some(end)) => {

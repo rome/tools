@@ -226,7 +226,7 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
         let root = parsed.syntax();
 
         // we ignore the error for now
-        let options = JsFormatOptions::default();
+        let options = JsFormatOptions::new(source_type);
         let formatted = format_node(options.clone(), &root).unwrap();
         let printed = formatted.print();
         let file_name = spec_input_file.file_name().unwrap().to_str().unwrap();
@@ -237,11 +237,11 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
                 text: printed.as_code(),
                 source_type,
                 file_name,
-                options,
+                options: options.clone(),
             });
         }
 
-        snapshot_content.add_output(printed, JsFormatOptions::default());
+        snapshot_content.add_output(printed, options);
 
         let test_directory = PathBuf::from(test_directory);
         let options_path = test_directory.join("options.json");
@@ -253,10 +253,9 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
                     serde_json::from_str(options_path.get_buffer_from_file().as_str()).unwrap();
 
                 for test_case in options.cases {
-                    let mut format_options: JsFormatOptions = test_case.into();
+                    let format_options: JsFormatOptions = test_case.into();
                     // we don't track the source type inside the serializable structs, so we
                     // inject it here
-                    format_options = format_options.with_source_type(source_type);
                     let formatted = format_node(format_options.clone(), &root).unwrap();
                     let printed = formatted.print();
 
