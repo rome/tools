@@ -7,6 +7,7 @@ use super::typescript::*;
 use crate::event::rewrite_events;
 use crate::event::RewriteParseEvents;
 use crate::lexer::{LexContext, ReLexContext};
+use crate::parser::rewrite_parser::RewriteCompletedMarker;
 use crate::parser::rewrite_parser::{RewriteMarker, RewriteParser};
 use crate::parser::{expected_token, ParserProgress, RecoveryResult};
 use crate::syntax::assignment::parse_assignment;
@@ -650,13 +651,18 @@ fn parse_member_expression_rest(
 
     while !p.at(EOF) {
         progress.assert_progressing(p);
+        let mut could_try_parse_type_arguments = true;
         lhs = match p.cur() {
-            T![.] => parse_static_member_expression(p, lhs, T![.]).unwrap(),
+            T![.] => {
+                could_try_parse_type_arguments = false;
+                parse_static_member_expression(p, lhs, T![.]).unwrap()
+            }
             // Don't parse out `[` as a member expression because it may as well be the start of a computed class member
             T!['['] if !context.is_in_ts_decorator() => {
                 parse_computed_member_expression(p, lhs, false).unwrap()
             }
             T![?.] if allow_optional_chain => {
+                could_try_parse_type_arguments = false;
                 let completed = if p.nth_at(1, T!['[']) {
                     parse_computed_member_expression(p, lhs, true).unwrap()
                 } else if is_nth_at_any_name(p, 1) {
@@ -675,6 +681,7 @@ fn parse_member_expression_rest(
                 completed
             }
             T![!] if !p.has_preceding_line_break() => {
+                could_try_parse_type_arguments = false;
                 // test ts ts_non_null_assertion_expression
                 // let a = { b: {} };
                 // a!;
@@ -699,12 +706,22 @@ fn parse_member_expression_rest(
                 non_null
             }
             BACKTICK => {
+                could_try_parse_type_arguments = false;
                 // test ts ts_optional_chain_call
                 // (<A, B>() => {})?.<A, B>();
                 let m = lhs.precede(p);
                 parse_template_literal(p, m, *in_optional_chain, true)
             }
             _ => break,
+        };
+        if could_try_parse_type_arguments {
+            match parse_ts_type_arguments(p) {
+                Absent => {}
+                Present(_) => {
+                    let new_marker = lhs.precede(p);
+                    lhs = new_marker.complete(p, JsSyntaxKind::TS_EXPRESSION_WITH_TYPE_ARGUMENTS);
+                }
+            };
         }
     }
 

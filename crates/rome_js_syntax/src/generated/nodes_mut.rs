@@ -4212,6 +4212,20 @@ impl TsExportDeclareClause {
         )
     }
 }
+impl TsExpressionWithTypeArguments {
+    pub fn with_expression(self, element: JsAnyExpression) -> Self {
+        Self::unwrap_cast(
+            self.syntax
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
+        )
+    }
+    pub fn with_arguments(self, element: TsTypeArguments) -> Self {
+        Self::unwrap_cast(
+            self.syntax
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
+        )
+    }
+}
 impl TsExtendsClause {
     pub fn with_extends_token(self, element: SyntaxToken) -> Self {
         Self::unwrap_cast(

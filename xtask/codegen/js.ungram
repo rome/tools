@@ -316,6 +316,7 @@ JsAnyExpression =
 	| TsTypeAssertionExpression
 	| TsAsExpression
 	| TsNonNullAssertionExpression
+	| TsExpressionWithTypeArguments
 	// JSX
 	| JsxTagExpression
 
@@ -2109,6 +2110,10 @@ TsTypeAssertionExpression =
 	type: TsType
 	'>'
 	expression: JsAnyExpression
+
+TsExpressionWithTypeArguments =
+	expression: JsAnyExpression
+	arguments: TsTypeArguments
 
 TsAsExpression =
 	expression: JsAnyExpression

@@ -1233,6 +1233,10 @@ fn parse_ts_type_predicate(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, kind))
 }
 
+// test ts ts_instantiation_expressions
+// let f1 = fx<string>; 
+// let f2 = fx<string, number>; 
+// let f3 = fx['test']<string>; 
 pub(crate) fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyntax {
     // Don't parse type arguments in JS because the syntax is ambiguous
     // https://github.com/microsoft/TypeScript/issues/36662
@@ -1289,7 +1293,6 @@ pub fn can_follow_type_arguments_in_expr(cur_kind: JsSyntaxKind) -> bool {
     }
 }
 
-// test ts ts_type_arguments
 pub(crate) fn parse_ts_type_arguments(p: &mut Parser) -> ParsedSyntax {
     // test ts ts_type_arguments_left_shift
     // type A<T> = T;
