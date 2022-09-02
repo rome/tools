@@ -17,3 +17,11 @@ Actions that are performed:
  - `rome.json` is created that serves as your [project configuration](#project-configuration).
 
 The command only works on projects that don't have Rome configuration.
+
+#### `rome start`
+
+Start the Rome daemon server
+
+#### `rome stop`
+
+Stop the Rome daemon server
