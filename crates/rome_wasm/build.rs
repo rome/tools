@@ -2,6 +2,7 @@ use std::{env, fs, io, path::PathBuf};
 
 use quote::{format_ident, quote};
 
+use rome_js_factory::syntax::SourceType;
 use rome_js_factory::{
     make,
     syntax::{JsAnyDeclaration, JsAnyModuleItem, JsAnyStatement},
@@ -66,7 +67,7 @@ fn main() -> io::Result<()> {
 
     // Wasm-bindgen will paste the generated TS code as-is into the final .d.ts file,
     // ensure it looks good by running it through the formatter
-    let formatted = format_node(JsFormatOptions::default(), module.syntax()).unwrap();
+    let formatted = format_node(JsFormatOptions::new(SourceType::ts()), module.syntax()).unwrap();
     let printed = formatted.print();
     let definitions = printed.into_code();
 

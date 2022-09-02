@@ -631,7 +631,7 @@ while(
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatOptions::default().with_indent_style(IndentStyle::Space(4)),
+            JsFormatOptions::new(SourceType::js_script()).with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -663,7 +663,7 @@ function() {
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatOptions::default().with_indent_style(IndentStyle::Space(4)),
+            JsFormatOptions::new(SourceType::js_script()).with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -694,7 +694,7 @@ function() {
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatOptions::default().with_indent_style(IndentStyle::Space(4)),
+            JsFormatOptions::new(SourceType::js_script()).with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -713,7 +713,7 @@ function() {
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatOptions::default().with_indent_style(IndentStyle::Space(4)),
+            JsFormatOptions::new(SourceType::js_script()).with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -735,7 +735,7 @@ function() {
 
         let tree = parse_script(input, 0);
         let result = format_range(
-            JsFormatOptions::default().with_indent_style(IndentStyle::Space(4)),
+            JsFormatOptions::new(SourceType::js_script()).with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
             TextRange::new(range_start, range_end),
         );
@@ -750,13 +750,13 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-const getIconEngagementTypeFrom = (engagementTypes: Array<EngagementType>) =>
-	(iconEngagementType) =>
-		engagementTypes.includes(iconEngagementType);
+const obj1 = conditionIsTruthy
+           ? { some: "long", object: "with", lots: "of", stuff }
+           : shortThing;
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
-        let options = JsFormatOptions::default();
+        let options = JsFormatOptions::new(syntax);
 
         let result = format_node(options.clone(), &tree.syntax())
             .unwrap()
@@ -782,7 +782,7 @@ const getIconEngagementTypeFrom = (engagementTypes: Array<EngagementType>) =>
         let tree = parse(src, 0, syntax);
 
         let result = format_range(
-            JsFormatOptions::default(),
+            JsFormatOptions::new(syntax),
             &tree.syntax(),
             TextRange::new(TextSize::from(0), TextSize::of(src) + TextSize::from(5)),
         );
