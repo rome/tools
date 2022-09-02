@@ -499,6 +499,7 @@ mod tests {
     use rome_js_syntax::{
         JsArrayExpression, JsBinaryExpression, JsExpressionStatement, JsIdentifierExpression,
         JsLogicalExpression, JsSequenceExpression, JsStringLiteralExpression, JsSyntaxNode,
+        SourceType,
     };
     use rome_rowan::{AstNode, SyntaxRewriter, TextSize};
 
@@ -766,7 +767,8 @@ mod tests {
     fn mappings() {
         let (transformed, source_map) = source_map_test("(((a * b) * c)) / 3");
 
-        let formatted = format_node(JsFormatOptions::default(), &transformed).unwrap();
+        let formatted =
+            format_node(JsFormatOptions::new(SourceType::default()), &transformed).unwrap();
         let printed = formatted.print();
 
         assert_eq!(printed.as_code(), "(a * b * c) / 3;\n");

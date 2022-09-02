@@ -54,9 +54,9 @@ type X = {
 	member: string;
 	// you stay like this
 	"member-member": number;
-	4: number;
+	"4": number;
 	with_underscore: number;
-	0197: number;
+	"0197": number;
 	"3n": number;
 	"3p": number;
 	p9: number;
@@ -68,9 +68,9 @@ interface Y {
 	member: string;
 	// you stay like this
 	"member-member": number;
-	4: number;
+	"4": number;
 	with_underscore: number;
-	0197: number;
+	"0197": number;
 	"3n": number;
 	"3p": number;
 	p9: number;
@@ -79,7 +79,7 @@ interface Y {
 }
 
 const Y = {
-	123: false,
+	"123": false,
 	"3n": false,
 	12334: false,
 };
@@ -96,9 +96,9 @@ type X = {
 	member: string;
 	// you stay like this
 	'member-member': number;
-	'4': number;
+	4: number;
 	with_underscore: number;
-	'0197': number;
+	0197: number;
 	'3n': number;
 	'3p': number;
 	p9: number;
@@ -110,9 +110,9 @@ interface Y {
 	member: string;
 	// you stay like this
 	'member-member': number;
-	'4': number;
+	4: number;
 	with_underscore: number;
-	'0197': number;
+	0197: number;
 	'3n': number;
 	'3p': number;
 	p9: number;
@@ -121,7 +121,7 @@ interface Y {
 }
 
 const Y = {
-	'123': false,
+	123: false,
 	'3n': false,
 	12334: false,
 };

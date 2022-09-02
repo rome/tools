@@ -4,7 +4,7 @@ use crate::BenchmarkSummary;
 use rome_formatter::Printed;
 use rome_js_formatter::context::JsFormatOptions;
 use rome_js_formatter::format_node;
-use rome_js_syntax::JsSyntaxNode;
+use rome_js_syntax::{JsSyntaxNode, SourceType};
 use std::fmt::{Display, Formatter};
 use std::time::Duration;
 
@@ -13,9 +13,13 @@ pub struct FormatterMeasurement {
     id: String,
     formatting: Duration,
 }
-pub fn benchmark_format_lib(id: &str, root: &JsSyntaxNode) -> BenchmarkSummary {
+pub fn benchmark_format_lib(
+    id: &str,
+    root: &JsSyntaxNode,
+    source_type: SourceType,
+) -> BenchmarkSummary {
     let formatter_timer = timing::start();
-    run_format(root);
+    run_format(root, source_type);
     let formatter_duration = formatter_timer.stop();
 
     BenchmarkSummary::Formatter(FormatterMeasurement {
@@ -24,14 +28,14 @@ pub fn benchmark_format_lib(id: &str, root: &JsSyntaxNode) -> BenchmarkSummary {
     })
 }
 
-pub fn run_format(root: &JsSyntaxNode) -> Printed {
+pub fn run_format(root: &JsSyntaxNode, source_type: SourceType) -> Printed {
     #[cfg(feature = "dhat-on")]
     let stats = {
         println!("Start");
         dhat::get_stats().unwrap()
     };
 
-    let formatted = format_node(JsFormatOptions::default(), root).unwrap();
+    let formatted = format_node(JsFormatOptions::new(source_type), root).unwrap();
 
     #[cfg(feature = "dhat-on")]
     let stats = {

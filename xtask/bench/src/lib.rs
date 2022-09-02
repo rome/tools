@@ -153,7 +153,7 @@ pub fn run(args: RunArgs) {
                         FeatureToBenchmark::Formatter => {
                             let root = parse(code, 0, source_type).syntax();
                             b.iter(|| {
-                                criterion::black_box(run_format(&root));
+                                criterion::black_box(run_format(&root, source_type));
                             })
                         }
                         FeatureToBenchmark::Analyzer => {
@@ -170,7 +170,7 @@ pub fn run(args: RunArgs) {
                     FeatureToBenchmark::Parser => benchmark_parse_lib(&id, code, source_type),
                     FeatureToBenchmark::Formatter => {
                         let root = parse(code, 0, source_type).syntax();
-                        benchmark_format_lib(&id, &root)
+                        benchmark_format_lib(&id, &root, source_type)
                     }
                     FeatureToBenchmark::Analyzer => {
                         let root = parse(code, 0, source_type).tree();

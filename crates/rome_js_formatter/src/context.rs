@@ -10,7 +10,7 @@ use std::fmt::Debug;
 use std::rc::Rc;
 use std::str::FromStr;
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone)]
 pub struct JsFormatContext {
     options: JsFormatOptions,
 
@@ -25,7 +25,7 @@ impl JsFormatContext {
         Self {
             options,
             comments: Rc::new(comments),
-            ..JsFormatContext::default()
+            source_map: None,
         }
     }
 
@@ -76,7 +76,7 @@ impl CstFormatContext for JsFormatContext {
     }
 }
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Clone)]
 pub struct JsFormatOptions {
     /// The indent style.
     indent_style: IndentStyle,
@@ -98,7 +98,10 @@ impl JsFormatOptions {
     pub fn new(source_type: SourceType) -> Self {
         Self {
             source_type,
-            ..JsFormatOptions::default()
+            indent_style: IndentStyle::default(),
+            line_width: LineWidth::default(),
+            quote_style: QuoteStyle::default(),
+            quote_properties: QuoteProperties::default(),
         }
     }
 
@@ -119,11 +122,6 @@ impl JsFormatOptions {
 
     pub fn with_quote_properties(mut self, quote_properties: QuoteProperties) -> Self {
         self.quote_properties = quote_properties;
-        self
-    }
-
-    pub fn with_source_type(mut self, source_type: SourceType) -> Self {
-        self.source_type = source_type;
         self
     }
 
