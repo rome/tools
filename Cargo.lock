@@ -1480,6 +1480,7 @@ version = "0.0.0"
 dependencies = [
  "anyhow",
  "crossbeam",
+ "dashmap",
  "hdrhistogram",
  "insta",
  "lazy_static",

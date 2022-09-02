@@ -162,15 +162,16 @@ impl WorkspaceServer {
 }
 
 impl Workspace for WorkspaceServer {
-    fn supports_feature(&self, params: SupportsFeatureParams) -> bool {
+    fn supports_feature(&self, params: SupportsFeatureParams) -> Result<bool, RomeError> {
         let capabilities = self.get_capabilities(&params.path);
         let settings = self.settings.read().unwrap();
-        match params.feature {
+        let result = match params.feature {
             FeatureName::Format => {
                 capabilities.formatter.format.is_some() && settings.formatter().enabled
             }
             FeatureName::Lint => capabilities.analyzer.lint.is_some() && settings.linter().enabled,
-        }
+        };
+        Ok(result)
     }
 
     /// Update the global settings for this workspace

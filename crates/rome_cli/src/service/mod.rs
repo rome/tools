@@ -4,14 +4,39 @@
 //! is based on the [Language Server Protocol](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#baseProtocol),
 //! a simplified derivative of the HTTP protocol
 
-use std::{io, panic::RefUnwindSafe, str::FromStr};
+use std::{
+    any::type_name,
+    borrow::Cow,
+    io,
+    panic::RefUnwindSafe,
+    str::{from_utf8, FromStr},
+    sync::Arc,
+    time::Duration,
+};
 
 use anyhow::{bail, ensure, Context, Error};
-use rome_service::{workspace::WorkspaceTransport, TransportError};
+use dashmap::DashMap;
+use rome_service::{
+    workspace::{TransportRequest, WorkspaceTransport},
+    TransportError,
+};
+use serde::{de::DeserializeOwned, Deserialize, Serialize};
+use serde_json::{
+    from_slice, from_str, to_vec,
+    value::{to_raw_value, RawValue},
+    Value,
+};
 use tokio::{
-    io::{split, AsyncBufReadExt, AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt, BufReader},
+    io::{
+        AsyncBufRead, AsyncBufReadExt, AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt,
+        BufReader, BufWriter,
+    },
     runtime::Runtime,
-    sync::mpsc::{self, UnboundedReceiver, UnboundedSender},
+    sync::{
+        mpsc::{channel, Sender},
+        oneshot,
+    },
+    time::sleep,
 };
 
 #[cfg(windows)]
@@ -32,134 +57,110 @@ pub(crate) use self::unix::{ensure_daemon, print_socket, run_daemon};
 /// [WorkspaceTransport] instance if the socket is currently active
 pub fn open_transport(runtime: Runtime) -> io::Result<Option<impl WorkspaceTransport>> {
     match runtime.block_on(open_socket()) {
-        Ok(Some(socket)) => Ok(Some(SocketTransport::open(runtime, socket))),
+        Ok(Some((read, write))) => Ok(Some(SocketTransport::open(runtime, read, write))),
         Ok(None) => Ok(None),
         Err(err) => Err(err),
     }
 }
 
+type JsonRpcResult = Result<Box<RawValue>, TransportError>;
+
 /// Implementation of [WorkspaceTransport] for types implementing [AsyncRead]
 /// and [AsyncWrite]
 pub struct SocketTransport {
     runtime: Runtime,
-    read_recv: UnboundedReceiver<Vec<u8>>,
-    write_send: UnboundedSender<Vec<u8>>,
+    write_send: Sender<Vec<u8>>,
+    pending_requests: Arc<DashMap<u64, oneshot::Sender<JsonRpcResult>>>,
 }
 
 impl SocketTransport {
-    pub fn open<T>(runtime: Runtime, socket: T) -> Self
+    pub fn open<R, W>(runtime: Runtime, socket_read: R, socket_write: W) -> Self
     where
-        T: AsyncRead + AsyncWrite + Send + 'static,
+        R: AsyncRead + Unpin + Send + 'static,
+        W: AsyncWrite + Unpin + Send + 'static,
     {
-        let (socket_read, mut socket_write) = split(socket);
+        let (write_send, mut write_recv) = channel(512);
+
+        let pending_requests: Arc<DashMap<u64, oneshot::Sender<JsonRpcResult>>> = Arc::default();
+        let pending_requests_2 = Arc::clone(&pending_requests);
+
         let mut socket_read = BufReader::new(socket_read);
-
-        let (read_send, read_recv) = mpsc::unbounded_channel();
-        let (write_send, mut write_recv) = mpsc::unbounded_channel::<Vec<_>>();
-
-        let read_task = async move {
-            loop {
-                let mut length = None;
-                let mut line = String::new();
-
-                loop {
-                    match socket_read
-                        .read_line(&mut line)
-                        .await
-                        .context("failed to read header line from the socket")?
-                    {
-                        // A read of 0 bytes means the connection was closed
-                        0 => {
-                            bail!("the connection to the remote workspace was unexpectedly closed");
-                        }
-                        // A read of two bytes corresponds to the "\r\n" sequence
-                        // that indicates the end of the header section
-                        2 => {
-                            if line != "\r\n" {
-                                bail!("unexpected byte sequence received from the remote workspace, got {line:?} expected \"\\r\\n\"");
-                            }
-
-                            break;
-                        }
-                        _ => {
-                            let header: TransportHeader = line
-                                .parse()
-                                .context("failed to parse header from the remote workspace")?;
-
-                            match header {
-                                TransportHeader::ContentLength(value) => {
-                                    length = Some(value);
-                                }
-                                TransportHeader::ContentType => {}
-                                TransportHeader::Unknown(name) => {
-                                    eprintln!("ignoring unknown header {name:?}");
-                                }
-                            }
-
-                            line.clear();
-                        }
-                    }
-                }
-
-                let length = length.context("incoming response from the remote workspace is missing the Content-Length header")?;
-
-                let mut result = vec![0u8; length];
-                socket_read.read_exact(&mut result).await.with_context(|| {
-                    format!("failed to read message of {length} bytes from the socket")
-                })?;
-
-                // Send the received message over the transport channel, or
-                // exit the task if the channel was closed
-                if read_send.send(result).is_err() {
-                    break;
-                }
-            }
-
-            Ok(())
-        };
-
-        let write_task = async move {
-            while let Some(message) = write_recv.recv().await {
-                socket_write.write_all(b"Content-Length: ").await?;
-
-                let length = message.len().to_string();
-                socket_write.write_all(length.as_bytes()).await?;
-                socket_write.write_all(b"\r\n").await?;
-
-                socket_write
-                    .write_all(b"Content-Type: application/vscode-jsonrpc; charset=utf-8\r\n")
-                    .await?;
-
-                socket_write.write_all(b"\r\n").await?;
-
-                socket_write.write_all(&message).await?;
-            }
-
-            Ok::<(), Error>(())
-        };
+        let mut socket_write = BufWriter::new(socket_write);
 
         runtime.spawn(async move {
-            if let Err(err) = read_task.await {
-                eprintln!(
-                    "{:?}",
-                    err.context("remote connection read task exited with an error")
-                );
+            while let Some(message) = write_recv.recv().await {
+                if let Err(err) = write_message(&mut socket_write, message).await {
+                    eprintln!(
+                        "{:?}",
+                        err.context("remote connection read task exited with an error")
+                    );
+                    break;
+                }
             }
         });
 
         runtime.spawn(async move {
-            if let Err(err) = write_task.await {
-                eprintln!(
-                    "{:?}",
-                    err.context("remote connection write task exited with an error")
-                );
+            loop {
+                let message = read_message(&mut socket_read).await;
+                let message = match message {
+                    Ok(message) => {
+                        let response = from_slice(&message).with_context(|| {
+                            if let Ok(message) = from_utf8(&message) {
+                                format!("failed to deserialize JSON-RPC response from {message:?}")
+                            } else {
+                                format!("failed to deserialize JSON-RPC response from {message:?}")
+                            }
+                        });
+
+                        response.map(|response| (message, response))
+                    }
+                    Err(err) => Err(err),
+                };
+
+                let (message, response): (_, JsonRpcResponse) = match message {
+                    Ok(message) => message,
+                    Err(err) => {
+                        eprintln!(
+                            "{:?}",
+                            err.context("remote connection write task exited with an error")
+                        );
+                        break;
+                    }
+                };
+
+                if let Some((_, channel)) = pending_requests.remove(&response.id) {
+                    let response = match (response.result, response.error) {
+                        (Some(result), None) => Ok(result),
+                        (None, Some(err)) => Err(TransportError::RPCError(err.message)),
+
+                        // Both result and error will be None if the request
+                        // returns a null-ish result, in this case create a
+                        // "null" RawValue as the result
+                        //
+                        // SAFETY: Calling `to_raw_value` with a static "null"
+                        // JSON Value will always succeed
+                        (None, None) => Ok(to_raw_value(&Value::Null).unwrap()),
+
+                        _ => {
+                            let message = if let Ok(message) = from_utf8(&message) {
+                                format!("invalid response {message:?}")
+                            } else {
+                                format!("invalid response {message:?}")
+                            };
+
+                            Err(TransportError::SerdeError(message))
+                        }
+                    };
+
+                    channel.send(response).ok();
+                }
             }
         });
 
         Self {
             runtime,
-            read_recv,
             write_send,
+            pending_requests: pending_requests_2,
         }
     }
 }
@@ -168,17 +169,168 @@ impl SocketTransport {
 impl RefUnwindSafe for SocketTransport {}
 
 impl WorkspaceTransport for SocketTransport {
-    fn send(&mut self, request: Vec<u8>) -> Result<(), TransportError> {
-        self.write_send
-            .send(request)
-            .map_err(|_| TransportError::ChannelClosed)
+    fn request<P, R>(&self, request: TransportRequest<P>) -> Result<R, TransportError>
+    where
+        P: Serialize,
+        R: DeserializeOwned,
+    {
+        let (send, recv) = oneshot::channel();
+
+        self.pending_requests.insert(request.id, send);
+
+        let request = JsonRpcRequest {
+            jsonrpc: Cow::Borrowed("2.0"),
+            id: request.id,
+            method: Cow::Borrowed(request.method),
+            params: request.params,
+        };
+
+        let request = to_vec(&request).map_err(|err| {
+            TransportError::SerdeError(format!(
+                "failed to serialize {} into byte buffer: {err}",
+                type_name::<P>()
+            ))
+        })?;
+
+        let response = self.runtime.block_on(async move {
+            self.write_send
+                .send(request)
+                .await
+                .map_err(|_| TransportError::ChannelClosed)?;
+
+            tokio::select! {
+                result = recv => {
+                    match result {
+                        Ok(Ok(response)) => Ok(response),
+                        Ok(Err(error)) => Err(error),
+                        Err(_) => Err(TransportError::ChannelClosed),
+                    }
+                }
+                _ = sleep(Duration::from_secs(15)) => {
+                    Err(TransportError::Timeout)
+                }
+            }
+        })?;
+
+        let response = response.get();
+        let result = from_str(response).map_err(|err| {
+            TransportError::SerdeError(format!(
+                "failed to deserialize {} from {response:?}: {err}",
+                type_name::<R>()
+            ))
+        })?;
+
+        Ok(result)
+    }
+}
+
+async fn read_message<R>(mut socket_read: R) -> Result<Vec<u8>, Error>
+where
+    R: AsyncBufRead + Unpin,
+{
+    let mut length = None;
+    let mut line = String::new();
+
+    loop {
+        match socket_read
+            .read_line(&mut line)
+            .await
+            .context("failed to read header line from the socket")?
+        {
+            // A read of 0 bytes means the connection was closed
+            0 => {
+                bail!("the connection to the remote workspace was unexpectedly closed");
+            }
+            // A read of two bytes corresponds to the "\r\n" sequence
+            // that indicates the end of the header section
+            2 => {
+                if line != "\r\n" {
+                    bail!("unexpected byte sequence received from the remote workspace, got {line:?} expected \"\\r\\n\"");
+                }
+
+                break;
+            }
+            _ => {
+                let header: TransportHeader = line
+                    .parse()
+                    .context("failed to parse header from the remote workspace")?;
+
+                match header {
+                    TransportHeader::ContentLength(value) => {
+                        length = Some(value);
+                    }
+                    TransportHeader::ContentType => {}
+                    TransportHeader::Unknown(name) => {
+                        eprintln!("ignoring unknown header {name:?}");
+                    }
+                }
+
+                line.clear();
+            }
+        }
     }
 
-    fn receive(&mut self) -> Result<Vec<u8>, TransportError> {
-        let read_recv = &mut self.read_recv;
-        self.runtime
-            .block_on(async move { read_recv.recv().await.ok_or(TransportError::ChannelClosed) })
-    }
+    let length = length.context(
+        "incoming response from the remote workspace is missing the Content-Length header",
+    )?;
+
+    let mut result = vec![0u8; length];
+    socket_read
+        .read_exact(&mut result)
+        .await
+        .with_context(|| format!("failed to read message of {length} bytes from the socket"))?;
+
+    Ok(result)
+}
+
+async fn write_message<W>(mut socket_write: W, message: Vec<u8>) -> Result<(), Error>
+where
+    W: AsyncWrite + Unpin,
+{
+    socket_write.write_all(b"Content-Length: ").await?;
+
+    let length = message.len().to_string();
+    socket_write.write_all(length.as_bytes()).await?;
+    socket_write.write_all(b"\r\n").await?;
+
+    socket_write
+        .write_all(b"Content-Type: application/vscode-jsonrpc; charset=utf-8\r\n")
+        .await?;
+
+    socket_write.write_all(b"\r\n").await?;
+
+    socket_write.write_all(&message).await?;
+
+    socket_write.flush().await?;
+
+    Ok(())
+}
+
+#[derive(Debug, Serialize)]
+struct JsonRpcRequest<P> {
+    jsonrpc: Cow<'static, str>,
+    id: u64,
+    method: Cow<'static, str>,
+    params: P,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(deny_unknown_fields)]
+struct JsonRpcResponse {
+    #[allow(dead_code)]
+    jsonrpc: Cow<'static, str>,
+    id: u64,
+    result: Option<Box<RawValue>>,
+    error: Option<JsonRpcError>,
+}
+
+#[derive(Debug, Deserialize)]
+struct JsonRpcError {
+    #[allow(dead_code)]
+    code: i64,
+    message: String,
+    #[allow(dead_code)]
+    data: Option<Box<RawValue>>,
 }
 
 enum TransportHeader {

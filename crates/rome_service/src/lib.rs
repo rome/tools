@@ -174,6 +174,8 @@ impl From<TransportError> for RomeError {
 pub enum TransportError {
     /// Error emitted by the transport layer if the connection was lost due to an I/O error
     ChannelClosed,
+    /// Error emitted by the transport layer if a request timed out
+    Timeout,
     /// Error caused by a serialization or deserialization issue
     SerdeError(String),
     /// Generic error type for RPC errors that can't be deserialized into RomeError
@@ -189,14 +191,11 @@ impl Display for TransportError {
             TransportError::ChannelClosed => fmt.write_str(
                 "a request to the remote workspace failed because the connection was interrupted",
             ),
+            TransportError::Timeout => {
+                fmt.write_str("the request to the remote workspace timed out")
+            }
             TransportError::RPCError(err) => fmt.write_str(err),
         }
-    }
-}
-
-impl From<serde_json::Error> for TransportError {
-    fn from(err: serde_json::Error) -> Self {
-        TransportError::SerdeError(err.to_string())
     }
 }
 

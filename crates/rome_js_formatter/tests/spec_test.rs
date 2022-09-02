@@ -205,10 +205,13 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
     );
 
     let mut rome_path = RomePath::new(file_path, 0);
-    let can_format = app.workspace.supports_feature(SupportsFeatureParams {
-        path: rome_path.clone(),
-        feature: FeatureName::Format,
-    });
+    let can_format = app
+        .workspace
+        .supports_feature(SupportsFeatureParams {
+            path: rome_path.clone(),
+            feature: FeatureName::Format,
+        })
+        .unwrap();
 
     if can_format {
         let mut snapshot_content = SnapshotContent::default();

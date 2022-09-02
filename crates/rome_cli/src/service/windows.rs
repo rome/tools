@@ -4,13 +4,16 @@ use std::{
     io::{self, ErrorKind},
     mem::swap,
     os::windows::process::CommandExt,
+    pin::Pin,
     process::Command,
+    sync::Arc,
+    task::{Context, Poll},
     time::Duration,
 };
 
 use rome_lsp::{ServerConnection, ServerFactory};
 use tokio::{
-    io::split,
+    io::{AsyncRead, AsyncWrite, ReadBuf},
     net::windows::named_pipe::{ClientOptions, NamedPipeClient, NamedPipeServer, ServerOptions},
     time,
 };
@@ -58,11 +61,81 @@ fn spawn_daemon() -> io::Result<()> {
 
 /// Open a connection to the daemon server process, returning [None] if the
 /// server is not running
-pub(crate) async fn open_socket() -> io::Result<Option<NamedPipeClient>> {
+pub(crate) async fn open_socket() -> io::Result<Option<(ClientReadHalf, ClientWriteHalf)>> {
     match try_connect().await {
-        Ok(socket) => Ok(Some(socket)),
+        Ok(socket) => {
+            let inner = Arc::new(socket);
+            Ok(Some((
+                ClientReadHalf {
+                    inner: inner.clone(),
+                },
+                ClientWriteHalf { inner },
+            )))
+        }
         Err(err) if err.kind() == ErrorKind::NotFound => Ok(None),
         Err(err) => Err(err),
+    }
+}
+
+pub(crate) struct ClientReadHalf {
+    inner: Arc<NamedPipeClient>,
+}
+
+impl AsyncRead for ClientReadHalf {
+    fn poll_read(
+        self: Pin<&mut Self>,
+        cx: &mut Context<'_>,
+        buf: &mut ReadBuf<'_>,
+    ) -> Poll<io::Result<()>> {
+        loop {
+            match self.inner.poll_read_ready(cx) {
+                Poll::Ready(Ok(())) => match self.inner.try_read(buf.initialize_unfilled()) {
+                    Ok(count) => {
+                        buf.advance(count);
+                        return Poll::Ready(Ok(()));
+                    }
+
+                    Err(err) if err.kind() == io::ErrorKind::WouldBlock => continue,
+                    Err(err) => return Poll::Ready(Err(err)),
+                },
+
+                Poll::Ready(Err(err)) => return Poll::Ready(Err(err)),
+                Poll::Pending => return Poll::Pending,
+            };
+        }
+    }
+}
+
+pub(crate) struct ClientWriteHalf {
+    inner: Arc<NamedPipeClient>,
+}
+
+impl AsyncWrite for ClientWriteHalf {
+    fn poll_write(
+        self: Pin<&mut Self>,
+        cx: &mut Context<'_>,
+        buf: &[u8],
+    ) -> Poll<Result<usize, io::Error>> {
+        loop {
+            match self.inner.poll_write_ready(cx) {
+                Poll::Ready(Ok(())) => match self.inner.try_write(buf) {
+                    Ok(count) => return Poll::Ready(Ok(count)),
+                    Err(err) if err.kind() == io::ErrorKind::WouldBlock => continue,
+                    Err(err) => return Poll::Ready(Err(err)),
+                },
+
+                Poll::Ready(Err(err)) => return Poll::Ready(Err(err)),
+                Poll::Pending => return Poll::Pending,
+            }
+        }
+    }
+
+    fn poll_flush(self: Pin<&mut Self>, _cx: &mut Context<'_>) -> Poll<Result<(), io::Error>> {
+        Poll::Ready(Ok(()))
+    }
+
+    fn poll_shutdown(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Result<(), io::Error>> {
+        self.poll_flush(cx)
     }
 }
 
@@ -116,6 +189,72 @@ pub(crate) async fn run_daemon(factory: ServerFactory) -> io::Result<Infallible>
 
 /// Async task driving a single client connection
 async fn run_server(connection: ServerConnection, stream: NamedPipeServer) {
-    let (read, write) = split(stream);
+    let inner = Arc::new(stream);
+    let read = ServerReadHalf {
+        inner: inner.clone(),
+    };
+    let write = ServerWriteHalf { inner };
     connection.accept(read, write).await;
+}
+
+struct ServerReadHalf {
+    inner: Arc<NamedPipeServer>,
+}
+
+impl AsyncRead for ServerReadHalf {
+    fn poll_read(
+        self: Pin<&mut Self>,
+        cx: &mut Context<'_>,
+        buf: &mut ReadBuf<'_>,
+    ) -> Poll<io::Result<()>> {
+        loop {
+            match self.inner.poll_read_ready(cx) {
+                Poll::Ready(Ok(())) => match self.inner.try_read(buf.initialize_unfilled()) {
+                    Ok(count) => {
+                        buf.advance(count);
+                        return Poll::Ready(Ok(()));
+                    }
+
+                    Err(err) if err.kind() == io::ErrorKind::WouldBlock => continue,
+                    Err(err) => return Poll::Ready(Err(err)),
+                },
+
+                Poll::Ready(Err(err)) => return Poll::Ready(Err(err)),
+                Poll::Pending => return Poll::Pending,
+            };
+        }
+    }
+}
+
+struct ServerWriteHalf {
+    inner: Arc<NamedPipeServer>,
+}
+
+impl AsyncWrite for ServerWriteHalf {
+    fn poll_write(
+        self: Pin<&mut Self>,
+        cx: &mut Context<'_>,
+        buf: &[u8],
+    ) -> Poll<Result<usize, io::Error>> {
+        loop {
+            match self.inner.poll_write_ready(cx) {
+                Poll::Ready(Ok(())) => match self.inner.try_write(buf) {
+                    Ok(count) => return Poll::Ready(Ok(count)),
+                    Err(err) if err.kind() == io::ErrorKind::WouldBlock => continue,
+                    Err(err) => return Poll::Ready(Err(err)),
+                },
+
+                Poll::Ready(Err(err)) => return Poll::Ready(Err(err)),
+                Poll::Pending => return Poll::Pending,
+            }
+        }
+    }
+
+    fn poll_flush(self: Pin<&mut Self>, _cx: &mut Context<'_>) -> Poll<Result<(), io::Error>> {
+        Poll::Ready(Ok(()))
+    }
+
+    fn poll_shutdown(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Result<(), io::Error>> {
+        self.poll_flush(cx)
+    }
 }

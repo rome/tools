@@ -9,7 +9,10 @@ use std::{
 use rome_lsp::{ServerConnection, ServerFactory};
 use tokio::{
     io::{split, Interest},
-    net::{UnixListener, UnixStream},
+    net::{
+        unix::{OwnedReadHalf, OwnedWriteHalf},
+        UnixListener, UnixStream,
+    },
     process::{Child, Command},
     time,
 };
@@ -61,9 +64,9 @@ fn spawn_daemon() -> io::Result<Child> {
 
 /// Open a connection to the daemon server process, returning [None] if the
 /// server is not running
-pub(crate) async fn open_socket() -> io::Result<Option<UnixStream>> {
+pub(crate) async fn open_socket() -> io::Result<Option<(OwnedReadHalf, OwnedWriteHalf)>> {
     match try_connect().await {
-        Ok(socket) => Ok(Some(socket)),
+        Ok(socket) => Ok(Some(socket.into_split())),
         Err(err)
             // The OS will return `ConnectionRefused` if the socket file exists
             // but no server process is listening on it
@@ -169,6 +172,6 @@ pub(crate) async fn run_daemon(factory: ServerFactory) -> io::Result<Infallible>
 
 /// Async task driving a single client connection
 async fn run_server(connection: ServerConnection, stream: UnixStream) {
-    let (read, write) = split(stream);
+    let (read, write) = stream.into_split();
     connection.accept(read, write).await;
 }

@@ -131,7 +131,7 @@ pub(crate) fn execute_mode(mode: Execution, mut session: CliSession) -> Result<(
             let can_format = workspace.supports_feature(SupportsFeatureParams {
                 path: rome_path.clone(),
                 feature: FeatureName::Format,
-            });
+            })?;
             if can_format {
                 workspace.open_file(OpenFileParams {
                     path: rome_path.clone(),

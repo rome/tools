@@ -119,7 +119,7 @@ impl Session {
         let lint_enabled = self.workspace.supports_feature(SupportsFeatureParams {
             feature: FeatureName::Lint,
             path: rome_path.clone(),
-        });
+        })?;
 
         let diagnostics = if lint_enabled {
             let result = self.workspace.pull_diagnostics(PullDiagnosticsParams {

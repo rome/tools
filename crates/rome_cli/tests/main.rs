@@ -1513,7 +1513,8 @@ fn run_cli<'app>(
     let (stdin, stdout) = split(server);
     runtime.spawn(connection.accept(stdin, stdout));
 
-    let transport = SocketTransport::open(runtime, client);
+    let (client_read, client_write) = split(client);
+    let transport = SocketTransport::open(runtime, client_read, client_write);
 
     let workspace = workspace::client(transport).unwrap();
     let app = App::new(fs, console, WorkspaceRef::Owned(workspace));
