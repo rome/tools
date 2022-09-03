@@ -1687,15 +1687,13 @@ fn parse_call_expression_rest(
         // (() => a)<A, B, C>();
         // type A<T> = T;
         // a<<T>(arg: T) => number, number, string>();
+
         // if TypeScript.is_supported(p) && matches!(p.cur(), T![<] | T![<<]) {
         //     // rewinds automatically if not a valid type arguments
         //     let type_arguments = parse_ts_type_arguments_in_expression(p).ok();
 
         //     if type_arguments.is_some() {
         //         if p.at(BACKTICK) {
-        //             // test ts ts_tagged_template_literal
-        //             // html<A, B>`abcd`
-        //             // html<A, B>`abcd`._string
         //             lhs = parse_template_literal(p, m, optional_chain_call, true);
         //             continue;
         //         }
@@ -1708,6 +1706,9 @@ fn parse_call_expression_rest(
         let type_arguments = if optional_chain_call {
             let type_arguments = parse_ts_type_arguments_in_expression(p).ok();
             if p.cur() == BACKTICK {
+                // test ts ts_tagged_template_literal
+                // html<A, B>`abcd`
+                // html<A, B>`abcd`._string
                 lhs = parse_template_literal(p, m, optional_chain_call, true);
                 continue;
             }

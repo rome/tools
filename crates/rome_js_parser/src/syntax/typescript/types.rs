@@ -1237,6 +1237,11 @@ fn parse_ts_type_predicate(p: &mut Parser) -> ParsedSyntax {
 // let f1 = fx<string>; 
 // let f2 = fx<string, number>; 
 // let f3 = fx['test']<string>; 
+// const a2 = f.g<number>;  // () => number
+// const a3 = f<number>.g;  // <U>() => U
+// const a4 = f<number>.g<number>;  // () => number
+// const a5 = f['g']<number>;  // () => number
+
 pub(crate) fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyntax {
     // Don't parse type arguments in JS because the syntax is ambiguous
     // https://github.com/microsoft/TypeScript/issues/36662
