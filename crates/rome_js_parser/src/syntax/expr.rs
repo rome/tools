@@ -739,6 +739,11 @@ fn parse_member_expression_rest(
     lhs
 }
 
+// test ts ts_new_operator
+// var c2 = new T<string>;  // Ok
+// var x1 = new SS<number>(); // OK
+// var x3 = new SS();         // OK
+// var x4 = new SS;           // OK
 fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     if !p.at(T![new]) {
         return Absent;
