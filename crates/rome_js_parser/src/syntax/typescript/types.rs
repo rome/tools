@@ -1246,7 +1246,14 @@ fn parse_ts_type_predicate(p: &mut Parser) -> ParsedSyntax {
 // const b2 = f?.<number>();
 // // const b3 = f<number>?.();
 // // const b4 = f<number>?.<number>();  // Type Error, expected no type arguments
-
+// const x1 = f<true>
+// (true);
+// // Parsed as relational expression
+// const x2 = f<true>
+// true;
+// // Parsed as instantiation expression
+// const x3 = f<true>;
+// true;
 
 // test_err ts ts_instantiation_expressions1
 // const a8 = f<number><number>;  // Relational operator error

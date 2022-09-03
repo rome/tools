@@ -10,3 +10,11 @@ const a6 = f<number>['g'];  // type Error
 const b2 = f?.<number>();
 // const b3 = f<number>?.();
 // const b4 = f<number>?.<number>();  // Type Error, expected no type arguments
+const x1 = f<true>
+(true);
+// Parsed as relational expression
+const x2 = f<true>
+true;
+// Parsed as instantiation expression
+const x3 = f<true>;
+true;
