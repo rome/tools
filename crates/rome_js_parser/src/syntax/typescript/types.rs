@@ -518,6 +518,7 @@ pub(crate) fn parse_ts_name(p: &mut Parser) -> ParsedSyntax {
 // let a = "test";
 // type B = typeof a;
 // type T21 = typeof Array<string>; 
+// type A<U> = InstanceType<typeof Array<U>>; 
 fn parse_ts_typeof_type(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![typeof]) {
         return Absent;
@@ -1254,6 +1255,9 @@ fn parse_ts_type_predicate(p: &mut Parser) -> ParsedSyntax {
 // // Parsed as instantiation expression
 // const x3 = f<true>;
 // true;
+
+// test ts ts_type_instantiation_expression
+// type StringBox = Box<string>;
 
 // test_err ts ts_instantiation_expressions1
 // const a8 = f<number><number>;  // Relational operator error
