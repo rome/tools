@@ -1243,6 +1243,9 @@ fn parse_ts_type_predicate(p: &mut Parser) -> ParsedSyntax {
 // const a5 = f['g']<number>;  // () => number
 // const a7 = (f<number>)['g'];
 // const a6 = f<number>['g'];  // type Error
+// const b2 = f?.<number>();
+// const b3 = f<number>?.();
+
 
 // test_err ts ts_instantiation_expressions1
 // const a8 = f<number><number>;  // Relational operator error
