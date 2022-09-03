@@ -369,14 +369,53 @@ JsModule {
             },
             semicolon_token: SEMICOLON@309..325 ";" [] [Whitespace("  "), Comments("// type Error")],
         },
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                kind: CONST_KW@325..332 "const" [Newline("\n")] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@332..335 "b2" [] [Whitespace(" ")],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@335..337 "=" [] [Whitespace(" ")],
+                            expression: JsCallExpression {
+                                callee: JsIdentifierExpression {
+                                    name: JsReferenceIdentifier {
+                                        value_token: IDENT@337..338 "f" [] [],
+                                    },
+                                },
+                                optional_chain_token: QUESTIONDOT@338..340 "?." [] [],
+                                type_arguments: TsTypeArguments {
+                                    l_angle_token: L_ANGLE@340..341 "<" [] [],
+                                    ts_type_argument_list: TsTypeArgumentList [
+                                        TsNumberType {
+                                            number_token: NUMBER_KW@341..347 "number" [] [],
+                                        },
+                                    ],
+                                    r_angle_token: R_ANGLE@347..348 ">" [] [],
+                                },
+                                arguments: JsCallArguments {
+                                    l_paren_token: L_PAREN@348..349 "(" [] [],
+                                    args: JsCallArgumentList [],
+                                    r_paren_token: R_PAREN@349..350 ")" [] [],
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@350..351 ";" [] [],
+        },
     ],
-    eof_token: EOF@325..326 "" [Newline("\n")] [],
+    eof_token: EOF@351..352 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..326
+0: JS_MODULE@0..352
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..325
+  2: JS_MODULE_ITEM_LIST@0..351
     0: JS_VARIABLE_STATEMENT@0..21
       0: JS_VARIABLE_DECLARATION@0..19
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
@@ -615,4 +654,30 @@ JsModule {
                       0: JS_STRING_LITERAL@305..308 "'g'" [] []
                   2: R_BRACK@308..309 "]" [] []
       1: SEMICOLON@309..325 ";" [] [Whitespace("  "), Comments("// type Error")]
-  3: EOF@325..326 "" [Newline("\n")] []
+    9: JS_VARIABLE_STATEMENT@325..351
+      0: JS_VARIABLE_DECLARATION@325..350
+        0: CONST_KW@325..332 "const" [Newline("\n")] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATOR_LIST@332..350
+          0: JS_VARIABLE_DECLARATOR@332..350
+            0: JS_IDENTIFIER_BINDING@332..335
+              0: IDENT@332..335 "b2" [] [Whitespace(" ")]
+            1: (empty)
+            2: JS_INITIALIZER_CLAUSE@335..350
+              0: EQ@335..337 "=" [] [Whitespace(" ")]
+              1: JS_CALL_EXPRESSION@337..350
+                0: JS_IDENTIFIER_EXPRESSION@337..338
+                  0: JS_REFERENCE_IDENTIFIER@337..338
+                    0: IDENT@337..338 "f" [] []
+                1: QUESTIONDOT@338..340 "?." [] []
+                2: TS_TYPE_ARGUMENTS@340..348
+                  0: L_ANGLE@340..341 "<" [] []
+                  1: TS_TYPE_ARGUMENT_LIST@341..347
+                    0: TS_NUMBER_TYPE@341..347
+                      0: NUMBER_KW@341..347 "number" [] []
+                  2: R_ANGLE@347..348 ">" [] []
+                3: JS_CALL_ARGUMENTS@348..350
+                  0: L_PAREN@348..349 "(" [] []
+                  1: JS_CALL_ARGUMENT_LIST@349..349
+                  2: R_PAREN@349..350 ")" [] []
+      1: SEMICOLON@350..351 ";" [] []
+  3: EOF@351..352 "" [Newline("\n")] []
