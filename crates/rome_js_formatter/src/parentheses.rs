@@ -158,6 +158,7 @@ impl NeedsParentheses for JsAnyExpression {
             JsAnyExpression::TsTypeAssertionExpression(type_assertion) => {
                 type_assertion.needs_parentheses()
             }
+            JsAnyExpression::TsExpressionWithTypeArguments(_) => todo!(),
         }
     }
 
@@ -252,6 +253,7 @@ impl NeedsParentheses for JsAnyExpression {
             JsAnyExpression::TsTypeAssertionExpression(type_assertion) => {
                 type_assertion.needs_parentheses_with_parent(parent)
             }
+            JsAnyExpression::TsExpressionWithTypeArguments(_) => todo!(),
         }
     }
 }

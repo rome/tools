@@ -2786,6 +2786,38 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsNonNullAssertionEx
         FormatOwnedWithRule :: new (self , crate :: ts :: expressions :: non_null_assertion_expression :: FormatTsNonNullAssertionExpression :: default ())
     }
 }
+impl FormatRule<rome_js_syntax::TsExpressionWithTypeArguments>
+    for crate::ts::expressions::expression_with_type_arguments::FormatTsExpressionWithTypeArguments
+{
+    type Context = JsFormatContext;
+    #[inline(always)]
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::TsExpressionWithTypeArguments,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsExpressionWithTypeArguments>::fmt(self, node, f)
+    }
+}
+impl<'a> AsFormat<'a> for rome_js_syntax::TsExpressionWithTypeArguments {
+    type Format = FormatRefWithRule<
+        'a,
+        rome_js_syntax::TsExpressionWithTypeArguments,
+        crate::ts::expressions::expression_with_type_arguments::FormatTsExpressionWithTypeArguments,
+    >;
+    fn format(&'a self) -> Self::Format {
+        FormatRefWithRule :: new (self , crate :: ts :: expressions :: expression_with_type_arguments :: FormatTsExpressionWithTypeArguments :: default ())
+    }
+}
+impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsExpressionWithTypeArguments {
+    type Format = FormatOwnedWithRule<
+        rome_js_syntax::TsExpressionWithTypeArguments,
+        crate::ts::expressions::expression_with_type_arguments::FormatTsExpressionWithTypeArguments,
+    >;
+    fn into_format(self) -> Self::Format {
+        FormatOwnedWithRule :: new (self , crate :: ts :: expressions :: expression_with_type_arguments :: FormatTsExpressionWithTypeArguments :: default ())
+    }
+}
 impl FormatRule<rome_js_syntax::JsxTagExpression>
     for crate::jsx::expressions::tag_expression::FormatJsxTagExpression
 {

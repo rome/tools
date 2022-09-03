@@ -14,68 +14,183 @@ JsModule {
                         initializer: JsInitializerClause {
                             eq_token: EQ@7..9 "=" [] [Whitespace(" ")],
                             expression: TsExpressionWithTypeArguments {
-                                expression: JsComputedMemberExpression {
-                                    object: JsIdentifierExpression {
-                                        name: JsReferenceIdentifier {
-                                            value_token: IDENT@9..11 "fx" [] [],
-                                        },
+                                expression: JsIdentifierExpression {
+                                    name: JsReferenceIdentifier {
+                                        value_token: IDENT@9..11 "fx" [] [],
                                     },
-                                    optional_chain_token: missing (optional),
-                                    l_brack_token: L_BRACK@11..12 "[" [] [],
-                                    member: JsStringLiteralExpression {
-                                        value_token: JS_STRING_LITERAL@12..18 "'test'" [] [],
-                                    },
-                                    r_brack_token: R_BRACK@18..19 "]" [] [],
                                 },
                                 arguments: TsTypeArguments {
-                                    l_angle_token: L_ANGLE@19..20 "<" [] [],
+                                    l_angle_token: L_ANGLE@11..12 "<" [] [],
                                     ts_type_argument_list: TsTypeArgumentList [
                                         TsStringType {
-                                            string_token: STRING_KW@20..26 "string" [] [],
+                                            string_token: STRING_KW@12..18 "string" [] [],
                                         },
                                     ],
-                                    r_angle_token: R_ANGLE@26..27 ">" [] [],
+                                    r_angle_token: R_ANGLE@18..19 ">" [] [],
                                 },
                             },
                         },
                     },
                 ],
             },
-            semicolon_token: SEMICOLON@27..29 ";" [] [Whitespace(" ")],
+            semicolon_token: SEMICOLON@19..21 ";" [] [Whitespace(" ")],
+        },
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                kind: LET_KW@21..26 "let" [Newline("\n")] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@26..29 "f2" [] [Whitespace(" ")],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@29..31 "=" [] [Whitespace(" ")],
+                            expression: TsExpressionWithTypeArguments {
+                                expression: JsIdentifierExpression {
+                                    name: JsReferenceIdentifier {
+                                        value_token: IDENT@31..33 "fx" [] [],
+                                    },
+                                },
+                                arguments: TsTypeArguments {
+                                    l_angle_token: L_ANGLE@33..34 "<" [] [],
+                                    ts_type_argument_list: TsTypeArgumentList [
+                                        TsStringType {
+                                            string_token: STRING_KW@34..40 "string" [] [],
+                                        },
+                                        COMMA@40..42 "," [] [Whitespace(" ")],
+                                        TsNumberType {
+                                            number_token: NUMBER_KW@42..48 "number" [] [],
+                                        },
+                                    ],
+                                    r_angle_token: R_ANGLE@48..49 ">" [] [],
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@49..51 ";" [] [Whitespace(" ")],
+        },
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                kind: LET_KW@51..56 "let" [Newline("\n")] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@56..59 "f3" [] [Whitespace(" ")],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@59..61 "=" [] [Whitespace(" ")],
+                            expression: TsExpressionWithTypeArguments {
+                                expression: JsComputedMemberExpression {
+                                    object: JsIdentifierExpression {
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@61..63 "fx" [] [],
+                                        },
+                                    },
+                                    optional_chain_token: missing (optional),
+                                    l_brack_token: L_BRACK@63..64 "[" [] [],
+                                    member: JsStringLiteralExpression {
+                                        value_token: JS_STRING_LITERAL@64..70 "'test'" [] [],
+                                    },
+                                    r_brack_token: R_BRACK@70..71 "]" [] [],
+                                },
+                                arguments: TsTypeArguments {
+                                    l_angle_token: L_ANGLE@71..72 "<" [] [],
+                                    ts_type_argument_list: TsTypeArgumentList [
+                                        TsStringType {
+                                            string_token: STRING_KW@72..78 "string" [] [],
+                                        },
+                                    ],
+                                    r_angle_token: R_ANGLE@78..79 ">" [] [],
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@79..81 ";" [] [Whitespace(" ")],
         },
     ],
-    eof_token: EOF@29..31 "" [Newline("\n"), Newline("\n")] [],
+    eof_token: EOF@81..82 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..31
+0: JS_MODULE@0..82
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..29
-    0: JS_VARIABLE_STATEMENT@0..29
-      0: JS_VARIABLE_DECLARATION@0..27
+  2: JS_MODULE_ITEM_LIST@0..81
+    0: JS_VARIABLE_STATEMENT@0..21
+      0: JS_VARIABLE_DECLARATION@0..19
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
-        1: JS_VARIABLE_DECLARATOR_LIST@4..27
-          0: JS_VARIABLE_DECLARATOR@4..27
+        1: JS_VARIABLE_DECLARATOR_LIST@4..19
+          0: JS_VARIABLE_DECLARATOR@4..19
             0: JS_IDENTIFIER_BINDING@4..7
               0: IDENT@4..7 "f1" [] [Whitespace(" ")]
             1: (empty)
-            2: JS_INITIALIZER_CLAUSE@7..27
+            2: JS_INITIALIZER_CLAUSE@7..19
               0: EQ@7..9 "=" [] [Whitespace(" ")]
-              1: TS_EXPRESSION_WITH_TYPE_ARGUMENTS@9..27
-                0: JS_COMPUTED_MEMBER_EXPRESSION@9..19
-                  0: JS_IDENTIFIER_EXPRESSION@9..11
-                    0: JS_REFERENCE_IDENTIFIER@9..11
-                      0: IDENT@9..11 "fx" [] []
+              1: TS_EXPRESSION_WITH_TYPE_ARGUMENTS@9..19
+                0: JS_IDENTIFIER_EXPRESSION@9..11
+                  0: JS_REFERENCE_IDENTIFIER@9..11
+                    0: IDENT@9..11 "fx" [] []
+                1: TS_TYPE_ARGUMENTS@11..19
+                  0: L_ANGLE@11..12 "<" [] []
+                  1: TS_TYPE_ARGUMENT_LIST@12..18
+                    0: TS_STRING_TYPE@12..18
+                      0: STRING_KW@12..18 "string" [] []
+                  2: R_ANGLE@18..19 ">" [] []
+      1: SEMICOLON@19..21 ";" [] [Whitespace(" ")]
+    1: JS_VARIABLE_STATEMENT@21..51
+      0: JS_VARIABLE_DECLARATION@21..49
+        0: LET_KW@21..26 "let" [Newline("\n")] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATOR_LIST@26..49
+          0: JS_VARIABLE_DECLARATOR@26..49
+            0: JS_IDENTIFIER_BINDING@26..29
+              0: IDENT@26..29 "f2" [] [Whitespace(" ")]
+            1: (empty)
+            2: JS_INITIALIZER_CLAUSE@29..49
+              0: EQ@29..31 "=" [] [Whitespace(" ")]
+              1: TS_EXPRESSION_WITH_TYPE_ARGUMENTS@31..49
+                0: JS_IDENTIFIER_EXPRESSION@31..33
+                  0: JS_REFERENCE_IDENTIFIER@31..33
+                    0: IDENT@31..33 "fx" [] []
+                1: TS_TYPE_ARGUMENTS@33..49
+                  0: L_ANGLE@33..34 "<" [] []
+                  1: TS_TYPE_ARGUMENT_LIST@34..48
+                    0: TS_STRING_TYPE@34..40
+                      0: STRING_KW@34..40 "string" [] []
+                    1: COMMA@40..42 "," [] [Whitespace(" ")]
+                    2: TS_NUMBER_TYPE@42..48
+                      0: NUMBER_KW@42..48 "number" [] []
+                  2: R_ANGLE@48..49 ">" [] []
+      1: SEMICOLON@49..51 ";" [] [Whitespace(" ")]
+    2: JS_VARIABLE_STATEMENT@51..81
+      0: JS_VARIABLE_DECLARATION@51..79
+        0: LET_KW@51..56 "let" [Newline("\n")] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATOR_LIST@56..79
+          0: JS_VARIABLE_DECLARATOR@56..79
+            0: JS_IDENTIFIER_BINDING@56..59
+              0: IDENT@56..59 "f3" [] [Whitespace(" ")]
+            1: (empty)
+            2: JS_INITIALIZER_CLAUSE@59..79
+              0: EQ@59..61 "=" [] [Whitespace(" ")]
+              1: TS_EXPRESSION_WITH_TYPE_ARGUMENTS@61..79
+                0: JS_COMPUTED_MEMBER_EXPRESSION@61..71
+                  0: JS_IDENTIFIER_EXPRESSION@61..63
+                    0: JS_REFERENCE_IDENTIFIER@61..63
+                      0: IDENT@61..63 "fx" [] []
                   1: (empty)
-                  2: L_BRACK@11..12 "[" [] []
-                  3: JS_STRING_LITERAL_EXPRESSION@12..18
-                    0: JS_STRING_LITERAL@12..18 "'test'" [] []
-                  4: R_BRACK@18..19 "]" [] []
-                1: TS_TYPE_ARGUMENTS@19..27
-                  0: L_ANGLE@19..20 "<" [] []
-                  1: TS_TYPE_ARGUMENT_LIST@20..26
-                    0: TS_STRING_TYPE@20..26
-                      0: STRING_KW@20..26 "string" [] []
-                  2: R_ANGLE@26..27 ">" [] []
-      1: SEMICOLON@27..29 ";" [] [Whitespace(" ")]
-  3: EOF@29..31 "" [Newline("\n"), Newline("\n")] []
+                  2: L_BRACK@63..64 "[" [] []
+                  3: JS_STRING_LITERAL_EXPRESSION@64..70
+                    0: JS_STRING_LITERAL@64..70 "'test'" [] []
+                  4: R_BRACK@70..71 "]" [] []
+                1: TS_TYPE_ARGUMENTS@71..79
+                  0: L_ANGLE@71..72 "<" [] []
+                  1: TS_TYPE_ARGUMENT_LIST@72..78
+                    0: TS_STRING_TYPE@72..78
+                      0: STRING_KW@72..78 "string" [] []
+                  2: R_ANGLE@78..79 ">" [] []
+      1: SEMICOLON@79..81 ";" [] [Whitespace(" ")]
+  3: EOF@81..82 "" [Newline("\n")] []

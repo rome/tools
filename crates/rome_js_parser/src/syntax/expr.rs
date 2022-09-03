@@ -651,18 +651,13 @@ fn parse_member_expression_rest(
 
     while !p.at(EOF) {
         progress.assert_progressing(p);
-        let mut could_try_parse_type_arguments = true;
         lhs = match p.cur() {
-            T![.] => {
-                could_try_parse_type_arguments = false;
-                parse_static_member_expression(p, lhs, T![.]).unwrap()
-            }
+            T![.] => parse_static_member_expression(p, lhs, T![.]).unwrap(),
             // Don't parse out `[` as a member expression because it may as well be the start of a computed class member
             T!['['] if !context.is_in_ts_decorator() => {
                 parse_computed_member_expression(p, lhs, false).unwrap()
             }
             T![?.] if allow_optional_chain => {
-                could_try_parse_type_arguments = false;
                 let completed = if p.nth_at(1, T!['[']) {
                     parse_computed_member_expression(p, lhs, true).unwrap()
                 } else if is_nth_at_any_name(p, 1) {
@@ -681,7 +676,6 @@ fn parse_member_expression_rest(
                 completed
             }
             T![!] if !p.has_preceding_line_break() => {
-                could_try_parse_type_arguments = false;
                 // test ts ts_non_null_assertion_expression
                 // let a = { b: {} };
                 // a!;
@@ -706,23 +700,38 @@ fn parse_member_expression_rest(
                 non_null
             }
             BACKTICK => {
-                could_try_parse_type_arguments = false;
                 // test ts ts_optional_chain_call
                 // (<A, B>() => {})?.<A, B>();
-                let m = lhs.precede(p);
+                let m = match lhs.kind() {
+                    TS_EXPRESSION_WITH_TYPE_ARGUMENTS => lhs.undo_completion(p),
+                    _ => lhs.precede(p),
+                };
                 parse_template_literal(p, m, *in_optional_chain, true)
             }
-            _ => break,
-        };
-        if could_try_parse_type_arguments {
-            match parse_ts_type_arguments(p) {
-                Absent => {}
-                Present(_) => {
+            _ => {
+                if let Present(_) = parse_ts_type_arguments_in_expression(p) {
                     let new_marker = lhs.precede(p);
                     lhs = new_marker.complete(p, JsSyntaxKind::TS_EXPRESSION_WITH_TYPE_ARGUMENTS);
-                }
-            };
-        }
+                    continue;
+                    // match p.cur() {
+                    //     BACKTICK => {
+                    //         let m = lhs.precede(p);
+                    //         lhs = parse_template_literal(p, m, *in_optional_chain, true);
+                    //         continue;
+                    //     }
+                    //     T!['('] => {
+                    //         let m = lhs.precede(p);
+                    //         parse_call_arguments(p).ok();
+                    //         lhs = m.complete(p, JsSyntaxKind::JS_CALL_EXPRESSION);
+                    //         continue;
+                    //     }
+                    //     _ => {
+                    //     }
+                    // }
+                };
+                break;
+            }
+        };
     }
 
     lhs
@@ -758,27 +767,21 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
         return Present(m.complete(p, NEW_TARGET));
     }
 
-    let expression = parse_primary_expression(p, context.and_ts_type_assertion_allowed(false))
-        .or_add_diagnostic(p, expected_expression);
-
-    if let Some(lhs) = expression {
-        parse_member_expression_rest(p, lhs, context, false, &mut false);
+    if let Some(lhs) = parse_primary_expression(p, context)
+        .or_add_diagnostic(p, expected_expression)
+        .map(|expr| parse_member_expression_rest(p, expr, context, false, &mut false))
+    {
+        if let TS_EXPRESSION_WITH_TYPE_ARGUMENTS = lhs.kind() {
+            lhs.undo_completion(p).abandon(p)
+        };
     }
 
     // test ts ts_new_with_type_arguments
     // class Test<A, B, C> {}
     // new Test<A, B, C>();
-    let type_arguments = if TypeScript.is_supported(p) {
-        parse_ts_type_arguments_in_expression(p)
-    } else {
-        Absent
-    };
 
     if p.at(T!['(']) {
         parse_call_arguments(p).unwrap();
-    } else if let Present(type_arguments) = type_arguments {
-        let error = p.err_builder("A 'new' expression with type arguments must always be followed by a parenthesized argument list.").primary(type_arguments.range(p), "");
-        p.error(error);
     }
 
     Present(m.complete(p, JS_NEW_EXPRESSION))
@@ -1662,15 +1665,17 @@ fn parse_call_expression_rest(
     loop {
         lhs = parse_member_expression_rest(p, lhs, context, true, &mut in_optional_chain);
 
-        if p.at(T![?.]) {}
-
         if !matches!(p.cur(), T![?.] | T![<] | T![<<] | T!['(']) {
             break lhs;
         }
 
         // Cloning here is necessary because parsing out the type arguments may rewind in which
         // case we want to return the `lhs`.
-        let m = lhs.clone().precede(p);
+        let m = match lhs.kind() {
+            TS_EXPRESSION_WITH_TYPE_ARGUMENTS => lhs.clone().undo_completion(p),
+            _ => lhs.clone().precede(p),
+        };
+
         let start_pos = p.tokens.position();
         let optional_chain_call = p.eat(T![?.]);
         in_optional_chain = in_optional_chain || optional_chain_call;
@@ -1682,24 +1687,36 @@ fn parse_call_expression_rest(
         // (() => a)<A, B, C>();
         // type A<T> = T;
         // a<<T>(arg: T) => number, number, string>();
-        if TypeScript.is_supported(p) && matches!(p.cur(), T![<] | T![<<]) {
-            // rewinds automatically if not a valid type arguments
+        // if TypeScript.is_supported(p) && matches!(p.cur(), T![<] | T![<<]) {
+        //     // rewinds automatically if not a valid type arguments
+        //     let type_arguments = parse_ts_type_arguments_in_expression(p).ok();
+
+        //     if type_arguments.is_some() {
+        //         if p.at(BACKTICK) {
+        //             // test ts ts_tagged_template_literal
+        //             // html<A, B>`abcd`
+        //             // html<A, B>`abcd`._string
+        //             lhs = parse_template_literal(p, m, optional_chain_call, true);
+        //             continue;
+        //         }
+
+        //         parse_call_arguments(p).or_add_diagnostic(p, expected_parameters);
+        //         lhs = m.complete(p, JS_CALL_EXPRESSION);
+        //         continue;
+        //     }
+        // }
+        let type_arguments = if optional_chain_call {
             let type_arguments = parse_ts_type_arguments_in_expression(p).ok();
-
-            if type_arguments.is_some() {
-                if p.at(BACKTICK) {
-                    // test ts ts_tagged_template_literal
-                    // html<A, B>`abcd`
-                    // html<A, B>`abcd`._string
-                    lhs = parse_template_literal(p, m, optional_chain_call, true);
-                    continue;
-                }
-
-                parse_call_arguments(p).or_add_diagnostic(p, expected_parameters);
-                lhs = m.complete(p, JS_CALL_EXPRESSION);
+            if p.cur() == BACKTICK {
+                lhs = parse_template_literal(p, m, optional_chain_call, true);
                 continue;
             }
-        } else if p.at(T!['(']) {
+            type_arguments
+        } else {
+            None
+        };
+
+        if type_arguments.is_some() || p.at(T!['(']) {
             parse_call_arguments(p)
                 .expect("Expected parsed out arguments because the parser is positioned at '('");
             lhs = m.complete(p, JS_CALL_EXPRESSION);
