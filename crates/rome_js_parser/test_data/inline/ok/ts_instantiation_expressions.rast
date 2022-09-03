@@ -409,10 +409,10 @@ JsModule {
             semicolon_token: SEMICOLON@350..351 ";" [] [],
         },
     ],
-    eof_token: EOF@351..352 "" [Newline("\n")] [],
+    eof_token: EOF@351..381 "" [Newline("\n"), Comments("// const b3 = f<numbe ..."), Newline("\n")] [],
 }
 
-0: JS_MODULE@0..352
+0: JS_MODULE@0..381
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
   2: JS_MODULE_ITEM_LIST@0..351
@@ -680,4 +680,4 @@ JsModule {
                   1: JS_CALL_ARGUMENT_LIST@349..349
                   2: R_PAREN@349..350 ")" [] []
       1: SEMICOLON@350..351 ";" [] []
-  3: EOF@351..352 "" [Newline("\n")] []
+  3: EOF@351..381 "" [Newline("\n"), Comments("// const b3 = f<numbe ..."), Newline("\n")] []

@@ -43,14 +43,49 @@ JsModule {
             },
             semicolon_token: SEMICOLON@28..59 ";" [] [Whitespace("  "), Comments("// Relational operato ...")],
         },
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                kind: CONST_KW@59..66 "const" [Newline("\n")] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@66..69 "b1" [] [Whitespace(" ")],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@69..71 "=" [] [Whitespace(" ")],
+                            expression: JsCallExpression {
+                                callee: JsIdentifierExpression {
+                                    name: JsReferenceIdentifier {
+                                        value_token: IDENT@71..72 "f" [] [],
+                                    },
+                                },
+                                optional_chain_token: QUESTIONDOT@72..74 "?." [] [],
+                                type_arguments: TsTypeArguments {
+                                    l_angle_token: L_ANGLE@74..75 "<" [] [],
+                                    ts_type_argument_list: TsTypeArgumentList [
+                                        TsNumberType {
+                                            number_token: NUMBER_KW@75..81 "number" [] [],
+                                        },
+                                    ],
+                                    r_angle_token: R_ANGLE@81..82 ">" [] [],
+                                },
+                                arguments: missing (required),
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@82..107 ";" [] [Whitespace("  "), Comments("// Error, `(` expected")],
+        },
     ],
-    eof_token: EOF@59..60 "" [Newline("\n")] [],
+    eof_token: EOF@107..108 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..60
+0: JS_MODULE@0..108
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..59
+  2: JS_MODULE_ITEM_LIST@0..107
     0: JS_VARIABLE_STATEMENT@0..59
       0: JS_VARIABLE_DECLARATION@0..28
         0: CONST_KW@0..6 "const" [] [Whitespace(" ")]
@@ -78,7 +113,30 @@ JsModule {
                   2: R_ANGLE@27..28 ">" [] []
                   3: (empty)
       1: SEMICOLON@28..59 ";" [] [Whitespace("  "), Comments("// Relational operato ...")]
-  3: EOF@59..60 "" [Newline("\n")] []
+    1: JS_VARIABLE_STATEMENT@59..107
+      0: JS_VARIABLE_DECLARATION@59..82
+        0: CONST_KW@59..66 "const" [Newline("\n")] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATOR_LIST@66..82
+          0: JS_VARIABLE_DECLARATOR@66..82
+            0: JS_IDENTIFIER_BINDING@66..69
+              0: IDENT@66..69 "b1" [] [Whitespace(" ")]
+            1: (empty)
+            2: JS_INITIALIZER_CLAUSE@69..82
+              0: EQ@69..71 "=" [] [Whitespace(" ")]
+              1: JS_CALL_EXPRESSION@71..82
+                0: JS_IDENTIFIER_EXPRESSION@71..72
+                  0: JS_REFERENCE_IDENTIFIER@71..72
+                    0: IDENT@71..72 "f" [] []
+                1: QUESTIONDOT@72..74 "?." [] []
+                2: TS_TYPE_ARGUMENTS@74..82
+                  0: L_ANGLE@74..75 "<" [] []
+                  1: TS_TYPE_ARGUMENT_LIST@75..81
+                    0: TS_NUMBER_TYPE@75..81
+                      0: NUMBER_KW@75..81 "number" [] []
+                  2: R_ANGLE@81..82 ">" [] []
+                3: (empty)
+      1: SEMICOLON@82..107 ";" [] [Whitespace("  "), Comments("// Error, `(` expected")]
+  3: EOF@107..108 "" [Newline("\n")] []
 --
 error[SyntaxError]: expected an expression but instead found ';'
   ┌─ ts_instantiation_expressions1.ts:1:29
@@ -87,4 +145,12 @@ error[SyntaxError]: expected an expression but instead found ';'
   │                             ^ Expected an expression here
 
 --
+error[SyntaxError]: expected a ( but instead found ';'
+  ┌─ ts_instantiation_expressions1.ts:2:23
+  │
+2 │ const b1 = f?.<number>;  // Error, `(` expected
+  │                       ^ Expected a ( here
+
+--
 const a8 = f<number><number>;  // Relational operator error
+const b1 = f?.<number>;  // Error, `(` expected
