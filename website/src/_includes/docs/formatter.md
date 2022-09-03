@@ -219,5 +219,5 @@ Run the formatter and make sure that **the code that was ignored is still the sa
 
 [VS Code extension]: https://marketplace.visualstudio.com/items?itemName=rome.rome
 [release page]: https://github.com/rome/tools/releases
-[playground]: https://play.rome.tools/?lineWidth=80&indentStyle=tab&indentWidth=2&typescript=true&jsx=false#ZnVuY3Rpb24gLy8gc29tZXRoaW5nCiBhKGIsIGMpICB7CiAgbGV0IGEgPSAiZiI7Cn0KCmZ1bmN0aW9uIGEoYiwgYykgLy8gc29tZXRoaW5nIAp7CiAgICBsZXQgYSA9ICJmIjsKfQ==
+[playground]: https://play.rome.tools
 [command palette]: https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette
