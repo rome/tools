@@ -1674,7 +1674,7 @@ fn parse_call_expression_rest(
         // Cloning here is necessary because parsing out the type arguments may rewind in which
         // case we want to return the `lhs`.
         let m = match lhs.kind() {
-            TS_EXPRESSION_WITH_TYPE_ARGUMENTS => lhs.clone().undo_completion(p),
+            TS_EXPRESSION_WITH_TYPE_ARGUMENTS if !p.at(T![?.]) => lhs.clone().undo_completion(p),
             _ => lhs.clone().precede(p),
         };
 
