@@ -282,14 +282,101 @@ JsModule {
             },
             semicolon_token: SEMICOLON@236..254 ";" [] [Whitespace("  "), Comments("// () => number")],
         },
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                kind: CONST_KW@254..261 "const" [Newline("\n")] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@261..264 "a7" [] [Whitespace(" ")],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@264..266 "=" [] [Whitespace(" ")],
+                            expression: JsComputedMemberExpression {
+                                object: JsParenthesizedExpression {
+                                    l_paren_token: L_PAREN@266..267 "(" [] [],
+                                    expression: TsExpressionWithTypeArguments {
+                                        expression: JsIdentifierExpression {
+                                            name: JsReferenceIdentifier {
+                                                value_token: IDENT@267..268 "f" [] [],
+                                            },
+                                        },
+                                        arguments: TsTypeArguments {
+                                            l_angle_token: L_ANGLE@268..269 "<" [] [],
+                                            ts_type_argument_list: TsTypeArgumentList [
+                                                TsNumberType {
+                                                    number_token: NUMBER_KW@269..275 "number" [] [],
+                                                },
+                                            ],
+                                            r_angle_token: R_ANGLE@275..276 ">" [] [],
+                                        },
+                                    },
+                                    r_paren_token: R_PAREN@276..277 ")" [] [],
+                                },
+                                optional_chain_token: missing (optional),
+                                l_brack_token: L_BRACK@277..278 "[" [] [],
+                                member: JsStringLiteralExpression {
+                                    value_token: JS_STRING_LITERAL@278..281 "'g'" [] [],
+                                },
+                                r_brack_token: R_BRACK@281..282 "]" [] [],
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@282..283 ";" [] [],
+        },
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                kind: CONST_KW@283..290 "const" [Newline("\n")] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@290..293 "a6" [] [Whitespace(" ")],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@293..295 "=" [] [Whitespace(" ")],
+                            expression: JsBinaryExpression {
+                                left: JsBinaryExpression {
+                                    left: JsIdentifierExpression {
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@295..296 "f" [] [],
+                                        },
+                                    },
+                                    operator_token: L_ANGLE@296..297 "<" [] [],
+                                    right: JsIdentifierExpression {
+                                        name: JsReferenceIdentifier {
+                                            value_token: IDENT@297..303 "number" [] [],
+                                        },
+                                    },
+                                },
+                                operator_token: R_ANGLE@303..304 ">" [] [],
+                                right: JsArrayExpression {
+                                    l_brack_token: L_BRACK@304..305 "[" [] [],
+                                    elements: JsArrayElementList [
+                                        JsStringLiteralExpression {
+                                            value_token: JS_STRING_LITERAL@305..308 "'g'" [] [],
+                                        },
+                                    ],
+                                    r_brack_token: R_BRACK@308..309 "]" [] [],
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: SEMICOLON@309..325 ";" [] [Whitespace("  "), Comments("// type Error")],
+        },
     ],
-    eof_token: EOF@254..255 "" [Newline("\n")] [],
+    eof_token: EOF@325..326 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..255
+0: JS_MODULE@0..326
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..254
+  2: JS_MODULE_ITEM_LIST@0..325
     0: JS_VARIABLE_STATEMENT@0..21
       0: JS_VARIABLE_DECLARATION@0..19
         0: LET_KW@0..4 "let" [] [Whitespace(" ")]
@@ -471,4 +558,61 @@ JsModule {
                       0: NUMBER_KW@229..235 "number" [] []
                   2: R_ANGLE@235..236 ">" [] []
       1: SEMICOLON@236..254 ";" [] [Whitespace("  "), Comments("// () => number")]
-  3: EOF@254..255 "" [Newline("\n")] []
+    7: JS_VARIABLE_STATEMENT@254..283
+      0: JS_VARIABLE_DECLARATION@254..282
+        0: CONST_KW@254..261 "const" [Newline("\n")] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATOR_LIST@261..282
+          0: JS_VARIABLE_DECLARATOR@261..282
+            0: JS_IDENTIFIER_BINDING@261..264
+              0: IDENT@261..264 "a7" [] [Whitespace(" ")]
+            1: (empty)
+            2: JS_INITIALIZER_CLAUSE@264..282
+              0: EQ@264..266 "=" [] [Whitespace(" ")]
+              1: JS_COMPUTED_MEMBER_EXPRESSION@266..282
+                0: JS_PARENTHESIZED_EXPRESSION@266..277
+                  0: L_PAREN@266..267 "(" [] []
+                  1: TS_EXPRESSION_WITH_TYPE_ARGUMENTS@267..276
+                    0: JS_IDENTIFIER_EXPRESSION@267..268
+                      0: JS_REFERENCE_IDENTIFIER@267..268
+                        0: IDENT@267..268 "f" [] []
+                    1: TS_TYPE_ARGUMENTS@268..276
+                      0: L_ANGLE@268..269 "<" [] []
+                      1: TS_TYPE_ARGUMENT_LIST@269..275
+                        0: TS_NUMBER_TYPE@269..275
+                          0: NUMBER_KW@269..275 "number" [] []
+                      2: R_ANGLE@275..276 ">" [] []
+                  2: R_PAREN@276..277 ")" [] []
+                1: (empty)
+                2: L_BRACK@277..278 "[" [] []
+                3: JS_STRING_LITERAL_EXPRESSION@278..281
+                  0: JS_STRING_LITERAL@278..281 "'g'" [] []
+                4: R_BRACK@281..282 "]" [] []
+      1: SEMICOLON@282..283 ";" [] []
+    8: JS_VARIABLE_STATEMENT@283..325
+      0: JS_VARIABLE_DECLARATION@283..309
+        0: CONST_KW@283..290 "const" [Newline("\n")] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATOR_LIST@290..309
+          0: JS_VARIABLE_DECLARATOR@290..309
+            0: JS_IDENTIFIER_BINDING@290..293
+              0: IDENT@290..293 "a6" [] [Whitespace(" ")]
+            1: (empty)
+            2: JS_INITIALIZER_CLAUSE@293..309
+              0: EQ@293..295 "=" [] [Whitespace(" ")]
+              1: JS_BINARY_EXPRESSION@295..309
+                0: JS_BINARY_EXPRESSION@295..303
+                  0: JS_IDENTIFIER_EXPRESSION@295..296
+                    0: JS_REFERENCE_IDENTIFIER@295..296
+                      0: IDENT@295..296 "f" [] []
+                  1: L_ANGLE@296..297 "<" [] []
+                  2: JS_IDENTIFIER_EXPRESSION@297..303
+                    0: JS_REFERENCE_IDENTIFIER@297..303
+                      0: IDENT@297..303 "number" [] []
+                1: R_ANGLE@303..304 ">" [] []
+                2: JS_ARRAY_EXPRESSION@304..309
+                  0: L_BRACK@304..305 "[" [] []
+                  1: JS_ARRAY_ELEMENT_LIST@305..308
+                    0: JS_STRING_LITERAL_EXPRESSION@305..308
+                      0: JS_STRING_LITERAL@305..308 "'g'" [] []
+                  2: R_BRACK@308..309 "]" [] []
+      1: SEMICOLON@309..325 ";" [] [Whitespace("  "), Comments("// type Error")]
+  3: EOF@325..326 "" [Newline("\n")] []
