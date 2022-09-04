@@ -12,7 +12,7 @@ jobs:
   deploy:
     if: ${{ !github.event.pull_request.head.repo.fork }}
     runs-on: ubuntu-latest
-    environment: aws
+    environment: netlify-playground
     name: Deploy Playground (Preview)
     steps:
       - uses: actions/checkout@master
@@ -43,19 +43,20 @@ jobs:
       - run: BASE_URL="/${{ steps.sha.outputs.sha }}/" pnpm --prefix website/playground build:js
 
       - name: Publish
-        uses: jakejarvis/s3-sync-action@master
-        env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          SOURCE_DIR: 'website/playground/dist' # optional: defaults to entire repository
-          DEST_DIR: ${{ steps.sha.outputs.sha }}
+        id: publish
+        uses: jsmrcaga/action-netlify-deploy@v1.1.0
+        with:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_DEPLOY_TO_PROD: false
+          deploy_alias: ${{ steps.sha.outputs.sha }}
+          build_directory: 'website/playground/dist'
 
       - name: Set Playground URL
         if: github.event_name == 'pull_request'
         id: url
         run: |
-          url="[Playground for commit ${{ steps.sha.outputs.sha }}](https://play.rome.tools/${{ steps.sha.outputs.sha }}/)"
+          url="[Playground for commit ${{ steps.sha.outputs.sha }}](${{ steps.publish.outputs.NETLIFY_LIVE_URL }}/)"
           echo "::set-output name=url::$url"
 
       - name: Get the PR number
