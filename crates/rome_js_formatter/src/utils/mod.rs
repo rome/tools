@@ -196,12 +196,13 @@ impl Format<JsFormatContext> for FormatWithSemicolon<'_> {
         let mut recording = f.start_recording();
         write!(recording, [self.content])?;
 
-        let is_unknown = recording
-            .stop()
-            .last()
-            .map_or(false, |last| match last.last_element() {
-                Some(FormatElement::Verbatim(elem)) => elem.is_unknown(),
-                _ => false,
+        let written = recording.stop();
+
+        let is_unknown = written
+            .start_signal(SignalKind::Verbatim)
+            .map_or(false, |signal| match signal {
+                Signal::StartVerbatim(kind) => kind.is_unknown(),
+                _ => unreachable!(),
             });
 
         if let Some(semicolon) = self.semicolon {
@@ -209,6 +210,7 @@ impl Format<JsFormatContext> for FormatWithSemicolon<'_> {
         } else if !is_unknown {
             text(";").fmt(f)?;
         }
+
         Ok(())
     }
 }

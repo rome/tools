@@ -860,9 +860,11 @@ function() {
     #[test]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"long_obj =
-  <div style={{ i: 'dont', use: 'bootstrap', and: 'instead', use: 'massive', objects }}>hello world</div>
-
+        let src = r#"
+new Test()
+  .test()
+  .test([, 0])
+  .test();
 
 "#;
         let syntax = SourceType::jsx();
@@ -871,7 +873,8 @@ function() {
 
         let result = format_node(options.clone(), &tree.syntax())
             .unwrap()
-            .print();
+            .print()
+            .unwrap();
         check_reformat(CheckReformatParams {
             root: &tree.syntax(),
             text: result.as_code(),
@@ -881,7 +884,12 @@ function() {
         });
         assert_eq!(
             result.as_code(),
-            "type Example = {\n\t[A in B]: T;\n} & {\n\t[A in B]: T;\n};\n"
+            r#"[
+	5,
+	7234932436,
+    // comment 3
+];
+"#
         );
     }
 

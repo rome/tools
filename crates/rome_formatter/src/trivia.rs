@@ -1,10 +1,11 @@
 //! Provides builders for comments and skipped token trivia.
 
+use crate::format_element::signal::VerbatimKind;
 use crate::prelude::*;
 use crate::{
     comments::{CommentKind, CommentStyle},
     write, Argument, Arguments, CstFormatContext, FormatRefWithRule, GroupId, SourceComment,
-    TextRange, VecBuffer,
+    TextRange,
 };
 use rome_rowan::{Language, SyntaxNode, SyntaxToken};
 #[cfg(debug_assertions)]
@@ -422,13 +423,21 @@ where
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
         write!(
             f,
-            [
-                if_group_breaks(&Arguments::from(&self.content)).with_group_id(self.group_id),
-                // Print the trivia otherwise
-                if_group_fits_on_line(&format_skipped_token_trivia(self.token))
-                    .with_group_id(self.group_id),
-            ]
-        )
+            [if_group_breaks(&Arguments::from(&self.content)).with_group_id(self.group_id),]
+        )?;
+
+        if f.comments().has_skipped(self.token) {
+            // Print the trivia otherwise
+            write!(
+                f,
+                [
+                    if_group_fits_on_line(&format_skipped_token_trivia(self.token))
+                        .with_group_id(self.group_id)
+                ]
+            )?;
+        }
+
+        Ok(())
     }
 }
 
@@ -533,17 +542,13 @@ impl<L: Language> FormatSkippedTokenTrivia<'_, L> {
         let skipped_range =
             skipped_range.unwrap_or_else(|| TextRange::empty(self.token.text_range().start()));
 
-        let verbatim = {
-            let mut buffer = VecBuffer::new(f.state_mut());
-            write!(buffer, [syntax_token_text_slice(self.token, skipped_range)])?;
-
-            FormatElement::Verbatim(Verbatim::new_verbatim(
-                buffer.into_vec().into_boxed_slice(),
-                skipped_range.len(),
-            ))
-        };
-
-        f.write_element(verbatim)?;
+        f.write_element(FormatElement::Signal(Signal::StartVerbatim(
+            VerbatimKind::Verbatim {
+                length: skipped_range.len(),
+            },
+        )))?;
+        write!(f, [syntax_token_text_slice(self.token, skipped_range)])?;
+        f.write_element(FormatElement::Signal(Signal::EndVerbatim))?;
 
         // Write whitespace separator between skipped/last comment and token
         if dangling_comments.is_empty() {

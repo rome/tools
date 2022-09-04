@@ -7,8 +7,6 @@ repository = "https://github.com/rome/tools"
 description = "WebAssembly bindings to the Rome Workspace API"
 license = "MIT"
 
-[package.metadata.wasm-pack.profile.dev]
-wasm-opt = ['-O1']
 
 [lib]
 crate-type = ["cdylib", "rlib"]

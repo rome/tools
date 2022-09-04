@@ -1,5 +1,4 @@
 use super::{write, Arguments, FormatElement};
-use crate::format_element::List;
 use crate::{Format, FormatResult, FormatState};
 use std::any::{Any, TypeId};
 use std::fmt::Debug;
@@ -23,9 +22,9 @@ pub trait Buffer {
     /// let mut state = FormatState::new(SimpleFormatContext::default());
     /// let mut buffer = VecBuffer::new(&mut state);
     ///
-    /// buffer.write_element(FormatElement::Text( Text::Static { text: "test"})).unwrap();
+    /// buffer.write_element(FormatElement::Text(Text::Static { text: "test"})).unwrap();
     ///
-    /// assert_eq!(buffer.into_element(), FormatElement::Text( Text::Static { text: "test"}));
+    /// assert_eq!(buffer.into_vec(), vec![FormatElement::Text(Text::Static { text: "test" })]);
     /// ```
     ///
     fn write_element(&mut self, element: FormatElement) -> FormatResult<()>;
@@ -51,7 +50,7 @@ pub trait Buffer {
     ///
     /// buffer.write_fmt(format_args!(text("Hello World"))).unwrap();
     ///
-    /// assert_eq!(buffer.into_element(), FormatElement::Text( Text::Static { text: "Hello World"}));
+    /// assert_eq!(buffer.into_vec(), vec![FormatElement::Text(Text::Static { text: "Hello World" })]);
     /// ```
     fn write_fmt(mut self: &mut Self, arguments: Arguments<Self::Context>) -> FormatResult<()> {
         write(&mut self, arguments)
@@ -182,16 +181,11 @@ impl<'a, Context> VecBuffer<'a, Context> {
     }
 
     /// Creates a buffer with the specified capacity
-    pub fn with_capacity(capacity: usize, context: &'a mut FormatState<Context>) -> Self {
+    pub fn with_capacity(capacity: usize, state: &'a mut FormatState<Context>) -> Self {
         Self {
-            state: context,
+            state,
             elements: Vec::with_capacity(capacity),
         }
-    }
-
-    /// Consumes the buffer and returns its content as a [`FormatElement`]
-    pub fn into_element(mut self) -> FormatElement {
-        self.take_element()
     }
 
     /// Consumes the buffer and returns the written [`FormatElement]`s as a vector.
@@ -200,13 +194,8 @@ impl<'a, Context> VecBuffer<'a, Context> {
     }
 
     /// Takes the elements without consuming self
-    pub fn take_element(&mut self) -> FormatElement {
-        if self.len() == 1 {
-            // Safety: Guaranteed by len check above
-            self.elements.pop().unwrap()
-        } else {
-            FormatElement::List(List::new(std::mem::take(&mut self.elements)))
-        }
+    pub fn take_vec(&mut self) -> Vec<FormatElement> {
+        std::mem::take(&mut self.elements)
     }
 }
 
@@ -228,10 +217,7 @@ impl<Context> Buffer for VecBuffer<'_, Context> {
     type Context = Context;
 
     fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
-        match element {
-            FormatElement::List(list) => self.elements.extend(list.into_vec()),
-            element => self.elements.push(element),
-        }
+        self.elements.push(element);
 
         Ok(())
     }
@@ -274,9 +260,6 @@ Make sure that you take and restore the snapshot in order and that this snapshot
 /// use rome_formatter::{FormatState, Formatted, PreambleBuffer, SimpleFormatContext, VecBuffer, write};
 /// use rome_formatter::prelude::*;
 ///
-/// let mut state = FormatState::new(SimpleFormatContext::default());
-/// let mut buffer = VecBuffer::new(&mut state);
-///
 /// struct Preamble;
 ///
 /// impl Format<SimpleFormatContext> for Preamble {
@@ -285,14 +268,21 @@ Make sure that you take and restore the snapshot in order and that this snapshot
 ///     }
 /// }
 ///
-/// let mut with_preamble = PreambleBuffer::new(&mut buffer, Preamble);
+/// # fn main() -> FormatResult<()> {
+/// let mut state = FormatState::new(SimpleFormatContext::default());
+/// let mut buffer = VecBuffer::new(&mut state);
 ///
-/// write!(&mut with_preamble, [text("this text will be on a new line")]).unwrap();
+/// {
+///     let mut with_preamble = PreambleBuffer::new(&mut buffer, Preamble);
 ///
-/// drop(with_preamble);
+///     write!(&mut with_preamble, [text("this text will be on a new line")])?;
+/// }
 ///
-/// let formatted = Formatted::new(buffer.into_element(), SimpleFormatContext::default());
-/// assert_eq!("# heading\nthis text will be on a new line", formatted.print().as_code());
+/// let formatted = Formatted::new(Document::from(buffer.into_vec()), SimpleFormatContext::default());
+/// assert_eq!("# heading\nthis text will be on a new line", formatted.print()?.as_code());
+///
+/// # Ok(())
+/// # }
 /// ```
 ///
 /// The pre-amble does not get written if no content is written to the buffer.
@@ -301,9 +291,6 @@ Make sure that you take and restore the snapshot in order and that this snapshot
 /// use rome_formatter::{FormatState, Formatted, PreambleBuffer, SimpleFormatContext, VecBuffer, write};
 /// use rome_formatter::prelude::*;
 ///
-/// let mut state = FormatState::new(SimpleFormatContext::default());
-/// let mut buffer = VecBuffer::new(&mut state);
-///
 /// struct Preamble;
 ///
 /// impl Format<SimpleFormatContext> for Preamble {
@@ -312,11 +299,17 @@ Make sure that you take and restore the snapshot in order and that this snapshot
 ///     }
 /// }
 ///
-/// let mut with_preamble = PreambleBuffer::new(&mut buffer, Preamble);
-/// drop(with_preamble);
+/// # fn main() -> FormatResult<()> {
+/// let mut state = FormatState::new(SimpleFormatContext::default());
+/// let mut buffer = VecBuffer::new(&mut state);
+/// {
+///     let mut with_preamble = PreambleBuffer::new(&mut buffer, Preamble);
+/// }
 ///
-/// let formatted = Formatted::new(buffer.into_element(), SimpleFormatContext::default());
-/// assert_eq!("", formatted.print().as_code());
+/// let formatted = Formatted::new(Document::from(buffer.into_vec()), SimpleFormatContext::default());
+/// assert_eq!("", formatted.print()?.as_code());
+/// # Ok(())
+/// # }
 /// ```
 pub struct PreambleBuffer<'buf, Preamble, Context> {
     /// The wrapped buffer
@@ -351,16 +344,12 @@ where
     type Context = Context;
 
     fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
-        if element.is_empty() {
-            Ok(())
-        } else {
-            if self.empty {
-                write!(self.inner, [&self.preamble])?;
-                self.empty = false;
-            }
-
-            self.inner.write_element(element)
+        if self.empty {
+            write!(self.inner, [&self.preamble])?;
+            self.empty = false;
         }
+
+        self.inner.write_element(element)
     }
 
     fn elements(&self) -> &[FormatElement] {
@@ -459,6 +448,7 @@ pub trait BufferExtensions: Buffer + Sized {
     /// use rome_formatter::prelude::*;
     /// use rome_formatter::{write, format, SimpleFormatContext};
     ///
+    /// # fn main() -> FormatResult<()> {
     /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
     ///     let mut recording = f.start_recording();
     ///
@@ -479,10 +469,11 @@ pub trait BufferExtensions: Buffer + Sized {
     ///     );
     ///
     ///     Ok(())
-    /// })]).unwrap();
+    /// })])?;
     ///
-    /// assert_eq!(formatted.print().as_code(), "ABCD");
-    ///
+    /// assert_eq!(formatted.print()?.as_code(), "ABCD");
+    /// # Ok(())
+    /// # }
     /// ```
     #[must_use]
     fn start_recording(&mut self) -> Recording<Self> {
@@ -494,7 +485,7 @@ pub trait BufferExtensions: Buffer + Sized {
     where
         I: IntoIterator<Item = FormatElement>,
     {
-        for element in elements {
+        for element in elements.into_iter() {
             self.write_element(element)?;
         }
 

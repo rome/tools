@@ -34,7 +34,7 @@ pub trait FormatOptional<Context> {
     ///     none_token.with_or_empty(|token, f| write!(f, [token]))
     /// ]).unwrap();
     ///
-    /// assert!(none_formatted.into_format_element().is_empty());
+    /// assert!(none_formatted.into_document().is_empty());
     ///
     /// let some_token = Some(MyFormat);
     /// assert_eq!(
@@ -112,20 +112,23 @@ pub trait MemoizeFormat<Context> {
     ///     }
     /// }
     ///
+    /// # fn main() -> FormatResult<()> {
     /// let normal = MyFormat::new();
     ///
     /// // Calls `format` for everytime the object gets formatted
     /// assert_eq!(
     ///     "Formatted 1 times. Formatted 2 times.",
-    ///     format!(SimpleFormatContext::default(), [normal, space(), normal]).unwrap().print().as_code()
+    ///     format!(SimpleFormatContext::default(), [normal, space(), normal])?.print()?.as_code()
     /// );
     ///
     /// // Memoized memoizes the result and calls `format` only once.
     /// let memoized = normal.memoized();
     /// assert_eq!(
     ///     "Formatted 3 times. Formatted 3 times.",
-    ///     format![SimpleFormatContext::default(), [memoized, space(), memoized]].unwrap().print().as_code()
+    ///     format![SimpleFormatContext::default(), [memoized, space(), memoized]]?.print()?.as_code()
     /// );
+    /// # Ok(())
+    /// # }
     /// ```
     ///
     fn memoized(self) -> Memoized<Self, Context>
@@ -142,7 +145,7 @@ impl<T, Context> MemoizeFormat<Context> for T where T: Format<Context> {}
 #[derive(Debug)]
 pub struct Memoized<F, Context> {
     inner: F,
-    memory: RefCell<Option<FormatResult<FormatElement>>>,
+    memory: RefCell<Option<FormatResult<Option<FormatElement>>>>,
     options: PhantomData<Context>,
 }
 
@@ -193,6 +196,7 @@ where
     ///     }
     /// }
     ///
+    /// # fn main() -> FormatResult<()> {
     /// let content = format_with(|f| {
     ///     let mut counter = Counter::default().memoized();
     ///     let counter_content = counter.inspect(f)?;
@@ -207,19 +211,22 @@ where
     /// });
     ///
     ///
-    /// let formatted = format!(SimpleFormatContext::default(), [content]).unwrap();
-    /// assert_eq!("Counter:\n\tCount: 0\nCount: 0\n", formatted.print().as_code())
+    /// let formatted = format!(SimpleFormatContext::default(), [content])?;
+    /// assert_eq!("Counter:\n\tCount: 0\nCount: 0\n", formatted.print()?.as_code());
+    /// # Ok(())
+    /// # }
     ///
     /// ```
-    pub fn inspect(&mut self, f: &mut Formatter<Context>) -> FormatResult<&FormatElement> {
+    pub fn inspect(&mut self, f: &mut Formatter<Context>) -> FormatResult<&[FormatElement]> {
         let result = self
             .memory
             .get_mut()
             .get_or_insert_with(|| f.intern(&self.inner));
 
         match result.as_ref() {
-            Ok(FormatElement::Interned(interned)) => Ok(interned.deref()),
-            Ok(other) => Ok(other),
+            Ok(Some(FormatElement::Interned(interned))) => Ok(interned.deref()),
+            Ok(Some(other)) => Ok(std::slice::from_ref(other)),
+            Ok(None) => Ok(&[]),
             Err(error) => Err(*error),
         }
     }
@@ -234,11 +241,12 @@ where
         let result = memory.get_or_insert_with(|| f.intern(&self.inner));
 
         match result {
-            Ok(elements) => {
+            Ok(Some(elements)) => {
                 f.write_element(elements.clone())?;
 
                 Ok(())
             }
+            Ok(None) => Ok(()),
             Err(err) => Err(*err),
         }
     }
