@@ -1291,7 +1291,8 @@ pub(crate) fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyn
 
 #[inline]
 pub fn can_follow_type_arguments_in_expr(cur_kind: JsSyntaxKind) -> bool {
-    matches!(cur_kind, 
+    matches!(
+        cur_kind,
         T!['(']
         | BACKTICK
          // These tokens can't follow in a call expression, nor can they start an
