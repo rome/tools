@@ -7,10 +7,10 @@ use super::typescript::*;
 use crate::event::rewrite_events;
 use crate::event::RewriteParseEvents;
 use crate::lexer::{LexContext, ReLexContext};
-use crate::parser::ToDiagnostic;
 use crate::parser::expected_node;
 use crate::parser::rewrite_parser::RewriteCompletedMarker;
 use crate::parser::rewrite_parser::{RewriteMarker, RewriteParser};
+use crate::parser::ToDiagnostic;
 use crate::parser::{expected_token, ParserProgress, RecoveryResult};
 use crate::syntax::assignment::parse_assignment;
 use crate::syntax::assignment::AssignmentExprPrecedence;
@@ -1725,10 +1725,9 @@ fn parse_call_expression_rest(
         };
 
         if type_arguments.is_some() || p.at(T!['(']) {
-            parse_call_arguments(p).or_add_diagnostic(p, |p, range| {
-                expected_node("(", range).to_diagnostic(p)
-            });
-                // .expect("Expected parsed out arguments because the parser is positioned at '('");
+            parse_call_arguments(p)
+                .or_add_diagnostic(p, |p, range| expected_node("(", range).to_diagnostic(p));
+            // .expect("Expected parsed out arguments because the parser is positioned at '('");
             lhs = m.complete(p, JS_CALL_EXPRESSION);
             continue;
         }

@@ -1,5 +1,6 @@
-use crate::prelude::*;
-use rome_js_syntax::TsExpressionWithTypeArguments;
+use crate::{parentheses::NeedsParentheses, prelude::*};
+use rome_formatter::write;
+use rome_js_syntax::{TsExpressionWithTypeArguments, TsExpressionWithTypeArgumentsFields};
 use rome_rowan::AstNode;
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsExpressionWithTypeArguments;
@@ -9,6 +10,17 @@ impl FormatNodeRule<TsExpressionWithTypeArguments> for FormatTsExpressionWithTyp
         node: &TsExpressionWithTypeArguments,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        format_verbatim_node(node.syntax()).fmt(f)
+        let TsExpressionWithTypeArgumentsFields {
+            expression,
+            arguments,
+        } = node.as_fields();
+
+        write![f, [expression.format(), arguments.format()]]
+    }
+}
+
+impl NeedsParentheses for TsExpressionWithTypeArguments {
+    fn needs_parentheses_with_parent(&self, _: &rome_js_syntax::JsSyntaxNode) -> bool {
+        false
     }
 }

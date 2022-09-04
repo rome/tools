@@ -10,14 +10,19 @@ pub struct FormatTsTypeofType;
 impl FormatNodeRule<TsTypeofType> for FormatTsTypeofType {
     fn fmt_fields(&self, node: &TsTypeofType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsTypeofTypeFields {
-            type_arguments: _,
+            type_arguments,
             typeof_token,
             expression_name,
         } = node.as_fields();
 
         write![
             f,
-            [typeof_token.format(), space(), expression_name.format()]
+            [
+                typeof_token.format(),
+                space(),
+                expression_name.format(),
+                type_arguments.format()
+            ]
         ]
     }
 

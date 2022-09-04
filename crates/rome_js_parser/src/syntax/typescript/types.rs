@@ -517,8 +517,8 @@ pub(crate) fn parse_ts_name(p: &mut Parser) -> ParsedSyntax {
 // test ts ts_typeof_type
 // let a = "test";
 // type B = typeof a;
-// type T21 = typeof Array<string>; 
-// type A<U> = InstanceType<typeof Array<U>>; 
+// type T21 = typeof Array<string>;
+// type A<U> = InstanceType<typeof Array<U>>;
 fn parse_ts_typeof_type(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![typeof]) {
         return Absent;
@@ -527,7 +527,9 @@ fn parse_ts_typeof_type(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     p.expect(T![typeof]);
     parse_ts_name(p).or_add_diagnostic(p, expected_identifier);
-    parse_ts_type_arguments(p).ok();
+    if !p.has_preceding_line_break() {
+        parse_ts_type_arguments(p).ok();
+    }
 
     Present(m.complete(p, TS_TYPEOF_TYPE))
 }
@@ -1235,9 +1237,9 @@ fn parse_ts_type_predicate(p: &mut Parser) -> ParsedSyntax {
 }
 
 // test ts ts_instantiation_expressions
-// let f1 = fx<string>; 
-// let f2 = fx<string, number>; 
-// let f3 = fx['test']<string>; 
+// let f1 = fx<string>;
+// let f2 = fx<string, number>;
+// let f3 = fx['test']<string>;
 // const a2 = f.g<number>;  // () => number
 // const a3 = f<number>.g;  // <U>() => U
 // const a4 = f<number>.g<number>;  // () => number
@@ -1262,7 +1264,6 @@ fn parse_ts_type_predicate(p: &mut Parser) -> ParsedSyntax {
 // test_err ts ts_instantiation_expressions1
 // const a8 = f<number><number>;  // Relational operator error
 // const b1 = f?.<number>;  // Error, `(` expected
-
 
 pub(crate) fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyntax {
     // Don't parse type arguments in JS because the syntax is ambiguous

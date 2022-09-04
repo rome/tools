@@ -1,5 +1,5 @@
-use rome_js_parser::{parse_module, parse};
-use rome_js_syntax::{JsAnyRoot, source_type};
+use rome_js_parser::{parse, parse_module};
+use rome_js_syntax::{source_type, JsAnyRoot};
 
 fn main() {
     let source = "const b3 = f<t>?.();";
