@@ -773,7 +773,7 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
         return Present(m.complete(p, NEW_TARGET));
     }
 
-    if let Some(lhs) = parse_primary_expression(p, context)
+    if let Some(lhs) = parse_primary_expression(p, context.and_ts_type_assertion_allowed(false))
         .or_add_diagnostic(p, expected_expression)
         .map(|expr| parse_member_expression_rest(p, expr, context, false, &mut false))
     {
