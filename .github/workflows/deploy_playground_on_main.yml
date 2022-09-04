@@ -16,10 +16,13 @@ jobs:
     name: Deploy Playground
     steps:
       - uses: actions/checkout@master
+
       - uses: actions/setup-node@v3
         with:
           node-version: '14'
+
       - uses: jetli/wasm-pack-action@v0.3.0
+
       - name: Cache pnpm modules
         uses: actions/cache@v3
         with:
@@ -27,18 +30,21 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-
+
       - name: Build WASM module for the web
         run: wasm-pack build --out-dir ../../npm/wasm-web --target web --release --scope rometools crates/rome_wasm
+
       - uses: pnpm/action-setup@v2.1.0
         with:
           version: 7
           run_install: |
             args: [--prefix website/playground]
+
       - run: pnpm --prefix website/playground build:js
+
+      - name: Install netlify-cli
+        run: npm i -g netlify-cli
+
       - name: Publish
-        uses: jsmrcaga/action-netlify-deploy@v1.1.0
-        with:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          NETLIFY_DEPLOY_TO_PROD: true
-          build_directory: 'website/playground/dist'
+        run: |
+          netlify deploy --dir=website/playground/dist --prod --site playground-rometools --auth ${{ secrets.NETLIFY_AUTH_TOKEN }}
