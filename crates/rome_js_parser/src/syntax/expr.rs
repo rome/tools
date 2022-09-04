@@ -8,7 +8,6 @@ use crate::event::rewrite_events;
 use crate::event::RewriteParseEvents;
 use crate::lexer::{LexContext, ReLexContext};
 use crate::parser::expected_node;
-use crate::parser::rewrite_parser::RewriteCompletedMarker;
 use crate::parser::rewrite_parser::{RewriteMarker, RewriteParser};
 use crate::parser::ToDiagnostic;
 use crate::parser::{expected_token, ParserProgress, RecoveryResult};
@@ -22,7 +21,7 @@ use crate::syntax::function::{
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::expected_simple_assignment_target;
 use crate::syntax::js_parse_error::{
-    expected_expression, expected_identifier, expected_parameters, invalid_assignment_error,
+    expected_expression, expected_identifier,  invalid_assignment_error,
     private_names_only_allowed_on_left_side_of_in_expression,
 };
 use crate::syntax::jsx::parse_jsx_tag_expression;

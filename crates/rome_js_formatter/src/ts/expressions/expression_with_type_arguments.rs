@@ -1,7 +1,6 @@
 use crate::{parentheses::NeedsParentheses, prelude::*};
 use rome_formatter::write;
 use rome_js_syntax::{TsExpressionWithTypeArguments, TsExpressionWithTypeArgumentsFields};
-use rome_rowan::AstNode;
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsExpressionWithTypeArguments;
 impl FormatNodeRule<TsExpressionWithTypeArguments> for FormatTsExpressionWithTypeArguments {
