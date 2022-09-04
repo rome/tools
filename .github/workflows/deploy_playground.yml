@@ -40,23 +40,25 @@ jobs:
         id: sha
         run: echo "::set-output name=sha::$(git rev-parse --short HEAD)"
 
-      - run: BASE_URL="/${{ steps.sha.outputs.sha }}/" pnpm --prefix website/playground build:js
+      - run: pnpm --prefix website/playground build:js
+
+      - name: Install netlify-cli
+        run: npm i -g netlify-cli
 
       - name: Publish
         id: publish
-        uses: jsmrcaga/action-netlify-deploy@v1.1.0
-        with:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-          NETLIFY_DEPLOY_TO_PROD: false
-          deploy_alias: ${{ steps.sha.outputs.sha }}
-          build_directory: 'website/playground/dist'
+        run: |
+          OUT=$(netlify deploy --dir=website/playground/dist --alias ${{ steps.sha.outputs.sha }} --site playground-rometools --auth ${{ secrets.NETLIFY_AUTH_TOKEN }})
+          echo "$OUT"
+
+          URL=$(echo "$OUT" | grep -Eo "https://(.*?)--playground-rometools.netlify.app")
+          echo "::set-output name=url::$URL"
 
       - name: Set Playground URL
         if: github.event_name == 'pull_request'
         id: url
         run: |
-          url="[Playground for commit ${{ steps.sha.outputs.sha }}](${{ steps.publish.outputs.NETLIFY_LIVE_URL }}/)"
+          url="[Playground for commit ${{ steps.sha.outputs.sha }}](${{ steps.publish.outputs.url }}/)"
           echo "::set-output name=url::$url"
 
       - name: Get the PR number
