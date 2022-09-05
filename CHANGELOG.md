@@ -34,6 +34,7 @@ Rome daemon server.
   }
 }
 ```
+- fixed a problem that was incorrectly turning off rules in certain circumstances
 
 ### Formatter
 
