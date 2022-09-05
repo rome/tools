@@ -4,7 +4,6 @@ use crate::{Format, FormatResult, FormatState};
 use std::any::{Any, TypeId};
 use std::fmt::Debug;
 use std::ops::{Deref, DerefMut};
-use std::ptr::NonNull;
 
 /// A trait for writing or formatting into [FormatElement]-accepting buffers or streams.
 pub trait Buffer {
