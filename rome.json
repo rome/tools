@@ -4,7 +4,7 @@
 			"recommended": true,
 			"js": {
 				"noDeadCode": "error",
-				"useCamelCase": "error"
+				"useCamelCase": "off"
 			}
 		}
 	}
