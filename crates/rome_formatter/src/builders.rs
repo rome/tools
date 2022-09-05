@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::{
-    format_element, write, Argument, Arguments, BufferSnapshot, FormatState, GroupId,
-    PreambleBuffer, TextRange, TextSize,
+    format_element, write, Argument, Arguments, BufferSnapshot, FormatState, GroupId, TextRange,
+    TextSize,
 };
 use crate::{Buffer, VecBuffer};
 use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTokenText, TextLen};
@@ -2122,27 +2122,26 @@ where
     /// that appear before the node in the input source.
     pub fn entry<L: Language>(&mut self, node: &SyntaxNode<L>, content: &dyn Format<Context>) {
         self.result = self.result.and_then(|_| {
-            let mut buffer = PreambleBuffer::new(
-                self.fmt,
-                format_with(|f| {
-                    if self.has_elements {
-                        if get_lines_before(node) > 1 {
-                            write!(f, [empty_line()])?;
-                        } else {
-                            self.separator.fmt(f)?;
-                        }
-                    }
+            if self.has_elements {
+                if get_lines_before(node) > 1 {
+                    write!(self.fmt, [empty_line()])?;
+                } else {
+                    self.separator.fmt(self.fmt)?;
+                }
+            }
 
-                    Ok(())
-                }),
-            );
+            self.has_elements = true;
 
-            write!(buffer, [content])?;
-
-            self.has_elements = self.has_elements || buffer.did_write_preamble();
-
-            Ok(())
+            write!(self.fmt, [content])
         });
+    }
+
+    pub fn entry_no_separator(&mut self, content: &dyn Format<Context>) {
+        self.result = self.result.and_then(|_| {
+            self.has_elements = true;
+
+            write!(self.fmt, [content])
+        })
     }
 
     /// Adds an iterator of entries to the output. Each entry is a `(node, content)` tuple.

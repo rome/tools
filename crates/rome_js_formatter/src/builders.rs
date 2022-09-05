@@ -444,30 +444,16 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
                 ])
                 .fmt(f)?,
                 DelimitedMode::SoftBlockSpaces(_) => {
-                    let mut is_empty = true;
-
-                    let format_content = format_once(|f| {
-                        let mut buffer = f.inspect(|element| {
-                            if !element.is_empty() {
-                                is_empty = false
-                            }
-                        });
-
-                        write!(
-                            buffer,
-                            [
+                    write!(
+                        f,
+                        [
+                            soft_line_indent_or_space(&format_args![
                                 open_token_trailing_trivia,
-                                format_content,
-                                close_token_leading_trivia
-                            ]
-                        )
-                    });
-
-                    soft_line_indent_or_space(&format_content).fmt(f)?;
-
-                    if !is_empty {
-                        soft_line_break_or_space().fmt(f)?;
-                    }
+                                format_content, close_token_leading_trivia
+                            ]),
+                            soft_line_break_or_space()
+                        ]
+                    )?;
                 }
             };
 

@@ -15,12 +15,16 @@ impl FormatNodeRule<JsNamedImportSpecifiers> for FormatJsNamedImportSpecifiers {
             r_curly_token,
         } = node.as_fields();
 
-        write!(
-            f,
-            [
-                format_delimited(&l_curly_token?, &specifiers.format(), &r_curly_token?,)
-                    .soft_block_spaces()
-            ]
-        )
+        if specifiers.is_empty() {
+            write!(f, [l_curly_token.format(), r_curly_token.format()])
+        } else {
+            write!(
+                f,
+                [
+                    format_delimited(&l_curly_token?, &specifiers.format(), &r_curly_token?,)
+                        .soft_block_spaces()
+                ]
+            )
+        }
     }
 }
