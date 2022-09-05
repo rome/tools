@@ -14,6 +14,7 @@ use tokio::{
     net::windows::named_pipe::{ClientOptions, NamedPipeClient, NamedPipeServer, ServerOptions},
     time,
 };
+use tracing::Instrument;
 
 /// Name of the global named pipe used to communicate with the server daemon
 const PIPE_NAME: &str = r"\\.\pipe\rome-service";
@@ -65,20 +66,32 @@ pub(crate) async fn open_socket() -> io::Result<Option<NamedPipeClient>> {
     }
 }
 
-/// Ensure the server daemon is running and ready to receive connections and
-/// print the global pipe name in the standard output
-pub(crate) async fn print_socket() -> io::Result<()> {
+/// Ensure the server daemon is running and ready to receive connections
+///
+/// Returns false if the daemon process was already running or true if it had
+/// to be started
+pub(crate) async fn ensure_daemon() -> io::Result<bool> {
+    let mut did_spawn = false;
+
     loop {
         match open_socket().await {
             Ok(Some(_)) => break,
             Ok(None) => {
                 spawn_daemon()?;
+                did_spawn = true;
                 time::sleep(Duration::from_millis(50)).await;
             }
             Err(err) => return Err(err),
         }
     }
 
+    Ok(did_spawn)
+}
+
+/// Ensure the server daemon is running and ready to receive connections and
+/// print the global pipe name in the standard output
+pub(crate) async fn print_socket() -> io::Result<()> {
+    ensure_daemon().await?;
     println!("{PIPE_NAME}");
     Ok(())
 }
@@ -96,7 +109,8 @@ pub(crate) async fn run_daemon(factory: ServerFactory) -> io::Result<Infallible>
         swap(&mut prev_server, &mut next_server);
 
         let connection = factory.create();
-        tokio::spawn(run_server(connection, next_server));
+        let span = tracing::trace_span!("run_server");
+        tokio::spawn(run_server(connection, next_server).instrument(span.or_current()));
     }
 }
 

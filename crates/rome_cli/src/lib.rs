@@ -1,3 +1,7 @@
+#![doc = include_str!("../README.md")]
+//!
+//! # Module
+//!
 //! This is where the main CLI session starts. The module is responsible
 //! to parse commands and arguments, redirect the execution of the commands and
 //! execute the traversal of directory and files, based on the command that were passed.
@@ -13,6 +17,7 @@ mod execute;
 mod metrics;
 mod panic;
 mod reports;
+mod service;
 mod termination;
 mod traversal;
 
@@ -22,6 +27,7 @@ pub use reports::{
     formatter::{FormatterReport, FormatterReportFileDetail, FormatterReportSummary},
     Report, ReportDiagnostic, ReportDiff, ReportErrorKind, ReportKind,
 };
+pub use service::{open_transport, SocketTransport};
 pub use termination::Termination;
 
 /// Global context for an execution of the CLI
@@ -75,6 +81,13 @@ impl<'app> CliSession<'app> {
             Some("check") if !is_empty => crate::commands::check::check(self),
             Some("ci") if !is_empty => crate::commands::ci::ci(self),
             Some("format") if !is_empty => crate::commands::format::format(self),
+
+            Some("start") => crate::commands::daemon::start(self),
+            Some("stop") => crate::commands::daemon::stop(self),
+
+            // Internal commands
+            Some("__run_server") => crate::commands::daemon::run_server(),
+            Some("__print_socket") => crate::commands::daemon::print_socket(),
 
             // Print the help for known commands called without any arguments, and exit with an error
             Some(cmd @ ("check" | "ci" | "format")) => {

@@ -20,7 +20,7 @@ use super::{
     SupportsFeatureParams, UpdateSettingsParams,
 };
 
-pub(super) struct WorkspaceClient<T> {
+pub struct WorkspaceClient<T> {
     transport: Mutex<T>,
     request_id: AtomicU64,
 }
@@ -30,7 +30,7 @@ pub trait WorkspaceTransport {
     fn receive(&mut self) -> Result<Vec<u8>, TransportError>;
 }
 
-#[derive(Serialize)]
+#[derive(Debug, Serialize)]
 struct JsonRpcRequest<P> {
     jsonrpc: &'static str,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -39,7 +39,7 @@ struct JsonRpcRequest<P> {
     params: P,
 }
 
-#[derive(Deserialize)]
+#[derive(Debug, Deserialize)]
 struct JsonRpcResponse<'a, R> {
     #[allow(dead_code)]
     jsonrpc: &'a str,
@@ -48,14 +48,14 @@ struct JsonRpcResponse<'a, R> {
     status: JsonRpcResult<R>,
 }
 
-#[derive(Deserialize)]
+#[derive(Debug, Deserialize)]
 #[serde(untagged)]
 enum JsonRpcResult<R> {
     Ok { result: R },
     Err { error: JsonRpcError },
 }
 
-#[derive(Deserialize)]
+#[derive(Debug, Deserialize)]
 struct JsonRpcError {
     #[allow(dead_code)]
     code: i64,
@@ -63,14 +63,14 @@ struct JsonRpcError {
     data: Option<RomeError>,
 }
 
-#[derive(Deserialize)]
+#[derive(Debug, Deserialize)]
 struct InitializeResult {}
 
 impl<T> WorkspaceClient<T>
 where
     T: WorkspaceTransport + RefUnwindSafe + Send + Sync,
 {
-    pub(super) fn new(transport: T) -> Result<Self, RomeError> {
+    pub fn new(transport: T) -> Result<Self, RomeError> {
         let client = Self {
             transport: Mutex::new(transport),
             request_id: AtomicU64::new(0),
@@ -125,6 +125,10 @@ where
                 None => Err(RomeError::from(TransportError::RPCError(error.message))),
             },
         }
+    }
+
+    pub fn shutdown(self) -> Result<(), RomeError> {
+        self.request("rome/shutdown", ())
     }
 }
 

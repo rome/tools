@@ -13,6 +13,7 @@ use tokio::{
     process::{Child, Command},
     time,
 };
+use tracing::Instrument;
 
 /// Returns the filesystem path of the global socket used to communicate with
 /// the server daemon
@@ -77,9 +78,11 @@ pub(crate) async fn open_socket() -> io::Result<Option<UnixStream>> {
     }
 }
 
-/// Ensure the server daemon is running and ready to receive connections and
-/// print the global socket name in the standard output
-pub(crate) async fn print_socket() -> io::Result<()> {
+/// Ensure the server daemon is running and ready to receive connections
+///
+/// Returns false if the daemon process was already running or true if it had
+/// to be started
+pub(crate) async fn ensure_daemon() -> io::Result<bool> {
     let mut current_child: Option<Child> = None;
     let mut last_error = None;
 
@@ -87,10 +90,9 @@ pub(crate) async fn print_socket() -> io::Result<()> {
     for _ in 0..10 {
         // Try to open a connection on the global socket
         match try_connect().await {
-            // The connection is open and ready => exit to printing the socket name
+            // The connection is open and ready
             Ok(_) => {
-                println!("{}", get_socket_name().display());
-                return Ok(());
+                return Ok(current_child.is_some());
             }
 
             // There's no process listening on the global socket
@@ -137,6 +139,14 @@ pub(crate) async fn print_socket() -> io::Result<()> {
     }))
 }
 
+/// Ensure the server daemon is running and ready to receive connections and
+/// print the global socket name in the standard output
+pub(crate) async fn print_socket() -> io::Result<()> {
+    ensure_daemon().await?;
+    println!("{}", get_socket_name().display());
+    Ok(())
+}
+
 /// Start listening on the global socket and accepting connections with the
 /// provided [ServerFactory]
 pub(crate) async fn run_daemon(factory: ServerFactory) -> io::Result<Infallible> {
@@ -152,7 +162,8 @@ pub(crate) async fn run_daemon(factory: ServerFactory) -> io::Result<Infallible>
     loop {
         let (stream, _) = listener.accept().await?;
         let connection = factory.create();
-        tokio::spawn(run_server(connection, stream));
+        let span = tracing::trace_span!("run_server");
+        tokio::spawn(run_server(connection, stream).instrument(span.or_current()));
     }
 }
 

@@ -17,6 +17,7 @@ use std::collections::HashMap;
 use std::path::PathBuf;
 use std::sync::Arc;
 use std::sync::RwLock;
+use tokio::sync::Notify;
 use tower_lsp::lsp_types;
 use tower_lsp::lsp_types::Url;
 use tracing::{error, info, trace};
@@ -43,10 +44,16 @@ pub(crate) struct Session {
 
     documents: RwLock<HashMap<lsp_types::Url, Document>>,
     url_interner: RwLock<UrlInterner>,
+
+    cancellation: Arc<Notify>,
 }
 
 impl Session {
-    pub(crate) fn new(client: tower_lsp::Client, workspace: Arc<dyn Workspace>) -> Self {
+    pub(crate) fn new(
+        client: tower_lsp::Client,
+        workspace: Arc<dyn Workspace>,
+        cancellation: Arc<Notify>,
+    ) -> Self {
         let client_capabilities = RwLock::new(Default::default());
         let documents = Default::default();
         let url_interner = Default::default();
@@ -63,6 +70,7 @@ impl Session {
             fs: DynRef::Owned(Box::new(OsFileSystem)),
             configuration,
             root_uri,
+            cancellation,
         }
     }
 
@@ -228,5 +236,10 @@ impl Session {
         } else {
             trace!("Cannot read configuration from the client");
         }
+    }
+
+    /// Broadcast a shutdown signal to all active connections
+    pub(crate) fn broadcast_shutdown(&self) {
+        self.cancellation.notify_one();
     }
 }

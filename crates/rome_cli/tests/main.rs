@@ -1485,7 +1485,7 @@ fn run_cli<'app>(
     console: DynRef<'app, dyn Console>,
     args: Arguments,
 ) -> Result<(), Termination> {
-    use rome_bin::SocketTransport;
+    use rome_cli::SocketTransport;
     use rome_lsp::ServerFactory;
     use rome_service::{workspace, WorkspaceRef};
     use tokio::{

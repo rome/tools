@@ -19,15 +19,14 @@ documentation = """
     -p rome_console \
     -p rome_*parser \
     -p rome_rowan
-    -p rome_bin
     --no-deps
 """
 bench_parser = "run -p xtask_bench --release -- --feature parser"
 bench_formatter = "run -p xtask_bench --release -- --feature formatter"
 bench_analyzer = "run -p xtask_bench --release -- --feature analyzer"
 coverage = "run -p xtask_coverage --profile=release-with-debug --"
-rome-cli = "run -p rome_bin --release --"
-rome-cli-dev = "run -p rome_bin --"
+rome-cli = "run -p rome_cli --release --"
+rome-cli-dev = "run -p rome_cli --"
 
 [profile.release]
 lto = true

@@ -18,7 +18,7 @@ function getSocket(command: string): Promise<string> {
 			if (code === 0) {
 				resolve(pipeName.trimEnd());
 			} else {
-				reject(code);
+				reject(new Error(`Command '${command} __print_socket' exited with code ${code}`));
 			}
 		});
 	});
@@ -26,7 +26,7 @@ function getSocket(command: string): Promise<string> {
 
 /**
  * Ensure the Rome daemon server is running and create a Socket connected to the RPC channel
- * 
+ *
  * @param command Path to the Rome daemon binary
  * @returns Socket instance connected to the daemon
  */
