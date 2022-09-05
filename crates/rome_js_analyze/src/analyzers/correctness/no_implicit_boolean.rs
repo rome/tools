@@ -70,6 +70,7 @@ impl Rule for NoImplicitBoolean {
         let n = ctx.query();
 
         Some(RuleDiagnostic::new(
+            rule_category!(),
             n.range(),
             markup! {
                 "Use explicit boolean values for boolean JSX props."

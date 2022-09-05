@@ -160,7 +160,7 @@ mod tests {
     use crate::{
         AtomicInterner, FileSystem, MemoryFileSystem, PathInterner, RomePath, TraversalContext,
     };
-    use rome_diagnostics::file::FileId;
+    use rome_diagnostics::{file::FileId, v2::Category};
 
     #[test]
     fn file_read_write() {
@@ -225,8 +225,11 @@ mod tests {
                 &self.interner
             }
 
-            fn push_diagnostic(&self, file_id: FileId, code: &'static str, message: String) {
-                panic!("unexpected error {code:?} in file {file_id:?}: {message}")
+            fn push_diagnostic(&self, file_id: FileId, code: &'static Category, message: String) {
+                panic!(
+                    "unexpected error {:?} in file {file_id:?}: {message}",
+                    code.name()
+                )
             }
 
             fn can_handle(&self, _: &RomePath) -> bool {

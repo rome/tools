@@ -1,6 +1,7 @@
 use std::collections::BTreeMap;
 
 use anyhow::{Context, Ok, Result};
+use case::CaseExt;
 use proc_macro2::TokenStream;
 use quote::{format_ident, quote};
 use xtask::{glue::fs2, project_root};
@@ -90,11 +91,11 @@ fn generate_group(category: &'static str, group: &str) -> Result<()> {
             .to_str()
             .context("could not convert file name to string")?;
 
-        let rule_name = to_camel_case(file_name)?;
+        let rule_type = file_name.to_camel();
 
-        let key = rule_name.clone();
+        let key = rule_type.clone();
         let module_name = format_ident!("{}", file_name);
-        let rule_name = format_ident!("{}", rule_name);
+        let rule_type = format_ident!("{}", rule_type);
 
         rules.insert(
             key,
@@ -103,7 +104,7 @@ fn generate_group(category: &'static str, group: &str) -> Result<()> {
                     mod #module_name;
                 },
                 quote! {
-                    self::#module_name::#rule_name
+                    self::#module_name::#rule_type
                 },
             ),
         );

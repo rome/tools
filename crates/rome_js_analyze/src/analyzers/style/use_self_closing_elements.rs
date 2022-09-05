@@ -77,6 +77,7 @@ impl Rule for UseSelfClosingElements {
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic::new(
+            rule_category!(),
             ctx.query().range(),
             markup! {
                 "JSX elements without children should be marked as self-closing. In JSX, it is valid for any element to be self-closing."

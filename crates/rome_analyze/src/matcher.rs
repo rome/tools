@@ -156,7 +156,7 @@ where
 #[cfg(test)]
 mod tests {
     use rome_console::codespan::Severity;
-    use rome_diagnostics::{file::FileId, Diagnostic};
+    use rome_diagnostics::{file::FileId, v2::category, Diagnostic};
     use rome_rowan::{
         raw_language::{RawLanguage, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
         AstNode, TextRange, TextSize, TriviaPiece, TriviaPieceKind,
@@ -212,7 +212,7 @@ mod tests {
                             // This is a random category for testing that's
                             // pretty much guaranteed to never be emitted by
                             // the analyzer
-                            "args/fileNotFound",
+                            category!("args/fileNotFound"),
                             "test_suppression",
                         )
                         .primary(span, ""),
@@ -358,19 +358,19 @@ mod tests {
             diagnostics.as_slice(),
             &[
                 (
-                    String::from("suppressions/invalidGroup"),
+                    category!("suppressions/invalidGroup"),
                     TextRange::new(TextSize::from(47), TextSize::from(62))
                 ),
                 (
-                    String::from("args/fileNotFound"),
+                    category!("args/fileNotFound"),
                     TextRange::new(TextSize::from(63), TextSize::from(74))
                 ),
                 (
-                    String::from("suppressions/invalidRule"),
+                    category!("suppressions/invalidRule"),
                     TextRange::new(TextSize::from(76), TextSize::from(96))
                 ),
                 (
-                    String::from("args/fileNotFound"),
+                    category!("args/fileNotFound"),
                     TextRange::new(TextSize::from(97), TextSize::from(108))
                 ),
             ]

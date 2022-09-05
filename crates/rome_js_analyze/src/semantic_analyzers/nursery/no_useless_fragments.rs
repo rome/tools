@@ -124,6 +124,7 @@ impl Rule for NoUselessFragments {
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
         Some(RuleDiagnostic::new(
+            rule_category!(),
             node.syntax().text_trimmed_range(),
             markup! {
                 "Avoid using unnecessary "<Emphasis>"Fragment"</Emphasis>"."

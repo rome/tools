@@ -72,6 +72,7 @@ impl Rule for UseWhile {
         let r_paren_range = node.r_paren_token().unwrap().text_trimmed_range();
 
         Some(RuleDiagnostic::new(
+            rule_category!(),
             for_range.cover(r_paren_range),
             markup! {
                 "Use "<Emphasis>"while"</Emphasis>" loops instead of "<Emphasis>"for"</Emphasis>" loops."

@@ -61,11 +61,13 @@ define_dategories! {
     "internalError/panic",
     "io/skippedFile",
     "io/unhandledFile",
+    "parse",
     "suppressions/invalidGroup",
     "suppressions/invalidRule",
     // Legacy codes
-    "SyntaxError",
     "IO",
     "Lint",
     "Format",
+    // Used in tests
+    "SemanticTests",
 }

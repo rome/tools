@@ -68,6 +68,7 @@ impl Rule for UseSingleCaseStatement {
         let n = ctx.query();
 
         Some(RuleDiagnostic::new(
+            rule_category!(),
             n.consequent().range(),
             markup! {
                 "A switch case should only have a single statement. If you want more, then wrap it in a block."

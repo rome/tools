@@ -70,6 +70,7 @@ impl Rule for NoUnreachable {
 
     fn diagnostic(_: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let mut diagnostic = RuleDiagnostic::new(
+            rule_category!(),
             state.text_trimmed_range,
             markup! {
                 "This code is unreachable"

@@ -72,7 +72,7 @@ impl Rule for NoRenderReturnValue {
 
     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
-        Some(RuleDiagnostic::new(
+        Some(RuleDiagnostic::new(rule_category!(),
             node.syntax().text_trimmed_range(),
             markup! {
                 "Do not depend on the value returned by the function "<Emphasis>"ReactDOM.render()"</Emphasis>"."

@@ -217,7 +217,7 @@ fn lint(
             // The configuration allows to change the severity of the diagnostics emitted by rules.
             let severity = rules
                 .as_ref()
-                .and_then(|rules| rules.get_severity_from_code(diagnostic.code()?.as_str()))
+                .and_then(|rules| rules.get_severity_from_code(diagnostic.code()?.name()))
                 .unwrap_or(Severity::Error);
 
             let mut diagnostic = diagnostic.into_diagnostic(severity);

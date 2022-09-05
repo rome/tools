@@ -4,6 +4,7 @@ use crate::registry::{RuleLanguage, RuleSuppressions};
 use crate::{AnalysisFilter, AnalyzerDiagnostic, Phase, Phases, Queryable, RuleRegistry};
 use rome_console::fmt::Display;
 use rome_console::{markup, MarkupBuf};
+use rome_diagnostics::v2::Category;
 use rome_diagnostics::{file::FileId, Applicability, Severity};
 use rome_diagnostics::{DiagnosticTag, Footer, Span};
 use rome_rowan::{BatchMutation, Language, TextRange};
@@ -142,7 +143,7 @@ pub trait RuleMeta {
 macro_rules! declare_rule {
     ( $( #[doc = $doc:literal] )+ $vis:vis $id:ident {
         version: $version:literal,
-        name: $name:literal,
+        name: $name:tt,
         $( $key:ident: $value:expr, )*
     } ) => {
         $( #[doc = $doc] )*
@@ -151,6 +152,11 @@ macro_rules! declare_rule {
         impl $crate::RuleMeta for $id {
             const METADATA: $crate::RuleMetadata =
                 $crate::RuleMetadata::new($version, $name, concat!( $( $doc, "\n", )* )) $( .$key($value) )*;
+        }
+
+        #[allow(unused_macros)]
+        macro_rules! rule_category {
+            () => { super::group_category!( $name ) };
         }
     };
 }
@@ -170,18 +176,25 @@ pub trait RuleGroup {
 /// and implement the [RuleGroup] trait for it
 #[macro_export]
 macro_rules! declare_group {
-    ( $vis:vis $id:ident { name: $name:literal, rules: [ $( $rule:ty, )* ] } ) => {
+    ( $vis:vis $id:ident { name: $name:tt, rules: [ $( $( $rule:ident )::* , )* ] } ) => {
         $vis enum $id {}
 
         impl $crate::RuleGroup for $id {
-            type Language = <( $( $rule, )* ) as $crate::GroupLanguage>::Language;
+            type Language = <( $( $( $rule )::* , )* ) as $crate::GroupLanguage>::Language;
 
             const NAME: &'static str = $name;
 
             fn push_rules(registry: &mut $crate::RuleRegistry<Self::Language>, filter: &$crate::AnalysisFilter) {
-                $( if filter.match_rule::<Self, $rule>() { registry.push::<Self, $rule>(); } )*
+                $( if filter.match_rule::<Self, $( $rule )::*>() { registry.push::<Self, $( $rule )::*>(); } )*
             }
         }
+
+        #[allow(unused_macros)]
+        macro_rules! group_category {
+            ( $rule_name:tt ) => { $crate::category_concat!( "lint", $name, $rule_name ) };
+        }
+
+        pub(self) use group_category;
     };
 }
 
@@ -318,6 +331,7 @@ pub trait Rule: RuleMeta {
 
 /// Diagnostic object returned by a single analysis rule
 pub struct RuleDiagnostic {
+    pub(crate) category: &'static Category,
     pub(crate) span: TextRange,
     pub(crate) title: MarkupBuf,
     pub(crate) summary: Option<String>,
@@ -332,8 +346,9 @@ pub struct RuleDiagnostic {
 impl RuleDiagnostic {
     /// Creates a new [`RuleDiagnostic`] with a severity and title that will be
     /// used in a builder-like way to modify labels.
-    pub fn new(span: impl Span, title: impl Display) -> Self {
+    pub fn new(category: &'static Category, span: impl Span, title: impl Display) -> Self {
         Self {
+            category,
             span: span.as_range(),
             title: markup!({ title }).to_owned(),
             summary: None,
@@ -430,13 +445,8 @@ impl RuleDiagnostic {
     /// Convert this [`RuleDiagnostic`] into an instance of [`AnalyzerDiagnostic`] by
     /// injecting the name of the rule that emitted it and the ID of the file
     /// the rule was being run on
-    pub(crate) fn into_analyzer_diagnostic(
-        self,
-        file_id: FileId,
-        code: String,
-        code_link: String,
-    ) -> AnalyzerDiagnostic {
-        AnalyzerDiagnostic::from_rule_diagnostic(file_id, code, code_link, self)
+    pub(crate) fn into_analyzer_diagnostic(self, file_id: FileId) -> AnalyzerDiagnostic {
+        AnalyzerDiagnostic::from_rule_diagnostic(file_id, self)
     }
 }
 

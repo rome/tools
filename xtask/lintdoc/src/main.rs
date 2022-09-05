@@ -455,7 +455,7 @@ fn assert_lint(
         } else {
             bail!(format!(
                 "analysis returned an unexpected diagnostic, code snippet:\n\n{:?}\n\n{}",
-                diag.code.unwrap_or_default(),
+                diag.code.map_or("", |code| code.name()),
                 code
             ));
         }
@@ -487,8 +487,10 @@ fn assert_lint(
 
         let result = analyze(FileId::zero(), &root, filter, |signal| {
             if let Some(diag) = signal.diagnostic() {
-                let code = format!("lint/{group}/{rule}");
-                let severity = settings.get_severity_from_rule_code(&code).expect(
+                let category = diag.code().expect("linter diagnostic has no code");
+                let severity = settings
+                    .get_severity_from_rule_code(category.name())
+                    .expect(
                     "If you see this error, it means you need to run cargo codegen-configuration",
                 );
                 let mut diag = diag.into_diagnostic(severity);
@@ -497,7 +499,7 @@ fn assert_lint(
                     diag.suggestions.push(action.into());
                 }
 
-                let res = write_diagnostic(&*code, diag);
+                let res = write_diagnostic(code, diag);
 
                 // Abort the analysis on error
                 if let Err(err) = res {

@@ -145,10 +145,7 @@ impl<'a> Display for DiagnosticPrinter<'a> {
 
 impl v2::Diagnostic for DiagnosticPrinter<'_> {
     fn category(&self) -> Option<&Category> {
-        self.d.code.as_deref().map(|code| {
-            code.parse()
-                .unwrap_or_else(|()| panic!("code {code:?} is not a valid diagnostic category"))
-        })
+        self.d.code
     }
 
     fn severity(&self) -> v2::Severity {
@@ -196,9 +193,7 @@ impl v2::Diagnostic for DiagnosticPrinter<'_> {
         for suggestion in &self.d.suggestions {
             let applicability = match suggestion.applicability {
                 Applicability::Always => "Safe fix",
-                Applicability::MaybeIncorrect
-                | Applicability::HasPlaceholders
-                | Applicability::Unspecified => "Suggested fix",
+                Applicability::MaybeIncorrect => "Suggested fix",
             };
 
             match suggestion.style {
@@ -254,15 +249,6 @@ impl v2::Diagnostic for DiagnosticPrinter<'_> {
                         },
                     )?;
                 }
-                SuggestionStyle::HideCode => {
-                    visitor.record_log(
-                        LogCategory::Info,
-                        &markup! {
-                            {applicability}": "{suggestion.msg}"\n"
-                        },
-                    )?;
-                }
-                SuggestionStyle::DontShow => {}
             }
         }
 
@@ -301,6 +287,14 @@ impl v2::Diagnostic for DiagnosticPrinter<'_> {
             tags |= DiagnosticTags::INTERNAL;
         }
 
+        if self.d.tag.map_or(false, |tag| tag.is_deprecated()) {
+            tags |= DiagnosticTags::DEPRECATED_CODE;
+        }
+
+        if self.d.tag.map_or(false, |tag| tag.is_unnecessary()) {
+            tags |= DiagnosticTags::UNNECESSARY_CODE;
+        }
+
         tags
     }
 }
@@ -310,7 +304,11 @@ mod tests {
     use rome_console::{codespan::Severity, markup, BufferConsole, ConsoleExt};
     use rome_text_edit::{TextRange, TextSize};
 
-    use crate::{file::SimpleFile, v2::FileId, Applicability, Diagnostic};
+    use crate::{
+        file::SimpleFile,
+        v2::{category, FileId},
+        Applicability, Diagnostic,
+    };
 
     #[test]
     fn test_error_diagnostic() {
@@ -349,20 +347,24 @@ labore et dolore magna aliqua";
 
         let files = SimpleFile::new(String::from("file_name"), SOURCE.into());
 
-        let diag = Diagnostic::error(FileId::zero(), "lint/correctness/noArguments", "message")
-            .label(
-                Severity::Error,
-                TextRange::new(TextSize::from(40u32), TextSize::from(55u32)),
-                "label",
-            )
-            .suggestion_full(
-                TextRange::new(TextSize::from(40u32), TextSize::from(55u32)),
-                "suggestion",
-                "completely different\ntext",
-                Applicability::Always,
-            )
-            .footer_note("footer note")
-            .footer_help("footer help");
+        let diag = Diagnostic::error(
+            FileId::zero(),
+            category!("lint/correctness/noArguments"),
+            "message",
+        )
+        .label(
+            Severity::Error,
+            TextRange::new(TextSize::from(40u32), TextSize::from(55u32)),
+            "label",
+        )
+        .suggestion_full(
+            TextRange::new(TextSize::from(40u32), TextSize::from(55u32)),
+            "suggestion",
+            "completely different\ntext",
+            Applicability::Always,
+        )
+        .footer_note("footer note")
+        .footer_help("footer help");
 
         let mut console = BufferConsole::default();
         console.log(markup! {

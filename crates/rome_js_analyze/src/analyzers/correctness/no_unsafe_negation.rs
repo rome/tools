@@ -79,6 +79,7 @@ impl Rule for NoUnsafeNegation {
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
         Some(RuleDiagnostic::new(
+            rule_category!(),
             node.range(),
             markup! {
                 "The negation operator is used unsafely on the left side of this binary expression."

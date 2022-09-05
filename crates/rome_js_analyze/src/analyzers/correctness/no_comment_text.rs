@@ -64,6 +64,7 @@ impl Rule for NoCommentText {
         let node = ctx.query();
 
         Some(RuleDiagnostic::new(
+            rule_category!(),
             node.range(),
             markup! {
                 "Wrap "<Emphasis>"comments"</Emphasis>" inside children within "<Emphasis>"braces"</Emphasis>"."

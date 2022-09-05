@@ -208,12 +208,16 @@ impl Rule for UseValidTypeof {
         const TITLE: &str = "Invalid `typeof` comparison value";
 
         Some(match err {
-            TypeofError::InvalidLiteral(range, literal) => RuleDiagnostic::new(range, TITLE)
-                .primary("not a valid type name")
-                .summary(format!("{TITLE}: \"{literal}\" is not a valid type name")),
-            TypeofError::InvalidExpression(range) => RuleDiagnostic::new(range, TITLE)
-                .primary("not a string literal")
-                .summary(format!("{TITLE}: this expression is not a string literal",)),
+            TypeofError::InvalidLiteral(range, literal) => {
+                RuleDiagnostic::new(rule_category!(), range, TITLE)
+                    .primary("not a valid type name")
+                    .summary(format!("{TITLE}: \"{literal}\" is not a valid type name"))
+            }
+            TypeofError::InvalidExpression(range) => {
+                RuleDiagnostic::new(rule_category!(), range, TITLE)
+                    .primary("not a string literal")
+                    .summary(format!("{TITLE}: this expression is not a string literal",))
+            }
         })
     }
 

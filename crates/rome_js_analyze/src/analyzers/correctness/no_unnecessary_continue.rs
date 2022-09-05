@@ -94,6 +94,7 @@ impl Rule for NoUnnecessaryContinue {
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
         Some(RuleDiagnostic::new(
+            rule_category!(),
             node.range(),
             markup! {
                 "Unnecessary continue statement"

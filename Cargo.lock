@@ -1584,6 +1584,8 @@ name = "rome_diagnostics_categories"
 version = "0.0.0"
 dependencies = [
  "quote",
+ "schemars",
+ "serde",
 ]
 
 [[package]]

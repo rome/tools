@@ -11,7 +11,7 @@ pub(crate) mod rewrite_parser;
 pub(crate) mod single_token_parse_recovery;
 
 use drop_bomb::DebugDropBomb;
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::{file::FileId, v2::category};
 use rome_js_syntax::{
     JsSyntaxKind::{self},
     SourceType, TextRange,
@@ -218,7 +218,7 @@ impl<'s> Parser<'s> {
     /// Make a new error builder with `error` severity
     #[must_use]
     pub fn err_builder(&self, message: &str) -> Diagnostic {
-        Diagnostic::error(self.file_id, "SyntaxError", message)
+        Diagnostic::error(self.file_id, category!("parse"), message)
     }
 
     /// Add an error
@@ -227,7 +227,7 @@ impl<'s> Parser<'s> {
 
         // Don't report another error if it would just be at the same position as the last error.
         if let Some(previous) = self.diagnostics.last() {
-            if err.code.as_deref() == Some("SyntaxError")
+            if err.code == Some(category!("parse"))
                 && previous.code == err.code
                 && previous.file_id == err.file_id
             {

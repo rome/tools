@@ -128,6 +128,7 @@ impl Rule for UseSimplifiedLogicExpression {
         let node = ctx.query();
 
         Some(RuleDiagnostic::new(
+            rule_category!(),
             node.range(),
             markup! {
                 "Logical expression contains unnecessary complexity."

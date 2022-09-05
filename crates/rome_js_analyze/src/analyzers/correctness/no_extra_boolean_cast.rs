@@ -227,6 +227,7 @@ impl Rule for NoExtraBooleanCast {
 		};
         Some(
             RuleDiagnostic::new(
+                rule_category!(),
                 node.range(),
                 markup! {
                     {title}
