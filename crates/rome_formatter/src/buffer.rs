@@ -237,7 +237,7 @@ impl<Context> Buffer for VecBuffer<'_, Context> {
     }
 
     fn elements(&self) -> &[FormatElement] {
-        &self
+        self
     }
 
     fn state(&self) -> &FormatState<Self::Context> {
