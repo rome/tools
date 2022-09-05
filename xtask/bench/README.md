@@ -53,5 +53,5 @@ critcmp main pr # (cargo install critcmp)
 ## Heap Profiling using `dhat`
 
 ```bash
-cargo run -p xtask_bench --features dhat-on --release
+cargo run -p xtask_bench --features dhat-heap --release-with-debug
 ```
