@@ -1,4 +1,4 @@
-#[cfg(feature = "dhat-on")]
+#[cfg(feature = "dhat-heap")]
 use crate::features::print_diff;
 use crate::BenchmarkSummary;
 use rome_formatter::Printed;
@@ -29,27 +29,27 @@ pub fn benchmark_format_lib(
 }
 
 pub fn run_format(root: &JsSyntaxNode, source_type: SourceType) -> Printed {
-    #[cfg(feature = "dhat-on")]
+    #[cfg(feature = "dhat-heap")]
     let stats = {
         println!("Start");
-        dhat::get_stats().unwrap()
+        dhat::HeapStats::get()
     };
 
     let formatted = format_node(JsFormatOptions::new(source_type), root).unwrap();
 
-    #[cfg(feature = "dhat-on")]
+    #[cfg(feature = "dhat-heap")]
     let stats = {
         println!("Formatted");
-        print_diff(stats, dhat::get_stats().unwrap())
+        print_diff(stats, dhat::HeapStats::get())
     };
 
     let printed = formatted.print();
     drop(formatted);
 
-    #[cfg(feature = "dhat-on")]
+    #[cfg(feature = "dhat-heap")]
     {
         println!("Printed");
-        print_diff(stats, dhat::get_stats().unwrap());
+        print_diff(stats, dhat::HeapStats::get());
     }
 
     #[allow(clippy::let_and_return)]

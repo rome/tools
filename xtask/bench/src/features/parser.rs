@@ -1,4 +1,4 @@
-#[cfg(feature = "dhat-on")]
+#[cfg(feature = "dhat-heap")]
 use crate::features::print_diff;
 use crate::BenchmarkSummary;
 use itertools::Itertools;
@@ -20,19 +20,19 @@ pub struct ParseMeasurement {
 }
 
 pub fn benchmark_parse_lib(id: &str, code: &str, source_type: SourceType) -> BenchmarkSummary {
-    #[cfg(feature = "dhat-on")]
+    #[cfg(feature = "dhat-heap")]
     println!("Start");
-    #[cfg(feature = "dhat-on")]
-    let stats = dhat::get_stats().unwrap();
+    #[cfg(feature = "dhat-heap")]
+    let stats = dhat::HeapStats::get();
 
     let parser_timer = timing::start();
     let (events, diagnostics, trivia) = parse_common(code, 0, source_type);
     let parse_duration = parser_timer.stop();
 
-    #[cfg(feature = "dhat-on")]
+    #[cfg(feature = "dhat-heap")]
     println!("Parsed");
-    #[cfg(feature = "dhat-on")]
-    let stats = print_diff(stats, dhat::get_stats().unwrap());
+    #[cfg(feature = "dhat-heap")]
+    let stats = print_diff(stats, dhat::HeapStats::get());
 
     let tree_sink_timer = timing::start();
     let mut tree_sink = rome_js_parser::LosslessTreeSink::new(code, &trivia);
@@ -40,10 +40,10 @@ pub fn benchmark_parse_lib(id: &str, code: &str, source_type: SourceType) -> Ben
     let (_green, diagnostics) = tree_sink.finish();
     let tree_sink_duration = tree_sink_timer.stop();
 
-    #[cfg(feature = "dhat-on")]
+    #[cfg(feature = "dhat-heap")]
     println!("Tree-Sink");
-    #[cfg(feature = "dhat-on")]
-    print_diff(stats, dhat::get_stats().unwrap());
+    #[cfg(feature = "dhat-heap")]
+    print_diff(stats, dhat::HeapStats::get());
 
     BenchmarkSummary::Parser(ParseMeasurement {
         id: id.to_string(),
