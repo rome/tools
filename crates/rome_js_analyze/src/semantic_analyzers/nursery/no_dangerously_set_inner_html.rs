@@ -100,7 +100,7 @@ impl Rule for NoDangerouslySetInnerHtml {
             NoDangerState::Property(property) => property.syntax().text_trimmed_range(),
         };
 
-        let diagnostic = RuleDiagnostic::new(
+        let diagnostic = RuleDiagnostic::new(rule_category!(),
             text_range,
             markup! {
                 "Avoid passing content using the "<Emphasis>"dangerouslySetInnerHTML"</Emphasis>" prop."

@@ -102,7 +102,7 @@ mod tests {
 
     use rome_analyze::Never;
     use rome_console::codespan::Severity;
-    use rome_diagnostics::file::FileId;
+    use rome_diagnostics::{file::FileId, v2::category};
     use rome_js_parser::parse;
     use rome_js_syntax::{SourceType, TextRange, TextSize};
 
@@ -180,10 +180,10 @@ if (true) {
             |signal| {
                 if let Some(diag) = signal.diagnostic() {
                     let diag = diag.into_diagnostic(Severity::Warning);
-                    let code = diag.code.as_deref().unwrap();
+                    let code = diag.code.unwrap();
                     let primary = diag.primary.as_ref().unwrap();
 
-                    if code == "lint/correctness/noDoubleEquals" {
+                    if code == category!("lint/correctness/noDoubleEquals") {
                         error_ranges.push(primary.span.range);
                     }
                 }

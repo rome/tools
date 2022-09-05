@@ -118,6 +118,7 @@ impl Rule for NoShoutyConstants {
         let declarator = ctx.query();
 
         let mut diag = RuleDiagnostic::new(
+            rule_category!(),
             declarator.syntax().text_trimmed_range(),
             markup! {
                 "Redundant constant declaration."
@@ -160,7 +161,7 @@ impl Rule for NoShoutyConstants {
 
         Some(JsRuleAction {
             category: ActionCategory::Refactor,
-            applicability: Applicability::Unspecified,
+            applicability: Applicability::MaybeIncorrect,
             message: markup! { "Use the constant value directly" }.to_owned(),
             mutation: batch,
         })

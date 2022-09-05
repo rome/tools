@@ -1,7 +1,7 @@
 use crate::suggestion::SuggestionChange;
-use crate::v2;
 use crate::{
     file::{FileId, FileSpan, Span},
+    v2::Category,
     Applicability, CodeSuggestion, DiagnosticTag, Severity, SuggestionStyle,
 };
 use rome_console::fmt::Display;
@@ -17,8 +17,7 @@ pub struct Diagnostic {
     pub file_id: FileId,
 
     pub severity: Severity,
-    pub code: Option<String>,
-    pub code_link: Option<String>,
+    pub code: Option<&'static Category>,
     pub title: MarkupBuf,
     pub summary: Option<String>,
     pub tag: Option<DiagnosticTag>,
@@ -31,28 +30,28 @@ pub struct Diagnostic {
 
 impl Diagnostic {
     /// Creates a new [`Diagnostic`] with the `Error` severity.
-    pub fn error(file_id: FileId, code: impl Into<String>, title: impl Display) -> Self {
-        Self::new_with_code(file_id, Severity::Error, title, Some(code.into()))
+    pub fn error(file_id: FileId, code: &'static Category, title: impl Display) -> Self {
+        Self::new_with_code(file_id, Severity::Error, title, Some(code))
     }
 
     /// Creates a new [`Diagnostic`] with the `Warning` severity.
-    pub fn warning(file_id: FileId, code: impl Into<String>, title: impl Display) -> Self {
-        Self::new_with_code(file_id, Severity::Warning, title, Some(code.into()))
+    pub fn warning(file_id: FileId, code: &'static Category, title: impl Display) -> Self {
+        Self::new_with_code(file_id, Severity::Warning, title, Some(code))
     }
 
     /// Creates a new [`Diagnostic`] with the `Help` severity.
-    pub fn help(file_id: FileId, code: impl Into<String>, title: impl Display) -> Self {
-        Self::new_with_code(file_id, Severity::Help, title, Some(code.into()))
+    pub fn help(file_id: FileId, code: &'static Category, title: impl Display) -> Self {
+        Self::new_with_code(file_id, Severity::Help, title, Some(code))
     }
 
     /// Creates a new [`Diagnostic`] with the `Note` severity.
-    pub fn note(file_id: FileId, code: impl Into<String>, title: impl Display) -> Self {
-        Self::new_with_code(file_id, Severity::Note, title, Some(code.into()))
+    pub fn note(file_id: FileId, code: &'static Category, title: impl Display) -> Self {
+        Self::new_with_code(file_id, Severity::Note, title, Some(code))
     }
 
     /// Creates a new [`Diagnostic`] with the `Bug` severity.
-    pub fn bug(file_id: FileId, code: impl Into<String>, title: impl Display) -> Self {
-        Self::new_with_code(file_id, Severity::Bug, title, Some(code.into()))
+    pub fn bug(file_id: FileId, code: &'static Category, title: impl Display) -> Self {
+        Self::new_with_code(file_id, Severity::Bug, title, Some(code))
     }
 
     /// Creates a new [`Diagnostic`] that will be used in a builder-like way
@@ -67,19 +66,11 @@ impl Diagnostic {
         file_id: FileId,
         severity: Severity,
         title: impl Display,
-        code: Option<String>,
+        code: Option<&'static Category>,
     ) -> Self {
-        let code = code.filter(|code| !code.is_empty());
-        if let Some(code) = &code {
-            if code.parse::<&'static v2::Category>().is_err() {
-                panic!("code {code:?} is not a registered diagnostic category");
-            }
-        }
-
         Self {
             file_id,
             code,
-            code_link: None,
             severity,
             title: markup!({ title }).to_owned(),
             summary: None,
@@ -100,12 +91,6 @@ impl Diagnostic {
     /// Set an explicit plain-text summary for this diagnostic.
     pub fn summary(mut self, summary: impl Into<String>) -> Self {
         self.summary = Some(summary.into());
-        self
-    }
-
-    /// Set a hyperlink for the code of this diagnostic.
-    pub fn code_link(mut self, code_link: impl Into<String>) -> Self {
-        self.code_link = Some(code_link.into());
         self
     }
 
@@ -280,24 +265,6 @@ impl Diagnostic {
             suggestion,
             applicability,
             SuggestionStyle::Inline,
-            file,
-        )
-    }
-
-    /// Add a suggestion which does not have a suggestion code.
-    pub fn suggestion_no_code(
-        self,
-        span: impl Span,
-        msg: impl Display,
-        applicability: Applicability,
-    ) -> Self {
-        let file = self.file_id;
-        self.suggestion_inner(
-            span,
-            markup!({ msg }).to_owned(),
-            "",
-            applicability,
-            SuggestionStyle::HideCode,
             file,
         )
     }

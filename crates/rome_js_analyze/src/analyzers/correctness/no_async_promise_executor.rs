@@ -77,6 +77,7 @@ impl Rule for NoAsyncPromiseExecutor {
 
     fn diagnostic(_: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic::new(
+            rule_category!(),
             state.range(),
             markup! {
                 "Promise executor functions should not be `async`."

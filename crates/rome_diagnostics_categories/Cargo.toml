@@ -7,6 +7,8 @@ license = "MIT"
 edition = "2021"
 
 [dependencies]
+serde = { version = "1.0.136", optional = true }
+schemars = { version = "0.8.10", optional = true }
 
 [build-dependencies]
 quote = "1.0.14"

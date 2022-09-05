@@ -124,14 +124,7 @@ where
 {
     fn diagnostic(&self) -> Option<AnalyzerDiagnostic> {
         let ctx = RuleContext::new(&self.query_result, self.root, self.services).ok()?;
-
-        R::diagnostic(&ctx, &self.state).map(|diag| {
-            diag.into_analyzer_diagnostic(
-                self.file_id,
-                format!("{}/{}", G::NAME, R::METADATA.name),
-                format!("https://rome.tools/docs/lint/rules/{}/", R::METADATA.name),
-            )
-        })
+        R::diagnostic(&ctx, &self.state).map(|diag| diag.into_analyzer_diagnostic(self.file_id))
     }
 
     fn action(&self) -> Option<AnalyzerAction<RuleLanguage<R>>> {

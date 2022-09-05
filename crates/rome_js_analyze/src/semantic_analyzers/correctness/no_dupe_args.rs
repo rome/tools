@@ -72,6 +72,7 @@ impl Rule for NoDupeArgs {
     fn diagnostic(_: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let binding_syntax_node = state;
         Some(RuleDiagnostic::new(
+            rule_category!(),
             binding_syntax_node.syntax().text_trimmed_range(),
             markup! {
                 "Duplicate argument name"

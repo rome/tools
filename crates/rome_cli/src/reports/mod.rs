@@ -2,7 +2,7 @@ pub mod formatter;
 
 use crate::reports::formatter::{FormatterReportFileDetail, FormatterReportSummary};
 use formatter::FormatterReport;
-use rome_console::codespan::Severity;
+use rome_diagnostics::{v2::Category, Severity};
 use rome_service::RomeError;
 use serde::Serialize;
 use std::collections::HashMap;
@@ -31,7 +31,7 @@ pub struct ReportDiagnostic {
     /// Severity of the [diagnostic][rome_diagnostics::Diagnostic]
     pub severity: Severity,
     /// The code of the [diagnostic][rome_diagnostics::Diagnostic]
-    pub code: Option<String>,
+    pub code: Option<&'static Category>,
     /// The title of the [diagnostic][rome_diagnostics::Diagnostic]
     pub title: String,
 }

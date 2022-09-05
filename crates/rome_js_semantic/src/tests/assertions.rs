@@ -1,6 +1,6 @@
 use crate::{semantic_events, SemanticEvent};
 use rome_console::{markup, ConsoleExt, EnvConsole};
-use rome_diagnostics::{file::FileId, file::SimpleFile, Diagnostic};
+use rome_diagnostics::{file::FileId, file::SimpleFile, v2::category, Diagnostic};
 use rome_js_syntax::{JsAnyRoot, JsSyntaxToken, SourceType, TextRange, TextSize, WalkEvent};
 use rome_rowan::{AstNode, NodeOrToken};
 use std::collections::{BTreeMap, HashMap};
@@ -699,7 +699,7 @@ fn error_assertion_not_attached_to_a_declaration(
     let files = SimpleFile::new(test_name.to_string(), code.into());
     let d = Diagnostic::error(
         FileId::zero(),
-        "",
+        category!("SemanticTests"),
         "This assertion must be attached to a SemanticEvent::DeclarationFound.",
     )
     .primary(assertion_range, "");
@@ -719,7 +719,7 @@ fn error_declaration_pointing_to_unknown_scope(
     let files = SimpleFile::new(test_name.to_string(), code.into());
     let d = Diagnostic::error(
         FileId::zero(),
-        "",
+        category!("SemanticTests"),
         "Declaration assertions is pointing to the wrong scope",
     )
     .primary(assertion_range, "");
@@ -739,12 +739,16 @@ fn error_assertion_name_clash(
     // If there is already an assertion with the same name. Suggest a rename
 
     let files = SimpleFile::new(test_name.to_string(), code.into());
-    let d = Diagnostic::error(FileId::zero(), "", "Assertion label conflict.")
-        .primary(
-            token.text_range(),
-            "There is already a assertion with the same name. Consider renaming this one.",
-        )
-        .secondary(old_range, "Previous assertion");
+    let d = Diagnostic::error(
+        FileId::zero(),
+        category!("SemanticTests"),
+        "Assertion label conflict.",
+    )
+    .primary(
+        token.text_range(),
+        "There is already a assertion with the same name. Consider renaming this one.",
+    )
+    .secondary(old_range, "Previous assertion");
 
     let mut console = EnvConsole::new(false);
     console.log(markup! {
@@ -760,7 +764,12 @@ fn error_scope_end_assertion_points_to_non_existing_scope_start_assertion(
     file_name: &str,
 ) {
     let files = SimpleFile::new(file_name.to_string(), code.into());
-    let d = Diagnostic::error(FileId::zero(), "", "Scope start assertion not found.").primary(
+    let d = Diagnostic::error(
+        FileId::zero(),
+        category!("SemanticTests"),
+        "Scope start assertion not found.",
+    )
+    .primary(
         range,
         "This scope end assertion points to a non-existing scope start assertion.",
     );
@@ -779,12 +788,16 @@ fn error_scope_end_assertion_points_to_the_wrong_scope_start(
     file_name: &str,
 ) {
     let files = SimpleFile::new(file_name.to_string(), code.into());
-    let d = Diagnostic::error(FileId::zero(), "", "Wrong scope start")
-        .primary(
-            range,
-            "This scope end assertion points to the wrong scope start.",
-        )
-        .secondary(same_name_range, "This assertion has the same label");
+    let d = Diagnostic::error(
+        FileId::zero(),
+        category!("SemanticTests"),
+        "Wrong scope start",
+    )
+    .primary(
+        range,
+        "This scope end assertion points to the wrong scope start.",
+    )
+    .secondary(same_name_range, "This assertion has the same label");
 
     let mut console = EnvConsole::new(false);
     console.log(markup! {

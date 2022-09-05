@@ -226,6 +226,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         use rome_analyze::RuleFilter;
         use indexmap::{IndexMap, IndexSet};
         use rome_console::codespan::Severity;
+        use rome_diagnostics::v2::Category;
 
         #[derive(Deserialize, Serialize, Debug, Clone)]
         #[cfg_attr(feature = "schemars", derive(JsonSchema))]
@@ -265,12 +266,12 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
                 }
             }
 
-            /// Given a code coming from [Diagnostic](rome_diagnostics::Diagnostic), this function returns
+            /// Given a category coming from [Diagnostic](rome_diagnostics::Diagnostic), this function returns
             /// the [Severity](rome_diagnostics::Severity) associated to the rule, if the configuration changed it.
             ///
             /// If not, the function returns [None].
-            pub fn get_severity_from_code(&self, code: &str) -> Option<Severity> {
-                let mut split_code = code.split('/');
+            pub fn get_severity_from_code(&self, category: &Category) -> Option<Severity> {
+                let mut split_code = category.name().split('/');
 
                 let _lint = split_code.next();
                 debug_assert_eq!(_lint, Some("lint"));

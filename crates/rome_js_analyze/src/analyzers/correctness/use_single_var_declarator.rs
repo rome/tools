@@ -72,6 +72,7 @@ impl Rule for UseSingleVarDeclarator {
         let node = ctx.query();
 
         Some(RuleDiagnostic::new(
+            rule_category!(),
             node.range(),
             "Declare variables separately",
         ))

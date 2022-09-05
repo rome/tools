@@ -159,7 +159,7 @@ impl Rule for UseButtonType {
                 "Provide a valid "<Emphasis>"type"</Emphasis>" prop for the "<Emphasis>"button"</Emphasis>" element."
             }).to_owned()
         };
-        Some(RuleDiagnostic::new(
+        Some(RuleDiagnostic::new(rule_category!(),
             state.node.syntax().text_trimmed_range(),
             message
         )

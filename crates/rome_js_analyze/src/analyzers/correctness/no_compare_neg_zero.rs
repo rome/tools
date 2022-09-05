@@ -78,6 +78,7 @@ impl Rule for NoCompareNegZero {
         let node = ctx.query();
 
         Some(RuleDiagnostic::new(
+            rule_category!(),
             node.range(),
             markup! {
                 "Do not use the "{state.operator_kind}" operator to compare against -0."

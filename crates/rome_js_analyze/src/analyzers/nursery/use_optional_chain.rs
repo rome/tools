@@ -130,6 +130,7 @@ impl Rule for UseOptionalChain {
         };
 
         Some(RuleDiagnostic::new(
+            rule_category!(),
             range,
             markup! {
                 "Change to an optional chain."
