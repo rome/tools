@@ -1,0 +1,12 @@
+{
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"js": {
+				"noDeadCode": "warn",
+				"useCamelCase": "warn"
+			}
+		}
+	}
+}
