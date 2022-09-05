@@ -927,7 +927,7 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
             let layout = self.layout(is_left_short, f)?;
 
             let left = format_once(|f| f.write_element(formatted_left));
-            let right = format_with(|f| self.write_right(f, layout)).memoized();
+            let right = format_with(|f| self.write_right(f, layout));
 
             let inner_content = format_with(|f| {
                 if matches!(
