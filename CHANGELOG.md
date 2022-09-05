@@ -13,7 +13,7 @@ file name with its extension.
 - Added `--apply-suggested` argument to the `rome check` command, to apply suggested and safe fixes.
 Suggested fixes should be considered **not stable** and applied with care. 
 - Added the `rome start` and `rome stop` commands to control the Rome daemon server process. 
-- Added the `--use-server` global flag to the command line to make the CLI connect to a runninginstance of the
+- Added the `--use-server` global flag to the command line to make the CLI connect to a running instance of the
 Rome daemon server. 
 
 ### Configuration
