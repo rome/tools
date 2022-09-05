@@ -6,14 +6,12 @@ use crate::{
 use rome_console::fmt::Display;
 use rome_console::{markup, MarkupBuf};
 use rome_text_edit::*;
+use serde::{Deserialize, Serialize};
 
 /// A diagnostic message that can give information
 /// like errors or warnings.
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-#[cfg_attr(
-    feature = "serde",
-    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
-)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct Diagnostic {
     pub file_id: FileId,
 
@@ -453,11 +451,8 @@ impl Diagnostic {
 
 /// Everything that can be added to a diagnostic, like
 /// a suggestion that will be displayed under the actual error.
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-#[cfg_attr(
-    feature = "serde",
-    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
-)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct SubDiagnostic {
     pub severity: Severity,
     pub msg: MarkupBuf,
@@ -465,11 +460,8 @@ pub struct SubDiagnostic {
 }
 
 /// A note or help that is displayed under the diagnostic.
-#[derive(Debug, Clone, PartialEq, Eq, Hash)]
-#[cfg_attr(
-    feature = "serde",
-    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
-)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct Footer {
     pub msg: MarkupBuf,
     pub severity: Severity,

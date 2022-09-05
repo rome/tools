@@ -24,6 +24,7 @@ pub enum MarkupElement<'fmt> {
     Success,
     Warn,
     Info,
+    Inverse,
     Hyperlink { href: Cow<'fmt, str> },
 }
 
@@ -66,7 +67,7 @@ impl<'fmt> MarkupElement<'fmt> {
                 color.set_fg(Some(BLUE));
             }
 
-            MarkupElement::Hyperlink { .. } => {}
+            MarkupElement::Inverse | MarkupElement::Hyperlink { .. } => {}
         }
     }
 
@@ -80,6 +81,7 @@ impl<'fmt> MarkupElement<'fmt> {
             MarkupElement::Success => MarkupElement::Success,
             MarkupElement::Warn => MarkupElement::Warn,
             MarkupElement::Info => MarkupElement::Info,
+            MarkupElement::Inverse => MarkupElement::Inverse,
             MarkupElement::Hyperlink { href } => MarkupElement::Hyperlink {
                 href: Cow::Owned(match href {
                     Cow::Borrowed(href) => href.to_string(),
@@ -222,7 +224,7 @@ impl Display for MarkupBuf {
 impl Debug for MarkupBuf {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         for node in &self.0 {
-            write!(fmt, "{node:?}")?;
+            Debug::fmt(node, fmt)?;
         }
         Ok(())
     }

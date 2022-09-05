@@ -1,6 +1,9 @@
 use rome_console::codespan::SourceFile;
 use rome_rowan::{Language, SyntaxElement, SyntaxNode, SyntaxToken, TextRange, TextSize};
+use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, fmt::Debug, ops::Range};
+
+pub use crate::v2::FileId;
 
 /// A value which can be used as the range inside of a diagnostic.
 ///
@@ -107,35 +110,9 @@ impl Span for TextRange {
     }
 }
 
-#[derive(Debug, Clone, Copy, Eq, PartialEq, PartialOrd, Ord, Hash)]
-#[cfg_attr(
-    feature = "serde",
-    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
-)]
-/// An id that points into a file database.
-pub struct FileId(usize);
-impl FileId {
-    pub const fn zero() -> Self {
-        Self(0)
-    }
-}
-impl From<usize> for FileId {
-    fn from(input: usize) -> Self {
-        Self(input)
-    }
-}
-impl From<FileId> for usize {
-    fn from(input: FileId) -> Self {
-        input.0
-    }
-}
-
 /// A range that is indexed in a specific file.
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-#[cfg_attr(
-    feature = "serde",
-    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
-)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct FileSpan {
     pub file: FileId,
     pub range: TextRange,

@@ -21,4 +21,4 @@ schemars = { version = "0.8.10", optional = true }
 [dev-dependencies]
 
 [features]
-serde = ["dep:serde", "schemars"]
+serde = ["dep:serde", "schemars", "rome_diagnostics/schema"]

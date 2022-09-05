@@ -1,0 +1,5 @@
+error: failed to parse format string
+ --> tests/macros/description_syntax_error.rs:4:36
+  |
+4 | #[diagnostic(message(description = "text {unclosed"))]
+  |                                    ^^^^^^^^^^^^^^^^
