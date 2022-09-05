@@ -39,6 +39,8 @@ The VS Code extension can be installed from the [Marketplace](https://marketplac
 	"rome.lspBin": "/path/to/rome/target/debug/rome"
 ```
 
+Please note that Windows disallows modifying an executable while it's running, meaning you wont be able to recompile the Rome binary once the extension was activated in your editor as the server is spawned as a background daemon, and continues to run even after the editor is closed. To stop the running daemon instance use the `rome stop` command, with the editor closed as the extension will try to restart it otherwise.
+
 To instead build the VS Code extension from source, navigate to the `editors/vscode` directory and run:
 
 ```bash
