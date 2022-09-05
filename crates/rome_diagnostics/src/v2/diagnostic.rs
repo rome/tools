@@ -29,7 +29,7 @@ pub trait Diagnostic: Debug {
     /// The category of a diagnostic uniquely identifying this
     /// diagnostic type, such as `lint/correctness/noArguments`, `args/invalid`
     /// or `format/disabled`.
-    fn category(&self) -> Option<&Category> {
+    fn category(&self) -> Option<&'static Category> {
         None
     }
 

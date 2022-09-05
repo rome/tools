@@ -54,7 +54,7 @@ fn generate_category(input: &DeriveInput) -> TokenStream {
     };
 
     quote! {
-        fn category(&self) -> Option<&rome_diagnostics::v2::Category> {
+        fn category(&self) -> Option<&'static rome_diagnostics::v2::Category> {
             Some(#category)
         }
     }

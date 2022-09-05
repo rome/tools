@@ -15,7 +15,8 @@ use crate::{
 use dashmap::{mapref::entry::Entry, DashMap};
 use indexmap::IndexSet;
 use rome_analyze::{AnalysisFilter, RuleFilter};
-use rome_diagnostics::{Diagnostic, Severity};
+use rome_diagnostics::file::SimpleFile;
+use rome_diagnostics::{v2, Diagnostic, Severity};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_rowan::{AstNode, Language as RowanLanguage, SendNode, SyntaxNode};
@@ -364,7 +365,28 @@ impl Workspace for WorkspaceServer {
         filter.categories = params.categories;
         let diagnostics = lint(&params.path, parse, filter, rules);
 
-        Ok(PullDiagnosticsResult { diagnostics })
+        if diagnostics.is_empty() {
+            return Ok(PullDiagnosticsResult {
+                diagnostics: Vec::new(),
+            });
+        }
+
+        let document = self
+            .documents
+            .get(&params.path)
+            .ok_or(RomeError::NotFound)?;
+
+        let files = SimpleFile::new(params.path.display().to_string(), document.content.clone());
+
+        Ok(PullDiagnosticsResult {
+            diagnostics: diagnostics
+                .into_iter()
+                .map(|diag| {
+                    let diag = diag.as_diagnostic(&files);
+                    v2::serde::Diagnostic::new(diag)
+                })
+                .collect(),
+        })
     }
 
     /// Retrieves the list of code actions available for a given cursor

@@ -182,7 +182,7 @@ mod internal {
     }
 
     impl<M: fmt::Display + 'static, E: AsDiagnostic> Diagnostic for ContextDiagnostic<M, E> {
-        fn category(&self) -> Option<&Category> {
+        fn category(&self) -> Option<&'static Category> {
             self.source.as_diagnostic().category()
         }
 
@@ -280,7 +280,7 @@ mod internal {
     }
 
     impl<E: AsDiagnostic> Diagnostic for CategoryDiagnostic<E> {
-        fn category(&self) -> Option<&Category> {
+        fn category(&self) -> Option<&'static Category> {
             Some(
                 self.source
                     .as_diagnostic()
@@ -335,7 +335,7 @@ mod internal {
     }
 
     impl<E: AsDiagnostic> Diagnostic for FilePathDiagnostic<E> {
-        fn category(&self) -> Option<&Category> {
+        fn category(&self) -> Option<&'static Category> {
             self.source.as_diagnostic().category()
         }
 
@@ -410,7 +410,7 @@ mod internal {
     }
 
     impl<E: AsDiagnostic> Diagnostic for FileSourceCodeDiagnostic<E> {
-        fn category(&self) -> Option<&Category> {
+        fn category(&self) -> Option<&'static Category> {
             self.source.as_diagnostic().category()
         }
 
