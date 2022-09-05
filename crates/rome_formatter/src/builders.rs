@@ -528,9 +528,44 @@ impl<Context> std::fmt::Debug for FormatComment<'_, Context> {
 ///
 /// This does not directly influence how this content will be printed, but some
 /// parts of the formatter may inspect the [labelled element](FormatElement::Label)
-/// using `inspect_is_labelled` buffer extension and choose a different formatting layout.
+/// using [FormatElement::has_label].
 ///
-/// See [inspect_is_labelled](BufferExtensions::inspect_is_labelled) for documentation.
+/// ## Examples
+///
+/// ```rust
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::{format, write, LineWidth};
+///
+/// enum SomeLabelId {}
+///
+/// let formatted = format!(
+///     SimpleFormatContext::default(),
+///     [format_with(|f| {
+///         write!(f, [
+///             labelled(
+///                 LabelId::of::<SomeLabelId>(),
+///                 &text("'I have a label'")
+///             )
+///         ])?;
+///
+///         let is_labelled = f.elements().last().map_or(false, |element| element.has_label(LabelId::of::<SomeLabelId>()));
+///
+///         if is_labelled {
+///             write!(f, [text(" has label SomeLabelId")])
+///         } else {
+///             write!(f, [text(" doesn't have label SomeLabelId")])
+///         }
+///     })]
+/// )
+/// .unwrap();
+///
+/// assert_eq!("'I have a label' has label SomeLabelId", formatted.print().as_code());
+/// ```
+///
+/// ## Alternatives
+///
+/// Use `Memoized.inspect(f)?.has_label(LabelId::of::<SomeLabelId>()` if you need to know if some content breaks that should
+/// only be written later.
 #[inline]
 pub fn labelled<Content, Context>(label_id: LabelId, content: &Content) -> FormatLabelled<Context>
 where
