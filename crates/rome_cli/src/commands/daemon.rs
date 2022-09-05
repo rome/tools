@@ -1,5 +1,6 @@
 use std::env;
 
+use rome_console::{markup, ConsoleExt};
 use rome_lsp::ServerFactory;
 use rome_service::workspace::WorkspaceClient;
 use tokio::runtime::Runtime;
@@ -14,22 +15,41 @@ use tracing_tree::HierarchicalLayer;
 use crate::{
     open_transport,
     service::{self, ensure_daemon, run_daemon},
-    Termination,
+    CliSession, Termination,
 };
 
-pub(crate) fn start() -> Result<(), Termination> {
+pub(crate) fn start(mut session: CliSession) -> Result<(), Termination> {
     let rt = Runtime::new()?;
-    rt.block_on(ensure_daemon())?;
+    let did_spawn = rt.block_on(ensure_daemon())?;
+
+    if did_spawn {
+        session.app.console.log(markup! {
+            "The Rome server was successfully started"
+        });
+    } else {
+        session.app.console.log(markup! {
+            "The Rome server was already running"
+        });
+    }
+
     Ok(())
 }
 
-pub(crate) fn stop() -> Result<(), Termination> {
+pub(crate) fn stop(mut session: CliSession) -> Result<(), Termination> {
     let rt = Runtime::new()?;
 
     if let Some(transport) = open_transport(rt)? {
         let client = WorkspaceClient::new(transport)?;
         // This can be an error if the connection is closed before the empty response is sent
         client.shutdown().ok();
+
+        session.app.console.log(markup! {
+            "The Rome server was successfully stopped"
+        });
+    } else {
+        session.app.console.log(markup! {
+            "The Rome server was not running"
+        });
     }
 
     Ok(())

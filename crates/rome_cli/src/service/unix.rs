@@ -79,7 +79,10 @@ pub(crate) async fn open_socket() -> io::Result<Option<UnixStream>> {
 }
 
 /// Ensure the server daemon is running and ready to receive connections
-pub(crate) async fn ensure_daemon() -> io::Result<()> {
+///
+/// Returns false if the daemon process was already running or true if it had
+/// to be started
+pub(crate) async fn ensure_daemon() -> io::Result<bool> {
     let mut current_child: Option<Child> = None;
     let mut last_error = None;
 
@@ -89,7 +92,7 @@ pub(crate) async fn ensure_daemon() -> io::Result<()> {
         match try_connect().await {
             // The connection is open and ready
             Ok(_) => {
-                return Ok(());
+                return Ok(current_child.is_some());
             }
 
             // There's no process listening on the global socket

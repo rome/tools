@@ -82,8 +82,8 @@ impl<'app> CliSession<'app> {
             Some("ci") if !is_empty => crate::commands::ci::ci(self),
             Some("format") if !is_empty => crate::commands::format::format(self),
 
-            Some("start") => crate::commands::daemon::start(),
-            Some("stop") => crate::commands::daemon::stop(),
+            Some("start") => crate::commands::daemon::start(self),
+            Some("stop") => crate::commands::daemon::stop(self),
 
             // Internal commands
             Some("__run_server") => crate::commands::daemon::run_server(),

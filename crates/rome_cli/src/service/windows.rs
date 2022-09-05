@@ -67,19 +67,25 @@ pub(crate) async fn open_socket() -> io::Result<Option<NamedPipeClient>> {
 }
 
 /// Ensure the server daemon is running and ready to receive connections
-pub(crate) async fn ensure_daemon() -> io::Result<()> {
+///
+/// Returns false if the daemon process was already running or true if it had
+/// to be started
+pub(crate) async fn ensure_daemon() -> io::Result<bool> {
+    let mut did_spawn = false;
+
     loop {
         match open_socket().await {
             Ok(Some(_)) => break,
             Ok(None) => {
                 spawn_daemon()?;
+                did_spawn = true;
                 time::sleep(Duration::from_millis(50)).await;
             }
             Err(err) => return Err(err),
         }
     }
 
-    Ok(())
+    Ok(did_spawn)
 }
 
 /// Ensure the server daemon is running and ready to receive connections and
