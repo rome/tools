@@ -1,4 +1,4 @@
-use std::{panic::catch_unwind, sync::Arc};
+use std::sync::Arc;
 
 use crate::capabilities::server_capabilities;
 use crate::requests::syntax_tree::{SyntaxTreePayload, SYNTAX_TREE_REQUEST};
@@ -185,15 +185,17 @@ macro_rules! workspace_method {
                 let workspace = server.session.workspace.clone();
                 let result = spawn_blocking(move || {
                     let _guard = span.entered();
-                    catch_unwind(move || workspace.$method(params))
+                    workspace.$method(params)
                 });
 
                 result.map(move |result| {
                     match result {
-                        Ok(Ok(Ok(result))) => Ok(result),
-                        Ok(Ok(Err(err))) => Err(into_lsp_error(err)),
-                        Ok(Err(err)) => Err(panic_to_lsp_error(err)),
-                        Err(err) => Err(into_lsp_error(err)),
+                        Ok(Ok(result)) => Ok(result),
+                        Ok(Err(err)) => Err(into_lsp_error(err)),
+                        Err(err) => match err.try_into_panic() {
+                            Ok(err) => Err(panic_to_lsp_error(err)),
+                            Err(err) => Err(into_lsp_error(err)),
+                        },
                     }
                 })
             },

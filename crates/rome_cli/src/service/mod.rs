@@ -67,6 +67,21 @@ type JsonRpcResult = Result<Box<RawValue>, TransportError>;
 
 /// Implementation of [WorkspaceTransport] for types implementing [AsyncRead]
 /// and [AsyncWrite]
+///
+/// This implementation makes use of two "background tasks":
+/// - the "write task" pulls outgoing messages from the "write channel" and
+/// writes them to the "write half" of the socket
+/// - the "read task" reads incoming messages from the "read half" of the
+/// socket, then looks up a request with an ID corresponding to the received
+/// message in the "pending requests" map. If a pending request is found, it's
+/// fullfilled with the content of the message that was just received
+///
+/// In addition to these, a new "foreground task" is created for each request.
+/// These tasks create a "oneshot channel" and store it in the pending requests
+/// map using the request ID as a key, then serialize the content of the
+/// request and send it over the write channel. Finally, the task blocks the
+/// current thread until a response is received over the oneshot channel from
+/// the read task, or the request times out
 pub struct SocketTransport {
     runtime: Runtime,
     write_send: Sender<Vec<u8>>,
