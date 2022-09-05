@@ -128,7 +128,6 @@ pub fn assert_cli_snapshot(
     }
 
     for message in &console.out_buffer {
-        dbg!(&message);
         let content = markup_to_string(markup! {
             {message.content}
         });

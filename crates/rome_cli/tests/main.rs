@@ -522,6 +522,17 @@ mod check {
                 .count(),
             1
         );
+        assert_eq!(
+            messages
+                .iter()
+                .filter(|m| m.level == LogLevel::Error)
+                .filter(|m| {
+                    let content = format!("{:?}", m.content);
+                    content.contains("js/noUnusedVariables")
+                })
+                .count(),
+            1
+        );
 
         assert_cli_snapshot(module_path!(), "upgrade_severity", fs, console);
     }

@@ -103,7 +103,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
 
 
                 pub(crate) fn is_recommended(&self) -> bool {
-                    matches!(self.recommended, Some(true))
+                    !matches!(self.recommended, Some(false))
                 }
 
 

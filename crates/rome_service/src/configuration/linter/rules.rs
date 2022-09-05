@@ -312,7 +312,7 @@ impl Js {
         RuleFilter::Rule("js", Self::CATEGORY_RULES[28]),
         RuleFilter::Rule("js", Self::CATEGORY_RULES[29]),
     ];
-    pub(crate) fn is_recommended(&self) -> bool { matches!(self.recommended, Some(true)) }
+    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
             if conf.is_enabled() {
@@ -391,7 +391,7 @@ impl Jsx {
         RuleFilter::Rule("jsx", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("jsx", Self::CATEGORY_RULES[2]),
     ];
-    pub(crate) fn is_recommended(&self) -> bool { matches!(self.recommended, Some(true)) }
+    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
             if conf.is_enabled() {
@@ -460,7 +460,7 @@ impl Regex {
     const RECOMMENDED_RULES: [&'static str; 1] = ["noMultipleSpacesInRegularExpressionLiterals"];
     const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 1] =
         [RuleFilter::Rule("regex", Self::CATEGORY_RULES[0])];
-    pub(crate) fn is_recommended(&self) -> bool { matches!(self.recommended, Some(true)) }
+    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
             if conf.is_enabled() {
@@ -528,7 +528,7 @@ impl Ts {
     const RECOMMENDED_RULES: [&'static str; 1] = ["useShorthandArrayType"];
     const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 1] =
         [RuleFilter::Rule("ts", Self::CATEGORY_RULES[0])];
-    pub(crate) fn is_recommended(&self) -> bool { matches!(self.recommended, Some(true)) }
+    pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
             if conf.is_enabled() {
