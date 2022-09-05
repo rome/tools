@@ -1,6 +1,5 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 147
 expression: content
 ---
 ## `rome.json`
@@ -39,6 +38,18 @@ error[js/noDeadCode]: This code is unreachable
 3 │ ┌         continue;
 4 │ │         break;
   │ └──────────────^
+
+
+```
+
+```block
+error[js/noUnusedVariables]: This function is unused.
+  ┌─ file.js:1:10
+  │
+1 │ function f() {
+  │          ^
+
+=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
 
 
 ```
