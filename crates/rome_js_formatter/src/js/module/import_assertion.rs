@@ -18,16 +18,12 @@ impl FormatNodeRule<JsImportAssertion> for FormatJsImportAssertion {
 
         write![f, [assert_token.format(), space()]]?;
 
-        if assertions.is_empty() {
-            write!(f, [l_curly_token.format(), r_curly_token.format()])
-        } else {
-            write!(
-                f,
-                [
-                    format_delimited(&l_curly_token?, &assertions.format(), &r_curly_token?,)
-                        .soft_block_spaces()
-                ]
-            )
-        }
+        write!(
+            f,
+            [
+                format_delimited(&l_curly_token?, &assertions.format(), &r_curly_token?,)
+                    .soft_block_spaces()
+            ]
+        )
     }
 }

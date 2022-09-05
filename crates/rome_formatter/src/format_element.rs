@@ -705,7 +705,7 @@ impl FormatElement {
 
     /// Utility function to get the "last element" of a [FormatElement], recursing
     /// into lists and groups to find the last element that's not
-    /// a line break, verbatim or a comment.
+    /// a line break, or a comment.
     pub fn last_element(&self) -> Option<&FormatElement> {
         match self {
             FormatElement::List(list) => {

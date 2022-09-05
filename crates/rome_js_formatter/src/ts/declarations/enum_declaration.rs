@@ -21,18 +21,16 @@ impl FormatNodeRule<TsEnumDeclaration> for FormatTsEnumDeclaration {
             write!(f, [const_token.format(), space()])?;
         }
 
-        write!(f, [enum_token.format(), space(), id.format(), space()])?;
-
-        if members.is_empty() {
-            write!(f, [l_curly_token.format(), r_curly_token.format()])
-        } else {
-            write!(
-                f,
-                [
-                    format_delimited(&l_curly_token?, &members.format(), &r_curly_token?)
-                        .soft_block_spaces()
-                ]
-            )
-        }
+        write!(
+            f,
+            [
+                enum_token.format(),
+                space(),
+                id.format(),
+                space(),
+                format_delimited(&l_curly_token?, &members.format(), &r_curly_token?,)
+                    .soft_block_spaces()
+            ]
+        )
     }
 }

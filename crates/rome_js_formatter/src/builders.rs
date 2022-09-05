@@ -444,16 +444,30 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
                 ])
                 .fmt(f)?,
                 DelimitedMode::SoftBlockSpaces(_) => {
-                    write!(
-                        f,
-                        [
-                            soft_line_indent_or_space(&format_args![
+                    let mut is_empty = true;
+
+                    let format_content = format_once(|f| {
+                        let previous_len = f.elements().len();
+
+                        write!(
+                            f,
+                            [
                                 open_token_trailing_trivia,
-                                format_content, close_token_leading_trivia
-                            ]),
-                            soft_line_break_or_space()
-                        ]
-                    )?;
+                                format_content,
+                                close_token_leading_trivia
+                            ]
+                        )?;
+
+                        is_empty = previous_len == f.elements().len();
+
+                        Ok(())
+                    });
+
+                    soft_line_indent_or_space(&format_content).fmt(f)?;
+
+                    if !is_empty {
+                        soft_line_break_or_space().fmt(f)?;
+                    }
                 }
             };
 
@@ -520,15 +534,10 @@ impl<'t> OpenDelimiter<'t> {
     /// It extracts the formatted trailing trivia of the token, without writing it in the buffer
     pub(crate) fn format_trailing_trivia(&self) -> impl Format<JsFormatContext> + 't {
         format_with(|f| {
-            // Not really interested in the pre-amble, but want to know if it was written
-            let mut buffer = VecBuffer::new(f.state_mut());
+            let previous_len = f.elements().len();
+            write!(f, [format_trailing_trivia(self.open_token)])?;
 
-            write!(buffer, [format_trailing_trivia(self.open_token)])?;
-
-            let trivia = buffer.into_vec();
-
-            if !trivia.is_empty() {
-                f.write_elements(trivia)?;
+            if previous_len < f.elements().len() {
                 soft_line_break().fmt(f)?;
             }
 
@@ -564,7 +573,7 @@ impl<'t> CloseDelimiter<'t> {
         format_with(|f| {
             let mut buffer = PreambleBuffer::new(f, soft_line_break());
 
-            write!(buffer, [format_leading_trivia(self.close_token,)])
+            write!(buffer, [format_leading_trivia(self.close_token)])
         })
     }
 

@@ -145,11 +145,6 @@ impl Format<JsFormatContext> for JsObjectPatternLike {
                 write!(f, [right])?;
             }
             write!(f, [&self.r_curly_token()?.format()])
-        } else if self.properties_len() == 0 {
-            write!(
-                f,
-                [self.l_curly_token().format(), self.r_curly_token().format()]
-            )
         } else {
             write!(
                 f,

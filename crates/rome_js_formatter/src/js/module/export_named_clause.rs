@@ -24,19 +24,15 @@ impl FormatNodeRule<JsExportNamedClause> for FormatJsExportNamedClause {
                 write!(f, [type_token.format(), space()])?;
             }
 
-            if specifiers.is_empty() {
-                write!(f, [l_curly_token.format(), r_curly_token.format()])
-            } else {
-                write!(
-                    f,
-                    [format_delimited(
-                        l_curly_token.as_ref()?,
-                        &specifiers.format(),
-                        r_curly_token.as_ref()?
-                    )
-                    .soft_block_spaces()]
+            write!(
+                f,
+                [format_delimited(
+                    l_curly_token.as_ref()?,
+                    &specifiers.format(),
+                    r_curly_token.as_ref()?
                 )
-            }
+                .soft_block_spaces()]
+            )
         });
 
         write!(

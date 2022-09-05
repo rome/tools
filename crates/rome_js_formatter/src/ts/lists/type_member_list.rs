@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::{write, Buffer, VecBuffer};
+use rome_formatter::{write, Buffer};
 use rome_js_syntax::{JsSyntaxKind, TsAnyTypeMember, TsTypeMemberList};
 
 use rome_rowan::AstNodeList;
@@ -30,21 +30,18 @@ struct TsTypeMemberItem {
 
 impl Format<JsFormatContext> for TsTypeMemberItem {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        let mut buffer = VecBuffer::new(f.state_mut());
-
-        write!(buffer, [self.member.format()])?;
-
-        let formatted_element = buffer.into_element();
-
-        let is_verbatim = matches!(
-            formatted_element.last_element(),
-            Some(FormatElement::Verbatim(_))
-        );
+        let mut is_verbatim = false;
 
         write!(
             f,
             [group(&format_once(|f| {
-                f.write_element(formatted_element)
+                write!(f, [self.member.format()])?;
+
+                is_verbatim = f.elements().last().map_or(false, |last| {
+                    matches!(last.last_element(), Some(FormatElement::Verbatim(_)))
+                });
+
+                Ok(())
             }))]
         )?;
 

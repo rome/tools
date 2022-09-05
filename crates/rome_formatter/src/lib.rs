@@ -47,10 +47,7 @@ use std::any::TypeId;
 use crate::printed_tokens::PrintedTokens;
 use crate::printer::{Printer, PrinterOptions};
 pub use arguments::{Argument, Arguments};
-pub use buffer::{
-    Buffer, BufferExtensions, BufferSnapshot, HasLabelBuffer, Inspect, PreambleBuffer, VecBuffer,
-    WillBreakBuffer,
-};
+pub use buffer::{Buffer, BufferExtensions, BufferSnapshot, Inspect, PreambleBuffer, VecBuffer};
 pub use builders::{
     block_indent, comment, empty_line, get_lines_before, group, hard_line_break, if_group_breaks,
     if_group_fits_on_line, indent, labelled, line_suffix, soft_block_indent, soft_line_break,

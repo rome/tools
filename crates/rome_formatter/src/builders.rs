@@ -1417,6 +1417,14 @@ impl<Context> Buffer for GroupBuffer<'_, Context> {
         Ok(())
     }
 
+    fn elements(&self) -> &[FormatElement] {
+        if self.content.is_empty() {
+            self.inner.elements()
+        } else {
+            &self.content
+        }
+    }
+
     fn state(&self) -> &FormatState<Self::Context> {
         self.inner.state()
     }
@@ -2136,6 +2144,7 @@ where
         });
     }
 
+    /// Writes an entry without adding a separating line break or empty line.
     pub fn entry_no_separator(&mut self, content: &dyn Format<Context>) {
         self.result = self.result.and_then(|_| {
             self.has_elements = true;

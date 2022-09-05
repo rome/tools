@@ -38,9 +38,12 @@ impl Format<JsFormatContext> for JsxAnyTagWithChildren {
             }
 
             ElementLayout::Default => {
-                let mut format_opening = format_opening.memoized();
+                let opening_start = f.elements().len();
+                write!(f, [format_opening])?;
 
-                let opening_breaks = format_opening.inspect(f)?.will_break();
+                let opening_breaks = f.elements()[opening_start..]
+                    .iter()
+                    .any(FormatElement::will_break);
 
                 let multiple_attributes = match self {
                     JsxAnyTagWithChildren::JsxElement(element) => {
@@ -58,7 +61,6 @@ impl Format<JsFormatContext> for JsxAnyTagWithChildren {
                 write!(
                     f,
                     [
-                        format_opening,
                         self.children().format().with_options(list_layout),
                         format_closing
                     ]

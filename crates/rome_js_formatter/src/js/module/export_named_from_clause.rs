@@ -37,8 +37,6 @@ impl FormatNodeRule<JsExportNamedFromClause> for FormatJsExportNamedFromClause {
                     )
                     .block_indent()]
                 )?;
-            } else if specifiers.is_empty() {
-                write!(f, [l_curly_token.format(), r_curly_token.format()])?;
             } else {
                 write!(
                     f,

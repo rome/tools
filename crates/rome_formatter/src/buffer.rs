@@ -1,5 +1,5 @@
 use super::{write, Arguments, FormatElement};
-use crate::format_element::{LabelId, List};
+use crate::format_element::List;
 use crate::{Format, FormatResult, FormatState};
 use std::any::{Any, TypeId};
 use std::fmt::Debug;
@@ -29,6 +29,12 @@ pub trait Buffer {
     /// ```
     ///
     fn write_element(&mut self, element: FormatElement) -> FormatResult<()>;
+
+    /// Returns a slice containing all elements written into this buffer.
+    ///
+    /// Useful to inspect if some content breaks, has a specific label or if some format
+    /// did write any content.
+    fn elements(&self) -> &[FormatElement];
 
     /// Glue for usage of the [`write!`] macro with implementors of this trait.
     ///
@@ -132,6 +138,10 @@ impl<W: Buffer<Context = Context> + ?Sized, Context> Buffer for &mut W {
         (**self).write_element(element)
     }
 
+    fn elements(&self) -> &[FormatElement] {
+        (**self).elements()
+    }
+
     fn write_fmt(&mut self, args: Arguments<Context>) -> FormatResult<()> {
         (**self).write_fmt(args)
     }
@@ -224,6 +234,10 @@ impl<Context> Buffer for VecBuffer<'_, Context> {
         }
 
         Ok(())
+    }
+
+    fn elements(&self) -> &[FormatElement] {
+        &self
     }
 
     fn state(&self) -> &FormatState<Self::Context> {
@@ -349,6 +363,10 @@ where
         }
     }
 
+    fn elements(&self) -> &[FormatElement] {
+        self.inner.elements()
+    }
+
     fn state(&self) -> &FormatState<Self::Context> {
         self.inner.state()
     }
@@ -408,6 +426,10 @@ where
         self.inner.state_mut()
     }
 
+    fn elements(&self) -> &[FormatElement] {
+        self.inner.elements()
+    }
+
     fn snapshot(&self) -> BufferSnapshot {
         self.inner.snapshot()
     }
@@ -438,216 +460,6 @@ pub trait BufferExtensions: Buffer + Sized {
 
         Ok(())
     }
-
-    /// It emits a custom buffer called [WillBreakBuffer], which tracks
-    /// it he last element written in the main buffer breaks, it does so by
-    /// checking if their IR emits an [element](FormatElement) that breaks.
-    ///
-    /// This functionality can be used only one element and only after the element
-    /// is written in the buffer.
-    ///
-    /// ## Examples
-    ///
-    /// ```
-    /// use rome_formatter::{format, format_args, write, LineWidth};
-    /// use rome_formatter::prelude::*;
-    ///
-    /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
-    ///
-    ///     let element = format_with(|f| {
-    ///         write!(f, [
-    ///             text("hello"),
-    ///             hard_line_break(),
-    ///             text("world!")
-    ///         ])
-    ///     });
-    ///     let mut buffer = f.inspect_will_break();
-    ///     write!(buffer, [element])?;
-    ///     let does_element_break = buffer.will_break();
-    ///
-    ///     if does_element_break {
-    ///         write!(f, [hard_line_break(), text("break")])
-    ///     } else {
-    ///         write!(f, [text("did not break")])
-    ///     }
-    ///
-    /// })]).unwrap();
-    ///
-    /// assert_eq!(
-    ///     "hello\nworld!\nbreak",
-    ///     formatted.print().as_code()
-    /// );
-    /// ```
-    ///
-    /// ## Alternatives
-    ///
-    /// Use `Memoized.inspect(f)?.will_break()` if you need to know if some content breaks that should
-    /// only be written later.
-    fn inspect_will_break(&mut self) -> WillBreakBuffer<Self::Context> {
-        WillBreakBuffer::new(self)
-    }
-
-    /// Wraps the current buffer in a [HasLabelBuffer], which tracks
-    /// labelled elements written in the main buffer, it does so by
-    /// checking if [element](FormatElement) is a [label](FormatElement::Label)
-    /// with the expected [label_id](LabelId).
-    ///
-    /// This functionality can be used only on one element and only after the element
-    /// is written in the buffer.
-    ///
-    /// ## Examples
-    ///
-    /// ```rust
-    /// use rome_formatter::prelude::*;
-    /// use rome_formatter::{format, write, LineWidth};
-    ///
-    /// enum SomeLabelId {}
-    ///
-    /// let formatted = format!(
-    ///     SimpleFormatContext::default(),
-    ///     [format_with(|f| {
-    ///         let mut buffer = f.inspect_is_labelled::<SomeLabelId>();
-    ///
-    ///         write!(buffer, [
-    ///             labelled(
-    ///                 LabelId::of::<SomeLabelId>(),
-    ///                 &text("'I have a label'")
-    ///             )
-    ///         ])?;
-    ///
-    ///         let is_labelled = buffer.has_label();
-    ///
-    ///         if is_labelled {
-    ///             write!(f, [text(" has label SomeLabelId")])
-    ///         } else {
-    ///             write!(f, [text(" doesn't have label SomeLabelId")])
-    ///         }
-    ///     })]
-    /// )
-    /// .unwrap();
-    ///
-    /// assert_eq!("'I have a label' has label SomeLabelId", formatted.print().as_code());
-    /// ```
-    ///
-    /// /// ## Alternatives
-    ///
-    /// Use `Memoized.inspect(f)?.has_label(LabelId::of::<SomeLabelId>()` if you need to know if some content breaks that should
-    /// only be written later.
-    fn inspect_is_labelled<T: ?Sized + 'static>(&mut self) -> HasLabelBuffer<Self::Context> {
-        let label_id = LabelId::of::<T>();
-        HasLabelBuffer::new(self, label_id)
-    }
 }
 
 impl<T> BufferExtensions for T where T: Buffer {}
-
-#[must_use = "must eventually call `is_labelled()` to retrieve the information"]
-pub struct HasLabelBuffer<'buffer, Context> {
-    inner: &'buffer mut dyn Buffer<Context = Context>,
-    label_id: LabelId,
-    has_label: bool,
-}
-
-impl<'buffer, Context> HasLabelBuffer<'buffer, Context> {
-    pub fn new(buffer: &'buffer mut dyn Buffer<Context = Context>, label_id: LabelId) -> Self {
-        Self {
-            inner: buffer,
-            label_id,
-            has_label: false,
-        }
-    }
-
-    pub fn has_label(self) -> bool {
-        self.has_label
-    }
-}
-
-impl<Context> Buffer for HasLabelBuffer<'_, Context> {
-    type Context = Context;
-
-    fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
-        self.has_label |= element.has_label(self.label_id);
-
-        self.inner.write_element(element)
-    }
-
-    fn state(&self) -> &FormatState<Self::Context> {
-        self.inner.state()
-    }
-
-    fn state_mut(&mut self) -> &mut FormatState<Self::Context> {
-        self.inner.state_mut()
-    }
-
-    fn snapshot(&self) -> BufferSnapshot {
-        BufferSnapshot::Any(Box::new(HasLabelledSnapshot {
-            inner: self.inner.snapshot(),
-            has_label: self.has_label,
-        }))
-    }
-
-    fn restore_snapshot(&mut self, snapshot: BufferSnapshot) {
-        let snapshot = snapshot.unwrap_any::<HasLabelledSnapshot>();
-        self.inner.restore_snapshot(snapshot.inner);
-        self.has_label = snapshot.has_label;
-    }
-}
-
-struct HasLabelledSnapshot {
-    inner: BufferSnapshot,
-    has_label: bool,
-}
-
-#[must_use = "must eventually call `will_break()` to retrieve the information"]
-pub struct WillBreakBuffer<'buffer, Context> {
-    breaks: bool,
-    inner: &'buffer mut dyn Buffer<Context = Context>,
-}
-
-impl<'buffer, Context> WillBreakBuffer<'buffer, Context> {
-    pub fn new(buffer: &'buffer mut dyn Buffer<Context = Context>) -> Self {
-        Self {
-            breaks: false,
-            inner: buffer,
-        }
-    }
-
-    pub fn will_break(&self) -> bool {
-        self.breaks
-    }
-}
-
-impl<Context> Buffer for WillBreakBuffer<'_, Context> {
-    type Context = Context;
-
-    fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
-        self.breaks = self.breaks || element.will_break();
-        self.inner.write_element(element)
-    }
-
-    fn state(&self) -> &FormatState<Self::Context> {
-        self.inner.state()
-    }
-
-    fn state_mut(&mut self) -> &mut FormatState<Self::Context> {
-        self.inner.state_mut()
-    }
-
-    fn snapshot(&self) -> BufferSnapshot {
-        BufferSnapshot::Any(Box::new(WillBreakSnapshot {
-            inner: self.inner.snapshot(),
-            breaks: self.breaks,
-        }))
-    }
-
-    fn restore_snapshot(&mut self, snapshot: BufferSnapshot) {
-        let snapshot = snapshot.unwrap_any::<WillBreakSnapshot>();
-        self.inner.restore_snapshot(snapshot.inner);
-        self.breaks = snapshot.breaks;
-    }
-}
-
-struct WillBreakSnapshot {
-    inner: BufferSnapshot,
-    breaks: bool,
-}

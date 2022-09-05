@@ -750,9 +750,10 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-const obj1 = conditionIsTruthy
-           ? { some: "long", object: "with", lots: "of", stuff }
-           : shortThing;
+function myfunc() {
+  var eval
+  var arguments;
+}
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
@@ -761,6 +762,8 @@ const obj1 = conditionIsTruthy
         let result = format_node(options.clone(), &tree.syntax())
             .unwrap()
             .print();
+
+        dbg!(result.as_code());
         check_reformat(CheckReformatParams {
             root: &tree.syntax(),
             text: result.as_code(),
