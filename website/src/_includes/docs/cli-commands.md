@@ -20,8 +20,8 @@ The command only works on projects that don't have Rome configuration.
 
 #### `rome start`
 
-Start the Rome daemon server
+Start the Rome [daemon](#daemon) server
 
 #### `rome stop`
 
-Stop the Rome daemon server
+Stop the Rome [daemon](#deamon) server
