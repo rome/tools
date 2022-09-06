@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::{
-    format_element, write, Argument, Arguments, BufferSnapshot, FormatState, GroupId,
-    PreambleBuffer, TextRange, TextSize,
+    format_element, write, Argument, Arguments, BufferSnapshot, FormatState, GroupId, TextRange,
+    TextSize,
 };
 use crate::{Buffer, VecBuffer};
 use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTokenText, TextLen};
@@ -528,9 +528,47 @@ impl<Context> std::fmt::Debug for FormatComment<'_, Context> {
 ///
 /// This does not directly influence how this content will be printed, but some
 /// parts of the formatter may inspect the [labelled element](FormatElement::Label)
-/// using `inspect_is_labelled` buffer extension and choose a different formatting layout.
+/// using [FormatElement::has_label].
 ///
-/// See [inspect_is_labelled](BufferExtensions::inspect_is_labelled) for documentation.
+/// ## Examples
+///
+/// ```rust
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::{format, write, LineWidth};
+///
+/// enum SomeLabelId {}
+///
+/// let formatted = format!(
+///     SimpleFormatContext::default(),
+///     [format_with(|f| {
+///         let mut recording = f.start_recording();
+///         write!(recording, [
+///             labelled(
+///                 LabelId::of::<SomeLabelId>(),
+///                 &text("'I have a label'")
+///             )
+///         ])?;
+///
+///         let recorded = recording.stop();
+///
+///         let is_labelled = recorded.last().map_or(false, |element| element.has_label(LabelId::of::<SomeLabelId>()));
+///
+///         if is_labelled {
+///             write!(f, [text(" has label SomeLabelId")])
+///         } else {
+///             write!(f, [text(" doesn't have label SomeLabelId")])
+///         }
+///     })]
+/// )
+/// .unwrap();
+///
+/// assert_eq!("'I have a label' has label SomeLabelId", formatted.print().as_code());
+/// ```
+///
+/// ## Alternatives
+///
+/// Use `Memoized.inspect(f)?.has_label(LabelId::of::<SomeLabelId>()` if you need to know if some content breaks that should
+/// only be written later.
 #[inline]
 pub fn labelled<Content, Context>(label_id: LabelId, content: &Content) -> FormatLabelled<Context>
 where
@@ -1417,6 +1455,10 @@ impl<Context> Buffer for GroupBuffer<'_, Context> {
         Ok(())
     }
 
+    fn elements(&self) -> &[FormatElement] {
+        &self.content
+    }
+
     fn state(&self) -> &FormatState<Self::Context> {
         self.inner.state()
     }
@@ -2122,27 +2164,27 @@ where
     /// that appear before the node in the input source.
     pub fn entry<L: Language>(&mut self, node: &SyntaxNode<L>, content: &dyn Format<Context>) {
         self.result = self.result.and_then(|_| {
-            let mut buffer = PreambleBuffer::new(
-                self.fmt,
-                format_with(|f| {
-                    if self.has_elements {
-                        if get_lines_before(node) > 1 {
-                            write!(f, [empty_line()])?;
-                        } else {
-                            self.separator.fmt(f)?;
-                        }
-                    }
+            if self.has_elements {
+                if get_lines_before(node) > 1 {
+                    write!(self.fmt, [empty_line()])?;
+                } else {
+                    self.separator.fmt(self.fmt)?;
+                }
+            }
 
-                    Ok(())
-                }),
-            );
+            self.has_elements = true;
 
-            write!(buffer, [content])?;
-
-            self.has_elements = self.has_elements || buffer.did_write_preamble();
-
-            Ok(())
+            write!(self.fmt, [content])
         });
+    }
+
+    /// Writes an entry without adding a separating line break or empty line.
+    pub fn entry_no_separator(&mut self, content: &dyn Format<Context>) {
+        self.result = self.result.and_then(|_| {
+            self.has_elements = true;
+
+            write!(self.fmt, [content])
+        })
     }
 
     /// Adds an iterator of entries to the output. Each entry is a `(node, content)` tuple.

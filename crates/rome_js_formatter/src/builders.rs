@@ -447,20 +447,20 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
                     let mut is_empty = true;
 
                     let format_content = format_once(|f| {
-                        let mut buffer = f.inspect(|element| {
-                            if !element.is_empty() {
-                                is_empty = false
-                            }
-                        });
+                        let mut recording = f.start_recording();
 
                         write!(
-                            buffer,
+                            recording,
                             [
                                 open_token_trailing_trivia,
                                 format_content,
                                 close_token_leading_trivia
                             ]
-                        )
+                        )?;
+
+                        is_empty = recording.stop().is_empty();
+
+                        Ok(())
                     });
 
                     soft_line_indent_or_space(&format_content).fmt(f)?;
@@ -534,15 +534,11 @@ impl<'t> OpenDelimiter<'t> {
     /// It extracts the formatted trailing trivia of the token, without writing it in the buffer
     pub(crate) fn format_trailing_trivia(&self) -> impl Format<JsFormatContext> + 't {
         format_with(|f| {
-            // Not really interested in the pre-amble, but want to know if it was written
-            let mut buffer = VecBuffer::new(f.state_mut());
+            let mut recording = f.start_recording();
+            write!(recording, [format_trailing_trivia(self.open_token)])?;
+            let recorded = recording.stop();
 
-            write!(buffer, [format_trailing_trivia(self.open_token)])?;
-
-            let trivia = buffer.into_vec();
-
-            if !trivia.is_empty() {
-                f.write_elements(trivia)?;
+            if !recorded.is_empty() {
                 soft_line_break().fmt(f)?;
             }
 
@@ -578,7 +574,7 @@ impl<'t> CloseDelimiter<'t> {
         format_with(|f| {
             let mut buffer = PreambleBuffer::new(f, soft_line_break());
 
-            write!(buffer, [format_leading_trivia(self.close_token,)])
+            write!(buffer, [format_leading_trivia(self.close_token)])
         })
     }
 

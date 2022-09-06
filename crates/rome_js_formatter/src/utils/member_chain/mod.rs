@@ -112,7 +112,7 @@ use crate::utils::member_chain::groups::{
     MemberChainGroup, MemberChainGroups, MemberChainGroupsBuilder,
 };
 use crate::utils::member_chain::simple_argument::SimpleArgument;
-use rome_formatter::{format_args, write, Buffer, Comments, CstFormatContext, PreambleBuffer};
+use rome_formatter::{format_args, write, Buffer, Comments, CstFormatContext};
 use rome_js_syntax::{JsAnyExpression, JsCallExpression, JsExpressionStatement, JsLanguage};
 use rome_rowan::{AstNode, SyntaxResult};
 
@@ -179,11 +179,7 @@ impl Format<JsFormatContext> for MemberChain {
                 ))]
             )
         } else {
-            // TODO This line suffix boundary shouldn't be needed but currently is because comments
-            // can move over node boundaries. Follow up when re-working member chain formatting
-            let mut buffer = PreambleBuffer::new(f, line_suffix_boundary());
-
-            write!(buffer, [&self.tail])
+            write!(f, [self.tail])
         }
     }
 }

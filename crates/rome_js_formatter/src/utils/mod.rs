@@ -27,7 +27,7 @@ pub(crate) use conditional::{ConditionalJsxChain, JsAnyConditional};
 pub(crate) use member_chain::get_member_chain;
 pub(crate) use object_like::JsObjectLike;
 pub(crate) use object_pattern_like::JsObjectPatternLike;
-use rome_formatter::{format_args, write, Buffer, CommentStyle, VecBuffer};
+use rome_formatter::{format_args, write, Buffer, CommentStyle};
 use rome_js_syntax::{JsAnyExpression, JsAnyStatement, JsInitializerClause, JsLanguage, Modifiers};
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList};
@@ -191,18 +191,16 @@ impl<'a> FormatWithSemicolon<'a> {
 
 impl Format<JsFormatContext> for FormatWithSemicolon<'_> {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        let mut buffer = VecBuffer::new(f.state_mut());
+        let mut recording = f.start_recording();
+        write!(recording, [self.content])?;
 
-        write!(buffer, [self.content])?;
-
-        let content = buffer.into_element();
-
-        let is_unknown = match content.last_element() {
-            Some(FormatElement::Verbatim(elem)) => elem.is_unknown(),
-            _ => false,
-        };
-
-        f.write_element(content)?;
+        let is_unknown = recording
+            .stop()
+            .last()
+            .map_or(false, |last| match last.last_element() {
+                Some(FormatElement::Verbatim(elem)) => elem.is_unknown(),
+                _ => false,
+            });
 
         if let Some(semicolon) = self.semicolon {
             write!(f, [semicolon.format()])?;

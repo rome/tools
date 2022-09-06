@@ -1168,7 +1168,7 @@ mod tests {
 
         write!(&mut buffer, [root]).unwrap();
 
-        Printer::new(options).print(&dbg!(buffer.into_element()))
+        Printer::new(options).print(&buffer.into_element())
     }
 
     #[test]
