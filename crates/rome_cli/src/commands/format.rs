@@ -87,10 +87,10 @@ pub(crate) fn apply_format_settings_from_cli(
 
     match indent_style {
         Some(IndentStyle::Tab) => {
-            workspace_settings.format.indent_style = Some(IndentStyle::Tab);
+            workspace_settings.formatter.indent_style = Some(IndentStyle::Tab);
         }
         Some(IndentStyle::Space(default_size)) => {
-            workspace_settings.format.indent_style =
+            workspace_settings.formatter.indent_style =
                 Some(IndentStyle::Space(size.unwrap_or(default_size)));
         }
         None => {}
@@ -133,7 +133,7 @@ pub(crate) fn apply_format_settings_from_cli(
         })?;
 
     if let Some(line_width) = line_width {
-        workspace_settings.format.line_width = Some(line_width);
+        workspace_settings.formatter.line_width = Some(line_width);
     }
 
     Ok(())

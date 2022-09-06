@@ -18,7 +18,6 @@ mod formatter;
 mod javascript;
 pub mod linter;
 
-pub(crate) use javascript::{deserialize_globals, serialize_globals};
 pub use linter::{RuleConfiguration, Rules};
 
 /// The configuration that is contained inside the file `rome.json`

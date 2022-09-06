@@ -7,26 +7,32 @@ use rome_js_syntax::JsLanguage;
 use std::sync::{RwLock, RwLockReadGuard};
 
 /// Global settings for the entire workspace
-#[derive(Debug, Default, serde::Serialize, serde::Deserialize)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[derive(Debug, Default)]
 pub struct WorkspaceSettings {
     /// Formatter settings applied to all files in the workspaces
-    #[serde(default)]
-    pub format: FormatSettings,
+    pub formatter: FormatSettings,
     /// Linter settings applied to all files in the workspace
-    #[serde(default)]
     pub linter: LinterSettings,
     /// Language specific settings
-    #[serde(default)]
     pub languages: LanguagesSettings,
 }
 
 impl WorkspaceSettings {
+    /// Retrieves the settings of the formatter
+    pub fn formatter(&self) -> &FormatSettings {
+        &self.formatter
+    }
+
+    /// Retrieves the settings of the linter
+    pub fn linter(&self) -> &LinterSettings {
+        &self.linter
+    }
+
     /// The (configuration)[Configuration] is merged into the workspace
     pub fn merge_with_configuration(&mut self, configuration: Configuration) {
         // formatter part
         if let Some(formatter) = configuration.formatter {
-            self.format = FormatSettings::from(formatter);
+            self.formatter = FormatSettings::from(formatter);
         }
         let formatter = configuration
             .javascript
@@ -62,8 +68,7 @@ impl WorkspaceSettings {
 }
 
 /// Formatter settings for the entire workspace
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[derive(Debug)]
 pub struct FormatSettings {
     /// Enabled by default
     pub enabled: bool,
@@ -86,8 +91,7 @@ impl Default for FormatSettings {
 }
 
 /// Linter settings for the entire workspace
-#[derive(Debug, serde::Serialize, serde::Deserialize)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[derive(Debug)]
 pub struct LinterSettings {
     /// Enabled by default
     pub enabled: bool,
@@ -106,33 +110,16 @@ impl Default for LinterSettings {
 }
 
 /// Static map of language names to language-specific settings
-#[derive(Debug, Default, serde::Serialize, serde::Deserialize)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[derive(Debug, Default)]
 pub struct LanguagesSettings {
-    #[serde(default)]
     pub javascript: LanguageSettings<JsLanguage>,
 }
 
 pub trait Language: rome_rowan::Language {
-    #[cfg(not(feature = "schemars"))]
     /// Formatter settings type for this language
-    type FormatSettings: Default + serde::Serialize + serde::de::DeserializeOwned;
-    #[cfg(feature = "schemars")]
-    /// Formatter settings type for this language
-    type FormatSettings: Default
-        + serde::Serialize
-        + serde::de::DeserializeOwned
-        + schemars::JsonSchema;
+    type FormatSettings: Default;
 
-    #[cfg(not(feature = "schemars"))]
-    /// Linter settings type for this language
-    type LinterSettings: Default + serde::Serialize + serde::de::DeserializeOwned;
-    #[cfg(feature = "schemars")]
-    /// Linter settings type for this language
-    type LinterSettings: Default
-        + serde::Serialize
-        + serde::de::DeserializeOwned
-        + schemars::JsonSchema;
+    type LinterSettings: Default;
 
     /// Fully resolved formatter options type for this language
     type FormatOptions: rome_formatter::FormatOptions;
@@ -149,30 +136,22 @@ pub trait Language: rome_rowan::Language {
     ) -> Self::FormatOptions;
 }
 
-#[derive(Debug, Default, serde::Serialize, serde::Deserialize)]
-#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[derive(Debug, Default)]
 pub struct LanguageSettings<L: Language> {
     /// Formatter settings for this language
-    #[serde(default)]
     pub format: L::FormatSettings,
 
     /// Linter settings for this language
-    #[serde(default)]
     pub linter: L::LinterSettings,
 
     /// Globals variables/bindings that can be found in a file
-    #[serde(
-        default,
-        deserialize_with = "crate::configuration::deserialize_globals",
-        serialize_with = "crate::configuration::serialize_globals"
-    )]
     pub globals: Option<IndexSet<String>>,
 }
 
 /// Handle object holding a temporary lock on the workspace settings until
 /// the deferred language-specific options resolution is called
 #[derive(Debug)]
-pub(crate) struct SettingsHandle<'a> {
+pub struct SettingsHandle<'a> {
     inner: RwLockReadGuard<'a, WorkspaceSettings>,
 }
 
@@ -197,7 +176,7 @@ impl<'a> SettingsHandle<'a> {
         L: Language,
     {
         L::resolve_format_options(
-            &self.inner.format,
+            &self.inner.formatter,
             &L::lookup_settings(&self.inner.languages).format,
             path,
         )

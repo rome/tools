@@ -167,9 +167,9 @@ impl Workspace for WorkspaceServer {
         let settings = self.settings.read().unwrap();
         match params.feature {
             FeatureName::Format => {
-                capabilities.formatter.format.is_some() && settings.format.enabled
+                capabilities.formatter.format.is_some() && settings.formatter().enabled
             }
-            FeatureName::Lint => capabilities.analyzer.lint.is_some() && settings.linter.enabled,
+            FeatureName::Lint => capabilities.analyzer.lint.is_some() && settings.linter().enabled,
         }
     }
 
@@ -240,7 +240,7 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings();
 
-        if !settings.as_ref().format.format_with_errors && parse.has_errors() {
+        if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
         }
 
@@ -285,7 +285,7 @@ impl Workspace for WorkspaceServer {
 
         let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings.read().unwrap();
-        let rules = settings.linter.rules.as_ref();
+        let rules = settings.linter().rules.as_ref();
         let enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = rules {
             let enabled: IndexSet<RuleFilter> = rules.as_enabled_rules();
             Some(enabled.into_iter().collect())
@@ -316,7 +316,7 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone())?;
 
         let settings = self.settings.read().unwrap();
-        let rules = settings.linter.rules.as_ref();
+        let rules = settings.linter().rules.as_ref();
 
         Ok(code_actions(&params.path, parse, params.range, rules))
     }
@@ -333,7 +333,7 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings();
 
-        if !settings.as_ref().format.format_with_errors && parse.has_errors() {
+        if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
         }
 
@@ -350,7 +350,7 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings();
 
-        if !settings.as_ref().format.format_with_errors && parse.has_errors() {
+        if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
         }
 
@@ -367,7 +367,7 @@ impl Workspace for WorkspaceServer {
         let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings();
 
-        if !settings.as_ref().format.format_with_errors && parse.has_errors() {
+        if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
         }
 
@@ -383,7 +383,7 @@ impl Workspace for WorkspaceServer {
 
         let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings.read().unwrap();
-        let rules = settings.linter.rules.as_ref();
+        let rules = settings.linter().rules.as_ref();
         fix_all(FixAllParams {
             rome_path: &params.path,
             parse,
