@@ -8,7 +8,7 @@ use std::{
 
 use rome_lsp::{ServerConnection, ServerFactory};
 use tokio::{
-    io::{split, Interest},
+    io::Interest,
     net::{
         unix::{OwnedReadHalf, OwnedWriteHalf},
         UnixListener, UnixStream,
