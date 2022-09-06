@@ -447,10 +447,10 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
                     let mut is_empty = true;
 
                     let format_content = format_once(|f| {
-                        let previous_len = f.elements().len();
+                        let mut recording = f.start_recording();
 
                         write!(
-                            f,
+                            recording,
                             [
                                 open_token_trailing_trivia,
                                 format_content,
@@ -458,7 +458,7 @@ impl Format<JsFormatContext> for FormatDelimited<'_, '_> {
                             ]
                         )?;
 
-                        is_empty = previous_len == f.elements().len();
+                        is_empty = recording.stop().is_empty();
 
                         Ok(())
                     });
@@ -534,10 +534,11 @@ impl<'t> OpenDelimiter<'t> {
     /// It extracts the formatted trailing trivia of the token, without writing it in the buffer
     pub(crate) fn format_trailing_trivia(&self) -> impl Format<JsFormatContext> + 't {
         format_with(|f| {
-            let previous_len = f.elements().len();
-            write!(f, [format_trailing_trivia(self.open_token)])?;
+            let mut recording = f.start_recording();
+            write!(recording, [format_trailing_trivia(self.open_token)])?;
+            let recorded = recording.stop();
 
-            if previous_len < f.elements().len() {
+            if !recorded.is_empty() {
                 soft_line_break().fmt(f)?;
             }
 

@@ -35,9 +35,10 @@ impl Format<JsFormatContext> for TsTypeMemberItem {
         write!(
             f,
             [group(&format_once(|f| {
-                write!(f, [self.member.format()])?;
+                let mut recording = f.start_recording();
+                write!(recording, [self.member.format()])?;
 
-                is_verbatim = f.elements().last().map_or(false, |last| {
+                is_verbatim = recording.stop().last().map_or(false, |last| {
                     matches!(last.last_element(), Some(FormatElement::Verbatim(_)))
                 });
 

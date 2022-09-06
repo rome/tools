@@ -32,8 +32,8 @@ pub trait Buffer {
 
     /// Returns a slice containing all elements written into this buffer.
     ///
-    /// Useful to inspect if some content breaks, has a specific label or if some format
-    /// did write any content.
+    /// Prefer using [BufferExtensions::start_recording] over accessing [Buffer::elements] directly.
+    #[doc(hidden)]
     fn elements(&self) -> &[FormatElement];
 
     /// Glue for usage of the [`write!`] macro with implementors of this trait.
@@ -418,16 +418,16 @@ where
         self.inner.write_element(element)
     }
 
+    fn elements(&self) -> &[FormatElement] {
+        self.inner.elements()
+    }
+
     fn state(&self) -> &FormatState<Self::Context> {
         self.inner.state()
     }
 
     fn state_mut(&mut self) -> &mut FormatState<Self::Context> {
         self.inner.state_mut()
-    }
-
-    fn elements(&self) -> &[FormatElement] {
-        self.inner.elements()
     }
 
     fn snapshot(&self) -> BufferSnapshot {
@@ -449,6 +449,46 @@ pub trait BufferExtensions: Buffer + Sized {
         Inspect::new(self, inspector)
     }
 
+    /// Starts a recording that gives you access to all elements that have been written between the start
+    /// and end of the recording
+    ///
+    /// #Examples
+    ///
+    /// ```
+    /// use std::ops::Deref;
+    /// use rome_formatter::prelude::*;
+    /// use rome_formatter::{write, format, SimpleFormatContext};
+    ///
+    /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
+    ///     let mut recording = f.start_recording();
+    ///
+    ///     write!(recording, [text("A")])?;
+    ///     write!(recording, [text("B")])?;
+    ///
+    ///     write!(recording, [format_with(|f| write!(f, [text("C"), text("D")]))])?;
+    ///
+    ///     let recorded = recording.stop();
+    ///     assert_eq!(
+    ///         recorded.deref(),
+    ///         &[
+    ///             FormatElement::Text(Text::Static{ text: "A" }),
+    ///             FormatElement::Text(Text::Static{ text: "B" }),
+    ///             FormatElement::Text(Text::Static{ text: "C" }),
+    ///             FormatElement::Text(Text::Static{ text: "D" })
+    ///         ]
+    ///     );
+    ///
+    ///     Ok(())
+    /// })]).unwrap();
+    ///
+    /// assert_eq!(formatted.print().as_code(), "ABCD");
+    ///
+    /// ```
+    #[must_use]
+    fn start_recording(&mut self) -> Recording<Self> {
+        Recording::new(self)
+    }
+
     /// Writes a sequence of elements into this buffer.
     fn write_elements<I>(&mut self, elements: I) -> FormatResult<()>
     where
@@ -463,3 +503,56 @@ pub trait BufferExtensions: Buffer + Sized {
 }
 
 impl<T> BufferExtensions for T where T: Buffer {}
+
+#[derive(Debug)]
+pub struct Recording<'buf, Buffer> {
+    start: usize,
+    buffer: &'buf mut Buffer,
+}
+
+impl<'buf, B> Recording<'buf, B>
+where
+    B: Buffer,
+{
+    fn new(buffer: &'buf mut B) -> Self {
+        Self {
+            start: buffer.elements().len(),
+            buffer,
+        }
+    }
+
+    #[inline(always)]
+    pub fn write_fmt(&mut self, arguments: Arguments<B::Context>) -> FormatResult<()> {
+        self.buffer.write_fmt(arguments)
+    }
+
+    #[inline(always)]
+    pub fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
+        self.buffer.write_element(element)
+    }
+
+    pub fn stop(self) -> Recorded<'buf> {
+        let buffer: &'buf B = self.buffer;
+        let elements = buffer.elements();
+
+        let recorded = if self.start > elements.len() {
+            // May happen if buffer was rewinded.
+            &[]
+        } else {
+            &elements[self.start..]
+        };
+
+        Recorded(recorded)
+    }
+}
+
+#[derive(Debug, Copy, Clone)]
+pub struct Recorded<'a>(&'a [FormatElement]);
+
+impl Deref for Recorded<'_> {
+    type Target = [FormatElement];
+
+    fn deref(&self) -> &Self::Target {
+        self.0
+    }
+}

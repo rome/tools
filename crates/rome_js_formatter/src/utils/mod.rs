@@ -191,10 +191,11 @@ impl<'a> FormatWithSemicolon<'a> {
 
 impl Format<JsFormatContext> for FormatWithSemicolon<'_> {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        write!(f, [self.content])?;
+        let mut recording = f.start_recording();
+        write!(recording, [self.content])?;
 
-        let is_unknown = f
-            .elements()
+        let is_unknown = recording
+            .stop()
             .last()
             .map_or(false, |last| match last.last_element() {
                 Some(FormatElement::Verbatim(elem)) => elem.is_unknown(),

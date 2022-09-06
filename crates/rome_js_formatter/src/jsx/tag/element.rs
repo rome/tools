@@ -38,12 +38,9 @@ impl Format<JsFormatContext> for JsxAnyTagWithChildren {
             }
 
             ElementLayout::Default => {
-                let opening_start = f.elements().len();
-                write!(f, [format_opening])?;
-
-                let opening_breaks = f.elements()[opening_start..]
-                    .iter()
-                    .any(FormatElement::will_break);
+                let mut recording = f.start_recording();
+                write!(recording, [format_opening])?;
+                let opening_breaks = recording.stop().iter().any(FormatElement::will_break);
 
                 let multiple_attributes = match self {
                     JsxAnyTagWithChildren::JsxElement(element) => {

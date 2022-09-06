@@ -541,14 +541,17 @@ impl<Context> std::fmt::Debug for FormatComment<'_, Context> {
 /// let formatted = format!(
 ///     SimpleFormatContext::default(),
 ///     [format_with(|f| {
-///         write!(f, [
+///         let mut recording = f.start_recording();
+///         write!(recording, [
 ///             labelled(
 ///                 LabelId::of::<SomeLabelId>(),
 ///                 &text("'I have a label'")
 ///             )
 ///         ])?;
 ///
-///         let is_labelled = f.elements().last().map_or(false, |element| element.has_label(LabelId::of::<SomeLabelId>()));
+///         let recorded = recording.stop();
+///
+///         let is_labelled = recorded.last().map_or(false, |element| element.has_label(LabelId::of::<SomeLabelId>()));
 ///
 ///         if is_labelled {
 ///             write!(f, [text(" has label SomeLabelId")])
@@ -1453,11 +1456,7 @@ impl<Context> Buffer for GroupBuffer<'_, Context> {
     }
 
     fn elements(&self) -> &[FormatElement] {
-        if self.content.is_empty() {
-            self.inner.elements()
-        } else {
-            &self.content
-        }
+        &self.content
     }
 
     fn state(&self) -> &FormatState<Self::Context> {
