@@ -109,7 +109,7 @@ self.addEventListener("message", async (e) => {
 			});
 
 			const path = getPathForType(sourceType, isTypeScript, isJsx);
-			if (currentFile?.path === path) {
+			if (currentFile && currentFile?.path === path) {
 				workspace.changeFile({
 					path,
 					version: currentFile.version++,
