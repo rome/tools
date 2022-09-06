@@ -1,6 +1,6 @@
 {
     "name": "rome",
-    "version": "0.8.0-next",
+    "version": "0.9.0-next",
     "bin": "bin/rome",
     "scripts": {
         "postinstall": "node scripts/postinstall.js",
@@ -17,6 +17,7 @@
         "build": "tsc "
     },
     "main": "./dist/index.js",
+    "types": "./dist/index.d.ts",
     "homepage": "https://rome.tools",
     "author": "Sebastian McKenzie",
     "bugs": "https://github.com/rome/tools/issues",

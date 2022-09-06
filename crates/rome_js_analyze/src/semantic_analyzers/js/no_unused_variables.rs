@@ -12,6 +12,17 @@ use rome_rowan::AstNode;
 declare_rule! {
     /// Disallow unused variables.
     ///
+    /// There are two exceptions to this rule:
+    /// 1. variables that starts with underscore, ex: `let _something;`
+    /// 2. the `React` variable;
+    ///
+    /// The pattern of having an underscore as prefix of a name of variable is a very diffuse
+    /// pattern among programmers, and Rome decided to follow it.
+    ///
+    /// Importing the `React` variable was a mandatory pattern until some time ago:
+    ///
+    /// For the time being this rule will ignore it, but this **might change in the future releases**.
+    ///
     /// ## Examples
     ///
     /// ### Invalid

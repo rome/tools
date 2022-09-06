@@ -52,12 +52,14 @@ USAGE:
     INPUTS can be one or more filesystem path, each pointing to a single file or an entire directory to be searched recursively for supported files
 
 OPTIONS:
-    --write                       Write the output of the formatter to the files instead of printing the diff to the console
-    --skip-errors                 Skip over files containing syntax errors instead of returning an error
-    --indent-style <tabs|space>   Determine whether the formatter should use tabs or spaces for indentation (default: tabs)
-    --indent-size <number>        If the indentation style is set to spaces, determine how many spaces should be used for indentation (default: 2)
-    --line-width <number>         Determine how many characters the formatter is allowed to print in a single line (default: 80)
-    --quote-style <single|double> Determine whether the formatter should use single or double quotes for strings (default: double)
+    --write                                  Edit the files in place (beware!) instead of instead of printing the diff to the console
+    --skip-errors                            Skip over files containing syntax errors instead of emitting an error diagnostic.
+    --indent-style <tabs|space>              Change the indention character (default: tabs)
+    --indent-size <number>                   If the indentation style is set to spaces, determine how many spaces should be used for indentation (default: 2)
+    --line-width <number>                    Change how many characters the formatter is allowed to print in a single line (default: 80)
+    --quote-style <single|double>            Changes the quotation character for strings (default: ")
+    --quote-properties <as-needed|preserve>  Changes when properties in object should be quoted (default: as-needed)
+    --stdin-file-path <string>                A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path file.js
 ```
 
 ### Suppression
@@ -197,8 +199,6 @@ function a(b, c) {
     let a = "f";
 }
 ```
-
-Please check our [playground] and its result
 
 #### Migration from other formatters
 

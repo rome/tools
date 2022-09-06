@@ -309,6 +309,30 @@ fn parse_documentation(
                 writeln!(content)?;
             }
 
+            Event::Start(Tag::Strong) => {
+                write!(content, "**")?;
+            }
+
+            Event::End(Tag::Strong) => {
+                write!(content, "**")?;
+            }
+
+            Event::Start(Tag::Emphasis) => {
+                write!(content, "_")?;
+            }
+
+            Event::End(Tag::Emphasis) => {
+                write!(content, "_")?;
+            }
+
+            Event::Start(Tag::Strikethrough) => {
+                write!(content, "~")?;
+            }
+
+            Event::End(Tag::Strikethrough) => {
+                write!(content, "~")?;
+            }
+
             _ => {
                 // TODO: Implement remaining events as required
                 bail!("unimplemented event {event:?}")
