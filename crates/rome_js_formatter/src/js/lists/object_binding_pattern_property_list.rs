@@ -1,7 +1,5 @@
 use crate::prelude::*;
-use rome_js_syntax::{
-    JsAnyObjectBindingPatternMember, JsObjectBindingPatternPropertyList, JsSyntaxKind,
-};
+use rome_js_syntax::{JsAnyObjectBindingPatternMember, JsObjectBindingPatternPropertyList};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsObjectBindingPatternPropertyList;
@@ -30,7 +28,7 @@ impl FormatRule<JsObjectBindingPatternPropertyList> for FormatJsObjectBindingPat
         };
 
         let entries = node
-            .format_separated(JsSyntaxKind::COMMA)
+            .format_separated(",")
             .with_trailing_separator(trailing_separator)
             .zip(node.iter());
 

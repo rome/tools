@@ -18,7 +18,14 @@ impl FormatNodeRule<JsBlockStatement> for FormatJsBlockStatement {
             r_curly_token,
         } = node.as_fields();
 
-        if is_non_collapsable_empty_block(node, f.context().comments()) {
+        write!(f, [l_curly_token.format()])?;
+
+        let r_curly_token = r_curly_token?;
+
+        let comments = f.context().comments();
+        if is_empty_block(node, comments) {
+            let has_dangling_trivia = comments.has_dangling_trivia(&r_curly_token);
+
             for stmt in statements
                 .iter()
                 .filter_map(|stmt| JsEmptyStatement::cast(stmt.into_syntax()))
@@ -26,44 +33,20 @@ impl FormatNodeRule<JsBlockStatement> for FormatJsBlockStatement {
                 f.state_mut().track_token(&stmt.semicolon_token()?)
             }
 
-            write!(
-                f,
-                [
-                    l_curly_token.format(),
-                    hard_line_break(),
-                    r_curly_token.format()
-                ]
-            )
+            if has_dangling_trivia {
+                write!(f, [format_dangling_trivia(&r_curly_token).indented()])?;
+            } else if is_non_collapsible(node) {
+                write!(f, [hard_line_break()])?;
+            }
         } else {
-            write!(
-                f,
-                [
-                    format_delimited(&l_curly_token?, &statements.format(), &r_curly_token?)
-                        .block_indent()
-                ]
-            )
+            write!(f, [block_indent(&statements.format())])?;
         }
+
+        write!(f, [r_curly_token.format()])
     }
 }
 
-// Formatting of curly braces for an:
-// * empty block: same line `{}`,
-// * empty block that is the 'cons' or 'alt' of an if statement: two lines `{\n}`
-// * non empty block: put each stmt on its own line: `{\nstmt1;\nstmt2;\n}`
-// * non empty block with comments (trailing comments on {, or leading comments on })
-fn is_non_collapsable_empty_block(
-    block: &JsBlockStatement,
-    suppressions: &Comments<JsLanguage>,
-) -> bool {
-    if block
-        .l_curly_token()
-        .map_or_else(|_| false, |token| token.has_trailing_comments())
-        || block
-            .r_curly_token()
-            .map_or_else(|_| false, |token| token.has_leading_comments())
-    {
-        return false;
-    }
+fn is_empty_block(block: &JsBlockStatement, comments: &Comments<JsLanguage>) -> bool {
     // add extra branch to avoid formatting the same code twice and generating different code,
     // here is an example:
     // ```js
@@ -89,15 +72,20 @@ fn is_non_collapsable_empty_block(
     // } finally {
     // }
     // ```
-    if !block.statements().is_empty()
-        && block.statements().iter().any(|s| {
-            !matches!(s, JsAnyStatement::JsEmptyStatement(_))
-                || s.syntax().has_comments_direct()
-                || suppressions.is_suppressed(s.syntax())
+    block.statements().is_empty()
+        && block.statements().iter().all(|s| {
+            matches!(s, JsAnyStatement::JsEmptyStatement(_))
+                && !comments.has_comments(s.syntax())
+                && !comments.is_suppressed(s.syntax())
         })
-    {
-        return false;
-    }
+}
+
+// Formatting of curly braces for an:
+// * empty block: same line `{}`,
+// * empty block that is the 'cons' or 'alt' of an if statement: two lines `{\n}`
+// * non empty block: put each stmt on its own line: `{\nstmt1;\nstmt2;\n}`
+// * non empty block with comments (trailing comments on {, or leading comments on })
+fn is_non_collapsible(block: &JsBlockStatement) -> bool {
     // reference https://github.com/prettier/prettier/blob/b188c905cfaeb238a122b4a95c230da83f2f3226/src/language-js/print/block.js#L19
     let parent = block.syntax().parent();
     match parent.clone().map(|p| p.kind()) {

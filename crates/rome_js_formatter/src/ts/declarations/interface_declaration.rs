@@ -1,5 +1,6 @@
 use crate::prelude::*;
 
+use crate::builders::format_delimited;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{TsInterfaceDeclaration, TsInterfaceDeclarationFields};
 
@@ -78,16 +79,17 @@ impl FormatNodeRule<TsInterfaceDeclaration> for FormatTsInterfaceDeclaration {
         let last_token = last_node.last_token();
         let mut has_trailing_comments = false;
 
-        if let Some(last_token) = &last_token {
-            for comment in last_token
-                .trailing_trivia()
-                .pieces()
-                .filter_map(|piece| piece.as_comments())
-            {
-                has_trailing_comments = true;
-                f.state_mut().mark_comment_as_formatted(&comment);
-            }
-        }
+        // FIXME
+        // if let Some(last_token) = &last_token {
+        //     for comment in last_token
+        //         .trailing_trivia()
+        //         .pieces()
+        //         .filter_map(|piece| piece.as_comments())
+        //     {
+        //         has_trailing_comments = true;
+        //         f.state_mut().mark_token_trivia_formatted(&comment);
+        //     }
+        // }
 
         let id_has_trailing_comments = id.syntax().has_trailing_comments();
         if id_has_trailing_comments || extends_clause.is_some() {
@@ -114,17 +116,10 @@ impl FormatNodeRule<TsInterfaceDeclaration> for FormatTsInterfaceDeclaration {
                     &l_curly_token,
                     &format_args![
                         format_with(|f| {
-                            // Write the manual handled comments
+                            // TODO: See PR Write the manual handled comments
                             if let Some(last_token) = &last_token {
                                 if has_trailing_comments {
-                                    write!(
-                                        f,
-                                        [
-                                            format_trailing_trivia(last_token)
-                                                .skip_formatted_check(),
-                                            hard_line_break()
-                                        ]
-                                    )?;
+                                    write!(f, [hard_line_break()])?;
                                 }
                             }
 

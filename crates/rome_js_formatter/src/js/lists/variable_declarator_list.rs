@@ -35,7 +35,7 @@ impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
         });
 
         let mut declarators = node.iter().zip(
-            node.format_separated(JsSyntaxKind::COMMA)
+            node.format_separated(",")
                 .with_trailing_separator(TrailingSeparator::Disallowed),
         );
 

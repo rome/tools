@@ -34,22 +34,7 @@ function jsdocCastInReturn() {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,5 +1,5 @@
--const myLongVariableName =
--  /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */ (fooBarBaz);
-+const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
-+  (fooBarBaz);
- 
- function jsdocCastInReturn() {
-   return /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */ (
-@@ -7,24 +7,20 @@
-   );
- }
- 
--const myLongVariableName =
--  /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
-+const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
-   (fooBarBaz);
+@@ -13,8 +13,7 @@
  
  function jsdocCastInReturn() {
    return (
@@ -59,10 +44,7 @@ function jsdocCastInReturn() {
    );
  }
  
--const myLongVariableName =
--  /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
-+const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
-   (fooBarBaz);
+@@ -24,7 +23,6 @@
  
  function jsdocCastInReturn() {
    return (
@@ -76,8 +58,8 @@ function jsdocCastInReturn() {
 # Output
 
 ```js
-const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
-  (fooBarBaz);
+const myLongVariableName =
+  /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */ (fooBarBaz);
 
 function jsdocCastInReturn() {
   return /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */ (
@@ -85,7 +67,8 @@ function jsdocCastInReturn() {
   );
 }
 
-const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
+const myLongVariableName =
+  /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
   (fooBarBaz);
 
 function jsdocCastInReturn() {
@@ -94,7 +77,8 @@ function jsdocCastInReturn() {
   );
 }
 
-const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
+const myLongVariableName =
+  /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
   (fooBarBaz);
 
 function jsdocCastInReturn() {
@@ -105,10 +89,4 @@ function jsdocCastInReturn() {
 ```
 
 
-# Lines exceeding max width of 80 characters
-```
-    1: const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
-   10: const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
-   19: const myLongVariableName = /** @type {ThisIsAVeryLongTypeThatShouldTriggerLineWrapping} */
-```
 

@@ -1,3 +1,4 @@
+use crate::builders::format_delimited;
 use crate::prelude::*;
 use crate::utils::node_has_leading_newline;
 use crate::JsFormatContext;
@@ -53,11 +54,13 @@ impl Format<JsFormatContext> for JsObjectLike {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let members = format_with(|f| self.write_members(f));
         if self.members_are_empty() {
+            let r_curly = self.r_curly_token()?;
             write!(
                 f,
                 [
-                    format_delimited(&self.l_curly_token()?, &members, &self.r_curly_token()?)
-                        .soft_block_indent()
+                    self.l_curly_token().format(),
+                    format_dangling_trivia(&r_curly).indented(),
+                    r_curly.format()
                 ]
             )
         } else if self.members_have_leading_newline() {

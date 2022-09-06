@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/return/comment.js
 ---
 
 # Input
@@ -54,14 +56,7 @@ fn(function f() {
 ```diff
 --- Prettier
 +++ Rome
-@@ -12,30 +12,25 @@
- }
- 
- function f() {
--  return; /* a */
-+  return /* a */
-   // b
-+  ;
+@@ -17,25 +17,19 @@
  }
  
  function x() {
@@ -115,9 +110,8 @@ function f() {
 }
 
 function f() {
-  return /* a */
+  return; /* a */
   // b
-  ;
 }
 
 function x() {

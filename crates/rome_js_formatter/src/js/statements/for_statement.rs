@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write};
+use rome_formatter::{format_args, write, CstFormatContext};
 
 use crate::utils::FormatStatementBody;
 use rome_js_syntax::JsForStatement;
@@ -23,8 +23,23 @@ impl FormatNodeRule<JsForStatement> for FormatJsForStatement {
         } = node.as_fields();
 
         let body = body?;
+        let l_paren_token = l_paren_token?;
 
         let format_body = FormatStatementBody::new(&body);
+
+        // Move dangling trivia between the `for /* this */ (` to the top of the `for` and
+        // add a line break after.
+        let comments = f.context().comments();
+        let dangling_trivia = comments.dangling_trivia(&l_paren_token);
+        if !dangling_trivia.is_empty() && dangling_trivia.iter().all(|trivia| trivia.is_comment()) {
+            write!(
+                f,
+                [
+                    format_dangling_trivia(&l_paren_token),
+                    soft_line_break_or_space()
+                ]
+            )?;
+        }
 
         if initializer.is_none() && test.is_none() && update.is_none() {
             return write!(

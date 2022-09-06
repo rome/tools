@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/comments/return-statement.js
 ---
 
 # Input
@@ -151,15 +153,6 @@ function inlineComment() {
  }
  
  function excessiveEverything() {
-@@ -116,5 +118,7 @@
- }
- 
- function inlineComment() {
--  return /* hi */ 42 || 42;
-+  return (
-+    /* hi */ 42 || 42
-+  );
- }
 ```
 
 # Output
@@ -285,9 +278,7 @@ function taggedTemplate() {
 }
 
 function inlineComment() {
-  return (
-    /* hi */ 42 || 42
-  );
+  return /* hi */ 42 || 42;
 }
 ```
 

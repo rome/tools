@@ -1,3 +1,4 @@
+use crate::builders::format_delimited;
 use crate::prelude::*;
 use rome_formatter::write;
 use rome_js_syntax::JsAnyClass;

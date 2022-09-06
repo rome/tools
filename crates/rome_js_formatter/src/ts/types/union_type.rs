@@ -1,8 +1,8 @@
 use crate::parentheses::NeedsParentheses;
 use crate::prelude::*;
 use crate::utils::{
-    has_leading_own_line_comment, should_hug_type, union_or_intersection_type_needs_parentheses,
-    FormatTypeMemberSeparator, TsIntersectionOrUnionTypeList,
+    should_hug_type, union_or_intersection_type_needs_parentheses, FormatTypeMemberSeparator,
+    TsIntersectionOrUnionTypeList,
 };
 use rome_formatter::{format_args, write, Buffer};
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxToken, TsTupleTypeElementList, TsUnionType};
@@ -62,7 +62,7 @@ impl FormatNodeRule<TsUnionType> for FormatTsUnionType {
                 f,
                 [
                     FormatTypeSetLeadingSeparator {
-                        separator: JsSyntaxKind::PIPE,
+                        separator: "|",
                         leading_separator: leading_separator_token.as_ref(),
                         leading_soft_line_break_or_space: should_indent
                             && !has_leading_own_line_comment,
@@ -123,7 +123,7 @@ impl NeedsParentheses for TsUnionType {
 }
 
 pub struct FormatTypeSetLeadingSeparator<'a> {
-    separator: JsSyntaxKind,
+    separator: &'static str,
     leading_separator: Option<&'a JsSyntaxToken>,
     leading_soft_line_break_or_space: bool,
 }
@@ -145,7 +145,7 @@ impl Format<JsFormatContext> for FormatTypeSetLeadingSeparator<'_> {
                     if self.leading_soft_line_break_or_space {
                         write!(f, [soft_line_break_or_space()])?;
                     }
-                    write!(f, [format_inserted(self.separator), space()])
+                    write!(f, [text(self.separator), space()])
                 });
 
                 write!(f, [if_group_breaks(&content)])

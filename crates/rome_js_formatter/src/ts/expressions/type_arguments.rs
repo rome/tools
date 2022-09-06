@@ -1,3 +1,4 @@
+use crate::builders::format_delimited;
 use crate::utils::should_hug_type;
 use crate::{prelude::*, utils::is_object_like_type};
 use rome_formatter::write;

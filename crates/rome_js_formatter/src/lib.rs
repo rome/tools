@@ -271,7 +271,7 @@ use rome_rowan::SyntaxResult;
 use rome_rowan::TextRange;
 use rome_rowan::{AstNode, SyntaxNode};
 
-use crate::builders::{format_parenthesize, format_suppressed_node};
+use crate::builders::format_suppressed_node;
 use crate::comments::JsCommentStyle;
 use crate::context::{JsFormatContext, JsFormatOptions};
 use crate::cst::FormatJsSyntaxNode;
@@ -427,19 +427,31 @@ where
         let syntax = node.syntax();
 
         if f.context().comments().is_suppressed(syntax) {
-            write!(f, [format_suppressed_node(syntax)])
-        } else if self.needs_parentheses(node) {
+            return write!(f, [format_suppressed_node(syntax)]);
+        }
+
+        if !self.prints_comments(node) {
+            write!(f, [format_leading_comments(node.syntax())])?;
+        }
+
+        if self.needs_parentheses(node) {
             write!(
                 f,
-                [format_parenthesize(
-                    node.syntax().first_token().as_ref(),
-                    &format_once(|f| self.fmt_fields(node, f)),
-                    node.syntax().last_token().as_ref(),
-                )]
-            )
+                [
+                    text("("),
+                    format_once(|f| self.fmt_fields(node, f)),
+                    text(")"),
+                ]
+            )?;
         } else {
-            self.fmt_fields(node, f)
+            self.fmt_fields(node, f)?;
         }
+
+        if !self.prints_comments(node) {
+            write!(f, [format_trailing_comments(node.syntax())])?;
+        }
+
+        Ok(())
     }
 
     /// Formats the node's fields.
@@ -449,6 +461,10 @@ where
     fn needs_parentheses(&self, item: &N) -> bool {
         let _ = item;
         false
+    }
+
+    fn prints_comments(&self, _item: &N) -> bool {
+        return false;
     }
 }
 
@@ -463,11 +479,7 @@ impl FormatRule<JsSyntaxToken> for FormatJsSyntaxToken {
 
         write!(
             f,
-            [
-                format_leading_trivia(token),
-                format_trimmed_token(token),
-                format_trailing_trivia(token),
-            ]
+            [format_dangling_trivia(token), format_trimmed_token(token),]
         )
     }
 }
@@ -502,10 +514,6 @@ impl FormatLanguage for JsFormatLanguage {
     type Context = JsFormatContext;
     type CommentStyle = JsCommentStyle;
     type FormatRule = FormatJsSyntaxNode;
-
-    fn comment_style(&self) -> Self::CommentStyle {
-        JsCommentStyle
-    }
 
     fn transform(
         &self,
@@ -750,8 +758,10 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-        type C = B & (C | A) & B;
+        b;
+// https://github.com/babel/babel/pull/11640
 
+a + , c;
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
@@ -760,13 +770,13 @@ function() {
         let result = format_node(options.clone(), &tree.syntax())
             .unwrap()
             .print();
-        check_reformat(CheckReformatParams {
-            root: &tree.syntax(),
-            text: result.as_code(),
-            source_type: syntax,
-            file_name: "quick_test",
-            options,
-        });
+        // check_reformat(CheckReformatParams {
+        //     root: &tree.syntax(),
+        //     text: result.as_code(),
+        //     source_type: syntax,
+        //     file_name: "quick_test",
+        //     options,
+        // });
         assert_eq!(
             result.as_code(),
             "type Example = {\n\t[A in B]: T;\n} & {\n\t[A in B]: T;\n};\n"

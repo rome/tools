@@ -1,6 +1,7 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write};
+use rome_formatter::{format_args, write, CstFormatContext};
 
+use crate::builders::format_delimited;
 use crate::utils::FormatStatementBody;
 use rome_js_syntax::JsIfStatement;
 use rome_js_syntax::JsIfStatementFields;
@@ -37,7 +38,21 @@ impl FormatNodeRule<JsIfStatement> for FormatJsIfStatement {
         )?;
 
         if let Some(else_clause) = else_clause {
-            let else_on_same_line = matches!(consequent, JsBlockStatement(_));
+            // const commentOnOwnLine =
+            //           hasComment(
+            //             node.consequent,
+            //             CommentCheckFlags.Trailing | CommentCheckFlags.Line
+            //           ) || needsHardlineAfterDanglingComment(node);
+
+            let trailing_line_comment = f
+                .context()
+                .comments()
+                .trailing_comments(else_clause.syntax())
+                .iter()
+                .any(|comment| comment.kind().is_line());
+
+            let else_on_same_line =
+                matches!(consequent, JsBlockStatement(_)) && !trailing_line_comment;
 
             if else_on_same_line {
                 write!(f, [space()])?;

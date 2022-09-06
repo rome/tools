@@ -65,11 +65,7 @@ impl FormatContext for JsFormatContext {
 impl CstFormatContext for JsFormatContext {
     type Language = JsLanguage;
     type Style = JsCommentStyle;
-    type LeadingCommentRule = FormatJsLeadingComment;
-
-    fn comment_style(&self) -> Self::Style {
-        JsCommentStyle
-    }
+    type CommentRule = FormatJsLeadingComment;
 
     fn comments(&self) -> &Comments<JsLanguage> {
         &self.comments

@@ -2,6 +2,7 @@ use crate::prelude::*;
 use crate::utils::{node_has_leading_newline, FormatWithSemicolon};
 use rome_formatter::write;
 
+use crate::builders::format_delimited;
 use rome_js_syntax::JsExportNamedFromClause;
 use rome_js_syntax::JsExportNamedFromClauseFields;
 use rome_rowan::AstNode;

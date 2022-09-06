@@ -51,19 +51,7 @@ switch (foo) {
 ```diff
 --- Prettier
 +++ Rome
-@@ -7,19 +7,18 @@
-   case "MemberExpression":
-     prop = node.property;
-     break;
--
-   // no default
- }
- 
- switch (foo) {
-   case "bar":
-     doThing();
--
-   // no default
+@@ -19,7 +19,8 @@
  }
  
  switch (foo) {
@@ -87,12 +75,14 @@ switch (node && node.type) {
   case "MemberExpression":
     prop = node.property;
     break;
+
   // no default
 }
 
 switch (foo) {
   case "bar":
     doThing();
+
   // no default
 }
 

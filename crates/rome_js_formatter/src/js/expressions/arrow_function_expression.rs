@@ -107,6 +107,10 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                         _ => false,
                     },
                 };
+                let body_has_leading_line_comment =
+                    dbg!(f.context().comments().leading_comments(body.syntax()))
+                        .iter()
+                        .any(|comment| comment.lines_after() > 0);
 
                 // Add parentheses to avoid confusion between `a => b ? c : d` and `a <= b ? c : d`
                 // but only if the body isn't an object/function or class expression because parentheses are always required in that
@@ -128,7 +132,8 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                     _ => false,
                 };
 
-                if body_has_soft_line_break && !should_add_parens {
+                if body_has_soft_line_break && !should_add_parens && !body_has_leading_line_comment
+                {
                     write![f, [format_signature, space(), body.format()]]
                 } else {
                     write!(
@@ -173,14 +178,14 @@ fn format_signature(arrow: &JsArrowFunctionExpression) -> impl Format<JsFormatCo
             match arrow.parameters()? {
                 JsAnyArrowFunctionParameters::JsAnyBinding(binding) => write!(
                     f,
-                    [format_parenthesize(
-                        binding.syntax().first_token().as_ref(),
+                    [
+                        text("("),
                         &soft_block_indent(&format_args![
                             binding.format(),
                             if_group_breaks(&text(","))
                         ]),
-                        binding.syntax().last_token().as_ref(),
-                    )]
+                        text(")")
+                    ]
                 )?,
                 JsAnyArrowFunctionParameters::JsParameters(params) => {
                     write!(f, [params.format()])?;
@@ -365,9 +370,9 @@ impl Format<JsFormatContext> for ArrowChain {
                 write!(
                     f,
                     [group(&format_args![
-                        format_inserted(JsSyntaxKind::L_PAREN,),
+                        text("("),
                         soft_block_indent(&tail_body.format()),
-                        format_inserted(JsSyntaxKind::R_PAREN)
+                        text(")")
                     ])]
                 )
             } else {

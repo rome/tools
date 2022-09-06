@@ -3,6 +3,7 @@ use rome_formatter::write;
 
 use crate::utils::FormatWithSemicolon;
 
+use crate::builders::format_delimited;
 use rome_js_syntax::JsExportNamedClause;
 use rome_js_syntax::JsExportNamedClauseFields;
 

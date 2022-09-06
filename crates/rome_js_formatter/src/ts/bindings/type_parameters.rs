@@ -1,5 +1,6 @@
 use crate::prelude::*;
 
+use crate::builders::format_delimited;
 use rome_formatter::{write, FormatRuleWithOptions, GroupId};
 use rome_js_syntax::{TsTypeParameters, TsTypeParametersFields};
 

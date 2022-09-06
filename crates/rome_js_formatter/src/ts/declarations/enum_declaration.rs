@@ -1,6 +1,7 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
+use crate::builders::format_delimited;
 use rome_js_syntax::{TsEnumDeclaration, TsEnumDeclarationFields};
 
 #[derive(Debug, Clone, Default)]

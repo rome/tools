@@ -6,6 +6,7 @@ use crate::js::lists::parameter_list::{
     AnyParameter, FormatJsAnyParameterList, JsAnyParameterList,
 };
 
+use crate::builders::format_delimited;
 use rome_js_syntax::{
     JsAnyConstructorParameter, JsAnyFormalParameter, JsCallExpression, JsConstructorParameters,
     JsParameters, JsSyntaxKind, JsSyntaxToken, TsType,

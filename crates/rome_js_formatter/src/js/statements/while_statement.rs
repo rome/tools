@@ -1,5 +1,6 @@
 use crate::prelude::*;
 
+use crate::builders::format_delimited;
 use crate::utils::FormatStatementBody;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::JsWhileStatement;

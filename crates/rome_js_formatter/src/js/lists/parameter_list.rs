@@ -3,7 +3,7 @@ use crate::prelude::*;
 
 use rome_js_syntax::{
     JsAnyConstructorParameter, JsAnyParameter, JsConstructorParameterList, JsLanguage,
-    JsParameterList, JsSyntaxKind,
+    JsParameterList,
 };
 use rome_rowan::{declare_node_union, AstSeparatedListNodesIterator, SyntaxResult};
 
@@ -64,7 +64,7 @@ impl Format<JsFormatContext> for FormatJsAnyParameterList<'_> {
                 match self.list {
                     JsAnyParameterList::JsParameterList(list) => {
                         let entries = list
-                            .format_separated(JsSyntaxKind::COMMA)
+                            .format_separated(",")
                             .with_trailing_separator(trailing_separator)
                             .zip(list.iter());
 
@@ -74,7 +74,7 @@ impl Format<JsFormatContext> for FormatJsAnyParameterList<'_> {
                     }
                     JsAnyParameterList::JsConstructorParameterList(list) => {
                         let entries = list
-                            .format_separated(JsSyntaxKind::COMMA)
+                            .format_separated(",")
                             .with_trailing_separator(trailing_separator)
                             .zip(list.iter());
 
@@ -91,11 +91,11 @@ impl Format<JsFormatContext> for FormatJsAnyParameterList<'_> {
 
                 match self.list {
                     JsAnyParameterList::JsParameterList(list) => join.entries(
-                        list.format_separated(JsSyntaxKind::COMMA)
+                        list.format_separated(",")
                             .with_trailing_separator(TrailingSeparator::Omit),
                     ),
                     JsAnyParameterList::JsConstructorParameterList(list) => join.entries(
-                        list.format_separated(JsSyntaxKind::COMMA)
+                        list.format_separated(",")
                             .with_trailing_separator(TrailingSeparator::Omit),
                     ),
                 };

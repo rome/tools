@@ -1,6 +1,7 @@
 use crate::prelude::*;
 use crate::utils::FormatWithSemicolon;
 
+use crate::builders::format_delimited;
 use crate::parentheses::NeedsParentheses;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{JsSyntaxNode, TsMappedType, TsMappedTypeFields};

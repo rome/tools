@@ -4,22 +4,24 @@ use crate::prelude::*;
 use crate::utils::member_chain::is_member_call_chain;
 use crate::utils::object::write_member_name;
 use crate::utils::{JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression};
-use rome_formatter::{format_args, write, CstFormatContext, FormatOptions, VecBuffer};
+use rome_formatter::{
+    format_args, has_leading_own_line_comment, write, Comments, CstFormatContext, FormatOptions,
+    VecBuffer,
+};
 use rome_js_syntax::JsAnyLiteralExpression;
 use rome_js_syntax::{
     JsAnyAssignmentPattern, JsAnyBindingPattern, JsAnyCallArgument, JsAnyClassMemberName,
     JsAnyExpression, JsAnyFunctionBody, JsAnyObjectAssignmentPatternMember,
     JsAnyObjectBindingPatternMember, JsAnyObjectMemberName, JsAnyTemplateElement,
-    JsAssignmentExpression, JsInitializerClause, JsLiteralMemberName, JsObjectAssignmentPattern,
-    JsObjectAssignmentPatternProperty, JsObjectBindingPattern, JsPropertyClassMember,
-    JsPropertyClassMemberFields, JsPropertyObjectMember, JsSyntaxKind, JsVariableDeclarator,
-    TsAnyVariableAnnotation, TsIdentifierBinding, TsPropertySignatureClassMember,
-    TsPropertySignatureClassMemberFields, TsType, TsTypeAliasDeclaration, TsTypeArguments,
+    JsAssignmentExpression, JsInitializerClause, JsLanguage, JsLiteralMemberName,
+    JsObjectAssignmentPattern, JsObjectAssignmentPatternProperty, JsObjectBindingPattern,
+    JsPropertyClassMember, JsPropertyClassMemberFields, JsPropertyObjectMember, JsSyntaxKind,
+    JsVariableDeclarator, TsAnyVariableAnnotation, TsIdentifierBinding,
+    TsPropertySignatureClassMember, TsPropertySignatureClassMemberFields, TsType,
+    TsTypeAliasDeclaration, TsTypeArguments,
 };
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 use std::iter;
-
-use super::has_leading_own_line_comment;
 
 declare_node_union! {
     pub(crate) JsAnyAssignmentLike =
@@ -620,7 +622,7 @@ impl JsAnyAssignmentLike {
             return Ok(AssignmentLikeLayout::BreakLeftHandSide);
         }
 
-        if self.should_break_after_operator(&right)? {
+        if self.should_break_after_operator(&right, f.context().comments())? {
             return Ok(AssignmentLikeLayout::BreakAfterOperator);
         }
 
@@ -818,11 +820,15 @@ impl JsAnyAssignmentLike {
     ///
     /// This function is small wrapper around [should_break_after_operator] because it has to work
     /// for nodes that belong to TypeScript too.
-    fn should_break_after_operator(&self, right: &RightAssignmentLike) -> SyntaxResult<bool> {
+    fn should_break_after_operator(
+        &self,
+        right: &RightAssignmentLike,
+        comments: &Comments<JsLanguage>,
+    ) -> SyntaxResult<bool> {
         let result = if let Some(expression) = right.as_expression() {
-            should_break_after_operator(&expression)?
+            should_break_after_operator(&expression, comments)?
         } else {
-            has_leading_own_line_comment(right.syntax())
+            has_leading_own_line_comment(right.syntax(), comments)
         };
 
         Ok(result)
@@ -830,12 +836,15 @@ impl JsAnyAssignmentLike {
 }
 
 /// Checks if the function is entitled to be printed with layout [AssignmentLikeLayout::BreakAfterOperator]
-pub(crate) fn should_break_after_operator(right: &JsAnyExpression) -> SyntaxResult<bool> {
+pub(crate) fn should_break_after_operator(
+    right: &JsAnyExpression,
+    comments: &Comments<JsLanguage>,
+) -> SyntaxResult<bool> {
     // Traverse from the right expression to the left most node and check if any has a leading comment
     // that causes a line break.
     let mut current: JsAnyBinaryLikeLeftExpression = right.clone().into();
     loop {
-        if has_leading_own_line_comment(current.syntax()) {
+        if has_leading_own_line_comment(current.syntax(), comments) {
             return Ok(true);
         }
 

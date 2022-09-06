@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::write;
+use rome_formatter::{write, CstFormatContext};
 
 use crate::utils::FormatWithSemicolon;
 
@@ -20,10 +20,14 @@ impl FormatNodeRule<JsBreakStatement> for FormatJsBreakStatement {
         write!(
             f,
             [FormatWithSemicolon::new(
-                &format_with(|f| {
+                &format_with(|f: &mut JsFormatter| {
                     write!(f, [break_token.format()])?;
 
                     if let Some(label) = &label_token {
+                        if f.context().comments().has_dangling_trivia(&label) {
+                            write!(f, [space(), format_dangling_trivia(label)])?;
+                        }
+
                         write!(f, [space(), label.format()])?;
                     }
 

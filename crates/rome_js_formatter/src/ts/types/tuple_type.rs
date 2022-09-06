@@ -1,5 +1,6 @@
 use crate::prelude::*;
 
+use crate::builders::format_delimited;
 use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
 use rome_js_syntax::{JsSyntaxNode, TsTupleType, TsTupleTypeFields};
