@@ -2843,7 +2843,6 @@ dependencies = [
  "backtrace",
  "colored",
  "indicatif",
- "num_cpus",
  "once_cell",
  "pico-args",
  "regex",
