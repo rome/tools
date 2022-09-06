@@ -11,7 +11,7 @@ echo "function f() { return {} }" | rome format --stdin-file-path example.js
 the argument  `--stdin-file-path` is mandatory when formatting from standard in. The path should represent a
 file name with its extension.
 - Added `--apply-suggested` argument to the `rome check` command, to apply suggested and safe fixes.
-Suggested fixes should be considered **not stable** and applied with care. 
+Suggested fixes should be considered **unstable** and applied with care. 
 - Added the `rome start` and `rome stop` commands to control the Rome daemon server process. 
 - Added the `--use-server` global flag to the command line to make the CLI connect to a running instance of the
 Rome daemon server. 
@@ -61,8 +61,8 @@ Significantly improved formatting and prettier compatibility of:
 - Added `js/inlineVariable` code action.
 - Applied various stability fixes to the rule [`js/noUnusedVariables`](https://rome.tools/docs/lint/rules/noUnusedVariables/). [#3124](https://github.com/rome/tools/pull/3124) [#3060](https://github.com/rome/tools/pull/3060) [#3004](https://github.com/rome/tools/pull/3004)
 - Fixed how the suggestion is applied [`js/noNegationElse`](https://rome.tools/docs/lint/rules/noNegationElse/). [#2999](https://github.com/rome/tools/issues/2999)
-- Fixed false positive in the rule [`js/noShoutyConstants`](https://rome.tools/docs/lint/rules/noShoutyConstants/). [#3077](https://github.com/rome/tools/issues/3077)
-- Fixed false positive in the rule [`ts/useShorthandArrayType`](https://rome.tools/docs/lint/rules/useShorthandArrayType/). [#3111](https://github.com/rome/tools/issues/3111)
+- Fixed a false positive in the rule [`js/noShoutyConstants`](https://rome.tools/docs/lint/rules/noShoutyConstants/). [#3077](https://github.com/rome/tools/issues/3077)
+- Fixed a false positive in the rule [`ts/useShorthandArrayType`](https://rome.tools/docs/lint/rules/useShorthandArrayType/). [#3111](https://github.com/rome/tools/issues/3111)
 
 ### VSCode
 
