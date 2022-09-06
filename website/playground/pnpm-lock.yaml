@@ -23,7 +23,7 @@ specifiers:
   react-tabs: ^3.2.3
   rome: next
   tailwindcss: ^3.0.19
-  typescript: ^4.4.4
+  typescript: ^4.8.2
   vite: 2.9.5
   vite-plugin-svgr: ^2.2.0
 
@@ -32,7 +32,7 @@ dependencies:
   '@codemirror/state': 6.1.0
   '@codemirror/view': 6.1.0
   '@rometools/wasm-web': link:../../npm/wasm-web
-  '@uiw/react-codemirror': 4.11.4_j45qn7k5iyiiecf3ysrf6hvqzq
+  '@uiw/react-codemirror': 4.11.4_j4ghec26bhhfaf2eptsehnzgue
   codemirror-lang-rome-ast: 0.0.6
   lang-rome-formatter-ir: 0.0.2
   prettier: 2.7.0
@@ -52,7 +52,7 @@ devDependencies:
   postcss: 8.4.6
   rome: 0.8.0-next.ff4153b
   tailwindcss: 3.0.19_qm7bagfnbv4vjkuayu3hle4sne
-  typescript: 4.5.5
+  typescript: 4.8.2
   vite: 2.9.5
   vite-plugin-svgr: 2.2.0_vite@2.9.5
 
@@ -335,8 +335,11 @@ packages:
       to-fast-properties: 2.0.0
     dev: true
 
-  /@codemirror/autocomplete/6.0.4:
+  /@codemirror/autocomplete/6.0.4_xtizu6iuiatnw5cgync2c544ka:
     resolution: {integrity: sha512-uP7UodCRykPNwSAN+wYa/AS9gJI/V47echCAXUYgCgBXy3l19nwO7W/d29COtG/dfAsjBOhMDeh3Ms8Y5VZbrA==}
+    peerDependencies:
+      '@codemirror/state': ^6.0.0
+      '@codemirror/view': ^6.0.0
     dependencies:
       '@codemirror/language': 6.2.0
       '@codemirror/state': 6.1.0
@@ -356,7 +359,7 @@ packages:
   /@codemirror/lang-javascript/6.0.1:
     resolution: {integrity: sha512-kjGbBEosl+ozDU5ruDV48w4v3H6KECTFiDjqMLT0KhVwESPfv3wOvnDrTT0uaMOg3YRGnBWsyiIoKHl/tNWWDg==}
     dependencies:
-      '@codemirror/autocomplete': 6.0.4
+      '@codemirror/autocomplete': 6.0.4_xtizu6iuiatnw5cgync2c544ka
       '@codemirror/language': 6.2.0
       '@codemirror/lint': 6.0.0
       '@codemirror/state': 6.1.0
@@ -709,10 +712,13 @@ packages:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
     dev: true
 
-  /@uiw/codemirror-extensions-basic-setup/4.11.4:
+  /@uiw/codemirror-extensions-basic-setup/4.11.4_xtizu6iuiatnw5cgync2c544ka:
     resolution: {integrity: sha512-pc9pQtCQFmAH5nV9UmX37VB0+yzSFQ2kbSvLHBFST9siYnacaR6HxmkBBBbYYXwVK/n9pGZ6A8ZefAUNTFfo/A==}
+    peerDependencies:
+      '@codemirror/state': '>=6.0.0'
+      '@codemirror/view': '>=6.0.0'
     dependencies:
-      '@codemirror/autocomplete': 6.0.4
+      '@codemirror/autocomplete': 6.0.4_xtizu6iuiatnw5cgync2c544ka
       '@codemirror/commands': 6.0.1
       '@codemirror/language': 6.2.0
       '@codemirror/lint': 6.0.0
@@ -721,7 +727,7 @@ packages:
       '@codemirror/view': 6.1.0
     dev: false
 
-  /@uiw/react-codemirror/4.11.4_j45qn7k5iyiiecf3ysrf6hvqzq:
+  /@uiw/react-codemirror/4.11.4_j4ghec26bhhfaf2eptsehnzgue:
     resolution: {integrity: sha512-p7DNBI6kj+DUzTe7MjBJwZ3qo0nSOav7T0MEGRpRNZA9ZO3RnzhPMie6swDA8e3dz1s59l9UdFB1fgyam1vFhQ==}
     peerDependencies:
       '@codemirror/view': '>=6.0.0'
@@ -731,10 +737,12 @@ packages:
       '@babel/runtime': 7.18.9
       '@codemirror/theme-one-dark': 6.0.0
       '@codemirror/view': 6.1.0
-      '@uiw/codemirror-extensions-basic-setup': 4.11.4
+      '@uiw/codemirror-extensions-basic-setup': 4.11.4_xtizu6iuiatnw5cgync2c544ka
       codemirror: 6.0.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
+    transitivePeerDependencies:
+      - '@codemirror/state'
     dev: false
 
   /@vitejs/plugin-react/1.1.4:
@@ -897,7 +905,7 @@ packages:
   /codemirror-lang-rome-ast/0.0.6:
     resolution: {integrity: sha512-2E4E4rNcj6XxLsVjCZJeOsdEXpfdgiejuLrbq6O4muXzf0KSv5X0ScQrs3LK5LmGwoQUC0AowYbfdj3lsaLWkQ==}
     dependencies:
-      '@codemirror/autocomplete': 6.0.4
+      '@codemirror/autocomplete': 6.0.4_xtizu6iuiatnw5cgync2c544ka
       '@codemirror/language': 6.2.0
       '@codemirror/state': 6.1.0
       '@codemirror/view': 6.1.0
@@ -909,7 +917,7 @@ packages:
   /codemirror/6.0.1:
     resolution: {integrity: sha512-J8j+nZ+CdWmIeFIGXEFbFPtpiYacFMDR8GlHK3IyHQJMCaVRfGx9NT+Hxivv1ckLWPvNdZqndbr/7lVhrf/Svg==}
     dependencies:
-      '@codemirror/autocomplete': 6.0.4
+      '@codemirror/autocomplete': 6.0.4_xtizu6iuiatnw5cgync2c544ka
       '@codemirror/commands': 6.0.1
       '@codemirror/language': 6.2.0
       '@codemirror/lint': 6.0.0
@@ -1394,7 +1402,7 @@ packages:
   /lang-rome-formatter-ir/0.0.2:
     resolution: {integrity: sha512-Zx7uZ6SA1vmMWkM7UbDZlex8MGOCQNBkxN9sAjeGgGHx69DNuR8E4GPfHFHI2P7oFLvXMrmAMPUY2jbEH9wtOA==}
     dependencies:
-      '@codemirror/autocomplete': 6.0.4
+      '@codemirror/autocomplete': 6.0.4_xtizu6iuiatnw5cgync2c544ka
       '@codemirror/language': 6.2.0
       '@codemirror/state': 6.1.0
       '@codemirror/view': 6.1.0
@@ -1806,8 +1814,8 @@ packages:
       is-number: 7.0.0
     dev: true
 
-  /typescript/4.5.5:
-    resolution: {integrity: sha512-TCTIul70LyWe6IJWT8QSYeA54WQe8EjQFU4wY52Fasj5UKx88LNYKCgBEHcOMOrFF1rKGbD8v/xcNWVUq9SymA==}
+  /typescript/4.8.2:
+    resolution: {integrity: sha512-C0I1UsrrDHo2fYI5oaCGbSejwX4ch+9Y5jTQELvovfmFkK3HHSZJB8MSJcWLmCUBzQBchCrZ9rMRV6GuNrvGtw==}
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true
