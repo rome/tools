@@ -124,30 +124,7 @@ type Ctor = (new () => X) | Y;
 ```diff
 --- Prettier
 +++ Rome
-@@ -28,13 +28,15 @@
-   j: Partial<X | Y>;
- }
- 
--type State = {
--  sharedProperty: any;
--} & (
--  | { discriminant: "FOO"; foo: any }
--  | { discriminant: "BAR"; bar: any }
--  | { discriminant: "BAZ"; baz: any }
--);
-+type State =
-+  & {
-+    sharedProperty: any;
-+  }
-+  & (
-+    | { discriminant: "FOO"; foo: any }
-+    | { discriminant: "BAR"; bar: any }
-+    | { discriminant: "BAZ"; baz: any }
-+  );
- 
- const foo1 = [abc, def, ghi, jkl, mno, pqr, stu, vwx, yz] as (
-   | string
-@@ -58,11 +60,11 @@
+@@ -58,11 +58,11 @@
  const foo4:
    | foo
    | (
@@ -199,15 +176,13 @@ interface Interface {
   j: Partial<X | Y>;
 }
 
-type State =
-  & {
-    sharedProperty: any;
-  }
-  & (
-    | { discriminant: "FOO"; foo: any }
-    | { discriminant: "BAR"; bar: any }
-    | { discriminant: "BAZ"; baz: any }
-  );
+type State = {
+  sharedProperty: any;
+} & (
+  | { discriminant: "FOO"; foo: any }
+  | { discriminant: "BAR"; bar: any }
+  | { discriminant: "BAZ"; baz: any }
+);
 
 const foo1 = [abc, def, ghi, jkl, mno, pqr, stu, vwx, yz] as (
   | string
