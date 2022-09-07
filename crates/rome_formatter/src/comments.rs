@@ -287,7 +287,7 @@ pub trait CommentStyle {
 /// * the dangling comments of a token
 ///
 /// Cloning `comments` is cheap as it only involves bumping a reference counter.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Default)]
 pub struct Comments<L: Language> {
     /// The use of a [Rc] is necessary to achieve that [Comments] has a lifetime that is independent from the [crate::Formatter].
     /// Having independent lifetimes is necessary to support the use case where a (formattable object)[crate::Format]
@@ -545,6 +545,22 @@ struct CommentsData<L: Language> {
     /// (thus, guarantees that the formatting isn't changed).
     #[cfg(debug_assertions)]
     checked_suppressions: RefCell<HashSet<SyntaxNode<L>>>,
+}
+
+impl<L> Default for CommentsData<L>
+where
+    L: Language,
+{
+    fn default() -> Self {
+        Self {
+            is_suppression: |_| false,
+            leading_comments: Default::default(),
+            trailing_comments: Default::default(),
+            dangling_trivia: Default::default(),
+            #[cfg(debug_assertions)]
+            checked_suppressions: Default::default(),
+        }
+    }
 }
 
 impl<L: Language> std::fmt::Debug for CommentsData<L> {

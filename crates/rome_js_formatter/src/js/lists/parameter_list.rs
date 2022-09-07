@@ -40,7 +40,7 @@ impl<'a> FormatJsAnyParameterList<'a> {
 impl Format<JsFormatContext> for FormatJsAnyParameterList<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         match self.layout {
-            None | Some(ParameterLayout::Default) => {
+            None | Some(ParameterLayout::Default) | Some(ParameterLayout::NoParameters) => {
                 // The trailing separator is disallowed if the last element in the list is a rest parameter
                 let has_trailing_rest = match self.list.last() {
                     Some(elem) => matches!(
@@ -129,6 +129,13 @@ impl JsAnyParameterList {
         match self {
             JsAnyParameterList::JsParameterList(parameters) => parameters.len(),
             JsAnyParameterList::JsConstructorParameterList(parameters) => parameters.len(),
+        }
+    }
+
+    pub fn is_empty(&self) -> bool {
+        match self {
+            JsAnyParameterList::JsParameterList(parameters) => parameters.is_empty(),
+            JsAnyParameterList::JsConstructorParameterList(parameters) => parameters.is_empty(),
         }
     }
 

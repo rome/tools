@@ -22,10 +22,11 @@ impl FormatNodeRule<JsExtendsClause> for FormatJsExtendsClause {
             let content =
                 format_with(|f| write!(f, [super_class.format(), type_arguments.format()]));
 
+            let comments = f.comments();
             let has_trailing_comments = if let Some(type_arguments) = &type_arguments {
-                type_arguments.syntax().has_trailing_comments()
+                comments.has_trailing_comments(type_arguments.syntax())
             } else {
-                super_class.syntax().has_trailing_comments()
+                comments.has_trailing_comments(super_class.syntax())
             };
 
             if node
@@ -33,7 +34,7 @@ impl FormatNodeRule<JsExtendsClause> for FormatJsExtendsClause {
                 .grand_parent()
                 .map_or(false, |p| p.kind() == JS_ASSIGNMENT_EXPRESSION)
             {
-                if super_class.syntax().has_leading_comments() || has_trailing_comments {
+                if comments.has_leading_comments(super_class.syntax()) || has_trailing_comments {
                     write!(f, [text("("), &content, text(")")])
                 } else {
                     let content = content.memoized();

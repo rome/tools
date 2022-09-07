@@ -44,7 +44,7 @@ impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
             None => return Err(FormatError::SyntaxError),
         };
 
-        if length == 1 && !first_declarator.syntax().has_leading_comments() {
+        if length == 1 && !f.comments().has_leading_comments(first_declarator.syntax()) {
             return write!(f, [format_first_declarator]);
         }
 

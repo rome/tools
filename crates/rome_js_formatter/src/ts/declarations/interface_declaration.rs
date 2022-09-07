@@ -41,9 +41,9 @@ impl FormatNodeRule<TsInterfaceDeclaration> for FormatTsInterfaceDeclaration {
             Ok(())
         });
 
-        let should_indent_extends_only = type_parameters
-            .as_ref()
-            .map_or(false, |params| !params.syntax().has_trailing_comments());
+        let should_indent_extends_only = type_parameters.as_ref().map_or(false, |params| {
+            !f.comments().has_trailing_comments(params.syntax())
+        });
 
         let format_extends = format_with(|f| {
             if let Some(extends_clause) = &extends_clause {
@@ -91,7 +91,7 @@ impl FormatNodeRule<TsInterfaceDeclaration> for FormatTsInterfaceDeclaration {
         //     }
         // }
 
-        let id_has_trailing_comments = id.syntax().has_trailing_comments();
+        let id_has_trailing_comments = f.comments().has_trailing_comments(id.syntax());
         if id_has_trailing_comments || extends_clause.is_some() {
             if should_indent_extends_only {
                 write!(

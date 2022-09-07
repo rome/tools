@@ -1,28 +1,28 @@
 use crate::builders::format_delimited;
 use crate::prelude::*;
-use rome_formatter::write;
-use rome_js_syntax::JsAnyClass;
+use rome_formatter::{write, Comments};
+use rome_js_syntax::{JsAnyClass, JsLanguage};
 
 pub struct FormatClass<'a> {
     class: &'a JsAnyClass,
 }
 
 impl FormatClass<'_> {
-    fn should_group(&self) -> FormatResult<bool> {
+    fn should_group(&self, comments: &Comments<JsLanguage>) -> FormatResult<bool> {
         if let Some(id) = self.class.id()? {
-            if id.syntax().has_trailing_comments() {
+            if comments.has_trailing_comments(id.syntax()) {
                 return Ok(true);
             }
         }
 
         if let Some(type_parameters) = self.class.type_parameters() {
-            if type_parameters.syntax().has_trailing_comments() {
+            if comments.has_trailing_comments(type_parameters.syntax()) {
                 return Ok(true);
             }
         }
 
         if let Some(extends) = self.class.extends_clause() {
-            if extends.syntax().has_trailing_comments() {
+            if comments.has_trailing_comments(extends.syntax()) {
                 return Ok(true);
             }
         }
@@ -51,7 +51,7 @@ impl Format<JsFormatContext> for FormatClass<'_> {
         let class_token = self.class.class_token()?;
         let members = self.class.members();
 
-        let group_mode = self.should_group()?;
+        let group_mode = self.should_group(f.comments())?;
 
         if let Some(abstract_token) = abstract_token {
             write!(f, [abstract_token.format(), space()])?;

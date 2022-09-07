@@ -1,9 +1,10 @@
 use crate::context::QuoteStyle;
 use crate::prelude::*;
-use rome_formatter::{format_args, write};
+use rome_formatter::{format_args, write, Comments};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsComputedMemberExpression, JsStaticMemberExpression,
-    JsSyntaxKind, JsxAnyChild, JsxExpressionChild, JsxTagExpression, TextLen,
+    JsAnyExpression, JsAnyLiteralExpression, JsComputedMemberExpression, JsLanguage,
+    JsStaticMemberExpression, JsSyntaxKind, JsxAnyChild, JsxExpressionChild, JsxTagExpression,
+    TextLen,
 };
 use rome_rowan::{SyntaxResult, SyntaxTokenText, TextRange, TextSize};
 use std::iter::{FusedIterator, Peekable};
@@ -142,7 +143,10 @@ impl Format<JsFormatContext> for JsxRawSpace {
     }
 }
 
-pub(crate) fn is_whitespace_jsx_expression(child: &JsxExpressionChild) -> bool {
+pub(crate) fn is_whitespace_jsx_expression(
+    child: &JsxExpressionChild,
+    comments: &Comments<JsLanguage>,
+) -> bool {
     match child.expression() {
         Some(JsAnyExpression::JsAnyLiteralExpression(
             JsAnyLiteralExpression::JsStringLiteralExpression(literal),
@@ -155,10 +159,8 @@ pub(crate) fn is_whitespace_jsx_expression(child: &JsxExpressionChild) -> bool {
                 (Ok(l_curly_token), Ok(value_token), Ok(r_curly_token)) => {
                     let is_empty = matches!(value_token.text_trimmed(), "\" \"" | "' '");
 
-                    let has_comments = l_curly_token.has_trailing_comments()
-                        || r_curly_token.has_leading_comments()
-                        || value_token.has_leading_non_whitespace_trivia()
-                        || value_token.has_trailing_comments();
+                    let has_comments = comments.has_dangling_trivia(&r_curly_token)
+                        || comments.has_comments(literal.syntax());
 
                     is_empty && !has_comments
                 }
@@ -169,7 +171,10 @@ pub(crate) fn is_whitespace_jsx_expression(child: &JsxExpressionChild) -> bool {
     }
 }
 
-pub(crate) fn jsx_split_children<I>(children: I) -> SyntaxResult<Vec<JsxChild>>
+pub(crate) fn jsx_split_children<I>(
+    children: I,
+    comments: &Comments<JsLanguage>,
+) -> SyntaxResult<Vec<JsxChild>>
 where
     I: IntoIterator<Item = JsxAnyChild>,
 {
@@ -244,7 +249,7 @@ where
             }
 
             JsxAnyChild::JsxExpressionChild(child) => {
-                if is_whitespace_jsx_expression(&child) {
+                if is_whitespace_jsx_expression(&child, comments) {
                     match result.last() {
                         Some(JsxChild::Whitespace) => {
                             // Ignore
@@ -402,6 +407,7 @@ impl FusedIterator for JsxSplitChunksIterator<'_> {}
 #[cfg(test)]
 mod tests {
     use crate::utils::jsx::{jsx_split_children, JsxChild, JsxSplitChunksIterator, JsxTextChunk};
+    use rome_formatter::Comments;
     use rome_js_parser::parse;
     use rome_js_syntax::{JsxChildList, JsxText, SourceType};
     use rome_rowan::{AstNode, TextSize};
@@ -497,7 +503,7 @@ mod tests {
     fn split_children_words_only() {
         let child_list = parse_jsx_children("a b c");
 
-        let children = jsx_split_children(&child_list).unwrap();
+        let children = jsx_split_children(&child_list, &Comments::default()).unwrap();
 
         assert_eq!(3, children.len());
         assert_word(&children[0], "a");
@@ -509,7 +515,7 @@ mod tests {
     fn split_non_meaningful_text() {
         let child_list = parse_jsx_children("  \n ");
 
-        let children = jsx_split_children(&child_list).unwrap();
+        let children = jsx_split_children(&child_list, &Comments::default()).unwrap();
 
         assert_eq!(children, vec![]);
     }
@@ -518,7 +524,7 @@ mod tests {
     fn split_non_meaningful_leading_multiple_lines() {
         let child_list = parse_jsx_children("  \n  \n ");
 
-        let children = jsx_split_children(&child_list).unwrap();
+        let children = jsx_split_children(&child_list, &Comments::default()).unwrap();
 
         assert_eq!(children, vec![JsxChild::EmptyLine]);
     }
@@ -527,7 +533,7 @@ mod tests {
     fn split_meaningful_whitespace() {
         let child_list = parse_jsx_children("  ");
 
-        let children = jsx_split_children(&child_list).unwrap();
+        let children = jsx_split_children(&child_list, &Comments::default()).unwrap();
 
         assert_eq!(children, vec![JsxChild::Whitespace]);
     }
@@ -536,7 +542,7 @@ mod tests {
     fn split_children_leading_newlines() {
         let child_list = parse_jsx_children("  \n a b");
 
-        let children = jsx_split_children(&child_list).unwrap();
+        let children = jsx_split_children(&child_list, &Comments::default()).unwrap();
 
         assert_eq!(3, children.len());
         assert_eq!(children[0], JsxChild::Newline);
@@ -548,7 +554,7 @@ mod tests {
     fn split_children_trailing_whitespace() {
         let child_list = parse_jsx_children("a b    \t ");
 
-        let children = jsx_split_children(&child_list).unwrap();
+        let children = jsx_split_children(&child_list, &Comments::default()).unwrap();
 
         assert_eq!(3, children.len());
         assert_word(&children[0], "a");
@@ -560,7 +566,7 @@ mod tests {
     fn split_children_trailing_newline() {
         let child_list = parse_jsx_children("a b \n   \t ");
 
-        let children = jsx_split_children(&child_list).unwrap();
+        let children = jsx_split_children(&child_list, &Comments::default()).unwrap();
 
         assert_eq!(3, children.len());
         assert_word(&children[0], "a");
@@ -572,7 +578,7 @@ mod tests {
     fn split_children_empty_expression() {
         let child_list = parse_jsx_children(r#"a{' '}c{" "}"#);
 
-        let children = jsx_split_children(&child_list).unwrap();
+        let children = jsx_split_children(&child_list, &Comments::default()).unwrap();
 
         assert_eq!(
             4,

@@ -2,8 +2,8 @@ use crate::context::TabWidth;
 use crate::parentheses::NeedsParentheses;
 use crate::prelude::*;
 use crate::utils::member_chain::chain_member::ChainMember;
-use rome_formatter::write;
-use rome_js_syntax::JsCallExpression;
+use rome_formatter::{write, Comments};
+use rome_js_syntax::{JsCallExpression, JsLanguage};
 use rome_rowan::SyntaxResult;
 use std::mem;
 
@@ -94,42 +94,35 @@ pub(super) struct MemberChainGroups {
 
 impl MemberChainGroups {
     /// This function checks if the current grouping should be merged with the first group.
-    pub fn should_merge(&self, head_group: &MemberChainGroup) -> SyntaxResult<bool> {
+    pub fn should_merge(
+        &self,
+        head_group: &MemberChainGroup,
+        comments: &Comments<JsLanguage>,
+    ) -> SyntaxResult<bool> {
         Ok(!self.groups.len() >= 1
             && self.should_not_wrap(head_group)?
             && !self.groups[0]
                 .members
                 .first()
-                .map_or(false, |item| item.has_trailing_comments()))
+                .map_or(false, |item| comments.has_trailing_comments(item.syntax())))
     }
 
     /// Checks if the groups contain comments.
-    pub fn has_comments(&self) -> SyntaxResult<bool> {
-        let mut has_leading_comments = false;
+    pub fn has_comments(&self, comments: &Comments<JsLanguage>) -> SyntaxResult<bool> {
+        let mut members = self.groups.iter().flat_map(|item| item.members.iter());
 
-        let flat_groups = self.groups.iter().flat_map(|item| item.members.iter());
-        for item in flat_groups {
-            if item.has_leading_comments()? {
-                has_leading_comments = true;
-                break;
-            }
-        }
-
-        let has_trailing_comments = self
-            .groups
-            .iter()
-            .flat_map(|item| item.members.iter())
-            .any(|item| item.has_trailing_comments());
+        let has_comments = members.any(|item| {
+            comments.has_trailing_comments(item.syntax())
+                || comments.has_leading_comments(item.syntax())
+        });
 
         let cutoff_has_leading_comments = if self.groups.len() >= self.cutoff as usize {
             let group = self.groups.get(self.cutoff as usize);
             if let Some(group) = group {
                 let first_item = group.members.first();
-                if let Some(first_item) = first_item {
-                    first_item.has_leading_comments()?
-                } else {
-                    false
-                }
+                first_item.map_or(false, |first_item| {
+                    comments.has_leading_comments(first_item.syntax())
+                })
             } else {
                 false
             }
@@ -137,7 +130,7 @@ impl MemberChainGroups {
             false
         };
 
-        Ok(has_leading_comments || has_trailing_comments || cutoff_has_leading_comments)
+        Ok(has_comments || cutoff_has_leading_comments)
     }
 
     /// Filters the stack of [FlattenItem] and return only the ones that
@@ -147,8 +140,8 @@ impl MemberChainGroups {
             .iter()
             .flat_map(|group| group.members.iter())
             .filter_map(|item| {
-                if let ChainMember::CallExpression(call_expression, ..) = item {
-                    Some(call_expression)
+                if let ChainMember::CallExpression { expression, .. } = item {
+                    Some(expression)
                 } else {
                     None
                 }
@@ -198,8 +191,9 @@ impl MemberChainGroups {
     pub(crate) fn should_merge_with_first_group(
         &mut self,
         head_group: &MemberChainGroup,
+        comments: &Comments<JsLanguage>,
     ) -> Option<Vec<MemberChainGroup>> {
-        if self.should_merge(head_group).unwrap_or(false) {
+        if self.should_merge(head_group, comments).unwrap_or(false) {
             let mut new_groups = self.groups.split_off(1);
             // self.groups is now the head (one element), while `new_groups` is a new vector without the
             // first element.
@@ -214,8 +208,11 @@ impl MemberChainGroups {
     /// Here we check if the length of the groups exceeds the cutoff or there are comments
     /// This function is the inverse of the prettier function
     /// [Prettier applies]: https://github.com/prettier/prettier/blob/a043ac0d733c4d53f980aa73807a63fc914f23bd/src/language-js/print/member-chain.js#L342
-    pub(crate) fn is_member_call_chain(&self) -> SyntaxResult<bool> {
-        Ok(self.groups.len() > self.cutoff as usize || self.has_comments()?)
+    pub(crate) fn is_member_call_chain(
+        &self,
+        comments: &Comments<JsLanguage>,
+    ) -> SyntaxResult<bool> {
+        Ok(self.groups.len() > self.cutoff as usize || self.has_comments(comments)?)
     }
 
     pub(super) fn iter(&self) -> impl Iterator<Item = &MemberChainGroup> {
@@ -247,8 +244,10 @@ impl MemberChainGroup {
         self.members.extend(group)
     }
 
-    pub(super) fn has_comments(&self) -> bool {
-        self.members.iter().any(|item| item.has_trailing_comments())
+    pub(super) fn has_comments(&self, comments: &Comments<JsLanguage>) -> bool {
+        self.members
+            .iter()
+            .any(|item| comments.has_trailing_comments(item.syntax()))
     }
 }
 
@@ -263,8 +262,8 @@ impl Format<JsFormatContext> for MemberChainGroup {
         let last = self.members.last();
 
         let needs_parens = last.map_or(false, |last| match last {
-            ChainMember::StaticMember(member) => member.needs_parentheses(),
-            ChainMember::ComputedMember(member) => member.needs_parentheses(),
+            ChainMember::StaticMember { expression, .. } => expression.needs_parentheses(),
+            ChainMember::ComputedMember { expression, .. } => expression.needs_parentheses(),
             _ => false,
         });
 

@@ -17,6 +17,10 @@ impl FormatNodeRule<JsCallExpression> for FormatJsCallExpression {
     fn needs_parentheses(&self, item: &JsCallExpression) -> bool {
         item.needs_parentheses()
     }
+
+    fn prints_comments(&self, _item: &JsCallExpression) -> bool {
+        true
+    }
 }
 
 impl NeedsParentheses for JsCallExpression {
