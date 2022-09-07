@@ -83,26 +83,26 @@ pub struct SupportsFeatureResult {
 }
 
 impl SupportsFeatureResult {
-    fn ignored() -> Self {
+    const fn ignored() -> Self {
         Self {
             reason: Some(UnsupportedReason::Ignored),
         }
     }
 
-    fn disabled() -> Self {
+    const fn disabled() -> Self {
         Self {
             reason: Some(UnsupportedReason::FeatureNotEnabled),
         }
     }
 
-    fn incapable() -> Self {
+    const fn file_not_supported() -> Self {
         Self {
             reason: Some(UnsupportedReason::FileNotSupported),
         }
     }
 }
 
-#[derive(serde::Serialize, serde::Deserialize, Eq, PartialEq)]
+#[derive(Debug, serde::Serialize, serde::Deserialize, Eq, PartialEq)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub enum UnsupportedReason {
     Ignored,
@@ -110,7 +110,7 @@ pub enum UnsupportedReason {
     FileNotSupported,
 }
 
-#[derive(serde::Serialize, serde::Deserialize)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub enum FeatureName {
     Format,

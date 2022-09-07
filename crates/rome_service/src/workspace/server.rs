@@ -14,7 +14,7 @@ use crate::{
 };
 use dashmap::{mapref::entry::Entry, DashMap};
 use indexmap::IndexSet;
-use rome_analyze::{AnalysisFilter, RuleFilter};
+use rome_analyze::{AnalysisFilter, RuleCategories, RuleFilter};
 use rome_diagnostics::{Diagnostic, Severity};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
@@ -141,7 +141,13 @@ impl WorkspaceServer {
     ///
     /// Returns and error if no file exists in the workspace with this path or
     /// if the language associated with the file has no parser capability
-    fn get_parse(&self, rome_path: RomePath) -> Result<AnyParse, RomeError> {
+    fn get_parse(&self, rome_path: RomePath, feature: FeatureName) -> Result<AnyParse, RomeError> {
+        let ignored = self.is_file_ignored(&rome_path, feature);
+
+        if ignored {
+            return Err(RomeError::FileIgnored(rome_path.to_path_buf()));
+        }
+
         match self.syntax.entry(rome_path) {
             Entry::Occupied(entry) => Ok(entry.get().clone()),
             Entry::Vacant(entry) => {
@@ -165,29 +171,20 @@ impl WorkspaceServer {
     /// a list of paths to match against.
     ///
     /// If the file path matches, than `true` is returned and it should be considered ignored.
-    fn is_file_ignored(
-        &self,
-        rome_path: &RomePath,
-        ignore_paths: &IndexSet<String>,
-    ) -> Result<bool, RomeError> {
-        if ignore_paths.is_empty() {
-            return Ok(false);
+    fn is_file_ignored(&self, rome_path: &RomePath, feature: FeatureName) -> bool {
+        let settings = self.settings();
+        match feature {
+            FeatureName::Format => settings
+                .as_ref()
+                .formatter
+                .ignored_files
+                .matches_path(rome_path.as_path()),
+            FeatureName::Lint => settings
+                .as_ref()
+                .linter
+                .ignored_files
+                .matches_path(rome_path.as_path()),
         }
-
-        let options = MatchOptions {
-            case_sensitive: true,
-            require_literal_leading_dot: false,
-            require_literal_separator: false,
-        };
-
-        let mut ignore = Matcher::new(options);
-        for ignore_path in ignore_paths {
-            ignore
-                .add_pattern(ignore_path.as_str())
-                .map_err(|_| RomeError::FileIgnored(rome_path.to_path_buf()))?;
-        }
-
-        Ok(ignore.matches_path(rome_path.as_path()))
     }
 }
 
@@ -198,37 +195,15 @@ impl Workspace for WorkspaceServer {
     ) -> Result<SupportsFeatureResult, RomeError> {
         let capabilities = self.get_capabilities(&params.path);
         let settings = self.settings.read().unwrap();
-        let result = match params.feature {
-            FeatureName::Format => {
-                let is_ignored = matches!(
-                    self.is_file_ignored(&params.path, &settings.format.ignored_files),
-                    Ok(true)
-                );
-                if is_ignored {
-                    SupportsFeatureResult::ignored()
-                } else if capabilities.formatter.format.is_none() {
-                    SupportsFeatureResult::incapable()
-                } else if !settings.formatter().enabled {
-                    SupportsFeatureResult::disabled()
-                } else {
-                    SupportsFeatureResult { reason: None }
-                }
-            }
-            FeatureName::Lint => {
-                let is_ignored = matches!(
-                    self.is_file_ignored(&params.path, &settings.linter.ignored_files),
-                    Ok(true)
-                );
-                if is_ignored {
-                    SupportsFeatureResult::ignored()
-                } else if capabilities.analyzer.lint.is_none() {
-                    SupportsFeatureResult::incapable()
-                } else if !settings.linter().enabled {
-                    SupportsFeatureResult::disabled()
-                } else {
-                    SupportsFeatureResult { reason: None }
-                }
-            }
+        let is_ignored = matches!(self.is_file_ignored(&params.path, params.feature), true);
+        let result = if is_ignored {
+            SupportsFeatureResult::ignored()
+        } else if capabilities.formatter.format.is_none() {
+            SupportsFeatureResult::file_not_supported()
+        } else if !settings.formatter().enabled {
+            SupportsFeatureResult::disabled()
+        } else {
+            SupportsFeatureResult { reason: None }
         };
         Ok(result)
     }
@@ -240,7 +215,7 @@ impl Workspace for WorkspaceServer {
     /// by another thread having previously panicked while holding the lock
     fn update_settings(&self, params: UpdateSettingsParams) -> Result<(), RomeError> {
         let mut settings = self.settings.write().unwrap();
-        settings.merge_with_configuration(params.configuration);
+        settings.merge_with_configuration(params.configuration)?;
         Ok(())
     }
 
@@ -268,7 +243,8 @@ impl Workspace for WorkspaceServer {
             .debug_syntax_tree
             .ok_or_else(self.build_capability_error(&params.path))?;
 
-        let parse = self.get_parse(params.path.clone())?;
+        // The feature name here can be any feature, in theory
+        let parse = self.get_parse(params.path.clone(), FeatureName::Format)?;
         let printed = debug_syntax_tree(&params.path, parse);
 
         Ok(printed)
@@ -284,7 +260,7 @@ impl Workspace for WorkspaceServer {
             .debug_control_flow
             .ok_or_else(self.build_capability_error(&params.path))?;
 
-        let parse = self.get_parse(params.path.clone())?;
+        let parse = self.get_parse(params.path.clone(), FeatureName::Lint)?;
         let printed = debug_control_flow(&params.path, parse, params.cursor);
 
         Ok(printed)
@@ -297,14 +273,7 @@ impl Workspace for WorkspaceServer {
             .debug_formatter_ir
             .ok_or_else(self.build_capability_error(&params.path))?;
         let settings = self.settings();
-
-        let ignored =
-            self.is_file_ignored(&params.path, &settings.as_ref().format.ignored_files)?;
-
-        if ignored {
-            return Err(RomeError::FileIgnored(params.path.to_path_buf()));
-        }
-        let parse = self.get_parse(params.path.clone())?;
+        let parse = self.get_parse(params.path.clone(), FeatureName::Format)?;
 
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
@@ -350,13 +319,7 @@ impl Workspace for WorkspaceServer {
             .ok_or_else(self.build_capability_error(&params.path))?;
 
         let settings = self.settings.read().unwrap();
-        let ignored = self.is_file_ignored(&params.path, &settings.linter.ignored_files)?;
-
-        if ignored {
-            return Err(RomeError::FileIgnored(params.path.to_path_buf()));
-        }
-
-        let parse = self.get_parse(params.path.clone())?;
+        let parse = self.get_parse(params.path.clone(), FeatureName::Lint)?;
         let rules = settings.linter().rules.as_ref();
         let enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = rules {
             let enabled: IndexSet<RuleFilter> = rules.as_enabled_rules();
@@ -386,13 +349,7 @@ impl Workspace for WorkspaceServer {
             .ok_or_else(self.build_capability_error(&params.path))?;
 
         let settings = self.settings.read().unwrap();
-        let ignored = self.is_file_ignored(&params.path, &settings.linter.ignored_files)?;
-
-        if ignored {
-            return Err(RomeError::FileIgnored(params.path.to_path_buf()));
-        }
-
-        let parse = self.get_parse(params.path.clone())?;
+        let parse = self.get_parse(params.path.clone(), FeatureName::Lint)?;
 
         let rules = settings.linter().rules.as_ref();
         Ok(code_actions(&params.path, parse, params.range, rules))
@@ -407,14 +364,7 @@ impl Workspace for WorkspaceServer {
             .format
             .ok_or_else(self.build_capability_error(&params.path))?;
         let settings = self.settings();
-        let ignored =
-            self.is_file_ignored(&params.path, &settings.as_ref().format.ignored_files)?;
-
-        if ignored {
-            return Err(RomeError::FileIgnored(params.path.to_path_buf()));
-        }
-
-        let parse = self.get_parse(params.path.clone())?;
+        let parse = self.get_parse(params.path.clone(), FeatureName::Format)?;
 
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
@@ -430,13 +380,7 @@ impl Workspace for WorkspaceServer {
             .format_range
             .ok_or_else(self.build_capability_error(&params.path))?;
         let settings = self.settings();
-        let ignored =
-            self.is_file_ignored(&params.path, &settings.as_ref().format.ignored_files)?;
-
-        if ignored {
-            return Err(RomeError::FileIgnored(params.path.to_path_buf()));
-        }
-        let parse = self.get_parse(params.path.clone())?;
+        let parse = self.get_parse(params.path.clone(), FeatureName::Format)?;
 
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
@@ -453,14 +397,7 @@ impl Workspace for WorkspaceServer {
             .ok_or_else(self.build_capability_error(&params.path))?;
 
         let settings = self.settings();
-        let ignored =
-            self.is_file_ignored(&params.path, &settings.as_ref().format.ignored_files)?;
-
-        if ignored {
-            return Err(RomeError::FileIgnored(params.path.to_path_buf()));
-        }
-
-        let parse = self.get_parse(params.path.clone())?;
+        let parse = self.get_parse(params.path.clone(), FeatureName::Format)?;
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
         }
@@ -475,12 +412,7 @@ impl Workspace for WorkspaceServer {
             .fix_all
             .ok_or_else(self.build_capability_error(&params.path))?;
         let settings = self.settings.read().unwrap();
-        let ignored = self.is_file_ignored(&params.path, &settings.linter.ignored_files)?;
-        if ignored {
-            return Err(RomeError::FileIgnored(params.path.to_path_buf()));
-        }
-
-        let parse = self.get_parse(params.path.clone())?;
+        let parse = self.get_parse(params.path.clone(), FeatureName::Lint)?;
 
         let rules = settings.linter().rules.as_ref();
         fix_all(FixAllParams {
@@ -498,7 +430,7 @@ impl Workspace for WorkspaceServer {
             .rename
             .ok_or_else(self.build_capability_error(&params.path))?;
 
-        let parse = self.get_parse(params.path.clone())?;
+        let parse = self.get_parse(params.path.clone(), FeatureName::Lint)?;
         let result = rename(&params.path, parse, params.symbol_at, params.new_name)?;
 
         Ok(result)

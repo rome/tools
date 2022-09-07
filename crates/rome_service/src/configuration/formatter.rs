@@ -1,4 +1,5 @@
 use crate::settings::FormatSettings;
+use crate::{ConfigurationError, MatchOptions, Matcher, RomeError};
 use indexmap::IndexSet;
 use rome_formatter::{IndentStyle, LineWidth};
 use serde::{Deserialize, Serialize};
@@ -50,19 +51,36 @@ impl Default for FormatterConfiguration {
     }
 }
 
-impl From<FormatterConfiguration> for FormatSettings {
-    fn from(conf: FormatterConfiguration) -> Self {
+impl TryFrom<FormatterConfiguration> for FormatSettings {
+    type Error = RomeError;
+
+    fn try_from(conf: FormatterConfiguration) -> Result<Self, Self::Error> {
         let indent_style = match conf.indent_style {
             PlainIndentStyle::Tab => IndentStyle::Tab,
             PlainIndentStyle::Space => IndentStyle::Space(conf.indent_size),
         };
-        Self {
+        let mut matcher = Matcher::new(MatchOptions {
+            case_sensitive: true,
+            require_literal_leading_dot: false,
+            require_literal_separator: false,
+        });
+        if let Some(ignore) = conf.ignore {
+            for pattern in ignore {
+                matcher.add_pattern(&pattern).map_err(|err| {
+                    RomeError::Configuration(ConfigurationError::InvalidIgnorePattern(
+                        pattern.to_string(),
+                        err.msg.to_string(),
+                    ))
+                })?;
+            }
+        }
+        Ok(Self {
             enabled: conf.enabled,
             indent_style: Some(indent_style),
             line_width: Some(conf.line_width),
             format_with_errors: conf.format_with_errors,
-            ignored_files: conf.ignore.unwrap_or_default(),
-        }
+            ignored_files: matcher,
+        })
     }
 }
 

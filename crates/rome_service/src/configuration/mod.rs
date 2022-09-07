@@ -80,6 +80,9 @@ pub enum ConfigurationError {
 
     /// Thrown when an unknown rule is found
     UnknownRule(String),
+
+    /// Thrown when the pattern inside the `ignore` field errors
+    InvalidIgnorePattern(String, String),
 }
 
 impl Debug for ConfigurationError {
@@ -89,6 +92,7 @@ impl Debug for ConfigurationError {
             ConfigurationError::DeserializationError(_) => std::fmt::Display::fmt(self, f),
             ConfigurationError::ConfigAlreadyExists => std::fmt::Display::fmt(self, f),
             ConfigurationError::UnknownRule(_) => std::fmt::Display::fmt(self, f),
+            ConfigurationError::InvalidIgnorePattern(_, _) => std::fmt::Display::fmt(self, f),
         }
     }
 }
@@ -115,6 +119,9 @@ impl Display for ConfigurationError {
 
             ConfigurationError::UnknownRule(rule) => {
                 write!(f, "invalid rule name `{rule}`")
+            }
+            ConfigurationError::InvalidIgnorePattern(pattern, reason) => {
+                write!(f, "couldn't parse the pattern {pattern}, reason: {reason}")
             }
         }
     }

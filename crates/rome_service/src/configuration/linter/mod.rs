@@ -3,6 +3,7 @@ mod rules;
 
 pub use crate::configuration::linter::rules::Rules;
 use crate::settings::LinterSettings;
+use crate::{ConfigurationError, MatchOptions, Matcher, RomeError};
 use indexmap::IndexSet;
 use rome_console::codespan::Severity;
 pub use rules::*;
@@ -41,13 +42,30 @@ impl Default for LinterConfiguration {
     }
 }
 
-impl From<LinterConfiguration> for LinterSettings {
-    fn from(conf: LinterConfiguration) -> Self {
-        Self {
+impl TryFrom<LinterConfiguration> for LinterSettings {
+    type Error = RomeError;
+
+    fn try_from(conf: LinterConfiguration) -> Result<Self, Self::Error> {
+        let mut matcher = Matcher::new(MatchOptions {
+            case_sensitive: true,
+            require_literal_leading_dot: false,
+            require_literal_separator: false,
+        });
+        if let Some(ignore) = conf.ignore {
+            for pattern in ignore {
+                matcher.add_pattern(&pattern).map_err(|err| {
+                    RomeError::Configuration(ConfigurationError::InvalidIgnorePattern(
+                        pattern.to_string(),
+                        err.msg.to_string(),
+                    ))
+                })?;
+            }
+        }
+        Ok(Self {
             enabled: conf.enabled,
             rules: conf.rules,
-            ignored_files: conf.ignore.unwrap_or_default(),
-        }
+            ignored_files: matcher,
+        })
     }
 }
 

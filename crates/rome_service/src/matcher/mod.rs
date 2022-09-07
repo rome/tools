@@ -7,13 +7,14 @@ use std::sync::RwLock;
 
 /// A data structure to use when there's need to match a string or a path a against
 /// a unix shell style patterns
-pub struct Matcher<'matches> {
+#[derive(Debug)]
+pub struct Matcher {
     patterns: Vec<Pattern>,
     options: MatchOptions,
-    already_ignored: RwLock<HashMap<&'matches str, bool>>,
+    already_ignored: RwLock<HashMap<String, bool>>,
 }
 
-impl<'matches> Matcher<'matches> {
+impl Matcher {
     /// Creates a new Matcher with given options.
     ///
     /// Check [glob website](https://docs.rs/glob/latest/glob/struct.MatchOptions.html) for [MatchOptions]
@@ -35,25 +36,25 @@ impl<'matches> Matcher<'matches> {
     /// It matches the given string against the stored patterns.
     ///
     /// It returns [true] if there's at least a match
-    pub fn matches(&self, source: &'matches str) -> bool {
+    pub fn matches(&self, source: &str) -> bool {
         let mut already_ignored = self.already_ignored.write().unwrap();
         if let Some(matches) = already_ignored.get(source) {
             return *matches;
         }
         for pattern in &self.patterns {
             if pattern.matches_with(source, self.options) || source.contains(pattern.as_str()) {
-                already_ignored.insert(source, true);
+                already_ignored.insert(source.to_string(), true);
                 return true;
             }
         }
-        already_ignored.insert(source, false);
+        already_ignored.insert(source.to_string(), false);
         false
     }
 
     /// It matches the given path against the stored patterns
     ///
     /// It returns [true] if there's a lest a match
-    pub fn matches_path(&self, source: &'matches Path) -> bool {
+    pub fn matches_path(&self, source: &Path) -> bool {
         let mut already_ignored = self.already_ignored.write().unwrap();
         let source_as_string = source.to_str();
         if let Some(source_as_string) = source_as_string {
@@ -81,7 +82,7 @@ impl<'matches> Matcher<'matches> {
         };
 
         if let Some(source_as_string) = source_as_string {
-            already_ignored.insert(source_as_string, matches);
+            already_ignored.insert(source_as_string.to_string(), matches);
         }
 
         matches
