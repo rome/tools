@@ -54,9 +54,9 @@ All rules are enabled by default, and cannot be disabled. [Suppression](#lint-su
 
 ### Lint suppression
 
-There are times when a developer wants to keep a specific formatting.
+There are times when a developer wants to ignore a rule for e specific line of the code.
 
-You can achieve this by adding a suppression comment right before the syntax node (expressions, statements, etc.).
+You can achieve this by adding a suppression comment above the line that is triggering the lint diagnostic.
 
 Suppression comments have the following format:
 
@@ -69,7 +69,7 @@ Where
 - `rome-ignore` is the start of a suppression comment;
 - `lint:` suppresses the linter;
 - `(js/noDebugger)`: **optional**, group and name of the rule you want to suppress;
-- `<explanation>` is an explanation why the formatting is disabled;
+- `<explanation>` explanation why the rule is disabled
 
 Here's an example:
 
