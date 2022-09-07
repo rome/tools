@@ -79,3 +79,17 @@ declare const Foo: number;
 // rome-ignore lint(js/noUnusedVariables): reason
 declare const Bar: number;
 ```
+
+
+### Code fixes
+
+Lint rules may provide automatic code fixes. Rome distinguishes between two types of fixes:
+
+* safe fixes
+* suggested fixes
+
+Safe fixes are guaranteed to not change the semantics of your code,
+and can be applied without explicit review.
+
+Suggested fixes may change the semantics of your program, and it's, 
+therefore, advised to manually review the changes. 
