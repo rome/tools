@@ -36,7 +36,7 @@ module.exports = function (eleventyConfig) {
 	});
 
 	eleventyConfig.addPlugin(syntaxHighlight);
-	eleventyConfig.addPlugin(pluginRss)
+	eleventyConfig.addPlugin(pluginRss);
 
 	eleventyConfig.addPlugin(pluginTOC, {
 		tags: ["h2", "h3", "h4"],
@@ -201,7 +201,7 @@ module.exports = function (eleventyConfig) {
 	});
 
 	eleventyConfig.addFilter("withAbsoluteUrl", function (string) {
-		return "https://rome.tools" + string;
+		return `https://rome.tools${string}`;
 	});
 
 	eleventyConfig.addShortcode("romeVersion", function () {
