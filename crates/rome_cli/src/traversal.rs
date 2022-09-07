@@ -599,26 +599,20 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
             return Ok(FileStatus::Ignored);
         }
 
-        let categories = if ctx.execution.is_format() {
+        let categories = if ctx.execution.is_format() || !can_lint {
             RuleCategories::SYNTAX
         } else {
             RuleCategories::SYNTAX | RuleCategories::LINT
         };
 
-        let (diagnostics, has_errors) = if can_lint {
-            let result = file_guard
-                .pull_diagnostics(categories)
-                .with_file_id_and_code(file_id, "Lint")?;
+        let result = file_guard
+            .pull_diagnostics(categories)
+            .with_file_id_and_code(file_id, "Lint")?;
 
-            let has_errors = result
-                .diagnostics
-                .iter()
-                .any(|diag| diag.severity >= Severity::Error);
-
-            (result.diagnostics, has_errors)
-        } else {
-            (vec![], false)
-        };
+        let has_errors = result
+            .diagnostics
+            .iter()
+            .any(|diag| diag.severity >= Severity::Error);
 
         // In formatting mode, abort immediately if the file has errors
         match ctx.execution.traversal_mode() {
@@ -634,7 +628,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
                     Message::Diagnostics {
                         name: path.display().to_string(),
                         content: input,
-                        diagnostics,
+                        diagnostics: result.diagnostics,
                     }
                 });
             }
@@ -645,13 +639,13 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         // In format mode the diagnostics have already been checked for errors
         // at this point, so they can just be dropped now since we don't want
         // to print syntax warnings for the format command
-        let result = if diagnostics.is_empty() || ctx.execution.is_format() {
+        let result = if result.diagnostics.is_empty() || ctx.execution.is_format() {
             FileStatus::Success
         } else {
             FileStatus::Message(Message::Diagnostics {
                 name: path.display().to_string(),
                 content: input.clone(),
-                diagnostics: diagnostics,
+                diagnostics: result.diagnostics,
             })
         };
 
