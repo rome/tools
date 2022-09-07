@@ -52,7 +52,6 @@ pub fn run_format(root: &JsSyntaxNode, source_type: SourceType) -> Printed {
         print_diff(stats, dhat::HeapStats::get());
     }
 
-    #[allow(clippy::let_and_return)]
     printed
 }
 
