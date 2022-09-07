@@ -45,8 +45,37 @@ At the moment only a few rules are implemented as the linting / analysis infrast
 
 **See the full [list of rules](/docs/lint/rules).**
 
-All rules are enabled by default, and cannot be disabled. [Suppressions](#suppressions) can be used to hide specific lint errors.
+All rules are enabled by default, and cannot be disabled. [Suppression](#lint-suppression) can be used to hide specific lint errors.
 
 
 [VS Code extension]: https://marketplace.visualstudio.com/items?itemName=rome.rome
 [release page]: https://github.com/rome/tools/releases
+
+
+### Lint suppression
+
+There are times when a developer wants to ignore a lint rule for a specific line of the code.
+
+You can achieve this by adding a suppression comment above the line that is triggering the lint diagnostic.
+
+Suppression comments have the following format:
+
+```js
+// rome-ignore lint: <explanation>
+// rome-ignore lint(js/noDebugger): <explanation>
+```
+
+Where
+- `rome-ignore` is the start of a suppression comment;
+- `lint:` suppresses the linter;
+- `(js/noDebugger)`: **optional**, group and name of the rule you want to suppress;
+- `<explanation>` explanation why the rule is disabled
+
+Here's an example:
+
+```ts
+// rome-ignore lint: reason
+declare const Foo: number;
+// rome-ignore lint(js/noUnusedVariables): reason
+declare const Bar: number;
+```
