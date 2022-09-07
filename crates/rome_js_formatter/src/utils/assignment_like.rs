@@ -1,13 +1,9 @@
 use crate::js::auxiliary::initializer_clause::FormatJsInitializerClauseOptions;
-use crate::parentheses::get_expression_left_side;
 use crate::prelude::*;
 use crate::utils::member_chain::is_member_call_chain;
 use crate::utils::object::write_member_name;
-use crate::utils::{JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression};
-use rome_formatter::{
-    format_args, has_leading_own_line_comment, write, Comments, CstFormatContext, FormatOptions,
-    VecBuffer,
-};
+use crate::utils::JsAnyBinaryLikeExpression;
+use rome_formatter::{format_args, write, Comments, CstFormatContext, FormatOptions, VecBuffer};
 use rome_js_syntax::JsAnyLiteralExpression;
 use rome_js_syntax::{
     JsAnyAssignmentPattern, JsAnyBindingPattern, JsAnyCallArgument, JsAnyClassMemberName,
@@ -828,7 +824,7 @@ impl JsAnyAssignmentLike {
         let result = if let Some(expression) = right.as_expression() {
             should_break_after_operator(&expression, comments)?
         } else {
-            has_leading_own_line_comment(right.syntax(), comments)
+            comments.has_leading_own_line_comment(right.syntax())
         };
 
         Ok(result)
@@ -840,21 +836,8 @@ pub(crate) fn should_break_after_operator(
     right: &JsAnyExpression,
     comments: &Comments<JsLanguage>,
 ) -> SyntaxResult<bool> {
-    // Traverse from the right expression to the left most node and check if any has a leading comment
-    // that causes a line break.
-    let mut current: JsAnyBinaryLikeLeftExpression = right.clone().into();
-    loop {
-        if has_leading_own_line_comment(current.syntax(), comments) {
-            return Ok(true);
-        }
-
-        if let JsAnyBinaryLikeLeftExpression::JsAnyExpression(expression) = current {
-            if let Some(left) = get_expression_left_side(&expression) {
-                current = left;
-                continue;
-            }
-        }
-        break;
+    if comments.has_leading_own_line_comment(right.syntax()) {
+        return Ok(true);
     }
 
     let result = match right {
@@ -1059,7 +1042,9 @@ fn is_poorly_breakable_member_or_call_chain(
         let is_breakable_call = match args.len() {
             0 => false,
             1 => match args.iter().next() {
-                Some(first_argument) => !is_short_argument(first_argument?, threshold)?,
+                Some(first_argument) => {
+                    !is_short_argument(first_argument?, threshold, f.context().comments())?
+                }
                 None => false,
             },
             _ => true,
@@ -1086,8 +1071,12 @@ fn is_poorly_breakable_member_or_call_chain(
 /// We need it to decide if `JsCallExpression` with the argument is breakable or not
 /// If the argument is short the function call isn't breakable
 /// [Prettier applies]: https://github.com/prettier/prettier/blob/a043ac0d733c4d53f980aa73807a63fc914f23bd/src/language-js/print/assignment.js#L374
-fn is_short_argument(argument: JsAnyCallArgument, threshold: u16) -> SyntaxResult<bool> {
-    if argument.syntax().has_comments_direct() {
+fn is_short_argument(
+    argument: JsAnyCallArgument,
+    threshold: u16,
+    comments: &Comments<JsLanguage>,
+) -> SyntaxResult<bool> {
+    if comments.has_comments(argument.syntax()) {
         return Ok(false);
     }
 
@@ -1098,7 +1087,7 @@ fn is_short_argument(argument: JsAnyCallArgument, threshold: u16) -> SyntaxResul
                 identifier.name()?.value_token()?.text_trimmed().len() <= threshold as usize
             }
             JsAnyExpression::JsUnaryExpression(unary_expression) => {
-                let has_comments = unary_expression.argument()?.syntax().has_comments_direct();
+                let has_comments = comments.has_comments(unary_expression.argument()?.syntax());
 
                 unary_expression.is_signed_numeric_literal()? && !has_comments
             }

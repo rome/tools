@@ -1,8 +1,9 @@
 use crate::prelude::*;
 
-use rome_formatter::{format_args, write};
+use rome_formatter::{format_args, write, Comments, CstFormatContext};
 use rome_js_syntax::{
-    JsAnyExpression, JsxAnyTag, JsxExpressionAttributeValue, JsxExpressionAttributeValueFields,
+    JsAnyExpression, JsLanguage, JsxAnyTag, JsxExpressionAttributeValue,
+    JsxExpressionAttributeValueFields,
 };
 
 #[derive(Debug, Clone, Default)]
@@ -22,7 +23,7 @@ impl FormatNodeRule<JsxExpressionAttributeValue> for FormatJsxExpressionAttribut
 
         let expression = expression?;
 
-        let should_inline = should_inline_jsx_expression(&expression);
+        let should_inline = should_inline_jsx_expression(&expression, f.context().comments());
 
         if should_inline {
             write!(
@@ -74,10 +75,13 @@ impl FormatNodeRule<JsxExpressionAttributeValue> for FormatJsxExpressionAttribut
 ///       ]
 ///     } />
 /// ```
-pub(crate) fn should_inline_jsx_expression(expression: &JsAnyExpression) -> bool {
+pub(crate) fn should_inline_jsx_expression(
+    expression: &JsAnyExpression,
+    comments: &Comments<JsLanguage>,
+) -> bool {
     use JsAnyExpression::*;
 
-    if expression.syntax().has_comments_direct() {
+    if comments.has_comments(expression.syntax()) {
         return false;
     }
 
@@ -94,7 +98,7 @@ pub(crate) fn should_inline_jsx_expression(expression: &JsAnyExpression) -> bool
         JsAwaitExpression(await_expression) => match await_expression.argument() {
             Ok(JsxTagExpression(argument)) => {
                 matches!(argument.tag(), Ok(JsxAnyTag::JsxElement(_)))
-                    && should_inline_jsx_expression(&argument.into())
+                    && should_inline_jsx_expression(&argument.into(), comments)
             }
             _ => false,
         },

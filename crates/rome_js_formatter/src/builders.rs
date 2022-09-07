@@ -98,11 +98,9 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
                 let leading_comments = comments.leading_comments(self.node);
 
                 let outside_trimmed_range = leading_comments.partition_point(|comment| {
-                    dbg!(trimmed_source_range)
-                        .contains_range(dbg!(source_range(f, comment.piece().text_range())))
+                    trimmed_source_range
+                        .contains_range(source_range(f, comment.piece().text_range()))
                 });
-
-                dbg!(outside_trimmed_range);
 
                 write!(
                     f,
@@ -137,8 +135,6 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
                             .to_string()
                     },
                 );
-
-                dbg!(&original_source);
 
                 dynamic_text(
                     &normalize_newlines(&original_source, LINE_TERMINATORS),

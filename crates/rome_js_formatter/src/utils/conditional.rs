@@ -204,7 +204,7 @@ impl FormatRule<JsAnyConditional> for FormatJsAnyConditionalRule {
 
             let has_block_comment = |syntax: &JsSyntaxNode| {
                 comments
-                    .node_comments(syntax)
+                    .leading_trailing_comments(syntax)
                     .any(|comment| comment.kind().is_block())
             };
 

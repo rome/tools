@@ -758,10 +758,9 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-        b;
-// https://github.com/babel/babel/pull/11640
-
-a + , c;
+fnString = // Comment0
+  // Comment1
+  'some' + 'long' + 'string';
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);

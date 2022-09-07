@@ -1,3 +1,4 @@
+use crate::comments::is_type_comment;
 use crate::parentheses::JsAnyParenthesized;
 use crate::TextRange;
 use rome_formatter::{TransformSourceMap, TransformSourceMapBuilder};
@@ -7,8 +8,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::syntax::SyntaxTrivia;
 use rome_rowan::{
-    AstNode, SyntaxKind, SyntaxRewriter, SyntaxToken, SyntaxTriviaPiece, SyntaxTriviaPieceComments,
-    VisitNodeSignal,
+    AstNode, SyntaxKind, SyntaxRewriter, SyntaxToken, SyntaxTriviaPiece, VisitNodeSignal,
 };
 use std::iter::FusedIterator;
 
@@ -378,25 +378,6 @@ fn has_type_cast_comment_or_skipped(trivia: &SyntaxTrivia<JsLanguage>) -> bool {
             piece.is_skipped()
         }
     })
-}
-
-/// Returns `true` if `comment` is a [Closure type comment](https://github.com/google/closure-compiler/wiki/Types-in-the-Closure-Type-System)
-/// or [TypeScript type comment](https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html#type)
-fn is_type_comment(comment: &SyntaxTriviaPieceComments<JsLanguage>) -> bool {
-    let text = comment.text();
-
-    // Must be a `/**` comment
-    if !text.starts_with("/**") {
-        return false;
-    }
-
-    text.trim_start_matches("/**")
-        .trim_end_matches("*/")
-        .split_whitespace()
-        .any(|word| match word.strip_prefix("@type") {
-            Some(after) => after.is_empty() || after.starts_with('{'),
-            None => false,
-        })
 }
 
 fn chain_pieces<F, S>(first: F, second: S) -> ChainTriviaPiecesIterator<F, S>

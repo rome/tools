@@ -3,7 +3,7 @@ use crate::prelude::*;
 use crate::prelude::{format_args, write};
 
 use crate::utils::JsAnyBinaryLikeExpression;
-use rome_formatter::{group, FormatResult};
+use rome_formatter::{group, CstFormatContext, FormatResult};
 use rome_js_syntax::{JsAnyExpression, JsxExpressionChild, JsxExpressionChildFields};
 
 #[derive(Debug, Clone, Default)]
@@ -23,7 +23,7 @@ impl FormatNodeRule<JsxExpressionChild> for FormatJsxExpressionChild {
             {
                 true
             } else {
-                should_inline_jsx_expression(expression)
+                should_inline_jsx_expression(expression, f.context().comments())
             }
         });
 

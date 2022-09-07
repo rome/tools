@@ -107,10 +107,10 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                         _ => false,
                     },
                 };
-                let body_has_leading_line_comment =
-                    dbg!(f.context().comments().leading_comments(body.syntax()))
-                        .iter()
-                        .any(|comment| comment.lines_after() > 0);
+                let body_has_leading_line_comment = f
+                    .context()
+                    .comments()
+                    .has_leading_own_line_comment(body.syntax());
 
                 // Add parentheses to avoid confusion between `a => b ? c : d` and `a <= b ? c : d`
                 // but only if the body isn't an object/function or class expression because parentheses are always required in that

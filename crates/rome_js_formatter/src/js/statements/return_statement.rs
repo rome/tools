@@ -1,9 +1,7 @@
 use crate::prelude::*;
 use crate::utils::{FormatWithSemicolon, JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression};
 
-use rome_formatter::{
-    format_args, has_leading_own_line_comment, write, Comments, CstFormatContext,
-};
+use rome_formatter::{format_args, write, Comments, CstFormatContext};
 
 use crate::parentheses::get_expression_left_side;
 use rome_js_syntax::{
@@ -145,7 +143,7 @@ fn has_argument_leading_comments(
     let mut current: Option<JsAnyBinaryLikeLeftExpression> = Some(argument.clone().into());
 
     while let Some(expression) = current {
-        if has_leading_own_line_comment(expression.syntax(), comments) {
+        if comments.has_leading_own_line_comment(expression.syntax()) {
             return true;
         }
 

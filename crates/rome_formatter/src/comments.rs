@@ -9,17 +9,6 @@ use std::cell::RefCell;
 use std::collections::{HashMap, HashSet};
 use std::rc::Rc;
 
-/// Tests if the node has any leading comment that will be placed on its own line.
-pub fn has_leading_own_line_comment<L: Language>(
-    node: &SyntaxNode<L>,
-    comments: &Comments<L>,
-) -> bool {
-    comments
-        .leading_comments(node)
-        .iter()
-        .any(|comment| comment.lines_after() > 0)
-}
-
 #[derive(Copy, Clone, Eq, PartialEq, Debug)]
 pub enum CommentKind {
     /// An inline comment that can appear between any two tokens and doesn't contain any line breaks.
@@ -189,6 +178,10 @@ impl<L: Language> DecoratedComment<L> {
             .expect("Expected token to have a parent node.")
     }
 
+    pub fn piece(&self) -> &SyntaxTriviaPieceComments<L> {
+        &self.comment
+    }
+
     pub fn enclosing_token(&self) -> SyntaxToken<L> {
         self.comment.as_piece().token()
     }
@@ -277,6 +270,8 @@ pub trait CommentStyle {
     /// Returns `true` if a comment with the given `text` is a `rome-ignore format:` suppression comment.
     fn is_suppression(text: &str) -> bool;
 
+    fn is_open_parentheses(kind: <Self::Language as Language>::Kind) -> bool;
+
     /// Returns the (kind)[CommentKind] of the comment
     fn get_comment_kind(comment: &SyntaxTriviaPieceComments<Self::Language>) -> CommentKind;
 
@@ -355,7 +350,9 @@ impl<L: Language> Comments<L> {
     /// Returns `true` if the given `node` has any leading or trailing comments.
     #[inline]
     pub fn has_comments(&self, node: &SyntaxNode<L>) -> bool {
-        self.has_leading_comments(node) || self.has_trailing_comments(node)
+        self.has_leading_comments(node)
+            || self.has_trailing_comments(node)
+            || self.has_node_dangling_trivia(node)
     }
 
     /// Returns `true` if the given [node] has any leading comments.
@@ -365,6 +362,13 @@ impl<L: Language> Comments<L> {
     #[inline]
     pub fn has_leading_comments(&self, node: &SyntaxNode<L>) -> bool {
         !self.leading_comments(node).is_empty()
+    }
+
+    /// Tests if the node has any leading comment that will be placed on its own line.
+    pub fn has_leading_own_line_comment(&self, node: &SyntaxNode<L>) -> bool {
+        self.leading_comments(node)
+            .iter()
+            .any(|comment| comment.lines_after() > 0)
     }
 
     /// Returns `true` if the given [node] has any trailing comments.
@@ -381,6 +385,14 @@ impl<L: Language> Comments<L> {
         node.tokens().any(|token| self.has_dangling_trivia(&token))
     }
 
+    pub fn node_dangling_comments<'a>(
+        &'a self,
+        node: &'a SyntaxNode<L>,
+    ) -> impl Iterator<Item = &SourceComment<L>> + 'a {
+        node.tokens()
+            .flat_map(|token| self.dangling_comments(&token))
+    }
+
     /// Returns the [node]'s leading comments.
     #[inline]
     pub fn leading_comments(&self, node: &SyntaxNode<L>) -> &[SourceComment<L>] {
@@ -393,9 +405,22 @@ impl<L: Language> Comments<L> {
         self.data.trailing_comments.get(node)
     }
 
-    pub fn node_comments(&self, node: &SyntaxNode<L>) -> impl Iterator<Item = &SourceComment<L>> {
+    pub fn leading_trailing_comments(
+        &self,
+        node: &SyntaxNode<L>,
+    ) -> impl Iterator<Item = &SourceComment<L>> {
         self.leading_comments(node)
             .iter()
+            .chain(self.trailing_comments(node).iter())
+    }
+
+    pub fn node_comments<'a>(
+        &'a self,
+        node: &'a SyntaxNode<L>,
+    ) -> impl Iterator<Item = &SourceComment<L>> + 'a {
+        self.leading_comments(node)
+            .iter()
+            .chain(self.node_dangling_comments(node))
             .chain(self.trailing_comments(node).iter())
     }
 
@@ -749,6 +774,15 @@ where
         }
 
         // Any comment following now is preceded by 'token' and not a node.
+
+        // TODO: Difference to prettier:
+        // - Prettier keeps the preceding node around, even if there has been a token in between
+        // - Prettier keeps the following node around, even if there has been a token in between
+        // - a = b; a is still the preceding even if positioned at b;
+        // - same with following. It takes the first node that follows (and belongs to the same parent)
+        // They then use a breakTie in situations where there are preceding and following nodes set.
+        // Emphasis the importance of nodes even more. Reduces the places where dangling comments can appear
+        // Has mainly become relevant for trailing comments. Is there also a noticable difference for leading?
         self.preceding_node = None;
         self.following_node = None;
         self.last_token = Some(token);
@@ -798,10 +832,17 @@ where
 
                     match (comment.take_preceding_node(), comment.take_following_node()) {
                         (Some(preceding), Some(following)) => {
+                            // Always attach suppression with the next node.
                             if Language::CommentStyle::is_suppression(comment.comment.text()) {
                                 self.node_comments
                                     .insert_leading_comment(following, comment.into());
                             } else {
+                                // Attach comments with both preceding and following node to the preceding
+                                // because there's a line break separating it from the following node.
+                                // ```javascript
+                                // a; // comment
+                                // b
+                                // ```
                                 self.node_comments
                                     .insert_trailing_comment(preceding, comment.into());
                             }
@@ -823,6 +864,13 @@ where
                     }
                 } else {
                     match (comment.take_following_node(), comment.take_preceding_node()) {
+                        // Following always wins for a leading comment
+                        // ```javascript
+                        // a;
+                        // // comment
+                        // b
+                        // ```
+                        // attach the comment to the `b` expression statement
                         (Some(following), _) => {
                             self.node_comments
                                 .insert_leading_comment(following, comment.into());

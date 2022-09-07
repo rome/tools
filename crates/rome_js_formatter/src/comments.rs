@@ -6,11 +6,12 @@ use rome_js_syntax::suppression::{parse_suppression_comment, SuppressionCategory
 use rome_js_syntax::{
     JsAnyStatement, JsArrayAssignmentPattern, JsArrayBindingPattern, JsArrayExpression,
     JsArrayHole, JsBlockStatement, JsBreakStatement, JsCallArgumentList, JsCallArguments,
-    JsContinueStatement, JsDefaultClause, JsFunctionBody, JsLanguage, JsSyntaxKind, JsSyntaxNode,
-    JsSyntaxToken,
+    JsContinueStatement, JsDefaultClause, JsFunctionBody, JsLanguage, JsModule, JsScript,
+    JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
 };
 use rome_rowan::{
-    declare_node_union, match_ast, SyntaxKind, SyntaxResult, SyntaxTriviaPieceComments, TextLen,
+    declare_node_union, match_ast, Language, SyntaxKind, SyntaxResult, SyntaxSlot,
+    SyntaxTriviaPieceComments, TextLen,
 };
 
 #[derive(Default)]
@@ -133,6 +134,10 @@ impl CommentStyle for JsCommentStyle {
             .any(|(category, _)| category == SuppressionCategory::Format)
     }
 
+    fn is_open_parentheses(kind: <Self::Language as Language>::Kind) -> bool {
+        kind == JsSyntaxKind::L_PAREN
+    }
+
     fn get_comment_kind(comment: &SyntaxTriviaPieceComments<JsLanguage>) -> CommentKind {
         if comment.text().starts_with("/*") {
             if comment.has_newline() {
@@ -151,7 +156,39 @@ impl CommentStyle for JsCommentStyle {
         let enclosing_node = comment.enclosing_node();
 
         if let Some(following_node) = comment.following_node() {
+            if comment.is_trailing_token_trivia() && is_type_comment(comment.piece()) {
+                return CommentPosition::Leading {
+                    node: following_node.clone(),
+                    comment,
+                };
+            }
+
             match following_node.kind() {
+                JsSyntaxKind::JS_SCRIPT | JsSyntaxKind::JS_MODULE => {
+                    let (directives, statements) = match_ast! {
+                        match following_node {
+                            JsScript(script) => {
+                                (script.directives().into_syntax_list(), script.statements().into_syntax_list())
+                            },
+                            JsModule(module) => {
+                                (module.directives().into_syntax_list(), module.items().into_syntax_list())
+                            },
+                            _ => unreachable!()
+                        }
+                    };
+
+                    let first_inner = directives.first().or_else(|| statements.first());
+
+                    return match first_inner {
+                        // Attach any leading comments to the first statement or directive in a module or script to prevent
+                        // that a rome-ignore comment on the first statement ignores the whole file.
+                        Some(SyntaxSlot::Node(node)) => CommentPosition::Leading { node, comment },
+                        Some(SyntaxSlot::Token(_)) | Some(SyntaxSlot::Empty) | None => {
+                            CommentPosition::Default(comment)
+                        }
+                    };
+                }
+
                 // Move leading comments in front of the `{` inside of the block
                 // ```
                 // if (test) /* comment */ {
@@ -323,7 +360,7 @@ impl CommentStyle for JsCommentStyle {
             }
         }
 
-        match dbg!(comment.following_token().kind()) {
+        match comment.following_token().kind() {
             JsSyntaxKind::R_BRACK => {
                 // Handles comments before the `]` token of an array
                 //
@@ -418,6 +455,25 @@ impl CommentStyle for JsCommentStyle {
 
         CommentPosition::Default(comment)
     }
+}
+
+/// Returns `true` if `comment` is a [Closure type comment](https://github.com/google/closure-compiler/wiki/Types-in-the-Closure-Type-System)
+/// or [TypeScript type comment](https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html#type)
+pub(crate) fn is_type_comment(comment: &SyntaxTriviaPieceComments<JsLanguage>) -> bool {
+    let text = comment.text();
+
+    // Must be a `/**` comment
+    if !text.starts_with("/**") {
+        return false;
+    }
+
+    text.trim_start_matches("/**")
+        .trim_end_matches("*/")
+        .split_whitespace()
+        .any(|word| match word.strip_prefix("@type") {
+            Some(after) => after.is_empty() || after.starts_with('{'),
+            None => false,
+        })
 }
 
 declare_node_union! {
