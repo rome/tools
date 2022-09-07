@@ -140,7 +140,7 @@ pub fn run(
         reporter: &mut reporters,
         pool: &yastl::Pool::new(
             std::thread::available_parallelism()
-                .map_or(2, |num| usize::from(num))
+                .map_or(2, usize::from)
                 .max(2),
         ),
     };
