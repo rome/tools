@@ -540,6 +540,7 @@ mod check {
 
 mod ci {
     use super::*;
+    use crate::configs::{CONFIG_DISABLED_FORMATTER, CONFIG_LINTER_DISABLED};
     use rome_fs::FileSystemExt;
 
     #[test]
@@ -641,6 +642,72 @@ mod ci {
         }
 
         assert_cli_snapshot(module_path!(), "ci_lint_error", fs, console);
+    }
+
+    #[test]
+    fn ci_does_not_run_formatter() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("rome.json");
+        fs.insert(file_path.into(), CONFIG_DISABLED_FORMATTER.as_bytes());
+
+        let file_path = Path::new("file.js");
+        fs.insert(file_path.into(), UNFORMATTED.as_bytes());
+
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        );
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut file = fs
+            .open(file_path)
+            .expect("formatting target file was removed by the CLI");
+
+        let mut content = String::new();
+        file.read_to_string(&mut content)
+            .expect("failed to read file from memory FS");
+
+        assert_eq!(content, UNFORMATTED);
+
+        drop(file);
+        assert_cli_snapshot(module_path!(), "ci_does_not_run_formatter", fs, console);
+    }
+
+    #[test]
+    fn ci_does_not_run_linter() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("rome.json");
+        fs.insert(file_path.into(), CONFIG_LINTER_DISABLED.as_bytes());
+
+        let file_path = Path::new("file.js");
+        fs.insert(file_path.into(), CUSTOM_FORMAT_BEFORE.as_bytes());
+
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        );
+
+        assert!(result.is_err(), "run_cli returned {result:?}");
+
+        let mut file = fs
+            .open(file_path)
+            .expect("formatting target file was removed by the CLI");
+
+        let mut content = String::new();
+        file.read_to_string(&mut content)
+            .expect("failed to read file from memory FS");
+
+        assert_eq!(content, CUSTOM_FORMAT_BEFORE);
+
+        drop(file);
+        assert_cli_snapshot(module_path!(), "ci_does_not_run_linter", fs, console);
     }
 }
 
