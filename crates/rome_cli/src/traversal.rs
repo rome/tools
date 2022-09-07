@@ -544,9 +544,10 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
     tracing::trace_span!("process_file", path = ?path).in_scope(move || {
         let rome_path = RomePath::new(path, file_id);
         let can_format = ctx.can_format(&rome_path);
+        let can_lint = ctx.can_lint(&rome_path);
         let can_handle = match ctx.execution.traversal_mode() {
             TraversalMode::Check { .. } => ctx.can_lint(&rome_path),
-            TraversalMode::CI { .. } => ctx.can_lint(&rome_path) || can_format,
+            TraversalMode::CI { .. } => can_lint || can_format,
             TraversalMode::Format { .. } => can_format,
         };
 
@@ -604,14 +605,20 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
             RuleCategories::SYNTAX | RuleCategories::LINT
         };
 
-        let result = file_guard
-            .pull_diagnostics(categories)
-            .with_file_id_and_code(file_id, "Lint")?;
+        let (diagnostics, has_errors) = if can_lint {
+            let result = file_guard
+                .pull_diagnostics(categories)
+                .with_file_id_and_code(file_id, "Lint")?;
 
-        let has_errors = result
-            .diagnostics
-            .iter()
-            .any(|diag| diag.severity >= Severity::Error);
+            let has_errors = result
+                .diagnostics
+                .iter()
+                .any(|diag| diag.severity >= Severity::Error);
+
+            (result.diagnostics, has_errors)
+        } else {
+            (vec![], false)
+        };
 
         // In formatting mode, abort immediately if the file has errors
         match ctx.execution.traversal_mode() {
@@ -627,7 +634,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
                     Message::Diagnostics {
                         name: path.display().to_string(),
                         content: input,
-                        diagnostics: result.diagnostics,
+                        diagnostics,
                     }
                 });
             }
@@ -638,13 +645,13 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         // In format mode the diagnostics have already been checked for errors
         // at this point, so they can just be dropped now since we don't want
         // to print syntax warnings for the format command
-        let result = if result.diagnostics.is_empty() || ctx.execution.is_format() {
+        let result = if diagnostics.is_empty() || ctx.execution.is_format() {
             FileStatus::Success
         } else {
             FileStatus::Message(Message::Diagnostics {
                 name: path.display().to_string(),
                 content: input.clone(),
-                diagnostics: result.diagnostics,
+                diagnostics: diagnostics,
             })
         };
 
