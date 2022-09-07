@@ -17,7 +17,7 @@ pub struct FormatterConfiguration {
     pub indent_style: PlainIndentStyle,
 
     /// The size of the indentation, 2 by default
-    indent_size: u8,
+    pub indent_size: u8,
 
     /// What's the max width of a line. Defaults to 80.
     #[serde(

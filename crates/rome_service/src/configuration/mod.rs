@@ -3,9 +3,6 @@
 //! The configuration is divided by "tool", and then it's possible to further customise it
 //! by language. The language might further options divided by tool.
 
-use crate::configuration::formatter::FormatterConfiguration;
-use crate::configuration::javascript::JavascriptConfiguration;
-use crate::configuration::linter::LinterConfiguration;
 use crate::{DynRef, RomeError};
 use rome_fs::{FileSystem, OpenOptions};
 use serde::{Deserialize, Serialize};
@@ -18,7 +15,9 @@ mod formatter;
 mod javascript;
 pub mod linter;
 
-pub use linter::{RuleConfiguration, Rules};
+pub use formatter::{FormatterConfiguration, PlainIndentStyle};
+pub use javascript::{JavascriptConfiguration, JavascriptFormatter};
+pub use linter::{LinterConfiguration, RuleConfiguration, Rules};
 
 /// The configuration that is contained inside the file `rome.json`
 #[derive(Debug, Deserialize, Serialize)]

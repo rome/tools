@@ -1,5 +1,8 @@
 use rome_formatter::IndentStyle;
-use rome_service::{load_config, settings::WorkspaceSettings, workspace::UpdateSettingsParams};
+use rome_service::configuration::{
+    FormatterConfiguration, JavascriptConfiguration, JavascriptFormatter, PlainIndentStyle,
+};
+use rome_service::{load_config, workspace::UpdateSettingsParams, Configuration};
 use std::path::PathBuf;
 
 use crate::execute::ReportMode;
@@ -8,16 +11,12 @@ use crate::{execute_mode, CliSession, Execution, Termination, TraversalMode};
 /// Handler for the "format" command of the Rome CLI
 pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     let configuration = load_config(&session.app.fs, None)?;
-    let mut workspace_settings = WorkspaceSettings::default();
+    let configuration = apply_format_settings_from_cli(&mut session, configuration)?;
 
-    if let Some(configuration) = configuration {
-        session
-            .app
-            .workspace
-            .update_settings(UpdateSettingsParams { configuration })?;
-    }
-
-    apply_format_settings_from_cli(&mut session, &mut workspace_settings)?;
+    session
+        .app
+        .workspace
+        .update_settings(UpdateSettingsParams { configuration })?;
 
     let is_write = session.args.contains("--write");
     let ignore_errors = session.args.contains("--skip-errors");
@@ -67,8 +66,21 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
 /// into the workspace settings
 pub(crate) fn apply_format_settings_from_cli(
     session: &mut CliSession,
-    workspace_settings: &mut WorkspaceSettings,
-) -> Result<(), Termination> {
+    configuration: Option<Configuration>,
+) -> Result<Configuration, Termination> {
+    let mut configuration = if let Some(configuration) = configuration {
+        configuration
+    } else {
+        Configuration {
+            formatter: Some(FormatterConfiguration::default()),
+            javascript: Some(JavascriptConfiguration {
+                formatter: Some(JavascriptFormatter::default()),
+                globals: None,
+            }),
+            ..Configuration::default()
+        }
+    };
+
     let size = session
         .args
         .opt_value_from_str("--indent-size")
@@ -85,27 +97,29 @@ pub(crate) fn apply_format_settings_from_cli(
             source,
         })?;
 
-    match indent_style {
-        Some(IndentStyle::Tab) => {
-            workspace_settings.formatter.indent_style = Some(IndentStyle::Tab);
-        }
-        Some(IndentStyle::Space(default_size)) => {
-            workspace_settings.formatter.indent_style =
-                Some(IndentStyle::Space(size.unwrap_or(default_size)));
-        }
-        None => {}
-    }
-
-    let quote_style = session
+    let line_width = session
         .args
-        .opt_value_from_str("--quote-style")
+        .opt_value_from_str("--line-width")
         .map_err(|source| Termination::ParseError {
-            argument: "--quote-style",
+            argument: "--line-width",
             source,
         })?;
 
-    if let Some(quote_style) = quote_style {
-        workspace_settings.languages.javascript.format.quote_style = Some(quote_style);
+    if let Some(formatter) = configuration.formatter.as_mut() {
+        match indent_style {
+            Some(IndentStyle::Tab) => {
+                formatter.indent_style = PlainIndentStyle::Tab;
+            }
+            Some(IndentStyle::Space(default_size)) => {
+                formatter.indent_style = PlainIndentStyle::Space;
+                formatter.indent_size = size.unwrap_or(default_size);
+            }
+            None => {}
+        }
+
+        if let Some(line_width) = line_width {
+            formatter.line_width = line_width;
+        }
     }
 
     let quote_properties = session
@@ -116,25 +130,26 @@ pub(crate) fn apply_format_settings_from_cli(
             source,
         })?;
 
-    if let Some(quote_properties) = quote_properties {
-        workspace_settings
-            .languages
-            .javascript
-            .format
-            .quote_properties = Some(quote_properties);
-    }
-
-    let line_width = session
+    let quote_style = session
         .args
-        .opt_value_from_str("--line-width")
+        .opt_value_from_str("--quote-style")
         .map_err(|source| Termination::ParseError {
-            argument: "--line-width",
+            argument: "--quote-style",
             source,
         })?;
+    if let Some(javascript) = configuration
+        .javascript
+        .as_mut()
+        .and_then(|j| j.formatter.as_mut())
+    {
+        if let Some(quote_properties) = quote_properties {
+            javascript.quote_properties = quote_properties;
+        }
 
-    if let Some(line_width) = line_width {
-        workspace_settings.formatter.line_width = Some(line_width);
+        if let Some(quote_style) = quote_style {
+            javascript.quote_style = quote_style;
+        }
     }
 
-    Ok(())
+    Ok(configuration)
 }
