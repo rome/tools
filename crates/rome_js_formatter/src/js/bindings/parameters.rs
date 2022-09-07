@@ -60,7 +60,7 @@ impl Format<JsFormatContext> for FormatJsAnyParameters {
                     f,
                     [
                         l_paren_token.format(),
-                        format_dangling_trivia(&r_paren_token),
+                        format_dangling_comments(self.syntax()),
                         r_paren_token.format()
                     ]
                 )

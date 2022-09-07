@@ -117,14 +117,13 @@ use rome_js_syntax::{JsAnyExpression, JsCallExpression, JsExpressionStatement, J
 use rome_rowan::{AstNode, SyntaxResult};
 
 #[derive(Debug, Clone)]
-pub(crate) struct MemberChain<'a> {
+pub(crate) struct MemberChain {
     calls_count: usize,
-    root: &'a JsCallExpression,
     head: MemberChainGroup,
     tail: MemberChainGroups,
 }
 
-impl MemberChain<'_> {
+impl MemberChain {
     /// It tells if the groups should be break on multiple lines
     pub(crate) fn groups_should_break(
         &self,
@@ -166,7 +165,7 @@ impl MemberChain<'_> {
     }
 }
 
-impl Format<JsFormatContext> for MemberChain<'_> {
+impl Format<JsFormatContext> for MemberChain {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         // TODO use Alternatives once available
         write!(f, [&self.head])?;
@@ -189,10 +188,10 @@ impl Format<JsFormatContext> for MemberChain<'_> {
     }
 }
 
-pub(crate) fn get_member_chain<'a>(
-    call_expression: &'a JsCallExpression,
+pub(crate) fn get_member_chain(
+    call_expression: &JsCallExpression,
     f: &mut JsFormatter,
-) -> SyntaxResult<MemberChain<'a>> {
+) -> SyntaxResult<MemberChain> {
     let mut chain_members = vec![];
     let parent_is_expression_statement =
         call_expression.syntax().parent().map_or(false, |parent| {
@@ -245,7 +244,6 @@ pub(crate) fn get_member_chain<'a>(
 
     Ok(MemberChain {
         calls_count,
-        root: call_expression,
         head: head_group,
         tail: rest_of_groups,
     })

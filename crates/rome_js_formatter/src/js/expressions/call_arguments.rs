@@ -27,7 +27,7 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                 f,
                 [
                     l_paren_token.format(),
-                    format_dangling_trivia(&r_paren_token),
+                    format_dangling_comments(node.syntax()),
                     r_paren_token.format()
                 ]
             );

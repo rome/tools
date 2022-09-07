@@ -23,7 +23,7 @@ impl FormatNodeRule<JsFunctionBody> for FormatJsFunctionBody {
                 f,
                 [
                     l_curly_token.format(),
-                    format_dangling_trivia(&r_curly_token).indented(),
+                    format_dangling_comments(node.syntax()).indented(),
                     r_curly_token.format()
                 ]
             )

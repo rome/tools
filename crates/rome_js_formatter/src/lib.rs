@@ -276,6 +276,7 @@ use crate::comments::JsCommentStyle;
 use crate::context::{JsFormatContext, JsFormatOptions};
 use crate::cst::FormatJsSyntaxNode;
 use crate::syntax_rewriter::transform;
+use rome_formatter::token::format_skipped_token_trivia;
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
 
@@ -479,7 +480,10 @@ impl FormatRule<JsSyntaxToken> for FormatJsSyntaxToken {
 
         write!(
             f,
-            [format_dangling_trivia(token), format_trimmed_token(token),]
+            [
+                format_skipped_token_trivia(token),
+                format_trimmed_token(token),
+            ]
         )
     }
 }

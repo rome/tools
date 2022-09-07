@@ -10,8 +10,8 @@ use rome_js_syntax::{
     JsSyntaxKind, JsSyntaxNode, JsSyntaxToken,
 };
 use rome_rowan::{
-    declare_node_union, match_ast, Language, SyntaxKind, SyntaxResult, SyntaxSlot,
-    SyntaxTriviaPieceComments, TextLen,
+    declare_node_union, match_ast, Language, SyntaxResult, SyntaxSlot, SyntaxTriviaPieceComments,
+    TextLen,
 };
 
 #[derive(Default)]
@@ -207,13 +207,11 @@ impl CommentStyle for JsCommentStyle {
                 {
                     let block = JsBlockStatement::unwrap_cast(following_node.clone());
 
-                    if let (Ok(_), Ok(r_curly_token)) =
-                        (block.l_curly_token(), block.r_curly_token())
-                    {
+                    if let (Ok(_), Ok(_)) = (block.l_curly_token(), block.r_curly_token()) {
                         return match block.statements().first() {
                             Some(JsAnyStatement::JsEmptyStatement(_)) => {
                                 CommentPosition::Dangling {
-                                    token: r_curly_token,
+                                    node: block.into_syntax(),
                                     comment,
                                 }
                             }
@@ -222,7 +220,7 @@ impl CommentStyle for JsCommentStyle {
                                 comment,
                             },
                             _ => CommentPosition::Dangling {
-                                token: r_curly_token,
+                                node: block.into_syntax(),
                                 comment,
                             },
                         };
@@ -235,7 +233,7 @@ impl CommentStyle for JsCommentStyle {
                 {
                     let function_body = JsFunctionBody::unwrap_cast(following_node.clone());
 
-                    if let (Ok(_), Ok(r_curly_token)) =
+                    if let (Ok(_), Ok(_)) =
                         (function_body.l_curly_token(), function_body.r_curly_token())
                     {
                         let first_directive = function_body
@@ -253,7 +251,7 @@ impl CommentStyle for JsCommentStyle {
                             }
                         } else {
                             CommentPosition::Dangling {
-                                token: r_curly_token,
+                                node: function_body.into_syntax(),
                                 comment,
                             }
                         };
@@ -266,14 +264,6 @@ impl CommentStyle for JsCommentStyle {
         };
 
         match enclosing_node.kind() {
-            // TODO move to general formatter handling?
-            // WHat does that mean for invalid syntax...
-            kind if kind.is_unknown() => {
-                return CommentPosition::Dangling {
-                    token: comment.enclosing_token(),
-                    comment,
-                }
-            }
             // Handles comments attached to operators of binary like expressions.
             //
             // Associates trailing comments with the left expression if they're directly followed by a line break.

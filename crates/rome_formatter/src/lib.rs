@@ -59,6 +59,7 @@ pub use comments::{
 pub use format_element::{normalize_newlines, FormatElement, Text, Verbatim, LINE_TERMINATORS};
 pub use group_id::GroupId;
 use indexmap::IndexSet;
+use rome_rowan::syntax::SyntaxElementKey;
 use rome_rowan::{
     Language, SyntaxElement, SyntaxError, SyntaxNode, SyntaxResult, SyntaxToken, SyntaxTriviaPiece,
     TextRange, TextSize, TokenAtOffset,
@@ -1279,7 +1280,7 @@ pub struct FormatState<Context> {
     /// Storing the position is sufficient because comments are guaranteed to not be empty
     /// (all start with a specific comment sequence) and thus, no two comments can have the same
     /// absolute position.
-    manually_formatted_token_trivia: IndexSet<TextSize>,
+    manually_formatted_dangling_comments: IndexSet<SyntaxElementKey>,
 
     // This is using a RefCell as it only exists in debug mode,
     // the Formatter is still completely immutable in release builds
@@ -1304,7 +1305,7 @@ impl<Context> FormatState<Context> {
         Self {
             context,
             group_id_builder: Default::default(),
-            manually_formatted_token_trivia: IndexSet::default(),
+            manually_formatted_dangling_comments: IndexSet::default(),
             #[cfg(debug_assertions)]
             printed_tokens: Default::default(),
         }
@@ -1335,16 +1336,15 @@ impl<Context> FormatState<Context> {
     ///
     /// This can be accomplished by manually formatting the leading/trailing trivia of the string literal expression
     /// before/after the close parentheses and then mark the comments as handled.
-    pub fn mark_token_trivia_formatted<L: Language>(&mut self, token: &SyntaxToken<L>) {
-        self.manually_formatted_token_trivia
-            .insert(token.text_range().start());
+    pub fn mark_dangling_comments_formatted<L: Language>(&mut self, node: &SyntaxNode<L>) {
+        self.manually_formatted_dangling_comments.insert(node.key());
     }
 
     /// Returns `true` if this comment has already been formatted manually
     /// and shouldn't be formatted again when formatting the token to which the comment belongs.
-    pub fn is_token_trivia_formatted<L: Language>(&self, token: &SyntaxToken<L>) -> bool {
-        self.manually_formatted_token_trivia
-            .contains(&token.text_range().start())
+    pub fn has_formatted_dangling_comments<L: Language>(&self, node: &SyntaxNode<L>) -> bool {
+        self.manually_formatted_dangling_comments
+            .contains(&node.key())
     }
 
     /// Returns the context specifying how to format the current CST
@@ -1394,7 +1394,7 @@ where
 {
     pub fn snapshot(&self) -> FormatStateSnapshot {
         FormatStateSnapshot {
-            manually_handled_trivia_len: self.manually_formatted_token_trivia.len(),
+            manually_handled_trivia_len: self.manually_formatted_dangling_comments.len(),
             #[cfg(debug_assertions)]
             printed_tokens: self.printed_tokens.clone(),
         }
@@ -1407,7 +1407,7 @@ where
             printed_tokens,
         } = snapshot;
 
-        self.manually_formatted_token_trivia
+        self.manually_formatted_dangling_comments
             .truncate(manual_handled_comments_len);
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {

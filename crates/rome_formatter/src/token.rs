@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::{
-    write, Argument, Arguments, CommentKind, CstFormatContext, DanglingTrivia, FormatRefWithRule,
-    GroupId, SourceComment,
+    write, Argument, Arguments, CommentKind, CstFormatContext, FormatRefWithRule, GroupId,
+    SourceComment,
 };
 use rome_rowan::{Language, SyntaxNode, SyntaxToken};
 
@@ -134,24 +134,24 @@ where
     }
 }
 
-pub const fn format_dangling_trivia<L: Language>(
-    token: &SyntaxToken<L>,
-) -> FormatDanglingTrivia<L> {
-    FormatDanglingTrivia {
-        token,
+pub const fn format_dangling_comments<L: Language>(
+    node: &SyntaxNode<L>,
+) -> FormatDanglingComments<L> {
+    FormatDanglingComments {
+        node,
         indent: false,
         ignore_formatted_check: false,
     }
 }
 
 /// Formats the dangling trivia of `token`.
-pub struct FormatDanglingTrivia<'a, L: Language> {
-    token: &'a SyntaxToken<L>,
+pub struct FormatDanglingComments<'a, L: Language> {
+    node: &'a SyntaxNode<L>,
     indent: bool,
     ignore_formatted_check: bool,
 }
 
-impl<L: Language> FormatDanglingTrivia<'_, L> {
+impl<L: Language> FormatDanglingComments<'_, L> {
     pub fn indented(mut self) -> Self {
         self.indent = true;
         self
@@ -163,42 +163,35 @@ impl<L: Language> FormatDanglingTrivia<'_, L> {
     }
 }
 
-impl<Context> Format<Context> for FormatDanglingTrivia<'_, Context::Language>
+impl<Context> Format<Context> for FormatDanglingComments<'_, Context::Language>
 where
     Context: CstFormatContext,
 {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        if !self.ignore_formatted_check && f.state().is_token_trivia_formatted(self.token) {
+        if !self.ignore_formatted_check && f.state().has_formatted_dangling_comments(self.node) {
             return Ok(());
         }
 
         let comments = f.context().comments().clone();
-        let dangling_trivia = comments.dangling_trivia(self.token);
+        let dangling_comments = comments.dangling_comments(self.node);
         let mut leading_comments_end = 0;
         let mut last_line_comment = false;
 
         let format_leading_comments = format_once(|f| {
-            if self.indent && matches!(dangling_trivia.first(), Some(DanglingTrivia::Comment(_))) {
+            if self.indent && !dangling_comments.is_empty() {
                 write!(f, [hard_line_break()])?;
             }
 
             // Write all comments up to the first skipped token trivia or the token
             let mut join = f.join_with(hard_line_break());
 
-            for trivia in dangling_trivia {
-                match trivia {
-                    DanglingTrivia::Comment(comment) => {
-                        let format_comment =
-                            FormatRefWithRule::new(comment, Context::CommentRule::default());
-                        join.entry(&format_comment);
+            for comment in dangling_comments {
+                let format_comment =
+                    FormatRefWithRule::new(comment, Context::CommentRule::default());
+                join.entry(&format_comment);
 
-                        last_line_comment = comment.kind().is_line();
-                        leading_comments_end += 1;
-                    }
-                    _ => {
-                        break;
-                    }
-                }
+                last_line_comment = comment.kind().is_line();
+                leading_comments_end += 1;
             }
 
             join.finish()
@@ -214,11 +207,7 @@ where
             }
         }
 
-        if leading_comments_end != dangling_trivia.len() {
-            panic!("Skipped token trivia not yet supported");
-        }
-
-        f.state_mut().mark_token_trivia_formatted(self.token);
+        f.state_mut().mark_dangling_comments_formatted(self.node);
 
         Ok(())
     }
@@ -274,7 +263,7 @@ where
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
         f.state_mut().track_token(self.token);
 
-        write!(f, [format_dangling_trivia(self.token)])
+        write!(f, [format_skipped_token_trivia(self.token)])
     }
 }
 
@@ -314,7 +303,7 @@ where
     fn fmt(&self, f: &mut Formatter<C>) -> FormatResult<()> {
         f.state_mut().track_token(self.token);
 
-        write!(f, [format_dangling_trivia(self.token)])?;
+        write!(f, [format_skipped_token_trivia(self.token)])?;
 
         f.write_fmt(Arguments::from(&self.content))
     }
@@ -368,9 +357,32 @@ where
             [
                 if_group_breaks(&Arguments::from(&self.content)).with_group_id(self.group_id),
                 // Print the trivia otherwise
-                if_group_fits_on_line(&format_dangling_trivia(self.token))
+                if_group_fits_on_line(&format_skipped_token_trivia(self.token))
                     .with_group_id(self.group_id),
             ]
         )
+    }
+}
+
+pub const fn format_skipped_token_trivia<L: Language>(
+    token: &SyntaxToken<L>,
+) -> FormatSkippedTokenTrivia<L> {
+    FormatSkippedTokenTrivia { token }
+}
+
+pub struct FormatSkippedTokenTrivia<'a, L: Language> {
+    token: &'a SyntaxToken<L>,
+}
+
+impl<Context> Format<Context> for FormatSkippedTokenTrivia<'_, Context::Language>
+where
+    Context: CstFormatContext,
+{
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+        if f.comments().has_skipped(self.token) {
+            panic!("Skipped token trivia not yet supported.");
+        }
+
+        Ok(())
     }
 }

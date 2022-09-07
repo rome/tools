@@ -24,7 +24,7 @@ impl FormatNodeRule<JsBlockStatement> for FormatJsBlockStatement {
 
         let comments = f.context().comments();
         if is_empty_block(node, comments) {
-            let has_dangling_trivia = comments.has_dangling_trivia(&r_curly_token);
+            let has_dangling_trivia = comments.has_skipped(&r_curly_token);
 
             for stmt in statements
                 .iter()
@@ -34,7 +34,7 @@ impl FormatNodeRule<JsBlockStatement> for FormatJsBlockStatement {
             }
 
             if has_dangling_trivia {
-                write!(f, [format_dangling_trivia(&r_curly_token).indented()])?;
+                write!(f, [format_dangling_comments(node.syntax()).indented()])?;
             } else if is_non_collapsible(node) {
                 write!(f, [hard_line_break()])?;
             }

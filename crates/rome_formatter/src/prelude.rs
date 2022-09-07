@@ -4,7 +4,7 @@ pub use crate::format_extensions::{FormatOptional as _, MemoizeFormat, Memoized}
 pub use crate::formatter::Formatter;
 pub use crate::printer::PrinterOptions;
 pub use crate::token::{
-    format_dangling_trivia, format_leading_comments, format_only_if_breaks, format_removed,
+    format_dangling_comments, format_leading_comments, format_only_if_breaks, format_removed,
     format_replaced, format_trailing_comments, format_trimmed_token,
 };
 

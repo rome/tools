@@ -3,7 +3,7 @@ use crate::js::expressions::template_element::{AnyTemplateElement, TemplateEleme
 
 use crate::context::TabWidth;
 use crate::prelude::*;
-use rome_formatter::{Comments, CstFormatContext};
+use rome_formatter::Comments;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsAnyTemplateElement, JsLanguage,
     JsTemplateElementList, TsAnyTemplateElement, TsTemplateElementList,

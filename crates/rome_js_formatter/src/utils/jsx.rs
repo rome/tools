@@ -156,10 +156,10 @@ pub(crate) fn is_whitespace_jsx_expression(
                 literal.value_token(),
                 child.r_curly_token(),
             ) {
-                (Ok(l_curly_token), Ok(value_token), Ok(r_curly_token)) => {
+                (Ok(_), Ok(value_token), Ok(r_curly_token)) => {
                     let is_empty = matches!(value_token.text_trimmed(), "\" \"" | "' '");
 
-                    let has_comments = comments.has_dangling_trivia(&r_curly_token)
+                    let has_comments = comments.has_skipped(&r_curly_token)
                         || comments.has_comments(literal.syntax());
 
                     is_empty && !has_comments

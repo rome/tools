@@ -30,12 +30,12 @@ impl FormatNodeRule<JsForStatement> for FormatJsForStatement {
         // Move dangling trivia between the `for /* this */ (` to the top of the `for` and
         // add a line break after.
         let comments = f.context().comments();
-        let dangling_trivia = comments.dangling_trivia(&l_paren_token);
-        if !dangling_trivia.is_empty() && dangling_trivia.iter().all(|trivia| trivia.is_comment()) {
+        let dangling_comments = comments.dangling_comments(node.syntax());
+        if !dangling_comments.is_empty() {
             write!(
                 f,
                 [
-                    format_dangling_trivia(&l_paren_token),
+                    format_dangling_comments(node.syntax()),
                     soft_line_break_or_space()
                 ]
             )?;

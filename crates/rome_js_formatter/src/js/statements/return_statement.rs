@@ -35,17 +35,19 @@ impl Format<JsFormatContext> for JsAnyStatementWithArgument {
             }
 
             let comments = f.context().comments();
-            let has_dangling_comments = comments.has_dangling_comments(&semicolon);
+            let has_dangling_comments = comments.has_dangling_comments(self.syntax());
 
             let is_last_comment_line = has_dangling_comments
                 && comments
-                    .dangling_comments(&semicolon)
+                    .dangling_comments(self.syntax())
+                    .iter()
                     .chain(comments.trailing_comments(self.syntax()))
                     .last()
                     .map_or(false, |comment| comment.kind().is_line());
 
             // We'll format it after the semicolon
-            f.state_mut().mark_token_trivia_formatted(&semicolon);
+            f.state_mut()
+                .mark_dangling_comments_formatted(&self.syntax());
 
             if is_last_comment_line {
                 write!(f, [semicolon.format()])?;
@@ -56,7 +58,7 @@ impl Format<JsFormatContext> for JsAnyStatementWithArgument {
                     f,
                     [
                         space(),
-                        format_dangling_trivia(&semicolon).ignore_formatted_check()
+                        format_dangling_comments(&self.syntax()).ignore_formatted_check()
                     ]
                 )?;
             }

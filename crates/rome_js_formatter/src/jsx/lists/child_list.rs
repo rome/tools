@@ -215,7 +215,6 @@ impl FormatJsxChildList {
     /// [JsxText] and [JsxExpressionChild] and instead, formats the nodes itself.
     #[cfg(debug_assertions)]
     fn disarm_debug_assertions(&self, node: &JsxChildList, f: &mut JsFormatter) {
-        use rome_formatter::CstFormatContext;
         use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression};
         use JsxAnyChild::*;
 
