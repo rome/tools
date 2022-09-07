@@ -1,0 +1,31 @@
+---json
+{
+    "permalink": "feed.xml",
+    "eleventyExcludeFromCollections": true,
+    "metadata": {
+        "title": "Rome's blog posts",
+        "language": "en",
+        "url": "https://rome.tools/"
+    }
+}
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:base="{{ metadata.url }}">
+    <title>{{ metadata.title }}</title>
+    <link href="{{ permalink }}" rel="self"/>
+    <link href="{{ metadata.url }}"/>
+    <updated>{{ collections.posts | getNewestCollectionItemDate | dateToRfc3339 }}</updated>
+    <id>{{ metadata.url }}</id>
+    {% for post in collections.post reversed %}
+        <author>
+            <name>{{ post.data.author_name }}</name>
+        </author>
+        <entry>
+            <title>{{ post.data.title }}</title>
+            <link href="{{ post.data.permalink | withAbsoluteUrl }}"/>
+            <updated>{{ post.date | dateToRfc3339 }}</updated>
+            <id>{{ post.url | url }}</id>
+            <content xml:lang="{{ metadata.language }}" type="html">{{ post.data.description }}</content>
+        </entry>
+    {%- endfor %}
+</feed>
