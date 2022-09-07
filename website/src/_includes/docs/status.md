@@ -3,8 +3,6 @@
 
 **Rome is being rewritten in Rust, so it doesn't support all the intended features**.
 
-Rome is currently only supported as a [formatter](#formatter) for JavaScript and TypeScript.** 
-
 We plan on covering the following areas:
 
 - Bundling
@@ -16,6 +14,11 @@ We plan on covering the following areas:
 - Testing
 - Type Checking
 - ... and more
+
+### Areas available
+
+- Formatter, check the [formatter section](#formatter)
+- Linter, check the [linter section](#linter)
 
 ### Language Support
 
