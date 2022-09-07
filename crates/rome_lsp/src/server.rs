@@ -189,6 +189,10 @@ macro_rules! workspace_method {
                 });
 
                 result.map(move |result| {
+                    // The type of `result` is `Result<Result<R, RomeError>, JoinError>`,
+                    // where the inner result is the return value of `$method` while the
+                    // outer one is added by `spawn_blocking` to catch panics or
+                    // cancellations of the task
                     match result {
                         Ok(Ok(result)) => Ok(result),
                         Ok(Err(err)) => Err(into_lsp_error(err)),
