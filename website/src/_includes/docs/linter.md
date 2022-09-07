@@ -79,3 +79,19 @@ declare const Foo: number;
 // rome-ignore lint(js/noUnusedVariables): reason
 declare const Bar: number;
 ```
+
+
+### How fixes work
+
+Each rule may or may not provide fixes for your code. These fixes have different natures.
+
+It's important to understand the nature of these fixes, and be aware of them.
+
+Rome rules will emit two types of fixes:
+- safe fixes
+- suggested fixes
+
+Safe fixes can be applied safely, without the worry of changing the semantics of your code. 
+
+Suggested fixes are changes suggested to the user, but they should not be accepted blindly. The reason
+why these category of fixes is not safe, is mostly due to the nature of JavaScript and its side effects.
