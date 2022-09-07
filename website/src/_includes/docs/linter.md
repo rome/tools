@@ -45,7 +45,7 @@ At the moment only a few rules are implemented as the linting / analysis infrast
 
 **See the full [list of rules](/docs/lint/rules).**
 
-All rules are enabled by default, and cannot be disabled. [Suppressions](#suppressions) can be used to hide specific lint errors.
+All rules are enabled by default, and cannot be disabled. [Suppression](#lint-suppression) can be used to hide specific lint errors.
 
 
 [VS Code extension]: https://marketplace.visualstudio.com/items?itemName=rome.rome
