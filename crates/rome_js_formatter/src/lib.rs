@@ -465,7 +465,7 @@ where
     }
 
     fn prints_comments(&self, _item: &N) -> bool {
-        return false;
+        false
     }
 }
 
@@ -609,7 +609,7 @@ mod tests {
     use rome_js_syntax::SourceType;
     use rome_rowan::{TextRange, TextSize};
 
-    use crate::check_reformat::{check_reformat, CheckReformatParams};
+    
 
     #[test]
     fn test_range_formatting() {
@@ -770,7 +770,7 @@ fnString = // Comment0
         let tree = parse(src, 0, syntax);
         let options = JsFormatOptions::new(syntax);
 
-        let result = format_node(options.clone(), &tree.syntax())
+        let result = format_node(options, &tree.syntax())
             .unwrap()
             .print();
         // check_reformat(CheckReformatParams {

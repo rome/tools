@@ -77,7 +77,7 @@ impl FormatNodeRule<TsInterfaceDeclaration> for FormatTsInterfaceDeclaration {
         };
 
         let last_token = last_node.last_token();
-        let mut has_trailing_comments = false;
+        let has_trailing_comments = false;
 
         // FIXME
         // if let Some(last_token) = &last_token {
@@ -117,7 +117,7 @@ impl FormatNodeRule<TsInterfaceDeclaration> for FormatTsInterfaceDeclaration {
                     &format_args![
                         format_with(|f| {
                             // TODO: See PR Write the manual handled comments
-                            if let Some(last_token) = &last_token {
+                            if let Some(_last_token) = &last_token {
                                 if has_trailing_comments {
                                     write!(f, [hard_line_break()])?;
                                 }

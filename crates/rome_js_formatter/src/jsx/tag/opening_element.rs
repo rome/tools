@@ -1,8 +1,8 @@
 use crate::prelude::*;
 
-use rome_formatter::{write, Comments, CstFormatContext};
+use rome_formatter::{write, CstFormatContext};
 use rome_js_syntax::{
-    JsLanguage, JsSyntaxToken, JsxAnyAttribute, JsxAnyAttributeValue, JsxAnyElementName,
+    JsSyntaxToken, JsxAnyAttribute, JsxAnyAttributeValue, JsxAnyElementName,
     JsxAttributeList, JsxOpeningElement, JsxSelfClosingElement, JsxString, TsTypeArguments,
 };
 use rome_rowan::{declare_node_union, SyntaxResult};
@@ -150,10 +150,7 @@ impl JsxAnyOpeningElement {
         matches!(self, JsxAnyOpeningElement::JsxSelfClosingElement(_))
     }
 
-    fn compute_layout(
-        &self,
-        comments: &Comments<JsLanguage>,
-    ) -> SyntaxResult<OpeningElementLayout> {
+    fn compute_layout(&self, comments: &JsComments) -> SyntaxResult<OpeningElementLayout> {
         let attributes = self.attributes();
         let name = self.name()?;
 

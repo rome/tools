@@ -1,7 +1,7 @@
 use crate::prelude::*;
-use rome_formatter::{write, Buffer, Comments, CstFormatContext};
+use rome_formatter::{write, Buffer, CstFormatContext};
 use rome_js_syntax::{JsAnyStatement, JsEmptyStatement};
-use rome_js_syntax::{JsBlockStatement, JsLanguage};
+use rome_js_syntax::{JsBlockStatement};
 
 use rome_js_syntax::JsBlockStatementFields;
 use rome_js_syntax::JsSyntaxKind;
@@ -46,7 +46,7 @@ impl FormatNodeRule<JsBlockStatement> for FormatJsBlockStatement {
     }
 }
 
-fn is_empty_block(block: &JsBlockStatement, comments: &Comments<JsLanguage>) -> bool {
+fn is_empty_block(block: &JsBlockStatement, comments: &JsComments) -> bool {
     // add extra branch to avoid formatting the same code twice and generating different code,
     // here is an example:
     // ```js

@@ -5,9 +5,9 @@ use crate::utils::jsx::{
 };
 use crate::JsFormatter;
 use rome_formatter::{
-    format_args, write, Comments, CstFormatContext, FormatRuleWithOptions, VecBuffer,
+    format_args, write, CstFormatContext, FormatRuleWithOptions, VecBuffer,
 };
-use rome_js_syntax::{JsLanguage, JsxAnyChild, JsxChildList};
+use rome_js_syntax::{JsxAnyChild, JsxChildList};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsxChildList {
@@ -278,7 +278,7 @@ impl FormatJsxChildList {
     }
 
     /// Computes additional meta data about the children by iterating once over all children.
-    fn children_meta(&self, list: &JsxChildList, comments: &Comments<JsLanguage>) -> ChildrenMeta {
+    fn children_meta(&self, list: &JsxChildList, comments: &JsComments) -> ChildrenMeta {
         let mut has_expression = false;
 
         let mut meta = ChildrenMeta::default();

@@ -1,10 +1,10 @@
 use crate::prelude::*;
 use crate::utils::{is_call_like_expression, write_arguments_multi_line};
-use rome_formatter::{format_args, write, Comments, CstFormatContext};
+use rome_formatter::{format_args, write, CstFormatContext};
 use rome_js_syntax::{
     JsAnyCallArgument, JsAnyExpression, JsAnyFunctionBody, JsAnyLiteralExpression, JsAnyName,
     JsAnyStatement, JsArrayExpression, JsArrowFunctionExpression, JsCallArgumentList,
-    JsCallArguments, JsCallArgumentsFields, JsCallExpression, JsLanguage, TsReferenceType,
+    JsCallArguments, JsCallArgumentsFields, JsCallExpression, TsReferenceType,
 };
 use rome_rowan::{AstSeparatedList, SyntaxResult, SyntaxTokenText};
 
@@ -218,7 +218,7 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
 /// Checks if the the first argument requires grouping
 fn should_group_first_argument(
     list: &JsCallArgumentList,
-    comments: &Comments<JsLanguage>,
+    comments: &JsComments,
 ) -> SyntaxResult<bool> {
     if list.len() != 2 {
         return Ok(false);
@@ -261,7 +261,7 @@ fn should_group_first_argument(
 /// Checks if the last group requires grouping
 fn should_group_last_argument(
     list: &JsCallArgumentList,
-    comments: &Comments<JsLanguage>,
+    comments: &JsComments,
 ) -> SyntaxResult<bool> {
     let list_len = list.len();
     let mut iter = list.iter();
@@ -306,7 +306,7 @@ fn should_group_last_argument(
 fn could_group_expression_argument(
     argument: &JsAnyExpression,
     is_arrow_recursion: bool,
-    comments: &Comments<JsLanguage>,
+    comments: &JsComments,
 ) -> SyntaxResult<bool> {
     let result = match argument {
         JsAnyExpression::JsObjectExpression(object_expression) => {
@@ -415,7 +415,7 @@ fn could_group_expression_argument(
 fn is_react_hook_with_deps_array(
     first_argument: &JsAnyCallArgument,
     second_argument: &JsAnyCallArgument,
-    comments: &Comments<JsLanguage>,
+    comments: &JsComments,
 ) -> SyntaxResult<bool> {
     if comments.has_comments(first_argument.syntax())
         || comments.has_comments(second_argument.syntax())

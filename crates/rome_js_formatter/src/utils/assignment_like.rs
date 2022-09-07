@@ -3,13 +3,13 @@ use crate::prelude::*;
 use crate::utils::member_chain::is_member_call_chain;
 use crate::utils::object::write_member_name;
 use crate::utils::JsAnyBinaryLikeExpression;
-use rome_formatter::{format_args, write, Comments, CstFormatContext, FormatOptions, VecBuffer};
+use rome_formatter::{format_args, write, CstFormatContext, FormatOptions, VecBuffer};
 use rome_js_syntax::JsAnyLiteralExpression;
 use rome_js_syntax::{
     JsAnyAssignmentPattern, JsAnyBindingPattern, JsAnyCallArgument, JsAnyClassMemberName,
     JsAnyExpression, JsAnyFunctionBody, JsAnyObjectAssignmentPatternMember,
     JsAnyObjectBindingPatternMember, JsAnyObjectMemberName, JsAnyTemplateElement,
-    JsAssignmentExpression, JsInitializerClause, JsLanguage, JsLiteralMemberName,
+    JsAssignmentExpression, JsInitializerClause, JsLiteralMemberName,
     JsObjectAssignmentPattern, JsObjectAssignmentPatternProperty, JsObjectBindingPattern,
     JsPropertyClassMember, JsPropertyClassMemberFields, JsPropertyObjectMember, JsSyntaxKind,
     JsVariableDeclarator, TsAnyVariableAnnotation, TsIdentifierBinding,
@@ -819,7 +819,7 @@ impl JsAnyAssignmentLike {
     fn should_break_after_operator(
         &self,
         right: &RightAssignmentLike,
-        comments: &Comments<JsLanguage>,
+        comments: &JsComments,
     ) -> SyntaxResult<bool> {
         let result = if let Some(expression) = right.as_expression() {
             should_break_after_operator(&expression, comments)?
@@ -834,7 +834,7 @@ impl JsAnyAssignmentLike {
 /// Checks if the function is entitled to be printed with layout [AssignmentLikeLayout::BreakAfterOperator]
 pub(crate) fn should_break_after_operator(
     right: &JsAnyExpression,
-    comments: &Comments<JsLanguage>,
+    comments: &JsComments,
 ) -> SyntaxResult<bool> {
     if comments.has_leading_own_line_comment(right.syntax()) {
         return Ok(true);
@@ -1074,7 +1074,7 @@ fn is_poorly_breakable_member_or_call_chain(
 fn is_short_argument(
     argument: JsAnyCallArgument,
     threshold: u16,
-    comments: &Comments<JsLanguage>,
+    comments: &JsComments,
 ) -> SyntaxResult<bool> {
     if comments.has_comments(argument.syntax()) {
         return Ok(false);

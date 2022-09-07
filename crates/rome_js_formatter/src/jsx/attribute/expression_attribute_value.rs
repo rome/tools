@@ -1,8 +1,8 @@
 use crate::prelude::*;
 
-use rome_formatter::{format_args, write, Comments, CstFormatContext};
+use rome_formatter::{format_args, write, CstFormatContext};
 use rome_js_syntax::{
-    JsAnyExpression, JsLanguage, JsxAnyTag, JsxExpressionAttributeValue,
+    JsAnyExpression, JsxAnyTag, JsxExpressionAttributeValue,
     JsxExpressionAttributeValueFields,
 };
 
@@ -77,7 +77,7 @@ impl FormatNodeRule<JsxExpressionAttributeValue> for FormatJsxExpressionAttribut
 /// ```
 pub(crate) fn should_inline_jsx_expression(
     expression: &JsAnyExpression,
-    comments: &Comments<JsLanguage>,
+    comments: &JsComments,
 ) -> bool {
     use JsAnyExpression::*;
 

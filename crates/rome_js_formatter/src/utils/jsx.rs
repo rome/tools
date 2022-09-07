@@ -1,8 +1,8 @@
 use crate::context::QuoteStyle;
 use crate::prelude::*;
-use rome_formatter::{format_args, write, Comments};
+use rome_formatter::{format_args, write};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsComputedMemberExpression, JsLanguage,
+    JsAnyExpression, JsAnyLiteralExpression, JsComputedMemberExpression,
     JsStaticMemberExpression, JsSyntaxKind, JsxAnyChild, JsxExpressionChild, JsxTagExpression,
     TextLen,
 };
@@ -145,7 +145,7 @@ impl Format<JsFormatContext> for JsxRawSpace {
 
 pub(crate) fn is_whitespace_jsx_expression(
     child: &JsxExpressionChild,
-    comments: &Comments<JsLanguage>,
+    comments: &JsComments,
 ) -> bool {
     match child.expression() {
         Some(JsAnyExpression::JsAnyLiteralExpression(
@@ -173,7 +173,7 @@ pub(crate) fn is_whitespace_jsx_expression(
 
 pub(crate) fn jsx_split_children<I>(
     children: I,
-    comments: &Comments<JsLanguage>,
+    comments: &JsComments,
 ) -> SyntaxResult<Vec<JsxChild>>
 where
     I: IntoIterator<Item = JsxAnyChild>,

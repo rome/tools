@@ -1,9 +1,9 @@
 use crate::prelude::*;
-use rome_formatter::{write, Comments, CstFormatContext, FormatRuleWithOptions, GroupId};
+use rome_formatter::{write, CstFormatContext, FormatRuleWithOptions, GroupId};
 
 use crate::utils::array::write_array_node;
 
-use rome_js_syntax::{JsArrayElementList, JsLanguage};
+use rome_js_syntax::{JsArrayElementList};
 use rome_rowan::{AstNode, AstSeparatedList};
 
 #[derive(Debug, Clone, Default)]
@@ -89,7 +89,7 @@ enum ArrayLayout {
 /// The underlying logic only allows lists of literal expressions
 /// with 10 or less characters, potentially wrapped in a "short"
 /// unary expression (+, -, ~ or !)
-fn can_print_fill(list: &JsArrayElementList, comments: &Comments<JsLanguage>) -> bool {
+fn can_print_fill(list: &JsArrayElementList, comments: &JsComments) -> bool {
     use rome_js_syntax::JsAnyArrayElement::*;
     use rome_js_syntax::JsAnyExpression::*;
     use rome_js_syntax::JsUnaryOperator::*;

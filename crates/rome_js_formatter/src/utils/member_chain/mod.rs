@@ -112,8 +112,8 @@ use crate::utils::member_chain::groups::{
     MemberChainGroup, MemberChainGroups, MemberChainGroupsBuilder,
 };
 use crate::utils::member_chain::simple_argument::SimpleArgument;
-use rome_formatter::{format_args, write, Buffer, Comments, CstFormatContext};
-use rome_js_syntax::{JsAnyExpression, JsCallExpression, JsExpressionStatement, JsLanguage};
+use rome_formatter::{format_args, write, Buffer, CstFormatContext};
+use rome_js_syntax::{JsAnyExpression, JsCallExpression, JsExpressionStatement};
 use rome_rowan::{AstNode, SyntaxResult};
 
 #[derive(Debug, Clone)]
@@ -125,10 +125,7 @@ pub(crate) struct MemberChain {
 
 impl MemberChain {
     /// It tells if the groups should be break on multiple lines
-    pub(crate) fn groups_should_break(
-        &self,
-        comments: &Comments<JsLanguage>,
-    ) -> FormatResult<bool> {
+    pub(crate) fn groups_should_break(&self, comments: &JsComments) -> FormatResult<bool> {
         // Do not allow the group to break if it only contains a single call expression
         if self.calls_count <= 1 {
             return Ok(false);
@@ -379,7 +376,7 @@ fn compute_groups(
 fn flatten_member_chain(
     queue: &mut Vec<ChainMember>,
     node: JsAnyExpression,
-    comments: &Comments<JsLanguage>,
+    comments: &JsComments,
     root: bool,
 ) -> SyntaxResult<ChainMember> {
     use JsAnyExpression::*;

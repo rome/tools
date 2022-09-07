@@ -53,8 +53,7 @@ pub use builders::{
     soft_line_break_or_space, soft_line_indent_or_space, space, text, BestFitting,
 };
 pub use comments::{
-    CommentKind, CommentPosition, CommentStyle, Comments, DanglingTrivia, DecoratedComment,
-    SourceComment,
+    CommentKind, CommentPlacement, CommentStyle, Comments, DecoratedComment, SourceComment,
 };
 pub use format_element::{normalize_newlines, FormatElement, Text, Verbatim, LINE_TERMINATORS};
 pub use group_id::GroupId;

@@ -2,8 +2,8 @@ use crate::context::TabWidth;
 use crate::parentheses::NeedsParentheses;
 use crate::prelude::*;
 use crate::utils::member_chain::chain_member::ChainMember;
-use rome_formatter::{write, Comments};
-use rome_js_syntax::{JsCallExpression, JsLanguage};
+use rome_formatter::{write};
+use rome_js_syntax::{JsCallExpression};
 use rome_rowan::SyntaxResult;
 use std::mem;
 
@@ -97,7 +97,7 @@ impl MemberChainGroups {
     pub fn should_merge(
         &self,
         head_group: &MemberChainGroup,
-        comments: &Comments<JsLanguage>,
+        comments: &JsComments,
     ) -> SyntaxResult<bool> {
         Ok(!self.groups.len() >= 1
             && self.should_not_wrap(head_group)?
@@ -108,7 +108,7 @@ impl MemberChainGroups {
     }
 
     /// Checks if the groups contain comments.
-    pub fn has_comments(&self, comments: &Comments<JsLanguage>) -> SyntaxResult<bool> {
+    pub fn has_comments(&self, comments: &JsComments) -> SyntaxResult<bool> {
         let mut members = self.groups.iter().flat_map(|item| item.members.iter());
 
         let has_comments = members.any(|item| {
@@ -191,7 +191,7 @@ impl MemberChainGroups {
     pub(crate) fn should_merge_with_first_group(
         &mut self,
         head_group: &MemberChainGroup,
-        comments: &Comments<JsLanguage>,
+        comments: &JsComments,
     ) -> Option<Vec<MemberChainGroup>> {
         if self.should_merge(head_group, comments).unwrap_or(false) {
             let mut new_groups = self.groups.split_off(1);
@@ -208,10 +208,7 @@ impl MemberChainGroups {
     /// Here we check if the length of the groups exceeds the cutoff or there are comments
     /// This function is the inverse of the prettier function
     /// [Prettier applies]: https://github.com/prettier/prettier/blob/a043ac0d733c4d53f980aa73807a63fc914f23bd/src/language-js/print/member-chain.js#L342
-    pub(crate) fn is_member_call_chain(
-        &self,
-        comments: &Comments<JsLanguage>,
-    ) -> SyntaxResult<bool> {
+    pub(crate) fn is_member_call_chain(&self, comments: &JsComments) -> SyntaxResult<bool> {
         Ok(self.groups.len() > self.cutoff as usize || self.has_comments(comments)?)
     }
 
@@ -244,7 +241,7 @@ impl MemberChainGroup {
         self.members.extend(group)
     }
 
-    pub(super) fn has_comments(&self, comments: &Comments<JsLanguage>) -> bool {
+    pub(super) fn has_comments(&self, comments: &JsComments) -> bool {
         self.members
             .iter()
             .any(|item| comments.has_trailing_comments(item.syntax()))

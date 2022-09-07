@@ -3,7 +3,7 @@ use crate::js::expressions::template_element::{AnyTemplateElement, TemplateEleme
 
 use crate::context::TabWidth;
 use crate::prelude::*;
-use rome_formatter::Comments;
+
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsAnyTemplateElement, JsLanguage,
     JsTemplateElementList, TsAnyTemplateElement, TsTemplateElementList,
@@ -88,7 +88,7 @@ impl AnyTemplateElementList {
     /// Simple expressions are:
     /// * Identifiers: `this`, `a`
     /// * Members: `a.b`, `a[b]`, `a.b[c].d`, `a.b[5]`, `a.b["test"]`
-    fn is_simple(&self, comments: &Comments<JsLanguage>) -> bool {
+    fn is_simple(&self, comments: &JsComments) -> bool {
         match self {
             AnyTemplateElementList::JsTemplateElementList(list) => {
                 if list.is_empty() {
@@ -147,7 +147,7 @@ declare_node_union! {
 
 fn is_simple_member_expression(
     expression: JsAnyExpression,
-    comments: &Comments<JsLanguage>,
+    comments: &JsComments,
 ) -> SyntaxResult<bool> {
     let mut current = expression;
 

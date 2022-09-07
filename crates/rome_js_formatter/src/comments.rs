@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use crate::utils::JsAnyBinaryLikeExpression;
-use rome_formatter::{write, CommentPosition, DecoratedComment};
+use rome_formatter::{write, CommentPlacement, Comments, DecoratedComment};
 use rome_formatter::{CommentKind, CommentStyle, SourceComment};
 use rome_js_syntax::suppression::{parse_suppression_comment, SuppressionCategory};
 use rome_js_syntax::{
@@ -13,6 +13,8 @@ use rome_rowan::{
     declare_node_union, match_ast, Language, SyntaxResult, SyntaxSlot, SyntaxTriviaPieceComments,
     TextLen,
 };
+
+pub type JsComments = Comments<JsLanguage>;
 
 #[derive(Default)]
 pub struct FormatJsLeadingComment;
@@ -150,14 +152,14 @@ impl CommentStyle for JsCommentStyle {
         }
     }
 
-    fn position_comment(
+    fn place_comment(
         comment: DecoratedComment<Self::Language>,
-    ) -> CommentPosition<Self::Language> {
+    ) -> CommentPlacement<Self::Language> {
         let enclosing_node = comment.enclosing_node();
 
         if let Some(following_node) = comment.following_node() {
             if comment.is_trailing_token_trivia() && is_type_comment(comment.piece()) {
-                return CommentPosition::Leading {
+                return CommentPlacement::Leading {
                     node: following_node.clone(),
                     comment,
                 };
@@ -182,9 +184,9 @@ impl CommentStyle for JsCommentStyle {
                     return match first_inner {
                         // Attach any leading comments to the first statement or directive in a module or script to prevent
                         // that a rome-ignore comment on the first statement ignores the whole file.
-                        Some(SyntaxSlot::Node(node)) => CommentPosition::Leading { node, comment },
+                        Some(SyntaxSlot::Node(node)) => CommentPlacement::Leading { node, comment },
                         Some(SyntaxSlot::Token(_)) | Some(SyntaxSlot::Empty) | None => {
-                            CommentPosition::Default(comment)
+                            CommentPlacement::Default(comment)
                         }
                     };
                 }
@@ -210,16 +212,16 @@ impl CommentStyle for JsCommentStyle {
                     if let (Ok(_), Ok(_)) = (block.l_curly_token(), block.r_curly_token()) {
                         return match block.statements().first() {
                             Some(JsAnyStatement::JsEmptyStatement(_)) => {
-                                CommentPosition::Dangling {
+                                CommentPlacement::Dangling {
                                     node: block.into_syntax(),
                                     comment,
                                 }
                             }
-                            Some(first_statement) => CommentPosition::Leading {
+                            Some(first_statement) => CommentPlacement::Leading {
                                 node: first_statement.into_syntax(),
                                 comment,
                             },
-                            _ => CommentPosition::Dangling {
+                            _ => CommentPlacement::Dangling {
                                 node: block.into_syntax(),
                                 comment,
                             },
@@ -245,12 +247,12 @@ impl CommentStyle for JsCommentStyle {
                             .first()
                             .map(|node| node.into_syntax());
                         return if let Some(first_node) = first_directive.or(first_statement) {
-                            CommentPosition::Leading {
+                            CommentPlacement::Leading {
                                 node: first_node,
                                 comment,
                             }
                         } else {
-                            CommentPosition::Dangling {
+                            CommentPlacement::Dangling {
                                 node: function_body.into_syntax(),
                                 comment,
                             }
@@ -286,18 +288,16 @@ impl CommentStyle for JsCommentStyle {
 
                 if comment.is_trailing_token_trivia() && comment.lines_after() > 0 {
                     if let Ok(left) = binary_like.left() {
-                        return CommentPosition::Trailing {
+                        return CommentPlacement::Trailing {
                             node: left.into_syntax(),
                             comment,
                         };
                     }
-                } else {
-                    if let Ok(right) = binary_like.right() {
-                        return CommentPosition::Leading {
-                            node: right.into_syntax(),
-                            comment,
-                        };
-                    }
+                } else if let Ok(right) = binary_like.right() {
+                    return CommentPlacement::Leading {
+                        node: right.into_syntax(),
+                        comment,
+                    };
                 }
             }
 
@@ -320,7 +320,7 @@ impl CommentStyle for JsCommentStyle {
                     && (semicolon.is_none()
                         || Some(comment.following_token()) == semicolon.as_ref())
                 {
-                    return CommentPosition::Trailing {
+                    return CommentPlacement::Trailing {
                         node: enclosing_node,
                         comment,
                     };
@@ -328,7 +328,7 @@ impl CommentStyle for JsCommentStyle {
             }
 
             JsSyntaxKind::JS_FOR_IN_STATEMENT | JsSyntaxKind::JS_FOR_OF_STATEMENT => {
-                return CommentPosition::Leading {
+                return CommentPlacement::Leading {
                     node: enclosing_node,
                     comment,
                 }
@@ -343,7 +343,7 @@ impl CommentStyle for JsCommentStyle {
             // Handles array hole comments. Array holes have no token so all comments
             // become trailing comments by default. Override it that all comments are elading comments.
             if JsArrayHole::can_cast(preceding_node.kind()) {
-                return CommentPosition::Leading {
+                return CommentPlacement::Leading {
                     node: preceding_node.clone(),
                     comment,
                 };
@@ -365,17 +365,17 @@ impl CommentStyle for JsCommentStyle {
                 if !comment.is_trailing_token_trivia()
                     && JsAnyArrayLike::can_cast(enclosing_node.kind())
                 {
-                    let array = JsAnyArrayLike::unwrap_cast(enclosing_node.clone());
+                    let array = JsAnyArrayLike::unwrap_cast(enclosing_node);
 
                     if array.r_brack_token().as_ref() == Ok(comment.following_token()) {
                         if let Some(Ok(last_element)) = array.last_element() {
                             if last_element.kind() == JsSyntaxKind::JS_ARRAY_HOLE {
-                                return CommentPosition::Leading {
+                                return CommentPlacement::Leading {
                                     node: last_element,
                                     comment,
                                 };
                             } else {
-                                return CommentPosition::Trailing {
+                                return CommentPlacement::Trailing {
                                     node: last_element,
                                     comment,
                                 };
@@ -415,13 +415,11 @@ impl CommentStyle for JsCommentStyle {
                 // // test
                 // ```
                 if let Some(arguments) = JsCallArguments::cast_ref(&enclosing_node) {
-                    if arguments.r_paren_token().as_ref() == Ok(comment.following_token()) {
-                        if arguments.args().is_empty() && comment.kind().is_line() {
-                            return CommentPosition::Trailing {
-                                node: arguments.into_syntax(),
-                                comment,
-                            };
-                        }
+                    if arguments.r_paren_token().as_ref() == Ok(comment.following_token()) && arguments.args().is_empty() && comment.kind().is_line() {
+                        return CommentPlacement::Trailing {
+                            node: arguments.into_syntax(),
+                            comment,
+                        };
                     }
                 }
                 // Makes the last comment in a non-empty call arguments list a trailing comment of the
@@ -431,7 +429,7 @@ impl CommentStyle for JsCommentStyle {
                 // ```
                 else if let Some(arguments_list) = JsCallArgumentList::cast_ref(&enclosing_node) {
                     if let Some(Ok(last_argument)) = arguments_list.last() {
-                        return CommentPosition::Trailing {
+                        return CommentPlacement::Trailing {
                             node: last_argument.into_syntax(),
                             comment,
                         };
@@ -443,7 +441,7 @@ impl CommentStyle for JsCommentStyle {
             }
         }
 
-        CommentPosition::Default(comment)
+        CommentPlacement::Default(comment)
     }
 }
 

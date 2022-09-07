@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::{write, Comments, CstFormatContext};
+use rome_formatter::{write, CstFormatContext};
 
 use crate::js::expressions::call_arguments::is_test_call_expression;
 use crate::js::lists::parameter_list::{
@@ -8,8 +8,7 @@ use crate::js::lists::parameter_list::{
 
 use crate::builders::format_delimited;
 use rome_js_syntax::{
-    JsAnyConstructorParameter, JsAnyFormalParameter, JsCallExpression, JsConstructorParameters,
-    JsLanguage, JsParameters, JsSyntaxKind, JsSyntaxToken, TsType,
+    JsAnyConstructorParameter, JsAnyFormalParameter, JsCallExpression, JsConstructorParameters, JsParameters, JsSyntaxKind, JsSyntaxToken, TsType,
 };
 use rome_rowan::{declare_node_union, SyntaxResult};
 
@@ -184,7 +183,7 @@ pub enum ParameterLayout {
 
 fn should_hug_function_parameters(
     parameters: &FormatJsAnyParameters,
-    comments: &Comments<JsLanguage>,
+    comments: &JsComments,
 ) -> FormatResult<bool> {
     use rome_js_syntax::{
         JsAnyBinding::*, JsAnyBindingPattern::*, JsAnyExpression::*, JsAnyFormalParameter::*,

@@ -25,7 +25,7 @@ impl FormatNodeRule<JsBreakStatement> for FormatJsBreakStatement {
 
                     // FIXME best place to add dangling comments
                     if let Some(label) = &label_token {
-                        if f.context().comments().has_dangling_comments(&node.syntax()) {
+                        if f.context().comments().has_dangling_comments(node.syntax()) {
                             write!(f, [space(), format_dangling_comments(node.syntax())])?;
                         }
 

@@ -1,11 +1,11 @@
 use crate::prelude::*;
 use crate::utils::{FormatWithSemicolon, JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression};
 
-use rome_formatter::{format_args, write, Comments, CstFormatContext};
+use rome_formatter::{format_args, write, CstFormatContext};
 
 use crate::parentheses::get_expression_left_side;
 use rome_js_syntax::{
-    JsAnyExpression, JsLanguage, JsReturnStatement, JsSequenceExpression, JsSyntaxToken,
+    JsAnyExpression, JsReturnStatement, JsSequenceExpression, JsSyntaxToken,
     JsThrowStatement,
 };
 use rome_rowan::{declare_node_union, SyntaxResult};
@@ -47,7 +47,7 @@ impl Format<JsFormatContext> for JsAnyStatementWithArgument {
 
             // We'll format it after the semicolon
             f.state_mut()
-                .mark_dangling_comments_formatted(&self.syntax());
+                .mark_dangling_comments_formatted(self.syntax());
 
             if is_last_comment_line {
                 write!(f, [semicolon.format()])?;
@@ -58,7 +58,7 @@ impl Format<JsFormatContext> for JsAnyStatementWithArgument {
                     f,
                     [
                         space(),
-                        format_dangling_comments(&self.syntax()).ignore_formatted_check()
+                        format_dangling_comments(self.syntax()).ignore_formatted_check()
                     ]
                 )?;
             }
@@ -74,7 +74,7 @@ impl Format<JsFormatContext> for JsAnyStatementWithArgument {
                 [FormatWithSemicolon::new(
                     &format_with(|f| {
                         if let Some(argument) = &argument {
-                            write!(f, [space(), FormatReturnOrThrowArgument(&argument)])?;
+                            write!(f, [space(), FormatReturnOrThrowArgument(argument)])?;
                         }
 
                         Ok(())
@@ -138,10 +138,7 @@ impl Format<JsFormatContext> for FormatReturnOrThrowArgument<'_> {
 ///
 /// Traversing the left nodes is necessary in case the first node is parenthesized because
 /// parentheses will be removed (and be re-added by the return statement, but only if the argument breaks)
-fn has_argument_leading_comments(
-    argument: &JsAnyExpression,
-    comments: &Comments<JsLanguage>,
-) -> bool {
+fn has_argument_leading_comments(argument: &JsAnyExpression, comments: &JsComments) -> bool {
     let mut current: Option<JsAnyBinaryLikeLeftExpression> = Some(argument.clone().into());
 
     while let Some(expression) = current {

@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write, Comments, CstFormatContext, FormatRuleWithOptions};
+use rome_formatter::{format_args, write, CstFormatContext, FormatRuleWithOptions};
 use std::iter::once;
 
 use crate::parentheses::{
@@ -11,7 +11,7 @@ use crate::utils::{
 };
 use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyBindingPattern, JsAnyExpression, JsAnyFormalParameter,
-    JsAnyFunctionBody, JsAnyParameter, JsAnyTemplateElement, JsArrowFunctionExpression, JsLanguage,
+    JsAnyFunctionBody, JsAnyParameter, JsAnyTemplateElement, JsArrowFunctionExpression,
     JsSyntaxKind, JsSyntaxNode, JsTemplate,
 };
 use rome_rowan::SyntaxResult;
@@ -428,7 +428,7 @@ impl ArrowFunctionLayout {
     /// of the different layouts.
     fn for_arrow(
         arrow: JsArrowFunctionExpression,
-        comments: &Comments<JsLanguage>,
+        comments: &JsComments,
         assignment_layout: Option<AssignmentLikeLayout>,
     ) -> SyntaxResult<ArrowFunctionLayout> {
         let mut head = None;

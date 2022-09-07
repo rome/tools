@@ -1,14 +1,14 @@
 use crate::builders::format_delimited;
 use crate::prelude::*;
-use rome_formatter::{write, Comments};
-use rome_js_syntax::{JsAnyClass, JsLanguage};
+use rome_formatter::{write};
+use rome_js_syntax::{JsAnyClass};
 
 pub struct FormatClass<'a> {
     class: &'a JsAnyClass,
 }
 
 impl FormatClass<'_> {
-    fn should_group(&self, comments: &Comments<JsLanguage>) -> FormatResult<bool> {
+    fn should_group(&self, comments: &JsComments) -> FormatResult<bool> {
         if let Some(id) = self.class.id()? {
             if comments.has_trailing_comments(id.syntax()) {
                 return Ok(true);
