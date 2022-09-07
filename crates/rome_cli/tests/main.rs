@@ -200,7 +200,7 @@ mod check {
             Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
         );
 
-        assert!(result.is_err());
+        assert!(result.is_err(), "run_cli returned {result:?}");
 
         let messages = &console.out_buffer;
 

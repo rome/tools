@@ -577,24 +577,22 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         // let unsupported_lint = ctx.can_lint(&rome_path);
         // let unsupported_file = match ctx.execution.traversal_mode() {
         //     TraversalMode::Check { .. } => unsupported_lint.as_ref(),
-        //     TraversalMode::CI { .. } => unsupported_lint.as_ref().or(unsupported_format.as_ref()),
+        //     TraversalMode::CI { .. } => unsupported_lint.as_ref().and(unsupported_format.as_ref()),
         //     TraversalMode::Format { .. } => unsupported_format.as_ref(),
         // };
 
         if let Some(reason) = unsupported_file {
-            match reason {
-                UnsupportedReason::FileNotSupported => {
-                    return Err(Message::from(TraversalError {
-                        severity: Severity::Error,
-                        file_id,
-                        code: "IO",
-                        message: String::from("unhandled file type"),
-                    }));
-                }
+            return match reason {
+                UnsupportedReason::FileNotSupported => Err(Message::from(TraversalError {
+                    severity: Severity::Error,
+                    file_id,
+                    code: "IO",
+                    message: String::from("unhandled file type"),
+                })),
                 UnsupportedReason::FeatureNotEnabled | UnsupportedReason::Ignored => {
-                    return Ok(FileStatus::Ignored)
+                    Ok(FileStatus::Ignored)
                 }
-            }
+            };
         }
         let open_options = OpenOptions::default().read(true).write(true);
         let mut file = ctx
@@ -636,7 +634,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
             return Ok(FileStatus::Ignored);
         }
 
-        let categories = if ctx.execution.is_format() || !can_lint {
+        let categories = if ctx.execution.is_format() || unsupported_lint.is_some() {
             RuleCategories::SYNTAX
         } else {
             RuleCategories::SYNTAX | RuleCategories::LINT

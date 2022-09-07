@@ -10,11 +10,11 @@ use crate::workspace::SupportsFeatureResult;
 use crate::{
     file_handlers::Features,
     settings::{SettingsHandle, WorkspaceSettings},
-    MatchOptions, Matcher, RomeError, Workspace,
+    RomeError, Workspace,
 };
 use dashmap::{mapref::entry::Entry, DashMap};
 use indexmap::IndexSet;
-use rome_analyze::{AnalysisFilter, RuleCategories, RuleFilter};
+use rome_analyze::{AnalysisFilter, RuleFilter};
 use rome_diagnostics::{Diagnostic, Severity};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
@@ -142,7 +142,7 @@ impl WorkspaceServer {
     /// Returns and error if no file exists in the workspace with this path or
     /// if the language associated with the file has no parser capability
     fn get_parse(&self, rome_path: RomePath, feature: FeatureName) -> Result<AnyParse, RomeError> {
-        let ignored = self.is_file_ignored(&rome_path, feature);
+        let ignored = self.is_file_ignored(&rome_path, &feature);
 
         if ignored {
             return Err(RomeError::FileIgnored(rome_path.to_path_buf()));
@@ -171,7 +171,7 @@ impl WorkspaceServer {
     /// a list of paths to match against.
     ///
     /// If the file path matches, than `true` is returned and it should be considered ignored.
-    fn is_file_ignored(&self, rome_path: &RomePath, feature: FeatureName) -> bool {
+    fn is_file_ignored(&self, rome_path: &RomePath, feature: &FeatureName) -> bool {
         let settings = self.settings();
         match feature {
             FeatureName::Format => settings
