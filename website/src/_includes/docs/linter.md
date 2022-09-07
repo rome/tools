@@ -54,7 +54,7 @@ All rules are enabled by default, and cannot be disabled. [Suppression](#lint-su
 
 ### Lint suppression
 
-There are times when a developer wants to ignore a rule for e specific line of the code.
+There are times when a developer wants to ignore a lint rule for a specific line of the code.
 
 You can achieve this by adding a suppression comment above the line that is triggering the lint diagnostic.
 
