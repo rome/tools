@@ -91,5 +91,5 @@ Lint rules may provide automatic code fixes. Rome distinguishes between two type
 Safe fixes are guaranteed to not change the semantics of your code,
 and can be applied without explicit review.
 
-Suggested fixes may change the semantics of your program, and it's,
-therefore,
+Suggested fixes may change the semantics of your program, and it's, 
+therefore, advised to manually review the changes. 
