@@ -45,7 +45,7 @@ At the moment only a few rules are implemented as the linting / analysis infrast
 
 **See the full [list of rules](/docs/lint/rules).**
 
-All rules are enabled by default, and cannot be disabled. [Suppression](#lint-suppression) can be used to hide specific lint errors.
+All rules are enabled by default, and cannot be disabled. [Suppressions](#suppressions) can be used to hide specific lint errors.
 
 
 [VS Code extension]: https://marketplace.visualstudio.com/items?itemName=rome.rome
@@ -81,17 +81,15 @@ declare const Bar: number;
 ```
 
 
-### How fixes work
+### Code fixes
 
-Each rule may or may not provide fixes for your code. These fixes have different natures.
+Lint rules may provide automatic code fixes. Rome distinguishes between two types of fixes:
 
-It's important to understand the nature of these fixes, and be aware of them.
+* safe fixes
+* suggested fixes
 
-Rome rules will emit two types of fixes:
-- safe fixes
-- suggested fixes
+Safe fixes are guaranteed to not change the semantics of your code,
+and can be applied without explicit review.
 
-Safe fixes can be applied safely, without the worry of changing the semantics of your code. 
-
-Suggested fixes are changes suggested to the user, but they should not be accepted blindly. The reason
-why these category of fixes is not safe, is mostly due to the nature of JavaScript and its side effects.
+Suggested fixes may change the semantics of your program, and it's,
+therefore,
