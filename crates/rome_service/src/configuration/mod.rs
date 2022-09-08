@@ -74,6 +74,9 @@ pub enum ConfigurationError {
     /// - incorrect fields
     /// - incorrect values
     DeserializationError(String),
+
+    /// Thrown when an unknown rule is found
+    UnknownRule(String),
 }
 
 impl Debug for ConfigurationError {
@@ -81,8 +84,8 @@ impl Debug for ConfigurationError {
         match self {
             ConfigurationError::SerializationError => std::fmt::Display::fmt(self, f),
             ConfigurationError::DeserializationError(_) => std::fmt::Display::fmt(self, f),
-
             ConfigurationError::ConfigAlreadyExists => std::fmt::Display::fmt(self, f),
+            ConfigurationError::UnknownRule(_) => std::fmt::Display::fmt(self, f),
         }
     }
 }
@@ -105,6 +108,10 @@ impl Display for ConfigurationError {
             }
             ConfigurationError::ConfigAlreadyExists => {
                 write!(f, "it seems that a configuration file already exists")
+            }
+
+            ConfigurationError::UnknownRule(rule) => {
+                write!(f, "invalid rule name `{rule}`")
             }
         }
     }
@@ -136,6 +143,8 @@ pub fn load_config(
                 .map_err(|_| RomeError::CantReadFile(configuration_path))?;
 
             let configuration: Configuration = serde_json::from_str(&buffer).map_err(|err| {
+                dbg!(&err);
+
                 RomeError::Configuration(ConfigurationError::DeserializationError(err.to_string()))
             })?;
 

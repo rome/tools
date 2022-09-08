@@ -1,6 +1,11 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 147
 expression: content
 ---
+# Termination Message
+
+```block
+failed to parse argument '--indent-size': failed to parse '-1': invalid digit found in string
+```
+
 

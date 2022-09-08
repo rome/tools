@@ -1,3 +1,4 @@
+use rome_cli::Termination;
 use rome_console::fmt::{Formatter, Termcolor};
 use rome_console::{markup, BufferConsole, Markup};
 use rome_diagnostics::termcolor::NoColor;
@@ -11,7 +12,6 @@ struct InMessages {
     stdin: Option<String>,
 }
 
-#[derive(Default)]
 struct CliSnapshot {
     /// input messages, coming from different sources
     pub in_messages: InMessages,
@@ -21,6 +21,20 @@ struct CliSnapshot {
     pub files: HashMap<String, String>,
     /// messages written in console
     pub messages: Vec<String>,
+    /// possible termination error of the CLI
+    pub termination: Option<Termination>,
+}
+
+impl CliSnapshot {
+    pub fn form_result(result: Result<(), Termination>) -> Self {
+        Self {
+            in_messages: InMessages::default(),
+            configuration: None,
+            files: HashMap::default(),
+            messages: Vec::new(),
+            termination: result.err(),
+        }
+    }
 }
 
 impl CliSnapshot {
@@ -61,6 +75,16 @@ impl CliSnapshot {
             content.push_str("\n\n")
         }
 
+        if let Some(termination) = &self.termination {
+            content.push_str("# Termination Message\n\n");
+            content.push_str("```block");
+            content.push('\n');
+            let _ = write!(content, "{:?}", termination);
+            content.push('\n');
+            content.push_str("```");
+            content.push_str("\n\n");
+        }
+
         if !self.messages.is_empty() {
             content.push_str("# Emitted Messages\n\n");
 
@@ -94,14 +118,42 @@ pub fn markup_to_string(markup: Markup) -> String {
     String::from_utf8(buffer).unwrap()
 }
 
-/// Function used to snapshot a session test of the a CLI run.
-pub fn assert_cli_snapshot(
-    module_path: &str,
-    test_name: &str,
+pub struct SnapshotPayload<'a> {
+    module_path: &'a str,
+    test_name: &'a str,
     fs: MemoryFileSystem,
     console: BufferConsole,
-) {
-    let mut cli_snapshot = CliSnapshot::default();
+    result: Result<(), Termination>,
+}
+
+impl<'a> SnapshotPayload<'a> {
+    pub fn new(
+        module_path: &'a str,
+        test_name: &'a str,
+        fs: MemoryFileSystem,
+        console: BufferConsole,
+        result: Result<(), Termination>,
+    ) -> Self {
+        Self {
+            module_path,
+            test_name,
+            fs,
+            console,
+            result,
+        }
+    }
+}
+
+/// Function used to snapshot a session test of the a CLI run.
+pub fn assert_cli_snapshot(payload: SnapshotPayload<'_>) {
+    let SnapshotPayload {
+        result,
+        console,
+        fs,
+        test_name,
+        module_path,
+    } = payload;
+    let mut cli_snapshot = CliSnapshot::form_result(result);
     let config_path = PathBuf::from("rome.json");
     let configuration = fs.read(&config_path).ok();
     if let Some(mut configuration) = configuration {

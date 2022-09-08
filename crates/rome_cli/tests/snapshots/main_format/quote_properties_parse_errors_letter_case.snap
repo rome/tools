@@ -1,6 +1,11 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 147
 expression: content
 ---
+# Termination Message
+
+```block
+failed to parse argument '--quote-properties': failed to parse 'As-needed': Value not supported for QuoteProperties
+```
+
 

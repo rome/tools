@@ -1,6 +1,5 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 147
 expression: content
 ---
 ## `rome.json`
@@ -14,6 +13,13 @@ expression: content
     "globals": [false]
   }
 }
+```
+
+# Termination Message
+
+```block
+Rome couldn't load the configuration file, here's why: 
+invalid type: boolean `false`, expected a string at line 6 column 21
 ```
 
 

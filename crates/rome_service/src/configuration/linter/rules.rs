@@ -351,9 +351,7 @@ where
     for rule_name in value.keys() {
         if !Js::CATEGORY_RULES.contains(&rule_name.as_str()) {
             return Err(serde::de::Error::custom(RomeError::Configuration(
-                ConfigurationError::DeserializationError(format!(
-                    "Invalid rule name `{rule_name}`"
-                )),
+                ConfigurationError::UnknownRule(format!("{rule_name}")),
             )));
         }
     }
@@ -430,9 +428,7 @@ where
     for rule_name in value.keys() {
         if !Jsx::CATEGORY_RULES.contains(&rule_name.as_str()) {
             return Err(serde::de::Error::custom(RomeError::Configuration(
-                ConfigurationError::DeserializationError(format!(
-                    "Invalid rule name `{rule_name}`"
-                )),
+                ConfigurationError::UnknownRule(format!("{rule_name}")),
             )));
         }
     }
@@ -499,9 +495,7 @@ where
     for rule_name in value.keys() {
         if !Regex::CATEGORY_RULES.contains(&rule_name.as_str()) {
             return Err(serde::de::Error::custom(RomeError::Configuration(
-                ConfigurationError::DeserializationError(format!(
-                    "Invalid rule name `{rule_name}`"
-                )),
+                ConfigurationError::UnknownRule(format!("{rule_name}")),
             )));
         }
     }
@@ -567,9 +561,7 @@ where
     for rule_name in value.keys() {
         if !Ts::CATEGORY_RULES.contains(&rule_name.as_str()) {
             return Err(serde::de::Error::custom(RomeError::Configuration(
-                ConfigurationError::DeserializationError(format!(
-                    "Invalid rule name `{rule_name}`"
-                )),
+                ConfigurationError::UnknownRule(format!("{rule_name}")),
             )));
         }
     }
