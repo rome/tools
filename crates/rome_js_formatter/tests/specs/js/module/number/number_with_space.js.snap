@@ -20,8 +20,7 @@ Quote style: Double Quotes
 Quote properties: As needed
 -----
 (123).toString;
-(123)
-	/****/.toString;
+(123)./****/ toString;
 (123) /**/.toString;
 (123).toString;
 

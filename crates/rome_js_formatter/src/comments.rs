@@ -3,13 +3,10 @@ use rome_formatter::{write, CommentPlacement, CommentPosition, Comments, Decorat
 use rome_formatter::{CommentKind, CommentStyle, SourceComment};
 use rome_js_syntax::suppression::{parse_suppression_comment, SuppressionCategory};
 use rome_js_syntax::{
-    JsAnyRoot, JsAnyStatement, JsArrayAssignmentPattern, JsArrayBindingPattern, JsArrayExpression,
-    JsArrayHole, JsBlockStatement, JsIfStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode,
-    JsSyntaxToken, JsWhileStatement,
+    JsAnyRoot, JsAnyStatement, JsArrayHole, JsBlockStatement, JsCatchClause, JsFinallyClause,
+    JsIfStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsWhileStatement,
 };
-use rome_rowan::{
-    declare_node_union, AstNode, SyntaxNode, SyntaxResult, SyntaxTriviaPieceComments, TextLen,
-};
+use rome_rowan::{AstNode, SyntaxTriviaPieceComments, TextLen};
 
 pub type JsComments = Comments<JsLanguage>;
 
@@ -151,15 +148,16 @@ impl CommentStyle for JsCommentStyle {
     ) -> CommentPlacement<Self::Language> {
         fn place_comment(
             mut comment: DecoratedComment<JsLanguage>,
-            rules: &[fn(
-                DecoratedComment<JsLanguage>,
-            )
-                -> Result<CommentPlacement<JsLanguage>, DecoratedComment<JsLanguage>>],
+            rules: &[fn(DecoratedComment<JsLanguage>) -> CommentPlacement<JsLanguage>],
         ) -> CommentPlacement<JsLanguage> {
             for rule in rules {
                 match rule(comment) {
-                    Ok(placement) => return placement,
-                    Err(unplaced) => comment = unplaced,
+                    CommentPlacement::Default(unplaced) => {
+                        comment = unplaced;
+                    }
+                    placement => {
+                        return placement;
+                    }
                 }
             }
 
@@ -172,7 +170,8 @@ impl CommentStyle for JsCommentStyle {
                 &[
                     handle_typecast_comment,
                     handle_if_statement_comment,
-                    place_while_comment,
+                    handle_while_comment,
+                    handle_try_comment,
                     // handle_block_statement_comment,
                     handle_root_comments,
                     handle_array_hole_comment,
@@ -181,8 +180,10 @@ impl CommentStyle for JsCommentStyle {
             CommentPosition::OwnLine => place_comment(
                 comment,
                 &[
+                    handle_member_expression_comment,
                     handle_if_statement_comment,
-                    place_while_comment,
+                    handle_while_comment,
+                    handle_try_comment,
                     // handle_block_statement_comment,
                     handle_root_comments,
                     handle_array_hole_comment,
@@ -192,7 +193,7 @@ impl CommentStyle for JsCommentStyle {
                 comment,
                 &[
                     handle_if_statement_comment,
-                    place_while_comment,
+                    handle_while_comment,
                     // handle_block_statement_comment,
                     handle_root_comments,
                     handle_array_hole_comment,
@@ -203,51 +204,13 @@ impl CommentStyle for JsCommentStyle {
 }
 
 /// Force end of line type cast comments to remain leading comments of the next node, if any
-fn handle_typecast_comment(
-    comment: DecoratedComment<JsLanguage>,
-) -> Result<CommentPlacement<JsLanguage>, DecoratedComment<JsLanguage>> {
+fn handle_typecast_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacement<JsLanguage> {
     match comment.following_node() {
-        Some(following_node) if is_type_comment(comment.piece()) => Ok(CommentPlacement::Leading {
+        Some(following_node) if is_type_comment(comment.piece()) => CommentPlacement::Leading {
             node: following_node.clone(),
             comment,
-        }),
-        _ => Err(comment),
-    }
-}
-
-/// Move leading comments in front of the `{` inside of the block
-///
-/// ```javascript
-/// if (test) /* comment */ {
-///  console.log('test');
-/// }
-/// ```
-///
-/// becomes
-/// ```javascript
-/// if (test) {
-///  /* comment */ console.log('test');
-/// }
-/// ```
-fn handle_block_statement_comment(
-    comment: DecoratedComment<JsLanguage>,
-) -> Result<CommentPlacement<JsLanguage>, DecoratedComment<JsLanguage>> {
-    if let Some(block) = comment
-        .following_node()
-        .and_then(JsBlockStatement::cast_ref)
-    {
-        Ok(match block.statements().first() {
-            Some(JsAnyStatement::JsEmptyStatement(_)) | None => CommentPlacement::Dangling {
-                node: block.into_syntax(),
-                comment,
-            },
-            Some(first_statement) => CommentPlacement::Leading {
-                node: first_statement.into_syntax(),
-                comment,
-            },
-        })
-    } else {
-        Err(comment)
+        },
+        _ => CommentPlacement::Default(comment),
     }
 }
 
@@ -255,22 +218,20 @@ fn handle_block_statement_comment(
 /// become trailing comments by default. Override it that all comments are leading comments.
 fn handle_array_hole_comment(
     comment: DecoratedComment<JsLanguage>,
-) -> Result<CommentPlacement<JsLanguage>, DecoratedComment<JsLanguage>> {
+) -> CommentPlacement<JsLanguage> {
     if let Some(array_hole) = comment.preceding_node().and_then(JsArrayHole::cast_ref) {
-        Ok(CommentPlacement::Leading {
+        CommentPlacement::Leading {
             node: array_hole.into_syntax(),
             comment,
-        })
+        }
     } else {
-        Err(comment)
+        CommentPlacement::Default(comment)
     }
 }
 
 /// Handle a all comments document.
 /// See `blank.js`
-fn handle_root_comments(
-    comment: DecoratedComment<JsLanguage>,
-) -> Result<CommentPlacement<JsLanguage>, DecoratedComment<JsLanguage>> {
+fn handle_root_comments(comment: DecoratedComment<JsLanguage>) -> CommentPlacement<JsLanguage> {
     if let Some(root) = JsAnyRoot::cast_ref(comment.enclosing_node()) {
         let is_blank = match &root {
             JsAnyRoot::JsExpressionSnipped(_) => false,
@@ -283,19 +244,51 @@ fn handle_root_comments(
         };
 
         if is_blank {
-            return Ok(CommentPlacement::Leading {
+            return CommentPlacement::Leading {
                 node: root.into_syntax(),
                 comment,
-            });
+            };
         }
     }
 
-    Err(comment)
+    CommentPlacement::Default(comment)
+}
+
+fn handle_member_expression_comment(
+    comment: DecoratedComment<JsLanguage>,
+) -> CommentPlacement<JsLanguage> {
+    let following = match comment.following_node() {
+        Some(following)
+            if matches!(
+                comment.enclosing_node().kind(),
+                JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION
+                    | JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION
+            ) =>
+        {
+            following
+        }
+        _ => return CommentPlacement::Default(comment),
+    };
+
+    // ```javascript
+    // a
+    // /* comment */.b
+    // a
+    // /* comment */[b]
+    // ```
+    if following.kind() == JsSyntaxKind::JS_IDENTIFIER_EXPRESSION {
+        CommentPlacement::Leading {
+            node: comment.enclosing_node().clone(),
+            comment,
+        }
+    } else {
+        CommentPlacement::Default(comment)
+    }
 }
 
 fn handle_if_statement_comment(
     comment: DecoratedComment<JsLanguage>,
-) -> Result<CommentPlacement<JsLanguage>, DecoratedComment<JsLanguage>> {
+) -> CommentPlacement<JsLanguage> {
     fn handle_else_clause(
         comment: DecoratedComment<JsLanguage>,
         consequent: JsSyntaxNode,
@@ -355,7 +348,7 @@ fn handle_if_statement_comment(
             node: if_statement,
             comment,
         }
-    };
+    }
 
     match (comment.enclosing_node().kind(), comment.following_node()) {
         (JsSyntaxKind::JS_IF_STATEMENT, Some(following)) => {
@@ -364,17 +357,17 @@ fn handle_if_statement_comment(
             if let Some(preceding) = comment.preceding_node() {
                 // Test if this is a comment right before the condition's `)`
                 if comment.following_token().kind() == JsSyntaxKind::R_PAREN {
-                    return Ok(CommentPlacement::Trailing {
+                    return CommentPlacement::Trailing {
                         node: preceding.clone(),
                         comment,
-                    });
+                    };
                 }
 
                 // Handle comments before `else`
                 if following.kind() == JsSyntaxKind::JS_ELSE_CLAUSE {
                     let consequent = preceding.clone();
                     let if_statement = comment.enclosing_node().clone();
-                    return Ok(handle_else_clause(comment, consequent, if_statement));
+                    return handle_else_clause(comment, consequent, if_statement);
                 }
             }
 
@@ -385,7 +378,7 @@ fn handle_if_statement_comment(
             // }
             // ```
             if let Some(block_statement) = JsBlockStatement::cast_ref(following) {
-                return Ok(place_block_statement_comment(block_statement, comment));
+                return place_block_statement_comment(block_statement, comment);
             }
 
             // Move comments coming before an if chain inside the body of the first non chain if.
@@ -395,7 +388,7 @@ fn handle_if_statement_comment(
             // ```
             if let Some(if_statement) = JsIfStatement::cast_ref(following) {
                 if let Ok(nested_consequent) = if_statement.consequent() {
-                    return Ok(place_leading_statement_comment(nested_consequent, comment));
+                    return place_leading_statement_comment(nested_consequent, comment);
                 }
             }
 
@@ -407,10 +400,10 @@ fn handle_if_statement_comment(
             // ```
             if let Ok(consequent) = if_statement.consequent() {
                 if consequent.syntax() == following {
-                    return Ok(CommentPlacement::Leading {
+                    return CommentPlacement::Leading {
                         node: following.clone(),
                         comment,
-                    });
+                    };
                 }
             }
         }
@@ -421,11 +414,11 @@ fn handle_if_statement_comment(
                 .and_then(JsIfStatement::cast)
             {
                 if let Ok(consequent) = if_statement.consequent() {
-                    return Ok(handle_else_clause(
+                    return handle_else_clause(
                         comment,
                         consequent.into_syntax(),
                         if_statement.into_syntax(),
-                    ));
+                    );
                 }
             }
         }
@@ -434,27 +427,25 @@ fn handle_if_statement_comment(
         }
     }
 
-    Err(comment)
+    CommentPlacement::Default(comment)
 }
 
-fn place_while_comment(
-    comment: DecoratedComment<JsLanguage>,
-) -> Result<CommentPlacement<JsLanguage>, DecoratedComment<JsLanguage>> {
+fn handle_while_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacement<JsLanguage> {
     let (while_statement, following) = match (
         JsWhileStatement::cast_ref(comment.enclosing_node()),
         comment.following_node(),
     ) {
         (Some(while_statement), Some(following)) => (while_statement, following),
-        _ => return Err(comment),
+        _ => return CommentPlacement::Default(comment),
     };
 
     if let Some(preceding) = comment.preceding_node() {
         // Test if this is a comment right before the condition's `)`
         if comment.following_token().kind() == JsSyntaxKind::R_PAREN {
-            return Ok(CommentPlacement::Trailing {
+            return CommentPlacement::Trailing {
                 node: preceding.clone(),
                 comment,
-            });
+            };
         }
     }
 
@@ -465,7 +456,7 @@ fn place_while_comment(
     // }
     // ```
     if let Some(block) = JsBlockStatement::cast_ref(following) {
-        return Ok(place_block_statement_comment(block, comment));
+        return place_block_statement_comment(block, comment);
     }
 
     // Make all comments after the condition's `)` leading comments
@@ -476,14 +467,76 @@ fn place_while_comment(
     // ```
     if let Ok(body) = while_statement.body() {
         if body.syntax() == following {
-            return Ok(CommentPlacement::Leading {
+            return CommentPlacement::Leading {
                 node: body.into_syntax(),
                 comment,
-            });
+            };
         }
     }
 
-    Err(comment)
+    CommentPlacement::Default(comment)
+}
+
+fn handle_try_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacement<JsLanguage> {
+    let following = match comment.following_node() {
+        Some(following)
+            if matches!(
+                comment.enclosing_node().kind(),
+                JsSyntaxKind::JS_TRY_STATEMENT | JsSyntaxKind::JS_TRY_FINALLY_STATEMENT
+            ) =>
+        {
+            // Move comments before the `catch` or `finally` inside of the body
+            // ```javascript
+            // try {
+            // }
+            //  catch(e) {
+            // }
+            // // Comment 7
+            // finally {}
+            // ```
+            let body = if let Some(catch) = JsCatchClause::cast_ref(following) {
+                catch.body()
+            } else if let Some(finally) = JsFinallyClause::cast_ref(following) {
+                finally.body()
+            } else {
+                // Use an err, so that the following code skips over it
+                Err(rome_rowan::SyntaxError::MissingRequiredChild)
+            };
+
+            //
+            // ```javascript
+            // try {
+            // } /* comment catch {
+            // }
+            // ```
+            if let Ok(body) = body {
+                return place_block_statement_comment(body, comment);
+            }
+
+            following
+        }
+        Some(following)
+            if matches!(
+                comment.enclosing_node().kind(),
+                JsSyntaxKind::JS_CATCH_CLAUSE | JsSyntaxKind::JS_FINALLY_CLAUSE
+            ) =>
+        {
+            following
+        }
+        _ => return CommentPlacement::Default(comment),
+    };
+
+    // Move comments coming before the `{` inside of the block
+    //
+    // ```javascript
+    // try /* test */ {
+    // }
+    // ```
+    if let Some(block) = JsBlockStatement::cast_ref(following) {
+        return place_block_statement_comment(block, comment);
+    }
+
+    CommentPlacement::Default(comment)
 }
 
 fn place_leading_statement_comment(
@@ -532,41 +585,4 @@ pub(crate) fn is_type_comment(comment: &SyntaxTriviaPieceComments<JsLanguage>) -
             Some(after) => after.is_empty() || after.starts_with('{'),
             None => false,
         })
-}
-
-declare_node_union! {
-    JsAnyArrayLike = JsArrayExpression
-        | JsArrayAssignmentPattern
-        | JsArrayBindingPattern
-}
-
-impl JsAnyArrayLike {
-    fn r_brack_token(&self) -> SyntaxResult<JsSyntaxToken> {
-        match self {
-            JsAnyArrayLike::JsArrayExpression(expression) => expression.r_brack_token(),
-            JsAnyArrayLike::JsArrayAssignmentPattern(assignment) => assignment.r_brack_token(),
-            JsAnyArrayLike::JsArrayBindingPattern(binding) => binding.r_brack_token(),
-        }
-    }
-
-    fn last_element(&self) -> Option<SyntaxResult<JsSyntaxNode>> {
-        match self {
-            JsAnyArrayLike::JsArrayExpression(array) => match array.elements().iter().last() {
-                Some(Ok(element)) => Some(Ok(element.into_syntax())),
-                Some(Err(error)) => Some(Err(error)),
-                None => None,
-            },
-            JsAnyArrayLike::JsArrayAssignmentPattern(array) => match array.elements().iter().last()
-            {
-                Some(Ok(element)) => Some(Ok(element.into_syntax())),
-                Some(Err(error)) => Some(Err(error)),
-                None => None,
-            },
-            JsAnyArrayLike::JsArrayBindingPattern(array) => match array.elements().iter().last() {
-                Some(Ok(element)) => Some(Ok(element.into_syntax())),
-                Some(Err(error)) => Some(Err(error)),
-                None => None,
-            },
-        }
-    }
 }

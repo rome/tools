@@ -1,6 +1,5 @@
 use crate::prelude::*;
 
-use crate::builders::format_delimited;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::JsCatchDeclaration;
 use rome_js_syntax::JsCatchDeclarationFields;
@@ -17,14 +16,44 @@ impl FormatNodeRule<JsCatchDeclaration> for FormatJsCatchDeclaration {
             type_annotation,
         } = node.as_fields();
 
-        write!(
-            f,
-            [format_delimited(
-                &l_paren_token?,
-                &format_args![binding.format(), type_annotation.format()],
-                &r_paren_token?,
+        let binding = binding?;
+
+        let leading_comment_with_break = f
+            .comments()
+            .leading_comments(binding.syntax())
+            .iter()
+            .any(|comment| comment.lines_after() > 0 || comment.kind().is_line());
+
+        let last_parameter_node = type_annotation
+            .as_ref()
+            .map(|type_annotation| type_annotation.syntax())
+            .unwrap_or_else(|| binding.syntax());
+
+        let trailing_comment_with_break = f
+            .comments()
+            .trailing_comments(last_parameter_node)
+            .iter()
+            .any(|comment| comment.lines_before() > 0 || comment.kind().is_line());
+
+        if leading_comment_with_break || trailing_comment_with_break {
+            write!(
+                f,
+                [
+                    l_paren_token.format(),
+                    soft_block_indent(&format_args![binding.format(), type_annotation.format()]),
+                    r_paren_token.format()
+                ]
             )
-            .soft_block_indent()]
-        )
+        } else {
+            write!(
+                f,
+                [
+                    l_paren_token.format(),
+                    binding.format(),
+                    type_annotation.format(),
+                    r_paren_token.format()
+                ]
+            )
+        }
     }
 }

@@ -73,7 +73,7 @@ fn is_empty_block(block: &JsBlockStatement, comments: &JsComments) -> bool {
     // }
     // ```
     block.statements().is_empty()
-        && block.statements().iter().all(|s| {
+        || block.statements().iter().all(|s| {
             matches!(s, JsAnyStatement::JsEmptyStatement(_))
                 && !comments.has_comments(s.syntax())
                 && !comments.is_suppressed(s.syntax())
