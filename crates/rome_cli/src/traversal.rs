@@ -556,15 +556,12 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         let can_format = ctx
             .can_format(&rome_path)
             .with_file_id_and_code(file_id, "IO")?;
+        let can_lint = ctx
+            .can_lint(&rome_path)
+            .with_file_id_and_code(file_id, "IO")?;
         let can_handle = match ctx.execution.traversal_mode() {
-            TraversalMode::Check { .. } => ctx
-                .can_lint(&rome_path)
-                .with_file_id_and_code(file_id, "IO")?,
-            TraversalMode::CI { .. } => {
-                ctx.can_lint(&rome_path)
-                    .with_file_id_and_code(file_id, "IO")?
-                    || can_format
-            }
+            TraversalMode::Check { .. } => can_lint,
+            TraversalMode::CI { .. } => can_lint || can_format,
             TraversalMode::Format { .. } => can_format,
         };
 
@@ -616,7 +613,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
             return Ok(FileStatus::Ignored);
         }
 
-        let categories = if ctx.execution.is_format() {
+        let categories = if ctx.execution.is_format() || !can_lint {
             RuleCategories::SYNTAX
         } else {
             RuleCategories::SYNTAX | RuleCategories::LINT

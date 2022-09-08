@@ -6,28 +6,19 @@ expression: content
 
 ```json
 {
-  "linter": {
+  "formatter": {
     "enabled": false
   }
 }
+
 ```
 
-## `fix.js`
+## `file.js`
 
 ```js
-
-if(a != -0) {}
-
+  statement(  )  
 ```
 
 # Emitted Messages
-
-```block
-fix.js: error[IO]: unhandled file type
-```
-
-```block
-Skipped 1 files
-```
 
 

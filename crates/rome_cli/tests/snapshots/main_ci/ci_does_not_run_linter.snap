@@ -6,11 +6,10 @@ expression: content
 
 ```json
 {
-  "formatter": {
+  "linter": {
     "enabled": false
   }
 }
-
 ```
 
 ## `file.js`
@@ -26,11 +25,14 @@ return { something }
 # Emitted Messages
 
 ```block
-file.js: error[IO]: unhandled file type
-```
+file.js: error[CI]: File content differs from formatting output
+    | @@ -1,4 +1,3 @@
+0   | - 
+1 0 |   function f() {
+2   | - return { something }
+  1 | + 	return { something };
+3 2 |   }
 
-```block
-Skipped 1 files
 ```
 
 

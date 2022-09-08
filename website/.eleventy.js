@@ -13,6 +13,7 @@ const terser = require("terser");
 const CleanCSS = require("clean-css");
 const htmlmin = require("html-minifier");
 const { base64Encode } = require("./utils");
+const pluginRss = require("@11ty/eleventy-plugin-rss");
 
 require("dotenv").config();
 
@@ -35,6 +36,7 @@ module.exports = function (eleventyConfig) {
 	});
 
 	eleventyConfig.addPlugin(syntaxHighlight);
+	eleventyConfig.addPlugin(pluginRss);
 
 	eleventyConfig.addPlugin(pluginTOC, {
 		tags: ["h2", "h3", "h4"],
@@ -196,6 +198,10 @@ module.exports = function (eleventyConfig) {
 
 	eleventyConfig.addFilter("kebabCase", function (string) {
 		return string.toLowerCase().replace(/\s/g, "-");
+	});
+
+	eleventyConfig.addFilter("withAbsoluteUrl", function (string) {
+		return `https://rome.tools${string}`;
 	});
 
 	eleventyConfig.addShortcode("romeVersion", function () {

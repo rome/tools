@@ -2,19 +2,16 @@
 source: crates/rome_cli/tests/snap_test.rs
 expression: content
 ---
-# Input messages
+## `file.js`
 
-```block
-function f() {return{}}
+```js
+let a = 'something';
+let b = {
+	'hey': 'hello',
+};
+
 ```
 
 # Emitted Messages
-
-```block
-function f() {
-	return {};
-}
-
-```
 
 
