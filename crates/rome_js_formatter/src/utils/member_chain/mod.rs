@@ -146,16 +146,6 @@ impl MemberChain {
 
         // TODO: add here will_break logic
 
-        //   const nodeHasComment =
-        //     flatGroups
-        //       .slice(1, -1)
-        //       .some((node) => hasComment(node.node, CommentCheckFlags.Leading)) ||
-        //     flatGroups
-        //       .slice(0, -1)
-        //       .some((node) => hasComment(node.node, CommentCheckFlags.Trailing)) ||
-        //     (groups[cutoff] &&
-        //       hasComment(groups[cutoff][0].node, CommentCheckFlags.Leading));
-
         Ok(call_expressions_are_not_simple)
     }
 

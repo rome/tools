@@ -5,7 +5,7 @@ use rome_js_syntax::suppression::{parse_suppression_comment, SuppressionCategory
 use rome_js_syntax::{
     JsAnyName, JsAnyRoot, JsAnyStatement, JsArrayHole, JsBlockStatement, JsCatchClause,
     JsFinallyClause, JsIdentifierExpression, JsIfStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode,
-    JsWhileStatement,
+    JsVariableDeclarator, JsWhileStatement,
 };
 use rome_rowan::{AstNode, SyntaxTriviaPieceComments, TextLen};
 
@@ -176,6 +176,7 @@ impl CommentStyle for JsCommentStyle {
                     // handle_block_statement_comment,
                     handle_root_comments,
                     handle_array_hole_comment,
+                    handle_variable_declarator,
                 ],
             ),
             CommentPosition::OwnLine => place_comment(
@@ -535,6 +536,90 @@ fn handle_try_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacement
     // ```
     if let Some(block) = JsBlockStatement::cast_ref(following) {
         return place_block_statement_comment(block, comment);
+    }
+
+    CommentPlacement::Default(comment)
+}
+
+fn handle_variable_declarator(
+    comment: DecoratedComment<JsLanguage>,
+) -> CommentPlacement<JsLanguage> {
+    let following = match comment.following_node() {
+        Some(following) => following,
+        None => return CommentPlacement::Default(comment),
+    };
+
+    fn is_complex_value(value: &JsSyntaxNode) -> bool {
+        matches!(
+            value.kind(),
+            JsSyntaxKind::JS_OBJECT_EXPRESSION
+                | JsSyntaxKind::JS_ARRAY_EXPRESSION
+                | JsSyntaxKind::JS_TEMPLATE
+                | JsSyntaxKind::TS_OBJECT_TYPE
+        )
+    }
+
+    let enclosing = comment.enclosing_node();
+    match enclosing.kind() {
+        JsSyntaxKind::JS_ASSIGNMENT_EXPRESSION | JsSyntaxKind::TS_TYPE_ALIAS_DECLARATION => {
+            // Makes all comments preceding objects/arrays/templates leading comments of these nodes.
+            // ```javascript
+            // let a = // comment
+            // { };
+            // ```
+            if is_complex_value(following) {
+                return CommentPlacement::Leading {
+                    node: following.clone(),
+                    comment,
+                };
+            }
+        }
+        JsSyntaxKind::JS_VARIABLE_DECLARATOR => {
+            let variable_declarator = JsVariableDeclarator::unwrap_cast(enclosing.clone());
+
+            match variable_declarator.initializer() {
+                // ```javascript
+                // let obj2 // Comment
+                // = {
+                //   key: 'val'
+                // }
+                // ```
+                Some(initializer) if initializer.syntax() == following => {
+                    if let Ok(expression) = initializer.expression() {
+                        return CommentPlacement::Leading {
+                            node: expression.into_syntax(),
+                            comment,
+                        };
+                    }
+                }
+                _ => {
+                    // fall through
+                }
+            }
+        }
+        JsSyntaxKind::JS_INITIALIZER_CLAUSE => {
+            if let Some(variable_declarator) =
+                enclosing.parent().and_then(JsVariableDeclarator::cast)
+            {
+                // Keep trailing comments with the id for variable declarators. Necessary because the value is wrapped
+                // inside of an initializer clause.
+                // ```javascript
+                // let a = // comment
+                //      b;
+                // ```
+                if !is_complex_value(following) {
+                    if let Ok(id) = variable_declarator.id() {
+                        return CommentPlacement::Trailing {
+                            node: id.into_syntax(),
+                            comment,
+                        };
+                    }
+                }
+            }
+        }
+        _ => {
+            // fall through
+        }
     }
 
     CommentPlacement::Default(comment)

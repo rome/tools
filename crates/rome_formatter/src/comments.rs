@@ -336,7 +336,7 @@ impl<L: Language> Comments<L> {
         let builder = CommentsBuilderVisitor::new(style);
 
         Self {
-            data: Rc::new(dbg!(builder.visit(root))),
+            data: Rc::new(builder.visit(root)),
         }
     }
 
