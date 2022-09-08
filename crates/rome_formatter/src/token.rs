@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::{
     write, Argument, Arguments, CommentKind, CstFormatContext, FormatRefWithRule, GroupId,
-    SourceComment,
+    SourceComment, TextRange,
 };
 use rome_rowan::{Language, SyntaxNode, SyntaxToken};
 
@@ -379,8 +379,89 @@ where
     Context: CstFormatContext,
 {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        if f.comments().has_skipped(self.token) {
-            panic!("Skipped token trivia not yet supported.");
+        if !f.comments().has_skipped(self.token) {
+            return Ok(());
+        }
+
+        let mut lines_before = 0;
+        let mut leading_space = 0;
+
+        let mut pieces = self.token.leading_trivia().pieces().peekable();
+
+        // Skip over all elements until we find the first skipped token trivia.
+        // Track if there are any empty lines / space before
+        while let Some(next) = pieces.peek() {
+            if next.is_newline() {
+                lines_before += 1;
+                leading_space = 0;
+            } else if next.is_whitespace() {
+                leading_space += 1;
+            } else if next.is_comments() {
+                lines_before = 0;
+                leading_space = 0;
+            } else if next.is_skipped() {
+                break;
+            }
+
+            pieces.next();
+        }
+
+        match pieces.next() {
+            Some(skipped_piece) => {
+                debug_assert!(
+                    skipped_piece.is_skipped(),
+                    "Should be skipped but is {:?}.",
+                    skipped_piece.kind()
+                );
+
+                let has_preceding_whitespace = lines_before > 0
+                    || leading_space > 0
+                    || self
+                        .token
+                        .prev_token()
+                        .and_then(|token| token.trailing_trivia().pieces().last())
+                        .map_or(false, |piece| piece.is_newline() || piece.is_whitespace());
+
+                if has_preceding_whitespace {
+                    write!(f, [space()])?;
+                }
+
+                // TODO format comments between skipped token and final token as dangling comments?
+
+                // Now count the spaces / lines before the token
+                lines_before = 0;
+                leading_space = 0;
+                let mut end = skipped_piece.text_range().end();
+
+                while let Some(piece) = pieces.next() {
+                    if piece.is_newline() {
+                        lines_before += 1;
+                        leading_space = 0;
+                    } else if piece.is_whitespace() {
+                        leading_space += 1;
+                    } else if piece.is_comments() | piece.is_skipped() {
+                        lines_before = 0;
+                        leading_space = 0;
+                    }
+                    end = piece.text_range().end();
+                }
+
+                // Range from the first skipped token up to the first token
+                let skipped_range = TextRange::new(skipped_piece.text_range().start(), end);
+
+                syntax_token_text_slice(self.token, skipped_range).fmt(f)?;
+
+                // Ensure that there's some whitespace between the last skipped token trivia and the
+                // next token except if there was no whitespace present in the source.
+                if lines_before > 0 {
+                    write!(f, [hard_line_break()])?;
+                } else if leading_space > 0 {
+                    write!(f, [space()])?;
+                };
+            }
+            None => {
+                debug_assert!(false, "`is_skipped` is true for a token that doesn't seem to have any skipped token trivia.");
+            }
         }
 
         Ok(())

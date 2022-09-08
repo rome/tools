@@ -3,10 +3,8 @@ mod multimap;
 
 use self::{builder::CommentsBuilderVisitor, multimap::AppendOnlyMultiMap};
 use crate::TextSize;
-use rome_rowan::{
-    Direction, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxToken,
-    SyntaxTriviaPieceComments, WalkEvent,
-};
+use rome_rowan::syntax::SyntaxElementKey;
+use rome_rowan::{Language, SyntaxKind, SyntaxNode, SyntaxToken, SyntaxTriviaPieceComments};
 #[cfg(debug_assertions)]
 use std::cell::RefCell;
 use std::collections::HashSet;
@@ -141,12 +139,13 @@ impl<L: Language> SourceComment<L> {
 
 #[derive(Debug, Clone)]
 pub struct DecoratedComment<L: Language> {
+    enclosing: SyntaxNode<L>,
     preceding: Option<SyntaxNode<L>>,
     following: Option<SyntaxNode<L>>,
     following_token: SyntaxToken<L>,
     lines_before: u32,
     lines_after: u32,
-    trailing_token_comment: bool,
+    position: CommentPosition,
     comment: SyntaxTriviaPieceComments<L>,
     kind: CommentKind,
 }
@@ -154,21 +153,12 @@ pub struct DecoratedComment<L: Language> {
 impl<L: Language> DecoratedComment<L> {
     /// The node that fully encloses the comment (the comment's start and end position are fully in the
     /// node's bounds).
-    pub fn enclosing_node(&self) -> SyntaxNode<L> {
-        // SAFETY: Guaranteed by the fact that comments are extracted from a root node.
-        self.comment
-            .as_piece()
-            .token()
-            .parent()
-            .expect("Expected token to have a parent node.")
+    pub fn enclosing_node(&self) -> &SyntaxNode<L> {
+        &self.enclosing
     }
 
     pub fn piece(&self) -> &SyntaxTriviaPieceComments<L> {
         &self.comment
-    }
-
-    pub fn enclosing_token(&self) -> SyntaxToken<L> {
-        self.comment.as_piece().token()
     }
 
     /// The node directly preceding the comment or [None] if the comment is preceded by a token or is the first
@@ -200,13 +190,18 @@ impl<L: Language> DecoratedComment<L> {
     }
 
     /// `true` if the comment is part of the tokens [trailing trivia](SyntaxToken::trailing_trivia)
+    #[deprecated]
     pub fn is_trailing_token_trivia(&self) -> bool {
-        self.trailing_token_comment
+        self.position.is_same_line()
     }
 
     /// Returns the [kind](CommentKind) of the comment.
     pub fn kind(&self) -> CommentKind {
         self.kind
+    }
+
+    pub fn position(&self) -> CommentPosition {
+        self.position
     }
 
     pub fn following_token(&self) -> &SyntaxToken<L> {
@@ -225,8 +220,8 @@ impl<L: Language> From<DecoratedComment<L>> for SourceComment<L> {
     }
 }
 
-#[derive(Debug, Copy, Clone)]
-enum DecoratedCommentKind {
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+pub enum CommentPosition {
     /// A comment that is separated by at least one line break from the following token
     ///
     /// ```javascript
@@ -249,6 +244,20 @@ enum DecoratedCommentKind {
     /// a /* comment */ + b
     /// ```
     SameLine,
+}
+
+impl CommentPosition {
+    pub const fn is_same_line(&self) -> bool {
+        matches!(self, CommentPosition::SameLine)
+    }
+
+    pub const fn is_own_line(&self) -> bool {
+        matches!(self, CommentPosition::OwnLine)
+    }
+
+    pub const fn is_end_of_line(&self) -> bool {
+        matches!(self, CommentPosition::EndOfLine)
+    }
 }
 
 #[derive(Debug)]
@@ -276,19 +285,19 @@ pub enum CommentPlacement<L: Language> {
 }
 
 /// Defines how to format comments for a specific [Language].
-pub trait CommentStyle {
+pub trait CommentStyle: Default {
     type Language: Language;
 
     /// Returns `true` if a comment with the given `text` is a `rome-ignore format:` suppression comment.
     fn is_suppression(text: &str) -> bool;
 
-    fn is_open_parentheses(kind: <Self::Language as Language>::Kind) -> bool;
-
     /// Returns the (kind)[CommentKind] of the comment
-    fn get_comment_kind(comment: &SyntaxTriviaPieceComments<Self::Language>) -> CommentKind;
+    fn get_comment_kind(&self, comment: &SyntaxTriviaPieceComments<Self::Language>) -> CommentKind;
 
-    fn place_comment(comment: DecoratedComment<Self::Language>)
-        -> CommentPlacement<Self::Language>;
+    fn place_comment(
+        &self,
+        comment: DecoratedComment<Self::Language>,
+    ) -> CommentPlacement<Self::Language>;
 }
 
 /// Type that stores the comments of a tree and gives access to:
@@ -320,31 +329,14 @@ pub struct Comments<L: Language> {
 
 impl<L: Language> Comments<L> {
     /// Extracts all the suppressions from `root` and its child nodes.
-    pub fn from_node<FormatLanguage>(root: &SyntaxNode<L>) -> Self
+    pub fn from_node<Style>(root: &SyntaxNode<L>, style: &Style) -> Self
     where
-        FormatLanguage: crate::FormatLanguage<SyntaxLanguage = L>,
+        Style: CommentStyle<Language = L>,
     {
-        let mut builder = CommentsBuilderVisitor::<FormatLanguage>::default();
-
-        for event in root.preorder_with_tokens(Direction::Next) {
-            match event {
-                WalkEvent::Enter(SyntaxElement::Node(node)) => {
-                    builder.visit_node(WalkEvent::Enter(node))
-                }
-
-                WalkEvent::Leave(SyntaxElement::Node(node)) => {
-                    builder.visit_node(WalkEvent::Leave(node))
-                }
-
-                WalkEvent::Enter(SyntaxElement::Token(token)) => builder.visit_token(token),
-                WalkEvent::Leave(SyntaxElement::Token(_)) => {
-                    // Handled as part of enter
-                }
-            }
-        }
+        let builder = CommentsBuilderVisitor::new(style);
 
         Self {
-            data: Rc::new(dbg!(builder.finish())),
+            data: Rc::new(dbg!(builder.visit(root))),
         }
     }
 
@@ -427,7 +419,7 @@ impl<L: Language> Comments<L> {
     /// Returns `true` if that node has skipped token trivia attached.
     #[inline]
     pub fn has_skipped(&self, token: &SyntaxToken<L>) -> bool {
-        self.data.with_skipped.contains(token)
+        self.data.with_skipped.contains(&token.key())
     }
 
     /// Returns `true` if the passed `node` has a leading suppression comment.
@@ -511,7 +503,7 @@ struct CommentsData<L: Language> {
     /// Stores the trailing node comments by node
     trailing_comments: AppendOnlyMultiMap<SyntaxNode<L>, SourceComment<L>>,
 
-    with_skipped: HashSet<SyntaxToken<L>>,
+    with_skipped: HashSet<SyntaxElementKey>,
 
     /// Stores all nodes for which [Comments::is_suppressed] has been called.
     /// This index of nodes that have been checked if they have a suppression comments is used to

@@ -38,26 +38,36 @@ impl FormatNodeRule<JsIfStatement> for FormatJsIfStatement {
         )?;
 
         if let Some(else_clause) = else_clause {
-            // const commentOnOwnLine =
-            //           hasComment(
-            //             node.consequent,
-            //             CommentCheckFlags.Trailing | CommentCheckFlags.Line
-            //           ) || needsHardlineAfterDanglingComment(node);
+            let comments = f.context().comments();
+            let dangling_comments = comments.dangling_comments(node.syntax());
+            let dangling_line_comment = dangling_comments
+                .last()
+                .map_or(false, |comment| comment.kind().is_line());
+            let has_dangling_comments = !dangling_comments.is_empty();
 
-            let trailing_line_comment = f
-                .context()
-                .comments()
-                .trailing_comments(else_clause.syntax())
+            let trailing_line_comment = comments
+                .trailing_comments(consequent.syntax())
                 .iter()
                 .any(|comment| comment.kind().is_line());
 
-            let else_on_same_line =
-                matches!(consequent, JsBlockStatement(_)) && !trailing_line_comment;
+            let else_on_same_line = matches!(consequent, JsBlockStatement(_))
+                && !trailing_line_comment
+                && !dangling_line_comment;
 
             if else_on_same_line {
                 write!(f, [space()])?;
             } else {
                 write!(f, [hard_line_break()])?;
+            }
+
+            if has_dangling_comments {
+                write!(f, [format_dangling_comments(node.syntax())])?;
+
+                if trailing_line_comment || dangling_line_comment {
+                    write!(f, [hard_line_break()])?
+                } else {
+                    write!(f, [space()])?;
+                }
             }
 
             write!(f, [else_clause.format()])?;

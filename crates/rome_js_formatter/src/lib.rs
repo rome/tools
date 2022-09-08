@@ -449,7 +449,13 @@ where
         }
 
         if !self.prints_comments(node) {
-            write!(f, [format_trailing_comments(node.syntax())])?;
+            write!(
+                f,
+                [
+                    format_dangling_comments(node.syntax()),
+                    format_trailing_comments(node.syntax())
+                ]
+            )?;
         }
 
         Ok(())
@@ -609,8 +615,6 @@ mod tests {
     use rome_js_syntax::SourceType;
     use rome_rowan::{TextRange, TextSize};
 
-    
-
     #[test]
     fn test_range_formatting() {
         let input = "
@@ -762,17 +766,17 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-fnString = // Comment0
-  // Comment1
-  'some' + 'long' + 'string';
+
+if (10) /* comment */ // comment
+true
+else /* comment */
+{true}
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
         let options = JsFormatOptions::new(syntax);
 
-        let result = format_node(options, &tree.syntax())
-            .unwrap()
-            .print();
+        let result = format_node(options, &tree.syntax()).unwrap().print();
         // check_reformat(CheckReformatParams {
         //     root: &tree.syntax(),
         //     text: result.as_code(),

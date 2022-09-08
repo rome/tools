@@ -1570,6 +1570,8 @@ version = "0.0.0"
 dependencies = [
  "cfg-if",
  "indexmap",
+ "rome_js_parser",
+ "rome_js_syntax",
  "rome_rowan",
  "rustc-hash",
  "schemars",

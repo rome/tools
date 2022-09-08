@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use rome_formatter::{write, Buffer, CstFormatContext};
+use rome_js_syntax::JsBlockStatement;
 use rome_js_syntax::{JsAnyStatement, JsEmptyStatement};
-use rome_js_syntax::{JsBlockStatement};
 
 use rome_js_syntax::JsBlockStatementFields;
 use rome_js_syntax::JsSyntaxKind;
@@ -24,7 +24,7 @@ impl FormatNodeRule<JsBlockStatement> for FormatJsBlockStatement {
 
         let comments = f.context().comments();
         if is_empty_block(node, comments) {
-            let has_dangling_trivia = comments.has_skipped(&r_curly_token);
+            let has_dangling_comments = comments.has_dangling_comments(node.syntax());
 
             for stmt in statements
                 .iter()
@@ -33,7 +33,7 @@ impl FormatNodeRule<JsBlockStatement> for FormatJsBlockStatement {
                 f.state_mut().track_token(&stmt.semicolon_token()?)
             }
 
-            if has_dangling_trivia {
+            if has_dangling_comments {
                 write!(f, [format_dangling_comments(node.syntax()).indented()])?;
             } else if is_non_collapsible(node) {
                 write!(f, [hard_line_break()])?;

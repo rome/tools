@@ -53,7 +53,8 @@ pub use builders::{
     soft_line_break_or_space, soft_line_indent_or_space, space, text, BestFitting,
 };
 pub use comments::{
-    CommentKind, CommentPlacement, CommentStyle, Comments, DecoratedComment, SourceComment,
+    CommentKind, CommentPlacement, CommentPosition, CommentStyle, Comments, DecoratedComment,
+    SourceComment,
 };
 pub use format_element::{normalize_newlines, FormatElement, Text, Verbatim, LINE_TERMINATORS};
 pub use group_id::GroupId;
@@ -881,7 +882,7 @@ pub fn format_node<L: FormatLanguage>(
             None => (root.clone(), None),
         };
 
-        let comments = Comments::from_node::<L>(&root);
+        let comments = Comments::from_node(&root, &L::CommentStyle::default());
         let format_node = FormatRefWithRule::new(&root, L::FormatRule::default());
 
         let context = language.create_context(comments, source_map);
