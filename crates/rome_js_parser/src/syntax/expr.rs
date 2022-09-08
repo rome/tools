@@ -709,27 +709,16 @@ fn parse_member_expression_rest(
                 };
                 parse_template_literal(p, m, *in_optional_chain, true)
             }
-            _ => {
+            T![<] | T![<<] => {
+                //  only those two possible token in cur position `parse_ts_type_arguments_in_expression` could possibly return a `Present(_)`
                 if let Present(_) = parse_ts_type_arguments_in_expression(p) {
                     let new_marker = lhs.precede(p);
                     lhs = new_marker.complete(p, JsSyntaxKind::TS_EXPRESSION_WITH_TYPE_ARGUMENTS);
                     continue;
-                    // match p.cur() {
-                    //     BACKTICK => {
-                    //         let m = lhs.precede(p);
-                    //         lhs = parse_template_literal(p, m, *in_optional_chain, true);
-                    //         continue;
-                    //     }
-                    //     T!['('] => {
-                    //         let m = lhs.precede(p);
-                    //         parse_call_arguments(p).ok();
-                    //         lhs = m.complete(p, JsSyntaxKind::JS_CALL_EXPRESSION);
-                    //         continue;
-                    //     }
-                    //     _ => {
-                    //     }
-                    // }
                 };
+                break;
+            }
+            _ => {
                 break;
             }
         };
@@ -1694,21 +1683,6 @@ fn parse_call_expression_rest(
         // type A<T> = T;
         // a<<T>(arg: T) => number, number, string>();
 
-        // if TypeScript.is_supported(p) && matches!(p.cur(), T![<] | T![<<]) {
-        //     // rewinds automatically if not a valid type arguments
-        //     let type_arguments = parse_ts_type_arguments_in_expression(p).ok();
-
-        //     if type_arguments.is_some() {
-        //         if p.at(BACKTICK) {
-        //             lhs = parse_template_literal(p, m, optional_chain_call, true);
-        //             continue;
-        //         }
-
-        //         parse_call_arguments(p).or_add_diagnostic(p, expected_parameters);
-        //         lhs = m.complete(p, JS_CALL_EXPRESSION);
-        //         continue;
-        //     }
-        // }
         let type_arguments = if optional_chain_call {
             let type_arguments = parse_ts_type_arguments_in_expression(p).ok();
             if p.cur() == BACKTICK {
@@ -1726,7 +1700,6 @@ fn parse_call_expression_rest(
         if type_arguments.is_some() || p.at(T!['(']) {
             parse_call_arguments(p)
                 .or_add_diagnostic(p, |p, range| expected_node("(", range).to_diagnostic(p));
-            // .expect("Expected parsed out arguments because the parser is positioned at '('");
             lhs = m.complete(p, JS_CALL_EXPRESSION);
             continue;
         }
