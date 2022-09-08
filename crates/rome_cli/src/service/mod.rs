@@ -113,7 +113,7 @@ impl SocketTransport {
         W: AsyncWrite + Unpin + Send + 'static,
     {
         /// Capacity of the "write channel", once this many requests have been
-        /// queued up calls to `write_send.send` will block the sending task
+        /// queued up, calls to `write_send.send` will block the sending task
         /// until enough capacity is available again
         ///
         /// Note that this does not limit how many requests can be in flight at
