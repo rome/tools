@@ -52,7 +52,7 @@ USAGE:
     INPUTS can be one or more filesystem path, each pointing to a single file or an entire directory to be searched recursively for supported files
 
 OPTIONS:
-    --write                                  Edit the files in place (beware!) instead of instead of printing the diff to the console
+    --write                                  Edit the files in place (beware!) instead of printing the diff to the console
     --skip-errors                            Skip over files containing syntax errors instead of emitting an error diagnostic.
     --indent-style <tabs|space>              Change the indention character (default: tabs)
     --indent-size <number>                   If the indentation style is set to spaces, determine how many spaces should be used for indentation (default: 2)
