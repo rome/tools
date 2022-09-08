@@ -40,7 +40,7 @@ const CHECK: Markup = markup! {
 
 const FORMAT_OPTIONS: Markup = markup! {
     "
-    "<Dim>"--write"</Dim>"                                  Edit the files in place (beware!) instead of instead of printing the diff to the console
+    "<Dim>"--write"</Dim>"                                  Edit the files in place (beware!) instead of printing the diff to the console
     "<Dim>"--skip-errors"</Dim>"                            Skip over files containing syntax errors instead of emitting an error diagnostic.
     "<Dim>"--indent-style <tabs|space>"</Dim>"              Change the indention character (default: tabs)
     "<Dim>"--indent-size <number>"</Dim>"                   If the indentation style is set to spaces, determine how many spaces should be used for indentation (default: 2)
