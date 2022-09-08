@@ -82,6 +82,27 @@ const NO_DEAD_CODE_ERROR: &str = r#"function f() {
 }
 "#;
 
+const APPLY_QUOTE_STYLE_BEFORE: &str = r#"
+let a = "something";
+let b = {
+    "hey": "hello"
+};"#;
+
+const APPLY_QUOTE_STYLE_AFTER: &str = "let a = 'something';
+let b = {\n\t'hey': 'hello',\n};\n";
+
+const CUSTOM_CONFIGURATION_BEFORE: &str = r#"function f() {
+  return { a, b }
+}"#;
+
+const CUSTOM_CONFIGURATION_AFTER: &str = "function f() {
+        return {
+                a,
+                b,
+        };
+}
+";
+
 mod check {
     use super::*;
     use crate::configs::{
@@ -823,6 +844,132 @@ mod format {
 
         drop(file);
         assert_cli_snapshot(module_path!(), "formatter_lint_warning", fs, console);
+    }
+
+    #[test]
+    fn applies_custom_configuration() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("file.js");
+        fs.insert(file_path.into(), CUSTOM_CONFIGURATION_BEFORE.as_bytes());
+
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![
+                OsString::from("format"),
+                OsString::from("--line-width"),
+                OsString::from("10"),
+                OsString::from("--indent-style"),
+                OsString::from("space"),
+                OsString::from("--indent-size"),
+                OsString::from("8"),
+                OsString::from("--write"),
+                file_path.as_os_str().into(),
+            ]),
+        );
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut file = fs
+            .open(file_path)
+            .expect("formatting target file was removed by the CLI");
+
+        let mut content = String::new();
+        file.read_to_string(&mut content)
+            .expect("failed to read file from memory FS");
+
+        assert_eq!(content, CUSTOM_CONFIGURATION_AFTER);
+
+        drop(file);
+        assert_cli_snapshot(module_path!(), "applies_custom_configuration", fs, console);
+    }
+
+    #[test]
+    fn applies_custom_configuration_over_config_file() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("rome.json");
+        fs.insert(file_path.into(), CONFIG_FORMAT.as_bytes());
+
+        let file_path = Path::new("file.js");
+        fs.insert(file_path.into(), CUSTOM_CONFIGURATION_BEFORE.as_bytes());
+
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![
+                OsString::from("format"),
+                OsString::from("--line-width"),
+                OsString::from("10"),
+                OsString::from("--indent-style"),
+                OsString::from("space"),
+                OsString::from("--indent-size"),
+                OsString::from("8"),
+                OsString::from("--write"),
+                file_path.as_os_str().into(),
+            ]),
+        );
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut file = fs
+            .open(file_path)
+            .expect("formatting target file was removed by the CLI");
+
+        let mut content = String::new();
+        file.read_to_string(&mut content)
+            .expect("failed to read file from memory FS");
+
+        assert_eq!(content, CUSTOM_CONFIGURATION_AFTER);
+
+        drop(file);
+        assert_cli_snapshot(
+            module_path!(),
+            "applies_custom_configuration_over_config_file",
+            fs,
+            console,
+        );
+    }
+
+    #[test]
+    fn applies_custom_quote_style() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("file.js");
+        fs.insert(file_path.into(), APPLY_QUOTE_STYLE_BEFORE.as_bytes());
+
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![
+                OsString::from("format"),
+                OsString::from("--quote-style"),
+                OsString::from("single"),
+                OsString::from("--quote-properties"),
+                OsString::from("preserve"),
+                OsString::from("--write"),
+                file_path.as_os_str().into(),
+            ]),
+        );
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut file = fs
+            .open(file_path)
+            .expect("formatting target file was removed by the CLI");
+
+        let mut content = String::new();
+        file.read_to_string(&mut content)
+            .expect("failed to read file from memory FS");
+
+        assert_eq!(content, APPLY_QUOTE_STYLE_AFTER);
+
+        drop(file);
+        assert_cli_snapshot(module_path!(), "applies_custom_quote_style", fs, console);
     }
 
     #[test]
