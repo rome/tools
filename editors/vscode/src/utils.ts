@@ -2,9 +2,9 @@ import { commands, TextDocument, TextEditor } from "vscode";
 
 const SUPPORTED_LANGUAGES = new Set(["javascript", "typescript"]);
 
-export type RomeDocument =
-	& TextDocument
-	& { languageId: keyof typeof SUPPORTED_LANGUAGES };
+export type RomeDocument = TextDocument & {
+	languageId: keyof typeof SUPPORTED_LANGUAGES;
+};
 export type RomeEditor = TextEditor & { document: RomeDocument };
 
 /** Sets ['when'](https://code.visualstudio.com/docs/getstarted/keybindings#_when-clause-contexts) clause contexts */

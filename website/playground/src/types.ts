@@ -46,9 +46,10 @@ export interface PlaygroundState {
 }
 
 // change `lineWidth` and `indentWidth` to string type, just to fits our `usePlaygroundState` fallback usage
-export type RomeConfiguration =
-	& Omit<PlaygroundState, "code" | "lineWidth" | "indentWidth">
-	& { lineWidth: string; indentWidth: string };
+export type RomeConfiguration = Omit<
+	PlaygroundState,
+	"code" | "lineWidth" | "indentWidth"
+> & { lineWidth: string; indentWidth: string };
 
 export const defaultRomeConfig: RomeConfiguration = {
 	lineWidth: "80",

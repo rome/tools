@@ -750,9 +750,12 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-const obj1 = conditionIsTruthy
-           ? { some: "long", object: "with", lots: "of", stuff }
-           : shortThing;
+type Example = {
+  [A in B]: T;
+} & {
+  [A in B]: T;
+};
+
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
@@ -770,7 +773,7 @@ const obj1 = conditionIsTruthy
         });
         assert_eq!(
             result.as_code(),
-            "type B8 = /*1*/ (C);\ntype B9 = (/*1*/ C);\ntype B10 = /*1*/ /*2*/ C;\n"
+            "type Example = {\n\t[A in B]: T;\n} & {\n\t[A in B]: T;\n};\n"
         );
     }
 

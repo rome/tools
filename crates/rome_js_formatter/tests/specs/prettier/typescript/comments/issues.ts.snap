@@ -42,7 +42,7 @@ export type AsyncExecuteOptions = child_process$execFileOpts & {
 ```diff
 --- Prettier
 +++ Rome
-@@ -2,36 +2,38 @@
+@@ -2,32 +2,32 @@
  // squished in a single line afterward
  export type BuckWebSocketMessage =
    | {
@@ -93,18 +93,7 @@ export type AsyncExecuteOptions = child_process$execFileOpts & {
 +  };
  
  // Two extra levels of indentation because of the comment
--export type AsyncExecuteOptions = child_process$execFileOpts & {
--  // The contents to write to stdin.
--  stdin?: string;
--  dontLogInNuclide?: boolean;
--};
-+export type AsyncExecuteOptions =
-+  & child_process$execFileOpts
-+  & {
-+    // The contents to write to stdin.
-+    stdin?: string;
-+    dontLogInNuclide?: boolean;
-+  };
+ export type AsyncExecuteOptions = child_process$execFileOpts & {
 ```
 
 # Output
@@ -142,13 +131,11 @@ export type BuckWebSocketMessage =
   };
 
 // Two extra levels of indentation because of the comment
-export type AsyncExecuteOptions =
-  & child_process$execFileOpts
-  & {
-    // The contents to write to stdin.
-    stdin?: string;
-    dontLogInNuclide?: boolean;
-  };
+export type AsyncExecuteOptions = child_process$execFileOpts & {
+  // The contents to write to stdin.
+  stdin?: string;
+  dontLogInNuclide?: boolean;
+};
 ```
 
 
