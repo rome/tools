@@ -766,9 +766,13 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-try {}
-catch(foo //comment
-) {}
+
+function call() {
+  return (
+    // Reason for a
+    a
+  )()
+}
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);

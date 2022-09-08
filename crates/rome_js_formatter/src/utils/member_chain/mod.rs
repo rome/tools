@@ -126,6 +126,13 @@ pub(crate) struct MemberChain {
 impl MemberChain {
     /// It tells if the groups should be break on multiple lines
     pub(crate) fn groups_should_break(&self, comments: &JsComments) -> FormatResult<bool> {
+        let node_has_comments =
+            self.head.has_comments(comments) || self.tail.has_comments(comments);
+
+        if node_has_comments {
+            return Ok(true);
+        }
+
         // Do not allow the group to break if it only contains a single call expression
         if self.calls_count <= 1 {
             return Ok(false);
@@ -139,12 +146,17 @@ impl MemberChain {
 
         // TODO: add here will_break logic
 
-        let node_has_comments =
-            self.tail.has_comments(comments)? || self.head.has_comments(comments);
+        //   const nodeHasComment =
+        //     flatGroups
+        //       .slice(1, -1)
+        //       .some((node) => hasComment(node.node, CommentCheckFlags.Leading)) ||
+        //     flatGroups
+        //       .slice(0, -1)
+        //       .some((node) => hasComment(node.node, CommentCheckFlags.Trailing)) ||
+        //     (groups[cutoff] &&
+        //       hasComment(groups[cutoff][0].node, CommentCheckFlags.Leading));
 
-        let should_break = node_has_comments || call_expressions_are_not_simple;
-
-        Ok(should_break)
+        Ok(call_expressions_are_not_simple)
     }
 
     /// We retrieve all the call expressions inside the group and we check if
@@ -434,5 +446,5 @@ pub fn is_member_call_chain(
 ) -> SyntaxResult<bool> {
     let chain = get_member_chain(expression, f)?;
 
-    chain.tail.is_member_call_chain(f.context().comments())
+    Ok(chain.tail.is_member_call_chain(f.context().comments()))
 }

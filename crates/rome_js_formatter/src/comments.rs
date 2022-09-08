@@ -3,8 +3,9 @@ use rome_formatter::{write, CommentPlacement, CommentPosition, Comments, Decorat
 use rome_formatter::{CommentKind, CommentStyle, SourceComment};
 use rome_js_syntax::suppression::{parse_suppression_comment, SuppressionCategory};
 use rome_js_syntax::{
-    JsAnyRoot, JsAnyStatement, JsArrayHole, JsBlockStatement, JsCatchClause, JsFinallyClause,
-    JsIfStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsWhileStatement,
+    JsAnyName, JsAnyRoot, JsAnyStatement, JsArrayHole, JsBlockStatement, JsCatchClause,
+    JsFinallyClause, JsIdentifierExpression, JsIfStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode,
+    JsWhileStatement,
 };
 use rome_rowan::{AstNode, SyntaxTriviaPieceComments, TextLen};
 
@@ -276,7 +277,7 @@ fn handle_member_expression_comment(
     // a
     // /* comment */[b]
     // ```
-    if following.kind() == JsSyntaxKind::JS_IDENTIFIER_EXPRESSION {
+    if JsAnyName::can_cast(following.kind()) || JsIdentifierExpression::can_cast(following.kind()) {
         CommentPlacement::Leading {
             node: comment.enclosing_node().clone(),
             comment,
