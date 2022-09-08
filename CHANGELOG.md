@@ -1,15 +1,15 @@
 # Rome changelog
 
-## 0.9.0
+## 0.9.1
 
 ### CLI
  
-- Fixed a regression where the arguments passed via CLI were ignored [#3175](https://github.com/rome/tools/issues/3175)
-- Fixed a regression where the command `rome ci` was not correctly reading the configuration [#3167](https://github.com/rome/tools/issues/3167)
+- Fixes a regression where the arguments passed via CLI were ignored [#3175](https://github.com/rome/tools/issues/3175)
+- Fixes a regression where the command `rome ci` was not correctly reading the configuration [#3167](https://github.com/rome/tools/issues/3167)
 
 ### VSCode
 
-- Fixed an issue where the extension could not load the configuration file, on Windows OS [#3182](https://github.com/rome/tools/issues/3182)
+- Windows: fixes an issue where the extension could not load the configuration file [#3182](https://github.com/rome/tools/issues/3182)
 
 ## 0.9.0
 
