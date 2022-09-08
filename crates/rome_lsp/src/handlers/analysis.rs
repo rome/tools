@@ -31,7 +31,7 @@ pub(crate) fn code_actions(
     let linter_enabled = &session.workspace.supports_feature(SupportsFeatureParams {
         path: rome_path,
         feature: FeatureName::Lint,
-    });
+    })?;
     if !linter_enabled {
         return Ok(Some(Vec::new()));
     }

@@ -1,4 +1,4 @@
-use std::{panic::catch_unwind, sync::Arc};
+use std::sync::Arc;
 
 use crate::capabilities::server_capabilities;
 use crate::requests::syntax_tree::{SyntaxTreePayload, SYNTAX_TREE_REQUEST};
@@ -6,9 +6,11 @@ use crate::session::Session;
 use crate::utils::{into_lsp_error, panic_to_lsp_error};
 use crate::{handlers, requests};
 use futures::future::ready;
+use futures::FutureExt;
 use rome_service::{workspace, Workspace};
 use tokio::io::{AsyncRead, AsyncWrite};
 use tokio::sync::Notify;
+use tokio::task::spawn_blocking;
 use tower_lsp::jsonrpc::Result as LspResult;
 use tower_lsp::{lsp_types::*, ClientSocket};
 use tower_lsp::{Client, LanguageServer, LspService, Server};
@@ -178,13 +180,27 @@ macro_rules! workspace_method {
         $builder = $builder.custom_method(
             concat!("rome/", stringify!($method)),
             |server: &LSPServer, params| {
-                let workspace = &server.session.workspace;
-                let result = catch_unwind(move || workspace.$method(params));
+                let span = tracing::trace_span!(concat!("rome/", stringify!($method)), params = ?params).or_current();
 
-                ready(match result {
-                    Ok(Ok(result)) => Ok(result),
-                    Ok(Err(err)) => Err(into_lsp_error(err)),
-                    Err(err) => Err(panic_to_lsp_error(err)),
+                let workspace = server.session.workspace.clone();
+                let result = spawn_blocking(move || {
+                    let _guard = span.entered();
+                    workspace.$method(params)
+                });
+
+                result.map(move |result| {
+                    // The type of `result` is `Result<Result<R, RomeError>, JoinError>`,
+                    // where the inner result is the return value of `$method` while the
+                    // outer one is added by `spawn_blocking` to catch panics or
+                    // cancellations of the task
+                    match result {
+                        Ok(Ok(result)) => Ok(result),
+                        Ok(Err(err)) => Err(into_lsp_error(err)),
+                        Err(err) => match err.try_into_panic() {
+                            Ok(err) => Err(panic_to_lsp_error(err)),
+                            Err(err) => Err(into_lsp_error(err)),
+                        },
+                    }
                 })
             },
         );
@@ -212,11 +228,7 @@ impl ServerFactory {
             ready(Ok(Some(())))
         });
 
-        // supports_feature is special because it returns a bool instead of a Result
-        builder = builder.custom_method("rome/supports_feature", |server: &LSPServer, params| {
-            ready(Ok(server.session.workspace.supports_feature(params)))
-        });
-
+        workspace_method!(builder, supports_feature);
         workspace_method!(builder, update_settings);
         workspace_method!(builder, open_file);
         workspace_method!(builder, get_syntax_tree);

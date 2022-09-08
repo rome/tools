@@ -1,14 +1,11 @@
 use std::{
     panic::RefUnwindSafe,
-    sync::{
-        atomic::{AtomicU64, Ordering},
-        Mutex,
-    },
+    sync::atomic::{AtomicU64, Ordering},
 };
 
 use rome_formatter::Printed;
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
-use serde_json::{from_slice, json, to_vec};
+use serde_json::json;
 
 use crate::{RomeError, TransportError, Workspace};
 
@@ -21,46 +18,22 @@ use super::{
 };
 
 pub struct WorkspaceClient<T> {
-    transport: Mutex<T>,
+    transport: T,
     request_id: AtomicU64,
 }
 
 pub trait WorkspaceTransport {
-    fn send(&mut self, request: Vec<u8>) -> Result<(), TransportError>;
-    fn receive(&mut self) -> Result<Vec<u8>, TransportError>;
+    fn request<P, R>(&self, request: TransportRequest<P>) -> Result<R, TransportError>
+    where
+        P: Serialize,
+        R: DeserializeOwned;
 }
 
-#[derive(Debug, Serialize)]
-struct JsonRpcRequest<P> {
-    jsonrpc: &'static str,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    id: Option<u64>,
-    method: &'static str,
-    params: P,
-}
-
-#[derive(Debug, Deserialize)]
-struct JsonRpcResponse<'a, R> {
-    #[allow(dead_code)]
-    jsonrpc: &'a str,
-    id: u64,
-    #[serde(flatten)]
-    status: JsonRpcResult<R>,
-}
-
-#[derive(Debug, Deserialize)]
-#[serde(untagged)]
-enum JsonRpcResult<R> {
-    Ok { result: R },
-    Err { error: JsonRpcError },
-}
-
-#[derive(Debug, Deserialize)]
-struct JsonRpcError {
-    #[allow(dead_code)]
-    code: i64,
-    message: String,
-    data: Option<RomeError>,
+#[derive(Debug)]
+pub struct TransportRequest<P> {
+    pub id: u64,
+    pub method: &'static str,
+    pub params: P,
 }
 
 #[derive(Debug, Deserialize)]
@@ -72,7 +45,7 @@ where
 {
     pub fn new(transport: T) -> Result<Self, RomeError> {
         let client = Self {
-            transport: Mutex::new(transport),
+            transport,
             request_id: AtomicU64::new(0),
         };
 
@@ -99,32 +72,12 @@ where
         P: Serialize,
         R: DeserializeOwned,
     {
-        let mut transport = self.transport.lock().unwrap();
-
         let id = self.request_id.fetch_add(1, Ordering::Relaxed);
-        let request = JsonRpcRequest {
-            jsonrpc: "2.0",
-            id: Some(id),
-            method,
-            params,
-        };
+        let request = TransportRequest { id, method, params };
 
-        let request = to_vec(&request).map_err(TransportError::from)?;
-        transport.send(request)?;
+        let response = self.transport.request(request)?;
 
-        let response = transport.receive()?;
-        let response: JsonRpcResponse<R> = from_slice(&response).map_err(TransportError::from)?;
-
-        // This should be true since we don't allow concurrent requests yet
-        assert_eq!(response.id, id);
-
-        match response.status {
-            JsonRpcResult::Ok { result } => Ok(result),
-            JsonRpcResult::Err { error } => match error.data {
-                Some(error) => Err(error),
-                None => Err(RomeError::from(TransportError::RPCError(error.message))),
-            },
-        }
+        Ok(response)
     }
 
     pub fn shutdown(self) -> Result<(), RomeError> {
@@ -136,9 +89,8 @@ impl<T> Workspace for WorkspaceClient<T>
 where
     T: WorkspaceTransport + RefUnwindSafe + Send + Sync,
 {
-    fn supports_feature(&self, params: SupportsFeatureParams) -> bool {
+    fn supports_feature(&self, params: SupportsFeatureParams) -> Result<bool, RomeError> {
         self.request("rome/supports_feature", params)
-            .unwrap_or(false)
     }
 
     fn update_settings(&self, params: UpdateSettingsParams) -> Result<(), RomeError> {

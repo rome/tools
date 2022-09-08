@@ -63,7 +63,7 @@ use rome_rowan::TextRangeSchema;
 use rome_text_edit::Indel;
 use std::{borrow::Cow, panic::RefUnwindSafe, sync::Arc};
 
-pub use self::client::{WorkspaceClient, WorkspaceTransport};
+pub use self::client::{TransportRequest, WorkspaceClient, WorkspaceTransport};
 pub use crate::file_handlers::Language;
 
 mod client;
@@ -259,7 +259,7 @@ pub trait Workspace: Send + Sync + RefUnwindSafe {
     /// Checks whether a certain feature is supported. There are different conditions:
     /// - Rome doesn't recognize a file, so it can provide the feature;
     /// - the feature is disabled inside the configuration;
-    fn supports_feature(&self, params: SupportsFeatureParams) -> bool;
+    fn supports_feature(&self, params: SupportsFeatureParams) -> Result<bool, RomeError>;
 
     /// Update the global settings for this workspace
     fn update_settings(&self, params: UpdateSettingsParams) -> Result<(), RomeError>;
