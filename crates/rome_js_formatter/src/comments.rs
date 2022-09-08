@@ -5,7 +5,7 @@ use rome_js_syntax::suppression::{parse_suppression_comment, SuppressionCategory
 use rome_js_syntax::{
     JsAnyRoot, JsAnyStatement, JsArrayAssignmentPattern, JsArrayBindingPattern, JsArrayExpression,
     JsArrayHole, JsBlockStatement, JsIfStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode,
-    JsSyntaxToken,
+    JsSyntaxToken, JsWhileStatement,
 };
 use rome_rowan::{
     declare_node_union, AstNode, SyntaxNode, SyntaxResult, SyntaxTriviaPieceComments, TextLen,
@@ -170,8 +170,9 @@ impl CommentStyle for JsCommentStyle {
             CommentPosition::EndOfLine => place_comment(
                 comment,
                 &[
-                    handle_if_statement_comment,
                     handle_typecast_comment,
+                    handle_if_statement_comment,
+                    place_while_comment,
                     // handle_block_statement_comment,
                     handle_root_comments,
                     handle_array_hole_comment,
@@ -181,6 +182,7 @@ impl CommentStyle for JsCommentStyle {
                 comment,
                 &[
                     handle_if_statement_comment,
+                    place_while_comment,
                     // handle_block_statement_comment,
                     handle_root_comments,
                     handle_array_hole_comment,
@@ -190,6 +192,7 @@ impl CommentStyle for JsCommentStyle {
                 comment,
                 &[
                     handle_if_statement_comment,
+                    place_while_comment,
                     // handle_block_statement_comment,
                     handle_root_comments,
                     handle_array_hole_comment,
@@ -402,11 +405,13 @@ fn handle_if_statement_comment(
             // true
             //
             // ```
-            if (if_statement.consequent().map(AstNode::into_syntax).as_ref()) == Ok(following) {
-                return Ok(CommentPlacement::Leading {
-                    node: following.clone(),
-                    comment,
-                });
+            if let Ok(consequent) = if_statement.consequent() {
+                if consequent.syntax() == following {
+                    return Ok(CommentPlacement::Leading {
+                        node: following.clone(),
+                        comment,
+                    });
+                }
             }
         }
         (JsSyntaxKind::JS_ELSE_CLAUSE, _) => {
@@ -426,6 +431,55 @@ fn handle_if_statement_comment(
         }
         _ => {
             // fall through
+        }
+    }
+
+    Err(comment)
+}
+
+fn place_while_comment(
+    comment: DecoratedComment<JsLanguage>,
+) -> Result<CommentPlacement<JsLanguage>, DecoratedComment<JsLanguage>> {
+    let (while_statement, following) = match (
+        JsWhileStatement::cast_ref(comment.enclosing_node()),
+        comment.following_node(),
+    ) {
+        (Some(while_statement), Some(following)) => (while_statement, following),
+        _ => return Err(comment),
+    };
+
+    if let Some(preceding) = comment.preceding_node() {
+        // Test if this is a comment right before the condition's `)`
+        if comment.following_token().kind() == JsSyntaxKind::R_PAREN {
+            return Ok(CommentPlacement::Trailing {
+                node: preceding.clone(),
+                comment,
+            });
+        }
+    }
+
+    // Move comments coming before the `{` inside of the block
+    //
+    // ```javascript
+    // while (cond) /* test */ {
+    // }
+    // ```
+    if let Some(block) = JsBlockStatement::cast_ref(following) {
+        return Ok(place_block_statement_comment(block, comment));
+    }
+
+    // Make all comments after the condition's `)` leading comments
+    // ```javascript
+    // while (5) // comment
+    // true
+    //
+    // ```
+    if let Ok(body) = while_statement.body() {
+        if body.syntax() == following {
+            return Ok(CommentPlacement::Leading {
+                node: body.into_syntax(),
+                comment,
+            });
         }
     }
 
