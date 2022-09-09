@@ -27,3 +27,5 @@ console.log({
 
 let camelCase;
 let longCamelCase;
+
+const THIS_IS_OK = 1;
