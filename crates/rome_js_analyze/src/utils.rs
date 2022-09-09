@@ -236,9 +236,4 @@ fn ok_to_camel_case() {
         to_camel_case("long_camel_case"),
         Cow::Owned(s) if s.as_str() == "longCamelCase"
     ));
-
-    assert!(matches!(
-        to_camel_case("UPPER_CASE"),
-        Cow::Owned(s) if s.as_str() == "upperCase"
-    ));
 }

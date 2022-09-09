@@ -35,8 +35,8 @@ let camelCase;
 let longCamelCase;
 
 let UPPER_CASE = 1;
-let { UPPER_CASE } = 1;
-let [ UPPER_CASE ] = 1;
+let { UPPER_CASE } = env;
+let [ UPPER_CASE ] = env;
 
 const THIS_IS_OK = 1;
 const { THIS_IS_OK } = env;
@@ -192,8 +192,8 @@ Safe fix: Rename this symbol to camel case
 29 29 |   
 30    | - let UPPER_CASE = 1;
    30 | + let uPPERCASE = 1;
-31 31 |   let { UPPER_CASE } = 1;
-32 32 |   let [ UPPER_CASE ] = 1;
+31 31 |   let { UPPER_CASE } = env;
+32 32 |   let [ UPPER_CASE ] = env;
 33 33 |   
 
 

@@ -59,8 +59,8 @@ fn check_is_camel(name: &str) -> Option<State> {
     }
 }
 
-// It is ok to be non camel case when:
-// 1 - is a const variable (eg: const THIS_IS_OK)
+// It is OK to be non camel case when:
+// 1. it's a const variable (eg: const THIS_IS_OK)
 fn is_non_camel_ok(binding: &JsIdentifierBinding) -> Option<bool> {
     use JsSyntaxKind::*;
     let declarator = binding.parent::<JsVariableDeclarator>()?;
