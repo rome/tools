@@ -766,13 +766,16 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-type T4 = test
-    extends // comment
-     string
-    // something
-    ? unknown : test extends number ? undefined :
-        // else
-        undefined;
+class Foo {
+  // rome-ignore format:
+  e(
+    lol /*string*/,
+    lol2 /*string*/,
+    lol3 /*string*/,
+    lol4 /*string*/
+  ) {} /* string*/
+}
+
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);

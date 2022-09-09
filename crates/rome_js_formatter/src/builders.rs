@@ -146,8 +146,8 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
                 let trailing_comments = comments.trailing_comments(self.node);
 
                 let outside_trimmed_range_start = trailing_comments.partition_point(|comment| {
-                    !trimmed_source_range
-                        .contains_range(source_range(f, comment.piece().text_range()))
+                    source_range(f, comment.piece().text_range()).end()
+                        <= trimmed_source_range.end()
                 });
 
                 write!(
