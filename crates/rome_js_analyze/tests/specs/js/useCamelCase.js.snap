@@ -34,7 +34,13 @@ console.log({
 let camelCase;
 let longCamelCase;
 
+let UPPER_CASE = 1;
+let { UPPER_CASE } = 1;
+let [ UPPER_CASE ] = 1;
+
 const THIS_IS_OK = 1;
+const { THIS_IS_OK } = env;
+const [ THIS_IS_OK ] = env;
 
 ```
 
@@ -168,6 +174,27 @@ warning[js/useCamelCase]: Prefer methods names in camel case.
    │
 15 │     set snake_setter(v) {
    │         ------------
+
+
+```
+
+```
+warning[js/useCamelCase]: Prefer variables names in camel case.
+   ┌─ useCamelCase.js:31:5
+   │
+31 │ let UPPER_CASE = 1;
+   │     ----------
+
+Safe fix: Rename this symbol to camel case
+      | @@ -28,7 +28,7 @@
+27 27 |   let camelCase;
+28 28 |   let longCamelCase;
+29 29 |   
+30    | - let UPPER_CASE = 1;
+   30 | + let uPPERCASE = 1;
+31 31 |   let { UPPER_CASE } = 1;
+32 32 |   let [ UPPER_CASE ] = 1;
+33 33 |   
 
 
 ```
