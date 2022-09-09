@@ -5,7 +5,7 @@ expression: content
 # Termination Message
 
 ```block
-missing argument 'stdin'. Type 'main-ce5f6749bdca01ce format --help' for more information.
+missing argument 'stdin'. Type 'rome format --help' for more information.
 ```
 
 

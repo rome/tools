@@ -70,10 +70,17 @@ pub enum Termination {
 }
 
 fn command_name() -> String {
-    current_exe()
+    #[allow(unused_assignments)]
+    let mut command = current_exe()
         .ok()
         .and_then(|path| Some(path.file_name()?.to_str()?.to_string()))
-        .unwrap_or_else(|| String::from("rome"))
+        .unwrap_or_else(|| String::from("rome"));
+    cfg_if::cfg_if! {
+        if #[cfg(debug_assertions)] {
+             command = String::from("rome")
+        }
+    }
+    command
 }
 
 // Termination implements Debug by redirecting to Display instead of deriving
