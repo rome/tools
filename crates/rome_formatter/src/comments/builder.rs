@@ -15,8 +15,8 @@ pub(super) struct CommentsBuilderVisitor<'a, Style: CommentStyle> {
     // State
     pending_comments: Vec<DecoratedComment<Style::Language>>,
     preceding_node: Option<SyntaxNode<Style::Language>>,
-    following_node: Option<SyntaxNode<Style::Language>>,
-    enclosing_node: Option<SyntaxNode<Style::Language>>,
+    following_node_index: Option<usize>,
+    parents: Vec<SyntaxNode<Style::Language>>,
     last_token: Option<SyntaxToken<Style::Language>>,
 }
 
@@ -31,8 +31,8 @@ where
 
             pending_comments: Default::default(),
             preceding_node: Default::default(),
-            following_node: Default::default(),
-            enclosing_node: Default::default(),
+            following_node_index: Default::default(),
+            parents: Default::default(),
             last_token: Default::default(),
         }
     }
@@ -70,18 +70,17 @@ where
                     return;
                 }
 
-                let is_root = self.enclosing_node.is_none();
+                let is_root = self.parents.is_empty();
 
-                if is_root {
-                    self.enclosing_node = Some(node);
-                }
                 // Associate comments with the most outer node
                 // Set following here because it is the "following node" of the next token's leading trivia.
-                else if self.following_node.is_none() {
+                if !is_root && self.following_node_index.is_none() {
                     // Flush in case the node doesn't have any tokens.
                     self.flush_comments(Some(&node));
-                    self.following_node = Some(node);
+                    self.following_node_index = Some(self.parents.len());
                 }
+
+                self.parents.push(node);
             }
 
             WalkEvent::Leave(node) => {
@@ -89,19 +88,11 @@ where
                     return;
                 }
 
+                self.parents.pop().unwrap();
+
                 // We're passed this node, flush any pending comments for its children
-                self.following_node = None;
+                self.following_node_index = None;
                 self.flush_comments(None);
-
-                self.enclosing_node = node.parent();
-
-                while let Some(enclosing) = &self.enclosing_node {
-                    if enclosing.kind().is_list() {
-                        self.enclosing_node = enclosing.parent();
-                    } else {
-                        break;
-                    }
-                }
 
                 // We're passed this node, so it must precede the sibling that comes next.
                 self.preceding_node = Some(node);
@@ -203,9 +194,9 @@ where
         }
 
         // Set following node to `None` because it now becomes the enclosing node.
-        if let Some(following_node) = self.following_node.take() {
+        if let Some(following_node) = self.following_node() {
             self.flush_comments(Some(&following_node.clone()));
-            self.enclosing_node = Some(following_node);
+            self.following_node_index = None;
 
             // The following node is only set after entering a node
             // That means, following node is only set for the first token of a node.
@@ -215,9 +206,20 @@ where
     }
 
     fn enclosing_node(&self) -> &SyntaxNode<Style::Language> {
-        self.enclosing_node
-            .as_ref()
-            .expect("Expected enclosing nodes to at least contain the root node.")
+        let element = match self.following_node_index {
+            None => self.parents.last(),
+            Some(index) => Some(&self.parents[index - 1]),
+        };
+
+        element.expect("Expected enclosing nodes to at least contain the root node.")
+    }
+
+    fn following_node(&self) -> Option<&SyntaxNode<Style::Language>> {
+        self.following_node_index.map(|index| {
+            self.parents
+                .get(index)
+                .expect("Expected following node index to point to a valid parent node")
+        })
     }
 
     fn queue_comment(&mut self, comment: DecoratedComment<Style::Language>) {
@@ -234,6 +236,12 @@ where
     }
 
     fn finish(mut self) -> CommentsData<Style::Language> {
+        assert!(
+            self.parents.is_empty(),
+            "Expected all enclosing nodes to have been processed but contains {:#?}",
+            self.parents
+        );
+
         self.flush_comments(None);
 
         self.builder.finish(Style::is_suppression)
@@ -530,6 +538,33 @@ mod tests {
                 .collect::<Vec<_>>(),
             vec![String::from("a: 'a'")]
         )
+    }
+
+    #[test]
+    fn dangling_arrow() {
+        let (decorated_comments, comments) = extract_comments("(/* comment */)  => true");
+
+        assert_eq!(decorated_comments.len(), 1);
+
+        let decorated = &decorated_comments[0];
+        assert_eq!(decorated.position(), CommentPosition::SameLine);
+        assert_eq!(decorated.lines_before(), 0);
+        assert_eq!(decorated.lines_after(), 0);
+        assert_eq!(decorated.preceding_node(), None);
+        assert_eq!(decorated.following_node(), None);
+        assert_eq!(
+            decorated.enclosing_node().kind(),
+            JsSyntaxKind::JS_PARAMETERS
+        );
+
+        assert_eq!(
+            comments
+                .dangling_comments
+                .keys()
+                .map(|node| node.kind())
+                .collect::<Vec<_>>(),
+            vec![JsSyntaxKind::JS_PARAMETERS]
+        );
     }
 
     #[test]

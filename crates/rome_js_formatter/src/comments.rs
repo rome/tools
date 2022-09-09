@@ -3,9 +3,10 @@ use rome_formatter::{write, CommentPlacement, CommentPosition, Comments, Decorat
 use rome_formatter::{CommentKind, CommentStyle, SourceComment};
 use rome_js_syntax::suppression::{parse_suppression_comment, SuppressionCategory};
 use rome_js_syntax::{
-    JsAnyName, JsAnyRoot, JsAnyStatement, JsArrayHole, JsBlockStatement, JsBreakStatement,
-    JsCatchClause, JsContinueStatement, JsEmptyStatement, JsFinallyClause, JsIdentifierExpression,
-    JsIfStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsVariableDeclarator, JsWhileStatement,
+    JsAnyName, JsAnyRoot, JsAnyStatement, JsArrayHole, JsArrowFunctionExpression, JsBlockStatement,
+    JsCallArguments, JsCatchClause, JsConstructorParameters, JsEmptyStatement, JsFinallyClause,
+    JsIdentifierExpression, JsIfStatement, JsLanguage, JsParameters, JsSyntaxKind, JsSyntaxNode,
+    JsVariableDeclarator, JsWhileStatement,
 };
 use rome_rowan::{AstNode, SyntaxTriviaPieceComments, TextLen};
 
@@ -169,6 +170,7 @@ impl CommentStyle for JsCommentStyle {
                 .or_else(handle_while_comment)
                 .or_else(handle_for_comment)
                 .or_else(handle_root_comments)
+                .or_else(handle_after_arrow_param_comment)
                 .or_else(handle_array_hole_comment)
                 .or_else(handle_continue_break_comment),
         }
@@ -183,6 +185,25 @@ fn handle_typecast_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlac
             comment,
         },
         _ => CommentPlacement::Default(comment),
+    }
+}
+
+fn handle_after_arrow_param_comment(
+    comment: DecoratedComment<JsLanguage>,
+) -> CommentPlacement<JsLanguage> {
+    let is_next_arrow = comment.following_token().kind() == JsSyntaxKind::FAT_ARROW;
+
+    // Makes comments after the `(` and `=>` dangling comments
+    // ```javascript
+    // () /* comment */ => true
+    // ```
+    if JsArrowFunctionExpression::can_cast(comment.enclosing_node().kind()) && is_next_arrow {
+        CommentPlacement::Dangling {
+            node: comment.enclosing_node().clone(),
+            comment,
+        }
+    } else {
+        CommentPlacement::Default(comment)
     }
 }
 
@@ -637,6 +658,54 @@ fn handle_for_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacement
         CommentPlacement::Default(comment)
     }
 }
+
+// Handles comments in empty `()` parens
+// fn handle_function_parameters_comment(
+//     comment: DecoratedComment<JsLanguage>,
+// ) -> CommentPlacement<JsLanguage> {
+//
+//     if comment.following_token().kind() != JsSyntaxKind::R_PAREN {
+//         return CommentPlacement::Default(comment);
+//     }
+
+// if (
+//     enclosingNode &&
+//     ((isRealFunctionLikeNode(enclosingNode) &&
+//       getFunctionParameters(enclosingNode).length === 0) ||
+//       (isCallLikeExpression(enclosingNode) &&
+//         getCallArguments(enclosingNode).length === 0))
+//   ) {
+//     addDanglingComment(enclosingNode, comment);
+//     return true;
+//   }
+//
+// let enclosing = comment.enclosing_node();
+//
+// if let Some(arguments) = JsCallArguments::cast_ref(enclosing) {
+//     if arguments.args().is_empty() {
+//         return CommentPlacement::Dangling {
+//             node: enclosing.clone(),
+//             comment,
+//         };
+//     }
+// } else if let Some(parameters) = JsParameters::cast_ref(enclosing) {
+//     if parameters.items().is_empty() {
+//         return CommentPlacement::Dangling {
+//             node: enclosing.clone(),
+//                 comment,
+//             };
+//         }
+//     } else if let Some(parameters) = JsConstructorParameters::cast_ref(enclosing) {
+//         if parameters.parameters().is_empty() {
+//             return CommentPlacement::Dangling {
+//                 node: enclosing.clone(),
+//                 comment,
+//             };
+//         }
+//     }
+//
+//     CommentPlacement::Default(comment)
+// }
 
 fn handle_variable_declarator_comment(
     comment: DecoratedComment<JsLanguage>,

@@ -8,7 +8,8 @@ use crate::js::lists::parameter_list::{
 
 use crate::builders::format_delimited;
 use rome_js_syntax::{
-    JsAnyConstructorParameter, JsAnyFormalParameter, JsCallExpression, JsConstructorParameters, JsParameters, JsSyntaxKind, JsSyntaxToken, TsType,
+    JsAnyConstructorParameter, JsAnyFormalParameter, JsCallExpression, JsConstructorParameters,
+    JsParameters, JsSyntaxKind, JsSyntaxToken, TsType,
 };
 use rome_rowan::{declare_node_union, SyntaxResult};
 
@@ -59,7 +60,7 @@ impl Format<JsFormatContext> for FormatJsAnyParameters {
                     f,
                     [
                         l_paren_token.format(),
-                        format_dangling_comments(self.syntax()),
+                        soft_block_indent(&format_dangling_comments(self.syntax())),
                         r_paren_token.format()
                     ]
                 )

@@ -15,14 +15,27 @@ impl FormatNodeRule<JsxSpreadChild> for FormatJsxSpreadChild {
             r_curly_token,
         } = node.as_fields();
 
-        write!(
-            f,
-            [
-                l_curly_token.format(),
-                dotdotdot_token.format(),
-                expression.format(),
-                r_curly_token.format()
-            ]
-        )
+        let expression = expression?;
+
+        let format_inner = format_with(|f| {
+            write!(
+                f,
+                [
+                    dotdotdot_token.format(),
+                    expression.format(),
+                    line_suffix_boundary()
+                ]
+            )
+        });
+
+        write!(f, [l_curly_token.format()])?;
+
+        if f.comments().has_comments(expression.syntax()) {
+            write!(f, [soft_block_indent(&format_inner)])?;
+        } else {
+            write!(f, [format_inner])?;
+        }
+
+        write!(f, [r_curly_token.format()])
     }
 }
