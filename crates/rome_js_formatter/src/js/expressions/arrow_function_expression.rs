@@ -197,7 +197,7 @@ fn format_signature(arrow: &JsArrowFunctionExpression) -> impl Format<JsFormatCo
 
         write!(f, [group(&format_parameters)])?;
 
-        if dbg!(f.comments()).has_dangling_comments(arrow.syntax()) {
+        if f.comments().has_dangling_comments(arrow.syntax()) {
             write!(f, [space(), format_dangling_comments(arrow.syntax())])?;
         }
 

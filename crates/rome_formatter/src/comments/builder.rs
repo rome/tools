@@ -144,8 +144,6 @@ where
 
         let trailing_end = trailing_end.unwrap_or(self.pending_comments.len());
 
-        let mut has_skipped = false;
-
         // Process the leading trivia of the current token. the trailing trivia is handled as part of the next token
         for leading in token.leading_trivia().pieces() {
             if leading.is_newline() {
@@ -154,22 +152,22 @@ where
                 self.builder.mark_has_skipped(&token);
 
                 lines_before = 0;
-                has_skipped = true;
+                break;
             } else if let Some(comment) = leading.as_comments() {
                 let kind = self.style.get_comment_kind(&comment);
-                if !has_skipped {
-                    self.queue_comment(DecoratedComment {
-                        enclosing: self.enclosing_node().clone(),
-                        preceding: self.preceding_node.clone(),
-                        following: None,
-                        following_token: token.clone(),
-                        lines_before,
-                        lines_after: 0,
-                        position: CommentPosition::OwnLine,
-                        kind,
-                        comment,
-                    });
-                }
+
+                self.queue_comment(DecoratedComment {
+                    enclosing: self.enclosing_node().clone(),
+                    preceding: self.preceding_node.clone(),
+                    following: None,
+                    following_token: token.clone(),
+                    lines_before,
+                    lines_after: 0,
+                    position: CommentPosition::OwnLine,
+                    kind,
+                    comment,
+                });
+
                 lines_before = 0;
             }
         }

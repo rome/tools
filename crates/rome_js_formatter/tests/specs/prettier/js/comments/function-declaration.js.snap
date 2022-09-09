@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/comments/function-declaration.js
 ---
 
 # Input
@@ -74,71 +76,19 @@ function foo4() {
 ```diff
 --- Prettier
 +++ Rome
-@@ -3,34 +3,35 @@
+@@ -3,9 +3,9 @@
  function c(/* comment */ argA, argB, argC) {} // comment
  call((/*object*/ row) => {});
  KEYPAD_NUMBERS.map(
 -  (
 -    num, // Buttons 0-9
 -  ) => <div />,
-+  (num) => (
++  (num) =>
 +    // Buttons 0-9
-+    <div />
-+  ),
++    <div />,
  );
  
--function f1 /* f */() {}
-+function f1 /* f */ () {}
- function f2(/* args */) {}
- function f3() /* returns */ {}
--function f4 /* f */(/* args */) /* returns */ {}
-+function f4 /* f */ (/* args */) /* returns */ {}
- 
--function f5 /* f */(/* a */ a) {}
--function f6 /* f */(a /* a */) {}
--function f7 /* f */(/* a */ a) /* returns */ {}
-+function f5 /* f */ (/* a */ a) {}
-+function f6 /* f */ (a /* a */) {}
-+function f7 /* f */ (/* a */ a) /* returns */ {}
- 
- const obj = {
--  f1 /* f */() {},
-+  f1 /* f */ () {},
-   f2(/* args */) {},
-   f3() /* returns */ {},
--  f4 /* f */(/* args */) /* returns */ {},
-+  f4 /* f */ (/* args */) /* returns */ {},
- };
- 
--(function f /* f */() {})();
-+(function f /* f */ () {})();
- (function f(/* args */) {})();
- (function f() /* returns */ {})();
--(function f /* f */(/* args */) /* returns */ {})();
-+(function f /* f */ (/* args */) /* returns */ {})();
- 
- class C1 {
--  f /* f */() {}
-+  f /* f */ () {}
- }
- class C2 {
-   f(/* args */) {}
-@@ -39,11 +40,12 @@
-   f() /* returns */ {}
- }
- class C4 {
--  f /* f */(/* args */) /* returns */ {}
-+  f /* f */ (/* args */) /* returns */ {}
- }
- 
--function foo1() {
--  // this is a function
-+function foo1()
-+// this is a function
-+{
-   return 42;
- }
- 
+ function f1 /* f */() {}
 ```
 
 # Output
@@ -149,35 +99,34 @@ function b() {} // comment
 function c(/* comment */ argA, argB, argC) {} // comment
 call((/*object*/ row) => {});
 KEYPAD_NUMBERS.map(
-  (num) => (
+  (num) =>
     // Buttons 0-9
-    <div />
-  ),
+    <div />,
 );
 
-function f1 /* f */ () {}
+function f1 /* f */() {}
 function f2(/* args */) {}
 function f3() /* returns */ {}
-function f4 /* f */ (/* args */) /* returns */ {}
+function f4 /* f */(/* args */) /* returns */ {}
 
-function f5 /* f */ (/* a */ a) {}
-function f6 /* f */ (a /* a */) {}
-function f7 /* f */ (/* a */ a) /* returns */ {}
+function f5 /* f */(/* a */ a) {}
+function f6 /* f */(a /* a */) {}
+function f7 /* f */(/* a */ a) /* returns */ {}
 
 const obj = {
-  f1 /* f */ () {},
+  f1 /* f */() {},
   f2(/* args */) {},
   f3() /* returns */ {},
-  f4 /* f */ (/* args */) /* returns */ {},
+  f4 /* f */(/* args */) /* returns */ {},
 };
 
-(function f /* f */ () {})();
+(function f /* f */() {})();
 (function f(/* args */) {})();
 (function f() /* returns */ {})();
-(function f /* f */ (/* args */) /* returns */ {})();
+(function f /* f */(/* args */) /* returns */ {})();
 
 class C1 {
-  f /* f */ () {}
+  f /* f */() {}
 }
 class C2 {
   f(/* args */) {}
@@ -186,12 +135,11 @@ class C3 {
   f() /* returns */ {}
 }
 class C4 {
-  f /* f */ (/* args */) /* returns */ {}
+  f /* f */(/* args */) /* returns */ {}
 }
 
-function foo1()
-// this is a function
-{
+function foo1() {
+  // this is a function
   return 42;
 }
 

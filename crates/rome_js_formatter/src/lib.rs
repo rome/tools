@@ -766,9 +766,12 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-        (/* comment */)  => true
+function foo1() // this is a function
+{
+	return 42;
+}
 "#;
-        let syntax = SourceType::js_module();
+        let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
         let options = JsFormatOptions::new(syntax);
 

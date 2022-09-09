@@ -5,8 +5,8 @@ use rome_js_syntax::suppression::{parse_suppression_comment, SuppressionCategory
 use rome_js_syntax::{
     JsAnyName, JsAnyRoot, JsAnyStatement, JsArrayHole, JsArrowFunctionExpression, JsBlockStatement,
     JsCallArguments, JsCatchClause, JsConstructorParameters, JsEmptyStatement, JsFinallyClause,
-    JsIdentifierExpression, JsIfStatement, JsLanguage, JsParameters, JsSyntaxKind, JsSyntaxNode,
-    JsVariableDeclarator, JsWhileStatement,
+    JsFunctionBody, JsIdentifierExpression, JsIfStatement, JsLanguage, JsParameters, JsSyntaxKind,
+    JsSyntaxNode, JsVariableDeclarator, JsWhileStatement,
 };
 use rome_rowan::{AstNode, SyntaxTriviaPieceComments, TextLen};
 
@@ -150,6 +150,7 @@ impl CommentStyle for JsCommentStyle {
     ) -> CommentPlacement<Self::Language> {
         match comment.position() {
             CommentPosition::EndOfLine => handle_typecast_comment(comment)
+                .or_else(handle_function_declaration_comment)
                 .or_else(handle_if_statement_comment)
                 .or_else(handle_while_comment)
                 .or_else(handle_try_comment)
@@ -159,6 +160,7 @@ impl CommentStyle for JsCommentStyle {
                 .or_else(handle_variable_declarator_comment)
                 .or_else(handle_continue_break_comment),
             CommentPosition::OwnLine => handle_member_expression_comment(comment)
+                .or_else(handle_function_declaration_comment)
                 .or_else(handle_if_statement_comment)
                 .or_else(handle_while_comment)
                 .or_else(handle_try_comment)
@@ -332,6 +334,47 @@ fn handle_member_expression_comment(
         CommentPlacement::Leading {
             node: comment.enclosing_node().clone(),
             comment,
+        }
+    } else {
+        CommentPlacement::Default(comment)
+    }
+}
+
+fn handle_function_declaration_comment(
+    comment: DecoratedComment<JsLanguage>,
+) -> CommentPlacement<JsLanguage> {
+    let is_function_declaration = matches!(
+        comment.enclosing_node().kind(),
+        JsSyntaxKind::JS_FUNCTION_DECLARATION
+            | JsSyntaxKind::JS_FUNCTION_EXPORT_DEFAULT_DECLARATION
+    );
+
+    let following = match comment.following_node() {
+        Some(following) if is_function_declaration => following,
+        _ => return CommentPlacement::Default(comment),
+    };
+
+    // Make comments between the `)` token and the function body leading comments
+    // of the first non empty statement or dangling comments of the body.
+    // ```javascript
+    // function test() /* comment */ {
+    //  console.log("Hy");
+    // }
+    // ```
+    if let Some(body) = JsFunctionBody::cast_ref(following) {
+        match body
+            .statements()
+            .iter()
+            .find(|statement| !matches!(statement, JsAnyStatement::JsEmptyStatement(_)))
+        {
+            Some(first) => CommentPlacement::Leading {
+                node: first.into_syntax(),
+                comment,
+            },
+            None => CommentPlacement::Dangling {
+                node: body.into_syntax(),
+                comment,
+            },
         }
     } else {
         CommentPlacement::Default(comment)

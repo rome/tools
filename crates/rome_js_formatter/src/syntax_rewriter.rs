@@ -199,12 +199,16 @@ impl JsFormatSyntaxRewriter {
                 }
 
                 // Remove all leading new lines directly in front of the token but keep the leading new-line if it precedes a skipped token trivia or a comment.
-                if leading_trivia.peek().is_none() && first_new_line.is_some() {
-                    let (inner_offset, new_line) = first_new_line.take().unwrap();
-
-                    self.source_map
-                        .add_deleted_range(TextRange::at(inner_offset, new_line.text_len()));
-                }
+                // TODO Verify if no longer needed. Needs at least line break for cases like
+                // num => ( // Buttons 0-9
+                //   <div />
+                // );
+                // if leading_trivia.peek().is_none() && first_new_line.is_some() {
+                //     let (inner_offset, new_line) = first_new_line.take().unwrap();
+                //
+                //     self.source_map
+                //         .add_deleted_range(TextRange::at(inner_offset, new_line.text_len()));
+                // }
 
                 let leading_trivia = chain_pieces(
                     first_new_line.map(|(_, trivia)| trivia).into_iter(),
