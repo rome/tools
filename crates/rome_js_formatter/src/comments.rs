@@ -159,6 +159,7 @@ impl CommentStyle for JsCommentStyle {
                 .or_else(handle_if_statement_comment)
                 .or_else(handle_while_comment)
                 .or_else(handle_try_comment)
+                .or_else(handle_for_comment)
                 .or_else(handle_root_comments)
                 .or_else(handle_array_hole_comment),
             CommentPosition::SameLine => handle_if_statement_comment(comment)
@@ -505,6 +506,31 @@ fn handle_try_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacement
     CommentPlacement::Default(comment)
 }
 
+fn handle_for_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacement<JsLanguage> {
+    let enclosing = comment.enclosing_node();
+
+    if matches!(
+        enclosing.kind(),
+        JsSyntaxKind::JS_FOR_OF_STATEMENT | JsSyntaxKind::JS_FOR_IN_STATEMENT
+    ) {
+        CommentPlacement::Leading {
+            node: enclosing.clone(),
+            comment,
+        }
+    } else {
+        CommentPlacement::Default(comment)
+    }
+
+    // if (
+    //     enclosingNode?.type === "ForInStatement" ||
+    //     enclosingNode?.type === "ForOfStatement"
+    // ) {
+    //     addLeadingComment(enclosingNode, comment);
+    //     return true;
+    // }
+    // return false;
+}
+
 fn handle_variable_declarator(
     comment: DecoratedComment<JsLanguage>,
 ) -> CommentPlacement<JsLanguage> {
@@ -606,8 +632,13 @@ fn place_block_statement_comment(
     block_statement: JsBlockStatement,
     comment: DecoratedComment<JsLanguage>,
 ) -> CommentPlacement<JsLanguage> {
-    match block_statement.statements().first() {
-        Some(JsAnyStatement::JsEmptyStatement(_)) | None => CommentPlacement::Dangling {
+    let first_non_empty = block_statement
+        .statements()
+        .iter()
+        .find(|statement| !matches!(statement, JsAnyStatement::JsEmptyStatement(_)));
+
+    match first_non_empty {
+        None => CommentPlacement::Dangling {
             node: block_statement.into_syntax(),
             comment,
         },
