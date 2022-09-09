@@ -13,6 +13,7 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     let configuration = load_config(&session.app.fs, None)?;
     let configuration = apply_format_settings_from_cli(&mut session, configuration)?;
 
+    dbg!(&configuration);
     session
         .app
         .workspace
@@ -105,6 +106,14 @@ pub(crate) fn apply_format_settings_from_cli(
             source,
         })?;
 
+    // if at least one argument is passed via CLI and no "formatter" configuration was passed
+    // via `rome.json`, we need to create it
+    if (line_width.is_some() | indent_style.is_some() | size.is_some())
+        && configuration.formatter.is_none()
+    {
+        configuration.formatter = Some(FormatterConfiguration::default());
+    }
+
     if let Some(formatter) = configuration.formatter.as_mut() {
         match indent_style {
             Some(IndentStyle::Tab) => {
@@ -137,6 +146,18 @@ pub(crate) fn apply_format_settings_from_cli(
             argument: "--quote-style",
             source,
         })?;
+
+    // if at least one argument is passed via CLI and no "javascript.formatter" configuration was passed
+    // via `rome.json`, we need to create it
+    if quote_style.is_some() | quote_properties.is_some() {
+        if configuration.javascript.is_none() {
+            configuration.javascript = Some(JavascriptConfiguration::with_formatter())
+        } else if let Some(javascript) = configuration.javascript.as_mut() {
+            if javascript.formatter.is_none() {
+                javascript.formatter = Some(JavascriptFormatter::default());
+            }
+        }
+    }
     if let Some(javascript) = configuration
         .javascript
         .as_mut()

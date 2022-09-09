@@ -144,3 +144,19 @@ pub const CONFIG_INCORRECT_GLOBALS_V2: &str = r#"{
       }
   }
 }"#;
+
+pub const CONFIG_ISSUE_3175_1: &str = r#"{
+  "formatter": {
+    "indentStyle": "space",
+    "indentSize": 2,
+    "lineWidth": 120
+  }
+}"#;
+
+pub const CONFIG_ISSUE_3175_2: &str = r#"{
+  "javascript": {
+    "formatter": {
+        "quoteStyle": "single"
+    }
+  }
+}"#;

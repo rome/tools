@@ -734,7 +734,9 @@ mod ci {
 
 mod format {
     use super::*;
-    use crate::configs::{CONFIG_DISABLED_FORMATTER, CONFIG_FORMAT};
+    use crate::configs::{
+        CONFIG_DISABLED_FORMATTER, CONFIG_FORMAT, CONFIG_ISSUE_3175_1, CONFIG_ISSUE_3175_2,
+    };
     use crate::snap_test::markup_to_string;
     use rome_console::markup;
     use rome_fs::FileSystemExt;
@@ -929,6 +931,97 @@ mod format {
         assert_cli_snapshot(
             module_path!(),
             "applies_custom_configuration_over_config_file",
+            fs,
+            console,
+        );
+    }
+
+    #[test]
+    fn applies_custom_configuration_over_config_file_issue_3175_v1() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("rome.json");
+        fs.insert(file_path.into(), CONFIG_ISSUE_3175_1.as_bytes());
+
+        let file_path = Path::new("file.js");
+        fs.insert(file_path.into(), "import React from 'react';\n".as_bytes());
+
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![
+                OsString::from("format"),
+                OsString::from("--quote-style"),
+                OsString::from("single"),
+                file_path.as_os_str().into(),
+            ]),
+        );
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut file = fs
+            .open(file_path)
+            .expect("formatting target file was removed by the CLI");
+
+        let mut content = String::new();
+        file.read_to_string(&mut content)
+            .expect("failed to read file from memory FS");
+
+        assert_eq!(content, "import React from 'react';\n");
+
+        drop(file);
+        assert_cli_snapshot(
+            module_path!(),
+            "applies_custom_configuration_over_config_file_issue_3175_v1",
+            fs,
+            console,
+        );
+    }
+
+    #[test]
+    fn applies_custom_configuration_over_config_file_issue_3175_v2() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let source = r#"function f() {
+  return 'hey';
+}
+"#;
+
+        let file_path = Path::new("rome.json");
+        fs.insert(file_path.into(), CONFIG_ISSUE_3175_2.as_bytes());
+
+        let file_path = Path::new("file.js");
+        fs.insert(file_path.into(), source.as_bytes());
+
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![
+                OsString::from("format"),
+                OsString::from("--indent-style"),
+                OsString::from("space"),
+                file_path.as_os_str().into(),
+            ]),
+        );
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut file = fs
+            .open(file_path)
+            .expect("formatting target file was removed by the CLI");
+
+        let mut content = String::new();
+        file.read_to_string(&mut content)
+            .expect("failed to read file from memory FS");
+
+        assert_eq!(content, source);
+
+        drop(file);
+        assert_cli_snapshot(
+            module_path!(),
+            "applies_custom_configuration_over_config_file_issue_3175_v2",
             fs,
             console,
         );
