@@ -1107,12 +1107,13 @@ mod format {
         assert_eq!(content, "import React from 'react';\n");
 
         drop(file);
-        assert_cli_snapshot(
+        assert_cli_snapshot(SnapshotPayload::new(
             module_path!(),
             "applies_custom_configuration_over_config_file_issue_3175_v1",
             fs,
             console,
-        );
+            result,
+        ));
     }
 
     #[test]
@@ -1155,12 +1156,13 @@ mod format {
         assert_eq!(content, source);
 
         drop(file);
-        assert_cli_snapshot(
+        assert_cli_snapshot(SnapshotPayload::new(
             module_path!(),
             "applies_custom_configuration_over_config_file_issue_3175_v2",
             fs,
             console,
-        );
+            result,
+        ));
     }
 
     #[test]
