@@ -284,6 +284,19 @@ pub enum CommentPlacement<L: Language> {
     Default(DecoratedComment<L>),
 }
 
+impl<L: Language> CommentPlacement<L> {
+    #[inline]
+    pub fn or_else<F>(self, or_else: F) -> Self
+    where
+        F: FnOnce(DecoratedComment<L>) -> CommentPlacement<L>,
+    {
+        match self {
+            CommentPlacement::Default(comment) => or_else(comment),
+            placement => placement,
+        }
+    }
+}
+
 /// Defines how to format comments for a specific [Language].
 pub trait CommentStyle: Default {
     type Language: Language;

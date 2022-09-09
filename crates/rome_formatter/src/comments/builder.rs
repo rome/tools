@@ -15,8 +15,8 @@ pub(super) struct CommentsBuilderVisitor<'a, Style: CommentStyle> {
     // State
     pending_comments: Vec<DecoratedComment<Style::Language>>,
     preceding_node: Option<SyntaxNode<Style::Language>>,
-    following_node_index: Option<usize>,
-    parents: Vec<SyntaxNode<Style::Language>>,
+    following_node: Option<SyntaxNode<Style::Language>>,
+    enclosing_node: Option<SyntaxNode<Style::Language>>,
     last_token: Option<SyntaxToken<Style::Language>>,
 }
 
@@ -31,8 +31,8 @@ where
 
             pending_comments: Default::default(),
             preceding_node: Default::default(),
-            following_node_index: Default::default(),
-            parents: Default::default(),
+            following_node: Default::default(),
+            enclosing_node: Default::default(),
             last_token: Default::default(),
         }
     }
@@ -70,17 +70,18 @@ where
                     return;
                 }
 
-                let is_root = self.parents.is_empty();
+                let is_root = self.enclosing_node.is_none();
 
+                if is_root {
+                    self.enclosing_node = Some(node);
+                }
                 // Associate comments with the most outer node
                 // Set following here because it is the "following node" of the next token's leading trivia.
-                if !is_root && self.following_node_index.is_none() {
+                else if self.following_node.is_none() {
                     // Flush in case the node doesn't have any tokens.
                     self.flush_comments(Some(&node));
-                    self.following_node_index = Some(self.parents.len());
+                    self.following_node = Some(node);
                 }
-
-                self.parents.push(node);
             }
 
             WalkEvent::Leave(node) => {
@@ -88,11 +89,19 @@ where
                     return;
                 }
 
-                self.parents.pop().unwrap();
-
                 // We're passed this node, flush any pending comments for its children
-                self.following_node_index = None;
+                self.following_node = None;
                 self.flush_comments(None);
+
+                self.enclosing_node = node.parent();
+
+                while let Some(enclosing) = &self.enclosing_node {
+                    if enclosing.kind().is_list() {
+                        self.enclosing_node = enclosing.parent();
+                    } else {
+                        break;
+                    }
+                }
 
                 // We're passed this node, so it must precede the sibling that comes next.
                 self.preceding_node = Some(node);
@@ -194,9 +203,9 @@ where
         }
 
         // Set following node to `None` because it now becomes the enclosing node.
-        if let Some(following_node) = self.following_node() {
+        if let Some(following_node) = self.following_node.take() {
             self.flush_comments(Some(&following_node.clone()));
-            self.following_node_index = None;
+            self.enclosing_node = Some(following_node);
 
             // The following node is only set after entering a node
             // That means, following node is only set for the first token of a node.
@@ -206,20 +215,9 @@ where
     }
 
     fn enclosing_node(&self) -> &SyntaxNode<Style::Language> {
-        let element = match self.following_node_index {
-            None => self.parents.last(),
-            Some(index) => Some(&self.parents[index - 1]),
-        };
-
-        element.expect("Expected enclosing nodes to at least contain the root node.")
-    }
-
-    fn following_node(&self) -> Option<&SyntaxNode<Style::Language>> {
-        self.following_node_index.map(|index| {
-            self.parents
-                .get(index)
-                .expect("Expected following node index to point to a valid parent node")
-        })
+        self.enclosing_node
+            .as_ref()
+            .expect("Expected enclosing nodes to at least contain the root node.")
     }
 
     fn queue_comment(&mut self, comment: DecoratedComment<Style::Language>) {
@@ -236,12 +234,6 @@ where
     }
 
     fn finish(mut self) -> CommentsData<Style::Language> {
-        assert!(
-            self.parents.is_empty(),
-            "Expected all enclosing nodes to have been processed but contains {:#?}",
-            self.parents
-        );
-
         self.flush_comments(None);
 
         self.builder.finish(Style::is_suppression)

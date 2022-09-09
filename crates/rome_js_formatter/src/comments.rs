@@ -147,60 +147,24 @@ impl CommentStyle for JsCommentStyle {
         &self,
         comment: DecoratedComment<Self::Language>,
     ) -> CommentPlacement<Self::Language> {
-        fn place_comment(
-            mut comment: DecoratedComment<JsLanguage>,
-            rules: &[fn(DecoratedComment<JsLanguage>) -> CommentPlacement<JsLanguage>],
-        ) -> CommentPlacement<JsLanguage> {
-            for rule in rules {
-                match rule(comment) {
-                    CommentPlacement::Default(unplaced) => {
-                        comment = unplaced;
-                    }
-                    placement => {
-                        return placement;
-                    }
-                }
-            }
-
-            CommentPlacement::Default(comment)
-        }
-
         match comment.position() {
-            CommentPosition::EndOfLine => place_comment(
-                comment,
-                &[
-                    handle_typecast_comment,
-                    handle_if_statement_comment,
-                    handle_while_comment,
-                    handle_try_comment,
-                    // handle_block_statement_comment,
-                    handle_root_comments,
-                    handle_array_hole_comment,
-                    handle_variable_declarator,
-                ],
-            ),
-            CommentPosition::OwnLine => place_comment(
-                comment,
-                &[
-                    handle_member_expression_comment,
-                    handle_if_statement_comment,
-                    handle_while_comment,
-                    handle_try_comment,
-                    // handle_block_statement_comment,
-                    handle_root_comments,
-                    handle_array_hole_comment,
-                ],
-            ),
-            CommentPosition::SameLine => place_comment(
-                comment,
-                &[
-                    handle_if_statement_comment,
-                    handle_while_comment,
-                    // handle_block_statement_comment,
-                    handle_root_comments,
-                    handle_array_hole_comment,
-                ],
-            ),
+            CommentPosition::EndOfLine => handle_typecast_comment(comment)
+                .or_else(handle_if_statement_comment)
+                .or_else(handle_while_comment)
+                .or_else(handle_try_comment)
+                .or_else(handle_root_comments)
+                .or_else(handle_array_hole_comment)
+                .or_else(handle_variable_declarator),
+            CommentPosition::OwnLine => handle_member_expression_comment(comment)
+                .or_else(handle_if_statement_comment)
+                .or_else(handle_while_comment)
+                .or_else(handle_try_comment)
+                .or_else(handle_root_comments)
+                .or_else(handle_array_hole_comment),
+            CommentPosition::SameLine => handle_if_statement_comment(comment)
+                .or_else(handle_while_comment)
+                .or_else(handle_root_comments)
+                .or_else(handle_array_hole_comment),
         }
     }
 }
