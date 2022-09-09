@@ -29,7 +29,7 @@ impl FormatNodeRule<JsForStatement> for FormatJsForStatement {
 
         // Move dangling trivia between the `for /* this */ (` to the top of the `for` and
         // add a line break after.
-        let comments = dbg!(f.context().comments());
+        let comments = f.context().comments();
         let dangling_comments = comments.dangling_comments(node.syntax());
         if !dangling_comments.is_empty() {
             write!(

@@ -3,9 +3,9 @@ use rome_formatter::{write, CommentPlacement, CommentPosition, Comments, Decorat
 use rome_formatter::{CommentKind, CommentStyle, SourceComment};
 use rome_js_syntax::suppression::{parse_suppression_comment, SuppressionCategory};
 use rome_js_syntax::{
-    JsAnyName, JsAnyRoot, JsAnyStatement, JsArrayHole, JsBlockStatement, JsCatchClause,
-    JsFinallyClause, JsIdentifierExpression, JsIfStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode,
-    JsVariableDeclarator, JsWhileStatement,
+    JsAnyName, JsAnyRoot, JsAnyStatement, JsArrayHole, JsBlockStatement, JsBreakStatement,
+    JsCatchClause, JsContinueStatement, JsEmptyStatement, JsFinallyClause, JsIdentifierExpression,
+    JsIfStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsVariableDeclarator, JsWhileStatement,
 };
 use rome_rowan::{AstNode, SyntaxTriviaPieceComments, TextLen};
 
@@ -152,20 +152,25 @@ impl CommentStyle for JsCommentStyle {
                 .or_else(handle_if_statement_comment)
                 .or_else(handle_while_comment)
                 .or_else(handle_try_comment)
+                .or_else(handle_for_comment)
                 .or_else(handle_root_comments)
                 .or_else(handle_array_hole_comment)
-                .or_else(handle_variable_declarator),
+                .or_else(handle_variable_declarator_comment)
+                .or_else(handle_continue_break_comment),
             CommentPosition::OwnLine => handle_member_expression_comment(comment)
                 .or_else(handle_if_statement_comment)
                 .or_else(handle_while_comment)
                 .or_else(handle_try_comment)
                 .or_else(handle_for_comment)
                 .or_else(handle_root_comments)
-                .or_else(handle_array_hole_comment),
+                .or_else(handle_array_hole_comment)
+                .or_else(handle_continue_break_comment),
             CommentPosition::SameLine => handle_if_statement_comment(comment)
                 .or_else(handle_while_comment)
+                .or_else(handle_for_comment)
                 .or_else(handle_root_comments)
-                .or_else(handle_array_hole_comment),
+                .or_else(handle_array_hole_comment)
+                .or_else(handle_continue_break_comment),
         }
     }
 }
@@ -194,6 +199,65 @@ fn handle_array_hole_comment(
     } else {
         CommentPlacement::Default(comment)
     }
+}
+
+fn handle_continue_break_comment(
+    comment: DecoratedComment<JsLanguage>,
+) -> CommentPlacement<JsLanguage> {
+    let enclosing = comment.enclosing_node();
+
+    // Make comments between the `continue` and label token trailing comments
+    // ```javascript
+    // continue /* comment */ a;
+    // ```
+    // This differs from Prettier because other ASTs use an identifier for the label whereas Rome uses
+    // a token.
+    match enclosing.kind() {
+        JsSyntaxKind::JS_CONTINUE_STATEMENT | JsSyntaxKind::JS_BREAK_STATEMENT => {
+            match enclosing.parent() {
+                // Make it the trailing of the parent if this is a single-statement body
+                // to prevent that the comment becomes a trailing comment of the parent when re-formatting
+                // ```javascript
+                // for (;;) continue /* comment */;
+                // ```
+                Some(parent)
+                    if matches!(
+                        parent.kind(),
+                        JsSyntaxKind::JS_FOR_STATEMENT
+                            | JsSyntaxKind::JS_FOR_OF_STATEMENT
+                            | JsSyntaxKind::JS_FOR_IN_STATEMENT
+                            | JsSyntaxKind::JS_WHILE_STATEMENT
+                            | JsSyntaxKind::JS_DO_WHILE_STATEMENT
+                            | JsSyntaxKind::JS_IF_STATEMENT
+                            | JsSyntaxKind::JS_WITH_STATEMENT
+                            | JsSyntaxKind::JS_LABELED_STATEMENT
+                    ) =>
+                {
+                    CommentPlacement::Trailing {
+                        node: parent,
+                        comment,
+                    }
+                }
+                _ => CommentPlacement::Trailing {
+                    node: enclosing.clone(),
+                    comment,
+                },
+            }
+        }
+        _ => CommentPlacement::Default(comment),
+    }
+
+    // function handleBreakAndContinueStatementComments({ comment, enclosingNode }) {
+    //   if (
+    //     (enclosingNode?.type === "ContinueStatement" ||
+    //       enclosingNode?.type === "BreakStatement") &&
+    //     !enclosingNode.label
+    //   ) {
+    //     addTrailingComment(enclosingNode, comment);
+    //     return true;
+    //   }
+    //   return false;
+    // }
 }
 
 /// Handle a all comments document.
@@ -348,6 +412,19 @@ fn handle_if_statement_comment(
                 return place_block_statement_comment(block_statement, comment);
             }
 
+            // Don't attach comments to empty statements
+            // ```javascript
+            // if (cond) /* test */ ;
+            // ```
+            if let Some(preceding) = comment.preceding_node() {
+                if JsEmptyStatement::can_cast(following.kind()) {
+                    return CommentPlacement::Trailing {
+                        node: preceding.clone(),
+                        comment,
+                    };
+                }
+            }
+
             // Move comments coming before an if chain inside the body of the first non chain if.
             //
             // ```javascript
@@ -424,6 +501,19 @@ fn handle_while_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlaceme
     // ```
     if let Some(block) = JsBlockStatement::cast_ref(following) {
         return place_block_statement_comment(block, comment);
+    }
+
+    // Don't attach comments to empty statements
+    // ```javascript
+    // if (cond) /* test */ ;
+    // ```
+    if let Some(preceding) = comment.preceding_node() {
+        if JsEmptyStatement::can_cast(following.kind()) {
+            return CommentPlacement::Trailing {
+                node: preceding.clone(),
+                comment,
+            };
+        }
     }
 
     // Make all comments after the condition's `)` leading comments
@@ -509,29 +599,46 @@ fn handle_try_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacement
 fn handle_for_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacement<JsLanguage> {
     let enclosing = comment.enclosing_node();
 
-    if matches!(
+    let is_for_in_or_of = matches!(
         enclosing.kind(),
         JsSyntaxKind::JS_FOR_OF_STATEMENT | JsSyntaxKind::JS_FOR_IN_STATEMENT
-    ) {
+    );
+
+    if !is_for_in_or_of && !matches!(enclosing.kind(), JsSyntaxKind::JS_FOR_STATEMENT) {
+        return CommentPlacement::Default(comment);
+    }
+
+    if comment.position().is_own_line() && is_for_in_or_of {
         CommentPlacement::Leading {
             node: enclosing.clone(),
             comment,
         }
+    }
+    // Don't attach comments to empty statement
+    // ```javascript
+    // for /* comment */ (;;);
+    // for (;;a++) /* comment */;
+    // ```
+    else if comment.following_node().map_or(false, |following| {
+        JsEmptyStatement::can_cast(following.kind())
+    }) {
+        if let Some(preceding) = comment.preceding_node() {
+            CommentPlacement::Trailing {
+                node: preceding.clone(),
+                comment,
+            }
+        } else {
+            CommentPlacement::Dangling {
+                node: comment.enclosing_node().clone(),
+                comment,
+            }
+        }
     } else {
         CommentPlacement::Default(comment)
     }
-
-    // if (
-    //     enclosingNode?.type === "ForInStatement" ||
-    //     enclosingNode?.type === "ForOfStatement"
-    // ) {
-    //     addLeadingComment(enclosingNode, comment);
-    //     return true;
-    // }
-    // return false;
 }
 
-fn handle_variable_declarator(
+fn handle_variable_declarator_comment(
     comment: DecoratedComment<JsLanguage>,
 ) -> CommentPlacement<JsLanguage> {
     let following = match comment.following_node() {

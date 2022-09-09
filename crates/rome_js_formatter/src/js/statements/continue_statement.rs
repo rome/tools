@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::{write, CstFormatContext};
+use rome_formatter::write;
 
 use crate::utils::FormatWithSemicolon;
 
@@ -23,12 +23,7 @@ impl FormatNodeRule<JsContinueStatement> for FormatJsContinueStatement {
                 &format_with(|f: &mut JsFormatter| {
                     write!(f, [continue_token.format()])?;
 
-                    // FIXME is this even possible
                     if let Some(label) = &label_token {
-                        if f.context().comments().has_dangling_comments(node.syntax()) {
-                            write!(f, [space(), format_dangling_comments(node.syntax())])?;
-                        }
-
                         write!(f, [space(), label.format()])?;
                     }
 

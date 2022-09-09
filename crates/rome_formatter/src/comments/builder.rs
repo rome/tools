@@ -228,7 +228,7 @@ where
         for mut comment in self.pending_comments.drain(..) {
             comment.following = following.cloned();
 
-            let placement = self.style.place_comment(dbg!(comment));
+            let placement = self.style.place_comment(comment);
             self.builder.add_comment(placement);
         }
     }
