@@ -381,7 +381,6 @@ fn format(
 ) -> Result<Printed, RomeError> {
     let options = settings.format_options::<JsLanguage>(rome_path);
 
-    dbg!(&options);
     let tree = parse.syntax();
     let formatted = format_node(options, &tree)?;
     let printed = formatted.print();

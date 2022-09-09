@@ -13,7 +13,6 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
     let configuration = load_config(&session.app.fs, None)?;
     let configuration = apply_format_settings_from_cli(&mut session, configuration)?;
 
-    dbg!(&configuration);
     session
         .app
         .workspace
@@ -72,15 +71,11 @@ pub(crate) fn apply_format_settings_from_cli(
     let mut configuration = if let Some(configuration) = configuration {
         configuration
     } else {
-        Configuration {
-            formatter: Some(FormatterConfiguration::default()),
-            javascript: Some(JavascriptConfiguration {
-                formatter: Some(JavascriptFormatter::default()),
-                globals: None,
-            }),
-            ..Configuration::default()
-        }
+        Configuration::default()
     };
+    let formatter = configuration
+        .formatter
+        .get_or_insert_with(FormatterConfiguration::default);
 
     let size = session
         .args
@@ -106,29 +101,19 @@ pub(crate) fn apply_format_settings_from_cli(
             source,
         })?;
 
-    // if at least one argument is passed via CLI and no "formatter" configuration was passed
-    // via `rome.json`, we need to create it
-    if (line_width.is_some() | indent_style.is_some() | size.is_some())
-        && configuration.formatter.is_none()
-    {
-        configuration.formatter = Some(FormatterConfiguration::default());
+    match indent_style {
+        Some(IndentStyle::Tab) => {
+            formatter.indent_style = PlainIndentStyle::Tab;
+        }
+        Some(IndentStyle::Space(default_size)) => {
+            formatter.indent_style = PlainIndentStyle::Space;
+            formatter.indent_size = size.unwrap_or(default_size);
+        }
+        None => {}
     }
 
-    if let Some(formatter) = configuration.formatter.as_mut() {
-        match indent_style {
-            Some(IndentStyle::Tab) => {
-                formatter.indent_style = PlainIndentStyle::Tab;
-            }
-            Some(IndentStyle::Space(default_size)) => {
-                formatter.indent_style = PlainIndentStyle::Space;
-                formatter.indent_size = size.unwrap_or(default_size);
-            }
-            None => {}
-        }
-
-        if let Some(line_width) = line_width {
-            formatter.line_width = line_width;
-        }
+    if let Some(line_width) = line_width {
+        formatter.line_width = line_width;
     }
 
     let quote_properties = session
@@ -147,29 +132,19 @@ pub(crate) fn apply_format_settings_from_cli(
             source,
         })?;
 
-    // if at least one argument is passed via CLI and no "javascript.formatter" configuration was passed
-    // via `rome.json`, we need to create it
-    if quote_style.is_some() | quote_properties.is_some() {
-        if configuration.javascript.is_none() {
-            configuration.javascript = Some(JavascriptConfiguration::with_formatter())
-        } else if let Some(javascript) = configuration.javascript.as_mut() {
-            if javascript.formatter.is_none() {
-                javascript.formatter = Some(JavascriptFormatter::default());
-            }
-        }
-    }
-    if let Some(javascript) = configuration
+    let javascript = configuration
         .javascript
-        .as_mut()
-        .and_then(|j| j.formatter.as_mut())
-    {
-        if let Some(quote_properties) = quote_properties {
-            javascript.quote_properties = quote_properties;
-        }
+        .get_or_insert_with(JavascriptConfiguration::default);
+    let javascript_formatter = javascript
+        .formatter
+        .get_or_insert_with(JavascriptFormatter::default);
 
-        if let Some(quote_style) = quote_style {
-            javascript.quote_style = quote_style;
-        }
+    if let Some(quote_properties) = quote_properties {
+        javascript_formatter.quote_properties = quote_properties;
+    }
+
+    if let Some(quote_style) = quote_style {
+        javascript_formatter.quote_style = quote_style;
     }
 
     Ok(configuration)
