@@ -765,14 +765,14 @@ function() {
     #[test]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"
-<div>
-  {a/* comment
-*/
-  }
-</div>;
+        let src = r#"#!/there/is-space-here->
+
+// Do not trim trailing whitespace from this source file!
+
+// There is some space here ->
+
 "#;
-        let syntax = SourceType::tsx();
+        let syntax = SourceType::js_module();
         let tree = parse(src, 0, syntax);
         let options = JsFormatOptions::new(syntax);
 

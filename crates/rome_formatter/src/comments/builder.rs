@@ -236,7 +236,7 @@ where
     fn finish(mut self) -> CommentsData<Style::Language> {
         self.flush_comments(None);
 
-        dbg!(self.builder.finish(Style::is_suppression))
+        self.builder.finish(Style::is_suppression)
     }
 }
 

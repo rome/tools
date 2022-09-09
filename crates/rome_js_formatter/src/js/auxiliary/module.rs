@@ -22,6 +22,7 @@ impl FormatNodeRule<JsModule> for FormatJsModule {
             f,
             [
                 FormatInterpreterToken::new(interpreter_token.as_ref()),
+                format_leading_comments(node.syntax()),
                 directives.format()
             ]
         ]?;
@@ -30,9 +31,14 @@ impl FormatNodeRule<JsModule> for FormatJsModule {
             f,
             [
                 items.format(),
+                format_trailing_comments(node.syntax()),
                 format_removed(&eof_token?),
                 hard_line_break()
             ]
         )
+    }
+
+    fn prints_comments(&self, _item: &JsModule) -> bool {
+        true
     }
 }
