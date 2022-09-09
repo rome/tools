@@ -23,6 +23,15 @@ pub struct JavascriptConfiguration {
     pub globals: Option<IndexSet<String>>,
 }
 
+impl JavascriptConfiguration {
+    pub fn with_formatter() -> Self {
+        Self {
+            formatter: Some(JavascriptFormatter::default()),
+            ..JavascriptConfiguration::default()
+        }
+    }
+}
+
 pub(crate) fn deserialize_globals<'de, D>(
     deserializer: D,
 ) -> Result<Option<IndexSet<String>>, D::Error>

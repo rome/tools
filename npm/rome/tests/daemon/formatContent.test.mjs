@@ -1,37 +1,22 @@
-import { describe, it, expect } from "vitest";
-import { BackendKind, Rome } from "../dist";
+import { describe, expect, it } from "vitest";
+import { BackendKind, Rome } from "../../dist";
+import { resolve } from "path";
+import { fileURLToPath } from "url";
 
-describe("Rome WebAssembly formatter", () => {
-	it("should not format files", async () => {
-		const rome = await Rome.create({
-			backendKind: BackendKind.NODE,
-		});
+const target = process.env.CI ? "target/release/rome" : "target/debug/rome";
 
-		let result = await rome.formatFiles(["./path/to/file.js"]);
-
-		expect(result.content).toEqual("");
-		expect(result.diagnostics).toEqual([]);
-	});
-
-	it("should not format files in debug mode", async () => {
-		const rome = await Rome.create({
-			backendKind: BackendKind.NODE,
-		});
-
-		let result = await rome.formatFiles(["./path/to/file.js"], {
-			debug: true,
-		});
-
-		expect(result.content).toEqual("");
-		expect(result.diagnostics).toEqual([]);
-		expect(result.ir).toEqual("");
-	});
-
+describe("Rome Deamon formatter", () => {
 	it("should format content", async () => {
-		const rome = await Rome.create({
-			backendKind: BackendKind.NODE,
-		});
+		const command = resolve(
+			fileURLToPath(import.meta.url),
+			"../../../../..",
+			target,
+		);
 
+		const rome = await Rome.create({
+			backendKind: BackendKind.DAEMON,
+			pathToBinary: command,
+		});
 		let result = await rome.formatContent("function f   () {  }", {
 			filePath: "example.js",
 		});
@@ -41,8 +26,15 @@ describe("Rome WebAssembly formatter", () => {
 	});
 
 	it("should not format and have diagnostics", async () => {
+		const command = resolve(
+			fileURLToPath(import.meta.url),
+			"../../../../..",
+			target,
+		);
+
 		const rome = await Rome.create({
-			backendKind: BackendKind.NODE,
+			backendKind: BackendKind.DAEMON,
+			pathToBinary: command,
 		});
 
 		let content = "function   () {  }";
@@ -59,8 +51,15 @@ describe("Rome WebAssembly formatter", () => {
 	});
 
 	it("should format content in debug mode", async () => {
+		const command = resolve(
+			fileURLToPath(import.meta.url),
+			"../../../../..",
+			target,
+		);
+
 		const rome = await Rome.create({
-			backendKind: BackendKind.NODE,
+			backendKind: BackendKind.DAEMON,
+			pathToBinary: command,
 		});
 
 		let result = await rome.formatContent("function f() {}", {
@@ -76,10 +75,16 @@ describe("Rome WebAssembly formatter", () => {
 	});
 
 	it("should not format content with range", async () => {
-		const rome = await Rome.create({
-			backendKind: BackendKind.NODE,
-		});
+		const command = resolve(
+			fileURLToPath(import.meta.url),
+			"../../../../..",
+			target,
+		);
 
+		const rome = await Rome.create({
+			backendKind: BackendKind.DAEMON,
+			pathToBinary: command,
+		});
 		let result = await rome.formatContent("let a   ; function g () {  }", {
 			filePath: "file.js",
 			range: [20, 25],
@@ -90,10 +95,16 @@ describe("Rome WebAssembly formatter", () => {
 	});
 
 	it("should not format content with range in debug mode", async () => {
-		const rome = await Rome.create({
-			backendKind: BackendKind.NODE,
-		});
+		const command = resolve(
+			fileURLToPath(import.meta.url),
+			"../../../../..",
+			target,
+		);
 
+		const rome = await Rome.create({
+			backendKind: BackendKind.DAEMON,
+			pathToBinary: command,
+		});
 		let result = await rome.formatContent("let a   ; function g () {  }", {
 			filePath: "file.js",
 			range: [20, 25],
@@ -120,20 +131,4 @@ describe("Rome WebAssembly formatter", () => {
 		`,
 		);
 	});
-});
-
-describe("Rome parser", () => {
-	it("should not parse content", async () => {
-		const rome = await Rome.create({
-			backendKind: BackendKind.NODE,
-		});
-
-		let result = await rome.parseContent("function f() {}", {
-			filePath: "example.js",
-		});
-
-		expect(result.ast).toEqual("");
-		expect(result.cst).toEqual("");
-		expect(result.diagnostics).toEqual([]);
-	});
-});
+}, 1500);

@@ -71,15 +71,11 @@ pub(crate) fn apply_format_settings_from_cli(
     let mut configuration = if let Some(configuration) = configuration {
         configuration
     } else {
-        Configuration {
-            formatter: Some(FormatterConfiguration::default()),
-            javascript: Some(JavascriptConfiguration {
-                formatter: Some(JavascriptFormatter::default()),
-                globals: None,
-            }),
-            ..Configuration::default()
-        }
+        Configuration::default()
     };
+    let formatter = configuration
+        .formatter
+        .get_or_insert_with(FormatterConfiguration::default);
 
     let size = session
         .args
@@ -105,21 +101,19 @@ pub(crate) fn apply_format_settings_from_cli(
             source,
         })?;
 
-    if let Some(formatter) = configuration.formatter.as_mut() {
-        match indent_style {
-            Some(IndentStyle::Tab) => {
-                formatter.indent_style = PlainIndentStyle::Tab;
-            }
-            Some(IndentStyle::Space(default_size)) => {
-                formatter.indent_style = PlainIndentStyle::Space;
-                formatter.indent_size = size.unwrap_or(default_size);
-            }
-            None => {}
+    match indent_style {
+        Some(IndentStyle::Tab) => {
+            formatter.indent_style = PlainIndentStyle::Tab;
         }
+        Some(IndentStyle::Space(default_size)) => {
+            formatter.indent_style = PlainIndentStyle::Space;
+            formatter.indent_size = size.unwrap_or(default_size);
+        }
+        None => {}
+    }
 
-        if let Some(line_width) = line_width {
-            formatter.line_width = line_width;
-        }
+    if let Some(line_width) = line_width {
+        formatter.line_width = line_width;
     }
 
     let quote_properties = session
@@ -137,18 +131,20 @@ pub(crate) fn apply_format_settings_from_cli(
             argument: "--quote-style",
             source,
         })?;
-    if let Some(javascript) = configuration
-        .javascript
-        .as_mut()
-        .and_then(|j| j.formatter.as_mut())
-    {
-        if let Some(quote_properties) = quote_properties {
-            javascript.quote_properties = quote_properties;
-        }
 
-        if let Some(quote_style) = quote_style {
-            javascript.quote_style = quote_style;
-        }
+    let javascript = configuration
+        .javascript
+        .get_or_insert_with(JavascriptConfiguration::default);
+    let javascript_formatter = javascript
+        .formatter
+        .get_or_insert_with(JavascriptFormatter::default);
+
+    if let Some(quote_properties) = quote_properties {
+        javascript_formatter.quote_properties = quote_properties;
+    }
+
+    if let Some(quote_style) = quote_style {
+        javascript_formatter.quote_style = quote_style;
     }
 
     Ok(configuration)
