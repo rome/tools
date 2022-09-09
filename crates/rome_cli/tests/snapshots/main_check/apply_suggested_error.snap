@@ -1,6 +1,5 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 147
 expression: content
 ---
 ## `fix.js`
@@ -10,6 +9,12 @@ let a = 4;
 debugger;
 console.log(a);
 
+```
+
+# Termination Message
+
+```block
+incompatible arguments '--apply' and '--apply-suggested'
 ```
 
 

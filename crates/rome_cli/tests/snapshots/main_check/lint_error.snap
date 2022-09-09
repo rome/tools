@@ -9,6 +9,12 @@ for(;true;);
 
 ```
 
+# Termination Message
+
+```block
+errors where emitted while running checks
+```
+
 # Emitted Messages
 
 ```block

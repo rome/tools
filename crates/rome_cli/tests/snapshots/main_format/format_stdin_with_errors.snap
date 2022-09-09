@@ -1,6 +1,11 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 147
 expression: content
 ---
+# Termination Message
+
+```block
+missing argument 'stdin'. Type 'rome format --help' for more information.
+```
+
 

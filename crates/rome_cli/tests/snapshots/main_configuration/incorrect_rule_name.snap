@@ -1,6 +1,5 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 147
 expression: content
 ---
 ## `rome.json`
@@ -19,6 +18,13 @@ expression: content
     }
   }
 }
+```
+
+# Termination Message
+
+```block
+Rome couldn't load the configuration file, here's why: 
+invalid rule name `foo_rule` at line 7 column 9
 ```
 
 
