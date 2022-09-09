@@ -18,7 +18,7 @@ impl FormatNodeRule<JsFunctionBody> for FormatJsFunctionBody {
 
         let r_curly_token = r_curly_token?;
 
-        if statements.is_empty() {
+        if statements.is_empty() && directives.is_empty() {
             write!(
                 f,
                 [

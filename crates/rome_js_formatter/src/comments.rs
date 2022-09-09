@@ -1,12 +1,12 @@
 use crate::prelude::*;
+use crate::utils::JsAnyConditional;
 use rome_formatter::{write, CommentPlacement, CommentPosition, Comments, DecoratedComment};
 use rome_formatter::{CommentKind, CommentStyle, SourceComment};
 use rome_js_syntax::suppression::{parse_suppression_comment, SuppressionCategory};
 use rome_js_syntax::{
     JsAnyName, JsAnyRoot, JsAnyStatement, JsArrayHole, JsArrowFunctionExpression, JsBlockStatement,
-    JsCallArguments, JsCatchClause, JsConstructorParameters, JsEmptyStatement, JsFinallyClause,
-    JsFunctionBody, JsIdentifierExpression, JsIfStatement, JsLanguage, JsParameters, JsSyntaxKind,
-    JsSyntaxNode, JsVariableDeclarator, JsWhileStatement,
+    JsCatchClause, JsEmptyStatement, JsFinallyClause, JsFunctionBody, JsIdentifierExpression,
+    JsIfStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsVariableDeclarator, JsWhileStatement,
 };
 use rome_rowan::{AstNode, SyntaxTriviaPieceComments, TextLen};
 
@@ -151,6 +151,7 @@ impl CommentStyle for JsCommentStyle {
         match comment.position() {
             CommentPosition::EndOfLine => handle_typecast_comment(comment)
                 .or_else(handle_function_declaration_comment)
+                .or_else(handle_conditional_comment)
                 .or_else(handle_if_statement_comment)
                 .or_else(handle_while_comment)
                 .or_else(handle_try_comment)
@@ -379,6 +380,51 @@ fn handle_function_declaration_comment(
     } else {
         CommentPlacement::Default(comment)
     }
+}
+
+fn handle_conditional_comment(
+    comment: DecoratedComment<JsLanguage>,
+) -> CommentPlacement<JsLanguage> {
+    let enclosing = comment.enclosing_node();
+
+    let (conditional, following) = match (
+        JsAnyConditional::cast_ref(enclosing),
+        comment.following_node(),
+    ) {
+        (Some(conditional), Some(following)) => (conditional, following),
+        _ => {
+            return CommentPlacement::Default(comment);
+        }
+    };
+
+    // Make end of line comments that come after the operator leading comments of the consequent / alternate.
+    // ```javascript
+    // a
+    //   // becomes leading of consequent
+    //   ? { x: 5 } :
+    //   {};
+    //
+    // a
+    //   ? { x: 5 }
+    //   : // becomes leading of alternate
+    // 	{};
+    //
+    // a // remains trailing, because it directly follows the node
+    //   ? { x: 5 }
+    //   : {};
+    // ```
+    let token = comment.piece().as_piece().token();
+    let is_after_operator = conditional.colon_token().as_ref() == Ok(&token)
+        || conditional.question_mark_token().as_ref() == Ok(&token);
+
+    if is_after_operator {
+        return CommentPlacement::Leading {
+            node: following.clone(),
+            comment,
+        };
+    }
+
+    CommentPlacement::Default(comment)
 }
 
 fn handle_if_statement_comment(

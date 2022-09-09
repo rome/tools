@@ -690,7 +690,7 @@ impl JsAnyConditional {
         }
     }
 
-    fn question_mark_token(&self) -> SyntaxResult<JsSyntaxToken> {
+    pub(crate) fn question_mark_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
             JsAnyConditional::JsConditionalExpression(conditional) => {
                 conditional.question_mark_token()
@@ -710,7 +710,7 @@ impl JsAnyConditional {
         }
     }
 
-    fn colon_token(&self) -> SyntaxResult<JsSyntaxToken> {
+    pub(crate) fn colon_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
             JsAnyConditional::JsConditionalExpression(conditional) => conditional.colon_token(),
             JsAnyConditional::TsConditionalType(conditional) => conditional.colon_token(),

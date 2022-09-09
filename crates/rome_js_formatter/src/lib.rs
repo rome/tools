@@ -766,10 +766,13 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-function foo1() // this is a function
-{
-	return 42;
-}
+type T4 = test
+    extends // comment
+     string
+    // something
+    ? unknown : test extends number ? undefined :
+        // else
+        undefined;
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
