@@ -26,7 +26,7 @@ struct CliSnapshot {
 }
 
 impl CliSnapshot {
-    pub fn form_result(result: Result<(), Termination>) -> Self {
+    pub fn from_result(result: Result<(), Termination>) -> Self {
         Self {
             in_messages: InMessages::default(),
             configuration: None,
@@ -153,7 +153,7 @@ pub fn assert_cli_snapshot(payload: SnapshotPayload<'_>) {
         test_name,
         module_path,
     } = payload;
-    let mut cli_snapshot = CliSnapshot::form_result(result);
+    let mut cli_snapshot = CliSnapshot::from_result(result);
     let config_path = PathBuf::from("rome.json");
     let configuration = fs.read(&config_path).ok();
     if let Some(mut configuration) = configuration {
