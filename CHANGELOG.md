@@ -1,5 +1,11 @@
 # Rome changelog
 
+## 0.9.2
+
+### CLI 
+
+- Fixes an issue where arguments were not correctly picked up and applied to the formatter [#3175](https://github.com/rome/tools/issues/3175)
+
 ## 0.9.1
 
 ### CLI
