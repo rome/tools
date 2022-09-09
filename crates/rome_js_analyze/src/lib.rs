@@ -111,19 +111,19 @@ mod tests {
         const SOURCE: &str = "
             function checkSuppressions1(a, b) {
                 a == b;
-                // rome-ignore lint(js): whole group
+                // rome-ignore lint(correctness): whole group
                 a == b;
-                // rome-ignore lint(js/noDoubleEquals): single rule
+                // rome-ignore lint(correctness/noDoubleEquals): single rule
                 a == b;
-                /* rome-ignore lint(js/useWhile): multiple block comments */ /* rome-ignore lint(js/noDoubleEquals): multiple block comments */
+                /* rome-ignore lint(correctness/useWhile): multiple block comments */ /* rome-ignore lint(correctness/noDoubleEquals): multiple block comments */
                 a == b;
-                // rome-ignore lint(js/useWhile): multiple line comments
-                // rome-ignore lint(js/noDoubleEquals): multiple line comments
+                // rome-ignore lint(correctness/useWhile): multiple line comments
+                // rome-ignore lint(correctness/noDoubleEquals): multiple line comments
                 a == b;
                 a == b;
             }
 
-            // rome-ignore lint(js/noDoubleEquals): do not suppress warning for the whole function
+            // rome-ignore lint(correctness/noDoubleEquals): do not suppress warning for the whole function
             function checkSuppressions2(a, b) {
                 a == b;
             }
@@ -138,7 +138,7 @@ mod tests {
                 let code = diag.code.as_deref().unwrap();
                 let primary = diag.primary.as_ref().unwrap();
 
-                if code == "js/noDoubleEquals" {
+                if code == "correctness/noDoubleEquals" {
                     error_ranges.push(primary.span.range);
                 }
             }
@@ -150,8 +150,8 @@ mod tests {
             error_ranges.as_slice(),
             &[
                 TextRange::new(TextSize::from(67), TextSize::from(69)),
-                TextRange::new(TextSize::from(604), TextSize::from(606)),
-                TextRange::new(TextSize::from(790), TextSize::from(792)),
+                TextRange::new(TextSize::from(658), TextSize::from(660)),
+                TextRange::new(TextSize::from(853), TextSize::from(855)),
             ]
         );
     }

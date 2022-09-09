@@ -1,0 +1,27 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: JsThrowStatement.js
+---
+# Input
+```js
+function JsThrowStatement1() {
+    throw new Error();
+    afterThrow();
+}
+
+```
+
+# Diagnostics
+```
+warning[nursery/noUnreachable]: This code is unreachable
+  ┌─ JsThrowStatement.js:3:5
+  │
+2 │     throw new Error();
+  │     ------------------ This statement will throw an exception ...
+3 │     afterThrow();
+  │     ------------- ... before it can reach this code
+
+
+```
+
+

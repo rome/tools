@@ -1,0 +1,48 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: JsContinueStatement.js
+---
+# Input
+```js
+function JsContinueStatement1() {
+    while (true) {
+        continue;
+        continue; // afterContinue
+    }
+}
+
+function JsContinueStatement2() {
+    while (true) {
+        continue;
+        break; // afterContinue
+    }
+}
+
+```
+
+# Diagnostics
+```
+warning[nursery/noUnreachable]: This code is unreachable
+  ┌─ JsContinueStatement.js:4:9
+  │
+3 │         continue;
+  │         --------- This statement will continue the loop ...
+4 │         continue; // afterContinue
+  │         --------- ... before it can reach this code
+
+
+```
+
+```
+warning[nursery/noUnreachable]: This code is unreachable
+   ┌─ JsContinueStatement.js:11:9
+   │
+10 │         continue;
+   │         --------- This statement will continue the loop ...
+11 │         break; // afterContinue
+   │         ------ ... before it can reach this code
+
+
+```
+
+

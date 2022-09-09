@@ -1,0 +1,60 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: JsLabeledStatement.js
+---
+# Input
+```js
+function JsLabeledStatement1() {
+    label: while (true) {
+        if (true) {
+            continue label;
+        } else {
+            break label;
+        }
+
+        afterLabelJump();
+    }
+}
+
+function JsLabeledStatement2() {
+    label: {
+        beforeBreak();
+        break label;
+        afterBreak();
+    }
+
+    afterBlock();
+}
+
+```
+
+# Diagnostics
+```
+warning[nursery/noUnreachable]: This code is unreachable
+  ┌─ JsLabeledStatement.js:9:9
+  │
+4 │             continue label;
+  │             --------------- Either this statement will continue the loop ...
+5 │         } else {
+6 │             break label;
+  │             ------------ ... or this statement will break the flow of the code ...
+  ·
+9 │         afterLabelJump();
+  │         ----------------- ... before it can reach this code
+
+
+```
+
+```
+warning[nursery/noUnreachable]: This code is unreachable
+   ┌─ JsLabeledStatement.js:17:9
+   │
+16 │         break label;
+   │         ------------ This statement will break the flow of the code ...
+17 │         afterBreak();
+   │         ------------- ... before it can reach this code
+
+
+```
+
+

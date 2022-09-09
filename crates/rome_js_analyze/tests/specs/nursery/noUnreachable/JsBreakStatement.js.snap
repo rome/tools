@@ -1,0 +1,48 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: JsBreakStatement.js
+---
+# Input
+```js
+function JsBreakStatement1() {
+    while (true) {
+        break;
+        break; // afterBreak
+    }
+}
+
+function JsBreakStatement2() {
+    while (true) {
+        break;
+        continue; // afterBreak
+    }
+}
+
+```
+
+# Diagnostics
+```
+warning[nursery/noUnreachable]: This code is unreachable
+  ┌─ JsBreakStatement.js:4:9
+  │
+3 │         break;
+  │         ------ This statement will break the flow of the code ...
+4 │         break; // afterBreak
+  │         ------ ... before it can reach this code
+
+
+```
+
+```
+warning[nursery/noUnreachable]: This code is unreachable
+   ┌─ JsBreakStatement.js:11:9
+   │
+10 │         break;
+   │         ------ This statement will break the flow of the code ...
+11 │         continue; // afterBreak
+   │         --------- ... before it can reach this code
+
+
+```
+
+

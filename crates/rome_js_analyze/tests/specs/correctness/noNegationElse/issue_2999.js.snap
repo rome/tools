@@ -1,0 +1,42 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: issue_2999.js
+---
+# Input
+```js
+if (!true) {
+	consequent;
+} else something();
+//valid https://github.com/rome/tools/issues/2999 
+if (!/^NCT/.test(input)) {
+	messages.push("NCT Number must start with NCT");
+} else if (!/^NCT\d{8}$/.test(input)) {
+	messages.push("NCT Number must have exactly 8 digits after NCT");
+}
+```
+
+# Diagnostics
+```
+warning[correctness/noNegationElse]: Invert blocks when performing a negation test.
+  ┌─ issue_2999.js:1:1
+  │  
+1 │ ┌ if (!true) {
+2 │ │     consequent;
+3 │ │ } else something();
+  │ └───────────────────'
+
+Suggested fix: Exchange alternate and consequent of the node
+    | @@ -1,6 +1,6 @@
+0   | - if (!true) {
+  0 | + if (true) something(); else {
+1 1 |   	consequent;
+2   | - } else something();
+  2 | + }
+3 3 |   //valid https://github.com/rome/tools/issues/2999
+4 4 |   if (!/^NCT/.test(input)) {
+5 5 |   	messages.push("NCT Number must start with NCT");
+
+
+```
+
+

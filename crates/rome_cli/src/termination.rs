@@ -70,7 +70,7 @@ pub enum Termination {
 }
 
 fn command_name() -> String {
-    #[allow(unused_assignments)]
+    #[allow(unused_assignments, unused_mut)]
     let mut command = current_exe()
         .ok()
         .and_then(|path| Some(path.file_name()?.to_str()?.to_string()))
