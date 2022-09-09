@@ -126,15 +126,17 @@ const foo = `but where will ${
 
 `<div>${
 	this.set && this.set.artist
-/* avoid console errors if `this.set` is undefined */}</div>`;
+	/* avoid console errors if `this.set` is undefined */
+}</div>`;
 
-`<div>${/* avoid console errors if `this.set` is undefined */
+`<div>${
+	/* avoid console errors if `this.set` is undefined */
 	this.set && this.set.artist
 }</div>`;
 
-`${ExampleStory.getFragment(
+`${
 	// $FlowFixMe found when converting React.createClass to ES6
-	"story",
-)}
+	ExampleStory.getFragment("story")
+}
 `;
 
