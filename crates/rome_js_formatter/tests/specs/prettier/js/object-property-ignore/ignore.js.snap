@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/object-property-ignore/ignore.js
 ---
 
 # Input
@@ -59,15 +61,6 @@ foo = {
 ```diff
 --- Prettier
 +++ Rome
-@@ -19,7 +19,7 @@
- foo = {
-   _: "",
-   // prettier-ignore
--  bar:            1 /* comment */,
-+  bar:            1, /* comment */
- };
- 
- foo = {
 @@ -39,7 +39,7 @@
  foo = {
    baz: {
@@ -103,7 +96,7 @@ foo = {
 foo = {
   _: "",
   // prettier-ignore
-  bar:            1, /* comment */
+  bar:            1 /* comment */,
 };
 
 foo = {

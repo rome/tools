@@ -1,11 +1,10 @@
-use crate::comments::multimap::AppendOnlyMultiMap;
-use crate::comments::{CommentPosition, CommentsData};
+use crate::comments::map::CommentsMap;
+use crate::comments::CommentPosition;
 use crate::{CommentPlacement, CommentStyle, DecoratedComment, SourceComment};
 use rome_rowan::syntax::SyntaxElementKey;
 use rome_rowan::{
     Direction, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxToken, WalkEvent,
 };
-use std::cell::RefCell;
 use std::collections::HashSet;
 
 pub(super) struct CommentsBuilderVisitor<'a, Style: CommentStyle> {
@@ -40,7 +39,10 @@ where
     pub(super) fn visit(
         mut self,
         root: &SyntaxNode<Style::Language>,
-    ) -> CommentsData<Style::Language> {
+    ) -> (
+        CommentsMap<SyntaxElementKey, SourceComment<Style::Language>>,
+        HashSet<SyntaxElementKey>,
+    ) {
         for event in root.preorder_with_tokens(Direction::Next) {
             match event {
                 WalkEvent::Enter(SyntaxElement::Node(node)) => {
@@ -58,7 +60,15 @@ where
             }
         }
 
-        self.finish()
+        assert!(
+            self.parents.is_empty(),
+            "Expected all enclosing nodes to have been processed but contains {:#?}",
+            self.parents
+        );
+
+        self.flush_comments(None);
+
+        self.builder.finish()
     }
 
     fn visit_node(&mut self, event: WalkEvent<SyntaxNode<Style::Language>>) {
@@ -232,24 +242,10 @@ where
             self.builder.add_comment(placement);
         }
     }
-
-    fn finish(mut self) -> CommentsData<Style::Language> {
-        assert!(
-            self.parents.is_empty(),
-            "Expected all enclosing nodes to have been processed but contains {:#?}",
-            self.parents
-        );
-
-        self.flush_comments(None);
-
-        self.builder.finish(Style::is_suppression)
-    }
 }
 
 struct CommentsBuilder<L: Language> {
-    leading_comments: AppendOnlyMultiMap<SyntaxNode<L>, SourceComment<L>>,
-    dangling_comments: AppendOnlyMultiMap<SyntaxNode<L>, SourceComment<L>>,
-    trailing_comments: AppendOnlyMultiMap<SyntaxNode<L>, SourceComment<L>>,
+    comments: CommentsMap<SyntaxElementKey, SourceComment<L>>,
     skipped: HashSet<SyntaxElementKey>,
 }
 
@@ -257,13 +253,13 @@ impl<L: Language> CommentsBuilder<L> {
     fn add_comment(&mut self, placement: CommentPlacement<L>) {
         match placement {
             CommentPlacement::Leading { node, comment } => {
-                self.insert_leading_comment(node, comment.into());
+                self.push_leading_comment(&node, comment.into());
             }
             CommentPlacement::Trailing { node, comment } => {
-                self.insert_trailing_comment(node, comment.into());
+                self.push_trailing_comment(&node, comment.into());
             }
             CommentPlacement::Dangling { node, comment } => {
-                self.insert_dangling_comment(node, comment.into())
+                self.push_dangling_comment(&node, comment.into())
             }
             CommentPlacement::Default(mut comment) => {
                 match comment.position {
@@ -276,18 +272,18 @@ impl<L: Language> CommentsBuilder<L> {
                                 // a; // comment
                                 // b
                                 // ```
-                                self.insert_trailing_comment(preceding, comment.into());
+                                self.push_trailing_comment(&preceding, comment);
                             }
                             (Some(preceding), None) => {
-                                self.insert_trailing_comment(preceding, comment.into());
+                                self.push_trailing_comment(&preceding, comment);
                             }
                             (None, Some(following)) => {
-                                self.insert_leading_comment(following, comment.into());
+                                self.push_leading_comment(&following, comment);
                             }
                             (None, None) => {
-                                self.insert_dangling_comment(
-                                    comment.enclosing_node().clone(),
-                                    comment.into(),
+                                self.push_dangling_comment(
+                                    &comment.enclosing_node().clone(),
+                                    comment,
                                 );
                             }
                         }
@@ -302,15 +298,15 @@ impl<L: Language> CommentsBuilder<L> {
                             // ```
                             // attach the comment to the `b` expression statement
                             (_, Some(following)) => {
-                                self.insert_leading_comment(following, comment.into());
+                                self.push_leading_comment(&following, comment);
                             }
                             (Some(preceding), None) => {
-                                self.insert_trailing_comment(preceding, comment.into());
+                                self.push_trailing_comment(&preceding, comment);
                             }
                             (None, None) => {
-                                self.insert_dangling_comment(
-                                    comment.enclosing_node().clone(),
-                                    comment.into(),
+                                self.push_dangling_comment(
+                                    &comment.enclosing_node().clone(),
+                                    comment,
                                 );
                             }
                         }
@@ -327,21 +323,21 @@ impl<L: Language> CommentsBuilder<L> {
                                 if preceding.text_range().end()
                                     == comment.piece().as_piece().token().text_range().end()
                                 {
-                                    self.insert_trailing_comment(preceding, comment.into());
+                                    self.push_trailing_comment(&preceding, comment);
                                 } else {
-                                    self.insert_leading_comment(following, comment.into());
+                                    self.push_leading_comment(&following, comment);
                                 }
                             }
                             (Some(preceding), None) => {
-                                self.insert_trailing_comment(preceding, comment.into());
+                                self.push_trailing_comment(&preceding, comment);
                             }
                             (None, Some(following)) => {
-                                self.insert_leading_comment(following, comment.into());
+                                self.push_leading_comment(&following, comment);
                             }
                             (None, None) => {
-                                self.insert_dangling_comment(
-                                    comment.enclosing_node().clone(),
-                                    comment.into(),
+                                self.push_dangling_comment(
+                                    &comment.enclosing_node().clone(),
+                                    comment,
                                 );
                             }
                         }
@@ -355,37 +351,32 @@ impl<L: Language> CommentsBuilder<L> {
         self.skipped.insert(token.key());
     }
 
-    fn insert_leading_comment(&mut self, node: SyntaxNode<L>, comment: SourceComment<L>) {
-        self.leading_comments.append(node, comment);
+    fn push_leading_comment(&mut self, node: &SyntaxNode<L>, comment: DecoratedComment<L>) {
+        self.comments.push_leading(node.key(), comment.into());
     }
 
-    fn insert_dangling_comment(&mut self, node: SyntaxNode<L>, comment: SourceComment<L>) {
-        self.dangling_comments.append(node, comment);
+    fn push_dangling_comment(&mut self, node: &SyntaxNode<L>, comment: DecoratedComment<L>) {
+        self.comments.push_dangling(node.key(), comment.into());
     }
 
-    fn insert_trailing_comment(&mut self, node: SyntaxNode<L>, comment: SourceComment<L>) {
-        self.trailing_comments.append(node, comment);
+    fn push_trailing_comment(&mut self, node: &SyntaxNode<L>, comment: DecoratedComment<L>) {
+        self.comments.push_trailing(node.key(), comment.into());
     }
 
-    fn finish(self, is_suppression: fn(&str) -> bool) -> CommentsData<L> {
-        CommentsData {
-            is_suppression,
-            leading_comments: self.leading_comments,
-            dangling_comments: self.dangling_comments,
-            trailing_comments: self.trailing_comments,
-            with_skipped: self.skipped,
-            #[cfg(debug_assertions)]
-            checked_suppressions: RefCell::new(Default::default()),
-        }
+    fn finish(
+        self,
+    ) -> (
+        CommentsMap<SyntaxElementKey, SourceComment<L>>,
+        HashSet<SyntaxElementKey>,
+    ) {
+        (self.comments, self.skipped)
     }
 }
 
 impl<L: Language> Default for CommentsBuilder<L> {
     fn default() -> Self {
         Self {
-            leading_comments: AppendOnlyMultiMap::new(),
-            dangling_comments: AppendOnlyMultiMap::new(),
-            trailing_comments: AppendOnlyMultiMap::new(),
+            comments: CommentsMap::new(),
             skipped: HashSet::default(),
         }
     }
@@ -394,17 +385,21 @@ impl<L: Language> Default for CommentsBuilder<L> {
 #[cfg(test)]
 mod tests {
     use crate::comments::builder::CommentsBuilderVisitor;
-    use crate::comments::{CommentPosition, CommentsData};
-    use crate::{CommentKind, CommentPlacement, CommentStyle, Comments, DecoratedComment};
+    use crate::comments::map::CommentsMap;
+    use crate::comments::CommentPosition;
+    use crate::{CommentKind, CommentPlacement, CommentStyle, DecoratedComment, SourceComment};
     use rome_js_parser::parse_module;
-    use rome_js_syntax::{JsLanguage, JsSyntaxKind, JsSyntaxToken};
-    use rome_rowan::SyntaxTriviaPieceComments;
+    use rome_js_syntax::{
+        JsLanguage, JsParameters, JsPropertyObjectMember, JsShorthandPropertyObjectMember,
+        JsSyntaxKind, JsSyntaxNode,
+    };
+    use rome_rowan::syntax::SyntaxElementKey;
+    use rome_rowan::{AstNode, SyntaxTriviaPieceComments};
     use std::cell::RefCell;
-    use std::rc::Rc;
 
     #[test]
     fn leading_comment() {
-        let (decorated, comments) = extract_comments(
+        let (root, decorated, comments) = extract_comments(
             r#"const foo = {
   a: 'a',
   /* comment for this line */
@@ -438,19 +433,17 @@ mod tests {
             JsSyntaxKind::JS_OBJECT_EXPRESSION
         );
 
-        assert_eq!(
-            comments
-                .leading_comments
-                .keys()
-                .map(|node| node.text_trimmed().to_string())
-                .collect::<Vec<_>>(),
-            vec![String::from("b")]
-        )
+        let b = root
+            .descendants()
+            .find_map(JsShorthandPropertyObjectMember::cast)
+            .unwrap();
+
+        assert!(!comments.leading(&b.syntax().key()).is_empty());
     }
 
     #[test]
     fn trailing_comment() {
-        let (decorated, comments) = extract_comments(
+        let (root, decorated, comments) = extract_comments(
             r#"const foo = {
   a: 'a' /* comment for this line */,
   b
@@ -483,19 +476,17 @@ mod tests {
             JsSyntaxKind::JS_OBJECT_EXPRESSION
         );
 
-        assert_eq!(
-            comments
-                .trailing_comments
-                .keys()
-                .map(|node| node.text_trimmed().to_string())
-                .collect::<Vec<_>>(),
-            vec![String::from("a: 'a'")]
-        )
+        let a = root
+            .descendants()
+            .find_map(JsPropertyObjectMember::cast)
+            .unwrap();
+
+        assert!(!comments.trailing(&a.syntax().key()).is_empty());
     }
 
     #[test]
     fn end_of_line_comment() {
-        let (decorated, comments) = extract_comments(
+        let (root, decorated, comments) = extract_comments(
             r#"const foo = {
   a: 'a', /* comment for this line */
   b
@@ -528,19 +519,17 @@ mod tests {
             JsSyntaxKind::JS_OBJECT_EXPRESSION
         );
 
-        assert_eq!(
-            comments
-                .trailing_comments
-                .keys()
-                .map(|node| node.text_trimmed().to_string())
-                .collect::<Vec<_>>(),
-            vec![String::from("a: 'a'")]
-        )
+        let a = root
+            .descendants()
+            .find_map(JsPropertyObjectMember::cast)
+            .unwrap();
+
+        assert!(!comments.trailing(&a.syntax().key()).is_empty());
     }
 
     #[test]
     fn dangling_arrow() {
-        let (decorated_comments, comments) = extract_comments("(/* comment */)  => true");
+        let (root, decorated_comments, comments) = extract_comments("(/* comment */)  => true");
 
         assert_eq!(decorated_comments.len(), 1);
 
@@ -555,19 +544,13 @@ mod tests {
             JsSyntaxKind::JS_PARAMETERS
         );
 
-        assert_eq!(
-            comments
-                .dangling_comments
-                .keys()
-                .map(|node| node.kind())
-                .collect::<Vec<_>>(),
-            vec![JsSyntaxKind::JS_PARAMETERS]
-        );
+        let parameters = root.descendants().find_map(JsParameters::cast).unwrap();
+        assert!(!comments.dangling(&parameters.syntax().key()).is_empty());
     }
 
     #[test]
     fn dangling_comments() {
-        let (decorated_comments, comments) = extract_comments(
+        let (root, decorated_comments, comments) = extract_comments(
             r#"
             function (/* test */) {}
             "#,
@@ -586,19 +569,13 @@ mod tests {
             JsSyntaxKind::JS_PARAMETERS
         );
 
-        assert_eq!(
-            comments
-                .dangling_comments
-                .keys()
-                .map(|node| node.kind())
-                .collect::<Vec<_>>(),
-            vec![JsSyntaxKind::JS_PARAMETERS]
-        );
+        let parameters = root.descendants().find_map(JsParameters::cast).unwrap();
+        assert!(!comments.dangling(&parameters.syntax().key()).is_empty());
     }
 
     #[test]
     fn comment_only_program() {
-        let (decorated, comments) = extract_comments(
+        let (root, decorated, comments) = extract_comments(
             r#"/* test */
 
 /* test */"#,
@@ -622,26 +599,23 @@ mod tests {
         assert_eq!(second.following_node(), None);
         assert_eq!(second.enclosing_node().kind(), JsSyntaxKind::JS_MODULE);
 
-        assert_eq!(
-            comments
-                .dangling_comments
-                .keys()
-                .map(|node| node.kind())
-                .collect::<Vec<_>>(),
-            vec![JsSyntaxKind::JS_MODULE]
-        );
+        assert!(!comments.dangling(&root.key()).is_empty());
     }
 
     fn extract_comments(
         source: &str,
-    ) -> (Vec<DecoratedComment<JsLanguage>>, CommentsData<JsLanguage>) {
+    ) -> (
+        JsSyntaxNode,
+        Vec<DecoratedComment<JsLanguage>>,
+        CommentsMap<SyntaxElementKey, SourceComment<JsLanguage>>,
+    ) {
         let tree = parse_module(source, 0);
 
         let style = TestCommentStyle::default();
         let builder = CommentsBuilderVisitor::new(&style);
-        let comments = builder.visit(&tree.syntax());
+        let (comments, _) = builder.visit(&tree.syntax());
 
-        (style.finish(), comments)
+        (tree.syntax(), style.finish(), comments)
     }
 
     #[derive(Default)]

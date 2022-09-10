@@ -1,8 +1,7 @@
 mod builder;
-mod multimap;
+mod map;
 
-use self::{builder::CommentsBuilderVisitor, multimap::AppendOnlyMultiMap};
-use crate::TextSize;
+use self::{builder::CommentsBuilderVisitor, map::CommentsMap};
 use rome_rowan::syntax::SyntaxElementKey;
 use rome_rowan::{Language, SyntaxKind, SyntaxNode, SyntaxToken, SyntaxTriviaPieceComments};
 #[cfg(debug_assertions)]
@@ -94,29 +93,6 @@ pub struct SourceComment<L: Language> {
 }
 
 impl<L: Language> SourceComment<L> {
-    /// Creates a new trailing comment. A trailing comment always has 0 lines before.
-    pub fn trailing(piece: SyntaxTriviaPieceComments<L>) -> Self {
-        Self {
-            lines_before: 0,
-            piece,
-
-            // FIXME
-            kind: CommentKind::InlineBlock,
-            lines_after: 0,
-        }
-    }
-
-    /// Creates a leading comment with the specified lines before
-    pub fn leading(piece: SyntaxTriviaPieceComments<L>, lines_before: u32) -> Self {
-        Self {
-            lines_before,
-            piece,
-            // FIXME
-            kind: CommentKind::InlineBlock,
-            lines_after: 0,
-        }
-    }
-
     /// Returns the underlining comment trivia piece
     pub fn piece(&self) -> &SyntaxTriviaPieceComments<L> {
         &self.piece
@@ -143,9 +119,9 @@ pub struct DecoratedComment<L: Language> {
     preceding: Option<SyntaxNode<L>>,
     following: Option<SyntaxNode<L>>,
     following_token: SyntaxToken<L>,
+    position: CommentPosition,
     lines_before: u32,
     lines_after: u32,
-    position: CommentPosition,
     comment: SyntaxTriviaPieceComments<L>,
     kind: CommentKind,
 }
@@ -187,12 +163,6 @@ impl<L: Language> DecoratedComment<L> {
 
     pub fn lines_after(&self) -> u32 {
         self.lines_after
-    }
-
-    /// `true` if the comment is part of the tokens [trailing trivia](SyntaxToken::trailing_trivia)
-    #[deprecated]
-    pub fn is_trailing_token_trivia(&self) -> bool {
-        self.position.is_same_line()
     }
 
     /// Returns the [kind](CommentKind) of the comment.
@@ -348,17 +318,25 @@ impl<L: Language> Comments<L> {
     {
         let builder = CommentsBuilderVisitor::new(style);
 
-        Self {
-            data: Rc::new(builder.visit(root)),
-        }
+        let (comments, skipped) = builder.visit(root);
+
+        dbg!(Self {
+            data: Rc::new(CommentsData {
+                root: Some(root.clone()),
+                is_suppression: Style::is_suppression,
+
+                comments,
+                with_skipped: skipped,
+                #[cfg(debug_assertions)]
+                checked_suppressions: RefCell::new(Default::default()),
+            }),
+        })
     }
 
     /// Returns `true` if the given `node` has any leading or trailing comments.
     #[inline]
     pub fn has_comments(&self, node: &SyntaxNode<L>) -> bool {
-        self.has_leading_comments(node)
-            || self.has_dangling_comments(node)
-            || self.has_trailing_comments(node)
+        self.data.comments.has(&node.key())
     }
 
     /// Returns `true` if the given [node] has any leading comments.
@@ -380,7 +358,7 @@ impl<L: Language> Comments<L> {
     /// Returns the [node]'s leading comments.
     #[inline]
     pub fn leading_comments(&self, node: &SyntaxNode<L>) -> &[SourceComment<L>] {
-        self.data.leading_comments.get(node)
+        self.data.comments.leading(&node.key())
     }
 
     /// Returns `true` if node has any dangling comments.
@@ -390,13 +368,13 @@ impl<L: Language> Comments<L> {
 
     /// Returns the dangling comments of `node`
     pub fn dangling_comments(&self, node: &SyntaxNode<L>) -> &[SourceComment<L>] {
-        self.data.dangling_comments.get(node)
+        self.data.comments.dangling(&node.key())
     }
 
     /// Returns the [node]'s trailing comments.
     #[inline]
     pub fn trailing_comments(&self, node: &SyntaxNode<L>) -> &[SourceComment<L>] {
-        self.data.trailing_comments.get(node)
+        self.data.comments.trailing(&node.key())
     }
 
     /// Returns `true` if the given [node] has any trailing comments.
@@ -423,10 +401,7 @@ impl<L: Language> Comments<L> {
         &'a self,
         node: &'a SyntaxNode<L>,
     ) -> impl Iterator<Item = &SourceComment<L>> + 'a {
-        self.leading_comments(node)
-            .iter()
-            .chain(self.dangling_comments(node).iter())
-            .chain(self.trailing_comments(node).iter())
+        self.data.comments.parts(&node.key())
     }
 
     /// Returns `true` if that node has skipped token trivia attached.
@@ -506,16 +481,12 @@ Node:
 }
 
 struct CommentsData<L: Language> {
+    root: Option<SyntaxNode<L>>,
+
     is_suppression: fn(&str) -> bool,
 
     /// Stores all leading node comments by node
-    leading_comments: AppendOnlyMultiMap<SyntaxNode<L>, SourceComment<L>>,
-
-    dangling_comments: AppendOnlyMultiMap<SyntaxNode<L>, SourceComment<L>>,
-
-    /// Stores the trailing node comments by node
-    trailing_comments: AppendOnlyMultiMap<SyntaxNode<L>, SourceComment<L>>,
-
+    comments: CommentsMap<SyntaxElementKey, SourceComment<L>>,
     with_skipped: HashSet<SyntaxElementKey>,
 
     /// Stores all nodes for which [Comments::is_suppressed] has been called.
@@ -530,16 +501,12 @@ struct CommentsData<L: Language> {
     checked_suppressions: RefCell<HashSet<SyntaxNode<L>>>,
 }
 
-impl<L> Default for CommentsData<L>
-where
-    L: Language,
-{
+impl<L: Language> Default for CommentsData<L> {
     fn default() -> Self {
         Self {
+            root: None,
             is_suppression: |_| false,
-            leading_comments: Default::default(),
-            dangling_comments: Default::default(),
-            trailing_comments: Default::default(),
+            comments: Default::default(),
             with_skipped: Default::default(),
             #[cfg(debug_assertions)]
             checked_suppressions: Default::default(),
@@ -549,38 +516,34 @@ where
 
 impl<L: Language> std::fmt::Debug for CommentsData<L> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let mut debug_comments: Vec<DebugComment<'_, L>> = Vec::new();
+        let mut list = f.debug_list();
 
-        for node in self.leading_comments.keys() {
-            debug_comments.extend(
-                self.leading_comments
-                    .get(node)
-                    .iter()
-                    .map(|comment| DebugComment::Leading { node, comment }),
-            );
+        if let Some(root) = &self.root {
+            for node in root.descendants() {
+                for leading in self.comments.leading(&node.key()) {
+                    list.entry(&DebugComment::Leading {
+                        node: &node,
+                        comment: leading,
+                    });
+                }
+
+                for dangling in self.comments.dangling(&node.key()) {
+                    list.entry(&DebugComment::Dangling {
+                        node: &node,
+                        comment: dangling,
+                    });
+                }
+
+                for trailing in self.comments.trailing(&node.key()) {
+                    list.entry(&DebugComment::Trailing {
+                        node: &node,
+                        comment: trailing,
+                    });
+                }
+            }
         }
 
-        for node in self.dangling_comments.keys() {
-            debug_comments.extend(
-                self.dangling_comments
-                    .get(node)
-                    .iter()
-                    .map(|comment| DebugComment::Dangling { node, comment }),
-            );
-        }
-
-        for node in self.trailing_comments.keys() {
-            debug_comments.extend(
-                self.trailing_comments
-                    .get(node)
-                    .iter()
-                    .map(|comment| DebugComment::Trailing { node, comment }),
-            );
-        }
-
-        debug_comments.sort_unstable_by_key(|comment| comment.start());
-
-        f.debug_list().entries(debug_comments).finish()
+        list.finish()
     }
 }
 
@@ -598,16 +561,6 @@ enum DebugComment<'a, L: Language> {
         comment: &'a SourceComment<L>,
         node: &'a SyntaxNode<L>,
     },
-}
-
-impl<L: Language> DebugComment<'_, L> {
-    fn start(&self) -> TextSize {
-        match self {
-            DebugComment::Leading { comment, .. }
-            | DebugComment::Trailing { comment, .. }
-            | DebugComment::Dangling { comment, .. } => comment.piece.text_range().start(),
-        }
-    }
 }
 
 impl<L: Language> std::fmt::Debug for DebugComment<'_, L> {

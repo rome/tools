@@ -766,16 +766,10 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-class Foo {
+const {
   // rome-ignore format:
-  e(
-    lol /*string*/,
-    lol2 /*string*/,
-    lol3 /*string*/,
-    lol4 /*string*/
-  ) {} /* string*/
-}
-
+  bar4 =           1,         /* comment */
+} = foo
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);

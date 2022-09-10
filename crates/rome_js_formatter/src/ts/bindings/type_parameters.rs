@@ -1,7 +1,5 @@
 use crate::prelude::*;
-
-use crate::builders::format_delimited;
-use rome_formatter::{write, FormatRuleWithOptions, GroupId};
+use rome_formatter::{format_args, write, FormatRuleWithOptions, GroupId};
 use rome_js_syntax::{TsTypeParameters, TsTypeParametersFields};
 
 #[derive(Debug, Clone, Default)]
@@ -26,12 +24,27 @@ impl FormatNodeRule<TsTypeParameters> for FormatTsTypeParameters {
             l_angle_token,
         } = node.as_fields();
 
-        write!(
-            f,
-            [
-                format_delimited(&l_angle_token?, &items.format(), &r_angle_token?)
-                    .soft_block_indent_with_group_id(self.group_id)
-            ]
-        )
+        if items.is_empty() {
+            write!(
+                f,
+                [
+                    l_angle_token.format(),
+                    space(),
+                    format_dangling_comments(node.syntax()),
+                    space(),
+                    r_angle_token.format()
+                ]
+            )
+        } else {
+            write!(
+                f,
+                [group(&format_args![
+                    l_angle_token.format(),
+                    soft_block_indent(&items.format()),
+                    r_angle_token.format()
+                ])
+                .with_group_id(self.group_id)]
+            )
+        }
     }
 }
