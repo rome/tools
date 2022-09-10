@@ -519,6 +519,10 @@ pub(crate) fn parse_ts_name(p: &mut Parser) -> ParsedSyntax {
 // type B = typeof a;
 // type T21 = typeof Array<string>;
 // type A<U> = InstanceType<typeof Array<U>>;
+
+// test tsx ts_typeof_type2
+// type X = typeof Array
+// <div>a</div>;
 fn parse_ts_typeof_type(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![typeof]) {
         return Absent;
