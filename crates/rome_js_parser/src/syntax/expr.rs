@@ -726,6 +726,9 @@ fn parse_member_expression_rest(
     lhs
 }
 
+// test_err ts ts_new_operator
+// new A<test><test>();
+
 // test ts ts_new_operator
 // var c2 = new T<string>;  // Ok
 // var x1 = new SS<number>(); // OK
