@@ -145,11 +145,11 @@ error[SyntaxError]: expected an expression but instead found ';'
   │                             ^ Expected an expression here
 
 --
-error[SyntaxError]: expected a ( but instead found ';'
+error[SyntaxError]: expected `(` but instead found `;`
   ┌─ ts_instantiation_expressions1.ts:2:23
   │
 2 │ const b1 = f?.<number>;  // Error, `(` expected
-  │                       ^ Expected a ( here
+  │                       ^ unexpected
 
 --
 const a8 = f<number><number>;  // Relational operator error

@@ -7,7 +7,6 @@ use super::typescript::*;
 use crate::event::rewrite_events;
 use crate::event::RewriteParseEvents;
 use crate::lexer::{LexContext, ReLexContext};
-use crate::parser::expected_node;
 use crate::parser::rewrite_parser::{RewriteMarker, RewriteParser};
 use crate::parser::ToDiagnostic;
 use crate::parser::{expected_token, ParserProgress, RecoveryResult};
@@ -1699,7 +1698,7 @@ fn parse_call_expression_rest(
 
         if type_arguments.is_some() || p.at(T!['(']) {
             parse_call_arguments(p)
-                .or_add_diagnostic(p, |p, range| expected_node("(", range).to_diagnostic(p));
+                .or_add_diagnostic(p, |p, _| expected_token(T!['(']).to_diagnostic(p));
             lhs = m.complete(p, JS_CALL_EXPRESSION);
             continue;
         }
