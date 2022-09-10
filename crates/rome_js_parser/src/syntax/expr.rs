@@ -703,7 +703,7 @@ fn parse_member_expression_rest(
                 // test ts ts_optional_chain_call
                 // (<A, B>() => {})?.<A, B>();
                 let m = match lhs.kind() {
-                    TS_EXPRESSION_WITH_TYPE_ARGUMENTS => lhs.undo_completion(p),
+                    TS_INSTANTIATION_EXPRESSION => lhs.undo_completion(p),
                     _ => lhs.precede(p),
                 };
                 parse_template_literal(p, m, *in_optional_chain, true)
@@ -712,7 +712,7 @@ fn parse_member_expression_rest(
                 //  only those two possible token in cur position `parse_ts_type_arguments_in_expression` could possibly return a `Present(_)`
                 if let Present(_) = parse_ts_type_arguments_in_expression(p) {
                     let new_marker = lhs.precede(p);
-                    lhs = new_marker.complete(p, JsSyntaxKind::TS_EXPRESSION_WITH_TYPE_ARGUMENTS);
+                    lhs = new_marker.complete(p, JsSyntaxKind::TS_INSTANTIATION_EXPRESSION);
                     continue;
                 };
                 break;
@@ -768,7 +768,7 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
         .or_add_diagnostic(p, expected_expression)
         .map(|expr| parse_member_expression_rest(p, expr, context, false, &mut false))
     {
-        if let TS_EXPRESSION_WITH_TYPE_ARGUMENTS = lhs.kind() {
+        if let TS_INSTANTIATION_EXPRESSION = lhs.kind() {
             lhs.undo_completion(p).abandon(p)
         };
     }
@@ -1669,7 +1669,7 @@ fn parse_call_expression_rest(
         // Cloning here is necessary because parsing out the type arguments may rewind in which
         // case we want to return the `lhs`.
         let m = match lhs.kind() {
-            TS_EXPRESSION_WITH_TYPE_ARGUMENTS if !p.at(T![?.]) => lhs.clone().undo_completion(p),
+            TS_INSTANTIATION_EXPRESSION if !p.at(T![?.]) => lhs.clone().undo_completion(p),
             _ => lhs.clone().precede(p),
         };
 

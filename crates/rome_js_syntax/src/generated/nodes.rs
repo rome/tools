@@ -8601,45 +8601,6 @@ pub struct TsExportDeclareClauseFields {
     pub declaration: SyntaxResult<JsAnyDeclarationClause>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
-pub struct TsExpressionWithTypeArguments {
-    pub(crate) syntax: SyntaxNode,
-}
-impl TsExpressionWithTypeArguments {
-    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
-    #[doc = r""]
-    #[doc = r" # Safety"]
-    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
-    #[doc = r" or a match on [SyntaxNode::kind]"]
-    #[inline]
-    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
-    pub fn as_fields(&self) -> TsExpressionWithTypeArgumentsFields {
-        TsExpressionWithTypeArgumentsFields {
-            expression: self.expression(),
-            arguments: self.arguments(),
-        }
-    }
-    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
-        support::required_node(&self.syntax, 0usize)
-    }
-    pub fn arguments(&self) -> SyntaxResult<TsTypeArguments> {
-        support::required_node(&self.syntax, 1usize)
-    }
-}
-#[cfg(feature = "serde")]
-impl Serialize for TsExpressionWithTypeArguments {
-    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
-    where
-        S: Serializer,
-    {
-        self.as_fields().serialize(serializer)
-    }
-}
-#[cfg_attr(feature = "serde", derive(Serialize))]
-pub struct TsExpressionWithTypeArgumentsFields {
-    pub expression: SyntaxResult<JsAnyExpression>,
-    pub arguments: SyntaxResult<TsTypeArguments>,
-}
-#[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsExtendsClause {
     pub(crate) syntax: SyntaxNode,
 }
@@ -9429,6 +9390,45 @@ impl Serialize for TsInferType {
 pub struct TsInferTypeFields {
     pub infer_token: SyntaxResult<SyntaxToken>,
     pub type_parameter: SyntaxResult<TsTypeParameterName>,
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+pub struct TsInstantiationExpression {
+    pub(crate) syntax: SyntaxNode,
+}
+impl TsInstantiationExpression {
+    #[doc = r" Create an AstNode from a SyntaxNode without checking its kind"]
+    #[doc = r""]
+    #[doc = r" # Safety"]
+    #[doc = r" This function must be guarded with a call to [AstNode::can_cast]"]
+    #[doc = r" or a match on [SyntaxNode::kind]"]
+    #[inline]
+    pub const unsafe fn new_unchecked(syntax: SyntaxNode) -> Self { Self { syntax } }
+    pub fn as_fields(&self) -> TsInstantiationExpressionFields {
+        TsInstantiationExpressionFields {
+            expression: self.expression(),
+            arguments: self.arguments(),
+        }
+    }
+    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+        support::required_node(&self.syntax, 0usize)
+    }
+    pub fn arguments(&self) -> SyntaxResult<TsTypeArguments> {
+        support::required_node(&self.syntax, 1usize)
+    }
+}
+#[cfg(feature = "serde")]
+impl Serialize for TsInstantiationExpression {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        self.as_fields().serialize(serializer)
+    }
+}
+#[cfg_attr(feature = "serde", derive(Serialize))]
+pub struct TsInstantiationExpressionFields {
+    pub expression: SyntaxResult<JsAnyExpression>,
+    pub arguments: SyntaxResult<TsTypeArguments>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct TsInterfaceDeclaration {
@@ -12712,7 +12712,7 @@ pub enum JsAnyExpression {
     JsxTagExpression(JsxTagExpression),
     NewTarget(NewTarget),
     TsAsExpression(TsAsExpression),
-    TsExpressionWithTypeArguments(TsExpressionWithTypeArguments),
+    TsInstantiationExpression(TsInstantiationExpression),
     TsNonNullAssertionExpression(TsNonNullAssertionExpression),
     TsTypeAssertionExpression(TsTypeAssertionExpression),
 }
@@ -12915,9 +12915,9 @@ impl JsAnyExpression {
             _ => None,
         }
     }
-    pub fn as_ts_expression_with_type_arguments(&self) -> Option<&TsExpressionWithTypeArguments> {
+    pub fn as_ts_instantiation_expression(&self) -> Option<&TsInstantiationExpression> {
         match &self {
-            JsAnyExpression::TsExpressionWithTypeArguments(item) => Some(item),
+            JsAnyExpression::TsInstantiationExpression(item) => Some(item),
             _ => None,
         }
     }
@@ -21741,35 +21741,6 @@ impl From<TsExportDeclareClause> for SyntaxNode {
 impl From<TsExportDeclareClause> for SyntaxElement {
     fn from(n: TsExportDeclareClause) -> SyntaxElement { n.syntax.into() }
 }
-impl AstNode for TsExpressionWithTypeArguments {
-    type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> =
-        SyntaxKindSet::from_raw(RawSyntaxKind(TS_EXPRESSION_WITH_TYPE_ARGUMENTS as u16));
-    fn can_cast(kind: SyntaxKind) -> bool { kind == TS_EXPRESSION_WITH_TYPE_ARGUMENTS }
-    fn cast(syntax: SyntaxNode) -> Option<Self> {
-        if Self::can_cast(syntax.kind()) {
-            Some(Self { syntax })
-        } else {
-            None
-        }
-    }
-    fn syntax(&self) -> &SyntaxNode { &self.syntax }
-    fn into_syntax(self) -> SyntaxNode { self.syntax }
-}
-impl std::fmt::Debug for TsExpressionWithTypeArguments {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_struct("TsExpressionWithTypeArguments")
-            .field("expression", &support::DebugSyntaxResult(self.expression()))
-            .field("arguments", &support::DebugSyntaxResult(self.arguments()))
-            .finish()
-    }
-}
-impl From<TsExpressionWithTypeArguments> for SyntaxNode {
-    fn from(n: TsExpressionWithTypeArguments) -> SyntaxNode { n.syntax }
-}
-impl From<TsExpressionWithTypeArguments> for SyntaxElement {
-    fn from(n: TsExpressionWithTypeArguments) -> SyntaxElement { n.syntax.into() }
-}
 impl AstNode for TsExtendsClause {
     type Language = Language;
     const KIND_SET: SyntaxKindSet<Language> =
@@ -22426,6 +22397,35 @@ impl From<TsInferType> for SyntaxNode {
 }
 impl From<TsInferType> for SyntaxElement {
     fn from(n: TsInferType) -> SyntaxElement { n.syntax.into() }
+}
+impl AstNode for TsInstantiationExpression {
+    type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> =
+        SyntaxKindSet::from_raw(RawSyntaxKind(TS_INSTANTIATION_EXPRESSION as u16));
+    fn can_cast(kind: SyntaxKind) -> bool { kind == TS_INSTANTIATION_EXPRESSION }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        if Self::can_cast(syntax.kind()) {
+            Some(Self { syntax })
+        } else {
+            None
+        }
+    }
+    fn syntax(&self) -> &SyntaxNode { &self.syntax }
+    fn into_syntax(self) -> SyntaxNode { self.syntax }
+}
+impl std::fmt::Debug for TsInstantiationExpression {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TsInstantiationExpression")
+            .field("expression", &support::DebugSyntaxResult(self.expression()))
+            .field("arguments", &support::DebugSyntaxResult(self.arguments()))
+            .finish()
+    }
+}
+impl From<TsInstantiationExpression> for SyntaxNode {
+    fn from(n: TsInstantiationExpression) -> SyntaxNode { n.syntax }
+}
+impl From<TsInstantiationExpression> for SyntaxElement {
+    fn from(n: TsInstantiationExpression) -> SyntaxElement { n.syntax.into() }
 }
 impl AstNode for TsInterfaceDeclaration {
     type Language = Language;
@@ -26657,9 +26657,9 @@ impl From<NewTarget> for JsAnyExpression {
 impl From<TsAsExpression> for JsAnyExpression {
     fn from(node: TsAsExpression) -> JsAnyExpression { JsAnyExpression::TsAsExpression(node) }
 }
-impl From<TsExpressionWithTypeArguments> for JsAnyExpression {
-    fn from(node: TsExpressionWithTypeArguments) -> JsAnyExpression {
-        JsAnyExpression::TsExpressionWithTypeArguments(node)
+impl From<TsInstantiationExpression> for JsAnyExpression {
+    fn from(node: TsInstantiationExpression) -> JsAnyExpression {
+        JsAnyExpression::TsInstantiationExpression(node)
     }
 }
 impl From<TsNonNullAssertionExpression> for JsAnyExpression {
@@ -26707,7 +26707,7 @@ impl AstNode for JsAnyExpression {
         .union(JsxTagExpression::KIND_SET)
         .union(NewTarget::KIND_SET)
         .union(TsAsExpression::KIND_SET)
-        .union(TsExpressionWithTypeArguments::KIND_SET)
+        .union(TsInstantiationExpression::KIND_SET)
         .union(TsNonNullAssertionExpression::KIND_SET)
         .union(TsTypeAssertionExpression::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
@@ -26744,7 +26744,7 @@ impl AstNode for JsAnyExpression {
             | JSX_TAG_EXPRESSION
             | NEW_TARGET
             | TS_AS_EXPRESSION
-            | TS_EXPRESSION_WITH_TYPE_ARGUMENTS
+            | TS_INSTANTIATION_EXPRESSION
             | TS_NON_NULL_ASSERTION_EXPRESSION
             | TS_TYPE_ASSERTION_EXPRESSION => true,
             k if JsAnyLiteralExpression::can_cast(k) => true,
@@ -26819,10 +26819,8 @@ impl AstNode for JsAnyExpression {
             JSX_TAG_EXPRESSION => JsAnyExpression::JsxTagExpression(JsxTagExpression { syntax }),
             NEW_TARGET => JsAnyExpression::NewTarget(NewTarget { syntax }),
             TS_AS_EXPRESSION => JsAnyExpression::TsAsExpression(TsAsExpression { syntax }),
-            TS_EXPRESSION_WITH_TYPE_ARGUMENTS => {
-                JsAnyExpression::TsExpressionWithTypeArguments(TsExpressionWithTypeArguments {
-                    syntax,
-                })
+            TS_INSTANTIATION_EXPRESSION => {
+                JsAnyExpression::TsInstantiationExpression(TsInstantiationExpression { syntax })
             }
             TS_NON_NULL_ASSERTION_EXPRESSION => {
                 JsAnyExpression::TsNonNullAssertionExpression(TsNonNullAssertionExpression {
@@ -26877,7 +26875,7 @@ impl AstNode for JsAnyExpression {
             JsAnyExpression::JsxTagExpression(it) => &it.syntax,
             JsAnyExpression::NewTarget(it) => &it.syntax,
             JsAnyExpression::TsAsExpression(it) => &it.syntax,
-            JsAnyExpression::TsExpressionWithTypeArguments(it) => &it.syntax,
+            JsAnyExpression::TsInstantiationExpression(it) => &it.syntax,
             JsAnyExpression::TsNonNullAssertionExpression(it) => &it.syntax,
             JsAnyExpression::TsTypeAssertionExpression(it) => &it.syntax,
             JsAnyExpression::JsAnyLiteralExpression(it) => it.syntax(),
@@ -26917,7 +26915,7 @@ impl AstNode for JsAnyExpression {
             JsAnyExpression::JsxTagExpression(it) => it.syntax,
             JsAnyExpression::NewTarget(it) => it.syntax,
             JsAnyExpression::TsAsExpression(it) => it.syntax,
-            JsAnyExpression::TsExpressionWithTypeArguments(it) => it.syntax,
+            JsAnyExpression::TsInstantiationExpression(it) => it.syntax,
             JsAnyExpression::TsNonNullAssertionExpression(it) => it.syntax,
             JsAnyExpression::TsTypeAssertionExpression(it) => it.syntax,
             JsAnyExpression::JsAnyLiteralExpression(it) => it.into_syntax(),
@@ -26960,7 +26958,7 @@ impl std::fmt::Debug for JsAnyExpression {
             JsAnyExpression::JsxTagExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::NewTarget(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::TsAsExpression(it) => std::fmt::Debug::fmt(it, f),
-            JsAnyExpression::TsExpressionWithTypeArguments(it) => std::fmt::Debug::fmt(it, f),
+            JsAnyExpression::TsInstantiationExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::TsNonNullAssertionExpression(it) => std::fmt::Debug::fmt(it, f),
             JsAnyExpression::TsTypeAssertionExpression(it) => std::fmt::Debug::fmt(it, f),
         }
@@ -27002,7 +27000,7 @@ impl From<JsAnyExpression> for SyntaxNode {
             JsAnyExpression::JsxTagExpression(it) => it.into(),
             JsAnyExpression::NewTarget(it) => it.into(),
             JsAnyExpression::TsAsExpression(it) => it.into(),
-            JsAnyExpression::TsExpressionWithTypeArguments(it) => it.into(),
+            JsAnyExpression::TsInstantiationExpression(it) => it.into(),
             JsAnyExpression::TsNonNullAssertionExpression(it) => it.into(),
             JsAnyExpression::TsTypeAssertionExpression(it) => it.into(),
         }
@@ -32908,11 +32906,6 @@ impl std::fmt::Display for TsExportDeclareClause {
         std::fmt::Display::fmt(self.syntax(), f)
     }
 }
-impl std::fmt::Display for TsExpressionWithTypeArguments {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::fmt::Display::fmt(self.syntax(), f)
-    }
-}
 impl std::fmt::Display for TsExtendsClause {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
@@ -32994,6 +32987,11 @@ impl std::fmt::Display for TsIndexedAccessType {
     }
 }
 impl std::fmt::Display for TsInferType {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for TsInstantiationExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }

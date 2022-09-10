@@ -848,11 +848,6 @@ macro_rules! map_syntax_node {
                     let $pattern = unsafe { $crate::TsExportDeclareClause::new_unchecked(node) };
                     $body
                 }
-                $crate::JsSyntaxKind::TS_EXPRESSION_WITH_TYPE_ARGUMENTS => {
-                    let $pattern =
-                        unsafe { $crate::TsExpressionWithTypeArguments::new_unchecked(node) };
-                    $body
-                }
                 $crate::JsSyntaxKind::TS_EXTENDS_CLAUSE => {
                     let $pattern = unsafe { $crate::TsExtendsClause::new_unchecked(node) };
                     $body
@@ -927,6 +922,11 @@ macro_rules! map_syntax_node {
                 }
                 $crate::JsSyntaxKind::TS_INFER_TYPE => {
                     let $pattern = unsafe { $crate::TsInferType::new_unchecked(node) };
+                    $body
+                }
+                $crate::JsSyntaxKind::TS_INSTANTIATION_EXPRESSION => {
+                    let $pattern =
+                        unsafe { $crate::TsInstantiationExpression::new_unchecked(node) };
                     $body
                 }
                 $crate::JsSyntaxKind::TS_INTERFACE_DECLARATION => {

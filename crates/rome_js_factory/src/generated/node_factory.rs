@@ -4455,18 +4455,6 @@ pub fn ts_export_declare_clause(
         ],
     ))
 }
-pub fn ts_expression_with_type_arguments(
-    expression: JsAnyExpression,
-    arguments: TsTypeArguments,
-) -> TsExpressionWithTypeArguments {
-    TsExpressionWithTypeArguments::unwrap_cast(SyntaxNode::new_detached(
-        JsSyntaxKind::TS_EXPRESSION_WITH_TYPE_ARGUMENTS,
-        [
-            Some(SyntaxElement::Node(expression.into_syntax())),
-            Some(SyntaxElement::Node(arguments.into_syntax())),
-        ],
-    ))
-}
 pub fn ts_extends_clause(extends_token: SyntaxToken, types: TsTypeList) -> TsExtendsClause {
     TsExtendsClause::unwrap_cast(SyntaxNode::new_detached(
         JsSyntaxKind::TS_EXTENDS_CLAUSE,
@@ -4926,6 +4914,18 @@ pub fn ts_infer_type(infer_token: SyntaxToken, type_parameter: TsTypeParameterNa
         [
             Some(SyntaxElement::Token(infer_token)),
             Some(SyntaxElement::Node(type_parameter.into_syntax())),
+        ],
+    ))
+}
+pub fn ts_instantiation_expression(
+    expression: JsAnyExpression,
+    arguments: TsTypeArguments,
+) -> TsInstantiationExpression {
+    TsInstantiationExpression::unwrap_cast(SyntaxNode::new_detached(
+        JsSyntaxKind::TS_INSTANTIATION_EXPRESSION,
+        [
+            Some(SyntaxElement::Node(expression.into_syntax())),
+            Some(SyntaxElement::Node(arguments.into_syntax())),
         ],
     ))
 }

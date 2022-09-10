@@ -1,15 +1,15 @@
 use crate::{parentheses::NeedsParentheses, prelude::*};
 use rome_formatter::write;
-use rome_js_syntax::{TsExpressionWithTypeArguments, TsExpressionWithTypeArgumentsFields};
+use rome_js_syntax::{TsInstantiationExpression, TsInstantiationExpressionFields};
 #[derive(Debug, Clone, Default)]
-pub struct FormatTsExpressionWithTypeArguments;
-impl FormatNodeRule<TsExpressionWithTypeArguments> for FormatTsExpressionWithTypeArguments {
+pub struct FormatTsInstantiationExpression;
+impl FormatNodeRule<TsInstantiationExpression> for FormatTsInstantiationExpression {
     fn fmt_fields(
         &self,
-        node: &TsExpressionWithTypeArguments,
+        node: &TsInstantiationExpression,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        let TsExpressionWithTypeArgumentsFields {
+        let TsInstantiationExpressionFields {
             expression,
             arguments,
         } = node.as_fields();
@@ -18,7 +18,7 @@ impl FormatNodeRule<TsExpressionWithTypeArguments> for FormatTsExpressionWithTyp
     }
 }
 
-impl NeedsParentheses for TsExpressionWithTypeArguments {
+impl NeedsParentheses for TsInstantiationExpression {
     fn needs_parentheses_with_parent(&self, _: &rome_js_syntax::JsSyntaxNode) -> bool {
         false
     }

@@ -316,7 +316,7 @@ JsAnyExpression =
 	| TsTypeAssertionExpression
 	| TsAsExpression
 	| TsNonNullAssertionExpression
-	| TsExpressionWithTypeArguments
+	| TsInstantiationExpression
 	// JSX
 	| JsxTagExpression
 
@@ -2111,7 +2111,8 @@ TsTypeAssertionExpression =
 	'>'
 	expression: JsAnyExpression
 
-TsExpressionWithTypeArguments =
+// This `SyntaxKind` is related to `ExpressionWithTypeArguments` in Typescript
+TsInstantiationExpression =
 	expression: JsAnyExpression
 	arguments: TsTypeArguments
 

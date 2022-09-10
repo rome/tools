@@ -13,7 +13,7 @@ JsModule {
                         variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@7..9 "=" [] [Whitespace(" ")],
-                            expression: TsExpressionWithTypeArguments {
+                            expression: TsInstantiationExpression {
                                 expression: JsIdentifierExpression {
                                     name: JsReferenceIdentifier {
                                         value_token: IDENT@9..11 "fx" [] [],
@@ -46,7 +46,7 @@ JsModule {
                         variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@28..30 "=" [] [Whitespace(" ")],
-                            expression: TsExpressionWithTypeArguments {
+                            expression: TsInstantiationExpression {
                                 expression: JsIdentifierExpression {
                                     name: JsReferenceIdentifier {
                                         value_token: IDENT@30..32 "fx" [] [],
@@ -83,7 +83,7 @@ JsModule {
                         variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@57..59 "=" [] [Whitespace(" ")],
-                            expression: TsExpressionWithTypeArguments {
+                            expression: TsInstantiationExpression {
                                 expression: JsComputedMemberExpression {
                                     object: JsIdentifierExpression {
                                         name: JsReferenceIdentifier {
@@ -124,7 +124,7 @@ JsModule {
                         variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@88..90 "=" [] [Whitespace(" ")],
-                            expression: TsExpressionWithTypeArguments {
+                            expression: TsInstantiationExpression {
                                 expression: JsStaticMemberExpression {
                                     object: JsIdentifierExpression {
                                         name: JsReferenceIdentifier {
@@ -164,7 +164,7 @@ JsModule {
                         initializer: JsInitializerClause {
                             eq_token: EQ@129..131 "=" [] [Whitespace(" ")],
                             expression: JsStaticMemberExpression {
-                                object: TsExpressionWithTypeArguments {
+                                object: TsInstantiationExpression {
                                     expression: JsIdentifierExpression {
                                         name: JsReferenceIdentifier {
                                             value_token: IDENT@131..132 "f" [] [],
@@ -202,9 +202,9 @@ JsModule {
                         variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@168..170 "=" [] [Whitespace(" ")],
-                            expression: TsExpressionWithTypeArguments {
+                            expression: TsInstantiationExpression {
                                 expression: JsStaticMemberExpression {
-                                    object: TsExpressionWithTypeArguments {
+                                    object: TsInstantiationExpression {
                                         expression: JsIdentifierExpression {
                                             name: JsReferenceIdentifier {
                                                 value_token: IDENT@170..171 "f" [] [],
@@ -252,7 +252,7 @@ JsModule {
                         variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@217..219 "=" [] [Whitespace(" ")],
-                            expression: TsExpressionWithTypeArguments {
+                            expression: TsInstantiationExpression {
                                 expression: JsComputedMemberExpression {
                                     object: JsIdentifierExpression {
                                         name: JsReferenceIdentifier {
@@ -296,7 +296,7 @@ JsModule {
                             expression: JsComputedMemberExpression {
                                 object: JsParenthesizedExpression {
                                     l_paren_token: L_PAREN@263..264 "(" [] [],
-                                    expression: TsExpressionWithTypeArguments {
+                                    expression: TsInstantiationExpression {
                                         expression: JsIdentifierExpression {
                                             name: JsReferenceIdentifier {
                                                 value_token: IDENT@264..265 "f" [] [],
@@ -420,7 +420,7 @@ JsModule {
                         initializer: JsInitializerClause {
                             eq_token: EQ@358..360 "=" [] [Whitespace(" ")],
                             expression: JsCallExpression {
-                                callee: TsExpressionWithTypeArguments {
+                                callee: TsInstantiationExpression {
                                     expression: JsIdentifierExpression {
                                         name: JsReferenceIdentifier {
                                             value_token: IDENT@360..361 "f" [] [],
@@ -462,7 +462,7 @@ JsModule {
                         initializer: JsInitializerClause {
                             eq_token: EQ@384..386 "=" [] [Whitespace(" ")],
                             expression: JsCallExpression {
-                                callee: TsExpressionWithTypeArguments {
+                                callee: TsInstantiationExpression {
                                     expression: JsIdentifierExpression {
                                         name: JsReferenceIdentifier {
                                             value_token: IDENT@386..387 "f" [] [],
@@ -588,7 +588,7 @@ JsModule {
                         variable_annotation: missing (optional),
                         initializer: JsInitializerClause {
                             eq_token: EQ@586..588 "=" [] [Whitespace(" ")],
-                            expression: TsExpressionWithTypeArguments {
+                            expression: TsInstantiationExpression {
                                 expression: JsIdentifierExpression {
                                     name: JsReferenceIdentifier {
                                         value_token: IDENT@588..589 "f" [] [],
@@ -634,7 +634,7 @@ JsModule {
             1: (empty)
             2: JS_INITIALIZER_CLAUSE@7..19
               0: EQ@7..9 "=" [] [Whitespace(" ")]
-              1: TS_EXPRESSION_WITH_TYPE_ARGUMENTS@9..19
+              1: TS_INSTANTIATION_EXPRESSION@9..19
                 0: JS_IDENTIFIER_EXPRESSION@9..11
                   0: JS_REFERENCE_IDENTIFIER@9..11
                     0: IDENT@9..11 "fx" [] []
@@ -655,7 +655,7 @@ JsModule {
             1: (empty)
             2: JS_INITIALIZER_CLAUSE@28..48
               0: EQ@28..30 "=" [] [Whitespace(" ")]
-              1: TS_EXPRESSION_WITH_TYPE_ARGUMENTS@30..48
+              1: TS_INSTANTIATION_EXPRESSION@30..48
                 0: JS_IDENTIFIER_EXPRESSION@30..32
                   0: JS_REFERENCE_IDENTIFIER@30..32
                     0: IDENT@30..32 "fx" [] []
@@ -679,7 +679,7 @@ JsModule {
             1: (empty)
             2: JS_INITIALIZER_CLAUSE@57..77
               0: EQ@57..59 "=" [] [Whitespace(" ")]
-              1: TS_EXPRESSION_WITH_TYPE_ARGUMENTS@59..77
+              1: TS_INSTANTIATION_EXPRESSION@59..77
                 0: JS_COMPUTED_MEMBER_EXPRESSION@59..69
                   0: JS_IDENTIFIER_EXPRESSION@59..61
                     0: JS_REFERENCE_IDENTIFIER@59..61
@@ -706,7 +706,7 @@ JsModule {
             1: (empty)
             2: JS_INITIALIZER_CLAUSE@88..101
               0: EQ@88..90 "=" [] [Whitespace(" ")]
-              1: TS_EXPRESSION_WITH_TYPE_ARGUMENTS@90..101
+              1: TS_INSTANTIATION_EXPRESSION@90..101
                 0: JS_STATIC_MEMBER_EXPRESSION@90..93
                   0: JS_IDENTIFIER_EXPRESSION@90..91
                     0: JS_REFERENCE_IDENTIFIER@90..91
@@ -732,7 +732,7 @@ JsModule {
             2: JS_INITIALIZER_CLAUSE@129..142
               0: EQ@129..131 "=" [] [Whitespace(" ")]
               1: JS_STATIC_MEMBER_EXPRESSION@131..142
-                0: TS_EXPRESSION_WITH_TYPE_ARGUMENTS@131..140
+                0: TS_INSTANTIATION_EXPRESSION@131..140
                   0: JS_IDENTIFIER_EXPRESSION@131..132
                     0: JS_REFERENCE_IDENTIFIER@131..132
                       0: IDENT@131..132 "f" [] []
@@ -756,9 +756,9 @@ JsModule {
             1: (empty)
             2: JS_INITIALIZER_CLAUSE@168..189
               0: EQ@168..170 "=" [] [Whitespace(" ")]
-              1: TS_EXPRESSION_WITH_TYPE_ARGUMENTS@170..189
+              1: TS_INSTANTIATION_EXPRESSION@170..189
                 0: JS_STATIC_MEMBER_EXPRESSION@170..181
-                  0: TS_EXPRESSION_WITH_TYPE_ARGUMENTS@170..179
+                  0: TS_INSTANTIATION_EXPRESSION@170..179
                     0: JS_IDENTIFIER_EXPRESSION@170..171
                       0: JS_REFERENCE_IDENTIFIER@170..171
                         0: IDENT@170..171 "f" [] []
@@ -788,7 +788,7 @@ JsModule {
             1: (empty)
             2: JS_INITIALIZER_CLAUSE@217..233
               0: EQ@217..219 "=" [] [Whitespace(" ")]
-              1: TS_EXPRESSION_WITH_TYPE_ARGUMENTS@219..233
+              1: TS_INSTANTIATION_EXPRESSION@219..233
                 0: JS_COMPUTED_MEMBER_EXPRESSION@219..225
                   0: JS_IDENTIFIER_EXPRESSION@219..220
                     0: JS_REFERENCE_IDENTIFIER@219..220
@@ -818,7 +818,7 @@ JsModule {
               1: JS_COMPUTED_MEMBER_EXPRESSION@263..279
                 0: JS_PARENTHESIZED_EXPRESSION@263..274
                   0: L_PAREN@263..264 "(" [] []
-                  1: TS_EXPRESSION_WITH_TYPE_ARGUMENTS@264..273
+                  1: TS_INSTANTIATION_EXPRESSION@264..273
                     0: JS_IDENTIFIER_EXPRESSION@264..265
                       0: JS_REFERENCE_IDENTIFIER@264..265
                         0: IDENT@264..265 "f" [] []
@@ -899,7 +899,7 @@ JsModule {
             2: JS_INITIALIZER_CLAUSE@358..373
               0: EQ@358..360 "=" [] [Whitespace(" ")]
               1: JS_CALL_EXPRESSION@360..373
-                0: TS_EXPRESSION_WITH_TYPE_ARGUMENTS@360..369
+                0: TS_INSTANTIATION_EXPRESSION@360..369
                   0: JS_IDENTIFIER_EXPRESSION@360..361
                     0: JS_REFERENCE_IDENTIFIER@360..361
                       0: IDENT@360..361 "f" [] []
@@ -927,7 +927,7 @@ JsModule {
             2: JS_INITIALIZER_CLAUSE@384..407
               0: EQ@384..386 "=" [] [Whitespace(" ")]
               1: JS_CALL_EXPRESSION@386..407
-                0: TS_EXPRESSION_WITH_TYPE_ARGUMENTS@386..395
+                0: TS_INSTANTIATION_EXPRESSION@386..395
                   0: JS_IDENTIFIER_EXPRESSION@386..387
                     0: JS_REFERENCE_IDENTIFIER@386..387
                       0: IDENT@386..387 "f" [] []
@@ -1009,7 +1009,7 @@ JsModule {
             1: (empty)
             2: JS_INITIALIZER_CLAUSE@586..595
               0: EQ@586..588 "=" [] [Whitespace(" ")]
-              1: TS_EXPRESSION_WITH_TYPE_ARGUMENTS@588..595
+              1: TS_INSTANTIATION_EXPRESSION@588..595
                 0: JS_IDENTIFIER_EXPRESSION@588..589
                   0: JS_REFERENCE_IDENTIFIER@588..589
                     0: IDENT@588..589 "f" [] []
