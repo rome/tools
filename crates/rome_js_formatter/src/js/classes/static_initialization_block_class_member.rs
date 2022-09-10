@@ -1,6 +1,5 @@
 use crate::prelude::*;
 
-use crate::builders::format_delimited;
 use rome_formatter::write;
 use rome_js_syntax::JsStaticInitializationBlockClassMember;
 use rome_js_syntax::JsStaticInitializationBlockClassMemberFields;
@@ -23,14 +22,14 @@ impl FormatNodeRule<JsStaticInitializationBlockClassMember>
             r_curly_token,
         } = node.as_fields();
 
-        write!(f, [static_token.format(), space()])?;
+        write!(f, [static_token.format(), space(), l_curly_token.format()])?;
 
-        write!(
-            f,
-            [
-                format_delimited(&l_curly_token?, &statements.format(), &r_curly_token?)
-                    .block_indent()
-            ]
-        )
+        if statements.is_empty() {
+            write!(f, [format_dangling_comments(node.syntax()).indented()])?;
+        } else {
+            write!(f, [block_indent(&statements.format())])?;
+        }
+
+        write!(f, [r_curly_token.format()])
     }
 }

@@ -174,10 +174,23 @@ impl JsFormatSyntaxRewriter {
                 self.source_map
                     .add_deleted_range(l_paren.text_trimmed_range());
 
-                let l_paren_trivia = chain_pieces(
-                    l_paren.leading_trivia().pieces(),
-                    l_paren.trailing_trivia().pieces(),
-                );
+                let mut l_paren_trailing = l_paren.trailing_trivia().pieces().peekable();
+
+                // Skip over leading whitespace
+                while let Some(piece) = l_paren_trailing.peek() {
+                    if piece.is_whitespace() {
+                        l_paren_trailing.next();
+                    } else {
+                        break;
+                    }
+                }
+
+                let l_paren_trailing_non_whitespace_trivia = l_paren_trailing
+                    .peek()
+                    .map_or(false, |piece| piece.is_skipped() || piece.is_comments());
+
+                let l_paren_trivia =
+                    chain_pieces(l_paren.leading_trivia().pieces(), l_paren_trailing);
 
                 let mut leading_trivia = first_token.leading_trivia().pieces().peekable();
                 let mut first_new_line = None;
@@ -199,16 +212,15 @@ impl JsFormatSyntaxRewriter {
                 }
 
                 // Remove all leading new lines directly in front of the token but keep the leading new-line if it precedes a skipped token trivia or a comment.
-                // TODO Verify if no longer needed. Needs at least line break for cases like
-                // num => ( // Buttons 0-9
-                //   <div />
-                // );
-                // if leading_trivia.peek().is_none() && first_new_line.is_some() {
-                //     let (inner_offset, new_line) = first_new_line.take().unwrap();
-                //
-                //     self.source_map
-                //         .add_deleted_range(TextRange::at(inner_offset, new_line.text_len()));
-                // }
+                if !l_paren_trailing_non_whitespace_trivia
+                    && leading_trivia.peek().is_none()
+                    && first_new_line.is_some()
+                {
+                    let (inner_offset, new_line) = first_new_line.take().unwrap();
+
+                    self.source_map
+                        .add_deleted_range(TextRange::at(inner_offset, new_line.text_len()));
+                }
 
                 let leading_trivia = chain_pieces(
                     first_new_line.map(|(_, trivia)| trivia).into_iter(),
