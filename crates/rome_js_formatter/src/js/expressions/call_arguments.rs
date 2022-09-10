@@ -213,6 +213,10 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
             )
         }
     }
+
+    fn formats_dangling_comments(&self) -> bool {
+        true
+    }
 }
 
 /// Checks if the the first argument requires grouping

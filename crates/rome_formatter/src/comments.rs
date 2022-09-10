@@ -3,10 +3,10 @@ mod map;
 
 use self::{builder::CommentsBuilderVisitor, map::CommentsMap};
 use rome_rowan::syntax::SyntaxElementKey;
-use rome_rowan::{Language, SyntaxKind, SyntaxNode, SyntaxToken, SyntaxTriviaPieceComments};
+use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTriviaPieceComments};
+use rustc_hash::FxHashSet;
 #[cfg(debug_assertions)]
 use std::cell::RefCell;
-use std::collections::HashSet;
 use std::rc::Rc;
 
 #[derive(Copy, Clone, Eq, PartialEq, Debug)]
@@ -320,7 +320,7 @@ impl<L: Language> Comments<L> {
 
         let (comments, skipped) = builder.visit(root);
 
-        dbg!(Self {
+        Self {
             data: Rc::new(CommentsData {
                 root: Some(root.clone()),
                 is_suppression: Style::is_suppression,
@@ -330,7 +330,7 @@ impl<L: Language> Comments<L> {
                 #[cfg(debug_assertions)]
                 checked_suppressions: RefCell::new(Default::default()),
             }),
-        })
+        }
     }
 
     /// Returns `true` if the given `node` has any leading or trailing comments.
@@ -455,6 +455,8 @@ impl<L: Language> Comments<L> {
     pub(crate) fn assert_checked_all_suppressions(&self, root: &SyntaxNode<L>) {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
+                use rome_rowan::SyntaxKind;
+
                 let checked_nodes = self.data.checked_suppressions.borrow();
                 for node in root.descendants() {
                     if node.kind().is_list() || node.kind().is_root() {
@@ -487,7 +489,7 @@ struct CommentsData<L: Language> {
 
     /// Stores all leading node comments by node
     comments: CommentsMap<SyntaxElementKey, SourceComment<L>>,
-    with_skipped: HashSet<SyntaxElementKey>,
+    with_skipped: FxHashSet<SyntaxElementKey>,
 
     /// Stores all nodes for which [Comments::is_suppressed] has been called.
     /// This index of nodes that have been checked if they have a suppression comments is used to

@@ -20,6 +20,10 @@ impl FormatNodeRule<JsParameters> for FormatJsParameters {
     fn fmt_fields(&self, node: &JsParameters, f: &mut JsFormatter) -> FormatResult<()> {
         FormatJsAnyParameters::from(node.clone()).fmt(f)
     }
+
+    fn formats_dangling_comments(&self) -> bool {
+        true
+    }
 }
 
 declare_node_union! {

@@ -58,8 +58,6 @@ pub use comments::{
 };
 pub use format_element::{normalize_newlines, FormatElement, Text, Verbatim, LINE_TERMINATORS};
 pub use group_id::GroupId;
-use indexmap::IndexSet;
-use rome_rowan::syntax::SyntaxElementKey;
 use rome_rowan::{
     Language, SyntaxElement, SyntaxError, SyntaxNode, SyntaxResult, SyntaxToken, SyntaxTriviaPiece,
     TextRange, TextSize, TokenAtOffset,
@@ -1273,15 +1271,6 @@ pub struct FormatState<Context> {
 
     group_id_builder: UniqueGroupIdBuilder,
 
-    /// Tracks comments that have been formatted manually and shouldn't be emitted again
-    /// when formatting the token the comments belong to.
-    ///
-    /// The map stores the absolute position of the manually formatted comments.
-    /// Storing the position is sufficient because comments are guaranteed to not be empty
-    /// (all start with a specific comment sequence) and thus, no two comments can have the same
-    /// absolute position.
-    manually_formatted_dangling_comments: IndexSet<SyntaxElementKey>,
-
     // This is using a RefCell as it only exists in debug mode,
     // the Formatter is still completely immutable in release builds
     #[cfg(debug_assertions)]
@@ -1305,7 +1294,7 @@ impl<Context> FormatState<Context> {
         Self {
             context,
             group_id_builder: Default::default(),
-            manually_formatted_dangling_comments: IndexSet::default(),
+
             #[cfg(debug_assertions)]
             printed_tokens: Default::default(),
         }
@@ -1313,38 +1302,6 @@ impl<Context> FormatState<Context> {
 
     pub fn into_context(self) -> Context {
         self.context
-    }
-
-    /// FIXME Update documentation
-    /// Mark the passed comment as formatted. This is necessary if a comment from a token is formatted
-    /// to avoid that the comment gets emitted again when formatting that token.
-    ///
-    /// # Examples
-    /// This can be useful when you want to move comments from one token to another.
-    /// For example, when parenthesising an expression:
-    ///
-    /// ```javascript
-    /// console.log("test");
-    /// /* leading */ "string" /* trailing */;
-    /// ```
-    ///
-    /// It is then desired that the leading and trailing comments are outside of the parentheses.
-    ///
-    /// ```javascript
-    /// /* leading */ ("string") /* trailing */;
-    /// ```
-    ///
-    /// This can be accomplished by manually formatting the leading/trailing trivia of the string literal expression
-    /// before/after the close parentheses and then mark the comments as handled.
-    pub fn mark_dangling_comments_formatted<L: Language>(&mut self, node: &SyntaxNode<L>) {
-        self.manually_formatted_dangling_comments.insert(node.key());
-    }
-
-    /// Returns `true` if this comment has already been formatted manually
-    /// and shouldn't be formatted again when formatting the token to which the comment belongs.
-    pub fn has_formatted_dangling_comments<L: Language>(&self, node: &SyntaxNode<L>) -> bool {
-        self.manually_formatted_dangling_comments
-            .contains(&node.key())
     }
 
     /// Returns the context specifying how to format the current CST
@@ -1394,7 +1351,6 @@ where
 {
     pub fn snapshot(&self) -> FormatStateSnapshot {
         FormatStateSnapshot {
-            manually_handled_trivia_len: self.manually_formatted_dangling_comments.len(),
             #[cfg(debug_assertions)]
             printed_tokens: self.printed_tokens.clone(),
         }
@@ -1402,13 +1358,10 @@ where
 
     pub fn restore_snapshot(&mut self, snapshot: FormatStateSnapshot) {
         let FormatStateSnapshot {
-            manually_handled_trivia_len: manual_handled_comments_len,
             #[cfg(debug_assertions)]
             printed_tokens,
         } = snapshot;
 
-        self.manually_formatted_dangling_comments
-            .truncate(manual_handled_comments_len);
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
                 self.printed_tokens = printed_tokens;
@@ -1418,7 +1371,6 @@ where
 }
 
 pub struct FormatStateSnapshot {
-    manually_handled_trivia_len: usize,
     #[cfg(debug_assertions)]
     printed_tokens: PrintedTokens,
 }

@@ -432,7 +432,7 @@ where
         }
 
         if !self.prints_comments(node) {
-            write!(f, [format_leading_comments(node.syntax())])?;
+            write!(f, [format_leading_comments(syntax)])?;
         }
 
         if self.needs_parentheses(node) {
@@ -449,13 +449,11 @@ where
         }
 
         if !self.prints_comments(node) {
-            write!(
-                f,
-                [
-                    format_dangling_comments(node.syntax()),
-                    format_trailing_comments(node.syntax())
-                ]
-            )?;
+            if !self.formats_dangling_comments() {
+                write!(f, [format_dangling_comments(syntax)])?;
+            }
+
+            write!(f, [format_trailing_comments(syntax)])?;
         }
 
         Ok(())
@@ -471,6 +469,10 @@ where
     }
 
     fn prints_comments(&self, _item: &N) -> bool {
+        false
+    }
+
+    fn formats_dangling_comments(&self) -> bool {
         false
     }
 }

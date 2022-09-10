@@ -47,4 +47,8 @@ impl FormatNodeRule<TsTypeParameters> for FormatTsTypeParameters {
             )
         }
     }
+
+    fn formats_dangling_comments(&self) -> bool {
+        true
+    }
 }

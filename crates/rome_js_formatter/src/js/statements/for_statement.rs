@@ -80,4 +80,8 @@ impl FormatNodeRule<JsForStatement> for FormatJsForStatement {
 
         write!(f, [group(&format_inner)])
     }
+
+    fn formats_dangling_comments(&self) -> bool {
+        true
+    }
 }

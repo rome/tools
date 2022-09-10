@@ -32,4 +32,8 @@ impl FormatNodeRule<JsStaticInitializationBlockClassMember>
 
         write!(f, [r_curly_token.format()])
     }
+
+    fn formats_dangling_comments(&self) -> bool {
+        true
+    }
 }

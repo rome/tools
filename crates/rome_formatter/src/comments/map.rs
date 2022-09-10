@@ -1,5 +1,5 @@
 use countme::Count;
-use std::collections::HashMap;
+use rustc_hash::FxHashMap;
 use std::fmt::{Debug, Formatter};
 use std::iter::FusedIterator;
 use std::num::NonZeroU32;
@@ -28,7 +28,7 @@ use std::ops::Range;
 /// Panics when storing the `u32::MAX` part.
 pub(super) struct CommentsMap<K, V> {
     /// Lookup table to retrieve the entry for a key.
-    index: HashMap<K, Entry>,
+    index: FxHashMap<K, Entry>,
 
     /// Flat array storing all the values that have been inserted in order.
     parts: Vec<V>,
@@ -43,7 +43,7 @@ pub(super) struct CommentsMap<K, V> {
 impl<K: std::hash::Hash + Eq, V> CommentsMap<K, V> {
     pub fn new() -> Self {
         Self {
-            index: HashMap::new(),
+            index: FxHashMap::default(),
             parts: Vec::new(),
             out_of_order: Vec::new(),
         }
@@ -235,13 +235,9 @@ impl<K: std::hash::Hash + Eq, V> CommentsMap<K, V> {
     }
 }
 
-impl<K, V> Default for CommentsMap<K, V> {
+impl<K: std::hash::Hash + Eq, V> Default for CommentsMap<K, V> {
     fn default() -> Self {
-        Self {
-            index: HashMap::new(),
-            parts: Vec::new(),
-            out_of_order: Vec::new(),
-        }
+        Self::new()
     }
 }
 

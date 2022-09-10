@@ -5,8 +5,7 @@ use rome_formatter::{format_args, write, CstFormatContext};
 
 use crate::parentheses::get_expression_left_side;
 use rome_js_syntax::{
-    JsAnyExpression, JsReturnStatement, JsSequenceExpression, JsSyntaxToken,
-    JsThrowStatement,
+    JsAnyExpression, JsReturnStatement, JsSequenceExpression, JsSyntaxToken, JsThrowStatement,
 };
 use rome_rowan::{declare_node_union, SyntaxResult};
 
@@ -16,6 +15,10 @@ pub struct FormatJsReturnStatement;
 impl FormatNodeRule<JsReturnStatement> for FormatJsReturnStatement {
     fn fmt_fields(&self, node: &JsReturnStatement, f: &mut JsFormatter) -> FormatResult<()> {
         JsAnyStatementWithArgument::from(node.clone()).fmt(f)
+    }
+
+    fn formats_dangling_comments(&self) -> bool {
+        true
     }
 }
 
@@ -37,30 +40,18 @@ impl Format<JsFormatContext> for JsAnyStatementWithArgument {
             let comments = f.context().comments();
             let has_dangling_comments = comments.has_dangling_comments(self.syntax());
 
-            let is_last_comment_line = has_dangling_comments
-                && comments
-                    .dangling_comments(self.syntax())
-                    .iter()
-                    .chain(comments.trailing_comments(self.syntax()))
-                    .last()
-                    .map_or(false, |comment| comment.kind().is_line());
-
-            // We'll format it after the semicolon
-            f.state_mut()
-                .mark_dangling_comments_formatted(self.syntax());
+            let is_last_comment_line = comments
+                .trailing_comments(self.syntax())
+                .last()
+                .or_else(|| comments.dangling_comments(self.syntax()).last())
+                .map_or(false, |comment| comment.kind().is_line());
 
             if is_last_comment_line {
                 write!(f, [semicolon.format()])?;
             }
 
             if has_dangling_comments {
-                write!(
-                    f,
-                    [
-                        space(),
-                        format_dangling_comments(self.syntax()).ignore_formatted_check()
-                    ]
-                )?;
+                write!(f, [space(), format_dangling_comments(self.syntax())])?;
             }
 
             if !is_last_comment_line {

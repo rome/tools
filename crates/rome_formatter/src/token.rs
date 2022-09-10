@@ -140,7 +140,6 @@ pub const fn format_dangling_comments<L: Language>(
     FormatDanglingComments {
         node,
         indent: false,
-        ignore_formatted_check: false,
     }
 }
 
@@ -148,17 +147,11 @@ pub const fn format_dangling_comments<L: Language>(
 pub struct FormatDanglingComments<'a, L: Language> {
     node: &'a SyntaxNode<L>,
     indent: bool,
-    ignore_formatted_check: bool,
 }
 
 impl<L: Language> FormatDanglingComments<'_, L> {
     pub fn indented(mut self) -> Self {
         self.indent = true;
-        self
-    }
-
-    pub fn ignore_formatted_check(mut self) -> Self {
-        self.ignore_formatted_check = true;
         self
     }
 }
@@ -168,17 +161,15 @@ where
     Context: CstFormatContext,
 {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        if !self.ignore_formatted_check && f.state().has_formatted_dangling_comments(self.node) {
+        let comments = f.context().comments().clone();
+        let dangling_comments = comments.dangling_comments(self.node);
+
+        if dangling_comments.is_empty() {
             return Ok(());
         }
 
-        let comments = f.context().comments().clone();
-        let dangling_comments = comments.dangling_comments(self.node);
-        let mut leading_comments_end = 0;
-        let mut last_line_comment = false;
-
-        let format_leading_comments = format_once(|f| {
-            if self.indent && !dangling_comments.is_empty() {
+        let format_leading_comments = format_with(|f| {
+            if self.indent {
                 write!(f, [hard_line_break()])?;
             }
 
@@ -189,9 +180,6 @@ where
                 let format_comment =
                     FormatRefWithRule::new(comment, Context::CommentRule::default());
                 join.entry(&format_comment);
-
-                last_line_comment = comment.kind().is_line();
-                leading_comments_end += 1;
             }
 
             join.finish()
@@ -202,12 +190,13 @@ where
         } else {
             write!(f, [format_leading_comments])?;
 
-            if last_line_comment {
+            if dangling_comments
+                .last()
+                .map_or(false, |comment| comment.kind().is_line())
+            {
                 write!(f, [hard_line_break()])?;
             }
         }
-
-        f.state_mut().mark_dangling_comments_formatted(self.node);
 
         Ok(())
     }

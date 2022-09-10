@@ -5,7 +5,7 @@ use rome_rowan::syntax::SyntaxElementKey;
 use rome_rowan::{
     Direction, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxToken, WalkEvent,
 };
-use std::collections::HashSet;
+use rustc_hash::FxHashSet;
 
 pub(super) struct CommentsBuilderVisitor<'a, Style: CommentStyle> {
     builder: CommentsBuilder<Style::Language>,
@@ -41,7 +41,7 @@ where
         root: &SyntaxNode<Style::Language>,
     ) -> (
         CommentsMap<SyntaxElementKey, SourceComment<Style::Language>>,
-        HashSet<SyntaxElementKey>,
+        FxHashSet<SyntaxElementKey>,
     ) {
         for event in root.preorder_with_tokens(Direction::Next) {
             match event {
@@ -246,7 +246,7 @@ where
 
 struct CommentsBuilder<L: Language> {
     comments: CommentsMap<SyntaxElementKey, SourceComment<L>>,
-    skipped: HashSet<SyntaxElementKey>,
+    skipped: FxHashSet<SyntaxElementKey>,
 }
 
 impl<L: Language> CommentsBuilder<L> {
@@ -367,7 +367,7 @@ impl<L: Language> CommentsBuilder<L> {
         self,
     ) -> (
         CommentsMap<SyntaxElementKey, SourceComment<L>>,
-        HashSet<SyntaxElementKey>,
+        FxHashSet<SyntaxElementKey>,
     ) {
         (self.comments, self.skipped)
     }
@@ -377,7 +377,7 @@ impl<L: Language> Default for CommentsBuilder<L> {
     fn default() -> Self {
         Self {
             comments: CommentsMap::new(),
-            skipped: HashSet::default(),
+            skipped: FxHashSet::default(),
         }
     }
 }

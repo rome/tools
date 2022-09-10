@@ -38,4 +38,8 @@ impl FormatNodeRule<JsFunctionBody> for FormatJsFunctionBody {
             )
         }
     }
+
+    fn formats_dangling_comments(&self) -> bool {
+        true
+    }
 }

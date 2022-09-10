@@ -15,6 +15,10 @@ impl FormatNodeRule<TsObjectType> for FormatTsObjectType {
     fn needs_parentheses(&self, item: &TsObjectType) -> bool {
         item.needs_parentheses()
     }
+
+    fn formats_dangling_comments(&self) -> bool {
+        true
+    }
 }
 
 impl NeedsParentheses for TsObjectType {

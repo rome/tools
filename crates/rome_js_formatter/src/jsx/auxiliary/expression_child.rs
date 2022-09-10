@@ -74,4 +74,8 @@ impl FormatNodeRule<JsxExpressionChild> for FormatJsxExpressionChild {
             }
         }
     }
+
+    fn formats_dangling_comments(&self) -> bool {
+        true
+    }
 }

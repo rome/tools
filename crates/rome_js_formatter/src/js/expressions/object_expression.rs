@@ -15,6 +15,10 @@ impl FormatNodeRule<JsObjectExpression> for FormatJsObjectExpression {
     fn needs_parentheses(&self, item: &JsObjectExpression) -> bool {
         item.needs_parentheses()
     }
+
+    fn formats_dangling_comments(&self) -> bool {
+        true
+    }
 }
 
 impl NeedsParentheses for JsObjectExpression {

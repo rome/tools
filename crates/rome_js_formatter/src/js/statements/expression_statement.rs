@@ -17,8 +17,6 @@ impl FormatNodeRule<JsExpressionStatement> for FormatJsExpressionStatement {
         } = node.as_fields();
 
         let has_dangling_comments = f.context().comments().has_dangling_comments(node.syntax());
-        f.state_mut()
-            .mark_dangling_comments_formatted(node.syntax());
 
         write!(
             f,
@@ -33,5 +31,9 @@ impl FormatNodeRule<JsExpressionStatement> for FormatJsExpressionStatement {
         }
 
         Ok(())
+    }
+
+    fn formats_dangling_comments(&self) -> bool {
+        true
     }
 }

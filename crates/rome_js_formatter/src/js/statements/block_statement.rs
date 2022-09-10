@@ -44,6 +44,10 @@ impl FormatNodeRule<JsBlockStatement> for FormatJsBlockStatement {
 
         write!(f, [r_curly_token.format()])
     }
+
+    fn formats_dangling_comments(&self) -> bool {
+        true
+    }
 }
 
 fn is_empty_block(block: &JsBlockStatement, comments: &JsComments) -> bool {

@@ -55,6 +55,10 @@ impl FormatNodeRule<JsArrayExpression> for FormatJsArrayExpression {
     fn needs_parentheses(&self, item: &JsArrayExpression) -> bool {
         item.needs_parentheses()
     }
+
+    fn formats_dangling_comments(&self) -> bool {
+        true
+    }
 }
 
 /// Returns `true` for arrays containing at least two elements if:

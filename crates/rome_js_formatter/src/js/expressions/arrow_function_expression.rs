@@ -163,6 +163,10 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
     fn needs_parentheses(&self, item: &JsArrowFunctionExpression) -> bool {
         item.needs_parentheses()
     }
+
+    fn formats_dangling_comments(&self) -> bool {
+        true
+    }
 }
 
 /// writes the arrow function type parameters, parameters, and return type annotation
