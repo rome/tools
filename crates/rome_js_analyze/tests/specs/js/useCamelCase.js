@@ -27,3 +27,11 @@ console.log({
 
 let camelCase;
 let longCamelCase;
+
+let UPPER_CASE = 1;
+let { UPPER_CASE } = env;
+let [ UPPER_CASE ] = env;
+
+const THIS_IS_OK = 1;
+const { THIS_IS_OK } = env;
+const [ THIS_IS_OK ] = env;

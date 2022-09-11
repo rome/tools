@@ -12,7 +12,7 @@ use rome_js_syntax::{
     JsFormalParameter, JsFunctionDeclaration, JsFunctionExportDefaultDeclaration,
     JsGetterClassMember, JsIdentifierBinding, JsLiteralMemberName, JsMethodClassMember,
     JsPrivateClassMemberName, JsPropertyClassMember, JsSetterClassMember, JsSyntaxKind,
-    JsVariableDeclarator,
+    JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList,
 };
 use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
 use std::{borrow::Cow, iter::once};
@@ -59,6 +59,21 @@ fn check_is_camel(name: &str) -> Option<State> {
     }
 }
 
+// It is OK to be non camel case when:
+// 1. it's a const variable (eg: const THIS_IS_OK)
+fn is_non_camel_ok(binding: &JsIdentifierBinding) -> Option<bool> {
+    use JsSyntaxKind::*;
+    let declarator = binding.parent::<JsVariableDeclarator>()?;
+    let is_ok = match declarator.syntax().parent().map(|parent| parent.kind()) {
+        Some(JS_VARIABLE_DECLARATOR_LIST) => declarator
+            .parent::<JsVariableDeclaratorList>()?
+            .parent::<JsVariableDeclaration>()?
+            .is_const(),
+        _ => false,
+    };
+    Some(is_ok)
+}
+
 impl Rule for UseCamelCase {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
@@ -71,17 +86,24 @@ impl Rule for UseCamelCase {
 
         match name {
             JsAnyCamelCaseName::JsIdentifierBinding(binding) => {
-                let is_variable = binding.parent::<JsVariableDeclarator>().is_some();
-                let is_parameter = binding.parent::<JsFormalParameter>().is_some();
-                let is_function = binding.parent::<JsFunctionDeclaration>().is_some();
-                let is_exported_function = binding
-                    .parent::<JsFunctionExportDefaultDeclaration>()
-                    .is_some();
-                if is_variable || is_parameter || is_function || is_exported_function {
-                    let name = binding.name_token().ok()?;
-                    check_is_camel(name.text_trimmed())
-                } else {
-                    None
+                let is_non_camel_ok = is_non_camel_ok(binding);
+                match is_non_camel_ok {
+                    Some(false) | None => {
+                        let is_variable = binding.parent::<JsVariableDeclarator>().is_some();
+                        let is_parameter = binding.parent::<JsFormalParameter>().is_some();
+                        let is_function = binding.parent::<JsFunctionDeclaration>().is_some();
+                        let is_exported_function = binding
+                            .parent::<JsFunctionExportDefaultDeclaration>()
+                            .is_some();
+
+                        if is_variable || is_parameter || is_function || is_exported_function {
+                            let name = binding.name_token().ok()?;
+                            check_is_camel(name.text_trimmed())
+                        } else {
+                            None
+                        }
+                    }
+                    _ => None,
                 }
             }
             JsAnyCamelCaseName::JsLiteralMemberName(name) => {
