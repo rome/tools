@@ -4918,7 +4918,7 @@ pub fn ts_infer_type(infer_token: SyntaxToken, type_parameter: TsTypeParameterNa
     ))
 }
 pub fn ts_instantiation_expression(
-    expression: JsAnyExpression,
+    expression: JsLeftHandSideExpression,
     arguments: TsTypeArguments,
 ) -> TsInstantiationExpression {
     TsInstantiationExpression::unwrap_cast(SyntaxNode::new_detached(

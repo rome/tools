@@ -11983,6 +11983,31 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsAnyTemplateElement
         )
     }
 }
+impl<'a> AsFormat<'a> for rome_js_syntax::JsLeftHandSideExpression {
+    type Format = FormatRefWithRule<
+        'a,
+        rome_js_syntax::JsLeftHandSideExpression,
+        crate::js::any::left_hand_side_expression::FormatJsLeftHandSideExpression,
+    >;
+    fn format(&'a self) -> Self::Format {
+        FormatRefWithRule::new(
+            self,
+            crate::js::any::left_hand_side_expression::FormatJsLeftHandSideExpression::default(),
+        )
+    }
+}
+impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::JsLeftHandSideExpression {
+    type Format = FormatOwnedWithRule<
+        rome_js_syntax::JsLeftHandSideExpression,
+        crate::js::any::left_hand_side_expression::FormatJsLeftHandSideExpression,
+    >;
+    fn into_format(self) -> Self::Format {
+        FormatOwnedWithRule::new(
+            self,
+            crate::js::any::left_hand_side_expression::FormatJsLeftHandSideExpression::default(),
+        )
+    }
+}
 impl<'a> AsFormat<'a> for rome_js_syntax::JsxAnyTag {
     type Format =
         FormatRefWithRule<'a, rome_js_syntax::JsxAnyTag, crate::jsx::any::tag::FormatJsxAnyTag>;

@@ -9409,7 +9409,7 @@ impl TsInstantiationExpression {
             arguments: self.arguments(),
         }
     }
-    pub fn expression(&self) -> SyntaxResult<JsAnyExpression> {
+    pub fn expression(&self) -> SyntaxResult<JsLeftHandSideExpression> {
         support::required_node(&self.syntax, 0usize)
     }
     pub fn arguments(&self) -> SyntaxResult<TsTypeArguments> {
@@ -9427,7 +9427,7 @@ impl Serialize for TsInstantiationExpression {
 }
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub struct TsInstantiationExpressionFields {
-    pub expression: SyntaxResult<JsAnyExpression>,
+    pub expression: SyntaxResult<JsLeftHandSideExpression>,
     pub arguments: SyntaxResult<TsTypeArguments>,
 }
 #[derive(Clone, PartialEq, Eq, Hash)]
@@ -13813,6 +13813,61 @@ impl JsAnyTemplateElement {
     pub fn as_js_template_element(&self) -> Option<&JsTemplateElement> {
         match &self {
             JsAnyTemplateElement::JsTemplateElement(item) => Some(item),
+            _ => None,
+        }
+    }
+}
+#[derive(Clone, PartialEq, Eq, Hash)]
+#[cfg_attr(feature = "serde", derive(Serialize))]
+pub enum JsLeftHandSideExpression {
+    JsComputedMemberExpression(JsComputedMemberExpression),
+    JsIdentifierExpression(JsIdentifierExpression),
+    JsParenthesizedExpression(JsParenthesizedExpression),
+    JsStaticMemberExpression(JsStaticMemberExpression),
+    TsAsExpression(TsAsExpression),
+    TsNonNullAssertionExpression(TsNonNullAssertionExpression),
+    TsTypeAssertionExpression(TsTypeAssertionExpression),
+}
+impl JsLeftHandSideExpression {
+    pub fn as_js_computed_member_expression(&self) -> Option<&JsComputedMemberExpression> {
+        match &self {
+            JsLeftHandSideExpression::JsComputedMemberExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_identifier_expression(&self) -> Option<&JsIdentifierExpression> {
+        match &self {
+            JsLeftHandSideExpression::JsIdentifierExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_parenthesized_expression(&self) -> Option<&JsParenthesizedExpression> {
+        match &self {
+            JsLeftHandSideExpression::JsParenthesizedExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_js_static_member_expression(&self) -> Option<&JsStaticMemberExpression> {
+        match &self {
+            JsLeftHandSideExpression::JsStaticMemberExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_as_expression(&self) -> Option<&TsAsExpression> {
+        match &self {
+            JsLeftHandSideExpression::TsAsExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_non_null_assertion_expression(&self) -> Option<&TsNonNullAssertionExpression> {
+        match &self {
+            JsLeftHandSideExpression::TsNonNullAssertionExpression(item) => Some(item),
+            _ => None,
+        }
+    }
+    pub fn as_ts_type_assertion_expression(&self) -> Option<&TsTypeAssertionExpression> {
+        match &self {
+            JsLeftHandSideExpression::TsTypeAssertionExpression(item) => Some(item),
             _ => None,
         }
     }
@@ -29310,6 +29365,154 @@ impl From<JsAnyTemplateElement> for SyntaxElement {
         node.into()
     }
 }
+impl From<JsComputedMemberExpression> for JsLeftHandSideExpression {
+    fn from(node: JsComputedMemberExpression) -> JsLeftHandSideExpression {
+        JsLeftHandSideExpression::JsComputedMemberExpression(node)
+    }
+}
+impl From<JsIdentifierExpression> for JsLeftHandSideExpression {
+    fn from(node: JsIdentifierExpression) -> JsLeftHandSideExpression {
+        JsLeftHandSideExpression::JsIdentifierExpression(node)
+    }
+}
+impl From<JsParenthesizedExpression> for JsLeftHandSideExpression {
+    fn from(node: JsParenthesizedExpression) -> JsLeftHandSideExpression {
+        JsLeftHandSideExpression::JsParenthesizedExpression(node)
+    }
+}
+impl From<JsStaticMemberExpression> for JsLeftHandSideExpression {
+    fn from(node: JsStaticMemberExpression) -> JsLeftHandSideExpression {
+        JsLeftHandSideExpression::JsStaticMemberExpression(node)
+    }
+}
+impl From<TsAsExpression> for JsLeftHandSideExpression {
+    fn from(node: TsAsExpression) -> JsLeftHandSideExpression {
+        JsLeftHandSideExpression::TsAsExpression(node)
+    }
+}
+impl From<TsNonNullAssertionExpression> for JsLeftHandSideExpression {
+    fn from(node: TsNonNullAssertionExpression) -> JsLeftHandSideExpression {
+        JsLeftHandSideExpression::TsNonNullAssertionExpression(node)
+    }
+}
+impl From<TsTypeAssertionExpression> for JsLeftHandSideExpression {
+    fn from(node: TsTypeAssertionExpression) -> JsLeftHandSideExpression {
+        JsLeftHandSideExpression::TsTypeAssertionExpression(node)
+    }
+}
+impl AstNode for JsLeftHandSideExpression {
+    type Language = Language;
+    const KIND_SET: SyntaxKindSet<Language> = JsComputedMemberExpression::KIND_SET
+        .union(JsIdentifierExpression::KIND_SET)
+        .union(JsParenthesizedExpression::KIND_SET)
+        .union(JsStaticMemberExpression::KIND_SET)
+        .union(TsAsExpression::KIND_SET)
+        .union(TsNonNullAssertionExpression::KIND_SET)
+        .union(TsTypeAssertionExpression::KIND_SET);
+    fn can_cast(kind: SyntaxKind) -> bool {
+        matches!(
+            kind,
+            JS_COMPUTED_MEMBER_EXPRESSION
+                | JS_IDENTIFIER_EXPRESSION
+                | JS_PARENTHESIZED_EXPRESSION
+                | JS_STATIC_MEMBER_EXPRESSION
+                | TS_AS_EXPRESSION
+                | TS_NON_NULL_ASSERTION_EXPRESSION
+                | TS_TYPE_ASSERTION_EXPRESSION
+        )
+    }
+    fn cast(syntax: SyntaxNode) -> Option<Self> {
+        let res = match syntax.kind() {
+            JS_COMPUTED_MEMBER_EXPRESSION => {
+                JsLeftHandSideExpression::JsComputedMemberExpression(JsComputedMemberExpression {
+                    syntax,
+                })
+            }
+            JS_IDENTIFIER_EXPRESSION => {
+                JsLeftHandSideExpression::JsIdentifierExpression(JsIdentifierExpression { syntax })
+            }
+            JS_PARENTHESIZED_EXPRESSION => {
+                JsLeftHandSideExpression::JsParenthesizedExpression(JsParenthesizedExpression {
+                    syntax,
+                })
+            }
+            JS_STATIC_MEMBER_EXPRESSION => {
+                JsLeftHandSideExpression::JsStaticMemberExpression(JsStaticMemberExpression {
+                    syntax,
+                })
+            }
+            TS_AS_EXPRESSION => JsLeftHandSideExpression::TsAsExpression(TsAsExpression { syntax }),
+            TS_NON_NULL_ASSERTION_EXPRESSION => {
+                JsLeftHandSideExpression::TsNonNullAssertionExpression(
+                    TsNonNullAssertionExpression { syntax },
+                )
+            }
+            TS_TYPE_ASSERTION_EXPRESSION => {
+                JsLeftHandSideExpression::TsTypeAssertionExpression(TsTypeAssertionExpression {
+                    syntax,
+                })
+            }
+            _ => return None,
+        };
+        Some(res)
+    }
+    fn syntax(&self) -> &SyntaxNode {
+        match self {
+            JsLeftHandSideExpression::JsComputedMemberExpression(it) => &it.syntax,
+            JsLeftHandSideExpression::JsIdentifierExpression(it) => &it.syntax,
+            JsLeftHandSideExpression::JsParenthesizedExpression(it) => &it.syntax,
+            JsLeftHandSideExpression::JsStaticMemberExpression(it) => &it.syntax,
+            JsLeftHandSideExpression::TsAsExpression(it) => &it.syntax,
+            JsLeftHandSideExpression::TsNonNullAssertionExpression(it) => &it.syntax,
+            JsLeftHandSideExpression::TsTypeAssertionExpression(it) => &it.syntax,
+        }
+    }
+    fn into_syntax(self) -> SyntaxNode {
+        match self {
+            JsLeftHandSideExpression::JsComputedMemberExpression(it) => it.syntax,
+            JsLeftHandSideExpression::JsIdentifierExpression(it) => it.syntax,
+            JsLeftHandSideExpression::JsParenthesizedExpression(it) => it.syntax,
+            JsLeftHandSideExpression::JsStaticMemberExpression(it) => it.syntax,
+            JsLeftHandSideExpression::TsAsExpression(it) => it.syntax,
+            JsLeftHandSideExpression::TsNonNullAssertionExpression(it) => it.syntax,
+            JsLeftHandSideExpression::TsTypeAssertionExpression(it) => it.syntax,
+        }
+    }
+}
+impl std::fmt::Debug for JsLeftHandSideExpression {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            JsLeftHandSideExpression::JsComputedMemberExpression(it) => std::fmt::Debug::fmt(it, f),
+            JsLeftHandSideExpression::JsIdentifierExpression(it) => std::fmt::Debug::fmt(it, f),
+            JsLeftHandSideExpression::JsParenthesizedExpression(it) => std::fmt::Debug::fmt(it, f),
+            JsLeftHandSideExpression::JsStaticMemberExpression(it) => std::fmt::Debug::fmt(it, f),
+            JsLeftHandSideExpression::TsAsExpression(it) => std::fmt::Debug::fmt(it, f),
+            JsLeftHandSideExpression::TsNonNullAssertionExpression(it) => {
+                std::fmt::Debug::fmt(it, f)
+            }
+            JsLeftHandSideExpression::TsTypeAssertionExpression(it) => std::fmt::Debug::fmt(it, f),
+        }
+    }
+}
+impl From<JsLeftHandSideExpression> for SyntaxNode {
+    fn from(n: JsLeftHandSideExpression) -> SyntaxNode {
+        match n {
+            JsLeftHandSideExpression::JsComputedMemberExpression(it) => it.into(),
+            JsLeftHandSideExpression::JsIdentifierExpression(it) => it.into(),
+            JsLeftHandSideExpression::JsParenthesizedExpression(it) => it.into(),
+            JsLeftHandSideExpression::JsStaticMemberExpression(it) => it.into(),
+            JsLeftHandSideExpression::TsAsExpression(it) => it.into(),
+            JsLeftHandSideExpression::TsNonNullAssertionExpression(it) => it.into(),
+            JsLeftHandSideExpression::TsTypeAssertionExpression(it) => it.into(),
+        }
+    }
+}
+impl From<JsLeftHandSideExpression> for SyntaxElement {
+    fn from(n: JsLeftHandSideExpression) -> SyntaxElement {
+        let node: SyntaxNode = n.into();
+        node.into()
+    }
+}
 impl From<JsxAttribute> for JsxAnyAttribute {
     fn from(node: JsxAttribute) -> JsxAnyAttribute { JsxAnyAttribute::JsxAttribute(node) }
 }
@@ -31792,6 +31995,11 @@ impl std::fmt::Display for JsAnySwitchClause {
     }
 }
 impl std::fmt::Display for JsAnyTemplateElement {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self.syntax(), f)
+    }
+}
+impl std::fmt::Display for JsLeftHandSideExpression {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         std::fmt::Display::fmt(self.syntax(), f)
     }

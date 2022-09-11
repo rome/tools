@@ -2111,9 +2111,17 @@ TsTypeAssertionExpression =
 	'>'
 	expression: JsAnyExpression
 
+JsLeftHandSideExpression = 
+	JsParenthesizedExpression
+	| JsStaticMemberExpression
+	| JsComputedMemberExpression
+	| JsIdentifierExpression
+	| TsNonNullAssertionExpression
+	| TsTypeAssertionExpression
+	| TsAsExpression
 // This `SyntaxKind` is related to `ExpressionWithTypeArguments` in Typescript
 TsInstantiationExpression =
-	expression: JsAnyExpression
+	expression: JsLeftHandSideExpression
 	arguments: TsTypeArguments
 
 TsAsExpression =

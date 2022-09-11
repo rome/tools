@@ -1,4 +1,4 @@
-use crate::{parentheses::NeedsParentheses, prelude::*};
+use crate::{parentheses::{NeedsParentheses, unary_like_expression_needs_parentheses}, prelude::*};
 use rome_formatter::write;
 use rome_js_syntax::{TsInstantiationExpression, TsInstantiationExpressionFields};
 #[derive(Debug, Clone, Default)]
@@ -19,7 +19,7 @@ impl FormatNodeRule<TsInstantiationExpression> for FormatTsInstantiationExpressi
 }
 
 impl NeedsParentheses for TsInstantiationExpression {
-    fn needs_parentheses_with_parent(&self, _: &rome_js_syntax::JsSyntaxNode) -> bool {
-        false
+    fn needs_parentheses_with_parent(&self, parent: &rome_js_syntax::JsSyntaxNode) -> bool {
+        unary_like_expression_needs_parentheses(self.syntax(), parent)
     }
 }
