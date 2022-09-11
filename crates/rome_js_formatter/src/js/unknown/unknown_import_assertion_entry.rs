@@ -14,8 +14,4 @@ impl FormatNodeRule<JsUnknownImportAssertionEntry> for FormatJsUnknownImportAsse
     ) -> FormatResult<()> {
         format_unknown_node(node.syntax()).fmt(formatter)
     }
-
-    fn prints_comments(&self, _item: &JsUnknownImportAssertionEntry) -> bool {
-        true
-    }
 }

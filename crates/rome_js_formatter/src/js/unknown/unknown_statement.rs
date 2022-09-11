@@ -14,8 +14,4 @@ impl FormatNodeRule<JsUnknownStatement> for FormatJsUnknownStatement {
     ) -> FormatResult<()> {
         format_unknown_node(node.syntax()).fmt(formatter)
     }
-
-    fn prints_comments(&self, _item: &JsUnknownStatement) -> bool {
-        true
-    }
 }

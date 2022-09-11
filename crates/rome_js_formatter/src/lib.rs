@@ -425,15 +425,11 @@ where
     N: AstNode<Language = JsLanguage>,
 {
     fn fmt(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
-        let syntax = node.syntax();
-
-        if f.context().comments().is_suppressed(syntax) {
-            return write!(f, [format_suppressed_node(syntax)]);
+        if self.is_suppressed(node, f) {
+            return write!(f, [format_suppressed_node(node.syntax())]);
         }
 
-        if !self.prints_comments(node) {
-            write!(f, [format_leading_comments(syntax)])?;
-        }
+        self.fmt_leading_comments(node, f)?;
 
         if self.needs_parentheses(node) {
             write!(
@@ -448,15 +444,8 @@ where
             self.fmt_fields(node, f)?;
         }
 
-        if !self.prints_comments(node) {
-            if !self.formats_dangling_comments() {
-                write!(f, [format_dangling_comments(syntax)])?;
-            }
-
-            write!(f, [format_trailing_comments(syntax)])?;
-        }
-
-        Ok(())
+        self.fmt_dangling_comments(node, f)?;
+        self.fmt_trailing_comments(node, f)
     }
 
     /// Formats the node's fields.
@@ -468,12 +457,20 @@ where
         false
     }
 
-    fn prints_comments(&self, _item: &N) -> bool {
-        false
+    fn is_suppressed(&self, node: &N, f: &JsFormatter) -> bool {
+        f.context().comments().is_suppressed(node.syntax())
     }
 
-    fn formats_dangling_comments(&self) -> bool {
-        false
+    fn fmt_leading_comments(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
+        format_leading_comments(node.syntax()).fmt(f)
+    }
+
+    fn fmt_dangling_comments(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
+        format_dangling_comments(node.syntax()).fmt(f)
+    }
+
+    fn fmt_trailing_comments(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
+        format_trailing_comments(node.syntax()).fmt(f)
     }
 }
 
@@ -768,10 +765,7 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-const {
-  // rome-ignore format:
-  bar4 =           1,         /* comment */
-} = foo
+a = <div {.../* rome-ignore format: */b}/>
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);

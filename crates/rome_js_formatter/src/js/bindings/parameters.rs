@@ -21,8 +21,9 @@ impl FormatNodeRule<JsParameters> for FormatJsParameters {
         FormatJsAnyParameters::from(node.clone()).fmt(f)
     }
 
-    fn formats_dangling_comments(&self) -> bool {
-        true
+    fn fmt_dangling_comments(&self, _: &JsParameters, _: &mut JsFormatter) -> FormatResult<()> {
+        // Formatted inside of `FormatJsAnyParameters
+        Ok(())
     }
 }
 

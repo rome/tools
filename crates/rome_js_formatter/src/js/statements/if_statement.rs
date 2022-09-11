@@ -76,7 +76,8 @@ impl FormatNodeRule<JsIfStatement> for FormatJsIfStatement {
         Ok(())
     }
 
-    fn formats_dangling_comments(&self) -> bool {
-        true
+    fn fmt_dangling_comments(&self, _: &JsIfStatement, _: &mut JsFormatter) -> FormatResult<()> {
+        // Formatted inside of `fmt_fields`
+        Ok(())
     }
 }

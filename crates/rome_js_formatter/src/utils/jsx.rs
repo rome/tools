@@ -1,12 +1,13 @@
 use crate::context::QuoteStyle;
 use crate::prelude::*;
-use rome_formatter::{format_args, write};
+use crate::JsCommentStyle;
+use rome_formatter::{format_args, write, CommentStyle};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsComputedMemberExpression,
-    JsStaticMemberExpression, JsSyntaxKind, JsxAnyChild, JsxExpressionChild, JsxTagExpression,
-    TextLen,
+    JsAnyExpression, JsAnyLiteralExpression, JsComputedMemberExpression, JsStaticMemberExpression,
+    JsSyntaxKind, JsxAnyChild, JsxAnyTag, JsxChildList, JsxExpressionChild, JsxTagExpression,
+    JsxText, TextLen,
 };
-use rome_rowan::{SyntaxResult, SyntaxTokenText, TextRange, TextSize};
+use rome_rowan::{Direction, SyntaxResult, SyntaxTokenText, TextRange, TextSize};
 use std::iter::{FusedIterator, Peekable};
 use std::str::Chars;
 
@@ -38,6 +39,50 @@ pub fn is_meaningful_jsx_text(text: &str) -> bool {
     }
 
     !has_newline
+}
+
+/// Tests if a [JsxAnyTag] has a suppression comment or not.
+///
+/// Suppression for [JsxAnyTag] differs from regular nodes if they are inside of a [JsxChildList] because
+/// they can then not be preceded by a comment.
+///
+/// A [JsxAnyTag] inside of a [JsxChildList] is suppressed if its first preceding sibling (that contains meaningful text)
+/// is a [JsxExpressionChild], not containing any expression, with a dangling suppression comment.
+///
+/// ```javascript
+/// <div>
+//   {/* rome-ignore format: reason */}
+//   <div a={  some} />
+//   </div>
+/// ```
+pub(crate) fn is_jsx_suppressed(tag: &JsxAnyTag, comments: &JsComments) -> bool {
+    comments.mark_suppression_checked(tag.syntax());
+
+    match tag.parent::<JsxChildList>() {
+        Some(_) => {
+            let prev_non_empty_text_sibling =
+                tag.syntax()
+                    .siblings(Direction::Prev)
+                    .skip(1)
+                    .find(|sibling| {
+                        if let Some(text) = JsxText::cast_ref(sibling) {
+                            text.value_token()
+                                .map_or(true, |token| is_meaningful_jsx_text(token.text()))
+                        } else {
+                            true
+                        }
+                    });
+
+            match prev_non_empty_text_sibling.and_then(JsxExpressionChild::cast) {
+                Some(child) if child.expression().is_none() => comments
+                    .dangling_comments(child.syntax())
+                    .iter()
+                    .any(|comment| JsCommentStyle::is_suppression(comment.piece().text())),
+                Some(_) | None => false,
+            }
+        }
+        _ => false,
+    }
 }
 
 /// Indicates that an element should always be wrapped in parentheses, should be wrapped

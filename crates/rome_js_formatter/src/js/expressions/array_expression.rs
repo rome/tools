@@ -56,8 +56,13 @@ impl FormatNodeRule<JsArrayExpression> for FormatJsArrayExpression {
         item.needs_parentheses()
     }
 
-    fn formats_dangling_comments(&self) -> bool {
-        true
+    fn fmt_dangling_comments(
+        &self,
+        _: &JsArrayExpression,
+        _: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        // Formatted inside of `fmt_fields`
+        Ok(())
     }
 }
 

@@ -17,8 +17,13 @@ impl FormatNodeRule<JsReturnStatement> for FormatJsReturnStatement {
         JsAnyStatementWithArgument::from(node.clone()).fmt(f)
     }
 
-    fn formats_dangling_comments(&self) -> bool {
-        true
+    fn fmt_dangling_comments(
+        &self,
+        _: &JsReturnStatement,
+        _: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        // Formatted inside of `JsAnyStatementWithArgument`
+        Ok(())
     }
 }
 

@@ -10,8 +10,4 @@ impl FormatNodeRule<JsUnknownMember> for FormatJsUnknownMember {
     fn fmt_fields(&self, node: &JsUnknownMember, formatter: &mut JsFormatter) -> FormatResult<()> {
         format_unknown_node(node.syntax()).fmt(formatter)
     }
-
-    fn prints_comments(&self, _item: &JsUnknownMember) -> bool {
-        true
-    }
 }

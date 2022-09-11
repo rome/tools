@@ -19,10 +19,6 @@ impl FormatNodeRule<JsUnknownExpression> for FormatJsUnknownExpression {
     fn needs_parentheses(&self, item: &JsUnknownExpression) -> bool {
         item.needs_parentheses()
     }
-
-    fn prints_comments(&self, _item: &JsUnknownExpression) -> bool {
-        true
-    }
 }
 
 impl NeedsParentheses for JsUnknownExpression {

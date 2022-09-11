@@ -428,8 +428,7 @@ impl<L: Language> Comments<L> {
         self.mark_suppression_checked(node);
         let is_suppression = self.data.is_suppression;
 
-        self.leading_comments(node)
-            .iter()
+        self.leading_dangling_trailing_comments(node)
             .any(|comment| is_suppression(comment.piece().text()))
     }
 
@@ -500,7 +499,7 @@ struct CommentsData<L: Language> {
     /// as verbatim if its formatting fails which has the same result as formatting it as suppressed node
     /// (thus, guarantees that the formatting isn't changed).
     #[cfg(debug_assertions)]
-    checked_suppressions: RefCell<HashSet<SyntaxNode<L>>>,
+    checked_suppressions: RefCell<FxHashSet<SyntaxNode<L>>>,
 }
 
 impl<L: Language> Default for CommentsData<L> {

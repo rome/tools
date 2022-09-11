@@ -98,8 +98,7 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
                 let leading_comments = comments.leading_comments(self.node);
 
                 let outside_trimmed_range = leading_comments.partition_point(|comment| {
-                    trimmed_source_range
-                        .contains_range(source_range(f, comment.piece().text_range()))
+                    comment.piece().text_range().end() <= trimmed_source_range.start()
                 });
 
                 write!(
@@ -109,7 +108,7 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
                     )]
                 )?;
 
-                // Find the source position of the first
+                // Find the source position of the first non-whitespace piece
                 let start_source = self
                     .node
                     .first_leading_trivia()
@@ -118,8 +117,10 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
                     .find_map(|piece| {
                         let source_range = source_range(f, piece.text_range());
 
-                        if (piece.is_skipped() || piece.is_comments())
-                            && !trimmed_source_range.contains(source_range.start())
+                        if piece.is_skipped() {
+                            Some(source_range.start())
+                        } else if piece.is_comments()
+                            && source_range.end() > trimmed_source_range.start()
                         {
                             Some(source_range.start())
                         } else {
@@ -205,17 +206,12 @@ pub struct FormatSuppressedNode<'node> {
 
 impl Format<JsFormatContext> for FormatSuppressedNode<'_> {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        // Insert a force a line break to ensure the suppression comment is on its own line
-        // and correctly registers as a leading trivia on the opening token of this node
         write!(
             f,
-            [
-                hard_line_break(),
-                FormatVerbatimNode {
-                    node: self.node,
-                    kind: VerbatimKind::Suppressed,
-                }
-            ]
+            [FormatVerbatimNode {
+                node: self.node,
+                kind: VerbatimKind::Suppressed,
+            }]
         )
     }
 }

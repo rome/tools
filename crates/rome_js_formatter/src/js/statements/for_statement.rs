@@ -81,7 +81,8 @@ impl FormatNodeRule<JsForStatement> for FormatJsForStatement {
         write!(f, [group(&format_inner)])
     }
 
-    fn formats_dangling_comments(&self) -> bool {
-        true
+    fn fmt_dangling_comments(&self, _: &JsForStatement, _: &mut JsFormatter) -> FormatResult<()> {
+        // Formatted inside of `fmt_fields`
+        Ok(())
     }
 }

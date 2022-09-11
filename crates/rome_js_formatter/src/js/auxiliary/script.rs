@@ -37,7 +37,21 @@ impl FormatNodeRule<JsScript> for FormatJsScript {
         ]
     }
 
-    fn prints_comments(&self, _item: &JsScript) -> bool {
-        true
+    fn fmt_leading_comments(&self, _: &JsScript, _: &mut JsFormatter) -> FormatResult<()> {
+        // Formatted as part of `fmt_fields`
+        Ok(())
+    }
+
+    fn fmt_dangling_comments(&self, node: &JsScript, f: &mut JsFormatter) -> FormatResult<()> {
+        debug_assert!(
+            !f.comments().has_dangling_comments(node.syntax()),
+            "Scrip should never have dangling comments."
+        );
+        Ok(())
+    }
+
+    fn fmt_trailing_comments(&self, _: &JsScript, _: &mut JsFormatter) -> FormatResult<()> {
+        // Formatted as part of `fmt_fields`
+        Ok(())
     }
 }

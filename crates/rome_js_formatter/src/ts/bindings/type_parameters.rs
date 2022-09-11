@@ -48,7 +48,8 @@ impl FormatNodeRule<TsTypeParameters> for FormatTsTypeParameters {
         }
     }
 
-    fn formats_dangling_comments(&self) -> bool {
-        true
+    fn fmt_dangling_comments(&self, _: &TsTypeParameters, _: &mut JsFormatter) -> FormatResult<()> {
+        // Formatted inside of `fmt_fields`
+        Ok(())
     }
 }

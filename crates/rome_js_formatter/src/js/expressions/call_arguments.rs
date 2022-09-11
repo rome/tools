@@ -214,8 +214,9 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
         }
     }
 
-    fn formats_dangling_comments(&self) -> bool {
-        true
+    fn fmt_dangling_comments(&self, _: &JsCallArguments, _: &mut JsFormatter) -> FormatResult<()> {
+        // Formatted inside of `fmt_fields`
+        Ok(())
     }
 }
 

@@ -33,7 +33,12 @@ impl FormatNodeRule<JsExpressionStatement> for FormatJsExpressionStatement {
         Ok(())
     }
 
-    fn formats_dangling_comments(&self) -> bool {
-        true
+    fn fmt_dangling_comments(
+        &self,
+        _: &JsExpressionStatement,
+        _: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        // Formatted inside of `fmt_fields`
+        Ok(())
     }
 }

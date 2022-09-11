@@ -33,7 +33,12 @@ impl FormatNodeRule<JsStaticInitializationBlockClassMember>
         write!(f, [r_curly_token.format()])
     }
 
-    fn formats_dangling_comments(&self) -> bool {
-        true
+    fn fmt_dangling_comments(
+        &self,
+        _: &JsStaticInitializationBlockClassMember,
+        _: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        // Formatted inside of `fmt_fields
+        Ok(())
     }
 }

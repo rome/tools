@@ -10,8 +10,4 @@ impl FormatNodeRule<JsUnknownBinding> for FormatJsUnknownBinding {
     fn fmt_fields(&self, node: &JsUnknownBinding, formatter: &mut JsFormatter) -> FormatResult<()> {
         format_unknown_node(node.syntax()).fmt(formatter)
     }
-
-    fn prints_comments(&self, _item: &JsUnknownBinding) -> bool {
-        true
-    }
 }

@@ -164,8 +164,13 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
         item.needs_parentheses()
     }
 
-    fn formats_dangling_comments(&self) -> bool {
-        true
+    fn fmt_dangling_comments(
+        &self,
+        _: &JsArrowFunctionExpression,
+        _: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        // Formatted inside of `fmt_fields`
+        Ok(())
     }
 }
 

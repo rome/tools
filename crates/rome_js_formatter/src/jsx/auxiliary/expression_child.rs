@@ -75,7 +75,12 @@ impl FormatNodeRule<JsxExpressionChild> for FormatJsxExpressionChild {
         }
     }
 
-    fn formats_dangling_comments(&self) -> bool {
-        true
+    fn fmt_dangling_comments(
+        &self,
+        _: &JsxExpressionChild,
+        _: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        // Formatted inside of `fmt_fields`
+        Ok(())
     }
 }

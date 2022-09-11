@@ -16,20 +16,14 @@ impl FormatNodeRule<JsxSpreadAttribute> for FormatJsxSpreadAttribute {
         } = node.as_fields();
 
         let argument = argument?;
-        let format_inner = format_with(|f| {
-            write!(
-                f,
-                [
-                    dotdotdot_token.format(),
-                    argument.format(),
-                    line_suffix_boundary()
-                ]
-            )
-        });
+        let format_inner =
+            format_with(|f| write!(f, [dotdotdot_token.format(), argument.format(),]));
 
         write!(f, [l_curly_token.format()])?;
 
-        if f.comments().has_comments(argument.syntax()) {
+        if f.comments().has_comments(argument.syntax())
+            && !f.comments().is_suppressed(argument.syntax())
+        {
             write!(f, [soft_block_indent(&format_inner)])?;
         } else {
             write!(f, [format_inner])?;

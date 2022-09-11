@@ -39,7 +39,8 @@ impl FormatNodeRule<JsFunctionBody> for FormatJsFunctionBody {
         }
     }
 
-    fn formats_dangling_comments(&self) -> bool {
-        true
+    fn fmt_dangling_comments(&self, _: &JsFunctionBody, _: &mut JsFormatter) -> FormatResult<()> {
+        // Formatted as part of `fmt_fields`
+        Ok(())
     }
 }

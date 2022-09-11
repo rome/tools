@@ -14,8 +14,4 @@ impl FormatNodeRule<JsUnknownNamedImportSpecifier> for FormatJsUnknownNamedImpor
     ) -> FormatResult<()> {
         format_unknown_node(node.syntax()).fmt(formatter)
     }
-
-    fn prints_comments(&self, _item: &JsUnknownNamedImportSpecifier) -> bool {
-        true
-    }
 }
