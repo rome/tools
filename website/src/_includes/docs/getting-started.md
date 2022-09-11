@@ -62,7 +62,7 @@ steps:
 You can download and install the binary directly using `curl`:
 
 ```shell
-curl -L https://github.com/rome/tools/releases/download/latest/rome-<OS>-<ARCH> -o rome
+curl -L https://github.com/rome/tools/releases/latest/download/rome-<OS>-<ARCH> -o rome
 chmod +x rome
 ```
 
