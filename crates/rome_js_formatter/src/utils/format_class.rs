@@ -63,7 +63,7 @@ impl Format<JsFormatContext> for FormatClass<'_> {
                 .has_trailing_line_comment(type_parameters.syntax())
         }) && !(extends.is_some() && implements_clause.is_some());
 
-        let type_parameters_id = if indent_only_heritage {
+        let type_parameters_id = if indent_only_heritage && implements_clause.is_some() {
             Some(f.group_id("type_parameters"))
         } else {
             None

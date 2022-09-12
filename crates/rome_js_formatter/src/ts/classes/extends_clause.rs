@@ -13,9 +13,12 @@ impl FormatNodeRule<TsExtendsClause> for FormatTsExtendsClause {
             types,
         } = node.as_fields();
 
-        write!(
-            f,
-            [extends_token.format(), space(), &indent(&types.format())]
-        )
+        write!(f, [extends_token.format(), space()])?;
+
+        if types.len() == 1 {
+            write!(f, [types.format()])
+        } else {
+            write!(f, [indent(&types.format())])
+        }
     }
 }

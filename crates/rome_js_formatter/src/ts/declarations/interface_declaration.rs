@@ -1,6 +1,5 @@
 use crate::prelude::*;
 
-use crate::builders::format_delimited;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{TsInterfaceDeclaration, TsInterfaceDeclarationFields};
 
@@ -24,9 +23,15 @@ impl FormatNodeRule<TsInterfaceDeclaration> for FormatTsInterfaceDeclaration {
         let id = id?;
         let type_parameters = type_parameters;
 
-        let type_parameter_group = type_parameters
-            .as_ref()
-            .map(|_| f.group_id("type-parameters"));
+        let should_indent_extends_only = type_parameters.as_ref().map_or(false, |params| {
+            !f.comments().has_trailing_line_comment(params.syntax())
+        });
+
+        let type_parameter_group = if should_indent_extends_only && extends_clause.is_some() {
+            Some(f.group_id("type_parameters"))
+        } else {
+            None
+        };
 
         let format_id = format_with(|f| {
             write!(f, [id.format(),])?;
@@ -39,10 +44,6 @@ impl FormatNodeRule<TsInterfaceDeclaration> for FormatTsInterfaceDeclaration {
             }
 
             Ok(())
-        });
-
-        let should_indent_extends_only = type_parameters.as_ref().map_or(false, |params| {
-            !f.comments().has_trailing_comments(params.syntax())
         });
 
         let format_extends = format_with(|f| {
@@ -68,29 +69,6 @@ impl FormatNodeRule<TsInterfaceDeclaration> for FormatTsInterfaceDeclaration {
 
         write![f, [interface_token.format(), space()]]?;
 
-        // Manually handle the trailing comments and push them into the members block
-        // to prevent that a comment gets formatted on the same line as the opening `{`
-        let last_node = match (&type_parameters, &extends_clause) {
-            (_, Some(extends_clause)) => extends_clause.syntax(),
-            (Some(type_parameters), None) => type_parameters.syntax(),
-            (None, None) => id.syntax(),
-        };
-
-        let last_token = last_node.last_token();
-        let has_trailing_comments = false;
-
-        // FIXME
-        // if let Some(last_token) = &last_token {
-        //     for comment in last_token
-        //         .trailing_trivia()
-        //         .pieces()
-        //         .filter_map(|piece| piece.as_comments())
-        //     {
-        //         has_trailing_comments = true;
-        //         f.state_mut().mark_token_trivia_formatted(&comment);
-        //     }
-        // }
-
         let id_has_trailing_comments = f.comments().has_trailing_comments(id.syntax());
         if id_has_trailing_comments || extends_clause.is_some() {
             if should_indent_extends_only {
@@ -108,29 +86,26 @@ impl FormatNodeRule<TsInterfaceDeclaration> for FormatTsInterfaceDeclaration {
             write!(f, [format_id, format_extends])?;
         }
 
-        write!(
-            f,
-            [
-                space(),
-                format_delimited(
-                    &l_curly_token,
-                    &format_args![
-                        format_with(|f| {
-                            // TODO: See PR Write the manual handled comments
-                            if let Some(_last_token) = &last_token {
-                                if has_trailing_comments {
-                                    write!(f, [hard_line_break()])?;
-                                }
-                            }
+        write!(f, [space(), l_curly_token.format()])?;
 
-                            Ok(())
-                        }),
-                        members.format()
-                    ],
-                    &r_curly_token
-                )
-                .block_indent()
-            ]
-        )
+        if members.is_empty() {
+            write!(
+                f,
+                [format_dangling_comments(node.syntax()).with_block_indent()]
+            )?;
+        } else {
+            write!(f, [block_indent(&members.format())])?;
+        }
+
+        write!(f, [r_curly_token.format()])
+    }
+
+    fn fmt_dangling_comments(
+        &self,
+        _: &TsInterfaceDeclaration,
+        _: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        // Handled inside of `fmt_fields`
+        Ok(())
     }
 }

@@ -776,10 +776,14 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-class G1<T> implements IPoly<T> {
-  x: T;
-}
-
+interface ReallyReallyLongName3<
+  TypeArgumentNumberOne,
+  TypeArgumentNumberTwo,
+  TypeArgumentNumberThree
+> // 1
+// 2
+extends BaseInterface // 3
+{}
         "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);

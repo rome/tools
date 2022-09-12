@@ -7,7 +7,7 @@ use rome_js_syntax::{
     JsAnyClass, JsAnyName, JsAnyRoot, JsAnyStatement, JsArrayHole, JsArrowFunctionExpression,
     JsBlockStatement, JsCatchClause, JsEmptyStatement, JsFinallyClause, JsFormalParameter,
     JsFunctionBody, JsIdentifierExpression, JsIfStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode,
-    JsVariableDeclarator, JsWhileStatement,
+    JsVariableDeclarator, JsWhileStatement, TsInterfaceDeclaration,
 };
 use rome_rowan::{AstNode, SyntaxTriviaPieceComments, TextLen};
 
@@ -327,56 +327,6 @@ fn handle_labelled_statement_comment(
 
 // TODO do same for interfaces
 fn handle_class_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacement<JsLanguage> {
-    if let Some(class) = JsAnyClass::cast_ref(comment.enclosing_node()) {
-        if let Some(following) = comment.following_node() {
-            // Make comments preceding the first member leading comments of the member
-            // ```javascript
-            // class Test { /* comment */
-            //      prop;
-            // }
-            // ```
-            if let Some(member) = class.members().first() {
-                if following == member.syntax() {
-                    return CommentPlacement::Leading {
-                        node: member.into_syntax(),
-                        comment,
-                    };
-                }
-            }
-
-            if let Some(preceding) = comment.preceding_node() {
-                // Make all comments between the id/type parameters and the extends clause trailing comments
-                // of the id/type parameters
-                //
-                // ```javascript
-                // class Test
-                //
-                // /* comment */ extends B {}
-                // ```
-                if matches!(
-                    following.kind(),
-                    JsSyntaxKind::JS_EXTENDS_CLAUSE | JsSyntaxKind::TS_IMPLEMENTS_CLAUSE
-                ) {
-                    return CommentPlacement::Trailing {
-                        node: preceding.clone(),
-                        comment,
-                    };
-                }
-            }
-        } else if class.members().is_empty() {
-            // Handle the case where there are no members, attach the comments as dangling comments.
-            // ```javascript
-            // class Test // comment
-            // {
-            // }
-            // ```
-            return CommentPlacement::Dangling {
-                node: comment.enclosing_node().clone(),
-                comment,
-            };
-        }
-    }
-
     // Make comments following after the `extends` or `implements` keyword trailing comments
     // of the preceding extends, type parameters, or id.
     // ```javascript
@@ -388,30 +338,75 @@ fn handle_class_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlaceme
     // ```
     if matches!(
         comment.enclosing_node().kind(),
-        JsSyntaxKind::JS_EXTENDS_CLAUSE | JsSyntaxKind::TS_IMPLEMENTS_CLAUSE
+        JsSyntaxKind::JS_EXTENDS_CLAUSE
+            | JsSyntaxKind::TS_IMPLEMENTS_CLAUSE
+            | JsSyntaxKind::TS_EXTENDS_CLAUSE
     ) && comment.preceding_node().is_none()
     {
-        if let Some(class) = comment.enclosing_node().parent().and_then(JsAnyClass::cast) {
-            if comment.enclosing_node().kind() == JsSyntaxKind::TS_IMPLEMENTS_CLAUSE {
-                if let Some(extends) = class.extends_clause() {
-                    return CommentPlacement::Trailing {
-                        node: extends.into_syntax(),
-                        comment,
-                    };
-                }
-            }
+        if let Some(sibling) = comment.enclosing_node().prev_sibling() {
+            return CommentPlacement::Trailing {
+                node: sibling,
+                comment,
+            };
+        }
+    }
 
-            if let Some(preceding) = class
-                .type_parameters()
-                .map(AstNode::into_syntax)
-                .or_else(|| class.id().ok().flatten().map(AstNode::into_syntax))
-            {
-                return CommentPlacement::Trailing {
-                    node: preceding,
+    let first_member = if let Some(class) = JsAnyClass::cast_ref(comment.enclosing_node()) {
+        class.members().first().map(AstNode::into_syntax)
+    } else if let Some(interface) = TsInterfaceDeclaration::cast_ref(comment.enclosing_node()) {
+        interface.members().first().map(AstNode::into_syntax)
+    } else {
+        return CommentPlacement::Default(comment);
+    };
+
+    if let Some(following) = comment.following_node() {
+        // Make comments preceding the first member leading comments of the member
+        // ```javascript
+        // class Test { /* comment */
+        //      prop;
+        // }
+        // ```
+        if let Some(member) = first_member {
+            if following == &member {
+                return CommentPlacement::Leading {
+                    node: member,
                     comment,
                 };
             }
         }
+
+        if let Some(preceding) = comment.preceding_node() {
+            // Make all comments between the id/type parameters and the extends clause trailing comments
+            // of the id/type parameters
+            //
+            // ```javascript
+            // class Test
+            //
+            // /* comment */ extends B {}
+            // ```
+            if matches!(
+                following.kind(),
+                JsSyntaxKind::JS_EXTENDS_CLAUSE
+                    | JsSyntaxKind::TS_IMPLEMENTS_CLAUSE
+                    | JsSyntaxKind::TS_EXTENDS_CLAUSE
+            ) {
+                return CommentPlacement::Trailing {
+                    node: preceding.clone(),
+                    comment,
+                };
+            }
+        }
+    } else if first_member.is_none() {
+        // Handle the case where there are no members, attach the comments as dangling comments.
+        // ```javascript
+        // class Test // comment
+        // {
+        // }
+        // ```
+        return CommentPlacement::Dangling {
+            node: comment.enclosing_node().clone(),
+            comment,
+        };
     }
 
     CommentPlacement::Default(comment)
