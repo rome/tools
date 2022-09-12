@@ -4,9 +4,9 @@ use rome_formatter::{write, CommentPlacement, CommentPosition, Comments, Decorat
 use rome_formatter::{CommentKind, CommentStyle, SourceComment};
 use rome_js_syntax::suppression::{parse_suppression_comment, SuppressionCategory};
 use rome_js_syntax::{
-    JsAnyName, JsAnyRoot, JsAnyStatement, JsArrayHole, JsArrowFunctionExpression, JsBlockStatement,
-    JsCatchClause, JsEmptyStatement, JsFinallyClause, JsFormalParameter, JsFunctionBody,
-    JsIdentifierExpression, JsIfStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode,
+    JsAnyClass, JsAnyName, JsAnyRoot, JsAnyStatement, JsArrayHole, JsArrowFunctionExpression,
+    JsBlockStatement, JsCatchClause, JsEmptyStatement, JsFinallyClause, JsFormalParameter,
+    JsFunctionBody, JsIdentifierExpression, JsIfStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode,
     JsVariableDeclarator, JsWhileStatement,
 };
 use rome_rowan::{AstNode, SyntaxTriviaPieceComments, TextLen};
@@ -156,6 +156,8 @@ impl CommentStyle for JsCommentStyle {
                 .or_else(handle_if_statement_comment)
                 .or_else(handle_while_comment)
                 .or_else(handle_try_comment)
+                .or_else(handle_class_comment)
+                .or_else(handle_method_comment)
                 .or_else(handle_for_comment)
                 .or_else(handle_root_comments)
                 .or_else(handle_array_hole_comment)
@@ -169,6 +171,8 @@ impl CommentStyle for JsCommentStyle {
                 .or_else(handle_if_statement_comment)
                 .or_else(handle_while_comment)
                 .or_else(handle_try_comment)
+                .or_else(handle_class_comment)
+                .or_else(handle_method_comment)
                 .or_else(handle_for_comment)
                 .or_else(handle_root_comments)
                 .or_else(handle_parameter_comment)
@@ -307,23 +311,6 @@ fn handle_switch_default_case_comment(
         }
         _ => CommentPlacement::Default(comment),
     }
-
-    //   if (
-    //     !enclosingNode ||
-    //     enclosingNode.type !== "SwitchCase" ||
-    //     enclosingNode.test
-    //   ) {
-    //     return false;
-    //   }
-    //
-    //   if (followingNode.type === "BlockStatement" && isLineComment(comment)) {
-    //     addBlockStatementFirstComment(followingNode, comment);
-    //   } else {
-    //     addDanglingComment(enclosingNode, comment);
-    //   }
-    //
-    //   return true;
-    // }
 }
 
 fn handle_labelled_statement_comment(
@@ -336,6 +323,153 @@ fn handle_labelled_statement_comment(
         },
         _ => CommentPlacement::Default(comment),
     }
+}
+
+// TODO do same for interfaces
+fn handle_class_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacement<JsLanguage> {
+    if let Some(class) = JsAnyClass::cast_ref(comment.enclosing_node()) {
+        if let Some(following) = comment.following_node() {
+            // Make comments preceding the first member leading comments of the member
+            // ```javascript
+            // class Test { /* comment */
+            //      prop;
+            // }
+            // ```
+            if let Some(member) = class.members().first() {
+                if following == member.syntax() {
+                    return CommentPlacement::Leading {
+                        node: member.into_syntax(),
+                        comment,
+                    };
+                }
+            }
+
+            if let Some(preceding) = comment.preceding_node() {
+                // Make all comments between the id/type parameters and the extends clause trailing comments
+                // of the id/type parameters
+                //
+                // ```javascript
+                // class Test
+                //
+                // /* comment */ extends B {}
+                // ```
+                if matches!(
+                    following.kind(),
+                    JsSyntaxKind::JS_EXTENDS_CLAUSE | JsSyntaxKind::TS_IMPLEMENTS_CLAUSE
+                ) {
+                    return CommentPlacement::Trailing {
+                        node: preceding.clone(),
+                        comment,
+                    };
+                }
+            }
+        } else if class.members().is_empty() {
+            // Handle the case where there are no members, attach the comments as dangling comments.
+            // ```javascript
+            // class Test // comment
+            // {
+            // }
+            // ```
+            return CommentPlacement::Dangling {
+                node: comment.enclosing_node().clone(),
+                comment,
+            };
+        }
+    }
+
+    // Make comments following after the `extends` or `implements` keyword trailing comments
+    // of the preceding extends, type parameters, or id.
+    // ```javascript
+    // class a9 extends
+    //   /* comment */
+    // b {
+    //   constructor() {}
+    // }
+    // ```
+    if matches!(
+        comment.enclosing_node().kind(),
+        JsSyntaxKind::JS_EXTENDS_CLAUSE | JsSyntaxKind::TS_IMPLEMENTS_CLAUSE
+    ) && comment.preceding_node().is_none()
+    {
+        if let Some(class) = comment.enclosing_node().parent().and_then(JsAnyClass::cast) {
+            if comment.enclosing_node().kind() == JsSyntaxKind::TS_IMPLEMENTS_CLAUSE {
+                if let Some(extends) = class.extends_clause() {
+                    return CommentPlacement::Trailing {
+                        node: extends.into_syntax(),
+                        comment,
+                    };
+                }
+            }
+
+            if let Some(preceding) = class
+                .type_parameters()
+                .map(AstNode::into_syntax)
+                .or_else(|| class.id().ok().flatten().map(AstNode::into_syntax))
+            {
+                return CommentPlacement::Trailing {
+                    node: preceding,
+                    comment,
+                };
+            }
+        }
+    }
+
+    CommentPlacement::Default(comment)
+}
+
+fn handle_method_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacement<JsLanguage> {
+    let enclosing = comment.enclosing_node();
+
+    let is_method = matches!(
+        enclosing.kind(),
+        JsSyntaxKind::JS_METHOD_CLASS_MEMBER
+            | JsSyntaxKind::JS_METHOD_OBJECT_MEMBER
+            | JsSyntaxKind::JS_SETTER_CLASS_MEMBER
+            | JsSyntaxKind::JS_GETTER_CLASS_MEMBER
+            | JsSyntaxKind::JS_SETTER_OBJECT_MEMBER
+            | JsSyntaxKind::JS_GETTER_OBJECT_MEMBER
+            | JsSyntaxKind::JS_CONSTRUCTOR_CLASS_MEMBER
+    );
+
+    if !is_method {
+        return CommentPlacement::Default(comment);
+    }
+
+    // Move end of line and own line comments before the method body into the function
+    // ```javascript
+    // class Test {
+    //   method() /* test */
+    //  {}
+    // }
+    // ```
+    if let Some(following) = comment.following_node() {
+        if let Some(body) = JsFunctionBody::cast_ref(following) {
+            if let Some(directive) = body.directives().first() {
+                return CommentPlacement::Leading {
+                    node: directive.into_syntax(),
+                    comment,
+                };
+            }
+
+            let first_non_empty = body
+                .statements()
+                .iter()
+                .find(|statement| !matches!(statement, JsAnyStatement::JsEmptyStatement(_)));
+
+            return match first_non_empty {
+                None => CommentPlacement::Dangling {
+                    node: body.into_syntax(),
+                    comment,
+                },
+                Some(statement) => CommentPlacement::Leading {
+                    node: statement.into_syntax(),
+                    comment,
+                },
+            };
+        }
+    }
+
+    CommentPlacement::Default(comment)
 }
 
 /// Handle a all comments document.

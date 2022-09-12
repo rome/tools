@@ -569,7 +569,10 @@ impl GroupModes {
     fn insert_print_mode(&mut self, group_id: GroupId, mode: PrintMode) {
         let index = u32::from(group_id) as usize;
 
-        self.0.resize(index + 1, None);
+        if self.0.len() < index + 1 {
+            self.0.resize(index + 1, None);
+        }
+
         self.0[index] = Some(mode);
     }
 
@@ -581,9 +584,9 @@ impl GroupModes {
     }
 
     fn unwrap_print_mode(&self, group_id: GroupId, next_element: &FormatElement) -> PrintMode {
-        self.get_print_mode(group_id).unwrap_or_else(||
+        self.get_print_mode(group_id).unwrap_or_else(|| {
             panic!("Expected group with id {group_id:?} to exist but it wasn't present in the document. Ensure that a group with such a document appears in the document before the element {next_element:?}.")
-        )
+        })
     }
 }
 

@@ -776,16 +776,18 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-let b = {
-   "a" /* comment */: () => 1
-};
+class G1<T> implements IPoly<T> {
+  x: T;
+}
 
         "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
         let options = JsFormatOptions::new(syntax);
 
-        let result = format_node(options, &tree.syntax()).unwrap().print();
+        let formatted = format_node(options, &tree.syntax()).unwrap();
+        println!("{}", &formatted.clone().into_format_element());
+        let result = formatted.print();
         // check_reformat(CheckReformatParams {
         //     root: &tree.syntax(),
         //     text: result.as_code(),
