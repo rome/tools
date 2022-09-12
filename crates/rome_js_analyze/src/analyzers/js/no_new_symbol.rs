@@ -95,9 +95,7 @@ impl Rule for NoNewSymbol {
 
 fn convert_new_expression_to_call_expression(expr: &JsNewExpression) -> Option<JsCallExpression> {
     let JsNewExpressionFields {
-        callee,
-        arguments,
-        ..
+        callee, arguments, ..
     } = expr.as_fields();
 
     let callee = callee.ok()?;
