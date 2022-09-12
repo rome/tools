@@ -220,7 +220,7 @@ pub struct Js {
 }
 impl Js {
     const CATEGORY_NAME: &'static str = "js";
-    pub(crate) const CATEGORY_RULES: [&'static str; 30] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 31] = [
         "noArguments",
         "noAsyncPromiseExecutor",
         "noCatchAssign",
@@ -245,6 +245,7 @@ impl Js {
         "noUnusedVariables",
         "useBlockStatements",
         "useCamelCase",
+        "useOptionalChain",
         "useSimplifiedLogicExpression",
         "useSingleCaseStatement",
         "useSingleVarDeclarator",
@@ -252,7 +253,7 @@ impl Js {
         "useValidTypeof",
         "useWhile",
     ];
-    const RECOMMENDED_RULES: [&'static str; 28] = [
+    const RECOMMENDED_RULES: [&'static str; 29] = [
         "noArguments",
         "noAsyncPromiseExecutor",
         "noCatchAssign",
@@ -275,6 +276,7 @@ impl Js {
         "noUnusedTemplateLiteral",
         "noUnusedVariables",
         "useBlockStatements",
+        "useOptionalChain",
         "useSimplifiedLogicExpression",
         "useSingleCaseStatement",
         "useSingleVarDeclarator",
@@ -282,7 +284,7 @@ impl Js {
         "useValidTypeof",
         "useWhile",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 28] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 29] = [
         RuleFilter::Rule("js", Self::CATEGORY_RULES[0]),
         RuleFilter::Rule("js", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("js", Self::CATEGORY_RULES[2]),
@@ -311,6 +313,7 @@ impl Js {
         RuleFilter::Rule("js", Self::CATEGORY_RULES[27]),
         RuleFilter::Rule("js", Self::CATEGORY_RULES[28]),
         RuleFilter::Rule("js", Self::CATEGORY_RULES[29]),
+        RuleFilter::Rule("js", Self::CATEGORY_RULES[30]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { matches!(self.recommended, Some(true)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -337,7 +340,7 @@ impl Js {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 28] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 29] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }
