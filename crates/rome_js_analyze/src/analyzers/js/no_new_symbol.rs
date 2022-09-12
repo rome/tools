@@ -29,7 +29,7 @@ declare_rule! {
     /// }
     /// ```
     pub(crate) NoNewSymbol {
-        version: "0.7.0",
+        version: "0.10.0",
         name: "noNewSymbol",
         recommended: true,
     }

@@ -6,3 +6,5 @@ function baz() {
 }
 // invalid
 var foo = new Symbol('foo');
+var foo2 = new Symbol();
+var lorem = new Symbol() // comment
