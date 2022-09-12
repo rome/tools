@@ -35,9 +35,9 @@ where
             Err(_) => {
                 f.restore_state_snapshot(snapshot);
 
-                // Lists that yield errors are formatted as they were unknown nodes.
+                // Lists that yield errors are formatted as they were suppressed nodes.
                 // Doing so, the formatter formats the nodes/tokens as is.
-                format_unknown_node(self.node.syntax()).fmt(f)
+                format_suppressed_node(self.node.syntax()).fmt(f)
             }
         }
     }
@@ -78,6 +78,9 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
             }
         }
 
+        // The trimmed range of a node is its range without any of its leading or trailing trivia.
+        // Except for nodes that used to be parenthesized, the range than covers the source from the
+        // `(` to the `)` (the trimmed range of the parenthesized expression, not the inner expression)
         let trimmed_source_range = f.context().source_map().map_or_else(
             || self.node.text_trimmed_range(),
             |source_map| source_map.trimmed_source_range(self.node),
@@ -94,39 +97,35 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
                         .map_or_else(|| range, |source_map| source_map.source_range(range))
                 }
 
-                let comments = f.context().comments().clone();
-                let leading_comments = comments.leading_comments(self.node);
+                // Format all leading comments that are outside of the node's source range except for
+                // unknown nodes because they already format the leading comments.
+                if self.kind != VerbatimKind::Unknown {
+                    let comments = f.context().comments().clone();
+                    let leading_comments = comments.leading_comments(self.node);
 
-                let outside_trimmed_range = leading_comments.partition_point(|comment| {
-                    comment.piece().text_range().end() <= trimmed_source_range.start()
-                });
+                    let outside_trimmed_range = leading_comments.partition_point(|comment| {
+                        comment.piece().text_range().end() <= trimmed_source_range.start()
+                    });
 
-                write!(
-                    f,
-                    [FormatLeadingComments::Comments(
-                        &leading_comments[..outside_trimmed_range]
-                    )]
-                )?;
+                    write!(
+                        f,
+                        [FormatLeadingComments::Comments(
+                            &leading_comments[..outside_trimmed_range]
+                        )]
+                    )?;
+                }
 
-                // Find the source position of the first non-whitespace piece
+                // Find the first skipped token trivia, if any, and include it in the verbatim range because
+                // the comments only format **up to** but not including skipped token trivia.
                 let start_source = self
                     .node
                     .first_leading_trivia()
                     .into_iter()
                     .flat_map(|trivia| trivia.pieces())
-                    .find_map(|piece| {
-                        let source_range = source_range(f, piece.text_range());
-
-                        if piece.is_skipped() {
-                            Some(source_range.start())
-                        } else if piece.is_comments()
-                            && source_range.end() > trimmed_source_range.start()
-                        {
-                            Some(source_range.start())
-                        } else {
-                            None
-                        }
-                    })
+                    .filter(|trivia| trivia.is_skipped())
+                    .map(|trivia| source_range(f, trivia.text_range()).start())
+                    .take_while(|start| *start < trimmed_source_range.start())
+                    .next()
                     .unwrap_or(trimmed_source_range.start());
 
                 let original_source = f.context().source_map().map_or_else(
@@ -143,20 +142,25 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
                 )
                 .fmt(f)?;
 
-                let comments = f.context().comments().clone();
-                let trailing_comments = comments.trailing_comments(self.node);
+                // Format all trailing comments that are outside of the trimmed range.
+                // The Unknown node already formats its trailing comments.
+                if self.kind != VerbatimKind::Unknown {
+                    let comments = f.context().comments().clone();
+                    let trailing_comments = comments.trailing_comments(self.node);
 
-                let outside_trimmed_range_start = trailing_comments.partition_point(|comment| {
-                    source_range(f, comment.piece().text_range()).end()
-                        <= trimmed_source_range.end()
-                });
+                    let outside_trimmed_range_start =
+                        trailing_comments.partition_point(|comment| {
+                            source_range(f, comment.piece().text_range()).end()
+                                <= trimmed_source_range.end()
+                        });
 
-                write!(
-                    f,
-                    [FormatTrailingComments::Comments(
-                        &trailing_comments[outside_trimmed_range_start..]
-                    )]
-                )?;
+                    write!(
+                        f,
+                        [FormatTrailingComments::Comments(
+                            &trailing_comments[outside_trimmed_range_start..]
+                        )]
+                    )?;
+                }
 
                 Ok(())
             })]

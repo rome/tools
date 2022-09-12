@@ -854,8 +854,6 @@ pub trait FormatLanguage {
         true
     }
 
-    // TODO move is_suppression and
-
     /// Returns the formatting options
     fn options(&self) -> &<Self::Context as FormatContext>::Options;
 

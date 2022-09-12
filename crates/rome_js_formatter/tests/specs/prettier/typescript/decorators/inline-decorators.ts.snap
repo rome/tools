@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/decorators/inline-decorators.ts
 ---
 
 # Input
@@ -75,13 +77,12 @@ class MyContainerComponent {
    method1() {}
  
    @d1
-@@ -30,22 +30,20 @@
+@@ -30,22 +30,19 @@
    constructor(
      @d1 private x: number,
      @d2(foo) private y: number,
 -    @d3("foo") private z: number,
 +    @d3('foo') private z: number,
-+
      @d4({
 -      x: string,
 -    })
@@ -142,7 +143,6 @@ class Class3 {
     @d1 private x: number,
     @d2(foo) private y: number,
     @d3('foo') private z: number,
-
     @d4({
             x: string
         }) private a: string,
@@ -163,6 +163,6 @@ class MyContainerComponent {
 
 # Lines exceeding max width of 80 characters
 ```
-   48:   @ContentChildren(MyComponent) components: QueryListSomeBigName<MyComponentThat>;
+   47:   @ContentChildren(MyComponent) components: QueryListSomeBigName<MyComponentThat>;
 ```
 

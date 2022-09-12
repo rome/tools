@@ -143,7 +143,7 @@ where
                         lines_before,
                         lines_after: 0, // Will be initialized after
                         position,
-                        kind: self.style.get_comment_kind(&comment),
+                        kind: Style::get_comment_kind(&comment),
                         comment,
                     });
 
@@ -164,7 +164,7 @@ where
                 lines_before = 0;
                 break;
             } else if let Some(comment) = leading.as_comments() {
-                let kind = self.style.get_comment_kind(&comment);
+                let kind = Style::get_comment_kind(&comment);
 
                 self.queue_comment(DecoratedComment {
                     enclosing: self.enclosing_node().clone(),

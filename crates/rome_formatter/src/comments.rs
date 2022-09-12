@@ -82,14 +82,14 @@ impl CommentKind {
 #[derive(Debug, Clone)]
 pub struct SourceComment<L: Language> {
     /// The number of lines appearing before this comment
-    lines_before: u32,
+    pub(crate) lines_before: u32,
 
-    lines_after: u32,
+    pub(crate) lines_after: u32,
 
     /// The comment piece
-    piece: SyntaxTriviaPieceComments<L>,
+    pub(crate) piece: SyntaxTriviaPieceComments<L>,
 
-    kind: CommentKind,
+    pub(crate) kind: CommentKind,
 }
 
 impl<L: Language> SourceComment<L> {
@@ -275,7 +275,7 @@ pub trait CommentStyle: Default {
     fn is_suppression(text: &str) -> bool;
 
     /// Returns the (kind)[CommentKind] of the comment
-    fn get_comment_kind(&self, comment: &SyntaxTriviaPieceComments<Self::Language>) -> CommentKind;
+    fn get_comment_kind(comment: &SyntaxTriviaPieceComments<Self::Language>) -> CommentKind;
 
     fn place_comment(
         &self,

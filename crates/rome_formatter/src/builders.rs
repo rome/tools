@@ -2059,11 +2059,11 @@ pub fn get_lines_before<L: Language>(next_node: &SyntaxNode<L>) -> usize {
         leading_trivia
             .pieces()
             .take_while(|piece| {
-                // Stop at the first comment piece, the comment printer
+                // Stop at the first comment or skipped piece, the comment printer
                 // will handle newlines between the comment and the node
-                !piece.is_comments()
+                !(piece.is_comments() || piece.is_skipped())
             })
-            .filter(|piece| piece.is_newline() || piece.is_skipped())
+            .filter(|piece| piece.is_newline())
             .count()
     } else {
         0

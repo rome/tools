@@ -132,7 +132,7 @@ impl CommentStyle for JsCommentStyle {
             .any(|(category, _)| category == SuppressionCategory::Format)
     }
 
-    fn get_comment_kind(&self, comment: &SyntaxTriviaPieceComments<JsLanguage>) -> CommentKind {
+    fn get_comment_kind(comment: &SyntaxTriviaPieceComments<JsLanguage>) -> CommentKind {
         if comment.text().starts_with("/*") {
             if comment.has_newline() {
                 CommentKind::Block
