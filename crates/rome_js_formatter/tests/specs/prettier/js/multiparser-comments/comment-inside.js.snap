@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/multiparser-comments/comment-inside.js
 ---
 
 # Input
@@ -74,48 +76,38 @@ expr1 = html`
 ```diff
 --- Prettier
 +++ Rome
-@@ -3,56 +3,43 @@
-   <div>
-     ${
-       this.set && this.set.artist
--      /* avoid console errors if `this.set` is undefined */
--    }
-+/* avoid console errors if `this.set` is undefined */}
-   </div>
- `;
- 
--html`${
--  foo
--  /* comment */
-+html`${foo
-+/* comment */
+@@ -13,36 +13,32 @@
+   /* comment */
  }`;
  html`
 -  ${
 -    foo
 -    /* comment */
 -  }
-+${foo
-+/* comment */
++${
++  foo
++  /* comment */
 +}
  `;
  
--graphql`
--  ${
--    foo
--    /* comment */
--  }
--`;
-+graphql`${foo
-+/* comment */
++graphql`${
++  foo
++  /* comment */
 +}`;
  graphql`
 -  ${
 -    foo
 -    /* comment */
 -  }
-+${foo
-+/* comment */
+-`;
+-graphql`
+-  ${
+-    foo
+-    /* comment */
+-  }
++${
++  foo
++  /* comment */
 +}
  `;
  
@@ -125,35 +117,23 @@ expr1 = html`
 -    /* comment */
 -  }
 -`;
-+css`${foo
-+/* comment */
++css`${
++  foo
++  /* comment */
 +}`;
  css`
 -  ${
 -    foo
 -    /* comment */
 -  }
-+${foo
-+/* comment */
++${
++  foo
++  /* comment */
 +}
  `;
  
--markdown`${
--  foo
--  /* comment */
-+markdown`${foo
-+/* comment */
- }`;
- markdown`
--${
--  foo
--  /* comment */
-+${foo
-+/* comment */
- }
- `;
- 
-@@ -62,6 +49,5 @@
+ markdown`${
+@@ -62,6 +58,5 @@
      ${x(
        foo, // fg
        bar,
@@ -171,43 +151,52 @@ html`
   <div>
     ${
       this.set && this.set.artist
-/* avoid console errors if `this.set` is undefined */}
+      /* avoid console errors if `this.set` is undefined */
+    }
   </div>
 `;
 
-html`${foo
-/* comment */
+html`${
+  foo
+  /* comment */
 }`;
 html`
-${foo
-/* comment */
+${
+  foo
+  /* comment */
 }
 `;
 
-graphql`${foo
-/* comment */
+graphql`${
+  foo
+  /* comment */
 }`;
 graphql`
-${foo
-/* comment */
+${
+  foo
+  /* comment */
 }
 `;
 
-css`${foo
-/* comment */
+css`${
+  foo
+  /* comment */
 }`;
 css`
-${foo
-/* comment */
+${
+  foo
+  /* comment */
 }
 `;
 
-markdown`${foo
-/* comment */
+markdown`${
+  foo
+  /* comment */
 }`;
 markdown`
-${foo
-/* comment */
+${
+  foo
+  /* comment */
 }
 `;
 

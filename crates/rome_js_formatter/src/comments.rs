@@ -161,6 +161,7 @@ impl CommentStyle for JsCommentStyle {
                 .or_else(handle_array_hole_comment)
                 .or_else(handle_variable_declarator_comment)
                 .or_else(handle_parameter_comment)
+                .or_else(handle_labelled_statement_comment)
                 .or_else(handle_continue_break_comment),
             CommentPosition::OwnLine => handle_member_expression_comment(comment)
                 .or_else(handle_function_declaration_comment)
@@ -171,6 +172,7 @@ impl CommentStyle for JsCommentStyle {
                 .or_else(handle_root_comments)
                 .or_else(handle_parameter_comment)
                 .or_else(handle_array_hole_comment)
+                .or_else(handle_labelled_statement_comment)
                 .or_else(handle_continue_break_comment),
             CommentPosition::SameLine => handle_if_statement_comment(comment)
                 .or_else(handle_while_comment)
@@ -271,6 +273,18 @@ fn handle_continue_break_comment(
                 },
             }
         }
+        _ => CommentPlacement::Default(comment),
+    }
+}
+
+fn handle_labelled_statement_comment(
+    comment: DecoratedComment<JsLanguage>,
+) -> CommentPlacement<JsLanguage> {
+    match comment.enclosing_node().kind() {
+        JsSyntaxKind::JS_LABELED_STATEMENT => CommentPlacement::Leading {
+            node: comment.enclosing_node().clone(),
+            comment,
+        },
         _ => CommentPlacement::Default(comment),
     }
 }
