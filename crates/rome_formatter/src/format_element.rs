@@ -81,12 +81,6 @@ pub enum FormatElement {
     /// line suffixes, potentially by inserting a hard line break.
     LineSuffixBoundary,
 
-    /// Special semantic element letting the printer and formatter know this is
-    /// a comment content, and it should only have a limited influence on the
-    /// formatting (for instance line breaks contained within will not cause
-    /// the parent group to break if this element is at the start of it).
-    Comment(Box<[FormatElement]>),
-
     /// A token that tracks tokens/nodes that are printed as verbatim.
     Verbatim(Verbatim),
 
@@ -193,7 +187,6 @@ impl std::fmt::Debug for FormatElement {
                 fmt.debug_tuple("LineSuffix").field(content).finish()
             }
             FormatElement::LineSuffixBoundary => write!(fmt, "LineSuffixBoundary"),
-            FormatElement::Comment(content) => fmt.debug_tuple("Comment").field(content).finish(),
             FormatElement::Verbatim(verbatim) => fmt
                 .debug_tuple("Verbatim")
                 .field(&verbatim.content)
@@ -671,7 +664,6 @@ impl FormatElement {
             FormatElement::Group(Group { content, .. })
             | FormatElement::ConditionalGroupContent(ConditionalGroupContent { content, .. })
             | FormatElement::IndentIfGroupBreaks(IndentIfGroupBreaks { content, .. })
-            | FormatElement::Comment(content)
             | FormatElement::Fill(content)
             | FormatElement::Verbatim(Verbatim { content, .. })
             | FormatElement::Label(Label { content, .. })
@@ -701,13 +693,13 @@ impl FormatElement {
 
     /// Utility function to get the "last element" of a [FormatElement], recursing
     /// into lists and groups to find the last element that's not
-    /// a line break, or a comment.
+    /// a line break
     pub fn last_element(&self) -> Option<&FormatElement> {
         match self {
             FormatElement::List(list) => {
                 list.iter().rev().find_map(|element| element.last_element())
             }
-            FormatElement::Line(_) | FormatElement::Comment(_) => None,
+            FormatElement::Line(_) => None,
 
             FormatElement::Group(Group { content, .. }) | FormatElement::Indent(content) => {
                 content.iter().rev().find_map(FormatElement::last_element)
@@ -858,9 +850,6 @@ impl Format<IrFormatContext> for FormatElement {
             }
             FormatElement::LineSuffix(line_suffix) => {
                 write!(f, [text("line_suffix("), line_suffix.as_ref(), text(")")])
-            }
-            FormatElement::Comment(content) => {
-                write!(f, [text("comment("), content.as_ref(), text(")")])
             }
             FormatElement::Verbatim(verbatim) => {
                 write!(f, [text("verbatim("), verbatim.content.as_ref(), text(")")])

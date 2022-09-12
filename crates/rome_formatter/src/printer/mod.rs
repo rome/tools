@@ -264,10 +264,6 @@ impl<'a> Printer<'a> {
                 self.queue_line_suffixes(HARD_BREAK, args, queue);
             }
 
-            FormatElement::Comment(content) => {
-                queue.extend_with_args(content.iter(), args);
-            }
-
             FormatElement::Verbatim(verbatim) => {
                 if let VerbatimKind::Verbatim { length } = &verbatim.kind {
                     self.state.verbatim_markers.push(TextRange::at(
@@ -1010,8 +1006,6 @@ fn fits_element_on_line<'a, 'rest>(
             }
         }
 
-        FormatElement::Comment(content) => queue.extend(content.iter(), args),
-
         FormatElement::Verbatim(verbatim) => queue.extend(verbatim.content.iter(), args),
         FormatElement::BestFitting(best_fitting) => {
             let content = match args.mode {
@@ -1417,11 +1411,7 @@ two lines`,
                 text("]")
             ]),
             text(";"),
-            comment(&line_suffix(&format_args![
-                space(),
-                text("// trailing"),
-                space()
-            ]),)
+            &line_suffix(&format_args![space(), text("// trailing"), space()])
         ]);
 
         assert_eq!(printed.as_code(), "[1, 2, 3]; // trailing")
