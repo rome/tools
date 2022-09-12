@@ -14,7 +14,7 @@ use rome_diagnostics::{
 };
 use rome_fs::{AtomicInterner, FileSystem, OpenOptions, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
-use rome_service::workspace::UnsupportedReason;
+use rome_service::workspace::{SupportsFeatureResult, UnsupportedReason};
 use rome_service::{
     workspace::{
         FeatureName, FileGuard, Language, OpenFileParams, RuleCategories, SupportsFeatureParams,
@@ -435,13 +435,11 @@ impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
         self.messages.send(msg.into()).ok();
     }
 
-    fn can_format(&self, rome_path: &RomePath) -> Option<UnsupportedReason> {
-        self.workspace
-            .supports_feature(SupportsFeatureParams {
-                path: rome_path.clone(),
-                feature: FeatureName::Format,
-            })
-            .reason
+    fn can_format(&self, rome_path: &RomePath) -> Result<SupportsFeatureResult, RomeError> {
+        self.workspace.supports_feature(SupportsFeatureParams {
+            path: rome_path.clone(),
+            feature: FeatureName::Format,
+        })
     }
 
     fn push_format_stat(&self, path: String, stat: FormatterReportFileDetail) {
@@ -450,13 +448,11 @@ impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
             .ok();
     }
 
-    fn can_lint(&self, rome_path: &RomePath) -> Option<UnsupportedReason> {
-        self.workspace
-            .supports_feature(SupportsFeatureParams {
-                path: rome_path.clone(),
-                feature: FeatureName::Lint,
-            })
-            .reason
+    fn can_lint(&self, rome_path: &RomePath) -> Result<SupportsFeatureResult, RomeError> {
+        self.workspace.supports_feature(SupportsFeatureParams {
+            path: rome_path.clone(),
+            feature: FeatureName::Lint,
+        })
     }
 }
 
@@ -479,22 +475,17 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
             TraversalMode::Check { .. } => self.can_lint(rome_path),
             TraversalMode::CI { .. } => self
                 .can_lint(rome_path)
-                .and_then(|can_lint| Ok(can_lint || self.can_format(rome_path)?)),
-            // TraversalMode::CI { .. } => self
-            //     .can_lint(rome_path)
-            //     .or_else(|| self.can_format(rome_path)),
-
+                .or_else(|_| self.can_format(rome_path)),
             TraversalMode::Format { .. } => self.can_format(rome_path),
         };
 
         match result {
-            Ok(result) => result,
+            Ok(result) => result.reason.is_none(),
             Err(err) => {
                 self.push_diagnostic(rome_path.file_id(), "IO", err.to_string());
                 false
             }
         }
-        .is_none()
     }
 
     fn handle_file(&self, path: &Path, file_id: FileId) {
@@ -563,25 +554,22 @@ type FileResult = Result<FileStatus, Message>;
 fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileResult {
     tracing::trace_span!("process_file", path = ?path).in_scope(move || {
         let rome_path = RomePath::new(path, file_id);
-        let can_format = ctx
+        let supported_format = ctx
             .can_format(&rome_path)
             .with_file_id_and_code(file_id, "IO")?;
-        let can_lint = ctx
+        let supported_lint = ctx
             .can_lint(&rome_path)
             .with_file_id_and_code(file_id, "IO")?;
-        let can_handle = match ctx.execution.traversal_mode() {
-            TraversalMode::Check { .. } => can_lint,
-            TraversalMode::CI { .. } => can_lint || can_format,
-            TraversalMode::Format { .. } => can_format,
-        // let unsupported_format = ctx.can_format(&rome_path);
-        // let unsupported_lint = ctx.can_lint(&rome_path);
-        // let unsupported_file = match ctx.execution.traversal_mode() {
-        //     TraversalMode::Check { .. } => unsupported_lint.as_ref(),
-        //     TraversalMode::CI { .. } => unsupported_lint.as_ref().and(unsupported_format.as_ref()),
-        //     TraversalMode::Format { .. } => unsupported_format.as_ref(),
-        // };
+        let supported_file = match ctx.execution.traversal_mode() {
+            TraversalMode::Check { .. } => supported_lint.reason.as_ref(),
+            TraversalMode::CI { .. } => supported_lint
+                .reason
+                .as_ref()
+                .and(supported_format.reason.as_ref()),
+            TraversalMode::Format { .. } => supported_format.reason.as_ref(),
+        };
 
-        if let Some(reason) = unsupported_file {
+        if let Some(reason) = supported_file {
             return match reason {
                 UnsupportedReason::FileNotSupported => Err(Message::from(TraversalError {
                     severity: Severity::Error,
@@ -634,7 +622,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
             return Ok(FileStatus::Ignored);
         }
 
-        let categories = if ctx.execution.is_format() || unsupported_lint.is_some() {
+        let categories = if ctx.execution.is_format() || supported_lint.reason.is_some() {
             RuleCategories::SYNTAX
         } else {
             RuleCategories::SYNTAX | RuleCategories::LINT
@@ -694,7 +682,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
             return Ok(result);
         }
 
-        if unsupported_format.is_none() {
+        if supported_format.reason.is_none() {
             let write = match ctx.execution.traversal_mode() {
                 // In check mode do not run the formatter and return the result immediately,
                 // but only if the argument `--apply` is not passed.

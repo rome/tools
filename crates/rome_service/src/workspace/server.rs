@@ -195,15 +195,30 @@ impl Workspace for WorkspaceServer {
     ) -> Result<SupportsFeatureResult, RomeError> {
         let capabilities = self.get_capabilities(&params.path);
         let settings = self.settings.read().unwrap();
-        let is_ignored = matches!(self.is_file_ignored(&params.path, params.feature), true);
-        let result = if is_ignored {
-            SupportsFeatureResult::ignored()
-        } else if capabilities.formatter.format.is_none() {
-            SupportsFeatureResult::file_not_supported()
-        } else if !settings.formatter().enabled {
-            SupportsFeatureResult::disabled()
-        } else {
-            SupportsFeatureResult { reason: None }
+        let is_ignored = matches!(self.is_file_ignored(&params.path, &params.feature), true);
+        let result = match params.feature {
+            FeatureName::Format => {
+                if is_ignored {
+                    SupportsFeatureResult::ignored()
+                } else if capabilities.formatter.format.is_none() {
+                    SupportsFeatureResult::file_not_supported()
+                } else if !settings.formatter().enabled {
+                    SupportsFeatureResult::disabled()
+                } else {
+                    SupportsFeatureResult { reason: None }
+                }
+            }
+            FeatureName::Lint => {
+                if is_ignored {
+                    SupportsFeatureResult::ignored()
+                } else if capabilities.analyzer.lint.is_none() {
+                    SupportsFeatureResult::file_not_supported()
+                } else if !settings.linter().enabled {
+                    SupportsFeatureResult::disabled()
+                } else {
+                    SupportsFeatureResult { reason: None }
+                }
+            }
         };
         Ok(result)
     }

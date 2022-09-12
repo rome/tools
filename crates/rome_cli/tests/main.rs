@@ -664,7 +664,13 @@ mod check {
 
         assert_eq!(buffer, FIX_BEFORE);
 
-        assert_cli_snapshot(module_path!(), "no_lint_when_file_is_ignored", fs, console);
+        assert_cli_snapshot(SnapshotPayload::new(
+            module_path!(),
+            "no_lint_when_file_is_ignored",
+            fs,
+            console,
+            result,
+        ));
     }
 }
 
@@ -881,7 +887,8 @@ mod ci {
 mod format {
     use super::*;
     use crate::configs::{
-        CONFIG_DISABLED_FORMATTER, CONFIG_FORMAT, CONFIG_ISSUE_3175_1, CONFIG_ISSUE_3175_2,
+        CONFIG_DISABLED_FORMATTER, CONFIG_FORMAT, CONFIG_FORMATTER_IGNORED_FILES,
+        CONFIG_ISSUE_3175_1, CONFIG_ISSUE_3175_2,
     };
     use crate::snap_test::{markup_to_string, SnapshotPayload};
     use rome_console::markup;
@@ -1673,7 +1680,13 @@ mod format {
         assert_eq!(content, UNFORMATTED);
 
         drop(file);
-        assert_cli_snapshot(module_path!(), "does_not_format_ignored_files", fs, console);
+        assert_cli_snapshot(SnapshotPayload::new(
+            module_path!(),
+            "does_not_format_ignored_files",
+            fs,
+            console,
+            result,
+        ));
     }
 }
 
