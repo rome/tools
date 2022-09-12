@@ -18,7 +18,7 @@ errors where emitted while running checks
 # Emitted Messages
 
 ```block
-error[js/useBlockStatements]: Block statements are preferred in this position.
+error[correctness/useBlockStatements]: Block statements are preferred in this position.
   ┌─ ci.js:1:1
   │
 1 │ for(;true;);
@@ -33,7 +33,7 @@ Suggested fix: Wrap the statement with a `JsBlockStatement`
 ```
 
 ```block
-error[js/useWhile]: Use while loops instead of for loops.
+error[correctness/useWhile]: Use while loops instead of for loops.
   ┌─ ci.js:1:1
   │
 1 │ for(;true;);

@@ -9,10 +9,10 @@ expression: content
   "linter": {
     "enabled": true,
     "rules": {
-        "js": {
+        "correctness": {
             "foo_rule": "off"
         },
-        "jsx": {
+        "style": {
             "what_the_hell": "off"
         }
     }
