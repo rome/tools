@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/preserve-line/argument-list.js
 ---
 
 # Input
@@ -250,26 +252,21 @@ function foo(
    /* Another comment */
  
    // Long Long Long Long Long Comment
-@@ -35,69 +27,50 @@
-   // Long Long Long Long Long Comment
- 
-   short3,
--  // More comments
--);
-+// More comments
+@@ -38,28 +30,21 @@
+   // More comments
+ );
  
 -differentArgTypes(
 -  () => {
 -    return true;
 -  },
--
--  isTrue ? doSomething() : 12,
- );
- 
 +differentArgTypes(() => {
 +  return true;
 +}, isTrue ? doSomething() : 12);
-+
+ 
+-  isTrue ? doSomething() : 12,
+-);
+-
  moreArgTypes(
    [1, 2, 3],
 -
@@ -285,10 +282,9 @@ function foo(
      { name: "Hello World", age: 34 },
 -
      oneThing + anotherThing,
-+  // Comment
  
--    // Comment
-   ),
+     // Comment
+@@ -67,37 +52,24 @@
  );
  
  evenMoreArgTypes(
@@ -315,22 +311,22 @@ function foo(
  
 -bar.on(
 -  "readable",
-+bar.on("readable", () => {
-+  doStuff();
-+});
- 
+-
 -  () => {
 -    doStuff();
 -  },
 -);
--
++bar.on("readable", () => {
++  doStuff();
++});
+ 
  foo(
    ["A, B"],
 -
    /* function here */
    function doSomething() {
      return true;
-@@ -106,33 +79,22 @@
+@@ -106,33 +78,22 @@
  
  doSomething.apply(
    null,
@@ -342,7 +338,11 @@ function foo(
  
 -doAnotherThing(
 -  "node",
--
++doAnotherThing("node", {
++  solution_type,
++  time_frame,
++});
+ 
 -  {
 -    solution_type,
 -    time_frame,
@@ -351,11 +351,7 @@ function foo(
 -
 -stuff.doThing(
 -  someStuff,
-+doAnotherThing("node", {
-+  solution_type,
-+  time_frame,
-+});
- 
+-
 -  -1,
 -  {
 -    accept: (node) => doSomething(node),
@@ -371,7 +367,7 @@ function foo(
    // This is important
    true,
    {
-@@ -140,19 +102,13 @@
+@@ -140,19 +101,13 @@
    },
  );
  
@@ -428,8 +424,7 @@ comments(
   // Long Long Long Long Long Comment
 
   short3,
-// More comments
-
+  // More comments
 );
 
 differentArgTypes(() => {
@@ -448,8 +443,8 @@ moreArgTypes(
     // Hello world again
     { name: "Hello World", age: 34 },
     oneThing + anotherThing,
-  // Comment
 
+    // Comment
   ),
 );
 

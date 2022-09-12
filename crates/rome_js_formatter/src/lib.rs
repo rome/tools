@@ -776,14 +776,11 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-interface ReallyReallyLongName3<
-  TypeArgumentNumberOne,
-  TypeArgumentNumberTwo,
-  TypeArgumentNumberThree
-> // 1
-// 2
-extends BaseInterface // 3
-{}
+measure() // Warm-up first
+  .then(() => {
+    SomethingLong();
+  });
+
         "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);

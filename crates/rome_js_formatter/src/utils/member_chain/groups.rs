@@ -108,7 +108,7 @@ impl MemberChainGroups {
             && !self.groups[0]
                 .members
                 .first()
-                .map_or(false, |item| comments.has_trailing_comments(item.syntax())))
+                .map_or(false, |item| comments.has_comments(item.syntax())))
     }
 
     /// Checks if the groups contain comments.
@@ -247,9 +247,9 @@ impl MemberChainGroup {
 
     pub(super) fn has_comments(&self, comments: &JsComments) -> bool {
         self.members.iter().enumerate().any(|(index, member)| {
-            if index > 0 && comments.has_leading_comments(member.syntax()) {
-                true
-            } else if index + 1 < self.members.len() {
+            if index == 0 {
+                comments.has_trailing_comments(member.syntax())
+            } else if index < self.members.len() {
                 comments.has_leading_comments(member.syntax())
                     || comments.has_trailing_comments(member.syntax())
             } else {
