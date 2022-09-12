@@ -2,8 +2,8 @@
 	"linter": {
 		"rules": {
 			"recommended": true,
-			"js": {
-				"noDeadCode": "error"
+			"nursery": {
+				"noUnreachable": "error"
 			}
 		}
 	}

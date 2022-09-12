@@ -179,7 +179,7 @@ warning[nursery/useCamelCase]: Prefer methods names in camel case.
 ```
 
 ```
-warning[js/useCamelCase]: Prefer variables names in camel case.
+warning[nursery/useCamelCase]: Prefer variables names in camel case.
    ┌─ useCamelCase.js:31:5
    │
 31 │ let UPPER_CASE = 1;

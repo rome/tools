@@ -172,7 +172,7 @@ impl ModuleIndex {
         let mut file_stem = path.file_stem();
 
         while let (Some(path), Some(stem)) = (parent, file_stem) {
-            repo.check_path(&path.join("description.md"));
+            repo.check_path(&path.join("mod.rs"));
 
             // Insert each module into its parent
             let stem = stem.to_str().unwrap().to_owned();
@@ -188,7 +188,7 @@ impl ModuleIndex {
         }
     }
 
-    /// Create all the description.md files needed to import
+    /// Create all the mod.rs files needed to import
     /// all the modules in the index up to the root
     fn print(mut self, stage: &mut Vec<PathBuf>) {
         for (path, imports) in self.modules {
@@ -209,7 +209,7 @@ impl ModuleIndex {
 
             let content = xtask::reformat(content).unwrap();
 
-            let path = path.join("description.md");
+            let path = path.join("mod.rs");
             let mut file = File::create(&path).unwrap();
             file.write_all(content.as_bytes()).unwrap();
             drop(file);

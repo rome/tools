@@ -4,7 +4,7 @@ expression: SuppressionComments.js
 ---
 # Input
 ```js
-// rome-ignore lint(js/noDeadCode): this comment does nothing
+// rome-ignore lint(nursery/noUnreachable): this comment does nothing
 function SuppressionComments1() {
     beforeReturn();
     return;
@@ -14,23 +14,13 @@ function SuppressionComments1() {
 function SuppressionComments2() {
     beforeReturn();
     return;
-    // rome-ignore lint(js/noDeadCode): supress warning
+    // rome-ignore lint(nursery/noUnreachable): supress warning
     afterReturn();
 }
 
 ```
 
 # Diagnostics
-```
-warning[Linter]: Unknown lint rule js/noDeadCode in suppression comment
-  ┌─ SuppressionComments.js:1:1
-  │
-1 │ // rome-ignore lint(js/noDeadCode): this comment does nothing
-  │ -------------------------------------------------------------
-
-
-```
-
 ```
 warning[nursery/noUnreachable]: This code is unreachable
   ┌─ SuppressionComments.js:5:5
@@ -39,29 +29,6 @@ warning[nursery/noUnreachable]: This code is unreachable
   │     ------- This statement will return from the function ...
 5 │     afterReturn();
   │     -------------- ... before it can reach this code
-
-
-```
-
-```
-warning[Linter]: Unknown lint rule js/noDeadCode in suppression comment
-   ┌─ SuppressionComments.js:11:5
-   │
-11 │     // rome-ignore lint(js/noDeadCode): supress warning
-   │     ---------------------------------------------------
-
-
-```
-
-```
-warning[nursery/noUnreachable]: This code is unreachable
-   ┌─ SuppressionComments.js:12:5
-   │
-10 │     return;
-   │     ------- This statement will return from the function ...
-11 │     // rome-ignore lint(js/noDeadCode): supress warning
-12 │     afterReturn();
-   │     -------------- ... before it can reach this code
 
 
 ```

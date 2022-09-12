@@ -503,8 +503,8 @@ where
 ///
 /// - `// rome-ignore format` -> `vec![]`
 /// - `// rome-ignore lint` -> `vec![None]`
-/// - `// rome-ignore lint(js/useWhile)` -> `vec![Some("js/useWhile")]`
-/// - `// rome-ignore lint(js/useWhile) lint(js/noDeadCode)` -> `vec![Some("js/useWhile"), Some("js/noDeadCode")]`
+/// - `// rome-ignore lint(correctness/useWhile)` -> `vec![Some("correctness/useWhile")]`
+/// - `// rome-ignore lint(correctness/useWhile) lint(nursery/noUnreachable)` -> `vec![Some("correctness/useWhile"), Some("nursery/noUnreachable")]`
 type SuppressionParser = fn(&str) -> Vec<Option<&str>>;
 
 type SignalHandler<'a, L, Break> = &'a mut dyn FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<Break>;
