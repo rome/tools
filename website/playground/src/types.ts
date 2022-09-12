@@ -72,14 +72,14 @@ export interface PlaygroundProps {
 
 export type PlaygroundSettings = Pick<
 	PlaygroundState,
-		| "lineWidth"
-		| "indentWidth"
-		| "indentStyle"
-		| "quoteStyle"
-		| "quoteProperties"
-		| "sourceType"
-		| "isTypeScript"
-		| "isJsx"
+	| "lineWidth"
+	| "indentWidth"
+	| "indentStyle"
+	| "quoteStyle"
+	| "quoteProperties"
+	| "sourceType"
+	| "isTypeScript"
+	| "isJsx"
 >;
 
 export type Tree = ReturnType<typeof parser.parse>;

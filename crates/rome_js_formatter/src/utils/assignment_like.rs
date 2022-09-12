@@ -5,6 +5,7 @@ use crate::utils::member_chain::is_member_call_chain;
 use crate::utils::object::write_member_name;
 use crate::utils::{JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression};
 use rome_formatter::{format_args, write, CstFormatContext, FormatOptions, VecBuffer};
+use rome_js_syntax::JsAnyLiteralExpression;
 use rome_js_syntax::{
     JsAnyAssignmentPattern, JsAnyBindingPattern, JsAnyCallArgument, JsAnyClassMemberName,
     JsAnyExpression, JsAnyFunctionBody, JsAnyObjectAssignmentPatternMember,
@@ -15,9 +16,10 @@ use rome_js_syntax::{
     TsAnyVariableAnnotation, TsIdentifierBinding, TsPropertySignatureClassMember,
     TsPropertySignatureClassMemberFields, TsType, TsTypeAliasDeclaration, TsTypeArguments,
 };
-use rome_js_syntax::{JsAnyLiteralExpression, JsSyntaxNode};
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 use std::iter;
+
+use super::has_leading_own_line_comment;
 
 declare_node_union! {
     pub(crate) JsAnyAssignmentLike =
@@ -873,34 +875,6 @@ pub(crate) fn should_break_after_operator(right: &JsAnyExpression) -> SyntaxResu
     };
 
     Ok(result)
-}
-/// Tests if the node has any leading comment that will be placed on its own line.
-pub(crate) fn has_leading_own_line_comment(node: &JsSyntaxNode) -> bool {
-    if let Some(leading_trivia) = node.first_leading_trivia() {
-        let mut first_comment = true;
-        let mut after_comment = false;
-        let mut after_new_line = false;
-
-        for piece in leading_trivia.pieces() {
-            if piece.is_comments() {
-                if after_new_line && first_comment {
-                    return true;
-                } else {
-                    first_comment = false;
-                    after_comment = true;
-                }
-            } else if piece.is_newline() {
-                if after_comment {
-                    return true;
-                } else {
-                    after_new_line = true;
-                }
-            } else if piece.is_skipped() {
-                return false;
-            }
-        }
-    }
-    false
 }
 
 impl Format<JsFormatContext> for JsAnyAssignmentLike {
