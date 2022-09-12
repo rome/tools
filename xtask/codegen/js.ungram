@@ -321,6 +321,28 @@ JsAnyExpression =
 	| JsxTagExpression
 
 
+// reference https://github.dev/microsoft/TypeScript/blob/77374732df82c9d5c1319677dc595868bbc648b5/src/compiler/utilitiesPublic.ts#L1554-L1590
+JsLeftHandSideExpression = 
+	JsStaticMemberExpression
+	| JsComputedMemberExpression
+	| JsNewExpression
+	| JsCallExpression
+	| JsxElement
+	| JsxSelfClosingElement
+	| JsxFragment
+	| JsTemplate 
+	| JsArrayExpression
+	| JsParenthesizedExpression
+	| JsObjectExpression
+	| JsClassExpression
+	| JsFunctionExpression
+	| JsIdentifierExpression
+	| JsAnyLiteralExpression
+	| TsInstantiationExpression
+	| JsThisExpression
+	| JsPrivateName
+  | TsNonNullAssertionExpression
+
 JsTemplate =
 	tag: JsAnyExpression?
 	type_arguments: TsTypeArguments?
@@ -2111,14 +2133,6 @@ TsTypeAssertionExpression =
 	'>'
 	expression: JsAnyExpression
 
-JsLeftHandSideExpression = 
-	JsParenthesizedExpression
-	| JsStaticMemberExpression
-	| JsComputedMemberExpression
-	| JsIdentifierExpression
-	| TsNonNullAssertionExpression
-	| TsTypeAssertionExpression
-	| TsAsExpression
 // This `SyntaxKind` is related to `ExpressionWithTypeArguments` in Typescript
 TsInstantiationExpression =
 	expression: JsLeftHandSideExpression
