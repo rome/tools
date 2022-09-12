@@ -1,0 +1,43 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: createElementBinding.js
+---
+# Input
+```js
+import React, { createElement } from "react";
+
+React.createElement('div', {
+    dangerouslySetInnerHTML: { __html: 'child' }
+});
+
+createElement('div', {
+    dangerouslySetInnerHTML: { __html: 'child' }
+});
+```
+
+# Diagnostics
+```
+warning[react/noDanger]: Avoid passing content using the dangerouslySetInnerHTML prop.
+  ┌─ createElementBinding.js:4:5
+  │
+4 │     dangerouslySetInnerHTML: { __html: 'child' }
+  │     -----------------------
+
+= warning: Setting content using code can expose users to cross-site scripting (XSS) attacks
+
+
+```
+
+```
+warning[react/noDanger]: Avoid passing content using the dangerouslySetInnerHTML prop.
+  ┌─ createElementBinding.js:8:5
+  │
+8 │     dangerouslySetInnerHTML: { __html: 'child' }
+  │     -----------------------
+
+= warning: Setting content using code can expose users to cross-site scripting (XSS) attacks
+
+
+```
+
+
