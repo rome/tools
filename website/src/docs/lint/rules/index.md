@@ -133,6 +133,14 @@ Disallow labels that share a name with a variable
 Disallow negation in the condition of an <code>if</code> statement if it has an <code>else</code> clause
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noNewSymbol">
+	<a href="/docs/lint/rules/noNewSymbol">noNewSymbol (since v0.10.0)</a>
+	<a class="header-anchor" href="#noNewSymbol"></a>
+	<span class="recommended">recommended</span>
+</h3>
+Disallow <code>new</code> operators with the <code>Symbol</code> object
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noShadowRestrictedNames">
 	<a href="/docs/lint/rules/noShadowRestrictedNames">noShadowRestrictedNames (since v0.9.0)</a>
 	<a class="header-anchor" href="#noShadowRestrictedNames"></a>
