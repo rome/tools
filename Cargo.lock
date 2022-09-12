@@ -1479,7 +1479,6 @@ name = "rome_cli"
 version = "0.0.0"
 dependencies = [
  "anyhow",
- "cfg-if",
  "crossbeam",
  "dashmap",
  "hdrhistogram",
