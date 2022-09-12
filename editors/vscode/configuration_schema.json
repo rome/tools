@@ -40,6 +40,18 @@
   },
   "additionalProperties": false,
   "definitions": {
+    "Correctness": {
+      "type": "object",
+      "properties": {
+        "recommended": {
+          "description": "It enables the recommended rules for this group",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      }
+    },
     "FormatterConfiguration": {
       "type": "object",
       "properties": {
@@ -131,30 +143,6 @@
       },
       "additionalProperties": false
     },
-    "Js": {
-      "type": "object",
-      "properties": {
-        "recommended": {
-          "description": "It enables the recommended rules for this group",
-          "type": [
-            "boolean",
-            "null"
-          ]
-        }
-      }
-    },
-    "Jsx": {
-      "type": "object",
-      "properties": {
-        "recommended": {
-          "description": "It enables the recommended rules for this group",
-          "type": [
-            "boolean",
-            "null"
-          ]
-        }
-      }
-    },
     "LineWidth": {
       "description": "Validated value for the `line_width` formatter options\n\nThe allowed range of values is 1..=320",
       "type": "integer",
@@ -186,6 +174,18 @@
       },
       "additionalProperties": false
     },
+    "Nursery": {
+      "type": "object",
+      "properties": {
+        "recommended": {
+          "description": "It enables the recommended rules for this group",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      }
+    },
     "PlainIndentStyle": {
       "type": "string",
       "enum": [
@@ -206,18 +206,6 @@
         "double",
         "single"
       ]
-    },
-    "Regex": {
-      "type": "object",
-      "properties": {
-        "recommended": {
-          "description": "It enables the recommended rules for this group",
-          "type": [
-            "boolean",
-            "null"
-          ]
-        }
-      }
     },
     "RuleConfiguration": {
       "anyOf": [
@@ -254,20 +242,20 @@
     "Rules": {
       "type": "object",
       "properties": {
-        "js": {
+        "correctness": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Js"
+              "$ref": "#/definitions/Correctness"
             },
             {
               "type": "null"
             }
           ]
         },
-        "jsx": {
+        "nursery": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Jsx"
+              "$ref": "#/definitions/Nursery"
             },
             {
               "type": "null"
@@ -281,20 +269,10 @@
             "null"
           ]
         },
-        "regex": {
+        "style": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Regex"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "ts": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/Ts"
+              "$ref": "#/definitions/Style"
             },
             {
               "type": "null"
@@ -304,7 +282,7 @@
       },
       "additionalProperties": false
     },
-    "Ts": {
+    "Style": {
       "type": "object",
       "properties": {
         "recommended": {

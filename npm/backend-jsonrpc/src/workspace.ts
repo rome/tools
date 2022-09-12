@@ -85,36 +85,29 @@ export interface JavascriptFormatter {
 	quoteStyle?: QuoteStyle;
 }
 export interface Rules {
-	js?: Js;
-	jsx?: Jsx;
+	correctness?: Correctness;
+	nursery?: Nursery;
 	/**
 	 * It enables the lint rules recommended by Rome. `true` by default.
 	 */
 	recommended?: boolean;
-	regex?: Regex;
-	ts?: Ts;
+	style?: Style;
 }
 export type QuoteProperties = "asNeeded" | "preserve";
 export type QuoteStyle = "double" | "single";
-export interface Js {
+export interface Correctness {
 	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
 }
-export interface Jsx {
+export interface Nursery {
 	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
 }
-export interface Regex {
-	/**
-	 * It enables the recommended rules for this group
-	 */
-	recommended?: boolean;
-}
-export interface Ts {
+export interface Style {
 	/**
 	 * It enables the recommended rules for this group
 	 */
