@@ -213,6 +213,14 @@ JavaScript allows the omission of curly braces when a block contains only one st
 Enforce camel case naming convention.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useOptionalChain">
+	<a href="/docs/lint/rules/useOptionalChain">useOptionalChain (since v0.10.0)</a>
+	<a class="header-anchor" href="#useOptionalChain"></a>
+	<span class="recommended">recommended</span>
+</h3>
+Enforce using concise optional chain instead of chained logical expressions.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useSimplifiedLogicExpression">
 	<a href="/docs/lint/rules/useSimplifiedLogicExpression">useSimplifiedLogicExpression (since v0.7.0)</a>
 	<a class="header-anchor" href="#useSimplifiedLogicExpression"></a>
