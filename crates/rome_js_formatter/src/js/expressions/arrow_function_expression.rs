@@ -350,7 +350,13 @@ impl Format<JsFormatContext> for ArrowChain {
 
             let join_signatures = format_with(|f| {
                 for arrow in self.arrows() {
-                    write!(f, [format_signature(arrow)])?;
+                    write!(
+                        f,
+                        [
+                            format_leading_comments(arrow.syntax()),
+                            format_signature(arrow)
+                        ]
+                    )?;
 
                     // The arrow of the tail is formatted outside of the group to ensure it never
                     // breaks from the body

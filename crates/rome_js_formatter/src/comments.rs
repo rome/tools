@@ -5,8 +5,9 @@ use rome_formatter::{CommentKind, CommentStyle, SourceComment};
 use rome_js_syntax::suppression::{parse_suppression_comment, SuppressionCategory};
 use rome_js_syntax::{
     JsAnyName, JsAnyRoot, JsAnyStatement, JsArrayHole, JsArrowFunctionExpression, JsBlockStatement,
-    JsCatchClause, JsEmptyStatement, JsFinallyClause, JsFunctionBody, JsIdentifierExpression,
-    JsIfStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode, JsVariableDeclarator, JsWhileStatement,
+    JsCatchClause, JsEmptyStatement, JsFinallyClause, JsFormalParameter, JsFunctionBody,
+    JsIdentifierExpression, JsIfStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode,
+    JsVariableDeclarator, JsWhileStatement,
 };
 use rome_rowan::{AstNode, SyntaxTriviaPieceComments, TextLen};
 
@@ -159,6 +160,7 @@ impl CommentStyle for JsCommentStyle {
                 .or_else(handle_root_comments)
                 .or_else(handle_array_hole_comment)
                 .or_else(handle_variable_declarator_comment)
+                .or_else(handle_parameter_comment)
                 .or_else(handle_continue_break_comment),
             CommentPosition::OwnLine => handle_member_expression_comment(comment)
                 .or_else(handle_function_declaration_comment)
@@ -167,6 +169,7 @@ impl CommentStyle for JsCommentStyle {
                 .or_else(handle_try_comment)
                 .or_else(handle_for_comment)
                 .or_else(handle_root_comments)
+                .or_else(handle_parameter_comment)
                 .or_else(handle_array_hole_comment)
                 .or_else(handle_continue_break_comment),
             CommentPosition::SameLine => handle_if_statement_comment(comment)
@@ -457,9 +460,12 @@ fn handle_if_statement_comment(
         // else if (cond2) expr2; /* b */
         // else expr3; /* b*/
         // ```
-        if !comment.kind().is_block() && !comment.position().is_own_line() {
+        if !comment.kind().is_block()
+            && !comment.position().is_own_line()
+            && !comment.preceding_node().is_none()
+        {
             return CommentPlacement::Dangling {
-                node: if_statement,
+                node: consequent,
                 comment,
             };
         }
@@ -472,6 +478,11 @@ fn handle_if_statement_comment(
         // if (cond) expr; /*
         // a multiline comment */
         // else b;
+        //
+        // if (6) // comment
+        // true
+        // else // comment
+        // {true}
         // ```
         CommentPlacement::Dangling {
             node: if_statement,
@@ -736,54 +747,6 @@ fn handle_for_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacement
     }
 }
 
-// Handles comments in empty `()` parens
-// fn handle_function_parameters_comment(
-//     comment: DecoratedComment<JsLanguage>,
-// ) -> CommentPlacement<JsLanguage> {
-//
-//     if comment.following_token().kind() != JsSyntaxKind::R_PAREN {
-//         return CommentPlacement::Default(comment);
-//     }
-
-// if (
-//     enclosingNode &&
-//     ((isRealFunctionLikeNode(enclosingNode) &&
-//       getFunctionParameters(enclosingNode).length === 0) ||
-//       (isCallLikeExpression(enclosingNode) &&
-//         getCallArguments(enclosingNode).length === 0))
-//   ) {
-//     addDanglingComment(enclosingNode, comment);
-//     return true;
-//   }
-//
-// let enclosing = comment.enclosing_node();
-//
-// if let Some(arguments) = JsCallArguments::cast_ref(enclosing) {
-//     if arguments.args().is_empty() {
-//         return CommentPlacement::Dangling {
-//             node: enclosing.clone(),
-//             comment,
-//         };
-//     }
-// } else if let Some(parameters) = JsParameters::cast_ref(enclosing) {
-//     if parameters.items().is_empty() {
-//         return CommentPlacement::Dangling {
-//             node: enclosing.clone(),
-//                 comment,
-//             };
-//         }
-//     } else if let Some(parameters) = JsConstructorParameters::cast_ref(enclosing) {
-//         if parameters.parameters().is_empty() {
-//             return CommentPlacement::Dangling {
-//                 node: enclosing.clone(),
-//                 comment,
-//             };
-//         }
-//     }
-//
-//     CommentPlacement::Default(comment)
-// }
-
 fn handle_variable_declarator_comment(
     comment: DecoratedComment<JsLanguage>,
 ) -> CommentPlacement<JsLanguage> {
@@ -805,12 +768,12 @@ fn handle_variable_declarator_comment(
     let enclosing = comment.enclosing_node();
     match enclosing.kind() {
         JsSyntaxKind::JS_ASSIGNMENT_EXPRESSION | JsSyntaxKind::TS_TYPE_ALIAS_DECLARATION => {
-            // Makes all comments preceding objects/arrays/templates leading comments of these nodes.
+            // Makes all comments preceding objects/arrays/templates or block comments leading comments of these nodes.
             // ```javascript
             // let a = // comment
             // { };
             // ```
-            if is_complex_value(following) {
+            if is_complex_value(following) || !comment.kind().is_line() {
                 return CommentPlacement::Leading {
                     node: following.clone(),
                     comment,
@@ -850,13 +813,68 @@ fn handle_variable_declarator_comment(
                 // let a = // comment
                 //      b;
                 // ```
-                if !is_complex_value(following) {
+                if !is_complex_value(following)
+                    && comment.kind().is_line()
+                    && comment.preceding_node().is_none()
+                {
                     if let Ok(id) = variable_declarator.id() {
                         return CommentPlacement::Trailing {
                             node: id.into_syntax(),
                             comment,
                         };
                     }
+                }
+            }
+        }
+        _ => {
+            // fall through
+        }
+    }
+
+    CommentPlacement::Default(comment)
+}
+
+fn handle_parameter_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacement<JsLanguage> {
+    // Make all own line comments leading comments of the parameter
+    // ```javascript
+    // function a(
+    //   b
+    //   // comment
+    //   = c
+    // )
+    // ```
+    match comment.enclosing_node().kind() {
+        JsSyntaxKind::JS_FORMAL_PARAMETER if comment.position().is_own_line() => {
+            return CommentPlacement::Leading {
+                node: comment.enclosing_node().clone(),
+                comment,
+            }
+        }
+        JsSyntaxKind::JS_INITIALIZER_CLAUSE => {
+            if let Some(parameter) = comment
+                .enclosing_node()
+                .parent()
+                .and_then(JsFormalParameter::cast)
+            {
+                // Keep end of line comments after the `=` trailing comments of the id
+                // ```javascript
+                // function a(
+                //   b = // test
+                //     c
+                // )
+                // ```
+                if comment.position().is_end_of_line() && comment.preceding_node().is_none() {
+                    if let Ok(binding) = parameter.binding() {
+                        return CommentPlacement::Trailing {
+                            node: binding.into_syntax(),
+                            comment,
+                        };
+                    }
+                } else if comment.position().is_own_line() {
+                    return CommentPlacement::Leading {
+                        node: parameter.into_syntax(),
+                        comment,
+                    };
                 }
             }
         }

@@ -126,6 +126,10 @@ pub(crate) struct MemberChain {
 impl MemberChain {
     /// It tells if the groups should be break on multiple lines
     pub(crate) fn groups_should_break(&self, comments: &JsComments) -> FormatResult<bool> {
+        if self.tail.is_empty() {
+            return Ok(false);
+        }
+
         let node_has_comments =
             self.head.has_comments(comments) || self.tail.has_comments(comments);
 

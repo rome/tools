@@ -2,6 +2,7 @@ mod builder;
 mod map;
 
 use self::{builder::CommentsBuilderVisitor, map::CommentsMap};
+use crate::TextSize;
 use rome_rowan::syntax::SyntaxElementKey;
 use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTriviaPieceComments};
 use rustc_hash::FxHashSet;
@@ -517,34 +518,36 @@ impl<L: Language> Default for CommentsData<L> {
 
 impl<L: Language> std::fmt::Debug for CommentsData<L> {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let mut list = f.debug_list();
+        let mut comments = Vec::new();
 
         if let Some(root) = &self.root {
             for node in root.descendants() {
                 for leading in self.comments.leading(&node.key()) {
-                    list.entry(&DebugComment::Leading {
-                        node: &node,
+                    comments.push(DebugComment::Leading {
+                        node: node.clone(),
                         comment: leading,
                     });
                 }
 
                 for dangling in self.comments.dangling(&node.key()) {
-                    list.entry(&DebugComment::Dangling {
-                        node: &node,
+                    comments.push(DebugComment::Dangling {
+                        node: node.clone(),
                         comment: dangling,
                     });
                 }
 
                 for trailing in self.comments.trailing(&node.key()) {
-                    list.entry(&DebugComment::Trailing {
-                        node: &node,
+                    comments.push(DebugComment::Trailing {
+                        node: node.clone(),
                         comment: trailing,
                     });
                 }
             }
         }
 
-        list.finish()
+        comments.sort_by_key(|comment| comment.start());
+
+        f.debug_list().entries(comments).finish()
     }
 }
 
@@ -552,16 +555,26 @@ impl<L: Language> std::fmt::Debug for CommentsData<L> {
 enum DebugComment<'a, L: Language> {
     Leading {
         comment: &'a SourceComment<L>,
-        node: &'a SyntaxNode<L>,
+        node: SyntaxNode<L>,
     },
     Trailing {
         comment: &'a SourceComment<L>,
-        node: &'a SyntaxNode<L>,
+        node: SyntaxNode<L>,
     },
     Dangling {
         comment: &'a SourceComment<L>,
-        node: &'a SyntaxNode<L>,
+        node: SyntaxNode<L>,
     },
+}
+
+impl<L: Language> DebugComment<'_, L> {
+    fn start(&self) -> TextSize {
+        match self {
+            DebugComment::Leading { comment, .. }
+            | DebugComment::Trailing { comment, .. }
+            | DebugComment::Dangling { comment, .. } => comment.piece.text_range().start(),
+        }
+    }
 }
 
 impl<L: Language> std::fmt::Debug for DebugComment<'_, L> {

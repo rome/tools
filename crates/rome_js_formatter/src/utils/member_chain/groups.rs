@@ -93,6 +93,10 @@ pub(super) struct MemberChainGroups {
 }
 
 impl MemberChainGroups {
+    pub(crate) fn is_empty(&self) -> bool {
+        self.groups.is_empty()
+    }
+
     /// This function checks if the current grouping should be merged with the first group.
     pub fn should_merge(
         &self,

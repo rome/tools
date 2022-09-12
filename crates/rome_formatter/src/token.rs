@@ -205,19 +205,10 @@ where
         });
 
         if self.indent() {
-            write!(f, [block_indent(&format_dangling_comments)])?;
+            write!(f, [block_indent(&format_dangling_comments)])
         } else {
-            write!(f, [format_dangling_comments])?;
-
-            if dangling_comments
-                .last()
-                .map_or(false, |comment| comment.kind().is_line())
-            {
-                write!(f, [hard_line_break()])?;
-            }
+            write!(f, [format_dangling_comments])
         }
-
-        Ok(())
     }
 }
 

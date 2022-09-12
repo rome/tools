@@ -774,16 +774,16 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-        // https://babeljs.io/docs/en/babel-plugin-proposal-decorators
-
-@annotation
-class MyClass { }
+if (6) // comment
+true
+else // comment
+{true}
         "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
         let options = JsFormatOptions::new(syntax);
 
-        let result = format_node(options, &dbg!(tree.syntax())).unwrap().print();
+        let result = format_node(options, &tree.syntax()).unwrap().print();
         // check_reformat(CheckReformatParams {
         //     root: &tree.syntax(),
         //     text: result.as_code(),
