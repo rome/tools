@@ -271,7 +271,7 @@ use rome_rowan::SyntaxResult;
 use rome_rowan::TextRange;
 use rome_rowan::{AstNode, SyntaxNode};
 
-use crate::builders::format_suppressed_node;
+use crate::builders::{format_suppressed_node, format_unknown_node};
 use crate::comments::JsCommentStyle;
 use crate::context::{JsFormatContext, JsFormatOptions};
 use crate::cst::FormatJsSyntaxNode;
@@ -471,6 +471,15 @@ where
 
     fn fmt_trailing_comments(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
         format_trailing_comments(node.syntax()).fmt(f)
+    }
+}
+
+pub trait FormatUnknownNodeRule<N>
+where
+    N: AstNode<Language = JsLanguage>,
+{
+    fn fmt(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
+        format_unknown_node(node.syntax()).fmt(f)
     }
 }
 

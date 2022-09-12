@@ -250,7 +250,7 @@ where
         let mut builder = f.debug_map();
 
         for (key, entry) in &self.index {
-            builder.entry(&key, &DebugEntry { entry, map: &self });
+            builder.entry(&key, &DebugEntry { entry, map: self });
         }
 
         builder.finish()

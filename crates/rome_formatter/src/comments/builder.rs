@@ -253,13 +253,13 @@ impl<L: Language> CommentsBuilder<L> {
     fn add_comment(&mut self, placement: CommentPlacement<L>) {
         match placement {
             CommentPlacement::Leading { node, comment } => {
-                self.push_leading_comment(&node, comment.into());
+                self.push_leading_comment(&node, comment);
             }
             CommentPlacement::Trailing { node, comment } => {
-                self.push_trailing_comment(&node, comment.into());
+                self.push_trailing_comment(&node, comment);
             }
             CommentPlacement::Dangling { node, comment } => {
-                self.push_dangling_comment(&node, comment.into())
+                self.push_dangling_comment(&node, comment)
             }
             CommentPlacement::Default(mut comment) => {
                 match comment.position {
@@ -630,7 +630,7 @@ mod tests {
             false
         }
 
-        fn get_comment_kind(&self, _: &SyntaxTriviaPieceComments<Self::Language>) -> CommentKind {
+        fn get_comment_kind(_: &SyntaxTriviaPieceComments<Self::Language>) -> CommentKind {
             CommentKind::Block
         }
 

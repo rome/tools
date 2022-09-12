@@ -270,18 +270,6 @@ fn handle_continue_break_comment(
         }
         _ => CommentPlacement::Default(comment),
     }
-
-    // function handleBreakAndContinueStatementComments({ comment, enclosingNode }) {
-    //   if (
-    //     (enclosingNode?.type === "ContinueStatement" ||
-    //       enclosingNode?.type === "BreakStatement") &&
-    //     !enclosingNode.label
-    //   ) {
-    //     addTrailingComment(enclosingNode, comment);
-    //     return true;
-    //   }
-    //   return false;
-    // }
 }
 
 /// Handle a all comments document.
