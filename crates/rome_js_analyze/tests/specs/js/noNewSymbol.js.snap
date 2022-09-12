@@ -1,0 +1,30 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 97
+expression: noNewSymbol.js
+---
+# Input
+```js
+// valid
+var bar = Symbol('bar');
+function baz() {
+    function Symbol() { }
+    new Symbol();
+}
+// invalid
+var foo = new Symbol('foo');
+
+```
+
+# Diagnostics
+```
+warning[js/noNewSymbol]: Symbol cannot be called as a constructor.
+  ┌─ noNewSymbol.js:8:11
+  │
+8 │ var foo = new Symbol('foo');
+  │           -----------------
+
+
+```
+
+
