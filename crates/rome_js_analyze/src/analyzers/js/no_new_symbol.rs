@@ -1,8 +1,12 @@
 use crate::{semantic_services::Semantic, JsRuleAction};
-use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{
+    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
+};
 use rome_console::markup;
-use rome_js_syntax::JsNewExpression;
-use rome_rowan::AstNode;
+use rome_diagnostics::Applicability;
+use rome_js_factory::make;
+use rome_js_syntax::{JsAnyExpression, JsCallExpression, JsNewExpression, JsNewExpressionFields};
+use rome_rowan::{AstNode, BatchMutationExt};
 
 declare_rule! {
     /// Disallow `new` operators with the `Symbol` object
@@ -70,7 +74,34 @@ impl Rule for NoNewSymbol {
         ))
     }
 
-    fn action(_: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
-        None
+    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
+        let node = ctx.query();
+        let mut mutation = ctx.root().begin();
+
+        let call_expression = convert_new_expression_to_call_expression(node)?;
+        mutation.replace_node(
+            JsAnyExpression::JsNewExpression(node.clone()),
+            JsAnyExpression::JsCallExpression(call_expression),
+        );
+
+        Some(JsRuleAction {
+            category: ActionCategory::QuickFix,
+            applicability: Applicability::MaybeIncorrect,
+            message: markup! { "Remove "<Emphasis>"new"</Emphasis>"." }.to_owned(),
+            mutation,
+        })
     }
+}
+
+fn convert_new_expression_to_call_expression(expr: &JsNewExpression) -> Option<JsCallExpression> {
+    let JsNewExpressionFields {
+        callee,
+        arguments,
+        ..
+    } = expr.as_fields();
+
+    let callee = callee.ok()?;
+    let arguments = arguments?;
+
+    Some(make::js_call_expression(callee, arguments).build())
 }

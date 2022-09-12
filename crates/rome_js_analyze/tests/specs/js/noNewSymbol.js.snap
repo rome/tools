@@ -24,6 +24,14 @@ warning[js/noNewSymbol]: Symbol cannot be called as a constructor.
 8 │ var foo = new Symbol('foo');
   │           -----------------
 
+Suggested fix: Remove new.
+    | @@ -5,4 +5,4 @@
+4 4 |       new Symbol();
+5 5 |   }
+6 6 |   // invalid
+7   | - var foo = new Symbol('foo');
+  7 | + var foo = Symbol('foo');
+
 
 ```
 
