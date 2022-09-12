@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/module-blocks/comments.js
 ---
 
 # Input
@@ -26,7 +28,7 @@ const m2 = module/* B1 */{
 @@ -1,12 +1,13 @@
 -const m = /*A1*/ module {
 -  /*A2*/ /*A3*/
-+const m = /*A1*/ module /*A2*/;
++const m = /*A1*/ module; /*A2*/
 +{
 +  /*A3*/
    /*A4*/
@@ -38,7 +40,7 @@ const m2 = module/* B1 */{
  
 -const m2 = module {
 -  /* B1 */
-+const m2 = module /* B1 */;
++const m2 = module; /* B1 */
 +{
    /* B2 */
 -};
@@ -48,7 +50,7 @@ const m2 = module/* B1 */{
 # Output
 
 ```js
-const m = /*A1*/ module /*A2*/;
+const m = /*A1*/ module; /*A2*/
 {
   /*A3*/
   /*A4*/
@@ -57,7 +59,7 @@ const m = /*A1*/ module /*A2*/;
   /*A6*/
 } /*A7*/ /*A8*/
 
-const m2 = module /* B1 */;
+const m2 = module; /* B1 */
 {
   /* B2 */
 }

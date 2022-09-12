@@ -776,11 +776,10 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-( a )  ;
-loooooooooooooooooooooooooong7    =
-	// rome-ignore format: test
-	!     "looooooooooooooooooooooooooooooooooooooooooog";
-
+switch(x) {
+  default: /* comment */
+    break;
+}
         "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);

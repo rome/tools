@@ -162,7 +162,8 @@ impl CommentStyle for JsCommentStyle {
                 .or_else(handle_variable_declarator_comment)
                 .or_else(handle_parameter_comment)
                 .or_else(handle_labelled_statement_comment)
-                .or_else(handle_continue_break_comment),
+                .or_else(handle_continue_break_comment)
+                .or_else(handle_switch_default_case_comment),
             CommentPosition::OwnLine => handle_member_expression_comment(comment)
                 .or_else(handle_function_declaration_comment)
                 .or_else(handle_if_statement_comment)
@@ -275,6 +276,54 @@ fn handle_continue_break_comment(
         }
         _ => CommentPlacement::Default(comment),
     }
+}
+
+/// Moves line comments after the `default` keyword into the block statement:
+///
+/// ```javascript
+/// switch (x) {
+///	    default: // comment
+///     {
+/// 		break;
+///     }
+/// ```
+///
+/// All other same line comments become `Dangling` comments that are handled inside of the default case
+/// formatting
+fn handle_switch_default_case_comment(
+    comment: DecoratedComment<JsLanguage>,
+) -> CommentPlacement<JsLanguage> {
+    match (comment.enclosing_node().kind(), comment.following_node()) {
+        (JsSyntaxKind::JS_DEFAULT_CLAUSE, Some(following)) => {
+            match JsBlockStatement::cast_ref(following) {
+                Some(block) if comment.kind().is_line() => {
+                    place_block_statement_comment(block, comment)
+                }
+                _ => CommentPlacement::Dangling {
+                    node: comment.enclosing_node().clone(),
+                    comment,
+                },
+            }
+        }
+        _ => CommentPlacement::Default(comment),
+    }
+
+    //   if (
+    //     !enclosingNode ||
+    //     enclosingNode.type !== "SwitchCase" ||
+    //     enclosingNode.test
+    //   ) {
+    //     return false;
+    //   }
+    //
+    //   if (followingNode.type === "BlockStatement" && isLineComment(comment)) {
+    //     addBlockStatementFirstComment(followingNode, comment);
+    //   } else {
+    //     addDanglingComment(enclosingNode, comment);
+    //   }
+    //
+    //   return true;
+    // }
 }
 
 fn handle_labelled_statement_comment(
