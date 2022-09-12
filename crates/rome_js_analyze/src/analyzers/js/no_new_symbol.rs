@@ -49,9 +49,7 @@ impl Rule for NoNewSymbol {
         let ident = callee.as_js_identifier_expression()?;
         let reference = ident.name().ok()?;
 
-        let name = ident.text();
-
-        if name == "Symbol" {
+        if reference.has_name("Symbol") {
             let model = ctx.model();
             let declaration = model.declaration(&reference);
 
