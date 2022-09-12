@@ -1,4 +1,7 @@
-use crate::{parentheses::{NeedsParentheses, unary_like_expression_needs_parentheses}, prelude::*};
+use crate::{
+    parentheses::{unary_like_expression_needs_parentheses, NeedsParentheses},
+    prelude::*,
+};
 use rome_formatter::write;
 use rome_js_syntax::{TsInstantiationExpression, TsInstantiationExpressionFields};
 #[derive(Debug, Clone, Default)]
