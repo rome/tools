@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::{
     write, Argument, Arguments, CommentKind, CommentStyle, CstFormatContext, FormatRefWithRule,
-    GroupId, SourceComment, TextRange,
+    GroupId, SourceComment, TextRange, VecBuffer,
 };
 use rome_rowan::{Language, SyntaxNode, SyntaxToken};
 
@@ -472,9 +472,29 @@ where
         let skipped_range =
             skipped_range.unwrap_or(TextRange::empty(self.token.text_range().start()));
 
-        write!(f, [syntax_token_text_slice(self.token, skipped_range)])?;
+        let verbatim = {
+            let mut buffer = VecBuffer::new(f.state_mut());
+            write!(buffer, [syntax_token_text_slice(self.token, skipped_range)])?;
 
-        if !dangling_comments.is_empty() {
+            FormatElement::Verbatim(Verbatim::new_verbatim(
+                buffer.into_vec().into_boxed_slice(),
+                skipped_range.len(),
+            ))
+        };
+
+        f.write_element(verbatim)?;
+
+        // Write whitespace separator between skipped/last comment and token
+        if dangling_comments.is_empty() {
+            match lines {
+                0 if spaces == 0 => {
+                    // Don't write a space if there was non in the source document
+                    Ok(())
+                }
+                0 => write!(f, [space()]),
+                _ => write!(f, [hard_line_break()]),
+            }
+        } else {
             match dangling_comments.first().unwrap().lines_before {
                 0 => write!(f, [space()])?,
                 1 => write!(f, [hard_line_break()])?,
@@ -488,11 +508,11 @@ where
                     indent: false
                 }]
             )?;
-        }
 
-        match lines {
-            0 => write!(f, [space()]),
-            _ => write!(f, [hard_line_break()]),
+            match lines {
+                0 => write!(f, [space()]),
+                _ => write!(f, [hard_line_break()]),
+            }
         }
     }
 }

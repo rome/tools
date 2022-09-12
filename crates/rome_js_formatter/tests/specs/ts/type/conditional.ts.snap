@@ -44,21 +44,18 @@ type T2 = test extends string
 	: undefined;
 
 type T3 = test extends string
-	?
-	  // something
+	? // something
 	  unknown
 	: test extends number
 	? undefined
-	:
-	  // else
+	: // else
 	  undefined;
 
 type T4 = test extends string
-	// something
-	? unknown
+	? // something
+	  unknown
 	: test extends number
 	? undefined
-	:
-	  // else
+	: // else
 	  undefined;
 
