@@ -139,7 +139,7 @@ pub const fn format_dangling_comments<L: Language>(
 ) -> FormatDanglingComments<L> {
     FormatDanglingComments::Node {
         node,
-        indent: false,
+        indent: DanglingIndentMode::None,
     }
 }
 
@@ -147,24 +147,39 @@ pub const fn format_dangling_comments<L: Language>(
 pub enum FormatDanglingComments<'a, L: Language> {
     Node {
         node: &'a SyntaxNode<L>,
-        indent: bool,
+        indent: DanglingIndentMode,
     },
     Comments {
         comments: &'a [SourceComment<L>],
-        indent: bool,
+        indent: DanglingIndentMode,
     },
 }
 
+#[derive(Copy, Clone, Debug)]
+pub enum DanglingIndentMode {
+    Block,
+    Soft,
+    None,
+}
+
 impl<L: Language> FormatDanglingComments<'_, L> {
-    pub fn indented(mut self) -> Self {
+    pub fn with_block_indent(self) -> Self {
+        self.with_indent_mode(DanglingIndentMode::Block)
+    }
+
+    pub fn with_soft_block_indent(self) -> Self {
+        self.with_indent_mode(DanglingIndentMode::Soft)
+    }
+
+    fn with_indent_mode(mut self, mode: DanglingIndentMode) -> Self {
         match &mut self {
-            FormatDanglingComments::Node { indent, .. } => *indent = true,
-            FormatDanglingComments::Comments { indent, .. } => *indent = true,
+            FormatDanglingComments::Node { indent, .. } => *indent = mode,
+            FormatDanglingComments::Comments { indent, .. } => *indent = mode,
         }
         self
     }
 
-    const fn indent(&self) -> bool {
+    const fn indent(&self) -> DanglingIndentMode {
         match self {
             FormatDanglingComments::Node { indent, .. } => *indent,
             FormatDanglingComments::Comments { indent, .. } => *indent,
@@ -188,10 +203,6 @@ where
         }
 
         let format_dangling_comments = format_with(|f| {
-            if self.indent() {
-                write!(f, [hard_line_break()])?;
-            }
-
             // Write all comments up to the first skipped token trivia or the token
             let mut join = f.join_with(hard_line_break());
 
@@ -201,13 +212,29 @@ where
                 join.entry(&format_comment);
             }
 
-            join.finish()
+            join.finish()?;
+
+            if matches!(self.indent(), DanglingIndentMode::Soft)
+                && dangling_comments
+                    .last()
+                    .map_or(false, |comment| comment.kind().is_line())
+            {
+                write!(f, [hard_line_break()])?;
+            }
+
+            Ok(())
         });
 
-        if self.indent() {
-            write!(f, [block_indent(&format_dangling_comments)])
-        } else {
-            write!(f, [format_dangling_comments])
+        match self.indent() {
+            DanglingIndentMode::Block => {
+                write!(f, [block_indent(&format_dangling_comments)])
+            }
+            DanglingIndentMode::Soft => {
+                write!(f, [group(&soft_block_indent(&format_dangling_comments))])
+            }
+            DanglingIndentMode::None => {
+                write!(f, [format_dangling_comments])
+            }
         }
     }
 }
@@ -496,7 +523,7 @@ where
                 f,
                 [FormatDanglingComments::Comments {
                     comments: &dangling_comments,
-                    indent: false
+                    indent: DanglingIndentMode::None
                 }]
             )?;
 

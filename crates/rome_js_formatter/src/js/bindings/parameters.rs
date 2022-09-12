@@ -65,7 +65,7 @@ impl Format<JsFormatContext> for FormatJsAnyParameters {
                     f,
                     [
                         l_paren_token.format(),
-                        soft_block_indent(&format_dangling_comments(self.syntax())),
+                        format_dangling_comments(self.syntax()).with_soft_block_indent(),
                         r_paren_token.format()
                     ]
                 )

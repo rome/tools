@@ -27,7 +27,7 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                 f,
                 [
                     l_paren_token.format(),
-                    format_dangling_comments(node.syntax()),
+                    format_dangling_comments(node.syntax()).with_soft_block_indent(),
                     r_paren_token.format()
                 ]
             );

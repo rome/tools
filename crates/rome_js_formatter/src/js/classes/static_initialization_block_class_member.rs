@@ -25,7 +25,10 @@ impl FormatNodeRule<JsStaticInitializationBlockClassMember>
         write!(f, [static_token.format(), space(), l_curly_token.format()])?;
 
         if statements.is_empty() {
-            write!(f, [format_dangling_comments(node.syntax()).indented()])?;
+            write!(
+                f,
+                [format_dangling_comments(node.syntax()).with_block_indent()]
+            )?;
         } else {
             write!(f, [block_indent(&statements.format())])?;
         }

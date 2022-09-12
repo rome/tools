@@ -59,7 +59,7 @@ impl Format<JsFormatContext> for JsObjectLike {
                 f,
                 [
                     self.l_curly_token().format(),
-                    format_dangling_comments(self.syntax()).indented(),
+                    format_dangling_comments(self.syntax()).with_block_indent(),
                     r_curly.format()
                 ]
             )

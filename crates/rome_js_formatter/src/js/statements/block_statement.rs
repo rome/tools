@@ -34,7 +34,10 @@ impl FormatNodeRule<JsBlockStatement> for FormatJsBlockStatement {
             }
 
             if has_dangling_comments {
-                write!(f, [format_dangling_comments(node.syntax()).indented()])?;
+                write!(
+                    f,
+                    [format_dangling_comments(node.syntax()).with_block_indent()]
+                )?;
             } else if is_non_collapsible(node) {
                 write!(f, [hard_line_break()])?;
             }

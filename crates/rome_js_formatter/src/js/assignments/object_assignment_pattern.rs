@@ -19,6 +19,15 @@ impl FormatNodeRule<JsObjectAssignmentPattern> for FormatJsObjectAssignmentPatte
     fn needs_parentheses(&self, item: &JsObjectAssignmentPattern) -> bool {
         item.needs_parentheses()
     }
+
+    fn fmt_dangling_comments(
+        &self,
+        _: &JsObjectAssignmentPattern,
+        _: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        // Handled inside of `JsObjectPatternLike`
+        Ok(())
+    }
 }
 
 impl NeedsParentheses for JsObjectAssignmentPattern {

@@ -466,7 +466,9 @@ where
     }
 
     fn fmt_dangling_comments(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
-        format_dangling_comments(node.syntax()).fmt(f)
+        format_dangling_comments(node.syntax())
+            .with_soft_block_indent()
+            .fmt(f)
     }
 
     fn fmt_trailing_comments(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
@@ -774,10 +776,11 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-if (6) // comment
-true
-else // comment
-{true}
+( a )  ;
+loooooooooooooooooooooooooong7    =
+	// rome-ignore format: test
+	!     "looooooooooooooooooooooooooooooooooooooooooog";
+
         "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
@@ -793,7 +796,11 @@ else // comment
         // });
         assert_eq!(
             result.as_code(),
-            "type Example = {\n\t[A in B]: T;\n} & {\n\t[A in B]: T;\n};\n"
+            r#"a;
+loooooooooooooooooooooooooong7 =
+	// rome-ignore format: test
+		!     "looooooooooooooooooooooooooooooooooooooooooog";
+"#
         );
     }
 

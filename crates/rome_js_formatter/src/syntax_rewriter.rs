@@ -179,6 +179,9 @@ impl JsFormatSyntaxRewriter {
                 // Skip over leading whitespace
                 while let Some(piece) = l_paren_trailing.peek() {
                     if piece.is_whitespace() {
+                        inner_offset += piece.text_len();
+                        self.source_map
+                            .add_deleted_range(TextRange::at(inner_offset, piece.text_len()));
                         l_paren_trailing.next();
                     } else {
                         break;

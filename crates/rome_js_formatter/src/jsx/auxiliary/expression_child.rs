@@ -62,7 +62,7 @@ impl FormatNodeRule<JsxExpressionChild> for FormatJsxExpressionChild {
                     write!(
                         f,
                         [
-                            format_dangling_comments(node.syntax()).indented(),
+                            format_dangling_comments(node.syntax()).with_block_indent(),
                             hard_line_break()
                         ]
                     )?;

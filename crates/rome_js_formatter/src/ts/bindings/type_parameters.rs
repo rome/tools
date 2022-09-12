@@ -30,7 +30,7 @@ impl FormatNodeRule<TsTypeParameters> for FormatTsTypeParameters {
                 [
                     l_angle_token.format(),
                     space(),
-                    format_dangling_comments(node.syntax()),
+                    format_dangling_comments(node.syntax()).with_soft_block_indent(),
                     space(),
                     r_angle_token.format()
                 ]

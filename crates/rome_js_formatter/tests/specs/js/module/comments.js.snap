@@ -97,14 +97,14 @@ import {
 
 expression(/* block comment */);
 
+expression(/* block comment */);
+
 expression(
-/* block comment */
+	// line comment
 );
 
-expression(); // line comment
-
 expression(
-// line comment
+	// line comment
 );
 
 expression(
@@ -120,9 +120,11 @@ expression(
 	"something",
 );
 
-const array0 = [/*0*/];
-const array1 = [/*0*/, /*1*/];
-const array2 = [/*0*/, /*1*/ , /*2*/];
+const array0 = [
+	/*0*/
+];
+const array1 = [/*0*/ /*1*/ ,];
+const array2 = [/*0*/ , /*1*/ /*2*/ ,];
 
 /* block comment */
 statement();
@@ -156,12 +158,14 @@ function name(
 
 4 + /* plus trailing */ 3 * 2 /* 2 trailing */;
 
-/* leading of opening */ /* trailing of opening */ 4 +
-	3 /* leading of closing */ /* trailing of closing */;
+/* leading of opening */ /* trailing of opening */ 4 + 3;
+
+/* leading of closing */
+/* trailing of closing */
 
 [3 /* trailing num */ /* trailing sep */];
 
-function test /* spacing before parentheses*/ () {}
+function test /* spacing before parentheses*/() {}
 
 a /* before member */.test;
 statement /* comment */;
@@ -170,5 +174,6 @@ statement /* comment */;
 
 /* leading */
 ("test") /*trailing*/;
+
 /* EOF comment */
 

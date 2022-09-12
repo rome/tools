@@ -27,7 +27,7 @@ impl FormatNodeRule<JsArrayExpression> for FormatJsArrayExpression {
                 f,
                 [
                     l_brack_token.format(),
-                    format_dangling_comments(node.syntax()).indented(),
+                    format_dangling_comments(node.syntax()).with_block_indent(),
                     r_brack_token.format(),
                 ]
             )
