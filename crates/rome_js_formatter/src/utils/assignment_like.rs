@@ -9,12 +9,11 @@ use rome_js_syntax::{
     JsAnyAssignmentPattern, JsAnyBindingPattern, JsAnyCallArgument, JsAnyClassMemberName,
     JsAnyExpression, JsAnyFunctionBody, JsAnyObjectAssignmentPatternMember,
     JsAnyObjectBindingPatternMember, JsAnyObjectMemberName, JsAnyTemplateElement,
-    JsAssignmentExpression, JsInitializerClause, JsLiteralMemberName,
-    JsObjectAssignmentPattern, JsObjectAssignmentPatternProperty, JsObjectBindingPattern,
-    JsPropertyClassMember, JsPropertyClassMemberFields, JsPropertyObjectMember, JsSyntaxKind,
-    JsVariableDeclarator, TsAnyVariableAnnotation, TsIdentifierBinding,
-    TsPropertySignatureClassMember, TsPropertySignatureClassMemberFields, TsType,
-    TsTypeAliasDeclaration, TsTypeArguments,
+    JsAssignmentExpression, JsInitializerClause, JsLiteralMemberName, JsObjectAssignmentPattern,
+    JsObjectAssignmentPatternProperty, JsObjectBindingPattern, JsPropertyClassMember,
+    JsPropertyClassMemberFields, JsPropertyObjectMember, JsSyntaxKind, JsVariableDeclarator,
+    TsAnyVariableAnnotation, TsIdentifierBinding, TsPropertySignatureClassMember,
+    TsPropertySignatureClassMemberFields, TsType, TsTypeAliasDeclaration, TsTypeArguments,
 };
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 use std::iter;
