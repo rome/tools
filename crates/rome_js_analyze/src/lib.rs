@@ -106,6 +106,32 @@ mod tests {
 
     use crate::{analyze, AnalysisFilter, ControlFlow};
 
+    #[ignore]
+    #[test]
+    fn quick_test() {
+        const SOURCE: &str = "
+        foo.bar && foo.bar?.();
+        ";
+
+        let parsed = parse(SOURCE, 0, SourceType::js_module());
+
+        let mut error_ranges = Vec::new();
+        analyze(0, &parsed.tree(), AnalysisFilter::default(), |signal| {
+            if let Some(diag) = signal.diagnostic() {
+                let diag = diag.into_diagnostic(Severity::Warning);
+                let primary = diag.primary.as_ref().unwrap();
+
+                error_ranges.push(primary.span.range);
+            }
+
+            dbg!(signal.action());
+
+            ControlFlow::<Never>::Continue(())
+        });
+
+        assert_eq!(error_ranges.as_slice(), &[]);
+    }
+
     #[test]
     fn suppression() {
         const SOURCE: &str = "

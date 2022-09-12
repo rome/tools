@@ -294,6 +294,7 @@ pub enum OperatorPrecedence {
     LeftHandSide = 18,
     Member = 19,
     Primary = 20,
+    Group = 21,
 }
 
 impl OperatorPrecedence {
