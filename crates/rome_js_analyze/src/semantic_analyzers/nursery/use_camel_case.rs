@@ -85,9 +85,8 @@ fn is_non_camel_ok(binding: &JsIdentifierBinding, model: &SemanticModel) -> Opti
 
             for reference in binding.all_reads(model) {
                 let greatparent = reference.node().grand_parent()?;
-                match greatparent.kind() {
-                    JS_NEW_EXPRESSION => return Some(true),
-                    _ => {}
+                if let JS_NEW_EXPRESSION = greatparent.kind() {
+                    return Some(true);
                 }
             }
 

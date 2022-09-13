@@ -209,7 +209,7 @@ Safe fix: Rename this symbol to camel case
 ```
 
 ```
-warning[js/useCamelCase]: Prefer functions names in camel case.
+warning[nursery/useCamelCase]: Prefer functions names in camel case.
    ┌─ useCamelCase.js:45:10
    │
 45 │ function PascalCaseNOk() { }
