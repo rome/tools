@@ -220,7 +220,7 @@ pub struct Js {
 }
 impl Js {
     const CATEGORY_NAME: &'static str = "js";
-    pub(crate) const CATEGORY_RULES: [&'static str; 31] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 32] = [
         "noArguments",
         "noAsyncPromiseExecutor",
         "noCatchAssign",
@@ -254,7 +254,7 @@ impl Js {
         "useWhile",
         "noNewSymbol",
     ];
-    const RECOMMENDED_RULES: [&'static str; 29] = [
+    const RECOMMENDED_RULES: [&'static str; 30] = [
         "noArguments",
         "noAsyncPromiseExecutor",
         "noCatchAssign",
