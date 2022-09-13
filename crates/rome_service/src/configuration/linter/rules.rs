@@ -216,7 +216,48 @@ pub struct Js {
         deserialize_with = "deserialize_js_rules",
         flatten
     )]
+    #[cfg_attr(feature = "schemars", schemars(with = "JsSchema"))]
     pub rules: IndexMap<String, RuleConfiguration>,
+}
+#[cfg_attr(
+    feature = "schemars",
+    derive(JsonSchema),
+    serde(rename_all = "camelCase")
+)]
+#[allow(dead_code)]
+#[doc = r" A list of rules that belong to this group"]
+struct JsSchema {
+    no_arguments: Option<RuleConfiguration>,
+    no_async_promise_executor: Option<RuleConfiguration>,
+    no_catch_assign: Option<RuleConfiguration>,
+    no_compare_neg_zero: Option<RuleConfiguration>,
+    no_dead_code: Option<RuleConfiguration>,
+    no_debugger: Option<RuleConfiguration>,
+    no_delete: Option<RuleConfiguration>,
+    no_double_equals: Option<RuleConfiguration>,
+    no_dupe_args: Option<RuleConfiguration>,
+    no_empty_pattern: Option<RuleConfiguration>,
+    no_extra_boolean_cast: Option<RuleConfiguration>,
+    no_function_assign: Option<RuleConfiguration>,
+    no_import_assign: Option<RuleConfiguration>,
+    no_label_var: Option<RuleConfiguration>,
+    no_negation_else: Option<RuleConfiguration>,
+    no_shadow_restricted_names: Option<RuleConfiguration>,
+    no_shouty_constants: Option<RuleConfiguration>,
+    no_sparse_array: Option<RuleConfiguration>,
+    no_unnecessary_continue: Option<RuleConfiguration>,
+    no_unsafe_negation: Option<RuleConfiguration>,
+    no_unused_template_literal: Option<RuleConfiguration>,
+    no_unused_variables: Option<RuleConfiguration>,
+    use_block_statements: Option<RuleConfiguration>,
+    use_camel_case: Option<RuleConfiguration>,
+    use_optional_chain: Option<RuleConfiguration>,
+    use_simplified_logic_expression: Option<RuleConfiguration>,
+    use_single_case_statement: Option<RuleConfiguration>,
+    use_single_var_declarator: Option<RuleConfiguration>,
+    use_template: Option<RuleConfiguration>,
+    use_valid_typeof: Option<RuleConfiguration>,
+    use_while: Option<RuleConfiguration>,
 }
 impl Js {
     const CATEGORY_NAME: &'static str = "js";
@@ -373,7 +414,20 @@ pub struct Jsx {
         deserialize_with = "deserialize_jsx_rules",
         flatten
     )]
+    #[cfg_attr(feature = "schemars", schemars(with = "JsxSchema"))]
     pub rules: IndexMap<String, RuleConfiguration>,
+}
+#[cfg_attr(
+    feature = "schemars",
+    derive(JsonSchema),
+    serde(rename_all = "camelCase")
+)]
+#[allow(dead_code)]
+#[doc = r" A list of rules that belong to this group"]
+struct JsxSchema {
+    no_comment_text: Option<RuleConfiguration>,
+    no_implicit_boolean: Option<RuleConfiguration>,
+    use_self_closing_elements: Option<RuleConfiguration>,
 }
 impl Jsx {
     const CATEGORY_NAME: &'static str = "jsx";
@@ -450,7 +504,18 @@ pub struct Regex {
         deserialize_with = "deserialize_regex_rules",
         flatten
     )]
+    #[cfg_attr(feature = "schemars", schemars(with = "RegexSchema"))]
     pub rules: IndexMap<String, RuleConfiguration>,
+}
+#[cfg_attr(
+    feature = "schemars",
+    derive(JsonSchema),
+    serde(rename_all = "camelCase")
+)]
+#[allow(dead_code)]
+#[doc = r" A list of rules that belong to this group"]
+struct RegexSchema {
+    no_multiple_spaces_in_regular_expression_literals: Option<RuleConfiguration>,
 }
 impl Regex {
     const CATEGORY_NAME: &'static str = "regex";
@@ -517,7 +582,18 @@ pub struct Ts {
         deserialize_with = "deserialize_ts_rules",
         flatten
     )]
+    #[cfg_attr(feature = "schemars", schemars(with = "TsSchema"))]
     pub rules: IndexMap<String, RuleConfiguration>,
+}
+#[cfg_attr(
+    feature = "schemars",
+    derive(JsonSchema),
+    serde(rename_all = "camelCase")
+)]
+#[allow(dead_code)]
+#[doc = r" A list of rules that belong to this group"]
+struct TsSchema {
+    use_shorthand_array_type: Option<RuleConfiguration>,
 }
 impl Ts {
     const CATEGORY_NAME: &'static str = "ts";
