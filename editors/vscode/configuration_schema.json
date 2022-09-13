@@ -40,18 +40,6 @@
   },
   "additionalProperties": false,
   "definitions": {
-    "Correctness": {
-      "type": "object",
-      "properties": {
-        "recommended": {
-          "description": "It enables the recommended rules for this group",
-          "type": [
-            "boolean",
-            "null"
-          ]
-        }
-      }
-    },
     "FormatterConfiguration": {
       "type": "object",
       "properties": {
@@ -143,6 +131,372 @@
       },
       "additionalProperties": false
     },
+    "Js": {
+      "description": "A list of rules that belong to this group",
+      "type": "object",
+      "properties": {
+        "noArguments": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noAsyncPromiseExecutor": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noCatchAssign": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noCompareNegZero": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noDeadCode": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noDebugger": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noDelete": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noDoubleEquals": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noDupeArgs": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noEmptyPattern": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noExtraBooleanCast": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noFunctionAssign": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noImportAssign": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noLabelVar": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noNegationElse": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noShadowRestrictedNames": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noShoutyConstants": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noSparseArray": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noUnnecessaryContinue": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noUnsafeNegation": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noUnusedTemplateLiteral": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noUnusedVariables": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recommended": {
+          "description": "It enables the recommended rules for this group",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "useBlockStatements": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useCamelCase": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useOptionalChain": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useSimplifiedLogicExpression": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useSingleCaseStatement": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useSingleVarDeclarator": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useTemplate": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useValidTypeof": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useWhile": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "Jsx": {
+      "description": "A list of rules that belong to this group",
+      "type": "object",
+      "properties": {
+        "noCommentText": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noImplicitBoolean": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recommended": {
+          "description": "It enables the recommended rules for this group",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "useSelfClosingElements": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
     "LineWidth": {
       "description": "Validated value for the `line_width` formatter options\n\nThe allowed range of values is 1..=320",
       "type": "integer",
@@ -174,18 +528,6 @@
       },
       "additionalProperties": false
     },
-    "Nursery": {
-      "type": "object",
-      "properties": {
-        "recommended": {
-          "description": "It enables the recommended rules for this group",
-          "type": [
-            "boolean",
-            "null"
-          ]
-        }
-      }
-    },
     "PlainIndentStyle": {
       "type": "string",
       "enum": [
@@ -206,6 +548,29 @@
         "double",
         "single"
       ]
+    },
+    "Regex": {
+      "description": "A list of rules that belong to this group",
+      "type": "object",
+      "properties": {
+        "noMultipleSpacesInRegularExpressionLiterals": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recommended": {
+          "description": "It enables the recommended rules for this group",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      }
     },
     "RuleConfiguration": {
       "anyOf": [
@@ -242,20 +607,20 @@
     "Rules": {
       "type": "object",
       "properties": {
-        "correctness": {
+        "js": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Correctness"
+              "$ref": "#/definitions/Js"
             },
             {
               "type": "null"
             }
           ]
         },
-        "nursery": {
+        "jsx": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Nursery"
+              "$ref": "#/definitions/Jsx"
             },
             {
               "type": "null"
@@ -269,10 +634,20 @@
             "null"
           ]
         },
-        "style": {
+        "regex": {
           "anyOf": [
             {
-              "$ref": "#/definitions/Style"
+              "$ref": "#/definitions/Regex"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ts": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Ts"
             },
             {
               "type": "null"
@@ -282,7 +657,8 @@
       },
       "additionalProperties": false
     },
-    "Style": {
+    "Ts": {
+      "description": "A list of rules that belong to this group",
       "type": "object",
       "properties": {
         "recommended": {
@@ -290,6 +666,16 @@
           "type": [
             "boolean",
             "null"
+          ]
+        },
+        "useShorthandArrayType": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
           ]
         }
       }
