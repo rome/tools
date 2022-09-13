@@ -102,8 +102,8 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
 /// one-to-one mapping between test case and analyzer rules, so each testing
 /// file will be run through the analyzer with only the rule corresponding
 /// to the file name (or the name of the parent directory if it's not "specs")
-/// enabled, eg. `js/useWhile.js` and `js/useWhile/test.js` will be analyzed with
-/// just the `js/useWhile` rule
+/// enabled, eg. `correctness/useWhile.js` and `correctness/useWhile/test.js` will be analyzed with
+/// just the `correctness-ignore lint(correctness/useW/useWhile` rule
 fn parse_test_path(file: &Path) -> (&str, &str) {
     let file_stem = file.file_stem().unwrap();
 

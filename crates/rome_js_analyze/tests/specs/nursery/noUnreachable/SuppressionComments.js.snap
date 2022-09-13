@@ -1,0 +1,36 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: SuppressionComments.js
+---
+# Input
+```js
+// rome-ignore lint(nursery/noUnreachable): this comment does nothing
+function SuppressionComments1() {
+    beforeReturn();
+    return;
+    afterReturn();
+}
+
+function SuppressionComments2() {
+    beforeReturn();
+    return;
+    // rome-ignore lint(nursery/noUnreachable): supress warning
+    afterReturn();
+}
+
+```
+
+# Diagnostics
+```
+warning[nursery/noUnreachable]: This code is unreachable
+  ┌─ SuppressionComments.js:5:5
+  │
+4 │     return;
+  │     ------- This statement will return from the function ...
+5 │     afterReturn();
+  │     -------------- ... before it can reach this code
+
+
+```
+
+

@@ -1,0 +1,29 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: JsWhileStatement.js
+---
+# Input
+```js
+function JsWhileStatement1() {
+    while (true) {
+        break;
+        afterBreak();
+    }
+}
+
+```
+
+# Diagnostics
+```
+warning[nursery/noUnreachable]: This code is unreachable
+  ┌─ JsWhileStatement.js:4:9
+  │
+3 │         break;
+  │         ------ This statement will break the flow of the code ...
+4 │         afterBreak();
+  │         ------------- ... before it can reach this code
+
+
+```
+
+

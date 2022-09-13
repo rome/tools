@@ -9,7 +9,7 @@ expression: content
   "linter": {
     "rules": {
         "recommended": true,
-        "js": {
+        "correctness": {
             "recommended": true,      
             "noDebugger": "warn"
         }
@@ -27,7 +27,7 @@ debugger;
 # Emitted Messages
 
 ```block
-warning[js/noDebugger]: This is an unexpected use of the debugger statement.
+warning[correctness/noDebugger]: This is an unexpected use of the debugger statement.
   ┌─ file.js:1:1
   │
 1 │ debugger;

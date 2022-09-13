@@ -230,7 +230,7 @@ pub struct RuleSuppressions<L: Language> {
 }
 
 impl<L: Language> RuleSuppressions<L> {
-    /// Supress query matching for the given node
+    /// Suppress query matching for the given node
     pub fn suppress_node(&mut self, node: SyntaxNode<L>) {
         self.inner.insert(node);
     }

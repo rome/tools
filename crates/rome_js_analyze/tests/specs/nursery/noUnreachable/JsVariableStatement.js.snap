@@ -1,0 +1,102 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: JsVariableStatement.js
+---
+# Input
+```js
+function JsVariableStatement1() {
+    return;
+    var variable;
+}
+
+function JsVariableStatement2() {
+    return;
+    var variable = initializer();
+}
+
+function JsVariableStatement3() {
+    return;
+    let variable;
+}
+
+function JsVariableStatement4() {
+    return;
+    let variable = initializer();
+}
+
+function JsVariableStatement5() {
+    return;
+    const variable = initializer();
+}
+
+function JsVariableStatement6() {
+    return;
+    var variable1 = initializer(),
+        variable2 = initializer();
+}
+
+```
+
+# Diagnostics
+```
+warning[nursery/noUnreachable]: This code is unreachable
+  ┌─ JsVariableStatement.js:8:20
+  │
+7 │     return;
+  │     ------- This statement will return from the function ...
+8 │     var variable = initializer();
+  │                    ------------- ... before it can reach this code
+
+
+```
+
+```
+warning[nursery/noUnreachable]: This code is unreachable
+   ┌─ JsVariableStatement.js:18:20
+   │
+17 │     return;
+   │     ------- This statement will return from the function ...
+18 │     let variable = initializer();
+   │                    ------------- ... before it can reach this code
+
+
+```
+
+```
+warning[nursery/noUnreachable]: This code is unreachable
+   ┌─ JsVariableStatement.js:23:22
+   │
+22 │     return;
+   │     ------- This statement will return from the function ...
+23 │     const variable = initializer();
+   │                      ------------- ... before it can reach this code
+
+
+```
+
+```
+warning[nursery/noUnreachable]: This code is unreachable
+   ┌─ JsVariableStatement.js:28:21
+   │
+27 │     return;
+   │     ------- This statement will return from the function ...
+28 │     var variable1 = initializer(),
+   │                     ------------- ... before it can reach this code
+
+
+```
+
+```
+warning[nursery/noUnreachable]: This code is unreachable
+   ┌─ JsVariableStatement.js:29:21
+   │
+27 │     return;
+   │     ------- This statement will return from the function ...
+28 │     var variable1 = initializer(),
+29 │         variable2 = initializer();
+   │                     ------------- ... before it can reach this code
+
+
+```
+
+

@@ -1,0 +1,144 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: TerminatorsPlurals.js
+---
+# Input
+```js
+function TerminatorsPlural1() {
+    return;
+    Statement1();
+    Statement2();
+    Statement3();
+    Statement4();
+}
+
+function TerminatorsPlural2() {
+    if (a) {
+        return;
+    } else {
+        return;
+    }
+
+    Statement1();
+    Statement2();
+    Statement3();
+    Statement4();
+}
+
+function TerminatorsPlural3() {
+    if (a) {
+        return;
+    } else if (b) {
+        return;
+    } else {
+        return;
+    }
+
+    Statement1();
+    Statement2();
+    Statement3();
+    Statement4();
+}
+
+function TerminatorsPlural4() {
+    if (a) {
+        return;
+    } else if (b) {
+        return;
+    } else if (c) {
+        return;
+    } else {
+        return;
+    }
+
+    Statement1();
+    Statement2();
+    Statement3();
+    Statement4();
+}
+
+```
+
+# Diagnostics
+```
+warning[nursery/noUnreachable]: This code is unreachable
+  ┌─ TerminatorsPlurals.js:3:5
+  │  
+2 │       return;
+  │       ------- This statement will return from the function ...
+3 │ ┌     Statement1();
+4 │ │     Statement2();
+5 │ │     Statement3();
+6 │ │     Statement4();
+  │ └─────────────────' ... before it can reach this code
+
+
+```
+
+```
+warning[nursery/noUnreachable]: This code is unreachable
+   ┌─ TerminatorsPlurals.js:16:5
+   │  
+11 │           return;
+   │           ------- Either this statement ...
+12 │       } else {
+13 │           return;
+   │           ------- ... or this statement will return from the function ...
+   ·  
+16 │ ┌     Statement1();
+17 │ │     Statement2();
+18 │ │     Statement3();
+19 │ │     Statement4();
+   │ └─────────────────' ... before it can reach this code
+
+
+```
+
+```
+warning[nursery/noUnreachable]: This code is unreachable
+   ┌─ TerminatorsPlurals.js:31:5
+   │  
+24 │           return;
+   │           ------- Either this statement, ...
+25 │       } else if (b) {
+26 │           return;
+   │           ------- ... this statement, ...
+27 │       } else {
+28 │           return;
+   │           ------- ... or this statement will return from the function ...
+   ·  
+31 │ ┌     Statement1();
+32 │ │     Statement2();
+33 │ │     Statement3();
+34 │ │     Statement4();
+   │ └─────────────────' ... before it can reach this code
+
+
+```
+
+```
+warning[nursery/noUnreachable]: This code is unreachable
+   ┌─ TerminatorsPlurals.js:48:5
+   │  
+39 │           return;
+   │           ------- Either this statement, ...
+40 │       } else if (b) {
+41 │           return;
+   │           ------- ... this statement, ...
+42 │       } else if (c) {
+43 │           return;
+   │           ------- ... this statement, ...
+44 │       } else {
+45 │           return;
+   │           ------- ... or this statement will return from the function ...
+   ·  
+48 │ ┌     Statement1();
+49 │ │     Statement2();
+50 │ │     Statement3();
+51 │ │     Statement4();
+   │ └─────────────────' ... before it can reach this code
+
+
+```
+
+

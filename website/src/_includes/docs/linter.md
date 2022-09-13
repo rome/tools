@@ -62,22 +62,22 @@ Suppression comments have the following format:
 
 ```js
 // rome-ignore lint: <explanation>
-// rome-ignore lint(js/noDebugger): <explanation>
+// rome-ignore lint(correctness/noDebugger): <explanation>
 ```
 
 Where
 - `rome-ignore` is the start of a suppression comment;
 - `lint:` suppresses the linter;
-- `(js/noDebugger)`: **optional**, group and name of the rule you want to suppress;
+- `(correctness/noDebugger)`: **optional**, group and name of the rule you want to suppress;
 - `<explanation>` explanation why the rule is disabled
 
 Here's an example:
 
 ```ts
 // rome-ignore lint: reason
-declare const Foo: number;
-// rome-ignore lint(js/noUnusedVariables): reason
-declare const Bar: number;
+debugger;
+// rome-ignore lint(correctness/noDebugger): reason
+debugger;
 ```
 
 

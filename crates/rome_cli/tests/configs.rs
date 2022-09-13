@@ -35,8 +35,7 @@ pub const CONFIG_ALL_FIELDS: &str = r#"{
   "linter": {
     "enabled": true,
     "rules": {
-        "js": {
-            "noDeadCode": "off",
+        "correctness": {
             "useSimplifiedLogicExpression": "warn",
             "noCatchAssign": "error",
             "noLabelVar": {
@@ -45,6 +44,9 @@ pub const CONFIG_ALL_FIELDS: &str = r#"{
             "useTemplate": {
                 "level": "error"
             }
+        },
+        "nursery": {
+            "noUnreachable": "off"
         }
     }
   },
@@ -73,10 +75,10 @@ pub const CONFIG_LINTER_WRONG_RULE: &str = r#"{
   "linter": {
     "enabled": true,
     "rules": {
-        "js": {
+        "correctness": {
             "foo_rule": "off"
         },
-        "jsx": {
+        "style": {
             "what_the_hell": "off"
         }
     }
@@ -96,7 +98,7 @@ pub const CONFIG_LINTER_SUPPRESSED_RULE: &str = r#"{
   "linter": {
     "rules": {
         "recommended": true,
-        "js": {
+        "correctness": {
             "noDebugger": "off"
         }
     }
@@ -107,7 +109,7 @@ pub const CONFIG_LINTER_SUPPRESSED_GROUP: &str = r#"{
   "linter": {
     "rules": {
         "recommended": true,
-        "js": {
+        "correctness": {
             "recommended": false
         }
     }
@@ -118,7 +120,7 @@ pub const CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC: &str = r#"{
   "linter": {
     "rules": {
         "recommended": true,
-        "js": {
+        "correctness": {
             "recommended": true,      
             "noDebugger": "warn"
         }
@@ -130,8 +132,8 @@ pub const CONFIG_LINTER_UPGRADE_DIAGNOSTIC: &str = r#"{
   "linter": {
     "rules": {
         "recommended": true,
-        "js": {
-            "noDeadCode": "error"
+        "nursery": {
+            "noUnreachable": "error"
         }
     }
   }

@@ -1,0 +1,28 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: JsForStatement.js
+---
+# Input
+```js
+function JsForStatement1() {
+    for (let i = 0; i < 10; ++i) {
+        break;
+    }
+}
+
+```
+
+# Diagnostics
+```
+warning[nursery/noUnreachable]: This code is unreachable
+  ┌─ JsForStatement.js:2:29
+  │
+2 │     for (let i = 0; i < 10; ++i) {
+  │                             --- This code will never be reached ...
+3 │         break;
+  │         ------ ... because this statement will break the flow of the code beforehand
+
+
+```
+
+

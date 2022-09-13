@@ -562,7 +562,7 @@ mod check {
                 .filter(|m| m.level == LogLevel::Error)
                 .filter(|m| {
                     let content = format!("{:#?}", m.content);
-                    content.contains("js/noDebugger")
+                    content.contains("correctness/noDebugger")
                 })
                 .count(),
             1
@@ -606,7 +606,7 @@ mod check {
                 .filter(|m| m.level == LogLevel::Error)
                 .filter(|m| {
                     let content = format!("{:?}", m.content);
-                    content.contains("js/noDeadCode")
+                    content.contains("nursery/noUnreachable")
                 })
                 .count(),
             1
@@ -617,7 +617,7 @@ mod check {
                 .filter(|m| m.level == LogLevel::Error)
                 .filter(|m| {
                     let content = format!("{:?}", m.content);
-                    content.contains("js/noUnusedVariables")
+                    content.contains("nursery/noUnusedVariables")
                 })
                 .count(),
             1

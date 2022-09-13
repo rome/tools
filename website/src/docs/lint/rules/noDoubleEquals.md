@@ -25,8 +25,8 @@ comparing to both `null` and `undefined`.
 foo == bar
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noDoubleEquals/">js/noDoubleEquals</a></span><span style="color: Tomato;">]</span><em>: </em><em>Use </em><em><em>===</em></em><em> instead of </em><em><em>==</em></em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noDoubleEquals.js:1:5
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noDoubleEquals/">correctness/noDoubleEquals</a></span><span style="color: Tomato;">]</span><em>: </em><em>Use </em><em><em>===</em></em><em> instead of </em><em><em>==</em></em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noDoubleEquals.js:1:5
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> foo <span style="color: Tomato;">=</span><span style="color: Tomato;">=</span> bar
   <span style="color: rgb(38, 148, 255);">│</span>     <span style="color: Tomato;">^</span><span style="color: Tomato;">^</span> <span style="color: Tomato;"><em>==</em></span><span style="color: Tomato;"> is only allowed when comparing against </span><span style="color: Tomato;"><em>null</em></span>

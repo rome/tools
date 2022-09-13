@@ -1,0 +1,57 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noDoubleEquals.js
+---
+# Input
+```js
+const isZero = a == 0;
+const isNonZero = a != 0;
+
+const isNull = a == null;
+const isNonNull = a != null;
+
+```
+
+# Diagnostics
+```
+warning[correctness/noDoubleEquals]: Use === instead of ==
+  ┌─ noDoubleEquals.js:1:18
+  │
+1 │ const isZero = a == 0;
+  │                  -- == is only allowed when comparing against null
+
+Suggested fix: Use ===
+    | @@ -1,4 +1,4 @@
+0   | - const isZero = a == 0;
+  0 | + const isZero = a === 0;
+1 1 |   const isNonZero = a != 0;
+2 2 |   
+3 3 |   const isNull = a == null;
+
+=  note: Using === may be unsafe if you are relying on type coercion
+
+
+```
+
+```
+warning[correctness/noDoubleEquals]: Use !== instead of !=
+  ┌─ noDoubleEquals.js:2:21
+  │
+2 │ const isNonZero = a != 0;
+  │                     -- != is only allowed when comparing against null
+
+Suggested fix: Use !==
+    | @@ -1,5 +1,5 @@
+0 0 |   const isZero = a == 0;
+1   | - const isNonZero = a != 0;
+  1 | + const isNonZero = a !== 0;
+2 2 |   
+3 3 |   const isNull = a == null;
+4 4 |   const isNonNull = a != null;
+
+=  note: Using !== may be unsafe if you are relying on type coercion
+
+
+```
+
+

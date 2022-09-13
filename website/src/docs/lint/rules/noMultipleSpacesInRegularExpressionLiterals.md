@@ -17,8 +17,8 @@ Disallow unclear usage of multiple space characters in regular expression litera
 /   /
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noMultipleSpacesInRegularExpressionLiterals/">regex/noMultipleSpacesInRegularExpressionLiterals</a></span><span style="color: Tomato;">]</span><em>: </em><em>This regular expression contains unclear uses of multiple spaces.</em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> regex/noMultipleSpacesInRegularExpressionLiterals.js:1:2
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noMultipleSpacesInRegularExpressionLiterals/">correctness/noMultipleSpacesInRegularExpressionLiterals</a></span><span style="color: Tomato;">]</span><em>: </em><em>This regular expression contains unclear uses of multiple spaces.</em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noMultipleSpacesInRegularExpressionLiterals.js:1:2
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> /<span style="color: Tomato;"> </span><span style="color: Tomato;"> </span><span style="color: Tomato;"> </span>/
   <span style="color: rgb(38, 148, 255);">│</span>  <span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span>
@@ -34,8 +34,8 @@ Disallow unclear usage of multiple space characters in regular expression litera
 /  foo/
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noMultipleSpacesInRegularExpressionLiterals/">regex/noMultipleSpacesInRegularExpressionLiterals</a></span><span style="color: Tomato;">]</span><em>: </em><em>This regular expression contains unclear uses of multiple spaces.</em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> regex/noMultipleSpacesInRegularExpressionLiterals.js:1:2
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noMultipleSpacesInRegularExpressionLiterals/">correctness/noMultipleSpacesInRegularExpressionLiterals</a></span><span style="color: Tomato;">]</span><em>: </em><em>This regular expression contains unclear uses of multiple spaces.</em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noMultipleSpacesInRegularExpressionLiterals.js:1:2
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> /<span style="color: Tomato;"> </span><span style="color: Tomato;"> </span>foo/
   <span style="color: rgb(38, 148, 255);">│</span>  <span style="color: Tomato;">^</span><span style="color: Tomato;">^</span>
@@ -51,8 +51,8 @@ Disallow unclear usage of multiple space characters in regular expression litera
 /foo   /
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noMultipleSpacesInRegularExpressionLiterals/">regex/noMultipleSpacesInRegularExpressionLiterals</a></span><span style="color: Tomato;">]</span><em>: </em><em>This regular expression contains unclear uses of multiple spaces.</em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> regex/noMultipleSpacesInRegularExpressionLiterals.js:1:5
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noMultipleSpacesInRegularExpressionLiterals/">correctness/noMultipleSpacesInRegularExpressionLiterals</a></span><span style="color: Tomato;">]</span><em>: </em><em>This regular expression contains unclear uses of multiple spaces.</em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noMultipleSpacesInRegularExpressionLiterals.js:1:5
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> /foo<span style="color: Tomato;"> </span><span style="color: Tomato;"> </span><span style="color: Tomato;"> </span>/
   <span style="color: rgb(38, 148, 255);">│</span>     <span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span>
@@ -68,8 +68,8 @@ Disallow unclear usage of multiple space characters in regular expression litera
 /foo  bar/
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noMultipleSpacesInRegularExpressionLiterals/">regex/noMultipleSpacesInRegularExpressionLiterals</a></span><span style="color: Tomato;">]</span><em>: </em><em>This regular expression contains unclear uses of multiple spaces.</em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> regex/noMultipleSpacesInRegularExpressionLiterals.js:1:5
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noMultipleSpacesInRegularExpressionLiterals/">correctness/noMultipleSpacesInRegularExpressionLiterals</a></span><span style="color: Tomato;">]</span><em>: </em><em>This regular expression contains unclear uses of multiple spaces.</em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noMultipleSpacesInRegularExpressionLiterals.js:1:5
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> /foo<span style="color: Tomato;"> </span><span style="color: Tomato;"> </span>bar/
   <span style="color: rgb(38, 148, 255);">│</span>     <span style="color: Tomato;">^</span><span style="color: Tomato;">^</span>
@@ -85,8 +85,8 @@ Disallow unclear usage of multiple space characters in regular expression litera
 /foo   bar    baz/
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noMultipleSpacesInRegularExpressionLiterals/">regex/noMultipleSpacesInRegularExpressionLiterals</a></span><span style="color: Tomato;">]</span><em>: </em><em>This regular expression contains unclear uses of multiple spaces.</em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> regex/noMultipleSpacesInRegularExpressionLiterals.js:1:5
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noMultipleSpacesInRegularExpressionLiterals/">correctness/noMultipleSpacesInRegularExpressionLiterals</a></span><span style="color: Tomato;">]</span><em>: </em><em>This regular expression contains unclear uses of multiple spaces.</em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noMultipleSpacesInRegularExpressionLiterals.js:1:5
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> /foo<span style="color: Tomato;"> </span><span style="color: Tomato;"> </span><span style="color: Tomato;"> </span><span style="color: Tomato;">b</span><span style="color: Tomato;">a</span><span style="color: Tomato;">r</span><span style="color: Tomato;"> </span><span style="color: Tomato;"> </span><span style="color: Tomato;"> </span><span style="color: Tomato;"> </span>baz/
   <span style="color: rgb(38, 148, 255);">│</span>     <span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span>
@@ -102,8 +102,8 @@ Disallow unclear usage of multiple space characters in regular expression litera
 /foo [ba]r  b(a|z)/
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noMultipleSpacesInRegularExpressionLiterals/">regex/noMultipleSpacesInRegularExpressionLiterals</a></span><span style="color: Tomato;">]</span><em>: </em><em>This regular expression contains unclear uses of multiple spaces.</em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> regex/noMultipleSpacesInRegularExpressionLiterals.js:1:11
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noMultipleSpacesInRegularExpressionLiterals/">correctness/noMultipleSpacesInRegularExpressionLiterals</a></span><span style="color: Tomato;">]</span><em>: </em><em>This regular expression contains unclear uses of multiple spaces.</em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noMultipleSpacesInRegularExpressionLiterals.js:1:11
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> /foo [ba]r<span style="color: Tomato;"> </span><span style="color: Tomato;"> </span>b(a|z)/
   <span style="color: rgb(38, 148, 255);">│</span>           <span style="color: Tomato;">^</span><span style="color: Tomato;">^</span>

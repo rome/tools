@@ -1,0 +1,30 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noArguments.cjs
+---
+# Input
+```js
+function f() {
+    console.log(arguments);
+}
+
+function f() {
+    let arguments = 1;
+    console.log(arguments);
+}
+```
+
+# Diagnostics
+```
+warning[correctness/noArguments]: Use the rest parameters instead of arguments.
+  ┌─ noArguments.cjs:2:17
+  │
+2 │     console.log(arguments);
+  │                 ---------
+
+=  note: arguments does not have Array.prototype methods and can be inconvenient to use.
+
+
+```
+
+

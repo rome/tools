@@ -26,7 +26,7 @@ errors where emitted while running checks
 # Emitted Messages
 
 ```block
-error[js/useBlockStatements]: Block statements are preferred in this position.
+error[correctness/useBlockStatements]: Block statements are preferred in this position.
   ┌─ check.js:2:1
   │
 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -45,7 +45,7 @@ Suggested fix: Wrap the statement with a `JsBlockStatement`
 ```
 
 ```block
-error[js/useWhile]: Use while loops instead of for loops.
+error[correctness/useWhile]: Use while loops instead of for loops.
   ┌─ check.js:2:1
   │
 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -64,7 +64,7 @@ Suggested fix: Use a while loop
 ```
 
 ```block
-error[js/useBlockStatements]: Block statements are preferred in this position.
+error[correctness/useBlockStatements]: Block statements are preferred in this position.
   ┌─ check.js:2:13
   │
 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -83,7 +83,7 @@ Suggested fix: Wrap the statement with a `JsBlockStatement`
 ```
 
 ```block
-error[js/useWhile]: Use while loops instead of for loops.
+error[correctness/useWhile]: Use while loops instead of for loops.
   ┌─ check.js:2:13
   │
 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -102,7 +102,7 @@ Suggested fix: Use a while loop
 ```
 
 ```block
-error[js/useBlockStatements]: Block statements are preferred in this position.
+error[correctness/useBlockStatements]: Block statements are preferred in this position.
   ┌─ check.js:2:25
   │
 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -121,7 +121,7 @@ Suggested fix: Wrap the statement with a `JsBlockStatement`
 ```
 
 ```block
-error[js/useWhile]: Use while loops instead of for loops.
+error[correctness/useWhile]: Use while loops instead of for loops.
   ┌─ check.js:2:25
   │
 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -140,7 +140,7 @@ Suggested fix: Use a while loop
 ```
 
 ```block
-error[js/useBlockStatements]: Block statements are preferred in this position.
+error[correctness/useBlockStatements]: Block statements are preferred in this position.
   ┌─ check.js:2:37
   │
 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -159,7 +159,7 @@ Suggested fix: Wrap the statement with a `JsBlockStatement`
 ```
 
 ```block
-error[js/useWhile]: Use while loops instead of for loops.
+error[correctness/useWhile]: Use while loops instead of for loops.
   ┌─ check.js:2:37
   │
 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -178,7 +178,7 @@ Suggested fix: Use a while loop
 ```
 
 ```block
-error[js/useBlockStatements]: Block statements are preferred in this position.
+error[correctness/useBlockStatements]: Block statements are preferred in this position.
   ┌─ check.js:2:49
   │
 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -197,7 +197,7 @@ Suggested fix: Wrap the statement with a `JsBlockStatement`
 ```
 
 ```block
-error[js/useWhile]: Use while loops instead of for loops.
+error[correctness/useWhile]: Use while loops instead of for loops.
   ┌─ check.js:2:49
   │
 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -216,7 +216,7 @@ Suggested fix: Use a while loop
 ```
 
 ```block
-error[js/useBlockStatements]: Block statements are preferred in this position.
+error[correctness/useBlockStatements]: Block statements are preferred in this position.
   ┌─ check.js:2:61
   │
 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -235,7 +235,7 @@ Suggested fix: Wrap the statement with a `JsBlockStatement`
 ```
 
 ```block
-error[js/useWhile]: Use while loops instead of for loops.
+error[correctness/useWhile]: Use while loops instead of for loops.
   ┌─ check.js:2:61
   │
 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -254,7 +254,7 @@ Suggested fix: Use a while loop
 ```
 
 ```block
-error[js/useBlockStatements]: Block statements are preferred in this position.
+error[correctness/useBlockStatements]: Block statements are preferred in this position.
   ┌─ check.js:3:1
   │
 3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -274,7 +274,7 @@ Suggested fix: Wrap the statement with a `JsBlockStatement`
 ```
 
 ```block
-error[js/useWhile]: Use while loops instead of for loops.
+error[correctness/useWhile]: Use while loops instead of for loops.
   ┌─ check.js:3:1
   │
 3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -294,7 +294,7 @@ Suggested fix: Use a while loop
 ```
 
 ```block
-error[js/useBlockStatements]: Block statements are preferred in this position.
+error[correctness/useBlockStatements]: Block statements are preferred in this position.
   ┌─ check.js:3:13
   │
 3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -314,7 +314,7 @@ Suggested fix: Wrap the statement with a `JsBlockStatement`
 ```
 
 ```block
-error[js/useWhile]: Use while loops instead of for loops.
+error[correctness/useWhile]: Use while loops instead of for loops.
   ┌─ check.js:3:13
   │
 3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -334,7 +334,7 @@ Suggested fix: Use a while loop
 ```
 
 ```block
-error[js/useBlockStatements]: Block statements are preferred in this position.
+error[correctness/useBlockStatements]: Block statements are preferred in this position.
   ┌─ check.js:3:25
   │
 3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -354,7 +354,7 @@ Suggested fix: Wrap the statement with a `JsBlockStatement`
 ```
 
 ```block
-error[js/useWhile]: Use while loops instead of for loops.
+error[correctness/useWhile]: Use while loops instead of for loops.
   ┌─ check.js:3:25
   │
 3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -374,7 +374,7 @@ Suggested fix: Use a while loop
 ```
 
 ```block
-error[js/useBlockStatements]: Block statements are preferred in this position.
+error[correctness/useBlockStatements]: Block statements are preferred in this position.
   ┌─ check.js:3:37
   │
 3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -394,7 +394,7 @@ Suggested fix: Wrap the statement with a `JsBlockStatement`
 ```
 
 ```block
-error[js/useWhile]: Use while loops instead of for loops.
+error[correctness/useWhile]: Use while loops instead of for loops.
   ┌─ check.js:3:37
   │
 3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);

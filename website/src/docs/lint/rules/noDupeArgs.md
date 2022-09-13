@@ -17,8 +17,8 @@ Disallow duplicate function arguments name.
 var f = function(a, b, b) {}
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noDupeArgs/">js/noDupeArgs</a></span><span style="color: Tomato;">]</span><em>: </em><em>Duplicate argument name</em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noDupeArgs.js:1:24
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noDupeArgs/">correctness/noDupeArgs</a></span><span style="color: Tomato;">]</span><em>: </em><em>Duplicate argument name</em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noDupeArgs.js:1:24
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> var f = function(a, b, <span style="color: Tomato;">b</span>) {}
   <span style="color: rgb(38, 148, 255);">│</span>                        <span style="color: Tomato;">^</span>
@@ -29,8 +29,8 @@ var f = function(a, b, b) {}
 function b(a, b, b) {}
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noDupeArgs/">js/noDupeArgs</a></span><span style="color: Tomato;">]</span><em>: </em><em>Duplicate argument name</em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noDupeArgs.js:1:18
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noDupeArgs/">correctness/noDupeArgs</a></span><span style="color: Tomato;">]</span><em>: </em><em>Duplicate argument name</em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noDupeArgs.js:1:18
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> function b(a, b, <span style="color: Tomato;">b</span>) {}
   <span style="color: rgb(38, 148, 255);">│</span>                  <span style="color: Tomato;">^</span>
