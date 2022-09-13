@@ -142,14 +142,6 @@ Disallow labels that share a name with a variable
 Disallow unclear usage of multiple space characters in regular expression literals
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="noNegationElse">
-	<a href="/docs/lint/rules/noNegationElse">noNegationElse (since v0.7.0)</a>
-	<a class="header-anchor" href="#noNegationElse"></a>
-	<span class="recommended">recommended</span>
-</h3>
-Disallow negation in the condition of an <code>if</code> statement if it has an <code>else</code> clause
-</div>
-<div class="rule">
 <h3 data-toc-exclude id="noShadowRestrictedNames">
 	<a href="/docs/lint/rules/noShadowRestrictedNames">noShadowRestrictedNames (since v0.9.0)</a>
 	<a class="header-anchor" href="#noShadowRestrictedNames"></a>
@@ -286,6 +278,14 @@ Enforce camel case naming convention.
 </section>
 <section>
 <h2>Style</h2>
+<div class="rule">
+<h3 data-toc-exclude id="noNegationElse">
+	<a href="/docs/lint/rules/noNegationElse">noNegationElse (since v0.7.0)</a>
+	<a class="header-anchor" href="#noNegationElse"></a>
+	<span class="recommended">recommended</span>
+</h3>
+Disallow negation in the condition of an <code>if</code> statement if it has an <code>else</code> clause
+</div>
 <div class="rule">
 <h3 data-toc-exclude id="noShoutyConstants">
 	<a href="/docs/lint/rules/noShoutyConstants">noShoutyConstants (since v0.7.0)</a>
