@@ -99,7 +99,7 @@ declare_rule! {
     pub(crate) NoUnusedVariables {
         version: "0.9.0",
         name: "noUnusedVariables",
-        recommended: true,
+        recommended: false,
     }
 }
 

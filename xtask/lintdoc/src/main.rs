@@ -1,9 +1,11 @@
 use pulldown_cmark::{html::write_html, CodeBlockKind, Event, LinkType, Parser, Tag};
 use rome_analyze::{AnalysisFilter, ControlFlow, RuleCategories, RuleFilter};
+use rome_console::fmt::Termcolor;
 use rome_console::{
     fmt::{Formatter, HTML},
-    markup,
+    markup, Markup,
 };
+use rome_diagnostics::termcolor::NoColor;
 use rome_diagnostics::{file::SimpleFile, Diagnostic};
 use rome_js_analyze::{analyze, metadata};
 use rome_js_syntax::{Language, LanguageVariant, ModuleKind, SourceType};
@@ -71,15 +73,38 @@ fn main() -> Result<()> {
     }
 
     for (group, rules) in groups {
-        let group_name = match group {
-            "correctness" => "Correctness",
-            "nursery" => "Nursery",
-            "style" => "Style",
+        let (group_name, description) = match group {
+            "correctness" => (
+                "Correctness",
+                markup! {
+                    "This group should includes those rules that are meant to prevent possible bugs and misuse of the language."
+                },
+            ),
+
+            "nursery" => (
+                "Nursery",
+                markup! {
+                    "Rules that are being written. Rules under this category are meant to be considered unstable or buggy.
+
+Rules can be downgraded to this category in case some path release is needed. After an arbitrary amount of time, the team can decide
+to promote these rules into a more appropriate category."
+
+                },
+            ),
+            "style" => (
+                "Style",
+                markup! {
+                    "Rules that focus mostly on making the code more consistent."
+                },
+            ),
             _ => panic!("Unknown group ID {group:?}"),
         };
 
         writeln!(index, "<section>")?;
         writeln!(index, "<h2>{group_name}</h2>")?;
+        writeln!(index)?;
+        writeln!(index, "{}", markup_to_string(description))?;
+        writeln!(index)?;
 
         for (rule, meta) in rules {
             let version = meta.version;
@@ -490,4 +515,13 @@ fn assert_lint(
     }
 
     Ok(())
+}
+
+pub fn markup_to_string(markup: Markup) -> String {
+    let mut buffer = Vec::new();
+    let mut write = Termcolor(NoColor::new(&mut buffer));
+    let mut fmt = Formatter::new(&mut write);
+    fmt.write_markup(markup).unwrap();
+
+    String::from_utf8(buffer).unwrap()
 }
