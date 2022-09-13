@@ -10,6 +10,6 @@ pub(crate) fn build_registry(filter: &AnalysisFilter) -> RuleRegistry<JsLanguage
     registry.push_group::<crate::semantic_analyzers::Correctness>(filter);
     registry.push_group::<crate::semantic_analyzers::Nursery>(filter);
     registry.push_group::<crate::semantic_analyzers::Style>(filter);
-    registry.push_group::<crate::assists::Refactor>(filter);
+    registry.push_group::<crate::assists::Correctness>(filter);
     registry
 }
