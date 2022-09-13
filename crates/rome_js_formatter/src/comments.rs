@@ -190,7 +190,8 @@ impl CommentStyle for JsCommentStyle {
                 .or_else(handle_after_arrow_param_comment)
                 .or_else(handle_array_hole_comment)
                 .or_else(handle_call_expression_comment)
-                .or_else(handle_continue_break_comment),
+                .or_else(handle_continue_break_comment)
+                .or_else(handle_class_comment),
         }
     }
 }
@@ -369,14 +370,17 @@ fn handle_class_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlaceme
         JsSyntaxKind::JS_EXTENDS_CLAUSE
             | JsSyntaxKind::TS_IMPLEMENTS_CLAUSE
             | JsSyntaxKind::TS_EXTENDS_CLAUSE
-    ) && comment.preceding_node().is_none()
-    {
-        if let Some(sibling) = comment.enclosing_node().prev_sibling() {
-            return CommentPlacement::Trailing {
-                node: sibling,
-                comment,
-            };
+    ) {
+        if comment.preceding_node().is_none() && !comment.position().is_same_line() {
+            if let Some(sibling) = comment.enclosing_node().prev_sibling() {
+                return CommentPlacement::Trailing {
+                    node: sibling,
+                    comment,
+                };
+            }
         }
+
+        return CommentPlacement::Default(comment);
     }
 
     let first_member = if let Some(class) = JsAnyClass::cast_ref(comment.enclosing_node()) {
@@ -386,6 +390,21 @@ fn handle_class_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlaceme
     } else {
         return CommentPlacement::Default(comment);
     };
+
+    if comment.position().is_same_line() {
+        // Handle same line comments in empty class bodies
+        // ```javascript
+        // class Test { /* comment */ }
+        // ```
+        if comment.following_token().kind() == JsSyntaxKind::R_CURLY && first_member.is_none() {
+            return CommentPlacement::Dangling {
+                node: comment.enclosing_node().clone(),
+                comment,
+            };
+        } else {
+            return CommentPlacement::Default(comment);
+        }
+    }
 
     if let Some(following) = comment.following_node() {
         // Make comments preceding the first member leading comments of the member
@@ -417,7 +436,8 @@ fn handle_class_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlaceme
                 JsSyntaxKind::JS_EXTENDS_CLAUSE
                     | JsSyntaxKind::TS_IMPLEMENTS_CLAUSE
                     | JsSyntaxKind::TS_EXTENDS_CLAUSE
-            ) {
+            ) && !comment.position().is_same_line()
+            {
                 return CommentPlacement::Trailing {
                     node: preceding.clone(),
                     comment,

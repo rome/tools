@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/comments/method_types.ts
 ---
 
 # Input
@@ -52,25 +54,21 @@ abstract class Test {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,11 +1,13 @@
+@@ -1,11 +1,11 @@
  interface foo1 {
--  bar3 /* foo */(/* baz */); // bat
+   bar3 /* foo */(/* baz */); // bat
 -  bar /* foo */ /* bar */?(/* baz */) /* bat */;
--  bar2 /* foo */(/* baz */) /* bat */;
-+  bar3 /* foo */ (
-+    /* baz */
-+  ); // bat
-+  bar /* foo */ ? /* bar */ (/* baz */) /* bat */;
-+  bar2 /* foo */ (/* baz */) /* bat */;
++  bar /* foo */?/* bar */ (/* baz */) /* bat */;
+   bar2 /* foo */(/* baz */) /* bat */;
  }
  
  interface foo2 {
 -  bar /* foo */?(/* bar */ bar: /* baz */ string): /* bat */ string;
-+  bar /* foo */ ? /* bar */ (bar: /* baz */ string): /* bat */ string;
++  bar /* foo */?/* bar */ (bar: /* baz */ string): /* bat */ string;
  }
  
  interface foo3 {
-@@ -17,23 +19,23 @@
+@@ -17,20 +17,20 @@
  }
  
  interface foo5 {
@@ -96,27 +94,20 @@ abstract class Test {
 +let foo10: new /* foo */ (a: /* bar */ string) /* baz */ => string;
  
  abstract class Test {
--  abstract foo12 /* foo */(a: /* bar */ string): /* baz */ void;
-+  abstract foo12 /* foo */ (a: /* bar */ string): /* baz */ void;
- 
--  abstract foo13 /* foo */(/* bar */); /* baz */
-+  abstract foo13 /* foo */ (/* bar */) /* baz */;
- }
+   abstract foo12 /* foo */(a: /* bar */ string): /* baz */ void;
 ```
 
 # Output
 
 ```js
 interface foo1 {
-  bar3 /* foo */ (
-    /* baz */
-  ); // bat
-  bar /* foo */ ? /* bar */ (/* baz */) /* bat */;
-  bar2 /* foo */ (/* baz */) /* bat */;
+  bar3 /* foo */(/* baz */); // bat
+  bar /* foo */?/* bar */ (/* baz */) /* bat */;
+  bar2 /* foo */(/* baz */) /* bat */;
 }
 
 interface foo2 {
-  bar /* foo */ ? /* bar */ (bar: /* baz */ string): /* bat */ string;
+  bar /* foo */?/* bar */ (bar: /* baz */ string): /* bat */ string;
 }
 
 interface foo3 {
@@ -144,9 +135,9 @@ let foo9: new /* foo */ (/* bar */) /* baz */ => string;
 let foo10: new /* foo */ (a: /* bar */ string) /* baz */ => string;
 
 abstract class Test {
-  abstract foo12 /* foo */ (a: /* bar */ string): /* baz */ void;
+  abstract foo12 /* foo */(a: /* bar */ string): /* baz */ void;
 
-  abstract foo13 /* foo */ (/* bar */) /* baz */;
+  abstract foo13 /* foo */(/* bar */); /* baz */
 }
 ```
 
