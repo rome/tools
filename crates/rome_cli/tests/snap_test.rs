@@ -4,6 +4,7 @@ use rome_console::{markup, BufferConsole, Markup};
 use rome_diagnostics::termcolor::NoColor;
 use rome_fs::{FileSystemExt, MemoryFileSystem};
 use std::collections::HashMap;
+use std::env::current_exe;
 use std::fmt::Write as _;
 use std::path::PathBuf;
 
@@ -76,10 +77,19 @@ impl CliSnapshot {
         }
 
         if let Some(termination) = &self.termination {
+            let mut message = format!("{:?}", termination);
+            let exe = current_exe()
+                .ok()
+                .and_then(|path| Some(path.file_name()?.to_str()?.to_string()));
+            if let Some(exe) = exe {
+                if message.contains(&exe) {
+                    message = message.replace(&exe, "rome");
+                }
+            }
             content.push_str("# Termination Message\n\n");
             content.push_str("```block");
             content.push('\n');
-            let _ = write!(content, "{:?}", termination);
+            let _ = write!(content, "{}", message);
             content.push('\n');
             content.push_str("```");
             content.push_str("\n\n");

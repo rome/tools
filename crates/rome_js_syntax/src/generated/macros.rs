@@ -924,6 +924,11 @@ macro_rules! map_syntax_node {
                     let $pattern = unsafe { $crate::TsInferType::new_unchecked(node) };
                     $body
                 }
+                $crate::JsSyntaxKind::TS_INSTANTIATION_EXPRESSION => {
+                    let $pattern =
+                        unsafe { $crate::TsInstantiationExpression::new_unchecked(node) };
+                    $body
+                }
                 $crate::JsSyntaxKind::TS_INTERFACE_DECLARATION => {
                     let $pattern = unsafe { $crate::TsInterfaceDeclaration::new_unchecked(node) };
                     $body

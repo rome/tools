@@ -1,5 +1,5 @@
-use crate::prelude::*;
 use crate::utils::should_hug_type;
+use crate::{prelude::*, utils::is_object_like_type};
 use rome_formatter::write;
 use rome_js_syntax::{
     JsAnyExpression, JsSyntaxKind, JsVariableDeclarator, TsType, TsTypeArguments,
@@ -28,10 +28,7 @@ impl FormatNodeRule<TsTypeArguments> for FormatTsTypeArguments {
                 let first_argument = first_argument?;
 
                 // first argument is not mapped type or object type
-                if !matches!(
-                    first_argument,
-                    TsType::TsObjectType(_) | TsType::TsMappedType(_)
-                ) {
+                if !is_object_like_type(&first_argument) {
                     // we then go up until we can find a potential type annotation,
                     // meaning four levels up
                     let maybe_type_annotation = first_argument.syntax().ancestors().nth(4);

@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/custom/typeParameters/variables.ts
 ---
 
 # Input
@@ -32,15 +34,13 @@ const fooooooooooooooo: SomeThing<string["anchor"]> = looooooooooooooooooooooooo
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,18 +1,24 @@
+@@ -1,18 +1,20 @@
  const foo: SomeThing<boolean> = func();
  const bar: SomeThing<boolean, boolean> = func();
 -const fooo: SomeThing<{ [P in "x" | "y"]: number }> = func();
-+const fooo: SomeThing<
-+  {
-+    [P in "x" | "y"]: number;
-+  }
-+> = func();
++const fooo: SomeThing<{
++  [P in "x" | "y"]: number;
++}> = func();
  const baar: SomeThing<K extends T ? G : S> = func();
  const fooooooooooooooo: SomeThing<boolean> =
    looooooooooooooooooooooooooooooongNameFunc();
@@ -48,11 +48,9 @@ const fooooooooooooooo: SomeThing<string["anchor"]> = looooooooooooooooooooooooo
    looooooooooooooooooooooooooooooongNameFunc();
 -const baaaaaaaaaaaaaaar: SomeThing<{ [P in "x" | "y"]: number }> =
 -  looooooooooooooooooooooooooooooongNameFunc();
-+const baaaaaaaaaaaaaaar: SomeThing<
-+  {
-+    [P in "x" | "y"]: number;
-+  }
-+> = looooooooooooooooooooooooooooooongNameFunc();
++const baaaaaaaaaaaaaaar: SomeThing<{
++  [P in "x" | "y"]: number;
++}> = looooooooooooooooooooooooooooooongNameFunc();
  const baaaaaaaaaaaaaaaar: SomeThing<K extends T ? G : S> =
    looooooooooooooooooooooooooooooongNameFunc();
 -const isAnySuccessfulAttempt$: Observable<boolean> = this._quizService
@@ -70,21 +68,17 @@ const fooooooooooooooo: SomeThing<string["anchor"]> = looooooooooooooooooooooooo
 ```js
 const foo: SomeThing<boolean> = func();
 const bar: SomeThing<boolean, boolean> = func();
-const fooo: SomeThing<
-  {
-    [P in "x" | "y"]: number;
-  }
-> = func();
+const fooo: SomeThing<{
+  [P in "x" | "y"]: number;
+}> = func();
 const baar: SomeThing<K extends T ? G : S> = func();
 const fooooooooooooooo: SomeThing<boolean> =
   looooooooooooooooooooooooooooooongNameFunc();
 const baaaaaaaaaaaaaaaaaaaaar: SomeThing<boolean, boolean> =
   looooooooooooooooooooooooooooooongNameFunc();
-const baaaaaaaaaaaaaaar: SomeThing<
-  {
-    [P in "x" | "y"]: number;
-  }
-> = looooooooooooooooooooooooooooooongNameFunc();
+const baaaaaaaaaaaaaaar: SomeThing<{
+  [P in "x" | "y"]: number;
+}> = looooooooooooooooooooooooooooooongNameFunc();
 const baaaaaaaaaaaaaaaar: SomeThing<K extends T ? G : S> =
   looooooooooooooooooooooooooooooongNameFunc();
 const isAnySuccessfulAttempt$: Observable<boolean> =

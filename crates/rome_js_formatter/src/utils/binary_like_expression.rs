@@ -68,11 +68,12 @@ use crate::parentheses::{
 };
 
 use crate::js::expressions::static_member_expression::JsAnyStaticMemberLike;
-use crate::utils::assignment_like::has_leading_own_line_comment;
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 use std::fmt::Debug;
 use std::hash::Hash;
 use std::iter::FusedIterator;
+
+use super::has_leading_own_line_comment;
 
 declare_node_union! {
     pub(crate) JsAnyBinaryLikeExpression = JsLogicalExpression | JsBinaryExpression | JsInstanceofExpression | JsInExpression

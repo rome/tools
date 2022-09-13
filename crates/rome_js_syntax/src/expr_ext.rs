@@ -3,12 +3,13 @@ use crate::numbers::parse_js_number;
 use crate::{
     JsAnyExpression, JsAnyLiteralExpression, JsArrayExpression, JsArrayHole,
     JsAssignmentExpression, JsBinaryExpression, JsCallExpression, JsComputedMemberExpression,
-    JsLiteralMemberName, JsLogicalExpression, JsNumberLiteralExpression, JsObjectExpression,
-    JsReferenceIdentifier, JsRegexLiteralExpression, JsStaticMemberExpression,
+    JsIdentifierExpression, JsLiteralMemberName, JsLogicalExpression, JsNumberLiteralExpression,
+    JsObjectExpression, JsReferenceIdentifier, JsRegexLiteralExpression, JsStaticMemberExpression,
     JsStringLiteralExpression, JsSyntaxKind, JsSyntaxToken, JsTemplate, JsUnaryExpression,
     OperatorPrecedence, T,
 };
 use crate::{JsPreUpdateExpression, JsSyntaxKind::*};
+use core::iter;
 use rome_rowan::{
     AstNode, AstSeparatedList, NodeOrToken, SyntaxNodeText, SyntaxResult, TextRange, TextSize,
 };
@@ -212,6 +213,43 @@ impl JsBinaryExpression {
             Ok(T![>] | T![<] | T![>=] | T![<=] | T![==] | T![===] | T![!=] | T![!==])
         )
     }
+
+    /// Whether this is a comparison operation similar to the optional chain
+    /// ```js
+    /// foo === undefined;
+    /// foo == undefined;
+    /// foo === null;
+    /// foo == null;
+    ///```
+    pub fn is_optional_chain_like(&self) -> SyntaxResult<bool> {
+        if matches!(
+            self.operator(),
+            Ok(JsBinaryOperator::StrictInequality | JsBinaryOperator::Inequality)
+        ) {
+            let right = self.right()?;
+
+            let is_right_null_expression = right
+                .as_js_any_literal_expression()
+                .map_or(false, |expression| {
+                    expression.as_js_null_literal_expression().is_some()
+                });
+
+            if is_right_null_expression {
+                return Ok(true);
+            }
+
+            let is_right_undefined_expression = right
+                .as_js_identifier_expression()
+                .map(|expression| expression.is_undefined())
+                .transpose()?
+                .unwrap_or(false);
+
+            if is_right_undefined_expression {
+                return Ok(true);
+            }
+        }
+        Ok(false)
+    }
 }
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash, Ord, PartialOrd)]
@@ -397,6 +435,10 @@ impl JsObjectExpression {
     pub fn has_trailing_comma(&self) -> bool {
         self.members().trailing_separator().is_some()
     }
+
+    pub fn is_empty(&self) -> bool {
+        self.members().is_empty()
+    }
 }
 
 impl JsNumberLiteralExpression {
@@ -461,6 +503,104 @@ impl JsRegexLiteralExpression {
         let end_slash_pos = text_trimmed.rfind('/').unwrap();
 
         Ok(String::from(&text_trimmed[1..end_slash_pos]))
+    }
+}
+
+impl JsAnyExpression {
+    /// Try to extract non `JsParenthesizedExpression` from `JsAnyExpression`
+    pub fn omit_parentheses(self) -> JsAnyExpression {
+        let first = self
+            .as_js_parenthesized_expression()
+            .and_then(|expression| expression.expression().ok());
+
+        iter::successors(first, |expression| {
+            let parenthesized = expression.as_js_parenthesized_expression()?;
+            parenthesized.expression().ok()
+        })
+        .last()
+        .unwrap_or(self)
+    }
+
+    pub fn precedence(&self) -> SyntaxResult<OperatorPrecedence> {
+        let precedence = match self {
+            JsAnyExpression::JsSequenceExpression(_) => OperatorPrecedence::Comma,
+            JsAnyExpression::JsYieldExpression(_) => OperatorPrecedence::Yield,
+            JsAnyExpression::JsConditionalExpression(_) => OperatorPrecedence::Conditional,
+            JsAnyExpression::JsAssignmentExpression(_) => OperatorPrecedence::Assignment,
+            JsAnyExpression::JsInExpression(_)
+            | JsAnyExpression::JsInstanceofExpression(_)
+            | JsAnyExpression::TsAsExpression(_) => OperatorPrecedence::Relational,
+            JsAnyExpression::JsLogicalExpression(expression) => expression.operator()?.precedence(),
+            JsAnyExpression::JsBinaryExpression(expression) => expression.operator()?.precedence(),
+            JsAnyExpression::TsTypeAssertionExpression(_)
+            | JsAnyExpression::TsNonNullAssertionExpression(_)
+            | JsAnyExpression::JsUnaryExpression(_)
+            | JsAnyExpression::JsAwaitExpression(_) => OperatorPrecedence::Unary,
+            JsAnyExpression::JsPostUpdateExpression(_)
+            | JsAnyExpression::JsPreUpdateExpression(_) => OperatorPrecedence::Update,
+            JsAnyExpression::JsCallExpression(_)
+            | JsAnyExpression::JsNewExpression(_)
+            | JsAnyExpression::JsImportCallExpression(_)
+            | JsAnyExpression::JsSuperExpression(_) => OperatorPrecedence::LeftHandSide,
+
+            JsAnyExpression::JsComputedMemberExpression(_)
+            | JsAnyExpression::JsStaticMemberExpression(_)
+            | JsAnyExpression::ImportMeta(_)
+            | JsAnyExpression::TsInstantiationExpression(_)
+            | JsAnyExpression::NewTarget(_) => OperatorPrecedence::Member,
+
+            JsAnyExpression::JsThisExpression(_)
+            | JsAnyExpression::JsAnyLiteralExpression(_)
+            | JsAnyExpression::JsArrayExpression(_)
+            | JsAnyExpression::JsArrowFunctionExpression(_)
+            | JsAnyExpression::JsClassExpression(_)
+            | JsAnyExpression::JsFunctionExpression(_)
+            | JsAnyExpression::JsIdentifierExpression(_)
+            | JsAnyExpression::JsObjectExpression(_)
+            | JsAnyExpression::JsxTagExpression(_) => OperatorPrecedence::Primary,
+
+            JsAnyExpression::JsTemplate(template) => {
+                if template.tag().is_some() {
+                    OperatorPrecedence::Member
+                } else {
+                    OperatorPrecedence::Primary
+                }
+            }
+
+            JsAnyExpression::JsUnknownExpression(_) => OperatorPrecedence::lowest(),
+            JsAnyExpression::JsParenthesizedExpression(_) => OperatorPrecedence::highest(),
+        };
+
+        Ok(precedence)
+    }
+}
+
+impl JsIdentifierExpression {
+    pub fn is_undefined(&self) -> SyntaxResult<bool> {
+        Ok(self.name()?.value_token()?.text_trimmed() == "undefined")
+    }
+}
+
+impl JsAnyLiteralExpression {
+    pub fn value_token(&self) -> SyntaxResult<JsSyntaxToken> {
+        match self {
+            JsAnyLiteralExpression::JsBigIntLiteralExpression(expression) => {
+                expression.value_token()
+            }
+            JsAnyLiteralExpression::JsBooleanLiteralExpression(expression) => {
+                expression.value_token()
+            }
+            JsAnyLiteralExpression::JsNullLiteralExpression(expression) => expression.value_token(),
+            JsAnyLiteralExpression::JsNumberLiteralExpression(expression) => {
+                expression.value_token()
+            }
+            JsAnyLiteralExpression::JsRegexLiteralExpression(expression) => {
+                expression.value_token()
+            }
+            JsAnyLiteralExpression::JsStringLiteralExpression(expression) => {
+                expression.value_token()
+            }
+        }
     }
 }
 
