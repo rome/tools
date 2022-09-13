@@ -161,7 +161,7 @@ if ((this ?? {}).#bar) { foo.bar; }
 
 # Diagnostics
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
   ┌─ nullishAndLogicalOr.ts:1:1
   │
 1 │ (foo || {}).bar;
@@ -179,7 +179,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
   ┌─ nullishAndLogicalOr.ts:2:1
   │
 2 │ (foo || ({})).bar;
@@ -198,7 +198,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
   ┌─ nullishAndLogicalOr.ts:3:1
   │
 3 │ (await foo || {}).bar;
@@ -218,7 +218,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
   ┌─ nullishAndLogicalOr.ts:4:1
   │
 4 │ (foo1?.foo2 || {}).foo3;
@@ -239,7 +239,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
   ┌─ nullishAndLogicalOr.ts:5:1
   │
 5 │ ((() => foo())() || {}).bar;
@@ -260,7 +260,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
   ┌─ nullishAndLogicalOr.ts:6:13
   │
 6 │ const foo = (bar || {}).baz;
@@ -281,7 +281,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
   ┌─ nullishAndLogicalOr.ts:7:1
   │
 7 │ (foo.bar || {})[baz];
@@ -302,7 +302,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
   ┌─ nullishAndLogicalOr.ts:9:1
   │
 9 │ ((foo1 || {}).foo2 || {}).foo3;
@@ -323,7 +323,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:10:1
    │
 10 │ (foo || undefined || {}).bar;
@@ -344,7 +344,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:12:1
    │
 12 │ (foo() || bar || {}).baz;
@@ -365,7 +365,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:13:1
    │
 13 │ ((foo1 ? foo2 : foo3) || {}).foo4;
@@ -386,7 +386,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:15:12
    │
 15 │ if (foo) { (foo || {}).bar; }
@@ -407,7 +407,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:16:5
    │
 16 │ if ((foo || {}).bar) { foo.bar; }
@@ -428,7 +428,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:18:1
    │
 18 │ (undefined && foo || {}).bar;
@@ -449,7 +449,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:19:1
    │
 19 │ (foo ?? {}).bar;
@@ -470,7 +470,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:20:1
    │
 20 │ (foo ?? ({})).bar;
@@ -491,7 +491,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:21:1
    │
 21 │ (await foo ?? {}).bar;
@@ -512,7 +512,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:23:1
    │
 23 │ (foo1?.foo2 ?? {}).foo3;
@@ -533,7 +533,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:24:1
    │
 24 │ ((() => foo())() ?? {}).bar;
@@ -554,7 +554,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:25:13
    │
 25 │ const foo = (bar ?? {}).baz;
@@ -575,7 +575,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:26:1
    │
 26 │ (foo.bar ?? {})[baz];
@@ -596,7 +596,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:27:1
    │
 27 │ ((foo1 ?? {}).foo2 ?? {}).foo3;
@@ -617,7 +617,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:29:1
    │
 29 │ (foo ?? undefined ?? {}).bar;
@@ -638,7 +638,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:30:1
    │
 30 │ (foo() ?? bar ?? {}).baz;
@@ -659,7 +659,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:31:1
    │
 31 │ ((foo1 ? foo2 : foo3) ?? {}).foo4;
@@ -680,7 +680,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:33:12
    │
 33 │ if (foo) { (foo ?? {}).bar; }
@@ -701,7 +701,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:34:5
    │
 34 │ if ((foo ?? {}).bar) { foo.bar; }
@@ -722,7 +722,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:36:1
    │
 36 │ (undefined && foo ?? {}).bar;
@@ -743,7 +743,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:37:1
    │
 37 │ (a > b || {}).bar;
@@ -764,7 +764,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:38:1
    │
 38 │ (((typeof x) as string) || {}).bar;
@@ -785,7 +785,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:40:1
    │
 40 │ (void foo() || {}).bar;
@@ -806,7 +806,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:41:1
    │
 41 │ ((a ? b : c) || {}).bar;
@@ -827,7 +827,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:43:1
    │
 43 │ ((a instanceof Error) || {}).bar;
@@ -848,7 +848,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:44:1
    │
 44 │ ((a << b) || {}).bar;
@@ -869,7 +869,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:45:1
    │
 45 │ ((foo ** 2) || {}).bar;
@@ -890,7 +890,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:46:1
    │
 46 │ (foo ** 2 || {}).bar;
@@ -911,7 +911,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:47:1
    │
 47 │ (foo++ || {}).bar;
@@ -932,7 +932,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:48:1
    │
 48 │ (+foo || {}).bar;
@@ -953,7 +953,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:51:1
    │
 51 │ (foo || {}).#bar;
@@ -974,7 +974,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:52:1
    │
 52 │ (foo || ({})).#bar;
@@ -995,7 +995,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:53:1
    │
 53 │ (await foo || {}).#bar;
@@ -1016,7 +1016,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:54:1
    │
 54 │ (foo1?.foo2 || {}).#foo3;
@@ -1037,7 +1037,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:55:1
    │
 55 │ ((() => foo())() || {}).#bar;
@@ -1058,7 +1058,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:56:13
    │
 56 │ const foo = (bar || {}).#baz;
@@ -1079,7 +1079,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:57:1
    │
 57 │ (foo.bar || {})[baz];
@@ -1100,7 +1100,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:59:1
    │
 59 │ ((foo1 || {}).#foo2 || {}).#foo3;
@@ -1121,7 +1121,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:60:1
    │
 60 │ (foo || undefined || {}).#bar;
@@ -1142,7 +1142,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:62:1
    │
 62 │ (foo() || bar || {}).#baz;
@@ -1163,7 +1163,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:63:1
    │
 63 │ ((foo1 ? foo2 : foo3) || {}).#foo4;
@@ -1184,7 +1184,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:65:12
    │
 65 │ if (foo) { (foo || {}).#bar; }
@@ -1205,7 +1205,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:66:5
    │
 66 │ if ((foo || {}).#bar) { foo.bar; }
@@ -1226,7 +1226,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:68:1
    │
 68 │ (undefined && foo || {}).#bar;
@@ -1247,7 +1247,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:69:1
    │
 69 │ (foo ?? {}).#bar;
@@ -1268,7 +1268,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:70:1
    │
 70 │ (foo ?? ({})).#bar;
@@ -1289,7 +1289,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:71:1
    │
 71 │ (await foo ?? {}).#bar;
@@ -1310,7 +1310,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:73:1
    │
 73 │ (foo1?.foo2 ?? {}).#foo3;
@@ -1331,7 +1331,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:74:1
    │
 74 │ ((() => foo())() ?? {}).#bar;
@@ -1352,7 +1352,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:75:13
    │
 75 │ const foo = (bar ?? {}).#baz;
@@ -1373,7 +1373,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:76:1
    │
 76 │ (foo.bar ?? {})[baz];
@@ -1394,7 +1394,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:77:1
    │
 77 │ ((foo1 ?? {}).#foo2 ?? {}).#foo3;
@@ -1415,7 +1415,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:79:1
    │
 79 │ (foo ?? undefined ?? {}).#bar;
@@ -1436,7 +1436,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:80:1
    │
 80 │ (foo() ?? bar ?? {}).#baz;
@@ -1457,7 +1457,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:81:1
    │
 81 │ ((foo1 ? foo2 : foo3) ?? {}).#foo4;
@@ -1478,7 +1478,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:83:12
    │
 83 │ if (foo) { (foo ?? {}).#bar; }
@@ -1499,7 +1499,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:84:5
    │
 84 │ if ((foo ?? {}).#bar) { foo.bar; }
@@ -1520,7 +1520,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:86:1
    │
 86 │ (undefined && foo ?? {}).#bar;
@@ -1541,7 +1541,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:87:1
    │
 87 │ (a > b || {}).#bar;
@@ -1562,7 +1562,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:88:1
    │
 88 │ (((typeof x) as string) || {}).#bar;
@@ -1583,7 +1583,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:90:1
    │
 90 │ (void foo() || {}).#bar;
@@ -1604,7 +1604,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:91:1
    │
 91 │ ((a ? b : c) || {}).#bar;
@@ -1625,7 +1625,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:93:1
    │
 93 │ ((a instanceof Error) || {}).#bar;
@@ -1646,7 +1646,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:94:1
    │
 94 │ ((a << b) || {}).#bar;
@@ -1667,7 +1667,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:95:1
    │
 95 │ ((foo ** 2) || {}).#bar;
@@ -1688,7 +1688,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:96:1
    │
 96 │ (foo ** 2 || {}).#bar;
@@ -1709,7 +1709,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:97:1
    │
 97 │ (foo++ || {}).#bar;
@@ -1730,7 +1730,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
    ┌─ nullishAndLogicalOr.ts:98:1
    │
 98 │ (+foo || {}).#bar;
@@ -1751,7 +1751,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:102:1
     │
 102 │ (this || {}).bar;
@@ -1772,7 +1772,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:103:1
     │
 103 │ (this || ({})).bar;
@@ -1793,7 +1793,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:104:1
     │
 104 │ (await this || {}).bar;
@@ -1814,7 +1814,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:105:13
     │
 105 │ const foo = (this || {}).baz;
@@ -1835,7 +1835,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:107:1
     │
 107 │ ((this || {}).foo2 || {}).foo3;
@@ -1856,7 +1856,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:109:12
     │
 109 │ if (foo) { (this || {}).bar; }
@@ -1877,7 +1877,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:110:5
     │
 110 │ if ((this || {}).bar) { foo.bar; }
@@ -1898,7 +1898,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:112:1
     │
 112 │ (undefined && this || {}).bar;
@@ -1919,7 +1919,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:113:1
     │
 113 │ (this ?? {}).bar;
@@ -1940,7 +1940,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:114:1
     │
 114 │ (this ?? ({})).bar;
@@ -1961,7 +1961,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:115:1
     │
 115 │ (await this ?? {}).bar;
@@ -1982,7 +1982,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:117:13
     │
 117 │ const foo = (this ?? {}).baz;
@@ -2003,7 +2003,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:118:1
     │
 118 │ ((this ?? {}).foo2 ?? {}).foo3;
@@ -2024,7 +2024,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:120:12
     │
 120 │ if (foo) { (this ?? {}).bar; }
@@ -2045,7 +2045,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:121:5
     │
 121 │ if ((this ?? {}).bar) { foo.bar; }
@@ -2066,7 +2066,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:123:1
     │
 123 │ (undefined && this ?? {}).bar;
@@ -2087,7 +2087,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:124:1
     │
 124 │ (((typeof this) as string) || {}).bar;
@@ -2108,7 +2108,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:127:1
     │
 127 │ (this || {}).#bar;
@@ -2129,7 +2129,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:128:1
     │
 128 │ (this || ({})).#bar;
@@ -2150,7 +2150,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:129:1
     │
 129 │ (await this || {}).#bar;
@@ -2171,7 +2171,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:130:13
     │
 130 │ const foo = (this || {}).#baz;
@@ -2192,7 +2192,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:132:1
     │
 132 │ ((this || {}).#foo2 || {}).#foo3;
@@ -2213,7 +2213,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:134:12
     │
 134 │ if (foo) { (this || {}).#bar; }
@@ -2234,7 +2234,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:135:5
     │
 135 │ if ((this || {}).#bar) { foo.bar; }
@@ -2255,7 +2255,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:137:1
     │
 137 │ (undefined && this || {}).#bar;
@@ -2276,7 +2276,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:138:1
     │
 138 │ (this ?? {}).#bar;
@@ -2297,7 +2297,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:139:1
     │
 139 │ (this ?? ({})).#bar;
@@ -2318,7 +2318,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:140:1
     │
 140 │ (await this ?? {}).#bar;
@@ -2339,7 +2339,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:142:13
     │
 142 │ const foo = (this ?? {}).#baz;
@@ -2360,7 +2360,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:143:1
     │
 143 │ ((this ?? {}).#foo2 ?? {}).#foo3;
@@ -2381,7 +2381,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:145:12
     │
 145 │ if (foo) { (this ?? {}).#bar; }
@@ -2402,7 +2402,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:146:5
     │
 146 │ if ((this ?? {}).#bar) { foo.bar; }
@@ -2423,7 +2423,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:148:1
     │
 148 │ (undefined && this ?? {}).#bar;
@@ -2444,7 +2444,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:149:1
     │
 149 │ (((typeof this) as string) || {}).#bar;
@@ -2465,7 +2465,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:150:1
     │
 150 │ (new foo || {}).bar;
@@ -2485,7 +2485,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:151:1
     │
 151 │ (foo() || {}).bar;
@@ -2504,7 +2504,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[js/useOptionalChain]: Change to an optional chain.
+warning[correctness/useOptionalChain]: Change to an optional chain.
     ┌─ nullishAndLogicalOr.ts:152:1
     │
 152 │ ((foo || {}).bar() || {}).baz;
