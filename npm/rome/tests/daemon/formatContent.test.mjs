@@ -5,18 +5,19 @@ import { fileURLToPath } from "url";
 
 const target = process.env.CI ? "target/release/rome" : "target/debug/rome";
 
-describe("Rome Deamon formatter", () => {
-	it("should format content", async () => {
-		const command = resolve(
-			fileURLToPath(import.meta.url),
-			"../../../../..",
-			target,
-		);
+describe("Rome Deamon formatter", async () => {
+	const command = resolve(
+		fileURLToPath(import.meta.url),
+		"../../../../..",
+		target,
+	);
 
-		const rome = await Rome.create({
-			backendKind: BackendKind.DAEMON,
-			pathToBinary: command,
-		});
+	const rome = await Rome.create({
+		backendKind: BackendKind.DAEMON,
+		pathToBinary: command,
+	});
+
+	it("should format content", async () => {
 		let result = await rome.formatContent("function f   () {  }", {
 			filePath: "example.js",
 		});
@@ -26,17 +27,6 @@ describe("Rome Deamon formatter", () => {
 	});
 
 	it("should not format and have diagnostics", async () => {
-		const command = resolve(
-			fileURLToPath(import.meta.url),
-			"../../../../..",
-			target,
-		);
-
-		const rome = await Rome.create({
-			backendKind: BackendKind.DAEMON,
-			pathToBinary: command,
-		});
-
 		let content = "function   () {  }";
 		let result = await rome.formatContent(content, {
 			filePath: "example.js",
@@ -51,17 +41,6 @@ describe("Rome Deamon formatter", () => {
 	});
 
 	it("should format content in debug mode", async () => {
-		const command = resolve(
-			fileURLToPath(import.meta.url),
-			"../../../../..",
-			target,
-		);
-
-		const rome = await Rome.create({
-			backendKind: BackendKind.DAEMON,
-			pathToBinary: command,
-		});
-
 		let result = await rome.formatContent("function f() {}", {
 			filePath: "example.js",
 			debug: true,
@@ -75,16 +54,6 @@ describe("Rome Deamon formatter", () => {
 	});
 
 	it("should not format content with range", async () => {
-		const command = resolve(
-			fileURLToPath(import.meta.url),
-			"../../../../..",
-			target,
-		);
-
-		const rome = await Rome.create({
-			backendKind: BackendKind.DAEMON,
-			pathToBinary: command,
-		});
 		let result = await rome.formatContent("let a   ; function g () {  }", {
 			filePath: "file.js",
 			range: [20, 25],
@@ -95,16 +64,6 @@ describe("Rome Deamon formatter", () => {
 	});
 
 	it("should not format content with range in debug mode", async () => {
-		const command = resolve(
-			fileURLToPath(import.meta.url),
-			"../../../../..",
-			target,
-		);
-
-		const rome = await Rome.create({
-			backendKind: BackendKind.DAEMON,
-			pathToBinary: command,
-		});
 		let result = await rome.formatContent("let a   ; function g () {  }", {
 			filePath: "file.js",
 			range: [20, 25],
@@ -131,4 +90,4 @@ describe("Rome Deamon formatter", () => {
 		`,
 		);
 	});
-}, 1500);
+});
