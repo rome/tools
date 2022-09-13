@@ -776,10 +776,12 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-measure() // Warm-up first
-  .then(() => {
-    SomethingLong();
-  });
+!(
+  x
+  /* foo */
+);
+
+
 
         "#;
         let syntax = SourceType::tsx();
@@ -787,7 +789,6 @@ measure() // Warm-up first
         let options = JsFormatOptions::new(syntax);
 
         let formatted = format_node(options, &tree.syntax()).unwrap();
-        println!("{}", &formatted.clone().into_format_element());
         let result = formatted.print();
         // check_reformat(CheckReformatParams {
         //     root: &tree.syntax(),

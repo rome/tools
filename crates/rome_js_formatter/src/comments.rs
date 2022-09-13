@@ -5,9 +5,9 @@ use rome_formatter::{CommentKind, CommentStyle, SourceComment};
 use rome_js_syntax::suppression::{parse_suppression_comment, SuppressionCategory};
 use rome_js_syntax::{
     JsAnyClass, JsAnyName, JsAnyRoot, JsAnyStatement, JsArrayHole, JsArrowFunctionExpression,
-    JsBlockStatement, JsCatchClause, JsEmptyStatement, JsFinallyClause, JsFormalParameter,
-    JsFunctionBody, JsIdentifierExpression, JsIfStatement, JsLanguage, JsSyntaxKind, JsSyntaxNode,
-    JsVariableDeclarator, JsWhileStatement, TsInterfaceDeclaration,
+    JsBlockStatement, JsCallArguments, JsCatchClause, JsEmptyStatement, JsFinallyClause,
+    JsFormalParameter, JsFunctionBody, JsIdentifierExpression, JsIfStatement, JsLanguage,
+    JsSyntaxKind, JsSyntaxNode, JsVariableDeclarator, JsWhileStatement, TsInterfaceDeclaration,
 };
 use rome_rowan::{AstNode, SyntaxTriviaPieceComments, TextLen};
 
@@ -164,6 +164,7 @@ impl CommentStyle for JsCommentStyle {
                 .or_else(handle_variable_declarator_comment)
                 .or_else(handle_parameter_comment)
                 .or_else(handle_labelled_statement_comment)
+                .or_else(handle_call_expression_comment)
                 .or_else(handle_continue_break_comment)
                 .or_else(handle_switch_default_case_comment),
             CommentPosition::OwnLine => handle_member_expression_comment(comment)
@@ -178,6 +179,7 @@ impl CommentStyle for JsCommentStyle {
                 .or_else(handle_parameter_comment)
                 .or_else(handle_array_hole_comment)
                 .or_else(handle_labelled_statement_comment)
+                .or_else(handle_call_expression_comment)
                 .or_else(handle_continue_break_comment),
             CommentPosition::SameLine => handle_if_statement_comment(comment)
                 .or_else(handle_while_comment)
@@ -185,6 +187,7 @@ impl CommentStyle for JsCommentStyle {
                 .or_else(handle_root_comments)
                 .or_else(handle_after_arrow_param_comment)
                 .or_else(handle_array_hole_comment)
+                .or_else(handle_call_expression_comment)
                 .or_else(handle_continue_break_comment),
         }
     }
@@ -233,6 +236,30 @@ fn handle_array_hole_comment(
     } else {
         CommentPlacement::Default(comment)
     }
+}
+
+fn handle_call_expression_comment(
+    comment: DecoratedComment<JsLanguage>,
+) -> CommentPlacement<JsLanguage> {
+    // Make comments between the callee and the arguments leading comments of the first argument.
+    // ```javascript
+    // a /* comment */ (call)
+    // ```
+    if let Some(arguments) = comment.following_node().and_then(JsCallArguments::cast_ref) {
+        return if let Some(Ok(first)) = arguments.args().first() {
+            CommentPlacement::Leading {
+                node: first.into_syntax(),
+                comment,
+            }
+        } else {
+            CommentPlacement::Dangling {
+                node: arguments.into_syntax(),
+                comment,
+            }
+        };
+    }
+
+    CommentPlacement::Default(comment)
 }
 
 fn handle_continue_break_comment(
@@ -325,7 +352,6 @@ fn handle_labelled_statement_comment(
     }
 }
 
-// TODO do same for interfaces
 fn handle_class_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacement<JsLanguage> {
     // Make comments following after the `extends` or `implements` keyword trailing comments
     // of the preceding extends, type parameters, or id.
@@ -1006,6 +1032,7 @@ fn handle_variable_declarator_comment(
                 //      b;
                 // ```
                 if !is_complex_value(following)
+                    && !JsCommentStyle::is_suppression(comment.piece().text())
                     && comment.kind().is_line()
                     && comment.preceding_node().is_none()
                 {
