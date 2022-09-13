@@ -1,16 +1,12 @@
 use crate::prelude::*;
 
-use crate::parentheses::{
-    is_in_many_type_union_or_intersection_list, operator_type_or_higher_needs_parens,
-    NeedsParentheses,
+use crate::parentheses::NeedsParentheses;
+use crate::utils::{
+    union_or_intersection_type_needs_parentheses, FormatTypeMemberSeparator,
+    TsIntersectionOrUnionTypeList,
 };
-use crate::utils::FormatTypeMemberSeparator;
 use rome_formatter::{format_args, write};
-use rome_js_syntax::{
-    JsSyntaxKind, JsSyntaxNode, TsIntersectionTypeElementList, TsIntersectionTypeFields,
-    TsUnionTypeVariantList,
-};
-use rome_js_syntax::{JsSyntaxToken, TsIntersectionType};
+use rome_js_syntax::{JsSyntaxNode, TsIntersectionType, TsIntersectionTypeFields};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsIntersectionType;
@@ -35,28 +31,6 @@ impl FormatNodeRule<TsIntersectionType> for FormatTsIntersectionType {
     }
 }
 
-pub struct FormatTypeSetLeadingSeparator<'a> {
-    pub(crate) separator: JsSyntaxKind,
-    pub(crate) leading_separator: Option<&'a JsSyntaxToken>,
-}
-
-impl Format<JsFormatContext> for FormatTypeSetLeadingSeparator<'_> {
-    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        match &self.leading_separator {
-            Some(token) => {
-                format_only_if_breaks(token, &format_args!(token.format(), space())).fmt(f)
-            }
-            None => write!(
-                f,
-                [if_group_breaks(&format_args![
-                    format_inserted(self.separator),
-                    space()
-                ])]
-            ),
-        }
-    }
-}
-
 impl NeedsParentheses for TsIntersectionType {
     fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
         union_or_intersection_type_needs_parentheses(
@@ -64,37 +38,6 @@ impl NeedsParentheses for TsIntersectionType {
             parent,
             &TsIntersectionOrUnionTypeList::TsIntersectionTypeElementList(self.types()),
         )
-    }
-}
-
-pub(super) fn union_or_intersection_type_needs_parentheses(
-    node: &JsSyntaxNode,
-    parent: &JsSyntaxNode,
-    types: &TsIntersectionOrUnionTypeList,
-) -> bool {
-    debug_assert!(matches!(
-        node.kind(),
-        JsSyntaxKind::TS_INTERSECTION_TYPE | JsSyntaxKind::TS_UNION_TYPE
-    ));
-
-    if is_in_many_type_union_or_intersection_list(node, parent) {
-        types.len() > 1
-    } else {
-        operator_type_or_higher_needs_parens(node, parent)
-    }
-}
-
-pub(super) enum TsIntersectionOrUnionTypeList {
-    TsIntersectionTypeElementList(TsIntersectionTypeElementList),
-    TsUnionTypeVariantList(TsUnionTypeVariantList),
-}
-
-impl TsIntersectionOrUnionTypeList {
-    fn len(&self) -> usize {
-        match self {
-            TsIntersectionOrUnionTypeList::TsIntersectionTypeElementList(list) => list.len(),
-            TsIntersectionOrUnionTypeList::TsUnionTypeVariantList(list) => list.len(),
-        }
     }
 }
 

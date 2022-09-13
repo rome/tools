@@ -118,12 +118,12 @@ type Backend = NodeWasm | Deamon;
 
 export type RomeCreate =
 	| {
-		backendKind: BackendKind.NODE;
-	}
+			backendKind: BackendKind.NODE;
+	  }
 	| {
-		backendKind: BackendKind.DAEMON;
-		pathToBinary?: string;
-	};
+			backendKind: BackendKind.DAEMON;
+			pathToBinary?: string;
+	  };
 
 export class Rome {
 	private readonly backend: Backend;

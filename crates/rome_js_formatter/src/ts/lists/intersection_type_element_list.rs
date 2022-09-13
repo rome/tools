@@ -1,6 +1,6 @@
-use crate::prelude::*;
+use crate::{prelude::*, utils::is_object_like_type};
 use rome_formatter::{format_args, write};
-use rome_js_syntax::{TsIntersectionTypeElementList, TsType};
+use rome_js_syntax::TsIntersectionTypeElementList;
 use rome_rowan::AstSeparatedList;
 
 #[derive(Debug, Clone, Default)]
@@ -19,8 +19,7 @@ impl FormatRule<TsIntersectionTypeElementList> for FormatTsIntersectionTypeEleme
         for (index, element) in node.elements().enumerate() {
             let node = element.node()?;
 
-            let is_object_type_like =
-                matches!(node, TsType::TsMappedType(_) | TsType::TsObjectType(_));
+            let is_object_type_like = is_object_like_type(node);
 
             // always inline first element
             if index == 0 {

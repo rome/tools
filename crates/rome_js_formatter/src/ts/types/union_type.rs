@@ -1,67 +1,110 @@
 use crate::parentheses::NeedsParentheses;
 use crate::prelude::*;
-use crate::ts::types::intersection_type::{
-    union_or_intersection_type_needs_parentheses, FormatTypeSetLeadingSeparator,
-    TsIntersectionOrUnionTypeList,
+use crate::utils::{
+    has_leading_own_line_comment, should_hug_type, union_or_intersection_type_needs_parentheses,
+    FormatTypeMemberSeparator, TsIntersectionOrUnionTypeList,
 };
 use rome_formatter::{format_args, write, Buffer};
-use rome_js_syntax::{JsSyntaxKind, TsUnionType};
+use rome_js_syntax::{JsSyntaxKind, JsSyntaxToken, TsTupleTypeElementList, TsUnionType};
 use rome_js_syntax::{JsSyntaxNode, TsUnionTypeFields};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsUnionType;
 
 impl FormatNodeRule<TsUnionType> for FormatTsUnionType {
+    // [Prettier applies]: https://github.com/prettier/prettier/blob/cd3e530c2e51fb8296c0fb7738a9afdd3a3a4410/src/language-js/print/type-annotation.js#L123-L202
     fn fmt_fields(&self, node: &TsUnionType, f: &mut JsFormatter) -> FormatResult<()> {
         let TsUnionTypeFields {
             leading_separator_token,
             types,
         } = node.as_fields();
 
-        let body = format_with(|f| {
+        // ```ts
+        // {
+        //   a: string
+        // } | null | void
+        // ```
+        // should be inlined and not be printed in the multi-line variant
+        if should_hug_type(&node.clone().into()) {
+            return write!(
+                f,
+                [
+                    FormatTypeMemberSeparator::new(leading_separator_token.as_ref()),
+                    types.format()
+                ]
+            );
+        }
+
+        let has_leading_own_line_comment = has_leading_own_line_comment(node.syntax());
+
+        let should_indent = {
+            let parent_kind = node.syntax().parent().map(|p| p.kind());
+
+            // These parents have indent for their content, so we don't need to indent here
+            !match parent_kind {
+                Some(JsSyntaxKind::TS_TYPE_ALIAS_DECLARATION) => has_leading_own_line_comment,
+                parent_kind => {
+                    matches!(
+                        parent_kind,
+                        Some(
+                            JsSyntaxKind::TS_TYPE_ASSERTION_EXPRESSION
+                                | JsSyntaxKind::TS_TUPLE_TYPE_ELEMENT_LIST
+                                | JsSyntaxKind::TS_TYPE_ASSERTION_ASSIGNMENT
+                                | JsSyntaxKind::TS_TYPE_ARGUMENT_LIST
+                        )
+                    )
+                }
+            }
+        };
+
+        let types = format_with(|f| {
             write!(
                 f,
                 [
-                    soft_line_break(),
                     FormatTypeSetLeadingSeparator {
                         separator: JsSyntaxKind::PIPE,
-                        leading_separator: leading_separator_token.as_ref()
+                        leading_separator: leading_separator_token.as_ref(),
+                        leading_soft_line_break_or_space: should_indent
+                            && !has_leading_own_line_comment,
                     },
                     types.format()
                 ]
             )
         });
 
-        if node.needs_parentheses() {
-            return write!(f, [group(&format_args![indent(&body), soft_line_break()])]);
-        }
+        let content = format_with(|f| {
+            // it is necessary to add parentheses for unions in intersections
+            // ```ts
+            // type Some = B & (C | A) & D
+            // ```
+            if node.needs_parentheses() {
+                return write!(f, [indent(&types), soft_line_break()]);
+            }
 
-        let should_indent = {
-            let parent_kind = node.syntax().parent().map(|p| p.kind());
+            let is_inside_complex_tuple_type = node
+                .parent::<TsTupleTypeElementList>()
+                .map_or(false, |tuple| tuple.len() > 1);
 
-            !matches!(
-                parent_kind,
-                Some(
-                    JsSyntaxKind::TS_REFERENCE_TYPE
-                        | JsSyntaxKind::TS_TYPE_ASSERTION_EXPRESSION
-                        | JsSyntaxKind::TS_TUPLE_TYPE
-                        | JsSyntaxKind::TS_TYPE_ASSERTION_ASSIGNMENT
-                        | JsSyntaxKind::TS_FUNCTION_TYPE
-                        | JsSyntaxKind::TS_TYPE_ARGUMENTS
+            if is_inside_complex_tuple_type {
+                write!(
+                    f,
+                    [
+                        indent(&format_args![
+                            if_group_breaks(&format_args![text("("), soft_line_break()]),
+                            types
+                        ]),
+                        soft_line_break(),
+                        if_group_breaks(&text(")"))
+                    ]
                 )
-            )
-        };
+            } else if should_indent {
+                write!(f, [indent(&types)])
+            } else {
+                write!(f, [types])
+            }
+        });
 
-        write![
-            f,
-            [group(&format_with(|f| {
-                if should_indent {
-                    write!(f, [&indent(&body)])
-                } else {
-                    write!(f, [&body])
-                }
-            }))]
-        ]
+        write!(f, [group(&content)])
     }
 
     fn needs_parentheses(&self, item: &TsUnionType) -> bool {
@@ -76,5 +119,37 @@ impl NeedsParentheses for TsUnionType {
             parent,
             &TsIntersectionOrUnionTypeList::TsUnionTypeVariantList(self.types()),
         )
+    }
+}
+
+pub struct FormatTypeSetLeadingSeparator<'a> {
+    separator: JsSyntaxKind,
+    leading_separator: Option<&'a JsSyntaxToken>,
+    leading_soft_line_break_or_space: bool,
+}
+
+impl Format<JsFormatContext> for FormatTypeSetLeadingSeparator<'_> {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        match &self.leading_separator {
+            Some(token) => {
+                let content = format_with(|f| {
+                    if self.leading_soft_line_break_or_space {
+                        write!(f, [soft_line_break_or_space()])?;
+                    }
+                    write!(f, [token.format(), space()])
+                });
+                format_only_if_breaks(token, &content).fmt(f)
+            }
+            None => {
+                let content = format_with(|f| {
+                    if self.leading_soft_line_break_or_space {
+                        write!(f, [soft_line_break_or_space()])?;
+                    }
+                    write!(f, [format_inserted(self.separator), space()])
+                });
+
+                write!(f, [if_group_breaks(&content)])
+            }
+        }
     }
 }

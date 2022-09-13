@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/union/prettier-ignore.ts
 ---
 
 # Input
@@ -38,40 +40,25 @@ export type a =
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,25 +1,25 @@
- export type a =
--  // foo
--  | (foo1 & foo2)
--  // bar
--  | (bar1 & bar2)
--  // prettier-ignore
+@@ -4,7 +4,7 @@
+   // bar
+   | (bar1 & bar2)
+   // prettier-ignore
 -  | qux1&qux2;
-+    // foo
-+    | (foo1 & foo2)
-+    // bar
-+    | (bar1 & bar2)
-+    // prettier-ignore
-+    | (qux1 & qux2);
++  | (qux1 & qux2);
  
  export type a =
--  // foo
--  | (foo1 & foo2)
--  // bar
--  | (bar1 & bar2)
--  // prettier-ignore
+   // foo
+@@ -12,7 +12,7 @@
+   // bar
+   | (bar1 & bar2)
+   // prettier-ignore
 -  | qux1&qux2
--  // baz
--  | (baz1 & baz2);
-+    // foo
-+    | (foo1 & foo2)
-+    // bar
-+    | (bar1 & bar2)
-+    // prettier-ignore
-+    | (qux1 & qux2)
-+    // baz
-+    | (baz1 & baz2);
++  | (qux1 & qux2)
+   // baz
+   | (baz1 & baz2);
  
- export type a =
+@@ -20,6 +20,6 @@
    // prettier-ignore
    | foo1&foo2
    // bar
@@ -86,22 +73,22 @@ export type a =
 
 ```js
 export type a =
-    // foo
-    | (foo1 & foo2)
-    // bar
-    | (bar1 & bar2)
-    // prettier-ignore
-    | (qux1 & qux2);
+  // foo
+  | (foo1 & foo2)
+  // bar
+  | (bar1 & bar2)
+  // prettier-ignore
+  | (qux1 & qux2);
 
 export type a =
-    // foo
-    | (foo1 & foo2)
-    // bar
-    | (bar1 & bar2)
-    // prettier-ignore
-    | (qux1 & qux2)
-    // baz
-    | (baz1 & baz2);
+  // foo
+  | (foo1 & foo2)
+  // bar
+  | (bar1 & bar2)
+  // prettier-ignore
+  | (qux1 & qux2)
+  // baz
+  | (baz1 & baz2);
 
 export type a =
   // prettier-ignore

@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/union/inlining.ts
 ---
 
 # Input
@@ -54,21 +56,8 @@ type T8 = number | (((((arg: any) => void))));
 ```diff
 --- Prettier
 +++ Rome
-@@ -2,13 +2,19 @@
-   articles: a | null;
- }
- interface RelayProps {
--  articles: Array<{
--    __id: string;
--  } | null> | null | void;
-+  articles:
-+    | Array<
-+      | {
-+        __id: string;
-+      }
-+      | null>
-+    | null
-+    | void;
+@@ -7,8 +7,9 @@
+   } | null> | null | void;
  }
  
 -type UploadState<E, EM, D> =
@@ -79,7 +68,7 @@ type T8 = number | (((((arg: any) => void))));
    | { type: "Not_begun" }
    // The upload timed out
    | { type: "Timed_out" }
-@@ -17,8 +23,9 @@
+@@ -17,8 +18,9 @@
    // Uploading to aws3 and CreatePostMutation succeeded
    | { type: "Success"; data: D };
  
@@ -100,14 +89,9 @@ interface RelayProps {
   articles: a | null;
 }
 interface RelayProps {
-  articles:
-    | Array<
-      | {
-        __id: string;
-      }
-      | null>
-    | null
-    | void;
+  articles: Array<{
+    __id: string;
+  } | null> | null | void;
 }
 
 type UploadState<E, EM, D>
