@@ -195,7 +195,7 @@ impl Workspace for WorkspaceServer {
     ) -> Result<SupportsFeatureResult, RomeError> {
         let capabilities = self.get_capabilities(&params.path);
         let settings = self.settings.read().unwrap();
-        let is_ignored = matches!(self.is_file_ignored(&params.path, &params.feature), true);
+        let is_ignored = self.is_file_ignored(&params.path, &params.feature);
         let result = match params.feature {
             FeatureName::Format => {
                 if is_ignored {
@@ -334,7 +334,12 @@ impl Workspace for WorkspaceServer {
             .ok_or_else(self.build_capability_error(&params.path))?;
 
         let settings = self.settings.read().unwrap();
-        let parse = self.get_parse(params.path.clone(), FeatureName::Lint)?;
+        let feature = if params.categories.is_syntax() {
+            FeatureName::Format
+        } else {
+            FeatureName::Lint
+        };
+        let parse = self.get_parse(params.path.clone(), feature)?;
         let rules = settings.linter().rules.as_ref();
         let enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = rules {
             let enabled: IndexSet<RuleFilter> = rules.as_enabled_rules();
