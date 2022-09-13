@@ -1451,6 +1451,21 @@ pub(crate) fn is_nth_at_identifier(p: &mut Parser, n: usize) -> bool {
 }
 
 #[inline]
+pub(crate) fn is_start_of_expression(p: &mut Parser) {
+    match p.cur() {
+        THIS_KW => {}
+        SUPER_KW => {}
+        NULL_KW => {}
+        TRUE_KW => {}
+        FALSE_KW => {}
+        JS_NUMBER_LITERAL => {}
+        JS_BIG_INT_LITERAL => {}
+        JS_STRING_LITERAL => {}
+        
+        _ => {}
+    }
+}
+#[inline]
 pub(crate) fn is_nth_at_identifier_or_keyword(p: &mut Parser, n: usize) -> bool {
     p.nth(n).is_keyword() || is_nth_at_identifier(p, n)
 }
