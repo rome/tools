@@ -186,7 +186,7 @@ pub struct Correctness {
 }
 impl Correctness {
     const CATEGORY_NAME: &'static str = "correctness";
-    pub(crate) const CATEGORY_RULES: [&'static str; 29] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 30] = [
         "noArguments",
         "noAsyncPromiseExecutor",
         "noCatchAssign",
@@ -210,6 +210,7 @@ impl Correctness {
         "noUnsafeNegation",
         "noUnusedTemplateLiteral",
         "useBlockStatements",
+        "useOptionalChain",
         "useSimplifiedLogicExpression",
         "useSingleCaseStatement",
         "useSingleVarDeclarator",
@@ -217,7 +218,7 @@ impl Correctness {
         "useValidTypeof",
         "useWhile",
     ];
-    const RECOMMENDED_RULES: [&'static str; 29] = [
+    const RECOMMENDED_RULES: [&'static str; 30] = [
         "noArguments",
         "noAsyncPromiseExecutor",
         "noCatchAssign",
@@ -241,6 +242,7 @@ impl Correctness {
         "noUnsafeNegation",
         "noUnusedTemplateLiteral",
         "useBlockStatements",
+        "useOptionalChain",
         "useSimplifiedLogicExpression",
         "useSingleCaseStatement",
         "useSingleVarDeclarator",
@@ -248,7 +250,7 @@ impl Correctness {
         "useValidTypeof",
         "useWhile",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 29] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 30] = [
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[0]),
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[2]),
@@ -278,6 +280,7 @@ impl Correctness {
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[26]),
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[27]),
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[28]),
+        RuleFilter::Rule("correctness", Self::CATEGORY_RULES[29]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -304,7 +307,7 @@ impl Correctness {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 29] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 30] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }
