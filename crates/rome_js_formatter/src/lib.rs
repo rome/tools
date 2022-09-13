@@ -771,12 +771,50 @@ function() {
         assert_eq!(result.range(), Some(TextRange::new(range_start, range_end)));
     }
 
+    #[test]
+    fn test_range_formatting_middle_of_token() {
+        let input = r#"/* */ function Foo(){
+/**/
+}
+"#;
+
+        let range = TextRange::new(TextSize::from(16), TextSize::from(28));
+
+        debug_assert_eq!(
+            &input[range],
+            r#"oo(){
+/**/
+}"#
+        );
+
+        let tree = parse_script(input, 0);
+        let result = format_range(
+            JsFormatOptions::new(SourceType::js_script()).with_indent_style(IndentStyle::Space(4)),
+            &tree.syntax(),
+            range,
+        )
+        .expect("Range formatting failed");
+
+        assert_eq!(
+            result.as_code(),
+            r#"/* */ function Foo() {
+    /**/
+}"#
+        );
+        assert_eq!(
+            result.range(),
+            Some(TextRange::new(TextSize::from(0), TextSize::from(28)))
+        )
+    }
+
     #[ignore]
     #[test]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-declare class Foo extends Qux<string> {/* dangling */}
+// prettier-ignore
+'use strict';
+[].forEach();
 
         "#;
         let syntax = SourceType::tsx();

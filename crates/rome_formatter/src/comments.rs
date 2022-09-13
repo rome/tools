@@ -273,7 +273,9 @@ pub trait CommentStyle: Default {
     type Language: Language;
 
     /// Returns `true` if a comment with the given `text` is a `rome-ignore format:` suppression comment.
-    fn is_suppression(text: &str) -> bool;
+    fn is_suppression(text: &str) -> bool {
+        false
+    }
 
     /// Returns the (kind)[CommentKind] of the comment
     fn get_comment_kind(comment: &SyntaxTriviaPieceComments<Self::Language>) -> CommentKind;
@@ -281,7 +283,9 @@ pub trait CommentStyle: Default {
     fn place_comment(
         &self,
         comment: DecoratedComment<Self::Language>,
-    ) -> CommentPlacement<Self::Language>;
+    ) -> CommentPlacement<Self::Language> {
+        CommentPlacement::Default(comment)
+    }
 }
 
 /// Type that stores the comments of a tree and gives access to:

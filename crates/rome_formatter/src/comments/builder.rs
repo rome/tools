@@ -80,11 +80,11 @@ where
                     return;
                 }
 
-                let is_root = self.parents.is_empty();
+                let is_root = matches!(self.following_node_index, Some(0));
 
                 // Associate comments with the most outer node
                 // Set following here because it is the "following node" of the next token's leading trivia.
-                if !is_root && self.following_node_index.is_none() {
+                if self.following_node_index.is_none() || is_root {
                     // Flush in case the node doesn't have any tokens.
                     self.flush_comments(Some(&node));
                     self.following_node_index = Some(self.parents.len());
@@ -216,6 +216,7 @@ where
     fn enclosing_node(&self) -> &SyntaxNode<Style::Language> {
         let element = match self.following_node_index {
             None => self.parents.last(),
+            Some(index) if index == 0 => Some(&self.parents[0]),
             Some(index) => Some(&self.parents[index - 1]),
         };
 
