@@ -6,7 +6,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{JsAnyExpression, JsCallExpression, JsNewExpression, JsNewExpressionFields};
-use rome_rowan::{AstNode, BatchMutationExt};
+use rome_rowan::{AstNode, AstNodeExt, BatchMutationExt};
 
 declare_rule! {
     /// Disallow `new` operators with the `Symbol` object
@@ -93,11 +93,29 @@ impl Rule for NoNewSymbol {
 
 fn convert_new_expression_to_call_expression(expr: &JsNewExpression) -> Option<JsCallExpression> {
     let JsNewExpressionFields {
-        callee, arguments, ..
+        new_token,
+        callee,
+        arguments,
+        ..
     } = expr.as_fields();
 
-    let callee = callee.ok()?;
+    let new_token = new_token.ok()?;
+    let mut callee = callee.ok()?;
     let arguments = arguments?;
+
+    if new_token.has_leading_comments() || new_token.has_trailing_comments() {
+        let first_token = callee.syntax().first_token()?;
+
+        let mut trivia = vec![];
+        trivia.extend(new_token.leading_trivia().pieces());
+        trivia.extend(new_token.trailing_trivia().pieces());
+        trivia.extend(first_token.leading_trivia().pieces());
+
+        callee = callee.replace_token_discard_trivia(
+            first_token.clone(),
+            first_token.with_leading_trivia_pieces(trivia),
+        )?;
+    }
 
     Some(make::js_call_expression(callee, arguments).build())
 }
