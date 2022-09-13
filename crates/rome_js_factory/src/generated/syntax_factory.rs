@@ -7554,7 +7554,7 @@ impl SyntaxFactory for JsSyntaxFactory {
                 let mut slots: RawNodeSlots<2usize> = RawNodeSlots::default();
                 let mut current_element = elements.next();
                 if let Some(element) = &current_element {
-                    if JsLeftHandSideExpression::can_cast(element.kind()) {
+                    if JsAnyExpression::can_cast(element.kind()) {
                         slots.mark_present();
                         current_element = elements.next();
                     }
