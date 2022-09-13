@@ -35,3 +35,12 @@ let [ UPPER_CASE ] = env;
 const THIS_IS_OK = 1;
 const { THIS_IS_OK } = env;
 const [ THIS_IS_OK ] = env;
+
+function PascalCaseOkBecauseNew() { }
+console.log(new PascalCaseOkBecauseNew());
+
+function PascalCaseOkBecauseExport() { }
+export default PascalCaseOkBecauseExport;
+
+function PascalCaseNOk() { }
+console.log(PascalCaseNOk());

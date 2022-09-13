@@ -8,6 +8,7 @@ use rome_analyze::{
 };
 use rome_console::markup;
 use rome_diagnostics::Applicability;
+use rome_js_semantic::{AllReferencesExtensions, IsExportedCanBeQueried, SemanticModel};
 use rome_js_syntax::{
     JsFormalParameter, JsFunctionDeclaration, JsFunctionExportDefaultDeclaration,
     JsGetterClassMember, JsIdentifierBinding, JsLiteralMemberName, JsMethodClassMember,
@@ -60,18 +61,40 @@ fn check_is_camel(name: &str) -> Option<State> {
 }
 
 // It is OK to be non camel case when:
-// 1. it's a const variable (eg: const THIS_IS_OK)
-fn is_non_camel_ok(binding: &JsIdentifierBinding) -> Option<bool> {
+// 1. it's a const variable (eg: const THIS_IS_OK);
+// 2. it's a function used in a new expression (eg: new PascalCase());
+// 3. it's a exported function.
+fn is_non_camel_ok(binding: &JsIdentifierBinding, model: &SemanticModel) -> Option<bool> {
     use JsSyntaxKind::*;
-    let declarator = binding.parent::<JsVariableDeclarator>()?;
-    let is_ok = match declarator.syntax().parent().map(|parent| parent.kind()) {
-        Some(JS_VARIABLE_DECLARATOR_LIST) => declarator
-            .parent::<JsVariableDeclaratorList>()?
-            .parent::<JsVariableDeclaration>()?
-            .is_const(),
-        _ => false,
-    };
-    Some(is_ok)
+    match binding.syntax().parent()?.kind() {
+        JS_VARIABLE_DECLARATOR => {
+            let declarator = binding.parent::<JsVariableDeclarator>()?;
+            let is_ok = match declarator.syntax().parent().map(|parent| parent.kind()) {
+                Some(JS_VARIABLE_DECLARATOR_LIST) => declarator
+                    .parent::<JsVariableDeclaratorList>()?
+                    .parent::<JsVariableDeclaration>()?
+                    .is_const(),
+                _ => false,
+            };
+            Some(is_ok)
+        }
+        JS_FUNCTION_DECLARATION => {
+            if binding.is_exported(model) {
+                return Some(true);
+            }
+
+            for reference in binding.all_reads(model) {
+                let greatparent = reference.node().grand_parent()?;
+                match greatparent.kind() {
+                    JS_NEW_EXPRESSION => return Some(true),
+                    _ => {}
+                }
+            }
+
+            Some(false)
+        }
+        _ => Some(false),
+    }
 }
 
 impl Rule for UseCamelCase {
@@ -83,10 +106,11 @@ impl Rule for UseCamelCase {
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let name = ctx.query();
+        let model = ctx.model();
 
         match name {
             JsAnyCamelCaseName::JsIdentifierBinding(binding) => {
-                let is_non_camel_ok = is_non_camel_ok(binding);
+                let is_non_camel_ok = is_non_camel_ok(binding, model);
                 match is_non_camel_ok {
                     Some(false) | None => {
                         let is_variable = binding.parent::<JsVariableDeclarator>().is_some();

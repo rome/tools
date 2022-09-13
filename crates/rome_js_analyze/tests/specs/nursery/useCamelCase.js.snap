@@ -42,6 +42,15 @@ const THIS_IS_OK = 1;
 const { THIS_IS_OK } = env;
 const [ THIS_IS_OK ] = env;
 
+function PascalCaseOkBecauseNew() { }
+console.log(new PascalCaseOkBecauseNew());
+
+function PascalCaseOkBecauseExport() { }
+export default PascalCaseOkBecauseExport;
+
+function PascalCaseNOk() { }
+console.log(PascalCaseNOk());
+
 ```
 
 # Diagnostics
@@ -195,6 +204,26 @@ Safe fix: Rename this symbol to camel case
 31 31 |   let { UPPER_CASE } = env;
 32 32 |   let [ UPPER_CASE ] = env;
 33 33 |   
+
+
+```
+
+```
+warning[js/useCamelCase]: Prefer functions names in camel case.
+   ┌─ useCamelCase.js:45:10
+   │
+45 │ function PascalCaseNOk() { }
+   │          -------------
+
+Safe fix: Rename this symbol to camel case
+      | @@ -42,5 +42,5 @@
+41 41 |   function PascalCaseOkBecauseExport() { }
+42 42 |   export default PascalCaseOkBecauseExport;
+43 43 |   
+44    | - function PascalCaseNOk() { }
+45    | - console.log(PascalCaseNOk());
+   44 | + function pascalCaseNOk() { }
+   45 | + console.log(pascalCaseNOk());
 
 
 ```
