@@ -96,29 +96,83 @@ export interface Rules {
 }
 export type QuoteProperties = "asNeeded" | "preserve";
 export type QuoteStyle = "double" | "single";
+/**
+ * A list of rules that belong to this group
+ */
 export interface Js {
+	noArguments?: RuleConfiguration;
+	noAsyncPromiseExecutor?: RuleConfiguration;
+	noCatchAssign?: RuleConfiguration;
+	noCompareNegZero?: RuleConfiguration;
+	noDeadCode?: RuleConfiguration;
+	noDebugger?: RuleConfiguration;
+	noDelete?: RuleConfiguration;
+	noDoubleEquals?: RuleConfiguration;
+	noDupeArgs?: RuleConfiguration;
+	noEmptyPattern?: RuleConfiguration;
+	noExtraBooleanCast?: RuleConfiguration;
+	noFunctionAssign?: RuleConfiguration;
+	noImportAssign?: RuleConfiguration;
+	noLabelVar?: RuleConfiguration;
+	noNegationElse?: RuleConfiguration;
+	noShadowRestrictedNames?: RuleConfiguration;
+	noShoutyConstants?: RuleConfiguration;
+	noSparseArray?: RuleConfiguration;
+	noUnnecessaryContinue?: RuleConfiguration;
+	noUnsafeNegation?: RuleConfiguration;
+	noUnusedTemplateLiteral?: RuleConfiguration;
+	noUnusedVariables?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
+	useBlockStatements?: RuleConfiguration;
+	useCamelCase?: RuleConfiguration;
+	useOptionalChain?: RuleConfiguration;
+	useSimplifiedLogicExpression?: RuleConfiguration;
+	useSingleCaseStatement?: RuleConfiguration;
+	useSingleVarDeclarator?: RuleConfiguration;
+	useTemplate?: RuleConfiguration;
+	useValidTypeof?: RuleConfiguration;
+	useWhile?: RuleConfiguration;
 }
+/**
+ * A list of rules that belong to this group
+ */
 export interface Jsx {
+	noCommentText?: RuleConfiguration;
+	noImplicitBoolean?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
+	useSelfClosingElements?: RuleConfiguration;
 }
+/**
+ * A list of rules that belong to this group
+ */
 export interface Regex {
+	noMultipleSpacesInRegularExpressionLiterals?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
 }
+/**
+ * A list of rules that belong to this group
+ */
 export interface Ts {
 	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
+	useShorthandArrayType?: RuleConfiguration;
+}
+export type RuleConfiguration = RulePlainConfiguration | RuleWithOptions;
+export type RulePlainConfiguration = "warn" | "error" | "off";
+export interface RuleWithOptions {
+	level: RulePlainConfiguration;
+	options: any;
 }
 export interface OpenFileParams {
 	content: string;
