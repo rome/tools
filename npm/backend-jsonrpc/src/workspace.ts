@@ -85,26 +85,25 @@ export interface JavascriptFormatter {
 	quoteStyle?: QuoteStyle;
 }
 export interface Rules {
-	js?: Js;
-	jsx?: Jsx;
+	correctness?: Correctness;
+	nursery?: Nursery;
 	/**
 	 * It enables the lint rules recommended by Rome. `true` by default.
 	 */
 	recommended?: boolean;
-	regex?: Regex;
-	ts?: Ts;
+	style?: Style;
 }
 export type QuoteProperties = "asNeeded" | "preserve";
 export type QuoteStyle = "double" | "single";
 /**
  * A list of rules that belong to this group
  */
-export interface Js {
+export interface Correctness {
 	noArguments?: RuleConfiguration;
 	noAsyncPromiseExecutor?: RuleConfiguration;
 	noCatchAssign?: RuleConfiguration;
+	noCommentText?: RuleConfiguration;
 	noCompareNegZero?: RuleConfiguration;
-	noDeadCode?: RuleConfiguration;
 	noDebugger?: RuleConfiguration;
 	noDelete?: RuleConfiguration;
 	noDoubleEquals?: RuleConfiguration;
@@ -112,22 +111,20 @@ export interface Js {
 	noEmptyPattern?: RuleConfiguration;
 	noExtraBooleanCast?: RuleConfiguration;
 	noFunctionAssign?: RuleConfiguration;
+	noImplicitBoolean?: RuleConfiguration;
 	noImportAssign?: RuleConfiguration;
 	noLabelVar?: RuleConfiguration;
-	noNegationElse?: RuleConfiguration;
+	noMultipleSpacesInRegularExpressionLiterals?: RuleConfiguration;
 	noShadowRestrictedNames?: RuleConfiguration;
-	noShoutyConstants?: RuleConfiguration;
 	noSparseArray?: RuleConfiguration;
 	noUnnecessaryContinue?: RuleConfiguration;
 	noUnsafeNegation?: RuleConfiguration;
 	noUnusedTemplateLiteral?: RuleConfiguration;
-	noUnusedVariables?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
 	useBlockStatements?: RuleConfiguration;
-	useCamelCase?: RuleConfiguration;
 	useOptionalChain?: RuleConfiguration;
 	useSimplifiedLogicExpression?: RuleConfiguration;
 	useSingleCaseStatement?: RuleConfiguration;
@@ -139,33 +136,26 @@ export interface Js {
 /**
  * A list of rules that belong to this group
  */
-export interface Jsx {
-	noCommentText?: RuleConfiguration;
-	noImplicitBoolean?: RuleConfiguration;
+export interface Nursery {
+	noUnreachable?: RuleConfiguration;
+	noUnusedVariables?: RuleConfiguration;
+	/**
+	 * It enables the recommended rules for this group
+	 */
+	recommended?: boolean;
+	useCamelCase?: RuleConfiguration;
+}
+/**
+ * A list of rules that belong to this group
+ */
+export interface Style {
+	noNegationElse?: RuleConfiguration;
+	noShoutyConstants?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
 	useSelfClosingElements?: RuleConfiguration;
-}
-/**
- * A list of rules that belong to this group
- */
-export interface Regex {
-	noMultipleSpacesInRegularExpressionLiterals?: RuleConfiguration;
-	/**
-	 * It enables the recommended rules for this group
-	 */
-	recommended?: boolean;
-}
-/**
- * A list of rules that belong to this group
- */
-export interface Ts {
-	/**
-	 * It enables the recommended rules for this group
-	 */
-	recommended?: boolean;
 	useShorthandArrayType?: RuleConfiguration;
 }
 export type RuleConfiguration = RulePlainConfiguration | RuleWithOptions;
