@@ -1,0 +1,1 @@
+type StringBox = Box<string>;

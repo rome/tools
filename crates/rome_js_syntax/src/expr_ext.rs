@@ -546,6 +546,7 @@ impl JsAnyExpression {
             JsAnyExpression::JsComputedMemberExpression(_)
             | JsAnyExpression::JsStaticMemberExpression(_)
             | JsAnyExpression::ImportMeta(_)
+            | JsAnyExpression::TsInstantiationExpression(_)
             | JsAnyExpression::NewTarget(_) => OperatorPrecedence::Member,
 
             JsAnyExpression::JsThisExpression(_)

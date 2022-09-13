@@ -8,6 +8,7 @@ use crate::event::rewrite_events;
 use crate::event::RewriteParseEvents;
 use crate::lexer::{LexContext, ReLexContext};
 use crate::parser::rewrite_parser::{RewriteMarker, RewriteParser};
+use crate::parser::ToDiagnostic;
 use crate::parser::{expected_token, ParserProgress, RecoveryResult};
 use crate::syntax::assignment::parse_assignment;
 use crate::syntax::assignment::AssignmentExprPrecedence;
@@ -19,7 +20,7 @@ use crate::syntax::function::{
 use crate::syntax::js_parse_error;
 use crate::syntax::js_parse_error::expected_simple_assignment_target;
 use crate::syntax::js_parse_error::{
-    expected_expression, expected_identifier, expected_parameters, invalid_assignment_error,
+    expected_expression, expected_identifier, invalid_assignment_error,
     private_names_only_allowed_on_left_side_of_in_expression,
 };
 use crate::syntax::jsx::parse_jsx_tag_expression;
@@ -701,16 +702,38 @@ fn parse_member_expression_rest(
             BACKTICK => {
                 // test ts ts_optional_chain_call
                 // (<A, B>() => {})?.<A, B>();
-                let m = lhs.precede(p);
+                let m = match lhs.kind() {
+                    TS_INSTANTIATION_EXPRESSION => lhs.undo_completion(p),
+                    _ => lhs.precede(p),
+                };
                 parse_template_literal(p, m, *in_optional_chain, true)
             }
-            _ => break,
-        }
+            T![<] | T![<<] => {
+                //  only those two possible token in cur position `parse_ts_type_arguments_in_expression` could possibly return a `Present(_)`
+                if let Present(_) = parse_ts_type_arguments_in_expression(p) {
+                    let new_marker = lhs.precede(p);
+                    lhs = new_marker.complete(p, JsSyntaxKind::TS_INSTANTIATION_EXPRESSION);
+                    continue;
+                };
+                break;
+            }
+            _ => {
+                break;
+            }
+        };
     }
 
     lhs
 }
 
+// test_err ts ts_new_operator
+// new A<test><test>();
+
+// test ts ts_new_operator
+// var c2 = new T<string>;  // Ok
+// var x1 = new SS<number>(); // OK
+// var x3 = new SS();         // OK
+// var x4 = new SS;           // OK
 fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     if !p.at(T![new]) {
         return Absent;
@@ -741,27 +764,21 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
         return Present(m.complete(p, NEW_TARGET));
     }
 
-    let expression = parse_primary_expression(p, context.and_ts_type_assertion_allowed(false))
-        .or_add_diagnostic(p, expected_expression);
-
-    if let Some(lhs) = expression {
-        parse_member_expression_rest(p, lhs, context, false, &mut false);
+    if let Some(lhs) = parse_primary_expression(p, context.and_ts_type_assertion_allowed(false))
+        .or_add_diagnostic(p, expected_expression)
+        .map(|expr| parse_member_expression_rest(p, expr, context, false, &mut false))
+    {
+        if let TS_INSTANTIATION_EXPRESSION = lhs.kind() {
+            lhs.undo_completion(p).abandon(p)
+        };
     }
 
     // test ts ts_new_with_type_arguments
     // class Test<A, B, C> {}
     // new Test<A, B, C>();
-    let type_arguments = if TypeScript.is_supported(p) {
-        parse_ts_type_arguments_in_expression(p)
-    } else {
-        Absent
-    };
 
     if p.at(T!['(']) {
         parse_call_arguments(p).unwrap();
-    } else if let Present(type_arguments) = type_arguments {
-        let error = p.err_builder("A 'new' expression with type arguments must always be followed by a parenthesized argument list.").primary(type_arguments.range(p), "");
-        p.error(error);
     }
 
     Present(m.complete(p, JS_NEW_EXPRESSION))
@@ -1645,15 +1662,17 @@ fn parse_call_expression_rest(
     loop {
         lhs = parse_member_expression_rest(p, lhs, context, true, &mut in_optional_chain);
 
-        if p.at(T![?.]) {}
-
         if !matches!(p.cur(), T![?.] | T![<] | T![<<] | T!['(']) {
             break lhs;
         }
 
         // Cloning here is necessary because parsing out the type arguments may rewind in which
         // case we want to return the `lhs`.
-        let m = lhs.clone().precede(p);
+        let m = match lhs.kind() {
+            TS_INSTANTIATION_EXPRESSION if !p.at(T![?.]) => lhs.clone().undo_completion(p),
+            _ => lhs.clone().precede(p),
+        };
+
         let start_pos = p.tokens.position();
         let optional_chain_call = p.eat(T![?.]);
         in_optional_chain = in_optional_chain || optional_chain_call;
@@ -1665,26 +1684,24 @@ fn parse_call_expression_rest(
         // (() => a)<A, B, C>();
         // type A<T> = T;
         // a<<T>(arg: T) => number, number, string>();
-        if TypeScript.is_supported(p) && matches!(p.cur(), T![<] | T![<<]) {
-            // rewinds automatically if not a valid type arguments
+
+        let type_arguments = if optional_chain_call {
             let type_arguments = parse_ts_type_arguments_in_expression(p).ok();
-
-            if type_arguments.is_some() {
-                if p.at(BACKTICK) {
-                    // test ts ts_tagged_template_literal
-                    // html<A, B>`abcd`
-                    // html<A, B>`abcd`._string
-                    lhs = parse_template_literal(p, m, optional_chain_call, true);
-                    continue;
-                }
-
-                parse_call_arguments(p).or_add_diagnostic(p, expected_parameters);
-                lhs = m.complete(p, JS_CALL_EXPRESSION);
+            if p.cur() == BACKTICK {
+                // test ts ts_tagged_template_literal
+                // html<A, B>`abcd`
+                // html<A, B>`abcd`._string
+                lhs = parse_template_literal(p, m, optional_chain_call, true);
                 continue;
             }
-        } else if p.at(T!['(']) {
+            type_arguments
+        } else {
+            None
+        };
+
+        if type_arguments.is_some() || p.at(T!['(']) {
             parse_call_arguments(p)
-                .expect("Expected parsed out arguments because the parser is positioned at '('");
+                .or_add_diagnostic(p, |p, _| expected_token(T!['(']).to_diagnostic(p));
             lhs = m.complete(p, JS_CALL_EXPRESSION);
             continue;
         }

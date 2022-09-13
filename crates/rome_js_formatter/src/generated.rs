@@ -2786,6 +2786,38 @@ impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsNonNullAssertionEx
         FormatOwnedWithRule :: new (self , crate :: ts :: expressions :: non_null_assertion_expression :: FormatTsNonNullAssertionExpression :: default ())
     }
 }
+impl FormatRule<rome_js_syntax::TsInstantiationExpression>
+    for crate::ts::expressions::instantiation_expression::FormatTsInstantiationExpression
+{
+    type Context = JsFormatContext;
+    #[inline(always)]
+    fn fmt(
+        &self,
+        node: &rome_js_syntax::TsInstantiationExpression,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        FormatNodeRule::<rome_js_syntax::TsInstantiationExpression>::fmt(self, node, f)
+    }
+}
+impl<'a> AsFormat<'a> for rome_js_syntax::TsInstantiationExpression {
+    type Format = FormatRefWithRule<
+        'a,
+        rome_js_syntax::TsInstantiationExpression,
+        crate::ts::expressions::instantiation_expression::FormatTsInstantiationExpression,
+    >;
+    fn format(&'a self) -> Self::Format {
+        FormatRefWithRule :: new (self , crate :: ts :: expressions :: instantiation_expression :: FormatTsInstantiationExpression :: default ())
+    }
+}
+impl IntoFormat<crate::JsFormatContext> for rome_js_syntax::TsInstantiationExpression {
+    type Format = FormatOwnedWithRule<
+        rome_js_syntax::TsInstantiationExpression,
+        crate::ts::expressions::instantiation_expression::FormatTsInstantiationExpression,
+    >;
+    fn into_format(self) -> Self::Format {
+        FormatOwnedWithRule :: new (self , crate :: ts :: expressions :: instantiation_expression :: FormatTsInstantiationExpression :: default ())
+    }
+}
 impl FormatRule<rome_js_syntax::JsxTagExpression>
     for crate::jsx::expressions::tag_expression::FormatJsxTagExpression
 {
