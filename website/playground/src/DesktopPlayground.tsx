@@ -200,6 +200,7 @@ export default function DesktopPlayground({
 					<TabPanel>
 						<div
 							className="overflow-scroll whitespace-pre-wrap text-red-500 text-xs error-panel h-full"
+							// rome-ignore lint(react/noDanger): the HTML is sanitized by our diagnostic printer
 							dangerouslySetInnerHTML={{ __html: errors }}
 						/>
 					</TabPanel>
