@@ -166,6 +166,7 @@ impl CommentStyle for JsCommentStyle {
                 .or_else(handle_labelled_statement_comment)
                 .or_else(handle_call_expression_comment)
                 .or_else(handle_continue_break_comment)
+                .or_else(handle_mapped_type_comment)
                 .or_else(handle_switch_default_case_comment),
             CommentPosition::OwnLine => handle_member_expression_comment(comment)
                 .or_else(handle_function_declaration_comment)
@@ -180,6 +181,7 @@ impl CommentStyle for JsCommentStyle {
                 .or_else(handle_array_hole_comment)
                 .or_else(handle_labelled_statement_comment)
                 .or_else(handle_call_expression_comment)
+                .or_else(handle_mapped_type_comment)
                 .or_else(handle_continue_break_comment),
             CommentPosition::SameLine => handle_if_statement_comment(comment)
                 .or_else(handle_while_comment)
@@ -1099,6 +1101,33 @@ fn handle_parameter_comment(comment: DecoratedComment<JsLanguage>) -> CommentPla
         }
         _ => {
             // fall through
+        }
+    }
+
+    CommentPlacement::Default(comment)
+}
+
+/// Format comments preceding the type parameter name in mapped types on the line above.
+///
+/// This is achieved by making them dangling comments of the mapped type.
+///
+/// ```javascript
+/// type A = {
+///   /* comment */
+///   [a in A]: string;
+/// }
+/// ```
+fn handle_mapped_type_comment(
+    comment: DecoratedComment<JsLanguage>,
+) -> CommentPlacement<JsLanguage> {
+    if let (JsSyntaxKind::TS_MAPPED_TYPE, Some(following)) =
+        (comment.enclosing_node().kind(), comment.following_node())
+    {
+        if following.kind() == JsSyntaxKind::TS_TYPE_PARAMETER_NAME {
+            return CommentPlacement::Dangling {
+                node: comment.enclosing_node().clone(),
+                comment,
+            };
         }
     }
 

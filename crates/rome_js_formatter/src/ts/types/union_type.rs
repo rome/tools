@@ -35,7 +35,7 @@ impl FormatNodeRule<TsUnionType> for FormatTsUnionType {
             );
         }
 
-        let has_leading_own_line_comment = has_leading_own_line_comment(node.syntax());
+        let has_leading_own_line_comment = f.comments().has_leading_own_line_comment(node.syntax());
 
         let should_indent = {
             let parent_kind = node.syntax().parent().map(|p| p.kind());

@@ -322,7 +322,7 @@ impl<L: Language> Comments<L> {
         let (comments, skipped) = builder.visit(root);
 
         Self {
-            data: Rc::new(CommentsData {
+            data: Rc::new(dbg!(CommentsData {
                 root: Some(root.clone()),
                 is_suppression: Style::is_suppression,
 
@@ -330,7 +330,7 @@ impl<L: Language> Comments<L> {
                 with_skipped: skipped,
                 #[cfg(debug_assertions)]
                 checked_suppressions: RefCell::new(Default::default()),
-            }),
+            })),
         }
     }
 
