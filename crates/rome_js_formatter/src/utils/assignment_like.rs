@@ -820,10 +820,17 @@ impl JsAnyAssignmentLike {
         right: &RightAssignmentLike,
         comments: &JsComments,
     ) -> SyntaxResult<bool> {
-        let result = if let Some(expression) = right.as_expression() {
-            should_break_after_operator(&expression, comments)?
-        } else {
-            comments.has_leading_own_line_comment(right.syntax())
+        let result = match right {
+            RightAssignmentLike::JsAnyExpression(expression) => {
+                should_break_after_operator(expression, comments)?
+            }
+            RightAssignmentLike::JsInitializerClause(initializer) => {
+                should_break_after_operator(&initializer.expression()?, comments)?
+            }
+            RightAssignmentLike::TsType(TsType::TsUnionType(ty)) => {
+                comments.has_leading_comments(ty.syntax())
+            }
+            right => comments.has_leading_own_line_comment(right.syntax()),
         };
 
         Ok(result)

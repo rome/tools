@@ -59,6 +59,7 @@ pub fn format_verbatim_node(node: &JsSyntaxNode) -> FormatVerbatimNode {
         kind: VerbatimKind::Verbatim {
             length: node.text_range().len(),
         },
+        format_comments: true,
     }
 }
 
@@ -66,7 +67,9 @@ pub fn format_verbatim_node(node: &JsSyntaxNode) -> FormatVerbatimNode {
 pub struct FormatVerbatimNode<'node> {
     node: &'node JsSyntaxNode,
     kind: VerbatimKind,
+    format_comments: bool,
 }
+
 impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         for element in self.node.descendants_with_tokens(Direction::Next) {
@@ -98,19 +101,21 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
                 }
 
                 // Format all leading comments that are outside of the node's source range.
-                let comments = f.context().comments().clone();
-                let leading_comments = comments.leading_comments(self.node);
+                if self.format_comments {
+                    let comments = f.context().comments().clone();
+                    let leading_comments = comments.leading_comments(self.node);
 
-                let outside_trimmed_range = leading_comments.partition_point(|comment| {
-                    comment.piece().text_range().end() <= trimmed_source_range.start()
-                });
+                    let outside_trimmed_range = leading_comments.partition_point(|comment| {
+                        comment.piece().text_range().end() <= trimmed_source_range.start()
+                    });
 
-                write!(
-                    f,
-                    [FormatLeadingComments::Comments(
-                        &leading_comments[..outside_trimmed_range]
-                    )]
-                )?;
+                    write!(
+                        f,
+                        [FormatLeadingComments::Comments(
+                            &leading_comments[..outside_trimmed_range]
+                        )]
+                    )?;
+                }
 
                 // Find the first skipped token trivia, if any, and include it in the verbatim range because
                 // the comments only format **up to** but not including skipped token trivia.
@@ -140,20 +145,26 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
                 .fmt(f)?;
 
                 // Format all trailing comments that are outside of the trimmed range.
-                let comments = f.context().comments().clone();
-                let trailing_comments = comments.trailing_comments(self.node);
+                if self.format_comments {
+                    let comments = f.context().comments().clone();
 
-                let outside_trimmed_range_start = trailing_comments.partition_point(|comment| {
-                    source_range(f, comment.piece().text_range()).end()
-                        <= trimmed_source_range.end()
-                });
+                    let trailing_comments = comments.trailing_comments(self.node);
 
-                write!(
-                    f,
-                    [FormatTrailingComments::Comments(
-                        &trailing_comments[outside_trimmed_range_start..]
-                    )]
-                )
+                    let outside_trimmed_range_start =
+                        trailing_comments.partition_point(|comment| {
+                            source_range(f, comment.piece().text_range()).end()
+                                <= trimmed_source_range.end()
+                        });
+
+                    write!(
+                        f,
+                        [FormatTrailingComments::Comments(
+                            &trailing_comments[outside_trimmed_range_start..]
+                        )]
+                    )?;
+                }
+
+                Ok(())
             })]
         )?;
 
@@ -165,6 +176,13 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
         };
 
         f.write_element(FormatElement::Verbatim(verbatim))
+    }
+}
+
+impl FormatVerbatimNode<'_> {
+    pub fn skip_comments(mut self) -> Self {
+        self.format_comments = false;
+        self
     }
 }
 
@@ -184,6 +202,7 @@ impl Format<JsFormatContext> for FormatUnknownNode<'_> {
         FormatVerbatimNode {
             node: self.node,
             kind: VerbatimKind::Unknown,
+            format_comments: true,
         }
         .fmt(f)
     }
@@ -191,12 +210,16 @@ impl Format<JsFormatContext> for FormatUnknownNode<'_> {
 
 /// Format a node having formatter suppression comment applied to it
 pub fn format_suppressed_node(node: &JsSyntaxNode) -> FormatSuppressedNode {
-    FormatSuppressedNode { node }
+    FormatSuppressedNode {
+        node,
+        format_comments: true,
+    }
 }
 
 #[derive(Debug, Clone)]
 pub struct FormatSuppressedNode<'node> {
     node: &'node JsSyntaxNode,
+    format_comments: bool,
 }
 
 impl Format<JsFormatContext> for FormatSuppressedNode<'_> {
@@ -206,8 +229,16 @@ impl Format<JsFormatContext> for FormatSuppressedNode<'_> {
             [FormatVerbatimNode {
                 node: self.node,
                 kind: VerbatimKind::Suppressed,
+                format_comments: self.format_comments
             }]
         )
+    }
+}
+
+impl FormatSuppressedNode<'_> {
+    pub fn skip_comments(mut self) -> Self {
+        self.format_comments = false;
+        self
     }
 }
 

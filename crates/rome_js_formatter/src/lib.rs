@@ -430,7 +430,12 @@ where
         }
 
         self.fmt_leading_comments(node, f)?;
+        self.fmt_node(node, f)?;
+        self.fmt_dangling_comments(node, f)?;
+        self.fmt_trailing_comments(node, f)
+    }
 
+    fn fmt_node(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
         if self.needs_parentheses(node) {
             write!(
                 f,
@@ -439,13 +444,10 @@ where
                     format_once(|f| self.fmt_fields(node, f)),
                     text(")"),
                 ]
-            )?;
+            )
         } else {
-            self.fmt_fields(node, f)?;
+            self.fmt_fields(node, f)
         }
-
-        self.fmt_dangling_comments(node, f)?;
-        self.fmt_trailing_comments(node, f)
     }
 
     /// Formats the node's fields.
@@ -812,10 +814,7 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-// prettier-ignore
-'use strict';
-[].forEach();
-
+type A4 = a | (/* 1 */ b);
         "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);

@@ -35,14 +35,14 @@ impl FormatNodeRule<TsUnionType> for FormatTsUnionType {
             );
         }
 
-        let has_leading_own_line_comment = f.comments().has_leading_own_line_comment(node.syntax());
+        let has_leading_comments = f.comments().has_leading_comments(node.syntax());
 
         let should_indent = {
             let parent_kind = node.syntax().parent().map(|p| p.kind());
 
             // These parents have indent for their content, so we don't need to indent here
             !match parent_kind {
-                Some(JsSyntaxKind::TS_TYPE_ALIAS_DECLARATION) => has_leading_own_line_comment,
+                Some(JsSyntaxKind::TS_TYPE_ALIAS_DECLARATION) => has_leading_comments,
                 parent_kind => {
                     matches!(
                         parent_kind,
@@ -58,14 +58,17 @@ impl FormatNodeRule<TsUnionType> for FormatTsUnionType {
         };
 
         let types = format_with(|f| {
+            if has_leading_comments {
+                write!(f, [soft_line_break()])?;
+            }
+
             write!(
                 f,
                 [
                     FormatTypeSetLeadingSeparator {
                         separator: "|",
                         leading_separator: leading_separator_token.as_ref(),
-                        leading_soft_line_break_or_space: should_indent
-                            && !has_leading_own_line_comment,
+                        leading_soft_line_break_or_space: should_indent && !has_leading_comments,
                     },
                     types.format()
                 ]
@@ -109,6 +112,17 @@ impl FormatNodeRule<TsUnionType> for FormatTsUnionType {
 
     fn needs_parentheses(&self, item: &TsUnionType) -> bool {
         item.needs_parentheses()
+    }
+
+    fn is_suppressed(&self, node: &TsUnionType, f: &JsFormatter) -> bool {
+        f.comments().mark_suppression_checked(node.syntax());
+
+        if node.types().is_empty() {
+            f.comments().is_suppressed(node.syntax())
+        } else {
+            // Suppression applies to first variant
+            false
+        }
     }
 }
 

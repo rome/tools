@@ -236,18 +236,18 @@ pub enum CommentPlacement<L: Language> {
     /// Overrides the positioning of the comment to be a leading node comment.
     Leading {
         node: SyntaxNode<L>,
-        comment: DecoratedComment<L>,
+        comment: SourceComment<L>,
     },
     /// Overrides the positioning of the comment to be a trailing node comment.
     Trailing {
         node: SyntaxNode<L>,
-        comment: DecoratedComment<L>,
+        comment: SourceComment<L>,
     },
 
     /// Makes this comment a dangling comment of `node`
     Dangling {
         node: SyntaxNode<L>,
-        comment: DecoratedComment<L>,
+        comment: SourceComment<L>,
     },
 
     /// Uses the default positioning rules for the comment.
@@ -256,6 +256,29 @@ pub enum CommentPlacement<L: Language> {
 }
 
 impl<L: Language> CommentPlacement<L> {
+    #[inline]
+    pub fn leading(node: SyntaxNode<L>, comment: impl Into<SourceComment<L>>) -> Self {
+        Self::Leading {
+            node,
+            comment: comment.into(),
+        }
+    }
+
+    pub fn dangling(node: SyntaxNode<L>, comment: impl Into<SourceComment<L>>) -> Self {
+        Self::Dangling {
+            node,
+            comment: comment.into(),
+        }
+    }
+
+    #[inline]
+    pub fn trailing(node: SyntaxNode<L>, comment: impl Into<SourceComment<L>>) -> Self {
+        Self::Trailing {
+            node,
+            comment: comment.into(),
+        }
+    }
+
     #[inline]
     pub fn or_else<F>(self, or_else: F) -> Self
     where
@@ -273,7 +296,7 @@ pub trait CommentStyle: Default {
     type Language: Language;
 
     /// Returns `true` if a comment with the given `text` is a `rome-ignore format:` suppression comment.
-    fn is_suppression(text: &str) -> bool {
+    fn is_suppression(_text: &str) -> bool {
         false
     }
 
@@ -326,7 +349,7 @@ impl<L: Language> Comments<L> {
         let (comments, skipped) = builder.visit(root);
 
         Self {
-            data: Rc::new(dbg!(CommentsData {
+            data: Rc::new(CommentsData {
                 root: Some(root.clone()),
                 is_suppression: Style::is_suppression,
 
@@ -334,7 +357,7 @@ impl<L: Language> Comments<L> {
                 with_skipped: skipped,
                 #[cfg(debug_assertions)]
                 checked_suppressions: RefCell::new(Default::default()),
-            })),
+            }),
         }
     }
 

@@ -182,7 +182,8 @@ impl CommentStyle for JsCommentStyle {
                 .or_else(handle_labelled_statement_comment)
                 .or_else(handle_call_expression_comment)
                 .or_else(handle_mapped_type_comment)
-                .or_else(handle_continue_break_comment),
+                .or_else(handle_continue_break_comment)
+                .or_else(handle_union_type_comment),
             CommentPosition::SameLine => handle_if_statement_comment(comment)
                 .or_else(handle_while_comment)
                 .or_else(handle_for_comment)
@@ -199,10 +200,9 @@ impl CommentStyle for JsCommentStyle {
 /// Force end of line type cast comments to remain leading comments of the next node, if any
 fn handle_typecast_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacement<JsLanguage> {
     match comment.following_node() {
-        Some(following_node) if is_type_comment(comment.piece()) => CommentPlacement::Leading {
-            node: following_node.clone(),
-            comment,
-        },
+        Some(following_node) if is_type_comment(comment.piece()) => {
+            CommentPlacement::leading(following_node.clone(), comment)
+        }
         _ => CommentPlacement::Default(comment),
     }
 }
@@ -217,10 +217,7 @@ fn handle_after_arrow_param_comment(
     // () /* comment */ => true
     // ```
     if JsArrowFunctionExpression::can_cast(comment.enclosing_node().kind()) && is_next_arrow {
-        CommentPlacement::Dangling {
-            node: comment.enclosing_node().clone(),
-            comment,
-        }
+        CommentPlacement::dangling(comment.enclosing_node().clone(), comment)
     } else {
         CommentPlacement::Default(comment)
     }
@@ -232,10 +229,7 @@ fn handle_array_hole_comment(
     comment: DecoratedComment<JsLanguage>,
 ) -> CommentPlacement<JsLanguage> {
     if let Some(array_hole) = comment.preceding_node().and_then(JsArrayHole::cast_ref) {
-        CommentPlacement::Leading {
-            node: array_hole.into_syntax(),
-            comment,
-        }
+        CommentPlacement::leading(array_hole.into_syntax(), comment)
     } else {
         CommentPlacement::Default(comment)
     }
@@ -250,15 +244,9 @@ fn handle_call_expression_comment(
     // ```
     if let Some(arguments) = comment.following_node().and_then(JsCallArguments::cast_ref) {
         return if let Some(Ok(first)) = arguments.args().first() {
-            CommentPlacement::Leading {
-                node: first.into_syntax(),
-                comment,
-            }
+            CommentPlacement::leading(first.into_syntax(), comment)
         } else {
-            CommentPlacement::Dangling {
-                node: arguments.into_syntax(),
-                comment,
-            }
+            CommentPlacement::dangling(arguments.into_syntax(), comment)
         };
     }
 
@@ -297,15 +285,9 @@ fn handle_continue_break_comment(
                             | JsSyntaxKind::JS_LABELED_STATEMENT
                     ) =>
                 {
-                    CommentPlacement::Trailing {
-                        node: parent,
-                        comment,
-                    }
+                    CommentPlacement::trailing(parent, comment)
                 }
-                _ => CommentPlacement::Trailing {
-                    node: enclosing.clone(),
-                    comment,
-                },
+                _ => CommentPlacement::trailing(enclosing.clone(), comment),
             }
         }
         _ => CommentPlacement::Default(comment),
@@ -333,10 +315,7 @@ fn handle_switch_default_case_comment(
                 Some(block) if comment.kind().is_line() => {
                     place_block_statement_comment(block, comment)
                 }
-                _ => CommentPlacement::Dangling {
-                    node: comment.enclosing_node().clone(),
-                    comment,
-                },
+                _ => CommentPlacement::dangling(comment.enclosing_node().clone(), comment),
             }
         }
         _ => CommentPlacement::Default(comment),
@@ -347,10 +326,9 @@ fn handle_labelled_statement_comment(
     comment: DecoratedComment<JsLanguage>,
 ) -> CommentPlacement<JsLanguage> {
     match comment.enclosing_node().kind() {
-        JsSyntaxKind::JS_LABELED_STATEMENT => CommentPlacement::Leading {
-            node: comment.enclosing_node().clone(),
-            comment,
-        },
+        JsSyntaxKind::JS_LABELED_STATEMENT => {
+            CommentPlacement::leading(comment.enclosing_node().clone(), comment)
+        }
         _ => CommentPlacement::Default(comment),
     }
 }
@@ -373,10 +351,7 @@ fn handle_class_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlaceme
     ) {
         if comment.preceding_node().is_none() && !comment.position().is_same_line() {
             if let Some(sibling) = comment.enclosing_node().prev_sibling() {
-                return CommentPlacement::Trailing {
-                    node: sibling,
-                    comment,
-                };
+                return CommentPlacement::trailing(sibling, comment);
             }
         }
 
@@ -397,10 +372,7 @@ fn handle_class_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlaceme
         // class Test { /* comment */ }
         // ```
         if comment.following_token().kind() == JsSyntaxKind::R_CURLY && first_member.is_none() {
-            return CommentPlacement::Dangling {
-                node: comment.enclosing_node().clone(),
-                comment,
-            };
+            return CommentPlacement::dangling(comment.enclosing_node().clone(), comment);
         } else {
             return CommentPlacement::Default(comment);
         }
@@ -415,10 +387,7 @@ fn handle_class_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlaceme
         // ```
         if let Some(member) = first_member {
             if following == &member {
-                return CommentPlacement::Leading {
-                    node: member,
-                    comment,
-                };
+                return CommentPlacement::leading(member, comment);
             }
         }
 
@@ -438,10 +407,7 @@ fn handle_class_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlaceme
                     | JsSyntaxKind::TS_EXTENDS_CLAUSE
             ) && !comment.position().is_same_line()
             {
-                return CommentPlacement::Trailing {
-                    node: preceding.clone(),
-                    comment,
-                };
+                return CommentPlacement::trailing(preceding.clone(), comment);
             }
         }
     } else if first_member.is_none() {
@@ -451,10 +417,7 @@ fn handle_class_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlaceme
         // {
         // }
         // ```
-        return CommentPlacement::Dangling {
-            node: comment.enclosing_node().clone(),
-            comment,
-        };
+        return CommentPlacement::dangling(comment.enclosing_node().clone(), comment);
     }
 
     CommentPlacement::Default(comment)
@@ -488,10 +451,7 @@ fn handle_method_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacem
     if let Some(following) = comment.following_node() {
         if let Some(body) = JsFunctionBody::cast_ref(following) {
             if let Some(directive) = body.directives().first() {
-                return CommentPlacement::Leading {
-                    node: directive.into_syntax(),
-                    comment,
-                };
+                return CommentPlacement::leading(directive.into_syntax(), comment);
             }
 
             let first_non_empty = body
@@ -500,14 +460,8 @@ fn handle_method_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacem
                 .find(|statement| !matches!(statement, JsAnyStatement::JsEmptyStatement(_)));
 
             return match first_non_empty {
-                None => CommentPlacement::Dangling {
-                    node: body.into_syntax(),
-                    comment,
-                },
-                Some(statement) => CommentPlacement::Leading {
-                    node: statement.into_syntax(),
-                    comment,
-                },
+                None => CommentPlacement::dangling(body.into_syntax(), comment),
+                Some(statement) => CommentPlacement::leading(statement.into_syntax(), comment),
             };
         }
     }
@@ -530,10 +484,7 @@ fn handle_root_comments(comment: DecoratedComment<JsLanguage>) -> CommentPlaceme
         };
 
         if is_blank {
-            return CommentPlacement::Leading {
-                node: root.into_syntax(),
-                comment,
-            };
+            return CommentPlacement::leading(root.into_syntax(), comment);
         }
     }
 
@@ -563,10 +514,7 @@ fn handle_member_expression_comment(
     // /* comment */[b]
     // ```
     if JsAnyName::can_cast(following.kind()) || JsIdentifierExpression::can_cast(following.kind()) {
-        CommentPlacement::Leading {
-            node: comment.enclosing_node().clone(),
-            comment,
-        }
+        CommentPlacement::leading(comment.enclosing_node().clone(), comment)
     } else {
         CommentPlacement::Default(comment)
     }
@@ -599,14 +547,8 @@ fn handle_function_declaration_comment(
             .iter()
             .find(|statement| !matches!(statement, JsAnyStatement::JsEmptyStatement(_)))
         {
-            Some(first) => CommentPlacement::Leading {
-                node: first.into_syntax(),
-                comment,
-            },
-            None => CommentPlacement::Dangling {
-                node: body.into_syntax(),
-                comment,
-            },
+            Some(first) => CommentPlacement::leading(first.into_syntax(), comment),
+            None => CommentPlacement::dangling(body.into_syntax(), comment),
         }
     } else {
         CommentPlacement::Default(comment)
@@ -649,10 +591,7 @@ fn handle_conditional_comment(
         || conditional.question_mark_token().as_ref() == Ok(&token);
 
     if is_after_operator {
-        return CommentPlacement::Leading {
-            node: following.clone(),
-            comment,
-        };
+        return CommentPlacement::leading(following.clone(), comment);
     }
 
     CommentPlacement::Default(comment)
@@ -680,10 +619,7 @@ fn handle_if_statement_comment(
         // }
         // ```
         if consequent.kind() == JsSyntaxKind::JS_BLOCK_STATEMENT {
-            return CommentPlacement::Trailing {
-                node: consequent,
-                comment,
-            };
+            return CommentPlacement::trailing(consequent, comment);
         }
 
         // Handle end of line comments that aren't stretching over multiple lines.
@@ -704,10 +640,7 @@ fn handle_if_statement_comment(
             && !comment.position().is_own_line()
             && !comment.preceding_node().is_none()
         {
-            return CommentPlacement::Dangling {
-                node: consequent,
-                comment,
-            };
+            return CommentPlacement::dangling(consequent, comment);
         }
 
         // ```javascript
@@ -724,10 +657,7 @@ fn handle_if_statement_comment(
         // else // comment
         // {true}
         // ```
-        CommentPlacement::Dangling {
-            node: if_statement,
-            comment,
-        }
+        CommentPlacement::dangling(if_statement, comment)
     }
 
     match (comment.enclosing_node().kind(), comment.following_node()) {
@@ -737,10 +667,7 @@ fn handle_if_statement_comment(
             if let Some(preceding) = comment.preceding_node() {
                 // Test if this is a comment right before the condition's `)`
                 if comment.following_token().kind() == JsSyntaxKind::R_PAREN {
-                    return CommentPlacement::Trailing {
-                        node: preceding.clone(),
-                        comment,
-                    };
+                    return CommentPlacement::trailing(preceding.clone(), comment);
                 }
 
                 // Handle comments before `else`
@@ -767,10 +694,7 @@ fn handle_if_statement_comment(
             // ```
             if let Some(preceding) = comment.preceding_node() {
                 if JsEmptyStatement::can_cast(following.kind()) {
-                    return CommentPlacement::Trailing {
-                        node: preceding.clone(),
-                        comment,
-                    };
+                    return CommentPlacement::trailing(preceding.clone(), comment);
                 }
             }
 
@@ -793,10 +717,7 @@ fn handle_if_statement_comment(
             // ```
             if let Ok(consequent) = if_statement.consequent() {
                 if consequent.syntax() == following {
-                    return CommentPlacement::Leading {
-                        node: following.clone(),
-                        comment,
-                    };
+                    return CommentPlacement::leading(following.clone(), comment);
                 }
             }
         }
@@ -835,10 +756,7 @@ fn handle_while_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlaceme
     if let Some(preceding) = comment.preceding_node() {
         // Test if this is a comment right before the condition's `)`
         if comment.following_token().kind() == JsSyntaxKind::R_PAREN {
-            return CommentPlacement::Trailing {
-                node: preceding.clone(),
-                comment,
-            };
+            return CommentPlacement::trailing(preceding.clone(), comment);
         }
     }
 
@@ -858,10 +776,7 @@ fn handle_while_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlaceme
     // ```
     if let Some(preceding) = comment.preceding_node() {
         if JsEmptyStatement::can_cast(following.kind()) {
-            return CommentPlacement::Trailing {
-                node: preceding.clone(),
-                comment,
-            };
+            return CommentPlacement::trailing(preceding.clone(), comment);
         }
     }
 
@@ -873,10 +788,7 @@ fn handle_while_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlaceme
     // ```
     if let Ok(body) = while_statement.body() {
         if body.syntax() == following {
-            return CommentPlacement::Leading {
-                node: body.into_syntax(),
-                comment,
-            };
+            return CommentPlacement::leading(body.into_syntax(), comment);
         }
     }
 
@@ -958,10 +870,7 @@ fn handle_for_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacement
     }
 
     if comment.position().is_own_line() && is_for_in_or_of {
-        CommentPlacement::Leading {
-            node: enclosing.clone(),
-            comment,
-        }
+        CommentPlacement::leading(enclosing.clone(), comment)
     }
     // Don't attach comments to empty statement
     // ```javascript
@@ -972,15 +881,9 @@ fn handle_for_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlacement
         JsEmptyStatement::can_cast(following.kind())
     }) {
         if let Some(preceding) = comment.preceding_node() {
-            CommentPlacement::Trailing {
-                node: preceding.clone(),
-                comment,
-            }
+            CommentPlacement::trailing(preceding.clone(), comment)
         } else {
-            CommentPlacement::Dangling {
-                node: comment.enclosing_node().clone(),
-                comment,
-            }
+            CommentPlacement::dangling(comment.enclosing_node().clone(), comment)
         }
     } else {
         CommentPlacement::Default(comment)
@@ -1002,6 +905,7 @@ fn handle_variable_declarator_comment(
                 | JsSyntaxKind::JS_ARRAY_EXPRESSION
                 | JsSyntaxKind::JS_TEMPLATE
                 | JsSyntaxKind::TS_OBJECT_TYPE
+                | JsSyntaxKind::TS_UNION_TYPE
         )
     }
 
@@ -1014,10 +918,7 @@ fn handle_variable_declarator_comment(
             // { };
             // ```
             if is_complex_value(following) || !comment.kind().is_line() {
-                return CommentPlacement::Leading {
-                    node: following.clone(),
-                    comment,
-                };
+                return CommentPlacement::leading(following.clone(), comment);
             }
         }
         JsSyntaxKind::JS_VARIABLE_DECLARATOR => {
@@ -1032,10 +933,7 @@ fn handle_variable_declarator_comment(
                 // ```
                 Some(initializer) if initializer.syntax() == following => {
                     if let Ok(expression) = initializer.expression() {
-                        return CommentPlacement::Leading {
-                            node: expression.into_syntax(),
-                            comment,
-                        };
+                        return CommentPlacement::leading(expression.into_syntax(), comment);
                     }
                 }
                 _ => {
@@ -1059,10 +957,7 @@ fn handle_variable_declarator_comment(
                     && comment.preceding_node().is_none()
                 {
                     if let Ok(id) = variable_declarator.id() {
-                        return CommentPlacement::Trailing {
-                            node: id.into_syntax(),
-                            comment,
-                        };
+                        return CommentPlacement::trailing(id.into_syntax(), comment);
                     }
                 }
             }
@@ -1086,10 +981,7 @@ fn handle_parameter_comment(comment: DecoratedComment<JsLanguage>) -> CommentPla
     // ```
     match comment.enclosing_node().kind() {
         JsSyntaxKind::JS_FORMAL_PARAMETER if comment.position().is_own_line() => {
-            return CommentPlacement::Leading {
-                node: comment.enclosing_node().clone(),
-                comment,
-            }
+            return CommentPlacement::leading(comment.enclosing_node().clone(), comment)
         }
         JsSyntaxKind::JS_INITIALIZER_CLAUSE => {
             if let Some(parameter) = comment
@@ -1106,16 +998,10 @@ fn handle_parameter_comment(comment: DecoratedComment<JsLanguage>) -> CommentPla
                 // ```
                 if comment.position().is_end_of_line() && comment.preceding_node().is_none() {
                     if let Ok(binding) = parameter.binding() {
-                        return CommentPlacement::Trailing {
-                            node: binding.into_syntax(),
-                            comment,
-                        };
+                        return CommentPlacement::trailing(binding.into_syntax(), comment);
                     }
                 } else if comment.position().is_own_line() {
-                    return CommentPlacement::Leading {
-                        node: parameter.into_syntax(),
-                        comment,
-                    };
+                    return CommentPlacement::leading(parameter.into_syntax(), comment);
                 }
             }
         }
@@ -1144,14 +1030,22 @@ fn handle_mapped_type_comment(
         (comment.enclosing_node().kind(), comment.following_node())
     {
         if following.kind() == JsSyntaxKind::TS_TYPE_PARAMETER_NAME {
-            return CommentPlacement::Dangling {
-                node: comment.enclosing_node().clone(),
-                comment,
-            };
+            return CommentPlacement::dangling(comment.enclosing_node().clone(), comment);
         }
     }
 
     CommentPlacement::Default(comment)
+}
+
+fn handle_union_type_comment(
+    comment: DecoratedComment<JsLanguage>,
+) -> CommentPlacement<JsLanguage> {
+    match (comment.enclosing_node().kind(), comment.preceding_node()) {
+        (JsSyntaxKind::TS_UNION_TYPE, Some(preceding)) => {
+            CommentPlacement::trailing(preceding.clone(), comment)
+        }
+        _ => CommentPlacement::Default(comment),
+    }
 }
 
 fn place_leading_statement_comment(
@@ -1160,10 +1054,7 @@ fn place_leading_statement_comment(
 ) -> CommentPlacement<JsLanguage> {
     match statement {
         JsAnyStatement::JsBlockStatement(block) => place_block_statement_comment(block, comment),
-        statement => CommentPlacement::Leading {
-            node: statement.into_syntax(),
-            comment,
-        },
+        statement => CommentPlacement::leading(statement.into_syntax(), comment),
     }
 }
 
@@ -1177,14 +1068,8 @@ fn place_block_statement_comment(
         .find(|statement| !matches!(statement, JsAnyStatement::JsEmptyStatement(_)));
 
     match first_non_empty {
-        None => CommentPlacement::Dangling {
-            node: block_statement.into_syntax(),
-            comment,
-        },
-        Some(statement) => CommentPlacement::Leading {
-            node: statement.into_syntax(),
-            comment,
-        },
+        None => CommentPlacement::dangling(block_statement.into_syntax(), comment),
+        Some(statement) => CommentPlacement::leading(statement.into_syntax(), comment),
     }
 }
 

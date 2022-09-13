@@ -1110,7 +1110,6 @@ pub fn format_range<Language: FormatLanguage>(
     let mut range_end = None;
 
     let sourcemap = printed.sourcemap();
-    dbg!(printed.as_code());
     for marker in sourcemap {
         // marker.source <= range.start()
         if let Some(start_dist) = range.start().checked_sub(marker.source) {
@@ -1233,9 +1232,7 @@ pub fn format_sub_tree<L: FormatLanguage>(
     };
 
     let formatted = format_node(root, language)?;
-    println!("{}", formatted.root);
     let mut printed = formatted.print_with_indent(initial_indent);
-    dbg!(printed.as_code());
     let sourcemap = printed.take_sourcemap();
     let verbatim_ranges = printed.take_verbatim_ranges();
 

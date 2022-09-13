@@ -152,12 +152,16 @@ where
             }
         }
 
-        let trailing_end = trailing_end.unwrap_or(self.pending_comments.len());
-
         // Process the leading trivia of the current token. the trailing trivia is handled as part of the next token
         for leading in token.leading_trivia().pieces() {
             if leading.is_newline() {
                 lines_before += 1;
+                // All comments following from here are own line comments
+                position = CommentPosition::OwnLine;
+
+                if trailing_end.is_none() {
+                    trailing_end = Some(self.pending_comments.len());
+                }
             } else if leading.is_skipped() {
                 self.builder.mark_has_skipped(&token);
 
@@ -173,7 +177,7 @@ where
                     following_token: token.clone(),
                     lines_before,
                     lines_after: 0,
-                    position: CommentPosition::OwnLine,
+                    position,
                     kind,
                     comment,
                 });
@@ -181,6 +185,8 @@ where
                 lines_before = 0;
             }
         }
+
+        let trailing_end = trailing_end.unwrap_or(self.pending_comments.len());
 
         self.last_token = Some(token);
 
@@ -352,15 +358,23 @@ impl<L: Language> CommentsBuilder<L> {
         self.skipped.insert(token.key());
     }
 
-    fn push_leading_comment(&mut self, node: &SyntaxNode<L>, comment: DecoratedComment<L>) {
+    fn push_leading_comment(&mut self, node: &SyntaxNode<L>, comment: impl Into<SourceComment<L>>) {
         self.comments.push_leading(node.key(), comment.into());
     }
 
-    fn push_dangling_comment(&mut self, node: &SyntaxNode<L>, comment: DecoratedComment<L>) {
+    fn push_dangling_comment(
+        &mut self,
+        node: &SyntaxNode<L>,
+        comment: impl Into<SourceComment<L>>,
+    ) {
         self.comments.push_dangling(node.key(), comment.into());
     }
 
-    fn push_trailing_comment(&mut self, node: &SyntaxNode<L>, comment: DecoratedComment<L>) {
+    fn push_trailing_comment(
+        &mut self,
+        node: &SyntaxNode<L>,
+        comment: impl Into<SourceComment<L>>,
+    ) {
         self.comments.push_trailing(node.key(), comment.into());
     }
 
