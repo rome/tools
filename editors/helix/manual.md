@@ -1,0 +1,45 @@
+# Configuration
+Currently, rome support `js`, `jsx`, `ts`, `tsx` four languages. Rome use a file socket to connect the editor client, 
+it should be a little different from other language server using a binary like `rust-analyzer`,
+you could use `nc -U ${LANGUAGE_SERVER_SOCKET_PATH}` to connect your rome language server, `LANGUAGE_SERVER_SOCKET_PATH` could be got by
+`rome __print_socket`, by default it is `/tmp/rome-socket`. More details why we need nc you could reference https://github.com/helix-editor/helix/wiki/How-to-install-the-default-language-servers
+
+**languages.toml**
+```toml
+[[language]]
+name = "javascript"
+scope = "source.js"
+file-types = ["js"]
+language-server = { command = "nc", args = ["-U", "/tmp/rome-socket"] }
+formatter = { command = "rome", args = ["format", "--stdin-file-path", "test.js"]}
+auto-format = true
+
+[[language]]
+name = "jsx"
+scope = "source.jsx"
+file-types = ["jsx"]
+language-server = { command = "nc", args = ["-U", "/tmp/rome-socket"] }
+formatter = { command = "rome", args = ["format", "--stdin-file-path", "test.jsx"]}
+auto-format = true
+[[language]]
+name = "typescript"
+scope = "source.ts"
+file-types = ["ts"]
+language-server = { command = "nc", args = ["-U", "/tmp/rome-socket"] }
+formatter = { command = "rome", args = ["format", "--stdin-file-path", "test.ts"]}
+auto-format = true
+
+[[language]]
+name = "tsx"
+scope = "source.tsx"
+file-types = ["tsx"]
+language-server = { command = "nc", args = ["-U", "/tmp/rome-socket"] }
+formatter = { command = "rome", args = ["format", "--stdin-file-path", "test.tsx"]}
+auto-format = true
+
+```
+
+# Limitation
+1. The `rome-socket` will not automatically create when you reboot until you using command `rome __print_socket`. As a workaround,
+you could write a init startup bash script.
+
