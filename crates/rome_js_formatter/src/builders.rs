@@ -240,14 +240,10 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
                     write_trivia_token(f, leading_trivia)?;
                 }
 
-                let original_source = f
-                    .context()
-                    .source_map()
-                    .map_or_else(
-                        || self.node.text_trimmed(),
-                        |source_map| source_map.text().slice(trimmed_source_range),
-                    )
-                    .to_string();
+                let original_source = f.context().source_map().map_or_else(
+                    || self.node.text_trimmed().to_string(),
+                    |source_map| source_map.text()[trimmed_source_range].to_string(),
+                );
 
                 dynamic_text(
                     &normalize_newlines(&original_source, LINE_TERMINATORS),

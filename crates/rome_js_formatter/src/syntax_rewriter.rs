@@ -7,28 +7,23 @@ use rome_js_syntax::{
 };
 use rome_rowan::syntax::SyntaxTrivia;
 use rome_rowan::{
-    AstNode, SyntaxKind, SyntaxRewriter, SyntaxTriviaPiece, SyntaxTriviaPieceComments,
+    AstNode, SyntaxKind, SyntaxRewriter, SyntaxToken, SyntaxTriviaPiece, SyntaxTriviaPieceComments,
     VisitNodeSignal,
 };
 use std::iter::FusedIterator;
 
 pub(super) fn transform(root: JsSyntaxNode) -> (JsSyntaxNode, TransformSourceMap) {
-    let mut rewriter = JsFormatSyntaxRewriter::new(&root);
+    let mut rewriter = JsFormatSyntaxRewriter::default();
     let transformed = rewriter.transform(root);
     (transformed, rewriter.finish())
 }
 
+#[derive(Default)]
 struct JsFormatSyntaxRewriter {
     source_map: TransformSourceMapBuilder,
 }
 
 impl JsFormatSyntaxRewriter {
-    fn new(root: &JsSyntaxNode) -> Self {
-        Self {
-            source_map: TransformSourceMapBuilder::new(root),
-        }
-    }
-
     /// Replaces parenthesized expression that:
     /// * have no syntax error: has no missing required child or no skipped token trivia attached to the left or right paren
     /// * inner expression isn't an unknown node
@@ -136,6 +131,8 @@ impl JsFormatSyntaxRewriter {
             }
         };
 
+        self.source_map.push_source_text(l_paren.text());
+
         let inner_trimmed_range = inner.text_trimmed_range();
         // Store away the inner offset because the new returned inner might be a detached node
         let mut inner_offset = inner.text_range().start();
@@ -162,6 +159,8 @@ impl JsFormatSyntaxRewriter {
                         ty.with_ty(TsType::unwrap_cast(inner)).into_syntax()
                     }
                 };
+
+                self.source_map.push_source_text(r_paren.text());
 
                 VisitNodeSignal::Replace(updated)
             }
@@ -236,6 +235,8 @@ impl JsFormatSyntaxRewriter {
 
                 self.source_map
                     .add_deleted_range(r_paren.text_trimmed_range());
+
+                self.source_map.push_source_text(r_paren.text());
 
                 // SAFETY: Calling `unwrap` is safe because we know that `last_token` is part of the `updated` subtree.
                 VisitNodeSignal::Replace(
@@ -361,6 +362,11 @@ impl SyntaxRewriter for JsFormatSyntaxRewriter {
             }
             _ => VisitNodeSignal::Traverse(node),
         }
+    }
+
+    fn visit_token(&mut self, token: SyntaxToken<Self::Language>) -> SyntaxToken<Self::Language> {
+        self.source_map.push_source_text(token.text());
+        token
     }
 }
 
@@ -507,7 +513,7 @@ mod tests {
     fn rebalances_logical_expressions() {
         let root = parse_module("a && (b && c)", 0).syntax();
 
-        let transformed = JsFormatSyntaxRewriter::new(&root).transform(root.clone());
+        let transformed = JsFormatSyntaxRewriter::default().transform(root.clone());
 
         // Changed the root tree
         assert_ne!(&transformed, &root);
@@ -535,7 +541,7 @@ mod tests {
     #[test]
     fn only_rebalances_logical_expressions_with_same_operator() {
         let root = parse_module("a && (b || c)", 0).syntax();
-        let transformed = JsFormatSyntaxRewriter::new(&root).transform(root.clone());
+        let transformed = JsFormatSyntaxRewriter::default().transform(root);
 
         // Removes parentheses
         assert_eq!(&transformed.text().to_string(), "a && b || c");
@@ -756,7 +762,7 @@ mod tests {
     fn source_map_test(input: &str) -> (JsSyntaxNode, TransformSourceMap) {
         let tree = parse_module(input, 0).syntax();
 
-        let mut rewriter = JsFormatSyntaxRewriter::new(&tree);
+        let mut rewriter = JsFormatSyntaxRewriter::default();
         let transformed = rewriter.transform(tree);
         let source_map = rewriter.finish();
 
