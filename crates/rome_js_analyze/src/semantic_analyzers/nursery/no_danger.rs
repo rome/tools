@@ -17,18 +17,18 @@ declare_rule! {
     /// ### Invalid
     ///
     /// ```jsx,expect_diagnostic
-    /// <div dangerouslySetInnerHTML={{ __html: 'child' }}></div>
+    /// <div dangerouslySetInnerHTML={{ __html: "child" }}></div>
     /// ```
     ///
     /// ```jsx,expect_diagnostic
     /// React.createElement('div', {
-    //     dangerouslySetInnerHTML: { __html: 'child' }
-    // });
+    ///     dangerouslySetInnerHTML: { __html: "child" }
+    /// });
     /// ```
     pub(crate) NoDanger {
         version: "0.10.0",
         name: "noDanger",
-        recommended: true,
+        recommended: false,
     }
 }
 
