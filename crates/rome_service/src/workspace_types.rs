@@ -231,7 +231,10 @@ fn schema_object_type<'a>(
                     })))
                 })
         })
-        .unwrap_or_else(|| panic!("unimplemented schema {schema:#?}"));
+        .unwrap_or_else(|| {
+            // this is temporary workaround to fix the `options` field, which is not used at the moment
+            TsType::from(make::ts_any_type(make::token(T![any])))
+        });
 
     // Types are considered "optional" in the serialization protocol if they
     // have the `nullable` OpenAPI extension property, or if they have a default value

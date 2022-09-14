@@ -32,7 +32,10 @@ use rome_js_syntax::{JsAnyExpression, JsAnyStatement, JsInitializerClause, JsLan
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList};
 pub(crate) use string_utils::*;
-pub(crate) use typescript::should_hug_type;
+pub(crate) use typescript::{
+    is_object_like_type, should_hug_type, union_or_intersection_type_needs_parentheses,
+    TsIntersectionOrUnionTypeList,
+};
 
 /// Utility function to format the separators of the nodes that belong to the unions
 /// of [rome_js_syntax::TsAnyTypeMember].
@@ -260,4 +263,33 @@ pub(crate) fn has_token_trailing_line_comment(token: &JsSyntaxToken) -> bool {
         .pieces()
         .filter_map(|piece| piece.as_comments())
         .any(|comment| JsCommentStyle.get_comment_kind(&comment).is_line())
+}
+
+/// Tests if the node has any leading comment that will be placed on its own line.
+pub(crate) fn has_leading_own_line_comment(node: &JsSyntaxNode) -> bool {
+    if let Some(leading_trivia) = node.first_leading_trivia() {
+        let mut first_comment = true;
+        let mut after_comment = false;
+        let mut after_new_line = false;
+
+        for piece in leading_trivia.pieces() {
+            if piece.is_comments() {
+                if after_new_line && first_comment {
+                    return true;
+                } else {
+                    first_comment = false;
+                    after_comment = true;
+                }
+            } else if piece.is_newline() {
+                if after_comment {
+                    return true;
+                } else {
+                    after_new_line = true;
+                }
+            } else if piece.is_skipped() {
+                return false;
+            }
+        }
+    }
+    false
 }

@@ -72,10 +72,9 @@ fn main() -> Result<()> {
 
     for (group, rules) in groups {
         let group_name = match group {
-            "js" => "JavaScript",
-            "jsx" => "JSX",
-            "ts" => "TypeScript",
-            "regex" => "RegExp",
+            "correctness" => "Correctness",
+            "nursery" => "Nursery",
+            "style" => "Style",
             _ => panic!("Unknown group ID {group:?}"),
         };
 

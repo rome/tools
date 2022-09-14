@@ -226,7 +226,7 @@ function wrapAsyncCallback(callback) {
 
 app.use(morgan("tiny"));
 
-// rome-ignore lint(js/noUnusedVariables): false positive
+// rome-ignore lint(nursery/noUnusedVariables): false positive
 app.use((req, res, next) => {
 	res.setHeader("Access-Control-Allow-Origin", "*");
 	res.setHeader("Access-Control-Allow-Headers", "Content-Type");
@@ -328,7 +328,7 @@ async function getFreshStats() {
 
 app.get(
 	"/funding/stats",
-	// rome-ignore lint(js/noUnusedVariables): false positive
+	// rome-ignore lint(nursery/noUnusedVariables): false positive
 	wrapAsyncCallback(async (req, res) => {
 		res.json(await getStats());
 	}),
@@ -336,7 +336,7 @@ app.get(
 
 app.get(
 	"/funding/all",
-	// rome-ignore lint(js/noUnusedVariables): false positive
+	// rome-ignore lint(nursery/noUnusedVariables): false positive
 	wrapAsyncCallback(async (req, res) => {
 		res.json(await getAllContributions());
 	}),
@@ -355,7 +355,7 @@ function generateRewardsDescription(tier) {
 app.post(
 	"/funding/checkout",
 	bodyParser.json(),
-	// rome-ignore lint(js/noUnusedVariables): false positive
+	// rome-ignore lint(nursery/noUnusedVariables): false positive
 	wrapAsyncCallback(async (req, res) => {
 		const { body } = req;
 
@@ -488,7 +488,7 @@ app.post(
 	}),
 );
 
-// rome-ignore lint(js/noUnusedVariables): false positive
+// rome-ignore lint(nursery/noUnusedVariables): false positive
 app.use(function (err, req, res, next) {
 	// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
 	if (Sentry !== undefined) {

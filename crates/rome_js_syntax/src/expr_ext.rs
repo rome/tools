@@ -41,7 +41,8 @@ impl JsReferenceIdentifier {
     /// ```
     pub fn has_name(&self, name: &str) -> bool {
         self.value_token()
-            .map( |token| token.text_trimmed() == name).unwrap_or_default()
+            .map(|token| token.text_trimmed() == name)
+            .unwrap_or_default()
     }
 }
 
@@ -560,6 +561,7 @@ impl JsAnyExpression {
             JsAnyExpression::JsComputedMemberExpression(_)
             | JsAnyExpression::JsStaticMemberExpression(_)
             | JsAnyExpression::ImportMeta(_)
+            | JsAnyExpression::TsInstantiationExpression(_)
             | JsAnyExpression::NewTarget(_) => OperatorPrecedence::Member,
 
             JsAnyExpression::JsThisExpression(_)

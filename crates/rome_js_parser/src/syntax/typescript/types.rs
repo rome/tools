@@ -517,6 +517,12 @@ pub(crate) fn parse_ts_name(p: &mut Parser) -> ParsedSyntax {
 // test ts ts_typeof_type
 // let a = "test";
 // type B = typeof a;
+// type T21 = typeof Array<string>;
+// type A<U> = InstanceType<typeof Array<U>>;
+
+// test tsx ts_typeof_type2
+// type X = typeof Array
+// <div>a</div>;
 fn parse_ts_typeof_type(p: &mut Parser) -> ParsedSyntax {
     if !p.at(T![typeof]) {
         return Absent;
@@ -525,6 +531,9 @@ fn parse_ts_typeof_type(p: &mut Parser) -> ParsedSyntax {
     let m = p.start();
     p.expect(T![typeof]);
     parse_ts_name(p).or_add_diagnostic(p, expected_identifier);
+    if !p.has_preceding_line_break() {
+        parse_ts_type_arguments(p).ok();
+    }
 
     Present(m.complete(p, TS_TYPEOF_TYPE))
 }
@@ -1231,6 +1240,35 @@ fn parse_ts_type_predicate(p: &mut Parser) -> ParsedSyntax {
     Present(m.complete(p, kind))
 }
 
+// test ts ts_instantiation_expressions
+// let f1 = fx<string>;
+// let f2 = fx<string, number>;
+// let f3 = fx['test']<string>;
+// const a2 = f.g<number>;  // () => number
+// const a3 = f<number>.g;  // <U>() => U
+// const a4 = f<number>.g<number>;  // () => number
+// const a5 = f['g']<number>;  // () => number
+// const a7 = (f<number>)['g'];
+// const a6 = f<number>['g'];  // type Error
+// const b2 = f?.<number>();
+// const b3 = f<number>?.();
+// const b4 = f<number>?.<number>();  // Type Error, expected no type arguments
+// const x1 = f<true>
+// (true);
+// // Parsed as relational expression
+// const x2 = f<true>
+// true;
+// // Parsed as instantiation expression
+// const x3 = f<true>;
+// true;
+
+// test ts ts_type_instantiation_expression
+// type StringBox = Box<string>;
+
+// test_err ts ts_instantiation_expressions1
+// const a8 = f<number><number>;  // Relational operator error
+// const b1 = f?.<number>;  // Error, `(` expected
+
 pub(crate) fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyntax {
     // Don't parse type arguments in JS because the syntax is ambiguous
     // https://github.com/microsoft/TypeScript/issues/36662
@@ -1246,13 +1284,45 @@ pub(crate) fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyn
         p.re_lex(ReLexContext::TypeArgumentLessThan);
         let arguments = parse_ts_type_arguments_impl(p, false);
 
-        if p.last() == Some(T![>]) && matches!(p.cur(), T!['('] | BACKTICK) {
+        if p.last() == Some(T![>]) && can_follow_type_arguments_in_expr(p.cur()) {
             Ok(Present(arguments))
         } else {
             Err(())
         }
     })
     .unwrap_or(Absent)
+}
+
+#[inline]
+pub fn can_follow_type_arguments_in_expr(cur_kind: JsSyntaxKind) -> bool {
+    matches!(
+        cur_kind,
+        T!['(']
+        | BACKTICK
+         // These tokens can't follow in a call expression, nor can they start an
+        // expression. So, consider the type argument list part of an instantiation
+        // expression.
+        | T![,]
+        | T![.]
+        | T![?.]
+        | T![')']
+        | T![']']
+        | T![:]
+        | T![;]
+        | T![?]
+        | T![==]
+        | T![===]
+        | T![!=]
+        | T![!==]
+        | T![&&]
+        | T![||]
+        | T![??]
+        | T![^]
+        | T![&]
+        | T![|]
+        | T!['}']
+        | EOF
+    )
 }
 
 pub(crate) fn parse_ts_type_arguments(p: &mut Parser) -> ParsedSyntax {

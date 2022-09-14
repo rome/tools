@@ -750,11 +750,7 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-type Example = {
-  [A in B]: T;
-} & {
-  [A in B]: T;
-};
+        type C = B & (C | A) & B;
 
 "#;
         let syntax = SourceType::tsx();

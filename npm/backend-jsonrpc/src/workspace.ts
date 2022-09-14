@@ -85,40 +85,84 @@ export interface JavascriptFormatter {
 	quoteStyle?: QuoteStyle;
 }
 export interface Rules {
-	js?: Js;
-	jsx?: Jsx;
+	correctness?: Correctness;
+	nursery?: Nursery;
 	/**
 	 * It enables the lint rules recommended by Rome. `true` by default.
 	 */
 	recommended?: boolean;
-	regex?: Regex;
-	ts?: Ts;
+	style?: Style;
 }
 export type QuoteProperties = "asNeeded" | "preserve";
 export type QuoteStyle = "double" | "single";
-export interface Js {
+/**
+ * A list of rules that belong to this group
+ */
+export interface Correctness {
+	noArguments?: RuleConfiguration;
+	noAsyncPromiseExecutor?: RuleConfiguration;
+	noCatchAssign?: RuleConfiguration;
+	noCommentText?: RuleConfiguration;
+	noCompareNegZero?: RuleConfiguration;
+	noDebugger?: RuleConfiguration;
+	noDelete?: RuleConfiguration;
+	noDoubleEquals?: RuleConfiguration;
+	noDupeArgs?: RuleConfiguration;
+	noEmptyPattern?: RuleConfiguration;
+	noExtraBooleanCast?: RuleConfiguration;
+	noFunctionAssign?: RuleConfiguration;
+	noImplicitBoolean?: RuleConfiguration;
+	noImportAssign?: RuleConfiguration;
+	noLabelVar?: RuleConfiguration;
+	noMultipleSpacesInRegularExpressionLiterals?: RuleConfiguration;
+	noShadowRestrictedNames?: RuleConfiguration;
+	noSparseArray?: RuleConfiguration;
+	noUnnecessaryContinue?: RuleConfiguration;
+	noUnsafeNegation?: RuleConfiguration;
+	noUnusedTemplateLiteral?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
+	useBlockStatements?: RuleConfiguration;
+	useOptionalChain?: RuleConfiguration;
+	useSimplifiedLogicExpression?: RuleConfiguration;
+	useSingleCaseStatement?: RuleConfiguration;
+	useSingleVarDeclarator?: RuleConfiguration;
+	useTemplate?: RuleConfiguration;
+	useValidTypeof?: RuleConfiguration;
+	useWhile?: RuleConfiguration;
 }
-export interface Jsx {
+/**
+ * A list of rules that belong to this group
+ */
+export interface Nursery {
+	noUnreachable?: RuleConfiguration;
+	noUnusedVariables?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
+	useCamelCase?: RuleConfiguration;
 }
-export interface Regex {
+/**
+ * A list of rules that belong to this group
+ */
+export interface Style {
+	noNegationElse?: RuleConfiguration;
+	noShoutyConstants?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
+	useSelfClosingElements?: RuleConfiguration;
+	useShorthandArrayType?: RuleConfiguration;
 }
-export interface Ts {
-	/**
-	 * It enables the recommended rules for this group
-	 */
-	recommended?: boolean;
+export type RuleConfiguration = RulePlainConfiguration | RuleWithOptions;
+export type RulePlainConfiguration = "warn" | "error" | "off";
+export interface RuleWithOptions {
+	level: RulePlainConfiguration;
+	options: any;
 }
 export interface OpenFileParams {
 	content: string;

@@ -1,0 +1,36 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: JsIfStatement.js
+---
+# Input
+```js
+function JsIfStatement1() {
+    if (true) {
+        return;
+    } else {
+        return;
+    }
+
+    afterIfElseReturn();
+}
+
+```
+
+# Diagnostics
+```
+warning[nursery/noUnreachable]: This code is unreachable
+  ┌─ JsIfStatement.js:8:5
+  │
+3 │         return;
+  │         ------- Either this statement ...
+4 │     } else {
+5 │         return;
+  │         ------- ... or this statement will return from the function ...
+  ·
+8 │     afterIfElseReturn();
+  │     -------------------- ... before it can reach this code
+
+
+```
+
+

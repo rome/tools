@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/cast/generic-cast.ts
 ---
 
 # Input
@@ -80,30 +82,7 @@ function x() {
  
    const stillTooLong = <
      Immutable.Map<
-@@ -24,37 +24,35 @@
- 
-   const stillTooLong2 = <
-     | Immutable.Map<
--        string,
--        boolean,
--        number,
--        object,
--        null,
--        undefined,
--        any,
--        void,
--        never
--      >
-+      string,
-+      boolean,
-+      number,
-+      object,
-+      null,
-+      undefined,
-+      any,
-+      void,
-+      never
-+    >
+@@ -37,10 +37,8 @@
      | undefined
    >someExistingConfigMap.mergeDeep(fallbackOptions);
  
@@ -116,30 +95,6 @@ function x() {
    );
  
    const stillTooLong4 = <
-     | Immutable.Map<
--        string,
--        boolean,
--        number,
--        object,
--        null,
--        undefined,
--        any,
--        void,
--        never
--      >
-+      string,
-+      boolean,
-+      number,
-+      object,
-+      null,
-+      undefined,
-+      any,
-+      void,
-+      never
-+    >
-     | undefined
-   >someExistingConfigMap.mergeDeep(
-     fallbackOptions.someMethodWithLongName(param1, param2),
 @@ -111,9 +109,9 @@
    const fitsObjLiteral = <PermissionsChecker<any> | undefined>{ a: "test" };
    const fitsArrayLiteral = <PermissionsChecker<any> | undefined>["t1", "t2"];
@@ -201,16 +156,16 @@ function y() {
 
   const stillTooLong2 = <
     | Immutable.Map<
-      string,
-      boolean,
-      number,
-      object,
-      null,
-      undefined,
-      any,
-      void,
-      never
-    >
+        string,
+        boolean,
+        number,
+        object,
+        null,
+        undefined,
+        any,
+        void,
+        never
+      >
     | undefined
   >someExistingConfigMap.mergeDeep(fallbackOptions);
 
@@ -220,16 +175,16 @@ function y() {
 
   const stillTooLong4 = <
     | Immutable.Map<
-      string,
-      boolean,
-      number,
-      object,
-      null,
-      undefined,
-      any,
-      void,
-      never
-    >
+        string,
+        boolean,
+        number,
+        object,
+        null,
+        undefined,
+        any,
+        void,
+        never
+      >
     | undefined
   >someExistingConfigMap.mergeDeep(
     fallbackOptions.someMethodWithLongName(param1, param2),

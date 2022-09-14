@@ -42,6 +42,7 @@ impl FormatRule<JsAnyExpression> for FormatJsAnyExpression {
             JsAnyExpression::TsTypeAssertionExpression(node) => node.format().fmt(f),
             JsAnyExpression::TsAsExpression(node) => node.format().fmt(f),
             JsAnyExpression::TsNonNullAssertionExpression(node) => node.format().fmt(f),
+            JsAnyExpression::TsInstantiationExpression(node) => node.format().fmt(f),
             JsAnyExpression::JsxTagExpression(node) => node.format().fmt(f),
         }
     }

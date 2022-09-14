@@ -1,6 +1,5 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 147
 expression: content
 ---
 ## `rome.json`
@@ -17,8 +16,7 @@ expression: content
   "linter": {
     "enabled": true,
     "rules": {
-        "js": {
-            "noDeadCode": "off",
+        "correctness": {
             "useSimplifiedLogicExpression": "warn",
             "noCatchAssign": "error",
             "noLabelVar": {
@@ -27,6 +25,9 @@ expression: content
             "useTemplate": {
                 "level": "error"
             }
+        },
+        "nursery": {
+            "noUnreachable": "off"
         }
     }
   },

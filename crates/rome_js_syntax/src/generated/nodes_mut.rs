@@ -4642,6 +4642,20 @@ impl TsInferType {
         )
     }
 }
+impl TsInstantiationExpression {
+    pub fn with_expression(self, element: JsAnyExpression) -> Self {
+        Self::unwrap_cast(
+            self.syntax
+                .splice_slots(0usize..=0usize, once(Some(element.into_syntax().into()))),
+        )
+    }
+    pub fn with_arguments(self, element: TsTypeArguments) -> Self {
+        Self::unwrap_cast(
+            self.syntax
+                .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
+        )
+    }
+}
 impl TsInterfaceDeclaration {
     pub fn with_interface_token(self, element: SyntaxToken) -> Self {
         Self::unwrap_cast(
@@ -5739,6 +5753,12 @@ impl TsTypeofType {
             self.syntax
                 .splice_slots(1usize..=1usize, once(Some(element.into_syntax().into()))),
         )
+    }
+    pub fn with_type_arguments(self, element: Option<TsTypeArguments>) -> Self {
+        Self::unwrap_cast(self.syntax.splice_slots(
+            2usize..=2usize,
+            once(element.map(|element| element.into_syntax().into())),
+        ))
     }
 }
 impl TsUndefinedType {

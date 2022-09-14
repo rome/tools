@@ -35,6 +35,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         let mut lines_recommended_rule_as_filter = Vec::new();
         let mut declarations = Vec::new();
         let mut lines_rule = Vec::new();
+        let mut schema_lines_rules = Vec::new();
         let property_group_name = Ident::new(&to_lower_snake_case(group), Span::call_site());
 
         let mut number_of_recommended_rules: u8 = 0;
@@ -60,9 +61,18 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
             lines_rule.push(quote! {
                  #rule
             });
+            schema_lines_rules.push(quote! {
+                #rule_identifier: Option<RuleConfiguration>
+            });
         }
 
         let group_struct_name = Ident::new(&group.to_capitalized().to_string(), Span::call_site());
+        let group_schema_struct_name = Ident::new(
+            &format!("{}Schema", &group.to_capitalized().to_string()),
+            Span::call_site(),
+        );
+        let group_schema_struct_name_as_literal =
+            Literal::string(&format!("{}Schema", &group.to_capitalized().to_string()));
 
         let number_of_recommended_rules = Literal::u8_unsuffixed(number_of_recommended_rules);
         let deserialize_function_string = Literal::string(&format!("deserialize_{}_rules", group));
@@ -80,7 +90,16 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
 
                 /// List of rules for the current group
                 #[serde(skip_serializing_if = "IndexMap::is_empty", deserialize_with = #deserialize_function_string, flatten)]
+                #[cfg_attr(feature = "schemars", schemars(with = #group_schema_struct_name_as_literal))]
                 pub rules: IndexMap<String, RuleConfiguration>,
+            }
+
+            // Struct is only used when generating the JSON schema
+            #[cfg_attr(feature = "schemars", derive(JsonSchema), serde(rename_all = "camelCase"))]
+            #[allow(dead_code)]
+            /// A list of rules that belong to this group
+            struct #group_schema_struct_name {
+                #( #schema_lines_rules ),*
             }
 
 
