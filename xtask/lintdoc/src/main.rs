@@ -1,11 +1,9 @@
 use pulldown_cmark::{html::write_html, CodeBlockKind, Event, LinkType, Parser, Tag};
 use rome_analyze::{AnalysisFilter, ControlFlow, RuleCategories, RuleFilter};
-use rome_console::fmt::Termcolor;
 use rome_console::{
     fmt::{Formatter, HTML},
     markup, Markup,
 };
-use rome_diagnostics::termcolor::NoColor;
 use rome_diagnostics::{file::SimpleFile, Diagnostic};
 use rome_js_analyze::{analyze, metadata};
 use rome_js_syntax::{Language, LanguageVariant, ModuleKind, SourceType};
@@ -103,7 +101,7 @@ to promote these rules into a more appropriate category."
         writeln!(index, "<section>")?;
         writeln!(index, "<h2>{group_name}</h2>")?;
         writeln!(index)?;
-        writeln!(index, "{}", markup_to_string(description))?;
+        markup_to_string(&mut index, description)?;
         writeln!(index)?;
 
         for (rule, meta) in rules {
@@ -517,11 +515,8 @@ fn assert_lint(
     Ok(())
 }
 
-pub fn markup_to_string(markup: Markup) -> String {
-    let mut buffer = Vec::new();
-    let mut write = Termcolor(NoColor::new(&mut buffer));
+pub fn markup_to_string(buffer: &mut Vec<u8>, markup: Markup) -> io::Result<()> {
+    let mut write = HTML(buffer);
     let mut fmt = Formatter::new(&mut write);
-    fmt.write_markup(markup).unwrap();
-
-    String::from_utf8(buffer).unwrap()
+    fmt.write_markup(markup)
 }

@@ -279,7 +279,6 @@ Disallow unreachable code
 <h3 data-toc-exclude id="noUnusedVariables">
 	<a href="/docs/lint/rules/noUnusedVariables">noUnusedVariables (since v0.9.0)</a>
 	<a class="header-anchor" href="#noUnusedVariables"></a>
-	<span class="recommended">recommended</span>
 </h3>
 Disallow unused variables.
 </div>

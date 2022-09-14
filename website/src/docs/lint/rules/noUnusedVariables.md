@@ -5,8 +5,6 @@ layout: layouts/rule.liquid
 
 # noUnusedVariables (since v0.9.0)
 
-> This rule is recommended by Rome.
-
 Disallow unused variables.
 
 There are two exceptions to this rule:
