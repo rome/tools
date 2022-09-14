@@ -541,7 +541,7 @@ mod tests {
     #[test]
     fn only_rebalances_logical_expressions_with_same_operator() {
         let root = parse_module("a && (b || c)", 0).syntax();
-        let transformed = JsFormatSyntaxRewriter::default().transform(root.clone());
+        let transformed = JsFormatSyntaxRewriter::default().transform(root);
 
         // Removes parentheses
         assert_eq!(&transformed.text().to_string(), "a && b || c");
