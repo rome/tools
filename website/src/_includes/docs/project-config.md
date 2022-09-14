@@ -47,11 +47,6 @@ A list of rules for `JavaScript` category.
 
 Enables the [recommended rules](/docs/lint/rules) for the category `JavaScript`.
 
-#### `linter.rules.js.rules`
-
-A map with the name of the rule as key, and their configuration as value. Check [rule configuration section](#configure-a-rule).
-for more details.
-
 Example:
 
 ```json
@@ -77,10 +72,6 @@ A list of rules for `TypeScript` category.
 
 Enables the [recommended rules](/docs/lint/rules) for the category `TypeScript`.
 
-#### `linter.rules.ts.rules`
-
-A map with the name of the rule as key, and their configuration as value. Check [rule configuration section](#configure-a-rule).
-for more details.
 
 Example:
 
@@ -107,11 +98,6 @@ A list of rules for `JSX` category.
 
 Enables the [recommended rules](/docs/lint/rules) for the category `JSX`.
 
-#### `linter.rules.jsx.rules`
-
-A map with the name of the rule as key, and their configuration as value. Check [rule configuration section](#configure-a-rule).
-for more details.
-
 Example:
 
 ```json
@@ -136,11 +122,6 @@ A list of rules for `Regex` category.
 #### `linter.rules.regex.recommended`
 
 Enables the [recommended rules](/docs/lint/rules) for the category `Regex`.
-
-#### `linter.rules.regex.rules`
-
-A map with the name of the rule as key, and their configuration as value. Check [rule configuration section](#configure-a-rule).
-for more details.
 
 Example:
 
