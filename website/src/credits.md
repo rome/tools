@@ -410,6 +410,14 @@ layout: layouts/page.liquid
 </ul>
 <!-- GENERATED:END(id:main) -->
 
+### Acknowledgements and inspirations
+
+Rome contains code that is heavily inspired from other projects. They have been adapted to Rome's 
+language/infrastructure.
+
+- [Prettier](https://github.com/prettier/prettier/)
+  - [LICENSE](https://github.com/rome/tools/blob/main/crates/rome_js_formatter/LICENSE)
+
 ## Forks
 
 Rome contains code forked from other projects. They have been transformed in some way, sometimes
