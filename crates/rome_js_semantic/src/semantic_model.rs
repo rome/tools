@@ -461,8 +461,9 @@ impl SemanticModel {
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
     /// use rome_js_syntax::{SourceType, JsReferenceIdentifier};
     /// use rome_js_semantic::{semantic_model, SemanticScopeExtensions};
+    /// use rome_diagnostics::file::FileId;
     ///
-    /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", 0, SourceType::js_module());
+    /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", FileId::zero(), SourceType::js_module());
     /// let model = semantic_model(&r.tree());
     ///
     /// let arguments_reference = r
@@ -503,8 +504,9 @@ impl SemanticModel {
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
     /// use rome_js_syntax::{SourceType, JsReferenceIdentifier};
     /// use rome_js_semantic::{semantic_model, DeclarationExtensions};
+    /// use rome_diagnostics::file::FileId;
     ///
-    /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", 0, SourceType::js_module());
+    /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", FileId::zero(), SourceType::js_module());
     /// let model = semantic_model(&r.tree());
     ///
     /// let arguments_reference = r
@@ -536,8 +538,9 @@ impl SemanticModel {
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
     /// use rome_js_syntax::{SourceType, JsIdentifierBinding};
     /// use rome_js_semantic::{semantic_model, AllReferencesExtensions};
+    /// use rome_diagnostics::file::FileId;
     ///
-    /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", 0, SourceType::js_module());
+    /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", FileId::zero(), SourceType::js_module());
     /// let model = semantic_model(&r.tree());
     ///
     /// let a_binding = r
@@ -878,6 +881,7 @@ pub fn semantic_model(root: &JsAnyRoot) -> SemanticModel {
 #[cfg(test)]
 mod test {
     use super::*;
+    use rome_diagnostics::file::FileId;
     use rome_js_syntax::{JsReferenceIdentifier, JsSyntaxKind, SourceType, TsIdentifierBinding};
     use rome_rowan::SyntaxNodeCast;
 
@@ -885,7 +889,7 @@ mod test {
     pub fn ok_semantic_model() {
         let r = rome_js_parser::parse(
             "function f(){let a = arguments[0]; let b = a + 1; b = 2; console.log(b)}",
-            0,
+            FileId::zero(),
             SourceType::js_module(),
         );
         let model = semantic_model(&r.tree());
@@ -989,7 +993,7 @@ mod test {
     pub fn ok_semantic_model_function_scope() {
         let r = rome_js_parser::parse(
             "function f() {} function g() {}",
-            0,
+            FileId::zero(),
             SourceType::js_module(),
         );
         let model = semantic_model(&r.tree());
@@ -1029,7 +1033,7 @@ mod test {
 
     /// Finds the last time a token named "name" is used and see if its node is marked as exported
     fn assert_is_exported(is_exported: bool, name: &str, code: &str) {
-        let r = rome_js_parser::parse(code, 0, SourceType::tsx());
+        let r = rome_js_parser::parse(code, FileId::zero(), SourceType::tsx());
         let model = semantic_model(&r.tree());
 
         let node = r

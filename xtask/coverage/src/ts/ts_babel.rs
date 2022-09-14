@@ -3,6 +3,7 @@ use crate::{
     check_file_encoding,
     runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite},
 };
+use rome_diagnostics::file::FileId;
 use rome_js_syntax::{LanguageVariant, SourceType};
 use rome_rowan::SyntaxKind;
 use std::path::Path;
@@ -44,7 +45,7 @@ impl TestCase for BabelTypescriptTestCase {
         let source_type = SourceType::ts().with_variant(self.variant);
         let files = TestCaseFiles::single(self.name().to_string(), self.code.clone(), source_type);
 
-        let result = rome_js_parser::parse(&self.code, 0, source_type);
+        let result = rome_js_parser::parse(&self.code, FileId::zero(), source_type);
 
         if self.expected_to_fail && result.diagnostics().is_empty() {
             TestRunOutcome::IncorrectlyPassed(files)
@@ -62,7 +63,10 @@ impl TestCase for BabelTypescriptTestCase {
         {
             TestRunOutcome::IncorrectlyErrored {
                 files,
-                errors: vec![create_unknown_node_in_tree_diagnostic(0, unknown)],
+                errors: vec![create_unknown_node_in_tree_diagnostic(
+                    FileId::zero(),
+                    unknown,
+                )],
             }
         } else {
             TestRunOutcome::Passed(files)

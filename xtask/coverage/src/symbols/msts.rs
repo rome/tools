@@ -1,3 +1,4 @@
+use rome_diagnostics::file::FileId;
 use rome_js_semantic::SemanticEvent;
 use rome_js_syntax::SourceType;
 
@@ -71,7 +72,7 @@ impl TestCase for SymbolsMicrosoftTestCase {
 
         let t = TestCaseFiles::single(self.name.clone(), code.clone(), SourceType::tsx());
 
-        let r = rome_js_parser::parse(&code, 0, SourceType::tsx());
+        let r = rome_js_parser::parse(&code, FileId::zero(), SourceType::tsx());
         let mut actual: Vec<_> = rome_js_semantic::semantic_events(r.syntax())
             .into_iter()
             .filter(|x| {

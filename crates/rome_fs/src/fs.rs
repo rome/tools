@@ -5,7 +5,8 @@ use std::{
     sync::Arc,
 };
 
-use crate::{interner::FileId, PathInterner, RomePath};
+use crate::{PathInterner, RomePath};
+use rome_diagnostics::file::FileId;
 
 mod memory;
 mod os;

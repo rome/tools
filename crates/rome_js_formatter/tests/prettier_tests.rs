@@ -1,3 +1,4 @@
+use rome_diagnostics::file::FileId;
 use rome_rowan::{TextRange, TextSize};
 use similar::{utils::diff_lines, Algorithm, ChangeTag, TextDiff};
 use std::fs::remove_file;
@@ -61,7 +62,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
         input_file.try_into().unwrap()
     };
 
-    let parsed = parse(&parse_input, 0, source_type);
+    let parsed = parse(&parse_input, FileId::zero(), source_type);
 
     let has_errors = parsed.has_errors();
     let syntax = parsed.syntax();

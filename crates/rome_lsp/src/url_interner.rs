@@ -18,7 +18,7 @@ impl UrlInterner {
     /// If `path` does not exists in `self`, returns [`None`].
     #[allow(unused)]
     pub(crate) fn get(&self, path: &Url) -> Option<FileId> {
-        self.map.get_index_of(path)
+        self.map.get_index_of(path).map(FileId::from)
     }
 
     /// Insert `path` in `self`.
@@ -28,7 +28,7 @@ impl UrlInterner {
     pub(crate) fn intern(&mut self, path: Url) -> FileId {
         let (id, _added) = self.map.insert_full(path);
         assert!(id < usize::MAX);
-        id
+        FileId::from(id)
     }
 
     /// Returns the path corresponding to `id`.
@@ -38,6 +38,6 @@ impl UrlInterner {
     /// Panics if `id` does not exists in `self`.
     #[allow(dead_code)]
     pub(crate) fn lookup(&self, id: FileId) -> &Url {
-        self.map.get_index(id).unwrap()
+        self.map.get_index(id.into()).unwrap()
     }
 }

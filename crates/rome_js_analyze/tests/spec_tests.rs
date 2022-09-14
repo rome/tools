@@ -9,6 +9,7 @@ use rome_console::{
     fmt::{Formatter, Termcolor},
     markup, Markup,
 };
+use rome_diagnostics::file::FileId;
 use rome_diagnostics::{file::SimpleFile, termcolor::NoColor, Diagnostic};
 use rome_js_parser::{
     parse,
@@ -28,7 +29,7 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
         .unwrap_or_else(|err| panic!("failed to read {:?}: {:?}", input_file, err));
 
     let source_type = input_file.try_into().unwrap();
-    let parsed = parse(&input_code, 0, source_type);
+    let parsed = parse(&input_code, FileId::zero(), source_type);
     let root = parsed.tree();
 
     let (group, rule) = parse_test_path(input_file);
@@ -42,7 +43,7 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     let mut diagnostics = Vec::new();
     let mut code_fixes = Vec::new();
 
-    rome_js_analyze::analyze(0, &root, filter, |event| {
+    rome_js_analyze::analyze(FileId::zero(), &root, filter, |event| {
         if let Some(diag) = event.diagnostic() {
             let mut diag = diag.into_diagnostic(Severity::Warning);
             if let Some(action) = event.action() {
@@ -165,7 +166,7 @@ fn check_code_action(
     }
 
     // Re-parse the modified code and panic if the resulting tree has syntax errors
-    let re_parse = parse(&output, 0, source_type);
+    let re_parse = parse(&output, FileId::zero(), source_type);
     assert_errors_are_absent(&re_parse, path);
 }
 

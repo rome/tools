@@ -402,12 +402,17 @@ impl FusedIterator for JsxSplitChunksIterator<'_> {}
 #[cfg(test)]
 mod tests {
     use crate::utils::jsx::{jsx_split_children, JsxChild, JsxSplitChunksIterator, JsxTextChunk};
+    use rome_diagnostics::file::FileId;
     use rome_js_parser::parse;
     use rome_js_syntax::{JsxChildList, JsxText, SourceType};
     use rome_rowan::{AstNode, TextSize};
 
     fn assert_jsx_text_chunks(text: &str, expected_chunks: Vec<(TextSize, JsxTextChunk)>) {
-        let parse = parse(&std::format!("<>{text}</>"), 0, SourceType::jsx());
+        let parse = parse(
+            &std::format!("<>{text}</>"),
+            FileId::zero(),
+            SourceType::jsx(),
+        );
         assert!(
             !parse.has_errors(),
             "Source should not have any errors {:?}",
@@ -478,7 +483,11 @@ mod tests {
     }
 
     fn parse_jsx_children(children: &str) -> JsxChildList {
-        let parse = parse(&std::format!("<div>{children}</div>"), 0, SourceType::jsx());
+        let parse = parse(
+            &std::format!("<div>{children}</div>"),
+            FileId::zero(),
+            SourceType::jsx(),
+        );
 
         assert!(
             !parse.has_errors(),

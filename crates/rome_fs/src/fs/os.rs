@@ -3,10 +3,10 @@ use super::{BoxedTraversal, File};
 use crate::fs::{FileSystemExt, OpenOptions};
 use crate::{
     fs::{TraversalContext, TraversalScope},
-    interner::FileId,
     FileSystem, RomePath,
 };
 use rayon::{scope, Scope};
+use rome_diagnostics::file::FileId;
 use std::{
     ffi::OsStr,
     fs,

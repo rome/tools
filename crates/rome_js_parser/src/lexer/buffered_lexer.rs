@@ -283,12 +283,13 @@ impl From<&LexerCheckpoint> for LookaheadToken {
 mod tests {
     use super::BufferedLexer;
     use crate::lexer::{LexContext, Lexer, TextRange, TextSize};
+    use rome_diagnostics::file::FileId;
     use rome_js_syntax::JsSyntaxKind::{JS_NUMBER_LITERAL, NEWLINE, WHITESPACE};
     use rome_js_syntax::T;
 
     #[test]
     fn without_lookahead() {
-        let lexer = Lexer::from_str("let a\n = 5", 0);
+        let lexer = Lexer::from_str("let a\n = 5", FileId::zero());
         let mut buffered = BufferedLexer::new(lexer);
 
         buffered.next_token(LexContext::default());
@@ -315,7 +316,7 @@ mod tests {
 
     #[test]
     fn lookahead() {
-        let lexer = Lexer::from_str("let a\n = 5", 0);
+        let lexer = Lexer::from_str("let a\n = 5", FileId::zero());
         let mut buffered = BufferedLexer::new(lexer);
 
         buffered.next_token(LexContext::default());

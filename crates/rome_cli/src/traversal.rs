@@ -196,7 +196,7 @@ struct ProcessMessagesOptions<'ctx> {
     /// Mutable reference to the [console](Console)
     console: &'ctx mut dyn Console,
     /// Receiver channel that expects info when a file is processed
-    recv_files: Receiver<(usize, PathBuf)>,
+    recv_files: Receiver<(FileId, PathBuf)>,
     /// Receiver channel that expects info when a message is sent
     recv_msgs: Receiver<Message>,
     /// Sender of reports

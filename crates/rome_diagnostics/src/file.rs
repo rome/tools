@@ -107,8 +107,28 @@ impl Span for TextRange {
     }
 }
 
+#[derive(Debug, Clone, Copy, Eq, PartialEq, PartialOrd, Ord, Hash)]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
 /// An id that points into a file database.
-pub type FileId = usize;
+pub struct FileId(usize);
+impl FileId {
+    pub const fn zero() -> Self {
+        Self(0)
+    }
+}
+impl From<usize> for FileId {
+    fn from(input: usize) -> Self {
+        Self(input)
+    }
+}
+impl From<FileId> for usize {
+    fn from(input: FileId) -> Self {
+        input.0
+    }
+}
 
 /// A range that is indexed in a specific file.
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
@@ -187,7 +207,7 @@ impl SimpleFiles {
 
     /// Adds a file to this database and returns the id for the new file.
     pub fn add(&mut self, name: String, source: String) -> FileId {
-        let id = self.id;
+        let id = FileId::from(self.id);
         self.id += 1;
         self.files.insert(id, SimpleFile::new(name, source));
         id

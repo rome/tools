@@ -296,7 +296,10 @@ mod tests {
     use rome_console::{codespan::Severity, markup, BufferConsole, ConsoleExt, Markup};
     use rome_rowan::{TextRange, TextSize};
 
-    use crate::{file::SimpleFile, Applicability, Diagnostic};
+    use crate::{
+        file::{FileId, SimpleFile},
+        Applicability, Diagnostic,
+    };
 
     #[test]
     fn test_error_diagnostic() {
@@ -328,7 +331,7 @@ labore et dolore magna aliqua";
 
         let files = SimpleFile::new(String::from("file_name"), SOURCE.into());
 
-        let diag = Diagnostic::error(0, "CODE", "message")
+        let diag = Diagnostic::error(FileId::zero(), "CODE", "message")
             .label(
                 Severity::Error,
                 TextRange::new(TextSize::from(40u32), TextSize::from(55u32)),
