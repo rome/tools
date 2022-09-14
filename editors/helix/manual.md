@@ -1,6 +1,6 @@
 # Configuration
-Currently, rome support `js`, `jsx`, `ts`, `tsx` four languages. Rome use a file socket to connect the editor client, 
-it should be a little different from other language server using a binary like `rust-analyzer`,
+Currently, rome support `js`, `jsx`, `ts`, `tsx` four languages. Rome uses a file socket to connect the editor client, 
+which may be different from other language servers using a binary e.g. `rust-analyzer`.
 you could use `nc -U ${LANGUAGE_SERVER_SOCKET_PATH}` to connect your rome language server, `LANGUAGE_SERVER_SOCKET_PATH` could be got by
 `rome __print_socket`, by default it is `/tmp/rome-socket`. More details why we need nc you could reference https://github.com/helix-editor/helix/wiki/How-to-install-the-default-language-servers
 
@@ -40,7 +40,7 @@ auto-format = true
 ```
 
 # Limitation
-1. The `rome-socket` will not automatically create when you reboot until you using command `rome __print_socket`. As a workaround,
+1. The `rome-socket` will not automatically create when you reboot until you use the command `rome __print_socket`. As a workaround,
 you could write a init startup bash script.
 
 # Video record
