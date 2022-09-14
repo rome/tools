@@ -484,7 +484,7 @@ pub struct DeletedRangeEntry<'a> {
 ///
 /// Returns the ranges in increased order by their start position.
 pub struct DeletedRanges<'a> {
-    source_text: &'a String,
+    source_text: &'a str,
 
     /// The mappings stored in increasing order
     deleted_ranges: std::slice::Iter<'a, DeletedRange>,
