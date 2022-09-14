@@ -31,7 +31,7 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     let parsed = parse(&input_code, 0, source_type);
     let root = parsed.tree();
 
-    let (group, rule) = dbg!(parse_test_path(input_file));
+    let (group, rule) = parse_test_path(input_file);
 
     let rule_filter = RuleFilter::Rule(group, rule);
     let filter = AnalysisFilter {

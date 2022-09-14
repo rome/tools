@@ -335,8 +335,7 @@ impl SyntaxNode {
 
         let mut children = self.children_with_tokens().filter(|child| {
             let child_range = child.text_range();
-            !child_range.is_empty()
-                && (child_range.start() <= offset && offset <= child_range.end())
+            !child_range.is_empty() && child_range.contains_inclusive(offset)
         });
 
         let left = children.next().unwrap();
@@ -602,16 +601,6 @@ impl PreorderWithTokens {
             WalkEvent::Enter(first_child) => WalkEvent::Leave(first_child.parent().unwrap().into()),
             WalkEvent::Leave(parent) => WalkEvent::Leave(parent),
         })
-    }
-
-    pub fn until_next_token(&mut self) -> Option<SyntaxToken> {
-        loop {
-            match self.next() {
-                Some(crate::WalkEvent::Enter(NodeOrToken::Token(t))) => break Some(t),
-                None => break None,
-                _ => continue,
-            }
-        }
     }
 }
 

@@ -143,8 +143,6 @@ pub fn load_config(
                 .map_err(|_| RomeError::CantReadFile(configuration_path))?;
 
             let configuration: Configuration = serde_json::from_str(&buffer).map_err(|err| {
-                dbg!(&err);
-
                 RomeError::Configuration(ConfigurationError::DeserializationError(err.to_string()))
             })?;
 

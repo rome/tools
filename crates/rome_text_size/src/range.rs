@@ -340,6 +340,81 @@ impl TextRange {
             Ordering::Equal
         }
     }
+
+    /// Subtracts an offset from the start position.
+    ///
+    ///
+    /// ## Panics
+    /// If `start - amount` is less than zero.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_text_size::{TextRange, TextSize};
+    ///
+    /// let range = TextRange::new(TextSize::from(5), TextSize::from(10));
+    /// assert_eq!(range.sub_start(TextSize::from(2)), TextRange::new(TextSize::from(3), TextSize::from(10)));
+    /// ```
+    #[inline]
+    pub fn sub_start(&self, amount: TextSize) -> TextRange {
+        TextRange::new(self.start() - amount, self.end())
+    }
+
+    /// Adds an offset to the start position.
+    ///
+    /// ## Panics
+    /// If `start + amount > end`
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_text_size::{TextRange, TextSize};
+    ///
+    /// let range = TextRange::new(TextSize::from(5), TextSize::from(10));
+    /// assert_eq!(range.add_start(TextSize::from(3)), TextRange::new(TextSize::from(8), TextSize::from(10)));
+    /// ```
+    #[inline]
+    pub fn add_start(&self, amount: TextSize) -> TextRange {
+        TextRange::new(self.start() + amount, self.end())
+    }
+
+    /// Subtracts an offset from the end position.
+    ///
+    ///
+    /// ## Panics
+    /// If `end - amount < 0` or `end - amount < start`
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_text_size::{TextRange, TextSize};
+    ///
+    /// let range = TextRange::new(TextSize::from(5), TextSize::from(10));
+    /// assert_eq!(range.sub_end(TextSize::from(2)), TextRange::new(TextSize::from(5), TextSize::from(8)));
+    /// ```
+    #[inline]
+    pub fn sub_end(&self, amount: TextSize) -> TextRange {
+        TextRange::new(self.start(), self.end() - amount)
+    }
+
+    /// Adds an offset to the end position.
+    ///
+    ///
+    /// ## Panics
+    /// If `end + amount > u32::MAX`
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_text_size::{TextRange, TextSize};
+    ///
+    /// let range = TextRange::new(TextSize::from(5), TextSize::from(10));
+    /// assert_eq!(range.add_end(TextSize::from(2)), TextRange::new(TextSize::from(5), TextSize::from(12)));
+    /// ```
+    #[inline]
+    pub fn add_end(&self, amount: TextSize) -> TextRange {
+        TextRange::new(self.start(), self.end() + amount)
+    }
 }
 
 impl Index<TextRange> for str {
