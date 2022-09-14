@@ -115,9 +115,7 @@ fn convert_new_expression_to_call_expression(expr: &JsNewExpression) -> Option<J
 
         let symbol = symbol.with_leading_trivia_pieces(leading_trivia);
 
-        callee = JsAnyExpression::JsIdentifierExpression(make::js_identifier_expression(
-            make::js_reference_identifier(symbol),
-        ));
+        callee = make::js_identifier_expression(make::js_reference_identifier(symbol)).into();
     }
 
     Some(make::js_call_expression(callee, arguments).build())
