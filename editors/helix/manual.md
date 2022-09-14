@@ -43,3 +43,9 @@ auto-format = true
 1. The `rome-socket` will not automatically create when you reboot until you using command `rome __print_socket`. As a workaround,
 you could write a init startup bash script.
 
+# Video record
+## Code Action
+https://user-images.githubusercontent.com/17974631/190205045-aeb86f87-1915-4d8b-8aad-2c046443ba83.mp4
+
+## Formatting
+https://user-images.githubusercontent.com/17974631/190205065-ddfde866-5f7c-4f53-8a62-b6cbb577982f.mp4
