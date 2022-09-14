@@ -5,7 +5,7 @@
 			"nursery": {
 				"noUnreachable": "error",
 				"noUnusedVariables": "error",
-				"useCamelCase": "error"
+				"useCamelCase": "off"
 			}
 		}
 	}
