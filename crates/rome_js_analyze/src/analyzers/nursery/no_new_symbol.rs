@@ -6,7 +6,7 @@ use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
 use rome_js_syntax::{JsAnyExpression, JsCallExpression, JsNewExpression, JsNewExpressionFields};
-use rome_rowan::{AstNode, AstNodeExt, BatchMutationExt};
+use rome_rowan::{AstNode, BatchMutationExt};
 
 declare_rule! {
     /// Disallow `new` operators with the `Symbol` object
@@ -77,7 +77,7 @@ impl Rule for NoNewSymbol {
         let mut mutation = ctx.root().begin();
 
         let call_expression = convert_new_expression_to_call_expression(node)?;
-        mutation.replace_node(
+        mutation.replace_node_discard_trivia(
             JsAnyExpression::JsNewExpression(node.clone()),
             JsAnyExpression::JsCallExpression(call_expression),
         );
@@ -104,17 +104,20 @@ fn convert_new_expression_to_call_expression(expr: &JsNewExpression) -> Option<J
     let arguments = arguments?;
 
     if new_token.has_leading_comments() || new_token.has_trailing_comments() {
-        let first_token = callee.syntax().first_token()?;
+        let symbol = callee.syntax().first_token()?;
 
-        let mut trivia = vec![];
-        trivia.extend(new_token.leading_trivia().pieces());
-        trivia.extend(new_token.trailing_trivia().pieces());
-        trivia.extend(first_token.leading_trivia().pieces());
+        let leading_trivia = new_token
+            .leading_trivia()
+            .pieces()
+            .chain(new_token.trailing_trivia().pieces())
+            .chain(symbol.leading_trivia().pieces())
+            .collect::<Vec<_>>();
 
-        callee = callee.replace_token_discard_trivia(
-            first_token.clone(),
-            first_token.with_leading_trivia_pieces(trivia),
-        )?;
+        let symbol = symbol.with_leading_trivia_pieces(leading_trivia);
+
+        callee = JsAnyExpression::JsIdentifierExpression(make::js_identifier_expression(
+            make::js_reference_identifier(symbol),
+        ));
     }
 
     Some(make::js_call_expression(callee, arguments).build())

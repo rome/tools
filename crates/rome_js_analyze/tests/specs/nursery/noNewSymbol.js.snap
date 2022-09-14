@@ -92,7 +92,7 @@ Suggested fix: Remove new.
  8  8 |   var foo2 = new Symbol();
  9  9 |   var lorem = new Symbol() // comment
 10    | - var s = /* prefix_cmt */ new /* suffix_cmt */ Symbol() // comment
-   10 | + var s = /* prefix_cmt */ Symbol() // comment
+   10 | + var s = /* prefix_cmt */  /* suffix_cmt */ Symbol() // comment
 
 
 ```
