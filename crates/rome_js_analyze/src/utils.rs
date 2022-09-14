@@ -289,7 +289,7 @@ pub(crate) fn is_react_create_element(
                             return Some(
                                 binding_identifier.syntax().text_trimmed()
                                     == identifier.syntax().text_trimmed()
-                                    && maybe_from_react == true,
+                                    && maybe_from_react,
                             );
                         }
                     }
@@ -310,7 +310,7 @@ pub(crate) fn is_react_create_element(
                             return Some(
                                 binding_identifier.syntax().text_trimmed()
                                     == identifier.syntax().text_trimmed()
-                                    && identifier.syntax().text_trimmed() == "createElement",
+                                    && maybe_from_react,
                             );
                         }
                     }
