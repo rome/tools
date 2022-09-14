@@ -57,13 +57,14 @@ fn is_id_and_string_literal_inner_text_equal(
 ) -> Option<(JsIdentifierBinding, JsStringLiteralExpression)> {
     let id = declarator.id().ok()?;
     let id = id.as_js_any_binding()?.as_js_identifier_binding()?;
-    let id_text = id.syntax().text_trimmed();
+    let name = id.name_token().ok()?;
+    let id_text = name.text_trimmed();
 
     let expression = declarator.initializer()?.expression().ok()?;
     let literal = expression
         .as_js_any_literal_expression()?
         .as_js_string_literal_expression()?;
-    let literal_text = literal.inner_string_text();
+    let literal_text = literal.inner_string_text().ok()?;
 
     for (from_id, from_literal) in id_text.chars().zip(literal_text.chars()) {
         if from_id != from_literal {

@@ -11,7 +11,7 @@ use crate::{
 use crate::{JsPreUpdateExpression, JsSyntaxKind::*};
 use core::iter;
 use rome_rowan::{
-    AstNode, AstSeparatedList, NodeOrToken, SyntaxNodeText, SyntaxResult, TextRange, TextSize,
+    AstNode, AstSeparatedList, NodeOrToken, SyntaxResult, SyntaxTokenText, TextRange, TextSize,
 };
 
 impl JsReferenceIdentifier {
@@ -449,24 +449,23 @@ impl JsNumberLiteralExpression {
 
 impl JsStringLiteralExpression {
     /// Get the inner text of a string not including the quotes
-    pub fn inner_string_text(&self) -> SyntaxNodeText {
-        let start = self.syntax().text_range().start() + TextSize::from(1);
-        let end_char = self
-            .syntax()
-            .text()
-            .char_at(self.syntax().text().len() - TextSize::from(1))
-            .unwrap();
-        let end = if end_char == '"' || end_char == '\'' {
-            self.syntax().text_range().end() - TextSize::from(1)
-        } else {
-            self.syntax().text_range().end()
-        };
+    pub fn inner_string_text(&self) -> SyntaxResult<SyntaxTokenText> {
+        let value = self.value_token()?;
+        let mut text = value.token_text();
 
-        let offset = self.syntax().text_range().start();
+        static QUOTES: [char; 2] = ['"', '\''];
 
-        self.syntax()
-            .text()
-            .slice(TextRange::new(start - offset, end - offset))
+        if text.starts_with(QUOTES) {
+            let range = text.range().add_start(TextSize::from(1));
+            text = text.slice(range);
+        }
+
+        if text.ends_with(QUOTES) {
+            let range = text.range().sub_end(TextSize::from(1));
+            text = text.slice(range);
+        }
+
+        Ok(text)
     }
 }
 

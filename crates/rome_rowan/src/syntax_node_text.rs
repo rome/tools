@@ -1,8 +1,10 @@
 use crate::{
     cursor::{SyntaxNode, SyntaxToken},
-    Direction, TextRange, TextSize,
+    TextRange, TextSize, TokenAtOffset,
 };
+use rome_text_size::TextLen;
 use std::fmt;
+use std::iter::FusedIterator;
 
 #[derive(Clone)]
 pub struct SyntaxNodeText {
@@ -114,54 +116,79 @@ impl SyntaxNodeText {
         }
     }
 
-    fn tokens_with_ranges(&self) -> impl Iterator<Item = (SyntaxToken, TextRange)> {
-        let text_range = self.range;
-        self.node
-            .descendants_with_tokens(Direction::Next)
-            .filter_map(|element| element.into_token())
-            .filter_map(move |token| {
-                let token_range = token.text_range();
-                let range = text_range.intersect(token_range)?;
-                Some((token, range - token_range.start()))
-            })
+    fn tokens_with_ranges(&self) -> impl Iterator<Item = (SyntaxToken, TextRange)> + FusedIterator {
+        SyntaxNodeTokenWithRanges::new(self)
     }
 
-    pub fn chars(&self) -> impl Iterator<Item = char> {
-        let mut iter = SyntaxNodeTextChars {
-            range: self.range,
-            iter: self.node.preorder_with_tokens(Direction::Next),
-            token: None,
-            index: self.range.start().into(),
-        };
-        iter.advance_token();
-        iter
+    pub fn chars(&self) -> impl Iterator<Item = char> + FusedIterator {
+        SyntaxNodeTextChars::new(self)
     }
 }
 
+#[derive(Clone)]
+struct SyntaxNodeTokenWithRanges {
+    text_range: TextRange,
+    next_token: Option<(SyntaxToken, TextRange)>,
+}
+
+impl SyntaxNodeTokenWithRanges {
+    fn new(text: &SyntaxNodeText) -> Self {
+        let text_range = text.range;
+
+        let token = match text.node.token_at_offset(text_range.start()) {
+            TokenAtOffset::None => None,
+            TokenAtOffset::Single(token) => Some(token),
+            TokenAtOffset::Between(_, next) => Some(next),
+        };
+
+        Self {
+            next_token: token.and_then(|token| Self::with_intersecting_range(token, text_range)),
+            text_range,
+        }
+    }
+
+    fn with_intersecting_range(
+        token: SyntaxToken,
+        text_range: TextRange,
+    ) -> Option<(SyntaxToken, TextRange)> {
+        let token_range = token.text_range();
+
+        let range = text_range.intersect(token_range)?;
+        Some((token, range - token_range.start()))
+    }
+}
+
+impl Iterator for SyntaxNodeTokenWithRanges {
+    type Item = (SyntaxToken, TextRange);
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let (token, range) = self.next_token.take()?;
+
+        self.next_token = token
+            .next_token()
+            .and_then(|token| Self::with_intersecting_range(token, self.text_range));
+
+        Some((token, range))
+    }
+}
+
+impl FusedIterator for SyntaxNodeTokenWithRanges {}
+
+#[derive(Clone)]
 struct SyntaxNodeTextChars {
-    range: TextRange,
-    iter: crate::cursor::PreorderWithTokens,
-    token: Option<(SyntaxToken, TextRange)>,
-    index: usize,
+    head: Option<(SyntaxToken, TextRange)>,
+    tail: SyntaxNodeTokenWithRanges,
+    index: TextSize,
 }
 
 impl SyntaxNodeTextChars {
-    fn advance_token(&mut self) {
-        loop {
-            self.token = self.iter.until_next_token().map(|x| {
-                let range = x.text_range();
-                (x, range)
-            });
+    fn new(text: &SyntaxNodeText) -> Self {
+        let mut chunks = SyntaxNodeTokenWithRanges::new(text);
 
-            let intersection = self
-                .token
-                .as_ref()
-                .and_then(|(_, range)| range.intersect(self.range));
-            if intersection.is_none() {
-                continue;
-            } else {
-                break;
-            }
+        Self {
+            head: chunks.next(),
+            tail: chunks,
+            index: TextSize::default(),
         }
     }
 }
@@ -171,29 +198,29 @@ impl Iterator for SyntaxNodeTextChars {
 
     fn next(&mut self) -> Option<Self::Item> {
         loop {
-            let end: usize = self.range.end().into();
-            if self.index >= end {
-                return None;
+            let (token, range) = self.head.as_ref()?;
+
+            if self.index >= range.end() {
+                self.head = self.tail.next();
+                self.index = TextSize::default();
+                continue;
             }
 
-            let (token, range) = self.token.as_ref()?;
             let text = token.text();
 
-            let start: usize = range.start().into();
-            let next_char = text[self.index - start..].chars().next();
-            match next_char {
-                Some(chr) => {
-                    self.index += chr.len_utf8();
-                    break Some(chr);
-                }
-                None => {
-                    self.advance_token();
-                    continue;
-                }
-            }
+            // SAFETY: Index check above guarantees that there's at least some text left
+            let next_char = text[TextRange::new(self.index, range.end())]
+                .chars()
+                .next()
+                .unwrap();
+
+            self.index += next_char.text_len();
+            break Some(next_char);
         }
     }
 }
+
+impl FusedIterator for SyntaxNodeTextChars {}
 
 fn found<T>(res: Result<(), T>) -> Option<T> {
     match res {
@@ -390,5 +417,28 @@ mod tests {
         check(&["{", "abc", "}", "{"], &["{", "123", "}"]);
         check(&["{", "abc", "}"], &["{", "123", "}", "{"]);
         check(&["{", "abc", "}ab"], &["{", "abc", "}", "ab"]);
+    }
+
+    #[test]
+    fn test_chars() {
+        fn check(t1: &[&str], expected: &str) {
+            let t1 = build_tree(t1).text();
+            let actual = t1.chars().collect::<String>();
+
+            assert_eq!(
+                expected, &actual,
+                "`{}` (SyntaxText) `{}` (SyntaxText)",
+                actual, expected
+            );
+        }
+
+        check(&[""], "");
+        check(&["a"], "a");
+        check(&["hello", "world"], "helloworld");
+        check(&["hellowo", "rld"], "helloworld");
+        check(&["hel", "lowo", "rld"], "helloworld");
+        check(&["{", "abc", "}"], "{abc}");
+        check(&["{", "abc", "}", "{"], "{abc}{");
+        check(&["{", "abc", "}ab"], "{abc}ab");
     }
 }

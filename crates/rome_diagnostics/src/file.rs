@@ -39,23 +39,19 @@ pub trait Span {
     }
 
     fn sub_start(&self, amount: TextSize) -> TextRange {
-        let range = self.as_range();
-        TextRange::new(range.start() - amount, range.end())
+        self.as_range().sub_start(amount)
     }
 
     fn add_start(&self, amount: TextSize) -> TextRange {
-        let range = self.as_range();
-        TextRange::new(range.start() + amount, range.end())
+        self.as_range().add_start(amount)
     }
 
     fn sub_end(&self, amount: TextSize) -> TextRange {
-        let range = self.as_range();
-        TextRange::new(range.start(), range.end() - amount)
+        self.as_range().sub_end(amount)
     }
 
     fn add_end(&self, amount: TextSize) -> TextRange {
-        let range = self.as_range();
-        TextRange::new(range.start(), range.end() + amount)
+        self.as_range().add_end(amount)
     }
 }
 

@@ -51,6 +51,10 @@ impl SyntaxTokenText {
         self
     }
 
+    pub fn range(&self) -> TextRange {
+        self.range
+    }
+
     pub fn text(&self) -> &str {
         &self.token.text()[self.range]
     }
