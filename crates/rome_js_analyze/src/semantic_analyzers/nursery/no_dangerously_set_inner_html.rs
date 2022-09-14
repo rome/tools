@@ -7,7 +7,7 @@ use rome_console::markup;
 use rome_js_syntax::{
     JsAnyExpression, JsCallExpression, JsLiteralMemberName, JsxAnyAttributeName, JsxAttribute,
 };
-use rome_rowan::{declare_node_union, AstNode, AstSeparatedList};
+use rome_rowan::{declare_node_union, AstNode};
 
 declare_rule! {
     /// Prevent the usage of dangerous JSX props
@@ -25,9 +25,9 @@ declare_rule! {
     ///     dangerouslySetInnerHTML: { __html: "child" }
     /// });
     /// ```
-    pub(crate) NoDanger {
+    pub(crate) NoDangerouslySetInnerHtml {
         version: "0.10.0",
-        name: "noDanger",
+        name: "noDangerouslySetInnerHtml",
         recommended: false,
     }
 }
@@ -41,7 +41,7 @@ pub(crate) enum NoDangerState {
     Property(JsLiteralMemberName),
 }
 
-impl Rule for NoDanger {
+impl Rule for NoDangerouslySetInnerHtml {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
     type Query = Semantic<JsAnyCreateElement>;
@@ -78,16 +78,14 @@ impl Rule for NoDanger {
                     _ => return None,
                 }?;
 
-                return if is_create_element {
+                if is_create_element {
                     // if we are inside a create element call, we inspect the second argument, which
                     // should be an object expression. We look for a member that has as name
                     // "dangerouslySetInnerHTML"
                     let arguments = call_expression.arguments().ok()?.args();
-                    if arguments.len() >= 2 {
-                        let mut arguments = arguments.into_iter();
-                        arguments.next();
-                        // SAFETY: safe because of the check around the len of the arguments
-                        let second_argument = arguments.next().unwrap().ok()?;
+                    let mut arguments = arguments.into_iter();
+                    if let (Some(_), Some(second_argument)) = (arguments.next(), arguments.next()) {
+                        let second_argument = second_argument.ok()?;
                         let object_expression = second_argument
                             .as_js_any_expression()?
                             .as_js_object_expression()?;
@@ -102,13 +100,8 @@ impl Rule for NoDanger {
                                 return Some(NoDangerState::Property(name.clone()));
                             }
                         }
-                        return None;
-                    } else {
-                        None
                     }
-                } else {
-                    None
-                };
+                }
             }
         }
 

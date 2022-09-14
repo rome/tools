@@ -17,7 +17,7 @@ createElement('div', {
 
 # Diagnostics
 ```
-warning[react/noDanger]: Avoid passing content using the dangerouslySetInnerHTML prop.
+warning[nursery/noDangerouslySetInnerHtml]: Avoid passing content using the dangerouslySetInnerHTML prop.
   ┌─ createElementBinding.js:4:5
   │
 4 │     dangerouslySetInnerHTML: { __html: 'child' }
@@ -29,7 +29,7 @@ warning[react/noDanger]: Avoid passing content using the dangerouslySetInnerHTML
 ```
 
 ```
-warning[react/noDanger]: Avoid passing content using the dangerouslySetInnerHTML prop.
+warning[nursery/noDangerouslySetInnerHtml]: Avoid passing content using the dangerouslySetInnerHTML prop.
   ┌─ createElementBinding.js:8:5
   │
 8 │     dangerouslySetInnerHTML: { __html: 'child' }

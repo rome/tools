@@ -13,7 +13,7 @@ let b = <div foo="" />
 
 # Diagnostics
 ```
-warning[react/noDanger]: Avoid passing content using the dangerouslySetInnerHTML prop.
+warning[nursery/noDangerouslySetInnerHtml]: Avoid passing content using the dangerouslySetInnerHTML prop.
   ┌─ insideJsx.jsx:2:14
   │
 2 │ let a = <div dangerouslySetInnerHTML={{ __html: 'child' }} />

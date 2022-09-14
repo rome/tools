@@ -6,7 +6,7 @@ use rome_js_syntax::{
     JsStatementList, JsStaticMemberExpression, JsVariableDeclaration, JsVariableDeclarator,
     JsVariableDeclaratorList, JsVariableStatement, T,
 };
-use rome_rowan::{declare_node_union, AstNode, AstSeparatedList, BatchMutation, SyntaxNodeCast};
+use rome_rowan::{declare_node_union, AstNode, AstSeparatedList, BatchMutation};
 use std::borrow::Cow;
 
 pub mod batch;
@@ -255,7 +255,7 @@ declare_node_union! {
 /// ```
 /// We check if the node is a static member expression with the specific members. Also, if `React`
 /// has been imported in the current scope, we make sure that the binding `React` has been imported
-/// from the `"react"`.
+/// from the `"react"` module.
 ///
 /// Second case
 ///
@@ -275,52 +275,49 @@ pub(crate) fn is_react_create_element(
             let member = node.member().ok()?;
             let member = member.as_js_name()?;
             let identifier = object.as_js_identifier_expression()?.name().ok()?;
-            let identifier_binding = model.declaration(&identifier);
 
-            if let Some(binding_identifier) = identifier_binding {
-                let binding_identifier = binding_identifier
-                    .syntax()
-                    .clone()
-                    .cast::<JsIdentifierBinding>()?;
-                for ancestor in binding_identifier.syntax().ancestors() {
-                    if ancestor.kind() == JS_IMPORT {
-                        return Some(
-                            binding_identifier.syntax().text_trimmed()
-                                == identifier.syntax().text_trimmed()
-                                && identifier.syntax().text_trimmed() == "React"
-                                && member.syntax().text_trimmed() == "createElement",
-                        );
+            let maybe_from_react = identifier.syntax().text_trimmed() == "React"
+                && member.syntax().text_trimmed() == "createElement";
+
+            if maybe_from_react {
+                let identifier_binding = model.declaration(&identifier);
+                if let Some(binding_identifier) = identifier_binding {
+                    let binding_identifier =
+                        JsIdentifierBinding::cast_ref(binding_identifier.syntax())?;
+                    for ancestor in binding_identifier.syntax().ancestors() {
+                        if ancestor.kind() == JS_IMPORT {
+                            return Some(
+                                binding_identifier.syntax().text_trimmed()
+                                    == identifier.syntax().text_trimmed()
+                                    && maybe_from_react == true,
+                            );
+                        }
                     }
                 }
-
-                identifier.syntax().text_trimmed() == "React"
-                    && member.syntax().text_trimmed() == "createElement"
-            } else {
-                identifier.syntax().text_trimmed() == "React"
-                    && member.syntax().text_trimmed() == "createElement"
             }
+            maybe_from_react
         }
         PossibleCreateElement::JsIdentifierExpression(identifier) => {
             let name = identifier.name().ok()?;
-            let identifier_binding = model.declaration(&name);
-            if let Some(identifier_binding) = identifier_binding {
-                let binding_identifier = identifier_binding
-                    .syntax()
-                    .clone()
-                    .cast::<JsIdentifierBinding>()?;
-                for ancestor in binding_identifier.syntax().ancestors() {
-                    if ancestor.kind() == JS_IMPORT {
-                        return Some(
-                            binding_identifier.syntax().text_trimmed()
-                                == identifier.syntax().text_trimmed()
-                                && identifier.syntax().text_trimmed() == "createElement",
-                        );
+            let maybe_from_react = identifier.syntax().text_trimmed() == "createElement";
+            if maybe_from_react {
+                let identifier_binding = model.declaration(&name);
+                if let Some(identifier_binding) = identifier_binding {
+                    let binding_identifier =
+                        JsIdentifierBinding::cast_ref(identifier_binding.syntax())?;
+                    for ancestor in binding_identifier.syntax().ancestors() {
+                        if ancestor.kind() == JS_IMPORT {
+                            return Some(
+                                binding_identifier.syntax().text_trimmed()
+                                    == identifier.syntax().text_trimmed()
+                                    && identifier.syntax().text_trimmed() == "createElement",
+                            );
+                        }
                     }
                 }
-                name.syntax().text_trimmed() == "createElement"
-            } else {
-                name.syntax().text_trimmed() == "createElement"
             }
+
+            maybe_from_react
         }
     };
 
