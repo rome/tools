@@ -22,7 +22,6 @@ import { Session } from "./session";
 import { syntaxTree } from "./commands/syntaxTree";
 import { Commands } from "./commands";
 import { StatusBar } from "./statusBar";
-import exp = require("constants");
 
 let client: LanguageClient;
 
