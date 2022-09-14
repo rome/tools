@@ -15,11 +15,14 @@ import {
 	ServerOptions,
 	StreamInfo,
 } from "vscode-languageclient/node";
+import { join, isAbsolute } from "path";
+import { existsSync } from "fs";
 import { setContextValue } from "./utils";
 import { Session } from "./session";
 import { syntaxTree } from "./commands/syntaxTree";
 import { Commands } from "./commands";
 import { StatusBar } from "./statusBar";
+import exp = require("constants");
 
 let client: LanguageClient;
 
@@ -121,7 +124,18 @@ async function getServerPath(
 	const config = workspace.getConfiguration();
 	const explicitPath = config.get("rome.lspBin");
 	if (typeof explicitPath === "string" && explicitPath !== "") {
-		return explicitPath;
+		if (isAbsolute(explicitPath)) {
+			return explicitPath;
+		} else {
+			for (let i = 0; i < workspace.workspaceFolders.length; i++) {
+				const workspaceFolder = workspace.workspaceFolders[i];
+				const possiblePath = join(workspaceFolder.uri.path, explicitPath);
+				if (existsSync(possiblePath)) {
+					return possiblePath;
+				}
+			}
+			return undefined;
+		}
 	}
 
 	const triplet = PLATFORM_TRIPLETS[process.platform]?.[process.arch];
