@@ -43,7 +43,7 @@ pub fn reformat(text: impl Display) -> Result<String> {
     reformat_without_preamble(text).map(prepend_generated_preamble)
 }
 
-const PREAMBLE: &str = "Generated file, do not edit by hand, see `xtask/codegen`";
+pub const PREAMBLE: &str = "Generated file, do not edit by hand, see `xtask/codegen`";
 pub fn prepend_generated_preamble(content: impl Display) -> String {
     format!("//! {}\n\n{}", PREAMBLE, content)
 }
