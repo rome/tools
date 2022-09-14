@@ -288,8 +288,7 @@ pub(crate) fn is_react_create_element(
                         if ancestor.kind() == JS_IMPORT {
                             return Some(
                                 binding_identifier.syntax().text_trimmed()
-                                    == identifier.syntax().text_trimmed()
-                                    && maybe_from_react,
+                                    == identifier.syntax().text_trimmed(),
                             );
                         }
                     }
@@ -309,8 +308,7 @@ pub(crate) fn is_react_create_element(
                         if ancestor.kind() == JS_IMPORT {
                             return Some(
                                 binding_identifier.syntax().text_trimmed()
-                                    == identifier.syntax().text_trimmed()
-                                    && maybe_from_react,
+                                    == identifier.syntax().text_trimmed(),
                             );
                         }
                     }
