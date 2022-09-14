@@ -1,4 +1,6 @@
 use crate::settings::FormatSettings;
+use crate::{ConfigurationError, MatchOptions, Matcher, RomeError};
+use indexmap::IndexSet;
 use rome_formatter::{IndentStyle, LineWidth};
 use serde::{Deserialize, Serialize};
 
@@ -25,6 +27,15 @@ pub struct FormatterConfiguration {
         serialize_with = "serialize_line_width"
     )]
     pub line_width: LineWidth,
+
+    /// A list of Unix shell style patterns. The formatter will ignore files/folders that will
+    /// match these patterns.
+    #[serde(
+        skip_serializing_if = "Option::is_none",
+        deserialize_with = "crate::deserialize_set_of_strings",
+        serialize_with = "crate::serialize_set_of_strings"
+    )]
+    pub ignore: Option<IndexSet<String>>,
 }
 
 impl Default for FormatterConfiguration {
@@ -35,22 +46,41 @@ impl Default for FormatterConfiguration {
             indent_size: 2,
             indent_style: PlainIndentStyle::default(),
             line_width: LineWidth::default(),
+            ignore: None,
         }
     }
 }
 
-impl From<FormatterConfiguration> for FormatSettings {
-    fn from(conf: FormatterConfiguration) -> Self {
+impl TryFrom<FormatterConfiguration> for FormatSettings {
+    type Error = RomeError;
+
+    fn try_from(conf: FormatterConfiguration) -> Result<Self, Self::Error> {
         let indent_style = match conf.indent_style {
             PlainIndentStyle::Tab => IndentStyle::Tab,
             PlainIndentStyle::Space => IndentStyle::Space(conf.indent_size),
         };
-        Self {
+        let mut matcher = Matcher::new(MatchOptions {
+            case_sensitive: true,
+            require_literal_leading_dot: false,
+            require_literal_separator: false,
+        });
+        if let Some(ignore) = conf.ignore {
+            for pattern in ignore {
+                matcher.add_pattern(&pattern).map_err(|err| {
+                    RomeError::Configuration(ConfigurationError::InvalidIgnorePattern(
+                        pattern.to_string(),
+                        err.msg.to_string(),
+                    ))
+                })?;
+            }
+        }
+        Ok(Self {
             enabled: conf.enabled,
             indent_style: Some(indent_style),
             line_width: Some(conf.line_width),
             format_with_errors: conf.format_with_errors,
-        }
+            ignored_files: matcher,
+        })
     }
 }
 

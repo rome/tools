@@ -106,8 +106,9 @@ const CUSTOM_CONFIGURATION_AFTER: &str = "function f() {
 mod check {
     use super::*;
     use crate::configs::{
-        CONFIG_LINTER_DISABLED, CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC, CONFIG_LINTER_SUPPRESSED_GROUP,
-        CONFIG_LINTER_SUPPRESSED_RULE, CONFIG_LINTER_UPGRADE_DIAGNOSTIC,
+        CONFIG_LINTER_DISABLED, CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC, CONFIG_LINTER_IGNORED_FILES,
+        CONFIG_LINTER_SUPPRESSED_GROUP, CONFIG_LINTER_SUPPRESSED_RULE,
+        CONFIG_LINTER_UPGRADE_DIAGNOSTIC,
     };
     use crate::snap_test::SnapshotPayload;
     use rome_console::LogLevel;
@@ -199,7 +200,7 @@ mod check {
             Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
         );
 
-        assert!(result.is_err());
+        assert!(result.is_err(), "run_cli returned {result:?}");
 
         let messages = &console.out_buffer;
 
@@ -631,6 +632,46 @@ mod check {
             result,
         ));
     }
+
+    #[test]
+    fn no_lint_when_file_is_ignored() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("rome.json");
+        fs.insert(file_path.into(), CONFIG_LINTER_IGNORED_FILES.as_bytes());
+
+        let file_path = Path::new("test.js");
+        fs.insert(file_path.into(), FIX_BEFORE.as_bytes());
+
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![
+                OsString::from("check"),
+                OsString::from("--apply"),
+                file_path.as_os_str().into(),
+            ]),
+        );
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut buffer = String::new();
+        fs.open(file_path)
+            .unwrap()
+            .read_to_string(&mut buffer)
+            .unwrap();
+
+        assert_eq!(buffer, FIX_BEFORE);
+
+        assert_cli_snapshot(SnapshotPayload::new(
+            module_path!(),
+            "no_lint_when_file_is_ignored",
+            fs,
+            console,
+            result,
+        ));
+    }
 }
 
 mod ci {
@@ -846,7 +887,8 @@ mod ci {
 mod format {
     use super::*;
     use crate::configs::{
-        CONFIG_DISABLED_FORMATTER, CONFIG_FORMAT, CONFIG_ISSUE_3175_1, CONFIG_ISSUE_3175_2,
+        CONFIG_DISABLED_FORMATTER, CONFIG_FORMAT, CONFIG_FORMATTER_IGNORED_FILES,
+        CONFIG_ISSUE_3175_1, CONFIG_ISSUE_3175_2,
     };
     use crate::snap_test::{markup_to_string, SnapshotPayload};
     use rome_console::markup;
@@ -1599,6 +1641,48 @@ mod format {
         assert_cli_snapshot(SnapshotPayload::new(
             module_path!(),
             "does_not_format_if_disabled",
+            fs,
+            console,
+            result,
+        ));
+    }
+
+    #[test]
+    fn does_not_format_ignored_files() {
+        let mut console = BufferConsole::default();
+        let mut fs = MemoryFileSystem::default();
+        let file_path = Path::new("rome.json");
+        fs.insert(file_path.into(), CONFIG_FORMATTER_IGNORED_FILES.as_bytes());
+
+        let file_path = Path::new("test.js");
+        fs.insert(file_path.into(), UNFORMATTED.as_bytes());
+
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![
+                OsString::from("format"),
+                OsString::from("test.js"),
+                OsString::from("--write"),
+            ]),
+        );
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        let mut file = fs
+            .open(file_path)
+            .expect("formatting target file was removed by the CLI");
+
+        let mut content = String::new();
+        file.read_to_string(&mut content)
+            .expect("failed to read file from memory FS");
+
+        assert_eq!(content, UNFORMATTED);
+
+        drop(file);
+        assert_cli_snapshot(SnapshotPayload::new(
+            module_path!(),
+            "does_not_format_ignored_files",
             fs,
             console,
             result,

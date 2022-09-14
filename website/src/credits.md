@@ -443,6 +443,10 @@ substantially rewritten.
 	- **Original**: [`rust-analyzer/rowan`](https://github.com/rust-analyzer/rowan)
 	- **License**: Apache License, Version 2.0
 
-- [`crates/rome_rowan`](https://github.com/rome/tools/tree/main/crates/rome_text_size)
+- [`crates/rome_text_size`](https://github.com/rome/tools/tree/main/crates/rome_text_size)
   - **Original**: [`rust-analyzer/text-size`](https://github.com/rust-analyzer/text-size)
   - **License**: Apache License, Version 2.0 or MIT
+
+- [`crates/rome_service/src/ignore/pattern`](https://github.com/rome/tools/tree/main/crates/rome_service/src/ignore/pattern)
+    - **Original**: [`rust-lang/glob`](https://github.com/rust-lang/glob/blob/master/src/lib.rs)
+    - **License**: Apache License, Version 2.0 or MIT

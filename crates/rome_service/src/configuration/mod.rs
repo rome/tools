@@ -4,17 +4,20 @@
 //! by language. The language might further options divided by tool.
 
 use crate::{DynRef, RomeError};
+use indexmap::IndexSet;
 use rome_fs::{FileSystem, OpenOptions};
+use serde::de::{SeqAccess, Visitor};
+use serde::ser::SerializeSeq;
 use serde::{Deserialize, Serialize};
 use std::fmt::{Debug, Display, Formatter};
 use std::io::ErrorKind;
+use std::marker::PhantomData;
 use std::path::PathBuf;
 use tracing::{error, info};
 
 mod formatter;
 mod javascript;
 pub mod linter;
-
 pub use formatter::{FormatterConfiguration, PlainIndentStyle};
 pub use javascript::{JavascriptConfiguration, JavascriptFormatter};
 pub use linter::{LinterConfiguration, RuleConfiguration, Rules};
@@ -77,6 +80,9 @@ pub enum ConfigurationError {
 
     /// Thrown when an unknown rule is found
     UnknownRule(String),
+
+    /// Thrown when the pattern inside the `ignore` field errors
+    InvalidIgnorePattern(String, String),
 }
 
 impl Debug for ConfigurationError {
@@ -86,6 +92,7 @@ impl Debug for ConfigurationError {
             ConfigurationError::DeserializationError(_) => std::fmt::Display::fmt(self, f),
             ConfigurationError::ConfigAlreadyExists => std::fmt::Display::fmt(self, f),
             ConfigurationError::UnknownRule(_) => std::fmt::Display::fmt(self, f),
+            ConfigurationError::InvalidIgnorePattern(_, _) => std::fmt::Display::fmt(self, f),
         }
     }
 }
@@ -112,6 +119,9 @@ impl Display for ConfigurationError {
 
             ConfigurationError::UnknownRule(rule) => {
                 write!(f, "invalid rule name `{rule}`")
+            }
+            ConfigurationError::InvalidIgnorePattern(pattern, reason) => {
+                write!(f, "couldn't parse the pattern {pattern}, reason: {reason}")
             }
         }
     }
@@ -196,4 +206,68 @@ pub fn create_config(
         .map_err(|_| RomeError::CantReadFile(path))?;
 
     Ok(())
+}
+
+/// Some documentation
+pub fn deserialize_set_of_strings<'de, D>(
+    deserializer: D,
+) -> Result<Option<IndexSet<String>>, D::Error>
+where
+    D: serde::de::Deserializer<'de>,
+{
+    struct IndexVisitor {
+        marker: PhantomData<fn() -> Option<IndexSet<String>>>,
+    }
+
+    impl IndexVisitor {
+        fn new() -> Self {
+            IndexVisitor {
+                marker: PhantomData,
+            }
+        }
+    }
+
+    impl<'de> Visitor<'de> for IndexVisitor {
+        type Value = Option<IndexSet<String>>;
+
+        // Format a message stating what data this Visitor expects to receive.
+        fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+            formatter.write_str("expecting a sequence")
+        }
+
+        fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error>
+        where
+            A: SeqAccess<'de>,
+        {
+            let mut index_set = IndexSet::with_capacity(seq.size_hint().unwrap_or(0));
+
+            while let Some(value) = seq.next_element()? {
+                index_set.insert(value);
+            }
+
+            Ok(Some(index_set))
+        }
+    }
+
+    deserializer.deserialize_seq(IndexVisitor::new())
+}
+
+pub fn serialize_set_of_strings<S>(
+    globals: &Option<IndexSet<String>>,
+    s: S,
+) -> Result<S::Ok, S::Error>
+where
+    S: serde::ser::Serializer,
+{
+    if let Some(globals) = globals {
+        let mut sequence = s.serialize_seq(Some(globals.len()))?;
+        let iter = globals.into_iter();
+        for global in iter {
+            sequence.serialize_element(global)?;
+        }
+
+        sequence.end()
+    } else {
+        s.serialize_none()
+    }
 }

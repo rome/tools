@@ -7,20 +7,17 @@ expression: content
 ```json
 {
   "formatter": {
-    "enabled": false
+    "enabled": true,
+    "ignore": ["test.js"]
   }
 }
 
 ```
 
-## `file.js`
+## `test.js`
 
 ```js
-
-function f() {
-return { something }
-}
-
+  statement(  )  
 ```
 
 # Emitted Messages

@@ -36,9 +36,15 @@ impl Workspace {
     }
 
     #[wasm_bindgen(js_name = supportsFeature)]
-    pub fn supports_feature(&self, params: ISupportsFeatureParams) -> Result<bool, Error> {
+    pub fn supports_feature(
+        &self,
+        params: ISupportsFeatureParams,
+    ) -> Result<ISupportsFeatureResult, Error> {
         let params: SupportsFeatureParams = params.into_serde().map_err(into_error)?;
-        self.inner.supports_feature(params).map_err(into_error)
+        let result = self.inner.supports_feature(params).map_err(into_error)?;
+        JsValue::from_serde(&result)
+            .map(ISupportsFeatureResult::from)
+            .map_err(into_error)
     }
 
     #[wasm_bindgen(js_name = updateSettings)]

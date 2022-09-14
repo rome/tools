@@ -6,6 +6,7 @@ use super::{
     UpdateSettingsParams,
 };
 use crate::file_handlers::{Capabilities, FixAllParams, Language};
+use crate::workspace::SupportsFeatureResult;
 use crate::{
     file_handlers::Features,
     settings::{SettingsHandle, WorkspaceSettings},
@@ -140,7 +141,21 @@ impl WorkspaceServer {
     ///
     /// Returns and error if no file exists in the workspace with this path or
     /// if the language associated with the file has no parser capability
-    fn get_parse(&self, rome_path: RomePath) -> Result<AnyParse, RomeError> {
+    fn get_parse(
+        &self,
+        rome_path: RomePath,
+        feature: Option<FeatureName>,
+    ) -> Result<AnyParse, RomeError> {
+        let ignored = if let Some(feature) = feature {
+            self.is_file_ignored(&rome_path, &feature)
+        } else {
+            false
+        };
+
+        if ignored {
+            return Err(RomeError::FileIgnored(rome_path.to_path_buf()));
+        }
+
         match self.syntax.entry(rome_path) {
             Entry::Occupied(entry) => Ok(entry.get().clone()),
             Entry::Vacant(entry) => {
@@ -159,17 +174,59 @@ impl WorkspaceServer {
             }
         }
     }
+
+    /// Takes as input the path of the file that workspace is currently processing and
+    /// a list of paths to match against.
+    ///
+    /// If the file path matches, than `true` is returned and it should be considered ignored.
+    fn is_file_ignored(&self, rome_path: &RomePath, feature: &FeatureName) -> bool {
+        let settings = self.settings();
+        match feature {
+            FeatureName::Format => settings
+                .as_ref()
+                .formatter
+                .ignored_files
+                .matches_path(rome_path.as_path()),
+            FeatureName::Lint => settings
+                .as_ref()
+                .linter
+                .ignored_files
+                .matches_path(rome_path.as_path()),
+        }
+    }
 }
 
 impl Workspace for WorkspaceServer {
-    fn supports_feature(&self, params: SupportsFeatureParams) -> Result<bool, RomeError> {
+    fn supports_feature(
+        &self,
+        params: SupportsFeatureParams,
+    ) -> Result<SupportsFeatureResult, RomeError> {
         let capabilities = self.get_capabilities(&params.path);
         let settings = self.settings.read().unwrap();
+        let is_ignored = self.is_file_ignored(&params.path, &params.feature);
         let result = match params.feature {
             FeatureName::Format => {
-                capabilities.formatter.format.is_some() && settings.formatter().enabled
+                if is_ignored {
+                    SupportsFeatureResult::ignored()
+                } else if capabilities.formatter.format.is_none() {
+                    SupportsFeatureResult::file_not_supported()
+                } else if !settings.formatter().enabled {
+                    SupportsFeatureResult::disabled()
+                } else {
+                    SupportsFeatureResult { reason: None }
+                }
             }
-            FeatureName::Lint => capabilities.analyzer.lint.is_some() && settings.linter().enabled,
+            FeatureName::Lint => {
+                if is_ignored {
+                    SupportsFeatureResult::ignored()
+                } else if capabilities.analyzer.lint.is_none() {
+                    SupportsFeatureResult::file_not_supported()
+                } else if !settings.linter().enabled {
+                    SupportsFeatureResult::disabled()
+                } else {
+                    SupportsFeatureResult { reason: None }
+                }
+            }
         };
         Ok(result)
     }
@@ -181,7 +238,7 @@ impl Workspace for WorkspaceServer {
     /// by another thread having previously panicked while holding the lock
     fn update_settings(&self, params: UpdateSettingsParams) -> Result<(), RomeError> {
         let mut settings = self.settings.write().unwrap();
-        settings.merge_with_configuration(params.configuration);
+        settings.merge_with_configuration(params.configuration)?;
         Ok(())
     }
 
@@ -209,7 +266,8 @@ impl Workspace for WorkspaceServer {
             .debug_syntax_tree
             .ok_or_else(self.build_capability_error(&params.path))?;
 
-        let parse = self.get_parse(params.path.clone())?;
+        // The feature name here can be any feature, in theory
+        let parse = self.get_parse(params.path.clone(), None)?;
         let printed = debug_syntax_tree(&params.path, parse);
 
         Ok(printed)
@@ -225,7 +283,7 @@ impl Workspace for WorkspaceServer {
             .debug_control_flow
             .ok_or_else(self.build_capability_error(&params.path))?;
 
-        let parse = self.get_parse(params.path.clone())?;
+        let parse = self.get_parse(params.path.clone(), None)?;
         let printed = debug_control_flow(&params.path, parse, params.cursor);
 
         Ok(printed)
@@ -237,9 +295,8 @@ impl Workspace for WorkspaceServer {
             .debug
             .debug_formatter_ir
             .ok_or_else(self.build_capability_error(&params.path))?;
-
-        let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings();
+        let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
 
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
@@ -284,8 +341,13 @@ impl Workspace for WorkspaceServer {
             .lint
             .ok_or_else(self.build_capability_error(&params.path))?;
 
-        let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings.read().unwrap();
+        let feature = if params.categories.is_syntax() {
+            FeatureName::Format
+        } else {
+            FeatureName::Lint
+        };
+        let parse = self.get_parse(params.path.clone(), Some(feature))?;
         let rules = settings.linter().rules.as_ref();
         let enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = rules {
             let enabled: IndexSet<RuleFilter> = rules.as_enabled_rules();
@@ -314,11 +376,10 @@ impl Workspace for WorkspaceServer {
             .code_actions
             .ok_or_else(self.build_capability_error(&params.path))?;
 
-        let parse = self.get_parse(params.path.clone())?;
-
         let settings = self.settings.read().unwrap();
-        let rules = settings.linter().rules.as_ref();
+        let parse = self.get_parse(params.path.clone(), Some(FeatureName::Lint))?;
 
+        let rules = settings.linter().rules.as_ref();
         Ok(code_actions(&params.path, parse, params.range, rules))
     }
 
@@ -330,9 +391,8 @@ impl Workspace for WorkspaceServer {
             .formatter
             .format
             .ok_or_else(self.build_capability_error(&params.path))?;
-
-        let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings();
+        let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
 
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
@@ -347,9 +407,8 @@ impl Workspace for WorkspaceServer {
             .formatter
             .format_range
             .ok_or_else(self.build_capability_error(&params.path))?;
-
-        let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings();
+        let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
 
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
@@ -365,9 +424,8 @@ impl Workspace for WorkspaceServer {
             .format_on_type
             .ok_or_else(self.build_capability_error(&params.path))?;
 
-        let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings();
-
+        let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
         if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
         }
@@ -381,9 +439,9 @@ impl Workspace for WorkspaceServer {
             .analyzer
             .fix_all
             .ok_or_else(self.build_capability_error(&params.path))?;
-
-        let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings.read().unwrap();
+        let parse = self.get_parse(params.path.clone(), Some(FeatureName::Lint))?;
+
         let rules = settings.linter().rules.as_ref();
         fix_all(FixAllParams {
             rome_path: &params.path,
@@ -400,7 +458,7 @@ impl Workspace for WorkspaceServer {
             .rename
             .ok_or_else(self.build_capability_error(&params.path))?;
 
-        let parse = self.get_parse(params.path.clone())?;
+        let parse = self.get_parse(params.path.clone(), None)?;
         let result = rename(&params.path, parse, params.symbol_at, params.new_name)?;
 
         Ok(result)

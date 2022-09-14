@@ -355,6 +355,17 @@
           "default": false,
           "type": "boolean"
         },
+        "ignore": {
+          "description": "A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
         "indentSize": {
           "description": "The size of the indentation, 2 by default",
           "default": 2,
@@ -447,6 +458,17 @@
           "description": "if `false`, it disables the feature and the linter won't be executed. `true` by default",
           "default": true,
           "type": "boolean"
+        },
+        "ignore": {
+          "description": "A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
         },
         "rules": {
           "description": "List of rules",

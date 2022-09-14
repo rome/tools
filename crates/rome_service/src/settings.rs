@@ -1,4 +1,4 @@
-use crate::{Configuration, Rules};
+use crate::{Configuration, MatchOptions, Matcher, RomeError, Rules};
 use indexmap::IndexSet;
 use rome_console::codespan::Severity;
 use rome_formatter::{IndentStyle, LineWidth};
@@ -29,10 +29,13 @@ impl WorkspaceSettings {
     }
 
     /// The (configuration)[Configuration] is merged into the workspace
-    pub fn merge_with_configuration(&mut self, configuration: Configuration) {
+    pub fn merge_with_configuration(
+        &mut self,
+        configuration: Configuration,
+    ) -> Result<(), RomeError> {
         // formatter part
         if let Some(formatter) = configuration.formatter {
-            self.formatter = FormatSettings::from(formatter);
+            self.formatter = FormatSettings::try_from(formatter)?;
         }
         let formatter = configuration
             .javascript
@@ -45,11 +48,13 @@ impl WorkspaceSettings {
 
         // linter part
         if let Some(linter) = configuration.linter {
-            self.linter = LinterSettings::from(linter)
+            self.linter = LinterSettings::try_from(linter)?;
         }
 
         let globals = configuration.javascript.and_then(|j| j.globals);
         self.languages.javascript.globals = globals;
+
+        Ok(())
     }
 
     /// It retrieves the severity based on the `code` of the rule and the current configuration.
@@ -77,6 +82,8 @@ pub struct FormatSettings {
     pub format_with_errors: bool,
     pub indent_style: Option<IndentStyle>,
     pub line_width: Option<LineWidth>,
+    /// List of paths/files to matcher
+    pub ignored_files: Matcher,
 }
 
 impl Default for FormatSettings {
@@ -86,6 +93,11 @@ impl Default for FormatSettings {
             format_with_errors: false,
             indent_style: Some(IndentStyle::default()),
             line_width: Some(LineWidth::default()),
+            ignored_files: Matcher::new(MatchOptions {
+                case_sensitive: true,
+                require_literal_leading_dot: false,
+                require_literal_separator: false,
+            }),
         }
     }
 }
@@ -98,6 +110,9 @@ pub struct LinterSettings {
 
     /// List of rules
     pub rules: Option<Rules>,
+
+    /// List of paths/files to matcher
+    pub ignored_files: Matcher,
 }
 
 impl Default for LinterSettings {
@@ -105,6 +120,11 @@ impl Default for LinterSettings {
         Self {
             enabled: true,
             rules: Some(Rules::default()),
+            ignored_files: Matcher::new(MatchOptions {
+                case_sensitive: true,
+                require_literal_leading_dot: false,
+                require_literal_separator: false,
+            }),
         }
     }
 }

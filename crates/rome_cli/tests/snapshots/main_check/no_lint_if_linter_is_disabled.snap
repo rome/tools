@@ -22,12 +22,4 @@ if(a != -0) {}
 
 # Emitted Messages
 
-```block
-fix.js: error[IO]: unhandled file type
-```
-
-```block
-Skipped 1 files
-```
-
 

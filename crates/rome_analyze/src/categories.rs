@@ -44,6 +44,12 @@ impl Default for RuleCategories {
     }
 }
 
+impl RuleCategories {
+    pub fn is_syntax(&self) -> bool {
+        *self == RuleCategories::SYNTAX
+    }
+}
+
 impl From<RuleCategory> for RuleCategories {
     fn from(input: RuleCategory) -> Self {
         match input {

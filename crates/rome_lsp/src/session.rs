@@ -115,12 +115,12 @@ impl Session {
     pub(crate) async fn update_diagnostics(&self, url: lsp_types::Url) -> anyhow::Result<()> {
         let rome_path = self.file_path(&url);
         let doc = self.document(&url)?;
-        let lint_enabled = self.workspace.supports_feature(SupportsFeatureParams {
+        let unsupported_lint = self.workspace.supports_feature(SupportsFeatureParams {
             feature: FeatureName::Lint,
             path: rome_path.clone(),
         })?;
 
-        let diagnostics = if lint_enabled {
+        let diagnostics = if unsupported_lint.reason.is_none() {
             let result = self.workspace.pull_diagnostics(PullDiagnosticsParams {
                 path: rome_path,
                 categories: RuleCategories::SYNTAX | RuleCategories::LINT,

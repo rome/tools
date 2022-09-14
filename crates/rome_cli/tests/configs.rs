@@ -162,3 +162,19 @@ pub const CONFIG_ISSUE_3175_2: &str = r#"{
     }
   }
 }"#;
+
+pub const CONFIG_FORMATTER_IGNORED_FILES: &str = r#"{
+  "formatter": {
+    "enabled": true,
+    "ignore": ["test.js"]
+  }
+}
+"#;
+
+pub const CONFIG_LINTER_IGNORED_FILES: &str = r#"{
+  "linter": {
+    "enabled": true,
+    "ignore": ["test.js"]
+  }
+}
+"#;

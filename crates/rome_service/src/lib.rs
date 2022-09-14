@@ -15,15 +15,22 @@ mod file_handlers;
 pub mod settings;
 pub mod workspace;
 
+pub mod matcher;
+
 #[cfg(feature = "schemars")]
 pub mod workspace_types;
 
 pub use crate::configuration::{
     create_config, load_config, Configuration, ConfigurationError, RuleConfiguration, Rules,
 };
+pub use crate::matcher::{MatchOptions, Matcher, Pattern};
+
 pub use crate::file_handlers::JsFormatSettings;
 use crate::file_handlers::Language;
 pub use crate::workspace::Workspace;
+
+/// Exports only for this crate
+pub(crate) use crate::configuration::{deserialize_set_of_strings, serialize_set_of_strings};
 
 /// This is the main entrypoint of the application.
 pub struct App<'app> {
@@ -62,6 +69,8 @@ pub enum RomeError {
     RenameError(RenameError),
     /// Error emitted by the underlying transport layer for a remote Workspace
     TransportError(TransportError),
+    /// Emitted when the file is ignored and should not be processed
+    FileIgnored(PathBuf),
 }
 
 impl Debug for RomeError {
@@ -150,6 +159,9 @@ impl Display for RomeError {
 
             RomeError::TransportError(err) => {
                 write!(f, "{err}",)
+            }
+            RomeError::FileIgnored(path) => {
+                write!(f, "The file {} was ignored", path.display())
             }
         }
     }

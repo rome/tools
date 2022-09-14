@@ -9,6 +9,13 @@ export interface RomePath {
 	id: number;
 	path: string;
 }
+export interface SupportsFeatureResult {
+	reason?: UnsupportedReason;
+}
+export type UnsupportedReason =
+	| "Ignored"
+	| "FeatureNotEnabled"
+	| "FileNotSupported";
 export interface UpdateSettingsParams {
 	configuration: Configuration;
 }
@@ -36,6 +43,10 @@ export interface FormatterConfiguration {
 	 */
 	formatWithErrors?: boolean;
 	/**
+	 * A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.
+	 */
+	ignore?: string[];
+	/**
 	 * The size of the indentation, 2 by default
 	 */
 	indentSize?: number;
@@ -62,6 +73,10 @@ export interface LinterConfiguration {
 	 * if `false`, it disables the feature and the linter won't be executed. `true` by default
 	 */
 	enabled?: boolean;
+	/**
+	 * A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.
+	 */
+	ignore?: string[];
 	/**
 	 * List of rules
 	 */
@@ -405,7 +420,9 @@ export interface RenameResult {
 	range: TextRangeSchema;
 }
 export interface Workspace {
-	supportsFeature(params: SupportsFeatureParams): Promise<boolean>;
+	supportsFeature(
+		params: SupportsFeatureParams,
+	): Promise<SupportsFeatureResult>;
 	updateSettings(params: UpdateSettingsParams): Promise<void>;
 	openFile(params: OpenFileParams): Promise<void>;
 	changeFile(params: ChangeFileParams): Promise<void>;
