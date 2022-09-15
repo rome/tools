@@ -18,5 +18,9 @@ schemars = { version = "0.8.10", optional = true }
 rustc-hash = "1.1.0"
 countme = "3.0.1"
 
+[dev-dependencies]
+rome_js_parser = { path = "../rome_js_parser"}
+rome_js_syntax = { path = "../rome_js_syntax" }
+
 [features]
 serde = ["dep:serde", "schemars", "rome_rowan/serde"]

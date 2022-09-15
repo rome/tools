@@ -1,12 +1,13 @@
+mod builder;
 mod map;
 
-use rome_rowan::{
-    Direction, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxTriviaPieceComments,
-    WalkEvent,
-};
+use self::{builder::CommentsBuilderVisitor, map::CommentsMap};
+use crate::{TextSize, TransformSourceMap};
+use rome_rowan::syntax::SyntaxElementKey;
+use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTriviaPieceComments};
+use rustc_hash::FxHashSet;
 #[cfg(debug_assertions)]
 use std::cell::RefCell;
-use std::collections::HashSet;
 use std::rc::Rc;
 
 #[derive(Copy, Clone, Eq, PartialEq, Debug)]
@@ -47,43 +48,6 @@ pub enum CommentKind {
     Line,
 }
 
-#[derive(Debug, Clone)]
-pub struct SourceComment<L: Language> {
-    /// The number of lines appearing before this comment
-    lines_before: u32,
-
-    /// The comment piece
-    piece: SyntaxTriviaPieceComments<L>,
-}
-
-impl<L: Language> SourceComment<L> {
-    /// Creates a new trailing comment. A trailing comment always has 0 lines before.
-    pub fn trailing(piece: SyntaxTriviaPieceComments<L>) -> Self {
-        Self {
-            lines_before: 0,
-            piece,
-        }
-    }
-
-    /// Creates a leading comment with the specified lines before
-    pub fn leading(piece: SyntaxTriviaPieceComments<L>, lines_before: u32) -> Self {
-        Self {
-            lines_before,
-            piece,
-        }
-    }
-
-    /// Returns the underlining comment trivia piece
-    pub fn piece(&self) -> &SyntaxTriviaPieceComments<L> {
-        &self.piece
-    }
-
-    /// Returns the number of lines before directly before this comment
-    pub fn lines_before(&self) -> u32 {
-        self.lines_before
-    }
-}
-
 impl CommentKind {
     pub const fn is_line(&self) -> bool {
         matches!(self, CommentKind::Line)
@@ -116,24 +80,236 @@ impl CommentKind {
     }
 }
 
+#[derive(Debug, Clone)]
+pub struct SourceComment<L: Language> {
+    /// The number of lines appearing before this comment
+    pub(crate) lines_before: u32,
+
+    pub(crate) lines_after: u32,
+
+    /// The comment piece
+    pub(crate) piece: SyntaxTriviaPieceComments<L>,
+
+    pub(crate) kind: CommentKind,
+}
+
+impl<L: Language> SourceComment<L> {
+    /// Returns the underlining comment trivia piece
+    pub fn piece(&self) -> &SyntaxTriviaPieceComments<L> {
+        &self.piece
+    }
+
+    /// Returns the number of lines before directly before this comment
+    pub fn lines_before(&self) -> u32 {
+        self.lines_before
+    }
+
+    pub fn lines_after(&self) -> u32 {
+        self.lines_after
+    }
+
+    /// The kind of the comment
+    pub fn kind(&self) -> CommentKind {
+        self.kind
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct DecoratedComment<L: Language> {
+    enclosing: SyntaxNode<L>,
+    preceding: Option<SyntaxNode<L>>,
+    following: Option<SyntaxNode<L>>,
+    following_token: SyntaxToken<L>,
+    position: CommentTextPosition,
+    lines_before: u32,
+    lines_after: u32,
+    comment: SyntaxTriviaPieceComments<L>,
+    kind: CommentKind,
+}
+
+impl<L: Language> DecoratedComment<L> {
+    /// The node that fully encloses the comment (the comment's start and end position are fully in the
+    /// node's bounds).
+    pub fn enclosing_node(&self) -> &SyntaxNode<L> {
+        &self.enclosing
+    }
+
+    pub fn piece(&self) -> &SyntaxTriviaPieceComments<L> {
+        &self.comment
+    }
+
+    /// The node directly preceding the comment or [None] if the comment is preceded by a token or is the first
+    /// token in the program.
+    pub fn preceding_node(&self) -> Option<&SyntaxNode<L>> {
+        self.preceding.as_ref()
+    }
+
+    fn take_preceding_node(&mut self) -> Option<SyntaxNode<L>> {
+        self.preceding.take()
+    }
+
+    /// The node directly following the comment or [None] if the comment is followed by a token or is the last token in the program.
+    pub fn following_node(&self) -> Option<&SyntaxNode<L>> {
+        self.following.as_ref()
+    }
+
+    fn take_following_node(&mut self) -> Option<SyntaxNode<L>> {
+        self.following.take()
+    }
+
+    /// The number of lines between this comment and the **previous** token, comment or skipped trivia.
+    pub fn lines_before(&self) -> u32 {
+        self.lines_before
+    }
+
+    pub fn lines_after(&self) -> u32 {
+        self.lines_after
+    }
+
+    /// Returns the [kind](CommentKind) of the comment.
+    pub fn kind(&self) -> CommentKind {
+        self.kind
+    }
+
+    pub fn position(&self) -> CommentTextPosition {
+        self.position
+    }
+
+    pub fn following_token(&self) -> &SyntaxToken<L> {
+        &self.following_token
+    }
+}
+
+impl<L: Language> From<DecoratedComment<L>> for SourceComment<L> {
+    fn from(decorated: DecoratedComment<L>) -> Self {
+        Self {
+            lines_before: decorated.lines_before,
+            lines_after: decorated.lines_after,
+            piece: decorated.comment,
+            kind: decorated.kind,
+        }
+    }
+}
+
+/// The position of a comment in the source document.
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+pub enum CommentTextPosition {
+    /// A comment that is separated by at least one line break from the following token
+    ///
+    /// ```javascript
+    /// a; /* this */ // or this
+    /// b;
+    EndOfLine,
+
+    /// A Comment that is separated by at least one line break from the preceding token
+    ///
+    /// ```javascript
+    /// a;
+    /// /* comment */ /* or this */
+    /// b;
+    /// ```
+    OwnLine,
+
+    /// A comment that is placed on the same line as the preceding and following token.
+    ///
+    /// ```javascript
+    /// a /* comment */ + b
+    /// ```
+    SameLine,
+}
+
+impl CommentTextPosition {
+    pub const fn is_same_line(&self) -> bool {
+        matches!(self, CommentTextPosition::SameLine)
+    }
+
+    pub const fn is_own_line(&self) -> bool {
+        matches!(self, CommentTextPosition::OwnLine)
+    }
+
+    pub const fn is_end_of_line(&self) -> bool {
+        matches!(self, CommentTextPosition::EndOfLine)
+    }
+}
+
+#[derive(Debug)]
+pub enum CommentPlacement<L: Language> {
+    /// Overrides the positioning of the comment to be a leading node comment.
+    Leading {
+        node: SyntaxNode<L>,
+        comment: SourceComment<L>,
+    },
+    /// Overrides the positioning of the comment to be a trailing node comment.
+    Trailing {
+        node: SyntaxNode<L>,
+        comment: SourceComment<L>,
+    },
+
+    /// Makes this comment a dangling comment of `node`
+    Dangling {
+        node: SyntaxNode<L>,
+        comment: SourceComment<L>,
+    },
+
+    /// Uses the default positioning rules for the comment.
+    /// TODO document rules
+    Default(DecoratedComment<L>),
+}
+
+impl<L: Language> CommentPlacement<L> {
+    #[inline]
+    pub fn leading(node: SyntaxNode<L>, comment: impl Into<SourceComment<L>>) -> Self {
+        Self::Leading {
+            node,
+            comment: comment.into(),
+        }
+    }
+
+    pub fn dangling(node: SyntaxNode<L>, comment: impl Into<SourceComment<L>>) -> Self {
+        Self::Dangling {
+            node,
+            comment: comment.into(),
+        }
+    }
+
+    #[inline]
+    pub fn trailing(node: SyntaxNode<L>, comment: impl Into<SourceComment<L>>) -> Self {
+        Self::Trailing {
+            node,
+            comment: comment.into(),
+        }
+    }
+
+    #[inline]
+    pub fn or_else<F>(self, or_else: F) -> Self
+    where
+        F: FnOnce(DecoratedComment<L>) -> CommentPlacement<L>,
+    {
+        match self {
+            CommentPlacement::Default(comment) => or_else(comment),
+            placement => placement,
+        }
+    }
+}
+
 /// Defines how to format comments for a specific [Language].
-pub trait CommentStyle<L: Language> {
+pub trait CommentStyle: Default {
+    type Language: Language;
+
     /// Returns `true` if a comment with the given `text` is a `rome-ignore format:` suppression comment.
-    fn is_suppression(&self, text: &str) -> bool;
+    fn is_suppression(_text: &str) -> bool {
+        false
+    }
 
     /// Returns the (kind)[CommentKind] of the comment
-    fn get_comment_kind(&self, comment: &SyntaxTriviaPieceComments<L>) -> CommentKind;
+    fn get_comment_kind(comment: &SyntaxTriviaPieceComments<Self::Language>) -> CommentKind;
 
-    /// Returns `true` if a token with the passed `kind` marks the start of a group. Common group tokens are:
-    /// * left parentheses: `(`, `[`, `{`
-    fn is_group_start_token(&self, kind: L::Kind) -> bool;
-
-    /// Returns `true` if a token with the passed `kind` marks the end of a group. Common group end tokens are:
-    /// * right parentheses: `)`, `]`, `}`
-    /// * end of statement token: `;`
-    /// * element separator: `,` or `.`.
-    /// * end of file token: `EOF`
-    fn is_group_end_token(&self, kind: L::Kind) -> bool;
+    fn place_comment(
+        &self,
+        comment: DecoratedComment<Self::Language>,
+    ) -> CommentPlacement<Self::Language> {
+        CommentPlacement::Default(comment)
+    }
 }
 
 /// Type that stores the comments of a tree and gives access to:
@@ -143,7 +319,7 @@ pub trait CommentStyle<L: Language> {
 /// * the dangling comments of a token
 ///
 /// Cloning `comments` is cheap as it only involves bumping a reference counter.
-#[derive(Debug, Default, Clone)]
+#[derive(Debug, Clone, Default)]
 pub struct Comments<L: Language> {
     /// The use of a [Rc] is necessary to achieve that [Comments] has a lifetime that is independent from the [crate::Formatter].
     /// Having independent lifetimes is necessary to support the use case where a (formattable object)[crate::Format]
@@ -165,65 +341,117 @@ pub struct Comments<L: Language> {
 
 impl<L: Language> Comments<L> {
     /// Extracts all the suppressions from `root` and its child nodes.
-    pub fn from_node<FormatLanguage>(root: &SyntaxNode<L>, language: &FormatLanguage) -> Self
+    pub fn from_node<Style>(
+        root: &SyntaxNode<L>,
+        style: &Style,
+        source_map: Option<&TransformSourceMap>,
+    ) -> Self
     where
-        FormatLanguage: crate::FormatLanguage<SyntaxLanguage = L>,
+        Style: CommentStyle<Language = L>,
     {
-        let mut suppressed_nodes = HashSet::new();
-        let mut current_node = None;
+        let builder = CommentsBuilderVisitor::new(style, source_map);
 
-        for event in root.preorder_with_tokens(Direction::Next) {
-            match event {
-                WalkEvent::Enter(SyntaxElement::Node(node)) => {
-                    // Lists cannot have a suppression comment attached, it must
-                    // belong to either the entire parent node or one of the children
-                    if node.kind().is_root() || node.kind().is_list() {
-                        continue;
-                    }
-
-                    if current_node.is_none() {
-                        current_node = Some(node);
-                    }
-                }
-                WalkEvent::Leave(SyntaxElement::Node(node)) => {
-                    if current_node == Some(node) {
-                        current_node = None;
-                    }
-                }
-                WalkEvent::Enter(SyntaxElement::Token(token)) => {
-                    if let Some(current_node) = current_node.take() {
-                        for comment in token
-                            .leading_trivia()
-                            .pieces()
-                            .filter_map(|piece| piece.as_comments())
-                        {
-                            if language.comment_style().is_suppression(comment.text()) {
-                                suppressed_nodes.insert(current_node);
-                                break;
-                            }
-                        }
-                    }
-                }
-                WalkEvent::Leave(SyntaxElement::Token(_)) => {
-                    // Token already handled as part of the enter event.
-                }
-            }
-        }
-
-        let data = CommentsData {
-            suppressed_nodes,
-            #[cfg(debug_assertions)]
-            checked_suppressions: RefCell::default(),
-        };
+        let (comments, skipped) = builder.visit(root);
 
         Self {
-            data: Rc::new(data),
+            data: Rc::new(CommentsData {
+                root: Some(root.clone()),
+                is_suppression: Style::is_suppression,
+
+                comments,
+                with_skipped: skipped,
+                #[cfg(debug_assertions)]
+                checked_suppressions: RefCell::new(Default::default()),
+            }),
         }
+    }
+
+    /// Returns `true` if the given `node` has any leading or trailing comments.
+    #[inline]
+    pub fn has_comments(&self, node: &SyntaxNode<L>) -> bool {
+        self.data.comments.has(&node.key())
+    }
+
+    /// Returns `true` if the given [node] has any leading comments.
+    /// By default, a comment is a node's leading comment if:
+    /// * the previous sibling is a token
+    /// * there's a line break before the commend ending before this comment and the comment.
+    #[inline]
+    pub fn has_leading_comments(&self, node: &SyntaxNode<L>) -> bool {
+        !self.leading_comments(node).is_empty()
+    }
+
+    /// Tests if the node has any leading comment that will be placed on its own line.
+    pub fn has_leading_own_line_comment(&self, node: &SyntaxNode<L>) -> bool {
+        self.leading_comments(node)
+            .iter()
+            .any(|comment| comment.lines_after() > 0)
+    }
+
+    /// Returns the [node]'s leading comments.
+    #[inline]
+    pub fn leading_comments(&self, node: &SyntaxNode<L>) -> &[SourceComment<L>] {
+        self.data.comments.leading(&node.key())
+    }
+
+    /// Returns `true` if node has any dangling comments.
+    pub fn has_dangling_comments(&self, node: &SyntaxNode<L>) -> bool {
+        !self.dangling_comments(node).is_empty()
+    }
+
+    /// Returns the dangling comments of `node`
+    pub fn dangling_comments(&self, node: &SyntaxNode<L>) -> &[SourceComment<L>] {
+        self.data.comments.dangling(&node.key())
+    }
+
+    /// Returns the [node]'s trailing comments.
+    #[inline]
+    pub fn trailing_comments(&self, node: &SyntaxNode<L>) -> &[SourceComment<L>] {
+        self.data.comments.trailing(&node.key())
+    }
+
+    pub fn has_trailing_line_comment(&self, node: &SyntaxNode<L>) -> bool {
+        self.trailing_comments(node)
+            .iter()
+            .any(|comment| comment.kind().is_line())
+    }
+
+    /// Returns `true` if the given [node] has any trailing comments.
+    /// By default, a comment is a node's trailing comment if:
+    /// * the next sibling is a token
+    /// * there's **no** line break between the node and this comment.
+    #[inline]
+    pub fn has_trailing_comments(&self, node: &SyntaxNode<L>) -> bool {
+        !self.trailing_comments(node).is_empty()
+    }
+
+    /// Returns an iterator over the leading and trailing comments of `node`.
+    pub fn leading_trailing_comments(
+        &self,
+        node: &SyntaxNode<L>,
+    ) -> impl Iterator<Item = &SourceComment<L>> {
+        self.leading_comments(node)
+            .iter()
+            .chain(self.trailing_comments(node).iter())
+    }
+
+    /// Returns an iterator over the leading, dangling, and trailing comments of `node`.
+    pub fn leading_dangling_trailing_comments<'a>(
+        &'a self,
+        node: &'a SyntaxNode<L>,
+    ) -> impl Iterator<Item = &SourceComment<L>> + 'a {
+        self.data.comments.parts(&node.key())
+    }
+
+    /// Returns `true` if that node has skipped token trivia attached.
+    #[inline]
+    pub fn has_skipped(&self, token: &SyntaxToken<L>) -> bool {
+        self.data.with_skipped.contains(&token.key())
     }
 
     /// Returns `true` if the passed `node` has a leading suppression comment.
     ///
-    /// Suppression comments only apply if they are at the start of a node and they suppress the most
+    /// Suppression comments only apply if they at the start of a node and they suppress the most
     /// outer node.
     ///
     /// # Examples
@@ -237,7 +465,10 @@ impl<L: Language> Comments<L> {
     /// call expression is nested inside of the expression statement.
     pub fn is_suppressed(&self, node: &SyntaxNode<L>) -> bool {
         self.mark_suppression_checked(node);
-        self.data.suppressed_nodes.contains(node)
+        let is_suppression = self.data.is_suppression;
+
+        self.leading_dangling_trailing_comments(node)
+            .any(|comment| is_suppression(comment.piece().text()))
     }
 
     /// Marks that it isn't necessary for the given node to check if it has been suppressed or not.
@@ -262,6 +493,8 @@ impl<L: Language> Comments<L> {
     pub(crate) fn assert_checked_all_suppressions(&self, root: &SyntaxNode<L>) {
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
+                use rome_rowan::SyntaxKind;
+
                 let checked_nodes = self.data.checked_suppressions.borrow();
                 for node in root.descendants() {
                     if node.kind().is_list() || node.kind().is_root() {
@@ -287,10 +520,14 @@ Node:
     }
 }
 
-#[derive(Debug, Default)]
 struct CommentsData<L: Language> {
-    /// Stores the nodes that have at least one leading suppression comment.
-    suppressed_nodes: HashSet<SyntaxNode<L>>,
+    root: Option<SyntaxNode<L>>,
+
+    is_suppression: fn(&str) -> bool,
+
+    /// Stores all leading node comments by node
+    comments: CommentsMap<SyntaxElementKey, SourceComment<L>>,
+    with_skipped: FxHashSet<SyntaxElementKey>,
 
     /// Stores all nodes for which [Comments::is_suppressed] has been called.
     /// This index of nodes that have been checked if they have a suppression comments is used to
@@ -301,5 +538,101 @@ struct CommentsData<L: Language> {
     /// as verbatim if its formatting fails which has the same result as formatting it as suppressed node
     /// (thus, guarantees that the formatting isn't changed).
     #[cfg(debug_assertions)]
-    checked_suppressions: RefCell<HashSet<SyntaxNode<L>>>,
+    checked_suppressions: RefCell<FxHashSet<SyntaxNode<L>>>,
+}
+
+impl<L: Language> Default for CommentsData<L> {
+    fn default() -> Self {
+        Self {
+            root: None,
+            is_suppression: |_| false,
+            comments: Default::default(),
+            with_skipped: Default::default(),
+            #[cfg(debug_assertions)]
+            checked_suppressions: Default::default(),
+        }
+    }
+}
+
+impl<L: Language> std::fmt::Debug for CommentsData<L> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let mut comments = Vec::new();
+
+        if let Some(root) = &self.root {
+            for node in root.descendants() {
+                for leading in self.comments.leading(&node.key()) {
+                    comments.push(DebugComment::Leading {
+                        node: node.clone(),
+                        comment: leading,
+                    });
+                }
+
+                for dangling in self.comments.dangling(&node.key()) {
+                    comments.push(DebugComment::Dangling {
+                        node: node.clone(),
+                        comment: dangling,
+                    });
+                }
+
+                for trailing in self.comments.trailing(&node.key()) {
+                    comments.push(DebugComment::Trailing {
+                        node: node.clone(),
+                        comment: trailing,
+                    });
+                }
+            }
+        }
+
+        comments.sort_by_key(|comment| comment.start());
+
+        f.debug_list().entries(comments).finish()
+    }
+}
+
+/// Helper for printing a comment of [Comments]
+enum DebugComment<'a, L: Language> {
+    Leading {
+        comment: &'a SourceComment<L>,
+        node: SyntaxNode<L>,
+    },
+    Trailing {
+        comment: &'a SourceComment<L>,
+        node: SyntaxNode<L>,
+    },
+    Dangling {
+        comment: &'a SourceComment<L>,
+        node: SyntaxNode<L>,
+    },
+}
+
+impl<L: Language> DebugComment<'_, L> {
+    fn start(&self) -> TextSize {
+        match self {
+            DebugComment::Leading { comment, .. }
+            | DebugComment::Trailing { comment, .. }
+            | DebugComment::Dangling { comment, .. } => comment.piece.text_range().start(),
+        }
+    }
+}
+
+impl<L: Language> std::fmt::Debug for DebugComment<'_, L> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            DebugComment::Leading { node, comment } => f
+                .debug_struct("Leading")
+                .field("node", node)
+                .field("comment", comment)
+                .finish(),
+            DebugComment::Dangling { node, comment } => f
+                .debug_struct("Dangling")
+                .field("node", node)
+                .field("comment", comment)
+                .finish(),
+            DebugComment::Trailing { node, comment } => f
+                .debug_struct("Trailing")
+                .field("node", node)
+                .field("comment", comment)
+                .finish(),
+        }
+    }
 }
