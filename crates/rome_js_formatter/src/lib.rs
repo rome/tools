@@ -814,11 +814,10 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-some.member.with.
-	// rome-ignore format: Verify that formatting calls into right.format()
-	rather.hard.to.test.because.name.doesnt.format
-
-	. being.ignored;"#;
+interface ConstructorInline {
+  // https://github.com/prettier/prettier/issues/2163
+  (i): any;
+}"#;
 
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
