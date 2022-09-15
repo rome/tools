@@ -1,6 +1,8 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
-use crate::{AsFormat, FormatNodeRule, IntoFormat, JsFormatContext, JsFormatter};
+use crate::{
+    AsFormat, FormatNodeRule, FormatUnknownNodeRule, IntoFormat, JsFormatContext, JsFormatter,
+};
 use rome_formatter::{FormatOwnedWithRule, FormatRefWithRule, FormatResult, FormatRule};
 impl FormatRule<rome_js_syntax::JsScript> for crate::js::auxiliary::script::FormatJsScript {
     type Context = JsFormatContext;
@@ -10284,7 +10286,7 @@ impl FormatRule<rome_js_syntax::JsUnknown> for crate::js::unknown::unknown::Form
     type Context = JsFormatContext;
     #[inline(always)]
     fn fmt(&self, node: &rome_js_syntax::JsUnknown, f: &mut JsFormatter) -> FormatResult<()> {
-        FormatNodeRule::<rome_js_syntax::JsUnknown>::fmt(self, node, f)
+        FormatUnknownNodeRule::<rome_js_syntax::JsUnknown>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::JsUnknown {
@@ -10322,7 +10324,7 @@ impl FormatRule<rome_js_syntax::JsUnknownStatement>
         node: &rome_js_syntax::JsUnknownStatement,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        FormatNodeRule::<rome_js_syntax::JsUnknownStatement>::fmt(self, node, f)
+        FormatUnknownNodeRule::<rome_js_syntax::JsUnknownStatement>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::JsUnknownStatement {
@@ -10360,7 +10362,7 @@ impl FormatRule<rome_js_syntax::JsUnknownExpression>
         node: &rome_js_syntax::JsUnknownExpression,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        FormatNodeRule::<rome_js_syntax::JsUnknownExpression>::fmt(self, node, f)
+        FormatUnknownNodeRule::<rome_js_syntax::JsUnknownExpression>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::JsUnknownExpression {
@@ -10394,7 +10396,7 @@ impl FormatRule<rome_js_syntax::JsUnknownMember>
     type Context = JsFormatContext;
     #[inline(always)]
     fn fmt(&self, node: &rome_js_syntax::JsUnknownMember, f: &mut JsFormatter) -> FormatResult<()> {
-        FormatNodeRule::<rome_js_syntax::JsUnknownMember>::fmt(self, node, f)
+        FormatUnknownNodeRule::<rome_js_syntax::JsUnknownMember>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::JsUnknownMember {
@@ -10432,7 +10434,7 @@ impl FormatRule<rome_js_syntax::JsUnknownBinding>
         node: &rome_js_syntax::JsUnknownBinding,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        FormatNodeRule::<rome_js_syntax::JsUnknownBinding>::fmt(self, node, f)
+        FormatUnknownNodeRule::<rome_js_syntax::JsUnknownBinding>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::JsUnknownBinding {
@@ -10470,7 +10472,7 @@ impl FormatRule<rome_js_syntax::JsUnknownAssignment>
         node: &rome_js_syntax::JsUnknownAssignment,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        FormatNodeRule::<rome_js_syntax::JsUnknownAssignment>::fmt(self, node, f)
+        FormatUnknownNodeRule::<rome_js_syntax::JsUnknownAssignment>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::JsUnknownAssignment {
@@ -10508,7 +10510,7 @@ impl FormatRule<rome_js_syntax::JsUnknownParameter>
         node: &rome_js_syntax::JsUnknownParameter,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        FormatNodeRule::<rome_js_syntax::JsUnknownParameter>::fmt(self, node, f)
+        FormatUnknownNodeRule::<rome_js_syntax::JsUnknownParameter>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::JsUnknownParameter {
@@ -10546,7 +10548,7 @@ impl FormatRule<rome_js_syntax::JsUnknownImportAssertionEntry>
         node: &rome_js_syntax::JsUnknownImportAssertionEntry,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        FormatNodeRule::<rome_js_syntax::JsUnknownImportAssertionEntry>::fmt(self, node, f)
+        FormatUnknownNodeRule::<rome_js_syntax::JsUnknownImportAssertionEntry>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::JsUnknownImportAssertionEntry {
@@ -10578,7 +10580,7 @@ impl FormatRule<rome_js_syntax::JsUnknownNamedImportSpecifier>
         node: &rome_js_syntax::JsUnknownNamedImportSpecifier,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        FormatNodeRule::<rome_js_syntax::JsUnknownNamedImportSpecifier>::fmt(self, node, f)
+        FormatUnknownNodeRule::<rome_js_syntax::JsUnknownNamedImportSpecifier>::fmt(self, node, f)
     }
 }
 impl<'a> AsFormat<'a> for rome_js_syntax::JsUnknownNamedImportSpecifier {
