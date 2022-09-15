@@ -48,8 +48,7 @@ auto-format = true
 `/tmp/rome-socket` is the default socket file path in Linux. Use the command `rome __print_socket` and use the correct value.
 
 # Limitation
-1. The `rome-socket` will not automatically create when you reboot until you use the command `rome __print_socket`. As a workaround,
-you could write a init startup bash script.
+1. The socket is not automatically created, and you need to call the command [`rome start`](https://rome.tools/#rome-start) in order to create one. Use the command [`rome stop`](https://rome.tools/#rome-stop) to free the socket.
 
 # Video record
 ## Code Action
