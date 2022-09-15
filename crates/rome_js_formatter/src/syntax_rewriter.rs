@@ -179,9 +179,9 @@ impl JsFormatSyntaxRewriter {
                 // Skip over leading whitespace
                 while let Some(piece) = l_paren_trailing.peek() {
                     if piece.is_whitespace() {
-                        inner_offset += piece.text_len();
                         self.source_map
                             .add_deleted_range(TextRange::at(inner_offset, piece.text_len()));
+                        inner_offset += piece.text_len();
                         l_paren_trailing.next();
                     } else {
                         break;
@@ -201,8 +201,9 @@ impl JsFormatSyntaxRewriter {
                 // The leading whitespace before the opening parens replaces the whitespace before the node.
                 while let Some(trivia) = leading_trivia.peek() {
                     if trivia.is_newline() && first_new_line.is_none() {
-                        inner_offset += trivia.text_len();
+                        let trivia_len = trivia.text_len();
                         first_new_line = Some((inner_offset, leading_trivia.next().unwrap()));
+                        inner_offset += trivia_len;
                     } else if trivia.is_whitespace() || trivia.is_newline() {
                         let trivia_len = trivia.text_len();
                         self.source_map
@@ -499,13 +500,13 @@ where
 #[cfg(test)]
 mod tests {
     use super::JsFormatSyntaxRewriter;
-    use crate::{format_node, JsFormatOptions};
+    use crate::{format_node, JsFormatOptions, TextRange};
     use rome_formatter::{SourceMarker, TransformSourceMap};
     use rome_js_parser::parse_module;
     use rome_js_syntax::{
         JsArrayExpression, JsBinaryExpression, JsExpressionStatement, JsIdentifierExpression,
         JsLogicalExpression, JsSequenceExpression, JsStringLiteralExpression, JsSyntaxNode,
-        SourceType,
+        JsUnaryExpression, SourceType,
     };
     use rome_rowan::{AstNode, SyntaxRewriter, TextSize};
 
@@ -756,6 +757,79 @@ mod tests {
         assert_eq!(
             source_map.trimmed_source_text(binary.syntax()),
             "(/* left */ a + b /* right */)"
+        );
+    }
+
+    #[test]
+    fn parentheses() {
+        let (transformed, source_map) = source_map_test(
+            r#"!(
+  /* foo */
+  x
+);
+!(
+  x // foo
+);
+!(
+  /* foo */
+  x + y
+);
+!(
+  x + y
+  /* foo */
+);
+!(
+  x + y // foo
+);"#,
+        );
+
+        let unary_expressions = transformed
+            .descendants()
+            .filter_map(JsUnaryExpression::cast)
+            .collect::<Vec<_>>();
+        assert_eq!(unary_expressions.len(), 5);
+
+        assert_eq!(
+            source_map.trimmed_source_text(unary_expressions[0].syntax()),
+            r#"!(
+  /* foo */
+  x
+)"#
+        );
+
+        assert_eq!(
+            source_map.source_range(unary_expressions[1].syntax().text_range()),
+            TextRange::new(TextSize::from(21), TextSize::from(36))
+        );
+
+        assert_eq!(
+            source_map.trimmed_source_text(unary_expressions[1].syntax()),
+            r#"!(
+  x // foo
+)"#
+        );
+
+        assert_eq!(
+            source_map.trimmed_source_text(unary_expressions[2].syntax()),
+            r#"!(
+  /* foo */
+  x + y
+)"#
+        );
+
+        assert_eq!(
+            source_map.trimmed_source_text(unary_expressions[3].syntax()),
+            r#"!(
+  x + y
+  /* foo */
+)"#
+        );
+
+        assert_eq!(
+            source_map.trimmed_source_text(unary_expressions[4].syntax()),
+            r#"!(
+  x + y // foo
+)"#
         );
     }
 

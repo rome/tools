@@ -1,6 +1,10 @@
 use crate::comments::map::CommentsMap;
 use crate::comments::CommentPosition;
-use crate::{CommentPlacement, CommentStyle, DecoratedComment, SourceComment};
+use crate::source_map::{DeletedRangeEntry, DeletedRanges};
+use crate::{
+    CommentPlacement, CommentStyle, DecoratedComment, SourceComment, TextRange, TextSize,
+    TransformSourceMap,
+};
 use rome_rowan::syntax::SyntaxElementKey;
 use rome_rowan::{
     Direction, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxToken, WalkEvent,
@@ -10,6 +14,7 @@ use rustc_hash::FxHashSet;
 pub(super) struct CommentsBuilderVisitor<'a, Style: CommentStyle> {
     builder: CommentsBuilder<Style::Language>,
     style: &'a Style,
+    parentheses: SourceParentheses<'a>,
 
     // State
     pending_comments: Vec<DecoratedComment<Style::Language>>,
@@ -23,10 +28,11 @@ impl<'a, Style> CommentsBuilderVisitor<'a, Style>
 where
     Style: CommentStyle,
 {
-    pub(super) fn new(style: &'a Style) -> Self {
+    pub(super) fn new(style: &'a Style, source_map: Option<&'a TransformSourceMap>) -> Self {
         Self {
             style,
             builder: Default::default(),
+            parentheses: SourceParentheses::from_source_map(source_map),
 
             pending_comments: Default::default(),
             preceding_node: Default::default(),
@@ -65,7 +71,6 @@ where
             "Expected all enclosing nodes to have been processed but contains {:#?}",
             self.parents
         );
-
         self.flush_comments(None);
 
         self.builder.finish()
@@ -111,7 +116,7 @@ where
     }
 
     fn visit_token(&mut self, token: SyntaxToken<Style::Language>) {
-        let comments_start = self.pending_comments.len();
+        let mut comments_start = self.pending_comments.len();
 
         // The index of the last trailing comment in `pending_comments`.
         let mut trailing_end: Option<usize> = None;
@@ -148,6 +153,25 @@ where
                     });
 
                     lines_before = 0;
+                }
+
+                if let Some(parens_source_range) = self
+                    .parentheses
+                    .r_paren_source_range(piece.text_range().end())
+                {
+                    self.flush_before_r_paren_comments(
+                        parens_source_range,
+                        &last_token,
+                        position,
+                        lines_before,
+                        comments_start,
+                        trailing_end,
+                    );
+
+                    lines_before = 0;
+                    position = CommentPosition::SameLine;
+                    comments_start = 0;
+                    trailing_end = None;
                 }
             }
         }
@@ -190,7 +214,6 @@ where
 
         self.last_token = Some(token);
 
-        let has_leading_comments = self.pending_comments.len() > trailing_end;
         let mut comments = self.pending_comments[comments_start..]
             .iter_mut()
             .enumerate()
@@ -198,7 +221,8 @@ where
 
         // Update the lines after of all comments as well as the positioning of end of line comments.
         while let Some((index, comment)) = comments.next() {
-            if index < trailing_end && (has_leading_comments || lines_before > 0) {
+            // Update the position of all trailing comments to be end of line as we've seen a line break since.
+            if index < trailing_end && position.is_own_line() {
                 comment.position = CommentPosition::EndOfLine;
             }
 
@@ -248,6 +272,55 @@ where
             let placement = self.style.place_comment(comment);
             self.builder.add_comment(placement);
         }
+    }
+
+    /// Processes comments appearing right before a `)` of a parenthesized expressions.
+    #[cold]
+    fn flush_before_r_paren_comments(
+        &mut self,
+        parens_source_range: TextRange,
+        last_token: &SyntaxToken<Style::Language>,
+        position: CommentPosition,
+        lines_before: u32,
+        start: usize,
+        trailing_end: Option<usize>,
+    ) {
+        let enclosing = self.enclosing_node().clone();
+
+        let trailing_end = trailing_end.unwrap_or(self.pending_comments.len());
+        let mut comments = self.pending_comments[start..]
+            .iter_mut()
+            .enumerate()
+            .peekable();
+
+        let parenthesized_node = self
+            .parentheses
+            .outer_most_parenthesized_node(last_token, parens_source_range);
+
+        // SAFETY: Safe, because the above loop at least returns the parent of the token. If this isn't the case,
+        // then it's likely that the source map is corrupted.
+        let preceding = parenthesized_node.expect("Last token to have a parent node.");
+
+        // Using the `enclosing` as default but it's mainly to satisfy Rust. The only case where it is used
+        // is if someone formats a Parenthesized expression as the root. Something we explicitly disallow
+        // in rome_js_formatter
+        let enclosing = preceding.parent().unwrap_or_else(|| enclosing);
+
+        // Update the lines after of all comments as well as the positioning of end of line comments.
+        while let Some((index, comment)) = comments.next() {
+            // Update the position of all trailing comments to be end of line as we've seen a line break since.
+            if index < trailing_end && position.is_own_line() {
+                comment.position = CommentPosition::EndOfLine;
+            }
+
+            comment.preceding = Some(preceding.clone());
+            comment.enclosing = enclosing.clone();
+            comment.lines_after = comments
+                .peek()
+                .map_or(lines_before, |(_, next)| next.lines_before);
+        }
+
+        self.flush_comments(None);
     }
 }
 
@@ -397,19 +470,132 @@ impl<L: Language> Default for CommentsBuilder<L> {
     }
 }
 
+enum SourceParentheses<'a> {
+    Empty,
+    SourceMap {
+        map: &'a TransformSourceMap,
+        next: Option<DeletedRangeEntry<'a>>,
+        tail: DeletedRanges<'a>,
+    },
+}
+
+impl<'a> SourceParentheses<'a> {
+    fn from_source_map(source_map: Option<&'a TransformSourceMap>) -> Self {
+        match source_map {
+            None => Self::Empty,
+            Some(source_map) => {
+                let mut deleted = source_map.deleted_ranges();
+                SourceParentheses::SourceMap {
+                    map: source_map,
+                    next: deleted.next(),
+                    tail: deleted,
+                }
+            }
+        }
+    }
+
+    /// Returns the range of `node` including its parentheses if any. Otherwise returns the range as is
+    fn parenthesized_range<L: Language>(&self, node: &SyntaxNode<L>) -> TextRange {
+        match self {
+            SourceParentheses::Empty => node.text_trimmed_range(),
+            SourceParentheses::SourceMap { map, .. } => map.trimmed_source_range(node),
+        }
+    }
+
+    /// Tests if the next offset is at a position where the original source document used to have an `)`.
+    ///
+    /// Must be called with offsets in increasing order.
+    ///
+    /// Returns the source range of the `)` if there's any `)` in the deleted range at this offset. Returns `None` otherwise
+    fn r_paren_source_range(&mut self, offset: TextSize) -> Option<TextRange> {
+        match self {
+            SourceParentheses::Empty => None,
+            SourceParentheses::SourceMap { next, tail, .. } => {
+                while let Some(range) = next {
+                    if range.transformed == offset {
+                        // A deleted range can contain multiple tokens. See if there's any `)` in the deleted
+                        // range and compute its source range.
+                        return range.text.find(")").map(|r_paren_position| {
+                            let start = range.source + TextSize::from(r_paren_position as u32);
+                            TextRange::at(start, TextSize::from(1))
+                        });
+                    } else if range.transformed > offset {
+                        return None;
+                    } else {
+                        *next = tail.next();
+                    }
+                }
+
+                None
+            }
+        }
+    }
+
+    /// Searches the outer most node that still is inside of the parentheses specified by the `parentheses_source_range`.
+    fn outer_most_parenthesized_node<L: Language>(
+        &self,
+        token: &SyntaxToken<L>,
+        parentheses_source_range: TextRange,
+    ) -> Option<SyntaxNode<L>> {
+        match self {
+            SourceParentheses::Empty => token.parent(),
+            SourceParentheses::SourceMap { map, .. } => {
+                debug_assert_eq!(&map.text()[parentheses_source_range], ")");
+
+                // How this works: We search the outer most node that, in the source document ends right after the `)`.
+                // The issue is, it is possible that multiple nodes end right after the `)`
+                //
+                // ```javascript
+                // !(
+                //     a
+                //     /* comment */
+                //  )
+                // ```
+                // The issue is, that in the transformed document, the `ReferenceIdentifier`, `IdentifierExpression`, `UnaryExpression`, and `ExpressionStatement`
+                // all end at the end position of `)`.
+                // However, not all the nodes start at the same position. That's why this code also tracks the start.
+                // We first find the closest node that directly ends at the position of the right paren. We then continue
+                // upwards to find the most outer node that starts at the same position as that node. (In this case,
+                // `ReferenceIdentifier` -> `IdentifierExpression`.
+                let mut start_offset = None;
+                let r_paren_source_end = parentheses_source_range.end();
+
+                let ancestors = token.ancestors().take_while(|node| {
+                    let source_range = self.parenthesized_range(node);
+
+                    if let Some(start) = start_offset {
+                        TextRange::new(start, r_paren_source_end).contains_range(source_range)
+                    } else if source_range.end() == r_paren_source_end {
+                        start_offset = Some(source_range.start());
+                        true
+                    } else {
+                        source_range.end() < r_paren_source_end
+                    }
+                });
+
+                ancestors.last()
+            }
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
-    use crate::comments::builder::CommentsBuilderVisitor;
+    use crate::comments::builder::{CommentsBuilder, CommentsBuilderVisitor};
     use crate::comments::map::CommentsMap;
     use crate::comments::CommentPosition;
-    use crate::{CommentKind, CommentPlacement, CommentStyle, DecoratedComment, SourceComment};
+    use crate::{
+        CommentKind, CommentPlacement, CommentStyle, DecoratedComment, SourceComment, TextSize,
+        TransformSourceMap, TransformSourceMapBuilder,
+    };
     use rome_js_parser::parse_module;
     use rome_js_syntax::{
-        JsLanguage, JsParameters, JsPropertyObjectMember, JsShorthandPropertyObjectMember,
-        JsSyntaxKind, JsSyntaxNode,
+        JsIdentifierExpression, JsLanguage, JsParameters, JsParenthesizedExpression,
+        JsPropertyObjectMember, JsReferenceIdentifier, JsShorthandPropertyObjectMember,
+        JsSyntaxKind, JsSyntaxNode, JsUnaryExpression,
     };
     use rome_rowan::syntax::SyntaxElementKey;
-    use rome_rowan::{AstNode, SyntaxTriviaPieceComments};
+    use rome_rowan::{AstNode, BatchMutation, SyntaxNode, SyntaxTriviaPieceComments, TextRange};
     use std::cell::RefCell;
 
     #[test]
@@ -589,6 +775,135 @@ mod tests {
     }
 
     #[test]
+    fn r_paren() {
+        let source = r#"!(
+    a
+    /* comment */
+)
+/* comment */
+b;"#;
+
+        let mut source_map_builder = TransformSourceMapBuilder::with_source(source.to_string());
+        let l_paren_range = TextRange::new(TextSize::from(1), TextSize::from(2));
+        let r_paren_range = TextRange::new(TextSize::from(27), TextSize::from(28));
+
+        assert_eq!(&source[l_paren_range], "(");
+        assert_eq!(&source[r_paren_range], ")");
+
+        source_map_builder.add_deleted_range(l_paren_range);
+        source_map_builder.add_deleted_range(r_paren_range);
+        source_map_builder.extend_trimmed_node_range(
+            TextRange::new(TextSize::from(7), TextSize::from(8)),
+            TextRange::new(l_paren_range.start(), r_paren_range.end()),
+        );
+
+        let source_map = source_map_builder.finish();
+
+        let root = parse_module(source, 0).syntax();
+
+        // A lot of code that simply removes the parenthesized expression and moves the parens
+        // trivia to the identifiers leading / trailing trivia.
+        let parenthesized = root
+            .descendants()
+            .find_map(JsParenthesizedExpression::cast)
+            .unwrap();
+
+        let reference_identifier = root
+            .descendants()
+            .find_map(JsReferenceIdentifier::cast)
+            .unwrap();
+
+        let mut mutation = BatchMutation::new(root);
+
+        let identifier_expression =
+            JsIdentifierExpression::cast(parenthesized.expression().unwrap().into_syntax())
+                .unwrap();
+        let l_paren = parenthesized.l_paren_token().unwrap();
+        let r_paren = parenthesized.r_paren_token().unwrap();
+
+        let identifier_token = reference_identifier.value_token().unwrap();
+        let new_identifier_token = identifier_token
+            .with_leading_trivia_pieces(
+                l_paren
+                    .leading_trivia()
+                    .pieces()
+                    .chain(l_paren.trailing_trivia().pieces())
+                    .chain(identifier_token.leading_trivia().pieces())
+                    .collect::<Vec<_>>(),
+            )
+            .with_trailing_trivia_pieces(
+                identifier_token
+                    .trailing_trivia()
+                    .pieces()
+                    .chain(r_paren.leading_trivia().pieces())
+                    .chain(r_paren.trailing_trivia().pieces())
+                    .collect::<Vec<_>>(),
+            );
+
+        let new_reference_identifier = reference_identifier
+            .clone()
+            .with_value_token(new_identifier_token);
+
+        let new_identifier_expression = identifier_expression.with_name(new_reference_identifier);
+
+        mutation.replace_element_discard_trivia(
+            parenthesized.into_syntax().into(),
+            new_identifier_expression.into_syntax().into(),
+        );
+
+        let transformed = mutation.commit();
+
+        let style = TestCommentStyle::default();
+        let mut comments_builder = CommentsBuilderVisitor::new(&style, Some(&source_map));
+        let (comments, _) = comments_builder.visit(&transformed);
+
+        let decorated_comments = style.finish();
+
+        assert_eq!(decorated_comments.len(), 2);
+
+        let argument_trailing = &decorated_comments[0];
+        assert_eq!(argument_trailing.position(), CommentPosition::OwnLine);
+        assert_eq!(argument_trailing.lines_before(), 1);
+        assert_eq!(argument_trailing.lines_after(), 1);
+        assert_eq!(
+            argument_trailing
+                .preceding_node()
+                .map(|preceding| preceding.kind()),
+            Some(JsSyntaxKind::JS_IDENTIFIER_EXPRESSION)
+        );
+        assert_eq!(argument_trailing.following_node(), None);
+        assert_eq!(
+            argument_trailing.enclosing_node().kind(),
+            JsSyntaxKind::JS_UNARY_EXPRESSION
+        );
+
+        let identifier_leading = &decorated_comments[1];
+        assert_eq!(identifier_leading.position(), CommentPosition::OwnLine);
+        assert_eq!(identifier_leading.lines_before(), 1);
+        assert_eq!(identifier_leading.lines_after(), 1);
+        assert_eq!(
+            identifier_leading.preceding_node().map(SyntaxNode::kind),
+            Some(JsSyntaxKind::JS_EXPRESSION_STATEMENT)
+        );
+        assert_eq!(
+            identifier_leading.following_node().map(SyntaxNode::kind),
+            Some(JsSyntaxKind::JS_EXPRESSION_STATEMENT)
+        );
+        assert_eq!(
+            identifier_leading.enclosing_node().kind(),
+            JsSyntaxKind::JS_MODULE
+        );
+
+        let unary = transformed
+            .descendants()
+            .find_map(JsUnaryExpression::cast)
+            .unwrap();
+        assert!(!comments
+            .trailing(&unary.argument().unwrap().syntax().key())
+            .is_empty());
+    }
+
+    #[test]
     fn comment_only_program() {
         let (root, decorated, comments) = extract_comments(
             r#"/* test */
@@ -624,10 +939,21 @@ mod tests {
         Vec<DecoratedComment<JsLanguage>>,
         CommentsMap<SyntaxElementKey, SourceComment<JsLanguage>>,
     ) {
+        extract_with_source_map(source, None)
+    }
+
+    fn extract_with_source_map(
+        source: &str,
+        source_map: Option<&TransformSourceMap>,
+    ) -> (
+        JsSyntaxNode,
+        Vec<DecoratedComment<JsLanguage>>,
+        CommentsMap<SyntaxElementKey, SourceComment<JsLanguage>>,
+    ) {
         let tree = parse_module(source, 0);
 
         let style = TestCommentStyle::default();
-        let builder = CommentsBuilderVisitor::new(&style);
+        let builder = CommentsBuilderVisitor::new(&style, source_map);
         let (comments, _) = builder.visit(&tree.syntax());
 
         (tree.syntax(), style.finish(), comments)

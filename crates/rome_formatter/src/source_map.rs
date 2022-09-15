@@ -385,9 +385,14 @@ impl TransformSourceMapBuilder {
     /// Creates a new builder for a source map that maps positions back to the passed `root` tree.
     pub fn new() -> Self {
         Self {
-            source_text: String::new(),
-            deleted_ranges: Vec::new(),
-            mapped_node_ranges: FxHashMap::default(),
+            ..Default::default()
+        }
+    }
+
+    pub fn with_source(source: String) -> Self {
+        Self {
+            source_text: source,
+            ..Default::default()
         }
     }
 

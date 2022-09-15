@@ -2,7 +2,7 @@ mod builder;
 mod map;
 
 use self::{builder::CommentsBuilderVisitor, map::CommentsMap};
-use crate::TextSize;
+use crate::{TextSize, TransformSourceMap};
 use rome_rowan::syntax::SyntaxElementKey;
 use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTriviaPieceComments};
 use rustc_hash::FxHashSet;
@@ -340,11 +340,15 @@ pub struct Comments<L: Language> {
 
 impl<L: Language> Comments<L> {
     /// Extracts all the suppressions from `root` and its child nodes.
-    pub fn from_node<Style>(root: &SyntaxNode<L>, style: &Style) -> Self
+    pub fn from_node<Style>(
+        root: &SyntaxNode<L>,
+        style: &Style,
+        source_map: Option<&TransformSourceMap>,
+    ) -> Self
     where
         Style: CommentStyle<Language = L>,
     {
-        let builder = CommentsBuilderVisitor::new(style);
+        let builder = CommentsBuilderVisitor::new(style, source_map);
 
         let (comments, skipped) = builder.visit(root);
 

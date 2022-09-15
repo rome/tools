@@ -878,7 +878,7 @@ pub fn format_node<L: FormatLanguage>(
             None => (root.clone(), None),
         };
 
-        let comments = Comments::from_node(&root, &L::CommentStyle::default());
+        let comments = Comments::from_node(&root, &L::CommentStyle::default(), source_map.as_ref());
         let format_node = FormatRefWithRule::new(&root, L::FormatRule::default());
 
         let context = language.create_context(comments, source_map);
