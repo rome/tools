@@ -1,5 +1,5 @@
-use crate::cst::{FormatLeadingComments, FormatTrailingComments};
 use crate::prelude::*;
+use crate::token::{FormatLeadingComments, FormatTrailingComments};
 use crate::VecBuffer;
 use crate::{write, CstFormatContext};
 use rome_rowan::{Direction, Language, SyntaxElement, SyntaxNode, TextRange};
