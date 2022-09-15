@@ -17,12 +17,15 @@ declare_rule! {
     /// ### Invalid
     ///
     /// ```jsx,expect_diagnostic
-    /// <div dangerouslySetInnerHTML={{ __html: "child" }}></div>
+    /// function createMarkup() {
+    ///     return { __html: 'child' }
+    /// }
+    /// <div dangerouslySetInnerHTML={createMarkup()}></div>
     /// ```
     ///
-    /// ```jsx,expect_diagnostic
+    /// ```js,expect_diagnostic
     /// React.createElement('div', {
-    ///     dangerouslySetInnerHTML: { __html: "child" }
+    ///     dangerouslySetInnerHTML: { __html: 'child' }
     /// });
     /// ```
     pub(crate) NoDangerouslySetInnerHtml {

@@ -12,13 +12,16 @@ Prevent the usage of dangerous JSX props
 ### Invalid
 
 ```jsx
-<div dangerouslySetInnerHTML={{ __html: "child" }}></div>
+function createMarkup() {
+    return { __html: 'child' }
+}
+<div dangerouslySetInnerHTML={createMarkup()}></div>
 ```
 
 {% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtml/">nursery/noDangerouslySetInnerHtml</a></span><span style="color: Orange;">]</span><em>: </em><em>Avoid passing content using the </em><em><em>dangerouslySetInnerHTML</em></em><em> prop.</em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noDangerouslySetInnerHtml.js:1:6
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noDangerouslySetInnerHtml.js:4:6
   <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> &lt;div dangerouslySetInnerHTML={{ __html: &quot;child&quot; }}&gt;&lt;/div&gt;
+<span style="color: rgb(38, 148, 255);">4</span> <span style="color: rgb(38, 148, 255);">│</span> &lt;div dangerouslySetInnerHTML={createMarkup()}&gt;&lt;/div&gt;
   <span style="color: rgb(38, 148, 255);">│</span>      <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span>
 
 = <span style="color: Orange;">warning</span><span style="color: Orange;">: </span>Setting content using code can expose users to cross-site scripting (XSS) attacks
@@ -27,14 +30,14 @@ Prevent the usage of dangerous JSX props
 
 ```jsx
 React.createElement('div', {
-    dangerouslySetInnerHTML: { __html: "child" }
+    dangerouslySetInnerHTML: { __html: 'child' }
 });
 ```
 
 {% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtml/">nursery/noDangerouslySetInnerHtml</a></span><span style="color: Orange;">]</span><em>: </em><em>Avoid passing content using the </em><em><em>dangerouslySetInnerHTML</em></em><em> prop.</em>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noDangerouslySetInnerHtml.js:2:5
   <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span>     dangerouslySetInnerHTML: { __html: &quot;child&quot; }
+<span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span>     dangerouslySetInnerHTML: { __html: 'child' }
   <span style="color: rgb(38, 148, 255);">│</span>     <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span>
 
 = <span style="color: Orange;">warning</span><span style="color: Orange;">: </span>Setting content using code can expose users to cross-site scripting (XSS) attacks
