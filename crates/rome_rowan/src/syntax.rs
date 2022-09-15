@@ -11,7 +11,7 @@ pub use trivia::{
     TriviaPieceKind,
 };
 
-pub use element::SyntaxElement;
+pub use element::{SyntaxElement, SyntaxElementKey};
 pub(crate) use node::SyntaxSlots;
 pub use node::{
     Preorder, PreorderWithTokens, SendNode, SyntaxElementChildren, SyntaxNode, SyntaxNodeChildren,
