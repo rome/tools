@@ -46,7 +46,7 @@ pub(super) struct CommentsMap<K, V> {
     /// Lookup table to retrieve the entry for a key.
     index: FxHashMap<K, Entry>,
 
-    /// Flat array storing all the values that have been inserted in order.
+    /// Flat array storing all the parts that have been inserted in order.
     parts: Vec<V>,
 
     /// Vector containing the leading, dangling, and trailing vectors for out of order entries.
@@ -120,7 +120,7 @@ impl<K: std::hash::Hash + Eq, V> CommentsMap<K, V> {
                 );
             }
 
-            // Has leading and dangling comments and its comments are at the end of values
+            // Has leading and dangling comments and its comments are at the end of parts
             Some(Entry::InOrder(entry))
                 if entry.trailing_end.is_none() && self.parts.len() == entry.range().end =>
             {
@@ -179,7 +179,7 @@ impl<K: std::hash::Hash + Eq, V> CommentsMap<K, V> {
     #[cold]
     fn entry_to_out_of_order<'a>(
         entry: &'a mut Entry,
-        values: &[V],
+        parts: &[V],
         out_of_order: &mut Vec<Vec<V>>,
     ) -> &'a mut OutOfOrderEntry
     where
@@ -189,9 +189,9 @@ impl<K: std::hash::Hash + Eq, V> CommentsMap<K, V> {
             Entry::InOrder(in_order) => {
                 let index = out_of_order.len();
 
-                out_of_order.push(values[in_order.leading_range()].to_vec());
-                out_of_order.push(values[in_order.dangling_range()].to_vec());
-                out_of_order.push(values[in_order.trailing_range()].to_vec());
+                out_of_order.push(parts[in_order.leading_range()].to_vec());
+                out_of_order.push(parts[in_order.dangling_range()].to_vec());
+                out_of_order.push(parts[in_order.trailing_range()].to_vec());
 
                 *entry = Entry::OutOfOrder(OutOfOrderEntry {
                     leading_index: index,
@@ -240,15 +240,15 @@ impl<K: std::hash::Hash + Eq, V> CommentsMap<K, V> {
     }
 
     /// Returns an iterator over all leading, dangling, and trailing parts of `key`.
-    pub fn parts(&self, key: &K) -> ValuesIterator<V> {
+    pub fn parts(&self, key: &K) -> PartsIterator<V> {
         match self.index.get(key) {
-            None => ValuesIterator::Slice([].iter()),
-            Some(Entry::OutOfOrder(entry)) => ValuesIterator::Leading {
+            None => PartsIterator::Slice([].iter()),
+            Some(Entry::OutOfOrder(entry)) => PartsIterator::Leading {
                 leading: self.out_of_order[entry.leading_index()].iter(),
                 dangling: &self.out_of_order[entry.dangling_index()],
                 trailing: &self.out_of_order[entry.trailing_index()],
             },
-            Some(Entry::InOrder(entry)) => ValuesIterator::Slice(self.parts[entry.range()].iter()),
+            Some(Entry::InOrder(entry)) => PartsIterator::Slice(self.parts[entry.range()].iter()),
         }
     }
 }
@@ -276,7 +276,7 @@ where
 }
 
 /// Iterator to iterate over all leading, dangling, and trailing parts of a key.
-pub(super) enum ValuesIterator<'a, V> {
+pub(super) enum PartsIterator<'a, V> {
     /// The slice into the [CommentsMap::parts] [Vec] if this is an in-order entry or the trailing parts
     /// of an out-of-order entry.
     Slice(std::slice::Iter<'a, V>),
@@ -297,14 +297,14 @@ pub(super) enum ValuesIterator<'a, V> {
     },
 }
 
-impl<'a, V> Iterator for ValuesIterator<'a, V> {
+impl<'a, V> Iterator for PartsIterator<'a, V> {
     type Item = &'a V;
 
     fn next(&mut self) -> Option<Self::Item> {
         match self {
-            ValuesIterator::Slice(inner) => inner.next(),
+            PartsIterator::Slice(inner) => inner.next(),
 
-            ValuesIterator::Leading {
+            PartsIterator::Leading {
                 leading,
                 dangling,
                 trailing,
@@ -313,7 +313,7 @@ impl<'a, V> Iterator for ValuesIterator<'a, V> {
                 None if !dangling.is_empty() => {
                     let mut dangling_iterator = dangling.iter();
                     let next = dangling_iterator.next().unwrap();
-                    *self = ValuesIterator::Dangling {
+                    *self = PartsIterator::Dangling {
                         dangling: dangling_iterator,
                         trailing,
                     };
@@ -322,17 +322,17 @@ impl<'a, V> Iterator for ValuesIterator<'a, V> {
                 None => {
                     let mut trailing_iterator = trailing.iter();
                     let next = trailing_iterator.next();
-                    *self = ValuesIterator::Slice(trailing_iterator);
+                    *self = PartsIterator::Slice(trailing_iterator);
                     next
                 }
             },
 
-            ValuesIterator::Dangling { dangling, trailing } => match dangling.next() {
+            PartsIterator::Dangling { dangling, trailing } => match dangling.next() {
                 Some(next) => Some(next),
                 None => {
                     let mut trailing_iterator = trailing.iter();
                     let next = trailing_iterator.next();
-                    *self = ValuesIterator::Slice(trailing_iterator);
+                    *self = PartsIterator::Slice(trailing_iterator);
                     next
                 }
             },
@@ -341,8 +341,8 @@ impl<'a, V> Iterator for ValuesIterator<'a, V> {
 
     fn size_hint(&self) -> (usize, Option<usize>) {
         match self {
-            ValuesIterator::Slice(slice) => slice.size_hint(),
-            ValuesIterator::Leading {
+            PartsIterator::Slice(slice) => slice.size_hint(),
+            PartsIterator::Leading {
                 leading,
                 dangling,
                 trailing,
@@ -351,7 +351,7 @@ impl<'a, V> Iterator for ValuesIterator<'a, V> {
 
                 (len, Some(len))
             }
-            ValuesIterator::Dangling { dangling, trailing } => {
+            PartsIterator::Dangling { dangling, trailing } => {
                 let len = dangling.len() + trailing.len();
                 (len, Some(len))
             }
@@ -363,8 +363,8 @@ impl<'a, V> Iterator for ValuesIterator<'a, V> {
         Self: Sized,
     {
         match self {
-            ValuesIterator::Slice(slice) => slice.last(),
-            ValuesIterator::Leading {
+            PartsIterator::Slice(slice) => slice.last(),
+            PartsIterator::Leading {
                 leading,
                 dangling,
                 trailing,
@@ -372,16 +372,16 @@ impl<'a, V> Iterator for ValuesIterator<'a, V> {
                 .last()
                 .or_else(|| dangling.last())
                 .or_else(|| leading.last()),
-            ValuesIterator::Dangling { dangling, trailing } => {
+            PartsIterator::Dangling { dangling, trailing } => {
                 trailing.last().or_else(|| dangling.last())
             }
         }
     }
 }
 
-impl<V> ExactSizeIterator for ValuesIterator<'_, V> {}
+impl<V> ExactSizeIterator for PartsIterator<'_, V> {}
 
-impl<V> FusedIterator for ValuesIterator<'_, V> {}
+impl<V> FusedIterator for PartsIterator<'_, V> {}
 
 #[derive(Debug)]
 enum Entry {
