@@ -65,6 +65,7 @@ fn instance_type<'a>(
                     if let Some(description) = description {
                         let comment = format!("/**\n\t* {} \n\t */", description);
                         let trivia = vec![
+                            (TriviaPieceKind::Newline, "\n"),
                             (TriviaPieceKind::MultiLineComment, comment.as_str()),
                             (TriviaPieceKind::Newline, "\n"),
                         ];
@@ -337,6 +338,7 @@ pub fn generate_type<'a>(
                 if let Some(description) = description {
                     let comment = format!("/**\n\t* {} \n\t */", description);
                     let trivia = vec![
+                        (TriviaPieceKind::Newline, "\n"),
                         (TriviaPieceKind::MultiLineComment, comment.as_str()),
                         (TriviaPieceKind::Newline, "\n"),
                     ];

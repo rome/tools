@@ -437,15 +437,23 @@ impl BoilerplateImpls {
     fn push(&mut self, kind: &NodeKind, node_id: &Ident, format_id: &TokenStream) {
         let format_rule_impl = match kind {
             NodeKind::List { .. } | NodeKind::Union { .. } => quote!(),
-            _ => quote! {
-                impl FormatRule<rome_js_syntax::#node_id> for #format_id {
-                   type Context = JsFormatContext;
-                    #[inline(always)]
-                    fn fmt(&self, node: &rome_js_syntax::#node_id, f: &mut JsFormatter) -> FormatResult<()> {
-                        FormatNodeRule::<rome_js_syntax::#node_id>::fmt(self, node, f)
+            kind => {
+                let rule = if matches!(kind, NodeKind::Unknown) {
+                    Ident::new("FormatUnknownNodeRule", Span::call_site())
+                } else {
+                    Ident::new("FormatNodeRule", Span::call_site())
+                };
+
+                quote! {
+                    impl FormatRule<rome_js_syntax::#node_id> for #format_id {
+                       type Context = JsFormatContext;
+                        #[inline(always)]
+                        fn fmt(&self, node: &rome_js_syntax::#node_id, f: &mut JsFormatter) -> FormatResult<()> {
+                            #rule::<rome_js_syntax::#node_id>::fmt(self, node, f)
+                        }
                     }
                 }
-            },
+            }
         };
 
         self.impls.push(quote! {
@@ -474,7 +482,7 @@ impl BoilerplateImpls {
 
         let tokens = quote! {
             use rome_formatter::{FormatRefWithRule, FormatOwnedWithRule, FormatRule, FormatResult};
-            use crate::{AsFormat, IntoFormat, FormatNodeRule, JsFormatter, JsFormatContext};
+            use crate::{AsFormat, IntoFormat, FormatNodeRule, FormatUnknownNodeRule, JsFormatter, JsFormatContext};
 
             #( #impls )*
         };

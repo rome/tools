@@ -2812,6 +2812,7 @@ name = "xtask_bench"
 version = "0.0.0"
 dependencies = [
  "ansi_rgb",
+ "countme",
  "criterion",
  "dhat",
  "humansize",
