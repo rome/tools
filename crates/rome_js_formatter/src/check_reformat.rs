@@ -1,5 +1,5 @@
 use crate::{format_node, JsFormatOptions};
-use rome_diagnostics::{file::SimpleFiles, termcolor, Emitter};
+use rome_diagnostics::{file::FileId, file::SimpleFiles, termcolor, Emitter};
 use rome_js_parser::parse;
 use rome_js_syntax::{JsSyntaxNode, SourceType};
 
@@ -22,7 +22,7 @@ pub fn check_reformat(params: CheckReformatParams) {
         options,
     } = params;
 
-    let re_parse = parse(text, 0, source_type);
+    let re_parse = parse(text, FileId::zero(), source_type);
 
     // Panic if the result from the formatter has syntax errors
     if re_parse.has_errors() {

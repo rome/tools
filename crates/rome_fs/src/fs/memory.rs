@@ -158,9 +158,9 @@ mod tests {
 
     use crate::fs::FileSystemExt;
     use crate::{
-        interner::FileId, AtomicInterner, FileSystem, MemoryFileSystem, PathInterner, RomePath,
-        TraversalContext,
+        AtomicInterner, FileSystem, MemoryFileSystem, PathInterner, RomePath, TraversalContext,
     };
+    use rome_diagnostics::file::FileId;
 
     #[test]
     fn file_read_write() {
@@ -226,7 +226,7 @@ mod tests {
             }
 
             fn push_diagnostic(&self, file_id: FileId, code: &'static str, message: String) {
-                panic!("unexpected error {code:?} in file {file_id}: {message}")
+                panic!("unexpected error {code:?} in file {file_id:?}: {message}")
             }
 
             fn can_handle(&self, _: &RomePath) -> bool {

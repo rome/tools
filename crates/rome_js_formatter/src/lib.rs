@@ -592,6 +592,7 @@ mod tests {
     use super::{format_node, format_range};
 
     use crate::context::JsFormatOptions;
+    use rome_diagnostics::file::FileId;
     use rome_formatter::IndentStyle;
     use rome_js_parser::{parse, parse_script};
     use rome_js_syntax::SourceType;
@@ -629,7 +630,7 @@ while(
         let range_start = TextSize::try_from(input.find("let").unwrap() - 2).unwrap();
         let range_end = TextSize::try_from(input.find("const").unwrap()).unwrap();
 
-        let tree = parse_script(input, 0);
+        let tree = parse_script(input, FileId::zero());
         let result = format_range(
             JsFormatOptions::new(SourceType::js_script()).with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
@@ -661,7 +662,7 @@ function() {
         let range_start = TextSize::try_from(input.find("const").unwrap()).unwrap();
         let range_end = TextSize::try_from(input.find('}').unwrap()).unwrap();
 
-        let tree = parse_script(input, 0);
+        let tree = parse_script(input, FileId::zero());
         let result = format_range(
             JsFormatOptions::new(SourceType::js_script()).with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
@@ -692,7 +693,7 @@ function() {
         let range_start = TextSize::try_from(input.find("statement_2").unwrap()).unwrap();
         let range_end = range_start + TextSize::of("statement_2()");
 
-        let tree = parse_script(input, 0);
+        let tree = parse_script(input, FileId::zero());
         let result = format_range(
             JsFormatOptions::new(SourceType::js_script()).with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
@@ -711,7 +712,7 @@ function() {
         let range_start = TextSize::try_from(input.find("3 + 4").unwrap()).unwrap();
         let range_end = range_start + TextSize::of("3 + 4");
 
-        let tree = parse_script(input, 0);
+        let tree = parse_script(input, FileId::zero());
         let result = format_range(
             JsFormatOptions::new(SourceType::js_script()).with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
@@ -733,7 +734,7 @@ function() {
         let range_start = TextSize::from(5);
         let range_end = TextSize::from(5);
 
-        let tree = parse_script(input, 0);
+        let tree = parse_script(input, FileId::zero());
         let result = format_range(
             JsFormatOptions::new(SourceType::js_script()).with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
@@ -754,7 +755,7 @@ function() {
 
 "#;
         let syntax = SourceType::tsx();
-        let tree = parse(src, 0, syntax);
+        let tree = parse(src, FileId::zero(), syntax);
         let options = JsFormatOptions::new(syntax);
 
         let result = format_node(options.clone(), &tree.syntax())
@@ -778,7 +779,7 @@ function() {
         let src = "statement();";
 
         let syntax = SourceType::js_module();
-        let tree = parse(src, 0, syntax);
+        let tree = parse(src, FileId::zero(), syntax);
 
         let result = format_range(
             JsFormatOptions::new(syntax),

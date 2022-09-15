@@ -49,6 +49,7 @@ impl<L: Language> Visitor for SyntaxVisitor<L> {
 #[cfg(test)]
 mod tests {
 
+    use rome_diagnostics::file::FileId;
     use rome_rowan::{
         raw_language::{RawLanguage, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
         AstNode,
@@ -117,7 +118,7 @@ mod tests {
         analyzer.add_visitor(Phases::Syntax, SyntaxVisitor::default());
 
         let ctx: AnalyzerContext<RawLanguage> = AnalyzerContext {
-            file_id: 0,
+            file_id: FileId::zero(),
             root,
             range: None,
             services: ServiceBag::default(),

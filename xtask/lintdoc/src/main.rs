@@ -4,7 +4,7 @@ use rome_console::{
     fmt::{Formatter, HTML},
     markup, Markup,
 };
-use rome_diagnostics::{file::SimpleFile, Diagnostic};
+use rome_diagnostics::{file::FileId, file::SimpleFile, Diagnostic};
 use rome_js_analyze::{analyze, metadata};
 use rome_js_syntax::{Language, LanguageVariant, ModuleKind, SourceType};
 use rome_service::settings::WorkspaceSettings;
@@ -459,7 +459,7 @@ fn assert_lint(
         Ok(())
     };
 
-    let parse = rome_js_parser::parse(code, 0, test.source_type);
+    let parse = rome_js_parser::parse(code, FileId::zero(), test.source_type);
 
     if parse.has_errors() {
         for diag in parse.into_diagnostics() {
@@ -476,7 +476,7 @@ fn assert_lint(
             ..AnalysisFilter::default()
         };
 
-        let result = analyze(0, &root, filter, |signal| {
+        let result = analyze(FileId::zero(), &root, filter, |signal| {
             if let Some(diag) = signal.diagnostic() {
                 let code = format!("{group}/{rule}");
                 let severity = settings.get_severity_from_rule_code(&code).unwrap();

@@ -60,10 +60,11 @@ impl FormatRule<SourceComment<JsLanguage>> for FormatJsLeadingComment {
 /// # use rome_js_parser::parse_module;
 /// # use rome_js_syntax::JsLanguage;
 /// # use rome_rowan::{Direction, SyntaxTriviaPieceComments};
+/// # use rome_diagnostics::file::FileId;
 ///  use rome_js_formatter::comments::is_doc_comment;
 ///
 /// # fn parse_comment(source: &str) -> SyntaxTriviaPieceComments<JsLanguage> {
-/// #     let root = parse_module(source, 0).tree();
+/// #     let root = parse_module(source, FileId::zero()).tree();
 /// #     root
 /// #        .eof_token()
 /// #        .expect("Root to have an EOF token")

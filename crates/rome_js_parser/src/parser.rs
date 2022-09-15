@@ -11,6 +11,7 @@ pub(crate) mod rewrite_parser;
 pub(crate) mod single_token_parse_recovery;
 
 use drop_bomb::DebugDropBomb;
+use rome_diagnostics::file::FileId;
 use rome_js_syntax::{
     JsSyntaxKind::{self},
     SourceType, TextRange,
@@ -68,7 +69,7 @@ impl ParserProgress {
 /// The Parser yields lower level events instead of nodes.
 /// These events are then processed into a syntax tree through a [`TreeSink`] implementation.
 pub(crate) struct Parser<'s> {
-    file_id: usize,
+    file_id: FileId,
     pub(super) tokens: TokenSource<'s>,
     pub(super) events: Vec<Event>,
     pub(super) state: ParserState,
@@ -80,7 +81,7 @@ pub(crate) struct Parser<'s> {
 
 impl<'s> Parser<'s> {
     /// Creates a new parser that parses the `source`.
-    pub fn new(source: &'s str, file_id: usize, source_type: SourceType) -> Parser<'s> {
+    pub fn new(source: &'s str, file_id: FileId, source_type: SourceType) -> Parser<'s> {
         let token_source = TokenSource::from_str(source, file_id);
 
         Parser {
@@ -611,6 +612,7 @@ pub struct Checkpoint {
 #[cfg(test)]
 mod tests {
     use crate::Parser;
+    use rome_diagnostics::file::FileId;
     use rome_js_syntax::{JsSyntaxKind, SourceType};
     use rome_rowan::AstNode;
 
@@ -624,7 +626,7 @@ mod tests {
 
         // File id is used for the labels inside parser errors to report them, the file id
         // is used to look up a file's source code and path inside of a codespan `Files` implementation.
-        let mut parser = Parser::new(source, 0, SourceType::default());
+        let mut parser = Parser::new(source, FileId::zero(), SourceType::default());
 
         // Use one of the syntax parsing functions to parse an expression.
         // This adds node and token events to the parser which are then used to make a node.
@@ -669,7 +671,7 @@ mod tests {
         expected = "Marker must either be `completed` or `abandoned` to avoid that children are implicitly attached to a marker's parent."
     )]
     fn uncompleted_markers_panic() {
-        let mut parser = Parser::new("'use strict'", 0, SourceType::default());
+        let mut parser = Parser::new("'use strict'", FileId::zero(), SourceType::default());
 
         let _ = parser.start();
         // drop the marker without calling complete or abandon
@@ -677,7 +679,7 @@ mod tests {
 
     #[test]
     fn completed_marker_doesnt_panic() {
-        let mut p = Parser::new("'use strict'", 0, SourceType::default());
+        let mut p = Parser::new("'use strict'", FileId::zero(), SourceType::default());
 
         let m = p.start();
         p.expect(JsSyntaxKind::JS_STRING_LITERAL);
@@ -686,7 +688,7 @@ mod tests {
 
     #[test]
     fn abandoned_marker_doesnt_panic() {
-        let mut p = Parser::new("'use strict'", 0, SourceType::default());
+        let mut p = Parser::new("'use strict'", FileId::zero(), SourceType::default());
 
         let m = p.start();
         m.abandon(&mut p);

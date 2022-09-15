@@ -693,13 +693,14 @@ fn matches_test_call(callee: &JsAnyExpression) -> SyntaxResult<Vec<SyntaxTokenTe
 #[cfg(test)]
 mod test {
     use super::contains_a_test_pattern;
+    use rome_diagnostics::file::FileId;
     use rome_js_parser::parse;
     use rome_js_syntax::{JsCallExpression, SourceType};
     use rome_rowan::AstNodeList;
 
     fn extract_call_expression(src: &str) -> JsCallExpression {
         let source_type = SourceType::js_module();
-        let result = parse(src, 0, source_type);
+        let result = parse(src, FileId::zero(), source_type);
         let module = result
             .tree()
             .as_js_module()

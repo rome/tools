@@ -1585,6 +1585,7 @@ dependencies = [
  "indexmap",
  "parking_lot 0.12.1",
  "rayon",
+ "rome_diagnostics",
  "schemars",
  "serde",
  "tracing",

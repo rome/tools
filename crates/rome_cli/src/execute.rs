@@ -1,6 +1,7 @@
 use crate::traversal::traverse;
 use crate::{CliSession, Termination};
 use rome_console::{markup, ConsoleExt};
+use rome_diagnostics::file::FileId;
 use rome_fs::RomePath;
 use rome_service::workspace::{
     FeatureName, FixFileMode, FormatFileParams, Language, OpenFileParams, SupportsFeatureParams,
@@ -125,7 +126,7 @@ pub(crate) fn execute_mode(mode: Execution, mut session: CliSession) -> Result<(
     if let Some((path, content)) = mode.as_stdin_file() {
         let workspace = &*session.app.workspace;
         let console = &mut *session.app.console;
-        let rome_path = RomePath::new(path, 0);
+        let rome_path = RomePath::new(path, FileId::zero());
 
         if mode.is_format() {
             let unsupported_format_reason = workspace

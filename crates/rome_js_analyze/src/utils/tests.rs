@@ -1,6 +1,7 @@
 use crate::utils::batch::JsBatchMutation;
 
 use super::rename::*;
+use rome_diagnostics::file::FileId;
 use rome_js_semantic::semantic_model;
 use rome_js_syntax::{JsFormalParameter, JsIdentifierBinding, JsVariableDeclarator, SourceType};
 use rome_rowan::{AstNode, BatchMutationExt, SyntaxNodeCast};
@@ -8,7 +9,7 @@ use rome_rowan::{AstNode, BatchMutationExt, SyntaxNodeCast};
 /// Search and renames a binding named "a" to "b".
 /// Asserts the renaming worked.
 pub fn assert_rename_ok(before: &str, expected: &str) {
-    let r = rome_js_parser::parse(before, 0, SourceType::js_module());
+    let r = rome_js_parser::parse(before, FileId::zero(), SourceType::js_module());
     let model = semantic_model(&r.tree());
 
     let binding_a = r
@@ -29,7 +30,7 @@ pub fn assert_rename_ok(before: &str, expected: &str) {
 /// Search and renames a binding named "a" to "b".
 /// Asserts the renaming to fail.
 pub fn assert_rename_nok(before: &str) {
-    let r = rome_js_parser::parse(before, 0, SourceType::js_module());
+    let r = rome_js_parser::parse(before, FileId::zero(), SourceType::js_module());
     let model = semantic_model(&r.tree());
 
     let binding_a = r
@@ -46,7 +47,7 @@ pub fn assert_rename_nok(before: &str) {
 /// Search a binding named "a" and remove it.
 /// Asserts the removal worked.
 pub fn assert_remove_ok(before: &str, expected: &str) {
-    let r = rome_js_parser::parse(before, 0, SourceType::js_module());
+    let r = rome_js_parser::parse(before, FileId::zero(), SourceType::js_module());
 
     let binding_a = r
         .syntax()

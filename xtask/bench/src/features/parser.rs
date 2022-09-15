@@ -2,6 +2,7 @@
 use crate::features::print_diff;
 use crate::BenchmarkSummary;
 use itertools::Itertools;
+use rome_diagnostics::file::FileId;
 use rome_diagnostics::file::SimpleFile;
 use rome_diagnostics::{Diagnostic, Emitter, Severity};
 use rome_js_parser::{parse_common, Parse};
@@ -26,7 +27,7 @@ pub fn benchmark_parse_lib(id: &str, code: &str, source_type: SourceType) -> Ben
     let stats = dhat::HeapStats::get();
 
     let parser_timer = timing::start();
-    let (events, diagnostics, trivia) = parse_common(code, 0, source_type);
+    let (events, diagnostics, trivia) = parse_common(code, FileId::zero(), source_type);
     let parse_duration = parser_timer.stop();
 
     #[cfg(feature = "dhat-heap")]
@@ -55,7 +56,7 @@ pub fn benchmark_parse_lib(id: &str, code: &str, source_type: SourceType) -> Ben
 }
 
 pub fn run_parse(code: &str, source_type: SourceType) -> Parse<JsAnyRoot> {
-    rome_js_parser::parse(code, 0, source_type)
+    rome_js_parser::parse(code, FileId::zero(), source_type)
 }
 
 impl ParseMeasurement {

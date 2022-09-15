@@ -2,6 +2,7 @@ use crate::runner::{
     create_unknown_node_in_tree_diagnostic, TestCase, TestCaseFiles, TestRunOutcome, TestSuite,
 };
 use regex::Regex;
+use rome_diagnostics::file::FileId;
 use rome_js_parser::parse;
 use rome_js_syntax::SourceType;
 use rome_rowan::syntax::SyntaxKind;
@@ -99,7 +100,7 @@ impl Test262TestCase {
 
         let files = TestCaseFiles::single(self.name.clone(), self.code.clone(), source_type);
 
-        match parse(&code, 0, source_type).ok() {
+        match parse(&code, FileId::zero(), source_type).ok() {
             Ok(root) if !should_fail => {
                 if let Some(unknown) = root
                     .syntax()
@@ -107,7 +108,10 @@ impl Test262TestCase {
                     .find(|descendant| descendant.kind().is_unknown())
                 {
                     TestRunOutcome::IncorrectlyErrored {
-                        errors: vec![create_unknown_node_in_tree_diagnostic(0, unknown)],
+                        errors: vec![create_unknown_node_in_tree_diagnostic(
+                            FileId::zero(),
+                            unknown,
+                        )],
                         files,
                     }
                 } else {

@@ -156,7 +156,7 @@ where
 #[cfg(test)]
 mod tests {
     use rome_console::codespan::Severity;
-    use rome_diagnostics::Diagnostic;
+    use rome_diagnostics::{file::FileId, Diagnostic};
     use rome_rowan::{
         raw_language::{RawLanguage, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
         AstNode, TextRange, TextSize, TriviaPiece, TriviaPieceKind,
@@ -207,7 +207,7 @@ mod tests {
             params.signal_queue.push(SignalEntry {
                 signal: Box::new(DiagnosticSignal::new(move || {
                     AnalyzerDiagnostic::from_diagnostic(
-                        Diagnostic::warning(0, "test_suppression", "test_suppression")
+                        Diagnostic::warning(FileId::zero(), "test_suppression", "test_suppression")
                             .primary(span, ""),
                     )
                 })),
@@ -338,7 +338,7 @@ mod tests {
         analyzer.add_visitor(Phases::Syntax, SyntaxVisitor::default());
 
         let ctx: AnalyzerContext<RawLanguage> = AnalyzerContext {
-            file_id: 0,
+            file_id: FileId::zero(),
             root,
             range: None,
             services: ServiceBag::default(),

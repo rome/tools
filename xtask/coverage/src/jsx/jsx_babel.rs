@@ -3,6 +3,7 @@ use crate::{
     check_file_encoding,
     runner::{TestCase, TestCaseFiles, TestRunOutcome, TestSuite},
 };
+use rome_diagnostics::file::FileId;
 use rome_js_parser::parse;
 use rome_js_syntax::{ModuleKind, SourceType};
 use rome_rowan::SyntaxKind;
@@ -37,7 +38,7 @@ impl TestCase for BabelJsxTestCase {
     fn run(&self) -> TestRunOutcome {
         let source_type = SourceType::jsx().with_module_kind(ModuleKind::Script);
         let files = TestCaseFiles::single(self.name().to_string(), self.code.clone(), source_type);
-        let result = parse(&self.code, 0, source_type);
+        let result = parse(&self.code, FileId::zero(), source_type);
 
         if result.diagnostics().is_empty() {
             if let Some(unknown) = result
@@ -47,7 +48,10 @@ impl TestCase for BabelJsxTestCase {
             {
                 TestRunOutcome::IncorrectlyErrored {
                     files,
-                    errors: vec![create_unknown_node_in_tree_diagnostic(0, unknown)],
+                    errors: vec![create_unknown_node_in_tree_diagnostic(
+                        FileId::zero(),
+                        unknown,
+                    )],
                 }
             } else {
                 TestRunOutcome::Passed(files)

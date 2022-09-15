@@ -1,3 +1,4 @@
+use rome_diagnostics::file::FileId;
 use rome_formatter::{FormatOptions, LineWidth};
 use rome_formatter::{IndentStyle, Printed};
 use rome_fs::RomePath;
@@ -204,7 +205,7 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
         spec_input_file.display()
     );
 
-    let mut rome_path = RomePath::new(file_path, 0);
+    let mut rome_path = RomePath::new(file_path, FileId::zero());
     let can_format = app
         .workspace
         .supports_feature(SupportsFeatureParams {
@@ -224,7 +225,7 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
         let input = fs::read_to_string(file_path).unwrap();
         snapshot_content.set_input(input.as_str());
 
-        let parsed = parse(buffer.as_str(), 0, source_type);
+        let parsed = parse(buffer.as_str(), FileId::zero(), source_type);
         let has_errors = parsed.has_errors();
         let root = parsed.syntax();
 
@@ -250,7 +251,7 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
         let options_path = test_directory.join("options.json");
         if options_path.exists() {
             {
-                let mut options_path = RomePath::new(&options_path, 0);
+                let mut options_path = RomePath::new(&options_path, FileId::zero());
                 // SAFETY: we checked its existence already, we assume we have rights to read it
                 let options: TestOptions =
                     serde_json::from_str(options_path.get_buffer_from_file().as_str()).unwrap();
