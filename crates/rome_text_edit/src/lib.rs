@@ -14,15 +14,7 @@ pub use rome_text_size::{TextRange, TextSize};
 pub struct Indel {
     pub insert: String,
     /// Refers to offsets in the original text
-    #[cfg_attr(feature = "serde", schemars(with = "TextRangeSchema"))]
     pub delete: TextRange,
-}
-
-#[cfg(feature = "serde")]
-#[derive(schemars::JsonSchema)]
-pub struct TextRangeSchema {
-    pub start: u32,
-    pub end: u32,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Eq, Hash)]

@@ -1797,6 +1797,7 @@ dependencies = [
 name = "rome_text_size"
 version = "0.0.0"
 dependencies = [
+ "schemars",
  "serde",
  "serde_test",
  "static_assertions",

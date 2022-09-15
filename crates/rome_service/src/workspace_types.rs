@@ -2,7 +2,7 @@
 
 use std::collections::{HashSet, VecDeque};
 
-use rome_js_syntax::JsAnyDeclaration;
+use rome_js_syntax::{JsAnyDeclaration, TsAnyTupleTypeElement};
 use schemars::{
     gen::{SchemaGenerator, SchemaSettings},
     schema::{InstanceType, RootSchema, Schema, SchemaObject, SingleOrVec},
@@ -97,7 +97,18 @@ fn instance_type<'a>(
                         make::token(T![']']),
                     ))
                 }
-                SingleOrVec::Vec(_) => unimplemented!(),
+                SingleOrVec::Vec(items) => TsType::from(make::ts_tuple_type(
+                    make::token(T!['[']),
+                    make::ts_tuple_type_element_list(
+                        items.iter().map(|schema| {
+                            let (ts_type, optional, _) = schema_type(queue, root_schema, schema);
+                            assert!(!optional, "optional nested types are not supported");
+                            TsAnyTupleTypeElement::TsType(ts_type)
+                        }),
+                        items.iter().map(|_| make::token(T![,])),
+                    ),
+                    make::token(T![']']),
+                )),
             }
         }
 

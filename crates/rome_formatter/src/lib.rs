@@ -298,10 +298,8 @@ impl FormatOptions for SimpleFormatOptions {
 )]
 pub struct SourceMarker {
     /// Position of the marker in the original source
-    #[cfg_attr(feature = "serde", schemars(with = "u32"))]
     pub source: TextSize,
     /// Position of the marker in the output code
-    #[cfg_attr(feature = "serde", schemars(with = "u32"))]
     pub dest: TextSize,
 }
 
@@ -358,13 +356,8 @@ where
 )]
 pub struct Printed {
     code: String,
-    #[cfg_attr(
-        feature = "serde",
-        schemars(with = "Option<rome_rowan::TextRangeSchema>")
-    )]
     range: Option<TextRange>,
     sourcemap: Vec<SourceMarker>,
-    #[cfg_attr(feature = "serde", schemars(with = "Vec<rome_rowan::TextRangeSchema>"))]
     verbatim_ranges: Vec<TextRange>,
 }
 
