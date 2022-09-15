@@ -300,9 +300,9 @@ fn handle_continue_break_comment(
 ///
 /// ```javascript
 /// switch (x) {
-///	    default: // comment
+///     default: // comment
 ///     {
-/// 		break;
+///         break;
 ///     }
 /// ```
 ///

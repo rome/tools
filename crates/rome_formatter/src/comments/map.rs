@@ -161,7 +161,7 @@ impl<K: std::hash::Hash + Eq, V> CommentsMap<K, V> {
     #[cold]
     fn entry_to_out_of_order<'a>(
         entry: &'a mut Entry,
-        values: &Vec<V>,
+        values: &[V],
         out_of_order: &mut Vec<Vec<V>>,
     ) -> &'a mut OutOfOrderEntry
     where

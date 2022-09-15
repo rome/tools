@@ -128,7 +128,7 @@ impl Format<JsFormatContext> for FormatVerbatimNode<'_> {
                     .map(|trivia| source_range(f, trivia.text_range()).start())
                     .take_while(|start| *start < trimmed_source_range.start())
                     .next()
-                    .unwrap_or(trimmed_source_range.start());
+                    .unwrap_or_else(|| trimmed_source_range.start());
 
                 let original_source = f.context().source_map().map_or_else(
                     || self.node.text_trimmed().to_string(),

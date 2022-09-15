@@ -400,15 +400,12 @@ pub struct FormatSkippedTokenTrivia<'a, L: Language> {
     token: &'a SyntaxToken<L>,
 }
 
-impl<Context> Format<Context> for FormatSkippedTokenTrivia<'_, Context::Language>
-where
-    Context: CstFormatContext,
-{
-    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        if !f.comments().has_skipped(self.token) {
-            return Ok(());
-        }
-
+impl<L: Language> FormatSkippedTokenTrivia<'_, L> {
+    #[cold]
+    fn fmt_skipped<Context>(&self, f: &mut Formatter<Context>) -> FormatResult<()>
+    where
+        Context: CstFormatContext<Language = L>,
+    {
         // Lines/spaces before the next token/comment
         let (mut lines, mut spaces) = match self.token.prev_token() {
             Some(token) => {
@@ -488,7 +485,7 @@ where
         }
 
         let skipped_range =
-            skipped_range.unwrap_or(TextRange::empty(self.token.text_range().start()));
+            skipped_range.unwrap_or_else(|| TextRange::empty(self.token.text_range().start()));
 
         let verbatim = {
             let mut buffer = VecBuffer::new(f.state_mut());
@@ -531,6 +528,19 @@ where
                 0 => write!(f, [space()]),
                 _ => write!(f, [hard_line_break()]),
             }
+        }
+    }
+}
+
+impl<Context> Format<Context> for FormatSkippedTokenTrivia<'_, Context::Language>
+where
+    Context: CstFormatContext,
+{
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+        if f.comments().has_skipped(self.token) {
+            self.fmt_skipped(f)
+        } else {
+            Ok(())
         }
     }
 }

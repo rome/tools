@@ -507,11 +507,13 @@ impl<'a> SourceParentheses<'a> {
     /// Must be called with offsets in increasing order.
     ///
     /// Returns the source range of the `)` if there's any `)` in the deleted range at this offset. Returns `None` otherwise
+
     fn r_paren_source_range(&mut self, offset: TextSize) -> Option<TextRange> {
         match self {
             SourceParentheses::Empty => None,
             SourceParentheses::SourceMap { next, tail, .. } => {
                 while let Some(range) = next {
+                    #[allow(clippy::comparison_chain)]
                     if range.transformed == offset {
                         // A deleted range can contain multiple tokens. See if there's any `)` in the deleted
                         // range and compute its source range.
