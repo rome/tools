@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/decorators/multiple.js
 ---
 
 # Input
@@ -28,10 +30,9 @@ const foo = {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,18 +1,16 @@
+@@ -1,18 +1,15 @@
  const dog = {
 -  @readonly
-+
 +@readonly
    @nonenumerable
    @doubledValue
@@ -60,7 +61,6 @@ const foo = {
 
 ```js
 const dog = {
-
 @readonly
   @nonenumerable
   @doubledValue
@@ -115,6 +115,6 @@ error[SyntaxError]: expected a statement but instead found '}'
 
 # Lines exceeding max width of 80 characters
 ```
-   15: @multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value";
+   14: @multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value";
 ```
 

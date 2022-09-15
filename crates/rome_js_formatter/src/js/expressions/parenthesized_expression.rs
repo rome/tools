@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write};
+use rome_formatter::{format_args, write, CstFormatContext};
 
 use crate::parentheses::NeedsParentheses;
 use rome_js_syntax::{
@@ -23,9 +23,9 @@ impl FormatNodeRule<JsParenthesizedExpression> for FormatJsParenthesizedExpressi
 
         let l_paren_token = l_paren_token?;
         let expression = expression?;
+        let comments = f.context().comments();
 
-        let should_hug = !(expression.syntax().has_comments_direct()
-            || l_paren_token.has_trailing_comments())
+        let should_hug = !comments.has_comments(expression.syntax())
             && (matches!(
                 expression,
                 JsAnyExpression::JsObjectExpression(_) | JsAnyExpression::JsArrayExpression(_)

@@ -32,6 +32,7 @@ Quote properties: As needed
 function a() {
 	// trailing comment
 	let a = 2;
+
 	/** leading comment **/
 }
 

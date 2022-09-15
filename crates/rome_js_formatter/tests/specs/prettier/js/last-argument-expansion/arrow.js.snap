@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/last-argument-expansion/arrow.js
 ---
 
 # Input
@@ -28,7 +30,7 @@ export default function searchUsers(action$) {
 ```diff
 --- Prettier
 +++ Rome
-@@ -3,17 +3,20 @@
+@@ -3,17 +3,19 @@
      .ofType(ActionTypes.SEARCHED_USERS)
      .map((action) => action.payload.query)
      .filter((q) => !!q)
@@ -44,8 +46,7 @@ export default function searchUsers(action$) {
 -              .map(receiveUsers),
 +    .switchMap(
 +      (q) =>
-+        Observable.timer(800)
-+          // debounce
++        Observable.timer(800) // debounce
 +          .takeUntil(action$.ofType(ActionTypes.CLEARED_SEARCH_RESULTS))
 +          .mergeMap(
 +            () =>
@@ -72,8 +73,7 @@ export default function searchUsers(action$) {
     .filter((q) => !!q)
     .switchMap(
       (q) =>
-        Observable.timer(800)
-          // debounce
+        Observable.timer(800) // debounce
           .takeUntil(action$.ofType(ActionTypes.CLEARED_SEARCH_RESULTS))
           .mergeMap(
             () =>

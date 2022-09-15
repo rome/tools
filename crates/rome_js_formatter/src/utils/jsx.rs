@@ -1,11 +1,13 @@
 use crate::context::QuoteStyle;
 use crate::prelude::*;
-use rome_formatter::{format_args, write};
+use crate::JsCommentStyle;
+use rome_formatter::{comments::CommentStyle, format_args, write};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsComputedMemberExpression, JsStaticMemberExpression,
-    JsSyntaxKind, JsxAnyChild, JsxExpressionChild, JsxTagExpression, TextLen,
+    JsSyntaxKind, JsxAnyChild, JsxAnyTag, JsxChildList, JsxExpressionChild, JsxTagExpression,
+    JsxText, TextLen,
 };
-use rome_rowan::{SyntaxResult, SyntaxTokenText, TextRange, TextSize};
+use rome_rowan::{Direction, SyntaxResult, SyntaxTokenText, TextRange, TextSize};
 use std::iter::{FusedIterator, Peekable};
 use std::str::Chars;
 
@@ -37,6 +39,50 @@ pub fn is_meaningful_jsx_text(text: &str) -> bool {
     }
 
     !has_newline
+}
+
+/// Tests if a [JsxAnyTag] has a suppression comment or not.
+///
+/// Suppression for [JsxAnyTag] differs from regular nodes if they are inside of a [JsxChildList] because
+/// they can then not be preceded by a comment.
+///
+/// A [JsxAnyTag] inside of a [JsxChildList] is suppressed if its first preceding sibling (that contains meaningful text)
+/// is a [JsxExpressionChild], not containing any expression, with a dangling suppression comment.
+///
+/// ```javascript
+/// <div>
+//   {/* rome-ignore format: reason */}
+//   <div a={  some} />
+//   </div>
+/// ```
+pub(crate) fn is_jsx_suppressed(tag: &JsxAnyTag, comments: &JsComments) -> bool {
+    comments.mark_suppression_checked(tag.syntax());
+
+    match tag.parent::<JsxChildList>() {
+        Some(_) => {
+            let prev_non_empty_text_sibling =
+                tag.syntax()
+                    .siblings(Direction::Prev)
+                    .skip(1)
+                    .find(|sibling| {
+                        if let Some(text) = JsxText::cast_ref(sibling) {
+                            text.value_token()
+                                .map_or(true, |token| is_meaningful_jsx_text(token.text()))
+                        } else {
+                            true
+                        }
+                    });
+
+            match prev_non_empty_text_sibling.and_then(JsxExpressionChild::cast) {
+                Some(child) if child.expression().is_none() => comments
+                    .dangling_comments(child.syntax())
+                    .iter()
+                    .any(|comment| JsCommentStyle::is_suppression(comment.piece().text())),
+                Some(_) | None => false,
+            }
+        }
+        _ => false,
+    }
 }
 
 /// Indicates that an element should always be wrapped in parentheses, should be wrapped
@@ -142,7 +188,10 @@ impl Format<JsFormatContext> for JsxRawSpace {
     }
 }
 
-pub(crate) fn is_whitespace_jsx_expression(child: &JsxExpressionChild) -> bool {
+pub(crate) fn is_whitespace_jsx_expression(
+    child: &JsxExpressionChild,
+    comments: &JsComments,
+) -> bool {
     match child.expression() {
         Some(JsAnyExpression::JsAnyLiteralExpression(
             JsAnyLiteralExpression::JsStringLiteralExpression(literal),
@@ -152,13 +201,11 @@ pub(crate) fn is_whitespace_jsx_expression(child: &JsxExpressionChild) -> bool {
                 literal.value_token(),
                 child.r_curly_token(),
             ) {
-                (Ok(l_curly_token), Ok(value_token), Ok(r_curly_token)) => {
+                (Ok(_), Ok(value_token), Ok(r_curly_token)) => {
                     let is_empty = matches!(value_token.text_trimmed(), "\" \"" | "' '");
 
-                    let has_comments = l_curly_token.has_trailing_comments()
-                        || r_curly_token.has_leading_comments()
-                        || value_token.has_leading_non_whitespace_trivia()
-                        || value_token.has_trailing_comments();
+                    let has_comments = comments.has_skipped(&r_curly_token)
+                        || comments.has_comments(literal.syntax());
 
                     is_empty && !has_comments
                 }
@@ -169,7 +216,10 @@ pub(crate) fn is_whitespace_jsx_expression(child: &JsxExpressionChild) -> bool {
     }
 }
 
-pub(crate) fn jsx_split_children<I>(children: I) -> SyntaxResult<Vec<JsxChild>>
+pub(crate) fn jsx_split_children<I>(
+    children: I,
+    comments: &JsComments,
+) -> SyntaxResult<Vec<JsxChild>>
 where
     I: IntoIterator<Item = JsxAnyChild>,
 {
@@ -244,7 +294,7 @@ where
             }
 
             JsxAnyChild::JsxExpressionChild(child) => {
-                if is_whitespace_jsx_expression(&child) {
+                if is_whitespace_jsx_expression(&child, comments) {
                     match result.last() {
                         Some(JsxChild::Whitespace) => {
                             // Ignore
@@ -403,6 +453,7 @@ impl FusedIterator for JsxSplitChunksIterator<'_> {}
 mod tests {
     use crate::utils::jsx::{jsx_split_children, JsxChild, JsxSplitChunksIterator, JsxTextChunk};
     use rome_diagnostics::file::FileId;
+    use rome_formatter::comments::Comments;
     use rome_js_parser::parse;
     use rome_js_syntax::{JsxChildList, JsxText, SourceType};
     use rome_rowan::{AstNode, TextSize};
@@ -506,7 +557,7 @@ mod tests {
     fn split_children_words_only() {
         let child_list = parse_jsx_children("a b c");
 
-        let children = jsx_split_children(&child_list).unwrap();
+        let children = jsx_split_children(&child_list, &Comments::default()).unwrap();
 
         assert_eq!(3, children.len());
         assert_word(&children[0], "a");
@@ -518,7 +569,7 @@ mod tests {
     fn split_non_meaningful_text() {
         let child_list = parse_jsx_children("  \n ");
 
-        let children = jsx_split_children(&child_list).unwrap();
+        let children = jsx_split_children(&child_list, &Comments::default()).unwrap();
 
         assert_eq!(children, vec![]);
     }
@@ -527,7 +578,7 @@ mod tests {
     fn split_non_meaningful_leading_multiple_lines() {
         let child_list = parse_jsx_children("  \n  \n ");
 
-        let children = jsx_split_children(&child_list).unwrap();
+        let children = jsx_split_children(&child_list, &Comments::default()).unwrap();
 
         assert_eq!(children, vec![JsxChild::EmptyLine]);
     }
@@ -536,7 +587,7 @@ mod tests {
     fn split_meaningful_whitespace() {
         let child_list = parse_jsx_children("  ");
 
-        let children = jsx_split_children(&child_list).unwrap();
+        let children = jsx_split_children(&child_list, &Comments::default()).unwrap();
 
         assert_eq!(children, vec![JsxChild::Whitespace]);
     }
@@ -545,7 +596,7 @@ mod tests {
     fn split_children_leading_newlines() {
         let child_list = parse_jsx_children("  \n a b");
 
-        let children = jsx_split_children(&child_list).unwrap();
+        let children = jsx_split_children(&child_list, &Comments::default()).unwrap();
 
         assert_eq!(3, children.len());
         assert_eq!(children[0], JsxChild::Newline);
@@ -557,7 +608,7 @@ mod tests {
     fn split_children_trailing_whitespace() {
         let child_list = parse_jsx_children("a b    \t ");
 
-        let children = jsx_split_children(&child_list).unwrap();
+        let children = jsx_split_children(&child_list, &Comments::default()).unwrap();
 
         assert_eq!(3, children.len());
         assert_word(&children[0], "a");
@@ -569,7 +620,7 @@ mod tests {
     fn split_children_trailing_newline() {
         let child_list = parse_jsx_children("a b \n   \t ");
 
-        let children = jsx_split_children(&child_list).unwrap();
+        let children = jsx_split_children(&child_list, &Comments::default()).unwrap();
 
         assert_eq!(3, children.len());
         assert_word(&children[0], "a");
@@ -581,7 +632,7 @@ mod tests {
     fn split_children_empty_expression() {
         let child_list = parse_jsx_children(r#"a{' '}c{" "}"#);
 
-        let children = jsx_split_children(&child_list).unwrap();
+        let children = jsx_split_children(&child_list, &Comments::default()).unwrap();
 
         assert_eq!(
             4,

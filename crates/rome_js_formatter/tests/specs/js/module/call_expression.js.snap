@@ -69,7 +69,10 @@ useMemo(() => {
 	};
 }, [a, b]);
 
-useMemo(() => {}, [a, b]); // some comment
+useMemo(
+	() => {}, // some comment
+	[a, b],
+);
 
 useEffect(() => {
 	if (clipboardStatus !== "normal") {
@@ -99,9 +102,11 @@ test.expect((t) => {
 	t.true(a);
 }, false);
 
-test.expect((t) => {
-	t.true(a);
-}, false
-// comment
+test.expect(
+	(t) => {
+		t.true(a);
+	},
+	false,
+	// comment
 );
 

@@ -20,7 +20,7 @@ impl FormatNodeRule<JsBreakStatement> for FormatJsBreakStatement {
         write!(
             f,
             [FormatWithSemicolon::new(
-                &format_with(|f| {
+                &format_with(|f: &mut JsFormatter| {
                     write!(f, [break_token.format()])?;
 
                     if let Some(label) = &label_token {

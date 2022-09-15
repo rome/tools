@@ -4,7 +4,7 @@ use crate::utils::jsx::{
     JsxRawSpace, JsxSpace,
 };
 use crate::JsFormatter;
-use rome_formatter::{format_args, write, FormatRuleWithOptions, VecBuffer};
+use rome_formatter::{format_args, write, CstFormatContext, FormatRuleWithOptions, VecBuffer};
 use rome_js_syntax::{JsxAnyChild, JsxChildList};
 
 #[derive(Debug, Clone, Default)]
@@ -27,7 +27,7 @@ impl FormatRule<JsxChildList> for FormatJsxChildList {
     fn fmt(&self, list: &JsxChildList, f: &mut JsFormatter) -> FormatResult<()> {
         self.disarm_debug_assertions(list, f);
 
-        let children_meta = self.children_meta(list);
+        let children_meta = self.children_meta(list, f.context().comments());
         let layout = self.layout(children_meta);
 
         let multiline_layout = if children_meta.meaningful_text {
@@ -42,7 +42,7 @@ impl FormatRule<JsxChildList> for FormatJsxChildList {
         let mut last: Option<JsxChild> = None;
         let mut force_multiline = layout.is_multiline();
 
-        let mut children = jsx_split_children(list)?;
+        let mut children = jsx_split_children(list, f.context().comments())?;
 
         // Trim trailing new lines
         if let Some(JsxChild::EmptyLine | JsxChild::Newline) = children.last() {
@@ -213,13 +213,14 @@ impl FormatJsxChildList {
     /// [JsxText] and [JsxExpressionChild] and instead, formats the nodes itself.
     #[cfg(debug_assertions)]
     fn disarm_debug_assertions(&self, node: &JsxChildList, f: &mut JsFormatter) {
-        use rome_formatter::CstFormatContext;
         use rome_js_syntax::{JsAnyExpression, JsAnyLiteralExpression};
         use JsxAnyChild::*;
 
         for child in node {
             match child {
-                JsxExpressionChild(expression) if is_whitespace_jsx_expression(&expression) => {
+                JsxExpressionChild(expression)
+                    if is_whitespace_jsx_expression(&expression, f.context().comments()) =>
+                {
                     f.context()
                         .comments()
                         .mark_suppression_checked(expression.syntax());
@@ -275,7 +276,7 @@ impl FormatJsxChildList {
     }
 
     /// Computes additional meta data about the children by iterating once over all children.
-    fn children_meta(&self, list: &JsxChildList) -> ChildrenMeta {
+    fn children_meta(&self, list: &JsxChildList, comments: &JsComments) -> ChildrenMeta {
         let mut has_expression = false;
 
         let mut meta = ChildrenMeta::default();
@@ -285,7 +286,9 @@ impl FormatJsxChildList {
 
             match child {
                 JsxElement(_) | JsxFragment(_) | JsxSelfClosingElement(_) => meta.any_tag = true,
-                JsxExpressionChild(expression) if !is_whitespace_jsx_expression(&expression) => {
+                JsxExpressionChild(expression)
+                    if !is_whitespace_jsx_expression(&expression, comments) =>
+                {
                     meta.multiple_expressions = has_expression;
                     has_expression = true;
                 }

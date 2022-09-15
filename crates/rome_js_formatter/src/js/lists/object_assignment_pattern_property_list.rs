@@ -1,7 +1,5 @@
 use crate::prelude::*;
-use rome_js_syntax::{
-    JsAnyObjectAssignmentPatternMember, JsObjectAssignmentPatternPropertyList, JsSyntaxKind,
-};
+use rome_js_syntax::{JsAnyObjectAssignmentPatternMember, JsObjectAssignmentPatternPropertyList};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsObjectAssignmentPatternPropertyList;
@@ -32,7 +30,7 @@ impl FormatRule<JsObjectAssignmentPatternPropertyList>
         };
 
         let entries = node
-            .format_separated(JsSyntaxKind::COMMA)
+            .format_separated(",")
             .with_trailing_separator(trailing_separator)
             .zip(node.iter());
 

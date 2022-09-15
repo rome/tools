@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/assignment/lone-arg.js
 ---
 
 # Input
@@ -33,15 +35,8 @@ const bifornCringerMoshedPerplexSawderGlyphsHb = someBigFunctionName(`foo
 ```diff
 --- Prettier
 +++ Rome
-@@ -10,10 +10,11 @@
-   someBigFunctionName("foo")("bar");
- 
- if (true) {
--  node.id = this.flowParseTypeAnnotatableIdentifier(
--    /*allowPrimitiveOverride*/ true,
--  );
-+  node.id =
-+    this.flowParseTypeAnnotatableIdentifier(/*allowPrimitiveOverride*/ true);
+@@ -15,5 +15,7 @@
+   );
  }
  
 -const bifornCringerMoshedPerplexSawderGlyphsHb = someBigFunctionName(`foo
@@ -67,8 +62,9 @@ const bifornCringerMoshedPerplexSawderGlyphsHa =
   someBigFunctionName("foo")("bar");
 
 if (true) {
-  node.id =
-    this.flowParseTypeAnnotatableIdentifier(/*allowPrimitiveOverride*/ true);
+  node.id = this.flowParseTypeAnnotatableIdentifier(
+    /*allowPrimitiveOverride*/ true,
+  );
 }
 
 const bifornCringerMoshedPerplexSawderGlyphsHb = someBigFunctionName(

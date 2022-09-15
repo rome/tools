@@ -15,6 +15,11 @@ impl FormatNodeRule<TsObjectType> for FormatTsObjectType {
     fn needs_parentheses(&self, item: &TsObjectType) -> bool {
         item.needs_parentheses()
     }
+
+    fn fmt_dangling_comments(&self, _: &TsObjectType, _: &mut JsFormatter) -> FormatResult<()> {
+        // Formatted inside of `JsObjectLike`
+        Ok(())
+    }
 }
 
 impl NeedsParentheses for TsObjectType {

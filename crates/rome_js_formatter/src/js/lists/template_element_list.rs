@@ -3,6 +3,7 @@ use crate::js::expressions::template_element::{AnyTemplateElement, TemplateEleme
 
 use crate::context::TabWidth;
 use crate::prelude::*;
+
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsAnyTemplateElement, JsLanguage,
     JsTemplateElementList, TsAnyTemplateElement, TsTemplateElementList,
@@ -28,7 +29,7 @@ pub(crate) enum AnyTemplateElementList {
 
 impl Format<JsFormatContext> for AnyTemplateElementList {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        let layout = if self.is_simple() {
+        let layout = if self.is_simple(f.comments()) {
             TemplateElementLayout::SingleLine
         } else {
             TemplateElementLayout::Fit
@@ -87,7 +88,7 @@ impl AnyTemplateElementList {
     /// Simple expressions are:
     /// * Identifiers: `this`, `a`
     /// * Members: `a.b`, `a[b]`, `a.b[c].d`, `a.b[5]`, `a.b["test"]`
-    fn is_simple(&self) -> bool {
+    fn is_simple(&self, comments: &JsComments) -> bool {
         match self {
             AnyTemplateElementList::JsTemplateElementList(list) => {
                 if list.is_empty() {
@@ -101,7 +102,9 @@ impl AnyTemplateElementList {
 
                 expression_elements.all(|expression_element| {
                     match expression_element.expression() {
-                        Ok(expression) => is_simple_member_expression(expression).unwrap_or(false),
+                        Ok(expression) => {
+                            is_simple_member_expression(expression, comments).unwrap_or(false)
+                        }
                         Err(_) => false,
                     }
                 })
@@ -142,11 +145,14 @@ declare_node_union! {
     AnyTemplateElementOrChunk = AnyTemplateElement | AnyTemplateChunkElement
 }
 
-fn is_simple_member_expression(expression: JsAnyExpression) -> SyntaxResult<bool> {
+fn is_simple_member_expression(
+    expression: JsAnyExpression,
+    comments: &JsComments,
+) -> SyntaxResult<bool> {
     let mut current = expression;
 
     loop {
-        if current.syntax().has_comments_direct() {
+        if comments.has_comments(current.syntax()) {
             return Ok(false);
         }
 

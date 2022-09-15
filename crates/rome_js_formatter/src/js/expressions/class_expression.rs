@@ -17,6 +17,15 @@ impl FormatNodeRule<JsClassExpression> for FormatJsClassExpression {
     fn needs_parentheses(&self, item: &JsClassExpression) -> bool {
         item.needs_parentheses()
     }
+
+    fn fmt_dangling_comments(
+        &self,
+        _: &JsClassExpression,
+        _: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        // Formatted as part of `FormatClass`
+        Ok(())
+    }
 }
 
 impl NeedsParentheses for JsClassExpression {

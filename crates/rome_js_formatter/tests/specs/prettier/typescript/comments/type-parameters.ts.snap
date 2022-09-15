@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/comments/type-parameters.ts
 ---
 
 # Input
@@ -42,53 +44,43 @@ type T = <
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,18 +1,18 @@
--functionName<A /* A comment */>();
--const a: T</* comment */> = 1;
--functionName</* comment */>();
--function foo</* comment */>() {}
-+functionName<A /* A comment */ >();
-+const a: T< /* comment */ > = 1;
-+functionName< /* comment */ >();
-+function foo< /* comment */ >() {}
+@@ -3,7 +3,7 @@
+ functionName</* comment */>();
+ function foo</* comment */>() {}
  interface Foo {
 -  </* comment */>(arg): any;
-+  < /* comment */ >(arg): any;
++ </* comment */>(arg): any;
  }
--type T = </* comment */>(arg) => any;
-+type T = < /* comment */ >(arg) => any;
+ type T = </* comment */>(arg) => any;
  
- functionName<A>(); // comment
- const a: T<
--  // comment
-+// comment
- > = 1;
- functionName<
--  // comment
-+// comment
- >();
- function foo<
+@@ -26,6 +26,4 @@
+ }
+ type T = <
    // comment
+->(
+-  arg,
+-) => any;
++>(arg) => any;
 ```
 
 # Output
 
 ```js
-functionName<A /* A comment */ >();
-const a: T< /* comment */ > = 1;
-functionName< /* comment */ >();
-function foo< /* comment */ >() {}
+functionName<A /* A comment */>();
+const a: T</* comment */> = 1;
+functionName</* comment */>();
+function foo</* comment */>() {}
 interface Foo {
-  < /* comment */ >(arg): any;
+ </* comment */>(arg): any;
 }
-type T = < /* comment */ >(arg) => any;
+type T = </* comment */>(arg) => any;
 
 functionName<A>(); // comment
 const a: T<
-// comment
+  // comment
 > = 1;
 functionName<
-// comment
+  // comment
 >();
 function foo<
   // comment
@@ -102,9 +94,7 @@ interface Foo {
 }
 type T = <
   // comment
->(
-  arg,
-) => any;
+>(arg) => any;
 ```
 
 

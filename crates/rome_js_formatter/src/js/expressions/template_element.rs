@@ -1,6 +1,8 @@
 use crate::prelude::*;
 use rome_formatter::printer::{PrintWidth, Printer};
-use rome_formatter::{format_args, write, FormatOptions, FormatRuleWithOptions, VecBuffer};
+use rome_formatter::{
+    format_args, write, CstFormatContext, FormatOptions, FormatRuleWithOptions, VecBuffer,
+};
 
 use crate::context::TabWidth;
 use crate::js::lists::template_element_list::{TemplateElementIndention, TemplateElementLayout};
@@ -63,8 +65,6 @@ impl FormatTemplateElement {
 
 impl Format<JsFormatContext> for FormatTemplateElement {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        let has_comments = self.element.syntax().has_comments_direct();
-
         let format_expression = format_with(|f| match &self.element {
             AnyTemplateElement::JsTemplateElement(template) => {
                 write!(f, [template.expression().format()])
@@ -110,7 +110,10 @@ impl Format<JsFormatContext> for FormatTemplateElement {
 
                 // It's preferred to break after/before `${` and `}` rather than breaking in the
                 // middle of some expressions.
-                let indent = has_comments
+                let indent = f
+                    .context()
+                    .comments()
+                    .has_comments(&self.element.inner_syntax()?)
                     || matches!(
                         expression,
                         Some(

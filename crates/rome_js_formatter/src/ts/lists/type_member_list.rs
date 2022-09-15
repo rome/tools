@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use rome_formatter::{write, Buffer};
-use rome_js_syntax::{JsSyntaxKind, TsAnyTypeMember, TsTypeMemberList};
+use rome_js_syntax::{TsAnyTypeMember, TsTypeMemberList};
 
 use rome_rowan::AstNodeList;
 
@@ -50,12 +50,9 @@ impl Format<JsFormatContext> for TsTypeMemberItem {
             // Children don't format the separator on purpose, so it's up to the parent - this node,
             // to decide to print their separator
             if self.last {
-                write!(
-                    f,
-                    [if_group_breaks(&format_inserted(JsSyntaxKind::SEMICOLON))]
-                )?;
+                write!(f, [if_group_breaks(&text(";"))])?;
             } else {
-                format_inserted(JsSyntaxKind::SEMICOLON).fmt(f)?;
+                text(";").fmt(f)?;
             }
         }
 

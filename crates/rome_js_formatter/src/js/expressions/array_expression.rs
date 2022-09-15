@@ -19,12 +19,24 @@ impl FormatNodeRule<JsArrayExpression> for FormatJsArrayExpression {
             r_brack_token,
         } = node.as_fields();
 
-        if should_break(&elements)? {
+        let r_brack_token = r_brack_token?;
+
+        if elements.is_empty() {
             write!(
                 f,
                 [
-                    format_delimited(&l_brack_token?, &elements.format(), &r_brack_token?)
-                        .block_indent()
+                    l_brack_token.format(),
+                    format_dangling_comments(node.syntax()).with_block_indent(),
+                    r_brack_token.format(),
+                ]
+            )
+        } else if should_break(&elements)? {
+            write!(
+                f,
+                [
+                    l_brack_token.format(),
+                    block_indent(&elements.format()),
+                    r_brack_token.format()
                 ]
             )
         } else {
@@ -35,8 +47,9 @@ impl FormatNodeRule<JsArrayExpression> for FormatJsArrayExpression {
             write!(
                 f,
                 [
-                    format_delimited(&l_brack_token?, &elements, &r_brack_token?)
-                        .soft_block_indent_with_group_id(Some(group_id))
+                    l_brack_token.format(),
+                    group(&soft_block_indent(&elements)).with_group_id(Some(group_id)),
+                    r_brack_token.format()
                 ]
             )
         }
@@ -44,6 +57,15 @@ impl FormatNodeRule<JsArrayExpression> for FormatJsArrayExpression {
 
     fn needs_parentheses(&self, item: &JsArrayExpression) -> bool {
         item.needs_parentheses()
+    }
+
+    fn fmt_dangling_comments(
+        &self,
+        _: &JsArrayExpression,
+        _: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        // Formatted inside of `fmt_fields`
+        Ok(())
     }
 }
 

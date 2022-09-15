@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/for/continue-and-break-comment-without-blocks.js
 ---
 
 # Input
@@ -110,261 +112,89 @@ label1: for (;;) continue label1
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,69 +1,104 @@
--for (;;) continue;
--// comment
-+for (;;)
-+  continue
-+  // comment
-+  ;
+@@ -58,7 +58,7 @@
+ for (const f in {}) break;
+ /* comment */
  
--for (;;) break;
--// comment
-+for (;;)
-+  break
-+  // comment
-+  ;
+-label1: for (;;) continue label1 /* comment */;
++label1: for (;;) continue label1; /* comment */
  
--for (const f of []) continue;
--// comment
-+for (const f of [])
-+  continue
-+  // comment
-+  ;
- 
--for (const f of []) break;
--// comment
-+for (const f of [])
-+  break
-+  // comment
-+  ;
- 
--for (const f in {}) continue;
--// comment
-+for (const f in {})
-+  continue
-+  // comment
-+  ;
- 
--for (const f in {}) break;
--// comment
-+for (const f in {})
-+  break
-+  // comment
-+  ;
- 
--for (;;) continue; // comment
-+for (;;)
-+  continue; // comment
- 
--for (;;) break; // comment
-+for (;;)
-+  break; // comment
- 
--for (const f of []) continue; // comment
-+for (const f of [])
-+  continue; // comment
- 
--for (const f of []) break; // comment
-+for (const f of [])
-+  break; // comment
- 
--for (const f in {}) continue; // comment
-+for (const f in {})
-+  continue; // comment
- 
--for (const f in {}) break; // comment
-+for (const f in {})
-+  break; // comment
- 
--for (;;) continue; /* comment */
-+for (;;) continue /* comment */;
- 
--for (;;) break; /* comment */
-+for (;;) break /* comment */;
- 
--for (const f of []) continue; /* comment */
-+for (const f of []) continue /* comment */;
- 
--for (const f of []) break; /* comment */
-+for (const f of []) break /* comment */;
- 
--for (const f in {}) continue; /* comment */
-+for (const f in {}) continue /* comment */;
- 
--for (const f in {}) break; /* comment */
-+for (const f in {}) break /* comment */;
- 
--for (;;) continue;
--/* comment */
-+for (;;)
-+  continue
-+  /* comment */
-+  ;
- 
--for (;;) break;
--/* comment */
-+for (;;)
-+  break
-+  /* comment */
-+  ;
- 
--for (const f of []) continue;
--/* comment */
-+for (const f of [])
-+  continue
-+  /* comment */
-+  ;
- 
--for (const f of []) break;
--/* comment */
-+for (const f of [])
-+  break
-+  /* comment */
-+  ;
- 
--for (const f in {}) continue;
--/* comment */
-+for (const f in {})
-+  continue
-+  /* comment */
-+  ;
- 
--for (const f in {}) break;
--/* comment */
-+for (const f in {})
-+  break
-+  /* comment */
-+  ;
- 
- label1: for (;;) continue label1 /* comment */;
- 
--label1: for (;;) continue label1;
--/* comment */
-+label1: for (;;)
-+  continue label1
-+  /* comment */
-+  ;
- 
--label1: for (;;) continue label1; // comment
-+label1: for (;;)
-+  continue label1; // comment
- 
--label1: for (;;) continue label1;
--// comment
-+label1: for (;;)
-+  continue label1
-+  // comment
-+  ;
+ label1: for (;;) continue label1;
+ /* comment */
 ```
 
 # Output
 
 ```js
-for (;;)
-  continue
-  // comment
-  ;
+for (;;) continue;
+// comment
 
-for (;;)
-  break
-  // comment
-  ;
+for (;;) break;
+// comment
 
-for (const f of [])
-  continue
-  // comment
-  ;
+for (const f of []) continue;
+// comment
 
-for (const f of [])
-  break
-  // comment
-  ;
+for (const f of []) break;
+// comment
 
-for (const f in {})
-  continue
-  // comment
-  ;
+for (const f in {}) continue;
+// comment
 
-for (const f in {})
-  break
-  // comment
-  ;
+for (const f in {}) break;
+// comment
 
-for (;;)
-  continue; // comment
+for (;;) continue; // comment
 
-for (;;)
-  break; // comment
+for (;;) break; // comment
 
-for (const f of [])
-  continue; // comment
+for (const f of []) continue; // comment
 
-for (const f of [])
-  break; // comment
+for (const f of []) break; // comment
 
-for (const f in {})
-  continue; // comment
+for (const f in {}) continue; // comment
 
-for (const f in {})
-  break; // comment
+for (const f in {}) break; // comment
 
-for (;;) continue /* comment */;
+for (;;) continue; /* comment */
 
-for (;;) break /* comment */;
+for (;;) break; /* comment */
 
-for (const f of []) continue /* comment */;
+for (const f of []) continue; /* comment */
 
-for (const f of []) break /* comment */;
+for (const f of []) break; /* comment */
 
-for (const f in {}) continue /* comment */;
+for (const f in {}) continue; /* comment */
 
-for (const f in {}) break /* comment */;
+for (const f in {}) break; /* comment */
 
-for (;;)
-  continue
-  /* comment */
-  ;
+for (;;) continue;
+/* comment */
 
-for (;;)
-  break
-  /* comment */
-  ;
+for (;;) break;
+/* comment */
 
-for (const f of [])
-  continue
-  /* comment */
-  ;
+for (const f of []) continue;
+/* comment */
 
-for (const f of [])
-  break
-  /* comment */
-  ;
+for (const f of []) break;
+/* comment */
 
-for (const f in {})
-  continue
-  /* comment */
-  ;
+for (const f in {}) continue;
+/* comment */
 
-for (const f in {})
-  break
-  /* comment */
-  ;
+for (const f in {}) break;
+/* comment */
 
-label1: for (;;) continue label1 /* comment */;
+label1: for (;;) continue label1; /* comment */
 
-label1: for (;;)
-  continue label1
-  /* comment */
-  ;
+label1: for (;;) continue label1;
+/* comment */
 
-label1: for (;;)
-  continue label1; // comment
+label1: for (;;) continue label1; // comment
 
-label1: for (;;)
-  continue label1
-  // comment
-  ;
+label1: for (;;) continue label1;
+// comment
 ```
 
 
