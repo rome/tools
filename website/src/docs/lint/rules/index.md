@@ -264,7 +264,6 @@ to promote these rules into a more appropriate category.
 <h3 data-toc-exclude id="noNewSymbol">
 	<a href="/docs/lint/rules/noNewSymbol">noNewSymbol (since v0.10.0)</a>
 	<a class="header-anchor" href="#noNewSymbol"></a>
-	<span class="recommended">recommended</span>
 </h3>
 Disallow <code>new</code> operators with the <code>Symbol</code> object
 </div>
