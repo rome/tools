@@ -156,6 +156,7 @@ export interface Correctness {
  * A list of rules that belong to this group
  */
 export interface Nursery {
+	noDangerouslySetInnerHtml?: RuleConfiguration;
 	noNewSymbol?: RuleConfiguration;
 	noUnreachable?: RuleConfiguration;
 	noUnusedVariables?: RuleConfiguration;
