@@ -1,8 +1,7 @@
 use crate::comments::{FormatJsLeadingComment, JsCommentStyle, JsComments};
 use rome_formatter::printer::PrinterOptions;
 use rome_formatter::{
-    CstFormatContext, FormatContext, FormatOptions, IndentStyle, LineWidth,
-    TransformSourceMap,
+    CstFormatContext, FormatContext, FormatOptions, IndentStyle, LineWidth, TransformSourceMap,
 };
 use rome_js_syntax::{JsLanguage, SourceType};
 use std::fmt;

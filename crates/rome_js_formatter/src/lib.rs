@@ -627,6 +627,8 @@ mod tests {
     use rome_js_syntax::SourceType;
     use rome_rowan::{TextRange, TextSize};
 
+    use crate::check_reformat::{check_reformat, CheckReformatParams};
+
     #[test]
     fn test_range_formatting() {
         let input = "
@@ -814,35 +816,26 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-export {
-  foooo,
+        type C = B & (C | A) & B;
 
-  barrr
-  // rome-ignore format: test
-  as  // comment
-		 a,
-} from 'foo'"#;
-
+"#;
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);
         let options = JsFormatOptions::new(syntax);
 
-        let formatted = format_node(options, &tree.syntax()).unwrap();
-        let result = formatted.print();
-        // check_reformat(CheckReformatParams {
-        //     root: &tree.syntax(),
-        //     text: result.as_code(),
-        //     source_type: syntax,
-        //     file_name: "quick_test",
-        //     options,
-        // });
+        let result = format_node(options.clone(), &tree.syntax())
+            .unwrap()
+            .print();
+        check_reformat(CheckReformatParams {
+            root: &tree.syntax(),
+            text: result.as_code(),
+            source_type: syntax,
+            file_name: "quick_test",
+            options,
+        });
         assert_eq!(
             result.as_code(),
-            r#"a;
-loooooooooooooooooooooooooong7 =
-	// rome-ignore format: test
-		!     "looooooooooooooooooooooooooooooooooooooooooog";
-"#
+            "type Example = {\n\t[A in B]: T;\n} & {\n\t[A in B]: T;\n};\n"
         );
     }
 

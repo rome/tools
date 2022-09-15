@@ -640,7 +640,7 @@ fn handle_if_statement_comment(
         // ```
         if !comment.kind().is_block()
             && !comment.position().is_own_line()
-            && !comment.preceding_node().is_none()
+            && comment.preceding_node().is_some()
         {
             return CommentPlacement::dangling(consequent, comment);
         }

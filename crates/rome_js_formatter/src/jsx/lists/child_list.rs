@@ -4,9 +4,7 @@ use crate::utils::jsx::{
     JsxRawSpace, JsxSpace,
 };
 use crate::JsFormatter;
-use rome_formatter::{
-    format_args, write, CstFormatContext, FormatRuleWithOptions, VecBuffer,
-};
+use rome_formatter::{format_args, write, CstFormatContext, FormatRuleWithOptions, VecBuffer};
 use rome_js_syntax::{JsxAnyChild, JsxChildList};
 
 #[derive(Debug, Clone, Default)]

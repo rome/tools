@@ -2,8 +2,8 @@ use crate::prelude::*;
 
 use rome_formatter::{write, CstFormatContext};
 use rome_js_syntax::{
-    JsSyntaxToken, JsxAnyAttribute, JsxAnyAttributeValue, JsxAnyElementName,
-    JsxAttributeList, JsxOpeningElement, JsxSelfClosingElement, JsxString, TsTypeArguments,
+    JsSyntaxToken, JsxAnyAttribute, JsxAnyAttributeValue, JsxAnyElementName, JsxAttributeList,
+    JsxOpeningElement, JsxSelfClosingElement, JsxString, TsTypeArguments,
 };
 use rome_rowan::{declare_node_union, SyntaxResult};
 

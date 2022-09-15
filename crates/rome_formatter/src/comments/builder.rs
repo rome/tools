@@ -304,7 +304,7 @@ where
         // Using the `enclosing` as default but it's mainly to satisfy Rust. The only case where it is used
         // is if someone formats a Parenthesized expression as the root. Something we explicitly disallow
         // in rome_js_formatter
-        let enclosing = preceding.parent().unwrap_or_else(|| enclosing);
+        let enclosing = preceding.parent().unwrap_or(enclosing);
 
         // Update the lines after of all comments as well as the positioning of end of line comments.
         while let Some((index, comment)) = comments.next() {
@@ -515,7 +515,7 @@ impl<'a> SourceParentheses<'a> {
                     if range.transformed == offset {
                         // A deleted range can contain multiple tokens. See if there's any `)` in the deleted
                         // range and compute its source range.
-                        return range.text.find(")").map(|r_paren_position| {
+                        return range.text.find(')').map(|r_paren_position| {
                             let start = range.source + TextSize::from(r_paren_position as u32);
                             TextRange::at(start, TextSize::from(1))
                         });
@@ -840,9 +840,7 @@ b;"#;
                     .collect::<Vec<_>>(),
             );
 
-        let new_reference_identifier = reference_identifier
-            .clone()
-            .with_value_token(new_identifier_token);
+        let new_reference_identifier = reference_identifier.with_value_token(new_identifier_token);
 
         let new_identifier_expression = identifier_expression.with_name(new_reference_identifier);
 

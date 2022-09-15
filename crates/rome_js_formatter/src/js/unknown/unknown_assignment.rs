@@ -1,9 +1,6 @@
-
-
 use crate::parentheses::NeedsParentheses;
 use crate::FormatUnknownNodeRule;
 use rome_js_syntax::{JsSyntaxNode, JsUnknownAssignment};
-
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsUnknownAssignment;

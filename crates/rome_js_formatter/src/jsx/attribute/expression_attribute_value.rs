@@ -2,8 +2,7 @@ use crate::prelude::*;
 
 use rome_formatter::{format_args, write, CstFormatContext};
 use rome_js_syntax::{
-    JsAnyExpression, JsxAnyTag, JsxExpressionAttributeValue,
-    JsxExpressionAttributeValueFields,
+    JsAnyExpression, JsxAnyTag, JsxExpressionAttributeValue, JsxExpressionAttributeValueFields,
 };
 
 #[derive(Debug, Clone, Default)]

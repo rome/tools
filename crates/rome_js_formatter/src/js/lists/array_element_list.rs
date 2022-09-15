@@ -3,7 +3,7 @@ use rome_formatter::{write, CstFormatContext, FormatRuleWithOptions, GroupId};
 
 use crate::utils::array::write_array_node;
 
-use rome_js_syntax::{JsArrayElementList};
+use rome_js_syntax::JsArrayElementList;
 use rome_rowan::{AstNode, AstSeparatedList};
 
 #[derive(Debug, Clone, Default)]
