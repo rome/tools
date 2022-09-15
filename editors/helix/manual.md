@@ -45,8 +45,7 @@ formatter = { command = "rome", args = ["format", "--stdin-file-path", "test.tsx
 auto-format = true
 
 ```
-`/tmp/rome-socket` is the default socket file path in Linux, I tested on Linux. If anything goes wrong, please double check if the 
-path equals to `rome __print_socket`
+`/tmp/rome-socket` is the default socket file path in Linux. Use the command `rome __print_socket` and use the correct value.
 
 # Limitation
 1. The `rome-socket` will not automatically create when you reboot until you use the command `rome __print_socket`. As a workaround,
