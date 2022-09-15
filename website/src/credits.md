@@ -410,7 +410,7 @@ layout: layouts/page.liquid
 </ul>
 <!-- GENERATED:END(id:main) -->
 
-### Acknowledgements and inspirations
+### Acknowledgements
 
 Rome contains code that is heavily inspired from other projects. They have been adapted to Rome's 
 language/infrastructure.
