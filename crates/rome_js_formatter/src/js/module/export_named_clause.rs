@@ -1,9 +1,8 @@
 use crate::prelude::*;
-use rome_formatter::write;
+use rome_formatter::{format_args, write};
 
 use crate::utils::FormatWithSemicolon;
 
-use crate::builders::format_delimited;
 use rome_js_syntax::JsExportNamedClause;
 use rome_js_syntax::JsExportNamedClauseFields;
 
@@ -25,20 +24,38 @@ impl FormatNodeRule<JsExportNamedClause> for FormatJsExportNamedClause {
                 write!(f, [type_token.format(), space()])?;
             }
 
-            write!(
-                f,
-                [format_delimited(
-                    l_curly_token.as_ref()?,
-                    &specifiers.format(),
-                    r_curly_token.as_ref()?
-                )
-                .soft_block_spaces()]
-            )
+            write!(f, [l_curly_token.format()])?;
+
+            if specifiers.is_empty() {
+                write!(
+                    f,
+                    [format_dangling_comments(node.syntax()).with_block_indent()]
+                )?;
+            } else {
+                write!(
+                    f,
+                    [group(&format_args![
+                        soft_line_indent_or_space(&specifiers.format()),
+                        soft_line_break_or_space(),
+                    ])]
+                )?;
+            }
+
+            write!(f, [r_curly_token.format()])
         });
 
         write!(
             f,
             [FormatWithSemicolon::new(&content, semicolon_token.as_ref())]
         )
+    }
+
+    fn fmt_dangling_comments(
+        &self,
+        _: &JsExportNamedClause,
+        _: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        // Handled as part of `fmt_fields`
+        Ok(())
     }
 }

@@ -814,10 +814,14 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-interface ConstructorInline {
-  // https://github.com/prettier/prettier/issues/2163
-  (i): any;
-}"#;
+export {
+  foooo,
+
+  barrr
+  // rome-ignore format: test
+  as  // comment
+		 a,
+} from 'foo'"#;
 
         let syntax = SourceType::tsx();
         let tree = parse(src, 0, syntax);

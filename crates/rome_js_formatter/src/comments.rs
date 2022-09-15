@@ -167,7 +167,8 @@ impl CommentStyle for JsCommentStyle {
                 .or_else(handle_call_expression_comment)
                 .or_else(handle_continue_break_comment)
                 .or_else(handle_mapped_type_comment)
-                .or_else(handle_switch_default_case_comment),
+                .or_else(handle_switch_default_case_comment)
+                .or_else(handle_import_export_specifier_comment),
             CommentPosition::OwnLine => handle_member_expression_comment(comment)
                 .or_else(handle_function_declaration_comment)
                 .or_else(handle_if_statement_comment)
@@ -183,7 +184,8 @@ impl CommentStyle for JsCommentStyle {
                 .or_else(handle_call_expression_comment)
                 .or_else(handle_mapped_type_comment)
                 .or_else(handle_continue_break_comment)
-                .or_else(handle_union_type_comment),
+                .or_else(handle_union_type_comment)
+                .or_else(handle_import_export_specifier_comment),
             CommentPosition::SameLine => handle_if_statement_comment(comment)
                 .or_else(handle_while_comment)
                 .or_else(handle_for_comment)
@@ -1046,6 +1048,65 @@ fn handle_union_type_comment(
         }
         _ => CommentPlacement::Default(comment),
     }
+}
+
+fn handle_import_export_specifier_comment(
+    comment: DecoratedComment<JsLanguage>,
+) -> CommentPlacement<JsLanguage> {
+    let enclosing_node = comment.enclosing_node();
+
+    match enclosing_node.kind() {
+        // Make end of line or own line comments in the middle of an import specifier leading comments of that specifier
+        // ```javascript
+        // import { a //comment1
+        // //comment2
+        // //comment3
+        // as b} from "";
+        // ```
+        JsSyntaxKind::JS_NAMED_IMPORT_SPECIFIER
+        | JsSyntaxKind::JS_EXPORT_NAMED_SPECIFIER
+        | JsSyntaxKind::JS_EXPORT_NAMED_SHORTHAND_SPECIFIER
+        | JsSyntaxKind::JS_EXPORT_NAMED_FROM_SPECIFIER => {
+            CommentPlacement::leading(enclosing_node.clone(), comment)
+        }
+        // Make end of line or own line comments in the middle of an import assertion a leading comment of the assertion
+        JsSyntaxKind::JS_IMPORT_ASSERTION_ENTRY => {
+            CommentPlacement::leading(enclosing_node.clone(), comment)
+        }
+
+        JsSyntaxKind::JS_EXPORT_AS_CLAUSE => {
+            if let Some(parent) = enclosing_node.parent() {
+                CommentPlacement::leading(parent, comment)
+            } else {
+                CommentPlacement::Default(comment)
+            }
+        }
+
+        _ => CommentPlacement::Default(comment),
+    }
+
+    // if (
+    //     enclosingNode?.type === "ImportSpecifier" ||
+    //     enclosingNode?.type === "ExportSpecifier"
+    //   ) {
+    //     addLeadingComment(enclosingNode, comment);
+    //     return true;
+    //   }
+    //
+    //   const isImportDeclaration =
+    //     precedingNode?.type === "ImportSpecifier" &&
+    //     enclosingNode?.type === "ImportDeclaration";
+    //   const isExportDeclaration =
+    //     precedingNode?.type === "ExportSpecifier" &&
+    //     enclosingNode?.type === "ExportNamedDeclaration";
+    //   if (
+    //     (isImportDeclaration || isExportDeclaration) &&
+    //     hasNewline(text, locEnd(comment))
+    //   ) {
+    //     addTrailingComment(precedingNode, comment);
+    //     return true;
+    //   }
+    //   return false;
 }
 
 fn place_leading_statement_comment(

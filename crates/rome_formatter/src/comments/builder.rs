@@ -581,7 +581,7 @@ impl<'a> SourceParentheses<'a> {
 
 #[cfg(test)]
 mod tests {
-    use crate::comments::builder::{CommentsBuilder, CommentsBuilderVisitor};
+    use crate::comments::builder::CommentsBuilderVisitor;
     use crate::comments::map::CommentsMap;
     use crate::comments::CommentPosition;
     use crate::{
@@ -854,7 +854,7 @@ b;"#;
         let transformed = mutation.commit();
 
         let style = TestCommentStyle::default();
-        let mut comments_builder = CommentsBuilderVisitor::new(&style, Some(&source_map));
+        let comments_builder = CommentsBuilderVisitor::new(&style, Some(&source_map));
         let (comments, _) = comments_builder.visit(&transformed);
 
         let decorated_comments = style.finish();
@@ -914,11 +914,14 @@ b;"#;
         assert_eq!(decorated.len(), 2);
 
         let first = &decorated[0];
-        assert_eq!(first.position(), CommentPosition::OwnLine);
+        assert_eq!(first.position(), CommentPosition::EndOfLine);
         assert_eq!(first.lines_before(), 0);
         assert_eq!(first.lines_after(), 2);
         assert_eq!(first.preceding_node(), None);
-        assert_eq!(first.following_node(), None);
+        assert_eq!(
+            first.following_node().map(SyntaxNode::kind),
+            Some(JsSyntaxKind::JS_MODULE)
+        );
         assert_eq!(first.enclosing_node().kind(), JsSyntaxKind::JS_MODULE);
 
         let second = &decorated[1];
@@ -926,10 +929,13 @@ b;"#;
         assert_eq!(second.lines_before(), 2);
         assert_eq!(second.lines_after(), 0);
         assert_eq!(second.preceding_node(), None);
-        assert_eq!(second.following_node(), None);
+        assert_eq!(
+            first.following_node().map(SyntaxNode::kind),
+            Some(JsSyntaxKind::JS_MODULE)
+        );
         assert_eq!(second.enclosing_node().kind(), JsSyntaxKind::JS_MODULE);
 
-        assert!(!comments.dangling(&root.key()).is_empty());
+        assert!(!comments.leading(&root.key()).is_empty());
     }
 
     fn extract_comments(
