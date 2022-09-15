@@ -10,7 +10,8 @@ expression: content
     "rules": {
         "recommended": true,
         "nursery": {
-            "noUnreachable": "error"
+            "noUnreachable": "error",
+            "noUnusedVariables": "error"
         }
     }
   }

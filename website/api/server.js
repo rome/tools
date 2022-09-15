@@ -17,10 +17,10 @@ const db = new pg.Client();
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET);
 
-let Sentry;
+let sentry;
 if (process.env.SENTRY_DSN !== undefined) {
-	Sentry = require("@sentry/node");
-	Sentry.init({ dsn: process.env.SENTRY_DSN, tracesSampleRate: 1 });
+	sentry = require("@sentry/node");
+	sentry.init({ dsn: process.env.SENTRY_DSN, tracesSampleRate: 1 });
 }
 
 const tiers = [
@@ -491,8 +491,8 @@ app.post(
 // rome-ignore lint(nursery/noUnusedVariables): false positive
 app.use(function (err, req, res, next) {
 	// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
-	if (Sentry !== undefined) {
-		Sentry.captureException(err);
+	if (sentry !== undefined) {
+		sentry.captureException(err);
 	}
 	console.error(err.stack);
 	res.status(500);
@@ -512,8 +512,8 @@ async function main() {
 
 main().catch((err) => {
 	// rome-ignore lint/js/preferOptionalChaining: netlify's node version does not support optional call expressions
-	if (Sentry !== undefined) {
-		Sentry.captureException(err);
+	if (sentry !== undefined) {
+		sentry.captureException(err);
 	}
 	console.error(err.stack);
 	process.exit(1);

@@ -400,11 +400,8 @@ impl Nursery {
         "noUnusedVariables",
         "useCamelCase",
     ];
-    const RECOMMENDED_RULES: [&'static str; 2] = ["noNewSymbol", "noUnusedVariables"];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 2] = [
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[0]),
-        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[2]),
-    ];
+    const RECOMMENDED_RULES: [&'static str; 0] = [];
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 0] = [];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
@@ -430,7 +427,7 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 2] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 0] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }

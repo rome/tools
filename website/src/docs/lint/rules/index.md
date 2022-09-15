@@ -13,6 +13,8 @@ eleventyNavigation:
 
 <section>
 <h2>Correctness</h2>
+
+This group should includes those rules that are meant to prevent possible bugs and misuse of the language.
 <div class="rule">
 <h3 data-toc-exclude id="noArguments">
 	<a href="/docs/lint/rules/noArguments">noArguments (since v0.7.0)</a>
@@ -253,11 +255,15 @@ initializer and update expressions are not needed
 </section>
 <section>
 <h2>Nursery</h2>
+
+Rules that are being written. Rules under this category are meant to be considered unstable or buggy.
+
+Rules can be downgraded to this category in case some path release is needed. After an arbitrary amount of time, the team can decide
+to promote these rules into a more appropriate category.
 <div class="rule">
 <h3 data-toc-exclude id="noNewSymbol">
 	<a href="/docs/lint/rules/noNewSymbol">noNewSymbol (since v0.10.0)</a>
 	<a class="header-anchor" href="#noNewSymbol"></a>
-	<span class="recommended">recommended</span>
 </h3>
 Disallow <code>new</code> operators with the <code>Symbol</code> object
 </div>
@@ -272,7 +278,6 @@ Disallow unreachable code
 <h3 data-toc-exclude id="noUnusedVariables">
 	<a href="/docs/lint/rules/noUnusedVariables">noUnusedVariables (since v0.9.0)</a>
 	<a class="header-anchor" href="#noUnusedVariables"></a>
-	<span class="recommended">recommended</span>
 </h3>
 Disallow unused variables.
 </div>
@@ -286,6 +291,8 @@ Enforce camel case naming convention.
 </section>
 <section>
 <h2>Style</h2>
+
+Rules that focus mostly on making the code more consistent.
 <div class="rule">
 <h3 data-toc-exclude id="noNegationElse">
 	<a href="/docs/lint/rules/noNegationElse">noNegationElse (since v0.7.0)</a>
