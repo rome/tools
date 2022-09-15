@@ -36,7 +36,7 @@ pub mod prelude;
 pub mod printed_tokens;
 pub mod printer;
 mod source_map;
-pub mod token;
+mod verbatim;
 
 use crate::formatter::Formatter;
 use crate::group_id::UniqueGroupIdBuilder;

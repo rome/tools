@@ -252,7 +252,7 @@ pub mod utils;
 mod check_reformat;
 #[rustfmt::skip]
 mod generated;
-pub(crate) mod builders;
+mod builders;
 pub mod comments;
 pub mod context;
 mod parentheses;
