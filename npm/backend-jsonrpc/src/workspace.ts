@@ -6,9 +6,13 @@ export interface SupportsFeatureParams {
 }
 export type FeatureName = "Format" | "Lint";
 export interface RomePath {
-	id: number;
+	id: FileId;
 	path: string;
 }
+/**
+ * An id that points into a file database.
+ */
+export type FileId = number;
 export interface SupportsFeatureResult {
 	reason?: UnsupportedReason;
 }
@@ -234,7 +238,7 @@ export interface Diagnostic {
 	children: SubDiagnostic[];
 	code?: string;
 	code_link?: string;
-	file_id: number;
+	file_id: FileId;
 	footers: Footer[];
 	primary?: SubDiagnostic;
 	severity: Severity;
@@ -284,7 +288,7 @@ export type MarkupBuf = MarkupNodeBuf[];
  * A range that is indexed in a specific file.
  */
 export interface FileSpan {
-	file: number;
+	file: FileId;
 	range: TextRangeSchema;
 }
 /**
