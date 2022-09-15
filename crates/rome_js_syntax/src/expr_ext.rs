@@ -26,8 +26,23 @@ impl JsReferenceIdentifier {
     /// assert!(!js_reference_identifier(ident("x")).is_undefined());
     /// ```
     pub fn is_undefined(&self) -> bool {
+        self.has_name("undefined")
+    }
+
+    /// Returns `true` if this identifier has the given name.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_factory::make::{js_reference_identifier, ident};
+    ///
+    /// assert!(js_reference_identifier(ident("foo")).has_name("foo"));
+    /// assert!(!js_reference_identifier(ident("bar")).has_name("foo"));
+    /// ```
+    pub fn has_name(&self, name: &str) -> bool {
         self.value_token()
-            .map_or(false, |name| name.text_trimmed() == "undefined")
+            .map(|token| token.text_trimmed() == name)
+            .unwrap_or_default()
     }
 }
 

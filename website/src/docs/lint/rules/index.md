@@ -254,6 +254,14 @@ initializer and update expressions are not needed
 <section>
 <h2>Nursery</h2>
 <div class="rule">
+<h3 data-toc-exclude id="noNewSymbol">
+	<a href="/docs/lint/rules/noNewSymbol">noNewSymbol (since v0.10.0)</a>
+	<a class="header-anchor" href="#noNewSymbol"></a>
+	<span class="recommended">recommended</span>
+</h3>
+Disallow <code>new</code> operators with the <code>Symbol</code> object
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noUnreachable">
 	<a href="/docs/lint/rules/noUnreachable">noUnreachable (since v0.7.0)</a>
 	<a class="header-anchor" href="#noUnreachable"></a>

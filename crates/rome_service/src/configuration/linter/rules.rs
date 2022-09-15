@@ -387,17 +387,24 @@ pub struct Nursery {
 #[allow(dead_code)]
 #[doc = r" A list of rules that belong to this group"]
 struct NurserySchema {
+    no_new_symbol: Option<RuleConfiguration>,
     no_unreachable: Option<RuleConfiguration>,
     no_unused_variables: Option<RuleConfiguration>,
     use_camel_case: Option<RuleConfiguration>,
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 3] =
-        ["noUnreachable", "noUnusedVariables", "useCamelCase"];
-    const RECOMMENDED_RULES: [&'static str; 1] = ["noUnusedVariables"];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 1] =
-        [RuleFilter::Rule("nursery", Self::CATEGORY_RULES[1])];
+    pub(crate) const CATEGORY_RULES: [&'static str; 4] = [
+        "noNewSymbol",
+        "noUnreachable",
+        "noUnusedVariables",
+        "useCamelCase",
+    ];
+    const RECOMMENDED_RULES: [&'static str; 2] = ["noNewSymbol", "noUnusedVariables"];
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 2] = [
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[0]),
+        RuleFilter::Rule("nursery", Self::CATEGORY_RULES[2]),
+    ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
         IndexSet::from_iter(self.rules.iter().filter_map(|(key, conf)| {
@@ -423,7 +430,7 @@ impl Nursery {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 1] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 2] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }
