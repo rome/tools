@@ -1,3 +1,5 @@
+mod map;
+
 use rome_rowan::{
     Direction, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxTriviaPieceComments,
     WalkEvent,
