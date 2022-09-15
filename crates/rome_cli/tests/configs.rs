@@ -133,7 +133,8 @@ pub const CONFIG_LINTER_UPGRADE_DIAGNOSTIC: &str = r#"{
     "rules": {
         "recommended": true,
         "nursery": {
-            "noUnreachable": "error"
+            "noUnreachable": "error",
+            "noUnusedVariables": "error"
         }
     }
   }
