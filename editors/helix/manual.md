@@ -1,8 +1,15 @@
 # Configuration
-Currently, rome support `js`, `jsx`, `ts`, `tsx` four languages. Rome uses a file socket to connect the editor client, 
-which may be different from other language servers using a binary e.g. `rust-analyzer`.
-you could use `nc -U ${LANGUAGE_SERVER_SOCKET_PATH}` to connect your rome language server, `LANGUAGE_SERVER_SOCKET_PATH` could be got by
-`rome __print_socket`, by default it is `/tmp/rome-socket`. More details why we need nc you could reference https://github.com/helix-editor/helix/wiki/How-to-install-the-default-language-servers
+Currently, rome supports the following file extensions: `js`, `jsx`, `ts`, `tsx` and `d.ts`. 
+
+Rome uses a file socket to connect the editor client, which may be different from other language servers using a binary e.g. `rust-analyzer`.
+
+You can use `nc -U ${LANGUAGE_SERVER_SOCKET_PATH}` to connect to the Rome language server. `LANGUAGE_SERVER_SOCKET_PATH` is path to where the Rome's socket is created. Rome creates that socket inside the temporary folder of the operative system, inside a folder called `rome-socket`. 
+
+To know the path of your OS, run the command:
+```shell
+rome __print_socket
+```
+More details why we need `nc`, please read the [wiki page of helix](https://github.com/helix-editor/helix/wiki/How-to-install-the-default-language-servers)
 
 **languages.toml**
 ```toml
@@ -38,6 +45,8 @@ formatter = { command = "rome", args = ["format", "--stdin-file-path", "test.tsx
 auto-format = true
 
 ```
+`/tmp/rome-socket` is the default socket file path in Linux, I tested on Linux. If anything goes wrong, please double check if the 
+path equals to `rome __print_socket`
 
 # Limitation
 1. The `rome-socket` will not automatically create when you reboot until you use the command `rome __print_socket`. As a workaround,
