@@ -1,0 +1,48 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: inJsx.jsx
+---
+# Input
+```js
+// invalid
+<>
+    <button>do something</button>
+    <button type="bar">do something</button>
+</>
+
+
+// valid
+<>
+    <button type="button">do something</button>
+    <button type={dynamic_value}>do something</button>
+</>
+```
+
+# Diagnostics
+```
+warning[nursery/useButtonType]: Provide an explicit type prop on button elements.
+  ┌─ inJsx.jsx:3:5
+  │
+3 │     <button>do something</button>
+  │     --------
+
+=  note: The default type of a button is submit, which causes a page reload and is not a typical behavior in a React application.
+= help: Allowed button types are: submit, button or reset
+
+
+```
+
+```
+warning[nursery/useButtonType]: Provide an explicit type prop on button elements.
+  ┌─ inJsx.jsx:4:18
+  │
+4 │     <button type="bar">do something</button>
+  │                  -----
+
+=  note: The default type of a button is submit, which causes a page reload and is not a typical behavior in a React application.
+= help: Allowed button types are: submit, button or reset
+
+
+```
+
+

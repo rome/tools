@@ -1,3 +1,9 @@
+pub mod batch;
+pub mod react;
+pub mod rename;
+#[cfg(test)]
+pub mod tests;
+
 use rome_js_factory::make;
 use rome_js_semantic::SemanticModel;
 use rome_js_syntax::JsSyntaxKind::JS_IMPORT;
@@ -8,11 +14,6 @@ use rome_js_syntax::{
 };
 use rome_rowan::{declare_node_union, AstNode, AstSeparatedList, BatchMutation};
 use std::borrow::Cow;
-
-pub mod batch;
-pub mod rename;
-#[cfg(test)]
-pub mod tests;
 
 #[derive(Debug, PartialEq)]
 pub(crate) enum EscapeError {

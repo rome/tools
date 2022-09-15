@@ -1,0 +1,47 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: inObject.js
+---
+# Input
+```js
+// invalid
+React.createElement('button');
+React.createElement('button', {
+    "type": "bar"
+});
+
+// valid
+React.createElement('button', {
+    "type": foo
+});
+
+```
+
+# Diagnostics
+```
+warning[nursery/useButtonType]: Provide an explicit type prop on button elements.
+  ┌─ inObject.js:2:21
+  │
+2 │ React.createElement('button');
+  │                     --------
+
+=  note: The default type of a button is submit, which causes a page reload and is not a typical behavior in a React application.
+= help: Allowed button types are: submit, button or reset
+
+
+```
+
+```
+warning[nursery/useButtonType]: Provide an explicit type prop on button elements.
+  ┌─ inObject.js:4:13
+  │
+4 │     "type": "bar"
+  │             -----
+
+=  note: The default type of a button is submit, which causes a page reload and is not a typical behavior in a React application.
+= help: Allowed button types are: submit, button or reset
+
+
+```
+
+

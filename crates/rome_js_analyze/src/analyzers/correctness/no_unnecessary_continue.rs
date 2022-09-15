@@ -6,7 +6,7 @@ use rome_diagnostics::Applicability;
 use rome_js_syntax::{JsContinueStatement, JsLabeledStatement, JsSyntaxKind, JsSyntaxNode};
 use rome_rowan::{AstNode, BatchMutationExt};
 
-use crate::{utils, JsRuleAction};
+use crate::{shared, JsRuleAction};
 
 declare_rule! {
     /// Avoid using unnecessary `ContinueStatement`.
@@ -105,7 +105,7 @@ impl Rule for NoUnnecessaryContinue {
         let node = ctx.query();
 
         let mut mutation = ctx.root().begin();
-        utils::remove_statement(&mut mutation, node)?;
+        shared::remove_statement(&mut mutation, node)?;
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,

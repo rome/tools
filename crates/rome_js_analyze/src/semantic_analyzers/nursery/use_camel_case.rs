@@ -1,6 +1,6 @@
 use crate::{
     semantic_services::Semantic,
-    utils::{rename::RenameSymbolExtensions, ToCamelCase},
+    shared::{rename::RenameSymbolExtensions, ToCamelCase},
     JsRuleAction,
 };
 use rome_analyze::{

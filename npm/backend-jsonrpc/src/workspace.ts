@@ -163,6 +163,7 @@ export interface Nursery {
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
+	useButtonType?: RuleConfiguration;
 	useCamelCase?: RuleConfiguration;
 	useOptionalChain?: RuleConfiguration;
 }

@@ -528,6 +528,16 @@
             "null"
           ]
         },
+        "useButtonType": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useCamelCase": {
           "anyOf": [
             {

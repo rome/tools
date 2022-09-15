@@ -17,7 +17,7 @@ mod control_flow;
 mod registry;
 mod semantic_analyzers;
 mod semantic_services;
-pub mod utils;
+pub mod shared;
 
 use crate::{registry::build_registry, semantic_services::SemanticModelBuilderVisitor};
 
@@ -101,7 +101,6 @@ mod tests {
 
     use rome_analyze::Never;
     use rome_console::codespan::Severity;
-    use rome_diagnostics::file::FileId;
     use rome_js_parser::parse;
     use rome_js_syntax::{SourceType, TextRange, TextSize};
 
@@ -110,30 +109,27 @@ mod tests {
     #[ignore]
     #[test]
     fn quick_test() {
-        const SOURCE: &str = "
-        foo.bar && foo.bar?.();
-        ";
+        const SOURCE: &str = r#"
+React.createElement('button', {
+    "type": "bar"
+});
+        "#;
 
-        let parsed = parse(SOURCE, FileId::zero(), SourceType::js_module());
+        let parsed = parse(SOURCE, 0, SourceType::jsx());
 
         let mut error_ranges = Vec::new();
-        analyze(
-            FileId::zero(),
-            &parsed.tree(),
-            AnalysisFilter::default(),
-            |signal| {
-                if let Some(diag) = signal.diagnostic() {
-                    let diag = diag.into_diagnostic(Severity::Warning);
-                    let primary = diag.primary.as_ref().unwrap();
+        analyze(0, &parsed.tree(), AnalysisFilter::default(), |signal| {
+            if let Some(diag) = signal.diagnostic() {
+                let diag = diag.into_diagnostic(Severity::Warning);
+                let primary = diag.primary.as_ref().unwrap();
 
-                    error_ranges.push(primary.span.range);
-                }
+                error_ranges.push(primary.span.range);
+            }
 
-                dbg!(signal.action());
+            dbg!(signal.action());
 
-                ControlFlow::<Never>::Continue(())
-            },
-        );
+            ControlFlow::<Never>::Continue(())
+        });
 
         assert_eq!(error_ranges.as_slice(), &[]);
     }
@@ -161,27 +157,22 @@ mod tests {
             }
         ";
 
-        let parsed = parse(SOURCE, FileId::zero(), SourceType::js_module());
+        let parsed = parse(SOURCE, 0, SourceType::js_module());
 
         let mut error_ranges = Vec::new();
-        analyze(
-            FileId::zero(),
-            &parsed.tree(),
-            AnalysisFilter::default(),
-            |signal| {
-                if let Some(diag) = signal.diagnostic() {
-                    let diag = diag.into_diagnostic(Severity::Warning);
-                    let code = diag.code.as_deref().unwrap();
-                    let primary = diag.primary.as_ref().unwrap();
+        analyze(0, &parsed.tree(), AnalysisFilter::default(), |signal| {
+            if let Some(diag) = signal.diagnostic() {
+                let diag = diag.into_diagnostic(Severity::Warning);
+                let code = diag.code.as_deref().unwrap();
+                let primary = diag.primary.as_ref().unwrap();
 
-                    if code == "correctness/noDoubleEquals" {
-                        error_ranges.push(primary.span.range);
-                    }
+                if code == "correctness/noDoubleEquals" {
+                    error_ranges.push(primary.span.range);
                 }
+            }
 
-                ControlFlow::<Never>::Continue(())
-            },
-        );
+            ControlFlow::<Never>::Continue(())
+        });
 
         assert_eq!(
             error_ranges.as_slice(),

@@ -281,6 +281,13 @@ Disallow unreachable code
 Disallow unused variables.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useButtonType">
+	<a href="/docs/lint/rules/useButtonType">useButtonType (since v0.10.0)</a>
+	<a class="header-anchor" href="#useButtonType"></a>
+</h3>
+Enforces the correct usage of the attribute <code>type</code> for the element <code>button</code>
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useCamelCase">
 	<a href="/docs/lint/rules/useCamelCase">useCamelCase (since v0.8.0)</a>
 	<a class="header-anchor" href="#useCamelCase"></a>

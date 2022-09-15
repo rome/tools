@@ -5,6 +5,7 @@
 #[macro_use]
 mod generated;
 pub mod expr_ext;
+pub mod jsx;
 pub mod modifier_ext;
 pub mod numbers;
 pub mod source_type;
