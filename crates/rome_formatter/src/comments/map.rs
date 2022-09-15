@@ -7,25 +7,41 @@ use std::ops::Range;
 
 /// An optimized multi-map implementation for storing leading, dangling, and trailing parts for a key.
 ///
-/// The implementation allows to store leading, dangling, and trailing parts for every key.
-/// A general purpose multimap implementation would allocate a new [Vec] for the leading, dangling, and trailing
-/// parts for every key.
+/// A naive implementation using three multimaps, one to store the leading, dangling, and trailing parts,
+/// requires between `keys < allocations < keys * 3` vec allocations.
 ///
-/// This implementation avoids this based on the assumptions that, for the vast majority of insertions:
-/// * The leading, dangling, and trailing parts for a key are inserted in this order.
-/// * The parts are inserted per key. For example, the parts for key one are inserted before the parts for key 2, and so on.
+/// This map implementation optimises for the use case where:
+/// * Parts belonging to the same key are inserted together. For example, all parts for the key `a` are inserted
+///   before inserting any parts for the key `b`.
+/// * The parts per key are inserted in the following order: leading, dangling, and then trailing parts.
 ///
-/// Parts that are inserted in compilation with these assumption are stored in a single [Vec] that is
-/// shared between all keys to significantly reduce the number of allocated [Vec]s.
-///
-/// The implementation does support insertions that don't comply with the above mentioned rules but
-/// these come at a performance penalty:
-/// * It requires allocating three [Vec], one for the leading, dangling, and trailing parts.
-/// * Already inserted parts must be copied over (by cloning) into these newly allocated [Vec]s.
+/// Parts inserted in the above mentioned order are stored in a `Vec` shared by all keys to reduce the number
+/// of allocations and increased cache locality. The implementation falls back to
+/// storing the leading, dangling, and trailing parts of a key in dedicated `Vec`s if the parts
+/// aren't inserted in the above described order. However, this comes with a slight performance penalty due to:
+/// * Requiring up to three [Vec] allocations, one for the leading, dangling, and trailing parts.
+/// * Requires copying already inserted parts for that key (by cloning) into the newly allocated [Vec]s.
 /// * Resolving the slices for every part requires an extra level of indirection.
 ///
-/// ## Panics
-/// Panics when storing the `u32::MAX` part.
+/// ## Limitations
+///
+/// The map supports storing up to `u32::MAX - 1` parts. Inserting the `u32::MAX`nth part panics.
+///
+/// ## Comments
+///
+/// Storing the leading, dangling, and trailing comments is an exemplary use case for this map implementation because
+/// it is generally desired to keep the comments in the same order as in the source document. This translates to
+/// inserting the comments per node and for every node in leading, dangling, trailing order (same order as this map optimises for).
+///
+/// Running Rome formatter on real world use cases showed that more than 99.99% of comments get inserted in
+/// the described order.
+///
+/// The size limitation isn't a concern for comments because Rome supports source documents with a size up to 4GB (`u32::MAX`)
+/// and every comment has at least a size of 2 bytes:
+/// * 1 byte for the start sequence, e.g. `#`
+/// * 1 byte for the end sequence, e.g. `\n`
+///
+/// Meaning, the upper bound for comments parts in a document are `u32::MAX / 2`.
 pub(super) struct CommentsMap<K, V> {
     /// Lookup table to retrieve the entry for a key.
     index: FxHashMap<K, Entry>,
@@ -33,10 +49,12 @@ pub(super) struct CommentsMap<K, V> {
     /// Flat array storing all the values that have been inserted in order.
     parts: Vec<V>,
 
-    /// Vector of vectors. Stores a triple of leading, dangling, and trailing [Vec] for every out of order entry.
+    /// Vector containing the leading, dangling, and trailing vectors for out of order entries.
     ///
-    /// The length of this vec is guaranteed to always be a multiple of 3 where the leading parts are
-    /// at offset 0, the dangling at offset 1, and the trailing parts at offset 2.
+    /// The length of `out_of_order` is a multiple of 3 where:
+    /// * `index % 3 == 0`: Leading parts
+    /// * `index % 3 == 1`: Dangling parts
+    /// * `index % 3 == 2`: Trailing parts
     out_of_order: Vec<Vec<V>>,
 }
 
