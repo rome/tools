@@ -1,3 +1,4 @@
+use crate::comments::is_type_comment;
 use crate::parentheses::JsAnyParenthesized;
 use crate::TextRange;
 use rome_formatter::{TransformSourceMap, TransformSourceMapBuilder};
@@ -7,8 +8,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::syntax::SyntaxTrivia;
 use rome_rowan::{
-    AstNode, SyntaxKind, SyntaxRewriter, SyntaxToken, SyntaxTriviaPiece, SyntaxTriviaPieceComments,
-    VisitNodeSignal,
+    AstNode, SyntaxKind, SyntaxRewriter, SyntaxToken, SyntaxTriviaPiece, VisitNodeSignal,
 };
 use std::iter::FusedIterator;
 
@@ -174,10 +174,26 @@ impl JsFormatSyntaxRewriter {
                 self.source_map
                     .add_deleted_range(l_paren.text_trimmed_range());
 
-                let l_paren_trivia = chain_pieces(
-                    l_paren.leading_trivia().pieces(),
-                    l_paren.trailing_trivia().pieces(),
-                );
+                let mut l_paren_trailing = l_paren.trailing_trivia().pieces().peekable();
+
+                // Skip over leading whitespace
+                while let Some(piece) = l_paren_trailing.peek() {
+                    if piece.is_whitespace() {
+                        self.source_map
+                            .add_deleted_range(TextRange::at(inner_offset, piece.text_len()));
+                        inner_offset += piece.text_len();
+                        l_paren_trailing.next();
+                    } else {
+                        break;
+                    }
+                }
+
+                let l_paren_trailing_non_whitespace_trivia = l_paren_trailing
+                    .peek()
+                    .map_or(false, |piece| piece.is_skipped() || piece.is_comments());
+
+                let l_paren_trivia =
+                    chain_pieces(l_paren.leading_trivia().pieces(), l_paren_trailing);
 
                 let mut leading_trivia = first_token.leading_trivia().pieces().peekable();
                 let mut first_new_line = None;
@@ -185,8 +201,9 @@ impl JsFormatSyntaxRewriter {
                 // The leading whitespace before the opening parens replaces the whitespace before the node.
                 while let Some(trivia) = leading_trivia.peek() {
                     if trivia.is_newline() && first_new_line.is_none() {
-                        inner_offset += trivia.text_len();
+                        let trivia_len = trivia.text_len();
                         first_new_line = Some((inner_offset, leading_trivia.next().unwrap()));
+                        inner_offset += trivia_len;
                     } else if trivia.is_whitespace() || trivia.is_newline() {
                         let trivia_len = trivia.text_len();
                         self.source_map
@@ -199,7 +216,10 @@ impl JsFormatSyntaxRewriter {
                 }
 
                 // Remove all leading new lines directly in front of the token but keep the leading new-line if it precedes a skipped token trivia or a comment.
-                if leading_trivia.peek().is_none() && first_new_line.is_some() {
+                if !l_paren_trailing_non_whitespace_trivia
+                    && leading_trivia.peek().is_none()
+                    && first_new_line.is_some()
+                {
                     let (inner_offset, new_line) = first_new_line.take().unwrap();
 
                     self.source_map
@@ -380,25 +400,6 @@ fn has_type_cast_comment_or_skipped(trivia: &SyntaxTrivia<JsLanguage>) -> bool {
     })
 }
 
-/// Returns `true` if `comment` is a [Closure type comment](https://github.com/google/closure-compiler/wiki/Types-in-the-Closure-Type-System)
-/// or [TypeScript type comment](https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html#type)
-fn is_type_comment(comment: &SyntaxTriviaPieceComments<JsLanguage>) -> bool {
-    let text = comment.text();
-
-    // Must be a `/**` comment
-    if !text.starts_with("/**") {
-        return false;
-    }
-
-    text.trim_start_matches("/**")
-        .trim_end_matches("*/")
-        .split_whitespace()
-        .any(|word| match word.strip_prefix("@type") {
-            Some(after) => after.is_empty() || after.starts_with('{'),
-            None => false,
-        })
-}
-
 fn chain_pieces<F, S>(first: F, second: S) -> ChainTriviaPiecesIterator<F, S>
 where
     F: Iterator<Item = SyntaxTriviaPiece<JsLanguage>>,
@@ -499,14 +500,14 @@ where
 #[cfg(test)]
 mod tests {
     use super::JsFormatSyntaxRewriter;
-    use crate::{format_node, JsFormatOptions};
+    use crate::{format_node, JsFormatOptions, TextRange};
     use rome_diagnostics::file::FileId;
     use rome_formatter::{SourceMarker, TransformSourceMap};
     use rome_js_parser::parse_module;
     use rome_js_syntax::{
         JsArrayExpression, JsBinaryExpression, JsExpressionStatement, JsIdentifierExpression,
         JsLogicalExpression, JsSequenceExpression, JsStringLiteralExpression, JsSyntaxNode,
-        SourceType,
+        JsUnaryExpression, SourceType,
     };
     use rome_rowan::{AstNode, SyntaxRewriter, TextSize};
 
@@ -757,6 +758,79 @@ mod tests {
         assert_eq!(
             source_map.trimmed_source_text(binary.syntax()),
             "(/* left */ a + b /* right */)"
+        );
+    }
+
+    #[test]
+    fn parentheses() {
+        let (transformed, source_map) = source_map_test(
+            r#"!(
+  /* foo */
+  x
+);
+!(
+  x // foo
+);
+!(
+  /* foo */
+  x + y
+);
+!(
+  x + y
+  /* foo */
+);
+!(
+  x + y // foo
+);"#,
+        );
+
+        let unary_expressions = transformed
+            .descendants()
+            .filter_map(JsUnaryExpression::cast)
+            .collect::<Vec<_>>();
+        assert_eq!(unary_expressions.len(), 5);
+
+        assert_eq!(
+            source_map.trimmed_source_text(unary_expressions[0].syntax()),
+            r#"!(
+  /* foo */
+  x
+)"#
+        );
+
+        assert_eq!(
+            source_map.source_range(unary_expressions[1].syntax().text_range()),
+            TextRange::new(TextSize::from(21), TextSize::from(36))
+        );
+
+        assert_eq!(
+            source_map.trimmed_source_text(unary_expressions[1].syntax()),
+            r#"!(
+  x // foo
+)"#
+        );
+
+        assert_eq!(
+            source_map.trimmed_source_text(unary_expressions[2].syntax()),
+            r#"!(
+  /* foo */
+  x + y
+)"#
+        );
+
+        assert_eq!(
+            source_map.trimmed_source_text(unary_expressions[3].syntax()),
+            r#"!(
+  x + y
+  /* foo */
+)"#
+        );
+
+        assert_eq!(
+            source_map.trimmed_source_text(unary_expressions[4].syntax()),
+            r#"!(
+  x + y // foo
+)"#
         );
     }
 

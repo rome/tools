@@ -261,7 +261,7 @@ mod syntax_rewriter;
 
 use rome_formatter::prelude::*;
 use rome_formatter::{
-    write, Comments, CstFormatContext, Format, FormatLanguage, TransformSourceMap,
+    comments::Comments, write, CstFormatContext, Format, FormatLanguage, TransformSourceMap,
 };
 use rome_formatter::{Buffer, FormatOwnedWithRule, FormatRefWithRule, Formatted, Printed};
 use rome_js_syntax::{
@@ -271,11 +271,11 @@ use rome_rowan::SyntaxResult;
 use rome_rowan::TextRange;
 use rome_rowan::{AstNode, SyntaxNode};
 
-use crate::builders::{format_parenthesize, format_suppressed_node};
 use crate::comments::JsCommentStyle;
 use crate::context::{JsFormatContext, JsFormatOptions};
 use crate::cst::FormatJsSyntaxNode;
 use crate::syntax_rewriter::transform;
+use rome_formatter::trivia::format_skipped_token_trivia;
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
 
@@ -424,18 +424,25 @@ where
     N: AstNode<Language = JsLanguage>,
 {
     fn fmt(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
-        let syntax = node.syntax();
+        if self.is_suppressed(node, f) {
+            return write!(f, [format_suppressed_node(node.syntax())]);
+        }
 
-        if f.context().comments().is_suppressed(syntax) {
-            write!(f, [format_suppressed_node(syntax)])
-        } else if self.needs_parentheses(node) {
+        self.fmt_leading_comments(node, f)?;
+        self.fmt_node(node, f)?;
+        self.fmt_dangling_comments(node, f)?;
+        self.fmt_trailing_comments(node, f)
+    }
+
+    fn fmt_node(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
+        if self.needs_parentheses(node) {
             write!(
                 f,
-                [format_parenthesize(
-                    node.syntax().first_token().as_ref(),
-                    &format_once(|f| self.fmt_fields(node, f)),
-                    node.syntax().last_token().as_ref(),
-                )]
+                [
+                    text("("),
+                    format_once(|f| self.fmt_fields(node, f)),
+                    text(")"),
+                ]
             )
         } else {
             self.fmt_fields(node, f)
@@ -449,6 +456,33 @@ where
     fn needs_parentheses(&self, item: &N) -> bool {
         let _ = item;
         false
+    }
+
+    fn is_suppressed(&self, node: &N, f: &JsFormatter) -> bool {
+        f.context().comments().is_suppressed(node.syntax())
+    }
+
+    fn fmt_leading_comments(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
+        format_leading_comments(node.syntax()).fmt(f)
+    }
+
+    fn fmt_dangling_comments(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
+        format_dangling_comments(node.syntax())
+            .with_soft_block_indent()
+            .fmt(f)
+    }
+
+    fn fmt_trailing_comments(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
+        format_trailing_comments(node.syntax()).fmt(f)
+    }
+}
+
+pub trait FormatUnknownNodeRule<N>
+where
+    N: AstNode<Language = JsLanguage>,
+{
+    fn fmt(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
+        format_unknown_node(node.syntax()).fmt(f)
     }
 }
 
@@ -464,9 +498,8 @@ impl FormatRule<JsSyntaxToken> for FormatJsSyntaxToken {
         write!(
             f,
             [
-                format_leading_trivia(token),
+                format_skipped_token_trivia(token),
                 format_trimmed_token(token),
-                format_trailing_trivia(token),
             ]
         )
     }
@@ -502,10 +535,6 @@ impl FormatLanguage for JsFormatLanguage {
     type Context = JsFormatContext;
     type CommentStyle = JsCommentStyle;
     type FormatRule = FormatJsSyntaxNode;
-
-    fn comment_style(&self) -> Self::CommentStyle {
-        JsCommentStyle
-    }
 
     fn transform(
         &self,
@@ -744,6 +773,42 @@ function() {
         let result = result.expect("range formatting failed");
         assert_eq!(result.as_code(), "");
         assert_eq!(result.range(), Some(TextRange::new(range_start, range_end)));
+    }
+
+    #[test]
+    fn test_range_formatting_middle_of_token() {
+        let input = r#"/* */ function Foo(){
+/**/
+}
+"#;
+
+        let range = TextRange::new(TextSize::from(16), TextSize::from(28));
+
+        debug_assert_eq!(
+            &input[range],
+            r#"oo(){
+/**/
+}"#
+        );
+
+        let tree = parse_script(input, 0);
+        let result = format_range(
+            JsFormatOptions::new(SourceType::js_script()).with_indent_style(IndentStyle::Space(4)),
+            &tree.syntax(),
+            range,
+        )
+        .expect("Range formatting failed");
+
+        assert_eq!(
+            result.as_code(),
+            r#"/* */ function Foo() {
+    /**/
+}"#
+        );
+        assert_eq!(
+            result.range(),
+            Some(TextRange::new(TextSize::from(0), TextSize::from(28)))
+        )
     }
 
     #[ignore]
