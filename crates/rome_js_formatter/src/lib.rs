@@ -419,6 +419,7 @@ where
 {
 }
 
+/// Rule for formatting a JavaScript [AstNode].
 pub trait FormatNodeRule<N>
 where
     N: AstNode<Language = JsLanguage>,
@@ -434,6 +435,7 @@ where
         self.fmt_trailing_comments(node, f)
     }
 
+    /// Formats the node without comments. Ignores any suppression comments.
     fn fmt_node(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
         if self.needs_parentheses(node) {
             write!(
@@ -458,25 +460,42 @@ where
         false
     }
 
+    /// Returns `true` if the node has a suppression comment and should use the same formatting as in the source document.
     fn is_suppressed(&self, node: &N, f: &JsFormatter) -> bool {
         f.context().comments().is_suppressed(node.syntax())
     }
 
+    /// Formats the [leading comments](rome_formatter::comments#leading-comments) of the node.
+    ///
+    /// You may want to override this method if you want to manually handle the formatting of comments
+    /// inside of the `fmt_fields` method or customize the formatting of the leading comments.
     fn fmt_leading_comments(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
         format_leading_comments(node.syntax()).fmt(f)
     }
 
+    /// Formats the [dangling comments](rome_formatter::comments#dangling-comments) of the node.
+    ///
+    /// You should override this method if the node handled by this rule can have dangling comments because the
+    /// default implementation formats the dangling comments at the end of the node, which isn't ideal but ensures that
+    /// no comments are dropped.
+    ///
+    /// A node can have dangling comments if all its children are tokens or if all node childrens are optional.
     fn fmt_dangling_comments(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
         format_dangling_comments(node.syntax())
             .with_soft_block_indent()
             .fmt(f)
     }
 
+    /// Formats the [trailing comments](rome_formatter::comments#trailing-comments) of the node.
+    ///
+    /// You may want to override this method if you want to manually handle the formatting of comments
+    /// inside of the `fmt_fields` method or customize the formatting of the trailing comments.
     fn fmt_trailing_comments(&self, node: &N, f: &mut JsFormatter) -> FormatResult<()> {
         format_trailing_comments(node.syntax()).fmt(f)
     }
 }
 
+/// Rule for formatting an unknown node.
 pub trait FormatUnknownNodeRule<N>
 where
     N: AstNode<Language = JsLanguage>,
