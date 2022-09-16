@@ -16,7 +16,7 @@ fn main() -> Result<()> {
 
     let mut content = Vec::new();
 
-    let command = format!("{}", "Use the command `cargo contributors`");
+    let command = "Use the command `cargo contributors`".to_string();
     writeln!(content, "<!-- {} -->", prepend_generated_preamble(command))?;
     writeln!(content)?;
     writeln!(content, "### Code contributors")?;
