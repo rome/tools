@@ -810,7 +810,7 @@ function() {
 }"#
         );
 
-        let tree = parse_script(input, 0);
+        let tree = parse_script(input, FileId::zero());
         let result = format_range(
             JsFormatOptions::new(SourceType::js_script()).with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
