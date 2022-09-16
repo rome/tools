@@ -1090,29 +1090,6 @@ fn handle_import_export_specifier_comment(
 
         _ => CommentPlacement::Default(comment),
     }
-
-    // if (
-    //     enclosingNode?.type === "ImportSpecifier" ||
-    //     enclosingNode?.type === "ExportSpecifier"
-    //   ) {
-    //     addLeadingComment(enclosingNode, comment);
-    //     return true;
-    //   }
-    //
-    //   const isImportDeclaration =
-    //     precedingNode?.type === "ImportSpecifier" &&
-    //     enclosingNode?.type === "ImportDeclaration";
-    //   const isExportDeclaration =
-    //     precedingNode?.type === "ExportSpecifier" &&
-    //     enclosingNode?.type === "ExportNamedDeclaration";
-    //   if (
-    //     (isImportDeclaration || isExportDeclaration) &&
-    //     hasNewline(text, locEnd(comment))
-    //   ) {
-    //     addTrailingComment(precedingNode, comment);
-    //     return true;
-    //   }
-    //   return false;
 }
 
 fn place_leading_statement_comment(
