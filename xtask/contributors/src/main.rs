@@ -12,33 +12,34 @@ fn main() -> Result<()> {
     let root = project_root().join("website/src/_includes");
     let mut args = Arguments::from_env();
     let token: String = args.value_from_str("--token").unwrap();
-    let mut contributors = Vec::new();
-    get_contributors(
-        "https://api.github.com/repos/rome/tools/contributors",
-        &token,
-        &mut contributors,
-    );
+    let contributors = get_contributors(&token);
 
     let mut content = Vec::new();
 
-    writeln!(content, "<!-- {} -->", PREAMBLE)?;
+    let command = format!("{}", "Use the command `cargo contributors`");
+    writeln!(content, "<!-- {} -->", prepend_generated_preamble(command))?;
     writeln!(content)?;
     writeln!(content, "### Code contributors")?;
     writeln!(content)?;
     writeln!(content, "<ul class=\"team-list credits\">")?;
     for contributor in contributors {
+        let mut contributor_html = String::new();
         let escaped_login = html_escape::encode_text(&contributor.login);
         let escaped_avatar = html_escape::encode_text(&contributor.avatar_url);
-        writeln!(
-            content,
-            "<li><a href=\"https://github.com/rome/tools/commits?author={}\">",
-            contributor.login
-        )?;
-        writeln!(
-            content,
-            "<img src=\"{}\" alt=\"{}\" />",
-            escaped_avatar, contributor.login
-        )?;
+        contributor_html.push_str("<li><a href=\"https://github.com/rome/tools/commits?author=");
+
+        html_escape::encode_double_quoted_attribute_to_string(
+            format!("{}", escaped_login),
+            &mut contributor_html,
+        );
+        contributor_html.push_str("\">");
+        contributor_html.push_str("<img src=\"");
+        html_escape::encode_double_quoted_attribute_to_string(
+            format!("{}", escaped_avatar),
+            &mut contributor_html,
+        );
+        writeln!(content, "{}", &contributor_html)?;
+        writeln!(content, "\" alt=\"{}\" />", contributor.login)?;
         writeln!(content, "<span>{}</span>", escaped_login)?;
         writeln!(content, "</a></li>")?;
     }
@@ -55,14 +56,24 @@ struct Contributor {
     login: String,
 }
 
-fn get_contributors(url: &str, token: &str, contributors: &mut Vec<Contributor>) {
+fn get_contributors(token: &str) -> Vec<Contributor> {
+    let mut contributors = Vec::new();
+    contributors_request(
+        "https://api.github.com/repos/rome/tools/contributors",
+        token,
+        &mut contributors,
+    );
+    contributors
+}
+
+fn contributors_request(url: &str, token: &str, contributors: &mut Vec<Contributor>) {
     let request = ureq::get(url)
         .set("User-Agent", "@rome")
         .set("Authorization", &format!("token {token}"));
 
     match request.call() {
         Ok(response) => {
-            let next_url = if let Some(link) = response.header("link") {
+            if let Some(link) = response.header("link") {
                 if link.contains("rel=\"next\"") {
                     let start_index = link
                         .find("rel=\"prev\", ")
@@ -72,20 +83,13 @@ fn get_contributors(url: &str, token: &str, contributors: &mut Vec<Contributor>)
                     let end_index = link.find("; rel=\"next\"").unwrap();
                     let url = &link[start_index..end_index];
                     let url = url.replace('<', "").replace('>', "");
-                    Some(url)
-                } else {
-                    None
+
+                    contributors_request(&url, token, contributors);
                 }
-            } else {
-                None
-            };
+            }
             let result: Result<Vec<Contributor>, std::io::Error> = response.into_json();
             if let Ok(new_contributors) = result {
                 contributors.extend(new_contributors);
-            }
-
-            if let Some(next_url) = next_url {
-                get_contributors(&next_url, token, contributors);
             }
         }
         Err(err) => {
