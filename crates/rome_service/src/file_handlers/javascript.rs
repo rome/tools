@@ -2,7 +2,6 @@ use rome_analyze::{AnalysisFilter, ControlFlow, Never, QueryMatch, RuleCategorie
 use rome_diagnostics::{Applicability, CodeSuggestion, Diagnostic};
 use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
-use rome_js_analyze::utils::rename::RenameError;
 use rome_js_analyze::{analyze, analyze_with_inspect_matcher, metadata, RuleError};
 use rome_js_formatter::context::{QuoteProperties, QuoteStyle};
 use rome_js_formatter::{context::JsFormatOptions, format_node};
@@ -29,6 +28,7 @@ use super::{
 use crate::file_handlers::{FixAllParams, Language as LanguageId};
 use indexmap::IndexSet;
 use rome_console::codespan::Severity;
+use rome_js_analyze::shared::rename::{RenameError, RenameSymbolExtensions};
 use std::borrow::Cow;
 use std::fmt::Debug;
 
@@ -442,8 +442,6 @@ fn rename(
     symbol_at: TextSize,
     new_name: String,
 ) -> Result<RenameResult, RomeError> {
-    use rome_js_analyze::utils::rename::RenameSymbolExtensions;
-
     let root = parse.tree();
     let model = semantic_model(&root);
 

@@ -1,5 +1,5 @@
 use crate::semantic_services::Semantic;
-use crate::utils::{is_react_create_element, PossibleCreateElement};
+use crate::shared::react::{is_react_create_element, PossibleCreateElement};
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::codespan::Severity;

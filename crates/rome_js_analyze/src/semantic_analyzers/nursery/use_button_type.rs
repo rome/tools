@@ -4,7 +4,8 @@ use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleD
 use rome_console::codespan::Severity;
 use rome_console::markup;
 use rome_js_syntax::{
-    JsAnyExpression, JsCallExpression, JsStringLiteralExpression, JsxOpeningElement, JsxString,
+    JsAnyExpression, JsCallExpression, JsObjectExpression, JsStringLiteralExpression,
+    JsxOpeningElement, JsxString,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeList};
 
@@ -48,11 +49,8 @@ declare_node_union! {
     pub(crate) UseButtonTypeQuery = JsxOpeningElement | JsCallExpression
 }
 
-pub(crate) enum UseButtonTypeState {
-    Initializer(JsxString),
-    Element(JsxOpeningElement),
-    Literal(JsStringLiteralExpression),
-    Property(JsStringLiteralExpression),
+declare_node_union! {
+    pub(crate) UseButtonTypeState = JsxString | JsxOpeningElement | JsStringLiteralExpression | JsObjectExpression
 }
 
 impl Rule for UseButtonType {
@@ -72,7 +70,7 @@ impl Rule for UseButtonType {
                 if name.syntax().text_trimmed() == "button" {
                     let attributes = opening_element.attributes();
                     if attributes.len() == 0 {
-                        return Some(UseButtonTypeState::Element(opening_element.clone()));
+                        return Some(UseButtonTypeState::from(opening_element.clone()));
                     } else {
                         for attribute in attributes {
                             let attribute = attribute.as_jsx_attribute()?;
@@ -85,9 +83,7 @@ impl Rule for UseButtonType {
                                 if !ALLOWED_BUTTON_TYPES
                                     .contains(&&*initializer.inner_string_text().ok()?)
                                 {
-                                    return Some(UseButtonTypeState::Initializer(
-                                        initializer.clone(),
-                                    ));
+                                    return Some(UseButtonTypeState::from(initializer.clone()));
                                 }
                             }
                         }
@@ -127,10 +123,10 @@ impl Rule for UseButtonType {
 
                             if let Some(second_argument) = second_argument {
                                 let second_argument = second_argument.ok()?;
-                                let members = second_argument
+                                let second_argument = second_argument
                                     .as_js_any_expression()?
-                                    .as_js_object_expression()?
-                                    .members();
+                                    .as_js_object_expression()?;
+                                let members = second_argument.members();
 
                                 for member in members {
                                     let member = member.ok()?;
@@ -149,16 +145,16 @@ impl Rule for UseButtonType {
                                         if !ALLOWED_BUTTON_TYPES
                                             .contains(&&*value.inner_string_text().ok()?)
                                         {
-                                            return Some(UseButtonTypeState::Property(
-                                                value.clone(),
-                                            ));
+                                            return Some(UseButtonTypeState::from(value.clone()));
                                         }
                                     }
                                 }
 
-                                // if we are here, it means that we haven't found the property "type"
+                                // if we are here, it means that we haven't found the property "type" and
+                                // we have return an error
+                                return Some(UseButtonTypeState::from(second_argument.clone()));
                             } else {
-                                return Some(UseButtonTypeState::Literal(first_argument.clone()));
+                                return Some(UseButtonTypeState::from(first_argument.clone()));
                             }
                         }
                     }
@@ -170,15 +166,8 @@ impl Rule for UseButtonType {
     }
 
     fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
-        let range = match state {
-            UseButtonTypeState::Initializer(string) => string.syntax().text_trimmed_range(),
-            UseButtonTypeState::Element(element) => element.syntax().text_trimmed_range(),
-            UseButtonTypeState::Property(property) => property.syntax().text_trimmed_range(),
-            UseButtonTypeState::Literal(literal) => literal.syntax().text_trimmed_range(),
-        };
-
         Some(RuleDiagnostic::new(
-            range,
+            state.syntax().text_trimmed_range(),
             markup! {
                 "Provide an explicit "<Emphasis>"type"</Emphasis>" prop on "<Emphasis>"button"</Emphasis>" elements."
             },
