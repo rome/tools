@@ -1,10 +1,14 @@
-use crate::{to_upper_snake_case, LanguageKind, Result};
+use crate::{kinds_src::AstSrc, to_upper_snake_case, LanguageKind, Result};
 use proc_macro2::{Literal, Punct, Spacing};
 use quote::{format_ident, quote};
 
 use super::kinds_src::KindsSrc;
 
-pub fn generate_syntax_kinds(grammar: KindsSrc, language_kind: LanguageKind) -> Result<String> {
+pub fn generate_syntax_kinds(
+    ast: &AstSrc,
+    grammar: KindsSrc,
+    language_kind: LanguageKind,
+) -> Result<String> {
     let syntax_kind = language_kind.syntax_kind();
     let punctuation_values = grammar.punct.iter().map(|(token, _name)| {
         // These tokens, when parsed to proc_macro2::TokenStream, generates a stream of bytes
@@ -58,10 +62,20 @@ pub fn generate_syntax_kinds(grammar: KindsSrc, language_kind: LanguageKind) -> 
         .map(|name| format_ident!("{}", name))
         .collect::<Vec<_>>();
 
-    let nodes = grammar
+    let nodes = ast
         .nodes
         .iter()
-        .map(|name| format_ident!("{}", name))
+        .map(|node| format_ident!("{}", to_upper_snake_case(&node.name)))
+        .chain(
+            ast.unknowns
+                .iter()
+                .map(|unknown| format_ident!("{}", to_upper_snake_case(&unknown))),
+        )
+        .chain(
+            ast.lists
+                .iter()
+                .map(|(name, list_str)| format_ident!("{}", to_upper_snake_case(&name))),
+        )
         .collect::<Vec<_>>();
 
     let lists = grammar

@@ -104,7 +104,7 @@ pub(crate) fn generate_syntax(ast: AstSrc, mode: &Mode, language_kind: LanguageK
     update(ast_nodes_mut_file.as_path(), &contents, mode)?;
 
     let syntax_kinds_file = project_root().join(kinds);
-    let contents = generate_syntax_kinds(kind_src, language_kind)?;
+    let contents = generate_syntax_kinds(&ast, kind_src, language_kind)?;
     update(syntax_kinds_file.as_path(), &contents, mode)?;
 
     let syntax_factory_file = project_root().join(factory);
