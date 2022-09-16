@@ -15,8 +15,8 @@ export default function NurseryRules({
 					<div className="flex items-center h-5">
 						<input
 							id="nursery-rules"
-							aria-describedby="jsx-description"
-							name="jsx"
+							aria-describedby="nursery-rules-description"
+							name="nursery-rules"
 							type="checkbox"
 							checked={enabledNurseryRules}
 							onChange={(e) => setEnabledNurseryRules(e.target.checked)}
@@ -24,11 +24,11 @@ export default function NurseryRules({
 						/>
 					</div>
 					<div className="ml-1 text-sm">
-						<label htmlFor="jsx" className="font-medium text-gray-700">
-							Nursery rules enabled
+						<label htmlFor="nursery-rules" className="font-medium text-gray-700">
+							Nursery rules
 						</label>
 						<span id="nursery-rules-description" className="text-gray-500">
-							<span className="sr-only">Nursery rules enabled</span>
+							<span className="sr-only">Nursery rules</span>
 						</span>
 					</div>
 				</div>
