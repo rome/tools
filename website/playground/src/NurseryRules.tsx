@@ -1,5 +1,3 @@
-import { SourceType } from "./types";
-
 interface Props {
 	setEnabledNurseryRules: (b: boolean) => void;
 	enabledNurseryRules: boolean;

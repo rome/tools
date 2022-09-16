@@ -10,7 +10,7 @@
 		"build:wasm": "wasm-pack build --out-dir ../../npm/wasm-web --target web --release --scope rometools ../../crates/rome_wasm",
 		"build:wasm-dev": "wasm-pack build --out-dir ../../npm/wasm-web --target web --dev --scope rometools ../../crates/rome_wasm",
 		"format": "cargo rome-cli-dev format --write ./src",
-		"check": "cargo rome-cli-dev check ./src",
+		"check": "cd ../../ && cargo rome-cli-dev check ./website/playground/src",
 		"tsc": "tsc"
 	},
 	"dependencies": {

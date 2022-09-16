@@ -2,7 +2,6 @@ import init, {
 	DiagnosticPrinter,
 	RomePath,
 	Workspace,
-	Nursery,
 	Configuration,
 } from "@rometools/wasm-web";
 import {
