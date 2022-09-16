@@ -591,7 +591,10 @@ impl GroupModes {
     fn insert_print_mode(&mut self, group_id: GroupId, mode: PrintMode) {
         let index = u32::from(group_id) as usize;
 
-        self.0.resize(index + 1, None);
+        if self.0.len() <= index {
+            self.0.resize(index + 1, None);
+        }
+
         self.0[index] = Some(mode);
     }
 
@@ -1470,6 +1473,49 @@ two lines`,
         let printed = format(&content);
 
         assert_eq!(printed.as_code(), "The referenced group breaks.\nThis group breaks because:\nIt measures with the 'if_group_breaks' variant because the referenced group breaks and that's just way too much text.");
+    }
+
+    #[test]
+    fn out_of_order_group_ids() {
+        let content = format_with(|f| {
+            let id_1 = f.group_id("id-1");
+            let id_2 = f.group_id("id-2");
+
+            write!(
+                f,
+                [
+                    group(&text("Group with id-2")).with_group_id(Some(id_2)),
+                    hard_line_break()
+                ]
+            )?;
+
+            write!(
+                f,
+                [
+                    group(&text("Group with id-1 does not fit on the line because it exceeds the line width of 80 characters by")).with_group_id(Some(id_1)),
+                    hard_line_break()
+                ]
+            )?;
+
+            write!(
+                f,
+                [
+                    if_group_fits_on_line(&text("Group 2 fits")).with_group_id(Some(id_2)),
+                    hard_line_break(),
+                    if_group_breaks(&text("Group 1 breaks")).with_group_id(Some(id_1))
+                ]
+            )
+        });
+
+        let printed = format(&content);
+
+        assert_eq!(
+            printed.as_code(),
+            r#"Group with id-2
+Group with id-1 does not fit on the line because it exceeds the line width of 80 characters by
+Group 2 fits
+Group 1 breaks"#
+        );
     }
 
     struct FormatArrayElements<'a> {
