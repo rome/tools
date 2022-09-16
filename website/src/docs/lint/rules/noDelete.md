@@ -18,7 +18,7 @@ const arr = [['a','b','c'], [1, 2, 3]];
 delete arr[0][2];
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noDelete/">correctness/noDelete</a></span><span style="color: Tomato;">]</span><em>: </em><em>This is an unexpected use of the </em><em><em>delete</em></em><em> operator.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noDelete/">correctness/noDelete</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong>This is an unexpected use of the </strong><strong><strong>delete</strong></strong><strong> operator.</strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noDelete.js:2:1
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">d</span><span style="color: Tomato;">e</span><span style="color: Tomato;">l</span><span style="color: Tomato;">e</span><span style="color: Tomato;">t</span><span style="color: Tomato;">e</span><span style="color: Tomato;"> </span><span style="color: Tomato;">a</span><span style="color: Tomato;">r</span><span style="color: Tomato;">r</span><span style="color: Tomato;">[</span><span style="color: Tomato;">0</span><span style="color: Tomato;">]</span><span style="color: Tomato;">[</span><span style="color: Tomato;">2</span><span style="color: Tomato;">]</span>;
@@ -37,7 +37,7 @@ const obj = {a: {b: {c: 123}}};
 delete obj.a.b.c;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noDelete/">correctness/noDelete</a></span><span style="color: Tomato;">]</span><em>: </em><em>This is an unexpected use of the </em><em><em>delete</em></em><em> operator.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noDelete/">correctness/noDelete</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong>This is an unexpected use of the </strong><strong><strong>delete</strong></strong><strong> operator.</strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noDelete.js:2:1
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">d</span><span style="color: Tomato;">e</span><span style="color: Tomato;">l</span><span style="color: Tomato;">e</span><span style="color: Tomato;">t</span><span style="color: Tomato;">e</span><span style="color: Tomato;"> </span><span style="color: Tomato;">o</span><span style="color: Tomato;">b</span><span style="color: Tomato;">j</span><span style="color: Tomato;">.</span><span style="color: Tomato;">a</span><span style="color: Tomato;">.</span><span style="color: Tomato;">b</span><span style="color: Tomato;">.</span><span style="color: Tomato;">c</span>;

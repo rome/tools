@@ -22,7 +22,7 @@ try {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noCatchAssign/">correctness/noCatchAssign</a></span><span style="color: Tomato;">]</span><em>: </em><em> Do not </em><em><em>reassign catch parameters.</em></em><em></em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noCatchAssign/">correctness/noCatchAssign</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong> Do not </strong><strong><strong>reassign catch parameters.</strong></strong><strong></strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noCatchAssign.js:5:3
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">3</span> <span style="color: rgb(38, 148, 255);">│</span> } catch (e) {

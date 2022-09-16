@@ -18,7 +18,7 @@ function foo() { };
 foo = bar;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noFunctionAssign/">correctness/noFunctionAssign</a></span><span style="color: Tomato;">]</span><em>: </em><em>Do not reassign a function declaration.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noFunctionAssign/">correctness/noFunctionAssign</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong>Do not reassign a function declaration.</strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noFunctionAssign.js:1:10
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> function <span style="color: Tomato;">f</span><span style="color: Tomato;">o</span><span style="color: Tomato;">o</span>() { };
@@ -36,7 +36,7 @@ function foo() {
  }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noFunctionAssign/">correctness/noFunctionAssign</a></span><span style="color: Tomato;">]</span><em>: </em><em>Do not reassign a function declaration.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noFunctionAssign/">correctness/noFunctionAssign</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong>Do not reassign a function declaration.</strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noFunctionAssign.js:1:10
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> function <span style="color: Tomato;">f</span><span style="color: Tomato;">o</span><span style="color: Tomato;">o</span>() {
@@ -53,7 +53,7 @@ foo = bar;
 function foo() { };
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noFunctionAssign/">correctness/noFunctionAssign</a></span><span style="color: Tomato;">]</span><em>: </em><em>Do not reassign a function declaration.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noFunctionAssign/">correctness/noFunctionAssign</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong>Do not reassign a function declaration.</strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noFunctionAssign.js:2:10
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> foo = bar;
@@ -71,7 +71,7 @@ function foo() { };
 function foo() { };
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noFunctionAssign/">correctness/noFunctionAssign</a></span><span style="color: Tomato;">]</span><em>: </em><em>Do not reassign a function declaration.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noFunctionAssign/">correctness/noFunctionAssign</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong>Do not reassign a function declaration.</strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noFunctionAssign.js:2:10
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> [foo] = bar;
@@ -89,7 +89,7 @@ function foo() { };
 function foo() { };
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noFunctionAssign/">correctness/noFunctionAssign</a></span><span style="color: Tomato;">]</span><em>: </em><em>Do not reassign a function declaration.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noFunctionAssign/">correctness/noFunctionAssign</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong>Do not reassign a function declaration.</strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noFunctionAssign.js:2:10
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> ({ x: foo = 0 } = bar);
@@ -108,7 +108,7 @@ function foo() {
  }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noFunctionAssign/">correctness/noFunctionAssign</a></span><span style="color: Tomato;">]</span><em>: </em><em>Do not reassign a function declaration.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noFunctionAssign/">correctness/noFunctionAssign</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong>Do not reassign a function declaration.</strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noFunctionAssign.js:1:10
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> function <span style="color: Tomato;">f</span><span style="color: Tomato;">o</span><span style="color: Tomato;">o</span>() {
@@ -127,7 +127,7 @@ function foo() {
  })();
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noFunctionAssign/">correctness/noFunctionAssign</a></span><span style="color: Tomato;">]</span><em>: </em><em>Do not reassign a function declaration.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noFunctionAssign/">correctness/noFunctionAssign</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong>Do not reassign a function declaration.</strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noFunctionAssign.js:3:14
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span>     ({ x: foo = 0 } = bar);

@@ -18,7 +18,7 @@ JavaScript allows the omission of curly braces when a block contains only one st
  if (x) x;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/useBlockStatements/">correctness/useBlockStatements</a></span><span style="color: Tomato;">]</span><em>: </em><em>Block statements are preferred in this position.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/useBlockStatements/">correctness/useBlockStatements</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong>Block statements are preferred in this position.</strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/useBlockStatements.js:1:2
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span>  <span style="color: Tomato;">i</span><span style="color: Tomato;">f</span><span style="color: Tomato;"> </span><span style="color: Tomato;">(</span><span style="color: Tomato;">x</span><span style="color: Tomato;">)</span><span style="color: Tomato;"> </span><span style="color: Tomato;">x</span><span style="color: Tomato;">;</span>
@@ -37,7 +37,7 @@ JavaScript allows the omission of curly braces when a block contains only one st
  } else y;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/useBlockStatements/">correctness/useBlockStatements</a></span><span style="color: Tomato;">]</span><em>: </em><em>Block statements are preferred in this position.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/useBlockStatements/">correctness/useBlockStatements</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong>Block statements are preferred in this position.</strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/useBlockStatements.js:3:4
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">3</span> <span style="color: rgb(38, 148, 255);">│</span>  } <span style="color: Tomato;">e</span><span style="color: Tomato;">l</span><span style="color: Tomato;">s</span><span style="color: Tomato;">e</span><span style="color: Tomato;"> </span><span style="color: Tomato;">y</span><span style="color: Tomato;">;</span>
@@ -58,7 +58,7 @@ if (x) {
 } else if (y) y;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/useBlockStatements/">correctness/useBlockStatements</a></span><span style="color: Tomato;">]</span><em>: </em><em>Block statements are preferred in this position.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/useBlockStatements/">correctness/useBlockStatements</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong>Block statements are preferred in this position.</strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/useBlockStatements.js:3:8
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">3</span> <span style="color: rgb(38, 148, 255);">│</span> } else <span style="color: Tomato;">i</span><span style="color: Tomato;">f</span><span style="color: Tomato;"> </span><span style="color: Tomato;">(</span><span style="color: Tomato;">y</span><span style="color: Tomato;">)</span><span style="color: Tomato;"> </span><span style="color: Tomato;">y</span><span style="color: Tomato;">;</span>
@@ -77,7 +77,7 @@ if (x) {
    for (;;);
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/useBlockStatements/">correctness/useBlockStatements</a></span><span style="color: Tomato;">]</span><em>: </em><em>Block statements are preferred in this position.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/useBlockStatements/">correctness/useBlockStatements</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong>Block statements are preferred in this position.</strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/useBlockStatements.js:1:4
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span>    <span style="color: Tomato;">f</span><span style="color: Tomato;">o</span><span style="color: Tomato;">r</span><span style="color: Tomato;"> </span><span style="color: Tomato;">(</span><span style="color: Tomato;">;</span><span style="color: Tomato;">;</span><span style="color: Tomato;">)</span><span style="color: Tomato;">;</span>
@@ -94,7 +94,7 @@ if (x) {
    for (p in obj);
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/useBlockStatements/">correctness/useBlockStatements</a></span><span style="color: Tomato;">]</span><em>: </em><em>Block statements are preferred in this position.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/useBlockStatements/">correctness/useBlockStatements</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong>Block statements are preferred in this position.</strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/useBlockStatements.js:1:4
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span>    <span style="color: Tomato;">f</span><span style="color: Tomato;">o</span><span style="color: Tomato;">r</span><span style="color: Tomato;"> </span><span style="color: Tomato;">(</span><span style="color: Tomato;">p</span><span style="color: Tomato;"> </span><span style="color: Tomato;">i</span><span style="color: Tomato;">n</span><span style="color: Tomato;"> </span><span style="color: Tomato;">o</span><span style="color: Tomato;">b</span><span style="color: Tomato;">j</span><span style="color: Tomato;">)</span><span style="color: Tomato;">;</span>
@@ -111,7 +111,7 @@ if (x) {
   for (x of xs);
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/useBlockStatements/">correctness/useBlockStatements</a></span><span style="color: Tomato;">]</span><em>: </em><em>Block statements are preferred in this position.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/useBlockStatements/">correctness/useBlockStatements</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong>Block statements are preferred in this position.</strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/useBlockStatements.js:1:3
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span>   <span style="color: Tomato;">f</span><span style="color: Tomato;">o</span><span style="color: Tomato;">r</span><span style="color: Tomato;"> </span><span style="color: Tomato;">(</span><span style="color: Tomato;">x</span><span style="color: Tomato;"> </span><span style="color: Tomato;">o</span><span style="color: Tomato;">f</span><span style="color: Tomato;"> </span><span style="color: Tomato;">x</span><span style="color: Tomato;">s</span><span style="color: Tomato;">)</span><span style="color: Tomato;">;</span>
@@ -129,7 +129,7 @@ if (x) {
   while (x);
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/useBlockStatements/">correctness/useBlockStatements</a></span><span style="color: Tomato;">]</span><em>: </em><em>Block statements are preferred in this position.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/useBlockStatements/">correctness/useBlockStatements</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong>Block statements are preferred in this position.</strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/useBlockStatements.js:1:3
   <span style="color: rgb(38, 148, 255);">│</span>  
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">┌</span>   <span style="color: Tomato;">d</span><span style="color: Tomato;">o</span><span style="color: Tomato;">;</span>
@@ -148,7 +148,7 @@ if (x) {
    while (x);
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/useBlockStatements/">correctness/useBlockStatements</a></span><span style="color: Tomato;">]</span><em>: </em><em>Block statements are preferred in this position.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/useBlockStatements/">correctness/useBlockStatements</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong>Block statements are preferred in this position.</strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/useBlockStatements.js:1:4
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span>    <span style="color: Tomato;">w</span><span style="color: Tomato;">h</span><span style="color: Tomato;">i</span><span style="color: Tomato;">l</span><span style="color: Tomato;">e</span><span style="color: Tomato;"> </span><span style="color: Tomato;">(</span><span style="color: Tomato;">x</span><span style="color: Tomato;">)</span><span style="color: Tomato;">;</span>
@@ -165,7 +165,7 @@ if (x) {
   with (x);
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;">SyntaxError</span><span style="color: Tomato;">]</span><em>: </em><em>`with` statements are not allowed in strict mode</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;">SyntaxError</span><span style="color: Tomato;">]</span><strong>: </strong><strong>`with` statements are not allowed in strict mode</strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/useBlockStatements.js:1:3
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span>   <span style="color: Tomato;">w</span><span style="color: Tomato;">i</span><span style="color: Tomato;">t</span><span style="color: Tomato;">h</span><span style="color: Tomato;"> </span><span style="color: Tomato;">(</span><span style="color: Tomato;">x</span><span style="color: Tomato;">)</span><span style="color: Tomato;">;</span>
