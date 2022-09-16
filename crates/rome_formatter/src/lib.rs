@@ -24,7 +24,7 @@
 mod arguments;
 mod buffer;
 mod builders;
-mod comments;
+pub mod comments;
 pub mod format_element;
 mod format_extensions;
 pub mod formatter;
@@ -53,10 +53,8 @@ pub use builders::{
     if_group_fits_on_line, indent, labelled, line_suffix, soft_block_indent, soft_line_break,
     soft_line_break_or_space, soft_line_indent_or_space, space, text, BestFitting,
 };
-pub use comments::{
-    CommentKind, CommentPlacement, CommentStyle, CommentTextPosition, Comments, DecoratedComment,
-    SourceComment,
-};
+
+use crate::comments::{CommentStyle, Comments, SourceComment};
 pub use format_element::{normalize_newlines, FormatElement, Text, Verbatim, LINE_TERMINATORS};
 pub use group_id::GroupId;
 use indexmap::IndexSet;
