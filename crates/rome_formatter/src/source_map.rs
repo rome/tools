@@ -382,13 +382,14 @@ pub struct TransformSourceMapBuilder {
 }
 
 impl TransformSourceMapBuilder {
-    /// Creates a new builder for a source map that maps positions back to the passed `root` tree.
+    /// Creates a new builder.
     pub fn new() -> Self {
         Self {
             ..Default::default()
         }
     }
 
+    /// Creates a new builder for a document with the given source.
     pub fn with_source(source: String) -> Self {
         Self {
             source_text: source,

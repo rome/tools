@@ -1,11 +1,12 @@
+//! Provides builders for comments and skipped token trivia.
+
 use crate::prelude::*;
 use crate::{
-    write, Argument, Arguments, CommentKind, CommentStyle, CstFormatContext, FormatRefWithRule,
-    GroupId, SourceComment, TextRange, VecBuffer,
+    comments::{CommentKind, CommentStyle},
+    write, Argument, Arguments, CstFormatContext, FormatRefWithRule, GroupId, SourceComment,
+    TextRange, VecBuffer,
 };
 use rome_rowan::{Language, SyntaxNode, SyntaxToken};
-
-///! Provides builders for formatting a CST.
 
 /// Formats the leading comments of `node`
 pub const fn format_leading_comments<L: Language>(
@@ -134,6 +135,7 @@ where
     }
 }
 
+/// Formats the dangling comments of `node`.
 pub const fn format_dangling_comments<L: Language>(
     node: &SyntaxNode<L>,
 ) -> FormatDanglingComments<L> {
@@ -157,16 +159,51 @@ pub enum FormatDanglingComments<'a, L: Language> {
 
 #[derive(Copy, Clone, Debug)]
 pub enum DanglingIndentMode {
+    /// Writes every comment on its own line and indents them with a block indent.
+    ///
+    /// # Examples
+    /// ```ignore
+    /// [
+    ///     /* comment */
+    /// ]
+    ///
+    /// [
+    ///     /* comment */
+    ///     /* multiple */
+    /// ]
+    /// ```
     Block,
+
+    /// Writes every comment on its own line and indents them with a soft line indent.
+    /// Guarantees to write a line break if the last formatted comment is a [line](CommentKind::Line) comment.
+    ///
+    /// # Examples
+    ///
+    /// ```ignore
+    /// [/* comment */]
+    ///
+    /// [
+    ///     /* comment */
+    ///     /* other */
+    /// ]
+    ///
+    /// [
+    ///     // line
+    /// ]
+    /// ```
     Soft,
+
+    /// Writes every comment on its own line.
     None,
 }
 
 impl<L: Language> FormatDanglingComments<'_, L> {
+    /// Indents the comments with a [block](DanglingIndentMode::Block) indent.
     pub fn with_block_indent(self) -> Self {
         self.with_indent_mode(DanglingIndentMode::Block)
     }
 
+    /// Indents the comments with a [soft block](DanglingIndentMode::Soft) indent.
     pub fn with_soft_block_indent(self) -> Self {
         self.with_indent_mode(DanglingIndentMode::Soft)
     }
@@ -239,10 +276,10 @@ where
     }
 }
 
-/// Formats a token without its leading or trailing trivia
+/// Formats a token without its skipped token trivia
 ///
 /// ## Warning
-/// It's your responsibility to format leading or trailing comments and skipped trivia.
+/// It's your responsibility to format any skipped trivia.
 pub const fn format_trimmed_token<L: Language>(token: &SyntaxToken<L>) -> FormatTrimmedToken<L> {
     FormatTrimmedToken { token }
 }
@@ -261,10 +298,7 @@ where
         syntax_token_text_slice(self.token, trimmed_range).fmt(f)
     }
 }
-/// Formats the leading and trailing trivia of a removed token.
-///
-/// Formats all leading and trailing comments up to the first line break or skipped token trivia as a trailing
-/// comment of the previous token. The remaining trivia is then printed as leading trivia of the next token.
+/// Formats the skipped token trivia of a removed token and marks the token as tracked.
 pub const fn format_removed<L>(token: &SyntaxToken<L>) -> FormatRemoved<L>
 where
     L: Language,
@@ -295,7 +329,7 @@ where
 
 /// Print out a `token` from the original source with a different `content`.
 ///
-/// This will print the trivia that belong to `token` to `content`;
+/// This will print the skipped token trivia that belong to `token` to `content`;
 /// `token` is then marked as consumed by the formatter.
 pub fn format_replaced<'a, 'content, L, Context>(
     token: &'a SyntaxToken<L>,
@@ -310,7 +344,7 @@ where
     }
 }
 
-/// Formats a token's leading and trailing trivia but uses the provided content instead
+/// Formats a token's skipped token trivia but uses the provided content instead
 /// of the token in the formatted output.
 #[derive(Copy, Clone)]
 pub struct FormatReplaced<'a, 'content, L, C>
@@ -335,7 +369,7 @@ where
     }
 }
 
-/// Formats the given token only if the group does break and otherwise retains the token's trivia.
+/// Formats the given token only if the group does break and otherwise retains the token's skipped token trivia.
 pub fn format_only_if_breaks<'a, 'content, L, Content, Context>(
     token: &'a SyntaxToken<L>,
     content: &'content Content,
@@ -351,7 +385,7 @@ where
     }
 }
 
-/// Formats a token with its leading and trailing trivia that only gets printed if its enclosing
+/// Formats a token with its skipped token trivia that only gets printed if its enclosing
 /// group does break but otherwise gets omitted from the formatted output.
 pub struct FormatOnlyIfBreaks<'a, 'content, L, C>
 where
@@ -390,12 +424,14 @@ where
     }
 }
 
+/// Formats the skipped token trivia of `token`.
 pub const fn format_skipped_token_trivia<L: Language>(
     token: &SyntaxToken<L>,
 ) -> FormatSkippedTokenTrivia<L> {
     FormatSkippedTokenTrivia { token }
 }
 
+/// Formats the skipped token trivia of `token`.
 pub struct FormatSkippedTokenTrivia<'a, L: Language> {
     token: &'a SyntaxToken<L>,
 }

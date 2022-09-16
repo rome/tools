@@ -1127,6 +1127,63 @@ impl<Context> std::fmt::Debug for BlockIndent<'_, Context> {
     }
 }
 
+/// Adds spaces around the content if its enclosing group fits on a line, otherwise indents the content and separates it by line breaks.
+///
+/// # Examples
+///
+/// Adds line breaks and indents the content if the enclosing group doesn't fit on the line.
+///
+/// ```
+/// use rome_formatter::{format, format_args, LineWidth, SimpleFormatOptions};
+/// use rome_formatter::prelude::*;
+///
+/// let context = SimpleFormatContext::new(SimpleFormatOptions {
+///     line_width: LineWidth::try_from(10).unwrap(),
+///     ..SimpleFormatOptions::default()
+/// });
+///
+/// let elements = format!(context, [
+///     group(&format_args![
+///         text("{"),
+///         soft_line_indent_or_spaced(&format_args![
+///             text("aPropertyThatExceeds"),
+///             text(":"),
+///             space(),
+///             text("'line width'"),
+///         ]),
+///         text("}")
+///     ])
+/// ]).unwrap();
+///
+/// assert_eq!(
+///     "{\n\taPropertyThatExceeds: 'line width'\n}",
+///     elements.print().as_code()
+/// );
+/// ```
+///
+/// Adds spaces around the content if the group fits on the line
+/// ```
+/// use rome_formatter::{format, format_args};
+/// use rome_formatter::prelude::*;
+///
+/// let elements = format!(SimpleFormatContext::default(), [
+///     group(&format_args![
+///         text("{"),
+///         soft_line_indent_or_spaced(&format_args![
+///             text("a"),
+///             text(":"),
+///             space(),
+///             text("5"),
+///         ]),
+///         text("}")
+///     ])
+/// ]).unwrap();
+///
+/// assert_eq!(
+///     "{ a: 5 }",
+///     elements.print().as_code()
+/// );
+/// ```
 pub fn soft_line_indent_or_spaced<Context>(
     content: &impl Format<Context>,
 ) -> SoftLineIndentOrSpaced<Context> {
