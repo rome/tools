@@ -138,7 +138,6 @@ impl From<FileId> for usize {
 )]
 pub struct FileSpan {
     pub file: FileId,
-    #[cfg_attr(feature = "serde", schemars(with = "rome_rowan::TextRangeSchema"))]
     pub range: TextRange,
 }
 

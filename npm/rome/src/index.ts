@@ -246,9 +246,6 @@ export class Rome {
 		if (options.range) {
 			const result = await this.backend.workspace.formatRange({
 				path: file.path,
-				// TODO: investigate following error:
-				// Unknown Error: invalid type: map, expected a tuple of size 2
-				// @ts-ignore The backend fails when passing an object, but it's ok when sending a tuple
 				range: options.range,
 			});
 			code = result.code;

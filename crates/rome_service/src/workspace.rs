@@ -58,8 +58,6 @@ use rome_diagnostics::{CodeSuggestion, Diagnostic};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_js_syntax::{TextRange, TextSize};
-#[cfg(feature = "schemars")]
-use rome_rowan::TextRangeSchema;
 use rome_text_edit::Indel;
 use std::{borrow::Cow, panic::RefUnwindSafe, sync::Arc};
 
@@ -150,7 +148,6 @@ pub struct GetSyntaxTreeResult {
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct GetControlFlowGraphParams {
     pub path: RomePath,
-    #[cfg_attr(feature = "schemars", schemars(with = "u32"))]
     pub cursor: TextSize,
 }
 
@@ -191,7 +188,6 @@ pub struct PullDiagnosticsResult {
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct PullActionsParams {
     pub path: RomePath,
-    #[cfg_attr(feature = "schemars", schemars(with = "TextRangeSchema"))]
     pub range: TextRange,
 }
 
@@ -219,7 +215,6 @@ pub struct FormatFileParams {
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct FormatRangeParams {
     pub path: RomePath,
-    #[cfg_attr(feature = "schemars", schemars(with = "TextRangeSchema"))]
     pub range: TextRange,
 }
 
@@ -227,7 +222,6 @@ pub struct FormatRangeParams {
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct FormatOnTypeParams {
     pub path: RomePath,
-    #[cfg_attr(feature = "schemars", schemars(with = "u32"))]
     pub offset: TextSize,
 }
 
@@ -266,7 +260,6 @@ pub struct FixAction {
     /// Name of the rule that emitted this code action
     pub rule_name: Cow<'static, str>,
     /// Source range at which this action was applied
-    #[cfg_attr(feature = "schemars", schemars(with = "TextRangeSchema"))]
     pub range: TextRange,
 }
 
@@ -274,7 +267,6 @@ pub struct FixAction {
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct RenameParams {
     pub path: RomePath,
-    #[cfg_attr(feature = "schemars", schemars(with = "u32"))]
     pub symbol_at: TextSize,
     pub new_name: String,
 }
@@ -283,7 +275,6 @@ pub struct RenameParams {
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct RenameResult {
     /// Range of source code modified by this rename operation
-    #[cfg_attr(feature = "schemars", schemars(with = "TextRangeSchema"))]
     pub range: TextRange,
     /// List of text edit operations to apply on the source code
     pub indels: Vec<Indel>,

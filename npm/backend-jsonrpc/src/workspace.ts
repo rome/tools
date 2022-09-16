@@ -216,9 +216,10 @@ export interface GetSyntaxTreeResult {
 	cst: string;
 }
 export interface GetControlFlowGraphParams {
-	cursor: number;
+	cursor: TextSize;
 	path: RomePath;
 }
+export type TextSize = number;
 export interface GetFormatterIRParams {
 	path: RomePath;
 }
@@ -273,7 +274,7 @@ export type Severity = "Help" | "Note" | "Warning" | "Error" | "Bug";
  */
 export interface CodeSuggestion {
 	applicability: Applicability;
-	labels: TextRangeSchema[];
+	labels: TextRange[];
 	msg: MarkupBuf;
 	span: FileSpan;
 	style: SuggestionStyle;
@@ -289,7 +290,7 @@ export type MarkupBuf = MarkupNodeBuf[];
  */
 export interface FileSpan {
 	file: FileId;
-	range: TextRangeSchema;
+	range: TextRange;
 }
 /**
  * Indicates how a tool should manage this suggestion.
@@ -299,10 +300,7 @@ export type Applicability =
 	| "MaybeIncorrect"
 	| "HasPlaceholders"
 	| "Unspecified";
-export interface TextRangeSchema {
-	end: number;
-	start: number;
-}
+export type TextRange = [TextSize, TextSize];
 export type SuggestionStyle = "DontShow" | "HideCode" | "Inline" | "Full";
 export type SuggestionChange = { Indels: Indel[] } | { String: string };
 export interface MarkupNodeBuf {
@@ -318,7 +316,7 @@ export interface Indel {
 	/**
 	 * Refers to offsets in the original text
 	 */
-	delete: TextRangeSchema;
+	delete: TextRange;
 	insert: string;
 }
 /**
@@ -336,7 +334,7 @@ export type MarkupElement =
 	| { Hyperlink: { href: string } };
 export interface PullActionsParams {
 	path: RomePath;
-	range: TextRangeSchema;
+	range: TextRange;
 }
 export interface PullActionsResult {
 	actions: CodeAction[];
@@ -352,9 +350,9 @@ export interface FormatFileParams {
 }
 export interface Printed {
 	code: string;
-	range?: TextRangeSchema;
+	range?: TextRange;
 	sourcemap: SourceMarker[];
-	verbatim_ranges: TextRangeSchema[];
+	verbatim_ranges: TextRange[];
 }
 /**
  * Lightweight sourcemap marker between source and output tokens
@@ -363,18 +361,18 @@ export interface SourceMarker {
 	/**
 	 * Position of the marker in the output code
 	 */
-	dest: number;
+	dest: TextSize;
 	/**
 	 * Position of the marker in the original source
 	 */
-	source: number;
+	source: TextSize;
 }
 export interface FormatRangeParams {
 	path: RomePath;
-	range: TextRangeSchema;
+	range: TextRange;
 }
 export interface FormatOnTypeParams {
-	offset: number;
+	offset: TextSize;
 	path: RomePath;
 }
 export interface FixFileParams {
@@ -403,7 +401,7 @@ export interface FixAction {
 	/**
 	 * Source range at which this action was applied
 	 */
-	range: TextRangeSchema;
+	range: TextRange;
 	/**
 	 * Name of the rule that emitted this code action
 	 */
@@ -412,7 +410,7 @@ export interface FixAction {
 export interface RenameParams {
 	new_name: string;
 	path: RomePath;
-	symbol_at: number;
+	symbol_at: TextSize;
 }
 export interface RenameResult {
 	/**
@@ -422,7 +420,7 @@ export interface RenameResult {
 	/**
 	 * Range of source code modified by this rename operation
 	 */
-	range: TextRangeSchema;
+	range: TextRange;
 }
 export interface Workspace {
 	supportsFeature(

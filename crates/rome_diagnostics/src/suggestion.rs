@@ -19,7 +19,6 @@ pub struct CodeSuggestion {
     pub applicability: Applicability,
     pub msg: MarkupBuf,
     pub style: SuggestionStyle,
-    #[cfg_attr(feature = "serde", schemars(with = "Vec<rome_rowan::TextRangeSchema>"))]
     pub labels: Vec<TextRange>,
 }
 

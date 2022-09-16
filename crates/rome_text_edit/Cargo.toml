@@ -12,4 +12,4 @@ serde = { version = "1.0.136", features = ["derive"], optional = true }
 schemars = { version = "0.8.10", optional = true }
 
 [features]
-serde = ["dep:serde", "schemars", "rome_text_size/serde"]
+serde = ["dep:serde", "schemars", "rome_text_size/serde", "rome_text_size/schemars"]
