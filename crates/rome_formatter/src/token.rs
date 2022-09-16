@@ -1,8 +1,8 @@
-use crate::comments::CommentStyle;
+use crate::comments::{CommentKind, CommentStyle, SourceComment};
 use crate::prelude::*;
 use crate::{
-    format_args, write, Argument, Arguments, CommentKind, CstFormatContext, FormatRefWithRule,
-    GroupId, LastTokenKind, SourceComment,
+    format_args, write, Argument, Arguments, CstFormatContext, FormatRefWithRule, GroupId,
+    LastTokenKind,
 };
 use rome_rowan::{Language, SyntaxToken, SyntaxTriviaPiece};
 
