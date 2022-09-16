@@ -304,6 +304,7 @@ enum ReferenceType {
 }
 
 /// Provides all information regarding to a specific reference.
+#[derive(Debug)]
 pub struct Reference {
     data: Arc<SemanticModelData>,
     node: JsSyntaxNode,

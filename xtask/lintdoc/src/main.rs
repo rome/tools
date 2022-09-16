@@ -479,7 +479,9 @@ fn assert_lint(
         let result = analyze(FileId::zero(), &root, filter, |signal| {
             if let Some(diag) = signal.diagnostic() {
                 let code = format!("{group}/{rule}");
-                let severity = settings.get_severity_from_rule_code(&code).unwrap();
+                let severity = settings.get_severity_from_rule_code(&code).expect(
+                    "If you see this error, it means you need to run cargo codegen-configuration",
+                );
                 let mut diag = diag.into_diagnostic(severity);
 
                 if let Some(action) = signal.action() {
