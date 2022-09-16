@@ -357,18 +357,13 @@ pub fn generate_formatter() {
             }
             NodeKind::Unknown => {
                 quote! {
-                    use crate::prelude::*;
-                    use crate::{FormatNodeFields};
-                    use rome_rowan::AstNode;
+                    use crate::FormatUnknownNodeRule;
                     use rome_js_syntax::#node_id;
 
                     #[derive(Debug, Clone, Default)]
                     pub struct #format_id;
 
-                    impl FormatNodeRule<#node_id> for #format_id {
-                        fn fmt_fields(&self, node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
-                            format_unknown_node(node.syntax()).fmt(f)
-                        }
+                    impl FormatUnknownNodeRule<#node_id> for #format_id {
                     }
                 }
             }
