@@ -145,11 +145,10 @@ fn check_code_action(
     action: &AnalyzerAction<JsLanguage>,
 ) {
     let mut output = source.to_string();
-    let (_, indels) = action.mutation.as_text_edits().unwrap_or_default();
+    let (new_tree, changes) = action.mutation.clone().run();
+    let (_, indels) = changes.unwrap();
 
     apply_indels(&indels, &mut output);
-
-    let new_tree = action.mutation.clone().commit();
 
     // Checks that applying the text edits returned by the BatchMutation
     // returns the same code as printing the modified syntax tree

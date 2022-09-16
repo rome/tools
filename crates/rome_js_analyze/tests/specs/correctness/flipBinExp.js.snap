@@ -6,34 +6,34 @@ expression: flipBinExp.js
 ```js
 if (a < b) {
 }
-if (a > b) {
-}
-if (a <= b) {
-}
-if (a >= b) {
-}
-if (a == b) {
-}
-if (a === b) {
-}
-if (a != b) {
-}
-if (a !== b) {
-}
+// if (a > b) {
+// }
+// if (a <= b) {
+// }
+// if (a >= b) {
+// }
+// if (a == b) {
+// }
+// if (a === b) {
+// }
+// if (a != b) {
+// }
+// if (a !== b) {
+// }
 
-const a = b + c;
-const a = b - c;
-const a = b * c;
-const a = b / c;
-const a = b % c;
-const a = b ** c;
+// const a = b + c;
+// const a = b - c;
+// const a = b * c;
+// const a = b / c;
+// const a = b % c;
+// const a = b ** c;
 
-const a = b << c;
-const a = b >> c;
-const a = b >>> c;
-const a = b & c;
-const a = b | c;
-const a = b ^ c;
+// const a = b << c;
+// const a = b >> c;
+// const a = b >>> c;
+// const a = b & c;
+// const a = b | c;
+// const a = b ^ c;
 
 ```
 
@@ -43,157 +43,8 @@ const a = b ^ c;
 0   | - if (a < b) {
   0 | + if (b > a) {
 1 1 |   }
-2 2 |   if (a > b) {
-3 3 |   }
-
-```
-
-```
-    | @@ -1,6 +1,6 @@
-0 0 |   if (a < b) {
-1 1 |   }
-2   | - if (a > b) {
-  2 | + if (b < a) {
-3 3 |   }
-4 4 |   if (a <= b) {
-5 5 |   }
-
-```
-
-```
-    | @@ -2,7 +2,7 @@
-1 1 |   }
-2 2 |   if (a > b) {
-3 3 |   }
-4   | - if (a <= b) {
-  4 | + if (b >= a) {
-5 5 |   }
-6 6 |   if (a >= b) {
-7 7 |   }
-
-```
-
-```
-    | @@ -4,7 +4,7 @@
-3 3 |   }
-4 4 |   if (a <= b) {
-5 5 |   }
-6   | - if (a >= b) {
-  6 | + if (b <= a) {
-7 7 |   }
-8 8 |   if (a == b) {
-9 9 |   }
-
-```
-
-```
-    | @@ -6,7 +6,7 @@
-5 5 |   }
-6 6 |   if (a >= b) {
-7 7 |   }
-8   | - if (a == b) {
-  8 | + if (b == a) {
-9 9 |   }
-10 10 |   if (a === b) {
-11 11 |   }
-
-```
-
-```
-      | @@ -8,7 +8,7 @@
- 7  7 |   }
- 8  8 |   if (a == b) {
- 9  9 |   }
-10    | - if (a === b) {
-   10 | + if (b === a) {
-11 11 |   }
-12 12 |   if (a != b) {
-13 13 |   }
-
-```
-
-```
-      | @@ -10,7 +10,7 @@
- 9  9 |   }
-10 10 |   if (a === b) {
-11 11 |   }
-12    | - if (a != b) {
-   12 | + if (b != a) {
-13 13 |   }
-14 14 |   if (a !== b) {
-15 15 |   }
-
-```
-
-```
-      | @@ -12,7 +12,7 @@
-11 11 |   }
-12 12 |   if (a != b) {
-13 13 |   }
-14    | - if (a !== b) {
-   14 | + if (b !== a) {
-15 15 |   }
-16 16 |   
-17 17 |   const a = b + c;
-
-```
-
-```
-      | @@ -15,7 +15,7 @@
-14 14 |   if (a !== b) {
-15 15 |   }
-16 16 |   
-17    | - const a = b + c;
-   17 | + const a = c + b;
-18 18 |   const a = b - c;
-19 19 |   const a = b * c;
-20 20 |   const a = b / c;
-
-```
-
-```
-      | @@ -17,7 +17,7 @@
-16 16 |   
-17 17 |   const a = b + c;
-18 18 |   const a = b - c;
-19    | - const a = b * c;
-   19 | + const a = c * b;
-20 20 |   const a = b / c;
-21 21 |   const a = b % c;
-22 22 |   const a = b ** c;
-
-```
-
-```
-      | @@ -25,6 +25,6 @@
-24 24 |   const a = b << c;
-25 25 |   const a = b >> c;
-26 26 |   const a = b >>> c;
-27    | - const a = b & c;
-   27 | + const a = c & b;
-28 28 |   const a = b | c;
-29 29 |   const a = b ^ c;
-
-```
-
-```
-      | @@ -26,5 +26,5 @@
-25 25 |   const a = b >> c;
-26 26 |   const a = b >>> c;
-27 27 |   const a = b & c;
-28    | - const a = b | c;
-   28 | + const a = c | b;
-29 29 |   const a = b ^ c;
-
-```
-
-```
-      | @@ -27,4 +27,4 @@
-26 26 |   const a = b >>> c;
-27 27 |   const a = b & c;
-28 28 |   const a = b | c;
-29    | - const a = b ^ c;
-   29 | + const a = c ^ b;
+2 2 |   // if (a > b) {
+3 3 |   // }
 
 ```
 

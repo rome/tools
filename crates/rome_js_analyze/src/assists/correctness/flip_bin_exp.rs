@@ -5,7 +5,7 @@ use rome_js_factory::make;
 use rome_js_syntax::{
     JsBinaryExpression, JsBinaryExpressionFields, JsBinaryOperator, JsSyntaxKind, T,
 };
-use rome_rowan::BatchMutationExt;
+use rome_rowan::{AstNode, BatchMutationExt};
 
 use crate::JsRuleAction;
 
@@ -21,6 +21,17 @@ declare_rule! {
         version: "0.7.0",
         name: "flipBinExp",
         recommended: false,
+    }
+}
+
+trait AstNodeDetach<L: rome_rowan::Language>: rome_rowan::AstNode<Language = L> {
+    fn detach(&self) -> Self;
+}
+
+impl<L: rome_rowan::Language, T: AstNode<Language = L>> AstNodeDetach<L> for T {
+    fn detach(&self) -> Self {
+        let node = self.syntax().clone().detach();
+        T::cast(node).unwrap()
     }
 }
 
@@ -49,10 +60,11 @@ impl Rule for FlipBinExp {
 
     fn action(ctx: &RuleContext<Self>, op: &Self::State) -> Option<JsRuleAction> {
         let node = ctx.query();
+
         let mut mutation = ctx.root().begin();
 
         let prev_left = node.left().ok()?;
-        let new_left = node.right().ok()?;
+        let new_left = node.right().ok()?.detach();
         mutation.replace_node(prev_left, new_left);
 
         let prev_op = node.operator_token().ok()?;
@@ -60,7 +72,7 @@ impl Rule for FlipBinExp {
         mutation.replace_token(prev_op, new_op);
 
         let prev_right = node.right().ok()?;
-        let new_right = node.left().ok()?;
+        let new_right = node.left().ok()?.detach();
         mutation.replace_node(prev_right, new_right);
 
         Some(JsRuleAction {

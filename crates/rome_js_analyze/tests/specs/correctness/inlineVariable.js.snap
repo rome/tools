@@ -64,7 +64,7 @@ statement(variable);
 ```
 
 ```
-      | @@ -7,14 +7,13 @@
+      | @@ -7,14 +7,12 @@
  6  6 |   
  7  7 |   statement(notInlinable);
  8  8 |   
@@ -72,16 +72,16 @@ statement(variable);
 10    | -     multipleDeclaratorsNotInlinable = "value4";
     9 | + let multipleDeclaratorsInlinable = "value3";
 11 10 |   
-12 11 |   if (multipleDeclaratorsInlinable) {
+12    | - if (multipleDeclaratorsInlinable) {
 13    | -     multipleDeclaratorsNotInlinable.memberWrite = multipleDeclaratorsInlinable;
-   12 | +     "value4".memberWrite = multipleDeclaratorsInlinable;
-14 13 |   }
-15 14 |   
+   11 | + if (multipleDeclaratorsInlinable) {"value4".memberWrite = multipleDeclaratorsInlinable;
+14 12 |   }
+15 13 |   
 16    | - statement(multipleDeclaratorsNotInlinable);
-   15 | + statement("value4");
-17 16 |   
-18 17 |   let variable = expression();
-19 18 |   statement(variable);
+   14 | + statement("value4");
+17 15 |   
+18 16 |   let variable = expression();
+19 17 |   statement(variable);
 
 ```
 

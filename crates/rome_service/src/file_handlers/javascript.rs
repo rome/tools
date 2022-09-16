@@ -346,8 +346,8 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
 
         match action {
             Some(action) => {
-                if let Some((range, _)) = action.mutation.as_text_edits() {
-                    tree = match JsAnyRoot::cast(action.mutation.commit()) {
+                if let (root, Some((range, _))) = action.mutation.run() {
+                    tree = match JsAnyRoot::cast(root) {
                         Some(tree) => tree,
                         None => {
                             return Err(RomeError::RuleError(
