@@ -218,6 +218,7 @@ impl<Context> Formatter<'_, Context>
 where
     Context: CstFormatContext,
 {
+    /// Returns the comments from the context.
     pub fn comments(&self) -> &Comments<Context::Language> {
         self.context().comments()
     }
