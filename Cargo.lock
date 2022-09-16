@@ -1585,6 +1585,7 @@ name = "rome_formatter"
 version = "0.0.0"
 dependencies = [
  "cfg-if",
+ "countme",
  "indexmap",
  "rome_rowan",
  "rustc-hash",
