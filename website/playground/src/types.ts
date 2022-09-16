@@ -43,6 +43,7 @@ export interface PlaygroundState {
 	isTypeScript: boolean;
 	isJsx: boolean;
 	cursorPosition: number;
+	enabledNurseryRules: boolean;
 }
 
 // change `lineWidth` and `indentWidth` to string type, just to fits our `usePlaygroundState` fallback usage
@@ -61,6 +62,7 @@ export const defaultRomeConfig: RomeConfiguration = {
 	isTypeScript: false,
 	isJsx: false,
 	cursorPosition: 0,
+	enabledNurseryRules: true
 };
 
 export interface PlaygroundProps {
@@ -80,6 +82,7 @@ export type PlaygroundSettings = Pick<
 	| "sourceType"
 	| "isTypeScript"
 	| "isJsx"
+	| "enabledNurseryRules"
 >;
 
 export type Tree = ReturnType<typeof parser.parse>;

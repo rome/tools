@@ -6,6 +6,7 @@ import { PlaygroundSettings, PlaygroundState } from "./types";
 import { Dispatch, SetStateAction } from "react";
 import { createSetter } from "./utils";
 import QuotePropertiesSelect from "./QuotePropertiesSelect";
+import NurseryRules from "./NurseryRules";
 
 interface Props {
 	settings: PlaygroundSettings;
@@ -23,6 +24,7 @@ export function SettingsMenu({
 		sourceType,
 		isTypeScript,
 		isJsx,
+		enabledNurseryRules
 	},
 }: Props) {
 	return (
@@ -59,6 +61,7 @@ export function SettingsMenu({
 					sourceType={sourceType}
 					setSourceType={createSetter(setPlaygroundState, "sourceType")}
 				/>
+				<NurseryRules setEnabledNurseryRules={createSetter(setPlaygroundState, "enabledNurseryRules")} enabledNurseryRules={enabledNurseryRules} />
 			</div>
 		</div>
 	);

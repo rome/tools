@@ -2,6 +2,8 @@ import init, {
 	DiagnosticPrinter,
 	RomePath,
 	Workspace,
+	Nursery,
+	Configuration
 } from "@rometools/wasm-web";
 import {
 	SourceType,
@@ -81,10 +83,10 @@ self.addEventListener("message", async (e) => {
 				isJsx,
 				sourceType,
 				cursorPosition,
+				enabledNurseryRules
 			} = playgroundState;
 
-			workspace.updateSettings({
-				configuration: {
+			const configuration: Configuration = {
 					formatter: {
 						enabled: true,
 						formatWithErrors: true,
@@ -105,7 +107,23 @@ self.addEventListener("message", async (e) => {
 									: "asNeeded",
 						},
 					},
-				},
+			};
+			if (enabledNurseryRules) {
+				configuration.linter = {
+					enabled: true,
+					rules: {
+						nursery: {
+							noNewSymbol: "error",
+							noDangerouslySetInnerHtml: "error",
+							noUnusedVariables: "error",
+							noUnreachable: "error",
+							useCamelCase: "error"
+						}
+					}
+				}
+			}
+			workspace.updateSettings({
+				configuration
 			});
 
 			const path = getPathForType(sourceType, isTypeScript, isJsx);
