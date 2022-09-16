@@ -3,7 +3,7 @@ import init, {
 	RomePath,
 	Workspace,
 	Nursery,
-	Configuration
+	Configuration,
 } from "@rometools/wasm-web";
 import {
 	SourceType,
@@ -83,30 +83,29 @@ self.addEventListener("message", async (e) => {
 				isJsx,
 				sourceType,
 				cursorPosition,
-				enabledNurseryRules
+				enabledNurseryRules,
 			} = playgroundState;
 
 			const configuration: Configuration = {
+				formatter: {
+					enabled: true,
+					formatWithErrors: true,
+					lineWidth: lineWidth,
+					indentStyle: indentStyle === IndentStyle.Tab ? "tab" : "space",
+					indentSize: indentWidth,
+				},
+				linter: {
+					enabled: true,
+				},
+				javascript: {
 					formatter: {
-						enabled: true,
-						formatWithErrors: true,
-						lineWidth: lineWidth,
-						indentStyle: indentStyle === IndentStyle.Tab ? "tab" : "space",
-						indentSize: indentWidth,
+						quoteStyle: quoteStyle === QuoteStyle.Double ? "double" : "single",
+						quoteProperties:
+							quoteProperties === QuoteProperties.Preserve
+								? "preserve"
+								: "asNeeded",
 					},
-					linter: {
-						enabled: true,
-					},
-					javascript: {
-						formatter: {
-							quoteStyle:
-								quoteStyle === QuoteStyle.Double ? "double" : "single",
-							quoteProperties:
-								quoteProperties === QuoteProperties.Preserve
-									? "preserve"
-									: "asNeeded",
-						},
-					},
+				},
 			};
 			if (enabledNurseryRules) {
 				configuration.linter = {
@@ -117,13 +116,13 @@ self.addEventListener("message", async (e) => {
 							noDangerouslySetInnerHtml: "error",
 							noUnusedVariables: "error",
 							noUnreachable: "error",
-							useCamelCase: "error"
-						}
-					}
-				}
+							useCamelCase: "error",
+						},
+					},
+				};
 			}
 			workspace.updateSettings({
-				configuration
+				configuration,
 			});
 
 			const path = getPathForType(sourceType, isTypeScript, isJsx);

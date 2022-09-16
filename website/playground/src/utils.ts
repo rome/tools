@@ -78,7 +78,9 @@ export function usePlaygroundState(
 			(searchParams.get("sourceType") as SourceType) ??
 			defaultRomeConfig.sourceType,
 		cursorPosition: 0,
-		enabledNurseryRules: searchParams.get("enabledNurseryRules") === "true" || defaultRomeConfig.enabledNurseryRules,
+		enabledNurseryRules:
+			searchParams.get("enabledNurseryRules") === "true" ||
+			defaultRomeConfig.enabledNurseryRules,
 	});
 	const [playgroundState, setPlaygroundState] = useState(initState());
 

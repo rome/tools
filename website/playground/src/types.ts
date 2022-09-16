@@ -62,7 +62,7 @@ export const defaultRomeConfig: RomeConfiguration = {
 	isTypeScript: false,
 	isJsx: false,
 	cursorPosition: 0,
-	enabledNurseryRules: true
+	enabledNurseryRules: true,
 };
 
 export interface PlaygroundProps {

@@ -24,7 +24,7 @@ export function SettingsMenu({
 		sourceType,
 		isTypeScript,
 		isJsx,
-		enabledNurseryRules
+		enabledNurseryRules,
 	},
 }: Props) {
 	return (
@@ -61,7 +61,13 @@ export function SettingsMenu({
 					sourceType={sourceType}
 					setSourceType={createSetter(setPlaygroundState, "sourceType")}
 				/>
-				<NurseryRules setEnabledNurseryRules={createSetter(setPlaygroundState, "enabledNurseryRules")} enabledNurseryRules={enabledNurseryRules} />
+				<NurseryRules
+					setEnabledNurseryRules={createSetter(
+						setPlaygroundState,
+						"enabledNurseryRules",
+					)}
+					enabledNurseryRules={enabledNurseryRules}
+				/>
 			</div>
 		</div>
 	);
