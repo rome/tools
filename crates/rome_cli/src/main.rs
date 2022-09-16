@@ -12,6 +12,10 @@ use tokio::runtime::Runtime;
 #[global_allocator]
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
+#[cfg(target_os = "macos")]
+#[global_allocator]
+static GLOBAL: tikv_jemallocator::Jemalloc = tikv_jemallocator::Jemalloc;
+
 fn main() -> Result<(), Termination> {
     setup_panic_handler();
 
