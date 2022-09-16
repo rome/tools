@@ -12,6 +12,7 @@ React.createElement('button', {
 React.createElement('button', {
     "style": "background: red"
 });
+React.createElement('button', {});
 
 // valid
 React.createElement('button', {
@@ -56,6 +57,19 @@ warning[nursery/useButtonType]: Provide an explicit type prop on button elements
 7 │ │     "style": "background: red"
 8 │ │ });
   │ └─'
+
+=  note: The default type of a button is submit, which causes a page reload and is not a typical behavior in a React application.
+= help: Allowed button types are: submit, button or reset
+
+
+```
+
+```
+warning[nursery/useButtonType]: Provide an explicit type prop on button elements.
+  ┌─ inObject.js:9:31
+  │
+9 │ React.createElement('button', {});
+  │                               --
 
 =  note: The default type of a button is submit, which causes a page reload and is not a typical behavior in a React application.
 = help: Allowed button types are: submit, button or reset
