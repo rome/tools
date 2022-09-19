@@ -24,7 +24,10 @@ export default function NurseryRules({
 						/>
 					</div>
 					<div className="ml-1 text-sm">
-						<label htmlFor="nursery-rules" className="font-medium text-gray-700">
+						<label
+							htmlFor="nursery-rules"
+							className="font-medium text-gray-700"
+						>
 							Nursery rules
 						</label>
 						<span id="nursery-rules-description" className="text-gray-500">

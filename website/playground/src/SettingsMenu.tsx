@@ -70,7 +70,6 @@ export function SettingsMenu({
 					)}
 					enabledNurseryRules={enabledNurseryRules}
 				/>
-
 			</div>
 		</div>
 	);
