@@ -285,7 +285,7 @@ Disallow unused variables.
 	<a href="/docs/lint/rules/useButtonType">useButtonType (since v0.10.0)</a>
 	<a class="header-anchor" href="#useButtonType"></a>
 </h3>
-Enforces the correct usage of the attribute <code>type</code> for the element <code>button</code>
+Enforces the usage of the attribute <code>type</code> for the element <code>button</code>
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useCamelCase">

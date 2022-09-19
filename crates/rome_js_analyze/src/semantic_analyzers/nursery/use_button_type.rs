@@ -50,7 +50,12 @@ declare_node_union! {
 }
 
 declare_node_union! {
-    pub(crate) UseButtonTypeState = JsxString | JsxOpeningElement | JsStringLiteralExpression | JsObjectExpression
+    pub(crate) UseButtonTypeNode = JsxString | JsxOpeningElement | JsStringLiteralExpression | JsObjectExpression
+}
+
+pub(crate) struct UseButtonTypeState {
+    node: UseButtonTypeNode,
+    missing_prop: bool,
 }
 
 impl Rule for UseButtonType {
@@ -70,7 +75,10 @@ impl Rule for UseButtonType {
                 if is_button(&name)? {
                     let attributes = opening_element.attributes();
                     if attributes.is_empty() {
-                        return Some(UseButtonTypeState::from(opening_element.clone()));
+                        return Some(UseButtonTypeState {
+                            node: UseButtonTypeNode::from(opening_element.clone()),
+                            missing_prop: true,
+                        });
                     } else {
                         for attribute in attributes {
                             let attribute = attribute.as_jsx_attribute()?;
@@ -84,7 +92,10 @@ impl Rule for UseButtonType {
                                 if !ALLOWED_BUTTON_TYPES
                                     .contains(&&*initializer.inner_string_text().ok()?)
                                 {
-                                    return Some(UseButtonTypeState::from(initializer.clone()));
+                                    return Some(UseButtonTypeState {
+                                        node: UseButtonTypeNode::from(initializer.clone()),
+                                        missing_prop: false,
+                                    });
                                 }
                             }
                         }
@@ -129,16 +140,25 @@ impl Rule for UseButtonType {
                                     if !ALLOWED_BUTTON_TYPES
                                         .contains(&&*value.inner_string_text().ok()?)
                                     {
-                                        return Some(UseButtonTypeState::from(value.clone()));
+                                        return Some(UseButtonTypeState {
+                                            node: UseButtonTypeNode::from(value.clone()),
+                                            missing_prop: false,
+                                        });
                                     }
                                 }
                             }
 
                             // if we are here, it means that we haven't found the property "type" and
                             // we have to return a diagnostic
-                            Some(UseButtonTypeState::from(props))
+                            Some(UseButtonTypeState {
+                                node: UseButtonTypeNode::from(props),
+                                missing_prop: false,
+                            })
                         } else {
-                            Some(UseButtonTypeState::from(first_argument.clone()))
+                            Some(UseButtonTypeState {
+                                node: UseButtonTypeNode::from(first_argument.clone()),
+                                missing_prop: true,
+                            })
                         };
                     }
                 }
@@ -149,14 +169,22 @@ impl Rule for UseButtonType {
     }
 
     fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
+        let message = if state.missing_prop {
+            (markup! {
+                "Provide an explicit "<Emphasis>"type"</Emphasis>" prop for the "<Emphasis>"button"</Emphasis>" element."
+            }).to_owned()
+        } else {
+            (markup!{
+                "Provide a correct "<Emphasis>"type"</Emphasis>" prop for the "<Emphasis>"button"</Emphasis>" element."
+            }).to_owned()
+        };
         Some(RuleDiagnostic::new(
-            state.syntax().text_trimmed_range(),
-            markup! {
-                "Provide an explicit "<Emphasis>"type"</Emphasis>" prop on "<Emphasis>"button"</Emphasis>" elements."
-            },
+            state.node.syntax().text_trimmed_range(),
+            message
         )
             .footer(Severity::Note, markup! {
-                "The default type of a button is "<Emphasis>"submit"</Emphasis>", which causes a page reload and is not a typical behavior in a React application."
+                "The default  "<Emphasis>"type"</Emphasis>" of a button is "<Emphasis>"submit"</Emphasis>", which causes the submission of a form when placed inside a `form` element. "
+                "This is likely not the behaviour that you want inside a React application."
             })
             .footer_help(
             markup! {

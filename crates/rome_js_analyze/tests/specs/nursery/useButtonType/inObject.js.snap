@@ -23,33 +23,33 @@ React.createElement('button', {
 
 # Diagnostics
 ```
-warning[nursery/useButtonType]: Provide an explicit type prop on button elements.
+warning[nursery/useButtonType]: Provide an explicit type prop for the button element.
   ┌─ inObject.js:2:21
   │
 2 │ React.createElement('button');
   │                     --------
 
-=  note: The default type of a button is submit, which causes a page reload and is not a typical behavior in a React application.
+=  note: The default  type of a button is submit, which causes the submission of a form when placed inside a `form` element. This is likely not the behaviour that you want inside a React application.
 = help: Allowed button types are: submit, button or reset
 
 
 ```
 
 ```
-warning[nursery/useButtonType]: Provide an explicit type prop on button elements.
+warning[nursery/useButtonType]: Provide a correct type prop for the button element.
   ┌─ inObject.js:4:13
   │
 4 │     "type": "bar"
   │             -----
 
-=  note: The default type of a button is submit, which causes a page reload and is not a typical behavior in a React application.
+=  note: The default  type of a button is submit, which causes the submission of a form when placed inside a `form` element. This is likely not the behaviour that you want inside a React application.
 = help: Allowed button types are: submit, button or reset
 
 
 ```
 
 ```
-warning[nursery/useButtonType]: Provide an explicit type prop on button elements.
+warning[nursery/useButtonType]: Provide a correct type prop for the button element.
   ┌─ inObject.js:6:31
   │  
 6 │   React.createElement('button', {
@@ -58,20 +58,20 @@ warning[nursery/useButtonType]: Provide an explicit type prop on button elements
 8 │ │ });
   │ └─'
 
-=  note: The default type of a button is submit, which causes a page reload and is not a typical behavior in a React application.
+=  note: The default  type of a button is submit, which causes the submission of a form when placed inside a `form` element. This is likely not the behaviour that you want inside a React application.
 = help: Allowed button types are: submit, button or reset
 
 
 ```
 
 ```
-warning[nursery/useButtonType]: Provide an explicit type prop on button elements.
+warning[nursery/useButtonType]: Provide a correct type prop for the button element.
   ┌─ inObject.js:9:31
   │
 9 │ React.createElement('button', {});
   │                               --
 
-=  note: The default type of a button is submit, which causes a page reload and is not a typical behavior in a React application.
+=  note: The default  type of a button is submit, which causes the submission of a form when placed inside a `form` element. This is likely not the behaviour that you want inside a React application.
 = help: Allowed button types are: submit, button or reset
 
 
