@@ -24,7 +24,7 @@
 mod arguments;
 mod buffer;
 mod builders;
-mod comments;
+pub mod comments;
 pub mod format_element;
 mod format_extensions;
 pub mod formatter;
@@ -53,7 +53,8 @@ pub use builders::{
     if_group_fits_on_line, indent, labelled, line_suffix, soft_block_indent, soft_line_break,
     soft_line_break_or_space, soft_line_indent_or_space, space, text, BestFitting,
 };
-pub use comments::{CommentKind, CommentStyle, Comments, SourceComment};
+
+use crate::comments::{CommentStyle, Comments, SourceComment};
 pub use format_element::{normalize_newlines, FormatElement, Text, Verbatim, LINE_TERMINATORS};
 pub use group_id::GroupId;
 use indexmap::IndexSet;
@@ -232,14 +233,10 @@ pub trait FormatOptions {
 /// The context customizes the comments formatting and stores the comments of the CST.
 pub trait CstFormatContext: FormatContext {
     type Language: Language;
-    type Style: CommentStyle<Self::Language>;
+    type Style: CommentStyle<Language = Self::Language>;
 
-    /// Rule for formatting leading comments.
-    type LeadingCommentRule: FormatRule<SourceComment<Self::Language>, Context = Self> + Default;
-
-    /// Customizes how comments are formatted
-    #[deprecated(note = "Prefer FormatLanguage::comment_style")]
-    fn comment_style(&self) -> Self::Style;
+    /// Rule for formatting comments.
+    type CommentRule: FormatRule<SourceComment<Self::Language>, Context = Self> + Default;
 
     /// Returns a reference to the program's comments.
     fn comments(&self) -> &Comments<Self::Language>;
@@ -825,13 +822,10 @@ pub trait FormatLanguage {
     type Context: CstFormatContext<Language = Self::SyntaxLanguage>;
 
     /// The type specifying how to format comments.
-    type CommentStyle: CommentStyle<Self::SyntaxLanguage>;
+    type CommentStyle: CommentStyle<Language = Self::SyntaxLanguage>;
 
     /// The rule type that can format a [SyntaxNode] of this language
     type FormatRule: FormatRule<SyntaxNode<Self::SyntaxLanguage>, Context = Self::Context> + Default;
-
-    /// Customizes how comments are formatted
-    fn comment_style(&self) -> Self::CommentStyle;
 
     /// Performs an optional pre-processing of the tree. This can be useful to remove nodes
     /// that otherwise complicate formatting.
@@ -877,7 +871,7 @@ pub fn format_node<L: FormatLanguage>(
             None => (root.clone(), None),
         };
 
-        let comments = Comments::from_node(&root, &language);
+        let comments = Comments::from_node(&root, &L::CommentStyle::default(), source_map.as_ref());
         let format_node = FormatRefWithRule::new(&root, L::FormatRule::default());
 
         let context = language.create_context(comments, source_map);
