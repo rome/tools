@@ -1,0 +1,193 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: jsx/ignore/jsx_ignore.js
+---
+
+# Input
+
+```js
+// this should remain as-is
+<div>
+ {/* prettier-ignore */}
+ <style jsx global>{ComponentStyles}</style>
+</div>;
+
+// this should remain as-is
+<div>
+ {/* prettier-ignore */}
+ <span     ugly  format=''   />
+</div>;
+
+// this should remain as-is
+f(
+  <Component>
+    {/*prettier-ignore*/}
+    <span     ugly  format=''   />
+  </Component>
+);
+
+// this be formatted
+<div>
+  {/* prettier-ignore */} foo
+  <Bar   excessive    spaces    />
+</div>;
+
+// this should remain as-is
+<div>
+{
+  /* prettier-ignore */
+  foo ( )
+}
+</div>;
+
+// this should remain as-is
+<div>
+{
+  /* prettier-ignore */
+  x     ?   <Y/> : <Z/>
+}
+</div>;
+
+push(
+  // prettier-ignore
+  <td> :)
+  </td>,
+);
+
+function f() {
+	// rome-ignore format: Instability issue
+  return (
+    // prettier-ignore
+    /* $FlowFixMe(>=0.53.0) */
+    <JSX />
+  );
+}
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,20 +1,22 @@
+ // this should remain as-is
+ <div>
+   {/* prettier-ignore */}
+-  <style jsx global>{ComponentStyles}</style>
++  <style jsx global>
++    {ComponentStyles}
++  </style>
+ </div>;
+ 
+ // this should remain as-is
+ <div>
+   {/* prettier-ignore */}
+-  <span     ugly  format=''   />
++  <span ugly format='' />
+ </div>;
+ 
+ // this should remain as-is
+ f(
+   <Component>
+     {/*prettier-ignore*/}
+-    <span     ugly  format=''   />
++    <span ugly format='' />
+   </Component>,
+ );
+ 
+@@ -28,16 +30,15 @@
+ <div>
+   {
+     /* prettier-ignore */
+-    foo ( )
++  foo ( )
+   }
+ </div>;
+ 
+ // this should remain as-is
+ <div>
+   {
+-    /* prettier-ignore */
+-    x     ?   <Y/> : <Z/>
+-  }
++  /* prettier-ignore */
++  x     ?   <Y/> : <Z/>}
+ </div>;
+ 
+ push(
+@@ -47,6 +48,7 @@
+ );
+ 
+ function f() {
++  // rome-ignore format: Instability issue
+   return (
+     // prettier-ignore
+     /* $FlowFixMe(>=0.53.0) */
+```
+
+# Output
+
+```js
+// this should remain as-is
+<div>
+  {/* prettier-ignore */}
+  <style jsx global>
+    {ComponentStyles}
+  </style>
+</div>;
+
+// this should remain as-is
+<div>
+  {/* prettier-ignore */}
+  <span ugly format='' />
+</div>;
+
+// this should remain as-is
+f(
+  <Component>
+    {/*prettier-ignore*/}
+    <span ugly format='' />
+  </Component>,
+);
+
+// this be formatted
+<div>
+  {/* prettier-ignore */} foo
+  <Bar excessive spaces />
+</div>;
+
+// this should remain as-is
+<div>
+  {
+    /* prettier-ignore */
+  foo ( )
+  }
+</div>;
+
+// this should remain as-is
+<div>
+  {
+  /* prettier-ignore */
+  x     ?   <Y/> : <Z/>}
+</div>;
+
+push(
+  // prettier-ignore
+  <td> :)
+  </td>,
+);
+
+function f() {
+  // rome-ignore format: Instability issue
+  return (
+    // prettier-ignore
+    /* $FlowFixMe(>=0.53.0) */
+    <JSX />
+  );
+}
+```
+
+
+
