@@ -8,10 +8,10 @@ export default function NurseryRules({
 	enabledNurseryRules,
 }: Props) {
 	return (
-		<div className="pl-5 pb-5">
+		<div className="pl-5">
 			<fieldset className="flex items-center">
 				<legend className="sr-only">Linter</legend>
-				<div className="relative flex p-5 pl-1 pt-7 pb-0">
+				<div className="relative flex p-5 pt-0 pl-1">
 					<div className="flex items-center h-5">
 						<input
 							id="nursery-rules"

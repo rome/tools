@@ -61,6 +61,8 @@ export function SettingsMenu({
 					sourceType={sourceType}
 					setSourceType={createSetter(setPlaygroundState, "sourceType")}
 				/>
+			</div>
+			<div className="flex flex-col sm:flex-row">
 				<NurseryRules
 					setEnabledNurseryRules={createSetter(
 						setPlaygroundState,
@@ -68,6 +70,7 @@ export function SettingsMenu({
 					)}
 					enabledNurseryRules={enabledNurseryRules}
 				/>
+
 			</div>
 		</div>
 	);
