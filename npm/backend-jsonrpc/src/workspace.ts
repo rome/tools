@@ -157,6 +157,7 @@ export interface Correctness {
 export interface Nursery {
 	noDangerouslySetInnerHtml?: RuleConfiguration;
 	noNewSymbol?: RuleConfiguration;
+	noRenderReturnValue?: RuleConfiguration;
 	noUnreachable?: RuleConfiguration;
 	noUnusedVariables?: RuleConfiguration;
 	/**

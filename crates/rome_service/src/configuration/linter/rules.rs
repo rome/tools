@@ -385,6 +385,7 @@ pub struct Nursery {
 struct NurserySchema {
     no_dangerously_set_inner_html: Option<RuleConfiguration>,
     no_new_symbol: Option<RuleConfiguration>,
+    no_render_return_value: Option<RuleConfiguration>,
     no_unreachable: Option<RuleConfiguration>,
     no_unused_variables: Option<RuleConfiguration>,
     use_button_type: Option<RuleConfiguration>,
@@ -396,6 +397,7 @@ impl Nursery {
     pub(crate) const CATEGORY_RULES: [&'static str; 7] = [
         "noDangerouslySetInnerHtml",
         "noNewSymbol",
+        "noRenderReturnValue",
         "noUnreachable",
         "noUnusedVariables",
         "useButtonType",

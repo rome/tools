@@ -1,0 +1,104 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noRenderReturnValue.jsx
+---
+# Input
+```js
+// invalid
+const a = ReactDOM.render(<div />, document.body);
+const foo = bar && ReactDOM.render(<div />, document.body);
+const foo = bar ? ReactDOM.render(<div />, document.body) : null
+const foo = () => ReactDOM.render(<div />, document.body);
+const foo = {
+    react: ReactDOM.render(<div />, document.body)
+};
+let lorem;
+lorem = ReactDOM.render(<div />, document.body);
+function render () {
+    return ReactDOM.render(<div />, document.body)
+}
+
+// valid
+ReactDOM.render(<div />, document.body);
+function render () {
+    ReactDOM.render(<div />, document.body);
+}
+const render = () => {
+    ReactDOM.render(<div />, document.body);
+}
+
+
+```
+
+# Diagnostics
+```
+warning[nursery/noRenderReturnValue]: Do not depend on the return value from ReactDOM.render().
+  ┌─ noRenderReturnValue.jsx:2:11
+  │
+2 │ const a = ReactDOM.render(<div />, document.body);
+  │           ---------------------------------------
+
+
+```
+
+```
+warning[nursery/noRenderReturnValue]: Do not depend on the return value from ReactDOM.render().
+  ┌─ noRenderReturnValue.jsx:3:20
+  │
+3 │ const foo = bar && ReactDOM.render(<div />, document.body);
+  │                    ---------------------------------------
+
+
+```
+
+```
+warning[nursery/noRenderReturnValue]: Do not depend on the return value from ReactDOM.render().
+  ┌─ noRenderReturnValue.jsx:4:19
+  │
+4 │ const foo = bar ? ReactDOM.render(<div />, document.body) : null
+  │                   ---------------------------------------
+
+
+```
+
+```
+warning[nursery/noRenderReturnValue]: Do not depend on the return value from ReactDOM.render().
+  ┌─ noRenderReturnValue.jsx:5:19
+  │
+5 │ const foo = () => ReactDOM.render(<div />, document.body);
+  │                   ---------------------------------------
+
+
+```
+
+```
+warning[nursery/noRenderReturnValue]: Do not depend on the return value from ReactDOM.render().
+  ┌─ noRenderReturnValue.jsx:7:12
+  │
+7 │     react: ReactDOM.render(<div />, document.body)
+  │            ---------------------------------------
+
+
+```
+
+```
+warning[nursery/noRenderReturnValue]: Do not depend on the return value from ReactDOM.render().
+   ┌─ noRenderReturnValue.jsx:10:9
+   │
+10 │ lorem = ReactDOM.render(<div />, document.body);
+   │         ---------------------------------------
+
+
+```
+
+```
+warning[nursery/noRenderReturnValue]: Do not depend on the return value from ReactDOM.render().
+   ┌─ noRenderReturnValue.jsx:12:12
+   │
+12 │     return ReactDOM.render(<div />, document.body)
+   │            ---------------------------------------
+
+
+```
+
+

@@ -501,6 +501,16 @@
             }
           ]
         },
+        "noRenderReturnValue": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noUnreachable": {
           "anyOf": [
             {
