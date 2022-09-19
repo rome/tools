@@ -243,13 +243,16 @@ impl<K: std::hash::Hash + Eq, V> CommentsMap<K, V> {
     pub fn parts(&self, key: &K) -> PartsIterator<V> {
         match self.index.get(key) {
             None => PartsIterator::Slice([].iter()),
-            Some(Entry::OutOfOrder(entry)) => PartsIterator::Leading {
-                leading: self.out_of_order[entry.leading_index()].iter(),
-                dangling: &self.out_of_order[entry.dangling_index()],
-                trailing: &self.out_of_order[entry.trailing_index()],
-            },
-            Some(Entry::InOrder(entry)) => PartsIterator::Slice(self.parts[entry.range()].iter()),
+            Some(entry) => PartsIterator::from_entry(entry, self),
         }
+    }
+
+    /// Returns an iterator over the parts of all keys.
+    #[allow(unused)]
+    pub fn all_parts(&self) -> impl Iterator<Item = &V> {
+        self.index
+            .values()
+            .flat_map(|entry| PartsIterator::from_entry(entry, self))
     }
 }
 
@@ -295,6 +298,19 @@ pub(super) enum PartsIterator<'a, V> {
         dangling: std::slice::Iter<'a, V>,
         trailing: &'a [V],
     },
+}
+
+impl<'a, V> PartsIterator<'a, V> {
+    fn from_entry<K>(entry: &Entry, map: &'a CommentsMap<K, V>) -> Self {
+        match entry {
+            Entry::OutOfOrder(entry) => PartsIterator::Leading {
+                leading: map.out_of_order[entry.leading_index()].iter(),
+                dangling: &map.out_of_order[entry.dangling_index()],
+                trailing: &map.out_of_order[entry.trailing_index()],
+            },
+            Entry::InOrder(entry) => PartsIterator::Slice(map.parts[entry.range()].iter()),
+        }
+    }
 }
 
 impl<'a, V> Iterator for PartsIterator<'a, V> {

@@ -7,6 +7,8 @@ use crate::{
     TextRange, VecBuffer,
 };
 use rome_rowan::{Language, SyntaxNode, SyntaxToken};
+#[cfg(debug_assertions)]
+use std::cell::Cell;
 
 /// Formats the leading comments of `node`
 pub const fn format_leading_comments<L: Language>(
@@ -57,6 +59,8 @@ where
                     _ => write!(f, [empty_line()])?,
                 },
             }
+
+            comment.mark_formatted()
         }
 
         Ok(())
@@ -129,6 +133,8 @@ where
                     write!(f, [content])?;
                 }
             }
+
+            comment.mark_formatted();
         }
 
         Ok(())
@@ -247,6 +253,8 @@ where
                 let format_comment =
                     FormatRefWithRule::new(comment, Context::CommentRule::default());
                 join.entry(&format_comment);
+
+                comment.mark_formatted();
             }
 
             join.finish()?;
@@ -484,6 +492,8 @@ impl<L: Language> FormatSkippedTokenTrivia<'_, L> {
                     lines_before: lines,
                     lines_after: 0,
                     piece: comment,
+                    #[cfg(debug_assertions)]
+                    formatted: Cell::new(true),
                 };
 
                 dangling_comments.push(source_comment);

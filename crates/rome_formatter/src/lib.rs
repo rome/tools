@@ -882,10 +882,12 @@ pub fn format_node<L: FormatLanguage>(
         let document = buffer.into_element();
 
         state.assert_formatted_all_tokens(&root);
-        state
-            .context()
-            .comments()
-            .assert_checked_all_suppressions(&root);
+        {
+            let comments = state.context().comments();
+
+            comments.assert_checked_all_suppressions(&root);
+            comments.assert_formatted_all_comments();
+        }
 
         Ok(Formatted::new(document, state.into_context()))
     })

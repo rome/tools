@@ -84,7 +84,7 @@ use rome_rowan::syntax::SyntaxElementKey;
 use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTriviaPieceComments};
 use rustc_hash::FxHashSet;
 #[cfg(debug_assertions)]
-use std::cell::RefCell;
+use std::cell::{Cell, RefCell};
 use std::rc::Rc;
 
 #[derive(Copy, Clone, Eq, PartialEq, Debug)]
@@ -164,6 +164,10 @@ pub struct SourceComment<L: Language> {
 
     /// The kind of the comment.
     pub(crate) kind: CommentKind,
+
+    /// Whether the comment has been formatted or not.
+    #[cfg(debug_assertions)]
+    pub(crate) formatted: Cell<bool>,
 }
 
 impl<L: Language> SourceComment<L> {
@@ -226,6 +230,16 @@ impl<L: Language> SourceComment<L> {
     /// The kind of the comment
     pub fn kind(&self) -> CommentKind {
         self.kind
+    }
+
+    #[cfg(not(debug_assertions))]
+    #[inline(always)]
+    pub fn mark_formatted(&self) {}
+
+    /// Marks the comment as formatted
+    #[cfg(debug_assertions)]
+    pub fn mark_formatted(&self) {
+        self.formatted.set(true)
     }
 }
 
@@ -446,6 +460,8 @@ impl<L: Language> From<DecoratedComment<L>> for SourceComment<L> {
             lines_after: decorated.lines_after,
             piece: decorated.comment,
             kind: decorated.kind,
+            #[cfg(debug_assertions)]
+            formatted: Cell::new(false),
         }
     }
 }
@@ -912,38 +928,39 @@ impl<L: Language> Comments<L> {
             .any(|comment| is_suppression(comment.piece().text()))
     }
 
+    #[cfg(not(debug_assertions))]
+    #[inline(always)]
+    pub fn mark_suppression_checked(&self, _: &SyntaxNode<L>) {}
+
     /// Marks that it isn't necessary for the given node to check if it has been suppressed or not.
-    #[inline]
+    #[cfg(debug_assertions)]
     pub fn mark_suppression_checked(&self, node: &SyntaxNode<L>) {
-        cfg_if::cfg_if! {
-            if #[cfg(debug_assertions)] {
-                let mut checked_nodes = self.data.checked_suppressions.borrow_mut();
-                checked_nodes.insert(node.clone());
-            } else {
-                let _ = node;
-            }
-        }
+        let mut checked_nodes = self.data.checked_suppressions.borrow_mut();
+        checked_nodes.insert(node.clone());
     }
+
+    #[cfg(not(debug_assertions))]
+    #[inline(always)]
+    pub(crate) fn assert_checked_all_suppressions(&self, _: &SyntaxNode<L>) {}
 
     /// Verifies that [NodeSuppressions::is_suppressed] has been called for every node of `root`.
     /// This is a no-op in builds that have the feature `debug_assertions` disabled.
     ///
     /// # Panics
     /// If theres any node for which the formatting didn't very if it has a suppression comment.
-    #[inline]
+    #[cfg(debug_assertions)]
     pub(crate) fn assert_checked_all_suppressions(&self, root: &SyntaxNode<L>) {
-        cfg_if::cfg_if! {
-            if #[cfg(debug_assertions)] {
-                use rome_rowan::SyntaxKind;
+        use rome_rowan::SyntaxKind;
 
-                let checked_nodes = self.data.checked_suppressions.borrow();
-                for node in root.descendants() {
-                    if node.kind().is_list() || node.kind().is_root() {
-                        continue;
-                    }
+        let checked_nodes = self.data.checked_suppressions.borrow();
+        for node in root.descendants() {
+            if node.kind().is_list() || node.kind().is_root() {
+                continue;
+            }
 
-                    if !checked_nodes.contains(&node) {
-                        panic!(r#"
+            if !checked_nodes.contains(&node) {
+                panic!(
+                    r#"
 The following node has been formatted without checking if it has suppression comments.
 Ensure that the formatter calls into the node's formatting rule by using `node.format()` or
 manually test if the node has a suppression comment using `f.context().comments().is_suppressed(node.syntax())`
@@ -951,12 +968,60 @@ if using the node's format rule isn't an option."
 
 Node:
 {node:#?}"#
-                        );
-                    }
-                }
-            } else {
-                let _ = root;
+                );
             }
+        }
+    }
+
+    #[inline(always)]
+    #[cfg(not(debug_assertions))]
+    pub(crate) fn assert_formatted_all_comments(&self) {}
+
+    #[cfg(debug_assertions)]
+    pub(crate) fn assert_formatted_all_comments(&self) {
+        let has_unformatted_comments = self
+            .data
+            .comments
+            .all_parts()
+            .any(|comment| !comment.formatted.get());
+
+        if has_unformatted_comments {
+            let mut unformatted_comments = Vec::new();
+
+            for node in self
+                .data
+                .root
+                .as_ref()
+                .expect("Expected root for comments with data")
+                .descendants()
+            {
+                unformatted_comments.extend(self.leading_comments(&node).iter().filter_map(
+                    |comment| {
+                        (!comment.formatted.get()).then_some(DebugComment::Leading {
+                            node: node.clone(),
+                            comment,
+                        })
+                    },
+                ));
+                unformatted_comments.extend(self.dangling_comments(&node).iter().filter_map(
+                    |comment| {
+                        (!comment.formatted.get()).then_some(DebugComment::Dangling {
+                            node: node.clone(),
+                            comment,
+                        })
+                    },
+                ));
+                unformatted_comments.extend(self.trailing_comments(&node).iter().filter_map(
+                    |comment| {
+                        (!comment.formatted.get()).then_some(DebugComment::Trailing {
+                            node: node.clone(),
+                            comment,
+                        })
+                    },
+                ));
+            }
+
+            panic!("The following comments have not been formatted.\n{unformatted_comments:#?}")
         }
     }
 }

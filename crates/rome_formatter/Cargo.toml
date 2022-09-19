@@ -13,7 +13,6 @@ rome_rowan = { path = "../rome_rowan" }
 tracing = { version = "0.1.31", default-features = false, features = ["std"] }
 serde = { version = "1.0.136", features = ["derive"], optional = true }
 cfg-if = "1.0.0"
-indexmap = "1.8.2"
 schemars = { version = "0.8.10", optional = true }
 rustc-hash = "1.1.0"
 countme = "3.0.1"
