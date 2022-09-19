@@ -28,7 +28,7 @@ use super::{
 use crate::file_handlers::{FixAllParams, Language as LanguageId};
 use indexmap::IndexSet;
 use rome_console::codespan::Severity;
-use rome_js_analyze::shared::rename::{RenameError, RenameSymbolExtensions};
+use rome_js_analyze::utils::rename::{RenameError, RenameSymbolExtensions};
 use std::borrow::Cow;
 use std::fmt::Debug;
 
