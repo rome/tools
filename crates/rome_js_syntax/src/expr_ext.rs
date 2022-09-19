@@ -464,6 +464,15 @@ impl JsNumberLiteralExpression {
 
 impl JsStringLiteralExpression {
     /// Get the inner text of a string not including the quotes
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_factory::make::{js_string_literal_expression, ident};
+    ///
+    ///let string = js_string_literal_expression(ident("foo"));
+    /// assert_eq!(string.inner_string_text().unwrap().text(), "foo");
+    /// ```
     pub fn inner_string_text(&self) -> SyntaxResult<SyntaxTokenText> {
         let value = self.value_token()?;
         let mut text = value.token_text();

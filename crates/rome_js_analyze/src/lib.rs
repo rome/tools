@@ -14,6 +14,7 @@ use std::{borrow::Cow, error::Error};
 mod analyzers;
 mod assists;
 mod control_flow;
+mod react;
 mod registry;
 mod semantic_analyzers;
 mod semantic_services;

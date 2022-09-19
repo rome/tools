@@ -3,6 +3,15 @@ use rome_rowan::{SyntaxResult, SyntaxTokenText};
 
 impl JsxString {
     /// Get the inner text of a string not including the quotes
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_factory::make::{jsx_ident, jsx_string};
+    ///
+    ///let string = jsx_string(jsx_ident("button"));
+    /// assert_eq!(string.inner_string_text().unwrap().text(), "button");
+    /// ```
     pub fn inner_string_text(&self) -> SyntaxResult<SyntaxTokenText> {
         let value = self.value_token()?;
         let mut text = value.token_text();
