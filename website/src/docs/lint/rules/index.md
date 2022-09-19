@@ -267,6 +267,13 @@ Prevent the usage of dangerous JSX props
 Disallow <code>new</code> operators with the <code>Symbol</code> object
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noRenderReturnValue">
+	<a href="/docs/lint/rules/noRenderReturnValue">noRenderReturnValue (since v0.10.0)</a>
+	<a class="header-anchor" href="#noRenderReturnValue"></a>
+</h3>
+Prevent the usage of the return value of <code>React.render</code>
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noUnreachable">
 	<a href="/docs/lint/rules/noUnreachable">noUnreachable (since v0.7.0)</a>
 	<a class="header-anchor" href="#noUnreachable"></a>

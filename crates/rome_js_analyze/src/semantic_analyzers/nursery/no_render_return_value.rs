@@ -18,13 +18,13 @@ declare_rule! {
     /// ### Invalid
     ///
     /// ```jsx,expect_diagnostic
-    /// const foo = React.render(<div />, document.body);
+    /// const foo = ReactDOM.render(<div />, document.body);
     /// ```
     ///
     /// ### Valid
     ///
     /// ```jsx
-    /// React.render(<div />, document.body);
+    /// ReactDOM.render(<div />, document.body);
     /// ```
     pub(crate) NoRenderReturnValue {
         version: "0.10.0",
