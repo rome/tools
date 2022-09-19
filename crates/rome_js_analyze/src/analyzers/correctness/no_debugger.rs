@@ -6,7 +6,7 @@ use rome_diagnostics::Applicability;
 use rome_js_syntax::JsDebuggerStatement;
 use rome_rowan::{AstNode, BatchMutationExt};
 
-use crate::{shared, JsRuleAction};
+use crate::{utils, JsRuleAction};
 
 declare_rule! {
     /// Disallow the use of `debugger`
@@ -59,7 +59,7 @@ impl Rule for NoDebugger {
         let node = ctx.query();
 
         let mut mutation = ctx.root().begin();
-        shared::remove_statement(&mut mutation, node)?;
+        utils::remove_statement(&mut mutation, node)?;
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,

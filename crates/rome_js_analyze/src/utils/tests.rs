@@ -1,5 +1,5 @@
 use super::rename::*;
-use crate::shared::batch::JsBatchMutation;
+use crate::utils::batch::JsBatchMutation;
 use rome_diagnostics::file::FileId;
 use rome_js_semantic::semantic_model;
 use rome_js_syntax::{JsFormalParameter, JsIdentifierBinding, JsVariableDeclarator, SourceType};
@@ -77,7 +77,7 @@ macro_rules! assert_rename_ok {
         $(
             #[test]
             pub fn $name() {
-                $crate::shared::tests::assert_rename_ok($before, $expected);
+                $crate::utils::tests::assert_rename_ok($before, $expected);
             }
         )*
     };
@@ -89,7 +89,7 @@ macro_rules! assert_rename_nok {
         $(
             #[test]
             pub fn $name() {
-                $crate::shared::tests::assert_rename_nok($before);
+                $crate::utils::tests::assert_rename_nok($before);
             }
         )*
     };
@@ -101,7 +101,7 @@ macro_rules! assert_remove_ok {
         $(
             #[test]
             pub fn $name() {
-                $crate::shared::tests::assert_remove_ok($before, $expected);
+                $crate::utils::tests::assert_remove_ok($before, $expected);
             }
         )*
     };

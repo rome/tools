@@ -1,4 +1,4 @@
-use crate::{semantic_services::Semantic, shared::batch::JsBatchMutation, JsRuleAction};
+use crate::{semantic_services::Semantic, utils::batch::JsBatchMutation, JsRuleAction};
 use rome_analyze::{
     context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
 };

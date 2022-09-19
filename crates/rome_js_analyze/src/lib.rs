@@ -17,7 +17,7 @@ mod control_flow;
 mod registry;
 mod semantic_analyzers;
 mod semantic_services;
-pub mod shared;
+pub mod utils;
 
 use crate::{registry::build_registry, semantic_services::SemanticModelBuilderVisitor};
 

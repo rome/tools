@@ -1,7 +1,7 @@
 use rome_console::{Console, EnvConsole};
 use rome_formatter::FormatError;
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
-use rome_js_analyze::shared::rename::RenameError;
+use rome_js_analyze::utils::rename::RenameError;
 use rome_js_analyze::RuleError;
 use serde::{Deserialize, Serialize};
 use std::error::Error;

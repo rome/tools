@@ -8,7 +8,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{BatchMutationExt, SyntaxNodeCast};
 
-use crate::{semantic_services::Semantic, shared::remove_declarator, JsRuleAction};
+use crate::{semantic_services::Semantic, utils::remove_declarator, JsRuleAction};
 
 declare_rule! {
     /// Provides a refactor to inline variables

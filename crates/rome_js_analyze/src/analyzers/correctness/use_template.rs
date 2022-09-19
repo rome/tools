@@ -12,7 +12,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList, BatchMutationExt, SyntaxToken, TriviaPiece};
 
-use crate::{shared::escape_string, JsRuleAction};
+use crate::{utils::escape_string, JsRuleAction};
 
 declare_rule! {
     /// Template literals are preferred over string concatenation.
