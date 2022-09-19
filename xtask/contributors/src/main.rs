@@ -1,6 +1,6 @@
 use pico_args::Arguments;
 use serde::{Deserialize, Serialize};
-use std::io::Write;
+use std::fmt::Write;
 use xtask::glue::fs2;
 use xtask::*;
 
@@ -14,14 +14,14 @@ fn main() -> Result<()> {
     let token: String = args.value_from_str("--token").unwrap();
     let contributors = get_contributors(&token);
 
-    let mut content = Vec::new();
+    let mut content = String::new();
 
     let command = "Use the command `cargo contributors`".to_string();
-    writeln!(content, "<!-- {} -->", prepend_generated_preamble(command))?;
-    writeln!(content)?;
-    writeln!(content, "### Code contributors")?;
-    writeln!(content)?;
-    writeln!(content, "<ul class=\"team-list credits\">")?;
+    write!(content, "<!-- {} -->", prepend_generated_preamble(command))?;
+    content.push('\n');
+    content.push_str("### Code contributors");
+    content.push('\n');
+    content.push_str("<ul class=\"team-list credits\">");
     for contributor in contributors {
         let mut contributor_html = String::new();
         let escaped_login = html_escape::encode_text(&contributor.login);
@@ -38,13 +38,13 @@ fn main() -> Result<()> {
             format!("{}", escaped_avatar),
             &mut contributor_html,
         );
-        writeln!(content, "{}", &contributor_html)?;
-        writeln!(content, "\" alt=\"{}\" />", contributor.login)?;
-        writeln!(content, "<span>{}</span>", escaped_login)?;
-        writeln!(content, "</a></li>")?;
+        content.push_str(&contributor_html);
+        write!(content, "\" alt=\"{}\" />", contributor.login)?;
+        write!(content, "<span>{}</span>", escaped_login)?;
+        content.push_str("</a></li>");
     }
 
-    writeln!(content, "</ul>")?;
+    content.push_str("</ul>");
     fs2::write(root.join("contributors.md"), content)?;
 
     Ok(())
