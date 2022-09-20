@@ -6,6 +6,7 @@ use crate::utils::jsx::{
 use crate::JsFormatter;
 use rome_formatter::{format_args, write, CstFormatContext, FormatRuleWithOptions, VecBuffer};
 use rome_js_syntax::{JsxAnyChild, JsxChildList};
+use std::cell::RefCell;
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsxChildList {
@@ -25,6 +26,36 @@ impl FormatRule<JsxChildList> for FormatJsxChildList {
     type Context = JsFormatContext;
 
     fn fmt(&self, list: &JsxChildList, f: &mut JsFormatter) -> FormatResult<()> {
+        let result = self.fmt_children(list, f)?;
+
+        match result {
+            FormatChildrenResult::ForceMultiline(format_multiline) => {
+                write!(f, [format_multiline])
+            }
+            FormatChildrenResult::BestFitting {
+                flat_children,
+                expanded_children,
+            } => {
+                write!(f, [best_fitting![flat_children, expanded_children]])
+            }
+        }
+    }
+}
+
+pub(crate) enum FormatChildrenResult {
+    ForceMultiline(FormatMultilineChildren),
+    BestFitting {
+        flat_children: FormatFlatChildren,
+        expanded_children: FormatMultilineChildren,
+    },
+}
+
+impl FormatJsxChildList {
+    pub(crate) fn fmt_children(
+        &self,
+        list: &JsxChildList,
+        f: &mut JsFormatter,
+    ) -> FormatResult<FormatChildrenResult> {
         self.disarm_debug_assertions(list, f);
 
         let children_meta = self.children_meta(list, f.context().comments());
@@ -194,18 +225,16 @@ impl FormatRule<JsxChildList> for FormatJsxChildList {
             last = Some(child);
         }
 
-        let format_multiline = format_once(|f| write!(f, [block_indent(&multiline.finish())]));
-        let format_flat_children = flat.finish();
-
         if force_multiline {
-            write!(f, [format_multiline])
+            Ok(FormatChildrenResult::ForceMultiline(multiline.finish()?))
         } else {
-            write!(f, [best_fitting![format_flat_children, format_multiline]])
+            Ok(FormatChildrenResult::BestFitting {
+                flat_children: flat.finish()?,
+                expanded_children: multiline.finish()?,
+            })
         }
     }
-}
 
-impl FormatJsxChildList {
     /// Tracks the tokens of [JsxText] and [JsxExpressionChild] nodes to be formatted and
     /// asserts that the suppression comments are checked (they get ignored).
     ///
@@ -511,17 +540,30 @@ impl MultilineBuilder {
         })
     }
 
-    fn finish(self) -> impl Format<JsFormatContext> {
-        format_once(move |f| {
-            let elements = self.result?;
-
-            match self.layout {
-                MultilineLayout::Fill => {
-                    f.write_element(FormatElement::Fill(elements.into_boxed_slice()))
-                }
-                MultilineLayout::NoFill => f.write_elements(elements),
-            }
+    fn finish(self) -> FormatResult<FormatMultilineChildren> {
+        Ok(FormatMultilineChildren {
+            layout: self.layout,
+            elements: RefCell::new(self.result?),
         })
+    }
+}
+
+pub(crate) struct FormatMultilineChildren {
+    layout: MultilineLayout,
+    elements: RefCell<Vec<FormatElement>>,
+}
+
+impl Format<JsFormatContext> for FormatMultilineChildren {
+    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        let elements = self.elements.take();
+        let format_inner = format_once(|f| match self.layout {
+            MultilineLayout::Fill => {
+                f.write_element(FormatElement::Fill(elements.into_boxed_slice()))
+            }
+            MultilineLayout::NoFill => f.write_elements(elements),
+        });
+
+        write!(f, [block_indent(&format_inner)])
     }
 }
 
@@ -559,12 +601,22 @@ impl FlatBuilder {
         self.disabled = true;
     }
 
-    fn finish(self) -> impl Format<JsFormatContext> {
-        format_once(move |f| {
-            assert!(!self.disabled, "The flat builder has been disabled and thus, does no longer store any elements. Make sure you don't call disable if you later intend to format the flat content.");
+    fn finish(self) -> FormatResult<FormatFlatChildren> {
+        assert!(!self.disabled, "The flat builder has been disabled and thus, does no longer store any elements. Make sure you don't call disable if you later intend to format the flat content.");
 
-            let elements = self.result?;
-            f.write_elements(elements)
+        Ok(FormatFlatChildren {
+            elements: RefCell::new(self.result?),
         })
+    }
+}
+
+pub(crate) struct FormatFlatChildren {
+    elements: RefCell<Vec<FormatElement>>,
+}
+
+impl Format<JsFormatContext> for FormatFlatChildren {
+    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        let elements = self.elements.take();
+        f.write_elements(elements)
     }
 }

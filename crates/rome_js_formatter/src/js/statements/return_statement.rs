@@ -111,7 +111,9 @@ impl Format<JsFormatContext> for FormatReturnOrThrowArgument<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         let argument = self.0;
 
-        if has_argument_leading_comments(argument, f.context().comments()) {
+        if has_argument_leading_comments(argument, f.context().comments())
+            && !matches!(argument, JsAnyExpression::JsxTagExpression(_))
+        {
             write!(f, [text("("), &block_indent(&argument.format()), text(")")])
         } else if is_binary_or_sequence_argument(argument) {
             write!(

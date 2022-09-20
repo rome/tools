@@ -842,7 +842,9 @@ pub(crate) fn should_break_after_operator(
     right: &JsAnyExpression,
     comments: &JsComments,
 ) -> SyntaxResult<bool> {
-    if comments.has_leading_own_line_comment(right.syntax()) {
+    if comments.has_leading_own_line_comment(right.syntax())
+        && !matches!(right, JsAnyExpression::JsxTagExpression(_))
+    {
         return Ok(true);
     }
 

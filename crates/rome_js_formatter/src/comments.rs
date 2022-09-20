@@ -218,7 +218,9 @@ fn handle_typecast_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlac
 fn handle_after_arrow_param_comment(
     comment: DecoratedComment<JsLanguage>,
 ) -> CommentPlacement<JsLanguage> {
-    let is_next_arrow = comment.following_token().kind() == JsSyntaxKind::FAT_ARROW;
+    let is_next_arrow = comment
+        .following_token()
+        .map_or(false, |token| token.kind() == JsSyntaxKind::FAT_ARROW);
 
     // Makes comments after the `(` and `=>` dangling comments
     // ```javascript
@@ -379,7 +381,11 @@ fn handle_class_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlaceme
         // ```javascript
         // class Test { /* comment */ }
         // ```
-        if comment.following_token().kind() == JsSyntaxKind::R_CURLY && first_member.is_none() {
+        if comment
+            .following_token()
+            .map_or(false, |token| token.kind() == JsSyntaxKind::R_CURLY)
+            && first_member.is_none()
+        {
             return CommentPlacement::dangling(comment.enclosing_node().clone(), comment);
         } else {
             return CommentPlacement::Default(comment);
@@ -674,7 +680,10 @@ fn handle_if_statement_comment(
 
             if let Some(preceding) = comment.preceding_node() {
                 // Test if this is a comment right before the condition's `)`
-                if comment.following_token().kind() == JsSyntaxKind::R_PAREN {
+                if comment
+                    .following_token()
+                    .map_or(false, |token| token.kind() == JsSyntaxKind::R_PAREN)
+                {
                     return CommentPlacement::trailing(preceding.clone(), comment);
                 }
 
@@ -763,7 +772,10 @@ fn handle_while_comment(comment: DecoratedComment<JsLanguage>) -> CommentPlaceme
 
     if let Some(preceding) = comment.preceding_node() {
         // Test if this is a comment right before the condition's `)`
-        if comment.following_token().kind() == JsSyntaxKind::R_PAREN {
+        if comment
+            .following_token()
+            .map_or(false, |token| token.kind() == JsSyntaxKind::R_PAREN)
+        {
             return CommentPlacement::trailing(preceding.clone(), comment);
         }
     }

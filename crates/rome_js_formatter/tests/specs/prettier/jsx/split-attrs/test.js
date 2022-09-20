@@ -44,6 +44,5 @@ long_string =
 long_string_with_extra_param =
   <div className="i use bootstrap and just put loooaads of classnames in here all the time" blah="3">hello world</div>
 
-// rome-ignore format: Instability issue
 long_obj =
   <div style={{ i: 'dont', use: 'bootstrap', and: 'instead', use: 'massive', objects }}>hello world</div>

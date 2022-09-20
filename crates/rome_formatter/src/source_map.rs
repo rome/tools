@@ -88,6 +88,65 @@ impl TransformSourceMap {
         self.trimmed_source_range_from_transformed_range(node.text_trimmed_range())
     }
 
+    /// Resolves the closest trimmed range for the passed in node.
+    ///
+    /// The difference to [::trimmed_source_range] only resolves the first trimmed range.
+    ///
+    /// ```javascript
+    /// function f() {
+    ///   return ((
+    ///     // prettier-ignore
+    ///     /* $FlowFixMe(>=0.53.0) */
+    ///     <JSX />
+    ///   ));
+    /// }
+    /// ```
+    ///
+    /// The trimmed range for the `JsxTagExpression` `<JSX />` returns the the range including all removed parentheses:
+    ///
+    /// ```javascript
+    ///   ((
+    ///     // prettier-ignore
+    ///     /* $FlowFixMe(>=0.53.0) */
+    ///     <JSX />
+    ///   ))
+    /// ```
+    ///
+    /// The [::closest_trimmed_range] resolves only the first deleted range, returning the range of the inner parenthesized
+    /// expression:
+
+    /// ```javascript
+    /// (
+    ///     // prettier-ignore
+    ///     /* $FlowFixMe(>=0.53.0) */
+    ///     <JSX />
+    ///   )
+    /// ```
+    pub fn closest_trimmed_range<L: Language>(&self, node: &SyntaxNode<L>) -> TextRange {
+        let source_range = self.source_range(node.text_trimmed_range());
+        self.resolve_trimmed_range(source_range)
+    }
+
+    fn resolve_trimmed_range(&self, mut source_range: TextRange) -> TextRange {
+        let start_mapping = self.mapped_node_ranges.get(&source_range.start());
+        if let Some(mapping) = start_mapping {
+            // If the queried node fully encloses the original range of the node, then extend the range
+            if source_range.contains_range(mapping.original_range) {
+                source_range = TextRange::new(mapping.extended_range.start(), source_range.end());
+            }
+        }
+
+        let end_mapping = self.mapped_node_ranges.get(&source_range.end());
+        if let Some(mapping) = end_mapping {
+            // If the queried node fully encloses the original range of the node, then extend the range
+            if source_range.contains_range(mapping.original_range) {
+                source_range = TextRange::new(source_range.start(), mapping.extended_range.end());
+            }
+        }
+
+        source_range
+    }
+
     fn trimmed_source_range_from_transformed_range(
         &self,
         transformed_range: TextRange,
@@ -97,34 +156,14 @@ impl TransformSourceMap {
         let mut mapped_range = source_range;
 
         loop {
-            let mut widened = false;
+            let resolved = self.resolve_trimmed_range(mapped_range);
 
-            let start_mapping = self.mapped_node_ranges.get(&mapped_range.start());
-            if let Some(mapping) = start_mapping {
-                // If the queried node fully encloses the original range of the node, then extend the range
-                if mapped_range.contains_range(mapping.original_range) {
-                    mapped_range =
-                        TextRange::new(mapping.extended_range.start(), mapped_range.end());
-                    widened = true;
-                }
-            }
-
-            let end_mapping = self.mapped_node_ranges.get(&mapped_range.end());
-            if let Some(mapping) = end_mapping {
-                // If the queried node fully encloses the original range of the node, then extend the range
-                if mapped_range.contains_range(mapping.original_range) {
-                    mapped_range =
-                        TextRange::new(mapped_range.start(), mapping.extended_range.end());
-                    widened = true;
-                }
-            }
-
-            if !widened {
-                break;
+            if resolved == mapped_range {
+                break resolved;
+            } else {
+                mapped_range = resolved;
             }
         }
-
-        mapped_range
     }
 
     /// Returns the source text of the trimmed range of `node`.

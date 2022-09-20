@@ -19,14 +19,14 @@ impl FormatNodeRule<JsxExpressionChild> for FormatJsxExpressionChild {
 
         match expression {
             Some(expression) => {
-                let should_inline =
-                    if matches!(expression, JsAnyExpression::JsConditionalExpression(_))
-                        || JsAnyBinaryLikeExpression::can_cast(expression.syntax().kind())
-                    {
-                        true
-                    } else {
-                        should_inline_jsx_expression(&expression, f.context().comments())
-                    };
+                let comments = f.context().comments();
+                let is_conditional_or_binary =
+                    matches!(expression, JsAnyExpression::JsConditionalExpression(_))
+                        || JsAnyBinaryLikeExpression::can_cast(expression.syntax().kind());
+
+                let should_inline = !comments.has_comments(expression.syntax())
+                    && (is_conditional_or_binary
+                        || should_inline_jsx_expression(&expression, comments));
 
                 if should_inline {
                     write!(

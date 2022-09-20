@@ -4,7 +4,6 @@
 
 <div>{/* comment */...a}</div>;
 
-// rome-ignore format: Instability issue
 <div>{...a //comment
 }</div>;
 
@@ -17,7 +16,6 @@
   ...a
 }</div>;
 
-// rome-ignore format: Instability issue
 <div>{//comment
   ...a // comment
 }</div>;
