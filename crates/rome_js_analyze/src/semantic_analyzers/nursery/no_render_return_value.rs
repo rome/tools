@@ -75,9 +75,15 @@ impl Rule for NoRenderReturnValue {
         Some(RuleDiagnostic::new(
             node.syntax().text_trimmed_range(),
             markup! {
-                "Do not depend on the return value from "<Emphasis>"ReactDOM.render()"</Emphasis>"."
+                "Do not depend on the value returned by the function "<Emphasis>"ReactDOM.render()"</Emphasis>"."
             },
-        ))
+        ).footer_note(markup! {
+"The returned value is legacy and future versions of react might return that value asynchronously."
+"
+Check the "<Hyperlink href="https://facebook.github.io/react/docs/react-dom.html#render">"React documentation"</Hyperlink>" for more information."
+
+        })
+        )
     }
 }
 
