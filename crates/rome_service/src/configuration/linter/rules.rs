@@ -387,16 +387,18 @@ struct NurserySchema {
     no_new_symbol: Option<RuleConfiguration>,
     no_unreachable: Option<RuleConfiguration>,
     no_unused_variables: Option<RuleConfiguration>,
+    use_button_type: Option<RuleConfiguration>,
     use_camel_case: Option<RuleConfiguration>,
     use_optional_chain: Option<RuleConfiguration>,
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 6] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 7] = [
         "noDangerouslySetInnerHtml",
         "noNewSymbol",
         "noUnreachable",
         "noUnusedVariables",
+        "useButtonType",
         "useCamelCase",
         "useOptionalChain",
     ];
