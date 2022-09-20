@@ -778,7 +778,9 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     // new Test<A, B, C>();
 
     if p.at(T![?.]) {
-        let error = p.err_builder(&format!("Invalid optional chain from new expression.",)).primary(p.cur_range(), "");
+        let error = p
+            .err_builder("Invalid optional chain from new expression.")
+            .primary(p.cur_range(), "");
 
         p.error(error);
     }
