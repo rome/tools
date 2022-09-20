@@ -3,10 +3,9 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::SemanticModel;
-use rome_js_syntax::JsSyntaxKind::JS_IMPORT;
 use rome_js_syntax::{
-    JsIdentifierBinding, JsImport, JsSyntaxKind, JsxAnyChild, JsxAnyElementName, JsxChildList,
-    JsxElement, JsxFragment, JsxMemberName, JsxReferenceIdentifier, JsxTagExpression,
+    JsIdentifierBinding, JsImport, JsSyntaxKind, JsxAnyChild, JsxAnyElementName, JsxElement,
+    JsxFragment, JsxMemberName, JsxReferenceIdentifier, JsxTagExpression,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeList};
 
@@ -93,7 +92,7 @@ impl Rule for NoUselessFragment {
                 let opening_element = element.opening_element().ok()?;
                 let name = opening_element.name().ok()?;
 
-                return match name {
+                match name {
                     JsxAnyElementName::JsxMemberName(member_name) => {
                         if jsx_member_name_is_react_fragment(&member_name, model)? {
                             Some(NoUselessFragmentState::Empty)
@@ -109,7 +108,7 @@ impl Rule for NoUselessFragment {
                         }
                     }
                     JsxAnyElementName::JsxName(_) | JsxAnyElementName::JsxNamespaceName(_) => None,
-                };
+                }
             }
         }
     }

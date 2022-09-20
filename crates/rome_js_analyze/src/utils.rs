@@ -1,4 +1,5 @@
 use rome_js_factory::make;
+use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
     JsAnyStatement, JsIdentifierBinding, JsIdentifierExpression, JsImport, JsLanguage,
     JsModuleItemList, JsStatementList, JsStaticMemberExpression, JsVariableDeclaration,
