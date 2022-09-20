@@ -13,8 +13,8 @@ impl JsImport {
     /// let binding = js_identifier_binding(ident("React"));
     /// let clause = js_import_default_clause(JsAnyBinding::JsIdentifierBinding(binding), token(T![from]), source).build();
     /// let import = js_import(token(T![import]), JsAnyImportClause::JsImportDefaultClause(clause)).build();
-    /// assert_eq!(import.source_is("react"), true);
-    /// assert_eq!(import.source_is("React"), false);
+    /// assert_eq!(import.source_is("react"), Ok(true));
+    /// assert_eq!(import.source_is("React"), Ok(false));
     /// ```
     pub fn source_is(&self, source_to_check: &str) -> SyntaxResult<bool> {
         let clause = self.import_clause()?;
@@ -37,8 +37,8 @@ impl JsModuleSource {
     /// use rome_js_factory::make::{ident, js_module_source};
     /// use rome_js_syntax::{JsAnyBinding, JsAnyImportClause, T};
     /// let source = js_module_source(ident("react"));
-    /// let text = source.inner_string_text().unwrap().text();
-    /// assert_eq!(text, "react");
+    /// let text = source.inner_string_text().unwrap();
+    /// assert_eq!(text.text(), "react");
     /// ```
     pub fn inner_string_text(&self) -> SyntaxResult<SyntaxTokenText> {
         let value = self.value_token()?;
