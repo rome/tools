@@ -80,23 +80,30 @@ impl Rule for UseButtonType {
                             missing_prop: true,
                         });
                     } else {
-                        for attribute in attributes {
+                        let type_attribute = attributes.into_iter().find_map(|attribute| {
                             let attribute = attribute.as_jsx_attribute()?;
                             let jsx_name = attribute.name().ok()?;
                             let jsx_name = jsx_name.as_jsx_name()?;
                             let name = jsx_name.value_token().ok()?;
                             let name = name.text_trimmed();
+
                             if name == "type" {
-                                let initializer = attribute.initializer()?.value().ok()?;
-                                let initializer = initializer.as_jsx_string()?;
-                                if !ALLOWED_BUTTON_TYPES
-                                    .contains(&&*initializer.inner_string_text().ok()?)
-                                {
-                                    return Some(UseButtonTypeState {
-                                        node: UseButtonTypeNode::from(initializer.clone()),
-                                        missing_prop: false,
-                                    });
-                                }
+                                Some(attribute.clone())
+                            } else {
+                                None
+                            }
+                        });
+
+                        if let Some(attribute) = type_attribute {
+                            let initializer = attribute.initializer()?.value().ok()?;
+                            let initializer = initializer.as_jsx_string()?;
+                            if !ALLOWED_BUTTON_TYPES
+                                .contains(&&*initializer.inner_string_text().ok()?)
+                            {
+                                return Some(UseButtonTypeState {
+                                    node: UseButtonTypeNode::from(initializer.clone()),
+                                    missing_prop: false,
+                                });
                             }
                         }
                     }
@@ -124,27 +131,32 @@ impl Rule for UseButtonType {
                         return if let Some(props) = props {
                             let members = props.members();
 
-                            for member in members {
+                            let type_member = members.into_iter().find_map(|member| {
                                 let member = member.ok()?;
                                 let property = member.as_js_property_object_member()?;
                                 let property_name = property.name().ok()?;
                                 let property_value = property.value().ok()?;
 
                                 let property_name = property_name.as_js_literal_member_name()?;
-                                // we found the correct member, we can bail
                                 if property_name.name().ok()? == "type" {
-                                    let value = property_value
-                                        .as_js_any_literal_expression()?
-                                        .as_js_string_literal_expression()?;
+                                    Some(property_value)
+                                } else {
+                                    None
+                                }
+                            });
 
-                                    if !ALLOWED_BUTTON_TYPES
-                                        .contains(&&*value.inner_string_text().ok()?)
-                                    {
-                                        return Some(UseButtonTypeState {
-                                            node: UseButtonTypeNode::from(value.clone()),
-                                            missing_prop: false,
-                                        });
-                                    }
+                            if let Some(type_member) = type_member {
+                                let value = type_member
+                                    .as_js_any_literal_expression()?
+                                    .as_js_string_literal_expression()?;
+
+                                if !ALLOWED_BUTTON_TYPES
+                                    .contains(&&*value.inner_string_text().ok()?)
+                                {
+                                    return Some(UseButtonTypeState {
+                                        node: UseButtonTypeNode::from(value.clone()),
+                                        missing_prop: false,
+                                    });
                                 }
                             }
 
