@@ -28,10 +28,10 @@ export default function NurseryRules({
 							htmlFor="nursery-rules"
 							className="font-medium text-gray-700"
 						>
-							Nursery rules
+							Nursery lint rules
 						</label>
 						<span id="nursery-rules-description" className="text-gray-500">
-							<span className="sr-only">Nursery rules</span>
+							<span className="sr-only">Nursery lint rules</span>
 						</span>
 					</div>
 				</div>
