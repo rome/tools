@@ -271,16 +271,6 @@
             }
           ]
         },
-        "useOptionalChain": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "useSimplifiedLogicExpression": {
           "anyOf": [
             {
@@ -539,6 +529,16 @@
           ]
         },
         "useCamelCase": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useOptionalChain": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
