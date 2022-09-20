@@ -14,6 +14,7 @@ use std::{borrow::Cow, error::Error};
 mod analyzers;
 mod assists;
 mod control_flow;
+mod react;
 mod registry;
 mod semantic_analyzers;
 mod semantic_services;
@@ -110,11 +111,13 @@ mod tests {
     #[ignore]
     #[test]
     fn quick_test() {
-        const SOURCE: &str = "
-        foo.bar && foo.bar?.();
-        ";
+        const SOURCE: &str = r#"
+React.createElement('button', {
+    "type": "bar"
+});
+        "#;
 
-        let parsed = parse(SOURCE, FileId::zero(), SourceType::js_module());
+        let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
 
         let mut error_ranges = Vec::new();
         analyze(

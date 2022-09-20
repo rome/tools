@@ -10,6 +10,11 @@ pub fn ident(text: &str) -> JsSyntaxToken {
     JsSyntaxToken::new_detached(JsSyntaxKind::IDENT, text, [], [])
 }
 
+/// Create a new identifier token with no attached trivia
+pub fn jsx_ident(text: &str) -> JsSyntaxToken {
+    JsSyntaxToken::new_detached(JsSyntaxKind::JSX_IDENT, text, [], [])
+}
+
 /// Create a new string literal token with no attached trivia
 pub fn js_string_literal(text: &str) -> JsSyntaxToken {
     JsSyntaxToken::new_detached(

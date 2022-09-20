@@ -1,12 +1,10 @@
+use crate::react::{is_react_create_element, ReactCreateElementCall};
 use crate::semantic_services::Semantic;
-use crate::utils::{is_react_create_element, PossibleCreateElement};
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::codespan::Severity;
 use rome_console::markup;
-use rome_js_syntax::{
-    JsAnyExpression, JsCallExpression, JsLiteralMemberName, JsxAnyAttributeName, JsxAttribute,
-};
+use rome_js_syntax::{JsCallExpression, JsLiteralMemberName, JsxAnyAttributeName, JsxAttribute};
 use rome_rowan::{declare_node_union, AstNode};
 
 declare_rule! {
@@ -67,32 +65,14 @@ impl Rule for NoDangerouslySetInnerHtml {
                 }
             }
             JsAnyCreateElement::JsCallExpression(call_expression) => {
-                let callee = call_expression.callee().ok()?;
-                let is_create_element = match callee {
-                    JsAnyExpression::JsStaticMemberExpression(static_member) => {
-                        is_react_create_element(PossibleCreateElement::from(static_member), model)
-                    }
-                    JsAnyExpression::JsIdentifierExpression(identifier_expression) => {
-                        is_react_create_element(
-                            PossibleCreateElement::from(identifier_expression),
-                            model,
-                        )
-                    }
-                    _ => return None,
-                }?;
-
-                if is_create_element {
+                if let Some(react_create_element) = is_react_create_element(call_expression, model)
+                {
+                    let ReactCreateElementCall { props, .. } = react_create_element;
                     // if we are inside a create element call, we inspect the second argument, which
                     // should be an object expression. We look for a member that has as name
                     // "dangerouslySetInnerHTML"
-                    let arguments = call_expression.arguments().ok()?.args();
-                    let mut arguments = arguments.into_iter();
-                    if let (Some(_), Some(second_argument)) = (arguments.next(), arguments.next()) {
-                        let second_argument = second_argument.ok()?;
-                        let object_expression = second_argument
-                            .as_js_any_expression()?
-                            .as_js_object_expression()?;
-                        let members = object_expression.members();
+                    if let Some(props) = props {
+                        let members = props.members();
                         for member in members {
                             let member = member.ok()?;
                             let property_member =

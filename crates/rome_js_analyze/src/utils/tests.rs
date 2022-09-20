@@ -1,6 +1,5 @@
-use crate::utils::batch::JsBatchMutation;
-
 use super::rename::*;
+use crate::utils::batch::JsBatchMutation;
 use rome_diagnostics::file::FileId;
 use rome_js_semantic::semantic_model;
 use rome_js_syntax::{JsFormalParameter, JsIdentifierBinding, JsVariableDeclarator, SourceType};
