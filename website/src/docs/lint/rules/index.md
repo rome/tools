@@ -271,7 +271,7 @@ Disallow <code>new</code> operators with the <code>Symbol</code> object
 	<a href="/docs/lint/rules/noRenderReturnValue">noRenderReturnValue (since v0.10.0)</a>
 	<a class="header-anchor" href="#noRenderReturnValue"></a>
 </h3>
-Prevent the usage of the return value of <code>React.render</code>
+Prevent the usage of the return value of <code>React.render</code>.
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noUnreachable">
