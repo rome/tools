@@ -1,0 +1,46 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: withChildren.jsx
+---
+# Input
+```js
+<>
+    <>foo</>
+    <React.Fragment>foo</React.Fragment>
+    <Fragment>foo</Fragment>
+</>
+
+```
+
+# Diagnostics
+```
+warning[nursery/noUselessFragment]: Avoid using unnecessary Fragment.
+  ┌─ withChildren.jsx:2:5
+  │
+2 │     <>foo</>
+  │     --------
+
+
+```
+
+```
+warning[nursery/noUselessFragment]: Avoid using unnecessary Fragment.
+  ┌─ withChildren.jsx:3:5
+  │
+3 │     <React.Fragment>foo</React.Fragment>
+  │     ------------------------------------
+
+
+```
+
+```
+warning[nursery/noUselessFragment]: Avoid using unnecessary Fragment.
+  ┌─ withChildren.jsx:4:5
+  │
+4 │     <Fragment>foo</Fragment>
+  │     ------------------------
+
+
+```
+
+
