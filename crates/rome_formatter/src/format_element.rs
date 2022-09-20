@@ -398,10 +398,6 @@ impl Interned {
     pub(crate) fn new(element: FormatElement) -> Self {
         Self(Rc::new(element))
     }
-
-    pub(crate) fn try_unwrap(this: Interned) -> Result<FormatElement, Interned> {
-        Rc::try_unwrap(this.0).map_err(Interned)
-    }
 }
 
 impl PartialEq for Interned {
