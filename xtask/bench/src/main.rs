@@ -10,7 +10,7 @@ static ALLOCATOR: dhat::Alloc = dhat::Alloc;
 #[global_allocator]
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
-#[cfg(all(target_os = "macos", not(feature = "dhat-heap")))]
+#[cfg(all(not(target_os = "windows"), not(feature = "dhat-heap")))]
 #[global_allocator]
 static GLOBAL: tikv_jemallocator::Jemalloc = tikv_jemallocator::Jemalloc;
 

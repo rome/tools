@@ -30,7 +30,7 @@ humansize = {version = "1.1.1", optional = true }
 [target.'cfg(target_os = "windows")'.dependencies]
 mimalloc = "0.1.29"
 
-[target.'cfg(target_os = "macos")'.dependencies]
+[target.'cfg(not(windows))'.dependencies]
 tikv-jemallocator = "0.5.0"
 
 [features]

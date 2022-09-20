@@ -12,7 +12,7 @@ use tokio::runtime::Runtime;
 #[global_allocator]
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
-#[cfg(target_os = "macos")]
+#[cfg(not(target_os = "windows"))]
 #[global_allocator]
 static GLOBAL: tikv_jemallocator::Jemalloc = tikv_jemallocator::Jemalloc;
 
