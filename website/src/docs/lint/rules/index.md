@@ -193,14 +193,6 @@ Requires following curly brace conventions.
 JavaScript allows the omission of curly braces when a block contains only one statement. However, it is considered by many to be best practice to never omit curly braces around blocks, even when they are optional, because it can lead to bugs and reduces code clarity.
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="useOptionalChain">
-	<a href="/docs/lint/rules/useOptionalChain">useOptionalChain (since v0.10.0)</a>
-	<a class="header-anchor" href="#useOptionalChain"></a>
-	<span class="recommended">recommended</span>
-</h3>
-Enforce using concise optional chain instead of chained logical expressions.
-</div>
-<div class="rule">
 <h3 data-toc-exclude id="useSimplifiedLogicExpression">
 	<a href="/docs/lint/rules/useSimplifiedLogicExpression">useSimplifiedLogicExpression (since v0.7.0)</a>
 	<a class="header-anchor" href="#useSimplifiedLogicExpression"></a>
@@ -303,11 +295,25 @@ Disallow unused variables.
 Disallow unnecessary fragments
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useButtonType">
+	<a href="/docs/lint/rules/useButtonType">useButtonType (since v0.10.0)</a>
+	<a class="header-anchor" href="#useButtonType"></a>
+</h3>
+Enforces the usage of the attribute <code>type</code> for the element <code>button</code>
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useCamelCase">
 	<a href="/docs/lint/rules/useCamelCase">useCamelCase (since v0.8.0)</a>
 	<a class="header-anchor" href="#useCamelCase"></a>
 </h3>
 Enforce camel case naming convention.
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useOptionalChain">
+	<a href="/docs/lint/rules/useOptionalChain">useOptionalChain (since v0.10.0)</a>
+	<a class="header-anchor" href="#useOptionalChain"></a>
+</h3>
+Enforce using concise optional chain instead of chained logical expressions.
 </div>
 </section>
 <section>

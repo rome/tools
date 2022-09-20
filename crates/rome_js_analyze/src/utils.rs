@@ -1,8 +1,6 @@
 use rome_js_factory::make;
-use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
-    JsAnyStatement, JsIdentifierBinding, JsIdentifierExpression, JsImport, JsLanguage,
-    JsModuleItemList, JsStatementList, JsStaticMemberExpression, JsVariableDeclaration,
+    JsAnyStatement, JsLanguage, JsModuleItemList, JsStatementList, JsVariableDeclaration,
     JsVariableDeclarator, JsVariableDeclaratorList, JsVariableStatement, T,
 };
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutation};
