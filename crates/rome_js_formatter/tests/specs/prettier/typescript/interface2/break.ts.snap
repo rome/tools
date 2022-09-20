@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/interface2/break.ts
 ---
 
 # Input
@@ -8,7 +10,7 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
 export interface Environment1 extends GenericEnvironment<
   SomeType,
   AnotherType,
-  YetAnotherType
+  YetAnotherType,
 > {
   m(): void;
 };
@@ -19,7 +21,7 @@ export class Environment2 extends GenericEnvironment<
   DifferentType1,
   DifferentType2,
   DifferentType3,
-  DifferentType4
+  DifferentType4,
 > {
   m() {};
 };
@@ -79,7 +81,30 @@ export interface ExtendsLongOneWithGenerics extends Bar< SomeLongTypeSomeLongTyp
 ```diff
 --- Prettier
 +++ Rome
-@@ -68,14 +68,14 @@
+@@ -1,5 +1,8 @@
+-export interface Environment1
+-  extends GenericEnvironment<SomeType, AnotherType, YetAnotherType> {
++export interface Environment1 extends GenericEnvironment<
++  SomeType,
++  AnotherType,
++  YetAnotherType,
++> {
+   m(): void;
+ }
+ export class Environment2 extends GenericEnvironment<
+@@ -9,9 +12,9 @@
+   DifferentType1,
+   DifferentType2,
+   DifferentType3,
+-  DifferentType4
++  DifferentType4,
+ > {
+-  m() {}
++  m() {};
+ }
+ 
+ // Declare Interface Break
+@@ -68,14 +71,14 @@
  
  interface ExtendsMany
    extends ASingleGenericInterface<
@@ -102,7 +127,7 @@ export interface ExtendsLongOneWithGenerics extends Bar< SomeLongTypeSomeLongTyp
    x: string;
  }
  
-@@ -97,6 +97,6 @@
+@@ -97,6 +100,6 @@
  
  export interface ExtendsLongOneWithGenerics
    extends Bar<
@@ -117,8 +142,11 @@ export interface ExtendsLongOneWithGenerics extends Bar< SomeLongTypeSomeLongTyp
 # Output
 
 ```js
-export interface Environment1
-  extends GenericEnvironment<SomeType, AnotherType, YetAnotherType> {
+export interface Environment1 extends GenericEnvironment<
+  SomeType,
+  AnotherType,
+  YetAnotherType,
+> {
   m(): void;
 }
 export class Environment2 extends GenericEnvironment<
@@ -128,9 +156,9 @@ export class Environment2 extends GenericEnvironment<
   DifferentType1,
   DifferentType2,
   DifferentType3,
-  DifferentType4
+  DifferentType4,
 > {
-  m() {}
+  m() {};
 }
 
 // Declare Interface Break
@@ -221,5 +249,22 @@ export interface ExtendsLongOneWithGenerics
     > {}
 ```
 
+
+# Errors
+```
+error[SyntaxError]: expected a type parameter but instead found '>'
+  ┌─ break.ts:5:1
+  │
+5 │ > {
+  │ ^ Expected a type parameter here
+
+error[SyntaxError]: expected a type parameter but instead found '>'
+   ┌─ break.ts:16:1
+   │
+16 │ > {
+   │ ^ Expected a type parameter here
+
+
+```
 
 

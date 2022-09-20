@@ -13,7 +13,7 @@ foo && foo[typeof bar] && foo[typeof bar].baz;
 
 # Diagnostics
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
   ┌─ complexLogicalAndCases.ts:2:1
   │
 2 │ foo && foo[bar as string] && foo[bar as string].baz;
@@ -31,7 +31,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
   ┌─ complexLogicalAndCases.ts:3:1
   │
 3 │ foo && foo[1 + 2] && foo[1 + 2].baz;
@@ -49,7 +49,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
   ┌─ complexLogicalAndCases.ts:4:1
   │
 4 │ foo && foo[typeof bar] && foo[typeof bar].baz;

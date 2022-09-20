@@ -1,0 +1,202 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: jsx/fragment/fragment.js
+---
+
+# Input
+
+```js
+<></>;
+
+<>
+   text
+</>;
+
+<>
+  <Component />
+  <Component />
+</>;
+
+<>
+  text
+  <h2>heading</h2>
+  text
+  <h2>heading</h2>
+  text
+</>;
+
+<div>
+  <>
+    <>
+      <span>Hello</span>
+      <span>world</span>
+    </>
+    <>
+      <span>Goodbye</span>
+      <span>world</span>
+    </>
+  </>
+</div>;
+
+foo = (
+  // comment
+  <></>
+);
+
+</* open fragment */>
+  <Component />
+  <Component />
+</ /* close fragment */>;
+
+< // open fragment
+>
+  <Component />
+  <Component />
+</ // close fragment
+>;
+
+[<></>, <></>];
+const fun1 = () => <></>;
+x = <></>
+function fun2(param = <></>) {}
+1 + <></>;
+1 || <></>;
+fun2(<></>);
+test ? <></> : x;
+<></>;
+<a>
+  <></>
+</a>;
+const obj = {
+  foo: <></>
+};
+const fragmentVar = <></>;
+function fun3() {
+  return <></>;
+}
+(<></>).toString();
+(<></>).props;
+(<></>)["computed"];
+(<></>)["computed"]();
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -28,24 +28,22 @@
+   </>
+ </div>;
+ 
+-foo = (
+-  // comment
+-  <></>
+-);
++foo =
++  (
++    // comment
++    <></>
++  );
+ 
+-</* open fragment */>
++< /* open fragment */ >
+   <Component />
+   <Component />
+-</ /* close fragment */>;
++</ /* close fragment */ >;
+ 
+-<
++<>
+   // open fragment
+->
+   <Component />
+   <Component />
+-</
+-  // close fragment
+->;
++</>; // close fragment
+ 
+ [<></>, <></>];
+ const fun1 = () => <></>;
+```
+
+# Output
+
+```js
+<></>;
+
+<>text</>;
+
+<>
+  <Component />
+  <Component />
+</>;
+
+<>
+  text
+  <h2>heading</h2>
+  text
+  <h2>heading</h2>
+  text
+</>;
+
+<div>
+  <>
+    <>
+      <span>Hello</span>
+      <span>world</span>
+    </>
+    <>
+      <span>Goodbye</span>
+      <span>world</span>
+    </>
+  </>
+</div>;
+
+foo =
+  (
+    // comment
+    <></>
+  );
+
+< /* open fragment */ >
+  <Component />
+  <Component />
+</ /* close fragment */ >;
+
+<>
+  // open fragment
+  <Component />
+  <Component />
+</>; // close fragment
+
+[<></>, <></>];
+const fun1 = () => <></>;
+x = <></>;
+function fun2(param = <></>) {}
+1 + <></>;
+1 || <></>;
+fun2(<></>);
+test ? <></> : x;
+<></>;
+<a>
+  <></>
+</a>;
+const obj = {
+  foo: <></>,
+};
+const fragmentVar = <></>;
+function fun3() {
+  return <></>;
+}
+(<></>).toString();
+(<></>).props;
+(<></>)["computed"];
+(<></>)["computed"]();
+```
+
+
+
