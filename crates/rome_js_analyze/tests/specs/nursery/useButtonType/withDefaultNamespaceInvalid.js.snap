@@ -27,7 +27,7 @@ warning[nursery/useButtonType]: Provide an explicit type prop for the button ele
 ```
 
 ```
-warning[nursery/useButtonType]: Provide a correct type prop for the button element.
+warning[nursery/useButtonType]: Provide a valid type prop for the button element.
   ┌─ withDefaultNamespaceInvalid.js:5:13
   │
 5 │     "type": "DefaultNamespace"

@@ -33,7 +33,7 @@ warning[nursery/useButtonType]: Provide an explicit type prop for the button ele
 ```
 
 ```
-warning[nursery/useButtonType]: Provide a correct type prop for the button element.
+warning[nursery/useButtonType]: Provide a valid type prop for the button element.
   ┌─ inJsx.jsx:4:18
   │
 4 │     <button type="bar">do something</button>

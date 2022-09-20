@@ -187,7 +187,7 @@ impl Rule for UseButtonType {
             }).to_owned()
         } else {
             (markup!{
-                "Provide a correct "<Emphasis>"type"</Emphasis>" prop for the "<Emphasis>"button"</Emphasis>" element."
+                "Provide a valid "<Emphasis>"type"</Emphasis>" prop for the "<Emphasis>"button"</Emphasis>" element."
             }).to_owned()
         };
         Some(RuleDiagnostic::new(

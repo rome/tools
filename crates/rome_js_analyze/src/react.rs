@@ -5,9 +5,11 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstSeparatedList};
 
-/// A convenient data structure that returns the three arguments of the `React.createElement` call
+/// A convenient data structure that returns the three arguments of the [React.createElement] call
+///
+///[React.createElement]: https://reactjs.org/docs/react-api.html#createelement
 pub(crate) struct ReactCreateElementCall {
-    /// First argument
+    /// The type of the react element
     pub(crate) element_type: JsAnyCallArgument,
     /// Optional props
     pub(crate) props: Option<JsObjectExpression>,

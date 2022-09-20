@@ -31,7 +31,7 @@ warning[nursery/useButtonType]: Provide an explicit type prop for the button ele
 ```
 
 ```
-warning[nursery/useButtonType]: Provide a correct type prop for the button element.
+warning[nursery/useButtonType]: Provide a valid type prop for the button element.
   ┌─ withRenamedImportInvalid.js:5:13
   │
 5 │     "type": "AwesomeReact"
@@ -44,7 +44,7 @@ warning[nursery/useButtonType]: Provide a correct type prop for the button eleme
 ```
 
 ```
-warning[nursery/useButtonType]: Provide a correct type prop for the button element.
+warning[nursery/useButtonType]: Provide a valid type prop for the button element.
   ┌─ withRenamedImportInvalid.js:9:13
   │
 9 │     "type": "awesomeCreateElement"
