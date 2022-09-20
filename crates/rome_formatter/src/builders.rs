@@ -1081,6 +1081,7 @@ pub struct BlockIndent<'a, Context> {
 enum IndentMode {
     Soft,
     Block,
+    SoftSpace,
     SoftLineOrSpace,
 }
 
@@ -1091,7 +1092,9 @@ impl<Context> Format<Context> for BlockIndent<'_, Context> {
         match self.mode {
             IndentMode::Soft => write!(buffer, [soft_line_break()])?,
             IndentMode::Block => write!(buffer, [hard_line_break()])?,
-            IndentMode::SoftLineOrSpace => write!(buffer, [soft_line_break_or_space()])?,
+            IndentMode::SoftLineOrSpace | IndentMode::SoftSpace => {
+                write!(buffer, [soft_line_break_or_space()])?
+            }
         };
 
         buffer.write_fmt(Arguments::from(&self.content))?;
@@ -1108,6 +1111,7 @@ impl<Context> Format<Context> for BlockIndent<'_, Context> {
         match self.mode {
             IndentMode::Soft => write!(f, [soft_line_break()])?,
             IndentMode::Block => write!(f, [hard_line_break()])?,
+            IndentMode::SoftSpace => write!(f, [soft_line_break_or_space()])?,
             IndentMode::SoftLineOrSpace => {}
         }
 
@@ -1121,6 +1125,7 @@ impl<Context> std::fmt::Debug for BlockIndent<'_, Context> {
             IndentMode::Soft => "SoftBlockIndent",
             IndentMode::Block => "HardBlockIndent",
             IndentMode::SoftLineOrSpace => "SoftLineIndentOrSpace",
+            IndentMode::SoftSpace => "SoftSpaceBlockIndent",
         };
 
         f.debug_tuple(name).field(&"{{content}}").finish()
@@ -1145,7 +1150,7 @@ impl<Context> std::fmt::Debug for BlockIndent<'_, Context> {
 /// let elements = format!(context, [
 ///     group(&format_args![
 ///         text("{"),
-///         soft_line_indent_or_spaced(&format_args![
+///         soft_space_or_block_indent(&format_args![
 ///             text("aPropertyThatExceeds"),
 ///             text(":"),
 ///             space(),
@@ -1169,7 +1174,7 @@ impl<Context> std::fmt::Debug for BlockIndent<'_, Context> {
 /// let elements = format!(SimpleFormatContext::default(), [
 ///     group(&format_args![
 ///         text("{"),
-///         soft_line_indent_or_spaced(&format_args![
+///         soft_space_or_block_indent(&format_args![
 ///             text("a"),
 ///             text(":"),
 ///             space(),
@@ -1184,40 +1189,10 @@ impl<Context> std::fmt::Debug for BlockIndent<'_, Context> {
 ///     elements.print().as_code()
 /// );
 /// ```
-pub fn soft_line_indent_or_spaced<Context>(
-    content: &impl Format<Context>,
-) -> SoftLineIndentOrSpaced<Context> {
-    SoftLineIndentOrSpaced {
+pub fn soft_space_or_block_indent<Context>(content: &impl Format<Context>) -> BlockIndent<Context> {
+    BlockIndent {
         content: Argument::new(content),
-    }
-}
-
-#[derive(Copy, Clone)]
-pub struct SoftLineIndentOrSpaced<'a, Context> {
-    content: Argument<'a, Context>,
-}
-
-impl<Context> Format<Context> for SoftLineIndentOrSpaced<'_, Context> {
-    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        let mut is_empty = true;
-
-        let format_content = format_once(|f| {
-            let mut recording = f.start_recording();
-
-            recording.write_fmt(Arguments::from(&self.content))?;
-
-            is_empty = recording.stop().is_empty();
-
-            Ok(())
-        });
-
-        soft_line_indent_or_space(&format_content).fmt(f)?;
-
-        if !is_empty {
-            soft_line_break_or_space().fmt(f)?;
-        }
-
-        Ok(())
+        mode: IndentMode::SoftSpace,
     }
 }
 
