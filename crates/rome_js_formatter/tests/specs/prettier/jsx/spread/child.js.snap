@@ -1,0 +1,116 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: jsx/spread/child.js
+---
+
+# Input
+
+```js
+<div>{...a}</div>;
+
+<div>{...a /* comment */}</div>;
+
+<div>{/* comment */...a}</div>;
+
+// rome-ignore format: Instability issue
+<div>{...a //comment
+}</div>;
+
+<div>{...a
+  //comment
+}</div>;
+
+<div>{
+  //comment
+  ...a
+}</div>;
+
+// rome-ignore format: Instability issue
+<div>{//comment
+  ...a // comment
+}</div>;
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -4,29 +4,23 @@
+ 
+ <div>{/* comment */ ...a}</div>;
+ 
+-<div>
+-  {
+-    ...a //comment
+-  }
+-</div>;
++// rome-ignore format: Instability issue
++<div>{...a //comment
++}</div>;
+ 
+ <div>
+-  {
+-    ...a
+-    //comment
++  {...a
++  //comment
+   }
+ </div>;
+ 
+ <div>
+   {
+-    //comment
+-    ...a
+-  }
++  //comment
++  ...a}
+ </div>;
+ 
+-<div>
+-  {
+-    //comment
+-    ...a // comment
+-  }
+-</div>;
++// rome-ignore format: Instability issue
++<div>{//comment
++  ...a // comment
++}</div>;
+```
+
+# Output
+
+```js
+<div>{...a}</div>;
+
+<div>{...a /* comment */}</div>;
+
+<div>{/* comment */ ...a}</div>;
+
+// rome-ignore format: Instability issue
+<div>{...a //comment
+}</div>;
+
+<div>
+  {...a
+  //comment
+  }
+</div>;
+
+<div>
+  {
+  //comment
+  ...a}
+</div>;
+
+// rome-ignore format: Instability issue
+<div>{//comment
+  ...a // comment
+}</div>;
+```
+
+
+

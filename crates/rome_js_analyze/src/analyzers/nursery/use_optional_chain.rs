@@ -76,7 +76,7 @@ declare_rule! {
     pub(crate) UseOptionalChain {
         version: "0.10.0",
         name: "useOptionalChain",
-        recommended: true,
+        recommended: false,
     }
 }
 

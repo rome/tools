@@ -365,7 +365,7 @@ impl<L: Language> DecoratedComment<L> {
         self.following.take()
     }
 
-    /// The number of lines between this comment and the **previous** token or comment.
+    /// The number of line breaks between this comment and the **previous** token or comment.
     ///
     /// # Examples
     ///

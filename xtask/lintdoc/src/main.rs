@@ -317,6 +317,7 @@ fn parse_documentation(
 
             Event::End(Tag::List(_)) => {
                 list_order = None;
+                writeln!(content)?;
             }
             Event::Start(Tag::Item) => {
                 if let Some(num) = list_order {

@@ -1,7 +1,7 @@
 export interface Environment1 extends GenericEnvironment<
   SomeType,
   AnotherType,
-  YetAnotherType
+  YetAnotherType,
 > {
   m(): void;
 };
@@ -12,7 +12,7 @@ export class Environment2 extends GenericEnvironment<
   DifferentType1,
   DifferentType2,
   DifferentType3,
-  DifferentType4
+  DifferentType4,
 > {
   m() {};
 };

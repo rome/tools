@@ -144,7 +144,6 @@ export interface Correctness {
 	 */
 	recommended?: boolean;
 	useBlockStatements?: RuleConfiguration;
-	useOptionalChain?: RuleConfiguration;
 	useSimplifiedLogicExpression?: RuleConfiguration;
 	useSingleCaseStatement?: RuleConfiguration;
 	useSingleVarDeclarator?: RuleConfiguration;
@@ -165,6 +164,7 @@ export interface Nursery {
 	 */
 	recommended?: boolean;
 	useCamelCase?: RuleConfiguration;
+	useOptionalChain?: RuleConfiguration;
 }
 /**
  * A list of rules that belong to this group
