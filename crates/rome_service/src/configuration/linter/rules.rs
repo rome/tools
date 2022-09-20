@@ -394,7 +394,7 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 7] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 8] = [
         "noDangerouslySetInnerHtml",
         "noNewSymbol",
         "noRenderReturnValue",
