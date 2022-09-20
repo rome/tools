@@ -1,0 +1,115 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: jsx/spread/attribute.js
+---
+
+# Input
+
+```js
+<div {...a}/>;
+
+<div {...(a || {})} />;
+
+<div {...(cond ? foo : bar)} />;
+
+<div {...a /* comment */}/>;
+
+<div {/* comment */...a}/>;
+
+<div {...a //comment
+}/>;
+
+<div {...a
+  //comment
+}/>;
+
+<div {
+  //comment
+  ...a
+}/>;
+
+<div {//comment
+  ...a // comment
+}/>;
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -9,28 +9,21 @@
+ <div {/* comment */ ...a} />;
+ 
+ <div
+-  {
+-    ...a //comment
+-  }
++  {...a} //comment
+ />;
+ 
+ <div
+-  {
+-    ...a
+-    //comment
++  {...a
++  //comment
+   }
+ />;
+ 
+ <div
+   {
+-    //comment
+-    ...a
+-  }
++  //comment
++  ...a}
+ />;
+ 
+ <div
+-  {
+-    //comment
+-    ...a // comment
+-  }
++  {...a} //comment // comment
+ />;
+```
+
+# Output
+
+```js
+<div {...a} />;
+
+<div {...(a || {})} />;
+
+<div {...(cond ? foo : bar)} />;
+
+<div {...a /* comment */} />;
+
+<div {/* comment */ ...a} />;
+
+<div
+  {...a} //comment
+/>;
+
+<div
+  {...a
+  //comment
+  }
+/>;
+
+<div
+  {
+  //comment
+  ...a}
+/>;
+
+<div
+  {...a} //comment // comment
+/>;
+```
+
+
+

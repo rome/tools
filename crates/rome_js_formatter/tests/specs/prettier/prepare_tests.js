@@ -78,6 +78,7 @@ async function traverseDir(dir, config) {
 }
 
 const PRETTIER_ROOT_JS = path.resolve(PRETTIER_ROOT, "js");
+const PRETTIER_ROOT_JSX = path.resolve(PRETTIER_ROOT, "jsx");
 const PRETTIER_ROOT_TS = path.resolve(PRETTIER_ROOT, "typescript");
 
 const defaultConfig = {
@@ -94,6 +95,13 @@ async function main() {
         ...defaultConfig,
         parser: "babel",
     });
+
+		console.log("Extracting tests from %s ...", {PRETTIER_ROOT_JSX});
+		await traverseDir(PRETTIER_ROOT_JSX, {
+			...defaultConfig,
+			parser: "babel",
+		});
+
     console.log("Extracting tests from %s ...", PRETTIER_ROOT_TS);
     await traverseDir(PRETTIER_ROOT_TS, {
         ...defaultConfig,

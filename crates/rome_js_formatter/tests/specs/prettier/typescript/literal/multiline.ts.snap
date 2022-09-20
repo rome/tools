@@ -1,0 +1,47 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/literal/multiline.ts
+---
+
+# Input
+
+```js
+type loremIpsumFooBazBar1 = 'Multiline string\
+         Multiline string'
+
+type loremIpsumFooBazBar2 = 'Multiline string\
+         Multiline string\
+         Multiline string'
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,7 +1,6 @@
+ type loremIpsumFooBazBar1 = "Multiline string\
+          Multiline string";
+ 
+-type loremIpsumFooBazBar2 =
+-  "Multiline string\
++type loremIpsumFooBazBar2 = "Multiline string\
+          Multiline string\
+          Multiline string";
+```
+
+# Output
+
+```js
+type loremIpsumFooBazBar1 = "Multiline string\
+         Multiline string";
+
+type loremIpsumFooBazBar2 = "Multiline string\
+         Multiline string\
+         Multiline string";
+```
+
+
+
