@@ -1,6 +1,7 @@
 use rome_js_factory::make;
 use rome_js_syntax::{
-    JsAnyStatement, JsLanguage, JsModuleItemList, JsStatementList, JsVariableDeclaration,
+    JsAnyStatement, JsIdentifierBinding, JsIdentifierExpression, JsImport, JsLanguage,
+    JsModuleItemList, JsStatementList, JsStaticMemberExpression, JsVariableDeclaration,
     JsVariableDeclarator, JsVariableDeclaratorList, JsVariableStatement, T,
 };
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutation};
