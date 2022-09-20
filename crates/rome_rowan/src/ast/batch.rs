@@ -40,7 +40,10 @@ struct CommitChange<L: Language> {
     new_node_key: Option<NodeKey>,
     new_node_slot: usize,
     new_node: Option<SyntaxElement<L>>,
-    indel: bool,
+    // A change can be requested by the user or 
+    // is the propagation of a another change
+    requested_change: bool,
+    // All text edits below this node
     indels: Vec<Indel>
 }
 
@@ -278,6 +281,11 @@ where
         });
         let parent_depth = parent.as_ref().map(|p| p.ancestors().count()).unwrap_or(0);
 
+        let next_string = next_element
+            .as_ref()
+            .map(|x| x.to_string())
+            .unwrap_or_default();
+
         self.changes.push(CommitChange {
             parent_depth,
             parent,
@@ -285,210 +293,30 @@ where
             new_node_key: key,
             new_node_slot,
             new_node: next_element,
-            indel: true,
-            indels: vec![]
+            requested_change: true,
+            indels: vec![Indel { 
+                delete: prev_element.text_range(),
+                insert: next_string
+            }]
         });
     }
 
-    /// Returns the range of the document modified by this mutation along with
+    /// Apply all mutations and returns the range of the document modified by this mutation along with
     /// a list of individual text edits to be performed on the source code, or
     /// [None] if the mutation is empty
+    /// 
+    /// For more details to debug compile with the feature "batch_log" enabled.
     pub fn as_text_edits(self) -> Option<(TextRange, Vec<Indel>)> {
-        let (_, edits) = self.run();
+        let (_, edits) = self.commit_and_text_edits();
         edits
     }
 
-    pub fn run(self) -> (SyntaxNode<L>, Option<(TextRange, Vec<Indel>)>) {
-        let BatchMutation {
-            root,
-            mut changes,
-            mut node_last_version,
-        } = self;
-
-        let old_root_range = root.text_range();
-
-        let mut mutated_range: Option<TextRange> = None;
-        
-
-        #[cfg(feature = "batch_log")]
-        for change in changes.iter() {
-            println!(
-                "Requested {:?} -> {:?} {:?}",
-                change
-                    .parent
-                    .as_ref()
-                    .unwrap()
-                    .element_in_slot(change.new_node_slot as u32)
-                    .unwrap()
-                    .to_string(),
-                change.new_node_key,
-                change.new_node.as_ref().map(|x| x.to_string()),
-            );
-        }
-
-        while let Some(item) = changes.pop() {
-            // If parent is None, we reached the root
-            if let Some(current_parent) = item.parent {
-                // This must be done before the detachment below
-                // because we need nodes that are still valid in the old tree
-
-                let grandparent = current_parent.parent();
-                let grandparent_range = grandparent.as_ref().map(|g| {
-                    let range = g.text_range();
-                    (range.start().into(), range.end().into())
-                });
-                let currentparent_slot = current_parent.index();
-
-                // Aggregate all modifications to the current parent
-                // This works because of the Ord we defined in the [CommitChange] struct
-
-                let mut replace_indel = item.indel;
-                let mut modifications = vec![(
-                    item.new_node_slot,
-                    item.new_node_key,
-                    item.new_node,
-                    item.indels
-                )];
-
-                loop {
-                    if let Some(next_change_parent) = changes.peek().and_then(|i| i.parent.as_ref())
-                    {
-                        if *next_change_parent == current_parent {
-                            // SAFETY: We can .pop().unwrap() because we .peek() above
-                            let next_change = changes.pop().expect("changes.pop");
-
-                            replace_indel |= next_change.indel;
-
-                            modifications.push((
-                                next_change.new_node_slot,
-                                next_change.new_node_key,
-                                next_change.new_node,
-                                next_change.indels
-                            ));
-                            continue;
-                        }
-                    }
-                    break;
-                }
-
-                // Now we detach the current parent, make all the modifications
-                // and push a pending change to its parent.
-
-                let current_parent_key = (
-                    current_parent.ancestors().count(),
-                    current_parent.text_range().start(),
-                );
-
-                #[cfg(feature = "batch_log")]
-                {
-                    println!(
-                        "Before: {:?} {:?}",
-                        current_parent_key,
-                        current_parent.to_string()
-                    );
-                }
-
-                let old_range = current_parent.text_range();
-                mutated_range = match mutated_range {
-                    Some(range) => Some(TextRange::new(
-                        range.start().min(old_range.start()),
-                        range.end().min(old_range.end()),
-                    )),
-                    None => Some(old_range),
-                };
-
-                let mut current_parent = current_parent.detach();
-                let is_list = current_parent.kind().is_list();
-                let mut removed_slots = 0;
-
-                let mut aggindels = vec![];
-
-                for (index, old_key, mut replace_with, mut indels) in modifications {
-                    let index = index
-                        .checked_sub( removed_slots)
-                        .unwrap_or_else(|| panic!("cannot replace element in slot {index} with {removed_slots} removed slots"));
-
-                    if let Some(new_version) = old_key.and_then(|x| node_last_version.remove(&x)) {
-                        replace_with = new_version;
-                        replace_indel = true;
-                    }
-
-                    #[cfg(feature = "batch_log")]
-                    {
-                        println!(
-                            "    replace {:?} -> {:?} {:?}",
-                            current_parent
-                                .element_in_slot(index as u32)
-                                .unwrap()
-                                .to_string(),
-                            old_key,
-                            replace_with.as_ref().map(|x| x.to_string())
-                        );
-                        println!("    indels: {:?}", indels);
-                    }
-
-                    aggindels.append(&mut indels);
-
-                    current_parent = if is_list && replace_with.is_none() {
-                        removed_slots += 1;
-                        current_parent.clone().splice_slots(index..=index, empty())
-                    } else {
-                        current_parent
-                            .clone()
-                            .splice_slots(index..=index, once(replace_with))
-                    };
-                }
-
-                #[cfg(feature = "batch_log")]
-                println!("    After: {:?}", current_parent.to_string());
-
-                if node_last_version.contains_key(&current_parent_key) {
-                    let _old = node_last_version
-                        .insert(
-                            current_parent_key,
-                            Some(SyntaxElement::Node(current_parent)),
-                        )
-                        .flatten();
-
-                    #[cfg(feature = "batch_log")]
-                    println!("    Discarded: {:?}", _old.map(|x| x.to_string()));
-                } else {
-                    if replace_indel {
-                        aggindels.clear();
-                        aggindels.push(Indel {
-                            delete: old_range,
-                            insert: current_parent.to_string(),
-                        });
-                    }      
-                    
-                    #[cfg(feature = "batch_log")]
-                    println!("    After indels: {:?}", aggindels);
-
-                    changes.push(CommitChange {
-                        parent_depth: item.parent_depth - 1,
-                        parent: grandparent,
-                        parent_range: grandparent_range,
-                        new_node_key: Some(current_parent_key),
-                        new_node_slot: currentparent_slot,
-                        new_node: Some(SyntaxElement::Node(current_parent)),
-                        indel: false,
-                        indels: aggindels
-                    });
-                }
-            } else {
-                let root = item
-                    .new_node
-                    .expect("new_node")
-                    .into_node()
-                    .expect("expected root to be a node and not a token");
-
-                dbg!(&item.indels);
-                let range = root.text_range();
-                return (root, Some((range, item.indels)));
-            }
-        }
-
-        (root, None)
+    /// Apply all mutations and return the new node
+    /// 
+    /// For more details to debug compile with the feature "batch_log" enabled.
+    pub fn commit(self) -> SyntaxNode<L> {
+        let (root, _) = self.commit_and_text_edits();
+        root
     }
 
     /// The core of the batch mutation algorithm can be summarized as:
@@ -506,10 +334,198 @@ where
     ///
     /// To address this case at step 3, when we pop a new change to apply it, we actually aggregate all changes to the current
     /// parent together. This is done by the heap because we also sort by node and it's range.
-    ///
-    pub fn commit(self) -> SyntaxNode<L> {
-        let (root, _) = self.run();
-        root
+    /// 
+    /// For more details to debug compile with the feature "batch_log" enabled.
+    pub fn commit_and_text_edits(self) -> (SyntaxNode<L>, Option<(TextRange, Vec<Indel>)>) {
+        let BatchMutation {
+            root,
+            mut changes,
+            node_last_version: mut node_new_versions,
+        } = self;
+
+        #[cfg(feature = "batch_log")]
+        for change in changes.iter() {
+            println!(
+                "Requested {:?} -> {:?} {:?}",
+                change
+                    .parent
+                    .as_ref()
+                    .unwrap()
+                    .element_in_slot(change.new_node_slot as u32)
+                    .unwrap()
+                    .to_string(),
+                change.new_node_key,
+                change.new_node.as_ref().map(|x| x.to_string()),
+            );
+        }
+
+        while let Some(mut item) = changes.pop() {
+            // If parent is None, we reached the root
+            if let Some(current_parent) = item.parent {
+                // This must be done before the detachment below
+                // because we need nodes that are still valid in the old tree
+
+                let grandparent = current_parent.parent();
+                let grandparent_range = grandparent.as_ref().map(|g| {
+                    let range = g.text_range();
+                    (range.start().into(), range.end().into())
+                });
+                let currentparent_slot = current_parent.index();
+                
+                // Collect all modifications to the same parent
+                // This works because of the Ord we defined in the [CommitChange] struct
+                let mut modifications = vec![(
+                    item.new_node_slot,
+                    item.new_node_key,
+                    item.new_node,
+                    item.indels
+                )];
+
+                loop {
+                    if let Some(next_change_parent) = changes
+                        .peek()
+                        .and_then(|i| i.parent.as_ref())
+                    {
+                        if *next_change_parent == current_parent {
+                            // SAFETY: We can .pop().unwrap() because we .peek() above
+                            let next_change = changes.pop().expect("changes.pop");
+
+                            modifications.push((
+                                next_change.new_node_slot,
+                                next_change.new_node_key,
+                                next_change.new_node,
+                                next_change.indels
+                            ));
+                            continue;
+                        }
+                    }
+                    
+                    break;
+                }
+
+                // Now we detach the current parent, make all the modifications
+                // and push a pending change to its parent.
+
+                let current_parent_text_range = current_parent.text_range();
+                let current_parent_key = (
+                    current_parent.ancestors().count(),
+                    current_parent_text_range.start(),
+                );
+
+                #[cfg(feature = "batch_log")]
+                println!(
+                    "Before: {:?} {:?}",
+                    current_parent_key,
+                    current_parent.to_string()
+                );
+
+                let mut current_parent = current_parent.detach();
+                let is_list = current_parent.kind().is_list();
+                let mut removed_slots = 0;
+
+                let mut new_indels: std::collections::HashMap<usize, Vec<Indel>> = HashMap::new();
+
+                for (index, old_key, replace_with, indels) in modifications {
+                    let index = index
+                        .checked_sub( removed_slots)
+                        .unwrap_or_else(|| panic!("cannot replace element in slot {index} with {removed_slots} removed slots"));
+
+                    let (replace_with, indels) = if let Some(new_version) = old_key
+                        .and_then(|x| node_new_versions.remove(&x))
+                    {
+                        let delete = current_parent
+                            .element_in_slot(index as u32)
+                            .unwrap();
+                        (new_version, vec![
+                            Indel {
+                                delete: delete.text_range(),
+                                insert: replace_with
+                                    .as_ref()
+                                    .map(|x| x.to_string())
+                                    .unwrap_or("".to_string())
+                            }
+                        ])
+                    } else {
+                        (replace_with, indels)                        
+                    };
+
+                    #[cfg(feature = "batch_log")]
+                    {
+                        println!(
+                            "    replace {:?} -> {:?} {:?}",
+                            current_parent
+                                .element_in_slot(index as u32)
+                                .unwrap()
+                                .to_string(),
+                            old_key,
+                            replace_with.as_ref().map(|x| x.to_string())
+                        );
+                        println!("    indels: {:?}", indels);
+                    }
+
+                    new_indels.insert(index, indels);
+
+                    current_parent = if is_list && replace_with.is_none() {
+                        removed_slots += 1;
+                        current_parent.clone().splice_slots(index..=index, empty())
+                    } else {
+                        current_parent
+                            .clone()
+                            .splice_slots(index..=index, once(replace_with))
+                    };
+                }
+
+                #[cfg(feature = "batch_log")]
+                println!("    After: {:?}", current_parent.to_string());
+
+                if node_new_versions.contains_key(&current_parent_key) {
+                    let _old = node_new_versions
+                        .insert(
+                            current_parent_key,
+                            Some(SyntaxElement::Node(current_parent)),
+                        )
+                        .flatten();
+
+                    #[cfg(feature = "batch_log")]
+                    println!("    Discarded: {:?}", _old.map(|x| x.to_string()));
+                } else {
+                    let new_indels = new_indels.into_values().flatten().collect();
+
+                    #[cfg(feature = "batch_log")]
+                    println!("    After indels: {:?}", new_indels);
+
+                    changes.push(CommitChange {
+                        parent_depth: item.parent_depth - 1,
+                        parent: grandparent,
+                        parent_range: grandparent_range,
+                        new_node_key: Some(current_parent_key),
+                        new_node_slot: currentparent_slot,
+                        new_node: Some(SyntaxElement::Node(current_parent)),
+                        requested_change: false,
+                        indels: new_indels
+                    });
+                }
+            } else {
+                let root = item
+                    .new_node
+                    .expect("new_node")
+                    .into_node()
+                    .expect("expected root to be a node and not a token");
+
+                #[cfg(feature = "batch_log")]
+                println!("End indels: {:?}", item.indels);
+
+                item.indels.sort_by_key(|x| x.delete.start());
+
+                let start = item.indels.iter().min_by_key(|x| x.delete.start()).unwrap();
+                let end = item.indels.iter().max_by_key(|x| x.delete.end()).unwrap();
+                let range = TextRange::new(start.delete.start(), end.delete.end());
+
+                return (root, Some((range, item.indels)));
+            }
+        }
+
+        (root, None)
     }
 }
 

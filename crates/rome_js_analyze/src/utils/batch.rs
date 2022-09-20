@@ -275,7 +275,7 @@ mod tests {
             make::token(T![?.]),
         );
 
-        let (root, changes) = batch.run();
+        let (root, changes) = batch.commit_and_text_edits();
         dbg!(changes);
         let after = root.to_string();
         // assert_eq!("if (a?.b?.c) {}", after.as_str());

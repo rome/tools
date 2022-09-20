@@ -145,7 +145,7 @@ fn check_code_action(
     action: &AnalyzerAction<JsLanguage>,
 ) {
     let mut output = source.to_string();
-    let (new_tree, changes) = action.mutation.clone().run();
+    let (new_tree, changes) = action.mutation.clone().commit_and_text_edits();
     let (_, indels) = changes.unwrap();
 
     apply_indels(&indels, &mut output);
