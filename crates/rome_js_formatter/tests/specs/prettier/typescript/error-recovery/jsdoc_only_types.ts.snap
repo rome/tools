@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/error-recovery/jsdoc_only_types.ts
 ---
 
 # Input
@@ -27,10 +29,10 @@ let h: !(string | number);
 +*
  function b(x: ?) {}
 -let c: ?string;
--let d: string?;
+-let d: ?string;
 -let e: ?(string | number);
 -let f: !string;
--let g: string!;
+-let g: !string;
 -let h: !(string | number);
 +let c:
 +?string

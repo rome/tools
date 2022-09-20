@@ -393,7 +393,7 @@ foo && foo[bar] && /*0*/foo/*1*/?./*2*/[/*3*/bar/*4*/]/*5*/?./*6*/[/*7*/baz/*8*/
 
 # Diagnostics
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
   ┌─ logicalAndCases.js:4:1
   │
 4 │ foo && foo.bar
@@ -414,7 +414,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
   ┌─ logicalAndCases.js:5:1
   │
 5 │ foo.bar && foo.bar.baz
@@ -435,7 +435,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
   ┌─ logicalAndCases.js:6:1
   │
 6 │ foo && foo()
@@ -456,7 +456,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
   ┌─ logicalAndCases.js:7:1
   │
 7 │ foo.bar && foo.bar()
@@ -477,7 +477,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
   ┌─ logicalAndCases.js:8:1
   │
 8 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz
@@ -498,7 +498,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
   ┌─ logicalAndCases.js:9:1
   │
 9 │ foo.bar && foo.bar.baz && foo.bar.baz.buzz
@@ -519,7 +519,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:12:1
    │
 12 │ foo && foo.bar && foo.bar.baz.buzz
@@ -540,7 +540,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:13:1
    │
 13 │ foo.bar && foo.bar.baz.buzz
@@ -561,7 +561,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:16:1
    │
 16 │ foo && foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz
@@ -582,7 +582,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:17:1
    │
 17 │ foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz
@@ -603,7 +603,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:20:1
    │
 20 │ foo && foo[bar] && foo[bar].baz && foo[bar].baz.buzz
@@ -624,7 +624,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:23:1
    │
 23 │ foo && foo[bar].baz && foo[bar].baz.buzz
@@ -645,7 +645,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:26:1
    │
 26 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz()
@@ -666,7 +666,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:27:1
    │
 27 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz()
@@ -687,7 +687,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:28:1
    │
 28 │ foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz()
@@ -708,7 +708,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:31:1
    │
 31 │ foo && foo.bar && foo.bar.baz.buzz()
@@ -729,7 +729,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:32:1
    │
 32 │ foo.bar && foo.bar.baz.buzz()
@@ -750,7 +750,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:35:1
    │
 35 │ foo && foo.bar && foo.bar.baz.buzz && foo.bar.baz.buzz()
@@ -771,7 +771,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:38:1
    │
 38 │ foo && foo.bar() && foo.bar().baz && foo.bar().baz.buzz && foo.bar().baz.buzz()
@@ -792,7 +792,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:41:1
    │
 41 │ foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz]()
@@ -813,7 +813,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:42:1
    │
 42 │ foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz] && foo.bar.baz[buzz]()
@@ -834,7 +834,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:45:1
    │
 45 │ foo && foo?.bar && foo?.bar.baz && foo?.bar.baz[buzz] && foo?.bar.baz[buzz]()
@@ -855,7 +855,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:46:1
    │
 46 │ foo && foo?.bar.baz && foo?.bar.baz[buzz]
@@ -876,7 +876,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:47:1
    │
 47 │ foo && foo?.() && foo?.().bar
@@ -897,7 +897,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:48:1
    │
 48 │ foo.bar && foo.bar?.() && foo.bar?.().baz
@@ -918,7 +918,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:54:1
    │
 54 │ foo && foo.bar && bing
@@ -939,7 +939,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:55:1
    │
 55 │ foo.bar && foo.bar.baz && bing
@@ -960,7 +960,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:56:1
    │
 56 │ foo && foo() && bing
@@ -981,7 +981,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:57:1
    │
 57 │ foo.bar && foo.bar() && bing
@@ -1002,7 +1002,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:58:1
    │
 58 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing
@@ -1023,7 +1023,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:59:1
    │
 59 │ foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing
@@ -1044,7 +1044,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:62:1
    │
 62 │ foo && foo.bar && foo.bar.baz.buzz && bing
@@ -1065,7 +1065,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:63:1
    │
 63 │ foo.bar && foo.bar.baz.buzz && bing
@@ -1086,7 +1086,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:66:1
    │
 66 │ foo && foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz && bing
@@ -1107,7 +1107,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:67:1
    │
 67 │ foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz && bing
@@ -1128,7 +1128,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:70:1
    │
 70 │ foo && foo[bar] && foo[bar].baz && foo[bar].baz.buzz && bing
@@ -1149,7 +1149,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:73:1
    │
 73 │ foo && foo[bar].baz && foo[bar].baz.buzz && bing
@@ -1170,7 +1170,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:76:1
    │
 76 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz() && bing
@@ -1191,7 +1191,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:77:1
    │
 77 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz() && bing
@@ -1212,7 +1212,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:78:1
    │
 78 │ foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz() && bing
@@ -1233,7 +1233,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:81:1
    │
 81 │ foo && foo.bar && foo.bar.baz.buzz() && bing
@@ -1254,7 +1254,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:82:1
    │
 82 │ foo.bar && foo.bar.baz.buzz() && bing
@@ -1275,7 +1275,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:85:1
    │
 85 │ foo && foo.bar && foo.bar.baz.buzz && foo.bar.baz.buzz() && bing
@@ -1296,7 +1296,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:88:1
    │
 88 │ foo && foo.bar() && foo.bar().baz && foo.bar().baz.buzz && foo.bar().baz.buzz() && bing
@@ -1317,7 +1317,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:91:1
    │
 91 │ foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz]() && bing
@@ -1338,7 +1338,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:92:1
    │
 92 │ foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz] && foo.bar.baz[buzz]() && bing
@@ -1359,7 +1359,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:95:1
    │
 95 │ foo && foo?.bar && foo?.bar.baz && foo?.bar.baz[buzz] && foo?.bar.baz[buzz]() && bing
@@ -1380,7 +1380,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:96:1
    │
 96 │ foo && foo?.bar.baz && foo?.bar.baz[buzz] && bing
@@ -1401,7 +1401,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:97:1
    │
 97 │ foo && foo?.() && foo?.().bar && bing
@@ -1422,7 +1422,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
    ┌─ logicalAndCases.js:98:1
    │
 98 │ foo.bar && foo.bar?.() && foo.bar?.().baz && bing
@@ -1443,7 +1443,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:101:1
     │
 101 │ foo && foo.bar && bing.bong
@@ -1464,7 +1464,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:102:1
     │
 102 │ foo.bar && foo.bar.baz && bing.bong
@@ -1485,7 +1485,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:103:1
     │
 103 │ foo && foo() && bing.bong
@@ -1506,7 +1506,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:104:1
     │
 104 │ foo.bar && foo.bar() && bing.bong
@@ -1527,7 +1527,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:105:1
     │
 105 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing.bong
@@ -1548,7 +1548,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:106:1
     │
 106 │ foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing.bong
@@ -1569,7 +1569,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:109:1
     │
 109 │ foo && foo.bar && foo.bar.baz.buzz && bing.bong
@@ -1590,7 +1590,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:110:1
     │
 110 │ foo.bar && foo.bar.baz.buzz && bing.bong
@@ -1611,7 +1611,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:113:1
     │
 113 │ foo && foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz && bing.bong
@@ -1632,7 +1632,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:114:1
     │
 114 │ foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz && bing.bong
@@ -1653,7 +1653,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:117:1
     │
 117 │ foo && foo[bar] && foo[bar].baz && foo[bar].baz.buzz && bing.bong
@@ -1674,7 +1674,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:120:1
     │
 120 │ foo && foo[bar].baz && foo[bar].baz.buzz && bing.bong
@@ -1695,7 +1695,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:123:1
     │
 123 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz() && bing.bong
@@ -1716,7 +1716,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:124:1
     │
 124 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz() && bing.bong
@@ -1737,7 +1737,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:125:1
     │
 125 │ foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz() && bing.bong
@@ -1758,7 +1758,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:128:1
     │
 128 │ foo && foo.bar && foo.bar.baz.buzz() && bing.bong
@@ -1779,7 +1779,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:129:1
     │
 129 │ foo.bar && foo.bar.baz.buzz() && bing.bong
@@ -1800,7 +1800,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:132:1
     │
 132 │ foo && foo.bar && foo.bar.baz.buzz && foo.bar.baz.buzz() && bing.bong
@@ -1821,7 +1821,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:135:1
     │
 135 │ foo && foo.bar() && foo.bar().baz && foo.bar().baz.buzz && foo.bar().baz.buzz() && bing.bong
@@ -1842,7 +1842,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:138:1
     │
 138 │ foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz]() && bing.bong
@@ -1863,7 +1863,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:139:1
     │
 139 │ foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz] && foo.bar.baz[buzz]() && bing.bong
@@ -1884,7 +1884,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:142:1
     │
 142 │ foo && foo?.bar && foo?.bar.baz && foo?.bar.baz[buzz] && foo?.bar.baz[buzz]() && bing.bong
@@ -1905,7 +1905,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:143:1
     │
 143 │ foo && foo?.bar.baz && foo?.bar.baz[buzz] && bing.bong
@@ -1926,7 +1926,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:144:1
     │
 144 │ foo && foo?.() && foo?.().bar && bing.bong
@@ -1947,7 +1947,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:145:1
     │
 145 │ foo.bar && foo.bar?.() && foo.bar?.().baz && bing.bong
@@ -1968,7 +1968,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:149:1
     │
 149 │ foo !== null && foo.bar
@@ -1989,7 +1989,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:150:1
     │
 150 │ foo.bar !== null && foo.bar.baz
@@ -2010,7 +2010,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:151:1
     │
 151 │ foo !== null && foo()
@@ -2031,7 +2031,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:152:1
     │
 152 │ foo.bar !== null && foo.bar()
@@ -2052,7 +2052,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:153:1
     │
 153 │ foo !== null && foo.bar !== null && foo.bar.baz !== null && foo.bar.baz.buzz
@@ -2073,7 +2073,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:154:1
     │
 154 │ foo.bar !== null && foo.bar.baz !== null && foo.bar.baz.buzz
@@ -2094,7 +2094,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:157:1
     │
 157 │ foo !== null && foo.bar !== null && foo.bar.baz.buzz
@@ -2115,7 +2115,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:158:1
     │
 158 │ foo.bar !== null && foo.bar.baz.buzz
@@ -2136,7 +2136,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:161:1
     │
 161 │ foo !== null && foo.bar !== null && foo.bar.baz !== null && foo.bar.baz !== null && foo.bar.baz.buzz
@@ -2157,7 +2157,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:162:1
     │
 162 │ foo.bar !== null && foo.bar.baz !== null && foo.bar.baz !== null && foo.bar.baz.buzz
@@ -2178,7 +2178,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:165:1
     │
 165 │ foo !== null && foo[bar] !== null && foo[bar].baz !== null && foo[bar].baz.buzz
@@ -2199,7 +2199,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:168:1
     │
 168 │ foo !== null && foo[bar].baz !== null && foo[bar].baz.buzz
@@ -2220,7 +2220,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:171:1
     │
 171 │ foo !== null && foo.bar !== null && foo.bar.baz !== null && foo.bar.baz.buzz()
@@ -2241,7 +2241,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:172:1
     │
 172 │ foo !== null && foo.bar !== null && foo.bar.baz !== null && foo.bar.baz.buzz !== null && foo.bar.baz.buzz()
@@ -2262,7 +2262,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:173:1
     │
 173 │ foo.bar !== null && foo.bar.baz !== null && foo.bar.baz.buzz !== null && foo.bar.baz.buzz()
@@ -2283,7 +2283,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:176:1
     │
 176 │ foo !== null && foo.bar !== null && foo.bar.baz.buzz()
@@ -2304,7 +2304,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:177:1
     │
 177 │ foo.bar !== null && foo.bar.baz.buzz()
@@ -2325,7 +2325,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:180:1
     │
 180 │ foo !== null && foo.bar !== null && foo.bar.baz.buzz !== null && foo.bar.baz.buzz()
@@ -2346,7 +2346,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:183:1
     │
 183 │ foo !== null && foo.bar() !== null && foo.bar().baz !== null && foo.bar().baz.buzz !== null && foo.bar().baz.buzz()
@@ -2367,7 +2367,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:186:1
     │
 186 │ foo !== null && foo.bar !== null && foo.bar.baz !== null && foo.bar.baz[buzz]()
@@ -2388,7 +2388,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:187:1
     │
 187 │ foo !== null && foo.bar !== null && foo.bar.baz !== null && foo.bar.baz[buzz] !== null && foo.bar.baz[buzz]()
@@ -2409,7 +2409,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:190:1
     │
 190 │ foo !== null && foo?.bar !== null && foo?.bar.baz !== null && foo?.bar.baz[buzz] !== null && foo?.bar.baz[buzz]()
@@ -2430,7 +2430,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:191:1
     │
 191 │ foo !== null && foo?.bar.baz !== null && foo?.bar.baz[buzz]
@@ -2451,7 +2451,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:192:1
     │
 192 │ foo !== null && foo?.() !== null && foo?.().bar
@@ -2472,7 +2472,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:193:1
     │
 193 │ foo.bar !== null && foo.bar?.() !== null && foo.bar?.().baz
@@ -2493,7 +2493,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:196:1
     │
 196 │ foo !== undefined && foo.bar
@@ -2514,7 +2514,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:197:1
     │
 197 │ foo.bar !== undefined && foo.bar.baz
@@ -2535,7 +2535,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:198:1
     │
 198 │ foo !== undefined && foo()
@@ -2556,7 +2556,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:199:1
     │
 199 │ foo.bar !== undefined && foo.bar()
@@ -2577,7 +2577,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:200:1
     │
 200 │ foo !== undefined && foo.bar !== undefined && foo.bar.baz !== undefined && foo.bar.baz.buzz
@@ -2598,7 +2598,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:201:1
     │
 201 │ foo.bar !== undefined && foo.bar.baz !== undefined && foo.bar.baz.buzz
@@ -2619,7 +2619,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:204:1
     │
 204 │ foo !== undefined && foo.bar !== undefined && foo.bar.baz.buzz
@@ -2640,7 +2640,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:205:1
     │
 205 │ foo.bar !== undefined && foo.bar.baz.buzz
@@ -2661,7 +2661,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:208:1
     │
 208 │ foo !== undefined && foo.bar !== undefined && foo.bar.baz !== undefined && foo.bar.baz !== undefined && foo.bar.baz.buzz
@@ -2682,7 +2682,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:209:1
     │
 209 │ foo.bar !== undefined && foo.bar.baz !== undefined && foo.bar.baz !== undefined && foo.bar.baz.buzz
@@ -2703,7 +2703,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:212:1
     │
 212 │ foo !== undefined && foo[bar] !== undefined && foo[bar].baz !== undefined && foo[bar].baz.buzz
@@ -2724,7 +2724,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:215:1
     │
 215 │ foo !== undefined && foo[bar].baz !== undefined && foo[bar].baz.buzz
@@ -2745,7 +2745,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:218:1
     │
 218 │ foo !== undefined && foo.bar !== undefined && foo.bar.baz !== undefined && foo.bar.baz.buzz()
@@ -2766,7 +2766,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:219:1
     │
 219 │ foo !== undefined && foo.bar !== undefined && foo.bar.baz !== undefined && foo.bar.baz.buzz !== undefined && foo.bar.baz.buzz()
@@ -2787,7 +2787,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:220:1
     │
 220 │ foo.bar !== undefined && foo.bar.baz !== undefined && foo.bar.baz.buzz !== undefined && foo.bar.baz.buzz()
@@ -2808,7 +2808,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:223:1
     │
 223 │ foo !== undefined && foo.bar !== undefined && foo.bar.baz.buzz()
@@ -2829,7 +2829,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:224:1
     │
 224 │ foo.bar !== undefined && foo.bar.baz.buzz()
@@ -2850,7 +2850,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:227:1
     │
 227 │ foo !== undefined && foo.bar !== undefined && foo.bar.baz.buzz !== undefined && foo.bar.baz.buzz()
@@ -2871,7 +2871,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:230:1
     │
 230 │ foo !== undefined && foo.bar() !== undefined && foo.bar().baz !== undefined && foo.bar().baz.buzz !== undefined && foo.bar().baz.buzz()
@@ -2892,7 +2892,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:233:1
     │
 233 │ foo !== undefined && foo.bar !== undefined && foo.bar.baz !== undefined && foo.bar.baz[buzz]()
@@ -2913,7 +2913,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:234:1
     │
 234 │ foo !== undefined && foo.bar !== undefined && foo.bar.baz !== undefined && foo.bar.baz[buzz] !== undefined && foo.bar.baz[buzz]()
@@ -2934,7 +2934,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:237:1
     │
 237 │ foo !== undefined && foo?.bar !== undefined && foo?.bar.baz !== undefined && foo?.bar.baz[buzz] !== undefined && foo?.bar.baz[buzz]()
@@ -2955,7 +2955,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:238:1
     │
 238 │ foo !== undefined && foo?.bar.baz !== undefined && foo?.bar.baz[buzz]
@@ -2976,7 +2976,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:239:1
     │
 239 │ foo !== undefined && foo?.() !== undefined && foo?.().bar
@@ -2997,7 +2997,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:240:1
     │
 240 │ foo.bar !== undefined && foo.bar?.() !== undefined && foo.bar?.().baz
@@ -3018,7 +3018,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:243:1
     │
 243 │ foo != null && foo.bar
@@ -3039,7 +3039,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:244:1
     │
 244 │ foo.bar != null && foo.bar.baz
@@ -3060,7 +3060,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:245:1
     │
 245 │ foo != null && foo()
@@ -3081,7 +3081,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:246:1
     │
 246 │ foo.bar != null && foo.bar()
@@ -3102,7 +3102,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:247:1
     │
 247 │ foo != null && foo.bar != null && foo.bar.baz != null && foo.bar.baz.buzz
@@ -3123,7 +3123,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:248:1
     │
 248 │ foo.bar != null && foo.bar.baz != null && foo.bar.baz.buzz
@@ -3144,7 +3144,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:251:1
     │
 251 │ foo != null && foo.bar != null && foo.bar.baz.buzz
@@ -3165,7 +3165,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:252:1
     │
 252 │ foo.bar != null && foo.bar.baz.buzz
@@ -3186,7 +3186,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:255:1
     │
 255 │ foo != null && foo.bar != null && foo.bar.baz != null && foo.bar.baz != null && foo.bar.baz.buzz
@@ -3207,7 +3207,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:256:1
     │
 256 │ foo.bar != null && foo.bar.baz != null && foo.bar.baz != null && foo.bar.baz.buzz
@@ -3228,7 +3228,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:259:1
     │
 259 │ foo != null && foo[bar] != null && foo[bar].baz != null && foo[bar].baz.buzz
@@ -3249,7 +3249,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:262:1
     │
 262 │ foo != null && foo[bar].baz != null && foo[bar].baz.buzz
@@ -3270,7 +3270,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:265:1
     │
 265 │ foo != null && foo.bar != null && foo.bar.baz != null && foo.bar.baz.buzz()
@@ -3291,7 +3291,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:266:1
     │
 266 │ foo != null && foo.bar != null && foo.bar.baz != null && foo.bar.baz.buzz != null && foo.bar.baz.buzz()
@@ -3312,7 +3312,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:267:1
     │
 267 │ foo.bar != null && foo.bar.baz != null && foo.bar.baz.buzz != null && foo.bar.baz.buzz()
@@ -3333,7 +3333,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:270:1
     │
 270 │ foo != null && foo.bar != null && foo.bar.baz.buzz()
@@ -3354,7 +3354,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:271:1
     │
 271 │ foo.bar != null && foo.bar.baz.buzz()
@@ -3375,7 +3375,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:274:1
     │
 274 │ foo != null && foo.bar != null && foo.bar.baz.buzz != null && foo.bar.baz.buzz()
@@ -3396,7 +3396,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:277:1
     │
 277 │ foo != null && foo.bar() != null && foo.bar().baz != null && foo.bar().baz.buzz != null && foo.bar().baz.buzz()
@@ -3417,7 +3417,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:280:1
     │
 280 │ foo != null && foo.bar != null && foo.bar.baz != null && foo.bar.baz[buzz]()
@@ -3438,7 +3438,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:281:1
     │
 281 │ foo != null && foo.bar != null && foo.bar.baz != null && foo.bar.baz[buzz] != null && foo.bar.baz[buzz]()
@@ -3459,7 +3459,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:284:1
     │
 284 │ foo != null && foo?.bar != null && foo?.bar.baz != null && foo?.bar.baz[buzz] != null && foo?.bar.baz[buzz]()
@@ -3480,7 +3480,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:285:1
     │
 285 │ foo != null && foo?.bar.baz != null && foo?.bar.baz[buzz]
@@ -3501,7 +3501,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:286:1
     │
 286 │ foo != null && foo?.() != null && foo?.().bar
@@ -3522,7 +3522,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:287:1
     │
 287 │ foo.bar != null && foo.bar?.() != null && foo.bar?.().baz
@@ -3543,7 +3543,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:290:1
     │
 290 │ foo != undefined && foo.bar
@@ -3564,7 +3564,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:291:1
     │
 291 │ foo.bar != undefined && foo.bar.baz
@@ -3585,7 +3585,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:292:1
     │
 292 │ foo != undefined && foo()
@@ -3606,7 +3606,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:293:1
     │
 293 │ foo.bar != undefined && foo.bar()
@@ -3627,7 +3627,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:294:1
     │
 294 │ foo != undefined && foo.bar != undefined && foo.bar.baz != undefined && foo.bar.baz.buzz
@@ -3648,7 +3648,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:295:1
     │
 295 │ foo.bar != undefined && foo.bar.baz != undefined && foo.bar.baz.buzz
@@ -3669,7 +3669,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:298:1
     │
 298 │ foo != undefined && foo.bar != undefined && foo.bar.baz.buzz
@@ -3690,7 +3690,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:299:1
     │
 299 │ foo.bar != undefined && foo.bar.baz.buzz
@@ -3711,7 +3711,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:302:1
     │
 302 │ foo != undefined && foo.bar != undefined && foo.bar.baz != undefined && foo.bar.baz != undefined && foo.bar.baz.buzz
@@ -3732,7 +3732,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:303:1
     │
 303 │ foo.bar != undefined && foo.bar.baz != undefined && foo.bar.baz != undefined && foo.bar.baz.buzz
@@ -3753,7 +3753,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:306:1
     │
 306 │ foo != undefined && foo[bar] != undefined && foo[bar].baz != undefined && foo[bar].baz.buzz
@@ -3774,7 +3774,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:309:1
     │
 309 │ foo != undefined && foo[bar].baz != undefined && foo[bar].baz.buzz
@@ -3795,7 +3795,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:312:1
     │
 312 │ foo != undefined && foo.bar != undefined && foo.bar.baz != undefined && foo.bar.baz.buzz()
@@ -3816,7 +3816,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:313:1
     │
 313 │ foo != undefined && foo.bar != undefined && foo.bar.baz != undefined && foo.bar.baz.buzz != undefined && foo.bar.baz.buzz()
@@ -3837,7 +3837,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:314:1
     │
 314 │ foo.bar != undefined && foo.bar.baz != undefined && foo.bar.baz.buzz != undefined && foo.bar.baz.buzz()
@@ -3858,7 +3858,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:317:1
     │
 317 │ foo != undefined && foo.bar != undefined && foo.bar.baz.buzz()
@@ -3879,7 +3879,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:318:1
     │
 318 │ foo.bar != undefined && foo.bar.baz.buzz()
@@ -3900,7 +3900,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:321:1
     │
 321 │ foo != undefined && foo.bar != undefined && foo.bar.baz.buzz != undefined && foo.bar.baz.buzz()
@@ -3921,7 +3921,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:324:1
     │
 324 │ foo != undefined && foo.bar() != undefined && foo.bar().baz != undefined && foo.bar().baz.buzz != undefined && foo.bar().baz.buzz()
@@ -3942,7 +3942,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:327:1
     │
 327 │ foo != undefined && foo.bar != undefined && foo.bar.baz != undefined && foo.bar.baz[buzz]()
@@ -3963,7 +3963,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:328:1
     │
 328 │ foo != undefined && foo.bar != undefined && foo.bar.baz != undefined && foo.bar.baz[buzz] != undefined && foo.bar.baz[buzz]()
@@ -3984,7 +3984,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:331:1
     │
 331 │ foo != undefined && foo?.bar != undefined && foo?.bar.baz != undefined && foo?.bar.baz[buzz] != undefined && foo?.bar.baz[buzz]()
@@ -4005,7 +4005,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:332:1
     │
 332 │ foo != undefined && foo?.bar.baz != undefined && foo?.bar.baz[buzz]
@@ -4026,7 +4026,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:333:1
     │
 333 │ foo != undefined && foo?.() != undefined && foo?.().bar
@@ -4047,7 +4047,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:334:1
     │
 334 │ foo.bar != undefined && foo.bar?.() != undefined && foo.bar?.().baz
@@ -4068,7 +4068,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:337:1
     │
 337 │ foo && foo.#bar
@@ -4089,7 +4089,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:338:1
     │
 338 │ foo.#bar && foo.#bar.#baz
@@ -4110,7 +4110,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:339:1
     │
 339 │ foo.#bar && foo.#bar()
@@ -4131,7 +4131,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:340:1
     │
 340 │ foo && foo.#bar && foo.#bar.#baz && foo.#bar.#baz.#buzz
@@ -4152,7 +4152,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:341:1
     │
 341 │ foo.#bar && foo.#bar.#baz && foo.#bar.#baz.#buzz
@@ -4173,7 +4173,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:344:1
     │
 344 │ foo && foo.bar && foo.bar.baz || baz && baz.bar && baz.bar.foo
@@ -4194,7 +4194,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:344:34
     │
 344 │ foo && foo.bar && foo.bar.baz || baz && baz.bar && baz.bar.foo
@@ -4215,7 +4215,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:347:1
     │
 347 │ foo && foo.bar != null && foo.bar.baz !== undefined && foo.bar.baz.buzz;
@@ -4236,7 +4236,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:349:1
     │
 349 │ foo.bar && foo.bar.baz != null && foo.bar.baz.qux !== undefined && foo.bar.baz.qux.buzz;
@@ -4257,7 +4257,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:352:1
     │
 352 │ foo && foo.bar(baz => <This Requires Spaces />);
@@ -4278,7 +4278,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:353:1
     │
 353 │ foo && foo.bar(baz => typeof baz);
@@ -4299,7 +4299,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:354:1
     │
 354 │ foo && foo["some long string"] && foo["some long string"].baz
@@ -4320,7 +4320,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:355:1
     │
 355 │ foo && foo[`some long string`] && foo[`some long string`].baz
@@ -4341,7 +4341,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:356:1
     │
 356 │ foo && foo['some long string'] && foo['some long string'].baz;
@@ -4362,7 +4362,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:359:1
     │
 359 │ foo && foo[123] && foo[123].baz;
@@ -4383,7 +4383,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:360:1
     │
 360 │ foo && foo[true] && foo[true].baz;
@@ -4404,7 +4404,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:361:1
     │
 361 │ foo && foo[null] && foo[null].baz;
@@ -4425,7 +4425,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:362:1
     │
 362 │ foo && foo[12n] && foo[12n].baz;
@@ -4446,7 +4446,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:363:1
     │
 363 │ foo && foo[/\w+/] && foo[/\w+/].baz;
@@ -4467,7 +4467,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:367:1
     │  
 367 │ ┌ foo && foo.bar(/* comment */a,
@@ -4490,7 +4490,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:372:1
     │
 372 │ foo && foo.bar != null;
@@ -4511,7 +4511,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:373:1
     │
 373 │ foo && foo.bar != undefined;
@@ -4532,7 +4532,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:374:1
     │
 374 │ foo && foo.bar != null && baz;
@@ -4553,7 +4553,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:377:1
     │
 377 │ foo && foo?.();
@@ -4574,7 +4574,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:378:1
     │
 378 │ foo.bar && foo.bar?.();
@@ -4595,7 +4595,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:381:1
     │
 381 │ foo && foo.bar && /*0*/foo/*1*/./*2*/bar/*3*/./*4*/baz/*5*/;
@@ -4616,7 +4616,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:382:1
     │
 382 │ foo && foo[bar] && /*0*/foo/*1*/[/*2*/bar/*3*/]/*4*/[/*5*/baz/*6*/]/*7*/;
@@ -4636,7 +4636,7 @@ Suggested fix: Change to an optional chain.
 ```
 
 ```
-warning[correctness/useOptionalChain]: Change to an optional chain.
+warning[nursery/useOptionalChain]: Change to an optional chain.
     ┌─ logicalAndCases.js:384:1
     │
 384 │ foo && foo[bar] && /*0*/foo/*1*/?./*2*/[/*3*/bar/*4*/]/*5*/?./*6*/[/*7*/baz/*8*/]/*9*/;

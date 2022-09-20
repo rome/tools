@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/if/trailing_comment.js
 ---
 
 # Input
@@ -16,13 +18,6 @@ if (
   // Comment
 ) {
   a;
-}
-
-if (
-	// comment
-	1
-) {
-	b;
 }
 ```
 
@@ -42,17 +37,6 @@ if (
  }
  if (code === 92) {
    /* '\' */
-@@ -16,3 +15,10 @@
- ) {
-   a;
- }
-+
-+if (
-+  // comment
-+  1
-+) {
-+  b;
-+}
 ```
 
 # Output
@@ -74,13 +58,6 @@ if (
   // Comment
 ) {
   a;
-}
-
-if (
-  // comment
-  1
-) {
-  b;
 }
 ```
 

@@ -1,0 +1,69 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/method-chain/13018.js
+---
+
+# Input
+
+```js
+foo(_a).bar().leet();
+foo(-a).bar().leet();
+foo(+a).bar().leet();
+foo(~a).bar().leet();
+foo(++a).bar().leet();
+foo(--a).bar().leet();
+foo(a++).bar().leet();
+foo(a--).bar().leet();
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,20 +1,8 @@
+ foo(_a).bar().leet();
+ foo(-a).bar().leet();
+-foo(+a)
+-  .bar()
+-  .leet();
+-foo(~a)
+-  .bar()
+-  .leet();
+-foo(++a)
+-  .bar()
+-  .leet();
+-foo(--a)
+-  .bar()
+-  .leet();
+-foo(a++)
+-  .bar()
+-  .leet();
+-foo(a--)
+-  .bar()
+-  .leet();
++foo(+a).bar().leet();
++foo(~a).bar().leet();
++foo(++a).bar().leet();
++foo(--a).bar().leet();
++foo(a++).bar().leet();
++foo(a--).bar().leet();
+```
+
+# Output
+
+```js
+foo(_a).bar().leet();
+foo(-a).bar().leet();
+foo(+a).bar().leet();
+foo(~a).bar().leet();
+foo(++a).bar().leet();
+foo(--a).bar().leet();
+foo(a++).bar().leet();
+foo(a--).bar().leet();
+```
+
+
+

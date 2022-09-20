@@ -215,7 +215,6 @@ struct CorrectnessSchema {
     no_unsafe_negation: Option<RuleConfiguration>,
     no_unused_template_literal: Option<RuleConfiguration>,
     use_block_statements: Option<RuleConfiguration>,
-    use_optional_chain: Option<RuleConfiguration>,
     use_simplified_logic_expression: Option<RuleConfiguration>,
     use_single_case_statement: Option<RuleConfiguration>,
     use_single_var_declarator: Option<RuleConfiguration>,
@@ -225,7 +224,7 @@ struct CorrectnessSchema {
 }
 impl Correctness {
     const CATEGORY_NAME: &'static str = "correctness";
-    pub(crate) const CATEGORY_RULES: [&'static str; 29] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 28] = [
         "noArguments",
         "noAsyncPromiseExecutor",
         "noCatchAssign",
@@ -248,7 +247,6 @@ impl Correctness {
         "noUnsafeNegation",
         "noUnusedTemplateLiteral",
         "useBlockStatements",
-        "useOptionalChain",
         "useSimplifiedLogicExpression",
         "useSingleCaseStatement",
         "useSingleVarDeclarator",
@@ -256,7 +254,7 @@ impl Correctness {
         "useValidTypeof",
         "useWhile",
     ];
-    const RECOMMENDED_RULES: [&'static str; 29] = [
+    const RECOMMENDED_RULES: [&'static str; 28] = [
         "noArguments",
         "noAsyncPromiseExecutor",
         "noCatchAssign",
@@ -279,7 +277,6 @@ impl Correctness {
         "noUnsafeNegation",
         "noUnusedTemplateLiteral",
         "useBlockStatements",
-        "useOptionalChain",
         "useSimplifiedLogicExpression",
         "useSingleCaseStatement",
         "useSingleVarDeclarator",
@@ -287,7 +284,7 @@ impl Correctness {
         "useValidTypeof",
         "useWhile",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 29] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 28] = [
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[0]),
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[2]),
@@ -316,7 +313,6 @@ impl Correctness {
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[25]),
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[26]),
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[27]),
-        RuleFilter::Rule("correctness", Self::CATEGORY_RULES[28]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -343,7 +339,7 @@ impl Correctness {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 29] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 28] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }
@@ -392,15 +388,17 @@ struct NurserySchema {
     no_unreachable: Option<RuleConfiguration>,
     no_unused_variables: Option<RuleConfiguration>,
     use_camel_case: Option<RuleConfiguration>,
+    use_optional_chain: Option<RuleConfiguration>,
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 5] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 6] = [
         "noDangerouslySetInnerHtml",
         "noNewSymbol",
         "noUnreachable",
         "noUnusedVariables",
         "useCamelCase",
+        "useOptionalChain",
     ];
     const RECOMMENDED_RULES: [&'static str; 0] = [];
     const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 0] = [];
