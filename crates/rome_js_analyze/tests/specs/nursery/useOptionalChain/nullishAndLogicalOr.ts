@@ -147,6 +147,6 @@ if ((this ?? {}).#bar) { foo.bar; }
 
 (undefined && this ?? {}).#bar;
 (((typeof this) as string) || {}).#bar;
-(new foo || {}).bar;
+// (new foo || {}).bar;
 (foo() || {}).bar;
 ((foo || {}).bar() || {}).baz;
