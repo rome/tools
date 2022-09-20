@@ -1,0 +1,978 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 98
+expression: logicalAndCases3.js
+---
+# Input
+```js
+// chained members
+foo && foo.bar && bing.bong
+foo.bar && foo.bar.baz && bing.bong
+foo && foo() && bing.bong
+foo.bar && foo.bar() && bing.bong
+foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+
+// case with a jump (i.e. a non-nullish prop)
+foo && foo.bar && foo.bar.baz.buzz && bing.bong
+foo.bar && foo.bar.baz.buzz && bing.bong
+
+// case where for some reason there is a doubled up expression
+foo && foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+
+// chained members with element access
+foo && foo[bar] && foo[bar].baz && foo[bar].baz.buzz && bing.bong
+
+// case with a jump (i.e. a non-nullish prop)
+foo && foo[bar].baz && foo[bar].baz.buzz && bing.bong
+
+// chained calls
+foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz() && bing.bong
+foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz() && bing.bong
+foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz() && bing.bong
+
+// case with a jump (i.e. a non-nullish prop)
+foo && foo.bar && foo.bar.baz.buzz() && bing.bong
+foo.bar && foo.bar.baz.buzz() && bing.bong
+
+// case with a jump (i.e. a non-nullish prop)
+foo && foo.bar && foo.bar.baz.buzz && foo.bar.baz.buzz() && bing.bong
+
+// case with a call expr inside the chain for some inefficient reason
+foo && foo.bar() && foo.bar().baz && foo.bar().baz.buzz && foo.bar().baz.buzz() && bing.bong
+
+// chained calls with element access
+foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz]() && bing.bong
+foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz] && foo.bar.baz[buzz]() && bing.bong
+
+// (partially) pre-optional chained
+foo && foo?.bar && foo?.bar.baz && foo?.bar.baz[buzz] && foo?.bar.baz[buzz]() && bing.bong
+foo && foo?.bar.baz && foo?.bar.baz[buzz] && bing.bong
+foo && foo?.() && foo?.().bar && bing.bong
+foo.bar && foo.bar?.() && foo.bar?.().baz && bing.bong
+
+// strict nullish equality checks x !== null && x.y !== null
+// chained members
+foo !== null && foo.bar
+foo.bar !== null && foo.bar.baz
+foo !== null && foo()
+foo.bar !== null && foo.bar()
+foo !== null && foo.bar !== null && foo.bar.baz !== null && foo.bar.baz.buzz
+foo.bar !== null && foo.bar.baz !== null && foo.bar.baz.buzz
+
+// chained calls with element access
+foo !== undefined && foo.bar !== undefined && foo.bar.baz !== undefined && foo.bar.baz[buzz]()
+foo !== undefined && foo.bar !== undefined && foo.bar.baz !== undefined && foo.bar.baz[buzz] !== undefined && foo.bar.baz[buzz]()
+
+// (partially) pre-optional chained
+foo !== undefined && foo?.bar !== undefined && foo?.bar.baz !== undefined && foo?.bar.baz[buzz] !== undefined && foo?.bar.baz[buzz]()
+foo !== undefined && foo?.bar.baz !== undefined && foo?.bar.baz[buzz]
+foo !== undefined && foo?.() !== undefined && foo?.().bar
+foo.bar !== undefined && foo.bar?.() !== undefined && foo.bar?.().baz
+
+// chained members
+foo != null && foo.bar
+foo.bar != null && foo.bar.baz
+foo != null && foo()
+foo.bar != null && foo.bar()
+foo != null && foo.bar != null && foo.bar.baz != null && foo.bar.baz.buzz
+foo.bar != null && foo.bar.baz != null && foo.bar.baz.buzz
+```
+
+# Diagnostics
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+  ┌─ logicalAndCases3.js:2:1
+  │
+2 │ foo && foo.bar && bing.bong
+  │ --------------
+
+Suggested fix: Change to an optional chain.
+    | @@ -1,5 +1,5 @@
+0 0 |   // chained members
+1   | - foo && foo.bar && bing.bong
+  1 | + foo?.bar && bing.bong
+2 2 |   foo.bar && foo.bar.baz && bing.bong
+3 3 |   foo && foo() && bing.bong
+4 4 |   foo.bar && foo.bar() && bing.bong
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+  ┌─ logicalAndCases3.js:3:1
+  │
+3 │ foo.bar && foo.bar.baz && bing.bong
+  │ ----------------------
+
+Suggested fix: Change to an optional chain.
+    | @@ -1,6 +1,6 @@
+0 0 |   // chained members
+1 1 |   foo && foo.bar && bing.bong
+2   | - foo.bar && foo.bar.baz && bing.bong
+  2 | + foo.bar?.baz && bing.bong
+3 3 |   foo && foo() && bing.bong
+4 4 |   foo.bar && foo.bar() && bing.bong
+5 5 |   foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+  ┌─ logicalAndCases3.js:4:1
+  │
+4 │ foo && foo() && bing.bong
+  │ ------------
+
+Suggested fix: Change to an optional chain.
+    | @@ -1,7 +1,7 @@
+0 0 |   // chained members
+1 1 |   foo && foo.bar && bing.bong
+2 2 |   foo.bar && foo.bar.baz && bing.bong
+3   | - foo && foo() && bing.bong
+  3 | + foo?.() && bing.bong
+4 4 |   foo.bar && foo.bar() && bing.bong
+5 5 |   foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+6 6 |   foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+  ┌─ logicalAndCases3.js:5:1
+  │
+5 │ foo.bar && foo.bar() && bing.bong
+  │ --------------------
+
+Suggested fix: Change to an optional chain.
+    | @@ -2,7 +2,7 @@
+1 1 |   foo && foo.bar && bing.bong
+2 2 |   foo.bar && foo.bar.baz && bing.bong
+3 3 |   foo && foo() && bing.bong
+4   | - foo.bar && foo.bar() && bing.bong
+  4 | + foo.bar?.() && bing.bong
+5 5 |   foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+6 6 |   foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+7 7 |   
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+  ┌─ logicalAndCases3.js:6:1
+  │
+6 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+  │ -------------------------------------------------
+
+Suggested fix: Change to an optional chain.
+    | @@ -3,7 +3,7 @@
+2 2 |   foo.bar && foo.bar.baz && bing.bong
+3 3 |   foo && foo() && bing.bong
+4 4 |   foo.bar && foo.bar() && bing.bong
+5   | - foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+  5 | + foo?.bar?.baz?.buzz && bing.bong
+6 6 |   foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+7 7 |   
+8 8 |   // case with a jump (i.e. a non-nullish prop)
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+  ┌─ logicalAndCases3.js:7:1
+  │
+7 │ foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+  │ ------------------------------------------
+
+Suggested fix: Change to an optional chain.
+    | @@ -4,7 +4,7 @@
+3 3 |   foo && foo() && bing.bong
+4 4 |   foo.bar && foo.bar() && bing.bong
+5 5 |   foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+6   | - foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+  6 | + foo.bar?.baz?.buzz && bing.bong
+7 7 |   
+8 8 |   // case with a jump (i.e. a non-nullish prop)
+9 9 |   foo && foo.bar && foo.bar.baz.buzz && bing.bong
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:10:1
+   │
+10 │ foo && foo.bar && foo.bar.baz.buzz && bing.bong
+   │ ----------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -7,7 +7,7 @@
+ 6  6 |   foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+ 7  7 |   
+ 8  8 |   // case with a jump (i.e. a non-nullish prop)
+ 9    | - foo && foo.bar && foo.bar.baz.buzz && bing.bong
+    9 | + foo?.bar?.baz.buzz && bing.bong
+10 10 |   foo.bar && foo.bar.baz.buzz && bing.bong
+11 11 |   
+12 12 |   // case where for some reason there is a doubled up expression
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:11:1
+   │
+11 │ foo.bar && foo.bar.baz.buzz && bing.bong
+   │ ---------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -8,7 +8,7 @@
+ 7  7 |   
+ 8  8 |   // case with a jump (i.e. a non-nullish prop)
+ 9  9 |   foo && foo.bar && foo.bar.baz.buzz && bing.bong
+10    | - foo.bar && foo.bar.baz.buzz && bing.bong
+   10 | + foo.bar?.baz.buzz && bing.bong
+11 11 |   
+12 12 |   // case where for some reason there is a doubled up expression
+13 13 |   foo && foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:14:1
+   │
+14 │ foo && foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+   │ ----------------------------------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -11,7 +11,7 @@
+10 10 |   foo.bar && foo.bar.baz.buzz && bing.bong
+11 11 |   
+12 12 |   // case where for some reason there is a doubled up expression
+13    | - foo && foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+   13 | + foo?.bar?.baz?.buzz && bing.bong
+14 14 |   foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+15 15 |   
+16 16 |   // chained members with element access
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:15:1
+   │
+15 │ foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+   │ ---------------------------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -12,7 +12,7 @@
+11 11 |   
+12 12 |   // case where for some reason there is a doubled up expression
+13 13 |   foo && foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+14    | - foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+   14 | + foo.bar?.baz?.buzz && bing.bong
+15 15 |   
+16 16 |   // chained members with element access
+17 17 |   foo && foo[bar] && foo[bar].baz && foo[bar].baz.buzz && bing.bong
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:18:1
+   │
+18 │ foo && foo[bar] && foo[bar].baz && foo[bar].baz.buzz && bing.bong
+   │ ----------------------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -15,7 +15,7 @@
+14 14 |   foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz && bing.bong
+15 15 |   
+16 16 |   // chained members with element access
+17    | - foo && foo[bar] && foo[bar].baz && foo[bar].baz.buzz && bing.bong
+   17 | + foo?.[bar]?.baz?.buzz && bing.bong
+18 18 |   
+19 19 |   // case with a jump (i.e. a non-nullish prop)
+20 20 |   foo && foo[bar].baz && foo[bar].baz.buzz && bing.bong
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:21:1
+   │
+21 │ foo && foo[bar].baz && foo[bar].baz.buzz && bing.bong
+   │ ----------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -18,7 +18,7 @@
+17 17 |   foo && foo[bar] && foo[bar].baz && foo[bar].baz.buzz && bing.bong
+18 18 |   
+19 19 |   // case with a jump (i.e. a non-nullish prop)
+20    | - foo && foo[bar].baz && foo[bar].baz.buzz && bing.bong
+   20 | + foo?.[bar].baz?.buzz && bing.bong
+21 21 |   
+22 22 |   // chained calls
+23 23 |   foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz() && bing.bong
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:24:1
+   │
+24 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz() && bing.bong
+   │ ---------------------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -21,7 +21,7 @@
+20 20 |   foo && foo[bar].baz && foo[bar].baz.buzz && bing.bong
+21 21 |   
+22 22 |   // chained calls
+23    | - foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz() && bing.bong
+   23 | + foo?.bar?.baz?.buzz() && bing.bong
+24 24 |   foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz() && bing.bong
+25 25 |   foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz() && bing.bong
+26 26 |   
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:25:1
+   │
+25 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz() && bing.bong
+   │ -----------------------------------------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -22,7 +22,7 @@
+21 21 |   
+22 22 |   // chained calls
+23 23 |   foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz() && bing.bong
+24    | - foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz() && bing.bong
+   24 | + foo?.bar?.baz?.buzz?.() && bing.bong
+25 25 |   foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz() && bing.bong
+26 26 |   
+27 27 |   // case with a jump (i.e. a non-nullish prop)
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:26:1
+   │
+26 │ foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz() && bing.bong
+   │ ----------------------------------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -23,7 +23,7 @@
+22 22 |   // chained calls
+23 23 |   foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz() && bing.bong
+24 24 |   foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz() && bing.bong
+25    | - foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz() && bing.bong
+   25 | + foo.bar?.baz?.buzz?.() && bing.bong
+26 26 |   
+27 27 |   // case with a jump (i.e. a non-nullish prop)
+28 28 |   foo && foo.bar && foo.bar.baz.buzz() && bing.bong
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:29:1
+   │
+29 │ foo && foo.bar && foo.bar.baz.buzz() && bing.bong
+   │ ------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -26,7 +26,7 @@
+25 25 |   foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz() && bing.bong
+26 26 |   
+27 27 |   // case with a jump (i.e. a non-nullish prop)
+28    | - foo && foo.bar && foo.bar.baz.buzz() && bing.bong
+   28 | + foo?.bar?.baz.buzz() && bing.bong
+29 29 |   foo.bar && foo.bar.baz.buzz() && bing.bong
+30 30 |   
+31 31 |   // case with a jump (i.e. a non-nullish prop)
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:30:1
+   │
+30 │ foo.bar && foo.bar.baz.buzz() && bing.bong
+   │ -----------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -27,7 +27,7 @@
+26 26 |   
+27 27 |   // case with a jump (i.e. a non-nullish prop)
+28 28 |   foo && foo.bar && foo.bar.baz.buzz() && bing.bong
+29    | - foo.bar && foo.bar.baz.buzz() && bing.bong
+   29 | + foo.bar?.baz.buzz() && bing.bong
+30 30 |   
+31 31 |   // case with a jump (i.e. a non-nullish prop)
+32 32 |   foo && foo.bar && foo.bar.baz.buzz && foo.bar.baz.buzz() && bing.bong
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:33:1
+   │
+33 │ foo && foo.bar && foo.bar.baz.buzz && foo.bar.baz.buzz() && bing.bong
+   │ --------------------------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -30,7 +30,7 @@
+29 29 |   foo.bar && foo.bar.baz.buzz() && bing.bong
+30 30 |   
+31 31 |   // case with a jump (i.e. a non-nullish prop)
+32    | - foo && foo.bar && foo.bar.baz.buzz && foo.bar.baz.buzz() && bing.bong
+   32 | + foo?.bar?.baz.buzz?.() && bing.bong
+33 33 |   
+34 34 |   // case with a call expr inside the chain for some inefficient reason
+35 35 |   foo && foo.bar() && foo.bar().baz && foo.bar().baz.buzz && foo.bar().baz.buzz() && bing.bong
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:36:1
+   │
+36 │ foo && foo.bar() && foo.bar().baz && foo.bar().baz.buzz && foo.bar().baz.buzz() && bing.bong
+   │ -------------------------------------------------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -33,7 +33,7 @@
+32 32 |   foo && foo.bar && foo.bar.baz.buzz && foo.bar.baz.buzz() && bing.bong
+33 33 |   
+34 34 |   // case with a call expr inside the chain for some inefficient reason
+35    | - foo && foo.bar() && foo.bar().baz && foo.bar().baz.buzz && foo.bar().baz.buzz() && bing.bong
+   35 | + foo?.bar()?.baz?.buzz?.() && bing.bong
+36 36 |   
+37 37 |   // chained calls with element access
+38 38 |   foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz]() && bing.bong
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:39:1
+   │
+39 │ foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz]() && bing.bong
+   │ ----------------------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -36,7 +36,7 @@
+35 35 |   foo && foo.bar() && foo.bar().baz && foo.bar().baz.buzz && foo.bar().baz.buzz() && bing.bong
+36 36 |   
+37 37 |   // chained calls with element access
+38    | - foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz]() && bing.bong
+   38 | + foo?.bar?.baz?.[buzz]() && bing.bong
+39 39 |   foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz] && foo.bar.baz[buzz]() && bing.bong
+40 40 |   
+41 41 |   // (partially) pre-optional chained
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:40:1
+   │
+40 │ foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz] && foo.bar.baz[buzz]() && bing.bong
+   │ -------------------------------------------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -37,7 +37,7 @@
+36 36 |   
+37 37 |   // chained calls with element access
+38 38 |   foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz]() && bing.bong
+39    | - foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz] && foo.bar.baz[buzz]() && bing.bong
+   39 | + foo?.bar?.baz?.[buzz]?.() && bing.bong
+40 40 |   
+41 41 |   // (partially) pre-optional chained
+42 42 |   foo && foo?.bar && foo?.bar.baz && foo?.bar.baz[buzz] && foo?.bar.baz[buzz]() && bing.bong
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:43:1
+   │
+43 │ foo && foo?.bar && foo?.bar.baz && foo?.bar.baz[buzz] && foo?.bar.baz[buzz]() && bing.bong
+   │ -----------------------------------------------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -40,7 +40,7 @@
+39 39 |   foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz] && foo.bar.baz[buzz]() && bing.bong
+40 40 |   
+41 41 |   // (partially) pre-optional chained
+42    | - foo && foo?.bar && foo?.bar.baz && foo?.bar.baz[buzz] && foo?.bar.baz[buzz]() && bing.bong
+   42 | + foo?.bar?.baz?.[buzz]?.() && bing.bong
+43 43 |   foo && foo?.bar.baz && foo?.bar.baz[buzz] && bing.bong
+44 44 |   foo && foo?.() && foo?.().bar && bing.bong
+45 45 |   foo.bar && foo.bar?.() && foo.bar?.().baz && bing.bong
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:44:1
+   │
+44 │ foo && foo?.bar.baz && foo?.bar.baz[buzz] && bing.bong
+   │ -----------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -41,7 +41,7 @@
+40 40 |   
+41 41 |   // (partially) pre-optional chained
+42 42 |   foo && foo?.bar && foo?.bar.baz && foo?.bar.baz[buzz] && foo?.bar.baz[buzz]() && bing.bong
+43    | - foo && foo?.bar.baz && foo?.bar.baz[buzz] && bing.bong
+   43 | + foo?.bar.baz?.[buzz] && bing.bong
+44 44 |   foo && foo?.() && foo?.().bar && bing.bong
+45 45 |   foo.bar && foo.bar?.() && foo.bar?.().baz && bing.bong
+46 46 |   
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:45:1
+   │
+45 │ foo && foo?.() && foo?.().bar && bing.bong
+   │ -----------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -42,7 +42,7 @@
+41 41 |   // (partially) pre-optional chained
+42 42 |   foo && foo?.bar && foo?.bar.baz && foo?.bar.baz[buzz] && foo?.bar.baz[buzz]() && bing.bong
+43 43 |   foo && foo?.bar.baz && foo?.bar.baz[buzz] && bing.bong
+44    | - foo && foo?.() && foo?.().bar && bing.bong
+   44 | + foo?.()?.bar && bing.bong
+45 45 |   foo.bar && foo.bar?.() && foo.bar?.().baz && bing.bong
+46 46 |   
+47 47 |   // strict nullish equality checks x !== null && x.y !== null
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:46:1
+   │
+46 │ foo.bar && foo.bar?.() && foo.bar?.().baz && bing.bong
+   │ -----------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -43,7 +43,7 @@
+42 42 |   foo && foo?.bar && foo?.bar.baz && foo?.bar.baz[buzz] && foo?.bar.baz[buzz]() && bing.bong
+43 43 |   foo && foo?.bar.baz && foo?.bar.baz[buzz] && bing.bong
+44 44 |   foo && foo?.() && foo?.().bar && bing.bong
+45    | - foo.bar && foo.bar?.() && foo.bar?.().baz && bing.bong
+   45 | + foo.bar?.()?.baz && bing.bong
+46 46 |   
+47 47 |   // strict nullish equality checks x !== null && x.y !== null
+48 48 |   // chained members
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:50:1
+   │
+50 │ foo !== null && foo.bar
+   │ -----------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -47,7 +47,7 @@
+46 46 |   
+47 47 |   // strict nullish equality checks x !== null && x.y !== null
+48 48 |   // chained members
+49    | - foo !== null && foo.bar
+   49 | + foo?.bar
+50 50 |   foo.bar !== null && foo.bar.baz
+51 51 |   foo !== null && foo()
+52 52 |   foo.bar !== null && foo.bar()
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:51:1
+   │
+51 │ foo.bar !== null && foo.bar.baz
+   │ -------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -48,7 +48,7 @@
+47 47 |   // strict nullish equality checks x !== null && x.y !== null
+48 48 |   // chained members
+49 49 |   foo !== null && foo.bar
+50    | - foo.bar !== null && foo.bar.baz
+   50 | + foo.bar?.baz
+51 51 |   foo !== null && foo()
+52 52 |   foo.bar !== null && foo.bar()
+53 53 |   foo !== null && foo.bar !== null && foo.bar.baz !== null && foo.bar.baz.buzz
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:52:1
+   │
+52 │ foo !== null && foo()
+   │ ---------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -49,7 +49,7 @@
+48 48 |   // chained members
+49 49 |   foo !== null && foo.bar
+50 50 |   foo.bar !== null && foo.bar.baz
+51    | - foo !== null && foo()
+   51 | + foo?.()
+52 52 |   foo.bar !== null && foo.bar()
+53 53 |   foo !== null && foo.bar !== null && foo.bar.baz !== null && foo.bar.baz.buzz
+54 54 |   foo.bar !== null && foo.bar.baz !== null && foo.bar.baz.buzz
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:53:1
+   │
+53 │ foo.bar !== null && foo.bar()
+   │ -----------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -50,7 +50,7 @@
+49 49 |   foo !== null && foo.bar
+50 50 |   foo.bar !== null && foo.bar.baz
+51 51 |   foo !== null && foo()
+52    | - foo.bar !== null && foo.bar()
+   52 | + foo.bar?.()
+53 53 |   foo !== null && foo.bar !== null && foo.bar.baz !== null && foo.bar.baz.buzz
+54 54 |   foo.bar !== null && foo.bar.baz !== null && foo.bar.baz.buzz
+55 55 |   
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:54:1
+   │
+54 │ foo !== null && foo.bar !== null && foo.bar.baz !== null && foo.bar.baz.buzz
+   │ ----------------------------------------------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -51,7 +51,7 @@
+50 50 |   foo.bar !== null && foo.bar.baz
+51 51 |   foo !== null && foo()
+52 52 |   foo.bar !== null && foo.bar()
+53    | - foo !== null && foo.bar !== null && foo.bar.baz !== null && foo.bar.baz.buzz
+   53 | + foo?.bar?.baz?.buzz
+54 54 |   foo.bar !== null && foo.bar.baz !== null && foo.bar.baz.buzz
+55 55 |   
+56 56 |   // chained calls with element access
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:55:1
+   │
+55 │ foo.bar !== null && foo.bar.baz !== null && foo.bar.baz.buzz
+   │ ------------------------------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -52,7 +52,7 @@
+51 51 |   foo !== null && foo()
+52 52 |   foo.bar !== null && foo.bar()
+53 53 |   foo !== null && foo.bar !== null && foo.bar.baz !== null && foo.bar.baz.buzz
+54    | - foo.bar !== null && foo.bar.baz !== null && foo.bar.baz.buzz
+   54 | + foo.bar?.baz?.buzz
+55 55 |   
+56 56 |   // chained calls with element access
+57 57 |   foo !== undefined && foo.bar !== undefined && foo.bar.baz !== undefined && foo.bar.baz[buzz]()
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:58:1
+   │
+58 │ foo !== undefined && foo.bar !== undefined && foo.bar.baz !== undefined && foo.bar.baz[buzz]()
+   │ ----------------------------------------------------------------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -55,7 +55,7 @@
+54 54 |   foo.bar !== null && foo.bar.baz !== null && foo.bar.baz.buzz
+55 55 |   
+56 56 |   // chained calls with element access
+57    | - foo !== undefined && foo.bar !== undefined && foo.bar.baz !== undefined && foo.bar.baz[buzz]()
+   57 | + foo?.bar?.baz?.[buzz]()
+58 58 |   foo !== undefined && foo.bar !== undefined && foo.bar.baz !== undefined && foo.bar.baz[buzz] !== undefined && foo.bar.baz[buzz]()
+59 59 |   
+60 60 |   // (partially) pre-optional chained
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:59:1
+   │
+59 │ foo !== undefined && foo.bar !== undefined && foo.bar.baz !== undefined && foo.bar.baz[buzz] !== undefined && foo.bar.baz[buzz]()
+   │ ---------------------------------------------------------------------------------------------------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -56,7 +56,7 @@
+55 55 |   
+56 56 |   // chained calls with element access
+57 57 |   foo !== undefined && foo.bar !== undefined && foo.bar.baz !== undefined && foo.bar.baz[buzz]()
+58    | - foo !== undefined && foo.bar !== undefined && foo.bar.baz !== undefined && foo.bar.baz[buzz] !== undefined && foo.bar.baz[buzz]()
+   58 | + foo?.bar?.baz?.[buzz]?.()
+59 59 |   
+60 60 |   // (partially) pre-optional chained
+61 61 |   foo !== undefined && foo?.bar !== undefined && foo?.bar.baz !== undefined && foo?.bar.baz[buzz] !== undefined && foo?.bar.baz[buzz]()
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:62:1
+   │
+62 │ foo !== undefined && foo?.bar !== undefined && foo?.bar.baz !== undefined && foo?.bar.baz[buzz] !== undefined && foo?.bar.baz[buzz]()
+   │ -------------------------------------------------------------------------------------------------------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -59,7 +59,7 @@
+58 58 |   foo !== undefined && foo.bar !== undefined && foo.bar.baz !== undefined && foo.bar.baz[buzz] !== undefined && foo.bar.baz[buzz]()
+59 59 |   
+60 60 |   // (partially) pre-optional chained
+61    | - foo !== undefined && foo?.bar !== undefined && foo?.bar.baz !== undefined && foo?.bar.baz[buzz] !== undefined && foo?.bar.baz[buzz]()
+   61 | + foo?.bar?.baz?.[buzz]?.()
+62 62 |   foo !== undefined && foo?.bar.baz !== undefined && foo?.bar.baz[buzz]
+63 63 |   foo !== undefined && foo?.() !== undefined && foo?.().bar
+64 64 |   foo.bar !== undefined && foo.bar?.() !== undefined && foo.bar?.().baz
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:63:1
+   │
+63 │ foo !== undefined && foo?.bar.baz !== undefined && foo?.bar.baz[buzz]
+   │ ---------------------------------------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -60,7 +60,7 @@
+59 59 |   
+60 60 |   // (partially) pre-optional chained
+61 61 |   foo !== undefined && foo?.bar !== undefined && foo?.bar.baz !== undefined && foo?.bar.baz[buzz] !== undefined && foo?.bar.baz[buzz]()
+62    | - foo !== undefined && foo?.bar.baz !== undefined && foo?.bar.baz[buzz]
+   62 | + foo?.bar.baz?.[buzz]
+63 63 |   foo !== undefined && foo?.() !== undefined && foo?.().bar
+64 64 |   foo.bar !== undefined && foo.bar?.() !== undefined && foo.bar?.().baz
+65 65 |   
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:64:1
+   │
+64 │ foo !== undefined && foo?.() !== undefined && foo?.().bar
+   │ ---------------------------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -61,7 +61,7 @@
+60 60 |   // (partially) pre-optional chained
+61 61 |   foo !== undefined && foo?.bar !== undefined && foo?.bar.baz !== undefined && foo?.bar.baz[buzz] !== undefined && foo?.bar.baz[buzz]()
+62 62 |   foo !== undefined && foo?.bar.baz !== undefined && foo?.bar.baz[buzz]
+63    | - foo !== undefined && foo?.() !== undefined && foo?.().bar
+   63 | + foo?.()?.bar
+64 64 |   foo.bar !== undefined && foo.bar?.() !== undefined && foo.bar?.().baz
+65 65 |   
+66 66 |   // chained members
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:65:1
+   │
+65 │ foo.bar !== undefined && foo.bar?.() !== undefined && foo.bar?.().baz
+   │ ---------------------------------------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -62,7 +62,7 @@
+61 61 |   foo !== undefined && foo?.bar !== undefined && foo?.bar.baz !== undefined && foo?.bar.baz[buzz] !== undefined && foo?.bar.baz[buzz]()
+62 62 |   foo !== undefined && foo?.bar.baz !== undefined && foo?.bar.baz[buzz]
+63 63 |   foo !== undefined && foo?.() !== undefined && foo?.().bar
+64    | - foo.bar !== undefined && foo.bar?.() !== undefined && foo.bar?.().baz
+   64 | + foo.bar?.()?.baz
+65 65 |   
+66 66 |   // chained members
+67 67 |   foo != null && foo.bar
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:68:1
+   │
+68 │ foo != null && foo.bar
+   │ ----------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -65,7 +65,7 @@
+64 64 |   foo.bar !== undefined && foo.bar?.() !== undefined && foo.bar?.().baz
+65 65 |   
+66 66 |   // chained members
+67    | - foo != null && foo.bar
+   67 | + foo?.bar
+68 68 |   foo.bar != null && foo.bar.baz
+69 69 |   foo != null && foo()
+70 70 |   foo.bar != null && foo.bar()
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:69:1
+   │
+69 │ foo.bar != null && foo.bar.baz
+   │ ------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -66,7 +66,7 @@
+65 65 |   
+66 66 |   // chained members
+67 67 |   foo != null && foo.bar
+68    | - foo.bar != null && foo.bar.baz
+   68 | + foo.bar?.baz
+69 69 |   foo != null && foo()
+70 70 |   foo.bar != null && foo.bar()
+71 71 |   foo != null && foo.bar != null && foo.bar.baz != null && foo.bar.baz.buzz
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:70:1
+   │
+70 │ foo != null && foo()
+   │ --------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -67,7 +67,7 @@
+66 66 |   // chained members
+67 67 |   foo != null && foo.bar
+68 68 |   foo.bar != null && foo.bar.baz
+69    | - foo != null && foo()
+   69 | + foo?.()
+70 70 |   foo.bar != null && foo.bar()
+71 71 |   foo != null && foo.bar != null && foo.bar.baz != null && foo.bar.baz.buzz
+72 72 |   foo.bar != null && foo.bar.baz != null && foo.bar.baz.buzz
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:71:1
+   │
+71 │ foo.bar != null && foo.bar()
+   │ ----------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -68,6 +68,6 @@
+67 67 |   foo != null && foo.bar
+68 68 |   foo.bar != null && foo.bar.baz
+69 69 |   foo != null && foo()
+70    | - foo.bar != null && foo.bar()
+   70 | + foo.bar?.()
+71 71 |   foo != null && foo.bar != null && foo.bar.baz != null && foo.bar.baz.buzz
+72 72 |   foo.bar != null && foo.bar.baz != null && foo.bar.baz.buzz
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:72:1
+   │
+72 │ foo != null && foo.bar != null && foo.bar.baz != null && foo.bar.baz.buzz
+   │ -------------------------------------------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -69,5 +69,5 @@
+68 68 |   foo.bar != null && foo.bar.baz
+69 69 |   foo != null && foo()
+70 70 |   foo.bar != null && foo.bar()
+71    | - foo != null && foo.bar != null && foo.bar.baz != null && foo.bar.baz.buzz
+   71 | + foo?.bar?.baz?.buzz
+72 72 |   foo.bar != null && foo.bar.baz != null && foo.bar.baz.buzz
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ logicalAndCases3.js:73:1
+   │
+73 │ foo.bar != null && foo.bar.baz != null && foo.bar.baz.buzz
+   │ ----------------------------------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -70,4 +70,4 @@
+69 69 |   foo != null && foo()
+70 70 |   foo.bar != null && foo.bar()
+71 71 |   foo != null && foo.bar != null && foo.bar.baz != null && foo.bar.baz.buzz
+72    | - foo.bar != null && foo.bar.baz != null && foo.bar.baz.buzz
+   72 | + foo.bar?.baz?.buzz
+
+
+```
+
+

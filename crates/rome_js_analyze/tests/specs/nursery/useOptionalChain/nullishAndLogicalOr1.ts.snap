@@ -1,0 +1,1225 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 98
+expression: nullishAndLogicalOr1.ts
+---
+# Input
+```js
+(foo || {}).bar;
+(foo || ({})).bar;
+(await foo || {}).bar;
+(foo1?.foo2 || {}).foo3;
+((() => foo())() || {}).bar;
+const foo = (bar || {}).baz;
+(foo.bar || {})[baz];
+
+((foo1 || {}).foo2 || {}).foo3;
+(foo || undefined || {}).bar;
+
+(foo() || bar || {}).baz;
+((foo1 ? foo2 : foo3) || {}).foo4;
+
+if (foo) { (foo || {}).bar; }
+if ((foo || {}).bar) { foo.bar; }
+
+(undefined && foo || {}).bar;
+(foo ?? {}).bar;
+(foo ?? ({})).bar;
+(await foo ?? {}).bar;
+
+(foo1?.foo2 ?? {}).foo3;
+((() => foo())() ?? {}).bar;
+const foo = (bar ?? {}).baz;
+(foo.bar ?? {})[baz];
+((foo1 ?? {}).foo2 ?? {}).foo3;
+
+(foo ?? undefined ?? {}).bar;
+(foo() ?? bar ?? {}).baz;
+((foo1 ? foo2 : foo3) ?? {}).foo4;
+
+if (foo) { (foo ?? {}).bar; }
+if ((foo ?? {}).bar) { foo.bar; }
+
+(undefined && foo ?? {}).bar;
+(a > b || {}).bar;
+(((typeof x) as string) || {}).bar;
+
+(void foo() || {}).bar;
+((a ? b : c) || {}).bar;
+
+((a instanceof Error) || {}).bar;
+((a << b) || {}).bar;
+((foo ** 2) || {}).bar;
+(foo ** 2 || {}).bar;
+(foo++ || {}).bar;
+(+foo || {}).bar;
+
+// private name
+(foo || {}).#bar;
+(foo || ({})).#bar;
+(await foo || {}).#bar;
+(foo1?.foo2 || {}).#foo3;
+((() => foo())() || {}).#bar;
+const foo = (bar || {}).#baz;
+(foo.bar || {})[baz];
+
+((foo1 || {}).#foo2 || {}).#foo3;
+(foo || undefined || {}).#bar;
+
+(foo() || bar || {}).#baz;
+((foo1 ? foo2 : foo3) || {}).#foo4;
+
+if (foo) { (foo || {}).#bar; }
+if ((foo || {}).#bar) { foo.bar; }
+
+(undefined && foo || {}).#bar;
+(foo ?? {}).#bar;
+(foo ?? ({})).#bar;
+(await foo ?? {}).#bar;
+```
+
+# Diagnostics
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+  ┌─ nullishAndLogicalOr1.ts:1:1
+  │
+1 │ (foo || {}).bar;
+  │ ---------------
+
+Suggested fix: Change to an optional chain.
+    | @@ -1,4 +1,4 @@
+0   | - (foo || {}).bar;
+  0 | + foo?.bar;
+1 1 |   (foo || ({})).bar;
+2 2 |   (await foo || {}).bar;
+3 3 |   (foo1?.foo2 || {}).foo3;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+  ┌─ nullishAndLogicalOr1.ts:2:1
+  │
+2 │ (foo || ({})).bar;
+  │ -----------------
+
+Suggested fix: Change to an optional chain.
+    | @@ -1,5 +1,5 @@
+0 0 |   (foo || {}).bar;
+1   | - (foo || ({})).bar;
+  1 | + foo?.bar;
+2 2 |   (await foo || {}).bar;
+3 3 |   (foo1?.foo2 || {}).foo3;
+4 4 |   ((() => foo())() || {}).bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+  ┌─ nullishAndLogicalOr1.ts:3:1
+  │
+3 │ (await foo || {}).bar;
+  │ ---------------------
+
+Suggested fix: Change to an optional chain.
+    | @@ -1,6 +1,6 @@
+0 0 |   (foo || {}).bar;
+1 1 |   (foo || ({})).bar;
+2   | - (await foo || {}).bar;
+  2 | + (await foo)?.bar;
+3 3 |   (foo1?.foo2 || {}).foo3;
+4 4 |   ((() => foo())() || {}).bar;
+5 5 |   const foo = (bar || {}).baz;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+  ┌─ nullishAndLogicalOr1.ts:4:1
+  │
+4 │ (foo1?.foo2 || {}).foo3;
+  │ -----------------------
+
+Suggested fix: Change to an optional chain.
+    | @@ -1,7 +1,7 @@
+0 0 |   (foo || {}).bar;
+1 1 |   (foo || ({})).bar;
+2 2 |   (await foo || {}).bar;
+3   | - (foo1?.foo2 || {}).foo3;
+  3 | + foo1?.foo2?.foo3;
+4 4 |   ((() => foo())() || {}).bar;
+5 5 |   const foo = (bar || {}).baz;
+6 6 |   (foo.bar || {})[baz];
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+  ┌─ nullishAndLogicalOr1.ts:5:1
+  │
+5 │ ((() => foo())() || {}).bar;
+  │ ---------------------------
+
+Suggested fix: Change to an optional chain.
+    | @@ -2,7 +2,7 @@
+1 1 |   (foo || ({})).bar;
+2 2 |   (await foo || {}).bar;
+3 3 |   (foo1?.foo2 || {}).foo3;
+4   | - ((() => foo())() || {}).bar;
+  4 | + (() => foo())()?.bar;
+5 5 |   const foo = (bar || {}).baz;
+6 6 |   (foo.bar || {})[baz];
+7 7 |   
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+  ┌─ nullishAndLogicalOr1.ts:6:13
+  │
+6 │ const foo = (bar || {}).baz;
+  │             ---------------
+
+Suggested fix: Change to an optional chain.
+    | @@ -3,7 +3,7 @@
+2 2 |   (await foo || {}).bar;
+3 3 |   (foo1?.foo2 || {}).foo3;
+4 4 |   ((() => foo())() || {}).bar;
+5   | - const foo = (bar || {}).baz;
+  5 | + const foo = bar?.baz;
+6 6 |   (foo.bar || {})[baz];
+7 7 |   
+8 8 |   ((foo1 || {}).foo2 || {}).foo3;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+  ┌─ nullishAndLogicalOr1.ts:7:1
+  │
+7 │ (foo.bar || {})[baz];
+  │ --------------------
+
+Suggested fix: Change to an optional chain.
+    | @@ -4,7 +4,7 @@
+3 3 |   (foo1?.foo2 || {}).foo3;
+4 4 |   ((() => foo())() || {}).bar;
+5 5 |   const foo = (bar || {}).baz;
+6   | - (foo.bar || {})[baz];
+  6 | + foo.bar?.[baz];
+7 7 |   
+8 8 |   ((foo1 || {}).foo2 || {}).foo3;
+9 9 |   (foo || undefined || {}).bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+  ┌─ nullishAndLogicalOr1.ts:9:1
+  │
+9 │ ((foo1 || {}).foo2 || {}).foo3;
+  │ ------------------------------
+
+Suggested fix: Change to an optional chain.
+    | @@ -6,7 +6,7 @@
+5 5 |   const foo = (bar || {}).baz;
+6 6 |   (foo.bar || {})[baz];
+7 7 |   
+8   | - ((foo1 || {}).foo2 || {}).foo3;
+  8 | + foo1?.foo2?.foo3;
+9 9 |   (foo || undefined || {}).bar;
+10 10 |   
+11 11 |   (foo() || bar || {}).baz;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:10:1
+   │
+10 │ (foo || undefined || {}).bar;
+   │ ----------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -7,7 +7,7 @@
+ 6  6 |   (foo.bar || {})[baz];
+ 7  7 |   
+ 8  8 |   ((foo1 || {}).foo2 || {}).foo3;
+ 9    | - (foo || undefined || {}).bar;
+    9 | + (foo || undefined)?.bar;
+10 10 |   
+11 11 |   (foo() || bar || {}).baz;
+12 12 |   ((foo1 ? foo2 : foo3) || {}).foo4;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:12:1
+   │
+12 │ (foo() || bar || {}).baz;
+   │ ------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -9,7 +9,7 @@
+ 8  8 |   ((foo1 || {}).foo2 || {}).foo3;
+ 9  9 |   (foo || undefined || {}).bar;
+10 10 |   
+11    | - (foo() || bar || {}).baz;
+   11 | + (foo() || bar)?.baz;
+12 12 |   ((foo1 ? foo2 : foo3) || {}).foo4;
+13 13 |   
+14 14 |   if (foo) { (foo || {}).bar; }
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:13:1
+   │
+13 │ ((foo1 ? foo2 : foo3) || {}).foo4;
+   │ ---------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -10,7 +10,7 @@
+ 9  9 |   (foo || undefined || {}).bar;
+10 10 |   
+11 11 |   (foo() || bar || {}).baz;
+12    | - ((foo1 ? foo2 : foo3) || {}).foo4;
+   12 | + (foo1 ? foo2 : foo3)?.foo4;
+13 13 |   
+14 14 |   if (foo) { (foo || {}).bar; }
+15 15 |   if ((foo || {}).bar) { foo.bar; }
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:15:12
+   │
+15 │ if (foo) { (foo || {}).bar; }
+   │            ---------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -12,7 +12,7 @@
+11 11 |   (foo() || bar || {}).baz;
+12 12 |   ((foo1 ? foo2 : foo3) || {}).foo4;
+13 13 |   
+14    | - if (foo) { (foo || {}).bar; }
+   14 | + if (foo) { foo?.bar; }
+15 15 |   if ((foo || {}).bar) { foo.bar; }
+16 16 |   
+17 17 |   (undefined && foo || {}).bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:16:5
+   │
+16 │ if ((foo || {}).bar) { foo.bar; }
+   │     ---------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -13,7 +13,7 @@
+12 12 |   ((foo1 ? foo2 : foo3) || {}).foo4;
+13 13 |   
+14 14 |   if (foo) { (foo || {}).bar; }
+15    | - if ((foo || {}).bar) { foo.bar; }
+   15 | + if (foo?.bar) { foo.bar; }
+16 16 |   
+17 17 |   (undefined && foo || {}).bar;
+18 18 |   (foo ?? {}).bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:18:1
+   │
+18 │ (undefined && foo || {}).bar;
+   │ ----------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -15,7 +15,7 @@
+14 14 |   if (foo) { (foo || {}).bar; }
+15 15 |   if ((foo || {}).bar) { foo.bar; }
+16 16 |   
+17    | - (undefined && foo || {}).bar;
+   17 | + (undefined && foo)?.bar;
+18 18 |   (foo ?? {}).bar;
+19 19 |   (foo ?? ({})).bar;
+20 20 |   (await foo ?? {}).bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:19:1
+   │
+19 │ (foo ?? {}).bar;
+   │ ---------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -16,7 +16,7 @@
+15 15 |   if ((foo || {}).bar) { foo.bar; }
+16 16 |   
+17 17 |   (undefined && foo || {}).bar;
+18    | - (foo ?? {}).bar;
+   18 | + foo?.bar;
+19 19 |   (foo ?? ({})).bar;
+20 20 |   (await foo ?? {}).bar;
+21 21 |   
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:20:1
+   │
+20 │ (foo ?? ({})).bar;
+   │ -----------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -17,7 +17,7 @@
+16 16 |   
+17 17 |   (undefined && foo || {}).bar;
+18 18 |   (foo ?? {}).bar;
+19    | - (foo ?? ({})).bar;
+   19 | + foo?.bar;
+20 20 |   (await foo ?? {}).bar;
+21 21 |   
+22 22 |   (foo1?.foo2 ?? {}).foo3;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:21:1
+   │
+21 │ (await foo ?? {}).bar;
+   │ ---------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -18,7 +18,7 @@
+17 17 |   (undefined && foo || {}).bar;
+18 18 |   (foo ?? {}).bar;
+19 19 |   (foo ?? ({})).bar;
+20    | - (await foo ?? {}).bar;
+   20 | + (await foo)?.bar;
+21 21 |   
+22 22 |   (foo1?.foo2 ?? {}).foo3;
+23 23 |   ((() => foo())() ?? {}).bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:23:1
+   │
+23 │ (foo1?.foo2 ?? {}).foo3;
+   │ -----------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -20,7 +20,7 @@
+19 19 |   (foo ?? ({})).bar;
+20 20 |   (await foo ?? {}).bar;
+21 21 |   
+22    | - (foo1?.foo2 ?? {}).foo3;
+   22 | + foo1?.foo2?.foo3;
+23 23 |   ((() => foo())() ?? {}).bar;
+24 24 |   const foo = (bar ?? {}).baz;
+25 25 |   (foo.bar ?? {})[baz];
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:24:1
+   │
+24 │ ((() => foo())() ?? {}).bar;
+   │ ---------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -21,7 +21,7 @@
+20 20 |   (await foo ?? {}).bar;
+21 21 |   
+22 22 |   (foo1?.foo2 ?? {}).foo3;
+23    | - ((() => foo())() ?? {}).bar;
+   23 | + (() => foo())()?.bar;
+24 24 |   const foo = (bar ?? {}).baz;
+25 25 |   (foo.bar ?? {})[baz];
+26 26 |   ((foo1 ?? {}).foo2 ?? {}).foo3;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:25:13
+   │
+25 │ const foo = (bar ?? {}).baz;
+   │             ---------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -22,7 +22,7 @@
+21 21 |   
+22 22 |   (foo1?.foo2 ?? {}).foo3;
+23 23 |   ((() => foo())() ?? {}).bar;
+24    | - const foo = (bar ?? {}).baz;
+   24 | + const foo = bar?.baz;
+25 25 |   (foo.bar ?? {})[baz];
+26 26 |   ((foo1 ?? {}).foo2 ?? {}).foo3;
+27 27 |   
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:26:1
+   │
+26 │ (foo.bar ?? {})[baz];
+   │ --------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -23,7 +23,7 @@
+22 22 |   (foo1?.foo2 ?? {}).foo3;
+23 23 |   ((() => foo())() ?? {}).bar;
+24 24 |   const foo = (bar ?? {}).baz;
+25    | - (foo.bar ?? {})[baz];
+   25 | + foo.bar?.[baz];
+26 26 |   ((foo1 ?? {}).foo2 ?? {}).foo3;
+27 27 |   
+28 28 |   (foo ?? undefined ?? {}).bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:27:1
+   │
+27 │ ((foo1 ?? {}).foo2 ?? {}).foo3;
+   │ ------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -24,7 +24,7 @@
+23 23 |   ((() => foo())() ?? {}).bar;
+24 24 |   const foo = (bar ?? {}).baz;
+25 25 |   (foo.bar ?? {})[baz];
+26    | - ((foo1 ?? {}).foo2 ?? {}).foo3;
+   26 | + foo1?.foo2?.foo3;
+27 27 |   
+28 28 |   (foo ?? undefined ?? {}).bar;
+29 29 |   (foo() ?? bar ?? {}).baz;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:29:1
+   │
+29 │ (foo ?? undefined ?? {}).bar;
+   │ ----------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -26,7 +26,7 @@
+25 25 |   (foo.bar ?? {})[baz];
+26 26 |   ((foo1 ?? {}).foo2 ?? {}).foo3;
+27 27 |   
+28    | - (foo ?? undefined ?? {}).bar;
+   28 | + (foo ?? undefined)?.bar;
+29 29 |   (foo() ?? bar ?? {}).baz;
+30 30 |   ((foo1 ? foo2 : foo3) ?? {}).foo4;
+31 31 |   
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:30:1
+   │
+30 │ (foo() ?? bar ?? {}).baz;
+   │ ------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -27,7 +27,7 @@
+26 26 |   ((foo1 ?? {}).foo2 ?? {}).foo3;
+27 27 |   
+28 28 |   (foo ?? undefined ?? {}).bar;
+29    | - (foo() ?? bar ?? {}).baz;
+   29 | + (foo() ?? bar)?.baz;
+30 30 |   ((foo1 ? foo2 : foo3) ?? {}).foo4;
+31 31 |   
+32 32 |   if (foo) { (foo ?? {}).bar; }
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:31:1
+   │
+31 │ ((foo1 ? foo2 : foo3) ?? {}).foo4;
+   │ ---------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -28,7 +28,7 @@
+27 27 |   
+28 28 |   (foo ?? undefined ?? {}).bar;
+29 29 |   (foo() ?? bar ?? {}).baz;
+30    | - ((foo1 ? foo2 : foo3) ?? {}).foo4;
+   30 | + (foo1 ? foo2 : foo3)?.foo4;
+31 31 |   
+32 32 |   if (foo) { (foo ?? {}).bar; }
+33 33 |   if ((foo ?? {}).bar) { foo.bar; }
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:33:12
+   │
+33 │ if (foo) { (foo ?? {}).bar; }
+   │            ---------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -30,7 +30,7 @@
+29 29 |   (foo() ?? bar ?? {}).baz;
+30 30 |   ((foo1 ? foo2 : foo3) ?? {}).foo4;
+31 31 |   
+32    | - if (foo) { (foo ?? {}).bar; }
+   32 | + if (foo) { foo?.bar; }
+33 33 |   if ((foo ?? {}).bar) { foo.bar; }
+34 34 |   
+35 35 |   (undefined && foo ?? {}).bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:34:5
+   │
+34 │ if ((foo ?? {}).bar) { foo.bar; }
+   │     ---------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -31,7 +31,7 @@
+30 30 |   ((foo1 ? foo2 : foo3) ?? {}).foo4;
+31 31 |   
+32 32 |   if (foo) { (foo ?? {}).bar; }
+33    | - if ((foo ?? {}).bar) { foo.bar; }
+   33 | + if (foo?.bar) { foo.bar; }
+34 34 |   
+35 35 |   (undefined && foo ?? {}).bar;
+36 36 |   (a > b || {}).bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:36:1
+   │
+36 │ (undefined && foo ?? {}).bar;
+   │ ----------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -33,7 +33,7 @@
+32 32 |   if (foo) { (foo ?? {}).bar; }
+33 33 |   if ((foo ?? {}).bar) { foo.bar; }
+34 34 |   
+35    | - (undefined && foo ?? {}).bar;
+   35 | + (undefined && foo)?.bar;
+36 36 |   (a > b || {}).bar;
+37 37 |   (((typeof x) as string) || {}).bar;
+38 38 |   
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:37:1
+   │
+37 │ (a > b || {}).bar;
+   │ -----------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -34,7 +34,7 @@
+33 33 |   if ((foo ?? {}).bar) { foo.bar; }
+34 34 |   
+35 35 |   (undefined && foo ?? {}).bar;
+36    | - (a > b || {}).bar;
+   36 | + (a > b)?.bar;
+37 37 |   (((typeof x) as string) || {}).bar;
+38 38 |   
+39 39 |   (void foo() || {}).bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:38:1
+   │
+38 │ (((typeof x) as string) || {}).bar;
+   │ ----------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -35,7 +35,7 @@
+34 34 |   
+35 35 |   (undefined && foo ?? {}).bar;
+36 36 |   (a > b || {}).bar;
+37    | - (((typeof x) as string) || {}).bar;
+   37 | + ((typeof x) as string)?.bar;
+38 38 |   
+39 39 |   (void foo() || {}).bar;
+40 40 |   ((a ? b : c) || {}).bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:40:1
+   │
+40 │ (void foo() || {}).bar;
+   │ ----------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -37,7 +37,7 @@
+36 36 |   (a > b || {}).bar;
+37 37 |   (((typeof x) as string) || {}).bar;
+38 38 |   
+39    | - (void foo() || {}).bar;
+   39 | + (void foo())?.bar;
+40 40 |   ((a ? b : c) || {}).bar;
+41 41 |   
+42 42 |   ((a instanceof Error) || {}).bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:41:1
+   │
+41 │ ((a ? b : c) || {}).bar;
+   │ -----------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -38,7 +38,7 @@
+37 37 |   (((typeof x) as string) || {}).bar;
+38 38 |   
+39 39 |   (void foo() || {}).bar;
+40    | - ((a ? b : c) || {}).bar;
+   40 | + (a ? b : c)?.bar;
+41 41 |   
+42 42 |   ((a instanceof Error) || {}).bar;
+43 43 |   ((a << b) || {}).bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:43:1
+   │
+43 │ ((a instanceof Error) || {}).bar;
+   │ --------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -40,7 +40,7 @@
+39 39 |   (void foo() || {}).bar;
+40 40 |   ((a ? b : c) || {}).bar;
+41 41 |   
+42    | - ((a instanceof Error) || {}).bar;
+   42 | + (a instanceof Error)?.bar;
+43 43 |   ((a << b) || {}).bar;
+44 44 |   ((foo ** 2) || {}).bar;
+45 45 |   (foo ** 2 || {}).bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:44:1
+   │
+44 │ ((a << b) || {}).bar;
+   │ --------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -41,7 +41,7 @@
+40 40 |   ((a ? b : c) || {}).bar;
+41 41 |   
+42 42 |   ((a instanceof Error) || {}).bar;
+43    | - ((a << b) || {}).bar;
+   43 | + (a << b)?.bar;
+44 44 |   ((foo ** 2) || {}).bar;
+45 45 |   (foo ** 2 || {}).bar;
+46 46 |   (foo++ || {}).bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:45:1
+   │
+45 │ ((foo ** 2) || {}).bar;
+   │ ----------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -42,7 +42,7 @@
+41 41 |   
+42 42 |   ((a instanceof Error) || {}).bar;
+43 43 |   ((a << b) || {}).bar;
+44    | - ((foo ** 2) || {}).bar;
+   44 | + (foo ** 2)?.bar;
+45 45 |   (foo ** 2 || {}).bar;
+46 46 |   (foo++ || {}).bar;
+47 47 |   (+foo || {}).bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:46:1
+   │
+46 │ (foo ** 2 || {}).bar;
+   │ --------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -43,7 +43,7 @@
+42 42 |   ((a instanceof Error) || {}).bar;
+43 43 |   ((a << b) || {}).bar;
+44 44 |   ((foo ** 2) || {}).bar;
+45    | - (foo ** 2 || {}).bar;
+   45 | + (foo ** 2)?.bar;
+46 46 |   (foo++ || {}).bar;
+47 47 |   (+foo || {}).bar;
+48 48 |   
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:47:1
+   │
+47 │ (foo++ || {}).bar;
+   │ -----------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -44,7 +44,7 @@
+43 43 |   ((a << b) || {}).bar;
+44 44 |   ((foo ** 2) || {}).bar;
+45 45 |   (foo ** 2 || {}).bar;
+46    | - (foo++ || {}).bar;
+   46 | + (foo++)?.bar;
+47 47 |   (+foo || {}).bar;
+48 48 |   
+49 49 |   // private name
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:48:1
+   │
+48 │ (+foo || {}).bar;
+   │ ----------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -45,7 +45,7 @@
+44 44 |   ((foo ** 2) || {}).bar;
+45 45 |   (foo ** 2 || {}).bar;
+46 46 |   (foo++ || {}).bar;
+47    | - (+foo || {}).bar;
+   47 | + (+foo)?.bar;
+48 48 |   
+49 49 |   // private name
+50 50 |   (foo || {}).#bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:51:1
+   │
+51 │ (foo || {}).#bar;
+   │ ----------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -48,7 +48,7 @@
+47 47 |   (+foo || {}).bar;
+48 48 |   
+49 49 |   // private name
+50    | - (foo || {}).#bar;
+   50 | + foo?.#bar;
+51 51 |   (foo || ({})).#bar;
+52 52 |   (await foo || {}).#bar;
+53 53 |   (foo1?.foo2 || {}).#foo3;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:52:1
+   │
+52 │ (foo || ({})).#bar;
+   │ ------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -49,7 +49,7 @@
+48 48 |   
+49 49 |   // private name
+50 50 |   (foo || {}).#bar;
+51    | - (foo || ({})).#bar;
+   51 | + foo?.#bar;
+52 52 |   (await foo || {}).#bar;
+53 53 |   (foo1?.foo2 || {}).#foo3;
+54 54 |   ((() => foo())() || {}).#bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:53:1
+   │
+53 │ (await foo || {}).#bar;
+   │ ----------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -50,7 +50,7 @@
+49 49 |   // private name
+50 50 |   (foo || {}).#bar;
+51 51 |   (foo || ({})).#bar;
+52    | - (await foo || {}).#bar;
+   52 | + (await foo)?.#bar;
+53 53 |   (foo1?.foo2 || {}).#foo3;
+54 54 |   ((() => foo())() || {}).#bar;
+55 55 |   const foo = (bar || {}).#baz;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:54:1
+   │
+54 │ (foo1?.foo2 || {}).#foo3;
+   │ ------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -51,7 +51,7 @@
+50 50 |   (foo || {}).#bar;
+51 51 |   (foo || ({})).#bar;
+52 52 |   (await foo || {}).#bar;
+53    | - (foo1?.foo2 || {}).#foo3;
+   53 | + foo1?.foo2?.#foo3;
+54 54 |   ((() => foo())() || {}).#bar;
+55 55 |   const foo = (bar || {}).#baz;
+56 56 |   (foo.bar || {})[baz];
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:55:1
+   │
+55 │ ((() => foo())() || {}).#bar;
+   │ ----------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -52,7 +52,7 @@
+51 51 |   (foo || ({})).#bar;
+52 52 |   (await foo || {}).#bar;
+53 53 |   (foo1?.foo2 || {}).#foo3;
+54    | - ((() => foo())() || {}).#bar;
+   54 | + (() => foo())()?.#bar;
+55 55 |   const foo = (bar || {}).#baz;
+56 56 |   (foo.bar || {})[baz];
+57 57 |   
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:56:13
+   │
+56 │ const foo = (bar || {}).#baz;
+   │             ----------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -53,7 +53,7 @@
+52 52 |   (await foo || {}).#bar;
+53 53 |   (foo1?.foo2 || {}).#foo3;
+54 54 |   ((() => foo())() || {}).#bar;
+55    | - const foo = (bar || {}).#baz;
+   55 | + const foo = bar?.#baz;
+56 56 |   (foo.bar || {})[baz];
+57 57 |   
+58 58 |   ((foo1 || {}).#foo2 || {}).#foo3;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:57:1
+   │
+57 │ (foo.bar || {})[baz];
+   │ --------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -54,7 +54,7 @@
+53 53 |   (foo1?.foo2 || {}).#foo3;
+54 54 |   ((() => foo())() || {}).#bar;
+55 55 |   const foo = (bar || {}).#baz;
+56    | - (foo.bar || {})[baz];
+   56 | + foo.bar?.[baz];
+57 57 |   
+58 58 |   ((foo1 || {}).#foo2 || {}).#foo3;
+59 59 |   (foo || undefined || {}).#bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:59:1
+   │
+59 │ ((foo1 || {}).#foo2 || {}).#foo3;
+   │ --------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -56,7 +56,7 @@
+55 55 |   const foo = (bar || {}).#baz;
+56 56 |   (foo.bar || {})[baz];
+57 57 |   
+58    | - ((foo1 || {}).#foo2 || {}).#foo3;
+   58 | + foo1?.#foo2?.#foo3;
+59 59 |   (foo || undefined || {}).#bar;
+60 60 |   
+61 61 |   (foo() || bar || {}).#baz;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:60:1
+   │
+60 │ (foo || undefined || {}).#bar;
+   │ -----------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -57,7 +57,7 @@
+56 56 |   (foo.bar || {})[baz];
+57 57 |   
+58 58 |   ((foo1 || {}).#foo2 || {}).#foo3;
+59    | - (foo || undefined || {}).#bar;
+   59 | + (foo || undefined)?.#bar;
+60 60 |   
+61 61 |   (foo() || bar || {}).#baz;
+62 62 |   ((foo1 ? foo2 : foo3) || {}).#foo4;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:62:1
+   │
+62 │ (foo() || bar || {}).#baz;
+   │ -------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -59,7 +59,7 @@
+58 58 |   ((foo1 || {}).#foo2 || {}).#foo3;
+59 59 |   (foo || undefined || {}).#bar;
+60 60 |   
+61    | - (foo() || bar || {}).#baz;
+   61 | + (foo() || bar)?.#baz;
+62 62 |   ((foo1 ? foo2 : foo3) || {}).#foo4;
+63 63 |   
+64 64 |   if (foo) { (foo || {}).#bar; }
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:63:1
+   │
+63 │ ((foo1 ? foo2 : foo3) || {}).#foo4;
+   │ ----------------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -60,7 +60,7 @@
+59 59 |   (foo || undefined || {}).#bar;
+60 60 |   
+61 61 |   (foo() || bar || {}).#baz;
+62    | - ((foo1 ? foo2 : foo3) || {}).#foo4;
+   62 | + (foo1 ? foo2 : foo3)?.#foo4;
+63 63 |   
+64 64 |   if (foo) { (foo || {}).#bar; }
+65 65 |   if ((foo || {}).#bar) { foo.bar; }
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:65:12
+   │
+65 │ if (foo) { (foo || {}).#bar; }
+   │            ----------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -62,7 +62,7 @@
+61 61 |   (foo() || bar || {}).#baz;
+62 62 |   ((foo1 ? foo2 : foo3) || {}).#foo4;
+63 63 |   
+64    | - if (foo) { (foo || {}).#bar; }
+   64 | + if (foo) { foo?.#bar; }
+65 65 |   if ((foo || {}).#bar) { foo.bar; }
+66 66 |   
+67 67 |   (undefined && foo || {}).#bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:66:5
+   │
+66 │ if ((foo || {}).#bar) { foo.bar; }
+   │     ----------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -63,7 +63,7 @@
+62 62 |   ((foo1 ? foo2 : foo3) || {}).#foo4;
+63 63 |   
+64 64 |   if (foo) { (foo || {}).#bar; }
+65    | - if ((foo || {}).#bar) { foo.bar; }
+   65 | + if (foo?.#bar) { foo.bar; }
+66 66 |   
+67 67 |   (undefined && foo || {}).#bar;
+68 68 |   (foo ?? {}).#bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:68:1
+   │
+68 │ (undefined && foo || {}).#bar;
+   │ -----------------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -65,7 +65,7 @@
+64 64 |   if (foo) { (foo || {}).#bar; }
+65 65 |   if ((foo || {}).#bar) { foo.bar; }
+66 66 |   
+67    | - (undefined && foo || {}).#bar;
+   67 | + (undefined && foo)?.#bar;
+68 68 |   (foo ?? {}).#bar;
+69 69 |   (foo ?? ({})).#bar;
+70 70 |   (await foo ?? {}).#bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:69:1
+   │
+69 │ (foo ?? {}).#bar;
+   │ ----------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -66,6 +66,6 @@
+65 65 |   if ((foo || {}).#bar) { foo.bar; }
+66 66 |   
+67 67 |   (undefined && foo || {}).#bar;
+68    | - (foo ?? {}).#bar;
+   68 | + foo?.#bar;
+69 69 |   (foo ?? ({})).#bar;
+70 70 |   (await foo ?? {}).#bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:70:1
+   │
+70 │ (foo ?? ({})).#bar;
+   │ ------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -67,5 +67,5 @@
+66 66 |   
+67 67 |   (undefined && foo || {}).#bar;
+68 68 |   (foo ?? {}).#bar;
+69    | - (foo ?? ({})).#bar;
+   69 | + foo?.#bar;
+70 70 |   (await foo ?? {}).#bar;
+
+
+```
+
+```
+warning[nursery/useOptionalChain]: Change to an optional chain.
+   ┌─ nullishAndLogicalOr1.ts:71:1
+   │
+71 │ (await foo ?? {}).#bar;
+   │ ----------------------
+
+Suggested fix: Change to an optional chain.
+      | @@ -68,4 +68,4 @@
+67 67 |   (undefined && foo || {}).#bar;
+68 68 |   (foo ?? {}).#bar;
+69 69 |   (foo ?? ({})).#bar;
+70    | - (await foo ?? {}).#bar;
+   70 | + (await foo)?.#bar;
+
+
+```
+
+
