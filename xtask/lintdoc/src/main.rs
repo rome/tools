@@ -356,6 +356,14 @@ fn parse_documentation(
                 write!(content, "~")?;
             }
 
+            Event::Start(Tag::BlockQuote) => {
+                write!(content, ">")?;
+            }
+
+            Event::End(Tag::BlockQuote) => {
+                writeln!(content)?;
+            }
+
             _ => {
                 // TODO: Implement remaining events as required
                 bail!("unimplemented event {event:?}")
