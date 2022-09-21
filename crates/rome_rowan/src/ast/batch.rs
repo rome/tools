@@ -4,7 +4,7 @@ use rome_text_size::TextRange;
 use crate::{AstNode, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxToken};
 use std::{
     cmp,
-    collections::{hash_map::Entry::Occupied, BinaryHeap, HashMap},
+    collections::{hash_map::Entry::Occupied, BinaryHeap, HashMap, VecDeque},
     iter::{empty, once},
 };
 
@@ -305,8 +305,6 @@ where
             mut node_last_version,
         } = self;
 
-        let mut mutated_range: Option<TextRange> = None;
-
         #[cfg(feature = "batch_log")]
         for change in changes.iter() {
             println!(
@@ -322,6 +320,9 @@ where
                 change.new_node.as_ref().map(|x| x.to_string()),
             );
         }
+
+        let mut modifications = VecDeque::with_capacity(10);
+        let mut aggindels = Vec::with_capacity(10);
 
         while let Some(item) = changes.pop() {
             // If parent is None, we reached the root
@@ -340,15 +341,18 @@ where
                 // This works because of the Ord we defined in the [CommitChange] struct
 
                 let mut replace_indel = item.indel;
-                let mut modifications = vec![(
+                modifications.clear();
+                modifications.push_back((
                     item.new_node_slot,
                     item.new_node_key,
                     item.new_node,
                     item.indels,
-                )];
+                ));
 
                 loop {
-                    if let Some(next_change_parent) = changes.peek().and_then(|i| i.parent.as_ref())
+                    if let Some(next_change_parent) = changes
+                        .peek()
+                        .and_then(|i| i.parent.as_ref())
                     {
                         if *next_change_parent == current_parent {
                             // SAFETY: We can .pop().unwrap() because we .peek() above
@@ -356,7 +360,7 @@ where
 
                             replace_indel |= next_change.indel;
 
-                            modifications.push((
+                            modifications.push_back((
                                 next_change.new_node_slot,
                                 next_change.new_node_key,
                                 next_change.new_node,
@@ -371,9 +375,11 @@ where
                 // Now we detach the current parent, make all the modifications
                 // and push a pending change to its parent.
 
+                let old_range = current_parent.text_range();
+
                 let current_parent_key = (
                     current_parent.ancestors().count(),
-                    current_parent.text_range().start(),
+                    old_range.start(),
                 );
 
                 #[cfg(feature = "batch_log")]
@@ -385,22 +391,13 @@ where
                     );
                 }
 
-                let old_range = current_parent.text_range();
-                mutated_range = match mutated_range {
-                    Some(range) => Some(TextRange::new(
-                        range.start().min(old_range.start()),
-                        range.end().min(old_range.end()),
-                    )),
-                    None => Some(old_range),
-                };
-
                 let mut current_parent = current_parent.detach();
                 let is_list = current_parent.kind().is_list();
                 let mut removed_slots = 0;
 
-                let mut aggindels = vec![];
+                aggindels.clear();
 
-                for (index, old_key, mut replace_with, mut indels) in modifications {
+                while let Some((index, old_key, mut replace_with, mut indels)) = modifications.pop_front() {
                     let index = index
                         .checked_sub( removed_slots)
                         .unwrap_or_else(|| panic!("cannot replace element in slot {index} with {removed_slots} removed slots"));
@@ -464,7 +461,7 @@ where
                         new_node_slot: currentparent_slot,
                         new_node: Some(SyntaxElement::Node(current_parent)),
                         indel: false,
-                        indels: aggindels,
+                        indels: aggindels.clone(),
                     });
                 }
             } else {
@@ -474,7 +471,6 @@ where
                     .into_node()
                     .expect("expected root to be a node and not a token");
 
-                dbg!(&item.indels);
                 let range = root.text_range();
                 return (root, Some((range, item.indels)));
             }
