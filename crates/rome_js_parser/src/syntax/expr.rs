@@ -768,6 +768,13 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
         .or_add_diagnostic(p, expected_expression)
         .map(|expr| parse_member_expression_rest(p, expr, context, false, &mut false))
     {
+        // test_err ts invalid_optional_chain_from_new_expressions
+        // new Test<string>?.test();
+        // new Test?.test();
+        // new A.b?.c()
+        // new (A.b)?.c()
+        // new (A.b?.()).c()
+        // new A.b?.()()
         if p.at(T![?.]) {
             let error = p
                 .err_builder("Invalid optional chain from new expression.")
@@ -787,14 +794,6 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     // class Test<A, B, C> {}
     // new Test<A, B, C>();
 
-    // test_err ts invalid_optional_chain_from_new_expressions
-    // new Test<string>?.test();
-    // new Test?.test();
-    // new A.b?.c()
-    // new (A.b)?.c()
-    // new (A.b?.()).c()
-    // new A.b?.()()
-    // p.
     if p.at(T!['(']) {
         parse_call_arguments(p).unwrap();
     }
