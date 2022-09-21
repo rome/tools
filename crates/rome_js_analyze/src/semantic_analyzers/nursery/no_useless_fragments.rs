@@ -149,6 +149,9 @@ fn jsx_member_name_is_react_fragment(
         {
             let source_is_react = js_import.source_is("react").ok()?;
             maybe_react_fragment = source_is_react;
+        } else {
+            // `React.Fragment` is a binding but it doesn't come from the "react" package
+            maybe_react_fragment = false;
         }
     }
 
@@ -169,6 +172,9 @@ fn jsx_reference_identifier_is_fragment(
         {
             let source_is_react = js_import.source_is("react").ok()?;
             maybe_react_fragment = source_is_react;
+        } else {
+            // `Fragment` is a binding g but it doesn't come from the "react" package
+            maybe_react_fragment = false;
         }
     }
 
