@@ -240,7 +240,7 @@ mod tests {
     pub fn ok_batch_mutation_multiple_changes_same_node() {
         let r = parse(
             "if (/*A*/a && a.b && a.b.c/*B*/) {}",
-            0,
+            0.into(),
             SourceType::js_module(),
         );
 
