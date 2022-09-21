@@ -26,22 +26,6 @@ impl FormatNodeRule<JsxOpeningFragment> for FormatJsxOpeningFragment {
             write!(f, [format_dangling_comments(node.syntax())])
         });
 
-        // const nodeHasComment = hasComment(node);
-        //   const hasOwnLineComment = hasComment(node, CommentCheckFlags.Line);
-        //   const isOpeningFragment = node.type === "JSXOpeningFragment";
-        //   return [
-        //     isOpeningFragment ? "<" : "</",
-        //     indent([
-        //       hasOwnLineComment
-        //         ? hardline
-        //         : nodeHasComment && !isOpeningFragment
-        //         ? " "
-        //         : "",
-        //       printDanglingComments(path, options, true),
-        //     ]),
-        //     hasOwnLineComment ? hardline : "",
-        //     ">",
-
         write![
             f,
             [

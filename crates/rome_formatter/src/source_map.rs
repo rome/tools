@@ -88,45 +88,6 @@ impl TransformSourceMap {
         self.trimmed_source_range_from_transformed_range(node.text_trimmed_range())
     }
 
-    /// Resolves the closest trimmed range for the passed in node.
-    ///
-    /// The difference to [::trimmed_source_range] only resolves the first trimmed range.
-    ///
-    /// ```javascript
-    /// function f() {
-    ///   return ((
-    ///     // prettier-ignore
-    ///     /* $FlowFixMe(>=0.53.0) */
-    ///     <JSX />
-    ///   ));
-    /// }
-    /// ```
-    ///
-    /// The trimmed range for the `JsxTagExpression` `<JSX />` returns the the range including all removed parentheses:
-    ///
-    /// ```javascript
-    ///   ((
-    ///     // prettier-ignore
-    ///     /* $FlowFixMe(>=0.53.0) */
-    ///     <JSX />
-    ///   ))
-    /// ```
-    ///
-    /// The [::closest_trimmed_range] resolves only the first deleted range, returning the range of the inner parenthesized
-    /// expression:
-
-    /// ```javascript
-    /// (
-    ///     // prettier-ignore
-    ///     /* $FlowFixMe(>=0.53.0) */
-    ///     <JSX />
-    ///   )
-    /// ```
-    pub fn closest_trimmed_range<L: Language>(&self, node: &SyntaxNode<L>) -> TextRange {
-        let source_range = self.source_range(node.text_trimmed_range());
-        self.resolve_trimmed_range(source_range)
-    }
-
     fn resolve_trimmed_range(&self, mut source_range: TextRange) -> TextRange {
         let start_mapping = self.mapped_node_ranges.get(&source_range.start());
         if let Some(mapping) = start_mapping {

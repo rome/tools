@@ -31,7 +31,7 @@ impl FormatNodeRule<JsImportAssertion> for FormatJsImportAssertion {
         } else {
             write!(
                 f,
-                [group(&soft_line_indent_or_spaced(&assertions.format()))]
+                [group(&soft_space_or_block_indent(&assertions.format()))]
             )?;
         }
 

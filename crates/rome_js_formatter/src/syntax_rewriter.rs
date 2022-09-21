@@ -893,15 +893,6 @@ mod tests {
 		)
 	)"#
         );
-
-        assert_eq!(
-            &source_map.text()[source_map.closest_trimmed_range(tag_expression.syntax())],
-            r#"(
-			// prettier-ignore
-			/* $FlowFixMe(>=0.53.0) */
-			<JSX />
-		)"#
-        );
     }
 
     fn source_map_test(input: &str) -> (JsSyntaxNode, TransformSourceMap) {

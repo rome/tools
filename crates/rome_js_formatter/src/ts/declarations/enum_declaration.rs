@@ -29,7 +29,7 @@ impl FormatNodeRule<TsEnumDeclaration> for FormatTsEnumDeclaration {
                 id.format(),
                 space(),
                 l_curly_token.format(),
-                group(&soft_line_indent_or_spaced(&members.format())),
+                group(&soft_space_or_block_indent(&members.format())),
                 r_curly_token.format()
             ]
         )

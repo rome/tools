@@ -25,7 +25,7 @@ impl FormatNodeRule<JsNamedImportSpecifiers> for FormatJsNamedImportSpecifiers {
         } else {
             write!(
                 f,
-                [group(&soft_line_indent_or_spaced(&specifiers.format()))]
+                [group(&soft_space_or_block_indent(&specifiers.format()))]
             )?;
         }
 

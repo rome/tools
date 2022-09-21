@@ -63,7 +63,7 @@ impl Format<JsFormatContext> for JsObjectLike {
         } else if self.members_have_leading_newline() {
             write!(f, [block_indent(&members)])?;
         } else {
-            write!(f, [group(&soft_line_indent_or_spaced(&members))])?;
+            write!(f, [group(&soft_space_or_block_indent(&members))])?;
         }
 
         write!(f, [self.r_curly_token().format()])

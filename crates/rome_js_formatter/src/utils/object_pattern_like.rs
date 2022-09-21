@@ -144,7 +144,7 @@ impl Format<JsFormatContext> for JsObjectPatternLike {
                 write!(f, [right])?;
             }
         } else {
-            write!(f, [group(&soft_line_indent_or_spaced(&right))])?;
+            write!(f, [group(&soft_space_or_block_indent(&right))])?;
         }
 
         write!(f, [self.r_curly_token().format()])
