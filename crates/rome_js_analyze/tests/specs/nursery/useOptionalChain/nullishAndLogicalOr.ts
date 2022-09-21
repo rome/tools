@@ -147,6 +147,6 @@ if ((this ?? {}).#bar) { foo.bar; }
 
 (undefined && this ?? {}).#bar;
 (((typeof this) as string) || {}).#bar;
-(new foo || {}).bar;
+// (new foo || {}).bar;  // tracked here https://github.com/rome/tools/issues/3257
 (foo() || {}).bar;
 ((foo || {}).bar() || {}).baz;

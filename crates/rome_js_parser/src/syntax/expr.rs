@@ -768,6 +768,23 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
         .or_add_diagnostic(p, expected_expression)
         .map(|expr| parse_member_expression_rest(p, expr, context, false, &mut false))
     {
+        // test_err ts invalid_optional_chain_from_new_expressions
+        // new Test<string>?.test();
+        // new Test?.test();
+        // new A.b?.c()
+        // new (A.b)?.c()
+        // new (A.b?.()).c()
+        // new A.b?.()()
+        if p.at(T![?.]) {
+            let error = p
+                .err_builder("Invalid optional chain from new expression.")
+                .primary(
+                    p.cur_range(),
+                    &format!("Did you mean to call '{}()'?", lhs.text(p)),
+                );
+
+            p.error(error);
+        }
         if let TS_INSTANTIATION_EXPRESSION = lhs.kind() {
             lhs.undo_completion(p).abandon(p)
         };
