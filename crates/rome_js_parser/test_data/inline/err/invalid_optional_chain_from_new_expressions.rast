@@ -384,35 +384,35 @@ error[SyntaxError]: Invalid optional chain from new expression.
   ┌─ invalid_optional_chain_from_new_expressions.ts:1:17
   │
 1 │ new Test<string>?.test();
-  │                 ^^
+  │                 ^^ Did you mean to call 'Test<string>()'?
 
 --
 error[SyntaxError]: Invalid optional chain from new expression.
   ┌─ invalid_optional_chain_from_new_expressions.ts:2:9
   │
 2 │ new Test?.test();
-  │         ^^
+  │         ^^ Did you mean to call 'Test()'?
 
 --
 error[SyntaxError]: Invalid optional chain from new expression.
   ┌─ invalid_optional_chain_from_new_expressions.ts:3:8
   │
 3 │ new A.b?.c()
-  │        ^^
+  │        ^^ Did you mean to call 'A.b()'?
 
 --
 error[SyntaxError]: Invalid optional chain from new expression.
   ┌─ invalid_optional_chain_from_new_expressions.ts:4:10
   │
 4 │ new (A.b)?.c()
-  │          ^^
+  │          ^^ Did you mean to call '(A.b)()'?
 
 --
 error[SyntaxError]: Invalid optional chain from new expression.
   ┌─ invalid_optional_chain_from_new_expressions.ts:6:8
   │
 6 │ new A.b?.()()
-  │        ^^
+  │        ^^ Did you mean to call 'A.b()'?
 
 --
 new Test<string>?.test();
