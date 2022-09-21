@@ -1,0 +1,12 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: useCamelCase.jsx
+---
+# Input
+```js
+// valid
+function Component() {}
+<Component>foo</Component>
+```
+
+

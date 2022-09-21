@@ -13,7 +13,7 @@ use rome_js_syntax::{
     JsFormalParameter, JsFunctionDeclaration, JsFunctionExportDefaultDeclaration,
     JsGetterClassMember, JsIdentifierBinding, JsLiteralMemberName, JsMethodClassMember,
     JsPrivateClassMemberName, JsPropertyClassMember, JsSetterClassMember, JsSyntaxKind,
-    JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList,
+    JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList, JsxReferenceIdentifier,
 };
 use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
 use std::{borrow::Cow, iter::once};
@@ -118,8 +118,14 @@ impl Rule for UseCamelCase {
                         let is_exported_function = binding
                             .parent::<JsFunctionExportDefaultDeclaration>()
                             .is_some();
+                        let is_jsx_component = model.all_reads(binding).any(|reference| {
+                            JsxReferenceIdentifier::can_cast(reference.node().kind())
+                        });
 
-                        if is_variable || is_parameter || is_function || is_exported_function {
+                        if is_jsx_component {
+                            None
+                        } else if is_variable || is_parameter || is_function || is_exported_function
+                        {
                             let name = binding.name_token().ok()?;
                             check_is_camel(name.text_trimmed())
                         } else {
