@@ -771,8 +771,11 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
         if p.at(T![?.]) {
             let error = p
                 .err_builder("Invalid optional chain from new expression.")
-                .primary(p.cur_range(), &format!("Did you mean to call '{}()'?", lhs.text(p)));
-    
+                .primary(
+                    p.cur_range(),
+                    &format!("Did you mean to call '{}()'?", lhs.text(p)),
+                );
+
             p.error(error);
         }
         if let TS_INSTANTIATION_EXPRESSION = lhs.kind() {
