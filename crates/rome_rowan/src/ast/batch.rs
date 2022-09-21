@@ -4,7 +4,7 @@ use rome_text_size::TextRange;
 use crate::{AstNode, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxToken};
 use std::{
     cmp,
-    collections::{BinaryHeap, HashMap, hash_map::Entry::Occupied},
+    collections::{hash_map::Entry::Occupied, BinaryHeap, HashMap},
     iter::{empty, once},
 };
 
@@ -440,8 +440,7 @@ where
                 println!("    After: {:?}", current_parent.to_string());
 
                 if let Occupied(mut e) = node_last_version.entry(current_parent_key) {
-                    let _old = e
-                        .insert(Some(SyntaxElement::Node(current_parent)));
+                    let _old = e.insert(Some(SyntaxElement::Node(current_parent)));
 
                     #[cfg(feature = "batch_log")]
                     println!("    Discarded: {:?}", _old.map(|x| x.to_string()));
