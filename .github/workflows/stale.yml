@@ -16,3 +16,4 @@ jobs:
           exempt-pr-labels: 'PR: on hold'
           stale-issue-label: 'S-Stale'
           stale-pr-label: 'S-Stale'
+          days-before-close: -1
