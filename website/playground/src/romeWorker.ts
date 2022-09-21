@@ -2,7 +2,7 @@ import init, {
 	DiagnosticPrinter,
 	RomePath,
 	Workspace,
-	Configuration,
+	Configuration
 } from "@rometools/wasm-web";
 import {
 	SourceType,
@@ -116,6 +116,9 @@ self.addEventListener("message", async (e) => {
 							noUnusedVariables: "error",
 							noUnreachable: "error",
 							useCamelCase: "error",
+							noRenderReturnValue: "error",
+							useButtonType: "error",
+							useOptionalChain: "error"
 						},
 					},
 				};

@@ -1,7 +1,3 @@
-use std::cmp::Ordering;
-use std::collections::VecDeque;
-use std::iter;
-
 use rome_analyze::{
     context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
 };
@@ -13,6 +9,9 @@ use rome_js_syntax::{
     JsStaticMemberExpression, OperatorPrecedence, T,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeExt, BatchMutationExt, SyntaxResult};
+use std::cmp::Ordering;
+use std::collections::VecDeque;
+use std::iter;
 
 use crate::JsRuleAction;
 
