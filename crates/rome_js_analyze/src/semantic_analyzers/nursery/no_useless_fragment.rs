@@ -4,8 +4,8 @@ use rome_analyze::{declare_rule, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
-    JsIdentifierBinding, JsImport, JsSyntaxKind, JsxAnyChild, JsxAnyElementName, JsxElement,
-    JsxFragment, JsxMemberName, JsxReferenceIdentifier, JsxTagExpression,
+    JsImport, JsSyntaxKind, JsxAnyChild, JsxAnyElementName, JsxElement, JsxFragment, JsxMemberName,
+    JsxReferenceIdentifier, JsxTagExpression,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeList};
 
@@ -23,6 +23,12 @@ declare_rule! {
     /// ```
     ///
     /// ```jsx,expect_diagnostic
+    /// <React.Fragment>
+    /// foo
+    /// </React.Fragment>
+    /// ```
+    ///
+    /// ```jsx,expect_diagnostic
     /// <></>
     /// ```
     pub(crate) NoUselessFragment {
@@ -35,7 +41,7 @@ declare_rule! {
 #[derive(Debug)]
 pub(crate) enum NoUselessFragmentState {
     Empty,
-    Attribute(JsxAnyChild),
+    Child(JsxAnyChild),
 }
 
 declare_node_union! {
@@ -54,39 +60,41 @@ impl Rule for NoUselessFragment {
         let model = ctx.model();
         match node {
             NoUselessFragmentQuery::JsxFragment(fragment) => {
-                let parent = node.syntax().parent().and_then(|parent| {
-                    if let Some(parent) = JsxTagExpression::cast_ref(&parent) {
-                        parent.syntax().parent()
-                    } else {
-                        Some(parent)
-                    }
-                });
-
-                let parent_kind = parent.map(|p| p.kind());
-                let matches_allowed_parents = matches!(
-                    parent_kind,
-                    Some(
-                        JsSyntaxKind::JS_RETURN_STATEMENT
-                            | JsSyntaxKind::JS_INITIALIZER_CLAUSE
-                            | JsSyntaxKind::JS_CONDITIONAL_EXPRESSION
-                            | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
-                            | JsSyntaxKind::JS_FUNCTION_EXPRESSION
-                            | JsSyntaxKind::JS_FUNCTION_DECLARATION
-                    )
-                );
+                let matches_allowed_parents = node
+                    .syntax()
+                    .parent()
+                    .map(|parent| match JsxTagExpression::try_cast(parent) {
+                        Ok(parent) => {
+                            let parent_kind = parent.syntax().parent().map(|p| p.kind());
+                            matches!(
+                                parent_kind,
+                                Some(
+                                    JsSyntaxKind::JS_RETURN_STATEMENT
+                                        | JsSyntaxKind::JS_INITIALIZER_CLAUSE
+                                        | JsSyntaxKind::JS_CONDITIONAL_EXPRESSION
+                                        | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
+                                        | JsSyntaxKind::JS_FUNCTION_EXPRESSION
+                                        | JsSyntaxKind::JS_FUNCTION_DECLARATION
+                                )
+                            )
+                        }
+                        Err(_) => false,
+                    })
+                    .unwrap_or(false);
 
                 let child_list = fragment.children();
-                if child_list.len() <= 1 && !matches_allowed_parents {
-                    return if child_list.is_empty() {
-                        Some(NoUselessFragmentState::Empty)
-                    } else {
-                        // SAFETY: it has at least one item
-                        let attribute = child_list.first().unwrap();
-                        Some(NoUselessFragmentState::Attribute(attribute))
-                    };
-                }
 
-                None
+                if !matches_allowed_parents {
+                    match child_list.first() {
+                        Some(first) if child_list.len() == 1 => {
+                            Some(NoUselessFragmentState::Child(first))
+                        }
+                        None => Some(NoUselessFragmentState::Empty),
+                        _ => None,
+                    }
+                } else {
+                    None
+                }
             }
             NoUselessFragmentQuery::JsxElement(element) => {
                 let opening_element = element.opening_element().ok()?;
@@ -131,23 +139,16 @@ fn jsx_member_name_is_react_fragment(
     let object = member_name.object().ok()?;
     let member = member_name.member().ok()?;
     let object = object.as_jsx_reference_identifier()?;
-    let maybe_react_fragment = object.value_token().ok()?.text_trimmed() == "React"
+    let mut maybe_react_fragment = object.value_token().ok()?.text_trimmed() == "React"
         && member.value_token().ok()?.text_trimmed() == "Fragment";
-    if maybe_react_fragment {
-        let reference = model.declaration(object);
-        if let Some(reference) = reference {
-            for ancestor in reference.syntax().ancestors() {
-                if let Some(js_import) = JsImport::cast(ancestor) {
-                    let source_is_react = js_import.source_is("react").ok()?;
-                    let reference = JsIdentifierBinding::cast_ref(reference.syntax())?;
-                    return Some(
-                        reference.name_token().ok()?.text_trimmed()
-                            == object.value_token().ok()?.text_trimmed()
-                            && source_is_react,
-                    );
-                }
-            }
-            return None;
+    if let Some(reference) = model.declaration(object) {
+        if let Some(js_import) = reference
+            .syntax()
+            .ancestors()
+            .find_map(|ancestor| JsImport::cast_ref(&ancestor))
+        {
+            let source_is_react = js_import.source_is("react").ok()?;
+            maybe_react_fragment = source_is_react;
         }
     }
 
@@ -159,21 +160,15 @@ fn jsx_reference_identifier_is_fragment(
     model: &SemanticModel,
 ) -> Option<bool> {
     let value_token = name.value_token().ok()?;
-    let maybe_react_fragment = value_token.text_trimmed() == "Fragment";
-    if maybe_react_fragment {
-        let reference = model.declaration(name);
-        if let Some(reference) = reference {
-            for ancestor in reference.syntax().ancestors() {
-                if let Some(js_import) = JsImport::cast(ancestor) {
-                    let source_is_react = js_import.source_is("react").ok()?;
-                    let reference = JsIdentifierBinding::cast_ref(reference.syntax())?;
-                    return Some(
-                        reference.name_token().ok()?.text_trimmed() == value_token.text_trimmed()
-                            && source_is_react,
-                    );
-                }
-            }
-            return None;
+    let mut maybe_react_fragment = value_token.text_trimmed() == "Fragment";
+    if let Some(reference) = model.declaration(name) {
+        if let Some(js_import) = reference
+            .syntax()
+            .ancestors()
+            .find_map(|ancestor| JsImport::cast_ref(&ancestor))
+        {
+            let source_is_react = js_import.source_is("react").ok()?;
+            maybe_react_fragment = source_is_react;
         }
     }
 
