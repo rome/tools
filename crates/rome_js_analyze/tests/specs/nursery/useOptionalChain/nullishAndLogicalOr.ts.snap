@@ -153,7 +153,7 @@ if ((this ?? {}).#bar) { foo.bar; }
 
 (undefined && this ?? {}).#bar;
 (((typeof this) as string) || {}).#bar;
-// (new foo || {}).bar;
+// (new foo || {}).bar;  // tracked here https://github.com/rome/tools/issues/3257
 (foo() || {}).bar;
 ((foo || {}).bar() || {}).baz;
 
@@ -2437,7 +2437,7 @@ Suggested fix: Change to an optional chain.
 147     | - (undefined && this ?? {}).#bar;
     147 | + (undefined && this)?.#bar;
 148 148 |   (((typeof this) as string) || {}).#bar;
-149 149 |   // (new foo || {}).bar;
+149 149 |   // (new foo || {}).bar;  // tracked here https://github.com/rome/tools/issues/3257
 150 150 |   (foo() || {}).bar;
 
 
@@ -2457,7 +2457,7 @@ Suggested fix: Change to an optional chain.
 147 147 |   (undefined && this ?? {}).#bar;
 148     | - (((typeof this) as string) || {}).#bar;
     148 | + ((typeof this) as string)?.#bar;
-149 149 |   // (new foo || {}).bar;
+149 149 |   // (new foo || {}).bar;  // tracked here https://github.com/rome/tools/issues/3257
 150 150 |   (foo() || {}).bar;
 151 151 |   ((foo || {}).bar() || {}).baz;
 
@@ -2475,7 +2475,7 @@ Suggested fix: Change to an optional chain.
         | @@ -148,5 +148,5 @@
 147 147 |   (undefined && this ?? {}).#bar;
 148 148 |   (((typeof this) as string) || {}).#bar;
-149 149 |   // (new foo || {}).bar;
+149 149 |   // (new foo || {}).bar;  // tracked here https://github.com/rome/tools/issues/3257
 150     | - (foo() || {}).bar;
     150 | + foo()?.bar;
 151 151 |   ((foo || {}).bar() || {}).baz;
@@ -2493,7 +2493,7 @@ warning[nursery/useOptionalChain]: Change to an optional chain.
 Suggested fix: Change to an optional chain.
         | @@ -149,4 +149,4 @@
 148 148 |   (((typeof this) as string) || {}).#bar;
-149 149 |   // (new foo || {}).bar;
+149 149 |   // (new foo || {}).bar;  // tracked here https://github.com/rome/tools/issues/3257
 150 150 |   (foo() || {}).bar;
 151     | - ((foo || {}).bar() || {}).baz;
     151 | + foo?.bar()?.baz;
