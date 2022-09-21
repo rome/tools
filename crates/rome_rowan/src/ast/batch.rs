@@ -378,7 +378,7 @@ where
                 let old_range = current_parent.text_range();
 
                 let current_parent_key = (
-                    current_parent.ancestors().count(),
+                    item.parent_depth,
                     old_range.start(),
                 );
 
