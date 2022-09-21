@@ -239,8 +239,7 @@ mod tests {
     #[test]
     pub fn ok_batch_mutation_multiple_changes_same_node() {
         let r = parse(
-            "if (
-                /*A*/a && a.b && a.b.c/*B*/) {}",
+            "if (/*A*/a && a.b && a.b.c/*B*/) {}",
             0,
             SourceType::js_module(),
         );
@@ -250,9 +249,6 @@ mod tests {
             .descendants()
             .filter_map(|x| x.cast::<JsLogicalExpression>())
             .collect();
-        // for expr in exprs.iter() {
-        //     println!("{:?}", expr.to_string());
-        // }
 
         let mut batch = r.tree().begin();
 
@@ -278,6 +274,6 @@ mod tests {
         let (root, changes) = batch.run();
         dbg!(changes);
         let after = root.to_string();
-        // assert_eq!("if (a?.b?.c) {}", after.as_str());
+        assert_eq!("if (/*A*/a?.b?.c/*B*/) {}", after.as_str());
     }
 }

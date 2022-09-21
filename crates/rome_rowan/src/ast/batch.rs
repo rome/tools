@@ -1,10 +1,10 @@
 use rome_text_edit::{Indel, TextSize};
 use rome_text_size::TextRange;
 
-use crate::{AstNode, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxSlot, SyntaxToken};
+use crate::{AstNode, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxToken};
 use std::{
     cmp,
-    collections::{BinaryHeap, HashMap},
+    collections::{BinaryHeap, HashMap, hash_map::Entry::Occupied},
     iter::{empty, once},
 };
 
@@ -41,7 +41,7 @@ struct CommitChange<L: Language> {
     new_node_slot: usize,
     new_node: Option<SyntaxElement<L>>,
     indel: bool,
-    indels: Vec<Indel>
+    indels: Vec<Indel>,
 }
 
 impl<L: Language> CommitChange<L> {
@@ -142,7 +142,7 @@ where
         let new_element_key = if next_element_depth > 1 {
             let key = (next_element_depth, next_element.text_range().start());
             self.node_last_version
-                .insert(key.clone(), Some(next_element.clone()));
+                .insert(key, Some(next_element.clone()));
             Some(key)
         } else {
             None
@@ -286,7 +286,7 @@ where
             new_node_slot,
             new_node: next_element,
             indel: true,
-            indels: vec![]
+            indels: vec![],
         });
     }
 
@@ -305,10 +305,7 @@ where
             mut node_last_version,
         } = self;
 
-        let old_root_range = root.text_range();
-
         let mut mutated_range: Option<TextRange> = None;
-        
 
         #[cfg(feature = "batch_log")]
         for change in changes.iter() {
@@ -347,7 +344,7 @@ where
                     item.new_node_slot,
                     item.new_node_key,
                     item.new_node,
-                    item.indels
+                    item.indels,
                 )];
 
                 loop {
@@ -363,7 +360,7 @@ where
                                 next_change.new_node_slot,
                                 next_change.new_node_key,
                                 next_change.new_node,
-                                next_change.indels
+                                next_change.indels,
                             ));
                             continue;
                         }
@@ -442,13 +439,9 @@ where
                 #[cfg(feature = "batch_log")]
                 println!("    After: {:?}", current_parent.to_string());
 
-                if node_last_version.contains_key(&current_parent_key) {
-                    let _old = node_last_version
-                        .insert(
-                            current_parent_key,
-                            Some(SyntaxElement::Node(current_parent)),
-                        )
-                        .flatten();
+                if let Occupied(mut e) = node_last_version.entry(current_parent_key) {
+                    let _old = e
+                        .insert(Some(SyntaxElement::Node(current_parent)));
 
                     #[cfg(feature = "batch_log")]
                     println!("    Discarded: {:?}", _old.map(|x| x.to_string()));
@@ -459,8 +452,8 @@ where
                             delete: old_range,
                             insert: current_parent.to_string(),
                         });
-                    }      
-                    
+                    }
+
                     #[cfg(feature = "batch_log")]
                     println!("    After indels: {:?}", aggindels);
 
@@ -472,7 +465,7 @@ where
                         new_node_slot: currentparent_slot,
                         new_node: Some(SyntaxElement::Node(current_parent)),
                         indel: false,
-                        indels: aggindels
+                        indels: aggindels,
                     });
                 }
             } else {
