@@ -1,9 +1,9 @@
 use rome_console::fmt;
 
 use super::{
-    error::internal::AsDiagnostic,
-    location::{AsPath, AsSourceCode},
-    Category, Error, Path, SourceCode,
+    diagnostic::internal::AsDiagnostic,
+    location::{AsResource, AsSourceCode},
+    Category, Error, Resource, SourceCode,
 };
 
 /// This trait is implemented for all types implementing [Diagnostic](super::Diagnostic)
@@ -13,7 +13,7 @@ pub trait DiagnosticExt: internal::Sealed + Sized {
     /// Returns a new diagnostic with the provided `message` as a message and
     /// description, and `self` as a source diagnostic. This is useful to
     /// create chains of diagnostics, where high level errors wrap lower level
-    /// causes
+    /// causes.
     fn context<M>(self, message: M) -> Error
     where
         Self: 'static,
@@ -21,19 +21,19 @@ pub trait DiagnosticExt: internal::Sealed + Sized {
         Error: From<internal::ContextDiagnostic<M, Self>>;
 
     /// Returns a new diagnostic using the provided `category` if `self`
-    /// doesn't already have one
+    /// doesn't already have one.
     fn with_category(self, category: &'static Category) -> Error
     where
         Error: From<internal::CategoryDiagnostic<Self>>;
 
     /// Returns a new diagnostic using the provided `path` if `self`
-    /// doesn't already have one
-    fn with_file_path(self, path: impl AsPath) -> Error
+    /// doesn't already have one.
+    fn with_file_path(self, path: impl AsResource) -> Error
     where
         Error: From<internal::FilePathDiagnostic<Self>>;
 
     /// Returns a new diagnostic using the provided `source_code` if `self`
-    /// doesn't already have one
+    /// doesn't already have one.
     fn with_file_source_code(self, source_code: impl AsSourceCode) -> Error
     where
         Error: From<internal::FileSourceCodeDiagnostic<Self>>;
@@ -64,12 +64,12 @@ impl<E: AsDiagnostic> DiagnosticExt for E {
         })
     }
 
-    fn with_file_path(self, path: impl AsPath) -> Error
+    fn with_file_path(self, path: impl AsResource) -> Error
     where
         Error: From<internal::FilePathDiagnostic<E>>,
     {
         Error::from(internal::FilePathDiagnostic {
-            path: path.as_path().map(Path::to_owned),
+            path: path.as_resource().map(Resource::to_owned),
             source: self,
         })
     }
@@ -89,7 +89,7 @@ pub trait Context<T, E>: internal::Sealed {
     /// If `self` is an error, returns a new diagnostic with the provided
     /// `message` as a message and description, and `self` as a source
     /// diagnostic. This is useful to create chains of diagnostics, where high
-    /// level errors wrap lower level causes
+    /// level errors wrap lower level causes.
     fn context<M>(self, message: M) -> Result<T, Error>
     where
         E: 'static,
@@ -97,14 +97,14 @@ pub trait Context<T, E>: internal::Sealed {
         Error: From<internal::ContextDiagnostic<M, E>>;
 
     /// If `self` is an error, returns a new diagnostic using the provided
-    /// `category` if `self` doesn't already have one
+    /// `category` if `self` doesn't already have one.
     fn with_category(self, category: &'static Category) -> Result<T, Error>
     where
         Error: From<internal::CategoryDiagnostic<E>>;
 
     /// If `self` is an error, returns a new diagnostic using the provided
-    /// `path` if `self` doesn't already have one
-    fn with_file_path(self, path: impl AsPath) -> Result<T, Error>
+    /// `path` if `self` doesn't already have one.
+    fn with_file_path(self, path: impl AsResource) -> Result<T, Error>
     where
         Error: From<internal::FilePathDiagnostic<E>>;
 }
@@ -134,7 +134,7 @@ impl<T, E: AsDiagnostic> Context<T, E> for Result<T, E> {
         }
     }
 
-    fn with_file_path(self, path: impl AsPath) -> Result<T, Error>
+    fn with_file_path(self, path: impl AsResource) -> Result<T, Error>
     where
         Error: From<internal::FilePathDiagnostic<E>>,
     {
@@ -157,30 +157,27 @@ mod internal {
     use rome_text_edit::TextSize;
 
     use crate::v2::{
-        error::internal::AsDiagnostic, Backtrace, Category, Diagnostic, DiagnosticTags,
-        IntoAdvices, Location, LogCategory, Path, Severity, SourceCode, Visitor,
+        diagnostic::internal::AsDiagnostic, Advices, Backtrace, Category, Diagnostic,
+        DiagnosticTags, Location, LogCategory, Resource, Severity, SourceCode, Visit,
     };
 
     /// This trait is inherited by `DiagnosticExt` and `Context`, since it's
     /// not visible outside of `rome_diagnostics` this prevents these extension
     /// traits from being implemented on other types outside of this module
+    ///
+    /// Making these traits "sealed" is mainly intended as a stability
+    /// guarantee, if these traits were simply public any change to their
+    /// signature or generic implementations would be a breaking change for
+    /// downstream implementations, so preventing these traits from ever being
+    /// implemented in downstream crates ensures this doesn't happen.
     pub trait Sealed {}
 
     /// Diagnostic type returned by [super::DiagnosticExt::context], uses
     /// `message` as its message and description, and `source` as its source
-    /// diagnostic
+    /// diagnostic.
     pub struct ContextDiagnostic<M, E> {
         pub(super) message: M,
         pub(super) source: E,
-    }
-
-    impl<M: fmt::Display, E: Debug> Debug for ContextDiagnostic<M, E> {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            f.debug_struct("Diagnostic")
-                .field("message", &DebugMarkup(&self.message))
-                .field("source", &self.source)
-                .finish()
-        }
     }
 
     impl<M: fmt::Display + 'static, E: AsDiagnostic> Diagnostic for ContextDiagnostic<M, E> {
@@ -203,11 +200,11 @@ mod internal {
             fmt::Display::fmt(&self.message, fmt)
         }
 
-        fn advices(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
+        fn advices(&self, visitor: &mut dyn Visit) -> io::Result<()> {
             self.source.as_diagnostic().advices(visitor)
         }
 
-        fn verbose_advices(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
+        fn verbose_advices(&self, visitor: &mut dyn Visit) -> io::Result<()> {
             self.source.as_diagnostic().verbose_advices(visitor)
         }
 
@@ -224,18 +221,27 @@ mod internal {
         }
     }
 
+    impl<M: fmt::Display, E: Debug> Debug for ContextDiagnostic<M, E> {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            f.debug_struct("Diagnostic")
+                .field("message", &DebugMarkup(&self.message))
+                .field("source", &self.source)
+                .finish()
+        }
+    }
+
     /// Helper wrapper implementing [Debug] for types implementing [fmt::Display],
-    /// prints a debug representation of the markup generated by printing `T`
+    /// prints a debug representation of the markup generated by printing `T`.
     struct DebugMarkup<T>(T);
 
     impl<T: fmt::Display> Debug for DebugMarkup<T> {
         fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             let buffer = markup!({ self.0 }).to_owned();
-            write!(fmt, "{buffer:?}")
+            Debug::fmt(&buffer, fmt)
         }
     }
 
-    /// Helper wrapper implementing [fmt::Write] for [std::fmt::Formatter]
+    /// Helper wrapper implementing [fmt::Write] for [std::fmt::Formatter].
     struct DisplayMarkup<'a, 'b>(&'a mut std::fmt::Formatter<'b>);
 
     impl fmt::Write for DisplayMarkup<'_, '_> {
@@ -257,7 +263,7 @@ mod internal {
     }
 
     /// Diagnostic type returned by [super::DiagnosticExt::with_category],
-    /// uses `category` as its category if `source` doesn't return one
+    /// uses `category` as its category if `source` doesn't return one.
     pub struct CategoryDiagnostic<E> {
         pub(super) category: &'static Category,
         pub(super) source: E,
@@ -294,11 +300,11 @@ mod internal {
             self.source.as_diagnostic().message(fmt)
         }
 
-        fn advices(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
+        fn advices(&self, visitor: &mut dyn Visit) -> io::Result<()> {
             self.source.as_diagnostic().advices(visitor)
         }
 
-        fn verbose_advices(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
+        fn verbose_advices(&self, visitor: &mut dyn Visit) -> io::Result<()> {
             self.source.as_diagnostic().verbose_advices(visitor)
         }
 
@@ -312,9 +318,9 @@ mod internal {
     }
 
     /// Diagnostic type returned by [super::DiagnosticExt::with_file_path],
-    /// uses `path` as its location path if `source` doesn't return one
+    /// uses `path` as its location path if `source` doesn't return one.
     pub struct FilePathDiagnostic<E> {
-        pub(super) path: Option<Path<String>>,
+        pub(super) path: Option<Resource<String>>,
         pub(super) source: E,
     }
 
@@ -344,11 +350,11 @@ mod internal {
             self.source.as_diagnostic().message(fmt)
         }
 
-        fn advices(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
+        fn advices(&self, visitor: &mut dyn Visit) -> io::Result<()> {
             self.source.as_diagnostic().advices(visitor)
         }
 
-        fn verbose_advices(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
+        fn verbose_advices(&self, visitor: &mut dyn Visit) -> io::Result<()> {
             self.source.as_diagnostic().verbose_advices(visitor)
         }
 
@@ -357,14 +363,14 @@ mod internal {
                 .as_diagnostic()
                 .location()
                 .map(|loc| Location {
-                    path: match loc.path {
-                        Path::Argv => Path::Argv,
-                        Path::Memory => Path::Memory,
-                        Path::File(file) => {
-                            if let Some(Path::File(path)) = &self.path {
-                                Path::File(file.or(path.as_deref()))
+                    resource: match loc.resource {
+                        Resource::Argv => Resource::Argv,
+                        Resource::Memory => Resource::Memory,
+                        Resource::File(file) => {
+                            if let Some(Resource::File(path)) = &self.path {
+                                Resource::File(file.or(path.as_deref()))
                             } else {
-                                Path::File(file)
+                                Resource::File(file)
                             }
                         }
                     },
@@ -373,7 +379,7 @@ mod internal {
                 })
                 .or_else(|| {
                     Some(Location {
-                        path: self.path.as_ref()?.as_deref(),
+                        resource: self.path.as_ref()?.as_deref(),
                         span: None,
                         source_code: None,
                     })
@@ -387,7 +393,7 @@ mod internal {
 
     /// Diagnostic type returned by [super::DiagnosticExt::with_file_source_code],
     /// uses `source_code` as its location source code if `source` doesn't
-    /// return one
+    /// return one.
     pub struct FileSourceCodeDiagnostic<E> {
         pub(super) source_code: Option<SourceCode<String, Vec<TextSize>>>,
         pub(super) source: E,
@@ -419,7 +425,7 @@ mod internal {
             self.source.as_diagnostic().message(fmt)
         }
 
-        fn advices(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
+        fn advices(&self, visitor: &mut dyn Visit) -> io::Result<()> {
             if let Some(source_code) = &self.source_code {
                 let mut visitor = FileSourceCodeVisitor {
                     visitor,
@@ -432,7 +438,7 @@ mod internal {
             }
         }
 
-        fn verbose_advices(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
+        fn verbose_advices(&self, visitor: &mut dyn Visit) -> io::Result<()> {
             if let Some(source_code) = &self.source_code {
                 let mut visitor = FileSourceCodeVisitor {
                     visitor,
@@ -461,50 +467,50 @@ mod internal {
     }
 
     /// Helper wrapper for a [Visitor], automatically inject `source_code` into
-    /// the location of code frame advices if they don't have one already
+    /// the location of code frame advices if they don't have one already.
     struct FileSourceCodeVisitor<'a> {
-        visitor: &'a mut dyn Visitor,
+        visitor: &'a mut dyn Visit,
         source_code: SourceCode<&'a str, &'a [TextSize]>,
     }
 
-    impl Visitor for FileSourceCodeVisitor<'_> {
-        fn visit_log(&mut self, category: LogCategory, text: &dyn fmt::Display) -> io::Result<()> {
-            self.visitor.visit_log(category, text)
+    impl Visit for FileSourceCodeVisitor<'_> {
+        fn record_log(&mut self, category: LogCategory, text: &dyn fmt::Display) -> io::Result<()> {
+            self.visitor.record_log(category, text)
         }
 
-        fn visit_list(&mut self, list: &[&dyn fmt::Display]) -> io::Result<()> {
-            self.visitor.visit_list(list)
+        fn record_list(&mut self, list: &[&dyn fmt::Display]) -> io::Result<()> {
+            self.visitor.record_list(list)
         }
 
-        fn visit_frame(&mut self, location: Location<'_>) -> io::Result<()> {
-            self.visitor.visit_frame(Location {
+        fn record_frame(&mut self, location: Location<'_>) -> io::Result<()> {
+            self.visitor.record_frame(Location {
                 source_code: Some(location.source_code.unwrap_or(self.source_code)),
                 ..location
             })
         }
 
-        fn visit_diff(&mut self, prev: &str, next: &str) -> io::Result<()> {
-            self.visitor.visit_diff(prev, next)
+        fn record_diff(&mut self, prev: &str, next: &str) -> io::Result<()> {
+            self.visitor.record_diff(prev, next)
         }
 
-        fn visit_backtrace(
+        fn record_backtrace(
             &mut self,
             title: &dyn fmt::Display,
             backtrace: &Backtrace,
         ) -> io::Result<()> {
-            self.visitor.visit_backtrace(title, backtrace)
+            self.visitor.record_backtrace(title, backtrace)
         }
 
-        fn visit_command(&mut self, command: &str) -> io::Result<()> {
-            self.visitor.visit_command(command)
+        fn record_command(&mut self, command: &str) -> io::Result<()> {
+            self.visitor.record_command(command)
         }
 
-        fn visit_group(
+        fn record_group(
             &mut self,
             title: &dyn fmt::Display,
-            advice: &dyn IntoAdvices,
+            advice: &dyn Advices,
         ) -> io::Result<()> {
-            self.visitor.visit_group(title, advice)
+            self.visitor.record_group(title, advice)
         }
     }
 }

@@ -1,5 +1,5 @@
 use rome_console::{codespan::SourceFile, markup, ConsoleExt, EnvConsole};
-use rome_diagnostics::v2::{Diagnostic, Path, PrintDiagnostic, Result, SourceCode};
+use rome_diagnostics::v2::{Diagnostic, PrintDiagnostic, Resource, Result, SourceCode};
 use rome_rowan::{TextRange, TextSize};
 use serde_json::Error;
 
@@ -9,8 +9,8 @@ struct SerdeDiagnostic {
     #[message]
     #[description]
     message: String,
-    #[location(path)]
-    path: Path<&'static str>,
+    #[location(resource)]
+    path: Resource<&'static str>,
     #[location(span)]
     span: Option<TextRange>,
     #[location(source_code)]
@@ -34,7 +34,7 @@ impl SerdeDiagnostic {
 
         Self {
             message: error.to_string(),
-            path: Path::Memory,
+            path: Resource::Memory,
             span,
             source_code: SourceCode {
                 text: input.to_string(),

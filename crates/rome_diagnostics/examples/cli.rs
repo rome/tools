@@ -1,7 +1,7 @@
 use std::io;
 
 use rome_console::{markup, ConsoleExt, EnvConsole};
-use rome_diagnostics::v2::{Diagnostic, IntoAdvices, LogCategory, Path, PrintDiagnostic, Visitor};
+use rome_diagnostics::v2::{Advices, Diagnostic, LogCategory, PrintDiagnostic, Resource, Visit};
 use rome_rowan::{TextRange, TextSize};
 
 #[derive(Debug, Diagnostic)]
@@ -15,8 +15,8 @@ use rome_rowan::{TextRange, TextSize};
 )]
 struct CliDiagnostic {
     command_name: String,
-    #[location(path)]
-    path: Path<&'static str>,
+    #[location(resource)]
+    path: Resource<&'static str>,
     #[location(span)]
     span: TextRange,
     #[location(source_code)]
@@ -31,26 +31,26 @@ struct CliAdvices {
     suggested_command: String,
 }
 
-impl IntoAdvices for CliAdvices {
-    fn visit(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
-        visitor.visit_log(
+impl Advices for CliAdvices {
+    fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
+        visitor.record_log(
             LogCategory::Info,
             &markup! {
                 "Did you mean "<Emphasis>{self.suggested_name}</Emphasis>" instead?"
             },
         )?;
 
-        visitor.visit_command(&self.suggested_command)?;
+        visitor.record_command(&self.suggested_command)?;
 
-        visitor.visit_log(LogCategory::Info, &"To see all available commands run")?;
-        visitor.visit_command("rome --help")
+        visitor.record_log(LogCategory::Info, &"To see all available commands run")?;
+        visitor.record_command("rome --help")
     }
 }
 
 pub fn main() {
     let diag = CliDiagnostic {
         command_name: String::from("formqt"),
-        path: Path::Argv,
+        path: Resource::Argv,
         span: TextRange::new(TextSize::from(5), TextSize::from(11)),
         source_code: String::from("rome formqt file.js"),
         advices: CliAdvices {

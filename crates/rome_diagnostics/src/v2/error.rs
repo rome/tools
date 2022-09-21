@@ -1,3 +1,21 @@
+//! The `error` module contains the implementation of [Error], a dynamic
+//! container struct for any type implementing [Diagnostic].
+//!
+//! The `Error` struct is essentially a manual implementation of
+//! `Box<dyn Diagnostic>` that is only a single word in size (thin pointer)
+//! instead of two for Rust's `dyn` types (wide pointer). This is done by
+//! manually managing how the "vtable" (the function pointer table used for
+//! dynamic dispatch) for the type is laid out and accessed in memory, at the
+//! cost of requiring the use of unsafe code.
+//!
+//! While reducing the size of `Error` is the main reason this type is using
+//! unsafe code (as it makes returning a `Result<T, Error>` more efficient),
+//! manually managing the vtable for `Error` opens additional possibilities for
+//! future extensions to the type like requiring disjoint trait bounds or
+//! implementing dynamic dispatch to traits that require handling owned
+//! instances of an object (the main use case for this would be implementing
+//! `Clone` for `Error` since `dyn Clone` is not allowed in Rust)
+
 use std::{
     fmt::{Debug, Formatter},
     io,
@@ -7,70 +25,73 @@ use std::{
 
 use rome_console::fmt;
 
-use self::internal::AsDiagnostic;
-use super::{Category, Diagnostic, DiagnosticTags, Location, Severity, Visitor};
+use super::{
+    diagnostic::internal::AsDiagnostic, Category, Diagnostic, DiagnosticTags, Location, Severity,
+    Visit,
+};
 
 /// The `Error` struct wraps any type implementing [Diagnostic] into a single
-/// dynamic type
+/// dynamic type.
 pub struct Error {
     inner: NonNull<ErrorImpl>,
 }
 
-/// Implement the [Diagnostic] trait as inherent methods on the [Error] type
+/// Implement the [Diagnostic] trait as inherent methods on the [Error] type.
 impl Error {
-    /// Calls [Diagnostic::category] on the [Diagnostic] wrapped by this [Error]
+    /// Calls [Diagnostic::category] on the [Diagnostic] wrapped by this [Error].
     pub fn category(&self) -> Option<&Category> {
         self.as_diagnostic().category()
     }
 
-    /// Calls [Diagnostic::severity] on the [Diagnostic] wrapped by this [Error]
+    /// Calls [Diagnostic::severity] on the [Diagnostic] wrapped by this [Error].
     pub fn severity(&self) -> Severity {
         self.as_diagnostic().severity()
     }
 
-    /// Calls [Diagnostic::description] on the [Diagnostic] wrapped by this [Error]
+    /// Calls [Diagnostic::description] on the [Diagnostic] wrapped by this [Error].
     pub fn description(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         self.as_diagnostic().description(fmt)
     }
 
-    /// Calls [Diagnostic::message] on the [Diagnostic] wrapped by this [Error]
+    /// Calls [Diagnostic::message] on the [Diagnostic] wrapped by this [Error].
     pub fn message(&self, fmt: &mut fmt::Formatter<'_>) -> io::Result<()> {
         self.as_diagnostic().message(fmt)
     }
 
-    /// Calls [Diagnostic::advices] on the [Diagnostic] wrapped by this [Error]
-    pub fn advices(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
+    /// Calls [Diagnostic::advices] on the [Diagnostic] wrapped by this [Error].
+    pub fn advices(&self, visitor: &mut dyn Visit) -> io::Result<()> {
         self.as_diagnostic().advices(visitor)
     }
 
-    /// Calls [Diagnostic::verbose_advices] on the [Diagnostic] wrapped by this [Error]
-    pub fn verbose_advices(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
+    /// Calls [Diagnostic::verbose_advices] on the [Diagnostic] wrapped by this [Error].
+    pub fn verbose_advices(&self, visitor: &mut dyn Visit) -> io::Result<()> {
         self.as_diagnostic().verbose_advices(visitor)
     }
 
-    /// Calls [Diagnostic::location] on the [Diagnostic] wrapped by this [Error]
+    /// Calls [Diagnostic::location] on the [Diagnostic] wrapped by this [Error].
     pub fn location(&self) -> Option<Location<'_>> {
         self.as_diagnostic().location()
     }
 
-    /// Calls [Diagnostic::tags] on the [Diagnostic] wrapped by this [Error]
+    /// Calls [Diagnostic::tags] on the [Diagnostic] wrapped by this [Error].
     pub fn tags(&self) -> DiagnosticTags {
         self.as_diagnostic().tags()
     }
 
-    /// Calls [Diagnostic::source] on the [Diagnostic] wrapped by this [Error]
+    /// Calls [Diagnostic::source] on the [Diagnostic] wrapped by this [Error].
     pub fn source(&self) -> Option<&dyn Diagnostic> {
         self.as_diagnostic().source()
     }
 }
 
 impl Error {
-    /// Returns the vtable for an error instance
+    /// Returns the vtable for an error instance.
     fn vtable(&self) -> &'static ErrorVTable {
+        // SAFETY: This assumes `inner` is a valid pointer to an `ErrorImpl`
         unsafe { self.inner.as_ref().vtable }
     }
 
-    /// Returns a [Ref] to the wrapped error
+    /// Returns a [Ref] to the wrapped error.
     fn inner(&'_ self) -> Ref<'_, ErrorImpl> {
         Ref {
             ptr: self.inner,
@@ -85,7 +106,7 @@ unsafe impl Send for Error {}
 unsafe impl Sync for Error {}
 
 /// Implement [From] for all types implementing [Diagnostic], [Send], [Sync]
-/// and outlives the `'static` lifetime
+/// and outlives the `'static` lifetime.
 impl<T> From<T> for Error
 where
     T: Diagnostic + Send + Sync + 'static,
@@ -94,6 +115,18 @@ where
         Self {
             inner: ErrorImpl::new(diag),
         }
+    }
+}
+
+impl AsDiagnostic for Error {
+    type Diagnostic = dyn Diagnostic;
+
+    fn as_diagnostic(&self) -> &Self::Diagnostic {
+        (self.vtable().as_diagnostic)(self.inner())
+    }
+
+    fn as_dyn(&self) -> &dyn Diagnostic {
+        self.as_diagnostic()
     }
 }
 
@@ -111,14 +144,14 @@ impl Drop for Error {
 }
 
 /// VTable struct for the [Error] type, contains function pointers used to
-/// manually implement dynamic dispatch
+/// manually implement dynamic dispatch.
 struct ErrorVTable {
     as_diagnostic: for<'a> fn(Ref<'a, ErrorImpl>) -> &'a (dyn Diagnostic + 'static),
     drop: fn(NonNull<ErrorImpl>),
 }
 
 /// Internal storage struct used to pack a vtable instance along with a
-/// diagnostic object
+/// diagnostic object.
 struct ErrorImpl<D = ()> {
     vtable: &'static ErrorVTable,
     diag: D,
@@ -130,7 +163,7 @@ where
 {
     /// Create a new instance of [ErrorImpl] containing the provided diagnostic
     /// and a reference to the corresponding vtable, allocate it on the heap
-    /// using [Box] and returns the corresponding raw pointer
+    /// using [Box] and returns the corresponding raw pointer.
     fn new(diag: D) -> NonNull<ErrorImpl> {
         let vtable = &ErrorVTable {
             as_diagnostic: as_diagnostic::<D>,
@@ -146,7 +179,7 @@ where
 
 /// This type is used to manually represent a reference as a raw pointer + an
 /// associated lifetime, in order to decouple the underlying type of the
-/// reference and allow it to be cast while retaining lifetime informations
+/// reference and allow it to be cast while retaining lifetime informations.
 #[derive(Copy, Clone)]
 struct Ref<'a, T> {
     ptr: NonNull<T>,
@@ -164,11 +197,12 @@ impl<'a, T> Ref<'a, T> {
 
     // Returns a reference to the value pointed to by this reference
     fn into_ref(self) -> &'a T {
+        // SAFETY: This assumes `ptr` is a valid pointer to `T`
         unsafe { self.ptr.as_ref() }
     }
 }
 
-/// Generic implementation of `as_diagnostic` for the `Error` type
+/// Generic implementation of `as_diagnostic` for the `Error` type.
 fn as_diagnostic<D: Diagnostic + 'static>(
     this: Ref<'_, ErrorImpl>,
 ) -> &'_ (dyn Diagnostic + 'static) {
@@ -177,65 +211,18 @@ fn as_diagnostic<D: Diagnostic + 'static>(
     &this.diag
 }
 
-/// Generic implementation of `drop` for the `Error` type
+/// Generic implementation of `drop` for the `Error` type.
 fn drop_error<D: Diagnostic>(this: NonNull<ErrorImpl>) {
     let this = this.cast::<ErrorImpl<D>>();
+    // SAFETY: This assumes `this` is a valid pointer to an `ErrorImpl<D>` that
+    // was allocated with `Box::new`
     unsafe {
-        Box::from_raw(this.as_ptr());
+        drop(Box::from_raw(this.as_ptr()));
     }
 }
 
-/// Alias of [std::result::Result] with the `Err` type defaulting to [Error]
+/// Alias of [std::result::Result] with the `Err` type defaulting to [Error].
 pub type Result<T, E = Error> = std::result::Result<T, E>;
-
-pub(crate) mod internal {
-    //! The `AsDiagnostic` trait needs to be declared as public as its referred
-    //! to in the `where` clause of other public items, but as it's not part of
-    //! the public API it's declared in a private module so it's not accessible
-    //! outside of the crate
-
-    use std::fmt::Debug;
-
-    use crate::v2::diagnostic::*;
-
-    use super::Error;
-
-    /// Since [Error] must implement `From<T: Diagnostic>` to be used with the
-    /// `?` operator, it cannot implement the [Diagnostic] trait (as that would
-    /// conflict with the implementation of `From<T> for T` in the standard
-    /// library). The [AsDiagnostic] exists as an internal implementation
-    /// detail to bridge this gap and allow various types and functions in
-    /// `rome_diagnostics` to be generic over all diagnostics + `Error`
-    pub trait AsDiagnostic: Debug {
-        type Diagnostic: Diagnostic + ?Sized;
-        fn as_diagnostic(&self) -> &Self::Diagnostic;
-        fn as_dyn(&self) -> &dyn Diagnostic;
-    }
-
-    impl<D: Diagnostic> AsDiagnostic for D {
-        type Diagnostic = D;
-
-        fn as_diagnostic(&self) -> &Self::Diagnostic {
-            self
-        }
-
-        fn as_dyn(&self) -> &dyn Diagnostic {
-            self
-        }
-    }
-
-    impl AsDiagnostic for Error {
-        type Diagnostic = dyn Diagnostic;
-
-        fn as_diagnostic(&self) -> &Self::Diagnostic {
-            (self.vtable().as_diagnostic)(self.inner())
-        }
-
-        fn as_dyn(&self) -> &dyn Diagnostic {
-            self.as_diagnostic()
-        }
-    }
-}
 
 #[cfg(test)]
 mod tests {

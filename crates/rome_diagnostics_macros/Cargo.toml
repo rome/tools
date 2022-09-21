@@ -1,8 +1,10 @@
 [package]
 name = "rome_diagnostics_macros"
-version = "0.1.0"
+version = "0.0.0"
+authors = ["Rome Tools Developers and Contributors"]
+repository = "https://github.com/rome/tools"
+license = "MIT"
 edition = "2021"
-
 
 [lib]
 proc-macro = true

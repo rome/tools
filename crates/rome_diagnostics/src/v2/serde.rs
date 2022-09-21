@@ -1,4 +1,4 @@
-use std::{fmt::Write as _, io};
+use std::io;
 
 use rome_console::{fmt, markup, MarkupBuf};
 use rome_text_edit::TextRange;
@@ -8,12 +8,12 @@ use serde::{
 };
 
 use super::{
-    diagnostic::DiagnosticTag, error::internal::AsDiagnostic, Backtrace, Category, DiagnosticTags,
-    IntoAdvices, LogCategory, Path, Severity, SourceCode, Visitor,
+    diagnostic::internal::AsDiagnostic, diagnostic::DiagnosticTag, Advices as _, Backtrace,
+    Category, DiagnosticTags, LogCategory, Resource, Severity, SourceCode, Visit,
 };
 
-/// Serializable representation for a [Diagnostic]
-#[derive(Debug, Serialize, Deserialize)]
+/// Serializable representation for a [Diagnostic](super::Diagnostic).
+#[derive(Clone, Debug, Serialize, Deserialize)]
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[cfg_attr(test, derive(Eq, PartialEq))]
 pub struct Diagnostic {
@@ -38,8 +38,7 @@ impl Diagnostic {
 
         let severity = diag.severity();
 
-        let mut description = String::new();
-        write!(description, "{}", PrintDescription(diag)).unwrap();
+        let description = PrintDescription(diag).to_string();
 
         let mut message = MarkupBuf::default();
         let mut fmt = fmt::Formatter::new(&mut message);
@@ -98,18 +97,18 @@ impl super::Diagnostic for Diagnostic {
         fmt.write_markup(markup! { {self.message} })
     }
 
-    fn advices(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
-        self.advices.visit(visitor)
+    fn advices(&self, visitor: &mut dyn Visit) -> io::Result<()> {
+        self.advices.record(visitor)
     }
 
-    fn verbose_advices(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
-        self.verbose_advices.visit(visitor)
+    fn verbose_advices(&self, visitor: &mut dyn Visit) -> io::Result<()> {
+        self.verbose_advices.record(visitor)
     }
 
     fn location(&self) -> Option<super::Location<'_>> {
         self.location.as_ref().and_then(|location| {
             super::Location::builder()
-                .path(&location.path)
+                .resource(&location.path)
                 .span(&location.span)
                 .source_code(&location.source_code)
                 .build()
@@ -127,8 +126,8 @@ impl super::Diagnostic for Diagnostic {
     }
 }
 
-/// Wrapper type implementing [std::fmt::Display] for types implementing [Diagnostic],
-/// prints the description of the diagnostic as a string
+/// Wrapper type implementing [std::fmt::Display] for types implementing [Diagnostic](super::Diagnostic),
+/// prints the description of the diagnostic as a string.
 struct PrintDescription<'fmt, D: ?Sized>(pub &'fmt D);
 
 impl<'fmt, D: super::Diagnostic + ?Sized> std::fmt::Display for PrintDescription<'fmt, D> {
@@ -137,11 +136,11 @@ impl<'fmt, D: super::Diagnostic + ?Sized> std::fmt::Display for PrintDescription
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Clone, Debug, Serialize, Deserialize)]
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[cfg_attr(test, derive(Eq, PartialEq))]
 struct Location {
-    path: Path<String>,
+    path: Resource<String>,
     span: Option<TextRange>,
     source_code: Option<String>,
 }
@@ -149,7 +148,7 @@ struct Location {
 impl From<super::Location<'_>> for Location {
     fn from(loc: super::Location<'_>) -> Self {
         Self {
-            path: loc.path.to_owned(),
+            path: loc.resource.to_owned(),
             span: loc.span,
             source_code: loc
                 .source_code
@@ -158,8 +157,8 @@ impl From<super::Location<'_>> for Location {
     }
 }
 
-/// Implementation of [Visitor] collecting serializable [Advice] into a vector
-#[derive(Debug, Serialize, Deserialize)]
+/// Implementation of [Visitor] collecting serializable [Advice] into a vector.
+#[derive(Clone, Debug, Serialize, Deserialize)]
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[cfg_attr(test, derive(Eq, PartialEq))]
 struct Advices {
@@ -174,14 +173,14 @@ impl Advices {
     }
 }
 
-impl Visitor for Advices {
-    fn visit_log(&mut self, category: LogCategory, text: &dyn fmt::Display) -> io::Result<()> {
+impl Visit for Advices {
+    fn record_log(&mut self, category: LogCategory, text: &dyn fmt::Display) -> io::Result<()> {
         self.advices
             .push(Advice::Log(category, markup!({ text }).to_owned()));
         Ok(())
     }
 
-    fn visit_list(&mut self, list: &[&dyn fmt::Display]) -> io::Result<()> {
+    fn record_list(&mut self, list: &[&dyn fmt::Display]) -> io::Result<()> {
         self.advices.push(Advice::List(
             list.iter()
                 .map(|item| markup!({ item }).to_owned())
@@ -190,17 +189,17 @@ impl Visitor for Advices {
         Ok(())
     }
 
-    fn visit_frame(&mut self, location: super::Location<'_>) -> io::Result<()> {
+    fn record_frame(&mut self, location: super::Location<'_>) -> io::Result<()> {
         self.advices.push(Advice::Frame(location.into()));
         Ok(())
     }
 
-    fn visit_diff(&mut self, prev: &str, next: &str) -> io::Result<()> {
+    fn record_diff(&mut self, prev: &str, next: &str) -> io::Result<()> {
         self.advices.push(Advice::Diff(prev.into(), next.into()));
         Ok(())
     }
 
-    fn visit_backtrace(
+    fn record_backtrace(
         &mut self,
         title: &dyn fmt::Display,
         backtrace: &Backtrace,
@@ -212,18 +211,18 @@ impl Visitor for Advices {
         Ok(())
     }
 
-    fn visit_command(&mut self, command: &str) -> io::Result<()> {
+    fn record_command(&mut self, command: &str) -> io::Result<()> {
         self.advices.push(Advice::Command(command.into()));
         Ok(())
     }
 
-    fn visit_group(
+    fn record_group(
         &mut self,
         title: &dyn fmt::Display,
-        advice: &dyn IntoAdvices,
+        advice: &dyn super::Advices,
     ) -> io::Result<()> {
         let mut advices = Advices::new();
-        advice.visit(&mut advices)?;
+        advice.record(&mut advices)?;
 
         self.advices
             .push(Advice::Group(markup!({ title }).to_owned(), advices));
@@ -231,18 +230,21 @@ impl Visitor for Advices {
     }
 }
 
-impl IntoAdvices for Advices {
-    fn visit(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
+impl super::Advices for Advices {
+    fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
         for advice in &self.advices {
-            advice.visit(visitor)?;
+            advice.record(visitor)?;
         }
 
         Ok(())
     }
 }
 
-/// Serializable representation of a [Diagnostic] advice
-#[derive(Debug, Serialize, Deserialize)]
+/// Serializable representation of a [Diagnostic](super::Diagnostic) advice
+///
+/// See the [Visitor] trait for additional documentation on all the supported
+/// advice types.
+#[derive(Clone, Debug, Serialize, Deserialize)]
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[cfg_attr(test, derive(Eq, PartialEq))]
 enum Advice {
@@ -255,27 +257,27 @@ enum Advice {
     Group(MarkupBuf, Advices),
 }
 
-impl IntoAdvices for Advice {
-    fn visit(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
+impl super::Advices for Advice {
+    fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
         match self {
-            Advice::Log(category, text) => visitor.visit_log(*category, text),
+            Advice::Log(category, text) => visitor.record_log(*category, text),
             Advice::List(list) => {
                 let as_display: Vec<&dyn fmt::Display> =
                     list.iter().map(|item| item as &dyn fmt::Display).collect();
-                visitor.visit_list(&as_display)
+                visitor.record_list(&as_display)
             }
-            Advice::Frame(location) => visitor.visit_frame(super::Location {
-                path: location.path.as_deref(),
+            Advice::Frame(location) => visitor.record_frame(super::Location {
+                resource: location.path.as_deref(),
                 span: location.span,
                 source_code: location.source_code.as_deref().map(|text| SourceCode {
                     text,
                     line_starts: None,
                 }),
             }),
-            Advice::Diff(prev, next) => visitor.visit_diff(prev, next),
-            Advice::Backtrace(title, backtrace) => visitor.visit_backtrace(title, backtrace),
-            Advice::Command(command) => visitor.visit_command(command),
-            Advice::Group(title, advice) => visitor.visit_group(title, advice),
+            Advice::Diff(prev, next) => visitor.record_diff(prev, next),
+            Advice::Backtrace(title, backtrace) => visitor.record_backtrace(title, backtrace),
+            Advice::Command(command) => visitor.record_command(command),
+            Advice::Group(title, advice) => visitor.record_group(title, advice),
         }
     }
 }
@@ -286,8 +288,8 @@ impl From<DiagnosticTag> for DiagnosticTags {
             DiagnosticTag::Fixable => DiagnosticTags::FIXABLE,
             DiagnosticTag::Internal => DiagnosticTags::INTERNAL,
             DiagnosticTag::Fatal => DiagnosticTags::FATAL,
-            DiagnosticTag::Unnecessary => DiagnosticTags::UNNECESSARY,
-            DiagnosticTag::Deprecated => DiagnosticTags::DEPRECATED,
+            DiagnosticTag::UnnecessaryCode => DiagnosticTags::UNNECESSARY_CODE,
+            DiagnosticTag::DeprecatedCode => DiagnosticTags::DEPRECATED_CODE,
         }
     }
 }
@@ -312,12 +314,12 @@ impl Serialize for DiagnosticTags {
             flags.push(DiagnosticTag::Fatal);
         }
 
-        if self.contains(Self::UNNECESSARY) {
-            flags.push(DiagnosticTag::Unnecessary);
+        if self.contains(Self::UNNECESSARY_CODE) {
+            flags.push(DiagnosticTag::UnnecessaryCode);
         }
 
-        if self.contains(Self::DEPRECATED) {
-            flags.push(DiagnosticTag::Deprecated);
+        if self.contains(Self::DEPRECATED_CODE) {
+            flags.push(DiagnosticTag::DeprecatedCode);
         }
 
         serializer.collect_seq(flags)
@@ -376,7 +378,7 @@ mod tests {
 
     use crate::{
         self as rome_diagnostics,
-        v2::{IntoAdvices, LogCategory, Visitor},
+        v2::{Advices, LogCategory, Visit},
     };
     use rome_diagnostics_macros::Diagnostic;
 
@@ -391,7 +393,7 @@ mod tests {
         tags(INTERNAL)
     )]
     struct TestDiagnostic {
-        #[location(path)]
+        #[location(resource)]
         path: String,
         #[location(span)]
         span: TextRange,
@@ -418,9 +420,9 @@ mod tests {
     #[derive(Debug)]
     struct TestAdvices;
 
-    impl IntoAdvices for TestAdvices {
-        fn visit(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
-            visitor.visit_log(LogCategory::Warn, &"log")?;
+    impl Advices for TestAdvices {
+        fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
+            visitor.record_log(LogCategory::Warn, &"log")?;
             Ok(())
         }
     }

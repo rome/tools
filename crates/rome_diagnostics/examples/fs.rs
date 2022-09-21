@@ -2,15 +2,15 @@ use std::io;
 
 use rome_console::{fmt, markup, ConsoleExt, EnvConsole};
 use rome_diagnostics::v2::{
-    Diagnostic, FilePath, IntoAdvices, Location, LogCategory, Path, PrintDiagnostic, SourceCode,
-    Visitor,
+    Advices, Diagnostic, FilePath, Location, LogCategory, PrintDiagnostic, Resource, SourceCode,
+    Visit,
 };
 use rome_rowan::{TextRange, TextSize};
 
 #[derive(Debug, Diagnostic)]
 #[diagnostic(category = "args/fileNotFound", message = "No matching files found")]
 struct NotFoundDiagnostic {
-    #[location(path)]
+    #[location(resource)]
     path: String,
     #[advice]
     advices: NotFoundAdvices,
@@ -24,9 +24,9 @@ struct NotFoundAdvices {
     configuration_source_code: String,
 }
 
-impl IntoAdvices for NotFoundAdvices {
-    fn visit(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
-        visitor.visit_log(LogCategory::Info, &"The following files were ignored")?;
+impl Advices for NotFoundAdvices {
+    fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
+        visitor.record_log(LogCategory::Info, &"The following files were ignored")?;
 
         let pattern_list: Vec<_> = self
             .pattern_list
@@ -34,11 +34,11 @@ impl IntoAdvices for NotFoundAdvices {
             .map(|pattern| pattern as &dyn fmt::Display)
             .collect();
 
-        visitor.visit_list(&pattern_list)?;
+        visitor.record_list(&pattern_list)?;
 
-        visitor.visit_log(LogCategory::Info, &"Ignore patterns were defined here")?;
-        visitor.visit_frame(Location {
-            path: Path::File(FilePath::Path(&self.configuration_path)),
+        visitor.record_log(LogCategory::Info, &"Ignore patterns were defined here")?;
+        visitor.record_frame(Location {
+            resource: Resource::File(FilePath::Path(&self.configuration_path)),
             span: Some(self.configuration_span),
             source_code: Some(SourceCode {
                 text: &self.configuration_source_code,

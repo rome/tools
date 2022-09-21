@@ -4,11 +4,11 @@
 
 use std::io;
 
-use rome_console::fmt;
+use rome_console::{fmt, markup};
 
 use super::{category, Category, Diagnostic};
 
-/// Implements [Diagnostic] over types implementing [std::error::Error]
+/// Implements [Diagnostic] over types implementing [std::error::Error].
 #[derive(Debug)]
 pub struct StdError {
     error: Box<dyn std::error::Error + Send + Sync>,
@@ -28,12 +28,19 @@ impl Diagnostic for StdError {
     }
 
     fn message(&self, fmt: &mut fmt::Formatter<'_>) -> io::Result<()> {
-        let error = self.error.to_string();
-        fmt.write_str(&error)
+        fmt.write_markup(markup!({ AsConsoleDisplay(&self.error) }))
     }
 }
 
-/// Implements [Diagnostic] over for [io::Error]
+struct AsConsoleDisplay<'a, T>(&'a T);
+
+impl<T: std::fmt::Display> fmt::Display for AsConsoleDisplay<'_, T> {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> io::Result<()> {
+        fmt.write_fmt(format_args!("{}", self.0))
+    }
+}
+
+/// Implements [Diagnostic] over for [io::Error].
 #[derive(Debug)]
 pub struct IoError {
     error: io::Error,

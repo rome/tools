@@ -171,8 +171,8 @@ fn generate_advices(input: &DeriveInput) -> TokenStream {
     let advices = input.advices.iter();
 
     quote! {
-        fn advices(&self, visitor: &mut dyn rome_diagnostics::v2::Visitor) -> ::std::io::Result<()> {
-            #( rome_diagnostics::v2::IntoAdvices::visit(&self.#advices, visitor)?; )*
+        fn advices(&self, visitor: &mut dyn rome_diagnostics::v2::Visit) -> ::std::io::Result<()> {
+            #( rome_diagnostics::v2::Advices::record(&self.#advices, visitor)?; )*
             Ok(())
         }
     }
@@ -186,8 +186,8 @@ fn generate_verbose_advices(input: &DeriveInput) -> TokenStream {
     let verbose_advices = input.verbose_advices.iter();
 
     quote! {
-        fn verbose_advices(&self, visitor: &mut dyn rome_diagnostics::v2::Visitor) -> ::std::io::Result<()> {
-            #( rome_diagnostics::v2::IntoAdvices::visit(&self.#verbose_advices, visitor)?; )*
+        fn verbose_advices(&self, visitor: &mut dyn rome_diagnostics::v2::Visit) -> ::std::io::Result<()> {
+            #( rome_diagnostics::v2::Advices::record(&self.#verbose_advices, visitor)?; )*
             Ok(())
         }
     }

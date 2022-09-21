@@ -372,7 +372,7 @@ struct LocationAttr {
 }
 
 pub(crate) enum LocationField {
-    Path(Ident),
+    Resource(Ident),
     Span(Ident),
     SourceCode(Ident),
 }
@@ -383,8 +383,8 @@ impl Parse for LocationAttr {
         let _paren_token = syn::parenthesized!(content in input);
         let ident: Ident = content.parse()?;
 
-        let field = if ident == "path" {
-            LocationField::Path(ident)
+        let field = if ident == "resource" {
+            LocationField::Resource(ident)
         } else if ident == "span" {
             LocationField::Span(ident)
         } else if ident == "source_code" {
@@ -403,7 +403,7 @@ impl Parse for LocationAttr {
 impl ToTokens for LocationField {
     fn to_tokens(&self, tokens: &mut TokenStream) {
         match self {
-            LocationField::Path(ident) => ident.to_tokens(tokens),
+            LocationField::Resource(ident) => ident.to_tokens(tokens),
             LocationField::Span(ident) => ident.to_tokens(tokens),
             LocationField::SourceCode(ident) => ident.to_tokens(tokens),
         }

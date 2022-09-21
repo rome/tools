@@ -11,14 +11,14 @@ mod backtrace;
 mod frame;
 
 use super::{
-    error::internal::AsDiagnostic, Diagnostic, DiagnosticTags, IntoAdvices, Location, LogCategory,
-    Path, Severity, Visitor,
+    diagnostic::internal::AsDiagnostic, Advices, Diagnostic, DiagnosticTags, Location, LogCategory,
+    Resource, Severity, Visit,
 };
 
 pub use self::backtrace::{set_bottom_frame, Backtrace};
 
 /// Helper struct from printing the description of a diagnostic into any
-/// formatter implementing [std::fmt::Write]
+/// formatter implementing [std::fmt::Write].
 pub struct PrintDescription<'fmt, D: ?Sized>(pub &'fmt D);
 
 impl<'fmt, D: AsDiagnostic + ?Sized> std::fmt::Display for PrintDescription<'fmt, D> {
@@ -31,16 +31,16 @@ impl<'fmt, D: AsDiagnostic + ?Sized> std::fmt::Display for PrintDescription<'fmt
 }
 
 /// Helper struct for printing a diagnostic as markup into any formatter
-/// implementing [rome_console::fmt::Write]
+/// implementing [rome_console::fmt::Write].
 pub struct PrintDiagnostic<'fmt, D: ?Sized>(pub &'fmt D);
 
 impl<'fmt, D: AsDiagnostic + ?Sized> fmt::Display for PrintDiagnostic<'fmt, D> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> io::Result<()> {
-        let diag = self.0.as_diagnostic();
+        let diagnostic = self.0.as_diagnostic();
 
         // Print the header for the diagnostic
         fmt.write_markup(markup! {
-            {PrintHeader(diag)}"\n\n"
+            {PrintHeader(diagnostic)}"\n\n"
         })?;
 
         // Wrap the formatter with an indentation level and print the advices
@@ -48,26 +48,26 @@ impl<'fmt, D: AsDiagnostic + ?Sized> fmt::Display for PrintDiagnostic<'fmt, D> {
         let mut fmt = IndentWriter::wrap(fmt, &mut slot, true, "  ");
         let mut visitor = PrintAdvices(&mut fmt);
 
-        print_advices(&mut visitor, diag, true)
+        print_advices(&mut visitor, diagnostic, true)
     }
 }
 
-/// Display struct implementing the formatting of a diagnostic header
+/// Display struct implementing the formatting of a diagnostic header.
 struct PrintHeader<'fmt, D: ?Sized>(&'fmt D);
 
 impl<'fmt, D: Diagnostic + ?Sized> fmt::Display for PrintHeader<'fmt, D> {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> io::Result<()> {
-        let Self(diag) = *self;
+        let Self(diagnostic) = *self;
 
         // Wrap the formatter with a counter to measure the width of the printed text
         let mut slot = None;
         let mut fmt = CountWidth::wrap(f, &mut slot);
 
         // Print the diagnostic location if it has one
-        if let Some(location) = diag.location() {
+        if let Some(location) = diagnostic.location() {
             // Print the path if it's a file
-            let file_name = match &location.path {
-                Path::File(file) => file.path(),
+            let file_name = match &location.resource {
+                Resource::File(file) => file.path(),
                 _ => None,
             };
 
@@ -78,16 +78,16 @@ impl<'fmt, D: Diagnostic + ?Sized> fmt::Display for PrintHeader<'fmt, D> {
                 // (the source code is necessary to convert a byte offset into a line + column)
                 if let (Some(span), Some(source_code)) = (location.span, location.source_code) {
                     let line_starts = source_code.line_starts.map_or_else(
-                            || Cow::Owned(SourceFile::line_starts(source_code.text).collect()),
-                            Cow::Borrowed,
-                        );
+                        || Cow::Owned(SourceFile::line_starts(source_code.text).collect()),
+                        Cow::Borrowed,
+                    );
 
-                        let file = SourceFile::new(source_code.text, line_starts.as_ref());
-                        if let Ok(location) = file.location(span.start()) {
-                            fmt.write_markup(markup! {
-                                ":"{location.line_number}":"{location.column_number}
-                            })?;
-                        }
+                    let file = SourceFile::new(source_code.text, line_starts.as_ref());
+                    if let Ok(location) = file.location(span.start()) {
+                        fmt.write_markup(markup! {
+                            ":"{location.line_number}":"{location.column_number}
+                        })?;
+                    }
                 }
 
                 fmt.write_str(" ")?;
@@ -96,7 +96,7 @@ impl<'fmt, D: Diagnostic + ?Sized> fmt::Display for PrintHeader<'fmt, D> {
 
         // Print the category of the diagnostic, with a hyperlink if
         // the category has an associated link
-        if let Some(category) = diag.category() {
+        if let Some(category) = diagnostic.category() {
             if let Some(link) = category.link() {
                 fmt.write_markup(markup! {
                     <Hyperlink href={link}>{category.name()}</Hyperlink>" "
@@ -109,7 +109,7 @@ impl<'fmt, D: Diagnostic + ?Sized> fmt::Display for PrintHeader<'fmt, D> {
         }
 
         // Print the internal, fixable and fatal tags
-        let tags = diag.tags();
+        let tags = diagnostic.tags();
 
         if tags.contains(DiagnosticTags::INTERNAL) {
             fmt.write_markup(markup! {
@@ -139,14 +139,14 @@ impl<'fmt, D: Diagnostic + ?Sized> fmt::Display for PrintHeader<'fmt, D> {
 }
 
 /// Wrapper for a type implementing [fmt::Write] that counts the total width of
-/// all printed characters
+/// all printed characters.
 struct CountWidth<'a, W: ?Sized> {
     writer: &'a mut W,
     width: usize,
 }
 
 impl<'write> CountWidth<'write, dyn fmt::Write + 'write> {
-    /// Wrap the writer in an existing [fmt::Formatter] with an instance of [CountWidth]
+    /// Wrap the writer in an existing [fmt::Formatter] with an instance of [CountWidth].
     fn wrap<'slot, 'fmt: 'write + 'slot>(
         fmt: &'fmt mut fmt::Formatter<'_>,
         slot: &'slot mut Option<Self>,
@@ -176,21 +176,21 @@ impl<W: fmt::Write + ?Sized> fmt::Write for CountWidth<'_, W> {
     }
 }
 
-/// Write the advices for `diag` into `visitor`
-fn print_advices<V, D>(visitor: &mut V, diag: &D, verbose: bool) -> io::Result<()>
+/// Write the advices for `diagnostic` into `visitor`.
+fn print_advices<V, D>(visitor: &mut V, diagnostic: &D, verbose: bool) -> io::Result<()>
 where
-    V: Visitor,
+    V: Visit,
     D: Diagnostic + ?Sized,
 {
     // Visit the advices of the diagnostic with a lightweight visitor that
     // detects if the diagnostic has any frame or backtrace advice
-    let skip_frame = if let Some(location) = diag.location() {
+    let skip_frame = if let Some(location) = diagnostic.location() {
         let mut frame_visitor = FrameVisitor {
             location,
             skip_frame: false,
         };
 
-        diag.advices(&mut frame_visitor)?;
+        diagnostic.advices(&mut frame_visitor)?;
 
         frame_visitor.skip_frame
     } else {
@@ -198,88 +198,88 @@ where
     };
 
     // Print the message for the diagnostic as a log advice
-    print_message_advice(visitor, diag, skip_frame)?;
+    print_message_advice(visitor, diagnostic, skip_frame)?;
 
     // Print the other advices for the diagnostic
-    diag.advices(visitor)?;
+    diagnostic.advices(visitor)?;
 
     // Print the tags of the diagnostic as advices
-    print_tags_advices(visitor, diag)?;
+    print_tags_advices(visitor, diagnostic)?;
 
     // If verbose printing is enabled, print the verbose advices in a nested group
     if verbose {
         // Count the number of verbose advices in the diagnostic
         let mut counter = CountAdvices(0);
-        diag.verbose_advices(&mut counter)?;
+        diagnostic.verbose_advices(&mut counter)?;
 
         // If the diagnostic has any verbose advice, print the group
-        if counter.0 > 0 {
-            let verbose_advices = PrintVerboseAdvices(diag);
-            visitor.visit_group(&"Verbose advice", &verbose_advices)?;
+        if !counter.is_empty() {
+            let verbose_advices = PrintVerboseAdvices(diagnostic);
+            visitor.record_group(&"Verbose advice", &verbose_advices)?;
         }
     }
 
     Ok(())
 }
 
-/// Advice visitor used to detect if the diagnostic contains any frame or backtrace diagnostic
+/// Advice visitor used to detect if the diagnostic contains any frame or backtrace diagnostic.
 #[derive(Debug)]
 struct FrameVisitor<'diag> {
     location: Location<'diag>,
     skip_frame: bool,
 }
 
-impl Visitor for FrameVisitor<'_> {
-    fn visit_frame(&mut self, location: Location<'_>) -> io::Result<()> {
+impl Visit for FrameVisitor<'_> {
+    fn record_frame(&mut self, location: Location<'_>) -> io::Result<()> {
         if location == self.location {
             self.skip_frame = true;
         }
         Ok(())
     }
 
-    fn visit_backtrace(&mut self, _: &dyn fmt::Display, _: &Backtrace) -> io::Result<()> {
+    fn record_backtrace(&mut self, _: &dyn fmt::Display, _: &Backtrace) -> io::Result<()> {
         self.skip_frame = true;
         Ok(())
     }
 }
 
-/// Print the message and code frame for the diagnostic as advices
-fn print_message_advice<V, D>(visitor: &mut V, diag: &D, skip_frame: bool) -> io::Result<()>
+/// Print the message and code frame for the diagnostic as advices.
+fn print_message_advice<V, D>(visitor: &mut V, diagnostic: &D, skip_frame: bool) -> io::Result<()>
 where
-    V: Visitor,
+    V: Visit,
     D: Diagnostic + ?Sized,
 {
     // Print the entire message / cause chain for the diagnostic to a MarkupBuf
     let message = {
         let mut message = MarkupBuf::default();
         let mut fmt = fmt::Formatter::new(&mut message);
-        fmt.write_markup(markup!({ PrintCauseChain(diag) }))?;
+        fmt.write_markup(markup!({ PrintCauseChain(diagnostic) }))?;
         message
     };
 
     // Print a log advice for the message, with a special fallback if the buffer is empty
     if message.is_empty() {
-        visitor.visit_log(
+        visitor.record_log(
             LogCategory::None,
             &markup! {
                 <Dim>"no diagnostic message provided"</Dim>
             },
         )?;
     } else {
-        let category = match diag.severity() {
+        let category = match diagnostic.severity() {
             Severity::Error => LogCategory::Error,
             Severity::Warning => LogCategory::Warn,
             Severity::Information | Severity::Hint => LogCategory::Info,
         };
 
-        visitor.visit_log(category, &message)?;
+        visitor.record_log(category, &message)?;
     }
 
     // If the diagnostic has no explicit code frame or backtrace advice, print
     // a code frame advice with the location of the diagnostic
     if !skip_frame {
-        if let Some(location) = diag.location().filter(|loc| loc.span.is_some()) {
-            visitor.visit_frame(location)?;
+        if let Some(location) = diagnostic.location().filter(|loc| loc.span.is_some()) {
+            visitor.record_frame(location)?;
         }
     }
 
@@ -287,29 +287,29 @@ where
 }
 
 /// Display wrapper for printing the "cause chain" of a diagnostic, with the
-/// message of this diagnostic and all of its sources
+/// message of this diagnostic and all of its sources.
 struct PrintCauseChain<'fmt, D: ?Sized>(&'fmt D);
 
 impl<'fmt, D: Diagnostic + ?Sized> fmt::Display for PrintCauseChain<'fmt, D> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> io::Result<()> {
-        let Self(diag) = *self;
+        let Self(diagnostic) = *self;
 
-        diag.message(fmt)?;
+        diagnostic.message(fmt)?;
 
-        let chain = iter::successors(diag.source(), |prev| prev.source());
-        for diag in chain {
+        let chain = iter::successors(diagnostic.source(), |prev| prev.source());
+        for diagnostic in chain {
             fmt.write_str("\n\nCaused by:\n")?;
 
             let mut slot = None;
             let mut fmt = IndentWriter::wrap(fmt, &mut slot, true, "  ");
-            diag.message(&mut fmt)?;
+            diagnostic.message(&mut fmt)?;
         }
 
         Ok(())
     }
 }
 
-/// Implementation of [Visitor] that prints the advices for a diagnostic
+/// Implementation of [Visitor] that prints the advices for a diagnostic.
 struct PrintAdvices<'a, 'b>(&'a mut fmt::Formatter<'b>);
 
 impl PrintAdvices<'_, '_> {
@@ -337,8 +337,8 @@ impl PrintAdvices<'_, '_> {
     }
 }
 
-impl Visitor for PrintAdvices<'_, '_> {
-    fn visit_log(&mut self, category: LogCategory, text: &dyn fmt::Display) -> io::Result<()> {
+impl Visit for PrintAdvices<'_, '_> {
+    fn record_log(&mut self, category: LogCategory, text: &dyn fmt::Display) -> io::Result<()> {
         match category {
             LogCategory::None => self.0.write_markup(markup! { {text}"\n\n" }),
             LogCategory::Info => self.print_log(MarkupElement::Info, '\u{2139}', text),
@@ -347,7 +347,7 @@ impl Visitor for PrintAdvices<'_, '_> {
         }
     }
 
-    fn visit_list(&mut self, list: &[&dyn fmt::Display]) -> io::Result<()> {
+    fn record_list(&mut self, list: &[&dyn fmt::Display]) -> io::Result<()> {
         for item in list {
             let mut slot = None;
             let mut fmt = IndentWriter::wrap(self.0, &mut slot, false, "  ");
@@ -363,17 +363,17 @@ impl Visitor for PrintAdvices<'_, '_> {
         }
     }
 
-    fn visit_frame(&mut self, location: Location<'_>) -> io::Result<()> {
+    fn record_frame(&mut self, location: Location<'_>) -> io::Result<()> {
         frame::print_frame(self.0, location)
     }
 
-    fn visit_diff(&mut self, left: &str, right: &str) -> io::Result<()> {
+    fn record_diff(&mut self, left: &str, right: &str) -> io::Result<()> {
         self.0.write_markup(markup! {
             {Diff { mode: DiffMode::Unified, left, right }}"\n"
         })
     }
 
-    fn visit_backtrace(
+    fn record_backtrace(
         &mut self,
         title: &dyn fmt::Display,
         backtrace: &Backtrace,
@@ -385,22 +385,18 @@ impl Visitor for PrintAdvices<'_, '_> {
             return Ok(());
         }
 
-        self.visit_log(LogCategory::Info, title)?;
+        self.record_log(LogCategory::Info, title)?;
 
         backtrace::print_backtrace(self.0, &backtrace)
     }
 
-    fn visit_command(&mut self, command: &str) -> io::Result<()> {
+    fn record_command(&mut self, command: &str) -> io::Result<()> {
         self.0.write_markup(markup! {
             <Emphasis>"$"</Emphasis>" "{command}"\n\n"
         })
     }
 
-    fn visit_group(
-        &mut self,
-        title: &dyn fmt::Display,
-        advice: &dyn IntoAdvices,
-    ) -> io::Result<()> {
+    fn record_group(&mut self, title: &dyn fmt::Display, advice: &dyn Advices) -> io::Result<()> {
         self.0.write_markup(markup! {
             <Emphasis>{title}</Emphasis>"\n\n"
         })?;
@@ -408,80 +404,86 @@ impl Visitor for PrintAdvices<'_, '_> {
         let mut slot = None;
         let mut fmt = IndentWriter::wrap(self.0, &mut slot, true, "  ");
         let mut visitor = PrintAdvices(&mut fmt);
-        advice.visit(&mut visitor)
+        advice.record(&mut visitor)
     }
 }
 
-/// Print the fatal and internal tags for the diagnostic as log advices
-fn print_tags_advices<V, D>(visitor: &mut V, diag: &D) -> io::Result<()>
+/// Print the fatal and internal tags for the diagnostic as log advices.
+fn print_tags_advices<V, D>(visitor: &mut V, diagnostic: &D) -> io::Result<()>
 where
-    V: Visitor,
+    V: Visit,
     D: Diagnostic + ?Sized,
 {
-    let tags = diag.tags();
+    let tags = diagnostic.tags();
 
     if tags.contains(DiagnosticTags::FATAL) {
-        visitor.visit_log(LogCategory::Warn, &"Rome exited as this error could not be handled and resulted in a fatal error. Please report it if necessary.")?;
+        visitor.record_log(LogCategory::Warn, &"Rome exited as this error could not be handled and resulted in a fatal error. Please report it if necessary.")?;
     }
 
     if tags.contains(DiagnosticTags::INTERNAL) {
-        visitor.visit_log(LogCategory::Warn, &"This diagnostic was derived from an internal Rome error. Potential bug, please report it if necessary.")?;
+        visitor.record_log(LogCategory::Warn, &"This diagnostic was derived from an internal Rome error. Potential bug, please report it if necessary.")?;
     }
 
     Ok(())
 }
 
-/// Advice visitor that counts how many advices are visited
+/// Advice visitor that counts how many advices are visited.
 struct CountAdvices(usize);
 
-impl Visitor for CountAdvices {
-    fn visit_log(&mut self, _: LogCategory, _: &dyn fmt::Display) -> io::Result<()> {
+impl CountAdvices {
+    fn is_empty(&self) -> bool {
+        self.0 == 0
+    }
+}
+
+impl Visit for CountAdvices {
+    fn record_log(&mut self, _: LogCategory, _: &dyn fmt::Display) -> io::Result<()> {
         self.0 += 1;
         Ok(())
     }
 
-    fn visit_list(&mut self, _: &[&dyn fmt::Display]) -> io::Result<()> {
+    fn record_list(&mut self, _: &[&dyn fmt::Display]) -> io::Result<()> {
         self.0 += 1;
         Ok(())
     }
 
-    fn visit_frame(&mut self, _: Location<'_>) -> io::Result<()> {
+    fn record_frame(&mut self, _: Location<'_>) -> io::Result<()> {
         self.0 += 1;
         Ok(())
     }
 
-    fn visit_diff(&mut self, _: &str, _: &str) -> io::Result<()> {
+    fn record_diff(&mut self, _: &str, _: &str) -> io::Result<()> {
         self.0 += 1;
         Ok(())
     }
 
-    fn visit_backtrace(&mut self, _: &dyn fmt::Display, _: &Backtrace) -> io::Result<()> {
+    fn record_backtrace(&mut self, _: &dyn fmt::Display, _: &Backtrace) -> io::Result<()> {
         self.0 += 1;
         Ok(())
     }
 
-    fn visit_command(&mut self, _: &str) -> io::Result<()> {
+    fn record_command(&mut self, _: &str) -> io::Result<()> {
         self.0 += 1;
         Ok(())
     }
 
-    fn visit_group(&mut self, _: &dyn fmt::Display, _: &dyn IntoAdvices) -> io::Result<()> {
+    fn record_group(&mut self, _: &dyn fmt::Display, _: &dyn Advices) -> io::Result<()> {
         self.0 += 1;
         Ok(())
     }
 }
 
-/// Implements [IntoAdvices] for verbose advices of a diagnostic
+/// Implements [Advices] for verbose advices of a diagnostic.
 struct PrintVerboseAdvices<'a, D: ?Sized>(&'a D);
 
-impl<D: Diagnostic + ?Sized> IntoAdvices for PrintVerboseAdvices<'_, D> {
-    fn visit(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
+impl<D: Diagnostic + ?Sized> Advices for PrintVerboseAdvices<'_, D> {
+    fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
         self.0.verbose_advices(visitor)
     }
 }
 
 /// Wrapper type over [fmt::Write] that injects `ident_text` at the start of
-/// every line
+/// every line.
 struct IndentWriter<'a, W: ?Sized> {
     writer: &'a mut W,
     pending_indent: bool,
@@ -555,8 +557,8 @@ mod tests {
     use serde_json::{from_value, json};
 
     use crate::v2::{
-        Diagnostic, FilePath, IntoAdvices, Location, LogCategory, Path, PrintDiagnostic,
-        SourceCode, Visitor,
+        Advices, Diagnostic, FilePath, Location, LogCategory, PrintDiagnostic, Resource,
+        SourceCode, Visit,
     };
     use crate::{self as rome_diagnostics};
 
@@ -594,7 +596,7 @@ mod tests {
         }
     }
 
-    impl<A: IntoAdvices + std::fmt::Debug> Diagnostic for TestDiagnostic<A> {
+    impl<A: Advices + std::fmt::Debug> Diagnostic for TestDiagnostic<A> {
         fn category(&self) -> Option<&Category> {
             Some(category!("internalError/io"))
         }
@@ -611,17 +613,17 @@ mod tests {
             write!(fmt, "diagnostic message")
         }
 
-        fn advices(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
+        fn advices(&self, visitor: &mut dyn Visit) -> io::Result<()> {
             if let Some(advice) = &self.advice {
-                advice.visit(visitor)?;
+                advice.record(visitor)?;
             }
 
             Ok(())
         }
 
-        fn verbose_advices(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
+        fn verbose_advices(&self, visitor: &mut dyn Visit) -> io::Result<()> {
             if let Some(advice) = &self.verbose_advice {
-                advice.visit(visitor)?;
+                advice.record(visitor)?;
             }
 
             Ok(())
@@ -629,7 +631,7 @@ mod tests {
 
         fn location(&self) -> Option<Location<'_>> {
             Location::builder()
-                .path(&self.path)
+                .resource(&self.path)
                 .span(&self.span)
                 .source_code(&self.source_code)
                 .build()
@@ -647,31 +649,31 @@ mod tests {
     #[derive(Debug)]
     struct LogAdvices;
 
-    impl IntoAdvices for LogAdvices {
-        fn visit(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
-            visitor.visit_log(LogCategory::Error, &"error")?;
-            visitor.visit_log(LogCategory::Warn, &"warn")?;
-            visitor.visit_log(LogCategory::Info, &"info")?;
-            visitor.visit_log(LogCategory::None, &"none")
+    impl Advices for LogAdvices {
+        fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
+            visitor.record_log(LogCategory::Error, &"error")?;
+            visitor.record_log(LogCategory::Warn, &"warn")?;
+            visitor.record_log(LogCategory::Info, &"info")?;
+            visitor.record_log(LogCategory::None, &"none")
         }
     }
 
     #[derive(Debug)]
     struct ListAdvice;
 
-    impl IntoAdvices for ListAdvice {
-        fn visit(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
-            visitor.visit_list(&[&"item 1", &"item 2"])
+    impl Advices for ListAdvice {
+        fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
+            visitor.record_list(&[&"item 1", &"item 2"])
         }
     }
 
     #[derive(Debug)]
     struct FrameAdvice;
 
-    impl IntoAdvices for FrameAdvice {
-        fn visit(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
-            visitor.visit_frame(Location {
-                path: Path::File(FilePath::Path("other_path")),
+    impl Advices for FrameAdvice {
+        fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
+            visitor.record_frame(Location {
+                resource: Resource::File(FilePath::Path("other_path")),
                 span: Some(TextRange::new(TextSize::from(8), TextSize::from(16))),
                 source_code: Some(SourceCode {
                     text: "context location context",
@@ -684,17 +686,17 @@ mod tests {
     #[derive(Debug)]
     struct DiffAdvice;
 
-    impl IntoAdvices for DiffAdvice {
-        fn visit(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
-            visitor.visit_diff("context before context", "context after context")
+    impl Advices for DiffAdvice {
+        fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
+            visitor.record_diff("context before context", "context after context")
         }
     }
 
     #[derive(Debug)]
     struct BacktraceAdvice;
 
-    impl IntoAdvices for BacktraceAdvice {
-        fn visit(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
+    impl Advices for BacktraceAdvice {
+        fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
             let backtrace = from_value(json!([
                 {
                     "ip": 0x0f0f0f0f,
@@ -709,25 +711,25 @@ mod tests {
                 }
             ]));
 
-            visitor.visit_backtrace(&"Backtrace Title", &backtrace.unwrap())
+            visitor.record_backtrace(&"Backtrace Title", &backtrace.unwrap())
         }
     }
 
     #[derive(Debug)]
     struct CommandAdvice;
 
-    impl IntoAdvices for CommandAdvice {
-        fn visit(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
-            visitor.visit_command("rome command --argument")
+    impl Advices for CommandAdvice {
+        fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
+            visitor.record_command("rome command --argument")
         }
     }
 
     #[derive(Debug)]
     struct GroupAdvice;
 
-    impl IntoAdvices for GroupAdvice {
-        fn visit(&self, visitor: &mut dyn Visitor) -> io::Result<()> {
-            visitor.visit_group(&"Group Title", &LogAdvices)
+    impl Advices for GroupAdvice {
+        fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
+            visitor.record_group(&"Group Title", &LogAdvices)
         }
     }
 

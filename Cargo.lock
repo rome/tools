@@ -1574,14 +1574,14 @@ dependencies = [
 
 [[package]]
 name = "rome_diagnostics_categories"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "quote",
 ]
 
 [[package]]
 name = "rome_diagnostics_macros"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "proc-macro-error",
  "proc-macro2",

@@ -6,9 +6,9 @@ use rome_console::{
 };
 use rome_text_edit::TextRange;
 
-use crate::v2::{Location, Path};
+use crate::v2::{Location, Resource};
 
-/// Prints a code frame advice as a [Codespan]
+/// Prints a code frame advice as a [Codespan].
 pub(super) fn print_frame(fmt: &mut fmt::Formatter<'_>, location: Location<'_>) -> io::Result<()> {
     let source_span = location.source_code.as_ref().and_then(|source_code| {
         let span = location.span.as_ref()?;
@@ -26,8 +26,8 @@ pub(super) fn print_frame(fmt: &mut fmt::Formatter<'_>, location: Location<'_>) 
 
         let source_file = SourceFile::new(source, &line_starts);
 
-        let locus = match location.path {
-            Path::File(file) => file.path().map(|name| match source_file.location(start) {
+        let locus = match location.resource {
+            Resource::File(file) => file.path().map(|name| match source_file.location(start) {
                 Ok(location) => Locus::FileLocation { name, location },
                 Err(_) => Locus::File { name },
             }),

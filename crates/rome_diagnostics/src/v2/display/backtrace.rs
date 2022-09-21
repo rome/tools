@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 use super::IndentWriter;
 
 /// The [Backtrace] type can be used to capture a native Rust stack trace, to
-/// be displayed a diagnostic advice for native errors
+/// be displayed a diagnostic advice for native errors.
 #[derive(Clone, Debug)]
 #[cfg_attr(test, derive(Eq, PartialEq))]
 pub struct Backtrace {
@@ -15,6 +15,9 @@ pub struct Backtrace {
 }
 
 impl Default for Backtrace {
+    // Do not inline this function to ensure it creates a stack frame, so that
+    // internal functions above it in the backtrace can be hidden when the
+    // backtrace is printed
     #[inline(never)]
     fn default() -> Self {
         Self::capture(Backtrace::default as usize)
@@ -22,12 +25,18 @@ impl Default for Backtrace {
 }
 
 impl Backtrace {
+    /// Take a snapshot of the current state of the stack and return it as a [Backtrace].
     pub fn capture(top_frame: usize) -> Self {
         Self {
             inner: BacktraceKind::Native(NativeBacktrace::new(top_frame)),
         }
     }
 
+    /// Since the `capture` function only takes a lightweight snapshot of the
+    /// stack, it's necessary to perform an additional resolution step to map
+    /// the list of instruction pointers on the stack to actual symbol
+    /// information (like function name and file location) before printing the
+    /// backtrace.
     pub(super) fn resolve(&mut self) {
         if let BacktraceKind::Native(inner) = &mut self.inner {
             inner.resolve();
@@ -94,7 +103,7 @@ impl schemars::JsonSchema for Backtrace {
 }
 
 /// Internal representation of a [Backtrace], can be either a native backtrace
-/// instance or a vector of serialized frames
+/// instance or a vector of serialized frames.
 #[derive(Clone, Debug)]
 enum BacktraceKind {
     Native(NativeBacktrace),
@@ -116,15 +125,15 @@ impl PartialEq for BacktraceKind {
 #[cfg(test)]
 impl Eq for BacktraceKind {}
 
-/// Wrapper type for a native backtrace instance
+/// Wrapper type for a native backtrace instance.
 #[derive(Clone, Debug)]
 struct NativeBacktrace {
     backtrace: ::backtrace::Backtrace,
     /// Pointer to the top frame, this frame and every entry above it on the
-    /// stack will not be displayed in the printed stack trace
+    /// stack will not be displayed in the printed stack trace.
     top_frame: usize,
     /// Pointer to the bottom frame, this frame and every entry below it on the
-    /// stack will not be displayed in the printed stack trace
+    /// stack will not be displayed in the printed stack trace.
     bottom_frame: usize,
 }
 
@@ -142,7 +151,7 @@ impl NativeBacktrace {
     }
 
     /// Returns the list of frames for this backtrace, truncated to the
-    /// `top_frame` and `bottom_frame`
+    /// `top_frame` and `bottom_frame`.
     fn frames(&self) -> &'_ [::backtrace::BacktraceFrame] {
         let mut frames = self.backtrace.frames();
 
@@ -179,12 +188,46 @@ impl NativeBacktrace {
 }
 
 thread_local! {
+    /// This cell holds the address of the function that conceptually sits at the
+    /// "bottom" of the backtraces created on the current thread (all the frames
+    /// below this will be hidden when the backtrace is printed)
+    ///
+    /// This value is thread-local since different threads will generally have
+    /// different values for the bottom frame address: for the main thread this
+    /// will be the address of the `main` function, while on worker threads
+    /// this will be the start function for the thread (see the documentation
+    /// of [set_bottom_frame] for examples of where to set the bottom frame).
     static BOTTOM_FRAME: Cell<Option<usize>> = Cell::new(None);
 }
 
 /// Registers a function pointer as the "bottom frame" for this thread: all
 /// instances of [Backtrace] created on this thread will omit this function and
 /// all entries below it on the stack
+///
+/// ## Examples
+///
+/// On the main thread:
+/// ```
+/// # use rome_diagnostics::v2::set_bottom_frame;
+/// # #[allow(clippy::needless_doctest_main)]
+/// pub fn main() {
+///     set_bottom_frame(main as usize);
+///
+///     // ...
+/// }
+/// ```
+///
+/// On worker threads:
+/// ```
+/// # use rome_diagnostics::v2::set_bottom_frame;
+/// fn worker_thread() {
+///     set_bottom_frame(worker_thread as usize);
+///
+///     // ...
+/// }
+///
+/// std::thread::spawn(worker_thread);
+/// ```
 pub fn set_bottom_frame(ptr: usize) {
     BOTTOM_FRAME.with(|cell| {
         cell.set(Some(ptr));
@@ -258,7 +301,7 @@ pub(super) fn print_backtrace(
     Ok(())
 }
 
-/// Serializable representation of a backtrace frame
+/// Serializable representation of a backtrace frame.
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[cfg_attr(
     feature = "schema",
@@ -280,7 +323,7 @@ impl From<&'_ backtrace::BacktraceFrame> for SerializedFrame {
     }
 }
 
-/// Serializable representation of a backtrace frame symbol
+/// Serializable representation of a backtrace frame symbol.
 #[derive(Clone, Debug, Serialize, Deserialize)]
 #[cfg_attr(
     feature = "schema",
