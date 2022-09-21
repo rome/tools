@@ -116,6 +116,9 @@ self.addEventListener("message", async (e) => {
 							noUnusedVariables: "error",
 							noUnreachable: "error",
 							useCamelCase: "error",
+							noRenderReturnValue: "error",
+							useButtonType: "error",
+							useOptionalChain: "error",
 						},
 					},
 				};
