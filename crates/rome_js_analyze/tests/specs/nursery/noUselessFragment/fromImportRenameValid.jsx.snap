@@ -1,0 +1,16 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: fromImportRenameValid.jsx
+---
+# Input
+```js
+import AwesomeReact, { Fragment as AwesomeFragment } from "noReact";
+
+<>
+    <AwesomeFragment></AwesomeFragment>
+    <AwesomeReact.Fragment>foo</AwesomeReact.Fragment>
+</>
+
+```
+
+
