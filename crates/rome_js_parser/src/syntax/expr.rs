@@ -777,13 +777,6 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     // class Test<A, B, C> {}
     // new Test<A, B, C>();
 
-    if p.at(T![?.]) {
-        let error = p
-            .err_builder("Invalid optional chain from new expression.")
-            .primary(p.cur_range(), "");
-
-        p.error(error);
-    }
     // test_err ts invalid_optional_chain_from_new_expressions
     // new Test<string>?.test();
     // new Test?.test();
@@ -791,6 +784,13 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
     // new (A.b)?.c()
     // new (A.b?.()).c()
     // new A.b?.()()
+    if p.at(T![?.]) {
+        let error = p
+            .err_builder("Invalid optional chain from new expression.")
+            .primary(p.cur_range(), "");
+
+        p.error(error);
+    }
     if p.at(T!['(']) {
         parse_call_arguments(p).unwrap();
     }
