@@ -10,6 +10,10 @@ static ALLOCATOR: dhat::Alloc = dhat::Alloc;
 #[global_allocator]
 static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 
+#[cfg(all(not(target_os = "windows"), not(feature = "dhat-heap")))]
+#[global_allocator]
+static GLOBAL: tikv_jemallocator::Jemalloc = tikv_jemallocator::Jemalloc;
+
 fn main() -> Result<(), pico_args::Error> {
     #[cfg(feature = "dhat-heap")]
     let _profiler = dhat::Profiler::new_heap();
