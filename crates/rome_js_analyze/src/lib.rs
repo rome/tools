@@ -112,9 +112,13 @@ mod tests {
     #[test]
     fn quick_test() {
         const SOURCE: &str = r#"
-React.createElement('button', {
-    "type": "bar"
-});
+import AwesomeReact, { Fragment as AwesomeFragment } from "react";
+
+<>
+    <AwesomeFragment>foo</AwesomeFragment>
+    <AwesomeReact.Fragment>foo</AwesomeReact.Fragment>
+</>
+
         "#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
@@ -127,6 +131,7 @@ React.createElement('button', {
             |signal| {
                 if let Some(diag) = signal.diagnostic() {
                     let diag = diag.into_diagnostic(Severity::Warning);
+                    dbg!(&diag);
                     let primary = diag.primary.as_ref().unwrap();
 
                     error_ranges.push(primary.span.range);

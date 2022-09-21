@@ -1,0 +1,16 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: userDefinedValid.jsx
+---
+# Input
+```js
+function Fragment() {}
+let React = { Fragment };
+<>
+    <Fragment>test</Fragment>
+    <React>test</React>
+</>
+
+```
+
+

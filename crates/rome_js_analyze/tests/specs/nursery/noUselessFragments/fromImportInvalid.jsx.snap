@@ -1,0 +1,37 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: fromImportInvalid.jsx
+---
+# Input
+```js
+import React, { Fragment } from "react";
+
+<>
+    <Fragment></Fragment>
+    <React.Fragment></React.Fragment>
+</>
+
+```
+
+# Diagnostics
+```
+warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
+  ┌─ fromImportInvalid.jsx:4:5
+  │
+4 │     <Fragment></Fragment>
+  │     ---------------------
+
+
+```
+
+```
+warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
+  ┌─ fromImportInvalid.jsx:5:5
+  │
+5 │     <React.Fragment></React.Fragment>
+  │     ---------------------------------
+
+
+```
+
+

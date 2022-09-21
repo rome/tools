@@ -1,0 +1,47 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noChildren.jsx
+---
+# Input
+```js
+// invalid
+
+<>
+    <></>
+    <React.Fragment></React.Fragment>
+    <Fragment></Fragment>
+</>
+```
+
+# Diagnostics
+```
+warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
+  ┌─ noChildren.jsx:4:5
+  │
+4 │     <></>
+  │     -----
+
+
+```
+
+```
+warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
+  ┌─ noChildren.jsx:5:5
+  │
+5 │     <React.Fragment></React.Fragment>
+  │     ---------------------------------
+
+
+```
+
+```
+warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
+  ┌─ noChildren.jsx:6:5
+  │
+6 │     <Fragment></Fragment>
+  │     ---------------------
+
+
+```
+
+

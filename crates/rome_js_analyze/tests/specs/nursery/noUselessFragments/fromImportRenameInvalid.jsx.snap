@@ -1,0 +1,37 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: fromImportRenameInvalid.jsx
+---
+# Input
+```js
+import AwesomeReact, { Fragment as AwesomeFragment } from "react";
+
+<>
+    <AwesomeFragment></AwesomeFragment>
+    <AwesomeReact.Fragment>foo</AwesomeReact.Fragment>
+</>
+
+```
+
+# Diagnostics
+```
+warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
+  ┌─ fromImportRenameInvalid.jsx:4:5
+  │
+4 │     <AwesomeFragment></AwesomeFragment>
+  │     -----------------------------------
+
+
+```
+
+```
+warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
+  ┌─ fromImportRenameInvalid.jsx:5:5
+  │
+5 │     <AwesomeReact.Fragment>foo</AwesomeReact.Fragment>
+  │     --------------------------------------------------
+
+
+```
+
+

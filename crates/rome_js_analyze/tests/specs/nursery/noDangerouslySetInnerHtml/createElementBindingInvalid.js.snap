@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-expression: createElementBinding.js
+expression: createElementBindingInvalid.js
 ---
 # Input
 ```js
@@ -18,7 +18,7 @@ createElement('div', {
 # Diagnostics
 ```
 warning[nursery/noDangerouslySetInnerHtml]: Avoid passing content using the dangerouslySetInnerHTML prop.
-  ┌─ createElementBinding.js:4:5
+  ┌─ createElementBindingInvalid.js:4:5
   │
 4 │     dangerouslySetInnerHTML: { __html: 'child' }
   │     -----------------------
@@ -30,7 +30,7 @@ warning[nursery/noDangerouslySetInnerHtml]: Avoid passing content using the dang
 
 ```
 warning[nursery/noDangerouslySetInnerHtml]: Avoid passing content using the dangerouslySetInnerHTML prop.
-  ┌─ createElementBinding.js:8:5
+  ┌─ createElementBindingInvalid.js:8:5
   │
 8 │     dangerouslySetInnerHTML: { __html: 'child' }
   │     -----------------------

@@ -1,6 +1,6 @@
 use rome_js_syntax::{
     JsAnyRoot, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier,
-    JsSyntaxNode, TextRange, TextSize, TsIdentifierBinding,
+    JsSyntaxNode, JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding,
 };
 use rome_rowan::{AstNode, SyntaxTokenText};
 use rust_lapper::{Interval, Lapper};
@@ -33,6 +33,7 @@ pub trait HasDeclarationAstNode: AstNode<Language = JsLanguage> {
 
 impl HasDeclarationAstNode for JsReferenceIdentifier {}
 impl HasDeclarationAstNode for JsIdentifierAssignment {}
+impl HasDeclarationAstNode for JsxReferenceIdentifier {}
 
 /// Marker trait that groups all "AstNode" that can be exported
 pub trait IsExportedCanBeQueried: AstNode<Language = JsLanguage> {
