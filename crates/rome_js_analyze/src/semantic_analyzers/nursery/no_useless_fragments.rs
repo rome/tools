@@ -31,35 +31,35 @@ declare_rule! {
     /// ```jsx,expect_diagnostic
     /// <></>
     /// ```
-    pub(crate) NoUselessFragment {
+    pub(crate) NoUselessFragments {
         version: "0.10.0",
-        name: "noUselessFragment",
+        name: "noUselessFragments",
         recommended: false,
     }
 }
 
 #[derive(Debug)]
-pub(crate) enum NoUselessFragmentState {
+pub(crate) enum NoUselessFragmentsState {
     Empty,
     Child(JsxAnyChild),
 }
 
 declare_node_union! {
-    pub(crate) NoUselessFragmentQuery = JsxFragment | JsxElement
+    pub(crate) NoUselessFragmentsQuery = JsxFragment | JsxElement
 }
 
-impl Rule for NoUselessFragment {
+impl Rule for NoUselessFragments {
     const CATEGORY: RuleCategory = RuleCategory::Lint;
 
-    type Query = Semantic<NoUselessFragmentQuery>;
-    type State = NoUselessFragmentState;
+    type Query = Semantic<NoUselessFragmentsQuery>;
+    type State = NoUselessFragmentsState;
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
         let model = ctx.model();
         match node {
-            NoUselessFragmentQuery::JsxFragment(fragment) => {
+            NoUselessFragmentsQuery::JsxFragment(fragment) => {
                 let matches_allowed_parents = node
                     .syntax()
                     .parent()
@@ -87,30 +87,30 @@ impl Rule for NoUselessFragment {
                 if !matches_allowed_parents {
                     match child_list.first() {
                         Some(first) if child_list.len() == 1 => {
-                            Some(NoUselessFragmentState::Child(first))
+                            Some(NoUselessFragmentsState::Child(first))
                         }
-                        None => Some(NoUselessFragmentState::Empty),
+                        None => Some(NoUselessFragmentsState::Empty),
                         _ => None,
                     }
                 } else {
                     None
                 }
             }
-            NoUselessFragmentQuery::JsxElement(element) => {
+            NoUselessFragmentsQuery::JsxElement(element) => {
                 let opening_element = element.opening_element().ok()?;
                 let name = opening_element.name().ok()?;
 
                 match name {
                     JsxAnyElementName::JsxMemberName(member_name) => {
                         if jsx_member_name_is_react_fragment(&member_name, model)? {
-                            Some(NoUselessFragmentState::Empty)
+                            Some(NoUselessFragmentsState::Empty)
                         } else {
                             None
                         }
                     }
                     JsxAnyElementName::JsxReferenceIdentifier(identifier) => {
                         if jsx_reference_identifier_is_fragment(&identifier, model)? {
-                            Some(NoUselessFragmentState::Empty)
+                            Some(NoUselessFragmentsState::Empty)
                         } else {
                             None
                         }

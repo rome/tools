@@ -531,7 +531,7 @@
             }
           ]
         },
-        "noUselessFragment": {
+        "noUselessFragments": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

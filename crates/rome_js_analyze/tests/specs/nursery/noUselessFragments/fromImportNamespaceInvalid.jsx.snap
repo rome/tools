@@ -14,7 +14,7 @@ import * as AwesomeReact from "react";
 
 # Diagnostics
 ```
-warning[nursery/noUselessFragment]: Avoid using unnecessary Fragment.
+warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
   ┌─ fromImportNamespaceInvalid.jsx:4:5
   │
 4 │     <AwesomeReact.Fragment>foo</AwesomeReact.Fragment>

@@ -288,9 +288,9 @@ Disallow unreachable code
 Disallow unused variables.
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="noUselessFragment">
-	<a href="/docs/lint/rules/noUselessFragment">noUselessFragment (since v0.10.0)</a>
-	<a class="header-anchor" href="#noUselessFragment"></a>
+<h3 data-toc-exclude id="noUselessFragments">
+	<a href="/docs/lint/rules/noUselessFragments">noUselessFragments (since v0.10.0)</a>
+	<a class="header-anchor" href="#noUselessFragments"></a>
 </h3>
 Disallow unnecessary fragments
 </div>

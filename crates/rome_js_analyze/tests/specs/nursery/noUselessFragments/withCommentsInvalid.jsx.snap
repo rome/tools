@@ -1,0 +1,46 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: withCommentsInvalid.jsx
+---
+# Input
+```js
+<>
+    </* test */>empty</>
+    <>empty</* comment */ />
+    <>empty</ /* comment */>
+</>
+
+```
+
+# Diagnostics
+```
+warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
+  ┌─ withCommentsInvalid.jsx:2:5
+  │
+2 │     </* test */>empty</>
+  │     --------------------
+
+
+```
+
+```
+warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
+  ┌─ withCommentsInvalid.jsx:3:5
+  │
+3 │     <>empty</* comment */ />
+  │     ------------------------
+
+
+```
+
+```
+warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
+  ┌─ withCommentsInvalid.jsx:4:5
+  │
+4 │     <>empty</ /* comment */>
+  │     ------------------------
+
+
+```
+
+

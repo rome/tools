@@ -1,9 +1,9 @@
 ---
-title: Lint Rule noUselessFragment
+title: Lint Rule noUselessFragments
 layout: layouts/rule.liquid
 ---
 
-# noUselessFragment (since v0.10.0)
+# noUselessFragments (since v0.10.0)
 
 Disallow unnecessary fragments
 
@@ -17,8 +17,8 @@ foo
 </>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noUselessFragment/">nursery/noUselessFragment</a></span><span style="color: Orange;">]</span><em>: </em><em>Avoid using unnecessary </em><em><em>Fragment</em></em><em>.</em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noUselessFragment.js:1:1
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noUselessFragments/">nursery/noUselessFragments</a></span><span style="color: Orange;">]</span><em>: </em><em>Avoid using unnecessary </em><em><em>Fragment</em></em><em>.</em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noUselessFragments.js:1:1
   <span style="color: rgb(38, 148, 255);">│</span>  
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: rgb(38, 148, 255);">┌</span> &lt;&gt;
 <span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: rgb(38, 148, 255);">│</span> foo
@@ -33,8 +33,8 @@ foo
 </React.Fragment>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noUselessFragment/">nursery/noUselessFragment</a></span><span style="color: Orange;">]</span><em>: </em><em>Avoid using unnecessary </em><em><em>Fragment</em></em><em>.</em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noUselessFragment.js:1:1
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noUselessFragments/">nursery/noUselessFragments</a></span><span style="color: Orange;">]</span><em>: </em><em>Avoid using unnecessary </em><em><em>Fragment</em></em><em>.</em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noUselessFragments.js:1:1
   <span style="color: rgb(38, 148, 255);">│</span>  
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: rgb(38, 148, 255);">┌</span> &lt;React.Fragment&gt;
 <span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: rgb(38, 148, 255);">│</span> foo
@@ -47,8 +47,8 @@ foo
 <></>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noUselessFragment/">nursery/noUselessFragment</a></span><span style="color: Orange;">]</span><em>: </em><em>Avoid using unnecessary </em><em><em>Fragment</em></em><em>.</em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noUselessFragment.js:1:1
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noUselessFragments/">nursery/noUselessFragments</a></span><span style="color: Orange;">]</span><em>: </em><em>Avoid using unnecessary </em><em><em>Fragment</em></em><em>.</em>
+  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noUselessFragments.js:1:1
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> &lt;&gt;&lt;/&gt;
   <span style="color: rgb(38, 148, 255);">│</span> <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span>

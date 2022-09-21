@@ -14,7 +14,7 @@ expression: withChildren.jsx
 
 # Diagnostics
 ```
-warning[nursery/noUselessFragment]: Avoid using unnecessary Fragment.
+warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
   ┌─ withChildren.jsx:2:5
   │
 2 │     <>foo</>
@@ -24,7 +24,7 @@ warning[nursery/noUselessFragment]: Avoid using unnecessary Fragment.
 ```
 
 ```
-warning[nursery/noUselessFragment]: Avoid using unnecessary Fragment.
+warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
   ┌─ withChildren.jsx:3:5
   │
 3 │     <React.Fragment>foo</React.Fragment>
@@ -34,7 +34,7 @@ warning[nursery/noUselessFragment]: Avoid using unnecessary Fragment.
 ```
 
 ```
-warning[nursery/noUselessFragment]: Avoid using unnecessary Fragment.
+warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
   ┌─ withChildren.jsx:4:5
   │
 4 │     <Fragment>foo</Fragment>
