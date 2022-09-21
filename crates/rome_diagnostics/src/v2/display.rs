@@ -123,7 +123,7 @@ impl<'fmt, D: Diagnostic + ?Sized> fmt::Display for PrintHeader<'fmt, D> {
             })?;
         }
 
-        if tags.contains(DiagnosticTags::FATAL) {
+        if diagnostic.severity() == Severity::Fatal {
             fmt.write_markup(markup! {
                 <Inverse><Error>" FATAL "</Error></Inverse>" "
             })?;
@@ -267,7 +267,7 @@ where
         )?;
     } else {
         let category = match diagnostic.severity() {
-            Severity::Error => LogCategory::Error,
+            Severity::Fatal | Severity::Error => LogCategory::Error,
             Severity::Warning => LogCategory::Warn,
             Severity::Information | Severity::Hint => LogCategory::Info,
         };
@@ -414,13 +414,11 @@ where
     V: Visit,
     D: Diagnostic + ?Sized,
 {
-    let tags = diagnostic.tags();
-
-    if tags.contains(DiagnosticTags::FATAL) {
+    if diagnostic.severity() == Severity::Fatal {
         visitor.record_log(LogCategory::Warn, &"Rome exited as this error could not be handled and resulted in a fatal error. Please report it if necessary.")?;
     }
 
-    if tags.contains(DiagnosticTags::INTERNAL) {
+    if diagnostic.tags().contains(DiagnosticTags::INTERNAL) {
         visitor.record_log(LogCategory::Warn, &"This diagnostic was derived from an internal Rome error. Potential bug, please report it if necessary.")?;
     }
 

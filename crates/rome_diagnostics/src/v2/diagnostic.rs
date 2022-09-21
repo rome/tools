@@ -111,6 +111,8 @@ pub trait Diagnostic: Debug {
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 /// The severity to associate to a diagnostic.
 pub enum Severity {
+    /// Reports a crash.
+    Fatal,
     /// Reports an error.
     Error,
     /// Reports a warning.
@@ -128,7 +130,6 @@ pub enum Severity {
 pub(super) enum DiagnosticTag {
     Fixable,
     Internal,
-    Fatal,
     UnnecessaryCode,
     DeprecatedCode,
 }
@@ -139,8 +140,6 @@ bitflags! {
         const FIXABLE = 1 << DiagnosticTag::Fixable as u8;
         /// This diagnostic results from an internal error.
         const INTERNAL = 1 << DiagnosticTag::Internal as u8;
-        /// This diagnostic results from a crash.
-        const FATAL = 1 << DiagnosticTag::Fatal as u8;
         /// This diagnostic tags unused or unnecessary code, this may change
         /// how the diagnostic is render in editors.
         const UNNECESSARY_CODE = 1 << DiagnosticTag::UnnecessaryCode as u8;

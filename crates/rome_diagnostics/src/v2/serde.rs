@@ -287,7 +287,6 @@ impl From<DiagnosticTag> for DiagnosticTags {
         match tag {
             DiagnosticTag::Fixable => DiagnosticTags::FIXABLE,
             DiagnosticTag::Internal => DiagnosticTags::INTERNAL,
-            DiagnosticTag::Fatal => DiagnosticTags::FATAL,
             DiagnosticTag::UnnecessaryCode => DiagnosticTags::UNNECESSARY_CODE,
             DiagnosticTag::DeprecatedCode => DiagnosticTags::DEPRECATED_CODE,
         }
@@ -308,10 +307,6 @@ impl Serialize for DiagnosticTags {
 
         if self.contains(Self::INTERNAL) {
             flags.push(DiagnosticTag::Internal);
-        }
-
-        if self.contains(Self::FATAL) {
-            flags.push(DiagnosticTag::Fatal);
         }
 
         if self.contains(Self::UNNECESSARY_CODE) {
