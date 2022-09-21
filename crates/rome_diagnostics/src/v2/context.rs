@@ -8,7 +8,7 @@ use super::{
 
 /// This trait is implemented for all types implementing [Diagnostic](super::Diagnostic)
 /// and the [Error] struct, and exposes various combinator methods to enrich
-/// existing diagnostics with additional informations
+/// existing diagnostics with additional information.
 pub trait DiagnosticExt: internal::Sealed + Sized {
     /// Returns a new diagnostic with the provided `message` as a message and
     /// description, and `self` as a source diagnostic. This is useful to

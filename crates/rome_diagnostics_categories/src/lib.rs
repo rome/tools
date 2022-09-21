@@ -12,7 +12,7 @@ pub struct Category {
 }
 
 impl Category {
-    /// Return the name of this diagnostic
+    /// Return the name of this category
     pub fn name(&self) -> &'static str {
         self.name
     }

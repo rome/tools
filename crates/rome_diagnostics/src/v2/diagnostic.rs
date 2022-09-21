@@ -9,7 +9,7 @@ use super::{Category, Location, Visitor};
 
 /// The `Diagnostic` trait
 pub trait Diagnostic: Debug {
-    /// The category of a diagnostic is string code uniquely identifying this
+    /// The category of a diagnostic uniquely identifying this
     /// diagnostic type, such as `lint/correctness/noArguments`, `args/invalid`
     /// or `format/disabled`
     fn category(&self) -> Option<&Category> {
@@ -61,7 +61,7 @@ pub trait Diagnostic: Debug {
     }
 
     /// A diagnostic can be tied to a specific "location": this can be a file,
-    /// memory buffer, command line argument ... It may also be tied to a
+    /// memory buffer, command line argument, etc. It may also be tied to a
     /// specific text range within the content of that location. Finally, it
     /// may also provide the source string for that location (this is required
     /// in order to display a code frame advice for the diagnostic)
@@ -73,8 +73,8 @@ pub trait Diagnostic: Debug {
     /// - If the diagnostic can be automatically fixed
     /// - If the diagnostic resulted from and internal error
     /// - If the diagnostic is being emitted as part of a crash / fatal error
-    /// - If the diagnostic is warning about a piece of unused or unnecessary code
-    /// - If the diagnostic is warning about a piece of deprecated or obsolete code
+    /// - If the diagnostic is a warning about a piece of unused or unnecessary code
+    /// - If the diagnostic is a warning about a piece of deprecated or obsolete code
     fn tags(&self) -> DiagnosticTags {
         DiagnosticTags::empty()
     }
@@ -92,6 +92,7 @@ pub trait Diagnostic: Debug {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
+/// The severity to associate to a diagnostic
 pub enum Severity {
     /// Reports an error
     Error,

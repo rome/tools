@@ -65,7 +65,7 @@ impl<'fmt, D: Diagnostic + ?Sized> fmt::Display for PrintHeader<'fmt, D> {
 
         // Print the diagnostic location if it has one
         if let Some(location) = diag.location() {
-            // Print tthe path if it's a file
+            // Print the path if it's a file
             let file_name = match &location.path {
                 Path::File(file) => file.path(),
                 _ => None,
@@ -76,9 +76,8 @@ impl<'fmt, D: Diagnostic + ?Sized> fmt::Display for PrintHeader<'fmt, D> {
 
                 // Print the line and column position if the location has a span and source code
                 // (the source code is necessary to convert a byte offset into a line + column)
-                if let Some(span) = location.span {
-                    if let Some(source_code) = location.source_code {
-                        let line_starts = source_code.line_starts.map_or_else(
+                if let (Some(span), Some(source_code)) = (location.span, location.source_code) {
+                    let line_starts = source_code.line_starts.map_or_else(
                             || Cow::Owned(SourceFile::line_starts(source_code.text).collect()),
                             Cow::Borrowed,
                         );
@@ -89,7 +88,6 @@ impl<'fmt, D: Diagnostic + ?Sized> fmt::Display for PrintHeader<'fmt, D> {
                                 ":"{location.line_number}":"{location.column_number}
                             })?;
                         }
-                    }
                 }
 
                 fmt.write_str(" ")?;
@@ -423,11 +421,11 @@ where
     let tags = diag.tags();
 
     if tags.contains(DiagnosticTags::FATAL) {
-        visitor.visit_log(LogCategory::Warn, &"Rome exited as this error could not be handled and resulted in a fatal error. Please report if necessary.")?;
+        visitor.visit_log(LogCategory::Warn, &"Rome exited as this error could not be handled and resulted in a fatal error. Please report it if necessary.")?;
     }
 
     if tags.contains(DiagnosticTags::INTERNAL) {
-        visitor.visit_log(LogCategory::Warn, &"This diagnostic was derived from an internal Rome error. Potential bug, please report if necessary.")?;
+        visitor.visit_log(LogCategory::Warn, &"This diagnostic was derived from an internal Rome error. Potential bug, please report it if necessary.")?;
     }
 
     Ok(())
