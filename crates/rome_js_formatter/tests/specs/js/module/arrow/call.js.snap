@@ -63,7 +63,7 @@ const testResults = results.testResults.map(
 
 it("mocks regexp instances", () => {
 	expect(
-	// () => moduleMocker.generateFromMetadata(moduleMocker.getMetadata(/a/)),
+		// () => moduleMocker.generateFromMetadata(moduleMocker.getMetadata(/a/)),
 	).not.toThrow();
 });
 
@@ -79,8 +79,9 @@ expect(
 );
 // .toThrowError(/Required parameter/);
 
-expect(() => asyncRequest({ type: "foo", url: "/test-endpoint" })).not
-	.toThrowError();
+expect(
+	() => asyncRequest({ type: "foo", url: "/test-endpoint" }),
+).not.toThrowError();
 
 expect(
 	() =>

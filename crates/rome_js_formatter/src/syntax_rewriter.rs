@@ -1,6 +1,5 @@
 use crate::comments::is_type_comment;
 use crate::parentheses::JsAnyParenthesized;
-use crate::TextRange;
 use rome_formatter::{TransformSourceMap, TransformSourceMapBuilder};
 use rome_js_syntax::{
     JsAnyAssignment, JsAnyExpression, JsLanguage, JsLogicalExpression, JsSyntaxKind, JsSyntaxNode,
@@ -8,8 +7,9 @@ use rome_js_syntax::{
 };
 use rome_rowan::syntax::SyntaxTrivia;
 use rome_rowan::{
-    AstNode, SyntaxKind, SyntaxRewriter, SyntaxToken, SyntaxTriviaPiece, VisitNodeSignal,
+    AstNode, SyntaxKind, SyntaxRewriter, SyntaxToken, SyntaxTriviaPiece, TextSize, VisitNodeSignal,
 };
+use std::collections::BTreeSet;
 use std::iter::FusedIterator;
 
 pub(super) fn transform(root: JsSyntaxNode) -> (JsSyntaxNode, TransformSourceMap) {
@@ -21,6 +21,26 @@ pub(super) fn transform(root: JsSyntaxNode) -> (JsSyntaxNode, TransformSourceMap
 #[derive(Default)]
 struct JsFormatSyntaxRewriter {
     source_map: TransformSourceMapBuilder,
+
+    /// Stores a map of the positions at which a `(` paren has been removed.
+    /// This is necessary for correctly computing the source offsets for nested parenthesized expressions with whitespace:
+    ///
+    /// ```javascript
+    /// function f() {
+    ///     return (
+    ///         (
+    ///             // prettier-ignore
+    ///             /* $FlowFixMe(>=0.53.0) */
+    ///             <JSX />
+    ///         )
+    ///     );
+    /// }
+    /// ```
+    /// The rewriter first removes any leading whitespace from the `JsxTagExpression`'s leading trivia.
+    /// However, it then removes the leading/trailing whitespace of the inner `(` as well when handling the outer
+    /// parenthesized expressions but the ranges of the `(` trailing trivia pieces no longer match the source ranges because
+    /// they are now off by 1 because of the removed `(`.
+    l_paren_source_position: BTreeSet<TextSize>,
 }
 
 impl JsFormatSyntaxRewriter {
@@ -135,8 +155,9 @@ impl JsFormatSyntaxRewriter {
 
         let inner_trimmed_range = inner.text_trimmed_range();
         // Store away the inner offset because the new returned inner might be a detached node
-        let mut inner_offset = inner.text_range().start();
+        let original_inner_offset = inner.text_range().start();
         let inner = self.transform(inner);
+        let inner_offset = original_inner_offset - inner.text_range().start();
 
         match inner.first_token() {
             // This can only happen if we have `()` which is highly unlikely to ever be the case.
@@ -171,17 +192,17 @@ impl JsFormatSyntaxRewriter {
                     parenthesized.syntax().text_trimmed_range(),
                 );
 
-                self.source_map
-                    .add_deleted_range(l_paren.text_trimmed_range());
+                let l_paren_trimmed_range = l_paren.text_trimmed_range();
+                self.source_map.add_deleted_range(l_paren_trimmed_range);
+                self.l_paren_source_position
+                    .insert(l_paren_trimmed_range.start());
 
                 let mut l_paren_trailing = l_paren.trailing_trivia().pieces().peekable();
 
                 // Skip over leading whitespace
                 while let Some(piece) = l_paren_trailing.peek() {
                     if piece.is_whitespace() {
-                        self.source_map
-                            .add_deleted_range(TextRange::at(inner_offset, piece.text_len()));
-                        inner_offset += piece.text_len();
+                        self.source_map.add_deleted_range(piece.text_range());
                         l_paren_trailing.next();
                     } else {
                         break;
@@ -198,17 +219,26 @@ impl JsFormatSyntaxRewriter {
                 let mut leading_trivia = first_token.leading_trivia().pieces().peekable();
                 let mut first_new_line = None;
 
+                let mut inner_offset = inner_offset;
+
+                // if !is_parent_parenthesized {
                 // The leading whitespace before the opening parens replaces the whitespace before the node.
                 while let Some(trivia) = leading_trivia.peek() {
+                    if self
+                        .l_paren_source_position
+                        .contains(&(trivia.text_range().start() + inner_offset))
+                    {
+                        inner_offset += TextSize::from(1);
+                    }
+
                     if trivia.is_newline() && first_new_line.is_none() {
-                        let trivia_len = trivia.text_len();
-                        first_new_line = Some((inner_offset, leading_trivia.next().unwrap()));
-                        inner_offset += trivia_len;
+                        first_new_line = Some((
+                            trivia.text_range() + inner_offset,
+                            leading_trivia.next().unwrap(),
+                        ));
                     } else if trivia.is_whitespace() || trivia.is_newline() {
-                        let trivia_len = trivia.text_len();
                         self.source_map
-                            .add_deleted_range(TextRange::at(inner_offset, trivia_len));
-                        inner_offset += trivia_len;
+                            .add_deleted_range(trivia.text_range() + inner_offset);
                         leading_trivia.next();
                     } else {
                         break;
@@ -220,11 +250,11 @@ impl JsFormatSyntaxRewriter {
                     && leading_trivia.peek().is_none()
                     && first_new_line.is_some()
                 {
-                    let (inner_offset, new_line) = first_new_line.take().unwrap();
+                    let (inner_offset, _) = first_new_line.take().unwrap();
 
-                    self.source_map
-                        .add_deleted_range(TextRange::at(inner_offset, new_line.text_len()));
+                    self.source_map.add_deleted_range(inner_offset);
                 }
+                // }
 
                 let leading_trivia = chain_pieces(
                     first_new_line.map(|(_, trivia)| trivia).into_iter(),
@@ -503,11 +533,11 @@ mod tests {
     use crate::{format_node, JsFormatOptions, TextRange};
     use rome_diagnostics::file::FileId;
     use rome_formatter::{SourceMarker, TransformSourceMap};
-    use rome_js_parser::parse_module;
+    use rome_js_parser::{parse, parse_module};
     use rome_js_syntax::{
         JsArrayExpression, JsBinaryExpression, JsExpressionStatement, JsIdentifierExpression,
         JsLogicalExpression, JsSequenceExpression, JsStringLiteralExpression, JsSyntaxNode,
-        JsUnaryExpression, SourceType,
+        JsUnaryExpression, JsxTagExpression, SourceType,
     };
     use rome_rowan::{AstNode, SyntaxRewriter, TextSize};
 
@@ -834,8 +864,39 @@ mod tests {
         );
     }
 
+    #[test]
+    fn nested_parentheses_with_whitespace() {
+        let (transformed, source_map) = source_map_test(
+            r#"function f() {
+	return (
+		(
+			// prettier-ignore
+			/* $FlowFixMe(>=0.53.0) */
+			<JSX />
+		)
+	);
+}"#,
+        );
+
+        let tag_expression = transformed
+            .descendants()
+            .find_map(JsxTagExpression::cast)
+            .unwrap();
+
+        assert_eq!(
+            source_map.trimmed_source_text(tag_expression.syntax()),
+            r#"(
+		(
+			// prettier-ignore
+			/* $FlowFixMe(>=0.53.0) */
+			<JSX />
+		)
+	)"#
+        );
+    }
+
     fn source_map_test(input: &str) -> (JsSyntaxNode, TransformSourceMap) {
-        let tree = parse_module(input, FileId::zero()).syntax();
+        let tree = parse(input, FileId::zero(), SourceType::jsx()).syntax();
 
         let mut rewriter = JsFormatSyntaxRewriter::default();
         let transformed = rewriter.transform(tree);

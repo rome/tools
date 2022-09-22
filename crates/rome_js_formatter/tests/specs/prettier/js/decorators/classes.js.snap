@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/decorators/classes.js
 ---
 
 # Input
@@ -28,7 +30,7 @@ const bar =
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,24 +1,17 @@
+@@ -1,24 +1,16 @@
 -@deco
 -class Foo {}
 +@deco class Foo {}
@@ -59,7 +61,6 @@ const bar =
 -      //
 -    }
 -  );
-+
 +@deco
 +  class {
 +    //
@@ -81,7 +82,6 @@ const foo =
 }
 
 const bar =
-
 @deco
   class {
     //

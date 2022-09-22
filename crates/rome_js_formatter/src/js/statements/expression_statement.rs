@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::write;
+use rome_formatter::{write, CstFormatContext};
 
 use crate::utils::FormatWithSemicolon;
 
@@ -16,12 +16,29 @@ impl FormatNodeRule<JsExpressionStatement> for FormatJsExpressionStatement {
             semicolon_token,
         } = node.as_fields();
 
+        let has_dangling_comments = f.context().comments().has_dangling_comments(node.syntax());
+
         write!(
             f,
             [FormatWithSemicolon::new(
                 &expression.format(),
                 semicolon_token.as_ref()
             )]
-        )
+        )?;
+
+        if has_dangling_comments {
+            write!(f, [space(), format_dangling_comments(node.syntax())])?;
+        }
+
+        Ok(())
+    }
+
+    fn fmt_dangling_comments(
+        &self,
+        _: &JsExpressionStatement,
+        _: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        // Formatted inside of `fmt_fields`
+        Ok(())
     }
 }

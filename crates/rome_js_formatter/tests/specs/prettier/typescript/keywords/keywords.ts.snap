@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/keywords/keywords.ts
 ---
 
 # Input
@@ -65,7 +67,7 @@ module YYY4 {
  
    // Apparently this parses :P
 -  export private public protected static readonly abstract async enum X {}
-+    export
++  export
 +  private
 +  public
 +  protected
@@ -144,7 +146,7 @@ module Y3 {
   }
 
   // Apparently this parses :P
-    export
+  export
   private
   public
   protected

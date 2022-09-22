@@ -10,4 +10,13 @@ impl FormatNodeRule<JsConstructorParameters> for FormatJsConstructorParameters {
     fn fmt_fields(&self, node: &JsConstructorParameters, f: &mut JsFormatter) -> FormatResult<()> {
         FormatJsAnyParameters::from(node.clone()).fmt(f)
     }
+
+    fn fmt_dangling_comments(
+        &self,
+        _: &JsConstructorParameters,
+        _: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        // Formatted inside of `FormatJsAnyParameters
+        Ok(())
+    }
 }

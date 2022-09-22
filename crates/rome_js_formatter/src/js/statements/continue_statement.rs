@@ -20,7 +20,7 @@ impl FormatNodeRule<JsContinueStatement> for FormatJsContinueStatement {
         write!(
             f,
             [FormatWithSemicolon::new(
-                &format_with(|f| {
+                &format_with(|f: &mut JsFormatter| {
                     write!(f, [continue_token.format()])?;
 
                     if let Some(label) = &label_token {

@@ -14,5 +14,5 @@ Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
 -----
-function foo([foo, /* not used */ , /* not used */]) {}
+function foo([foo, /* not used */ /* not used */ ,]) {}
 

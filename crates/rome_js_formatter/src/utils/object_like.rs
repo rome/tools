@@ -52,30 +52,20 @@ impl JsObjectLike {
 impl Format<JsFormatContext> for JsObjectLike {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let members = format_with(|f| self.write_members(f));
+
+        write!(f, [self.l_curly_token().format(),])?;
+
         if self.members_are_empty() {
             write!(
                 f,
-                [
-                    format_delimited(&self.l_curly_token()?, &members, &self.r_curly_token()?)
-                        .soft_block_indent()
-                ]
-            )
+                [format_dangling_comments(self.syntax()).with_block_indent(),]
+            )?;
         } else if self.members_have_leading_newline() {
-            write!(
-                f,
-                [
-                    format_delimited(&self.l_curly_token()?, &members, &self.r_curly_token()?)
-                        .block_indent()
-                ]
-            )
+            write!(f, [block_indent(&members)])?;
         } else {
-            write!(
-                f,
-                [
-                    format_delimited(&self.l_curly_token()?, &members, &self.r_curly_token()?)
-                        .soft_block_spaces()
-                ]
-            )
+            write!(f, [group(&soft_space_or_block_indent(&members))])?;
         }
+
+        write!(f, [self.r_curly_token().format()])
     }
 }

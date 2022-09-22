@@ -126,8 +126,8 @@ type State = {
 
 // spec cases
 //retain comment case
-type TypeWithComments = /*1*/
-	/*2*/ /*3*/ {} /*4*/ & /*5*/ number[] /*6*/ & /*7*/ SomeType /*8*/;
+type TypeWithComments = /*1*/ /*2*/ /*3*/ {} /*4*/ & /*5*/ number[] /*6*/ &
+	/*7*/ SomeType /*8*/;
 
 type IndentAfterDifferentType1 = {} & SomeLongType & {
 		somelonglonglongkey: number;

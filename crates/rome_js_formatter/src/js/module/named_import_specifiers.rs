@@ -15,12 +15,29 @@ impl FormatNodeRule<JsNamedImportSpecifiers> for FormatJsNamedImportSpecifiers {
             r_curly_token,
         } = node.as_fields();
 
-        write!(
-            f,
-            [
-                format_delimited(&l_curly_token?, &specifiers.format(), &r_curly_token?,)
-                    .soft_block_spaces()
-            ]
-        )
+        write!(f, [l_curly_token.format()])?;
+
+        if specifiers.is_empty() {
+            write!(
+                f,
+                [format_dangling_comments(node.syntax()).with_soft_block_indent()]
+            )?;
+        } else {
+            write!(
+                f,
+                [group(&soft_space_or_block_indent(&specifiers.format()))]
+            )?;
+        }
+
+        write!(f, [r_curly_token.format()])
+    }
+
+    fn fmt_dangling_comments(
+        &self,
+        _: &JsNamedImportSpecifiers,
+        _: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        // Handled inside of `fmt_fields`
+        Ok(())
     }
 }

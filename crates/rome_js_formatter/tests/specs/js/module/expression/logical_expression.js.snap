@@ -269,12 +269,7 @@ const a =
 lorem && // foo
 	ipsum;
 
-lorem &&
-	call_function(
-		1,
-		3,
-	) // foo
-	;
+lorem && call_function(1, 3); // foo
 
 lorem &&
 	// foo

@@ -1,8 +1,8 @@
 use crate::prelude::*;
 
-use crate::jsx::lists::child_list::JsxChildListLayout;
-use crate::utils::jsx::is_meaningful_jsx_text;
-use rome_formatter::{write, CstFormatContext, FormatResult};
+use crate::jsx::lists::child_list::{FormatChildrenResult, FormatJsxChildList, JsxChildListLayout};
+use crate::utils::jsx::{is_jsx_suppressed, is_meaningful_jsx_text};
+use rome_formatter::{format_args, write, CstFormatContext, FormatResult, FormatRuleWithOptions};
 use rome_js_syntax::{
     JsAnyExpression, JsxAnyChild, JsxChildList, JsxElement, JsxExpressionChild, JsxFragment,
 };
@@ -14,6 +14,34 @@ pub struct FormatJsxElement;
 impl FormatNodeRule<JsxElement> for FormatJsxElement {
     fn fmt_fields(&self, node: &JsxElement, f: &mut JsFormatter) -> FormatResult<()> {
         JsxAnyTagWithChildren::from(node.clone()).fmt(f)
+    }
+
+    fn is_suppressed(&self, node: &JsxElement, f: &JsFormatter) -> bool {
+        is_jsx_suppressed(&node.clone().into(), f.comments())
+    }
+
+    fn fmt_leading_comments(&self, node: &JsxElement, f: &mut JsFormatter) -> FormatResult<()> {
+        debug_assert!(
+            !f.comments().has_leading_comments(node.syntax()),
+            "JsxElement can not have comments."
+        );
+        Ok(())
+    }
+
+    fn fmt_dangling_comments(&self, node: &JsxElement, f: &mut JsFormatter) -> FormatResult<()> {
+        debug_assert!(
+            !f.comments().has_dangling_comments(node.syntax()),
+            "JsxElement can not have comments."
+        );
+        Ok(())
+    }
+
+    fn fmt_trailing_comments(&self, node: &JsxElement, f: &mut JsFormatter) -> FormatResult<()> {
+        debug_assert!(
+            !f.comments().has_trailing_comments(node.syntax()),
+            "JsxElement can not have comments."
+        );
+        Ok(())
     }
 }
 
@@ -38,9 +66,8 @@ impl Format<JsFormatContext> for JsxAnyTagWithChildren {
             }
 
             ElementLayout::Default => {
-                let mut recording = f.start_recording();
-                write!(recording, [format_opening])?;
-                let opening_breaks = recording.stop().iter().any(FormatElement::will_break);
+                let mut format_opening = format_opening.memoized();
+                let opening_breaks = format_opening.inspect(f)?.will_break();
 
                 let multiple_attributes = match self {
                     JsxAnyTagWithChildren::JsxElement(element) => {
@@ -55,13 +82,29 @@ impl Format<JsFormatContext> for JsxAnyTagWithChildren {
                     JsxChildListLayout::BestFitting
                 };
 
-                write!(
-                    f,
-                    [
-                        self.children().format().with_options(list_layout),
-                        format_closing
-                    ]
-                )
+                let children = self.children();
+                let format_children = FormatJsxChildList::default()
+                    .with_options(list_layout)
+                    .fmt_children(&children, f)?;
+
+                match format_children {
+                    FormatChildrenResult::ForceMultiline(multiline) => {
+                        write!(f, [format_opening, multiline, format_closing])
+                    }
+                    FormatChildrenResult::BestFitting {
+                        flat_children,
+                        expanded_children,
+                    } => {
+                        let format_closing = format_closing.memoized();
+                        write!(
+                            f,
+                            [best_fitting![
+                                format_args![format_opening, flat_children, format_closing],
+                                format_args![format_opening, expanded_children, format_closing]
+                            ]]
+                        )
+                    }
+                }
             }
         }
     }

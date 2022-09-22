@@ -207,21 +207,10 @@ pub(crate) fn should_group_function_parameters(
     let result = if parameter_count != 1 {
         false
     } else {
-        // TODO https://github.com/rome/tools/issues/2768
-        // THIS is a hack that is necessary to avoid that the formatter doesn't insert a space
-        // between `)` and the `:` of the return type annotation IF there's a an inline comment
-        // after the last comment that has been written. This can be deleted once the comments refactor lands.
-        let is_last_content_inline_comment = f.state().is_last_content_inline_comment();
-        f.state_mut().set_last_content_inline_comment(false);
-
-        let group = matches!(
+        matches!(
             return_type,
             TsAnyReturnType::TsType(TsType::TsObjectType(_) | TsType::TsMappedType(_))
-        ) || formatted_return_type.inspect(f)?.will_break();
-
-        f.state_mut()
-            .set_last_content_inline_comment(is_last_content_inline_comment);
-        group
+        ) || formatted_return_type.inspect(f)?.will_break()
     };
 
     Ok(result)

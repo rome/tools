@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/comments/jsx.js
 ---
 
 # Input
@@ -133,138 +135,41 @@ onClick={() => {}}>
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,24 +1,26 @@
--<div>{/* comment */}</div>;
-+<div>
-+  {
-+  /* comment */
-+  }
-+</div>;
- 
- <div>{/* comment */}</div>;
- 
- <div>
-   {/* comment
--   */}
-+*/}
- </div>;
+@@ -9,8 +9,7 @@
  
  <div>
    {
 -    a
 -    /* comment
--     */
 +    a /* comment
-+*/
+      */
    }
- </div>;
- 
- <div>
--  {
--    /* comment
--     */
-+  {/* comment
-+*/
-     a
-   }
- </div>;
-@@ -29,29 +31,29 @@
- 
- <div>
-   {
--    // single line comment
-+  // single line comment
-   }
- </div>;
- 
- <div>
-   {
--    // multiple line comments 1
--    // multiple line comments 2
-+  // multiple line comments 1
-+  // multiple line comments 2
-   }
- </div>;
- 
- <div>
-   {
--    // multiple mixed comments 1
--    /* multiple mixed comments 2 */
--    /* multiple mixed comments 3 */
--    // multiple mixed comments 4
-+  // multiple mixed comments 1
-+  /* multiple mixed comments 2 */
-+  /* multiple mixed comments 3 */
-+  // multiple mixed comments 4
-   }
- </div>;
- 
- <div>
-   {
--    // Some very v  ery very very merry (xmas) very very long line to break line width limit
-+  // Some very v  ery very very merry (xmas) very very long line to break line width limit
-   }
- </div>;
- 
-@@ -62,13 +64,15 @@
- <div>
-   {/**
-    * JSDoc-y comment in JSX. I wonder what will happen to it?
--   */}
-+  */}
- </div>;
- 
- <div>
--  {/**
-+  {
-+  /**
-    * Another JSDoc comment in JSX.
--   */}
-+   */
-+  }
- </div>;
- 
- <div
-@@ -90,9 +94,8 @@
-   {foo}
- </div>;
- 
--<div
--  className="foo"
--  // comment
-+<div className="foo"
-+// comment
- >
-   {foo}
  </div>;
 ```
 
 # Output
 
 ```js
-<div>
-  {
-  /* comment */
-  }
-</div>;
+<div>{/* comment */}</div>;
 
 <div>{/* comment */}</div>;
 
 <div>
   {/* comment
-*/}
+   */}
 </div>;
 
 <div>
   {
     a /* comment
-*/
+     */
   }
 </div>;
 
 <div>
-  {/* comment
-*/
+  {
+    /* comment
+     */
     a
   }
 </div>;
@@ -275,29 +180,29 @@ onClick={() => {}}>
 
 <div>
   {
-  // single line comment
+    // single line comment
   }
 </div>;
 
 <div>
   {
-  // multiple line comments 1
-  // multiple line comments 2
+    // multiple line comments 1
+    // multiple line comments 2
   }
 </div>;
 
 <div>
   {
-  // multiple mixed comments 1
-  /* multiple mixed comments 2 */
-  /* multiple mixed comments 3 */
-  // multiple mixed comments 4
+    // multiple mixed comments 1
+    /* multiple mixed comments 2 */
+    /* multiple mixed comments 3 */
+    // multiple mixed comments 4
   }
 </div>;
 
 <div>
   {
-  // Some very v  ery very very merry (xmas) very very long line to break line width limit
+    // Some very v  ery very very merry (xmas) very very long line to break line width limit
   }
 </div>;
 
@@ -308,15 +213,13 @@ onClick={() => {}}>
 <div>
   {/**
    * JSDoc-y comment in JSX. I wonder what will happen to it?
-  */}
+   */}
 </div>;
 
 <div>
-  {
-  /**
+  {/**
    * Another JSDoc comment in JSX.
-   */
-  }
+   */}
 </div>;
 
 <div
@@ -338,8 +241,9 @@ onClick={() => {}}>
   {foo}
 </div>;
 
-<div className="foo"
-// comment
+<div
+  className="foo"
+  // comment
 >
   {foo}
 </div>;
@@ -359,7 +263,7 @@ onClick={() => {}}>
 
 # Lines exceeding max width of 80 characters
 ```
-   56:   // Some very v  ery very very merry (xmas) very very long line to break line width limit
-   61:   {/*<div>  Some very v  ery very very long line to break line width limit </div>*/}
+   53:     // Some very v  ery very very merry (xmas) very very long line to break line width limit
+   58:   {/*<div>  Some very v  ery very very long line to break line width limit </div>*/}
 ```
 

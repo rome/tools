@@ -20,7 +20,11 @@ impl FormatNodeRule<JsDefaultClause> for FormatJsDefaultClause {
             Some(JsAnyStatement::JsBlockStatement(_))
         );
 
-        write!(f, [default_token.format(), colon_token.format(), space()])?;
+        write!(f, [default_token.format(), colon_token.format()])?;
+
+        if f.comments().has_dangling_comments(node.syntax()) {
+            write!(f, [space(), format_dangling_comments(node.syntax())])?;
+        }
 
         if consequent.is_empty() {
             write!(f, [hard_line_break()])
@@ -36,5 +40,10 @@ impl FormatNodeRule<JsDefaultClause> for FormatJsDefaultClause {
                 ))]
             )
         }
+    }
+
+    fn fmt_dangling_comments(&self, _: &JsDefaultClause, _: &mut JsFormatter) -> FormatResult<()> {
+        // Handled inside of `fmt_fields`
+        Ok(())
     }
 }

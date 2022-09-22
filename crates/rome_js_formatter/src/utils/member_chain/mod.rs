@@ -112,8 +112,8 @@ use crate::utils::member_chain::groups::{
     MemberChainGroup, MemberChainGroups, MemberChainGroupsBuilder,
 };
 use crate::utils::member_chain::simple_argument::SimpleArgument;
-use rome_formatter::{format_args, write, Buffer, Comments, CstFormatContext};
-use rome_js_syntax::{JsAnyExpression, JsCallExpression, JsExpressionStatement, JsLanguage};
+use rome_formatter::{format_args, write, Buffer, CstFormatContext};
+use rome_js_syntax::{JsAnyExpression, JsCallExpression, JsExpressionStatement};
 use rome_rowan::{AstNode, SyntaxResult};
 
 #[derive(Debug, Clone)]
@@ -125,7 +125,18 @@ pub(crate) struct MemberChain {
 
 impl MemberChain {
     /// It tells if the groups should be break on multiple lines
-    pub(crate) fn groups_should_break(&self) -> FormatResult<bool> {
+    pub(crate) fn groups_should_break(&self, comments: &JsComments) -> FormatResult<bool> {
+        if self.tail.is_empty() {
+            return Ok(false);
+        }
+
+        let node_has_comments =
+            self.head.has_comments(comments) || self.tail.has_comments(comments);
+
+        if node_has_comments {
+            return Ok(true);
+        }
+
         // Do not allow the group to break if it only contains a single call expression
         if self.calls_count <= 1 {
             return Ok(false);
@@ -139,11 +150,7 @@ impl MemberChain {
 
         // TODO: add here will_break logic
 
-        let node_has_comments = self.tail.has_comments()? || self.head.has_comments();
-
-        let should_break = node_has_comments || call_expressions_are_not_simple;
-
-        Ok(should_break)
+        Ok(call_expressions_are_not_simple)
     }
 
     /// We retrieve all the call expressions inside the group and we check if
@@ -166,7 +173,7 @@ impl Format<JsFormatContext> for MemberChain {
         // TODO use Alternatives once available
         write!(f, [&self.head])?;
 
-        if self.groups_should_break()? {
+        if self.groups_should_break(f.context().comments())? {
             write!(
                 f,
                 [indent(&format_args!(
@@ -198,6 +205,7 @@ pub(crate) fn get_member_chain(
         &mut chain_members,
         call_expression.clone().into(),
         f.context().comments(),
+        true,
     )?;
 
     chain_members.push(root);
@@ -228,7 +236,9 @@ pub(crate) fn get_member_chain(
 
     // Here we check if the first element of Groups::groups can be moved inside the head.
     // If so, then we extract it and concatenate it together with the head.
-    if let Some(group_to_merge) = rest_of_groups.should_merge_with_first_group(&head_group) {
+    if let Some(group_to_merge) =
+        rest_of_groups.should_merge_with_first_group(&head_group, f.comments())
+    {
         let group_to_merge = group_to_merge
             .into_iter()
             .flat_map(|group| group.into_members());
@@ -260,7 +270,7 @@ fn compute_first_group_index(flatten_items: &[ChainMember]) -> usize {
                 // - `something[1][2][4]`
                 // - `something[1]()[3]()`
                 // - `something()[2].something.else[0]`
-                ChainMember::CallExpression(_) | ChainMember::ComputedMember(_) => true,
+                ChainMember::CallExpression { .. } | ChainMember::ComputedMember { .. } => true,
 
                 // SAFETY: The check `flatten_items[index + 1]` will never panic at runtime because
                 // 1. The array will always have at least two items
@@ -291,11 +301,11 @@ fn compute_first_group_index(flatten_items: &[ChainMember]) -> usize {
                 // and the next one is a call expression... the `matches!` fails and the loop is stopped.
                 //
                 // The last element of the array is always a `CallExpression`, which allows us to avoid the overflow of the array.
-                ChainMember::StaticMember(_) => {
+                ChainMember::StaticMember { .. } => {
                     let next_flatten_item = &flatten_items[index + 1];
                     matches!(
                         next_flatten_item,
-                        ChainMember::StaticMember(_) | ChainMember::ComputedMember(_)
+                        ChainMember::StaticMember { .. } | ChainMember::ComputedMember { .. }
                     )
                 }
                 _ => false,
@@ -323,10 +333,10 @@ fn compute_groups(
     let mut groups_builder =
         MemberChainGroupsBuilder::new(in_expression_statement, f.options().tab_width());
     for item in flatten_items {
-        let has_trailing_comments = item.syntax().has_trailing_comments();
+        let has_trailing_comments = f.comments().has_trailing_comments(item.syntax());
 
         match item {
-            ChainMember::StaticMember(_) => {
+            ChainMember::StaticMember { .. } => {
                 // if we have seen a JsCallExpression, we want to close the group.
                 // The resultant group will be something like: [ . , then, () ];
                 // `.` and `then` belong to the previous StaticMemberExpression,
@@ -340,14 +350,14 @@ fn compute_groups(
                     groups_builder.start_or_continue_group(item);
                 }
             }
-            ChainMember::CallExpression(_) => {
+            ChainMember::CallExpression { .. } => {
                 let is_loose_call_expression = item.is_loose_call_expression();
                 groups_builder.start_or_continue_group(item);
                 if is_loose_call_expression {
                     has_seen_call_expression = true;
                 }
             }
-            ChainMember::ComputedMember(_) => {
+            ChainMember::ComputedMember { .. } => {
                 groups_builder.start_or_continue_group(item);
             }
             ChainMember::Node(_) => groups_builder.continue_group(item),
@@ -372,7 +382,8 @@ fn compute_groups(
 fn flatten_member_chain(
     queue: &mut Vec<ChainMember>,
     node: JsAnyExpression,
-    comments: &Comments<JsLanguage>,
+    comments: &JsComments,
+    root: bool,
 ) -> SyntaxResult<ChainMember> {
     use JsAnyExpression::*;
 
@@ -380,32 +391,44 @@ fn flatten_member_chain(
         return Ok(ChainMember::Node(node.into_syntax()));
     }
 
-    match node {
+    let member = match node {
         JsCallExpression(call_expression) => {
             let callee = call_expression.callee()?;
-            let left = flatten_member_chain(queue, callee, comments)?;
+            let left = flatten_member_chain(queue, callee, comments, false)?;
             queue.push(left);
 
-            Ok(ChainMember::CallExpression(call_expression))
+            ChainMember::CallExpression {
+                expression: call_expression,
+                root,
+            }
         }
+
         JsStaticMemberExpression(static_member) => {
             let object = static_member.object()?;
-            let left = flatten_member_chain(queue, object, comments)?;
+            let left = flatten_member_chain(queue, object, comments, false)?;
             queue.push(left);
 
-            Ok(ChainMember::StaticMember(static_member))
+            ChainMember::StaticMember {
+                expression: static_member,
+                root,
+            }
         }
 
         JsComputedMemberExpression(computed_expression) => {
             let object = computed_expression.object()?;
 
-            let left = flatten_member_chain(queue, object, comments)?;
+            let left = flatten_member_chain(queue, object, comments, false)?;
             queue.push(left);
 
-            Ok(ChainMember::ComputedMember(computed_expression))
+            ChainMember::ComputedMember {
+                expression: computed_expression,
+                root,
+            }
         }
-        expression => Ok(ChainMember::Node(expression.into_syntax())),
-    }
+        expression => ChainMember::Node(expression.into_syntax()),
+    };
+
+    Ok(member)
 }
 
 /// Here we check if the length of the groups exceeds the cutoff or there are comments
@@ -417,5 +440,5 @@ pub fn is_member_call_chain(
 ) -> SyntaxResult<bool> {
     let chain = get_member_chain(expression, f)?;
 
-    chain.tail.is_member_call_chain()
+    Ok(chain.tail.is_member_call_chain(f.context().comments()))
 }

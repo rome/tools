@@ -21,6 +21,7 @@ impl FormatNodeRule<JsScript> for FormatJsScript {
             f,
             [
                 FormatInterpreterToken::new(interpreter_token.as_ref()),
+                format_leading_comments(node.syntax()),
                 directives.format(),
             ]
         ]?;
@@ -29,9 +30,28 @@ impl FormatNodeRule<JsScript> for FormatJsScript {
             f,
             [
                 statements.format(),
+                format_trailing_comments(node.syntax()),
                 format_removed(&eof_token?),
                 hard_line_break()
             ]
         ]
+    }
+
+    fn fmt_leading_comments(&self, _: &JsScript, _: &mut JsFormatter) -> FormatResult<()> {
+        // Formatted as part of `fmt_fields`
+        Ok(())
+    }
+
+    fn fmt_dangling_comments(&self, node: &JsScript, f: &mut JsFormatter) -> FormatResult<()> {
+        debug_assert!(
+            !f.comments().has_dangling_comments(node.syntax()),
+            "Scrip should never have dangling comments."
+        );
+        Ok(())
+    }
+
+    fn fmt_trailing_comments(&self, _: &JsScript, _: &mut JsFormatter) -> FormatResult<()> {
+        // Formatted as part of `fmt_fields`
+        Ok(())
     }
 }

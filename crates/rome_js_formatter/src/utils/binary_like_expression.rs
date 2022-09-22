@@ -54,7 +54,6 @@
 //! and right side of each Right side.
 
 use crate::prelude::*;
-use crate::utils::{has_token_trailing_line_comment, has_trailing_line_comment};
 use rome_formatter::{format_args, write, Buffer, CstFormatContext};
 use rome_js_syntax::{
     JsAnyExpression, JsAnyInProperty, JsBinaryExpression, JsBinaryOperator, JsDoWhileStatement,
@@ -72,8 +71,6 @@ use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 use std::fmt::Debug;
 use std::hash::Hash;
 use std::iter::FusedIterator;
-
-use super::has_leading_own_line_comment;
 
 declare_node_union! {
     pub(crate) JsAnyBinaryLikeExpression = JsLogicalExpression | JsBinaryExpression | JsInstanceofExpression | JsInExpression
@@ -197,6 +194,7 @@ fn split_into_left_and_right_sides(
                 }
             }
             VisitEvent::Exit(expression) => items.push(BinaryLeftOrRightSide::Right {
+                print_parent_comments: expression.syntax() != root.syntax(),
                 parent: expression,
                 inside_condition,
             }),
@@ -268,6 +266,10 @@ enum BinaryLeftOrRightSide {
         parent: JsAnyBinaryLikeExpression,
         /// Is the parent the condition of a `if` / `while` / `do-while` / `for` statement?
         inside_condition: bool,
+
+        /// Indicates if the comments of the parent should be printed or not.
+        /// Must be true if `parent` isn't the root `JsAnyBinaryLike` for which `format` is called.
+        print_parent_comments: bool,
     },
 }
 
@@ -297,6 +299,7 @@ impl Format<JsFormatContext> for BinaryLeftOrRightSide {
             BinaryLeftOrRightSide::Right {
                 parent: binary_like_expression,
                 inside_condition: inside_parenthesis,
+                print_parent_comments,
             } => {
                 // It's only possible to suppress the formatting of the whole binary expression formatting OR
                 // the formatting of the right hand side value but not of a nested binary expression.
@@ -341,13 +344,12 @@ impl Format<JsFormatContext> for BinaryLeftOrRightSide {
                 let right_has_same_kind =
                     is_same_binary_expression_kind(binary_like_expression, right.syntax());
 
-                let should_break = {
-                    if has_token_trailing_line_comment(&operator_token) {
-                        true
-                    } else {
-                        has_leading_own_line_comment(binary_like_expression.left()?.syntax())
-                    }
-                };
+                let should_break = f
+                    .context()
+                    .comments()
+                    .trailing_comments(binary_like_expression.left()?.syntax())
+                    .iter()
+                    .any(|comment| comment.kind().is_line());
 
                 let should_group = !(parent_has_same_kind
                     || left_has_same_kind
@@ -358,20 +360,24 @@ impl Format<JsFormatContext> for BinaryLeftOrRightSide {
                             JsAnyBinaryLikeExpression::JsLogicalExpression(_)
                         )));
 
+                if *print_parent_comments {
+                    write!(
+                        f,
+                        [format_leading_comments(binary_like_expression.syntax())]
+                    )?;
+                }
+
                 if !should_break && should_group {
                     write!(f, [group(&operator_and_right_expression)])?;
                 } else {
                     write!(f, [operator_and_right_expression])?;
                 }
 
-                // This is not ideal but it fixes an instability issue when the right hand side has a trailing line comment
-                // `a && b // comment` -> `a &&\n b; // comment` (see how the comment moved after the `;`)
-                if has_trailing_line_comment(right.syntax())
-                    && parent.map_or(false, |parent| {
-                        parent.kind() == JsSyntaxKind::JS_EXPRESSION_STATEMENT
-                    })
-                {
-                    write!(f, [line_suffix_boundary()])?;
+                if *print_parent_comments {
+                    write!(
+                        f,
+                        [format_trailing_comments(binary_like_expression.syntax())]
+                    )?;
                 }
 
                 Ok(())

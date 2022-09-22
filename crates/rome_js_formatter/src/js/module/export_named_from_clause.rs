@@ -27,29 +27,27 @@ impl FormatNodeRule<JsExportNamedFromClause> for FormatJsExportNamedFromClause {
                 write!(f, [type_token.format(), space()])?;
             }
 
+            write!(f, [l_curly_token.format(),])?;
+
             if node_has_leading_newline(specifiers.syntax()) {
-                write!(
-                    f,
-                    [format_delimited(
-                        l_curly_token.as_ref()?,
-                        &specifiers.format(),
-                        r_curly_token.as_ref()?,
-                    )
-                    .block_indent()]
-                )?;
+                write!(f, [block_indent(&specifiers.format()),])?;
             } else {
                 write!(
                     f,
-                    [format_delimited(
-                        l_curly_token.as_ref()?,
-                        &specifiers.format(),
-                        r_curly_token.as_ref()?,
-                    )
-                    .soft_block_spaces()]
+                    [group(&soft_space_or_block_indent(&specifiers.format())),]
                 )?;
             };
 
-            write![f, [space(), from_token.format(), space(), source.format(),]]?;
+            write![
+                f,
+                [
+                    r_curly_token.format(),
+                    space(),
+                    from_token.format(),
+                    space(),
+                    source.format(),
+                ]
+            ]?;
 
             if let Some(assertion) = &assertion {
                 write!(f, [space(), assertion.format()])?;
