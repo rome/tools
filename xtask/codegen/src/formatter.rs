@@ -357,18 +357,13 @@ pub fn generate_formatter() {
             }
             NodeKind::Unknown => {
                 quote! {
-                    use crate::prelude::*;
-                    use crate::{FormatNodeFields};
-                    use rome_rowan::AstNode;
+                    use crate::FormatUnknownNodeRule;
                     use rome_js_syntax::#node_id;
 
                     #[derive(Debug, Clone, Default)]
                     pub struct #format_id;
 
-                    impl FormatNodeRule<#node_id> for #format_id {
-                        fn fmt_fields(&self, node: &#node_id, f: &mut JsFormatter) -> FormatResult<()> {
-                            format_unknown_node(node.syntax()).fmt(f)
-                        }
+                    impl FormatUnknownNodeRule<#node_id> for #format_id {
                     }
                 }
             }
@@ -437,15 +432,23 @@ impl BoilerplateImpls {
     fn push(&mut self, kind: &NodeKind, node_id: &Ident, format_id: &TokenStream) {
         let format_rule_impl = match kind {
             NodeKind::List { .. } | NodeKind::Union { .. } => quote!(),
-            _ => quote! {
-                impl FormatRule<rome_js_syntax::#node_id> for #format_id {
-                   type Context = JsFormatContext;
-                    #[inline(always)]
-                    fn fmt(&self, node: &rome_js_syntax::#node_id, f: &mut JsFormatter) -> FormatResult<()> {
-                        FormatNodeRule::<rome_js_syntax::#node_id>::fmt(self, node, f)
+            kind => {
+                let rule = if matches!(kind, NodeKind::Unknown) {
+                    Ident::new("FormatUnknownNodeRule", Span::call_site())
+                } else {
+                    Ident::new("FormatNodeRule", Span::call_site())
+                };
+
+                quote! {
+                    impl FormatRule<rome_js_syntax::#node_id> for #format_id {
+                       type Context = JsFormatContext;
+                        #[inline(always)]
+                        fn fmt(&self, node: &rome_js_syntax::#node_id, f: &mut JsFormatter) -> FormatResult<()> {
+                            #rule::<rome_js_syntax::#node_id>::fmt(self, node, f)
+                        }
                     }
                 }
-            },
+            }
         };
 
         self.impls.push(quote! {
@@ -474,7 +477,7 @@ impl BoilerplateImpls {
 
         let tokens = quote! {
             use rome_formatter::{FormatRefWithRule, FormatOwnedWithRule, FormatRule, FormatResult};
-            use crate::{AsFormat, IntoFormat, FormatNodeRule, JsFormatter, JsFormatContext};
+            use crate::{AsFormat, IntoFormat, FormatNodeRule, FormatUnknownNodeRule, JsFormatter, JsFormatContext};
 
             #( #impls )*
         };
