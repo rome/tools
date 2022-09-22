@@ -49,459 +49,539 @@ else
 
 # Diagnostics
 ```
-warning[correctness/useBlockStatements]: Block statements are preferred in this position.
-  ┌─ useBlockStatements.js:2:1
-  │
-2 │ if (x) x;
-  │ ---------
+useBlockStatements.js:2:1 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Wrap the statement with a `JsBlockStatement`
-    | @@ -1,5 +1,5 @@
-0 0 |   // invalid
-1   | - if (x) x;
-  1 | + if (x) { x; }
-2 2 |   if (x) {
-3 3 |     x;
-4 4 |   } else y;
-
-
-```
-
-```
-warning[correctness/useBlockStatements]: Block statements are preferred in this position.
-  ┌─ useBlockStatements.js:5:3
-  │
-5 │ } else y;
-  │   -------
-
-Suggested fix: Wrap the statement with a `JsBlockStatement`
-    | @@ -2,7 +2,7 @@
-1 1 |   if (x) x;
-2 2 |   if (x) {
-3 3 |     x;
-4   | - } else y;
-  4 | + } else { y; }
-5 5 |   if (x) {
-6 6 |     x;
-7 7 |   } else if (y) y;
-
+  ! Block statements are preferred in this position.
+  
+    ┌─ useBlockStatements.js:2:1
+    │
+  2 │ if (x) x;
+    │ ^^^^^^^^^
+  
+  i Suggested fix: Wrap the statement with a `JsBlockStatement`
+  
+      | @@ -1,5 +1,5 @@
+  0 0 |   // invalid
+  1   | - if (x) x;
+    1 | + if (x) { x; }
+  2 2 |   if (x) {
+  3 3 |     x;
+  4 4 |   } else y;
+  
 
 ```
 
 ```
-warning[correctness/useBlockStatements]: Block statements are preferred in this position.
-  ┌─ useBlockStatements.js:8:8
-  │
-8 │ } else if (y) y;
-  │        ---------
+useBlockStatements.js:5:3 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Wrap the statement with a `JsBlockStatement`
-    | @@ -5,7 +5,7 @@
-4 4 |   } else y;
-5 5 |   if (x) {
-6 6 |     x;
-7   | - } else if (y) y;
-  7 | + } else if (y) { y; }
-8 8 |   for (;;);
-9 9 |   for (p in obj);
-10 10 |   for (x of xs);
-
-
-```
-
-```
-warning[correctness/useBlockStatements]: Block statements are preferred in this position.
-  ┌─ useBlockStatements.js:9:1
-  │
-9 │ for (;;);
-  │ ---------
-
-Suggested fix: Wrap the statement with a `JsBlockStatement`
-    | @@ -6,7 +6,7 @@
-5 5 |   if (x) {
-6 6 |     x;
-7 7 |   } else if (y) y;
-8   | - for (;;);
-  8 | + for (;;) {}
-9 9 |   for (p in obj);
-10 10 |   for (x of xs);
-11 11 |   do;
-
+  ! Block statements are preferred in this position.
+  
+    ┌─ useBlockStatements.js:5:3
+    │
+  5 │ } else y;
+    │   ^^^^^^^
+  
+  i Suggested fix: Wrap the statement with a `JsBlockStatement`
+  
+      | @@ -2,7 +2,7 @@
+  1 1 |   if (x) x;
+  2 2 |   if (x) {
+  3 3 |     x;
+  4   | - } else y;
+    4 | + } else { y; }
+  5 5 |   if (x) {
+  6 6 |     x;
+  7 7 |   } else if (y) y;
+  
 
 ```
 
 ```
-warning[correctness/useBlockStatements]: Block statements are preferred in this position.
-   ┌─ useBlockStatements.js:10:1
-   │
-10 │ for (p in obj);
-   │ ---------------
+useBlockStatements.js:8:8 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Wrap the statement with a `JsBlockStatement`
-      | @@ -7,7 +7,7 @@
- 6  6 |     x;
- 7  7 |   } else if (y) y;
- 8  8 |   for (;;);
- 9    | - for (p in obj);
-    9 | + for (p in obj) {}
-10 10 |   for (x of xs);
-11 11 |   do;
-12 12 |   while (x);
-
-
-```
-
-```
-warning[correctness/useBlockStatements]: Block statements are preferred in this position.
-   ┌─ useBlockStatements.js:11:1
-   │
-11 │ for (x of xs);
-   │ --------------
-
-Suggested fix: Wrap the statement with a `JsBlockStatement`
-      | @@ -8,7 +8,7 @@
- 7  7 |   } else if (y) y;
- 8  8 |   for (;;);
- 9  9 |   for (p in obj);
-10    | - for (x of xs);
-   10 | + for (x of xs) {}
-11 11 |   do;
-12 12 |   while (x);
-13 13 |   while (x);
-
+  ! Block statements are preferred in this position.
+  
+    ┌─ useBlockStatements.js:8:8
+    │
+  8 │ } else if (y) y;
+    │        ^^^^^^^^^
+  
+  i Suggested fix: Wrap the statement with a `JsBlockStatement`
+  
+      | @@ -5,7 +5,7 @@
+  4 4 |   } else y;
+  5 5 |   if (x) {
+  6 6 |     x;
+  7   | - } else if (y) y;
+    7 | + } else if (y) { y; }
+  8 8 |   for (;;);
+  9 9 |   for (p in obj);
+  10 10 |   for (x of xs);
+  
 
 ```
 
 ```
-warning[correctness/useBlockStatements]: Block statements are preferred in this position.
-   ┌─ useBlockStatements.js:12:1
-   │  
-12 │ ┌ do;
-13 │ │ while (x);
-   │ └──────────'
+useBlockStatements.js:9:1 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Wrap the statement with a `JsBlockStatement`
-      | @@ -9,7 +9,7 @@
- 8  8 |   for (;;);
- 9  9 |   for (p in obj);
-10 10 |   for (x of xs);
-11    | - do;
-   11 | + do {}
-12 12 |   while (x);
-13 13 |   while (x);
-14 14 |   
-
-
-```
-
-```
-warning[correctness/useBlockStatements]: Block statements are preferred in this position.
-   ┌─ useBlockStatements.js:14:1
-   │
-14 │ while (x);
-   │ ----------
-
-Suggested fix: Wrap the statement with a `JsBlockStatement`
-      | @@ -11,7 +11,7 @@
-10 10 |   for (x of xs);
-11 11 |   do;
-12 12 |   while (x);
-13    | - while (x);
-   13 | + while (x) {}
-14 14 |   
-15 15 |   if (x);
-16 16 |   
-
+  ! Block statements are preferred in this position.
+  
+    ┌─ useBlockStatements.js:9:1
+    │
+  9 │ for (;;);
+    │ ^^^^^^^^^
+  
+  i Suggested fix: Wrap the statement with a `JsBlockStatement`
+  
+      | @@ -6,7 +6,7 @@
+  5 5 |   if (x) {
+  6 6 |     x;
+  7 7 |   } else if (y) y;
+  8   | - for (;;);
+    8 | + for (;;) {}
+  9 9 |   for (p in obj);
+  10 10 |   for (x of xs);
+  11 11 |   do;
+  
 
 ```
 
 ```
-warning[correctness/useBlockStatements]: Block statements are preferred in this position.
-   ┌─ useBlockStatements.js:16:1
-   │
-16 │ if (x);
-   │ -------
+useBlockStatements.js:10:1 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Wrap the statement with a `JsBlockStatement`
-      | @@ -13,7 +13,7 @@
-12 12 |   while (x);
-13 13 |   while (x);
-14 14 |   
-15    | - if (x);
-   15 | + if (x) {}
-16 16 |   
-17 17 |   if (test);
-18 18 |   else if (test);
-
-
-```
-
-```
-warning[correctness/useBlockStatements]: Block statements are preferred in this position.
-   ┌─ useBlockStatements.js:18:1
-   │  
-18 │ ┌ if (test);
-19 │ │ else if (test);
-20 │ │ else;
-   │ └─────'
-
-Suggested fix: Wrap the statement with a `JsBlockStatement`
-      | @@ -15,7 +15,7 @@
-14 14 |   
-15 15 |   if (x);
-16 16 |   
-17    | - if (test);
-   17 | + if (test) {}
-18 18 |   else if (test);
-19 19 |   else;
-20 20 |   
-
+  ! Block statements are preferred in this position.
+  
+     ┌─ useBlockStatements.js:10:1
+     │
+  10 │ for (p in obj);
+     │ ^^^^^^^^^^^^^^^
+  
+  i Suggested fix: Wrap the statement with a `JsBlockStatement`
+  
+        | @@ -7,7 +7,7 @@
+   6  6 |     x;
+   7  7 |   } else if (y) y;
+   8  8 |   for (;;);
+   9    | - for (p in obj);
+      9 | + for (p in obj) {}
+  10 10 |   for (x of xs);
+  11 11 |   do;
+  12 12 |   while (x);
+  
 
 ```
 
 ```
-warning[correctness/useBlockStatements]: Block statements are preferred in this position.
-   ┌─ useBlockStatements.js:19:6
-   │  
-19 │   else if (test);
-   │ ┌──────'
-20 │ │ else;
-   │ └─────'
+useBlockStatements.js:11:1 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Wrap the statement with a `JsBlockStatement`
-      | @@ -16,7 +16,7 @@
-15 15 |   if (x);
-16 16 |   
-17 17 |   if (test);
-18    | - else if (test);
-   18 | + else if (test) {}
-19 19 |   else;
-20 20 |   
-21 21 |   while (test)
-
-
-```
-
-```
-warning[correctness/useBlockStatements]: Block statements are preferred in this position.
-   ┌─ useBlockStatements.js:20:1
-   │
-20 │ else;
-   │ -----
-
-Suggested fix: Wrap the statement with a `JsBlockStatement`
-      | @@ -17,7 +17,7 @@
-16 16 |   
-17 17 |   if (test);
-18 18 |   else if (test);
-19    | - else;
-   19 | + else {}
-20 20 |   
-21 21 |   while (test)
-22 22 |     bar
-
+  ! Block statements are preferred in this position.
+  
+     ┌─ useBlockStatements.js:11:1
+     │
+  11 │ for (x of xs);
+     │ ^^^^^^^^^^^^^^
+  
+  i Suggested fix: Wrap the statement with a `JsBlockStatement`
+  
+        | @@ -8,7 +8,7 @@
+   7  7 |   } else if (y) y;
+   8  8 |   for (;;);
+   9  9 |   for (p in obj);
+  10    | - for (x of xs);
+     10 | + for (x of xs) {}
+  11 11 |   do;
+  12 12 |   while (x);
+  13 13 |   while (x);
+  
 
 ```
 
 ```
-warning[correctness/useBlockStatements]: Block statements are preferred in this position.
-   ┌─ useBlockStatements.js:22:1
-   │  
-22 │ ┌ while (test)
-23 │ │   bar
-   │ └─────'
+useBlockStatements.js:12:1 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Wrap the statement with a `JsBlockStatement`
-      | @@ -19,8 +19,9 @@
-18 18 |   else if (test);
-19 19 |   else;
-20 20 |   
-21    | - while (test)
-   21 | + while (test) {
-22 22 |     bar
-   23 | + }
-23 24 |   
-24 25 |     while (test)
-25 26 |       bar
-
-
-```
-
-```
-warning[correctness/useBlockStatements]: Block statements are preferred in this position.
-   ┌─ useBlockStatements.js:25:3
-   │  
-25 │ ┌   while (test)
-26 │ │     bar
-   │ └───────'
-
-Suggested fix: Wrap the statement with a `JsBlockStatement`
-      | @@ -22,8 +22,9 @@
-21 21 |   while (test)
-22 22 |     bar
-23 23 |   
-24    | -   while (test)
-   24 | +   while (test) {
-25 25 |       bar
-   26 | +   }
-26 27 |   
-27 28 |   if (test)
-28 29 |     bar
-
+  ! Block statements are preferred in this position.
+  
+     ┌─ useBlockStatements.js:12:1
+     │  
+  12 │ ┌ do;
+  13 │ │ while (x);
+     │ └──────────^
+  
+  i Suggested fix: Wrap the statement with a `JsBlockStatement`
+  
+        | @@ -9,7 +9,7 @@
+   8  8 |   for (;;);
+   9  9 |   for (p in obj);
+  10 10 |   for (x of xs);
+  11    | - do;
+     11 | + do {}
+  12 12 |   while (x);
+  13 13 |   while (x);
+  14 14 |   
+  
 
 ```
 
 ```
-warning[correctness/useBlockStatements]: Block statements are preferred in this position.
-   ┌─ useBlockStatements.js:28:1
-   │  
-28 │ ┌ if (test)
-29 │ │   bar
-30 │ │ else if(test)
-31 │ │   bar
-32 │ │ else
-33 │ │   bar
-   │ └─────'
+useBlockStatements.js:14:1 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Wrap the statement with a `JsBlockStatement`
-      | @@ -25,8 +25,9 @@
-24 24 |     while (test)
-25 25 |       bar
-26 26 |   
-27    | - if (test)
-   27 | + if (test) {
-28 28 |     bar
-   29 | + }
-29 30 |   else if(test)
-30 31 |     bar
-31 32 |   else
-
+  ! Block statements are preferred in this position.
+  
+     ┌─ useBlockStatements.js:14:1
+     │
+  14 │ while (x);
+     │ ^^^^^^^^^^
+  
+  i Suggested fix: Wrap the statement with a `JsBlockStatement`
+  
+        | @@ -11,7 +11,7 @@
+  10 10 |   for (x of xs);
+  11 11 |   do;
+  12 12 |   while (x);
+  13    | - while (x);
+     13 | + while (x) {}
+  14 14 |   
+  15 15 |   if (x);
+  16 16 |   
+  
 
 ```
 
 ```
-warning[correctness/useBlockStatements]: Block statements are preferred in this position.
-   ┌─ useBlockStatements.js:30:6
-   │  
-30 │   else if(test)
-   │ ┌──────'
-31 │ │   bar
-32 │ │ else
-33 │ │   bar
-   │ └─────'
+useBlockStatements.js:16:1 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Wrap the statement with a `JsBlockStatement`
-      | @@ -27,8 +27,9 @@
-26 26 |   
-27 27 |   if (test)
-28 28 |     bar
-29    | - else if(test)
-   29 | + else if(test) {
-30 30 |     bar
-   31 | + }
-31 32 |   else
-32 33 |     bar
-33 34 |   
-
+  ! Block statements are preferred in this position.
+  
+     ┌─ useBlockStatements.js:16:1
+     │
+  16 │ if (x);
+     │ ^^^^^^^
+  
+  i Suggested fix: Wrap the statement with a `JsBlockStatement`
+  
+        | @@ -13,7 +13,7 @@
+  12 12 |   while (x);
+  13 13 |   while (x);
+  14 14 |   
+  15    | - if (x);
+     15 | + if (x) {}
+  16 16 |   
+  17 17 |   if (test);
+  18 18 |   else if (test);
+  
 
 ```
 
 ```
-warning[correctness/useBlockStatements]: Block statements are preferred in this position.
-   ┌─ useBlockStatements.js:32:1
-   │  
-32 │ ┌ else
-33 │ │   bar
-   │ └─────'
+useBlockStatements.js:18:1 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Wrap the statement with a `JsBlockStatement`
-      | @@ -29,8 +29,9 @@
-28 28 |     bar
-29 29 |   else if(test)
-30 30 |     bar
-31    | - else
-   31 | + else {
-32 32 |     bar
-   33 | + }
-33 34 |   
-34 35 |     if (test)
-35 36 |       bar
-
-
-```
-
-```
-warning[correctness/useBlockStatements]: Block statements are preferred in this position.
-   ┌─ useBlockStatements.js:35:3
-   │  
-35 │ ┌   if (test)
-36 │ │     bar
-37 │ │   else if(test)
-38 │ │     bar
-39 │ │   else
-40 │ │     bar
-   │ └───────'
-
-Suggested fix: Wrap the statement with a `JsBlockStatement`
-      | @@ -32,8 +32,9 @@
-31 31 |   else
-32 32 |     bar
-33 33 |   
-34    | -   if (test)
-   34 | +   if (test) {
-35 35 |       bar
-   36 | +   }
-36 37 |     else if(test)
-37 38 |       bar
-38 39 |     else
-
+  ! Block statements are preferred in this position.
+  
+     ┌─ useBlockStatements.js:18:1
+     │  
+  18 │ ┌ if (test);
+  19 │ │ else if (test);
+  20 │ │ else;
+     │ └─────^
+  
+  i Suggested fix: Wrap the statement with a `JsBlockStatement`
+  
+        | @@ -15,7 +15,7 @@
+  14 14 |   
+  15 15 |   if (x);
+  16 16 |   
+  17    | - if (test);
+     17 | + if (test) {}
+  18 18 |   else if (test);
+  19 19 |   else;
+  20 20 |   
+  
 
 ```
 
 ```
-warning[correctness/useBlockStatements]: Block statements are preferred in this position.
-   ┌─ useBlockStatements.js:37:8
-   │  
-37 │     else if(test)
-   │ ┌────────'
-38 │ │     bar
-39 │ │   else
-40 │ │     bar
-   │ └───────'
+useBlockStatements.js:19:6 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Wrap the statement with a `JsBlockStatement`
-      | @@ -34,7 +34,8 @@
-33 33 |   
-34 34 |     if (test)
-35 35 |       bar
-36    | -   else if(test)
-   36 | +   else if(test) {
-37 37 |       bar
-   38 | +   }
-38 39 |     else
-39 40 |       bar
-
+  ! Block statements are preferred in this position.
+  
+     ┌─ useBlockStatements.js:19:6
+     │  
+  19 │   else if (test);
+     │ ┌──────^
+  20 │ │ else;
+     │ └─────^
+  
+  i Suggested fix: Wrap the statement with a `JsBlockStatement`
+  
+        | @@ -16,7 +16,7 @@
+  15 15 |   if (x);
+  16 16 |   
+  17 17 |   if (test);
+  18    | - else if (test);
+     18 | + else if (test) {}
+  19 19 |   else;
+  20 20 |   
+  21 21 |   while (test)
+  
 
 ```
 
 ```
-warning[correctness/useBlockStatements]: Block statements are preferred in this position.
-   ┌─ useBlockStatements.js:39:3
-   │  
-39 │ ┌   else
-40 │ │     bar
-   │ └───────'
+useBlockStatements.js:20:1 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Wrap the statement with a `JsBlockStatement`
-      | @@ -36,5 +36,6 @@
-35 35 |       bar
-36 36 |     else if(test)
-37 37 |       bar
-38    | -   else
-   38 | +   else {
-39 39 |       bar
-   40 | +   }
+  ! Block statements are preferred in this position.
+  
+     ┌─ useBlockStatements.js:20:1
+     │
+  20 │ else;
+     │ ^^^^^
+  
+  i Suggested fix: Wrap the statement with a `JsBlockStatement`
+  
+        | @@ -17,7 +17,7 @@
+  16 16 |   
+  17 17 |   if (test);
+  18 18 |   else if (test);
+  19    | - else;
+     19 | + else {}
+  20 20 |   
+  21 21 |   while (test)
+  22 22 |     bar
+  
 
+```
+
+```
+useBlockStatements.js:22:1 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Block statements are preferred in this position.
+  
+     ┌─ useBlockStatements.js:22:1
+     │  
+  22 │ ┌ while (test)
+  23 │ │   bar
+     │ └─────^
+  
+  i Suggested fix: Wrap the statement with a `JsBlockStatement`
+  
+        | @@ -19,8 +19,9 @@
+  18 18 |   else if (test);
+  19 19 |   else;
+  20 20 |   
+  21    | - while (test)
+     21 | + while (test) {
+  22 22 |     bar
+     23 | + }
+  23 24 |   
+  24 25 |     while (test)
+  25 26 |       bar
+  
+
+```
+
+```
+useBlockStatements.js:25:3 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Block statements are preferred in this position.
+  
+     ┌─ useBlockStatements.js:25:3
+     │  
+  25 │ ┌   while (test)
+  26 │ │     bar
+     │ └───────^
+  
+  i Suggested fix: Wrap the statement with a `JsBlockStatement`
+  
+        | @@ -22,8 +22,9 @@
+  21 21 |   while (test)
+  22 22 |     bar
+  23 23 |   
+  24    | -   while (test)
+     24 | +   while (test) {
+  25 25 |       bar
+     26 | +   }
+  26 27 |   
+  27 28 |   if (test)
+  28 29 |     bar
+  
+
+```
+
+```
+useBlockStatements.js:28:1 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Block statements are preferred in this position.
+  
+     ┌─ useBlockStatements.js:28:1
+     │  
+  28 │ ┌ if (test)
+  29 │ │   bar
+  30 │ │ else if(test)
+  31 │ │   bar
+  32 │ │ else
+  33 │ │   bar
+     │ └─────^
+  
+  i Suggested fix: Wrap the statement with a `JsBlockStatement`
+  
+        | @@ -25,8 +25,9 @@
+  24 24 |     while (test)
+  25 25 |       bar
+  26 26 |   
+  27    | - if (test)
+     27 | + if (test) {
+  28 28 |     bar
+     29 | + }
+  29 30 |   else if(test)
+  30 31 |     bar
+  31 32 |   else
+  
+
+```
+
+```
+useBlockStatements.js:30:6 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Block statements are preferred in this position.
+  
+     ┌─ useBlockStatements.js:30:6
+     │  
+  30 │   else if(test)
+     │ ┌──────^
+  31 │ │   bar
+  32 │ │ else
+  33 │ │   bar
+     │ └─────^
+  
+  i Suggested fix: Wrap the statement with a `JsBlockStatement`
+  
+        | @@ -27,8 +27,9 @@
+  26 26 |   
+  27 27 |   if (test)
+  28 28 |     bar
+  29    | - else if(test)
+     29 | + else if(test) {
+  30 30 |     bar
+     31 | + }
+  31 32 |   else
+  32 33 |     bar
+  33 34 |   
+  
+
+```
+
+```
+useBlockStatements.js:32:1 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Block statements are preferred in this position.
+  
+     ┌─ useBlockStatements.js:32:1
+     │  
+  32 │ ┌ else
+  33 │ │   bar
+     │ └─────^
+  
+  i Suggested fix: Wrap the statement with a `JsBlockStatement`
+  
+        | @@ -29,8 +29,9 @@
+  28 28 |     bar
+  29 29 |   else if(test)
+  30 30 |     bar
+  31    | - else
+     31 | + else {
+  32 32 |     bar
+     33 | + }
+  33 34 |   
+  34 35 |     if (test)
+  35 36 |       bar
+  
+
+```
+
+```
+useBlockStatements.js:35:3 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Block statements are preferred in this position.
+  
+     ┌─ useBlockStatements.js:35:3
+     │  
+  35 │ ┌   if (test)
+  36 │ │     bar
+  37 │ │   else if(test)
+  38 │ │     bar
+  39 │ │   else
+  40 │ │     bar
+     │ └───────^
+  
+  i Suggested fix: Wrap the statement with a `JsBlockStatement`
+  
+        | @@ -32,8 +32,9 @@
+  31 31 |   else
+  32 32 |     bar
+  33 33 |   
+  34    | -   if (test)
+     34 | +   if (test) {
+  35 35 |       bar
+     36 | +   }
+  36 37 |     else if(test)
+  37 38 |       bar
+  38 39 |     else
+  
+
+```
+
+```
+useBlockStatements.js:37:8 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Block statements are preferred in this position.
+  
+     ┌─ useBlockStatements.js:37:8
+     │  
+  37 │     else if(test)
+     │ ┌────────^
+  38 │ │     bar
+  39 │ │   else
+  40 │ │     bar
+     │ └───────^
+  
+  i Suggested fix: Wrap the statement with a `JsBlockStatement`
+  
+        | @@ -34,7 +34,8 @@
+  33 33 |   
+  34 34 |     if (test)
+  35 35 |       bar
+  36    | -   else if(test)
+     36 | +   else if(test) {
+  37 37 |       bar
+     38 | +   }
+  38 39 |     else
+  39 40 |       bar
+  
+
+```
+
+```
+useBlockStatements.js:39:3 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Block statements are preferred in this position.
+  
+     ┌─ useBlockStatements.js:39:3
+     │  
+  39 │ ┌   else
+  40 │ │     bar
+     │ └───────^
+  
+  i Suggested fix: Wrap the statement with a `JsBlockStatement`
+  
+        | @@ -36,5 +36,6 @@
+  35 35 |       bar
+  36 36 |     else if(test)
+  37 37 |       bar
+  38    | -   else
+     38 | +   else {
+  39 39 |       bar
+     40 | +   }
+  
 
 ```
 

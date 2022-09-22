@@ -23,31 +23,46 @@ z: expr;
 
 # Diagnostics
 ```
-warning[correctness/noLabelVar]: Do not use the x1 variable name as a label
-  ┌─ noLabelVar.js:3:1
-  │
-2 │ const x1 = "test";
-  │       -- The variable is declared here
-3 │ x1: expr;
-  │ --
+noLabelVar.js:3:1 lint/correctness/noLabelVar ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Creating a label with the same name as an in-scope variable leads to confusion.
-
+  ! Do not use the x1 variable name as a label
+  
+    ┌─ noLabelVar.js:3:1
+    │
+  3 │ x1: expr;
+    │ ^^
+  
+  i The variable is declared here
+  
+    ┌─ noLabelVar.js:2:7
+    │
+  2 │ const x1 = "test";
+    │       ^^
+  
+  i Creating a label with the same name as an in-scope variable leads to confusion.
+  
 
 ```
 
 ```
-warning[correctness/noLabelVar]: Do not use the x1 variable name as a label
-  ┌─ noLabelVar.js:7:5
-  │
-2 │ const x1 = "test";
-  │       -- The variable is declared here
-  ·
-7 │     x1: for (let i = 0; i < 10; i++) {
-  │     --
+noLabelVar.js:7:5 lint/correctness/noLabelVar ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Creating a label with the same name as an in-scope variable leads to confusion.
-
+  ! Do not use the x1 variable name as a label
+  
+    ┌─ noLabelVar.js:7:5
+    │
+  7 │     x1: for (let i = 0; i < 10; i++) {
+    │     ^^
+  
+  i The variable is declared here
+  
+    ┌─ noLabelVar.js:2:7
+    │
+  2 │ const x1 = "test";
+    │       ^^
+  
+  i Creating a label with the same name as an in-scope variable leads to confusion.
+  
 
 ```
 

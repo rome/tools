@@ -89,11 +89,14 @@ JsModule {
       1: (empty)
   3: EOF@28..29 "" [Newline("\n")] []
 --
-error[SyntaxError]: An arrow function cannot have a 'this' parameter.
-  ┌─ ts_arrow_function_this_parameter.ts:1:10
-  │
-1 │ let a = (this: string) => {}
-  │          ^^^^^^^^^^^^
+ts_arrow_function_this_parameter.ts:1:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × An arrow function cannot have a 'this' parameter.
+  
+    ┌─ ts_arrow_function_this_parameter.ts:1:10
+    │
+  1 │ let a = (this: string) => {}
+    │          ^^^^^^^^^^^^
+  
 --
 let a = (this: string) => {}

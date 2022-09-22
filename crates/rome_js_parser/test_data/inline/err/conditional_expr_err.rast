@@ -137,26 +137,41 @@ JsModule {
       1: (empty)
   3: EOF@51..52 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `:` but instead found `baz`
-  ┌─ conditional_expr_err.js:1:11
-  │
-1 │ foo ? bar baz
-  │           ^^^ unexpected
+conditional_expr_err.js:1:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `:` but instead found `baz`
+  
+  × unexpected
+  
+    ┌─ conditional_expr_err.js:1:11
+    │
+  1 │ foo ? bar baz
+    │           ^^^
+  
 --
-error[SyntaxError]: expected `:` but instead found `baz`
-  ┌─ conditional_expr_err.js:2:11
-  │
-2 │ foo ? bar baz ? foo : bar
-  │           ^^^ unexpected
+conditional_expr_err.js:2:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `:` but instead found `baz`
+  
+  × unexpected
+  
+    ┌─ conditional_expr_err.js:2:11
+    │
+  2 │ foo ? bar baz ? foo : bar
+    │           ^^^
+  
 --
-error[SyntaxError]: expected an expression, or an assignment but instead found ''
-  ┌─ conditional_expr_err.js:4:1
-  │
-4 │ 
-  │ ^ Expected an expression, or an assignment here
+conditional_expr_err.js:4:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an expression, or an assignment but instead found ''
+  
+  × Expected an expression, or an assignment here
+  
+    ┌─ conditional_expr_err.js:4:1
+    │
+  4 │ 
+    │ ^
+  
 --
 foo ? bar baz
 foo ? bar baz ? foo : bar

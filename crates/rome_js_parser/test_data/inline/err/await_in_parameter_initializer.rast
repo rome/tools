@@ -199,40 +199,61 @@ JsModule {
       2: R_CURLY@69..70 "}" [] []
   3: EOF@70..71 "" [Newline("\n")] []
 --
-error[SyntaxError]: `await` is only allowed within async functions and at the top levels of modules.
-  ┌─ await_in_parameter_initializer.js:1:25
-  │
-1 │ async function test(a = await b()) {}
-  │                         ^^^^^^^^^
+await_in_parameter_initializer.js:1:25 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × `await` is only allowed within async functions and at the top levels of modules.
+  
+    ┌─ await_in_parameter_initializer.js:1:25
+    │
+  1 │ async function test(a = await b()) {}
+    │                         ^^^^^^^^^
+  
 --
-error[SyntaxError]: Illegal use of `await` as an identifier inside of a module
-  ┌─ await_in_parameter_initializer.js:2:20
-  │
-2 │ function test2(a = await b()) {}
-  │                    ^^^^^
+await_in_parameter_initializer.js:2:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of `await` as an identifier inside of a module
+  
+    ┌─ await_in_parameter_initializer.js:2:20
+    │
+  2 │ function test2(a = await b()) {}
+    │                    ^^^^^
+  
 --
-error[SyntaxError]: expected `,` but instead found `b`
-  ┌─ await_in_parameter_initializer.js:2:26
-  │
-2 │ function test2(a = await b()) {}
-  │                          ^ unexpected
+await_in_parameter_initializer.js:2:26 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `b`
+  
+  × unexpected
+  
+    ┌─ await_in_parameter_initializer.js:2:26
+    │
+  2 │ function test2(a = await b()) {}
+    │                          ^
+  
 --
-error[SyntaxError]: expected `,` but instead found `(`
-  ┌─ await_in_parameter_initializer.js:2:27
-  │
-2 │ function test2(a = await b()) {}
-  │                           ^ unexpected
+await_in_parameter_initializer.js:2:27 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `(`
+  
+  × unexpected
+  
+    ┌─ await_in_parameter_initializer.js:2:27
+    │
+  2 │ function test2(a = await b()) {}
+    │                           ^
+  
 --
-error[SyntaxError]: expected a function body but instead found ')'
-  ┌─ await_in_parameter_initializer.js:2:29
-  │
-2 │ function test2(a = await b()) {}
-  │                             ^ Expected a function body here
+await_in_parameter_initializer.js:2:29 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a function body but instead found ')'
+  
+  × Expected a function body here
+  
+    ┌─ await_in_parameter_initializer.js:2:29
+    │
+  2 │ function test2(a = await b()) {}
+    │                             ^
+  
 --
 async function test(a = await b()) {}
 function test2(a = await b()) {}

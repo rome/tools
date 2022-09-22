@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "typescript\\decorators\\decorators-comments.ts"
 ---
 
 # Input
@@ -123,18 +125,24 @@ class Something3 {
 
 # Errors
 ```
-error[SyntaxError]: Only abstract classes can have abstract members
-   ┌─ decorators-comments.ts:35:5
-   │
-35 │     abstract property: Array<string>
-   │     ^^^^^^^^
+decorators-comments.ts:35:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Only abstract classes can have abstract members
-   ┌─ decorators-comments.ts:41:5
-   │
-41 │     abstract method(): Array<string>
-   │     ^^^^^^^^
+  × Only abstract classes can have abstract members
+  
+     ┌─ decorators-comments.ts:35:5
+     │
+  35 │     abstract property: Array<string>
+     │     ^^^^^^^^
+  
+decorators-comments.ts:41:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Only abstract classes can have abstract members
+  
+     ┌─ decorators-comments.ts:41:5
+     │
+  41 │     abstract method(): Array<string>
+     │     ^^^^^^^^
+  
 
 ```
 

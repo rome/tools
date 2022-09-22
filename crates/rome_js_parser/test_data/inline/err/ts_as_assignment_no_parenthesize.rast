@@ -166,19 +166,29 @@ JsModule {
       1: SEMICOLON@78..79 ";" [] []
   3: EOF@79..80 "" [Newline("\n")] []
 --
-error[SyntaxError]: Invalid assignment to `a()`
-  ┌─ ts_as_assignment_no_parenthesize.ts:3:2
-  │
-3 │ (a() as string) = "string";
-  │  ^^^ This expression cannot be assigned to
+ts_as_assignment_no_parenthesize.ts:3:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Invalid assignment to `a()`
+  
+  × This expression cannot be assigned to
+  
+    ┌─ ts_as_assignment_no_parenthesize.ts:3:2
+    │
+  3 │ (a() as string) = "string";
+    │  ^^^
+  
 --
-error[SyntaxError]: Invalid assignment to `<number> a`
-  ┌─ ts_as_assignment_no_parenthesize.ts:4:1
-  │
-4 │ <number> a = 3;
-  │ ^^^^^^^^^^ This expression cannot be assigned to
+ts_as_assignment_no_parenthesize.ts:4:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Invalid assignment to `<number> a`
+  
+  × This expression cannot be assigned to
+  
+    ┌─ ts_as_assignment_no_parenthesize.ts:4:1
+    │
+  4 │ <number> a = 3;
+    │ ^^^^^^^^^^
+  
 --
 let a: any;
 a as string = "string";

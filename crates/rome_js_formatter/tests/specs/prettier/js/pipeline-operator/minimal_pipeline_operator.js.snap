@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\pipeline-operator\\minimal_pipeline_operator.js"
 ---
 
 # Input
@@ -197,216 +199,391 @@ const result2 = [4, 9].map( x => x |> inc |> double )
 
 # Errors
 ```
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-  ┌─ minimal_pipeline_operator.js:1:4
-  │
-1 │ a |> b |> c;
-  │    ^ This operator requires a left hand side value
+minimal_pipeline_operator.js:1:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-  ┌─ minimal_pipeline_operator.js:1:9
-  │
-1 │ a |> b |> c;
-  │         ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+    ┌─ minimal_pipeline_operator.js:1:4
+    │
+  1 │ a |> b |> c;
+    │    ^
+  
+minimal_pipeline_operator.js:1:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-  ┌─ minimal_pipeline_operator.js:3:4
-  │
-3 │ a |> (b |> c);
-  │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+    ┌─ minimal_pipeline_operator.js:1:9
+    │
+  1 │ a |> b |> c;
+    │         ^
+  
+minimal_pipeline_operator.js:3:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-  ┌─ minimal_pipeline_operator.js:3:10
-  │
-3 │ a |> (b |> c);
-  │          ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+    ┌─ minimal_pipeline_operator.js:3:4
+    │
+  3 │ a |> (b |> c);
+    │    ^
+  
+minimal_pipeline_operator.js:3:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-  ┌─ minimal_pipeline_operator.js:5:5
-  │
-5 │ (a |> b) || c;
-  │     ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+    ┌─ minimal_pipeline_operator.js:3:10
+    │
+  3 │ a |> (b |> c);
+    │          ^
+  
+minimal_pipeline_operator.js:5:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-  ┌─ minimal_pipeline_operator.js:6:4
-  │
-6 │ a |> (b || c);
-  │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+    ┌─ minimal_pipeline_operator.js:5:5
+    │
+  5 │ (a |> b) || c;
+    │     ^
+  
+minimal_pipeline_operator.js:6:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-  ┌─ minimal_pipeline_operator.js:9:4
-  │
-9 │   |> doubleSay
-  │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+    ┌─ minimal_pipeline_operator.js:6:4
+    │
+  6 │ a |> (b || c);
+    │    ^
+  
+minimal_pipeline_operator.js:9:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:10:4
-   │
-10 │   |> capitalize
-   │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+    ┌─ minimal_pipeline_operator.js:9:4
+    │
+  9 │   |> doubleSay
+    │    ^
+  
+minimal_pipeline_operator.js:10:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:11:4
-   │
-11 │   |> exclaim;
-   │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:10:4
+     │
+  10 │   |> capitalize
+     │    ^
+  
+minimal_pipeline_operator.js:11:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:14:4
-   │
-14 │   |> double
-   │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:11:4
+     │
+  11 │   |> exclaim;
+     │    ^
+  
+minimal_pipeline_operator.js:14:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:15:4
-   │
-15 │   |> (_ => add(7, _))
-   │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:14:4
+     │
+  14 │   |> double
+     │    ^
+  
+minimal_pipeline_operator.js:15:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:16:4
-   │
-16 │   |> (_ => subtract(2, _))
-   │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:15:4
+     │
+  15 │   |> (_ => add(7, _))
+     │    ^
+  
+minimal_pipeline_operator.js:16:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:17:4
-   │
-17 │   |> (_ => boundScore(0, 100, _));
-   │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:16:4
+     │
+  16 │   |> (_ => subtract(2, _))
+     │    ^
+  
+minimal_pipeline_operator.js:17:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:21:6
-   │
-21 │     |> bounded('age', 1, 100)
-   │      ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:17:4
+     │
+  17 │   |> (_ => boundScore(0, 100, _));
+     │    ^
+  
+minimal_pipeline_operator.js:21:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:22:6
-   │
-22 │     |> format('name', /^[a-z]$/i)
-   │      ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:21:6
+     │
+  21 │     |> bounded('age', 1, 100)
+     │      ^
+  
+minimal_pipeline_operator.js:22:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:23:6
-   │
-23 │     |> Person.insertIntoDatabase;
-   │      ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:22:6
+     │
+  22 │     |> format('name', /^[a-z]$/i)
+     │      ^
+  
+minimal_pipeline_operator.js:23:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:26:6
-   │
-26 │ foo |> (bar ?? baz);
-   │      ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:23:6
+     │
+  23 │     |> Person.insertIntoDatabase;
+     │      ^
+  
+minimal_pipeline_operator.js:26:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:27:7
-   │
-27 │ (foo |> bar) ?? baz;
-   │       ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:26:6
+     │
+  26 │ foo |> (bar ?? baz);
+     │      ^
+  
+minimal_pipeline_operator.js:27:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:30:3
-   │
-30 │  |> map(a => a * 2)
-   │   ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:27:7
+     │
+  27 │ (foo |> bar) ?? baz;
+     │       ^
+  
+minimal_pipeline_operator.js:30:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:31:3
-   │
-31 │  |> filter(a => a > 5)
-   │   ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:30:3
+     │
+  30 │  |> map(a => a * 2)
+     │   ^
+  
+minimal_pipeline_operator.js:31:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:32:3
-   │
-32 │  |> reduce((sum, a) => a+sum, 0)
-   │   ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:31:3
+     │
+  31 │  |> filter(a => a > 5)
+     │   ^
+  
+minimal_pipeline_operator.js:32:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:33:3
-   │
-33 │  |> increment
-   │   ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:32:3
+     │
+  32 │  |> reduce((sum, a) => a+sum, 0)
+     │   ^
+  
+minimal_pipeline_operator.js:33:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:34:3
-   │
-34 │  |> add(3)
-   │   ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:33:3
+     │
+  33 │  |> increment
+     │   ^
+  
+minimal_pipeline_operator.js:34:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:37:4
-   │
-37 │   |> map(event => event.target.value)
-   │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:34:3
+     │
+  34 │  |> add(3)
+     │   ^
+  
+minimal_pipeline_operator.js:37:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:38:4
-   │
-38 │   |> filter(searchText => searchText.length > 2)
-   │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:37:4
+     │
+  37 │   |> map(event => event.target.value)
+     │    ^
+  
+minimal_pipeline_operator.js:38:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:39:4
-   │
-39 │   |> debounce(300)
-   │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:38:4
+     │
+  38 │   |> filter(searchText => searchText.length > 2)
+     │    ^
+  
+minimal_pipeline_operator.js:39:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:40:4
-   │
-40 │   |> distinctUntilChanged()
-   │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:39:4
+     │
+  39 │   |> debounce(300)
+     │    ^
+  
+minimal_pipeline_operator.js:40:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:41:4
-   │
-41 │   |> switchMap(searchText => queryApi(searchText) |> retry(3))
-   │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:40:4
+     │
+  40 │   |> distinctUntilChanged()
+     │    ^
+  
+minimal_pipeline_operator.js:41:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:41:52
-   │
-41 │   |> switchMap(searchText => queryApi(searchText) |> retry(3))
-   │                                                    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:41:4
+     │
+  41 │   |> switchMap(searchText => queryApi(searchText) |> retry(3))
+     │    ^
+  
+minimal_pipeline_operator.js:41:52 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:42:4
-   │
-42 │   |> share();
-   │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:41:52
+     │
+  41 │   |> switchMap(searchText => queryApi(searchText) |> retry(3))
+     │                                                    ^
+  
+minimal_pipeline_operator.js:42:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:45:4
-   │
-45 │   |> (_ => _.map(x => x * 2))
-   │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:42:4
+     │
+  42 │   |> share();
+     │    ^
+  
+minimal_pipeline_operator.js:45:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:46:4
-   │
-46 │   |> (_ => _.reduce( (a,b) => a + b ))
-   │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:45:4
+     │
+  45 │   |> (_ => _.map(x => x * 2))
+     │    ^
+  
+minimal_pipeline_operator.js:46:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:47:4
-   │
-47 │   |> (sum => sum + 1)
-   │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:46:4
+     │
+  46 │   |> (_ => _.reduce( (a,b) => a + b ))
+     │    ^
+  
+minimal_pipeline_operator.js:47:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:49:37
-   │
-49 │ const result2 = [4, 9].map( x => x |> inc |> double )
-   │                                     ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:47:4
+     │
+  47 │   |> (sum => sum + 1)
+     │    ^
+  
+minimal_pipeline_operator.js:49:37 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ minimal_pipeline_operator.js:49:44
-   │
-49 │ const result2 = [4, 9].map( x => x |> inc |> double )
-   │                                            ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:49:37
+     │
+  49 │ const result2 = [4, 9].map( x => x |> inc |> double )
+     │                                     ^
+  
+minimal_pipeline_operator.js:49:44 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ minimal_pipeline_operator.js:49:44
+     │
+  49 │ const result2 = [4, 9].map( x => x |> inc |> double )
+     │                                            ^
+  
 
 ```
 

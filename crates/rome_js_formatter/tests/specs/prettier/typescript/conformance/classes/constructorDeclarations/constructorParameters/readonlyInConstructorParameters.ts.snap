@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "typescript\\conformance\\classes\\constructorDeclarations\\constructorParameters\\readonlyInConstructorParameters.ts"
 ---
 
 # Input
@@ -57,14 +59,24 @@ new F(1).x;
 
 # Errors
 ```
-error[SyntaxError]: 'public' must precede 'readonly'
-  ┌─ readonlyInConstructorParameters.ts:7:26
-  │
-7 │     constructor(readonly public x: number) {}
-  │                 -------- ^^^^^^ move this modifier
-  │                 │         
-  │                 before this modifier
+readonlyInConstructorParameters.ts:7:26 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'public' must precede 'readonly'
+  
+  × move this modifier
+  
+    ┌─ readonlyInConstructorParameters.ts:7:26
+    │
+  7 │     constructor(readonly public x: number) {}
+    │                          ^^^^^^
+  
+  i before this modifier
+  
+    ┌─ readonlyInConstructorParameters.ts:7:17
+    │
+  7 │     constructor(readonly public x: number) {}
+    │                 ^^^^^^^^
+  
 
 ```
 

@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\babel-plugins\\throw-expressions.js"
 ---
 
 # Input
@@ -47,36 +49,61 @@ function test(param = throw new Error('required!')
 
 # Errors
 ```
-error[SyntaxError]: expected an expression, or an assignment but instead found 'throw'
-  ┌─ throw-expressions.js:3:23
-  │
-3 │ function test(param = throw new Error('required!')) {
-  │                       ^^^^^ Expected an expression, or an assignment here
+throw-expressions.js:3:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `Error`
-  ┌─ throw-expressions.js:3:33
-  │
-3 │ function test(param = throw new Error('required!')) {
-  │                                 ^^^^^ unexpected
+  × expected an expression, or an assignment but instead found 'throw'
+  
+  × Expected an expression, or an assignment here
+  
+    ┌─ throw-expressions.js:3:23
+    │
+  3 │ function test(param = throw new Error('required!')) {
+    │                       ^^^^^
+  
+throw-expressions.js:3:33 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `(`
-  ┌─ throw-expressions.js:3:38
-  │
-3 │ function test(param = throw new Error('required!')) {
-  │                                      ^ unexpected
+  × expected `,` but instead found `Error`
+  
+  × unexpected
+  
+    ┌─ throw-expressions.js:3:33
+    │
+  3 │ function test(param = throw new Error('required!')) {
+    │                                 ^^^^^
+  
+throw-expressions.js:3:38 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a function body but instead found ')'
-  ┌─ throw-expressions.js:3:51
-  │
-3 │ function test(param = throw new Error('required!')) {
-  │                                                   ^ Expected a function body here
+  × expected `,` but instead found `(`
+  
+  × unexpected
+  
+    ┌─ throw-expressions.js:3:38
+    │
+  3 │ function test(param = throw new Error('required!')) {
+    │                                      ^
+  
+throw-expressions.js:3:51 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an expression but instead found 'throw'
-  ┌─ throw-expressions.js:4:34
-  │
-4 │   const test = param === true || throw new Error('Falsy!');
-  │                                  ^^^^^ Expected an expression here
+  × expected a function body but instead found ')'
+  
+  × Expected a function body here
+  
+    ┌─ throw-expressions.js:3:51
+    │
+  3 │ function test(param = throw new Error('required!')) {
+    │                                                   ^
+  
+throw-expressions.js:4:34 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an expression but instead found 'throw'
+  
+  × Expected an expression here
+  
+    ┌─ throw-expressions.js:4:34
+    │
+  4 │   const test = param === true || throw new Error('Falsy!');
+    │                                  ^^^^^
+  
 
 ```
 

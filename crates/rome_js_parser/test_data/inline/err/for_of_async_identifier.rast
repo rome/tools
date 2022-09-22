@@ -77,12 +77,15 @@ JsModule {
         0: SEMICOLON@30..31 ";" [] []
   3: EOF@31..32 "" [Newline("\n")] []
 --
-error[SyntaxError]: The left-hand side of a `for...of` statement may not be `async`
-  ┌─ for_of_async_identifier.js:2:6
-  │
-2 │ for (async of [1]) ;
-  │      ^^^^^
+for_of_async_identifier.js:2:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × The left-hand side of a `for...of` statement may not be `async`
+  
+    ┌─ for_of_async_identifier.js:2:6
+    │
+  2 │ for (async of [1]) ;
+    │      ^^^^^
+  
 --
 let async;
 for (async of [1]) ;

@@ -39,25 +39,31 @@ errors where emitted while running checks
 # Emitted Messages
 
 ```block
-error[nursery/noUnreachable]: This code is unreachable
-  ┌─ file.js:3:9
-  │  
-3 │ ┌         continue;
-4 │ │         break;
-  │ └──────────────^
+file.js:3:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × This code is unreachable
+  
+    ┌─ file.js:3:9
+    │  
+  3 │ ┌         continue;
+  4 │ │         break;
+    │ └──────────────^
+  
 
 ```
 
 ```block
-error[nursery/noUnusedVariables]: This function is unused.
-  ┌─ file.js:1:10
-  │
-1 │ function f() {
-  │          ^
+file.js:1:10 lint/nursery/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-
+  × This function is unused.
+  
+    ┌─ file.js:1:10
+    │
+  1 │ function f() {
+    │          ^
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
 
 ```
 

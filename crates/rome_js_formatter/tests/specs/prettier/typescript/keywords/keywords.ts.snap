@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: typescript/keywords/keywords.ts
+  test_file: "typescript\\keywords\\keywords.ts"
 ---
 
 # Input
@@ -198,177 +198,325 @@ module YYY4 {
 
 # Errors
 ```
-error[SyntaxError]: Illegal use of reserved keyword `public` as an identifier in strict mode
-  ┌─ keywords.ts:4:5
-  │
-4 │     public module Module {
-  │     ^^^^^^
+keywords.ts:4:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ keywords.ts:4:12
-  │
-4 │     public module Module {
-  │     -------^^^^^^
-  │     │      │
-  │     │      An explicit or implicit semicolon is expected here...
-  │     ...Which is required to end this statement
+  × Illegal use of reserved keyword `public` as an identifier in strict mode
+  
+    ┌─ keywords.ts:4:5
+    │
+  4 │     public module Module {
+    │     ^^^^^^
+  
+keywords.ts:4:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a class, a function, or a variable declaration but instead found 'private'
-  ┌─ keywords.ts:9:12
-  │
-9 │     export private public protected static readonly abstract async enum X { }
-  │            ^^^^^^^ Expected a class, a function, or a variable declaration here
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ keywords.ts:4:12
+    │
+  4 │     public module Module {
+    │            ^^^^^^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ keywords.ts:4:5
+    │
+  4 │     public module Module {
+    │     ^^^^^^^^^^^^^
+  
+keywords.ts:9:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ keywords.ts:9:20
-  │
-9 │     export private public protected static readonly abstract async enum X { }
-  │            --------^^^^^^
-  │            │       │
-  │            │       An explicit or implicit semicolon is expected here...
-  │            ...Which is required to end this statement
+  × expected a class, a function, or a variable declaration but instead found 'private'
+  
+  × Expected a class, a function, or a variable declaration here
+  
+    ┌─ keywords.ts:9:12
+    │
+  9 │     export private public protected static readonly abstract async enum X { }
+    │            ^^^^^^^
+  
+keywords.ts:9:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ keywords.ts:9:27
-  │
-9 │     export private public protected static readonly abstract async enum X { }
-  │                    -------^^^^^^^^^
-  │                    │      │
-  │                    │      An explicit or implicit semicolon is expected here...
-  │                    ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ keywords.ts:9:20
+    │
+  9 │     export private public protected static readonly abstract async enum X { }
+    │                    ^^^^^^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ keywords.ts:9:12
+    │
+  9 │     export private public protected static readonly abstract async enum X { }
+    │            ^^^^^^^^^^^^^^
+  
+keywords.ts:9:27 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ keywords.ts:9:37
-  │
-9 │     export private public protected static readonly abstract async enum X { }
-  │                           ----------^^^^^^
-  │                           │         │
-  │                           │         An explicit or implicit semicolon is expected here...
-  │                           ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ keywords.ts:9:27
+    │
+  9 │     export private public protected static readonly abstract async enum X { }
+    │                           ^^^^^^^^^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ keywords.ts:9:20
+    │
+  9 │     export private public protected static readonly abstract async enum X { }
+    │                    ^^^^^^^^^^^^^^^^
+  
+keywords.ts:9:37 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ keywords.ts:9:44
-  │
-9 │     export private public protected static readonly abstract async enum X { }
-  │                                     -------^^^^^^^^
-  │                                     │      │
-  │                                     │      An explicit or implicit semicolon is expected here...
-  │                                     ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ keywords.ts:9:37
+    │
+  9 │     export private public protected static readonly abstract async enum X { }
+    │                                     ^^^^^^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ keywords.ts:9:27
+    │
+  9 │     export private public protected static readonly abstract async enum X { }
+    │                           ^^^^^^^^^^^^^^^^
+  
+keywords.ts:9:44 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ keywords.ts:9:53
-  │
-9 │     export private public protected static readonly abstract async enum X { }
-  │                                            ---------^^^^^^^^
-  │                                            │        │
-  │                                            │        An explicit or implicit semicolon is expected here...
-  │                                            ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ keywords.ts:9:44
+    │
+  9 │     export private public protected static readonly abstract async enum X { }
+    │                                            ^^^^^^^^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ keywords.ts:9:37
+    │
+  9 │     export private public protected static readonly abstract async enum X { }
+    │                                     ^^^^^^^^^^^^^^^
+  
+keywords.ts:9:53 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ keywords.ts:9:62
-  │
-9 │     export private public protected static readonly abstract async enum X { }
-  │                                                     ---------^^^^^
-  │                                                     │        │
-  │                                                     │        An explicit or implicit semicolon is expected here...
-  │                                                     ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ keywords.ts:9:53
+    │
+  9 │     export private public protected static readonly abstract async enum X { }
+    │                                                     ^^^^^^^^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ keywords.ts:9:44
+    │
+  9 │     export private public protected static readonly abstract async enum X { }
+    │                                            ^^^^^^^^^^^^^^^^^
+  
+keywords.ts:9:62 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ keywords.ts:9:68
-  │
-9 │     export private public protected static readonly abstract async enum X { }
-  │                                                              ------^^^^
-  │                                                              │     │
-  │                                                              │     An explicit or implicit semicolon is expected here...
-  │                                                              ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ keywords.ts:9:62
+    │
+  9 │     export private public protected static readonly abstract async enum X { }
+    │                                                              ^^^^^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ keywords.ts:9:53
+    │
+  9 │     export private public protected static readonly abstract async enum X { }
+    │                                                     ^^^^^^^^^^^^^^
+  
+keywords.ts:9:68 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: ';' expected'
-   ┌─ keywords.ts:12:16
-   │
-12 │         export private static readonly [x: any]: any;
-   │                ^^^^^^^ An explicit or implicit semicolon is expected here...
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ keywords.ts:9:68
+    │
+  9 │     export private public protected static readonly abstract async enum X { }
+    │                                                                    ^^^^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ keywords.ts:9:62
+    │
+  9 │     export private public protected static readonly abstract async enum X { }
+    │                                                              ^^^^^^^^^^
+  
+keywords.ts:12:16 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: index signature members cannot be static
-   ┌─ keywords.ts:12:24
-   │
-12 │         export private static readonly [x: any]: any;
-   │                        ^^^^^^
+  × ';' expected'
+  
+  × An explicit or implicit semicolon is expected here...
+  
+     ┌─ keywords.ts:12:16
+     │
+  12 │         export private static readonly [x: any]: any;
+     │                ^^^^^^^
+  
+keywords.ts:12:24 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Illegal use of reserved keyword `public` as an identifier in strict mode
-   ┌─ keywords.ts:17:5
-   │
-17 │     public enum Color { Blue, Red }
-   │     ^^^^^^
+  × index signature members cannot be static
+  
+     ┌─ keywords.ts:12:24
+     │
+  12 │         export private static readonly [x: any]: any;
+     │                        ^^^^^^
+  
+keywords.ts:17:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ keywords.ts:17:12
-   │
-17 │     public enum Color { Blue, Red }
-   │     -------^^^^
-   │     │      │
-   │     │      An explicit or implicit semicolon is expected here...
-   │     ...Which is required to end this statement
+  × Illegal use of reserved keyword `public` as an identifier in strict mode
+  
+     ┌─ keywords.ts:17:5
+     │
+  17 │     public enum Color { Blue, Red }
+     │     ^^^^^^
+  
+keywords.ts:17:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Illegal use of reserved keyword `private` as an identifier in strict mode
-   ┌─ keywords.ts:21:5
-   │
-21 │     private module Module {
-   │     ^^^^^^^
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+     ┌─ keywords.ts:17:12
+     │
+  17 │     public enum Color { Blue, Red }
+     │            ^^^^
+  
+  i ...Which is required to end this statement
+  
+     ┌─ keywords.ts:17:5
+     │
+  17 │     public enum Color { Blue, Red }
+     │     ^^^^^^^^^^^
+  
+keywords.ts:21:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ keywords.ts:21:13
-   │
-21 │     private module Module {
-   │     --------^^^^^^
-   │     │       │
-   │     │       An explicit or implicit semicolon is expected here...
-   │     ...Which is required to end this statement
+  × Illegal use of reserved keyword `private` as an identifier in strict mode
+  
+     ┌─ keywords.ts:21:5
+     │
+  21 │     private module Module {
+     │     ^^^^^^^
+  
+keywords.ts:21:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Illegal use of reserved keyword `private` as an identifier in strict mode
-   ┌─ keywords.ts:27:5
-   │
-27 │     private enum Color { Blue, Red }
-   │     ^^^^^^^
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+     ┌─ keywords.ts:21:13
+     │
+  21 │     private module Module {
+     │             ^^^^^^
+  
+  i ...Which is required to end this statement
+  
+     ┌─ keywords.ts:21:5
+     │
+  21 │     private module Module {
+     │     ^^^^^^^^^^^^^^
+  
+keywords.ts:27:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ keywords.ts:27:13
-   │
-27 │     private enum Color { Blue, Red }
-   │     --------^^^^
-   │     │       │
-   │     │       An explicit or implicit semicolon is expected here...
-   │     ...Which is required to end this statement
+  × Illegal use of reserved keyword `private` as an identifier in strict mode
+  
+     ┌─ keywords.ts:27:5
+     │
+  27 │     private enum Color { Blue, Red }
+     │     ^^^^^^^
+  
+keywords.ts:27:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Illegal use of reserved keyword `static` as an identifier in strict mode
-   ┌─ keywords.ts:31:5
-   │
-31 │     static module Module {
-   │     ^^^^^^
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+     ┌─ keywords.ts:27:13
+     │
+  27 │     private enum Color { Blue, Red }
+     │             ^^^^
+  
+  i ...Which is required to end this statement
+  
+     ┌─ keywords.ts:27:5
+     │
+  27 │     private enum Color { Blue, Red }
+     │     ^^^^^^^^^^^^
+  
+keywords.ts:31:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ keywords.ts:31:12
-   │
-31 │     static module Module {
-   │     -------^^^^^^
-   │     │      │
-   │     │      An explicit or implicit semicolon is expected here...
-   │     ...Which is required to end this statement
+  × Illegal use of reserved keyword `static` as an identifier in strict mode
+  
+     ┌─ keywords.ts:31:5
+     │
+  31 │     static module Module {
+     │     ^^^^^^
+  
+keywords.ts:31:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Illegal use of reserved keyword `static` as an identifier in strict mode
-   ┌─ keywords.ts:37:5
-   │
-37 │     static enum Color { Blue, Red }
-   │     ^^^^^^
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+     ┌─ keywords.ts:31:12
+     │
+  31 │     static module Module {
+     │            ^^^^^^
+  
+  i ...Which is required to end this statement
+  
+     ┌─ keywords.ts:31:5
+     │
+  31 │     static module Module {
+     │     ^^^^^^^^^^^^^
+  
+keywords.ts:37:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ keywords.ts:37:12
-   │
-37 │     static enum Color { Blue, Red }
-   │     -------^^^^
-   │     │      │
-   │     │      An explicit or implicit semicolon is expected here...
-   │     ...Which is required to end this statement
+  × Illegal use of reserved keyword `static` as an identifier in strict mode
+  
+     ┌─ keywords.ts:37:5
+     │
+  37 │     static enum Color { Blue, Red }
+     │     ^^^^^^
+  
+keywords.ts:37:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+     ┌─ keywords.ts:37:12
+     │
+  37 │     static enum Color { Blue, Red }
+     │            ^^^^
+  
+  i ...Which is required to end this statement
+  
+     ┌─ keywords.ts:37:5
+     │
+  37 │     static enum Color { Blue, Red }
+     │     ^^^^^^^^^^^
+  
 
 ```
 

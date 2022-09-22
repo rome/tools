@@ -73,11 +73,14 @@ JsModule {
       0: SEMICOLON@38..39 ";" [] []
   3: EOF@39..40 "" [Newline("\n")] []
 --
-error[SyntaxError]: 'abstract' modifier cannot be used with a private identifier'.
-  ┌─ typescript_abstract_classes_invalid_abstract_private_member.ts:1:20
-  │
-1 │ abstract class A { abstract #name(); };
-  │                    ^^^^^^^^
+typescript_abstract_classes_invalid_abstract_private_member.ts:1:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━
 
+  × 'abstract' modifier cannot be used with a private identifier'.
+  
+    ┌─ typescript_abstract_classes_invalid_abstract_private_member.ts:1:20
+    │
+  1 │ abstract class A { abstract #name(); };
+    │                    ^^^^^^^^
+  
 --
 abstract class A { abstract #name(); };

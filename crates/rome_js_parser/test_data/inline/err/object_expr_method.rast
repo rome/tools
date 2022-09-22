@@ -67,11 +67,16 @@ JsModule {
       1: (empty)
   3: EOF@16..17 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `,` but instead found `)`
-  ┌─ object_expr_method.js:1:14
-  │
-1 │ let b = { foo) }
-  │              ^ unexpected
+object_expr_method.js:1:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `)`
+  
+  × unexpected
+  
+    ┌─ object_expr_method.js:1:14
+    │
+  1 │ let b = { foo) }
+    │              ^
+  
 --
 let b = { foo) }

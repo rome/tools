@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: typescript/interface2/break.ts
+  test_file: "typescript\\interface2\\break.ts"
 ---
 
 # Input
@@ -219,18 +219,28 @@ export interface ExtendsLongOneWithGenerics
 
 # Errors
 ```
-error[SyntaxError]: expected a type parameter but instead found '>'
-  ┌─ break.ts:5:1
-  │
-5 │ > {
-  │ ^ Expected a type parameter here
+break.ts:5:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type parameter but instead found '>'
-   ┌─ break.ts:16:1
-   │
-16 │ > {
-   │ ^ Expected a type parameter here
+  × expected a type parameter but instead found '>'
+  
+  × Expected a type parameter here
+  
+    ┌─ break.ts:5:1
+    │
+  5 │ > {
+    │ ^
+  
+break.ts:16:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a type parameter but instead found '>'
+  
+  × Expected a type parameter here
+  
+     ┌─ break.ts:16:1
+     │
+  16 │ > {
+     │ ^
+  
 
 ```
 

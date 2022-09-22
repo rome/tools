@@ -58,11 +58,16 @@ JsModule {
       8: R_CURLY@20..21 "}" [] []
   3: EOF@21..22 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected an expression, or an assignment but instead found ';'
-  ┌─ class_property_initializer.js:1:19
-  │
-1 │ class B { lorem = ; }
-  │                   ^ Expected an expression, or an assignment here
+class_property_initializer.js:1:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an expression, or an assignment but instead found ';'
+  
+  × Expected an expression, or an assignment here
+  
+    ┌─ class_property_initializer.js:1:19
+    │
+  1 │ class B { lorem = ; }
+    │                   ^
+  
 --
 class B { lorem = ; }

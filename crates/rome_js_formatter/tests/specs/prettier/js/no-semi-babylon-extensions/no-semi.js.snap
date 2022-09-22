@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\no-semi-babylon-extensions\\no-semi.js"
 ---
 
 # Input
@@ -52,12 +54,17 @@ class A {
 
 # Errors
 ```
-error[SyntaxError]: expected a statement but instead found '::b.c'
-  ┌─ no-semi.js:2:2
-  │
-2 │ ;::b.c
-  │  ^^^^^ Expected a statement here
+no-semi.js:2:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a statement but instead found '::b.c'
+  
+  × Expected a statement here
+  
+    ┌─ no-semi.js:2:2
+    │
+  2 │ ;::b.c
+    │  ^^^^^
+  
 
 ```
 

@@ -249,47 +249,65 @@ JsModule {
       8: R_CURLY@195..197 "}" [Newline("\n")] []
   3: EOF@197..198 "" [Newline("\n")] []
 --
-error[SyntaxError]: 'abstract' cannot appear on a constructor declaration.
-  ┌─ typescript_abstract_class_member_should_not_have_body.ts:2:5
-  │
-2 │     abstract constructor() { }
-  │     ^^^^^^^^
+typescript_abstract_class_member_should_not_have_body.ts:2:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'abstract' cannot appear on a constructor declaration.
+  
+    ┌─ typescript_abstract_class_member_should_not_have_body.ts:2:5
+    │
+  2 │     abstract constructor() { }
+    │     ^^^^^^^^
+  
 --
-error[SyntaxError]: abstract members should not have a body
-  ┌─ typescript_abstract_class_member_should_not_have_body.ts:3:30
-  │
-3 │     abstract display(): void { }
-  │                              ^^^
+typescript_abstract_class_member_should_not_have_body.ts:3:30 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × abstract members should not have a body
+  
+    ┌─ typescript_abstract_class_member_should_not_have_body.ts:3:30
+    │
+  3 │     abstract display(): void { }
+    │                              ^^^
+  
 --
-error[SyntaxError]: abstract members should not have a body
-  ┌─ typescript_abstract_class_member_should_not_have_body.ts:4:28
-  │
-4 │     abstract get my_name() { }
-  │                            ^^^
+typescript_abstract_class_member_should_not_have_body.ts:4:28 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × abstract members should not have a body
+  
+    ┌─ typescript_abstract_class_member_should_not_have_body.ts:4:28
+    │
+  4 │     abstract get my_name() { }
+    │                            ^^^
+  
 --
-error[SyntaxError]: abstract members should not have a body
-  ┌─ typescript_abstract_class_member_should_not_have_body.ts:5:32
-  │
-5 │     abstract set my_name(name) { }
-  │                                ^^^
+typescript_abstract_class_member_should_not_have_body.ts:5:32 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × abstract members should not have a body
+  
+    ┌─ typescript_abstract_class_member_should_not_have_body.ts:5:32
+    │
+  5 │     abstract set my_name(name) { }
+    │                                ^^^
+  
 --
-error[SyntaxError]: abstract members should not have a body
-  ┌─ typescript_abstract_class_member_should_not_have_body.ts:6:30
-  │
-6 │     abstract #private_name() { }
-  │                              ^^^
+typescript_abstract_class_member_should_not_have_body.ts:6:30 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × abstract members should not have a body
+  
+    ┌─ typescript_abstract_class_member_should_not_have_body.ts:6:30
+    │
+  6 │     abstract #private_name() { }
+    │                              ^^^
+  
 --
-error[SyntaxError]: 'abstract' modifier cannot be used with a private identifier'.
-  ┌─ typescript_abstract_class_member_should_not_have_body.ts:6:5
-  │
-6 │     abstract #private_name() { }
-  │     ^^^^^^^^
+typescript_abstract_class_member_should_not_have_body.ts:6:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'abstract' modifier cannot be used with a private identifier'.
+  
+    ┌─ typescript_abstract_class_member_should_not_have_body.ts:6:5
+    │
+  6 │     abstract #private_name() { }
+    │     ^^^^^^^^
+  
 --
 abstract class AbstractMembers {
     abstract constructor() { }

@@ -69,106 +69,178 @@ function JsTryFinallyStatement4() {
 
 # Diagnostics
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-   ┌─ JsTryFinallyStatement.js:11:5
-   │
- 8 │         return;
-   │         ------- This statement will return from the function ...
-   ·
-11 │     afterFinallyReturn();
-   │     --------------------- ... before it can reach this code
+JsTryFinallyStatement.js:11:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-
-```
-
-```
-warning[nursery/noUnreachable]: This code is unreachable
-   ┌─ JsTryFinallyStatement.js:18:9
-   │
-15 │     return;
-   │     ------- This statement will return from the function ...
-   ·
-18 │         tryBlock();
-   │         ----------- ... before it can reach this code
-
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+     ┌─ JsTryFinallyStatement.js:11:5
+     │
+  11 │     afterFinallyReturn();
+     │     ^^^^^^^^^^^^^^^^^^^^^
+  
+  i This statement will return from the function ...
+  
+    ┌─ JsTryFinallyStatement.js:8:9
+    │
+  8 │         return;
+    │         ^^^^^^^
+  
 
 ```
 
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-   ┌─ JsTryFinallyStatement.js:20:9
-   │
-15 │     return;
-   │     ------- This statement will return from the function ...
-   ·
-20 │         catchClause();
-   │         -------------- ... before it can reach this code
+JsTryFinallyStatement.js:18:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-
-```
-
-```
-warning[nursery/noUnreachable]: This code is unreachable
-   ┌─ JsTryFinallyStatement.js:22:9
-   │
-15 │     return;
-   │     ------- This statement will return from the function ...
-   ·
-22 │         finallyClause();
-   │         ---------------- ... before it can reach this code
-
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+     ┌─ JsTryFinallyStatement.js:18:9
+     │
+  18 │         tryBlock();
+     │         ^^^^^^^^^^^
+  
+  i This statement will return from the function ...
+  
+     ┌─ JsTryFinallyStatement.js:15:5
+     │
+  15 │     return;
+     │     ^^^^^^^
+  
 
 ```
 
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-   ┌─ JsTryFinallyStatement.js:35:9
-   │
-32 │             return;
-   │             ------- This statement will return from the function ...
-   ·
-35 │         afterTryStatement1();
-   │         --------------------- ... before it can reach this code
+JsTryFinallyStatement.js:20:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-
-```
-
-```
-warning[nursery/noUnreachable]: This code is unreachable
-   ┌─ JsTryFinallyStatement.js:37:9
-   │
-32 │             return;
-   │             ------- This statement will return from the function ...
-   ·
-37 │         catchClause2();
-   │         --------------- ... before it can reach this code
-
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+     ┌─ JsTryFinallyStatement.js:20:9
+     │
+  20 │         catchClause();
+     │         ^^^^^^^^^^^^^^
+  
+  i This statement will return from the function ...
+  
+     ┌─ JsTryFinallyStatement.js:15:5
+     │
+  15 │     return;
+     │     ^^^^^^^
+  
 
 ```
 
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-   ┌─ JsTryFinallyStatement.js:40:5
-   │
-32 │             return;
-   │             ------- This statement will return from the function ...
-   ·
-40 │     afterTryStatement2();
-   │     --------------------- ... before it can reach this code
+JsTryFinallyStatement.js:22:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+     ┌─ JsTryFinallyStatement.js:22:9
+     │
+  22 │         finallyClause();
+     │         ^^^^^^^^^^^^^^^^
+  
+  i This statement will return from the function ...
+  
+     ┌─ JsTryFinallyStatement.js:15:5
+     │
+  15 │     return;
+     │     ^^^^^^^
+  
 
 ```
 
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-   ┌─ JsTryFinallyStatement.js:59:5
-   │
-46 │         return;
-   │         ------- This statement will return from the function ...
-   ·
-59 │     afterTryStatement();
-   │     -------------------- ... before it can reach this code
+JsTryFinallyStatement.js:35:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+     ┌─ JsTryFinallyStatement.js:35:9
+     │
+  35 │         afterTryStatement1();
+     │         ^^^^^^^^^^^^^^^^^^^^^
+  
+  i This statement will return from the function ...
+  
+     ┌─ JsTryFinallyStatement.js:32:13
+     │
+  32 │             return;
+     │             ^^^^^^^
+  
+
+```
+
+```
+JsTryFinallyStatement.js:37:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+     ┌─ JsTryFinallyStatement.js:37:9
+     │
+  37 │         catchClause2();
+     │         ^^^^^^^^^^^^^^^
+  
+  i This statement will return from the function ...
+  
+     ┌─ JsTryFinallyStatement.js:32:13
+     │
+  32 │             return;
+     │             ^^^^^^^
+  
+
+```
+
+```
+JsTryFinallyStatement.js:40:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+     ┌─ JsTryFinallyStatement.js:40:5
+     │
+  40 │     afterTryStatement2();
+     │     ^^^^^^^^^^^^^^^^^^^^^
+  
+  i This statement will return from the function ...
+  
+     ┌─ JsTryFinallyStatement.js:32:13
+     │
+  32 │             return;
+     │             ^^^^^^^
+  
+
+```
+
+```
+JsTryFinallyStatement.js:59:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+     ┌─ JsTryFinallyStatement.js:59:5
+     │
+  59 │     afterTryStatement();
+     │     ^^^^^^^^^^^^^^^^^^^^
+  
+  i This statement will return from the function ...
+  
+     ┌─ JsTryFinallyStatement.js:46:9
+     │
+  46 │         return;
+     │         ^^^^^^^
+  
 
 ```
 

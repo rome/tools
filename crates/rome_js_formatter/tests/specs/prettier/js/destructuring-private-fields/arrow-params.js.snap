@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\destructuring-private-fields\\arrow-params.js"
 ---
 
 # Input
@@ -41,36 +43,59 @@ class C {
 
 # Errors
 ```
-error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '#x'
-  ┌─ arrow-params.js:3:11
-  │
-3 │   #p = ({ #x: x }) => {}
-  │           ^^ Expected a property, a shorthand property, a getter, a setter, or a method here
+arrow-params.js:3:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `:`
-  ┌─ arrow-params.js:3:13
-  │
-3 │   #p = ({ #x: x }) => {}
-  │             ^ unexpected
+  × expected a property, a shorthand property, a getter, a setter, or a method but instead found '#x'
+  
+  × Expected a property, a shorthand property, a getter, a setter, or a method here
+  
+    ┌─ arrow-params.js:3:11
+    │
+  3 │   #p = ({ #x: x }) => {}
+    │           ^^
+  
+arrow-params.js:3:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-  ┌─ arrow-params.js:3:3
-  │
-3 │   #p = ({ #x: x }) => {}
-  │   ^^^^^^^^^^^^^^^^
+  × expected `,` but instead found `:`
+  
+  × unexpected
+  
+    ┌─ arrow-params.js:3:13
+    │
+  3 │   #p = ({ #x: x }) => {}
+    │             ^
+  
+arrow-params.js:3:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '=>'
-  ┌─ arrow-params.js:3:20
-  │
-3 │   #p = ({ #x: x }) => {}
-  │                    ^^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+  × expected a semicolon to end the class property, but found none
+  
+    ┌─ arrow-params.js:3:3
+    │
+  3 │   #p = ({ #x: x }) => {}
+    │   ^^^^^^^^^^^^^^^^
+  
+arrow-params.js:3:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a statement but instead found '}'
-  ┌─ arrow-params.js:4:1
-  │
-4 │ }
-  │ ^ Expected a statement here
+  × expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '=>'
+  
+  × Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+  
+    ┌─ arrow-params.js:3:20
+    │
+  3 │   #p = ({ #x: x }) => {}
+    │                    ^^
+  
+arrow-params.js:4:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a statement but instead found '}'
+  
+  × Expected a statement here
+  
+    ┌─ arrow-params.js:4:1
+    │
+  4 │ }
+    │ ^
+  
 
 ```
 

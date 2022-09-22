@@ -26,11 +26,16 @@ JsModule {
       1: SEMICOLON@2..3 ";" [] []
   3: EOF@3..4 "" [Newline("\n")] []
 --
-error[SyntaxError]: Parenthesized expression didnt contain anything
-  ┌─ empty_parenthesized_expression.js:1:2
-  │
-1 │ ();
-  │  ^ Expected an expression here
+empty_parenthesized_expression.js:1:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Parenthesized expression didnt contain anything
+  
+  × Expected an expression here
+  
+    ┌─ empty_parenthesized_expression.js:1:2
+    │
+  1 │ ();
+    │  ^
+  
 --
 ();

@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\partial-application\\test.js"
 ---
 
 # Input
@@ -51,42 +53,72 @@ let newScore = player.score
 
 # Errors
 ```
-error[SyntaxError]: expected an expression but instead found '?'
-  ┌─ test.js:1:23
-  │
-1 │ const addOne = add(1, ?); // apply from the left
-  │                       ^ Expected an expression here
+test.js:1:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an expression but instead found '?, 10'
-  ┌─ test.js:4:20
-  │
-4 │ const addTen = add(?, 10); // apply from the right
-  │                    ^^^^^ Expected an expression here
+  × expected an expression but instead found '?'
+  
+  × Expected an expression here
+  
+    ┌─ test.js:1:23
+    │
+  1 │ const addOne = add(1, ?); // apply from the left
+    │                       ^
+  
+test.js:4:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-  ┌─ test.js:9:4
-  │
-9 │   |> add(7, ?)
-  │    ^ This operator requires a left hand side value
+  × expected an expression but instead found '?, 10'
+  
+  × Expected an expression here
+  
+    ┌─ test.js:4:20
+    │
+  4 │ const addTen = add(?, 10); // apply from the right
+    │                    ^^^^^
+  
+test.js:9:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an expression but instead found '?'
-  ┌─ test.js:9:13
-  │
-9 │   |> add(7, ?)
-  │             ^ Expected an expression here
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+    ┌─ test.js:9:4
+    │
+  9 │   |> add(7, ?)
+    │    ^
+  
+test.js:9:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ test.js:10:4
-   │
-10 │   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
-   │    ^ This operator requires a left hand side value
+  × expected an expression but instead found '?'
+  
+  × Expected an expression here
+  
+    ┌─ test.js:9:13
+    │
+  9 │   |> add(7, ?)
+    │             ^
+  
+test.js:10:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an expression but instead found '?'
-   ┌─ test.js:10:20
-   │
-10 │   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
-   │                    ^ Expected an expression here
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ test.js:10:4
+     │
+  10 │   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
+     │    ^
+  
+test.js:10:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an expression but instead found '?'
+  
+  × Expected an expression here
+  
+     ┌─ test.js:10:20
+     │
+  10 │   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
+     │                    ^
+  
 
 ```
 

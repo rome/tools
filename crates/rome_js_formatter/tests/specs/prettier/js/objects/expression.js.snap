@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\objects\\expression.js"
 ---
 
 # Input
@@ -94,18 +96,28 @@ const a3 = {
 
 # Errors
 ```
-error[SyntaxError]: expected `)` but instead found `:`
-  ┌─ expression.js:5:4
-  │
-5 │ ({}::b, 0);
-  │    ^ unexpected
+expression.js:5:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `)` but instead found `:`
-  ┌─ expression.js:6:4
-  │
-6 │ ({}::b()``[''].c++ && 0 ? 0 : 0, 0);
-  │    ^ unexpected
+  × expected `)` but instead found `:`
+  
+  × unexpected
+  
+    ┌─ expression.js:5:4
+    │
+  5 │ ({}::b, 0);
+    │    ^
+  
+expression.js:6:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `)` but instead found `:`
+  
+  × unexpected
+  
+    ┌─ expression.js:6:4
+    │
+  6 │ ({}::b()``[''].c++ && 0 ? 0 : 0, 0);
+    │    ^
+  
 
 ```
 

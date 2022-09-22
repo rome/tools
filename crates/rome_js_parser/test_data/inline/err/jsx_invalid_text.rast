@@ -110,19 +110,25 @@ JsModule {
       1: SEMICOLON@33..34 ";" [] []
   3: EOF@34..35 "" [Newline("\n")] []
 --
-error: Unexpected token. Did you mean `{'>'}` or `&gt;`?
-  ┌─ jsx_invalid_text.jsx:1:10
-  │
-1 │ <a> test ></a>;
-  │          ^
+jsx_invalid_text.jsx:1:10 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Unexpected token. Did you mean `{'>'}` or `&gt;`?
+  
+    ┌─ jsx_invalid_text.jsx:1:10
+    │
+  1 │ <a> test ></a>;
+    │          ^
+  
 --
-error: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-  ┌─ jsx_invalid_text.jsx:2:13
-  │
-2 │ <b> invalid }</b>;
-  │             ^
+jsx_invalid_text.jsx:2:13 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+  
+    ┌─ jsx_invalid_text.jsx:2:13
+    │
+  2 │ <b> invalid }</b>;
+    │             ^
+  
 --
 <a> test ></a>;
 <b> invalid }</b>;

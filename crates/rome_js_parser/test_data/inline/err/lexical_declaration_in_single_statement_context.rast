@@ -104,19 +104,29 @@ JsModule {
         1: SEMICOLON@41..42 ";" [] []
   3: EOF@42..43 "" [Newline("\n")] []
 --
-error[SyntaxError]: Lexical declaration cannot appear in a single-statement context
-  ┌─ lexical_declaration_in_single_statement_context.js:1:11
-  │
-1 │ if (true) let a;
-  │           ^^^^^^ Wrap this declaration in a block statement
+lexical_declaration_in_single_statement_context.js:1:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Lexical declaration cannot appear in a single-statement context
+  
+  × Wrap this declaration in a block statement
+  
+    ┌─ lexical_declaration_in_single_statement_context.js:1:11
+    │
+  1 │ if (true) let a;
+    │           ^^^^^^
+  
 --
-error[SyntaxError]: Lexical declaration cannot appear in a single-statement context
-  ┌─ lexical_declaration_in_single_statement_context.js:2:14
-  │
-2 │ while (true) const b = 5;
-  │              ^^^^^^^^^^^^ Wrap this declaration in a block statement
+lexical_declaration_in_single_statement_context.js:2:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Lexical declaration cannot appear in a single-statement context
+  
+  × Wrap this declaration in a block statement
+  
+    ┌─ lexical_declaration_in_single_statement_context.js:2:14
+    │
+  2 │ while (true) const b = 5;
+    │              ^^^^^^^^^^^^
+  
 --
 if (true) let a;
 while (true) const b = 5;

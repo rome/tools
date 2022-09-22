@@ -55,176 +55,215 @@ console.log(PascalCaseNOk());
 
 # Diagnostics
 ```
-warning[nursery/useCamelCase]: Prefer variables names in camel case.
-  ┌─ useCamelCase.js:1:5
-  │
-1 │ let snake_case;
-  │     ----------
+useCamelCase.js:1:5 lint/nursery/useCamelCase  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Safe fix: Rename this symbol to camel case
-    | @@ -1,5 +1,5 @@
-0   | - let snake_case;
-1   | - snake_case = 1;
-  0 | + let snakeCase;
-  1 | + snakeCase = 1;
-2 2 |   let _snake_case;
-3 3 |   console.log(_snake_case);
-4 4 |   
-
-
-```
-
-```
-warning[nursery/useCamelCase]: Prefer functions names in camel case.
-  ┌─ useCamelCase.js:6:10
-  │
-6 │ function snake_function(snake_case, PascalCase) {}
-  │          --------------
-
-Safe fix: Rename this symbol to camel case
-    | @@ -3,7 +3,7 @@
-2 2 |   let _snake_case;
-3 3 |   console.log(_snake_case);
-4 4 |   
-5   | - function snake_function(snake_case, PascalCase) {}
-  5 | + function snakeFunction(snake_case, PascalCase) {}
-6 6 |   
-7 7 |   class PascalCase {
-8 8 |   	snake_property = 1;
-
+  ! Prefer variables names in camel case.
+  
+    ┌─ useCamelCase.js:1:5
+    │
+  1 │ let snake_case;
+    │     ^^^^^^^^^^
+  
+  i Safe fix: Rename this symbol to camel case
+  
+      | @@ -1,5 +1,5 @@
+  0   | - let snake_case;
+  1   | - snake_case = 1;
+    0 | + let snakeCase;
+    1 | + snakeCase = 1;
+  2 2 |   let _snake_case;
+  3 3 |   console.log(_snake_case);
+  4 4 |   
+  
 
 ```
 
 ```
-warning[nursery/useCamelCase]: Prefer parameters names in camel case.
-  ┌─ useCamelCase.js:6:25
-  │
-6 │ function snake_function(snake_case, PascalCase) {}
-  │                         ----------
+useCamelCase.js:6:10 lint/nursery/useCamelCase  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Safe fix: Rename this symbol to camel case
-    | @@ -3,7 +3,7 @@
-2 2 |   let _snake_case;
-3 3 |   console.log(_snake_case);
-4 4 |   
-5   | - function snake_function(snake_case, PascalCase) {}
-  5 | + function snake_function(snakeCase, PascalCase) {}
-6 6 |   
-7 7 |   class PascalCase {
-8 8 |   	snake_property = 1;
-
-
-```
-
-```
-warning[nursery/useCamelCase]: Prefer parameters names in camel case.
-  ┌─ useCamelCase.js:6:37
-  │
-6 │ function snake_function(snake_case, PascalCase) {}
-  │                                     ----------
-
-Safe fix: Rename this symbol to camel case
-    | @@ -3,7 +3,7 @@
-2 2 |   let _snake_case;
-3 3 |   console.log(_snake_case);
-4 4 |   
-5   | - function snake_function(snake_case, PascalCase) {}
-  5 | + function snake_function(snake_case, pascalCase) {}
-6 6 |   
-7 7 |   class PascalCase {
-8 8 |   	snake_property = 1;
-
+  ! Prefer functions names in camel case.
+  
+    ┌─ useCamelCase.js:6:10
+    │
+  6 │ function snake_function(snake_case, PascalCase) {}
+    │          ^^^^^^^^^^^^^^
+  
+  i Safe fix: Rename this symbol to camel case
+  
+      | @@ -3,7 +3,7 @@
+  2 2 |   let _snake_case;
+  3 3 |   console.log(_snake_case);
+  4 4 |   
+  5   | - function snake_function(snake_case, PascalCase) {}
+    5 | + function snakeFunction(snake_case, PascalCase) {}
+  6 6 |   
+  7 7 |   class PascalCase {
+  8 8 |   	snake_property = 1;
+  
 
 ```
 
 ```
-warning[nursery/useCamelCase]: Prefer properties names in camel case.
-  ┌─ useCamelCase.js:9:2
-  │
-9 │     snake_property = 1;
-  │     --------------
+useCamelCase.js:6:25 lint/nursery/useCamelCase  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-
-```
-
-```
-warning[nursery/useCamelCase]: Prefer properties names in camel case.
-   ┌─ useCamelCase.js:10:2
-   │
-10 │     #private_snake_property = 2;
-   │     -----------------------
-
-
-```
-
-```
-warning[nursery/useCamelCase]: Prefer methods names in camel case.
-   ┌─ useCamelCase.js:12:2
-   │
-12 │     snake_function() {}
-   │     --------------
-
+  ! Prefer parameters names in camel case.
+  
+    ┌─ useCamelCase.js:6:25
+    │
+  6 │ function snake_function(snake_case, PascalCase) {}
+    │                         ^^^^^^^^^^
+  
+  i Safe fix: Rename this symbol to camel case
+  
+      | @@ -3,7 +3,7 @@
+  2 2 |   let _snake_case;
+  3 3 |   console.log(_snake_case);
+  4 4 |   
+  5   | - function snake_function(snake_case, PascalCase) {}
+    5 | + function snake_function(snakeCase, PascalCase) {}
+  6 6 |   
+  7 7 |   class PascalCase {
+  8 8 |   	snake_property = 1;
+  
 
 ```
 
 ```
-warning[nursery/useCamelCase]: Prefer methods names in camel case.
-   ┌─ useCamelCase.js:14:6
-   │
-14 │     get snake_getter() {}
-   │         ------------
+useCamelCase.js:6:37 lint/nursery/useCamelCase  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-
-```
-
-```
-warning[nursery/useCamelCase]: Prefer methods names in camel case.
-   ┌─ useCamelCase.js:15:6
-   │
-15 │     set snake_setter(v) {
-   │         ------------
-
-
-```
-
-```
-warning[nursery/useCamelCase]: Prefer variables names in camel case.
-   ┌─ useCamelCase.js:31:5
-   │
-31 │ let UPPER_CASE = 1;
-   │     ----------
-
-Safe fix: Rename this symbol to camel case
-      | @@ -28,7 +28,7 @@
-27 27 |   let camelCase;
-28 28 |   let longCamelCase;
-29 29 |   
-30    | - let UPPER_CASE = 1;
-   30 | + let uPPERCASE = 1;
-31 31 |   let { UPPER_CASE } = env;
-32 32 |   let [ UPPER_CASE ] = env;
-33 33 |   
-
+  ! Prefer parameters names in camel case.
+  
+    ┌─ useCamelCase.js:6:37
+    │
+  6 │ function snake_function(snake_case, PascalCase) {}
+    │                                     ^^^^^^^^^^
+  
+  i Safe fix: Rename this symbol to camel case
+  
+      | @@ -3,7 +3,7 @@
+  2 2 |   let _snake_case;
+  3 3 |   console.log(_snake_case);
+  4 4 |   
+  5   | - function snake_function(snake_case, PascalCase) {}
+    5 | + function snake_function(snake_case, pascalCase) {}
+  6 6 |   
+  7 7 |   class PascalCase {
+  8 8 |   	snake_property = 1;
+  
 
 ```
 
 ```
-warning[nursery/useCamelCase]: Prefer functions names in camel case.
-   ┌─ useCamelCase.js:45:10
-   │
-45 │ function PascalCaseNOk() { }
-   │          -------------
+useCamelCase.js:9:2 lint/nursery/useCamelCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Safe fix: Rename this symbol to camel case
-      | @@ -42,5 +42,5 @@
-41 41 |   function PascalCaseOkBecauseExport() { }
-42 42 |   export default PascalCaseOkBecauseExport;
-43 43 |   
-44    | - function PascalCaseNOk() { }
-45    | - console.log(PascalCaseNOk());
-   44 | + function pascalCaseNOk() { }
-   45 | + console.log(pascalCaseNOk());
+  ! Prefer properties names in camel case.
+  
+    ┌─ useCamelCase.js:9:2
+    │
+  9 │     snake_property = 1;
+    │     ^^^^^^^^^^^^^^
+  
 
+```
+
+```
+useCamelCase.js:10:2 lint/nursery/useCamelCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Prefer properties names in camel case.
+  
+     ┌─ useCamelCase.js:10:2
+     │
+  10 │     #private_snake_property = 2;
+     │     ^^^^^^^^^^^^^^^^^^^^^^^
+  
+
+```
+
+```
+useCamelCase.js:12:2 lint/nursery/useCamelCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Prefer methods names in camel case.
+  
+     ┌─ useCamelCase.js:12:2
+     │
+  12 │     snake_function() {}
+     │     ^^^^^^^^^^^^^^
+  
+
+```
+
+```
+useCamelCase.js:14:6 lint/nursery/useCamelCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Prefer methods names in camel case.
+  
+     ┌─ useCamelCase.js:14:6
+     │
+  14 │     get snake_getter() {}
+     │         ^^^^^^^^^^^^
+  
+
+```
+
+```
+useCamelCase.js:15:6 lint/nursery/useCamelCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Prefer methods names in camel case.
+  
+     ┌─ useCamelCase.js:15:6
+     │
+  15 │     set snake_setter(v) {
+     │         ^^^^^^^^^^^^
+  
+
+```
+
+```
+useCamelCase.js:31:5 lint/nursery/useCamelCase  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Prefer variables names in camel case.
+  
+     ┌─ useCamelCase.js:31:5
+     │
+  31 │ let UPPER_CASE = 1;
+     │     ^^^^^^^^^^
+  
+  i Safe fix: Rename this symbol to camel case
+  
+        | @@ -28,7 +28,7 @@
+  27 27 |   let camelCase;
+  28 28 |   let longCamelCase;
+  29 29 |   
+  30    | - let UPPER_CASE = 1;
+     30 | + let uPPERCASE = 1;
+  31 31 |   let { UPPER_CASE } = env;
+  32 32 |   let [ UPPER_CASE ] = env;
+  33 33 |   
+  
+
+```
+
+```
+useCamelCase.js:45:10 lint/nursery/useCamelCase  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Prefer functions names in camel case.
+  
+     ┌─ useCamelCase.js:45:10
+     │
+  45 │ function PascalCaseNOk() { }
+     │          ^^^^^^^^^^^^^
+  
+  i Safe fix: Rename this symbol to camel case
+  
+        | @@ -42,5 +42,5 @@
+  41 41 |   function PascalCaseOkBecauseExport() { }
+  42 42 |   export default PascalCaseOkBecauseExport;
+  43 43 |   
+  44    | - function PascalCaseNOk() { }
+  45    | - console.log(PascalCaseNOk());
+     44 | + function pascalCaseNOk() { }
+     45 | + console.log(pascalCaseNOk());
+  
 
 ```
 

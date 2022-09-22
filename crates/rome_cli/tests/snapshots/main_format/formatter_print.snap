@@ -11,10 +11,14 @@ expression: content
 # Emitted Messages
 
 ```block
-format.js: help[Formatter]: Formatter would have printed the following content:
-    | @@ -1 +1 @@
-0   | -   statement(  )
-  0 | + statement();
+format.js format/diff ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  i Formatter would have printed the following content:
+  
+      | @@ -1 +1 @@
+  0   | -   statement(  )
+    0 | + statement();
+  
 
 ```
 

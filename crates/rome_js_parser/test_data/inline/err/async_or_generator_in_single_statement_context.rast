@@ -112,19 +112,25 @@ JsModule {
       5: (empty)
   3: EOF@58..59 "" [Newline("\n")] []
 --
-error[SyntaxError]: `async` and generator functions can only be declared at top level or inside a block
-  ┌─ async_or_generator_in_single_statement_context.js:1:11
-  │
-1 │ if (true) async function t() {}
-  │           ^^^^^^^^^^^^^^^^^^^^^
+async_or_generator_in_single_statement_context.js:1:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × `async` and generator functions can only be declared at top level or inside a block
+  
+    ┌─ async_or_generator_in_single_statement_context.js:1:11
+    │
+  1 │ if (true) async function t() {}
+    │           ^^^^^^^^^^^^^^^^^^^^^
+  
 --
-error[SyntaxError]: `async` and generator functions can only be declared at top level or inside a block
-  ┌─ async_or_generator_in_single_statement_context.js:2:11
-  │
-2 │ if (true) function* t() {}
-  │           ^^^^^^^^^^^^^^^^
+async_or_generator_in_single_statement_context.js:2:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × `async` and generator functions can only be declared at top level or inside a block
+  
+    ┌─ async_or_generator_in_single_statement_context.js:2:11
+    │
+  2 │ if (true) function* t() {}
+    │           ^^^^^^^^^^^^^^^^
+  
 --
 if (true) async function t() {}
 if (true) function* t() {}

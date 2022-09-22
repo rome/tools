@@ -118,19 +118,29 @@ JsModule {
       1: SEMICOLON@33..34 ";" [] []
   3: EOF@34..35 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected an expression but instead found ')'
-  ┌─ binary_expressions_err.js:1:10
-  │
-1 │ foo(foo +);
-  │          ^ Expected an expression here
+binary_expressions_err.js:1:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an expression but instead found ')'
+  
+  × Expected an expression here
+  
+    ┌─ binary_expressions_err.js:1:10
+    │
+  1 │ foo(foo +);
+    │          ^
+  
 --
-error[SyntaxError]: Expected an expression for the left hand side of the `*` operator.
-  ┌─ binary_expressions_err.js:2:7
-  │
-2 │ foo + * 2;
-  │       ^ This operator requires a left hand side value
+binary_expressions_err.js:2:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected an expression for the left hand side of the `*` operator.
+  
+  × This operator requires a left hand side value
+  
+    ┌─ binary_expressions_err.js:2:7
+    │
+  2 │ foo + * 2;
+    │       ^
+  
 --
 foo(foo +);
 foo + * 2;

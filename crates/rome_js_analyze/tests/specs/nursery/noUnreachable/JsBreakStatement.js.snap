@@ -22,26 +22,46 @@ function JsBreakStatement2() {
 
 # Diagnostics
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-  ┌─ JsBreakStatement.js:4:9
-  │
-3 │         break;
-  │         ------ This statement will break the flow of the code ...
-4 │         break; // afterBreak
-  │         ------ ... before it can reach this code
+JsBreakStatement.js:4:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+    ┌─ JsBreakStatement.js:4:9
+    │
+  4 │         break; // afterBreak
+    │         ^^^^^^
+  
+  i This statement will break the flow of the code ...
+  
+    ┌─ JsBreakStatement.js:3:9
+    │
+  3 │         break;
+    │         ^^^^^^
+  
 
 ```
 
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-   ┌─ JsBreakStatement.js:11:9
-   │
-10 │         break;
-   │         ------ This statement will break the flow of the code ...
-11 │         continue; // afterBreak
-   │         --------- ... before it can reach this code
+JsBreakStatement.js:11:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+     ┌─ JsBreakStatement.js:11:9
+     │
+  11 │         continue; // afterBreak
+     │         ^^^^^^^^^
+  
+  i This statement will break the flow of the code ...
+  
+     ┌─ JsBreakStatement.js:10:9
+     │
+  10 │         break;
+     │         ^^^^^^
+  
 
 ```
 

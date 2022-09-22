@@ -15,14 +15,24 @@ function JsWhileStatement1() {
 
 # Diagnostics
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-  ┌─ JsWhileStatement.js:4:9
-  │
-3 │         break;
-  │         ------ This statement will break the flow of the code ...
-4 │         afterBreak();
-  │         ------------- ... before it can reach this code
+JsWhileStatement.js:4:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+    ┌─ JsWhileStatement.js:4:9
+    │
+  4 │         afterBreak();
+    │         ^^^^^^^^^^^^^
+  
+  i This statement will break the flow of the code ...
+  
+    ┌─ JsWhileStatement.js:3:9
+    │
+  3 │         break;
+    │         ^^^^^^
+  
 
 ```
 

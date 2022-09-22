@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\record\\destructuring.js"
 ---
 
 # Input
@@ -68,64 +70,118 @@ assert(rest.c === 3);
 
 # Errors
 ```
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ destructuring.js:1:19
-  │
-1 │ const { a, b } = #{ a: 1, b: 2 };
-  │                   ^ Expected an identifier here
+destructuring.js:1:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ destructuring.js:1:18
-  │
-1 │ const { a, b } = #{ a: 1, b: 2 };
-  │                  ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    ┌─ destructuring.js:1:19
+    │
+  1 │ const { a, b } = #{ a: 1, b: 2 };
+    │                   ^
+  
+destructuring.js:1:18 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ destructuring.js:1:19
-  │
-1 │ const { a, b } = #{ a: 1, b: 2 };
-  │ ------------------^ An explicit or implicit semicolon is expected here...
-  │ │                  
-  │ ...Which is required to end this statement
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    ┌─ destructuring.js:1:18
+    │
+  1 │ const { a, b } = #{ a: 1, b: 2 };
+    │                  ^
+  
+destructuring.js:1:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ destructuring.js:1:28
-  │
-1 │ const { a, b } = #{ a: 1, b: 2 };
-  │                        ----^
-  │                        │   │
-  │                        │   An explicit or implicit semicolon is expected here...
-  │                        ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ destructuring.js:1:19
+    │
+  1 │ const { a, b } = #{ a: 1, b: 2 };
+    │                   ^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ destructuring.js:1:1
+    │
+  1 │ const { a, b } = #{ a: 1, b: 2 };
+    │ ^^^^^^^^^^^^^^^^^^
+  
+destructuring.js:1:28 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ destructuring.js:5:25
-  │
-5 │ const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
-  │                         ^ Expected an identifier here
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ destructuring.js:1:28
+    │
+  1 │ const { a, b } = #{ a: 1, b: 2 };
+    │                            ^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ destructuring.js:1:24
+    │
+  1 │ const { a, b } = #{ a: 1, b: 2 };
+    │                        ^^^^^
+  
+destructuring.js:5:25 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ destructuring.js:5:24
-  │
-5 │ const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
-  │                        ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    ┌─ destructuring.js:5:25
+    │
+  5 │ const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
+    │                         ^
+  
+destructuring.js:5:24 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ destructuring.js:5:25
-  │
-5 │ const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
-  │ ------------------------^ An explicit or implicit semicolon is expected here...
-  │ │                        
-  │ ...Which is required to end this statement
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    ┌─ destructuring.js:5:24
+    │
+  5 │ const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
+    │                        ^
+  
+destructuring.js:5:25 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ destructuring.js:5:34
-  │
-5 │ const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
-  │                              ----^
-  │                              │   │
-  │                              │   An explicit or implicit semicolon is expected here...
-  │                              ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ destructuring.js:5:25
+    │
+  5 │ const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
+    │                         ^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ destructuring.js:5:1
+    │
+  5 │ const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
+    │ ^^^^^^^^^^^^^^^^^^^^^^^^
+  
+destructuring.js:5:34 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ destructuring.js:5:34
+    │
+  5 │ const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
+    │                                  ^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ destructuring.js:5:30
+    │
+  5 │ const { a, ...rest } = #{ a: 1, b: 2, c: 3 };
+    │                              ^^^^^
+  
 
 ```
 

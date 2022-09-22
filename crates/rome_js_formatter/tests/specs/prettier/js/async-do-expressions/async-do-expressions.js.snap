@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\async-do-expressions\\async-do-expressions.js"
 ---
 
 # Input
@@ -130,97 +132,184 @@ do {
 
 # Errors
 ```
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ async-do-expressions.js:1:7
-  │
-1 │ async do {
-  │ ------^^
-  │ │     │
-  │ │     An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
+async-do-expressions.js:1:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `while` but instead found `;`
-  ┌─ async-do-expressions.js:3:2
-  │
-3 │ };
-  │  ^ unexpected
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ async-do-expressions.js:1:7
+    │
+  1 │ async do {
+    │       ^^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ async-do-expressions.js:1:1
+    │
+  1 │ async do {
+    │ ^^^^^^^^
+  
+async-do-expressions.js:3:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `)` but instead found `do`
-  ┌─ async-do-expressions.js:5:8
-  │
-5 │ (async do {});
-  │        ^^ unexpected
+  × expected `while` but instead found `;`
+  
+  × unexpected
+  
+    ┌─ async-do-expressions.js:3:2
+    │
+  3 │ };
+    │  ^
+  
+async-do-expressions.js:5:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `while` but instead found `)`
-  ┌─ async-do-expressions.js:5:13
-  │
-5 │ (async do {});
-  │             ^ unexpected
+  × expected `)` but instead found `do`
+  
+  × unexpected
+  
+    ┌─ async-do-expressions.js:5:8
+    │
+  5 │ (async do {});
+    │        ^^
+  
+async-do-expressions.js:5:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ async-do-expressions.js:7:15
-  │
-7 │ let x = async do {
-  │ --------------^^ An explicit or implicit semicolon is expected here...
-  │ │              
-  │ ...Which is required to end this statement
+  × expected `while` but instead found `)`
+  
+  × unexpected
+  
+    ┌─ async-do-expressions.js:5:13
+    │
+  5 │ (async do {});
+    │             ^
+  
+async-do-expressions.js:7:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `while` but instead found `;`
-   ┌─ async-do-expressions.js:11:2
-   │
-11 │ };
-   │  ^ unexpected
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ async-do-expressions.js:7:15
+    │
+  7 │ let x = async do {
+    │               ^^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ async-do-expressions.js:7:1
+    │
+  7 │ let x = async do {
+    │ ^^^^^^^^^^^^^^
+  
+async-do-expressions.js:11:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ async-do-expressions.js:13:7
-   │
-13 │ async do {
-   │ ------^^
-   │ │     │
-   │ │     An explicit or implicit semicolon is expected here...
-   │ ...Which is required to end this statement
+  × expected `while` but instead found `;`
+  
+  × unexpected
+  
+     ┌─ async-do-expressions.js:11:2
+     │
+  11 │ };
+     │  ^
+  
+async-do-expressions.js:13:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `while` but instead found `function`
-   ┌─ async-do-expressions.js:17:1
-   │
-17 │ function iter() {
-   │ ^^^^^^^^ unexpected
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+     ┌─ async-do-expressions.js:13:7
+     │
+  13 │ async do {
+     │       ^^
+  
+  i ...Which is required to end this statement
+  
+     ┌─ async-do-expressions.js:13:1
+     │
+  13 │ async do {
+     │ ^^^^^^^^
+  
+async-do-expressions.js:17:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ async-do-expressions.js:18:16
-   │
-18 │   return async do {
-   │   -------------^^
-   │   │            │
-   │   │            An explicit or implicit semicolon is expected here...
-   │   ...Which is required to end this statement
+  × expected `while` but instead found `function`
+  
+  × unexpected
+  
+     ┌─ async-do-expressions.js:17:1
+     │
+  17 │ function iter() {
+     │ ^^^^^^^^
+  
+async-do-expressions.js:18:16 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `while` but instead found `}`
-   ┌─ async-do-expressions.js:21:1
-   │
-21 │ };
-   │ ^ unexpected
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+     ┌─ async-do-expressions.js:18:16
+     │
+  18 │   return async do {
+     │                ^^
+  
+  i ...Which is required to end this statement
+  
+     ┌─ async-do-expressions.js:18:3
+     │
+  18 │   return async do {
+     │   ^^^^^^^^^^^^^^^
+  
+async-do-expressions.js:21:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `)` but instead found `;`
-   ┌─ async-do-expressions.js:21:2
-   │
-21 │ };
-   │  ^ unexpected
+  × expected `while` but instead found `}`
+  
+  × unexpected
+  
+     ┌─ async-do-expressions.js:21:1
+     │
+  21 │ };
+     │ ^
+  
+async-do-expressions.js:21:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ async-do-expressions.js:23:15
-   │
-23 │ let x = async do {
-   │ --------------^^ An explicit or implicit semicolon is expected here...
-   │ │              
-   │ ...Which is required to end this statement
+  × expected `)` but instead found `;`
+  
+  × unexpected
+  
+     ┌─ async-do-expressions.js:21:2
+     │
+  21 │ };
+     │  ^
+  
+async-do-expressions.js:23:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `while` but instead found `;`
-   ┌─ async-do-expressions.js:26:2
-   │
-26 │ };
-   │  ^ unexpected
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+     ┌─ async-do-expressions.js:23:15
+     │
+  23 │ let x = async do {
+     │               ^^
+  
+  i ...Which is required to end this statement
+  
+     ┌─ async-do-expressions.js:23:1
+     │
+  23 │ let x = async do {
+     │ ^^^^^^^^^^^^^^
+  
+async-do-expressions.js:26:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `while` but instead found `;`
+  
+  × unexpected
+  
+     ┌─ async-do-expressions.js:26:2
+     │
+  26 │ };
+     │  ^
+  
 
 ```
 

@@ -61,83 +61,144 @@ function TerminatorsPlural4() {
 
 # Diagnostics
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-  ┌─ TerminatorsPlurals.js:3:5
-  │  
-2 │       return;
-  │       ------- This statement will return from the function ...
-3 │ ┌     Statement1();
-4 │ │     Statement2();
-5 │ │     Statement3();
-6 │ │     Statement4();
-  │ └─────────────────' ... before it can reach this code
+TerminatorsPlurals.js:3:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-
-```
-
-```
-warning[nursery/noUnreachable]: This code is unreachable
-   ┌─ TerminatorsPlurals.js:16:5
-   │  
-11 │           return;
-   │           ------- Either this statement ...
-12 │       } else {
-13 │           return;
-   │           ------- ... or this statement will return from the function ...
-   ·  
-16 │ ┌     Statement1();
-17 │ │     Statement2();
-18 │ │     Statement3();
-19 │ │     Statement4();
-   │ └─────────────────' ... before it can reach this code
-
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+    ┌─ TerminatorsPlurals.js:3:5
+    │  
+  3 │ ┌     Statement1();
+  4 │ │     Statement2();
+  5 │ │     Statement3();
+  6 │ │     Statement4();
+    │ └─────────────────^
+  
+  i This statement will return from the function ...
+  
+    ┌─ TerminatorsPlurals.js:2:5
+    │
+  2 │     return;
+    │     ^^^^^^^
+  
 
 ```
 
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-   ┌─ TerminatorsPlurals.js:31:5
-   │  
-24 │           return;
-   │           ------- Either this statement, ...
-25 │       } else if (b) {
-26 │           return;
-   │           ------- ... this statement, ...
-27 │       } else {
-28 │           return;
-   │           ------- ... or this statement will return from the function ...
-   ·  
-31 │ ┌     Statement1();
-32 │ │     Statement2();
-33 │ │     Statement3();
-34 │ │     Statement4();
-   │ └─────────────────' ... before it can reach this code
+TerminatorsPlurals.js:16:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+     ┌─ TerminatorsPlurals.js:16:5
+     │  
+  16 │ ┌     Statement1();
+  17 │ │     Statement2();
+  18 │ │     Statement3();
+  19 │ │     Statement4();
+     │ └─────────────────^
+  
+  i Either this statement ...
+  
+     ┌─ TerminatorsPlurals.js:11:9
+     │
+  11 │         return;
+     │         ^^^^^^^
+  
+  i ... or this statement will return from the function ...
+  
+     ┌─ TerminatorsPlurals.js:13:9
+     │
+  13 │         return;
+     │         ^^^^^^^
+  
 
 ```
 
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-   ┌─ TerminatorsPlurals.js:48:5
-   │  
-39 │           return;
-   │           ------- Either this statement, ...
-40 │       } else if (b) {
-41 │           return;
-   │           ------- ... this statement, ...
-42 │       } else if (c) {
-43 │           return;
-   │           ------- ... this statement, ...
-44 │       } else {
-45 │           return;
-   │           ------- ... or this statement will return from the function ...
-   ·  
-48 │ ┌     Statement1();
-49 │ │     Statement2();
-50 │ │     Statement3();
-51 │ │     Statement4();
-   │ └─────────────────' ... before it can reach this code
+TerminatorsPlurals.js:31:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+     ┌─ TerminatorsPlurals.js:31:5
+     │  
+  31 │ ┌     Statement1();
+  32 │ │     Statement2();
+  33 │ │     Statement3();
+  34 │ │     Statement4();
+     │ └─────────────────^
+  
+  i Either this statement, ...
+  
+     ┌─ TerminatorsPlurals.js:24:9
+     │
+  24 │         return;
+     │         ^^^^^^^
+  
+  i ... this statement, ...
+  
+     ┌─ TerminatorsPlurals.js:26:9
+     │
+  26 │         return;
+     │         ^^^^^^^
+  
+  i ... or this statement will return from the function ...
+  
+     ┌─ TerminatorsPlurals.js:28:9
+     │
+  28 │         return;
+     │         ^^^^^^^
+  
+
+```
+
+```
+TerminatorsPlurals.js:48:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+     ┌─ TerminatorsPlurals.js:48:5
+     │  
+  48 │ ┌     Statement1();
+  49 │ │     Statement2();
+  50 │ │     Statement3();
+  51 │ │     Statement4();
+     │ └─────────────────^
+  
+  i Either this statement, ...
+  
+     ┌─ TerminatorsPlurals.js:39:9
+     │
+  39 │         return;
+     │         ^^^^^^^
+  
+  i ... this statement, ...
+  
+     ┌─ TerminatorsPlurals.js:41:9
+     │
+  41 │         return;
+     │         ^^^^^^^
+  
+  i ... this statement, ...
+  
+     ┌─ TerminatorsPlurals.js:43:9
+     │
+  43 │         return;
+     │         ^^^^^^^
+  
+  i ... or this statement will return from the function ...
+  
+     ┌─ TerminatorsPlurals.js:45:9
+     │
+  45 │         return;
+     │         ^^^^^^^
+  
 
 ```
 

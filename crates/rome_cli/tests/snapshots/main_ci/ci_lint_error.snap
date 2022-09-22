@@ -18,32 +18,40 @@ errors where emitted while running checks
 # Emitted Messages
 
 ```block
-error[correctness/useBlockStatements]: Block statements are preferred in this position.
-  ┌─ ci.js:1:1
-  │
-1 │ for(;true;);
-  │ ^^^^^^^^^^^^
+ci.js:1:1 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Wrap the statement with a `JsBlockStatement`
-    | @@ -1 +1 @@
-0   | - for(;true;);
-  0 | + for(;true;) {}
-
+  × Block statements are preferred in this position.
+  
+    ┌─ ci.js:1:1
+    │
+  1 │ for(;true;);
+    │ ^^^^^^^^^^^^
+  
+  i Suggested fix: Wrap the statement with a `JsBlockStatement`
+  
+      | @@ -1 +1 @@
+  0   | - for(;true;);
+    0 | + for(;true;) {}
+  
 
 ```
 
 ```block
-error[correctness/useWhile]: Use while loops instead of for loops.
-  ┌─ ci.js:1:1
-  │
-1 │ for(;true;);
-  │ ^^^^^^^^^^^
+ci.js:1:1 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Use a while loop
-    | @@ -1 +1 @@
-0   | - for(;true;);
-  0 | + while (true);
-
+  × Use while loops instead of for loops.
+  
+    ┌─ ci.js:1:1
+    │
+  1 │ for(;true;);
+    │ ^^^^^^^^^^^
+  
+  i Suggested fix: Use a while loop
+  
+      | @@ -1 +1 @@
+  0   | - for(;true;);
+    0 | + while (true);
+  
 
 ```
 

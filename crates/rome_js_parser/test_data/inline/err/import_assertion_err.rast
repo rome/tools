@@ -453,87 +453,149 @@ JsModule {
       2: (empty)
   3: EOF@379..380 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `:` but instead found `,`
-  ┌─ import_assertion_err.js:1:27
-  │
-1 │ import "foo" assert { type, "json" };
-  │                           ^ unexpected
+import_assertion_err.js:1:27 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `:` but instead found `,`
+  
+  × unexpected
+  
+    ┌─ import_assertion_err.js:1:27
+    │
+  1 │ import "foo" assert { type, "json" };
+    │                           ^
+  
 --
-error[SyntaxError]: expected `:` but instead found `}`
-  ┌─ import_assertion_err.js:1:36
-  │
-1 │ import "foo" assert { type, "json" };
-  │                                    ^ unexpected
+import_assertion_err.js:1:36 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `:` but instead found `}`
+  
+  × unexpected
+  
+    ┌─ import_assertion_err.js:1:36
+    │
+  1 │ import "foo" assert { type, "json" };
+    │                                    ^
+  
 --
-error[SyntaxError]: 'assert' keyword cannot contain escape character.
-  ┌─ import_assertion_err.js:2:14
-  │
-2 │ import "bar" \u{61}ssert { type: "json" };
-  │              ^^^^^^^^^^^
+import_assertion_err.js:2:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'assert' keyword cannot contain escape character.
+  
+    ┌─ import_assertion_err.js:2:14
+    │
+  2 │ import "bar" \u{61}ssert { type: "json" };
+    │              ^^^^^^^^^^^
+  
 --
-error[SyntaxError]: expected `from` but instead found `assert`
-  ┌─ import_assertion_err.js:3:16
-  │
-3 │ import { foo } assert { type: "json" };
-  │                ^^^^^^ unexpected
+import_assertion_err.js:3:16 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `from` but instead found `assert`
+  
+  × unexpected
+  
+    ┌─ import_assertion_err.js:3:16
+    │
+  3 │ import { foo } assert { type: "json" };
+    │                ^^^^^^
+  
 --
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ import_assertion_err.js:5:8
-  │
-5 │ assert { type: "json" }
-  │ -------^
-  │ │      │
-  │ │      An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
+import_assertion_err.js:5:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ import_assertion_err.js:5:8
+    │
+  5 │ assert { type: "json" }
+    │        ^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ import_assertion_err.js:5:1
+    │
+  5 │ assert { type: "json" }
+    │ ^^^^^^^^
+  
 --
-error[SyntaxError]: Duplicate assertion keys are not allowed
-  ┌─ import_assertion_err.js:6:38
-  │
-6 │ import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
-  │                                      ^^^^^^          ---- second use here
-  │                                      │                
-  │                                      First use of the key `type`
+import_assertion_err.js:6:38 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Duplicate assertion keys are not allowed
+  
+  × First use of the key `type`
+  
+    ┌─ import_assertion_err.js:6:38
+    │
+  6 │ import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
+    │                                      ^^^^^^
+  
+  i second use here
+  
+    ┌─ import_assertion_err.js:6:54
+    │
+  6 │ import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
+    │                                                      ^^^^
+  
 --
-error[SyntaxError]: expected `{` but instead found `;`
-  ┌─ import_assertion_err.js:7:18
-  │
-7 │ import "x" assert;
-  │                  ^ unexpected
+import_assertion_err.js:7:18 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `{` but instead found `;`
+  
+  × unexpected
+  
+    ┌─ import_assertion_err.js:7:18
+    │
+  7 │ import "x" assert;
+    │                  ^
+  
 --
-error[SyntaxError]: expected `string literal` but instead found `true`
-  ┌─ import_assertion_err.js:8:61
-  │
-8 │ import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
-  │                                                             ^^^^ unexpected
+import_assertion_err.js:8:61 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `string literal` but instead found `true`
+  
+  × unexpected
+  
+    ┌─ import_assertion_err.js:8:61
+    │
+  8 │ import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
+    │                                                             ^^^^
+  
 --
-error[SyntaxError]: expected `:` but instead found `,`
-  ┌─ import_assertion_err.js:8:65
-  │
-8 │ import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
-  │                                                                 ^ unexpected
+import_assertion_err.js:8:65 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `:` but instead found `,`
+  
+  × unexpected
+  
+    ┌─ import_assertion_err.js:8:65
+    │
+  8 │ import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
+    │                                                                 ^
+  
 --
-error[SyntaxError]: expected `string literal` but instead found `1`
-  ┌─ import_assertion_err.js:8:80
-  │
-8 │ import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
-  │                                                                                ^ unexpected
+import_assertion_err.js:8:80 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `string literal` but instead found `1`
+  
+  × unexpected
+  
+    ┌─ import_assertion_err.js:8:80
+    │
+  8 │ import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
+    │                                                                                ^
+  
 --
-error[SyntaxError]: expected `{` but instead the file ends
-   ┌─ import_assertion_err.js:10:1
-   │
-10 │ 
-   │ ^ the file ends here
+import_assertion_err.js:10:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `{` but instead the file ends
+  
+  × the file ends here
+  
+     ┌─ import_assertion_err.js:10:1
+     │
+  10 │ 
+     │ ^
+  
 --
 import "foo" assert { type, "json" };
 import "bar" \u{61}ssert { type: "json" };

@@ -30,30 +30,53 @@ function JsLabeledStatement2() {
 
 # Diagnostics
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-  ┌─ JsLabeledStatement.js:9:9
-  │
-4 │             continue label;
-  │             --------------- Either this statement will continue the loop ...
-5 │         } else {
-6 │             break label;
-  │             ------------ ... or this statement will break the flow of the code ...
-  ·
-9 │         afterLabelJump();
-  │         ----------------- ... before it can reach this code
+JsLabeledStatement.js:9:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+    ┌─ JsLabeledStatement.js:9:9
+    │
+  9 │         afterLabelJump();
+    │         ^^^^^^^^^^^^^^^^^
+  
+  i Either this statement will continue the loop ...
+  
+    ┌─ JsLabeledStatement.js:4:13
+    │
+  4 │             continue label;
+    │             ^^^^^^^^^^^^^^^
+  
+  i ... or this statement will break the flow of the code ...
+  
+    ┌─ JsLabeledStatement.js:6:13
+    │
+  6 │             break label;
+    │             ^^^^^^^^^^^^
+  
 
 ```
 
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-   ┌─ JsLabeledStatement.js:17:9
-   │
-16 │         break label;
-   │         ------------ This statement will break the flow of the code ...
-17 │         afterBreak();
-   │         ------------- ... before it can reach this code
+JsLabeledStatement.js:17:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+     ┌─ JsLabeledStatement.js:17:9
+     │
+  17 │         afterBreak();
+     │         ^^^^^^^^^^^^^
+  
+  i This statement will break the flow of the code ...
+  
+     ┌─ JsLabeledStatement.js:16:9
+     │
+  16 │         break label;
+     │         ^^^^^^^^^^^^
+  
 
 ```
 

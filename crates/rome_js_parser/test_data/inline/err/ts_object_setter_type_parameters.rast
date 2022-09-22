@@ -110,11 +110,14 @@ JsModule {
       1: SEMICOLON@27..28 ";" [] []
   3: EOF@28..29 "" [Newline("\n")] []
 --
-error[SyntaxError]: An accessor cannot have type parameters.
-  ┌─ ts_object_setter_type_parameters.ts:1:9
-  │
-1 │ ({ set a<A>(value: A) {} });
-  │         ^^^
+ts_object_setter_type_parameters.ts:1:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × An accessor cannot have type parameters.
+  
+    ┌─ ts_object_setter_type_parameters.ts:1:9
+    │
+  1 │ ({ set a<A>(value: A) {} });
+    │         ^^^
+  
 --
 ({ set a<A>(value: A) {} });

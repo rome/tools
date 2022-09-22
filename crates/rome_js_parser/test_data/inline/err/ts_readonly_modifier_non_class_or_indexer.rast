@@ -226,33 +226,45 @@ JsModule {
       8: R_CURLY@139..141 "}" [Newline("\n")] []
   3: EOF@141..142 "" [Newline("\n")] []
 --
-error[SyntaxError]: 'readonly' cannot appear on a constructor declaration.
-  ┌─ ts_readonly_modifier_non_class_or_indexer.ts:2:3
-  │
-2 │   readonly constructor() {}
-  │   ^^^^^^^^
+ts_readonly_modifier_non_class_or_indexer.ts:2:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'readonly' cannot appear on a constructor declaration.
+  
+    ┌─ ts_readonly_modifier_non_class_or_indexer.ts:2:3
+    │
+  2 │   readonly constructor() {}
+    │   ^^^^^^^^
+  
 --
-error[SyntaxError]: Readonly can only appear on a property declaration or index signature.
-  ┌─ ts_readonly_modifier_non_class_or_indexer.ts:3:3
-  │
-3 │   readonly method() {}
-  │   ^^^^^^^^
+ts_readonly_modifier_non_class_or_indexer.ts:3:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Readonly can only appear on a property declaration or index signature.
+  
+    ┌─ ts_readonly_modifier_non_class_or_indexer.ts:3:3
+    │
+  3 │   readonly method() {}
+    │   ^^^^^^^^
+  
 --
-error[SyntaxError]: Readonly can only appear on a property declaration or index signature.
-  ┌─ ts_readonly_modifier_non_class_or_indexer.ts:4:3
-  │
-4 │   readonly get test() { return "a"; }
-  │   ^^^^^^^^
+ts_readonly_modifier_non_class_or_indexer.ts:4:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Readonly can only appear on a property declaration or index signature.
+  
+    ┌─ ts_readonly_modifier_non_class_or_indexer.ts:4:3
+    │
+  4 │   readonly get test() { return "a"; }
+    │   ^^^^^^^^
+  
 --
-error[SyntaxError]: Readonly can only appear on a property declaration or index signature.
-  ┌─ ts_readonly_modifier_non_class_or_indexer.ts:5:3
-  │
-5 │   readonly set test(value: string) {}
-  │   ^^^^^^^^
+ts_readonly_modifier_non_class_or_indexer.ts:5:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Readonly can only appear on a property declaration or index signature.
+  
+    ┌─ ts_readonly_modifier_non_class_or_indexer.ts:5:3
+    │
+  5 │   readonly set test(value: string) {}
+    │   ^^^^^^^^
+  
 --
 class Test {
   readonly constructor() {}

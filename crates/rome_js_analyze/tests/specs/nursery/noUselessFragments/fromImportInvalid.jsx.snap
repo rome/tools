@@ -15,22 +15,28 @@ import React, { Fragment } from "react";
 
 # Diagnostics
 ```
-warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
-  ┌─ fromImportInvalid.jsx:4:5
-  │
-4 │     <Fragment></Fragment>
-  │     ---------------------
+fromImportInvalid.jsx:4:5 lint/nursery/noUselessFragments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! Avoid using unnecessary Fragment.
+  
+    ┌─ fromImportInvalid.jsx:4:5
+    │
+  4 │     <Fragment></Fragment>
+    │     ^^^^^^^^^^^^^^^^^^^^^
+  
 
 ```
 
 ```
-warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
-  ┌─ fromImportInvalid.jsx:5:5
-  │
-5 │     <React.Fragment></React.Fragment>
-  │     ---------------------------------
+fromImportInvalid.jsx:5:5 lint/nursery/noUselessFragments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! Avoid using unnecessary Fragment.
+  
+    ┌─ fromImportInvalid.jsx:5:5
+    │
+  5 │     <React.Fragment></React.Fragment>
+    │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
 
 ```
 

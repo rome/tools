@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\babel-plugins\\decorator-auto-accessors.js"
 ---
 
 # Input
@@ -36,12 +38,15 @@ class C extends HTMLElement {
 
 # Errors
 ```
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-  ┌─ decorator-auto-accessors.js:2:3
-  │
-2 │   accessor clicked = false;
-  │   ^^^^^^^^
+decorator-auto-accessors.js:2:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a semicolon to end the class property, but found none
+  
+    ┌─ decorator-auto-accessors.js:2:3
+    │
+  2 │   accessor clicked = false;
+    │   ^^^^^^^^
+  
 
 ```
 

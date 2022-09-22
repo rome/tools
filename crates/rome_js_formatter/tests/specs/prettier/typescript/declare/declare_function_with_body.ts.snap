@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "typescript\\declare\\declare_function_with_body.ts"
 ---
 
 # Input
@@ -41,21 +43,31 @@ declare function bar() {
 
 # Errors
 ```
-error[SyntaxError]: A 'declare' function cannot have a function body
-  ┌─ declare_function_with_body.ts:2:24
-  │
-2 │ declare function foo() {}
-  │                        ^^ remove this body
+declare_function_with_body.ts:2:24 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: A 'declare' function cannot have a function body
-  ┌─ declare_function_with_body.ts:3:24
-  │  
-3 │   declare function bar() {
-  │ ┌────────────────────────^
-4 │ │   // comment
-5 │ │ }
-  │ └─^ remove this body
+  × A 'declare' function cannot have a function body
+  
+  × remove this body
+  
+    ┌─ declare_function_with_body.ts:2:24
+    │
+  2 │ declare function foo() {}
+    │                        ^^
+  
+declare_function_with_body.ts:3:24 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × A 'declare' function cannot have a function body
+  
+  × remove this body
+  
+    ┌─ declare_function_with_body.ts:3:24
+    │  
+  3 │   declare function bar() {
+    │ ┌────────────────────────^
+  4 │ │   // comment
+  5 │ │ }
+    │ └─^
+  
 
 ```
 

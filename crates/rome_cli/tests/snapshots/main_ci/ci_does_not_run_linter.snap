@@ -31,13 +31,17 @@ errors where emitted while running checks
 # Emitted Messages
 
 ```block
-file.js: error[CI]: File content differs from formatting output
-    | @@ -1,4 +1,3 @@
-0   | - 
-1 0 |   function f() {
-2   | - return { something }
-  1 | + 	return { something };
-3 2 |   }
+file.js ci/formatMismatch ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × File content differs from formatting output
+  
+      | @@ -1,4 +1,3 @@
+  0   | - 
+  1 0 |   function f() {
+  2   | - return { something }
+    1 | + 	return { something };
+  3 2 |   }
+  
 
 ```
 

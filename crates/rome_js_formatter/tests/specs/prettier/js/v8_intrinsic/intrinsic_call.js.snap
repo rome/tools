@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\v8_intrinsic\\intrinsic_call.js"
 ---
 
 # Input
@@ -96,34 +98,54 @@ function printFunc(f) {
 
 # Errors
 ```
-error[SyntaxError]: expected a statement but instead found '%DebugPrint
-        (
-                foo )'
-  ┌─ intrinsic_call.js:2:13
-  │  
-2 │ ┌             %DebugPrint
-3 │ │         (
-4 │ │                 foo )
-  │ └─────────────────────^ Expected a statement here
+intrinsic_call.js:2:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `%` operator.
-   ┌─ intrinsic_call.js:10:8
-   │
-10 │     if(%
-   │        ^ This operator requires a left hand side value
+  × expected a statement but instead found '%DebugPrint
+            (
+                    foo )'
+  
+  × Expected a statement here
+  
+    ┌─ intrinsic_call.js:2:13
+    │  
+  2 │ ┌             %DebugPrint
+  3 │ │         (
+  4 │ │                 foo )
+    │ └─────────────────────^
+  
+intrinsic_call.js:10:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `%` operator.
-   ┌─ intrinsic_call.js:14:9
-   │
-14 │         % IsWasmCode(
-   │         ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `%` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ intrinsic_call.js:10:8
+     │
+  10 │     if(%
+     │        ^
+  
+intrinsic_call.js:14:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `%` operator.
-   ┌─ intrinsic_call.js:21:6
-   │
-21 │     (%
-   │      ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `%` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ intrinsic_call.js:14:9
+     │
+  14 │         % IsWasmCode(
+     │         ^
+  
+intrinsic_call.js:21:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected an expression for the left hand side of the `%` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ intrinsic_call.js:21:6
+     │
+  21 │     (%
+     │      ^
+  
 
 ```
 

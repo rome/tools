@@ -62,11 +62,16 @@ JsModule {
       1: (empty)
   3: EOF@11..12 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `:` but instead found `}`
-  ┌─ object_expr_non_ident_literal_prop.js:1:11
-  │
-1 │ let d = {5}
-  │           ^ unexpected
+object_expr_non_ident_literal_prop.js:1:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `:` but instead found `}`
+  
+  × unexpected
+  
+    ┌─ object_expr_non_ident_literal_prop.js:1:11
+    │
+  1 │ let d = {5}
+    │           ^
+  
 --
 let d = {5}

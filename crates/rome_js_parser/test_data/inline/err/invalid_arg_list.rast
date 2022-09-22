@@ -323,47 +323,77 @@ JsModule {
       1: SEMICOLON@83..84 ";" [] []
   3: EOF@84..85 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `,` but instead found `;`
-  ┌─ invalid_arg_list.js:3:8
-  │
-3 │ foo(a,b;
-  │        ^ unexpected
+invalid_arg_list.js:3:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `;`
+  
+  × unexpected
+  
+    ┌─ invalid_arg_list.js:3:8
+    │
+  3 │ foo(a,b;
+    │        ^
+  
 --
-error[SyntaxError]: expected `,` but instead found `var`
-  ┌─ invalid_arg_list.js:4:9
-  │
-4 │ foo(a,b var;
-  │         ^^^ unexpected
+invalid_arg_list.js:4:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `var`
+  
+  × unexpected
+  
+    ┌─ invalid_arg_list.js:4:9
+    │
+  4 │ foo(a,b var;
+    │         ^^^
+  
 --
-error[SyntaxError]: expected an identifier, an array pattern, or an object pattern but instead found ';'
-  ┌─ invalid_arg_list.js:4:12
-  │
-4 │ foo(a,b var;
-  │            ^ Expected an identifier, an array pattern, or an object pattern here
+invalid_arg_list.js:4:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier, an array pattern, or an object pattern but instead found ';'
+  
+  × Expected an identifier, an array pattern, or an object pattern here
+  
+    ┌─ invalid_arg_list.js:4:12
+    │
+  4 │ foo(a,b var;
+    │            ^
+  
 --
-error[SyntaxError]: expected an expression but instead found ','
-  ┌─ invalid_arg_list.js:5:6
-  │
-5 │ foo (,,b);
-  │      ^ Expected an expression here
+invalid_arg_list.js:5:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an expression but instead found ','
+  
+  × Expected an expression here
+  
+    ┌─ invalid_arg_list.js:5:6
+    │
+  5 │ foo (,,b);
+    │      ^
+  
 --
-error[SyntaxError]: expected an expression but instead found ','
-  ┌─ invalid_arg_list.js:5:7
-  │
-5 │ foo (,,b);
-  │       ^ Expected an expression here
+invalid_arg_list.js:5:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an expression but instead found ','
+  
+  × Expected an expression here
+  
+    ┌─ invalid_arg_list.js:5:7
+    │
+  5 │ foo (,,b);
+    │       ^
+  
 --
-error[SyntaxError]: expected an expression, or an assignment but instead found ')'
-  ┌─ invalid_arg_list.js:6:12
-  │
-6 │ foo (a, ...);
-  │            ^ Expected an expression, or an assignment here
+invalid_arg_list.js:6:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an expression, or an assignment but instead found ')'
+  
+  × Expected an expression, or an assignment here
+  
+    ┌─ invalid_arg_list.js:6:12
+    │
+  6 │ foo (a, ...);
+    │            ^
+  
 --
 function foo(...args) {}
 let a, b, c;

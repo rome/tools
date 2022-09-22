@@ -14,32 +14,41 @@ expression: withCommentsInvalid.jsx
 
 # Diagnostics
 ```
-warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
-  ┌─ withCommentsInvalid.jsx:2:5
-  │
-2 │     </* test */>empty</>
-  │     --------------------
+withCommentsInvalid.jsx:2:5 lint/nursery/noUselessFragments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-
-```
-
-```
-warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
-  ┌─ withCommentsInvalid.jsx:3:5
-  │
-3 │     <>empty</* comment */ />
-  │     ------------------------
-
+  ! Avoid using unnecessary Fragment.
+  
+    ┌─ withCommentsInvalid.jsx:2:5
+    │
+  2 │     </* test */>empty</>
+    │     ^^^^^^^^^^^^^^^^^^^^
+  
 
 ```
 
 ```
-warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
-  ┌─ withCommentsInvalid.jsx:4:5
-  │
-4 │     <>empty</ /* comment */>
-  │     ------------------------
+withCommentsInvalid.jsx:3:5 lint/nursery/noUselessFragments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! Avoid using unnecessary Fragment.
+  
+    ┌─ withCommentsInvalid.jsx:3:5
+    │
+  3 │     <>empty</* comment */ />
+    │     ^^^^^^^^^^^^^^^^^^^^^^^^
+  
+
+```
+
+```
+withCommentsInvalid.jsx:4:5 lint/nursery/noUselessFragments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using unnecessary Fragment.
+  
+    ┌─ withCommentsInvalid.jsx:4:5
+    │
+  4 │     <>empty</ /* comment */>
+    │     ^^^^^^^^^^^^^^^^^^^^^^^^
+  
 
 ```
 

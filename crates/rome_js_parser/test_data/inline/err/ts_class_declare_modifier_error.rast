@@ -311,47 +311,65 @@ JsModule {
       8: R_CURLY@205..207 "}" [Newline("\n")] []
   3: EOF@207..208 "" [Newline("\n")] []
 --
-error[SyntaxError]: 'declare' modifier is only allowed on properties.
-  ┌─ ts_class_declare_modifier_error.ts:2:5
-  │
-2 │     declare method(): string;
-  │     ^^^^^^^
+ts_class_declare_modifier_error.ts:2:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'declare' modifier is only allowed on properties.
+  
+    ┌─ ts_class_declare_modifier_error.ts:2:5
+    │
+  2 │     declare method(): string;
+    │     ^^^^^^^
+  
 --
-error[SyntaxError]: 'declare' cannot appear on a parameter.
-  ┌─ ts_class_declare_modifier_error.ts:3:25
-  │
-3 │     declare constructor(declare readonly prop) {}
-  │                         ^^^^^^^
+ts_class_declare_modifier_error.ts:3:25 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'declare' cannot appear on a parameter.
+  
+    ┌─ ts_class_declare_modifier_error.ts:3:25
+    │
+  3 │     declare constructor(declare readonly prop) {}
+    │                         ^^^^^^^
+  
 --
-error[SyntaxError]: 'declare' cannot appear on a constructor declaration.
-  ┌─ ts_class_declare_modifier_error.ts:3:5
-  │
-3 │     declare constructor(declare readonly prop) {}
-  │     ^^^^^^^
+ts_class_declare_modifier_error.ts:3:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'declare' cannot appear on a constructor declaration.
+  
+    ┌─ ts_class_declare_modifier_error.ts:3:5
+    │
+  3 │     declare constructor(declare readonly prop) {}
+    │     ^^^^^^^
+  
 --
-error[SyntaxError]: 'declare' modifier is only allowed on properties.
-  ┌─ ts_class_declare_modifier_error.ts:4:5
-  │
-4 │     declare get test() { return "a" }
-  │     ^^^^^^^
+ts_class_declare_modifier_error.ts:4:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'declare' modifier is only allowed on properties.
+  
+    ┌─ ts_class_declare_modifier_error.ts:4:5
+    │
+  4 │     declare get test() { return "a" }
+    │     ^^^^^^^
+  
 --
-error[SyntaxError]: 'declare' modifier is only allowed on properties.
-  ┌─ ts_class_declare_modifier_error.ts:5:5
-  │
-5 │     declare set test(value: string) {}
-  │     ^^^^^^^
+ts_class_declare_modifier_error.ts:5:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'declare' modifier is only allowed on properties.
+  
+    ┌─ ts_class_declare_modifier_error.ts:5:5
+    │
+  5 │     declare set test(value: string) {}
+    │     ^^^^^^^
+  
 --
-error[SyntaxError]: 'declare' modifier cannot appear on an index signature.
-  ┌─ ts_class_declare_modifier_error.ts:6:5
-  │
-6 │     declare [name: string]: string;
-  │     ^^^^^^^
+ts_class_declare_modifier_error.ts:6:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'declare' modifier cannot appear on an index signature.
+  
+    ┌─ ts_class_declare_modifier_error.ts:6:5
+    │
+  6 │     declare [name: string]: string;
+    │     ^^^^^^^
+  
 --
 class Test {
     declare method(): string;

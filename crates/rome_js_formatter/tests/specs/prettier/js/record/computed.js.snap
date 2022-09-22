@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\record\\computed.js"
 ---
 
 # Input
@@ -57,222 +59,378 @@ assert(#{ [9 + 1]: "ten" } === #{ ["10"]: "ten" })
 
 # Errors
 ```
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ computed.js:2:9
-  │
-2 │ assert(#{ [key]: 1 } === #{ a: 1 })
-  │         ^ Expected an identifier here
+computed.js:2:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ computed.js:2:8
-  │
-2 │ assert(#{ [key]: 1 } === #{ a: 1 })
-  │        ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    ┌─ computed.js:2:9
+    │
+  2 │ assert(#{ [key]: 1 } === #{ a: 1 })
+    │         ^
+  
+computed.js:2:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `{`
-  ┌─ computed.js:2:9
-  │
-2 │ assert(#{ [key]: 1 } === #{ a: 1 })
-  │         ^ unexpected
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    ┌─ computed.js:2:8
+    │
+  2 │ assert(#{ [key]: 1 } === #{ a: 1 })
+    │        ^
+  
+computed.js:2:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ computed.js:2:27
-  │
-2 │ assert(#{ [key]: 1 } === #{ a: 1 })
-  │                           ^ Expected an identifier here
+  × expected `,` but instead found `{`
+  
+  × unexpected
+  
+    ┌─ computed.js:2:9
+    │
+  2 │ assert(#{ [key]: 1 } === #{ a: 1 })
+    │         ^
+  
+computed.js:2:27 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ computed.js:2:26
-  │
-2 │ assert(#{ [key]: 1 } === #{ a: 1 })
-  │                          ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    ┌─ computed.js:2:27
+    │
+  2 │ assert(#{ [key]: 1 } === #{ a: 1 })
+    │                           ^
+  
+computed.js:2:26 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `{`
-  ┌─ computed.js:2:27
-  │
-2 │ assert(#{ [key]: 1 } === #{ a: 1 })
-  │                           ^ unexpected
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    ┌─ computed.js:2:26
+    │
+  2 │ assert(#{ [key]: 1 } === #{ a: 1 })
+    │                          ^
+  
+computed.js:2:27 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ computed.js:3:9
-  │
-3 │ assert(#{ [key.toUpperCase()]: 1 } === #{ A: 1 })
-  │         ^ Expected an identifier here
+  × expected `,` but instead found `{`
+  
+  × unexpected
+  
+    ┌─ computed.js:2:27
+    │
+  2 │ assert(#{ [key]: 1 } === #{ a: 1 })
+    │                           ^
+  
+computed.js:3:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ computed.js:3:8
-  │
-3 │ assert(#{ [key.toUpperCase()]: 1 } === #{ A: 1 })
-  │        ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    ┌─ computed.js:3:9
+    │
+  3 │ assert(#{ [key.toUpperCase()]: 1 } === #{ A: 1 })
+    │         ^
+  
+computed.js:3:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `{`
-  ┌─ computed.js:3:9
-  │
-3 │ assert(#{ [key.toUpperCase()]: 1 } === #{ A: 1 })
-  │         ^ unexpected
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    ┌─ computed.js:3:8
+    │
+  3 │ assert(#{ [key.toUpperCase()]: 1 } === #{ A: 1 })
+    │        ^
+  
+computed.js:3:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ computed.js:3:41
-  │
-3 │ assert(#{ [key.toUpperCase()]: 1 } === #{ A: 1 })
-  │                                         ^ Expected an identifier here
+  × expected `,` but instead found `{`
+  
+  × unexpected
+  
+    ┌─ computed.js:3:9
+    │
+  3 │ assert(#{ [key.toUpperCase()]: 1 } === #{ A: 1 })
+    │         ^
+  
+computed.js:3:41 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ computed.js:3:40
-  │
-3 │ assert(#{ [key.toUpperCase()]: 1 } === #{ A: 1 })
-  │                                        ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    ┌─ computed.js:3:41
+    │
+  3 │ assert(#{ [key.toUpperCase()]: 1 } === #{ A: 1 })
+    │                                         ^
+  
+computed.js:3:40 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `{`
-  ┌─ computed.js:3:41
-  │
-3 │ assert(#{ [key.toUpperCase()]: 1 } === #{ A: 1 })
-  │                                         ^ unexpected
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    ┌─ computed.js:3:40
+    │
+  3 │ assert(#{ [key.toUpperCase()]: 1 } === #{ A: 1 })
+    │                                        ^
+  
+computed.js:3:41 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ computed.js:5:9
-  │
-5 │ assert(#{ [true]: 1 } === #{ true: 1 })
-  │         ^ Expected an identifier here
+  × expected `,` but instead found `{`
+  
+  × unexpected
+  
+    ┌─ computed.js:3:41
+    │
+  3 │ assert(#{ [key.toUpperCase()]: 1 } === #{ A: 1 })
+    │                                         ^
+  
+computed.js:5:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ computed.js:5:8
-  │
-5 │ assert(#{ [true]: 1 } === #{ true: 1 })
-  │        ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    ┌─ computed.js:5:9
+    │
+  5 │ assert(#{ [true]: 1 } === #{ true: 1 })
+    │         ^
+  
+computed.js:5:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `{`
-  ┌─ computed.js:5:9
-  │
-5 │ assert(#{ [true]: 1 } === #{ true: 1 })
-  │         ^ unexpected
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    ┌─ computed.js:5:8
+    │
+  5 │ assert(#{ [true]: 1 } === #{ true: 1 })
+    │        ^
+  
+computed.js:5:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ computed.js:5:28
-  │
-5 │ assert(#{ [true]: 1 } === #{ true: 1 })
-  │                            ^ Expected an identifier here
+  × expected `,` but instead found `{`
+  
+  × unexpected
+  
+    ┌─ computed.js:5:9
+    │
+  5 │ assert(#{ [true]: 1 } === #{ true: 1 })
+    │         ^
+  
+computed.js:5:28 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ computed.js:5:27
-  │
-5 │ assert(#{ [true]: 1 } === #{ true: 1 })
-  │                           ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    ┌─ computed.js:5:28
+    │
+  5 │ assert(#{ [true]: 1 } === #{ true: 1 })
+    │                            ^
+  
+computed.js:5:27 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `{`
-  ┌─ computed.js:5:28
-  │
-5 │ assert(#{ [true]: 1 } === #{ true: 1 })
-  │                            ^ unexpected
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    ┌─ computed.js:5:27
+    │
+  5 │ assert(#{ [true]: 1 } === #{ true: 1 })
+    │                           ^
+  
+computed.js:5:28 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ computed.js:6:9
-  │
-6 │ assert(#{ [true]: 1 } === #{ ["true"]: 1 })
-  │         ^ Expected an identifier here
+  × expected `,` but instead found `{`
+  
+  × unexpected
+  
+    ┌─ computed.js:5:28
+    │
+  5 │ assert(#{ [true]: 1 } === #{ true: 1 })
+    │                            ^
+  
+computed.js:6:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ computed.js:6:8
-  │
-6 │ assert(#{ [true]: 1 } === #{ ["true"]: 1 })
-  │        ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    ┌─ computed.js:6:9
+    │
+  6 │ assert(#{ [true]: 1 } === #{ ["true"]: 1 })
+    │         ^
+  
+computed.js:6:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `{`
-  ┌─ computed.js:6:9
-  │
-6 │ assert(#{ [true]: 1 } === #{ ["true"]: 1 })
-  │         ^ unexpected
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    ┌─ computed.js:6:8
+    │
+  6 │ assert(#{ [true]: 1 } === #{ ["true"]: 1 })
+    │        ^
+  
+computed.js:6:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ computed.js:6:28
-  │
-6 │ assert(#{ [true]: 1 } === #{ ["true"]: 1 })
-  │                            ^ Expected an identifier here
+  × expected `,` but instead found `{`
+  
+  × unexpected
+  
+    ┌─ computed.js:6:9
+    │
+  6 │ assert(#{ [true]: 1 } === #{ ["true"]: 1 })
+    │         ^
+  
+computed.js:6:28 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ computed.js:6:27
-  │
-6 │ assert(#{ [true]: 1 } === #{ ["true"]: 1 })
-  │                           ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    ┌─ computed.js:6:28
+    │
+  6 │ assert(#{ [true]: 1 } === #{ ["true"]: 1 })
+    │                            ^
+  
+computed.js:6:27 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `{`
-  ┌─ computed.js:6:28
-  │
-6 │ assert(#{ [true]: 1 } === #{ ["true"]: 1 })
-  │                            ^ unexpected
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    ┌─ computed.js:6:27
+    │
+  6 │ assert(#{ [true]: 1 } === #{ ["true"]: 1 })
+    │                           ^
+  
+computed.js:6:28 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ computed.js:8:9
-  │
-8 │ assert(#{ [1 + 1]: "two" } === #{ 2: "two" })
-  │         ^ Expected an identifier here
+  × expected `,` but instead found `{`
+  
+  × unexpected
+  
+    ┌─ computed.js:6:28
+    │
+  6 │ assert(#{ [true]: 1 } === #{ ["true"]: 1 })
+    │                            ^
+  
+computed.js:8:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ computed.js:8:8
-  │
-8 │ assert(#{ [1 + 1]: "two" } === #{ 2: "two" })
-  │        ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    ┌─ computed.js:8:9
+    │
+  8 │ assert(#{ [1 + 1]: "two" } === #{ 2: "two" })
+    │         ^
+  
+computed.js:8:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `{`
-  ┌─ computed.js:8:9
-  │
-8 │ assert(#{ [1 + 1]: "two" } === #{ 2: "two" })
-  │         ^ unexpected
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    ┌─ computed.js:8:8
+    │
+  8 │ assert(#{ [1 + 1]: "two" } === #{ 2: "two" })
+    │        ^
+  
+computed.js:8:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ computed.js:8:33
-  │
-8 │ assert(#{ [1 + 1]: "two" } === #{ 2: "two" })
-  │                                 ^ Expected an identifier here
+  × expected `,` but instead found `{`
+  
+  × unexpected
+  
+    ┌─ computed.js:8:9
+    │
+  8 │ assert(#{ [1 + 1]: "two" } === #{ 2: "two" })
+    │         ^
+  
+computed.js:8:33 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ computed.js:8:32
-  │
-8 │ assert(#{ [1 + 1]: "two" } === #{ 2: "two" })
-  │                                ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    ┌─ computed.js:8:33
+    │
+  8 │ assert(#{ [1 + 1]: "two" } === #{ 2: "two" })
+    │                                 ^
+  
+computed.js:8:32 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `{`
-  ┌─ computed.js:8:33
-  │
-8 │ assert(#{ [1 + 1]: "two" } === #{ 2: "two" })
-  │                                 ^ unexpected
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    ┌─ computed.js:8:32
+    │
+  8 │ assert(#{ [1 + 1]: "two" } === #{ 2: "two" })
+    │                                ^
+  
+computed.js:8:33 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ computed.js:9:9
-  │
-9 │ assert(#{ [9 + 1]: "ten" } === #{ ["10"]: "ten" })
-  │         ^ Expected an identifier here
+  × expected `,` but instead found `{`
+  
+  × unexpected
+  
+    ┌─ computed.js:8:33
+    │
+  8 │ assert(#{ [1 + 1]: "two" } === #{ 2: "two" })
+    │                                 ^
+  
+computed.js:9:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ computed.js:9:8
-  │
-9 │ assert(#{ [9 + 1]: "ten" } === #{ ["10"]: "ten" })
-  │        ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    ┌─ computed.js:9:9
+    │
+  9 │ assert(#{ [9 + 1]: "ten" } === #{ ["10"]: "ten" })
+    │         ^
+  
+computed.js:9:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `{`
-  ┌─ computed.js:9:9
-  │
-9 │ assert(#{ [9 + 1]: "ten" } === #{ ["10"]: "ten" })
-  │         ^ unexpected
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    ┌─ computed.js:9:8
+    │
+  9 │ assert(#{ [9 + 1]: "ten" } === #{ ["10"]: "ten" })
+    │        ^
+  
+computed.js:9:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ computed.js:9:33
-  │
-9 │ assert(#{ [9 + 1]: "ten" } === #{ ["10"]: "ten" })
-  │                                 ^ Expected an identifier here
+  × expected `,` but instead found `{`
+  
+  × unexpected
+  
+    ┌─ computed.js:9:9
+    │
+  9 │ assert(#{ [9 + 1]: "ten" } === #{ ["10"]: "ten" })
+    │         ^
+  
+computed.js:9:33 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ computed.js:9:32
-  │
-9 │ assert(#{ [9 + 1]: "ten" } === #{ ["10"]: "ten" })
-  │                                ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    ┌─ computed.js:9:33
+    │
+  9 │ assert(#{ [9 + 1]: "ten" } === #{ ["10"]: "ten" })
+    │                                 ^
+  
+computed.js:9:32 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `{`
-  ┌─ computed.js:9:33
-  │
-9 │ assert(#{ [9 + 1]: "ten" } === #{ ["10"]: "ten" })
-  │                                 ^ unexpected
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    ┌─ computed.js:9:32
+    │
+  9 │ assert(#{ [9 + 1]: "ten" } === #{ ["10"]: "ten" })
+    │                                ^
+  
+computed.js:9:33 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `{`
+  
+  × unexpected
+  
+    ┌─ computed.js:9:33
+    │
+  9 │ assert(#{ [9 + 1]: "ten" } === #{ ["10"]: "ten" })
+    │                                 ^
+  
 
 ```
 

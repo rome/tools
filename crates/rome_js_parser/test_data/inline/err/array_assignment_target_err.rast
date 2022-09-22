@@ -293,56 +293,96 @@ JsModule {
       1: (empty)
   3: EOF@100..101 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `,` but instead found `a`
-  ┌─ array_assignment_target_err.js:1:4
-  │
-1 │ [a a, ++b, ] = test;
-  │    ^ unexpected
+array_assignment_target_err.js:1:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `a`
+  
+  × unexpected
+  
+    ┌─ array_assignment_target_err.js:1:4
+    │
+  1 │ [a a, ++b, ] = test;
+    │    ^
+  
 --
-error[SyntaxError]: Invalid assignment to `++b`
-  ┌─ array_assignment_target_err.js:1:7
-  │
-1 │ [a a, ++b, ] = test;
-  │       ^^^ This expression cannot be assigned to
+array_assignment_target_err.js:1:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Invalid assignment to `++b`
+  
+  × This expression cannot be assigned to
+  
+    ┌─ array_assignment_target_err.js:1:7
+    │
+  1 │ [a a, ++b, ] = test;
+    │       ^^^
+  
 --
-error[SyntaxError]: rest element may not have a trailing comma
-  ┌─ array_assignment_target_err.js:2:15
-  │
-2 │ [a, c, ...rest,] = test;
-  │        -------^ Remove the trailing comma here
-  │        │       
-  │        Rest element
+array_assignment_target_err.js:2:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × rest element may not have a trailing comma
+  
+  × Remove the trailing comma here
+  
+    ┌─ array_assignment_target_err.js:2:15
+    │
+  2 │ [a, c, ...rest,] = test;
+    │               ^
+  
+  i Rest element
+  
+    ┌─ array_assignment_target_err.js:2:8
+    │
+  2 │ [a, c, ...rest,] = test;
+    │        ^^^^^^^
+  
 --
-error[SyntaxError]: expected an expression, or an assignment but instead found ','
-  ┌─ array_assignment_target_err.js:3:6
-  │
-3 │ [a = , = "test"] = test;
-  │      ^ Expected an expression, or an assignment here
+array_assignment_target_err.js:3:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an expression, or an assignment but instead found ','
+  
+  × Expected an expression, or an assignment here
+  
+    ┌─ array_assignment_target_err.js:3:6
+    │
+  3 │ [a = , = "test"] = test;
+    │      ^
+  
 --
-error[SyntaxError]: expected an identifier, or an assignment target but instead found '='
-  ┌─ array_assignment_target_err.js:3:8
-  │
-3 │ [a = , = "test"] = test;
-  │        ^ Expected an identifier, or an assignment target here
+array_assignment_target_err.js:3:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier, or an assignment target but instead found '='
+  
+  × Expected an identifier, or an assignment target here
+  
+    ┌─ array_assignment_target_err.js:3:8
+    │
+  3 │ [a = , = "test"] = test;
+    │        ^
+  
 --
-error[SyntaxError]: expected `,` but instead found `b`
-  ┌─ array_assignment_target_err.js:4:5
-  │
-4 │ [[a b] [c]]= test;
-  │     ^ unexpected
+array_assignment_target_err.js:4:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `b`
+  
+  × unexpected
+  
+    ┌─ array_assignment_target_err.js:4:5
+    │
+  4 │ [[a b] [c]]= test;
+    │     ^
+  
 --
-error[SyntaxError]: expected `,` but instead found `:`
-  ┌─ array_assignment_target_err.js:5:3
-  │
-5 │ [a: b] = c
-  │   ^ unexpected
+array_assignment_target_err.js:5:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `:`
+  
+  × unexpected
+  
+    ┌─ array_assignment_target_err.js:5:3
+    │
+  5 │ [a: b] = c
+    │   ^
+  
 --
 [a a, ++b, ] = test;
 [a, c, ...rest,] = test;

@@ -18,45 +18,68 @@ try {
 
 # Diagnostics
 ```
-warning[correctness/noCatchAssign]:  Do not reassign catch parameters.
-  ┌─ noCatchAssign.js:2:24
-  │
-2 │ try { } catch (e) { e; e = 10; }
-  │                -       -
-  │                │        
-  │                The catch parameter is declared here
+noCatchAssign.js:2:24 lint/correctness/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Use a local variable instead.
-
-
-```
-
-```
-warning[correctness/noCatchAssign]:  Do not reassign catch parameters.
-  ┌─ noCatchAssign.js:6:3
-  │
-5 │ } catch (error) {
-  │          ----- The catch parameter is declared here
-6 │   error = 100;
-  │   -----
-
-=  note: Use a local variable instead.
-
+  !  Do not reassign catch parameters.
+  
+    ┌─ noCatchAssign.js:2:24
+    │
+  2 │ try { } catch (e) { e; e = 10; }
+    │                        ^
+  
+  i The catch parameter is declared here
+  
+    ┌─ noCatchAssign.js:2:16
+    │
+  2 │ try { } catch (e) { e; e = 10; }
+    │                ^
+  
+  i Use a local variable instead.
+  
 
 ```
 
 ```
-warning[correctness/noCatchAssign]:  Do not reassign catch parameters.
-  ┌─ noCatchAssign.js:8:5
-  │
-5 │ } catch (error) {
-  │          ----- The catch parameter is declared here
-  ·
-8 │     error = 10;
-  │     -----
+noCatchAssign.js:6:3 lint/correctness/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Use a local variable instead.
+  !  Do not reassign catch parameters.
+  
+    ┌─ noCatchAssign.js:6:3
+    │
+  6 │   error = 100;
+    │   ^^^^^
+  
+  i The catch parameter is declared here
+  
+    ┌─ noCatchAssign.js:5:10
+    │
+  5 │ } catch (error) {
+    │          ^^^^^
+  
+  i Use a local variable instead.
+  
 
+```
+
+```
+noCatchAssign.js:8:5 lint/correctness/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  !  Do not reassign catch parameters.
+  
+    ┌─ noCatchAssign.js:8:5
+    │
+  8 │     error = 10;
+    │     ^^^^^
+  
+  i The catch parameter is declared here
+  
+    ┌─ noCatchAssign.js:5:10
+    │
+  5 │ } catch (error) {
+    │          ^^^^^
+  
+  i Use a local variable instead.
+  
 
 ```
 

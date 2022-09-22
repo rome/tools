@@ -13,56 +13,68 @@ foo && foo[typeof bar] && foo[typeof bar].baz;
 
 # Diagnostics
 ```
-warning[nursery/useOptionalChain]: Change to an optional chain.
-  ┌─ complexLogicalAndCases.ts:2:1
-  │
-2 │ foo && foo[bar as string] && foo[bar as string].baz;
-  │ -------------------------
+complexLogicalAndCases.ts:2:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Change to an optional chain.
-    | @@ -1,4 +1,4 @@
-0 0 |   // currently do not handle complex computed properties
-1   | - foo && foo[bar as string] && foo[bar as string].baz;
-  1 | + foo?.[bar as string] && foo[bar as string].baz;
-2 2 |   foo && foo[1 + 2] && foo[1 + 2].baz;
-3 3 |   foo && foo[typeof bar] && foo[typeof bar].baz;
-
-
-```
-
-```
-warning[nursery/useOptionalChain]: Change to an optional chain.
-  ┌─ complexLogicalAndCases.ts:3:1
-  │
-3 │ foo && foo[1 + 2] && foo[1 + 2].baz;
-  │ -----------------
-
-Suggested fix: Change to an optional chain.
-    | @@ -1,4 +1,4 @@
-0 0 |   // currently do not handle complex computed properties
-1 1 |   foo && foo[bar as string] && foo[bar as string].baz;
-2   | - foo && foo[1 + 2] && foo[1 + 2].baz;
-  2 | + foo?.[1 + 2] && foo[1 + 2].baz;
-3 3 |   foo && foo[typeof bar] && foo[typeof bar].baz;
-
+  ! Change to an optional chain.
+  
+    ┌─ complexLogicalAndCases.ts:2:1
+    │
+  2 │ foo && foo[bar as string] && foo[bar as string].baz;
+    │ ^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i Suggested fix: Change to an optional chain.
+  
+      | @@ -1,4 +1,4 @@
+  0 0 |   // currently do not handle complex computed properties
+  1   | - foo && foo[bar as string] && foo[bar as string].baz;
+    1 | + foo?.[bar as string] && foo[bar as string].baz;
+  2 2 |   foo && foo[1 + 2] && foo[1 + 2].baz;
+  3 3 |   foo && foo[typeof bar] && foo[typeof bar].baz;
+  
 
 ```
 
 ```
-warning[nursery/useOptionalChain]: Change to an optional chain.
-  ┌─ complexLogicalAndCases.ts:4:1
-  │
-4 │ foo && foo[typeof bar] && foo[typeof bar].baz;
-  │ ----------------------
+complexLogicalAndCases.ts:3:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Change to an optional chain.
-    | @@ -1,4 +1,4 @@
-0 0 |   // currently do not handle complex computed properties
-1 1 |   foo && foo[bar as string] && foo[bar as string].baz;
-2 2 |   foo && foo[1 + 2] && foo[1 + 2].baz;
-3   | - foo && foo[typeof bar] && foo[typeof bar].baz;
-  3 | + foo?.[typeof bar] && foo[typeof bar].baz;
+  ! Change to an optional chain.
+  
+    ┌─ complexLogicalAndCases.ts:3:1
+    │
+  3 │ foo && foo[1 + 2] && foo[1 + 2].baz;
+    │ ^^^^^^^^^^^^^^^^^
+  
+  i Suggested fix: Change to an optional chain.
+  
+      | @@ -1,4 +1,4 @@
+  0 0 |   // currently do not handle complex computed properties
+  1 1 |   foo && foo[bar as string] && foo[bar as string].baz;
+  2   | - foo && foo[1 + 2] && foo[1 + 2].baz;
+    2 | + foo?.[1 + 2] && foo[1 + 2].baz;
+  3 3 |   foo && foo[typeof bar] && foo[typeof bar].baz;
+  
 
+```
+
+```
+complexLogicalAndCases.ts:4:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Change to an optional chain.
+  
+    ┌─ complexLogicalAndCases.ts:4:1
+    │
+  4 │ foo && foo[typeof bar] && foo[typeof bar].baz;
+    │ ^^^^^^^^^^^^^^^^^^^^^^
+  
+  i Suggested fix: Change to an optional chain.
+  
+      | @@ -1,4 +1,4 @@
+  0 0 |   // currently do not handle complex computed properties
+  1 1 |   foo && foo[bar as string] && foo[bar as string].baz;
+  2 2 |   foo && foo[1 + 2] && foo[1 + 2].baz;
+  3   | - foo && foo[typeof bar] && foo[typeof bar].baz;
+    3 | + foo?.[typeof bar] && foo[typeof bar].baz;
+  
 
 ```
 

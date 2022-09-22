@@ -88,11 +88,16 @@ JsModule {
       1: (empty)
   3: EOF@34..35 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `>` but instead found `5`
-  ┌─ jsx_fragment_closing_missing_r_angle.jsx:1:15
-  │
-1 │ <div><>test</ 5 more content</div>
-  │               ^ unexpected
+jsx_fragment_closing_missing_r_angle.jsx:1:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `>` but instead found `5`
+  
+  × unexpected
+  
+    ┌─ jsx_fragment_closing_missing_r_angle.jsx:1:15
+    │
+  1 │ <div><>test</ 5 more content</div>
+    │               ^
+  
 --
 <div><>test</ 5 more content</div>

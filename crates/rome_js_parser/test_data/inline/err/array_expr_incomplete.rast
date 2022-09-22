@@ -49,11 +49,16 @@ JsModule {
       1: (empty)
   3: EOF@9..10 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `]` but instead the file ends
-  ┌─ array_expr_incomplete.js:2:1
-  │
-2 │ 
-  │ ^ the file ends here
+array_expr_incomplete.js:2:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `]` but instead the file ends
+  
+  × the file ends here
+  
+    ┌─ array_expr_incomplete.js:2:1
+    │
+  2 │ 
+    │ ^
+  
 --
 let a = [

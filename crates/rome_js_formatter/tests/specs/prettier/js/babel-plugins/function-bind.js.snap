@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\babel-plugins\\function-bind.js"
 ---
 
 # Input
@@ -85,12 +87,17 @@ obj.func.call(obj, val)
 
 # Errors
 ```
-error[SyntaxError]: expected a statement but instead found ':'
-  ┌─ function-bind.js:3:5
-  │
-3 │ obj::func
-  │     ^ Expected a statement here
+function-bind.js:3:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a statement but instead found ':'
+  
+  × Expected a statement here
+  
+    ┌─ function-bind.js:3:5
+    │
+  3 │ obj::func
+    │     ^
+  
 
 ```
 

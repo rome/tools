@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\babel-plugins\\async-do-expressions.js"
 ---
 
 # Input
@@ -32,21 +34,35 @@ do { await requestAPI().json() };
 
 # Errors
 ```
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ async-do-expressions.js:1:7
-  │
-1 │ async do { await requestAPI().json() };
-  │ ------^^
-  │ │     │
-  │ │     An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
+async-do-expressions.js:1:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `while` but instead found `;`
-  ┌─ async-do-expressions.js:1:39
-  │
-1 │ async do { await requestAPI().json() };
-  │                                       ^ unexpected
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ async-do-expressions.js:1:7
+    │
+  1 │ async do { await requestAPI().json() };
+    │       ^^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ async-do-expressions.js:1:1
+    │
+  1 │ async do { await requestAPI().json() };
+    │ ^^^^^^^^
+  
+async-do-expressions.js:1:39 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `while` but instead found `;`
+  
+  × unexpected
+  
+    ┌─ async-do-expressions.js:1:39
+    │
+  1 │ async do { await requestAPI().json() };
+    │                                       ^
+  
 
 ```
 

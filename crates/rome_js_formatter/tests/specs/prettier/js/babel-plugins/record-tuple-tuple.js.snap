@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\babel-plugins\\record-tuple-tuple.js"
 ---
 
 # Input
@@ -30,26 +32,44 @@ const tuple1 = #;
 
 # Errors
 ```
-error[SyntaxError]: expected an identifier but instead found '['
-  ┌─ record-tuple-tuple.js:1:17
-  │
-1 │ const tuple1 = #[1, 2, 3];
-  │                 ^ Expected an identifier here
+record-tuple-tuple.js:1:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ record-tuple-tuple.js:1:16
-  │
-1 │ const tuple1 = #[1, 2, 3];
-  │                ^
+  × expected an identifier but instead found '['
+  
+  × Expected an identifier here
+  
+    ┌─ record-tuple-tuple.js:1:17
+    │
+  1 │ const tuple1 = #[1, 2, 3];
+    │                 ^
+  
+record-tuple-tuple.js:1:16 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ record-tuple-tuple.js:1:17
-  │
-1 │ const tuple1 = #[1, 2, 3];
-  │ ----------------^ An explicit or implicit semicolon is expected here...
-  │ │                
-  │ ...Which is required to end this statement
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    ┌─ record-tuple-tuple.js:1:16
+    │
+  1 │ const tuple1 = #[1, 2, 3];
+    │                ^
+  
+record-tuple-tuple.js:1:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ record-tuple-tuple.js:1:17
+    │
+  1 │ const tuple1 = #[1, 2, 3];
+    │                 ^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ record-tuple-tuple.js:1:1
+    │
+  1 │ const tuple1 = #[1, 2, 3];
+    │ ^^^^^^^^^^^^^^^^
+  
 
 ```
 

@@ -71,19 +71,27 @@ JsModule {
       8: R_CURLY@18..20 "}" [Newline("\n")] []
   3: EOF@20..21 "" [Newline("\n")] []
 --
-error[SyntaxError]: Unexpected space or comment between `#` and identifier
-  ┌─ private_name_with_space.js:2:3
-  │
-2 │     # test;
-  │      ^ remove the space here
+private_name_with_space.js:2:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Unexpected space or comment between `#` and identifier
+  
+  × remove the space here
+  
+    ┌─ private_name_with_space.js:2:3
+    │
+  2 │     # test;
+    │      ^
+  
 --
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-  ┌─ private_name_with_space.js:2:2
-  │
-2 │     # test;
-  │     ^
+private_name_with_space.js:2:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a semicolon to end the class property, but found none
+  
+    ┌─ private_name_with_space.js:2:2
+    │
+  2 │     # test;
+    │     ^
+  
 --
 class A {
 	# test;

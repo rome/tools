@@ -159,28 +159,48 @@ JsModule {
       1: SEMICOLON@78..79 ";" [] []
   3: EOF@79..80 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected an identifier, or an assignment target but instead found ''
-  ┌─ array_assignment_target_rest_err.js:1:7
-  │
-1 │ ([ ... ] = a);
-  │       ^ Expected an identifier, or an assignment target here
+array_assignment_target_rest_err.js:1:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier, or an assignment target but instead found ''
+  
+  × Expected an identifier, or an assignment target here
+  
+    ┌─ array_assignment_target_rest_err.js:1:7
+    │
+  1 │ ([ ... ] = a);
+    │       ^
+  
 --
-error[SyntaxError]: rest element cannot have a default
-  ┌─ array_assignment_target_rest_err.js:2:9
-  │
-2 │ ([ ...c = "default" ] = a);
-  │    ---- ^^^^^^^^^^^^ Remove the default value here
-  │    │     
-  │    Rest element
+array_assignment_target_rest_err.js:2:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × rest element cannot have a default
+  
+  × Remove the default value here
+  
+    ┌─ array_assignment_target_rest_err.js:2:9
+    │
+  2 │ ([ ...c = "default" ] = a);
+    │         ^^^^^^^^^^^^
+  
+  i Rest element
+  
+    ┌─ array_assignment_target_rest_err.js:2:4
+    │
+  2 │ ([ ...c = "default" ] = a);
+    │    ^^^^
+  
 --
-error[SyntaxError]: rest element must be the last element
-  ┌─ array_assignment_target_rest_err.js:3:4
-  │
-3 │ ([ ...rest, other_assignment ] = a);
-  │    ^^^^^^^ Move the rest element to the end of the pattern, right before the closing ']'
+array_assignment_target_rest_err.js:3:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × rest element must be the last element
+  
+  × Move the rest element to the end of the pattern, right before the closing ']'
+  
+    ┌─ array_assignment_target_rest_err.js:3:4
+    │
+  3 │ ([ ...rest, other_assignment ] = a);
+    │    ^^^^^^^
+  
 --
 ([ ... ] = a);
 ([ ...c = "default" ] = a);

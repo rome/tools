@@ -177,28 +177,48 @@ JsModule {
       1: SEMICOLON@84..85 ";" [] []
   3: EOF@85..86 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected an identifier, an array pattern, or an object pattern but instead found ''
-  ┌─ array_binding_rest_err.js:1:10
-  │
-1 │ let [ ... ] = a;
-  │          ^ Expected an identifier, an array pattern, or an object pattern here
+array_binding_rest_err.js:1:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier, an array pattern, or an object pattern but instead found ''
+  
+  × Expected an identifier, an array pattern, or an object pattern here
+  
+    ┌─ array_binding_rest_err.js:1:10
+    │
+  1 │ let [ ... ] = a;
+    │          ^
+  
 --
-error[SyntaxError]: rest element cannot have a default
-  ┌─ array_binding_rest_err.js:2:12
-  │
-2 │ let [ ...c = "default" ] = a;
-  │       ---- ^^^^^^^^^^^^ Remove the default value here
-  │       │     
-  │       Rest element
+array_binding_rest_err.js:2:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × rest element cannot have a default
+  
+  × Remove the default value here
+  
+    ┌─ array_binding_rest_err.js:2:12
+    │
+  2 │ let [ ...c = "default" ] = a;
+    │            ^^^^^^^^^^^^
+  
+  i Rest element
+  
+    ┌─ array_binding_rest_err.js:2:7
+    │
+  2 │ let [ ...c = "default" ] = a;
+    │       ^^^^
+  
 --
-error[SyntaxError]: rest element must be the last element
-  ┌─ array_binding_rest_err.js:3:7
-  │
-3 │ let [ ...rest, other_assignment ] = a;
-  │       ^^^^^^^ Move the rest element to the end of the pattern, right before the closing ']'
+array_binding_rest_err.js:3:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × rest element must be the last element
+  
+  × Move the rest element to the end of the pattern, right before the closing ']'
+  
+    ┌─ array_binding_rest_err.js:3:7
+    │
+  3 │ let [ ...rest, other_assignment ] = a;
+    │       ^^^^^^^
+  
 --
 let [ ... ] = a;
 let [ ...c = "default" ] = a;

@@ -27,16 +27,20 @@ debugger;
 # Emitted Messages
 
 ```block
-warning[correctness/noDebugger]: This is an unexpected use of the debugger statement.
-  ┌─ file.js:1:1
-  │
-1 │ debugger;
-  │ ---------
+file.js:1:1 lint/correctness/noDebugger  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Remove debugger statement
-    | @@ -1 +0,0 @@
-0   | - debugger;
-
+  ! This is an unexpected use of the debugger statement.
+  
+    ┌─ file.js:1:1
+    │
+  1 │ debugger;
+    │ ^^^^^^^^^
+  
+  i Suggested fix: Remove debugger statement
+  
+      | @@ -1 +0,0 @@
+  0   | - debugger;
+  
 
 ```
 

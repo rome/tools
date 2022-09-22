@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: js/record/spread.js
+  test_file: "js\\record\\spread.js"
 ---
 
 # Input
@@ -68,99 +68,180 @@ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
 
 # Errors
 ```
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ spread.js:1:19
-  │
-1 │ const formData = #{ title: "Implement all the things" }
-  │                   ^ Expected an identifier here
+spread.js:1:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ spread.js:1:18
-  │
-1 │ const formData = #{ title: "Implement all the things" }
-  │                  ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    ┌─ spread.js:1:19
+    │
+  1 │ const formData = #{ title: "Implement all the things" }
+    │                   ^
+  
+spread.js:1:18 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ spread.js:1:19
-  │
-1 │ const formData = #{ title: "Implement all the things" }
-  │ ------------------^ An explicit or implicit semicolon is expected here...
-  │ │                  
-  │ ...Which is required to end this statement
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    ┌─ spread.js:1:18
+    │
+  1 │ const formData = #{ title: "Implement all the things" }
+    │                  ^
+  
+spread.js:1:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ spread.js:2:18
-  │
-2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
-  │                  ^ Expected an identifier here
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ spread.js:1:19
+    │
+  1 │ const formData = #{ title: "Implement all the things" }
+    │                   ^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ spread.js:1:1
+    │
+  1 │ const formData = #{ title: "Implement all the things" }
+    │ ^^^^^^^^^^^^^^^^^^
+  
+spread.js:2:18 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ spread.js:2:17
-  │
-2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
-  │                 ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    ┌─ spread.js:2:18
+    │
+  2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+    │                  ^
+  
+spread.js:2:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ spread.js:2:18
-  │
-2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
-  │ -----------------^ An explicit or implicit semicolon is expected here...
-  │ │                 
-  │ ...Which is required to end this statement
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    ┌─ spread.js:2:17
+    │
+  2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+    │                 ^
+  
+spread.js:2:18 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ spread.js:2:34
-  │
-2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
-  │                        ----------^
-  │                        │         │
-  │                        │         An explicit or implicit semicolon is expected here...
-  │                        ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ spread.js:2:18
+    │
+  2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+    │                  ^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ spread.js:2:1
+    │
+  2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+    │ ^^^^^^^^^^^^^^^^^
+  
+spread.js:2:34 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ spread.js:3:20
-  │
-3 │ const taskLater = #{ ...taskNow, status: "DONE" }
-  │                    ^ Expected an identifier here
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ spread.js:2:34
+    │
+  2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+    │                                  ^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ spread.js:2:24
+    │
+  2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+    │                        ^^^^^^^^^^^
+  
+spread.js:3:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ spread.js:3:19
-  │
-3 │ const taskLater = #{ ...taskNow, status: "DONE" }
-  │                   ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    ┌─ spread.js:3:20
+    │
+  3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+    │                    ^
+  
+spread.js:3:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ spread.js:3:20
-  │
-3 │ const taskLater = #{ ...taskNow, status: "DONE" }
-  │ -------------------^ An explicit or implicit semicolon is expected here...
-  │ │                   
-  │ ...Which is required to end this statement
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    ┌─ spread.js:3:19
+    │
+  3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+    │                   ^
+  
+spread.js:3:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an expression but instead found '...taskNow, status: "DONE"'
-  ┌─ spread.js:3:22
-  │
-3 │ const taskLater = #{ ...taskNow, status: "DONE" }
-  │                      ^^^^^^^^^^^^^^^^^^^^^^^^^^ Expected an expression here
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ spread.js:3:20
+    │
+  3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+    │                    ^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ spread.js:3:1
+    │
+  3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+    │ ^^^^^^^^^^^^^^^^^^^
+  
+spread.js:3:22 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ spread.js:6:23
-  │
-6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
-  │                       ^ Expected an identifier here
+  × expected an expression but instead found '...taskNow, status: "DONE"'
+  
+  × Expected an expression here
+  
+    ┌─ spread.js:3:22
+    │
+  3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+    │                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+spread.js:6:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ spread.js:6:22
-  │
-6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
-  │                      ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    ┌─ spread.js:6:23
+    │
+  6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
+    │                       ^
+  
+spread.js:6:22 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `{`
-  ┌─ spread.js:6:23
-  │
-6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
-  │                       ^ unexpected
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    ┌─ spread.js:6:22
+    │
+  6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
+    │                      ^
+  
+spread.js:6:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `{`
+  
+  × unexpected
+  
+    ┌─ spread.js:6:23
+    │
+  6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
+    │                       ^
+  
 
 ```
 
