@@ -1,4 +1,3 @@
-#![allow(rustdoc::broken_intra_doc_links)]
 use std::collections::BinaryHeap;
 
 use rome_diagnostics::file::FileId;

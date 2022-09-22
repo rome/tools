@@ -80,7 +80,7 @@ impl Rule for UseTemplate {
                     )
                 )
             })
-            .then_some( collections)
+            .then_some(collections)
     }
 
     fn suppressed_nodes(
