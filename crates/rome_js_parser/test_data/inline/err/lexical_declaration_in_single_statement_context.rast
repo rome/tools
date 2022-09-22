@@ -104,7 +104,7 @@ JsModule {
         1: SEMICOLON@41..42 ";" [] []
   3: EOF@42..43 "" [Newline("\n")] []
 --
-lexical_declaration_in_single_statement_context.js:1:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+lexical_declaration_in_single_statement_context.js:1:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Lexical declaration cannot appear in a single-statement context
   
@@ -116,7 +116,7 @@ lexical_declaration_in_single_statement_context.js:1:11 SyntaxError ━━━━
     │           ^^^^^^
   
 --
-lexical_declaration_in_single_statement_context.js:2:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+lexical_declaration_in_single_statement_context.js:2:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Lexical declaration cannot appear in a single-statement context
   

@@ -184,7 +184,7 @@ JsModule {
       1: (empty)
   3: EOF@76..77 "" [Newline("\n")] []
 --
-template_after_optional_chain.js:1:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+template_after_optional_chain.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Tagged template expressions are not permitted in an optional chain.
   
@@ -194,7 +194,7 @@ template_after_optional_chain.js:1:1 SyntaxError ━━━━━━━━━━�
     │ ^^^^^^^^^^^^^^^^^^^^^^^
   
 --
-template_after_optional_chain.js:2:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+template_after_optional_chain.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Tagged template expressions are not permitted in an optional chain.
   
@@ -204,7 +204,7 @@ template_after_optional_chain.js:2:1 SyntaxError ━━━━━━━━━━�
     │ ^^^^^^^^^^^^^^^^^^^^^^^^^
   
 --
-template_after_optional_chain.js:3:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+template_after_optional_chain.js:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Tagged template expressions are not permitted in an optional chain.
   

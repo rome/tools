@@ -52,7 +52,7 @@ class Foo {
 
 # Errors
 ```
-duplicates-access-modifier.ts:2:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+duplicates-access-modifier.ts:2:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Accessibility modifier already seen.
   
@@ -70,7 +70,7 @@ duplicates-access-modifier.ts:2:10 SyntaxError ━━━━━━━━━━━
   2 │   public public a;
     │   ^^^^^^
   
-duplicates-access-modifier.ts:3:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+duplicates-access-modifier.ts:3:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Accessibility modifier already seen.
   
@@ -88,7 +88,7 @@ duplicates-access-modifier.ts:3:11 SyntaxError ━━━━━━━━━━━
   3 │   private public b;
     │   ^^^^^^^
   
-duplicates-access-modifier.ts:4:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+duplicates-access-modifier.ts:4:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Accessibility modifier already seen.
   
@@ -106,7 +106,7 @@ duplicates-access-modifier.ts:4:13 SyntaxError ━━━━━━━━━━━
   4 │   protected private c;
     │   ^^^^^^^^^
   
-duplicates-access-modifier.ts:5:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+duplicates-access-modifier.ts:5:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Accessibility modifier already seen.
   
@@ -124,7 +124,7 @@ duplicates-access-modifier.ts:5:10 SyntaxError ━━━━━━━━━━━
   5 │   public protected d;
     │   ^^^^^^
   
-duplicates-access-modifier.ts:6:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+duplicates-access-modifier.ts:6:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Accessibility modifier already seen.
   
@@ -142,7 +142,7 @@ duplicates-access-modifier.ts:6:10 SyntaxError ━━━━━━━━━━━
   6 │   public protected private e;
     │   ^^^^^^
   
-duplicates-access-modifier.ts:6:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+duplicates-access-modifier.ts:6:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Accessibility modifier already seen.
   

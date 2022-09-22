@@ -192,7 +192,7 @@ JsModule {
       8: R_CURLY@162..164 "}" [Newline("\n")] []
   3: EOF@164..165 "" [Newline("\n")] []
 --
-ts_invalid_decorated_class_members.ts:6:29 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_invalid_decorated_class_members.ts:6:29 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a parameter but instead found ')'
   

@@ -106,7 +106,7 @@ JsModule {
       8: R_CURLY@31..32 "}" [] []
   3: EOF@32..33 "" [Newline("\n")] []
 --
-ts_constructor_type_parameters.ts:1:22 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_constructor_type_parameters.ts:1:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × constructors cannot have type parameters.
   

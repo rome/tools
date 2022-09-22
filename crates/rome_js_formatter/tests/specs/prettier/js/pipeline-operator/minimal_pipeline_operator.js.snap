@@ -199,7 +199,7 @@ const result2 = [4, 9].map( x => x |> inc |> double )
 
 # Errors
 ```
-minimal_pipeline_operator.js:1:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:1:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -210,7 +210,7 @@ minimal_pipeline_operator.js:1:4 SyntaxError ━━━━━━━━━━━�
   1 │ a |> b |> c;
     │    ^
   
-minimal_pipeline_operator.js:1:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:1:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -221,7 +221,7 @@ minimal_pipeline_operator.js:1:9 SyntaxError ━━━━━━━━━━━�
   1 │ a |> b |> c;
     │         ^
   
-minimal_pipeline_operator.js:3:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:3:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -232,7 +232,7 @@ minimal_pipeline_operator.js:3:4 SyntaxError ━━━━━━━━━━━�
   3 │ a |> (b |> c);
     │    ^
   
-minimal_pipeline_operator.js:3:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:3:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -243,7 +243,7 @@ minimal_pipeline_operator.js:3:10 SyntaxError ━━━━━━━━━━━�
   3 │ a |> (b |> c);
     │          ^
   
-minimal_pipeline_operator.js:5:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:5:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -254,7 +254,7 @@ minimal_pipeline_operator.js:5:5 SyntaxError ━━━━━━━━━━━�
   5 │ (a |> b) || c;
     │     ^
   
-minimal_pipeline_operator.js:6:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:6:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -265,7 +265,7 @@ minimal_pipeline_operator.js:6:4 SyntaxError ━━━━━━━━━━━�
   6 │ a |> (b || c);
     │    ^
   
-minimal_pipeline_operator.js:9:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:9:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -276,7 +276,7 @@ minimal_pipeline_operator.js:9:4 SyntaxError ━━━━━━━━━━━�
   9 │   |> doubleSay
     │    ^
   
-minimal_pipeline_operator.js:10:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:10:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -287,7 +287,7 @@ minimal_pipeline_operator.js:10:4 SyntaxError ━━━━━━━━━━━�
   10 │   |> capitalize
      │    ^
   
-minimal_pipeline_operator.js:11:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:11:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -298,7 +298,7 @@ minimal_pipeline_operator.js:11:4 SyntaxError ━━━━━━━━━━━�
   11 │   |> exclaim;
      │    ^
   
-minimal_pipeline_operator.js:14:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:14:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -309,7 +309,7 @@ minimal_pipeline_operator.js:14:4 SyntaxError ━━━━━━━━━━━�
   14 │   |> double
      │    ^
   
-minimal_pipeline_operator.js:15:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:15:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -320,7 +320,7 @@ minimal_pipeline_operator.js:15:4 SyntaxError ━━━━━━━━━━━�
   15 │   |> (_ => add(7, _))
      │    ^
   
-minimal_pipeline_operator.js:16:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:16:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -331,7 +331,7 @@ minimal_pipeline_operator.js:16:4 SyntaxError ━━━━━━━━━━━�
   16 │   |> (_ => subtract(2, _))
      │    ^
   
-minimal_pipeline_operator.js:17:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:17:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -342,7 +342,7 @@ minimal_pipeline_operator.js:17:4 SyntaxError ━━━━━━━━━━━�
   17 │   |> (_ => boundScore(0, 100, _));
      │    ^
   
-minimal_pipeline_operator.js:21:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:21:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -353,7 +353,7 @@ minimal_pipeline_operator.js:21:6 SyntaxError ━━━━━━━━━━━�
   21 │     |> bounded('age', 1, 100)
      │      ^
   
-minimal_pipeline_operator.js:22:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:22:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -364,7 +364,7 @@ minimal_pipeline_operator.js:22:6 SyntaxError ━━━━━━━━━━━�
   22 │     |> format('name', /^[a-z]$/i)
      │      ^
   
-minimal_pipeline_operator.js:23:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:23:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -375,7 +375,7 @@ minimal_pipeline_operator.js:23:6 SyntaxError ━━━━━━━━━━━�
   23 │     |> Person.insertIntoDatabase;
      │      ^
   
-minimal_pipeline_operator.js:26:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:26:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -386,7 +386,7 @@ minimal_pipeline_operator.js:26:6 SyntaxError ━━━━━━━━━━━�
   26 │ foo |> (bar ?? baz);
      │      ^
   
-minimal_pipeline_operator.js:27:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:27:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -397,7 +397,7 @@ minimal_pipeline_operator.js:27:7 SyntaxError ━━━━━━━━━━━�
   27 │ (foo |> bar) ?? baz;
      │       ^
   
-minimal_pipeline_operator.js:30:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:30:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -408,7 +408,7 @@ minimal_pipeline_operator.js:30:3 SyntaxError ━━━━━━━━━━━�
   30 │  |> map(a => a * 2)
      │   ^
   
-minimal_pipeline_operator.js:31:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:31:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -419,7 +419,7 @@ minimal_pipeline_operator.js:31:3 SyntaxError ━━━━━━━━━━━�
   31 │  |> filter(a => a > 5)
      │   ^
   
-minimal_pipeline_operator.js:32:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:32:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -430,7 +430,7 @@ minimal_pipeline_operator.js:32:3 SyntaxError ━━━━━━━━━━━�
   32 │  |> reduce((sum, a) => a+sum, 0)
      │   ^
   
-minimal_pipeline_operator.js:33:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:33:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -441,7 +441,7 @@ minimal_pipeline_operator.js:33:3 SyntaxError ━━━━━━━━━━━�
   33 │  |> increment
      │   ^
   
-minimal_pipeline_operator.js:34:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:34:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -452,7 +452,7 @@ minimal_pipeline_operator.js:34:3 SyntaxError ━━━━━━━━━━━�
   34 │  |> add(3)
      │   ^
   
-minimal_pipeline_operator.js:37:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:37:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -463,7 +463,7 @@ minimal_pipeline_operator.js:37:4 SyntaxError ━━━━━━━━━━━�
   37 │   |> map(event => event.target.value)
      │    ^
   
-minimal_pipeline_operator.js:38:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:38:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -474,7 +474,7 @@ minimal_pipeline_operator.js:38:4 SyntaxError ━━━━━━━━━━━�
   38 │   |> filter(searchText => searchText.length > 2)
      │    ^
   
-minimal_pipeline_operator.js:39:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:39:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -485,7 +485,7 @@ minimal_pipeline_operator.js:39:4 SyntaxError ━━━━━━━━━━━�
   39 │   |> debounce(300)
      │    ^
   
-minimal_pipeline_operator.js:40:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:40:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -496,7 +496,7 @@ minimal_pipeline_operator.js:40:4 SyntaxError ━━━━━━━━━━━�
   40 │   |> distinctUntilChanged()
      │    ^
   
-minimal_pipeline_operator.js:41:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:41:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -507,7 +507,7 @@ minimal_pipeline_operator.js:41:4 SyntaxError ━━━━━━━━━━━�
   41 │   |> switchMap(searchText => queryApi(searchText) |> retry(3))
      │    ^
   
-minimal_pipeline_operator.js:41:52 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:41:52 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -518,7 +518,7 @@ minimal_pipeline_operator.js:41:52 SyntaxError ━━━━━━━━━━━
   41 │   |> switchMap(searchText => queryApi(searchText) |> retry(3))
      │                                                    ^
   
-minimal_pipeline_operator.js:42:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:42:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -529,7 +529,7 @@ minimal_pipeline_operator.js:42:4 SyntaxError ━━━━━━━━━━━�
   42 │   |> share();
      │    ^
   
-minimal_pipeline_operator.js:45:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:45:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -540,7 +540,7 @@ minimal_pipeline_operator.js:45:4 SyntaxError ━━━━━━━━━━━�
   45 │   |> (_ => _.map(x => x * 2))
      │    ^
   
-minimal_pipeline_operator.js:46:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:46:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -551,7 +551,7 @@ minimal_pipeline_operator.js:46:4 SyntaxError ━━━━━━━━━━━�
   46 │   |> (_ => _.reduce( (a,b) => a + b ))
      │    ^
   
-minimal_pipeline_operator.js:47:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:47:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -562,7 +562,7 @@ minimal_pipeline_operator.js:47:4 SyntaxError ━━━━━━━━━━━�
   47 │   |> (sum => sum + 1)
      │    ^
   
-minimal_pipeline_operator.js:49:37 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:49:37 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -573,7 +573,7 @@ minimal_pipeline_operator.js:49:37 SyntaxError ━━━━━━━━━━━
   49 │ const result2 = [4, 9].map( x => x |> inc |> double )
      │                                     ^
   
-minimal_pipeline_operator.js:49:44 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+minimal_pipeline_operator.js:49:44 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   

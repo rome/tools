@@ -117,7 +117,7 @@ JsModule {
       8: R_CURLY@66..67 "}" [] []
   3: EOF@67..68 "" [Newline("\n")] []
 --
-ts_property_initializer_ambient_context.ts:1:24 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_property_initializer_ambient_context.ts:1:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Initializers are not allowed in ambient contexts.
   
@@ -127,7 +127,7 @@ ts_property_initializer_ambient_context.ts:1:24 SyntaxError ━━━━━━�
     │                        ^^^^^^^^
   
 --
-ts_property_initializer_ambient_context.ts:2:24 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_property_initializer_ambient_context.ts:2:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Initializers are not allowed in ambient contexts.
   

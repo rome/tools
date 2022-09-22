@@ -195,7 +195,7 @@ JsModule {
         3: R_CURLY@92..93 "}" [] []
   3: EOF@93..94 "" [Newline("\n")] []
 --
-function_expression_id_err.js:1:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function_expression_id_err.js:1:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `await` as an identifier in an async context
   
@@ -205,7 +205,7 @@ function_expression_id_err.js:1:17 SyntaxError ━━━━━━━━━━━
     │                 ^^^^^
   
 --
-function_expression_id_err.js:2:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function_expression_id_err.js:2:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `yield` as an identifier in generator function
   
@@ -215,7 +215,7 @@ function_expression_id_err.js:2:12 SyntaxError ━━━━━━━━━━━
     │            ^^^^^
   
 --
-function_expression_id_err.js:3:29 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function_expression_id_err.js:3:29 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `yield` as an identifier in generator function
   

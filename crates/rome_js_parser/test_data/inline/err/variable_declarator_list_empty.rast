@@ -46,7 +46,7 @@ JsModule {
         1: JS_UNKNOWN@12..12
   3: EOF@12..13 "" [Newline("\n")] []
 --
-variable_declarator_list_empty.js:1:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+variable_declarator_list_empty.js:1:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier, an array pattern, or an object pattern but instead found ';'
   
@@ -58,7 +58,7 @@ variable_declarator_list_empty.js:1:6 SyntaxError ━━━━━━━━━━
     │      ^
   
 --
-variable_declarator_list_empty.js:3:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+variable_declarator_list_empty.js:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier, an array pattern, or an object pattern but instead found ''
   

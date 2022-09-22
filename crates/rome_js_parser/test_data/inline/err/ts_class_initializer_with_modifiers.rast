@@ -55,7 +55,7 @@ JsModule {
       8: R_CURLY@29..31 "}" [Newline("\n")] []
   3: EOF@31..32 "" [Newline("\n")] []
 --
-ts_class_initializer_with_modifiers.ts:2:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_initializer_with_modifiers.ts:2:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Static class blocks cannot have any modifier.
   

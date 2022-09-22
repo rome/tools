@@ -186,7 +186,7 @@ JsModule {
       1: SEMICOLON@103..104 ";" [] []
   3: EOF@104..105 "" [Newline("\n")] []
 --
-unary_delete.js:1:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+unary_delete.js:1:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × the target for a delete operator cannot be a single identifier
   
@@ -196,7 +196,7 @@ unary_delete.js:1:8 SyntaxError ━━━━━━━━━━━━━━━━
     │        ^^^^^
   
 --
-unary_delete.js:2:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+unary_delete.js:2:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × the target for a delete operator cannot be a private member
   
@@ -206,7 +206,7 @@ unary_delete.js:2:8 SyntaxError ━━━━━━━━━━━━━━━━
     │        ^^^^^^^^^^^
   
 --
-unary_delete.js:3:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+unary_delete.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × the target for a delete operator cannot be a private member
   
@@ -216,7 +216,7 @@ unary_delete.js:3:8 SyntaxError ━━━━━━━━━━━━━━━━
     │        ^^^^^^^^^^^^^^
   
 --
-unary_delete.js:4:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+unary_delete.js:4:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × the target for a delete operator cannot be a private member
   
@@ -226,7 +226,7 @@ unary_delete.js:4:8 SyntaxError ━━━━━━━━━━━━━━━━
     │        ^^^^^^^^^^^^
   
 --
-unary_delete.js:5:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+unary_delete.js:5:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × the target for a delete operator cannot be a private member
   

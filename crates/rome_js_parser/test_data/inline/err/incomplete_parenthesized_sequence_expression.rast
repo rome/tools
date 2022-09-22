@@ -85,7 +85,7 @@ JsModule {
       1: SEMICOLON@13..14 ";" [] []
   3: EOF@14..15 "" [Newline("\n")] []
 --
-incomplete_parenthesized_sequence_expression.js:1:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+incomplete_parenthesized_sequence_expression.js:1:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression but instead found ';'
   
@@ -97,7 +97,7 @@ incomplete_parenthesized_sequence_expression.js:1:4 SyntaxError ━━━━━�
     │    ^
   
 --
-incomplete_parenthesized_sequence_expression.js:2:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+incomplete_parenthesized_sequence_expression.js:2:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `;`
   

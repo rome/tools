@@ -210,7 +210,7 @@ const f = x |> (f)
 
 # Errors
 ```
-fsharp_style_pipeline_operator.js:2:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:2:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -221,7 +221,7 @@ fsharp_style_pipeline_operator.js:2:4 SyntaxError ━━━━━━━━━━
   2 │   |> await
     │    ^
   
-fsharp_style_pipeline_operator.js:3:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:3:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an unary expression but instead found '|'
   
@@ -232,7 +232,7 @@ fsharp_style_pipeline_operator.js:3:3 SyntaxError ━━━━━━━━━━
   3 │   |> x => doubleSay(x, ', ')
     │   ^
   
-fsharp_style_pipeline_operator.js:3:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:3:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -243,7 +243,7 @@ fsharp_style_pipeline_operator.js:3:4 SyntaxError ━━━━━━━━━━
   3 │   |> x => doubleSay(x, ', ')
     │    ^
   
-fsharp_style_pipeline_operator.js:3:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
@@ -263,7 +263,7 @@ fsharp_style_pipeline_operator.js:3:8 SyntaxError ━━━━━━━━━━
   3 │ │   |> x => doubleSay(x, ', ')
     │ └─────────^
   
-fsharp_style_pipeline_operator.js:12:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:12:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -274,7 +274,7 @@ fsharp_style_pipeline_operator.js:12:4 SyntaxError ━━━━━━━━━�
   12 │   |> doubleSay
      │    ^
   
-fsharp_style_pipeline_operator.js:13:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:13:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -285,7 +285,7 @@ fsharp_style_pipeline_operator.js:13:4 SyntaxError ━━━━━━━━━�
   13 │   |> capitalize
      │    ^
   
-fsharp_style_pipeline_operator.js:14:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:14:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -296,7 +296,7 @@ fsharp_style_pipeline_operator.js:14:4 SyntaxError ━━━━━━━━━�
   14 │   |> exclaim;
      │    ^
   
-fsharp_style_pipeline_operator.js:17:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:17:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -307,7 +307,7 @@ fsharp_style_pipeline_operator.js:17:4 SyntaxError ━━━━━━━━━�
   17 │   |> double
      │    ^
   
-fsharp_style_pipeline_operator.js:18:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:18:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -318,7 +318,7 @@ fsharp_style_pipeline_operator.js:18:4 SyntaxError ━━━━━━━━━�
   18 │   |> n => add(7, n)
      │    ^
   
-fsharp_style_pipeline_operator.js:18:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:18:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
@@ -338,7 +338,7 @@ fsharp_style_pipeline_operator.js:18:8 SyntaxError ━━━━━━━━━�
   18 │ │   |> n => add(7, n)
      │ └───────^
   
-fsharp_style_pipeline_operator.js:22:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:22:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -349,7 +349,7 @@ fsharp_style_pipeline_operator.js:22:4 SyntaxError ━━━━━━━━━�
   22 │   |> api.get
      │    ^
   
-fsharp_style_pipeline_operator.js:23:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:23:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -360,7 +360,7 @@ fsharp_style_pipeline_operator.js:23:4 SyntaxError ━━━━━━━━━�
   23 │   |> await
      │    ^
   
-fsharp_style_pipeline_operator.js:24:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:24:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an unary expression but instead found '|'
   
@@ -371,7 +371,7 @@ fsharp_style_pipeline_operator.js:24:3 SyntaxError ━━━━━━━━━�
   24 │   |> r => r.json()
      │   ^
   
-fsharp_style_pipeline_operator.js:24:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:24:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -382,7 +382,7 @@ fsharp_style_pipeline_operator.js:24:4 SyntaxError ━━━━━━━━━�
   24 │   |> r => r.json()
      │    ^
   
-fsharp_style_pipeline_operator.js:24:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:24:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
@@ -403,7 +403,7 @@ fsharp_style_pipeline_operator.js:24:8 SyntaxError ━━━━━━━━━�
   24 │ │   |> r => r.json()
      │ └───────^
   
-fsharp_style_pipeline_operator.js:28:22 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:28:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -414,7 +414,7 @@ fsharp_style_pipeline_operator.js:28:22 SyntaxError ━━━━━━━━━�
   28 │ const f = (x) => (x |> (y) => y + 1)
      │                      ^
   
-fsharp_style_pipeline_operator.js:28:28 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:28:28 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `=>`
   
@@ -425,7 +425,7 @@ fsharp_style_pipeline_operator.js:28:28 SyntaxError ━━━━━━━━━�
   28 │ const f = (x) => (x |> (y) => y + 1)
      │                            ^^
   
-fsharp_style_pipeline_operator.js:32:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:32:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -436,7 +436,7 @@ fsharp_style_pipeline_operator.js:32:4 SyntaxError ━━━━━━━━━�
   32 │   |> (y) => y + 1
      │    ^
   
-fsharp_style_pipeline_operator.js:32:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:32:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
@@ -455,7 +455,7 @@ fsharp_style_pipeline_operator.js:32:10 SyntaxError ━━━━━━━━━�
   32 │ │   |> (y) => y + 1
      │ └─────────^
   
-fsharp_style_pipeline_operator.js:36:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:36:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -466,7 +466,7 @@ fsharp_style_pipeline_operator.js:36:4 SyntaxError ━━━━━━━━━�
   36 │   |> (y) => (y + 1 |> (z) => z * y)
      │    ^
   
-fsharp_style_pipeline_operator.js:36:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:36:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
@@ -485,7 +485,7 @@ fsharp_style_pipeline_operator.js:36:10 SyntaxError ━━━━━━━━━�
   36 │ │   |> (y) => (y + 1 |> (z) => z * y)
      │ └─────────^
   
-fsharp_style_pipeline_operator.js:39:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:39:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -496,7 +496,7 @@ fsharp_style_pipeline_operator.js:39:4 SyntaxError ━━━━━━━━━�
   39 │   |> (y => (y + 1 |> (z) => z * y))
      │    ^
   
-fsharp_style_pipeline_operator.js:39:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:39:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -507,7 +507,7 @@ fsharp_style_pipeline_operator.js:39:20 SyntaxError ━━━━━━━━━�
   39 │   |> (y => (y + 1 |> (z) => z * y))
      │                    ^
   
-fsharp_style_pipeline_operator.js:39:26 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:39:26 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `=>`
   
@@ -518,7 +518,7 @@ fsharp_style_pipeline_operator.js:39:26 SyntaxError ━━━━━━━━━�
   39 │   |> (y => (y + 1 |> (z) => z * y))
      │                          ^^
   
-fsharp_style_pipeline_operator.js:42:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:42:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -529,7 +529,7 @@ fsharp_style_pipeline_operator.js:42:4 SyntaxError ━━━━━━━━━�
   42 │   |> (
      │    ^
   
-fsharp_style_pipeline_operator.js:44:22 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:44:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -540,7 +540,7 @@ fsharp_style_pipeline_operator.js:44:22 SyntaxError ━━━━━━━━━�
   44 │       return (y + 1 |> (z) => z * y);
      │                      ^
   
-fsharp_style_pipeline_operator.js:44:28 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:44:28 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `=>`
   
@@ -551,7 +551,7 @@ fsharp_style_pipeline_operator.js:44:28 SyntaxError ━━━━━━━━━�
   44 │       return (y + 1 |> (z) => z * y);
      │                            ^^
   
-fsharp_style_pipeline_operator.js:48:27 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:48:27 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -562,7 +562,7 @@ fsharp_style_pipeline_operator.js:48:27 SyntaxError ━━━━━━━━━�
   48 │ const f = x + ((f) => (f |> f));
      │                           ^
   
-fsharp_style_pipeline_operator.js:49:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:49:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -573,7 +573,7 @@ fsharp_style_pipeline_operator.js:49:14 SyntaxError ━━━━━━━━━�
   49 │ const f = x |> (f) => f |> f;
      │              ^
   
-fsharp_style_pipeline_operator.js:49:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+fsharp_style_pipeline_operator.js:49:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   

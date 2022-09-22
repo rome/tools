@@ -45,7 +45,7 @@ JsModule {
       1: (empty)
   3: EOF@7..8 "" [Newline("\n")] []
 --
-type_arguments_incomplete.ts:2:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+type_arguments_incomplete.ts:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression but instead found ''
   

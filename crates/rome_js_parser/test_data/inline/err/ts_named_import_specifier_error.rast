@@ -229,7 +229,7 @@ JsModule {
       2: (empty)
   3: EOF@164..165 "" [Newline("\n")] []
 --
-ts_named_import_specifier_error.ts:1:18 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_named_import_specifier_error.ts:1:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `as` but instead found `}`
   
@@ -241,7 +241,7 @@ ts_named_import_specifier_error.ts:1:18 SyntaxError ━━━━━━━━━�
     │                  ^
   
 --
-ts_named_import_specifier_error.ts:2:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_named_import_specifier_error.ts:2:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `as` but instead found `}`
   
@@ -253,7 +253,7 @@ ts_named_import_specifier_error.ts:2:23 SyntaxError ━━━━━━━━━�
     │                       ^
   
 --
-ts_named_import_specifier_error.ts:3:25 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_named_import_specifier_error.ts:3:25 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `as` but instead found `}`
   
@@ -265,7 +265,7 @@ ts_named_import_specifier_error.ts:3:25 SyntaxError ━━━━━━━━━�
     │                         ^
   
 --
-ts_named_import_specifier_error.ts:4:30 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_named_import_specifier_error.ts:4:30 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `as` but instead found `}`
   
@@ -277,7 +277,7 @@ ts_named_import_specifier_error.ts:4:30 SyntaxError ━━━━━━━━━�
     │                              ^
   
 --
-ts_named_import_specifier_error.ts:6:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_named_import_specifier_error.ts:6:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `}` but instead the file ends
   

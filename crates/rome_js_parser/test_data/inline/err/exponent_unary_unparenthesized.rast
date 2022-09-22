@@ -220,7 +220,7 @@ JsModule {
       1: SEMICOLON@90..91 ";" [] []
   3: EOF@91..92 "" [Newline("\n")] []
 --
-exponent_unary_unparenthesized.js:1:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+exponent_unary_unparenthesized.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × unparenthesized unary expression can't appear on the left-hand side of '**'
   
@@ -235,7 +235,7 @@ exponent_unary_unparenthesized.js:1:1 SyntaxError ━━━━━━━━━━
     │            ^^
   
 --
-exponent_unary_unparenthesized.js:2:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+exponent_unary_unparenthesized.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × unparenthesized unary expression can't appear on the left-hand side of '**'
   
@@ -250,7 +250,7 @@ exponent_unary_unparenthesized.js:2:1 SyntaxError ━━━━━━━━━━
     │            ^^
   
 --
-exponent_unary_unparenthesized.js:3:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+exponent_unary_unparenthesized.js:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × unparenthesized unary expression can't appear on the left-hand side of '**'
   
@@ -265,7 +265,7 @@ exponent_unary_unparenthesized.js:3:1 SyntaxError ━━━━━━━━━━
     │              ^^
   
 --
-exponent_unary_unparenthesized.js:4:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+exponent_unary_unparenthesized.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × unparenthesized unary expression can't appear on the left-hand side of '**'
   
@@ -280,7 +280,7 @@ exponent_unary_unparenthesized.js:4:1 SyntaxError ━━━━━━━━━━
     │    ^^
   
 --
-exponent_unary_unparenthesized.js:5:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+exponent_unary_unparenthesized.js:5:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × unparenthesized unary expression can't appear on the left-hand side of '**'
   
@@ -295,7 +295,7 @@ exponent_unary_unparenthesized.js:5:1 SyntaxError ━━━━━━━━━━
     │    ^^
   
 --
-exponent_unary_unparenthesized.js:6:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+exponent_unary_unparenthesized.js:6:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × unparenthesized unary expression can't appear on the left-hand side of '**'
   
@@ -310,7 +310,7 @@ exponent_unary_unparenthesized.js:6:1 SyntaxError ━━━━━━━━━━
     │    ^^
   
 --
-exponent_unary_unparenthesized.js:7:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+exponent_unary_unparenthesized.js:7:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × unparenthesized unary expression can't appear on the left-hand side of '**'
   

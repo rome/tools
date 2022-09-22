@@ -304,7 +304,7 @@ JsModule {
       1: SEMICOLON@119..120 ";" [] []
   3: EOF@120..121 "" [Newline("\n")] []
 --
-binding_identifier_invalid.js:1:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+binding_identifier_invalid.js:1:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `await` as an identifier in an async context
   
@@ -314,7 +314,7 @@ binding_identifier_invalid.js:1:19 SyntaxError ━━━━━━━━━━━
     │                   ^^^^^
   
 --
-binding_identifier_invalid.js:3:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+binding_identifier_invalid.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `yield` as an identifier in generator function
   
@@ -324,7 +324,7 @@ binding_identifier_invalid.js:3:8 SyntaxError ━━━━━━━━━━━�
     │        ^^^^^
   
 --
-binding_identifier_invalid.js:5:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+binding_identifier_invalid.js:5:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `eval` as an identifier in strict mode
   
@@ -334,7 +334,7 @@ binding_identifier_invalid.js:5:5 SyntaxError ━━━━━━━━━━━�
     │     ^^^^
   
 --
-binding_identifier_invalid.js:6:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+binding_identifier_invalid.js:6:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of reserved keyword `let` as an identifier in strict mode
   
@@ -344,7 +344,7 @@ binding_identifier_invalid.js:6:5 SyntaxError ━━━━━━━━━━━�
     │     ^^^
   
 --
-binding_identifier_invalid.js:7:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+binding_identifier_invalid.js:7:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of reserved keyword `let` as an identifier in strict mode
   
@@ -354,7 +354,7 @@ binding_identifier_invalid.js:7:7 SyntaxError ━━━━━━━━━━━�
     │       ^^^
   
 --
-binding_identifier_invalid.js:8:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+binding_identifier_invalid.js:8:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Declarations inside of a `let` declaration may not have duplicates
   

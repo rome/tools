@@ -59,7 +59,7 @@ JsModule {
       2: SEMICOLON@27..28 ";" [] []
   3: EOF@28..29 "" [Newline("\n")] []
 --
-import_as_identifier_err.js:1:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+import_as_identifier_err.js:1:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a string literal, or an identifier but instead found ''
   

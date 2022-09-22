@@ -136,7 +136,7 @@ let newScore = boundScore(0, 100, add(7, double(person.score)));
 
 # Errors
 ```
-pipeline-operator-fsharp.js:5:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline-operator-fsharp.js:5:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -147,7 +147,7 @@ pipeline-operator-fsharp.js:5:4 SyntaxError ━━━━━━━━━━━━
   5 │   |> await
     │    ^
   
-pipeline-operator-fsharp.js:6:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline-operator-fsharp.js:6:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an unary expression but instead found '|'
   
@@ -158,7 +158,7 @@ pipeline-operator-fsharp.js:6:3 SyntaxError ━━━━━━━━━━━━
   6 │   |> x => doubleSay(x, ', ')
     │   ^
   
-pipeline-operator-fsharp.js:6:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline-operator-fsharp.js:6:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -169,7 +169,7 @@ pipeline-operator-fsharp.js:6:4 SyntaxError ━━━━━━━━━━━━
   6 │   |> x => doubleSay(x, ', ')
     │    ^
   
-pipeline-operator-fsharp.js:6:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline-operator-fsharp.js:6:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
@@ -189,7 +189,7 @@ pipeline-operator-fsharp.js:6:8 SyntaxError ━━━━━━━━━━━━
   6 │ │   |> x => doubleSay(x, ', ')
     │ └─────────^
   
-pipeline-operator-fsharp.js:18:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline-operator-fsharp.js:18:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -200,7 +200,7 @@ pipeline-operator-fsharp.js:18:4 SyntaxError ━━━━━━━━━━━�
   18 │   |> doubleSay
      │    ^
   
-pipeline-operator-fsharp.js:19:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline-operator-fsharp.js:19:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -211,7 +211,7 @@ pipeline-operator-fsharp.js:19:4 SyntaxError ━━━━━━━━━━━�
   19 │   |> capitalize
      │    ^
   
-pipeline-operator-fsharp.js:20:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline-operator-fsharp.js:20:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -222,7 +222,7 @@ pipeline-operator-fsharp.js:20:4 SyntaxError ━━━━━━━━━━━�
   20 │   |> exclaim;
      │    ^
   
-pipeline-operator-fsharp.js:27:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline-operator-fsharp.js:27:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -233,7 +233,7 @@ pipeline-operator-fsharp.js:27:4 SyntaxError ━━━━━━━━━━━�
   27 │   |> double
      │    ^
   
-pipeline-operator-fsharp.js:28:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline-operator-fsharp.js:28:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -244,7 +244,7 @@ pipeline-operator-fsharp.js:28:4 SyntaxError ━━━━━━━━━━━�
   28 │   |> n => add(7, n)
      │    ^
   
-pipeline-operator-fsharp.js:28:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline-operator-fsharp.js:28:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   

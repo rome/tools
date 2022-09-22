@@ -39,7 +39,7 @@ JsModule {
         5: SEMICOLON@39..40 ";" [] []
   3: EOF@40..41 "" [Newline("\n")] []
 --
-escaped_from.js:1:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+escaped_from.js:1:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'from' keyword cannot contain escape character.
   

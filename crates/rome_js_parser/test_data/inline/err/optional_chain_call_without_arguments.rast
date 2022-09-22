@@ -138,7 +138,7 @@ JsModule {
       1: SEMICOLON@45..46 ";" [] []
   3: EOF@46..47 "" [Newline("\n")] []
 --
-optional_chain_call_without_arguments.ts:2:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+optional_chain_call_without_arguments.ts:2:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier but instead found ';'
   
@@ -150,7 +150,7 @@ optional_chain_call_without_arguments.ts:2:9 SyntaxError ━━━━━━━�
     │         ^
   
 --
-optional_chain_call_without_arguments.ts:3:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+optional_chain_call_without_arguments.ts:3:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier but instead found '<'
   

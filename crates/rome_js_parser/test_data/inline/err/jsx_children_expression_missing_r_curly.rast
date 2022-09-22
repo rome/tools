@@ -88,7 +88,7 @@ JsModule {
       1: (empty)
   3: EOF@36..37 "" [Newline("\n")] []
 --
-jsx_children_expression_missing_r_curly.jsx:3:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_children_expression_missing_r_curly.jsx:3:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `}` but instead found `some`
   

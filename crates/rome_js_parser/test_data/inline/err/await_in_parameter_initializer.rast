@@ -199,7 +199,7 @@ JsModule {
       2: R_CURLY@69..70 "}" [] []
   3: EOF@70..71 "" [Newline("\n")] []
 --
-await_in_parameter_initializer.js:1:25 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+await_in_parameter_initializer.js:1:25 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `await` is only allowed within async functions and at the top levels of modules.
   
@@ -209,7 +209,7 @@ await_in_parameter_initializer.js:1:25 SyntaxError ━━━━━━━━━�
     │                         ^^^^^^^^^
   
 --
-await_in_parameter_initializer.js:2:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+await_in_parameter_initializer.js:2:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `await` as an identifier inside of a module
   
@@ -219,7 +219,7 @@ await_in_parameter_initializer.js:2:20 SyntaxError ━━━━━━━━━�
     │                    ^^^^^
   
 --
-await_in_parameter_initializer.js:2:26 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+await_in_parameter_initializer.js:2:26 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `b`
   
@@ -231,7 +231,7 @@ await_in_parameter_initializer.js:2:26 SyntaxError ━━━━━━━━━�
     │                          ^
   
 --
-await_in_parameter_initializer.js:2:27 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+await_in_parameter_initializer.js:2:27 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `(`
   
@@ -243,7 +243,7 @@ await_in_parameter_initializer.js:2:27 SyntaxError ━━━━━━━━━�
     │                           ^
   
 --
-await_in_parameter_initializer.js:2:29 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+await_in_parameter_initializer.js:2:29 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a function body but instead found ')'
   

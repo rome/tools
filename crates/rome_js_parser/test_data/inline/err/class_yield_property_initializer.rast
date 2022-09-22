@@ -107,7 +107,7 @@ JsScript {
         3: R_CURLY@68..70 "}" [Newline("\n")] []
   3: EOF@70..71 "" [Newline("\n")] []
 --
-class_yield_property_initializer.js:4:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+class_yield_property_initializer.js:4:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of reserved keyword `yield` as an identifier in strict mode
   

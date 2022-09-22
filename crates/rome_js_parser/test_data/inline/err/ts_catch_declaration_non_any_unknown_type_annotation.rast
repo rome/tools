@@ -67,7 +67,7 @@ JsModule {
           2: R_CURLY@29..30 "}" [] []
   3: EOF@30..31 "" [Newline("\n")] []
 --
-ts_catch_declaration_non_any_unknown_type_annotation.ts:1:22 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_catch_declaration_non_any_unknown_type_annotation.ts:1:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Catch clause variable type annotation must be 'any' or 'unknown' if specified.
   

@@ -79,7 +79,7 @@ JsModule {
       2: SEMICOLON@34..35 ";" [] []
   3: EOF@35..36 "" [Newline("\n")] []
 --
-ts_typed_default_import_with_named.ts:1:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_typed_default_import_with_named.ts:1:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A type-only import can specify a default import or named bindings, but not both.
   

@@ -67,7 +67,7 @@ JsModule {
       1: SEMICOLON@29..30 ";" [] []
   3: EOF@30..31 "" [Newline("\n")] []
 --
-jsx_element_attribute_expression_error.jsx:1:22 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_element_attribute_expression_error.jsx:1:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `}` but instead found `asdf`
   

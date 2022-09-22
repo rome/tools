@@ -124,7 +124,7 @@ JsModule {
           3: R_CURLY@80..81 "}" [] []
   3: EOF@81..82 "" [Newline("\n")] []
 --
-ts_declare_function_with_body.ts:1:40 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_declare_function_with_body.ts:1:40 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A 'declare' function cannot have a function body
   

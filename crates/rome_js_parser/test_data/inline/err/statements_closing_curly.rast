@@ -57,7 +57,7 @@ JsModule {
       2: R_CURLY@76..78 "}" [Newline("\n")] []
   3: EOF@78..79 "" [Newline("\n")] []
 --
-statements_closing_curly.js:2:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+statements_closing_curly.js:2:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   

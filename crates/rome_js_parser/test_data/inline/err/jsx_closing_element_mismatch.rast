@@ -252,7 +252,7 @@ JsModule {
       1: SEMICOLON@73..74 ";" [] []
   3: EOF@74..75 "" [Newline("\n")] []
 --
-jsx_closing_element_mismatch.jsx:1:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_closing_element_mismatch.jsx:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected corresponding JSX closing tag for 'test'.
   
@@ -271,7 +271,7 @@ jsx_closing_element_mismatch.jsx:1:1 SyntaxError ━━━━━━━━━━�
     │       ^^^
   
 --
-jsx_closing_element_mismatch.jsx:2:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_closing_element_mismatch.jsx:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected corresponding JSX closing tag for 'test'.
   
@@ -290,7 +290,7 @@ jsx_closing_element_mismatch.jsx:2:1 SyntaxError ━━━━━━━━━━�
     │       ^^^^^^^
   
 --
-jsx_closing_element_mismatch.jsx:3:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_closing_element_mismatch.jsx:3:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected corresponding JSX closing tag for 'nested'.
   
@@ -309,7 +309,7 @@ jsx_closing_element_mismatch.jsx:3:7 SyntaxError ━━━━━━━━━━�
     │               ^^^^^^^
   
 --
-jsx_closing_element_mismatch.jsx:3:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_closing_element_mismatch.jsx:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected corresponding JSX closing tag for 'some'.
   
@@ -328,7 +328,7 @@ jsx_closing_element_mismatch.jsx:3:1 SyntaxError ━━━━━━━━━━�
     │                      ^^^^^^^^^
   
 --
-jsx_closing_element_mismatch.jsx:4:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_closing_element_mismatch.jsx:4:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier but instead found '5'
   

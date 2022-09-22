@@ -32,7 +32,7 @@ JsModule {
       5: R_CURLY@18..19 "}" [] []
   3: EOF@19..20 "" [Newline("\n")] []
 --
-abstract_class_in_js.js:1:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+abstract_class_in_js.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × abstract classes are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   

@@ -32,7 +32,7 @@ JsModule {
       1: (empty)
   3: EOF@11..12 "" [Newline("\n")] []
 --
-ts_export_type.ts:1:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_export_type.ts:1:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a class, a function, or a variable declaration but instead found 'type'
   

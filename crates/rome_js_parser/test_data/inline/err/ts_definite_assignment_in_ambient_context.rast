@@ -127,7 +127,7 @@ JsModule {
       8: R_CURLY@66..67 "}" [] []
   3: EOF@67..68 "" [Newline("\n")] []
 --
-ts_definite_assignment_in_ambient_context.ts:1:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_definite_assignment_in_ambient_context.ts:1:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Definite assignment operators '!' aren't allowed in ambient contexts.
   
@@ -137,7 +137,7 @@ ts_definite_assignment_in_ambient_context.ts:1:23 SyntaxError ━━━━━━
     │                       ^
   
 --
-ts_definite_assignment_in_ambient_context.ts:2:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_definite_assignment_in_ambient_context.ts:2:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Definite assignment operators '!' aren't allowed in ambient contexts.
   

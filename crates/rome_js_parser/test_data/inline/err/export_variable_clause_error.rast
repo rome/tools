@@ -121,7 +121,7 @@ JsModule {
         1: SEMICOLON@48..49 ";" [] []
   3: EOF@49..50 "" [Newline("\n")] []
 --
-export_variable_clause_error.js:1:16 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export_variable_clause_error.js:1:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression, or an assignment but instead found ';'
   
@@ -133,7 +133,7 @@ export_variable_clause_error.js:1:16 SyntaxError ━━━━━━━━━━�
     │                ^
   
 --
-export_variable_clause_error.js:2:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export_variable_clause_error.js:2:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Const var declarations must have an initialized value
   

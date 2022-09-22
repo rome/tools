@@ -47,7 +47,7 @@ class c3 {
 
 # Errors
 ```
-parameterProperty.ts:5:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+parameterProperty.ts:5:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of reserved keyword `public` as an identifier in strict mode
   
@@ -56,7 +56,7 @@ parameterProperty.ts:5:19 SyntaxError ━━━━━━━━━━━━━━
   5 │   not_constructor(public arg: number = 10) {
     │                   ^^^^^^
   
-parameterProperty.ts:5:26 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+parameterProperty.ts:5:26 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `arg`
   

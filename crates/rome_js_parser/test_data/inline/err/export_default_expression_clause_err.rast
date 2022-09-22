@@ -46,7 +46,7 @@ JsModule {
       0: SEMICOLON@19..20 ";" [] []
   3: EOF@20..21 "" [Newline("\n")] []
 --
-export_default_expression_clause_err.js:1:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export_default_expression_clause_err.js:1:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   

@@ -410,7 +410,7 @@ JsModule {
           2: R_CURLY@273..275 "}" [Newline("\n")] []
   3: EOF@275..276 "" [Newline("\n")] []
 --
-typescript_members_with_body_in_ambient_context_should_err.ts:2:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━
+typescript_members_with_body_in_ambient_context_should_err.ts:2:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × members inside ambient contexts should not have a body
   
@@ -420,7 +420,7 @@ typescript_members_with_body_in_ambient_context_should_err.ts:2:19 SyntaxError �
     │                   ^^
   
 --
-typescript_members_with_body_in_ambient_context_should_err.ts:3:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━
+typescript_members_with_body_in_ambient_context_should_err.ts:3:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × members inside ambient contexts should not have a body
   
@@ -430,7 +430,7 @@ typescript_members_with_body_in_ambient_context_should_err.ts:3:12 SyntaxError �
     │            ^^
   
 --
-typescript_members_with_body_in_ambient_context_should_err.ts:4:24 SyntaxError ━━━━━━━━━━━━━━━━━━━━━
+typescript_members_with_body_in_ambient_context_should_err.ts:4:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × members inside ambient contexts should not have a body
   
@@ -440,7 +440,7 @@ typescript_members_with_body_in_ambient_context_should_err.ts:4:24 SyntaxError �
     │                        ^^^^^^^^^^^^^^
   
 --
-typescript_members_with_body_in_ambient_context_should_err.ts:5:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━
+typescript_members_with_body_in_ambient_context_should_err.ts:5:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × members inside ambient contexts should not have a body
   
@@ -450,7 +450,7 @@ typescript_members_with_body_in_ambient_context_should_err.ts:5:17 SyntaxError �
     │                 ^^
   
 --
-typescript_members_with_body_in_ambient_context_should_err.ts:9:24 SyntaxError ━━━━━━━━━━━━━━━━━━━━━
+typescript_members_with_body_in_ambient_context_should_err.ts:9:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × members inside ambient contexts should not have a body
   
@@ -460,7 +460,7 @@ typescript_members_with_body_in_ambient_context_should_err.ts:9:24 SyntaxError �
     │                        ^^
   
 --
-typescript_members_with_body_in_ambient_context_should_err.ts:10:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━
+typescript_members_with_body_in_ambient_context_should_err.ts:10:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × members inside ambient contexts should not have a body
   
@@ -470,7 +470,7 @@ typescript_members_with_body_in_ambient_context_should_err.ts:10:17 SyntaxError 
      │                 ^^
   
 --
-typescript_members_with_body_in_ambient_context_should_err.ts:11:29 SyntaxError ━━━━━━━━━━━━━━━━━━━━
+typescript_members_with_body_in_ambient_context_should_err.ts:11:29 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × members inside ambient contexts should not have a body
   
@@ -480,7 +480,7 @@ typescript_members_with_body_in_ambient_context_should_err.ts:11:29 SyntaxError 
      │                             ^^^^^^^^^^^^^^
   
 --
-typescript_members_with_body_in_ambient_context_should_err.ts:12:22 SyntaxError ━━━━━━━━━━━━━━━━━━━━
+typescript_members_with_body_in_ambient_context_should_err.ts:12:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × members inside ambient contexts should not have a body
   

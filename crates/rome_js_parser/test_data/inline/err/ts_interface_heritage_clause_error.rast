@@ -187,7 +187,7 @@ JsModule {
       6: R_CURLY@125..126 "}" [] []
   3: EOF@126..127 "" [Newline("\n")] []
 --
-ts_interface_heritage_clause_error.ts:2:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_interface_heritage_clause_error.ts:2:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Interface declaration cannot have 'implements' clause.
   
@@ -197,7 +197,7 @@ ts_interface_heritage_clause_error.ts:2:13 SyntaxError ━━━━━━━━�
     │             ^^^^^^^^^^^^
   
 --
-ts_interface_heritage_clause_error.ts:3:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_interface_heritage_clause_error.ts:3:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'extends' clause already seen.
   
@@ -214,7 +214,7 @@ ts_interface_heritage_clause_error.ts:3:23 SyntaxError ━━━━━━━━�
     │             ^^^^^^^^^
   
 --
-ts_interface_heritage_clause_error.ts:4:21 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_interface_heritage_clause_error.ts:4:21 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'extends' list cannot be empty.
   
@@ -224,7 +224,7 @@ ts_interface_heritage_clause_error.ts:4:21 SyntaxError ━━━━━━━━�
     │                     ^
   
 --
-ts_interface_heritage_clause_error.ts:5:22 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_interface_heritage_clause_error.ts:5:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Trailing comma not allowed.
   

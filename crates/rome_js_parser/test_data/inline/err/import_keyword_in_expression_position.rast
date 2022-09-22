@@ -51,7 +51,7 @@ JsModule {
       2: SEMICOLON@14..15 ";" [] []
   3: EOF@15..16 "" [Newline("\n")] []
 --
-import_keyword_in_expression_position.js:1:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+import_keyword_in_expression_position.js:1:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression, or an assignment but instead found 'import'
   
@@ -63,7 +63,7 @@ import_keyword_in_expression_position.js:1:9 SyntaxError ━━━━━━━�
     │         ^^^^^^
   
 --
-import_keyword_in_expression_position.js:1:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+import_keyword_in_expression_position.js:1:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a default import, a namespace import, or a named import but instead found ';'
   

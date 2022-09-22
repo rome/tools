@@ -29,7 +29,7 @@ const
 
 # Errors
 ```
-downlevelLetConst1.ts:1:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+downlevelLetConst1.ts:1:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier, an array pattern, or an object pattern but instead found ''
   

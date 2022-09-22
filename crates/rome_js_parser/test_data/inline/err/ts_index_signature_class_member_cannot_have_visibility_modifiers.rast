@@ -234,7 +234,7 @@ JsModule {
       8: R_CURLY@136..138 "}" [Newline("\n")] []
   3: EOF@138..139 "" [Newline("\n")] []
 --
-ts_index_signature_class_member_cannot_have_visibility_modifiers.ts:2:5 SyntaxError ━━━━━━━━━━━━━━━━
+ts_index_signature_class_member_cannot_have_visibility_modifiers.ts:2:5 parse ━━━━━━━━━━━━━━━━━━━━━━
 
   × 'public' modifier cannot appear on an index signature.
   
@@ -244,7 +244,7 @@ ts_index_signature_class_member_cannot_have_visibility_modifiers.ts:2:5 SyntaxEr
     │     ^^^^^^
   
 --
-ts_index_signature_class_member_cannot_have_visibility_modifiers.ts:5:5 SyntaxError ━━━━━━━━━━━━━━━━
+ts_index_signature_class_member_cannot_have_visibility_modifiers.ts:5:5 parse ━━━━━━━━━━━━━━━━━━━━━━
 
   × 'private' modifier cannot appear on an index signature.
   
@@ -254,7 +254,7 @@ ts_index_signature_class_member_cannot_have_visibility_modifiers.ts:5:5 SyntaxEr
     │     ^^^^^^^
   
 --
-ts_index_signature_class_member_cannot_have_visibility_modifiers.ts:8:5 SyntaxError ━━━━━━━━━━━━━━━━
+ts_index_signature_class_member_cannot_have_visibility_modifiers.ts:8:5 parse ━━━━━━━━━━━━━━━━━━━━━━
 
   × 'protected' modifier cannot appear on an index signature.
   

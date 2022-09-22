@@ -62,7 +62,7 @@ JsModule {
         2: R_CURLY@40..42 "}" [Newline("\n")] []
   3: EOF@42..43 "" [Newline("\n")] []
 --
-double_label.js:3:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+double_label.js:3:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Duplicate statement labels are not allowed
   

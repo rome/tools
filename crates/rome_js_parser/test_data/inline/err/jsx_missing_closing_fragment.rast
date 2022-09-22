@@ -139,7 +139,7 @@ JsModule {
       1: (empty)
   3: EOF@48..48 "" [] []
 --
-jsx_missing_closing_fragment.jsx:1:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_missing_closing_fragment.jsx:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × JSX fragment has no corresponding closing tag.
   
@@ -158,7 +158,7 @@ jsx_missing_closing_fragment.jsx:1:1 SyntaxError ━━━━━━━━━━�
     │         ^^^^
   
 --
-jsx_missing_closing_fragment.jsx:3:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_missing_closing_fragment.jsx:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `<` but instead the file ends
   

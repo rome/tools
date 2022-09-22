@@ -213,7 +213,7 @@ JsModule {
         4: SEMICOLON@100..101 ";" [] []
   3: EOF@101..102 "" [Newline("\n")] []
 --
-export_named_clause_err.js:1:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export_named_clause_err.js:1:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × "default" can only be used with "export ... from ..."
   
@@ -223,7 +223,7 @@ export_named_clause_err.js:1:10 SyntaxError ━━━━━━━━━━━━
     │          ^^^^^^^
   
 --
-export_named_clause_err.js:2:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export_named_clause_err.js:2:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an export name but instead found '"a" as b'
   
@@ -235,7 +235,7 @@ export_named_clause_err.js:2:10 SyntaxError ━━━━━━━━━━━━
     │          ^^^^^^^^
   
 --
-export_named_clause_err.js:3:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export_named_clause_err.js:3:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier but instead found ''
   
@@ -247,7 +247,7 @@ export_named_clause_err.js:3:10 SyntaxError ━━━━━━━━━━━━
     │          ^
   
 --
-export_named_clause_err.js:4:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export_named_clause_err.js:4:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a string literal, or an identifier but instead found '5'
   
@@ -259,7 +259,7 @@ export_named_clause_err.js:4:15 SyntaxError ━━━━━━━━━━━━
     │               ^
   
 --
-export_named_clause_err.js:5:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export_named_clause_err.js:5:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `b`
   
@@ -271,7 +271,7 @@ export_named_clause_err.js:5:12 SyntaxError ━━━━━━━━━━━━
     │            ^
   
 --
-export_named_clause_err.js:5:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export_named_clause_err.js:5:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `c`
   

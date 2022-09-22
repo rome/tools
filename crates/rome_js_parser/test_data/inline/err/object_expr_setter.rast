@@ -90,7 +90,7 @@ JsModule {
       1: (empty)
   3: EOF@41..42 "" [Newline("\n")] []
 --
-object_expr_setter.js:2:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+object_expr_setter.js:2:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a parameter but instead found ')'
   

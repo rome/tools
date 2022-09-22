@@ -129,7 +129,7 @@ JsModule {
         8: R_CURLY@47..48 "}" [] []
   3: EOF@48..49 "" [Newline("\n")] []
 --
-ts_ambient_context_semi.ts:1:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_ambient_context_semi.ts:1:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a semicolon to end the method declaration, but found none
   
@@ -139,7 +139,7 @@ ts_ambient_context_semi.ts:1:19 SyntaxError ━━━━━━━━━━━━
     │                   ^^^^^^^^
   
 --
-ts_ambient_context_semi.ts:1:28 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_ambient_context_semi.ts:1:28 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a semicolon to end the method declaration, but found none
   

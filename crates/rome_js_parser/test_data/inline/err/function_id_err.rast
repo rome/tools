@@ -106,7 +106,7 @@ JsModule {
         3: R_CURLY@44..46 "}" [Newline("\n")] []
   3: EOF@46..47 "" [Newline("\n")] []
 --
-function_id_err.js:2:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function_id_err.js:2:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `yield` as an identifier in generator function
   

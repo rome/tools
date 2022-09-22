@@ -64,7 +64,7 @@ JsScript {
         1: SEMICOLON@24..25 ";" [] []
   3: EOF@25..26 "" [Newline("\n")] []
 --
-let_array_with_new_line.js:2:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+let_array_with_new_line.js:2:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Lexical declaration cannot appear in a single-statement context
   

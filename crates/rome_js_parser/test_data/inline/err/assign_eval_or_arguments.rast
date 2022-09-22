@@ -240,7 +240,7 @@ JsModule {
       1: (empty)
   3: EOF@105..106 "" [Newline("\n")] []
 --
-assign_eval_or_arguments.js:1:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+assign_eval_or_arguments.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `eval` as an identifier in strict mode
   
@@ -250,7 +250,7 @@ assign_eval_or_arguments.js:1:1 SyntaxError ━━━━━━━━━━━━
     │ ^^^^
   
 --
-assign_eval_or_arguments.js:2:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+assign_eval_or_arguments.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `eval` as an identifier in strict mode
   
@@ -260,7 +260,7 @@ assign_eval_or_arguments.js:2:1 SyntaxError ━━━━━━━━━━━━
     │ ^^^^
   
 --
-assign_eval_or_arguments.js:3:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+assign_eval_or_arguments.js:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `eval` as an identifier in strict mode
   
@@ -270,7 +270,7 @@ assign_eval_or_arguments.js:3:1 SyntaxError ━━━━━━━━━━━━
     │ ^^^^
   
 --
-assign_eval_or_arguments.js:4:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+assign_eval_or_arguments.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `arguments` as an identifier in strict mode
   
@@ -280,7 +280,7 @@ assign_eval_or_arguments.js:4:1 SyntaxError ━━━━━━━━━━━━
     │ ^^^^^^^^^
   
 --
-assign_eval_or_arguments.js:5:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+assign_eval_or_arguments.js:5:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `arguments` as an identifier in strict mode
   
@@ -290,7 +290,7 @@ assign_eval_or_arguments.js:5:1 SyntaxError ━━━━━━━━━━━━
     │ ^^^^^^^^^
   
 --
-assign_eval_or_arguments.js:6:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+assign_eval_or_arguments.js:6:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `eval` as an identifier in strict mode
   
@@ -300,7 +300,7 @@ assign_eval_or_arguments.js:6:4 SyntaxError ━━━━━━━━━━━━
     │    ^^^^
   
 --
-assign_eval_or_arguments.js:5:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+assign_eval_or_arguments.js:5:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `"baz"
     ({ eval } = o)

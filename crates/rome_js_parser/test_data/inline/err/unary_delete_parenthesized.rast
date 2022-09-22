@@ -367,7 +367,7 @@ JsModule {
       1: SEMICOLON@184..185 ";" [] []
   3: EOF@185..186 "" [Newline("\n")] []
 --
-unary_delete_parenthesized.js:1:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+unary_delete_parenthesized.js:1:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × the target for a delete operator cannot be a single identifier
   
@@ -377,7 +377,7 @@ unary_delete_parenthesized.js:1:9 SyntaxError ━━━━━━━━━━━�
     │         ^^^^^
   
 --
-unary_delete_parenthesized.js:2:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+unary_delete_parenthesized.js:2:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × the target for a delete operator cannot be a single identifier
   
@@ -387,7 +387,7 @@ unary_delete_parenthesized.js:2:10 SyntaxError ━━━━━━━━━━━
     │          ^^^^^
   
 --
-unary_delete_parenthesized.js:3:18 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+unary_delete_parenthesized.js:3:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × the target for a delete operator cannot be a single identifier
   
@@ -397,7 +397,7 @@ unary_delete_parenthesized.js:3:18 SyntaxError ━━━━━━━━━━━
     │                  ^^^^^
   
 --
-unary_delete_parenthesized.js:4:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+unary_delete_parenthesized.js:4:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × the target for a delete operator cannot be a private member
   
@@ -407,7 +407,7 @@ unary_delete_parenthesized.js:4:9 SyntaxError ━━━━━━━━━━━�
     │         ^^^^^^^^^^^
   
 --
-unary_delete_parenthesized.js:5:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+unary_delete_parenthesized.js:5:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × the target for a delete operator cannot be a private member
   
@@ -417,7 +417,7 @@ unary_delete_parenthesized.js:5:9 SyntaxError ━━━━━━━━━━━�
     │         ^^^^^^^^^^^^^^
   
 --
-unary_delete_parenthesized.js:6:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+unary_delete_parenthesized.js:6:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × the target for a delete operator cannot be a private member
   
@@ -427,7 +427,7 @@ unary_delete_parenthesized.js:6:9 SyntaxError ━━━━━━━━━━━�
     │         ^^^^^^^^^^^^
   
 --
-unary_delete_parenthesized.js:7:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+unary_delete_parenthesized.js:7:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × the target for a delete operator cannot be a private member
   
@@ -437,7 +437,7 @@ unary_delete_parenthesized.js:7:9 SyntaxError ━━━━━━━━━━━�
     │         ^^^^^^^^^^^^^^^^^^
   
 --
-unary_delete_parenthesized.js:8:18 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+unary_delete_parenthesized.js:8:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × the target for a delete operator cannot be a private member
   

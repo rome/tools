@@ -36,7 +36,7 @@ interface Foo {
 
 # Errors
 ```
-errorOnInitializerInInterfaceProperty.ts:2:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+errorOnInitializerInInterfaceProperty.ts:2:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × ';' expected'
   
@@ -47,7 +47,7 @@ errorOnInitializerInInterfaceProperty.ts:2:17 SyntaxError ━━━━━━━�
   2 │     bar: number = 5;
     │                 ^
   
-errorOnInitializerInInterfaceProperty.ts:2:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+errorOnInitializerInInterfaceProperty.ts:2:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a property, or a signature but instead found ';'
   
@@ -58,7 +58,7 @@ errorOnInitializerInInterfaceProperty.ts:2:20 SyntaxError ━━━━━━━�
   2 │     bar: number = 5;
     │                    ^
   
-errorOnInitializerInInterfaceProperty.ts:3:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+errorOnInitializerInInterfaceProperty.ts:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found '}'
   

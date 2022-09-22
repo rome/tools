@@ -49,7 +49,7 @@ JsModule {
       1: (empty)
   3: EOF@12..13 "" [Newline("\n")] []
 --
-variable_declarator_list_incomplete.js:2:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+variable_declarator_list_incomplete.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier, an array pattern, or an object pattern but instead found ''
   

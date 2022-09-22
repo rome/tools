@@ -82,7 +82,7 @@ JsModule {
       1: SEMICOLON@25..26 ";" [] []
   3: EOF@26..27 "" [Newline("\n")] []
 --
-js_type_variable_annotation.js:1:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+js_type_variable_annotation.js:1:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × type annotation are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   
@@ -94,7 +94,7 @@ js_type_variable_annotation.js:1:6 SyntaxError ━━━━━━━━━━━
     │      ^^^^^^^^
   
 --
-js_type_variable_annotation.js:1:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+js_type_variable_annotation.js:1:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × definite assertion assignments are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   

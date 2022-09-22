@@ -68,7 +68,7 @@ JsModule {
       1: SEMICOLON@23..24 ";" [] []
   3: EOF@24..25 "" [Newline("\n")] []
 --
-ts_definite_variable_with_initializer.js:1:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_definite_variable_with_initializer.js:1:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × definite assertion assignments are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   

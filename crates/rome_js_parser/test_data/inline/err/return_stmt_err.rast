@@ -38,7 +38,7 @@ JsModule {
       2: SEMICOLON@18..19 ";" [] []
   3: EOF@19..20 "" [Newline("\n")] []
 --
-return_stmt_err.js:1:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+return_stmt_err.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal return statement outside of a function
   
@@ -48,7 +48,7 @@ return_stmt_err.js:1:1 SyntaxError ━━━━━━━━━━━━━━━
     │ ^^^^^^^
   
 --
-return_stmt_err.js:2:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+return_stmt_err.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal return statement outside of a function
   

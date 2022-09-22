@@ -74,7 +74,7 @@ JsModule {
       1: (empty)
   3: EOF@20..20 "" [] []
 --
-template_literal_unterminated.js:1:16 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+template_literal_unterminated.js:1:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × unterminated template literal
   

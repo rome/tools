@@ -4,8 +4,7 @@ exports[`Rome WebAssembly formatContent > should not format and have diagnostics
 [
   {
     "children": [],
-    "code": "SyntaxError",
-    "code_link": null,
+    "code": "parse",
     "file_id": 0,
     "footers": [],
     "primary": {

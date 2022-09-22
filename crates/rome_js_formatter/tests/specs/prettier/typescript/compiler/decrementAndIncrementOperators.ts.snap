@@ -115,7 +115,7 @@ x[x++]++;
 
 # Errors
 ```
-decrementAndIncrementOperators.ts:4:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+decrementAndIncrementOperators.ts:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `1`
   
@@ -126,7 +126,7 @@ decrementAndIncrementOperators.ts:4:1 SyntaxError ━━━━━━━━━━
   4 │ 1 ++;
     │ ^
   
-decrementAndIncrementOperators.ts:6:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+decrementAndIncrementOperators.ts:6:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `1`
   
@@ -137,7 +137,7 @@ decrementAndIncrementOperators.ts:6:2 SyntaxError ━━━━━━━━━━
   6 │ (1)++;
     │  ^
   
-decrementAndIncrementOperators.ts:7:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+decrementAndIncrementOperators.ts:7:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `1`
   
@@ -148,7 +148,7 @@ decrementAndIncrementOperators.ts:7:2 SyntaxError ━━━━━━━━━━
   7 │ (1)--;
     │  ^
   
-decrementAndIncrementOperators.ts:9:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+decrementAndIncrementOperators.ts:9:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `1`
   
@@ -159,7 +159,7 @@ decrementAndIncrementOperators.ts:9:4 SyntaxError ━━━━━━━━━━
   9 │ ++(1);
     │    ^
   
-decrementAndIncrementOperators.ts:10:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+decrementAndIncrementOperators.ts:10:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `1`
   
@@ -170,7 +170,7 @@ decrementAndIncrementOperators.ts:10:4 SyntaxError ━━━━━━━━━�
   10 │ --(1);
      │    ^
   
-decrementAndIncrementOperators.ts:12:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+decrementAndIncrementOperators.ts:12:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `1 + 2`
   
@@ -181,7 +181,7 @@ decrementAndIncrementOperators.ts:12:2 SyntaxError ━━━━━━━━━�
   12 │ (1 + 2)++;
      │  ^^^^^
   
-decrementAndIncrementOperators.ts:13:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+decrementAndIncrementOperators.ts:13:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `1 + 2`
   
@@ -192,7 +192,7 @@ decrementAndIncrementOperators.ts:13:2 SyntaxError ━━━━━━━━━�
   13 │ (1 + 2)--;
      │  ^^^^^
   
-decrementAndIncrementOperators.ts:15:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+decrementAndIncrementOperators.ts:15:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `1 + 2`
   
@@ -203,7 +203,7 @@ decrementAndIncrementOperators.ts:15:4 SyntaxError ━━━━━━━━━�
   15 │ ++(1 + 2);
      │    ^^^^^
   
-decrementAndIncrementOperators.ts:16:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+decrementAndIncrementOperators.ts:16:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `1 + 2`
   
@@ -214,7 +214,7 @@ decrementAndIncrementOperators.ts:16:4 SyntaxError ━━━━━━━━━�
   16 │ --(1 + 2);
      │    ^^^^^
   
-decrementAndIncrementOperators.ts:18:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+decrementAndIncrementOperators.ts:18:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `x + x`
   
@@ -225,7 +225,7 @@ decrementAndIncrementOperators.ts:18:2 SyntaxError ━━━━━━━━━�
   18 │ (x + x)++;
      │  ^^^^^
   
-decrementAndIncrementOperators.ts:19:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+decrementAndIncrementOperators.ts:19:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `x + x`
   
@@ -236,7 +236,7 @@ decrementAndIncrementOperators.ts:19:2 SyntaxError ━━━━━━━━━�
   19 │ (x + x)--;
      │  ^^^^^
   
-decrementAndIncrementOperators.ts:21:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+decrementAndIncrementOperators.ts:21:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `x + x`
   
@@ -247,7 +247,7 @@ decrementAndIncrementOperators.ts:21:4 SyntaxError ━━━━━━━━━�
   21 │ ++(x + x);
      │    ^^^^^
   
-decrementAndIncrementOperators.ts:22:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+decrementAndIncrementOperators.ts:22:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `x + x`
   

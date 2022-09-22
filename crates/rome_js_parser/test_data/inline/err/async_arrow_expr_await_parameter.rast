@@ -167,7 +167,7 @@ JsModule {
       1: SEMICOLON@58..59 ";" [] []
   3: EOF@59..60 "" [Newline("\n")] []
 --
-async_arrow_expr_await_parameter.js:1:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+async_arrow_expr_await_parameter.js:1:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `await` as an identifier in an async context
   
@@ -177,7 +177,7 @@ async_arrow_expr_await_parameter.js:1:15 SyntaxError ━━━━━━━━━
     │               ^^^^^
   
 --
-async_arrow_expr_await_parameter.js:2:24 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+async_arrow_expr_await_parameter.js:2:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an unary expression but instead found ')'
   
@@ -189,7 +189,7 @@ async_arrow_expr_await_parameter.js:2:24 SyntaxError ━━━━━━━━━
     │                        ^
   
 --
-async_arrow_expr_await_parameter.js:2:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+async_arrow_expr_await_parameter.js:2:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `await` is only allowed within async functions and at the top levels of modules.
   

@@ -88,7 +88,7 @@ JsModule {
       1: (empty)
   3: EOF@47..48 "" [Newline("\n")] []
 --
-jsx_closing_missing_r_angle.jsx:1:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_closing_missing_r_angle.jsx:1:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `>` but instead found `more`
   

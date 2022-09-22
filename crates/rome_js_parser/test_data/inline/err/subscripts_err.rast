@@ -99,7 +99,7 @@ JsModule {
       1: (empty)
   3: EOF@21..21 "" [] []
 --
-subscripts_err.js:1:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+subscripts_err.js:1:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression but instead found ']'
   
@@ -111,7 +111,7 @@ subscripts_err.js:1:12 SyntaxError ━━━━━━━━━━━━━━━
     │            ^
   
 --
-subscripts_err.js:1:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+subscripts_err.js:1:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier but instead found ';'
   
@@ -123,7 +123,7 @@ subscripts_err.js:1:14 SyntaxError ━━━━━━━━━━━━━━━
     │              ^
   
 --
-subscripts_err.js:2:5 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+subscripts_err.js:2:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × unterminated template literal
   

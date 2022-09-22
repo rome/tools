@@ -172,7 +172,7 @@ JsModule {
       1: SEMICOLON@60..61 ";" [] []
   3: EOF@61..62 "" [Newline("\n")] []
 --
-jsx_namespace_member_element_name.jsx:2:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_namespace_member_element_name.jsx:2:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × JSX property access expressions cannot include JSX namespace names.
   
@@ -182,7 +182,7 @@ jsx_namespace_member_element_name.jsx:2:2 SyntaxError ━━━━━━━━�
     │  ^^^^^^^^^^^
   
 --
-jsx_namespace_member_element_name.jsx:2:18 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_namespace_member_element_name.jsx:2:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × JSX property access expressions cannot include JSX namespace names.
   

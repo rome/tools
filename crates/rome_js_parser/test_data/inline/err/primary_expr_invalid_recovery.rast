@@ -84,7 +84,7 @@ JsModule {
       1: SEMICOLON@16..17 ";" [] []
   3: EOF@17..18 "" [Newline("\n")] []
 --
-primary_expr_invalid_recovery.js:1:9 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+primary_expr_invalid_recovery.js:1:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × unexpected token `\`
   
