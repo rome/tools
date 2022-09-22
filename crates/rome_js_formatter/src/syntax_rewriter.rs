@@ -27,13 +27,13 @@ struct JsFormatSyntaxRewriter {
     ///
     /// ```javascript
     /// function f() {
-    /// 	return (
-    /// 		(
-    /// 			// prettier-ignore
-    /// 			/* $FlowFixMe(>=0.53.0) */
-    /// 			<JSX />
-    /// 		)
-    /// 	);
+    ///     return (
+    ///         (
+    ///             // prettier-ignore
+    ///             /* $FlowFixMe(>=0.53.0) */
+    ///             <JSX />
+    ///         )
+    ///     );
     /// }
     /// ```
     /// The rewriter first removes any leading whitespace from the `JsxTagExpression`'s leading trivia.
