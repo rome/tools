@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/break-calls/react.js
 ---
 
 # Input
@@ -77,29 +79,15 @@ function Comp5() {
 ```diff
 --- Prettier
 +++ Rome
-@@ -41,64 +41,66 @@
- }
- 
- function MyComponent(props) {
--  useEffect(
--    () => {
--      console.log("some code", props.foo);
--    },
+@@ -45,7 +45,6 @@
+     () => {
+       console.log("some code", props.foo);
+     },
 -
--    // We need to disable the eslint warning here,
--    // because of some complicated reason.
--    // eslint-disable line react-hooks/exhaustive-deps
--    [],
--  );
-+  useEffect(() => {
-+    console.log("some code", props.foo);
-+  },
-+  // We need to disable the eslint warning here,
-+  // because of some complicated reason.
-+  // eslint-disable line react-hooks/exhaustive-deps
-+  []);
- 
-   return null;
+     // We need to disable the eslint warning here,
+     // because of some complicated reason.
+     // eslint-disable line react-hooks/exhaustive-deps
+@@ -56,49 +55,54 @@
  }
  
  function Comp1() {
@@ -236,13 +224,15 @@ function helloWorldWithReact() {
 }
 
 function MyComponent(props) {
-  useEffect(() => {
-    console.log("some code", props.foo);
-  },
-  // We need to disable the eslint warning here,
-  // because of some complicated reason.
-  // eslint-disable line react-hooks/exhaustive-deps
-  []);
+  useEffect(
+    () => {
+      console.log("some code", props.foo);
+    },
+    // We need to disable the eslint warning here,
+    // because of some complicated reason.
+    // eslint-disable line react-hooks/exhaustive-deps
+    [],
+  );
 
   return null;
 }

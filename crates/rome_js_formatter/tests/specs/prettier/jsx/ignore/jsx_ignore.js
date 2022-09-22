@@ -47,7 +47,6 @@ push(
 );
 
 function f() {
-	// rome-ignore format: Instability issue
   return (
     // prettier-ignore
     /* $FlowFixMe(>=0.53.0) */

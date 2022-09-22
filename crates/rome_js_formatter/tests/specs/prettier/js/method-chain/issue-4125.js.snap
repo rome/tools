@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/method-chain/issue-4125.js
 ---
 
 # Input
@@ -162,17 +164,7 @@ var l = base
 ```diff
 --- Prettier
 +++ Rome
-@@ -19,7 +19,8 @@
- 
- // you can still force multi-line chaining with a comment:
- const sha256_2 = (data) =>
--  crypto // breakme
-+  crypto
-+    // breakme
-     .createHash("sha256")
-     .update(data)
-     .digest("hex");
-@@ -44,7 +45,8 @@
+@@ -44,7 +44,8 @@
  
  // examples from https://github.com/prettier/prettier/issues/1565
  
@@ -182,7 +174,7 @@ var l = base
    .selectAll("p")
    .data([1, 2, 3])
    .enter()
-@@ -67,7 +69,10 @@
+@@ -67,7 +68,10 @@
  
  db.branch(
    db.table("users").filter({ email }).count(),
@@ -194,17 +186,7 @@ var l = base
    db.table("users").insert({ email }),
    db.table("users").filter({ email }),
  );
-@@ -78,7 +83,8 @@
- 
- fetchUser(id).then(fetchAccountForUser).catch(handleFetchError);
- 
--fetchUser(id) //
-+fetchUser(id)
-+  //
-   .then(fetchAccountForUser)
-   .catch(handleFetchError);
- 
-@@ -90,39 +96,40 @@
+@@ -90,39 +94,39 @@
      authorizationToken: data.token,
    }).initVerify("foo_container");
  
@@ -254,8 +236,7 @@ var l = base
 -            .map(receiveUsers),
 +  .switchMap(
 +    (q) =>
-+      Observable.timer(800)
-+        // debounce
++      Observable.timer(800) // debounce
 +        .takeUntil(action$.ofType(ActionTypes.CLEARED_SEARCH_RESULTS))
 +        .mergeMap(
 +          () =>
@@ -271,7 +252,7 @@ var l = base
    );
  
  window.FooClient.setVars({
-@@ -138,21 +145,32 @@
+@@ -138,21 +142,32 @@
  const a1 = x.a(true).b(null).c(123);
  const a2 = x.d("").e(``).f(g);
  const a3 = x.d("").e(`${123}`).f(g);
@@ -309,7 +290,7 @@ var l = base
    .b(`${c(d())}`)
    .f();
  
-@@ -161,7 +179,4 @@
+@@ -161,7 +176,4 @@
    .b()
    .c(a(a(b(c(d().p).p).p).p));
  
@@ -344,8 +325,7 @@ somePromise
 
 // you can still force multi-line chaining with a comment:
 const sha256_2 = (data) =>
-  crypto
-    // breakme
+  crypto // breakme
     .createHash("sha256")
     .update(data)
     .digest("hex");
@@ -408,8 +388,7 @@ const date = moment.utc(userInput).hour(0).minute(0).second(0);
 
 fetchUser(id).then(fetchAccountForUser).catch(handleFetchError);
 
-fetchUser(id)
-  //
+fetchUser(id) //
   .then(fetchAccountForUser)
   .catch(handleFetchError);
 
@@ -442,8 +421,7 @@ action$
   .filter((q) => !!q)
   .switchMap(
     (q) =>
-      Observable.timer(800)
-        // debounce
+      Observable.timer(800) // debounce
         .takeUntil(action$.ofType(ActionTypes.CLEARED_SEARCH_RESULTS))
         .mergeMap(
           () =>

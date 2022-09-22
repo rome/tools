@@ -71,6 +71,22 @@ where
             "Expected all enclosing nodes to have been processed but contains {:#?}",
             self.parents
         );
+
+        // Process any comments attached to the last token.
+        // Important for range formatting where it isn't guaranteed that the
+        // last token is an EOF token.
+        if let Some(last_token) = self.last_token.take() {
+            self.parents.push(root.clone());
+            let (comments_start, lines_before, position, trailing_end) =
+                self.visit_trailing_comments(last_token, None);
+            Self::update_comments(
+                &mut self.pending_comments[comments_start..],
+                position,
+                lines_before,
+                trailing_end,
+            );
+        }
+
         self.flush_comments(None);
 
         self.builder.finish()
@@ -116,65 +132,18 @@ where
     }
 
     fn visit_token(&mut self, token: SyntaxToken<Style::Language>) {
-        let mut comments_start = self.pending_comments.len();
-
-        // The index of the last trailing comment in `pending_comments`.
-        let mut trailing_end: Option<usize> = None;
-
-        // Number of lines before the next comment, token, or skipped token trivia
-        let mut lines_before = 0;
-
-        // Trailing comments are all `SameLine` comments EXCEPT if any is followed by a line break,
-        // a leading comment (that always have line breaks), or there's a line break before the token.
-        let mut position = CommentTextPosition::SameLine;
-
         // Process the trailing trivia of the last token
-        if let Some(last_token) = self.last_token.take() {
-            for piece in last_token.trailing_trivia().pieces() {
-                if piece.is_newline() {
-                    lines_before += 1;
-                    // All comments following from here are own line comments
-                    position = CommentTextPosition::OwnLine;
-
-                    if trailing_end.is_none() {
-                        trailing_end = Some(self.pending_comments.len());
-                    }
-                } else if let Some(comment) = piece.as_comments() {
-                    self.queue_comment(DecoratedComment {
-                        enclosing: self.enclosing_node().clone(),
-                        preceding: self.preceding_node.clone(),
-                        following: None,
-                        following_token: token.clone(),
-                        lines_before,
-                        lines_after: 0, // Will be initialized after
-                        text_position: position,
-                        kind: Style::get_comment_kind(&comment),
-                        comment,
-                    });
-
-                    lines_before = 0;
-                }
-
-                if let Some(parens_source_range) = self
-                    .parentheses
-                    .r_paren_source_range(piece.text_range().end())
-                {
-                    self.flush_before_r_paren_comments(
-                        parens_source_range,
-                        &last_token,
-                        position,
-                        lines_before,
-                        comments_start,
-                        trailing_end,
-                    );
-
-                    lines_before = 0;
-                    position = CommentTextPosition::SameLine;
-                    comments_start = 0;
-                    trailing_end = None;
-                }
-            }
-        }
+        let (comments_start, mut lines_before, mut position, mut trailing_end) =
+            if let Some(last_token) = self.last_token.take() {
+                self.visit_trailing_comments(last_token, Some(&token))
+            } else {
+                (
+                    self.pending_comments.len(),
+                    0,
+                    CommentTextPosition::SameLine,
+                    None,
+                )
+            };
 
         // Process the leading trivia of the current token. the trailing trivia is handled as part of the next token
         for leading in token.leading_trivia().pieces() {
@@ -198,7 +167,7 @@ where
                     enclosing: self.enclosing_node().clone(),
                     preceding: self.preceding_node.clone(),
                     following: None,
-                    following_token: token.clone(),
+                    following_token: Some(token.clone()),
                     lines_before,
                     lines_after: 0,
                     text_position: position,
@@ -210,26 +179,14 @@ where
             }
         }
 
-        let trailing_end = trailing_end.unwrap_or(self.pending_comments.len());
-
         self.last_token = Some(token);
 
-        let mut comments = self.pending_comments[comments_start..]
-            .iter_mut()
-            .enumerate()
-            .peekable();
-
-        // Update the lines after of all comments as well as the positioning of end of line comments.
-        while let Some((index, comment)) = comments.next() {
-            // Update the position of all trailing comments to be end of line as we've seen a line break since.
-            if index < trailing_end && position.is_own_line() {
-                comment.text_position = CommentTextPosition::EndOfLine;
-            }
-
-            comment.lines_after = comments
-                .peek()
-                .map_or(lines_before, |(_, next)| next.lines_before);
-        }
+        Self::update_comments(
+            &mut self.pending_comments[comments_start..],
+            position,
+            lines_before,
+            trailing_end,
+        );
 
         // Set following node to `None` because it now becomes the enclosing node.
         if let Some(following_node) = self.following_node() {
@@ -265,6 +222,28 @@ where
         self.pending_comments.push(comment);
     }
 
+    fn update_comments(
+        comments: &mut [DecoratedComment<Style::Language>],
+        position: CommentTextPosition,
+        lines_before: u32,
+        trailing_end: Option<usize>,
+    ) {
+        let trailing_end = trailing_end.unwrap_or(comments.len());
+        let mut comments = comments.iter_mut().enumerate().peekable();
+
+        // Update the lines after of all comments as well as the positioning of end of line comments.
+        while let Some((index, comment)) = comments.next() {
+            // Update the position of all trailing comments to be end of line as we've seen a line break since.
+            if index < trailing_end && position.is_own_line() {
+                comment.text_position = CommentTextPosition::EndOfLine;
+            }
+
+            comment.lines_after = comments
+                .peek()
+                .map_or(lines_before, |(_, next)| next.lines_before);
+        }
+    }
+
     fn flush_comments(&mut self, following: Option<&SyntaxNode<Style::Language>>) {
         for mut comment in self.pending_comments.drain(..) {
             comment.following = following.cloned();
@@ -272,6 +251,72 @@ where
             let placement = self.style.place_comment(comment);
             self.builder.add_comment(placement);
         }
+    }
+
+    fn visit_trailing_comments(
+        &mut self,
+        token: SyntaxToken<Style::Language>,
+        following_token: Option<&SyntaxToken<Style::Language>>,
+    ) -> (usize, u32, CommentTextPosition, Option<usize>) {
+        let mut comments_start = 0;
+
+        // The index of the last trailing comment in `pending_comments`.
+        let mut trailing_end: Option<usize> = None;
+
+        // Number of lines before the next comment, token, or skipped token trivia
+        let mut lines_before = 0;
+
+        // Trailing comments are all `SameLine` comments EXCEPT if any is followed by a line break,
+        // a leading comment (that always have line breaks), or there's a line break before the token.
+        let mut position = CommentTextPosition::SameLine;
+
+        // Process the trailing trivia of the last token
+        for piece in token.trailing_trivia().pieces() {
+            if piece.is_newline() {
+                lines_before += 1;
+                // All comments following from here are own line comments
+                position = CommentTextPosition::OwnLine;
+
+                if trailing_end.is_none() {
+                    trailing_end = Some(self.pending_comments.len());
+                }
+            } else if let Some(comment) = piece.as_comments() {
+                self.queue_comment(DecoratedComment {
+                    enclosing: self.enclosing_node().clone(),
+                    preceding: self.preceding_node.clone(),
+                    following: None,
+                    following_token: following_token.cloned(),
+                    lines_before,
+                    lines_after: 0, // Will be initialized after
+                    text_position: position,
+                    kind: Style::get_comment_kind(&comment),
+                    comment,
+                });
+
+                lines_before = 0;
+            }
+
+            if let Some(parens_source_range) = self
+                .parentheses
+                .r_paren_source_range(piece.text_range().end())
+            {
+                self.flush_before_r_paren_comments(
+                    parens_source_range,
+                    &token,
+                    position,
+                    lines_before,
+                    comments_start,
+                    trailing_end,
+                );
+
+                lines_before = 0;
+                position = CommentTextPosition::SameLine;
+                comments_start = 0;
+                trailing_end = None;
+            }
+        }
+
+        (comments_start, lines_before, position, trailing_end)
     }
 
     /// Processes comments appearing right before a `)` of a parenthesized expressions.
@@ -287,19 +332,16 @@ where
     ) {
         let enclosing = self.enclosing_node().clone();
 
-        let trailing_end = trailing_end.unwrap_or(self.pending_comments.len());
-        let mut comments = self.pending_comments[start..]
-            .iter_mut()
-            .enumerate()
-            .peekable();
+        let comments = &mut self.pending_comments[start..];
+        let trailing_end = trailing_end.unwrap_or(comments.len());
+
+        let mut comments = comments.iter_mut().enumerate().peekable();
 
         let parenthesized_node = self
             .parentheses
             .outer_most_parenthesized_node(last_token, parens_source_range);
 
-        // SAFETY: Safe, because the above loop at least returns the parent of the token. If this isn't the case,
-        // then it's likely that the source map is corrupted.
-        let preceding = parenthesized_node.expect("Last token to have a parent node.");
+        let preceding = parenthesized_node;
 
         // Using the `enclosing` as default but it's mainly to satisfy Rust. The only case where it is used
         // is if someone formats a Parenthesized expression as the root. Something we explicitly disallow
@@ -538,9 +580,9 @@ impl<'a> SourceParentheses<'a> {
         &self,
         token: &SyntaxToken<L>,
         parentheses_source_range: TextRange,
-    ) -> Option<SyntaxNode<L>> {
+    ) -> SyntaxNode<L> {
         match self {
-            SourceParentheses::Empty => token.parent(),
+            SourceParentheses::Empty => token.parent().unwrap(),
             SourceParentheses::SourceMap { map, .. } => {
                 debug_assert_eq!(&map.text()[parentheses_source_range], ")");
 
@@ -567,7 +609,11 @@ impl<'a> SourceParentheses<'a> {
 
                     if let Some(start) = start_offset {
                         TextRange::new(start, r_paren_source_end).contains_range(source_range)
-                    } else if source_range.end() == r_paren_source_end {
+                    }
+                    // Greater than to guarantee that we always return at least one node AND
+                    // handle the case where a node is wrapped in multiple parentheses.
+                    // Take the first node that fully encloses the parentheses
+                    else if source_range.end() >= r_paren_source_end {
                         start_offset = Some(source_range.start());
                         true
                     } else {
@@ -575,7 +621,11 @@ impl<'a> SourceParentheses<'a> {
                     }
                 });
 
-                ancestors.last()
+                // SAFETY:
+                // * The builder starts with a node which guarantees that every token has a parent node.
+                // * The above `take_while` guarantees to return `true` for the parent of the token.
+                // Thus, there's always at least one node
+                ancestors.last().unwrap()
             }
         }
     }
@@ -589,6 +639,7 @@ mod tests {
         DecoratedComment, SourceComment,
     };
     use crate::{TextSize, TransformSourceMap, TransformSourceMapBuilder};
+    use rome_diagnostics::file::FileId;
     use rome_js_parser::parse_module;
     use rome_js_syntax::{
         JsIdentifierExpression, JsLanguage, JsParameters, JsParenthesizedExpression,
@@ -800,7 +851,7 @@ b;"#;
 
         let source_map = source_map_builder.finish();
 
-        let root = parse_module(source, 0).syntax();
+        let root = parse_module(source, FileId::zero()).syntax();
 
         // A lot of code that simply removes the parenthesized expression and moves the parens
         // trivia to the identifiers leading / trailing trivia.
@@ -961,7 +1012,7 @@ b;"#;
         Vec<DecoratedComment<JsLanguage>>,
         CommentsMap<SyntaxElementKey, SourceComment<JsLanguage>>,
     ) {
-        let tree = parse_module(source, 0);
+        let tree = parse_module(source, FileId::zero());
 
         let style = TestCommentStyle::default();
         let builder = CommentsBuilderVisitor::new(&style, source_map);

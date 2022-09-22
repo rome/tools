@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-use rome_formatter::write;
+use rome_formatter::{write, CstFormatContext};
 use rome_js_syntax::{
     JsSyntaxToken, JsxAnyAttribute, JsxAnyAttributeValue, JsxAnyElementName, JsxAttributeList,
     JsxOpeningElement, JsxSelfClosingElement, JsxString, TsTypeArguments,
@@ -22,7 +22,7 @@ declare_node_union! {
 
 impl Format<JsFormatContext> for JsxAnyOpeningElement {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        let layout = self.compute_layout()?;
+        let layout = self.compute_layout(f.context().comments())?;
 
         let l_angle_token = self.l_angle_token()?;
         let name = self.name()?;
@@ -150,23 +150,21 @@ impl JsxAnyOpeningElement {
         matches!(self, JsxAnyOpeningElement::JsxSelfClosingElement(_))
     }
 
-    fn compute_layout(&self) -> SyntaxResult<OpeningElementLayout> {
+    fn compute_layout(&self, comments: &JsComments) -> SyntaxResult<OpeningElementLayout> {
         let attributes = self.attributes();
-        let l_angle_token = self.l_angle_token()?;
         let name = self.name()?;
 
-        let name_has_comments = l_angle_token.has_trailing_comments()
-            || name.syntax().has_comments_direct()
+        let name_has_comments = comments.has_comments(name.syntax())
             || self
                 .type_arguments()
-                .map_or(false, |arguments| arguments.syntax().has_comments_direct());
+                .map_or(false, |arguments| comments.has_comments(arguments.syntax()));
 
         let layout = if self.is_self_closing() && attributes.is_empty() && !name_has_comments {
             OpeningElementLayout::Inline
         } else if attributes.len() == 1
             && attributes.iter().all(|attribute| {
                 is_single_line_string_literal_attribute(&attribute)
-                    && !attribute.syntax().has_comments_direct()
+                    && !comments.has_comments(attribute.syntax())
             })
             && !name_has_comments
         {

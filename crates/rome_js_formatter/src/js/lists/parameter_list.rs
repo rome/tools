@@ -3,7 +3,7 @@ use crate::prelude::*;
 
 use rome_js_syntax::{
     JsAnyConstructorParameter, JsAnyParameter, JsConstructorParameterList, JsLanguage,
-    JsParameterList, JsSyntaxKind,
+    JsParameterList,
 };
 use rome_rowan::{declare_node_union, AstSeparatedListNodesIterator, SyntaxResult};
 
@@ -40,7 +40,7 @@ impl<'a> FormatJsAnyParameterList<'a> {
 impl Format<JsFormatContext> for FormatJsAnyParameterList<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         match self.layout {
-            None | Some(ParameterLayout::Default) => {
+            None | Some(ParameterLayout::Default) | Some(ParameterLayout::NoParameters) => {
                 // The trailing separator is disallowed if the last element in the list is a rest parameter
                 let has_trailing_rest = match self.list.last() {
                     Some(elem) => matches!(
@@ -64,7 +64,7 @@ impl Format<JsFormatContext> for FormatJsAnyParameterList<'_> {
                 match self.list {
                     JsAnyParameterList::JsParameterList(list) => {
                         let entries = list
-                            .format_separated(JsSyntaxKind::COMMA)
+                            .format_separated(",")
                             .with_trailing_separator(trailing_separator)
                             .zip(list.iter());
 
@@ -74,7 +74,7 @@ impl Format<JsFormatContext> for FormatJsAnyParameterList<'_> {
                     }
                     JsAnyParameterList::JsConstructorParameterList(list) => {
                         let entries = list
-                            .format_separated(JsSyntaxKind::COMMA)
+                            .format_separated(",")
                             .with_trailing_separator(trailing_separator)
                             .zip(list.iter());
 
@@ -91,11 +91,11 @@ impl Format<JsFormatContext> for FormatJsAnyParameterList<'_> {
 
                 match self.list {
                     JsAnyParameterList::JsParameterList(list) => join.entries(
-                        list.format_separated(JsSyntaxKind::COMMA)
+                        list.format_separated(",")
                             .with_trailing_separator(TrailingSeparator::Omit),
                     ),
                     JsAnyParameterList::JsConstructorParameterList(list) => join.entries(
-                        list.format_separated(JsSyntaxKind::COMMA)
+                        list.format_separated(",")
                             .with_trailing_separator(TrailingSeparator::Omit),
                     ),
                 };
@@ -129,6 +129,13 @@ impl JsAnyParameterList {
         match self {
             JsAnyParameterList::JsParameterList(parameters) => parameters.len(),
             JsAnyParameterList::JsConstructorParameterList(parameters) => parameters.len(),
+        }
+    }
+
+    pub fn is_empty(&self) -> bool {
+        match self {
+            JsAnyParameterList::JsParameterList(parameters) => parameters.is_empty(),
+            JsAnyParameterList::JsConstructorParameterList(parameters) => parameters.is_empty(),
         }
     }
 

@@ -290,17 +290,14 @@ type LongUnion =
 
 type Comments =
 	// leading separator
-	|
-	  // leading type
-	  A
-	| B /*
-trailing type */;
+	| // leading type
+	A
+	| B; /*
+trailing type */
 
 type A = [
-	|
-	  /*leading comment with new line*/
-	  A
-	| B,
+	/*leading comment with new line*/
+	A | B,
 ];
 
 type RemoveLeadingSeparatorIfNotBreak = /*a*/ /*b*/ A | B;
@@ -309,7 +306,8 @@ type BreakLongTypeAddedLeadingSeparator =
 	| BBBBBBBBBBBBBBBBBBBBBBBB
 	| CCCCCCCCCCCCCCCCCCCCCCCCCCC
 	| DDDDDDDDDDDDDDDDDDDDDDDDDDDDD;
-type BreakLongTypeWithLeadingComment = /*leading comment*/
+type BreakLongTypeWithLeadingComment =
+	/*leading comment*/
 	| BBBBBBBBBBBBBBBBBBBBBBBB
 	| CCCCCCCCCCCCCCCCCCCCCCCCCCC
 	| DDDDDDDDDDDDDDDDDDDDDDDDDDDDD;
@@ -365,10 +363,10 @@ const fooo: SomeThingWithShortMappedType<{
 
 const fooo: SomeThingWithLongMappedType<{
 	[P in
-		| AAAAAAAAAAAAAAAAA
-		| BBBBBBBBBBBB
-		| CCCCCCCCCCCCCCCCCCCCC
-		| DDDDDDDDDDDDDDDDDDDDDDDDDDDDD]: number;
+			| AAAAAAAAAAAAAAAAA
+			| BBBBBBBBBBBB
+			| CCCCCCCCCCCCCCCCCCCCC
+			| DDDDDDDDDDDDDDDDDDDDDDDDDDDDD]: number;
 }> = {};
 
 export type A =

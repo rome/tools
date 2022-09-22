@@ -33,7 +33,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 -----
 switch (key) {
-	case value: // comment
+	case // comment
+	value:
 
 	case value:
 	// fallthrough

@@ -23,7 +23,7 @@ const fn2 = () => {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,9 +1,9 @@
+@@ -1,6 +1,6 @@
  const fn1 = () => {
    return;
 -}; /* foo */
@@ -31,11 +31,6 @@ const fn2 = () => {
  
  const fn2 = () => {
    return;
--};
--
-+}
- // foo
-+;
 ```
 
 # Output
@@ -47,9 +42,9 @@ const fn1 = () => {
 
 const fn2 = () => {
   return;
-}
+};
+
 // foo
-;
 ```
 
 

@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::write;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::JsAnyClass;
 
 pub struct FormatClass<'a> {
@@ -7,21 +7,21 @@ pub struct FormatClass<'a> {
 }
 
 impl FormatClass<'_> {
-    fn should_group(&self) -> FormatResult<bool> {
+    fn should_group(&self, comments: &JsComments) -> FormatResult<bool> {
         if let Some(id) = self.class.id()? {
-            if id.syntax().has_trailing_comments() {
+            if comments.has_trailing_comments(id.syntax()) {
                 return Ok(true);
             }
         }
 
         if let Some(type_parameters) = self.class.type_parameters() {
-            if type_parameters.syntax().has_trailing_comments() {
+            if comments.has_trailing_comments(type_parameters.syntax()) {
                 return Ok(true);
             }
         }
 
         if let Some(extends) = self.class.extends_clause() {
-            if extends.syntax().has_trailing_comments() {
+            if comments.has_trailing_comments(extends.syntax()) {
                 return Ok(true);
             }
         }
@@ -50,7 +50,7 @@ impl Format<JsFormatContext> for FormatClass<'_> {
         let class_token = self.class.class_token()?;
         let members = self.class.members();
 
-        let group_mode = self.should_group()?;
+        let group_mode = self.should_group(f.comments())?;
 
         if let Some(abstract_token) = abstract_token {
             write!(f, [abstract_token.format(), space()])?;
@@ -58,39 +58,74 @@ impl Format<JsFormatContext> for FormatClass<'_> {
 
         write!(f, [class_token.format()])?;
 
+        let indent_only_heritage = type_parameters.as_ref().map_or(false, |type_parameters| {
+            !f.comments()
+                .has_trailing_line_comment(type_parameters.syntax())
+        }) && !(extends.is_some() && implements_clause.is_some());
+
+        let type_parameters_id = if indent_only_heritage && implements_clause.is_some() {
+            Some(f.group_id("type_parameters"))
+        } else {
+            None
+        };
+
         let head = format_with(|f| {
             if let Some(id) = &id {
                 write!(f, [space(), id.format()])?;
             }
 
-            write!(f, [type_parameters.format()])?;
+            if let Some(type_parameters) = &type_parameters {
+                write!(
+                    f,
+                    [type_parameters.format().with_options(type_parameters_id)]
+                )?;
+            }
 
+            Ok(())
+        });
+
+        let format_heritage_clauses = format_with(|f| {
             if let Some(extends) = &extends {
                 if group_mode {
-                    write!(f, [soft_line_break_or_space()])?;
+                    write!(f, [soft_line_break_or_space(), group(&extends.format())])?;
                 } else {
-                    write!(f, [space()])?;
+                    write!(f, [space(), extends.format()])?;
                 }
-
-                write!(f, [extends.format()])?;
             }
 
             if let Some(implements_clause) = &implements_clause {
-                write!(f, [soft_line_break_or_space(), implements_clause.format()])?;
+                if indent_only_heritage {
+                    write!(
+                        f,
+                        [
+                            if_group_breaks(&space()).with_group_id(type_parameters_id),
+                            if_group_fits_on_line(&soft_line_break_or_space())
+                                .with_group_id(type_parameters_id)
+                        ]
+                    )?;
+                } else {
+                    write!(f, [soft_line_break_or_space()])?;
+                }
+
+                write!(f, [implements_clause.format()])?;
             }
 
             Ok(())
         });
 
         if group_mode {
-            let heritage_id = f.group_id("heritageGroup");
+            let indented = format_with(|f| {
+                if indent_only_heritage {
+                    write!(f, [head, indent(&format_heritage_clauses)])
+                } else {
+                    write!(f, [indent(&format_args![head, format_heritage_clauses])])
+                }
+            });
 
+            let heritage_id = f.group_id("heritageGroup");
             write!(
                 f,
-                [
-                    group(&indent(&head)).with_group_id(Some(heritage_id)),
-                    space(),
-                ]
+                [group(&indented).with_group_id(Some(heritage_id)), space()]
             )?;
 
             if !members.is_empty() {
@@ -100,17 +135,27 @@ impl Format<JsFormatContext> for FormatClass<'_> {
                 )?;
             }
         } else {
-            write!(f, [head, space()])?;
+            write!(f, [head, format_heritage_clauses, space()])?;
         }
 
-        write![
-            f,
-            [format_delimited(
-                &self.class.l_curly_token()?,
-                &members.format(),
-                &self.class.r_curly_token()?
+        if members.is_empty() {
+            write!(
+                f,
+                [
+                    self.class.l_curly_token().format(),
+                    format_dangling_comments(self.class.syntax()).with_block_indent(),
+                    self.class.r_curly_token().format()
+                ]
             )
-            .block_indent()]
-        ]
+        } else {
+            write![
+                f,
+                [
+                    self.class.l_curly_token().format(),
+                    block_indent(&members.format()),
+                    self.class.r_curly_token().format()
+                ]
+            ]
+        }
     }
 }

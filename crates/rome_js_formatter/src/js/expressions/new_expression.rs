@@ -32,13 +32,7 @@ impl FormatNodeRule<JsNewExpression> for FormatJsNewExpression {
                 write!(f, [arguments.format()])
             }
             None => {
-                write!(
-                    f,
-                    [
-                        format_inserted(JsSyntaxKind::L_PAREN),
-                        format_inserted(JsSyntaxKind::R_PAREN)
-                    ]
-                )
+                write!(f, [text("("), text(")")])
             }
         }
     }

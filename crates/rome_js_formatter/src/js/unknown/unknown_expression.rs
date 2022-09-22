@@ -1,25 +1,11 @@
-use crate::prelude::*;
-
 use crate::parentheses::NeedsParentheses;
+use crate::FormatUnknownNodeRule;
 use rome_js_syntax::{JsSyntaxNode, JsUnknownExpression};
-use rome_rowan::AstNode;
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsUnknownExpression;
 
-impl FormatNodeRule<JsUnknownExpression> for FormatJsUnknownExpression {
-    fn fmt_fields(
-        &self,
-        node: &JsUnknownExpression,
-        formatter: &mut JsFormatter,
-    ) -> FormatResult<()> {
-        format_unknown_node(node.syntax()).fmt(formatter)
-    }
-
-    fn needs_parentheses(&self, item: &JsUnknownExpression) -> bool {
-        item.needs_parentheses()
-    }
-}
+impl FormatUnknownNodeRule<JsUnknownExpression> for FormatJsUnknownExpression {}
 
 impl NeedsParentheses for JsUnknownExpression {
     #[inline]

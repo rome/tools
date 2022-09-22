@@ -810,7 +810,7 @@ function() {
 }"#
         );
 
-        let tree = parse_script(input, 0);
+        let tree = parse_script(input, FileId::zero());
         let result = format_range(
             JsFormatOptions::new(SourceType::js_script()).with_indent_style(IndentStyle::Space(4)),
             &tree.syntax(),
@@ -830,15 +830,42 @@ function() {
         )
     }
 
+    #[test]
+    fn range_formatting_trailing_comments() {
+        let input = r#"let fn =a((x ) => {
+          quux (); //
+        });
+"#;
+
+        let range = TextRange::new(TextSize::from(28), TextSize::from(41));
+
+        debug_assert_eq!(&input[range], r#"  quux (); //"#);
+
+        let tree = parse_script(input, FileId::zero());
+        let result = format_range(
+            JsFormatOptions::new(SourceType::js_script()).with_indent_style(IndentStyle::Space(4)),
+            &tree.syntax(),
+            range,
+        )
+        .expect("Range formatting failed");
+
+        assert_eq!(result.as_code(), r#"quux(); //"#);
+        assert_eq!(
+            result.range(),
+            Some(TextRange::new(TextSize::from(30), TextSize::from(41)))
+        )
+    }
+
     #[ignore]
     #[test]
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
-        let src = r#"
-        type C = B & (C | A) & B;
+        let src = r#"long_obj =
+  <div style={{ i: 'dont', use: 'bootstrap', and: 'instead', use: 'massive', objects }}>hello world</div>
+
 
 "#;
-        let syntax = SourceType::tsx();
+        let syntax = SourceType::jsx();
         let tree = parse(src, FileId::zero(), syntax);
         let options = JsFormatOptions::new(syntax);
 

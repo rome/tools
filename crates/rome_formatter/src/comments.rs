@@ -237,7 +237,7 @@ pub struct DecoratedComment<L: Language> {
     enclosing: SyntaxNode<L>,
     preceding: Option<SyntaxNode<L>>,
     following: Option<SyntaxNode<L>>,
-    following_token: SyntaxToken<L>,
+    following_token: Option<SyntaxToken<L>>,
     text_position: CommentTextPosition,
     lines_before: u32,
     lines_after: u32,
@@ -434,8 +434,8 @@ impl<L: Language> DecoratedComment<L> {
     /// ```
     ///
     /// The `following_token` for both comments is `b` because it's the token coming after the comments.
-    pub fn following_token(&self) -> &SyntaxToken<L> {
-        &self.following_token
+    pub fn following_token(&self) -> Option<&SyntaxToken<L>> {
+        self.following_token.as_ref()
     }
 }
 

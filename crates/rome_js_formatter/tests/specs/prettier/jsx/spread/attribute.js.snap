@@ -40,40 +40,33 @@ info:
 ```diff
 --- Prettier
 +++ Rome
-@@ -9,28 +9,21 @@
- <div {/* comment */ ...a} />;
+@@ -6,7 +6,7 @@
+ 
+ <div {...a /* comment */} />;
+ 
+-<div {/* comment */ ...a} />;
++<div {.../* comment */ a} />;
  
  <div
--  {
--    ...a //comment
--  }
-+  {...a} //comment
- />;
+   {
+@@ -23,14 +23,14 @@
  
  <div
--  {
--    ...a
+   {
 -    //comment
-+  {...a
-+  //comment
+-    ...a
++    ...//comment
++    a
    }
  />;
  
  <div
    {
 -    //comment
--    ...a
--  }
-+  //comment
-+  ...a}
- />;
- 
- <div
--  {
--    //comment
 -    ...a // comment
--  }
-+  {...a} //comment // comment
++    ...//comment
++    a // comment
+   }
  />;
 ```
 
@@ -88,26 +81,33 @@ info:
 
 <div {...a /* comment */} />;
 
-<div {/* comment */ ...a} />;
+<div {.../* comment */ a} />;
 
 <div
-  {...a} //comment
-/>;
-
-<div
-  {...a
-  //comment
+  {
+    ...a //comment
   }
 />;
 
 <div
   {
-  //comment
-  ...a}
+    ...a
+    //comment
+  }
 />;
 
 <div
-  {...a} //comment // comment
+  {
+    ...//comment
+    a
+  }
+/>;
+
+<div
+  {
+    ...//comment
+    a // comment
+  }
 />;
 ```
 

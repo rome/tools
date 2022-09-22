@@ -14,4 +14,13 @@ impl FormatNodeRule<JsClassExportDefaultDeclaration> for FormatJsClassExportDefa
     ) -> FormatResult<()> {
         FormatClass::from(&node.clone().into()).fmt(f)
     }
+
+    fn fmt_dangling_comments(
+        &self,
+        _: &JsClassExportDefaultDeclaration,
+        _: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        /* Formatted as part of `FormatClass` */
+        Ok(())
+    }
 }

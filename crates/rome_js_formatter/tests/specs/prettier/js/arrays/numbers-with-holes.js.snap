@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/arrays/numbers-with-holes.js
 ---
 
 # Input
@@ -42,7 +44,7 @@ const numberWithHoles2 = [
 ```diff
 --- Prettier
 +++ Rome
-@@ -2,8 +2,8 @@
+@@ -2,13 +2,13 @@
    7234932941,
    7234932722,
    7234932312,
@@ -52,6 +54,12 @@ const numberWithHoles2 = [
    7234932841,
    ,
    7234932843,
+-  ,
+   // comment after a hole 1
++  ,
+   7234932436,
+ ];
+ 
 @@ -16,13 +16,13 @@
    0x234932941,
    0x234932722,
@@ -63,9 +71,10 @@ const numberWithHoles2 = [
    0x234932841,
    ,
    0x234932843,
-   ,
-+
+-  ,
    // comment after a hole 2
++  ,
++
    0x234932436,
  ];
 ```
@@ -82,8 +91,8 @@ const numberWithHoles1 = [
   7234932841,
   ,
   7234932843,
-  ,
   // comment after a hole 1
+  ,
   7234932436,
 ];
 
@@ -96,9 +105,9 @@ const numberWithHoles2 = [
   0x234932841,
   ,
   0x234932843,
+  // comment after a hole 2
   ,
 
-  // comment after a hole 2
   0x234932436,
 ];
 ```

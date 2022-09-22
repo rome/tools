@@ -17,7 +17,6 @@ obj?.foo.bar?.baz; // Only access `foo` if `obj` exists, and `baz` if
                    // `bar` exists
 
 // Example usage with bracket notation:
-// rome-ignore format: https://github.com/rome/tools/issues/2768
 obj?.['foo']?.bar?.baz // 42
 
 const obj2 = {

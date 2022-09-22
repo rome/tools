@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/comments/export.js
 ---
 
 # Input
@@ -53,36 +55,20 @@ export {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,5 +1,4 @@
--export //comment
+@@ -1,5 +1,5 @@
+ export //comment
 - {};
-+export {}; //comment
++{};
  
  export /* comment */ {};
  
-@@ -25,14 +24,12 @@
- const barrr = "";
- export {
-   foooo,
--  // comment
--  barrr as baz,
-+  barrr as baz, // comment
- } from "foo";
- 
- const fooooo = "";
- const barrrr = "";
- export {
-   fooooo,
--  // comment
--  barrrr as bazz,
-+  barrrr as bazz, // comment
- };
 ```
 
 # Output
 
 ```js
-export {}; //comment
+export //comment
+{};
 
 export /* comment */ {};
 
@@ -108,14 +94,16 @@ const foooo = "";
 const barrr = "";
 export {
   foooo,
-  barrr as baz, // comment
+  // comment
+  barrr as baz,
 } from "foo";
 
 const fooooo = "";
 const barrrr = "";
 export {
   fooooo,
-  barrrr as bazz, // comment
+  // comment
+  barrrr as bazz,
 };
 ```
 

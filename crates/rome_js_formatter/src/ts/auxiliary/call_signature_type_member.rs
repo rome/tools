@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::utils::FormatTypeMemberSeparator;
+use rome_formatter::{format_args, write};
 
-use rome_formatter::write;
 use rome_js_syntax::{TsCallSignatureTypeMember, TsCallSignatureTypeMemberFields};
 
 #[derive(Debug, Clone, Default)]
@@ -23,8 +23,7 @@ impl FormatNodeRule<TsCallSignatureTypeMember> for FormatTsCallSignatureTypeMemb
         write!(
             f,
             [
-                type_parameters.format(),
-                parameters.format(),
+                group(&format_args![type_parameters.format(), parameters.format()]),
                 return_type_annotation.format(),
                 FormatTypeMemberSeparator::new(separator_token.as_ref())
             ]

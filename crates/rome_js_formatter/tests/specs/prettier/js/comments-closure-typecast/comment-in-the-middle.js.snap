@@ -1,0 +1,57 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/comments-closure-typecast/comment-in-the-middle.js
+---
+
+# Input
+
+```js
+var a =
+/**
+ * bla bla bla
+ * @type {string |
+  * number
+ * }
+* bla bla bla
+ */
+//2
+ ((window['s'])).toString();
+console.log(a.foo());
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -7,5 +7,6 @@
+    * bla bla bla
+    */
+   //2
+-  (window["s"]).toString();
++  (window["s"])
++    .toString();
+ console.log(a.foo());
+```
+
+# Output
+
+```js
+var a =
+  /**
+   * bla bla bla
+   * @type {string |
+   * number
+   * }
+   * bla bla bla
+   */
+  //2
+  (window["s"])
+    .toString();
+console.log(a.foo());
+```
+
+
+
