@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: js/babel-plugins/export-default-from.js
+  test_file: "js\\babel-plugins\\export-default-from.js"
 ---
 
 # Input
@@ -43,30 +43,53 @@ from;
 
 # Errors
 ```
-error[SyntaxError]: expected `*` but instead found `v`
-  ┌─ export-default-from.js:4:8
-  │
-4 │ export v from 'mod';
-  │        ^ unexpected
+export-default-from.js:4:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ export-default-from.js:4:10
-  │
-4 │ export v from 'mod';
-  │        --^^^^
-  │        │ │
-  │        │ An explicit or implicit semicolon is expected here...
-  │        ...Which is required to end this statement
+  × expected `*` but instead found `v`
+  
+  × unexpected
+  
+    ┌─ export-default-from.js:4:8
+    │
+  4 │ export v from 'mod';
+    │        ^
+  
+export-default-from.js:4:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ export-default-from.js:4:15
-  │
-4 │ export v from 'mod';
-  │          -----^^^^^
-  │          │    │
-  │          │    An explicit or implicit semicolon is expected here...
-  │          ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ export-default-from.js:4:10
+    │
+  4 │ export v from 'mod';
+    │          ^^^^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ export-default-from.js:4:8
+    │
+  4 │ export v from 'mod';
+    │        ^^^^^^
+  
+export-default-from.js:4:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ export-default-from.js:4:15
+    │
+  4 │ export v from 'mod';
+    │               ^^^^^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ export-default-from.js:4:10
+    │
+  4 │ export v from 'mod';
+    │          ^^^^^^^^^^
+  
 
 ```
 

@@ -33,100 +33,164 @@ var foo13 = function () { foo13 = bar; };
 
 # Diagnostics
 ```
-warning[correctness/noFunctionAssign]: Do not reassign a function declaration.
-  ┌─ noFunctionAssign.js:1:10
-  │
-1 │ function foo() { };
-  │          ---
-2 │ foo = bar;
-  │ --- Reassigned here.
+noFunctionAssign.js:1:10 lint/correctness/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Use a local variable instead.
-
-
-```
-
-```
-warning[correctness/noFunctionAssign]: Do not reassign a function declaration.
-  ┌─ noFunctionAssign.js:4:10
-  │
-4 │ function foo2() { foo2 = bar; }
-  │          ----     ---- Reassigned here.
-
-=  note: Use a local variable instead.
-
+  ! Do not reassign a function declaration.
+  
+    ┌─ noFunctionAssign.js:1:10
+    │
+  1 │ function foo() { };
+    │          ^^^
+  
+  i Reassigned here.
+  
+    ┌─ noFunctionAssign.js:2:1
+    │
+  2 │ foo = bar;
+    │ ^^^
+  
+  i Use a local variable instead.
+  
 
 ```
 
 ```
-warning[correctness/noFunctionAssign]: Do not reassign a function declaration.
-  ┌─ noFunctionAssign.js:7:10
-  │
-6 │ foo3 = bar;
-  │ ---- Reassigned here.
-7 │ function foo3() { };
-  │          ----
+noFunctionAssign.js:4:10 lint/correctness/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Reassignment happens here because the function declaration is hoisted.
-=  note: Use a local variable instead.
-
-
-```
-
-```
-warning[correctness/noFunctionAssign]: Do not reassign a function declaration.
-   ┌─ noFunctionAssign.js:10:10
-   │
- 9 │ [foo4] = bar;
-   │  ---- Reassigned here.
-10 │ function foo4() { };
-   │          ----
-
-=  note: Reassignment happens here because the function declaration is hoisted.
-=  note: Use a local variable instead.
-
+  ! Do not reassign a function declaration.
+  
+    ┌─ noFunctionAssign.js:4:10
+    │
+  4 │ function foo2() { foo2 = bar; }
+    │          ^^^^
+  
+  i Reassigned here.
+  
+    ┌─ noFunctionAssign.js:4:19
+    │
+  4 │ function foo2() { foo2 = bar; }
+    │                   ^^^^
+  
+  i Use a local variable instead.
+  
 
 ```
 
 ```
-warning[correctness/noFunctionAssign]: Do not reassign a function declaration.
-   ┌─ noFunctionAssign.js:13:10
-   │
-12 │ ({ x: foo5 = 0 } = bar);
-   │       ---- Reassigned here.
-13 │ function foo5() { };
-   │          ----
+noFunctionAssign.js:7:10 lint/correctness/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Reassignment happens here because the function declaration is hoisted.
-=  note: Use a local variable instead.
-
-
-```
-
-```
-warning[correctness/noFunctionAssign]: Do not reassign a function declaration.
-   ┌─ noFunctionAssign.js:15:10
-   │
-15 │ function foo6() { [foo6] = bar; }
-   │          ----      ---- Reassigned here.
-
-=  note: Use a local variable instead.
-
+  ! Do not reassign a function declaration.
+  
+    ┌─ noFunctionAssign.js:7:10
+    │
+  7 │ function foo3() { };
+    │          ^^^^
+  
+  i Reassigned here.
+  
+    ┌─ noFunctionAssign.js:6:1
+    │
+  6 │ foo3 = bar;
+    │ ^^^^
+  
+  i Reassignment happens here because the function declaration is hoisted.
+  
+  i Use a local variable instead.
+  
 
 ```
 
 ```
-warning[correctness/noFunctionAssign]: Do not reassign a function declaration.
-   ┌─ noFunctionAssign.js:17:50
-   │
-17 │ (function () { ({ x: foo7 = 0 } = bar); function foo7() { }; })();
-   │                      ----                        ----
-   │                      │                            
-   │                      Reassigned here.
+noFunctionAssign.js:10:10 lint/correctness/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Reassignment happens here because the function declaration is hoisted.
-=  note: Use a local variable instead.
+  ! Do not reassign a function declaration.
+  
+     ┌─ noFunctionAssign.js:10:10
+     │
+  10 │ function foo4() { };
+     │          ^^^^
+  
+  i Reassigned here.
+  
+    ┌─ noFunctionAssign.js:9:2
+    │
+  9 │ [foo4] = bar;
+    │  ^^^^
+  
+  i Reassignment happens here because the function declaration is hoisted.
+  
+  i Use a local variable instead.
+  
 
+```
+
+```
+noFunctionAssign.js:13:10 lint/correctness/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not reassign a function declaration.
+  
+     ┌─ noFunctionAssign.js:13:10
+     │
+  13 │ function foo5() { };
+     │          ^^^^
+  
+  i Reassigned here.
+  
+     ┌─ noFunctionAssign.js:12:7
+     │
+  12 │ ({ x: foo5 = 0 } = bar);
+     │       ^^^^
+  
+  i Reassignment happens here because the function declaration is hoisted.
+  
+  i Use a local variable instead.
+  
+
+```
+
+```
+noFunctionAssign.js:15:10 lint/correctness/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not reassign a function declaration.
+  
+     ┌─ noFunctionAssign.js:15:10
+     │
+  15 │ function foo6() { [foo6] = bar; }
+     │          ^^^^
+  
+  i Reassigned here.
+  
+     ┌─ noFunctionAssign.js:15:20
+     │
+  15 │ function foo6() { [foo6] = bar; }
+     │                    ^^^^
+  
+  i Use a local variable instead.
+  
+
+```
+
+```
+noFunctionAssign.js:17:50 lint/correctness/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not reassign a function declaration.
+  
+     ┌─ noFunctionAssign.js:17:50
+     │
+  17 │ (function () { ({ x: foo7 = 0 } = bar); function foo7() { }; })();
+     │                                                  ^^^^
+  
+  i Reassigned here.
+  
+     ┌─ noFunctionAssign.js:17:22
+     │
+  17 │ (function () { ({ x: foo7 = 0 } = bar); function foo7() { }; })();
+     │                      ^^^^
+  
+  i Reassignment happens here because the function declaration is hoisted.
+  
+  i Use a local variable instead.
+  
 
 ```
 

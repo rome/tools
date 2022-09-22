@@ -185,39 +185,56 @@ JsModule {
       8: R_CURLY@123..124 "}" [] []
   3: EOF@124..125 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected a class method body but instead found 'abstract'
-  ┌─ ts_abstract_member_ansi.ts:1:43
-  │
-1 │ abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }
-  │                                           ^^^^^^^^ Expected a class method body here
+ts_abstract_member_ansi.ts:1:43 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a class method body but instead found 'abstract'
+  
+  × Expected a class method body here
+  
+    ┌─ ts_abstract_member_ansi.ts:1:43
+    │
+  1 │ abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }
+    │                                           ^^^^^^^^
+  
 --
-error[SyntaxError]: 'abstract' cannot appear on a constructor declaration.
-  ┌─ ts_abstract_member_ansi.ts:1:20
-  │
-1 │ abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }
-  │                    ^^^^^^^^
+ts_abstract_member_ansi.ts:1:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'abstract' cannot appear on a constructor declaration.
+  
+    ┌─ ts_abstract_member_ansi.ts:1:20
+    │
+  1 │ abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }
+    │                    ^^^^^^^^
+  
 --
-error[SyntaxError]: expected a semicolon to end the method declaration, but found none
-  ┌─ ts_abstract_member_ansi.ts:1:43
-  │
-1 │ abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }
-  │                                           ^^^^^^^^^^^^^^^^^
+ts_abstract_member_ansi.ts:1:43 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a semicolon to end the method declaration, but found none
+  
+    ┌─ ts_abstract_member_ansi.ts:1:43
+    │
+  1 │ abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }
+    │                                           ^^^^^^^^^^^^^^^^^
+  
 --
-error[SyntaxError]: expected a semicolon to end the method declaration, but found none
-  ┌─ ts_abstract_member_ansi.ts:1:61
-  │
-1 │ abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }
-  │                                                             ^^^^^^^^^^^^^^^^^^^^^
+ts_abstract_member_ansi.ts:1:61 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a semicolon to end the method declaration, but found none
+  
+    ┌─ ts_abstract_member_ansi.ts:1:61
+    │
+  1 │ abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }
+    │                                                             ^^^^^^^^^^^^^^^^^^^^^
+  
 --
-error[SyntaxError]: expected a semicolon to end the method declaration, but found none
-  ┌─ ts_abstract_member_ansi.ts:1:83
-  │
-1 │ abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }
-  │                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ts_abstract_member_ansi.ts:1:83 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a semicolon to end the method declaration, but found none
+  
+    ┌─ ts_abstract_member_ansi.ts:1:83
+    │
+  1 │ abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }
+    │                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
 --
 abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }

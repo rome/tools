@@ -42,11 +42,16 @@ JsModule {
       1: SEMICOLON@6..7 ";" [] []
   3: EOF@7..8 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `:` but instead found `;`
-  ┌─ ts_variable_annotation_err.ts:1:7
-  │
-1 │ let a!;
-  │       ^ unexpected
+ts_variable_annotation_err.ts:1:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `:` but instead found `;`
+  
+  × unexpected
+  
+    ┌─ ts_variable_annotation_err.ts:1:7
+    │
+  1 │ let a!;
+    │       ^
+  
 --
 let a!;

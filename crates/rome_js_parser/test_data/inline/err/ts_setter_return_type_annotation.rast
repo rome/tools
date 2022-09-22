@@ -98,12 +98,15 @@ JsModule {
       8: R_CURLY@46..48 "}" [Newline("\n")] []
   3: EOF@48..49 "" [Newline("\n")] []
 --
-error[SyntaxError]: A 'set' accessor cannot have a return type annotation.
-  ┌─ ts_setter_return_type_annotation.ts:2:25
-  │
-2 │     set a(value: string): void {}
-  │                         ^^^^^^
+ts_setter_return_type_annotation.ts:2:25 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × A 'set' accessor cannot have a return type annotation.
+  
+    ┌─ ts_setter_return_type_annotation.ts:2:25
+    │
+  2 │     set a(value: string): void {}
+    │                         ^^^^^^
+  
 --
 class Test {
     set a(value: string): void {}

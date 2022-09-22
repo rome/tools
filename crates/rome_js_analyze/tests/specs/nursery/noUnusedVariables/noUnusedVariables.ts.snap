@@ -59,50 +59,62 @@ used_overloaded();
 
 # Diagnostics
 ```
-warning[nursery/noUnusedVariables]: This parameter is unused.
-  ┌─ noUnusedVariables.ts:4:14
-  │
-4 │     constructor(a: number) {}
-  │                 -
+noUnusedVariables.ts:4:14 lint/nursery/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-
-
-```
-
-```
-warning[nursery/noUnusedVariables]: This parameter is unused.
-  ┌─ noUnusedVariables.ts:5:4
-  │
-5 │     f(a: number) {}
-  │       -
-
-=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-
+  ! This parameter is unused.
+  
+    ┌─ noUnusedVariables.ts:4:14
+    │
+  4 │     constructor(a: number) {}
+    │                 ^
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
 
 ```
 
 ```
-warning[nursery/noUnusedVariables]: This parameter is unused.
-  ┌─ noUnusedVariables.ts:6:8
-  │
-6 │     set a(a: number) {}
-  │           -
+noUnusedVariables.ts:5:4 lint/nursery/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-
+  ! This parameter is unused.
+  
+    ┌─ noUnusedVariables.ts:5:4
+    │
+  5 │     f(a: number) {}
+    │       ^
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
 
 ```
 
 ```
-warning[nursery/noUnusedVariables]: This function is unused.
-   ┌─ noUnusedVariables.ts:12:10
-   │
-12 │ function unused_overloaded(s?: string) {
-   │          -----------------
+noUnusedVariables.ts:6:8 lint/nursery/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  ! This parameter is unused.
+  
+    ┌─ noUnusedVariables.ts:6:8
+    │
+  6 │     set a(a: number) {}
+    │           ^
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
 
+```
+
+```
+noUnusedVariables.ts:12:10 lint/nursery/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This function is unused.
+  
+     ┌─ noUnusedVariables.ts:12:10
+     │
+  12 │ function unused_overloaded(s?: string) {
+     │          ^^^^^^^^^^^^^^^^^
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
 
 ```
 

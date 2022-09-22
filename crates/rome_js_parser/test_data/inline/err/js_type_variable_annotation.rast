@@ -82,18 +82,28 @@ JsModule {
       1: SEMICOLON@25..26 ";" [] []
   3: EOF@26..27 "" [Newline("\n")] []
 --
-error[SyntaxError]: type annotation are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  ┌─ js_type_variable_annotation.js:1:6
-  │
-1 │ let a: string, b!: number;
-  │      ^^^^^^^^ TypeScript only syntax
+js_type_variable_annotation.js:1:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × type annotation are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  
+  × TypeScript only syntax
+  
+    ┌─ js_type_variable_annotation.js:1:6
+    │
+  1 │ let a: string, b!: number;
+    │      ^^^^^^^^
+  
 --
-error[SyntaxError]: definite assertion assignments are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  ┌─ js_type_variable_annotation.js:1:17
-  │
-1 │ let a: string, b!: number;
-  │                 ^^^^^^^^^ TypeScript only syntax
+js_type_variable_annotation.js:1:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × definite assertion assignments are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  
+  × TypeScript only syntax
+  
+    ┌─ js_type_variable_annotation.js:1:17
+    │
+  1 │ let a: string, b!: number;
+    │                 ^^^^^^^^^
+  
 --
 let a: string, b!: number;

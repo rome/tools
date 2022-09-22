@@ -275,44 +275,77 @@ JsModule {
       1: SEMICOLON@116..117 ";" [] []
   3: EOF@117..118 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected an identifier, or an assignment target but instead found '}'
-  ┌─ rest_property_assignment_target_err.js:1:8
-  │
-1 │ ({ ... } = a);
-  │        ^ Expected an identifier, or an assignment target here
+rest_property_assignment_target_err.js:1:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier, or an assignment target but instead found '}'
+  
+  × Expected an identifier, or an assignment target here
+  
+    ┌─ rest_property_assignment_target_err.js:1:8
+    │
+  1 │ ({ ... } = a);
+    │        ^
+  
 --
-error[SyntaxError]: rest element cannot have a default
-  ┌─ rest_property_assignment_target_err.js:2:9
-  │
-2 │ ({ ...c = "default" } = a);
-  │    ---- ^^^^^^^^^^^^ Remove the default value here
-  │    │     
-  │    Rest element
+rest_property_assignment_target_err.js:2:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × rest element cannot have a default
+  
+  × Remove the default value here
+  
+    ┌─ rest_property_assignment_target_err.js:2:9
+    │
+  2 │ ({ ...c = "default" } = a);
+    │         ^^^^^^^^^^^^
+  
+  i Rest element
+  
+    ┌─ rest_property_assignment_target_err.js:2:4
+    │
+  2 │ ({ ...c = "default" } = a);
+    │    ^^^^
+  
 --
-error[SyntaxError]: object and array assignment targets are not allowed in rest patterns
-  ┌─ rest_property_assignment_target_err.js:3:7
-  │
-3 │ ({ ...{a} } = b);
-  │       ^^^
+rest_property_assignment_target_err.js:3:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × object and array assignment targets are not allowed in rest patterns
+  
+    ┌─ rest_property_assignment_target_err.js:3:7
+    │
+  3 │ ({ ...{a} } = b);
+    │       ^^^
+  
 --
-error[SyntaxError]: rest element must be the last element
-  ┌─ rest_property_assignment_target_err.js:4:4
-  │
-4 │ ({ ...rest, other_assignment } = a);
-  │    ^^^^^^^ Move the rest element to the end of the pattern, right before the closing '}'
+rest_property_assignment_target_err.js:4:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × rest element must be the last element
+  
+  × Move the rest element to the end of the pattern, right before the closing '}'
+  
+    ┌─ rest_property_assignment_target_err.js:4:4
+    │
+  4 │ ({ ...rest, other_assignment } = a);
+    │    ^^^^^^^
+  
 --
-error[SyntaxError]: rest element may not have a trailing comma
-  ┌─ rest_property_assignment_target_err.js:5:11
-  │
-5 │ ({ ...rest, } = a);
-  │    -------^ Remove the trailing comma here
-  │    │       
-  │    Rest element
+rest_property_assignment_target_err.js:5:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × rest element may not have a trailing comma
+  
+  × Remove the trailing comma here
+  
+    ┌─ rest_property_assignment_target_err.js:5:11
+    │
+  5 │ ({ ...rest, } = a);
+    │           ^
+  
+  i Rest element
+  
+    ┌─ rest_property_assignment_target_err.js:5:4
+    │
+  5 │ ({ ...rest, } = a);
+    │    ^^^^^^^
+  
 --
 ({ ... } = a);
 ({ ...c = "default" } = a);

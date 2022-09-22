@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "typescript\\definite\\definite.ts"
 ---
 
 # Input
@@ -45,12 +47,20 @@ var y!: MyComponent;
 
 # Errors
 ```
-error[SyntaxError]: Declarations with initializers cannot also have definite assignment assertions.
-  ┌─ definite.ts:5:18
-  │
-5 │ const x!: string = '';
-  │        --------- ^^^^
+definite.ts:5:18 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Declarations with initializers cannot also have definite assignment assertions.
+  
+    ┌─ definite.ts:5:18
+    │
+  5 │ const x!: string = '';
+    │                  ^^^^
+  
+    ┌─ definite.ts:5:8
+    │
+  5 │ const x!: string = '';
+    │        ^^^^^^^^^
+  
 
 ```
 

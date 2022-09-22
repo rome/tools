@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "typescript\\optional-variance\\basic.ts"
 ---
 
 # Input
@@ -235,228 +237,413 @@ declare class StateNode<TContext, in out TEvent extends { type: string }> {
 
 # Errors
 ```
-error[SyntaxError]: expected `,` but instead found `T`
-  ┌─ basic.ts:1:20
-  │
-1 │ type Covariant<out T> = {
-  │                    ^ unexpected
+basic.ts:1:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type parameter but instead found 'in'
-  ┌─ basic.ts:4:20
-  │
-4 │ type Contravariant<in T> = {
-  │                    ^^ Expected a type parameter here
+  × expected `,` but instead found `T`
+  
+  × unexpected
+  
+    ┌─ basic.ts:1:20
+    │
+  1 │ type Covariant<out T> = {
+    │                    ^
+  
+basic.ts:4:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `T`
-  ┌─ basic.ts:4:23
-  │
-4 │ type Contravariant<in T> = {
-  │                       ^ unexpected
+  × expected a type parameter but instead found 'in'
+  
+  × Expected a type parameter here
+  
+    ┌─ basic.ts:4:20
+    │
+  4 │ type Contravariant<in T> = {
+    │                    ^^
+  
+basic.ts:4:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type parameter but instead found 'in'
-  ┌─ basic.ts:7:16
-  │
-7 │ type Invariant<in out T> = {
-  │                ^^ Expected a type parameter here
+  × expected `,` but instead found `T`
+  
+  × unexpected
+  
+    ┌─ basic.ts:4:23
+    │
+  4 │ type Contravariant<in T> = {
+    │                       ^
+  
+basic.ts:7:16 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `out`
-  ┌─ basic.ts:7:19
-  │
-7 │ type Invariant<in out T> = {
-  │                   ^^^ unexpected
+  × expected a type parameter but instead found 'in'
+  
+  × Expected a type parameter here
+  
+    ┌─ basic.ts:7:16
+    │
+  7 │ type Invariant<in out T> = {
+    │                ^^
+  
+basic.ts:7:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `T`
-  ┌─ basic.ts:7:23
-  │
-7 │ type Invariant<in out T> = {
-  │                       ^ unexpected
+  × expected `,` but instead found `out`
+  
+  × unexpected
+  
+    ┌─ basic.ts:7:19
+    │
+  7 │ type Invariant<in out T> = {
+    │                   ^^^
+  
+basic.ts:7:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `T`
-   ┌─ basic.ts:10:14
-   │
-10 │ type T10<out T> = T;
-   │              ^ unexpected
+  × expected `,` but instead found `T`
+  
+  × unexpected
+  
+    ┌─ basic.ts:7:23
+    │
+  7 │ type Invariant<in out T> = {
+    │                       ^
+  
+basic.ts:10:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type parameter but instead found 'in'
-   ┌─ basic.ts:11:10
-   │
-11 │ type T11<in T> = keyof T;
-   │          ^^ Expected a type parameter here
+  × expected `,` but instead found `T`
+  
+  × unexpected
+  
+     ┌─ basic.ts:10:14
+     │
+  10 │ type T10<out T> = T;
+     │              ^
+  
+basic.ts:11:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `T`
-   ┌─ basic.ts:11:13
-   │
-11 │ type T11<in T> = keyof T;
-   │             ^ unexpected
+  × expected a type parameter but instead found 'in'
+  
+  × Expected a type parameter here
+  
+     ┌─ basic.ts:11:10
+     │
+  11 │ type T11<in T> = keyof T;
+     │          ^^
+  
+basic.ts:11:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `T`
-   ┌─ basic.ts:12:14
-   │
-12 │ type T12<out T, out K extends keyof T> = T[K];
-   │              ^ unexpected
+  × expected `,` but instead found `T`
+  
+  × unexpected
+  
+     ┌─ basic.ts:11:13
+     │
+  11 │ type T11<in T> = keyof T;
+     │             ^
+  
+basic.ts:12:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `K`
-   ┌─ basic.ts:12:21
-   │
-12 │ type T12<out T, out K extends keyof T> = T[K];
-   │                     ^ unexpected
+  × expected `,` but instead found `T`
+  
+  × unexpected
+  
+     ┌─ basic.ts:12:14
+     │
+  12 │ type T12<out T, out K extends keyof T> = T[K];
+     │              ^
+  
+basic.ts:12:21 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type parameter but instead found 'in'
-   ┌─ basic.ts:13:10
-   │
-13 │ type T13<in out T> = T[keyof T];
-   │          ^^ Expected a type parameter here
+  × expected `,` but instead found `K`
+  
+  × unexpected
+  
+     ┌─ basic.ts:12:21
+     │
+  12 │ type T12<out T, out K extends keyof T> = T[K];
+     │                     ^
+  
+basic.ts:13:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `out`
-   ┌─ basic.ts:13:13
-   │
-13 │ type T13<in out T> = T[keyof T];
-   │             ^^^ unexpected
+  × expected a type parameter but instead found 'in'
+  
+  × Expected a type parameter here
+  
+     ┌─ basic.ts:13:10
+     │
+  13 │ type T13<in out T> = T[keyof T];
+     │          ^^
+  
+basic.ts:13:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `T`
-   ┌─ basic.ts:13:17
-   │
-13 │ type T13<in out T> = T[keyof T];
-   │                 ^ unexpected
+  × expected `,` but instead found `out`
+  
+  × unexpected
+  
+     ┌─ basic.ts:13:13
+     │
+  13 │ type T13<in out T> = T[keyof T];
+     │             ^^^
+  
+basic.ts:13:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type parameter but instead found 'in'
-   ┌─ basic.ts:15:17
-   │
-15 │ type Covariant1<in T> = {
-   │                 ^^ Expected a type parameter here
+  × expected `,` but instead found `T`
+  
+  × unexpected
+  
+     ┌─ basic.ts:13:17
+     │
+  13 │ type T13<in out T> = T[keyof T];
+     │                 ^
+  
+basic.ts:15:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `T`
-   ┌─ basic.ts:15:20
-   │
-15 │ type Covariant1<in T> = {
-   │                    ^ unexpected
+  × expected a type parameter but instead found 'in'
+  
+  × Expected a type parameter here
+  
+     ┌─ basic.ts:15:17
+     │
+  15 │ type Covariant1<in T> = {
+     │                 ^^
+  
+basic.ts:15:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `T`
-   ┌─ basic.ts:19:25
-   │
-19 │ type Contravariant1<out T> = keyof T;
-   │                         ^ unexpected
+  × expected `,` but instead found `T`
+  
+  × unexpected
+  
+     ┌─ basic.ts:15:20
+     │
+  15 │ type Covariant1<in T> = {
+     │                    ^
+  
+basic.ts:19:25 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `T`
-   ┌─ basic.ts:21:25
-   │
-21 │ type Contravariant2<out T> = {
-   │                         ^ unexpected
+  × expected `,` but instead found `T`
+  
+  × unexpected
+  
+     ┌─ basic.ts:19:25
+     │
+  19 │ type Contravariant1<out T> = keyof T;
+     │                         ^
+  
+basic.ts:21:25 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type parameter but instead found 'in'
-   ┌─ basic.ts:25:17
-   │
-25 │ type Invariant1<in T> = {
-   │                 ^^ Expected a type parameter here
+  × expected `,` but instead found `T`
+  
+  × unexpected
+  
+     ┌─ basic.ts:21:25
+     │
+  21 │ type Contravariant2<out T> = {
+     │                         ^
+  
+basic.ts:25:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `T`
-   ┌─ basic.ts:25:20
-   │
-25 │ type Invariant1<in T> = {
-   │                    ^ unexpected
+  × expected a type parameter but instead found 'in'
+  
+  × Expected a type parameter here
+  
+     ┌─ basic.ts:25:17
+     │
+  25 │ type Invariant1<in T> = {
+     │                 ^^
+  
+basic.ts:25:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `T`
-   ┌─ basic.ts:29:21
-   │
-29 │ type Invariant2<out T> = {
-   │                     ^ unexpected
+  × expected `,` but instead found `T`
+  
+  × unexpected
+  
+     ┌─ basic.ts:25:20
+     │
+  25 │ type Invariant1<in T> = {
+     │                    ^
+  
+basic.ts:29:21 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type parameter but instead found 'in'
-   ┌─ basic.ts:32:11
-   │
-32 │ type Foo1<in T> = {
-   │           ^^ Expected a type parameter here
+  × expected `,` but instead found `T`
+  
+  × unexpected
+  
+     ┌─ basic.ts:29:21
+     │
+  29 │ type Invariant2<out T> = {
+     │                     ^
+  
+basic.ts:32:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `T`
-   ┌─ basic.ts:32:14
-   │
-32 │ type Foo1<in T> = {
-   │              ^ unexpected
+  × expected a type parameter but instead found 'in'
+  
+  × Expected a type parameter here
+  
+     ┌─ basic.ts:32:11
+     │
+  32 │ type Foo1<in T> = {
+     │           ^^
+  
+basic.ts:32:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `T`
-   ┌─ basic.ts:37:15
-   │
-37 │ type Foo2<out T> = {
-   │               ^ unexpected
+  × expected `,` but instead found `T`
+  
+  × unexpected
+  
+     ┌─ basic.ts:32:14
+     │
+  32 │ type Foo1<in T> = {
+     │              ^
+  
+basic.ts:37:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type parameter but instead found 'in'
-   ┌─ basic.ts:42:11
-   │
-42 │ type Foo3<in out T> = {
-   │           ^^ Expected a type parameter here
+  × expected `,` but instead found `T`
+  
+  × unexpected
+  
+     ┌─ basic.ts:37:15
+     │
+  37 │ type Foo2<out T> = {
+     │               ^
+  
+basic.ts:42:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `out`
-   ┌─ basic.ts:42:14
-   │
-42 │ type Foo3<in out T> = {
-   │              ^^^ unexpected
+  × expected a type parameter but instead found 'in'
+  
+  × Expected a type parameter here
+  
+     ┌─ basic.ts:42:11
+     │
+  42 │ type Foo3<in out T> = {
+     │           ^^
+  
+basic.ts:42:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `T`
-   ┌─ basic.ts:42:18
-   │
-42 │ type Foo3<in out T> = {
-   │                  ^ unexpected
+  × expected `,` but instead found `out`
+  
+  × unexpected
+  
+     ┌─ basic.ts:42:14
+     │
+  42 │ type Foo3<in out T> = {
+     │              ^^^
+  
+basic.ts:42:18 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type parameter but instead found 'in'
-   ┌─ basic.ts:47:10
-   │
-47 │ type T21<in out T> = T;
-   │          ^^ Expected a type parameter here
+  × expected `,` but instead found `T`
+  
+  × unexpected
+  
+     ┌─ basic.ts:42:18
+     │
+  42 │ type Foo3<in out T> = {
+     │                  ^
+  
+basic.ts:47:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `out`
-   ┌─ basic.ts:47:13
-   │
-47 │ type T21<in out T> = T;
-   │             ^^^ unexpected
+  × expected a type parameter but instead found 'in'
+  
+  × Expected a type parameter here
+  
+     ┌─ basic.ts:47:10
+     │
+  47 │ type T21<in out T> = T;
+     │          ^^
+  
+basic.ts:47:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `T`
-   ┌─ basic.ts:47:17
-   │
-47 │ type T21<in out T> = T;
-   │                 ^ unexpected
+  × expected `,` but instead found `out`
+  
+  × unexpected
+  
+     ┌─ basic.ts:47:13
+     │
+  47 │ type T21<in out T> = T;
+     │             ^^^
+  
+basic.ts:47:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `T`
-   ┌─ basic.ts:49:19
-   │
-49 │ interface Baz<out T> {}
-   │                   ^ unexpected
+  × expected `,` but instead found `T`
+  
+  × unexpected
+  
+     ┌─ basic.ts:47:17
+     │
+  47 │ type T21<in out T> = T;
+     │                 ^
+  
+basic.ts:49:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type parameter but instead found 'in'
-   ┌─ basic.ts:50:15
-   │
-50 │ interface Baz<in T> {}
-   │               ^^ Expected a type parameter here
+  × expected `,` but instead found `T`
+  
+  × unexpected
+  
+     ┌─ basic.ts:49:19
+     │
+  49 │ interface Baz<out T> {}
+     │                   ^
+  
+basic.ts:50:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `T`
-   ┌─ basic.ts:50:18
-   │
-50 │ interface Baz<in T> {}
-   │                  ^ unexpected
+  × expected a type parameter but instead found 'in'
+  
+  × Expected a type parameter here
+  
+     ┌─ basic.ts:50:15
+     │
+  50 │ interface Baz<in T> {}
+     │               ^^
+  
+basic.ts:50:18 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `A`
-   ┌─ basic.ts:52:22
-   │
-52 │ interface Parent<out A> {
-   │                      ^ unexpected
+  × expected `,` but instead found `T`
+  
+  × unexpected
+  
+     ┌─ basic.ts:50:18
+     │
+  50 │ interface Baz<in T> {}
+     │                  ^
+  
+basic.ts:52:22 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type parameter but instead found 'in'
-   ┌─ basic.ts:57:35
-   │
-57 │ declare class StateNode<TContext, in out TEvent extends { type: string }> {
-   │                                   ^^ Expected a type parameter here
+  × expected `,` but instead found `A`
+  
+  × unexpected
+  
+     ┌─ basic.ts:52:22
+     │
+  52 │ interface Parent<out A> {
+     │                      ^
+  
+basic.ts:57:35 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `out`
-   ┌─ basic.ts:57:38
-   │
-57 │ declare class StateNode<TContext, in out TEvent extends { type: string }> {
-   │                                      ^^^ unexpected
+  × expected a type parameter but instead found 'in'
+  
+  × Expected a type parameter here
+  
+     ┌─ basic.ts:57:35
+     │
+  57 │ declare class StateNode<TContext, in out TEvent extends { type: string }> {
+     │                                   ^^
+  
+basic.ts:57:38 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `TEvent`
-   ┌─ basic.ts:57:42
-   │
-57 │ declare class StateNode<TContext, in out TEvent extends { type: string }> {
-   │                                          ^^^^^^ unexpected
+  × expected `,` but instead found `out`
+  
+  × unexpected
+  
+     ┌─ basic.ts:57:38
+     │
+  57 │ declare class StateNode<TContext, in out TEvent extends { type: string }> {
+     │                                      ^^^
+  
+basic.ts:57:42 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `TEvent`
+  
+  × unexpected
+  
+     ┌─ basic.ts:57:42
+     │
+  57 │ declare class StateNode<TContext, in out TEvent extends { type: string }> {
+     │                                          ^^^^^^
+  
 
 ```
 

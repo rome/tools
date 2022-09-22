@@ -57,11 +57,14 @@ JsModule {
       8: R_CURLY@24..25 "}" [] []
   3: EOF@25..26 "" [Newline("\n")] []
 --
-error[SyntaxError]: Only abstract classes can have abstract members
-  ┌─ class_member_modifier.js:1:11
-  │
-1 │ class A { abstract foo; }
-  │           ^^^^^^^^
+class_member_modifier.js:1:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Only abstract classes can have abstract members
+  
+    ┌─ class_member_modifier.js:1:11
+    │
+  1 │ class A { abstract foo; }
+    │           ^^^^^^^^
+  
 --
 class A { abstract foo; }

@@ -65,11 +65,14 @@ JsModule {
         8: R_CURLY@34..35 "}" [] []
   3: EOF@35..36 "" [Newline("\n")] []
 --
-error[SyntaxError]: 'async' modifier cannot be used in an ambient context.
-  ┌─ ts_ambient_async_method.ts:1:19
-  │
-1 │ declare class A { async method(); }
-  │                   ^^^^^^^^^^^^^^^
+ts_ambient_async_method.ts:1:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'async' modifier cannot be used in an ambient context.
+  
+    ┌─ ts_ambient_async_method.ts:1:19
+    │
+  1 │ declare class A { async method(); }
+    │                   ^^^^^^^^^^^^^^^
+  
 --
 declare class A { async method(); }

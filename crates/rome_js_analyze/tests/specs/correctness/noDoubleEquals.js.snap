@@ -14,43 +14,55 @@ const isNonNull = a != null;
 
 # Diagnostics
 ```
-warning[correctness/noDoubleEquals]: Use === instead of ==
-  ┌─ noDoubleEquals.js:1:18
-  │
-1 │ const isZero = a == 0;
-  │                  -- == is only allowed when comparing against null
+noDoubleEquals.js:1:18 lint/correctness/noDoubleEquals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Use ===
-    | @@ -1,4 +1,4 @@
-0   | - const isZero = a == 0;
-  0 | + const isZero = a === 0;
-1 1 |   const isNonZero = a != 0;
-2 2 |   
-3 3 |   const isNull = a == null;
-
-=  note: Using === may be unsafe if you are relying on type coercion
-
+  ! Use === instead of ==
+  
+  ! == is only allowed when comparing against null
+  
+    ┌─ noDoubleEquals.js:1:18
+    │
+  1 │ const isZero = a == 0;
+    │                  ^^
+  
+  i Using === may be unsafe if you are relying on type coercion
+  
+  i Suggested fix: Use ===
+  
+      | @@ -1,4 +1,4 @@
+  0   | - const isZero = a == 0;
+    0 | + const isZero = a === 0;
+  1 1 |   const isNonZero = a != 0;
+  2 2 |   
+  3 3 |   const isNull = a == null;
+  
 
 ```
 
 ```
-warning[correctness/noDoubleEquals]: Use !== instead of !=
-  ┌─ noDoubleEquals.js:2:21
-  │
-2 │ const isNonZero = a != 0;
-  │                     -- != is only allowed when comparing against null
+noDoubleEquals.js:2:21 lint/correctness/noDoubleEquals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Use !==
-    | @@ -1,5 +1,5 @@
-0 0 |   const isZero = a == 0;
-1   | - const isNonZero = a != 0;
-  1 | + const isNonZero = a !== 0;
-2 2 |   
-3 3 |   const isNull = a == null;
-4 4 |   const isNonNull = a != null;
-
-=  note: Using !== may be unsafe if you are relying on type coercion
-
+  ! Use !== instead of !=
+  
+  ! != is only allowed when comparing against null
+  
+    ┌─ noDoubleEquals.js:2:21
+    │
+  2 │ const isNonZero = a != 0;
+    │                     ^^
+  
+  i Using !== may be unsafe if you are relying on type coercion
+  
+  i Suggested fix: Use !==
+  
+      | @@ -1,5 +1,5 @@
+  0 0 |   const isZero = a == 0;
+  1   | - const isNonZero = a != 0;
+    1 | + const isNonZero = a !== 0;
+  2 2 |   
+  3 3 |   const isNull = a == null;
+  4 4 |   const isNonNull = a != null;
+  
 
 ```
 

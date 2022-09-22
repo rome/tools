@@ -146,24 +146,43 @@ JsModule {
           2: R_PAREN@79..80 ")" [] []
   3: EOF@80..81 "" [Newline("\n")] []
 --
-error[SyntaxError]: Illegal duplicate default export declarations
-  ┌─ multiple_default_exports_err.js:2:8
-  │
-1 │ export default (class {})
-  │        ------------------ the module's default export is first defined here
-2 │ export default a + b;
-  │        ^^^^^^^^^^^^^^ multiple default exports are erroneous
+multiple_default_exports_err.js:2:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal duplicate default export declarations
+  
+  × multiple default exports are erroneous
+  
+    ┌─ multiple_default_exports_err.js:2:8
+    │
+  2 │ export default a + b;
+    │        ^^^^^^^^^^^^^^
+  
+  i the module's default export is first defined here
+  
+    ┌─ multiple_default_exports_err.js:1:8
+    │
+  1 │ export default (class {})
+    │        ^^^^^^^^^^^^^^^^^^
+  
 --
-error[SyntaxError]: Illegal duplicate default export declarations
-  ┌─ multiple_default_exports_err.js:3:8
-  │
-1 │ export default (class {})
-  │        ------------------ the module's default export is first defined here
-2 │ export default a + b;
-3 │ export default (function a() {})
-  │        ^^^^^^^^^^^^^^^^^^^^^^^^^ multiple default exports are erroneous
+multiple_default_exports_err.js:3:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal duplicate default export declarations
+  
+  × multiple default exports are erroneous
+  
+    ┌─ multiple_default_exports_err.js:3:8
+    │
+  3 │ export default (function a() {})
+    │        ^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i the module's default export is first defined here
+  
+    ┌─ multiple_default_exports_err.js:1:8
+    │
+  1 │ export default (class {})
+    │        ^^^^^^^^^^^^^^^^^^
+  
 --
 export default (class {})
 export default a + b;

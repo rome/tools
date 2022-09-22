@@ -130,21 +130,39 @@ JsModule {
       8: R_CURLY@86..87 "}" [] []
   3: EOF@87..88 "" [Newline("\n")] []
 --
-error[SyntaxError]: 'abstract' cannot be used with 'static' modifier.
-  ┌─ typescript_abstract_classes_invalid_static_abstract_member.ts:1:20
-  │
-1 │ abstract class A { abstract static fn1(); }
-  │                    ^^^^^^^^ ------ 'static' modifier
+typescript_abstract_classes_invalid_static_abstract_member.ts:1:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━
 
+  × 'abstract' cannot be used with 'static' modifier.
+  
+    ┌─ typescript_abstract_classes_invalid_static_abstract_member.ts:1:20
+    │
+  1 │ abstract class A { abstract static fn1(); }
+    │                    ^^^^^^^^
+  
+  i 'static' modifier
+  
+    ┌─ typescript_abstract_classes_invalid_static_abstract_member.ts:1:29
+    │
+  1 │ abstract class A { abstract static fn1(); }
+    │                             ^^^^^^
+  
 --
-error[SyntaxError]: 'abstract' cannot be used with 'static' modifier.
-  ┌─ typescript_abstract_classes_invalid_static_abstract_member.ts:2:27
-  │
-2 │ abstract class B { static abstract fn1(); }
-  │                    ------ ^^^^^^^^
-  │                    │       
-  │                    'static' modifier
+typescript_abstract_classes_invalid_static_abstract_member.ts:2:27 SyntaxError ━━━━━━━━━━━━━━━━━━━━━
 
+  × 'abstract' cannot be used with 'static' modifier.
+  
+    ┌─ typescript_abstract_classes_invalid_static_abstract_member.ts:2:27
+    │
+  2 │ abstract class B { static abstract fn1(); }
+    │                           ^^^^^^^^
+  
+  i 'static' modifier
+  
+    ┌─ typescript_abstract_classes_invalid_static_abstract_member.ts:2:20
+    │
+  2 │ abstract class B { static abstract fn1(); }
+    │                    ^^^^^^
+  
 --
 abstract class A { abstract static fn1(); }
 abstract class B { static abstract fn1(); }

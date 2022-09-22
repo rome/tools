@@ -16,14 +16,17 @@ function f() {
 
 # Diagnostics
 ```
-warning[correctness/noArguments]: Use the rest parameters instead of arguments.
-  ┌─ noArguments.cjs:2:17
-  │
-2 │     console.log(arguments);
-  │                 ---------
+noArguments.cjs:2:17 lint/correctness/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: arguments does not have Array.prototype methods and can be inconvenient to use.
-
+  ! Use the rest parameters instead of arguments.
+  
+    ┌─ noArguments.cjs:2:17
+    │
+  2 │     console.log(arguments);
+    │                 ^^^^^^^^^
+  
+  i arguments does not have Array.prototype methods and can be inconvenient to use.
+  
 
 ```
 

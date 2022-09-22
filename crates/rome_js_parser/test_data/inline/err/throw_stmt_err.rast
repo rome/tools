@@ -65,22 +65,36 @@ JsModule {
       2: SEMICOLON@33..34 ";" [] []
   3: EOF@34..35 "" [Newline("\n")] []
 --
-error[SyntaxError]: Linebreaks between a throw statement and the error to be thrown are not allowed
-  ┌─ throw_stmt_err.js:2:1
-  │
-2 │ new Error("oh no :(")
-  │ ^^^
-  │ │
-  │ Help: did you mean to throw this?
-  │ A linebreak is not allowed here
+throw_stmt_err.js:2:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Linebreaks between a throw statement and the error to be thrown are not allowed
+  
+  × A linebreak is not allowed here
+  
+    ┌─ throw_stmt_err.js:2:1
+    │
+  2 │ new Error("oh no :(")
+    │ ^^^
+  
+  i Help: did you mean to throw this?
+  
+    ┌─ throw_stmt_err.js:2:1
+    │
+  2 │ new Error("oh no :(")
+    │ ^^^
+  
 --
-error[SyntaxError]: expected an expression but instead found ';'
-  ┌─ throw_stmt_err.js:3:6
-  │
-3 │ throw;
-  │      ^ Expected an expression here
+throw_stmt_err.js:3:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an expression but instead found ';'
+  
+  × Expected an expression here
+  
+    ┌─ throw_stmt_err.js:3:6
+    │
+  3 │ throw;
+    │      ^
+  
 --
 throw
 new Error("oh no :(")

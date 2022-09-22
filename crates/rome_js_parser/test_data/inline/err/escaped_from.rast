@@ -39,11 +39,14 @@ JsModule {
         5: SEMICOLON@39..40 ";" [] []
   3: EOF@40..41 "" [Newline("\n")] []
 --
-error[SyntaxError]: 'from' keyword cannot contain escape character.
-  ┌─ escaped_from.js:1:11
-  │
-1 │ export {} \u0066rom "./escaped-from.js";
-  │           ^^^^^^^^^
+escaped_from.js:1:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'from' keyword cannot contain escape character.
+  
+    ┌─ escaped_from.js:1:11
+    │
+  1 │ export {} \u0066rom "./escaped-from.js";
+    │           ^^^^^^^^^
+  
 --
 export {} \u0066rom "./escaped-from.js";

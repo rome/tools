@@ -29,14 +29,24 @@ function JsSwitchStatement2() {
 
 # Diagnostics
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-   ┌─ JsSwitchStatement.js:18:13
-   │
-17 │             break;
-   │             ------ This statement will break the flow of the code ...
-18 │             afterBreak();
-   │             ------------- ... before it can reach this code
+JsSwitchStatement.js:18:13 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+     ┌─ JsSwitchStatement.js:18:13
+     │
+  18 │             afterBreak();
+     │             ^^^^^^^^^^^^^
+  
+  i This statement will break the flow of the code ...
+  
+     ┌─ JsSwitchStatement.js:17:13
+     │
+  17 │             break;
+     │             ^^^^^^
+  
 
 ```
 

@@ -234,26 +234,35 @@ JsModule {
         3: R_CURLY@109..110 "}" [] []
   3: EOF@110..111 "" [Newline("\n")] []
 --
-error[SyntaxError]: Parameter cannot have question mark and initializer
-  ┌─ ts_formal_parameter_error.ts:1:23
-  │
-1 │ function a(x?: string = "test") {}
-  │                       ^^^^^^^^
+ts_formal_parameter_error.ts:1:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Parameter cannot have question mark and initializer
+  
+    ┌─ ts_formal_parameter_error.ts:1:23
+    │
+  1 │ function a(x?: string = "test") {}
+    │                       ^^^^^^^^
+  
 --
-error[SyntaxError]: rest elements may not have default initializers
-  ┌─ ts_formal_parameter_error.ts:2:30
-  │
-2 │ function b(...rest: string[] = "init") {}
-  │                              ^^^^^^^^
+ts_formal_parameter_error.ts:2:30 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × rest elements may not have default initializers
+  
+    ┌─ ts_formal_parameter_error.ts:2:30
+    │
+  2 │ function b(...rest: string[] = "init") {}
+    │                              ^^^^^^^^
+  
 --
-error[SyntaxError]: rest elements may not have trailing commas
-  ┌─ ts_formal_parameter_error.ts:3:12
-  │
-3 │ function c(...rest, b: string) {}
-  │            ^^^^^^^
+ts_formal_parameter_error.ts:3:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × rest elements may not have trailing commas
+  
+    ┌─ ts_formal_parameter_error.ts:3:12
+    │
+  3 │ function c(...rest, b: string) {}
+    │            ^^^^^^^
+  
 --
 function a(x?: string = "test") {}
 function b(...rest: string[] = "init") {}

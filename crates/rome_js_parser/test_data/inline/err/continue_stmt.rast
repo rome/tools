@@ -123,28 +123,46 @@ JsModule {
         2: R_CURLY@84..86 "}" [Newline("\n")] []
   3: EOF@86..87 "" [Newline("\n")] []
 --
-error[SyntaxError]: A `continue` statement can only be used within an enclosing `for`, `while` or `do while` statement.
-  ┌─ continue_stmt.js:1:18
-  │
-1 │ function foo() { continue; }
-  │                  ^^^^^^^^
+continue_stmt.js:1:18 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × A `continue` statement can only be used within an enclosing `for`, `while` or `do while` statement.
+  
+    ┌─ continue_stmt.js:1:18
+    │
+  1 │ function foo() { continue; }
+    │                  ^^^^^^^^
+  
 --
-error[SyntaxError]: Use of undefined statement label `foo`
-  ┌─ continue_stmt.js:3:12
-  │
-3 │   continue foo;
-  │            ^^^ This label is used, but it is never defined
+continue_stmt.js:3:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Use of undefined statement label `foo`
+  
+  × This label is used, but it is never defined
+  
+    ┌─ continue_stmt.js:3:12
+    │
+  3 │   continue foo;
+    │            ^^^
+  
 --
-error[SyntaxError]: A `continue` statement can only jump to a label of an enclosing `for`, `while` or `do while` statement.
-  ┌─ continue_stmt.js:6:12
-  │
-5 │ foo: {
-  │ --- points to non-iteration statement
-6 │   continue foo;
-  │            ^^^ This label
+continue_stmt.js:6:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × A `continue` statement can only jump to a label of an enclosing `for`, `while` or `do while` statement.
+  
+  × This label
+  
+    ┌─ continue_stmt.js:6:12
+    │
+  6 │   continue foo;
+    │            ^^^
+  
+  i points to non-iteration statement
+  
+    ┌─ continue_stmt.js:5:1
+    │
+  5 │ foo: {
+    │ ^^^
+  
 --
 function foo() { continue; }
 while (true) {

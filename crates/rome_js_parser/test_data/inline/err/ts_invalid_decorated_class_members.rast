@@ -192,12 +192,17 @@ JsModule {
       8: R_CURLY@162..164 "}" [Newline("\n")] []
   3: EOF@164..165 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected a parameter but instead found ')'
-  ┌─ ts_invalid_decorated_class_members.ts:6:29
-  │
-6 │   @test abstract set setter();
-  │                             ^ Expected a parameter here
+ts_invalid_decorated_class_members.ts:6:29 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a parameter but instead found ')'
+  
+  × Expected a parameter here
+  
+    ┌─ ts_invalid_decorated_class_members.ts:6:29
+    │
+  6 │   @test abstract set setter();
+    │                             ^
+  
 --
 abstract class Test {
   @test method();

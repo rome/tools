@@ -142,33 +142,53 @@ JsModule {
       0: R_CURLY@38..39 "}" [] []
   3: EOF@39..40 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '/'
-  ┌─ object_expr_error_prop_name.js:1:11
-  │
-1 │ let a = { /: 6, /: /foo/ }
-  │           ^ Expected a property, a shorthand property, a getter, a setter, or a method here
+object_expr_error_prop_name.js:1:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a property, a shorthand property, a getter, a setter, or a method but instead found '/'
+  
+  × Expected a property, a shorthand property, a getter, a setter, or a method here
+  
+    ┌─ object_expr_error_prop_name.js:1:11
+    │
+  1 │ let a = { /: 6, /: /foo/ }
+    │           ^
+  
 --
-error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '/'
-  ┌─ object_expr_error_prop_name.js:1:17
-  │
-1 │ let a = { /: 6, /: /foo/ }
-  │                 ^ Expected a property, a shorthand property, a getter, a setter, or a method here
+object_expr_error_prop_name.js:1:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a property, a shorthand property, a getter, a setter, or a method but instead found '/'
+  
+  × Expected a property, a shorthand property, a getter, a setter, or a method here
+  
+    ┌─ object_expr_error_prop_name.js:1:17
+    │
+  1 │ let a = { /: 6, /: /foo/ }
+    │                 ^
+  
 --
-error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '{'
-  ┌─ object_expr_error_prop_name.js:2:10
-  │
-2 │ let b = {{}}
-  │          ^ Expected a property, a shorthand property, a getter, a setter, or a method here
+object_expr_error_prop_name.js:2:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a property, a shorthand property, a getter, a setter, or a method but instead found '{'
+  
+  × Expected a property, a shorthand property, a getter, a setter, or a method here
+  
+    ┌─ object_expr_error_prop_name.js:2:10
+    │
+  2 │ let b = {{}}
+    │          ^
+  
 --
-error[SyntaxError]: expected a statement but instead found '}'
-  ┌─ object_expr_error_prop_name.js:2:12
-  │
-2 │ let b = {{}}
-  │            ^ Expected a statement here
+object_expr_error_prop_name.js:2:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a statement but instead found '}'
+  
+  × Expected a statement here
+  
+    ┌─ object_expr_error_prop_name.js:2:12
+    │
+  2 │ let b = {{}}
+    │            ^
+  
 --
 let a = { /: 6, /: /foo/ }
 let b = {{}}

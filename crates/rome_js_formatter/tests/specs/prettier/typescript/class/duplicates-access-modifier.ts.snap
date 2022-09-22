@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "typescript\\class\\duplicates-access-modifier.ts"
 ---
 
 # Input
@@ -50,54 +52,114 @@ class Foo {
 
 # Errors
 ```
-error[SyntaxError]: Accessibility modifier already seen.
-  ┌─ duplicates-access-modifier.ts:2:10
-  │
-2 │   public public a;
-  │   ------ ^^^^^^ duplicate modifier
-  │   │       
-  │   first modifier
+duplicates-access-modifier.ts:2:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Accessibility modifier already seen.
-  ┌─ duplicates-access-modifier.ts:3:11
-  │
-3 │   private public b;
-  │   ------- ^^^^^^ duplicate modifier
-  │   │        
-  │   first modifier
+  × Accessibility modifier already seen.
+  
+  × duplicate modifier
+  
+    ┌─ duplicates-access-modifier.ts:2:10
+    │
+  2 │   public public a;
+    │          ^^^^^^
+  
+  i first modifier
+  
+    ┌─ duplicates-access-modifier.ts:2:3
+    │
+  2 │   public public a;
+    │   ^^^^^^
+  
+duplicates-access-modifier.ts:3:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Accessibility modifier already seen.
-  ┌─ duplicates-access-modifier.ts:4:13
-  │
-4 │   protected private c;
-  │   --------- ^^^^^^^ duplicate modifier
-  │   │          
-  │   first modifier
+  × Accessibility modifier already seen.
+  
+  × duplicate modifier
+  
+    ┌─ duplicates-access-modifier.ts:3:11
+    │
+  3 │   private public b;
+    │           ^^^^^^
+  
+  i first modifier
+  
+    ┌─ duplicates-access-modifier.ts:3:3
+    │
+  3 │   private public b;
+    │   ^^^^^^^
+  
+duplicates-access-modifier.ts:4:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Accessibility modifier already seen.
-  ┌─ duplicates-access-modifier.ts:5:10
-  │
-5 │   public protected d;
-  │   ------ ^^^^^^^^^ duplicate modifier
-  │   │       
-  │   first modifier
+  × Accessibility modifier already seen.
+  
+  × duplicate modifier
+  
+    ┌─ duplicates-access-modifier.ts:4:13
+    │
+  4 │   protected private c;
+    │             ^^^^^^^
+  
+  i first modifier
+  
+    ┌─ duplicates-access-modifier.ts:4:3
+    │
+  4 │   protected private c;
+    │   ^^^^^^^^^
+  
+duplicates-access-modifier.ts:5:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Accessibility modifier already seen.
-  ┌─ duplicates-access-modifier.ts:6:10
-  │
-6 │   public protected private e;
-  │   ------ ^^^^^^^^^ duplicate modifier
-  │   │       
-  │   first modifier
+  × Accessibility modifier already seen.
+  
+  × duplicate modifier
+  
+    ┌─ duplicates-access-modifier.ts:5:10
+    │
+  5 │   public protected d;
+    │          ^^^^^^^^^
+  
+  i first modifier
+  
+    ┌─ duplicates-access-modifier.ts:5:3
+    │
+  5 │   public protected d;
+    │   ^^^^^^
+  
+duplicates-access-modifier.ts:6:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Accessibility modifier already seen.
-  ┌─ duplicates-access-modifier.ts:6:20
-  │
-6 │   public protected private e;
-  │          --------- ^^^^^^^ duplicate modifier
-  │          │          
-  │          first modifier
+  × Accessibility modifier already seen.
+  
+  × duplicate modifier
+  
+    ┌─ duplicates-access-modifier.ts:6:10
+    │
+  6 │   public protected private e;
+    │          ^^^^^^^^^
+  
+  i first modifier
+  
+    ┌─ duplicates-access-modifier.ts:6:3
+    │
+  6 │   public protected private e;
+    │   ^^^^^^
+  
+duplicates-access-modifier.ts:6:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Accessibility modifier already seen.
+  
+  × duplicate modifier
+  
+    ┌─ duplicates-access-modifier.ts:6:20
+    │
+  6 │   public protected private e;
+    │                    ^^^^^^^
+  
+  i first modifier
+  
+    ┌─ duplicates-access-modifier.ts:6:10
+    │
+  6 │   public protected private e;
+    │          ^^^^^^^^^
+  
 
 ```
 

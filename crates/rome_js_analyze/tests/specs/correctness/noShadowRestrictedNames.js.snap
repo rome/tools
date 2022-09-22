@@ -22,86 +22,107 @@ try {
 
 # Diagnostics
 ```
-warning[correctness/noShadowRestrictedNames]: Do not shadow the global "NaN" property.
-  ┌─ noShadowRestrictedNames.js:1:10
-  │
-1 │ function NaN() {}
-  │          ---
+noShadowRestrictedNames.js:1:10 lint/correctness/noShadowRestrictedNames ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.
-
-
-```
-
-```
-warning[correctness/noShadowRestrictedNames]: Do not shadow the global "undefined" property.
-  ┌─ noShadowRestrictedNames.js:2:10
-  │
-2 │ function undefined() {}
-  │          ---------
-
-=  note: Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.
-
+  ! Do not shadow the global "NaN" property.
+  
+    ┌─ noShadowRestrictedNames.js:1:10
+    │
+  1 │ function NaN() {}
+    │          ^^^
+  
+  i Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.
+  
 
 ```
 
 ```
-warning[correctness/noShadowRestrictedNames]: Do not shadow the global "Infinity" property.
-  ┌─ noShadowRestrictedNames.js:3:10
-  │
-3 │ function Infinity() {}
-  │          --------
+noShadowRestrictedNames.js:2:10 lint/correctness/noShadowRestrictedNames ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.
-
-
-```
-
-```
-warning[correctness/noShadowRestrictedNames]: Do not shadow the global "Array" property.
-  ┌─ noShadowRestrictedNames.js:6:10
-  │
-6 │ function Array() {}
-  │          -----
-
-=  note: Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.
-
+  ! Do not shadow the global "undefined" property.
+  
+    ┌─ noShadowRestrictedNames.js:2:10
+    │
+  2 │ function undefined() {}
+    │          ^^^^^^^^^
+  
+  i Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.
+  
 
 ```
 
 ```
-warning[correctness/noShadowRestrictedNames]: Do not shadow the global "JSON" property.
-  ┌─ noShadowRestrictedNames.js:8:15
-  │
-8 │ function test(JSON) {
-  │               ----
+noShadowRestrictedNames.js:3:10 lint/correctness/noShadowRestrictedNames ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.
-
-
-```
-
-```
-warning[correctness/noShadowRestrictedNames]: Do not shadow the global "Set" property.
-   ┌─ noShadowRestrictedNames.js:11:5
-   │
-11 │ let Set;
-   │     ---
-
-=  note: Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.
-
+  ! Do not shadow the global "Infinity" property.
+  
+    ┌─ noShadowRestrictedNames.js:3:10
+    │
+  3 │ function Infinity() {}
+    │          ^^^^^^^^
+  
+  i Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.
+  
 
 ```
 
 ```
-warning[correctness/noShadowRestrictedNames]: Do not shadow the global "Object" property.
-   ┌─ noShadowRestrictedNames.js:13:10
-   │
-13 │ } catch (Object) {}
-   │          ------
+noShadowRestrictedNames.js:6:10 lint/correctness/noShadowRestrictedNames ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.
+  ! Do not shadow the global "Array" property.
+  
+    ┌─ noShadowRestrictedNames.js:6:10
+    │
+  6 │ function Array() {}
+    │          ^^^^^
+  
+  i Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.
+  
 
+```
+
+```
+noShadowRestrictedNames.js:8:15 lint/correctness/noShadowRestrictedNames ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not shadow the global "JSON" property.
+  
+    ┌─ noShadowRestrictedNames.js:8:15
+    │
+  8 │ function test(JSON) {
+    │               ^^^^
+  
+  i Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.
+  
+
+```
+
+```
+noShadowRestrictedNames.js:11:5 lint/correctness/noShadowRestrictedNames ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not shadow the global "Set" property.
+  
+     ┌─ noShadowRestrictedNames.js:11:5
+     │
+  11 │ let Set;
+     │     ^^^
+  
+  i Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.
+  
+
+```
+
+```
+noShadowRestrictedNames.js:13:10 lint/correctness/noShadowRestrictedNames ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not shadow the global "Object" property.
+  
+     ┌─ noShadowRestrictedNames.js:13:10
+     │
+  13 │ } catch (Object) {}
+     │          ^^^^^^
+  
+  i Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.
+  
 
 ```
 

@@ -18,12 +18,17 @@ errors where emitted while running checks
 # Emitted Messages
 
 ```block
-error[SyntaxError]: expected `(` but instead the file ends
-  ┌─ ci.js:2:1
-  │
-2 │ 
-  │ ^ the file ends here
+ci.js:2:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `(` but instead the file ends
+  
+  × the file ends here
+  
+    ┌─ ci.js:2:1
+    │
+  2 │ 
+    │ ^
+  
 
 ```
 

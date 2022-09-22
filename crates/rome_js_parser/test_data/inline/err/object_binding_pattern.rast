@@ -327,61 +327,99 @@ JsModule {
       1: SEMICOLON@123..124 ";" [] []
   3: EOF@124..125 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `:` but instead found `}`
-  ┌─ object_binding_pattern.js:1:9
-  │
-1 │ let { 5 } } = { eval: "foo" };
-  │         ^ unexpected
+object_binding_pattern.js:1:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `:` but instead found `}`
+  
+  × unexpected
+  
+    ┌─ object_binding_pattern.js:1:9
+    │
+  1 │ let { 5 } } = { eval: "foo" };
+    │         ^
+  
 --
-error[SyntaxError]: Object and Array patterns require initializers
-  ┌─ object_binding_pattern.js:1:5
-  │
-1 │ let { 5 } } = { eval: "foo" };
-  │     ^^^^^ this pattern is declared, but it is not given an initialized value
+object_binding_pattern.js:1:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Object and Array patterns require initializers
+  
+  × this pattern is declared, but it is not given an initialized value
+  
+    ┌─ object_binding_pattern.js:1:5
+    │
+  1 │ let { 5 } } = { eval: "foo" };
+    │     ^^^^^
+  
 --
-error[SyntaxError]: expected a statement but instead found '} ='
-  ┌─ object_binding_pattern.js:1:11
-  │
-1 │ let { 5 } } = { eval: "foo" };
-  │           ^^^ Expected a statement here
+object_binding_pattern.js:1:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a statement but instead found '} ='
+  
+  × Expected a statement here
+  
+    ┌─ object_binding_pattern.js:1:11
+    │
+  1 │ let { 5 } } = { eval: "foo" };
+    │           ^^^
+  
 --
-error[SyntaxError]: Illegal use of `eval` as an identifier in strict mode
-  ┌─ object_binding_pattern.js:2:7
-  │
-2 │ let { eval } = { eval: "foo" };
-  │       ^^^^
+object_binding_pattern.js:2:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of `eval` as an identifier in strict mode
+  
+    ┌─ object_binding_pattern.js:2:7
+    │
+  2 │ let { eval } = { eval: "foo" };
+    │       ^^^^
+  
 --
-error[SyntaxError]: expected `:` but instead found `,`
-  ┌─ object_binding_pattern.js:3:8
-  │
-3 │ let { 5, 6 } = { eval: "foo" };
-  │        ^ unexpected
+object_binding_pattern.js:3:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `:` but instead found `,`
+  
+  × unexpected
+  
+    ┌─ object_binding_pattern.js:3:8
+    │
+  3 │ let { 5, 6 } = { eval: "foo" };
+    │        ^
+  
 --
-error[SyntaxError]: expected `:` but instead found `}`
-  ┌─ object_binding_pattern.js:3:12
-  │
-3 │ let { 5, 6 } = { eval: "foo" };
-  │            ^ unexpected
+object_binding_pattern.js:3:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `:` but instead found `}`
+  
+  × unexpected
+  
+    ┌─ object_binding_pattern.js:3:12
+    │
+  3 │ let { 5, 6 } = { eval: "foo" };
+    │            ^
+  
 --
-error[SyntaxError]: expected `:` but instead found `,`
-  ┌─ object_binding_pattern.js:4:15
-  │
-4 │ let { default , eval: } = {};
-  │               ^ unexpected
+object_binding_pattern.js:4:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `:` but instead found `,`
+  
+  × unexpected
+  
+    ┌─ object_binding_pattern.js:4:15
+    │
+  4 │ let { default , eval: } = {};
+    │               ^
+  
 --
-error[SyntaxError]: expected an identifier, an array pattern, or an object pattern but instead found '}'
-  ┌─ object_binding_pattern.js:4:23
-  │
-4 │ let { default , eval: } = {};
-  │                       ^ Expected an identifier, an array pattern, or an object pattern here
+object_binding_pattern.js:4:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier, an array pattern, or an object pattern but instead found '}'
+  
+  × Expected an identifier, an array pattern, or an object pattern here
+  
+    ┌─ object_binding_pattern.js:4:23
+    │
+  4 │ let { default , eval: } = {};
+    │                       ^
+  
 --
 let { 5 } } = { eval: "foo" };
 let { eval } = { eval: "foo" };

@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "typescript\\import-export\\type-modifier.ts"
 ---
 
 # Input
@@ -59,12 +61,15 @@ import type foo, { bar } from 'bar';
 
 # Errors
 ```
-error[SyntaxError]: A type-only import can specify a default import or named bindings, but not both.
-   ┌─ type-modifier.ts:15:8
-   │
-15 │ import type foo, { bar } from 'bar';
-   │        ^^^^^^^^^^^^^^^^^
+type-modifier.ts:15:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × A type-only import can specify a default import or named bindings, but not both.
+  
+     ┌─ type-modifier.ts:15:8
+     │
+  15 │ import type foo, { bar } from 'bar';
+     │        ^^^^^^^^^^^^^^^^^
+  
 
 ```
 

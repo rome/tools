@@ -18,18 +18,31 @@ function JsIfStatement1() {
 
 # Diagnostics
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-  ┌─ JsIfStatement.js:8:5
-  │
-3 │         return;
-  │         ------- Either this statement ...
-4 │     } else {
-5 │         return;
-  │         ------- ... or this statement will return from the function ...
-  ·
-8 │     afterIfElseReturn();
-  │     -------------------- ... before it can reach this code
+JsIfStatement.js:8:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+    ┌─ JsIfStatement.js:8:5
+    │
+  8 │     afterIfElseReturn();
+    │     ^^^^^^^^^^^^^^^^^^^^
+  
+  i Either this statement ...
+  
+    ┌─ JsIfStatement.js:3:9
+    │
+  3 │         return;
+    │         ^^^^^^^
+  
+  i ... or this statement will return from the function ...
+  
+    ┌─ JsIfStatement.js:5:9
+    │
+  5 │         return;
+    │         ^^^^^^^
+  
 
 ```
 

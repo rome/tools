@@ -145,26 +145,41 @@ JsModule {
           3: R_CURLY@77..78 "}" [] []
   3: EOF@78..79 "" [Newline("\n")] []
 --
-error[SyntaxError]: In strict mode code, functions can only be declared at top level or inside a block
-  ┌─ function_in_single_statement_context_strict.js:1:11
-  │
-1 │ if (true) function a() {}
-  │           ^^^^^^^^^^^^^^^ wrap the function in a block statement
+function_in_single_statement_context_strict.js:1:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × In strict mode code, functions can only be declared at top level or inside a block
+  
+  × wrap the function in a block statement
+  
+    ┌─ function_in_single_statement_context_strict.js:1:11
+    │
+  1 │ if (true) function a() {}
+    │           ^^^^^^^^^^^^^^^
+  
 --
-error[SyntaxError]: In strict mode code, functions can only be declared at top level or inside a block
-  ┌─ function_in_single_statement_context_strict.js:2:9
-  │
-2 │ label1: function b() {}
-  │         ^^^^^^^^^^^^^^^ wrap the function in a block statement
+function_in_single_statement_context_strict.js:2:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × In strict mode code, functions can only be declared at top level or inside a block
+  
+  × wrap the function in a block statement
+  
+    ┌─ function_in_single_statement_context_strict.js:2:9
+    │
+  2 │ label1: function b() {}
+    │         ^^^^^^^^^^^^^^^
+  
 --
-error[SyntaxError]: In strict mode code, functions can only be declared at top level or inside a block
-  ┌─ function_in_single_statement_context_strict.js:3:14
-  │
-3 │ while (true) function c() {}
-  │              ^^^^^^^^^^^^^^^ wrap the function in a block statement
+function_in_single_statement_context_strict.js:3:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × In strict mode code, functions can only be declared at top level or inside a block
+  
+  × wrap the function in a block statement
+  
+    ┌─ function_in_single_statement_context_strict.js:3:14
+    │
+  3 │ while (true) function c() {}
+    │              ^^^^^^^^^^^^^^^
+  
 --
 if (true) function a() {}
 label1: function b() {}

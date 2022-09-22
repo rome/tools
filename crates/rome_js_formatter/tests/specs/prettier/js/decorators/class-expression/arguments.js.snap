@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\decorators\\class-expression\\arguments.js"
 ---
 
 # Input
@@ -42,18 +44,28 @@ console.log(@deco class {});
 
 # Errors
 ```
-error[SyntaxError]: expected an expression but instead found '@deco class Foo {}'
-  ┌─ arguments.js:1:13
-  │
-1 │ console.log(@deco class Foo {})
-  │             ^^^^^^^^^^^^^^^^^^ Expected an expression here
+arguments.js:1:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an expression but instead found '@deco class {}'
-  ┌─ arguments.js:2:13
-  │
-2 │ console.log(@deco class {})
-  │             ^^^^^^^^^^^^^^ Expected an expression here
+  × expected an expression but instead found '@deco class Foo {}'
+  
+  × Expected an expression here
+  
+    ┌─ arguments.js:1:13
+    │
+  1 │ console.log(@deco class Foo {})
+    │             ^^^^^^^^^^^^^^^^^^
+  
+arguments.js:2:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an expression but instead found '@deco class {}'
+  
+  × Expected an expression here
+  
+    ┌─ arguments.js:2:13
+    │
+  2 │ console.log(@deco class {})
+    │             ^^^^^^^^^^^^^^
+  
 
 ```
 

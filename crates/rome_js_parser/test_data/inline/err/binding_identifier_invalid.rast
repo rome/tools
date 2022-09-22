@@ -304,49 +304,74 @@ JsModule {
       1: SEMICOLON@119..120 ";" [] []
   3: EOF@120..121 "" [Newline("\n")] []
 --
-error[SyntaxError]: Illegal use of `await` as an identifier in an async context
-  ┌─ binding_identifier_invalid.js:1:19
-  │
-1 │ async () => { let await = 5; }
-  │                   ^^^^^
+binding_identifier_invalid.js:1:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of `await` as an identifier in an async context
+  
+    ┌─ binding_identifier_invalid.js:1:19
+    │
+  1 │ async () => { let await = 5; }
+    │                   ^^^^^
+  
 --
-error[SyntaxError]: Illegal use of `yield` as an identifier in generator function
-  ┌─ binding_identifier_invalid.js:3:8
-  │
-3 │    let yield = 5;
-  │        ^^^^^
+binding_identifier_invalid.js:3:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of `yield` as an identifier in generator function
+  
+    ┌─ binding_identifier_invalid.js:3:8
+    │
+  3 │    let yield = 5;
+    │        ^^^^^
+  
 --
-error[SyntaxError]: Illegal use of `eval` as an identifier in strict mode
-  ┌─ binding_identifier_invalid.js:5:5
-  │
-5 │ let eval = 5;
-  │     ^^^^
+binding_identifier_invalid.js:5:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of `eval` as an identifier in strict mode
+  
+    ┌─ binding_identifier_invalid.js:5:5
+    │
+  5 │ let eval = 5;
+    │     ^^^^
+  
 --
-error[SyntaxError]: Illegal use of reserved keyword `let` as an identifier in strict mode
-  ┌─ binding_identifier_invalid.js:6:5
-  │
-6 │ let let = 5;
-  │     ^^^
+binding_identifier_invalid.js:6:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of reserved keyword `let` as an identifier in strict mode
+  
+    ┌─ binding_identifier_invalid.js:6:5
+    │
+  6 │ let let = 5;
+    │     ^^^
+  
 --
-error[SyntaxError]: Illegal use of reserved keyword `let` as an identifier in strict mode
-  ┌─ binding_identifier_invalid.js:7:7
-  │
-7 │ const let = 5;
-  │       ^^^
+binding_identifier_invalid.js:7:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of reserved keyword `let` as an identifier in strict mode
+  
+    ┌─ binding_identifier_invalid.js:7:7
+    │
+  7 │ const let = 5;
+    │       ^^^
+  
 --
-error[SyntaxError]: Declarations inside of a `let` declaration may not have duplicates
-  ┌─ binding_identifier_invalid.js:8:8
-  │
-8 │ let a, a;
-  │     -  ^ a second declaration of `a` is not allowed
-  │     │   
-  │     `a` is first declared here
+binding_identifier_invalid.js:8:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Declarations inside of a `let` declaration may not have duplicates
+  
+  × a second declaration of `a` is not allowed
+  
+    ┌─ binding_identifier_invalid.js:8:8
+    │
+  8 │ let a, a;
+    │        ^
+  
+  i `a` is first declared here
+  
+    ┌─ binding_identifier_invalid.js:8:5
+    │
+  8 │ let a, a;
+    │     ^
+  
 --
 async () => { let await = 5; }
 function *foo() {

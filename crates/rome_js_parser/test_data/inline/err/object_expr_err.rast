@@ -164,19 +164,29 @@ JsModule {
       1: (empty)
   3: EOF@49..50 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `,` but instead found `bar`
-  ┌─ object_expr_err.js:2:15
-  │
-2 │ let b = { foo bar }
-  │               ^^^ unexpected
+object_expr_err.js:2:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `bar`
+  
+  × unexpected
+  
+    ┌─ object_expr_err.js:2:15
+    │
+  2 │ let b = { foo bar }
+    │               ^^^
+  
 --
-error[SyntaxError]: expected `}` but instead the file ends
-  ┌─ object_expr_err.js:4:1
-  │
-4 │ 
-  │ ^ the file ends here
+object_expr_err.js:4:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `}` but instead the file ends
+  
+  × the file ends here
+  
+    ┌─ object_expr_err.js:4:1
+    │
+  4 │ 
+    │ ^
+  
 --
 let a = {, foo}
 let b = { foo bar }

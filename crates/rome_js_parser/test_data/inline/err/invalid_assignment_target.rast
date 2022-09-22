@@ -229,54 +229,89 @@ JsModule {
       1: SEMICOLON@61..62 ";" [] []
   3: EOF@62..63 "" [Newline("\n")] []
 --
-error[SyntaxError]: Invalid assignment to `++a`
-  ┌─ invalid_assignment_target.js:1:1
-  │
-1 │ ++a = b;
-  │ ^^^ This expression cannot be assigned to
+invalid_assignment_target.js:1:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Invalid assignment to `++a`
+  
+  × This expression cannot be assigned to
+  
+    ┌─ invalid_assignment_target.js:1:1
+    │
+  1 │ ++a = b;
+    │ ^^^
+  
 --
-error[SyntaxError]: Invalid assignment to `++a`
-  ┌─ invalid_assignment_target.js:2:2
-  │
-2 │ (++a) = b;
-  │  ^^^ This expression cannot be assigned to
+invalid_assignment_target.js:2:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Invalid assignment to `++a`
+  
+  × This expression cannot be assigned to
+  
+    ┌─ invalid_assignment_target.js:2:2
+    │
+  2 │ (++a) = b;
+    │  ^^^
+  
 --
-error[SyntaxError]: expected `)` but instead found `;`
-  ┌─ invalid_assignment_target.js:3:7
-  │
-3 │ (a = b;
-  │       ^ unexpected
+invalid_assignment_target.js:3:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `)` but instead found `;`
+  
+  × unexpected
+  
+    ┌─ invalid_assignment_target.js:3:7
+    │
+  3 │ (a = b;
+    │       ^
+  
 --
-error[SyntaxError]: Invalid assignment to `a?.b`
-  ┌─ invalid_assignment_target.js:4:1
-  │
-4 │ a?.b = b;
-  │ ^^^^ This expression cannot be assigned to
+invalid_assignment_target.js:4:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Invalid assignment to `a?.b`
+  
+  × This expression cannot be assigned to
+  
+    ┌─ invalid_assignment_target.js:4:1
+    │
+  4 │ a?.b = b;
+    │ ^^^^
+  
 --
-error[SyntaxError]: Invalid assignment to `a?.["b"]`
-  ┌─ invalid_assignment_target.js:5:1
-  │
-5 │ a?.["b"] = b;
-  │ ^^^^^^^^ This expression cannot be assigned to
+invalid_assignment_target.js:5:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Invalid assignment to `a?.["b"]`
+  
+  × This expression cannot be assigned to
+  
+    ┌─ invalid_assignment_target.js:5:1
+    │
+  5 │ a?.["b"] = b;
+    │ ^^^^^^^^
+  
 --
-error[SyntaxError]: expected an expression but instead found ')'
-  ┌─ invalid_assignment_target.js:6:5
-  │
-6 │ (a +) = b;
-  │     ^ Expected an expression here
+invalid_assignment_target.js:6:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an expression but instead found ')'
+  
+  × Expected an expression here
+  
+    ┌─ invalid_assignment_target.js:6:5
+    │
+  6 │ (a +) = b;
+    │     ^
+  
 --
-error[SyntaxError]: Invalid assignment to `a +`
-  ┌─ invalid_assignment_target.js:6:2
-  │
-6 │ (a +) = b;
-  │  ^^^ This expression cannot be assigned to
+invalid_assignment_target.js:6:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Invalid assignment to `a +`
+  
+  × This expression cannot be assigned to
+  
+    ┌─ invalid_assignment_target.js:6:2
+    │
+  6 │ (a +) = b;
+    │  ^^^
+  
 --
 ++a = b;
 (++a) = b;

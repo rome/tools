@@ -44,11 +44,14 @@ JsModule {
         4: SEMICOLON@29..30 ";" [] []
   3: EOF@30..31 "" [Newline("\n")] []
 --
-error[SyntaxError]: 'async' modifier cannot be used in an ambient context.
-  ┌─ ts_declare_async_function.ts:1:9
-  │
-1 │ declare async function test();
-  │         ^^^^^
+ts_declare_async_function.ts:1:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'async' modifier cannot be used in an ambient context.
+  
+    ┌─ ts_declare_async_function.ts:1:9
+    │
+  1 │ declare async function test();
+    │         ^^^^^
+  
 --
 declare async function test();

@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\babel-plugins\\pipeline-operator-minimal.js"
 ---
 
 # Input
@@ -58,24 +60,39 @@ result; //=> "Hello, hello!"
 
 # Errors
 ```
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-  ┌─ pipeline-operator-minimal.js:8:4
-  │
-8 │   |> doubleSay
-  │    ^ This operator requires a left hand side value
+pipeline-operator-minimal.js:8:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-  ┌─ pipeline-operator-minimal.js:9:4
-  │
-9 │   |> capitalize
-  │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+    ┌─ pipeline-operator-minimal.js:8:4
+    │
+  8 │   |> doubleSay
+    │    ^
+  
+pipeline-operator-minimal.js:9:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ pipeline-operator-minimal.js:10:4
-   │
-10 │   |> exclaim;
-   │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+    ┌─ pipeline-operator-minimal.js:9:4
+    │
+  9 │   |> capitalize
+    │    ^
+  
+pipeline-operator-minimal.js:10:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ pipeline-operator-minimal.js:10:4
+     │
+  10 │   |> exclaim;
+     │    ^
+  
 
 ```
 

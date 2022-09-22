@@ -13,14 +13,24 @@ function JsThrowStatement1() {
 
 # Diagnostics
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-  ┌─ JsThrowStatement.js:3:5
-  │
-2 │     throw new Error();
-  │     ------------------ This statement will throw an exception ...
-3 │     afterThrow();
-  │     ------------- ... before it can reach this code
+JsThrowStatement.js:3:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+    ┌─ JsThrowStatement.js:3:5
+    │
+  3 │     afterThrow();
+    │     ^^^^^^^^^^^^^
+  
+  i This statement will throw an exception ...
+  
+    ┌─ JsThrowStatement.js:2:5
+    │
+  2 │     throw new Error();
+    │     ^^^^^^^^^^^^^^^^^^
+  
 
 ```
 

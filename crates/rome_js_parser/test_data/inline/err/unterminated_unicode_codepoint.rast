@@ -55,11 +55,14 @@ JsModule {
       1: SEMICOLON@16..17 ";" [] []
   3: EOF@17..18 "" [Newline("\n")] []
 --
-error: expected hex digits for a unicode code point escape, but encountered an invalid character
-  ┌─ unterminated_unicode_codepoint.js:1:16
-  │
-1 │ let s = "\u{200";
-  │                ^
+unterminated_unicode_codepoint.js:1:16 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected hex digits for a unicode code point escape, but encountered an invalid character
+  
+    ┌─ unterminated_unicode_codepoint.js:1:16
+    │
+  1 │ let s = "\u{200";
+    │                ^
+  
 --
 let s = "\u{200";

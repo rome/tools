@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\decorators\\class-expression\\class-expression.js"
 ---
 
 # Input
@@ -114,96 +116,165 @@ const b2 = [];
 
 # Errors
 ```
-error[SyntaxError]: expected `)` but instead found `@`
-  ┌─ class-expression.js:1:13
-  │
-1 │ const a1 = (@deco class Foo {});
-  │             ^ unexpected
+class-expression.js:1:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a statement but instead found ')'
-  ┌─ class-expression.js:1:31
-  │
-1 │ const a1 = (@deco class Foo {});
-  │                               ^ Expected a statement here
+  × expected `)` but instead found `@`
+  
+  × unexpected
+  
+    ┌─ class-expression.js:1:13
+    │
+  1 │ const a1 = (@deco class Foo {});
+    │             ^
+  
+class-expression.js:1:31 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `)` but instead found `@`
-  ┌─ class-expression.js:2:13
-  │
-2 │ const a2 = (@deco class {});
-  │             ^ unexpected
+  × expected a statement but instead found ')'
+  
+  × Expected a statement here
+  
+    ┌─ class-expression.js:1:31
+    │
+  1 │ const a1 = (@deco class Foo {});
+    │                               ^
+  
+class-expression.js:2:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: class declarations must have a name
-  ┌─ class-expression.js:2:19
-  │
-2 │ const a2 = (@deco class {});
-  │                   ^^^^^^
+  × expected `)` but instead found `@`
+  
+  × unexpected
+  
+    ┌─ class-expression.js:2:13
+    │
+  2 │ const a2 = (@deco class {});
+    │             ^
+  
+class-expression.js:2:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a statement but instead found ')'
-  ┌─ class-expression.js:2:27
-  │
-2 │ const a2 = (@deco class {});
-  │                           ^ Expected a statement here
+  × class declarations must have a name
+  
+    ┌─ class-expression.js:2:19
+    │
+  2 │ const a2 = (@deco class {});
+    │                   ^^^^^^
+  
+class-expression.js:2:27 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `)` but instead found `@`
-  ┌─ class-expression.js:4:2
-  │
-4 │ (@deco class Foo {});
-  │  ^ unexpected
+  × expected a statement but instead found ')'
+  
+  × Expected a statement here
+  
+    ┌─ class-expression.js:2:27
+    │
+  2 │ const a2 = (@deco class {});
+    │                           ^
+  
+class-expression.js:4:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a statement but instead found ')'
-  ┌─ class-expression.js:4:20
-  │
-4 │ (@deco class Foo {});
-  │                    ^ Expected a statement here
+  × expected `)` but instead found `@`
+  
+  × unexpected
+  
+    ┌─ class-expression.js:4:2
+    │
+  4 │ (@deco class Foo {});
+    │  ^
+  
+class-expression.js:4:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `)` but instead found `@`
-  ┌─ class-expression.js:5:2
-  │
-5 │ (@deco class {});
-  │  ^ unexpected
+  × expected a statement but instead found ')'
+  
+  × Expected a statement here
+  
+    ┌─ class-expression.js:4:20
+    │
+  4 │ (@deco class Foo {});
+    │                    ^
+  
+class-expression.js:5:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: class declarations must have a name
-  ┌─ class-expression.js:5:8
-  │
-5 │ (@deco class {});
-  │        ^^^^^^
+  × expected `)` but instead found `@`
+  
+  × unexpected
+  
+    ┌─ class-expression.js:5:2
+    │
+  5 │ (@deco class {});
+    │  ^
+  
+class-expression.js:5:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a statement but instead found ')'
-  ┌─ class-expression.js:5:16
-  │
-5 │ (@deco class {});
-  │                ^ Expected a statement here
+  × class declarations must have a name
+  
+    ┌─ class-expression.js:5:8
+    │
+  5 │ (@deco class {});
+    │        ^^^^^^
+  
+class-expression.js:5:16 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `)` but instead found `@`
-  ┌─ class-expression.js:8:3
-  │
-8 │ ;(@deco class Foo {})
-  │   ^ unexpected
+  × expected a statement but instead found ')'
+  
+  × Expected a statement here
+  
+    ┌─ class-expression.js:5:16
+    │
+  5 │ (@deco class {});
+    │                ^
+  
+class-expression.js:8:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a statement but instead found ')'
-  ┌─ class-expression.js:8:21
-  │
-8 │ ;(@deco class Foo {})
-  │                     ^ Expected a statement here
+  × expected `)` but instead found `@`
+  
+  × unexpected
+  
+    ┌─ class-expression.js:8:3
+    │
+  8 │ ;(@deco class Foo {})
+    │   ^
+  
+class-expression.js:8:21 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `)` but instead found `@`
-   ┌─ class-expression.js:11:3
-   │
-11 │ ;(@deco class {})
-   │   ^ unexpected
+  × expected a statement but instead found ')'
+  
+  × Expected a statement here
+  
+    ┌─ class-expression.js:8:21
+    │
+  8 │ ;(@deco class Foo {})
+    │                     ^
+  
+class-expression.js:11:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: class declarations must have a name
-   ┌─ class-expression.js:11:9
-   │
-11 │ ;(@deco class {})
-   │         ^^^^^^
+  × expected `)` but instead found `@`
+  
+  × unexpected
+  
+     ┌─ class-expression.js:11:3
+     │
+  11 │ ;(@deco class {})
+     │   ^
+  
+class-expression.js:11:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a statement but instead found ')'
-   ┌─ class-expression.js:11:17
-   │
-11 │ ;(@deco class {})
-   │                 ^ Expected a statement here
+  × class declarations must have a name
+  
+     ┌─ class-expression.js:11:9
+     │
+  11 │ ;(@deco class {})
+     │         ^^^^^^
+  
+class-expression.js:11:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a statement but instead found ')'
+  
+  × Expected a statement here
+  
+     ┌─ class-expression.js:11:17
+     │
+  11 │ ;(@deco class {})
+     │                 ^
+  
 
 ```
 

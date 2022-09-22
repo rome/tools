@@ -101,14 +101,24 @@ JsModule {
         3: R_CURLY@62..64 "}" [Newline("\n")] []
   3: EOF@64..65 "" [Newline("\n")] []
 --
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ debugger_stmt.js:2:12
-  │
-2 │   debugger {
-  │   -------- ^ An explicit or implicit semicolon is expected here...
-  │   │         
-  │   ...Which is required to end this statement
+debugger_stmt.js:2:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ debugger_stmt.js:2:12
+    │
+  2 │   debugger {
+    │            ^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ debugger_stmt.js:2:3
+    │
+  2 │   debugger {
+    │   ^^^^^^^^
+  
 --
 function foo() {
   debugger {

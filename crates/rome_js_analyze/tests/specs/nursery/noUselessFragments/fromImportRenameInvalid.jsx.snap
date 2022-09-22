@@ -15,22 +15,28 @@ import AwesomeReact, { Fragment as AwesomeFragment } from "react";
 
 # Diagnostics
 ```
-warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
-  ┌─ fromImportRenameInvalid.jsx:4:5
-  │
-4 │     <AwesomeFragment></AwesomeFragment>
-  │     -----------------------------------
+fromImportRenameInvalid.jsx:4:5 lint/nursery/noUselessFragments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! Avoid using unnecessary Fragment.
+  
+    ┌─ fromImportRenameInvalid.jsx:4:5
+    │
+  4 │     <AwesomeFragment></AwesomeFragment>
+    │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
 
 ```
 
 ```
-warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
-  ┌─ fromImportRenameInvalid.jsx:5:5
-  │
-5 │     <AwesomeReact.Fragment>foo</AwesomeReact.Fragment>
-  │     --------------------------------------------------
+fromImportRenameInvalid.jsx:5:5 lint/nursery/noUselessFragments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! Avoid using unnecessary Fragment.
+  
+    ┌─ fromImportRenameInvalid.jsx:5:5
+    │
+  5 │     <AwesomeReact.Fragment>foo</AwesomeReact.Fragment>
+    │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
 
 ```
 

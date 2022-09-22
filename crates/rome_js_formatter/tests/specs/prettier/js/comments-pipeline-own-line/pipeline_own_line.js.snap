@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\comments-pipeline-own-line\\pipeline_own_line.js"
 ---
 
 # Input
@@ -157,72 +159,127 @@ bifornCringerMoshedPerplexSawder[
 
 # Errors
 ```
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-  ┌─ pipeline_own_line.js:4:3
-  │
-4 │     |> x
-  │      ^ This operator requires a left hand side value
+pipeline_own_line.js:4:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ pipeline_own_line.js:12:2
-   │
-12 │ |> kochabCooieGameOnOboleUnweave
-   │  ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+    ┌─ pipeline_own_line.js:4:3
+    │
+  4 │     |> x
+    │      ^
+  
+pipeline_own_line.js:12:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ pipeline_own_line.js:13:2
-   │
-13 │ |> glimseGlyphsHazardNoopsTieTie;
-   │  ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ pipeline_own_line.js:12:2
+     │
+  12 │ |> kochabCooieGameOnOboleUnweave
+     │  ^
+  
+pipeline_own_line.js:13:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ pipeline_own_line.js:19:2
-   │
-19 │ |> foo // comment
-   │  ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ pipeline_own_line.js:13:2
+     │
+  13 │ |> glimseGlyphsHazardNoopsTieTie;
+     │  ^
+  
+pipeline_own_line.js:19:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ pipeline_own_line.js:20:2
-   │
-20 │ |> kochabCooieGameOnOboleUnweave
-   │  ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ pipeline_own_line.js:19:2
+     │
+  19 │ |> foo // comment
+     │  ^
+  
+pipeline_own_line.js:20:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ pipeline_own_line.js:21:2
-   │
-21 │ |> glimseGlyphsHazardNoopsTieTie;
-   │  ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ pipeline_own_line.js:20:2
+     │
+  20 │ |> kochabCooieGameOnOboleUnweave
+     │  ^
+  
+pipeline_own_line.js:21:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ pipeline_own_line.js:28:2
-   │
-28 │ |> kochabCooieGameOnOboleUnweave
-   │  ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ pipeline_own_line.js:21:2
+     │
+  21 │ |> glimseGlyphsHazardNoopsTieTie;
+     │  ^
+  
+pipeline_own_line.js:28:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ pipeline_own_line.js:29:2
-   │
-29 │ |> glimseGlyphsHazardNoopsTieTie;
-   │  ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ pipeline_own_line.js:28:2
+     │
+  28 │ |> kochabCooieGameOnOboleUnweave
+     │  ^
+  
+pipeline_own_line.js:29:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ pipeline_own_line.js:36:2
-   │
-36 │ |> foo // comment
-   │  ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ pipeline_own_line.js:29:2
+     │
+  29 │ |> glimseGlyphsHazardNoopsTieTie;
+     │  ^
+  
+pipeline_own_line.js:36:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ pipeline_own_line.js:37:2
-   │
-37 │ |> kochabCooieGameOnOboleUnweave
-   │  ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ pipeline_own_line.js:36:2
+     │
+  36 │ |> foo // comment
+     │  ^
+  
+pipeline_own_line.js:37:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ pipeline_own_line.js:38:2
-   │
-38 │ |> glimseGlyphsHazardNoopsTieTie;
-   │  ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ pipeline_own_line.js:37:2
+     │
+  37 │ |> kochabCooieGameOnOboleUnweave
+     │  ^
+  
+pipeline_own_line.js:38:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ pipeline_own_line.js:38:2
+     │
+  38 │ |> glimseGlyphsHazardNoopsTieTie;
+     │  ^
+  
 
 ```
 

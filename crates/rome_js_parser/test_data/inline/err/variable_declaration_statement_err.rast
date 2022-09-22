@@ -284,26 +284,41 @@ JsModule {
       1: SEMICOLON@85..86 ";" [] []
   3: EOF@86..87 "" [Newline("\n")] []
 --
-error[SyntaxError]: Const var declarations must have an initialized value
-  ┌─ variable_declaration_statement_err.js:3:7
-  │
-3 │ const e;
-  │       ^ this variable needs to be initialized
+variable_declaration_statement_err.js:3:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Const var declarations must have an initialized value
+  
+  × this variable needs to be initialized
+  
+    ┌─ variable_declaration_statement_err.js:3:7
+    │
+  3 │ const e;
+    │       ^
+  
 --
-error[SyntaxError]: Object and Array patterns require initializers
-  ┌─ variable_declaration_statement_err.js:4:5
-  │
-4 │ let [f];
-  │     ^^^ this pattern is declared, but it is not given an initialized value
+variable_declaration_statement_err.js:4:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Object and Array patterns require initializers
+  
+  × this pattern is declared, but it is not given an initialized value
+  
+    ┌─ variable_declaration_statement_err.js:4:5
+    │
+  4 │ let [f];
+    │     ^^^
+  
 --
-error[SyntaxError]: Object and Array patterns require initializers
-  ┌─ variable_declaration_statement_err.js:5:7
-  │
-5 │ const { g };
-  │       ^^^^^ this pattern is declared, but it is not given an initialized value
+variable_declaration_statement_err.js:5:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Object and Array patterns require initializers
+  
+  × this pattern is declared, but it is not given an initialized value
+  
+    ┌─ variable_declaration_statement_err.js:5:7
+    │
+  5 │ const { g };
+    │       ^^^^^
+  
 --
 let a, { b } = { a: 10 }
 const c = 1, { d } = { a: 10 }

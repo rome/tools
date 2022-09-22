@@ -22,26 +22,46 @@ function JsContinueStatement2() {
 
 # Diagnostics
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-  ┌─ JsContinueStatement.js:4:9
-  │
-3 │         continue;
-  │         --------- This statement will continue the loop ...
-4 │         continue; // afterContinue
-  │         --------- ... before it can reach this code
+JsContinueStatement.js:4:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+    ┌─ JsContinueStatement.js:4:9
+    │
+  4 │         continue; // afterContinue
+    │         ^^^^^^^^^
+  
+  i This statement will continue the loop ...
+  
+    ┌─ JsContinueStatement.js:3:9
+    │
+  3 │         continue;
+    │         ^^^^^^^^^
+  
 
 ```
 
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-   ┌─ JsContinueStatement.js:11:9
-   │
-10 │         continue;
-   │         --------- This statement will continue the loop ...
-11 │         break; // afterContinue
-   │         ------ ... before it can reach this code
+JsContinueStatement.js:11:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+     ┌─ JsContinueStatement.js:11:9
+     │
+  11 │         break; // afterContinue
+     │         ^^^^^^
+  
+  i This statement will continue the loop ...
+  
+     ┌─ JsContinueStatement.js:10:9
+     │
+  10 │         continue;
+     │         ^^^^^^^^^
+  
 
 ```
 

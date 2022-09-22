@@ -18,61 +18,73 @@ function test() {
 
 # Diagnostics
 ```
-warning[correctness/noDebugger]: This is an unexpected use of the debugger statement.
-  ┌─ noDebugger.js:3:10
-  │
-3 │ if (foo) debugger
-  │          --------
+noDebugger.js:3:10 lint/correctness/noDebugger  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Remove debugger statement
-    | @@ -1,6 +1,6 @@
-0 0 |   const test = { debugger: 1 }; test.debugger;
-1 1 |   
-2   | - if (foo) debugger
-  2 | + if (foo) ;
-3 3 |   
-4 4 |   debugger;
-5 5 |   
-
-
-```
-
-```
-warning[correctness/noDebugger]: This is an unexpected use of the debugger statement.
-  ┌─ noDebugger.js:5:1
-  │
-5 │ debugger;
-  │ ---------
-
-Suggested fix: Remove debugger statement
-    | @@ -2,8 +2,6 @@
-1 1 |   
-2 2 |   if (foo) debugger
-3 3 |   
-4   | - debugger;
-5   | - 
-6 4 |   function test() {
-7 5 |     let a = 3;
-8 6 |     debugger;
-
+  ! This is an unexpected use of the debugger statement.
+  
+    ┌─ noDebugger.js:3:10
+    │
+  3 │ if (foo) debugger
+    │          ^^^^^^^^
+  
+  i Suggested fix: Remove debugger statement
+  
+      | @@ -1,6 +1,6 @@
+  0 0 |   const test = { debugger: 1 }; test.debugger;
+  1 1 |   
+  2   | - if (foo) debugger
+    2 | + if (foo) ;
+  3 3 |   
+  4 4 |   debugger;
+  5 5 |   
+  
 
 ```
 
 ```
-warning[correctness/noDebugger]: This is an unexpected use of the debugger statement.
-  ┌─ noDebugger.js:9:3
-  │
-9 │   debugger;
-  │   ---------
+noDebugger.js:5:1 lint/correctness/noDebugger  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Remove debugger statement
-    | @@ -6,5 +6,4 @@
-5 5 |   
-6 6 |   function test() {
-7 7 |     let a = 3;
-8   | -   debugger;
-9 8 |   }
+  ! This is an unexpected use of the debugger statement.
+  
+    ┌─ noDebugger.js:5:1
+    │
+  5 │ debugger;
+    │ ^^^^^^^^^
+  
+  i Suggested fix: Remove debugger statement
+  
+      | @@ -2,8 +2,6 @@
+  1 1 |   
+  2 2 |   if (foo) debugger
+  3 3 |   
+  4   | - debugger;
+  5   | - 
+  6 4 |   function test() {
+  7 5 |     let a = 3;
+  8 6 |     debugger;
+  
 
+```
+
+```
+noDebugger.js:9:3 lint/correctness/noDebugger  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This is an unexpected use of the debugger statement.
+  
+    ┌─ noDebugger.js:9:3
+    │
+  9 │   debugger;
+    │   ^^^^^^^^^
+  
+  i Suggested fix: Remove debugger statement
+  
+      | @@ -6,5 +6,4 @@
+  5 5 |   
+  6 6 |   function test() {
+  7 7 |     let a = 3;
+  8   | -   debugger;
+  9 8 |   }
+  
 
 ```
 

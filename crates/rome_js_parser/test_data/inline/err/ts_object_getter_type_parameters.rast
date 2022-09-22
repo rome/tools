@@ -98,11 +98,14 @@ JsModule {
       1: SEMICOLON@22..23 ";" [] []
   3: EOF@23..24 "" [Newline("\n")] []
 --
-error[SyntaxError]: An accessor cannot have type parameters.
-  ┌─ ts_object_getter_type_parameters.ts:1:9
-  │
-1 │ ({ get a<A>(): A {} });
-  │         ^^^
+ts_object_getter_type_parameters.ts:1:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × An accessor cannot have type parameters.
+  
+    ┌─ ts_object_getter_type_parameters.ts:1:9
+    │
+  1 │ ({ get a<A>(): A {} });
+    │         ^^^
+  
 --
 ({ get a<A>(): A {} });

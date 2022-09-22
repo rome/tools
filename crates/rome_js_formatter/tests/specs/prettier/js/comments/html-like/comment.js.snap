@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\comments\\html-like\\comment.js"
 ---
 
 # Input
@@ -33,30 +35,50 @@ alert(1)
 
 # Errors
 ```
-error[SyntaxError]: Expected an expression for the left hand side of the `<` operator.
-  ┌─ comment.js:1:1
-  │
-1 │ <!--
-  │ ^ This operator requires a left hand side value
+comment.js:1:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Invalid assignment to `alert(1)`
-  ┌─ comment.js:2:1
-  │
-2 │ alert(1)
-  │ ^^^^^^^^ This expression cannot be assigned to
+  × Expected an expression for the left hand side of the `<` operator.
+  
+  × This operator requires a left hand side value
+  
+    ┌─ comment.js:1:1
+    │
+  1 │ <!--
+    │ ^
+  
+comment.js:2:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an identifier, or a member expression but instead found '>'
-  ┌─ comment.js:3:3
-  │
-3 │ -->
-  │   ^ Expected an identifier, or a member expression here
+  × Invalid assignment to `alert(1)`
+  
+  × This expression cannot be assigned to
+  
+    ┌─ comment.js:2:1
+    │
+  2 │ alert(1)
+    │ ^^^^^^^^
+  
+comment.js:3:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an expression but instead found ''
-  ┌─ comment.js:3:4
-  │
-3 │ -->
-  │    ^ Expected an expression here
+  × expected an identifier, or a member expression but instead found '>'
+  
+  × Expected an identifier, or a member expression here
+  
+    ┌─ comment.js:3:3
+    │
+  3 │ -->
+    │   ^
+  
+comment.js:3:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an expression but instead found ''
+  
+  × Expected an expression here
+  
+    ┌─ comment.js:3:4
+    │
+  3 │ -->
+    │    ^
+  
 
 ```
 

@@ -38,19 +38,25 @@ JsModule {
       2: SEMICOLON@18..19 ";" [] []
   3: EOF@19..20 "" [Newline("\n")] []
 --
-error[SyntaxError]: Illegal return statement outside of a function
-  ┌─ return_stmt_err.js:1:1
-  │
-1 │ return;
-  │ ^^^^^^^
+return_stmt_err.js:1:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal return statement outside of a function
+  
+    ┌─ return_stmt_err.js:1:1
+    │
+  1 │ return;
+    │ ^^^^^^^
+  
 --
-error[SyntaxError]: Illegal return statement outside of a function
-  ┌─ return_stmt_err.js:2:1
-  │
-2 │ return foo;
-  │ ^^^^^^^^^^^
+return_stmt_err.js:2:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal return statement outside of a function
+  
+    ┌─ return_stmt_err.js:2:1
+    │
+  2 │ return foo;
+    │ ^^^^^^^^^^^
+  
 --
 return;
 return foo;
