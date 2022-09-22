@@ -71,7 +71,7 @@ impl Format<JsFormatContext> for JsxAnyTagWithChildren {
 
                 let multiple_attributes = match self {
                     JsxAnyTagWithChildren::JsxElement(element) => {
-                        element.closing_token()?.attributes().len() > 1
+                        element.opening_element()?.attributes().len() > 1
                     }
                     JsxAnyTagWithChildren::JsxFragment(_) => false,
                 };
@@ -114,7 +114,7 @@ impl JsxAnyTagWithChildren {
     fn fmt_opening(&self, f: &mut JsFormatter) -> FormatResult<()> {
         match self {
             JsxAnyTagWithChildren::JsxElement(element) => {
-                write!(f, [element.closing_token().format()])
+                write!(f, [element.opening_element().format()])
             }
             JsxAnyTagWithChildren::JsxFragment(fragment) => {
                 write!(f, [fragment.opening_fragment().format()])

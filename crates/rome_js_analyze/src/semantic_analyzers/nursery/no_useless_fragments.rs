@@ -81,6 +81,19 @@ impl NoUselessFragmentsQuery {
         }
     }
 
+    fn remove_node_from_list(&self, mutation: &mut BatchMutation<JsLanguage>) {
+        match self {
+            NoUselessFragmentsQuery::JsxFragment(fragment) => {
+                let old_node = JsxAnyChild::JsxFragment(fragment.clone());
+                mutation.remove_jsx_child_element(old_node);
+            }
+            NoUselessFragmentsQuery::JsxElement(element) => {
+                let old_node = JsxAnyChild::JsxElement(element.clone());
+                mutation.remove_jsx_child_element(old_node);
+            }
+        }
+    }
+
     fn opening_comments(&self) -> Option<Vec<SyntaxTriviaPiece<JsLanguage>>> {
         let mut comments = Vec::new();
         let l_angle = match self {
@@ -89,7 +102,7 @@ impl NoUselessFragmentsQuery {
                 opening_fragment.l_angle_token().ok()?
             }
             NoUselessFragmentsQuery::JsxElement(element) => {
-                let opening_element = element.closing_token().ok()?;
+                let opening_element = element.opening_element().ok()?;
                 opening_element.l_angle_token().ok()?
             }
         };
@@ -98,13 +111,13 @@ impl NoUselessFragmentsQuery {
             l_angle
                 .leading_trivia()
                 .pieces()
-                .filter(|piece| piece.is_comments()),
-        );
-        comments.extend(
-            l_angle
-                .trailing_trivia()
-                .pieces()
-                .filter(|piece| piece.is_comments()),
+                .filter(|piece| piece.is_comments())
+                .chain(
+                    l_angle
+                        .trailing_trivia()
+                        .pieces()
+                        .filter(|piece| piece.is_comments()),
+                ),
         );
 
         Some(comments)
@@ -207,7 +220,7 @@ impl Rule for NoUselessFragments {
                 }
             }
             NoUselessFragmentsQuery::JsxElement(element) => {
-                let opening_element = element.closing_token().ok()?;
+                let opening_element = element.opening_element().ok()?;
                 let name = opening_element.name().ok()?;
 
                 let is_valid_react_fragment = match name {
@@ -269,13 +282,18 @@ impl Rule for NoUselessFragments {
         if is_in_list {
             let new_child = match state {
                 NoUselessFragmentsState::Empty => {
-                    let open_curly =
-                        make::token(T!['{']).with_trailing_trivia_pieces(opening_leading_comments);
-                    let close_curly =
-                        make::token(T!['{']).with_leading_trivia_pieces(closing_leading_comments);
-                    JsxAnyChild::JsxExpressionChild(
-                        jsx_expression_child(open_curly, close_curly).build(),
-                    )
+                    if !opening_leading_comments.is_empty() || !closing_leading_comments.is_empty()
+                    {
+                        let open_curly = make::token(T!['{'])
+                            .with_trailing_trivia_pieces(opening_leading_comments);
+                        let close_curly = make::token(T!['}'])
+                            .with_leading_trivia_pieces(closing_leading_comments);
+                        Some(JsxAnyChild::JsxExpressionChild(
+                            jsx_expression_child(open_curly, close_curly).build(),
+                        ))
+                    } else {
+                        None
+                    }
                 }
                 NoUselessFragmentsState::Child(child) => {
                     let child = child.clone();
@@ -314,11 +332,15 @@ impl Rule for NoUselessFragments {
                         }
                     };
 
-                    new_child
+                    Some(new_child)
                 }
             };
 
-            node.replace_node_from_list(&mut mutation, new_child);
+            if let Some(new_child) = new_child {
+                node.replace_node_from_list(&mut mutation, new_child);
+            } else {
+                node.remove_node_from_list(&mut mutation);
+            }
         }
 
         Some(JsRuleAction {

@@ -19,6 +19,9 @@ pub trait JsBatchMutation {
     /// Replace a JSX child with a new child
     fn replace_jsx_child_element(&mut self, old_child: JsxAnyChild, new_child: JsxAnyChild)
         -> bool;
+
+    /// Removes a JSX child from a list
+    fn remove_jsx_child_element(&mut self, node_to_remove: JsxAnyChild) -> bool;
 }
 
 fn remove_js_formal_parameter_from_js_parameter_list(
@@ -185,6 +188,22 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
                 for element in list {
                     if element == old_child {
                         self.replace_node(old_child.clone(), new_child.clone());
+                        return Some(true);
+                    }
+                }
+
+                None
+            })
+            .unwrap_or(false)
+    }
+
+    fn remove_jsx_child_element(&mut self, node_to_remove: JsxAnyChild) -> bool {
+        node_to_remove
+            .parent::<JsxChildList>()
+            .and_then(|list| {
+                for element in list {
+                    if element == node_to_remove {
+                        self.remove_node(node_to_remove.clone());
                         return Some(true);
                     }
                 }

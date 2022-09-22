@@ -87,7 +87,7 @@ impl Rule for UseSelfClosingElements {
     fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
         let mut mutation = ctx.root().begin();
 
-        let open_element = ctx.query().closing_token().ok()?;
+        let open_element = ctx.query().opening_element().ok()?;
         let JsxOpeningElementFields {
             l_angle_token,
             name,
