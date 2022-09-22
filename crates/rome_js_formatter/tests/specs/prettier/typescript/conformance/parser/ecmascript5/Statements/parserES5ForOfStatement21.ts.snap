@@ -34,7 +34,7 @@ for (var of of) { }
 
 # Errors
 ```
-parserES5ForOfStatement21.ts:2:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+parserES5ForOfStatement21.ts:2:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression, or an assignment but instead found ')'
   

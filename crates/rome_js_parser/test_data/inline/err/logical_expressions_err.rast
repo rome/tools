@@ -118,7 +118,7 @@ JsModule {
       1: (empty)
   3: EOF@36..37 "" [Newline("\n")] []
 --
-logical_expressions_err.js:1:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+logical_expressions_err.js:1:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `*` operator.
   
@@ -130,7 +130,7 @@ logical_expressions_err.js:1:8 SyntaxError ━━━━━━━━━━━━�
     │        ^
   
 --
-logical_expressions_err.js:3:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+logical_expressions_err.js:3:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression but instead found ')'
   

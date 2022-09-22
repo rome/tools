@@ -86,7 +86,7 @@ JsModule {
       8: R_CURLY@52..54 "}" [Newline("\n")] []
   3: EOF@54..55 "" [Newline("\n")] []
 --
-ts_index_signature_class_member_cannot_be_abstract.ts:2:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_index_signature_class_member_cannot_be_abstract.ts:2:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'abstract' modifier cannot appear on an index signature.
   

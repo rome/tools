@@ -143,7 +143,7 @@ JsModule {
       8: R_CURLY@61..62 "}" [] []
   3: EOF@62..63 "" [Newline("\n")] []
 --
-class_invalid_modifiers.js:1:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+class_invalid_modifiers.js:1:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'public' modifier can only be used in TypeScript files
   
@@ -153,7 +153,7 @@ class_invalid_modifiers.js:1:11 SyntaxError ━━━━━━━━━━━━
     │           ^^^^^^
   
 --
-class_invalid_modifiers.js:2:18 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+class_invalid_modifiers.js:2:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'static' already seen
   

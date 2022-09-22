@@ -79,7 +79,7 @@ JsModule {
           5: R_CURLY@32..33 "}" [] []
   3: EOF@33..34 "" [Newline("\n")] []
 --
-ts_export_default_enum.ts:1:16 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_export_default_enum.ts:1:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'export default' isn't allowed for 'enum's. Move the 'enum' declaration in its own statement and then export the enum's name.
   

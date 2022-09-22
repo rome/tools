@@ -77,7 +77,7 @@ JsModule {
       8: R_CURLY@50..52 "}" [Newline("\n")] []
   3: EOF@52..53 "" [Newline("\n")] []
 --
-ts_abstract_property_cannot_have_initiliazers.ts:2:27 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_abstract_property_cannot_have_initiliazers.ts:2:27 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Property cannot have an initializer because it is marked abstract.
   

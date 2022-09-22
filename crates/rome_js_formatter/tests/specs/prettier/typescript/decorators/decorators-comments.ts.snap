@@ -125,7 +125,7 @@ class Something3 {
 
 # Errors
 ```
-decorators-comments.ts:35:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+decorators-comments.ts:35:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Only abstract classes can have abstract members
   
@@ -134,7 +134,7 @@ decorators-comments.ts:35:5 SyntaxError ━━━━━━━━━━━━━�
   35 │     abstract property: Array<string>
      │     ^^^^^^^^
   
-decorators-comments.ts:41:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+decorators-comments.ts:41:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Only abstract classes can have abstract members
   

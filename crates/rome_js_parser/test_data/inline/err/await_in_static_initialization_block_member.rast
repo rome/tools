@@ -61,7 +61,7 @@ JsScript {
       8: R_CURLY@45..47 "}" [Newline("\n")] []
   3: EOF@47..48 "" [Newline("\n")] []
 --
-await_in_static_initialization_block_member.js:4:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+await_in_static_initialization_block_member.js:4:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an unary expression but instead found ';'
   
@@ -73,7 +73,7 @@ await_in_static_initialization_block_member.js:4:10 SyntaxError ━━━━━�
     │          ^
   
 --
-await_in_static_initialization_block_member.js:4:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+await_in_static_initialization_block_member.js:4:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `await` is only allowed within async functions and at the top levels of modules.
   

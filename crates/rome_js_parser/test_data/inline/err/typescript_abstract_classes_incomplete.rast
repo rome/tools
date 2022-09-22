@@ -38,7 +38,7 @@ JsModule {
       0: SEMICOLON@17..18 ";" [] []
   3: EOF@18..19 "" [Newline("\n")] []
 --
-typescript_abstract_classes_incomplete.ts:1:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+typescript_abstract_classes_incomplete.ts:1:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × class declarations must have a name
   

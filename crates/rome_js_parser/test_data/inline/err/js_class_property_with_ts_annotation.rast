@@ -123,7 +123,7 @@ JsModule {
       8: R_CURLY@46..48 "}" [Newline("\n")] []
   3: EOF@48..49 "" [Newline("\n")] []
 --
-js_class_property_with_ts_annotation.js:2:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+js_class_property_with_ts_annotation.js:2:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × return types can only be used in TypeScript files
   
@@ -135,7 +135,7 @@ js_class_property_with_ts_annotation.js:2:3 SyntaxError ━━━━━━━━
     │   ^^^^^^^^
   
 --
-js_class_property_with_ts_annotation.js:3:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+js_class_property_with_ts_annotation.js:3:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `?` modifiers can only be used in TypeScript files
   
@@ -145,7 +145,7 @@ js_class_property_with_ts_annotation.js:3:3 SyntaxError ━━━━━━━━
     │   ^
   
 --
-js_class_property_with_ts_annotation.js:4:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+js_class_property_with_ts_annotation.js:4:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `!` modifiers can only be used in TypeScript files
   

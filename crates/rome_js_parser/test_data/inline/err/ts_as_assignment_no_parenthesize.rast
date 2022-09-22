@@ -166,7 +166,7 @@ JsModule {
       1: SEMICOLON@78..79 ";" [] []
   3: EOF@79..80 "" [Newline("\n")] []
 --
-ts_as_assignment_no_parenthesize.ts:3:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_as_assignment_no_parenthesize.ts:3:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `a()`
   
@@ -178,7 +178,7 @@ ts_as_assignment_no_parenthesize.ts:3:2 SyntaxError ━━━━━━━━━�
     │  ^^^
   
 --
-ts_as_assignment_no_parenthesize.ts:4:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_as_assignment_no_parenthesize.ts:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `<number> a`
   

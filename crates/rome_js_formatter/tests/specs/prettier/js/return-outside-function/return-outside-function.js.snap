@@ -35,7 +35,7 @@ return someVeryLongStringA && someVeryLongStringB && someVeryLongStringC && some
 
 # Errors
 ```
-return-outside-function.js:1:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+return-outside-function.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal return statement outside of a function
   

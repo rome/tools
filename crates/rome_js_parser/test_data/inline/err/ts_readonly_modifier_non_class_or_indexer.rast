@@ -226,7 +226,7 @@ JsModule {
       8: R_CURLY@139..141 "}" [Newline("\n")] []
   3: EOF@141..142 "" [Newline("\n")] []
 --
-ts_readonly_modifier_non_class_or_indexer.ts:2:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_readonly_modifier_non_class_or_indexer.ts:2:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'readonly' cannot appear on a constructor declaration.
   
@@ -236,7 +236,7 @@ ts_readonly_modifier_non_class_or_indexer.ts:2:3 SyntaxError ━━━━━━�
     │   ^^^^^^^^
   
 --
-ts_readonly_modifier_non_class_or_indexer.ts:3:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_readonly_modifier_non_class_or_indexer.ts:3:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Readonly can only appear on a property declaration or index signature.
   
@@ -246,7 +246,7 @@ ts_readonly_modifier_non_class_or_indexer.ts:3:3 SyntaxError ━━━━━━�
     │   ^^^^^^^^
   
 --
-ts_readonly_modifier_non_class_or_indexer.ts:4:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_readonly_modifier_non_class_or_indexer.ts:4:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Readonly can only appear on a property declaration or index signature.
   
@@ -256,7 +256,7 @@ ts_readonly_modifier_non_class_or_indexer.ts:4:3 SyntaxError ━━━━━━�
     │   ^^^^^^^^
   
 --
-ts_readonly_modifier_non_class_or_indexer.ts:5:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_readonly_modifier_non_class_or_indexer.ts:5:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Readonly can only appear on a property declaration or index signature.
   

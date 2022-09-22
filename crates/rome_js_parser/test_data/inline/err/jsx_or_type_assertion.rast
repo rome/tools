@@ -380,7 +380,7 @@ JsScript {
         3: R_CURLY@281..283 "}" [Newline("\n")] []
   3: EOF@283..284 "" [Newline("\n")] []
 --
-jsx_or_type_assertion.js:3:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_or_type_assertion.js:3:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   
@@ -392,7 +392,7 @@ jsx_or_type_assertion.js:3:13 SyntaxError ━━━━━━━━━━━━�
     │             ^^^^^^
   
 --
-jsx_or_type_assertion.js:4:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_or_type_assertion.js:4:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   
@@ -404,7 +404,7 @@ jsx_or_type_assertion.js:4:13 SyntaxError ━━━━━━━━━━━━�
     │             ^^^^^^^^^
   
 --
-jsx_or_type_assertion.js:5:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_or_type_assertion.js:5:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   
@@ -416,7 +416,7 @@ jsx_or_type_assertion.js:5:13 SyntaxError ━━━━━━━━━━━━�
     │             ^^^^^^^^^
   
 --
-jsx_or_type_assertion.js:6:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_or_type_assertion.js:6:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   
@@ -428,7 +428,7 @@ jsx_or_type_assertion.js:6:13 SyntaxError ━━━━━━━━━━━━�
     │             ^^^^^^
   
 --
-jsx_or_type_assertion.js:7:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_or_type_assertion.js:7:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   

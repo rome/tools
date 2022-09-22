@@ -46,7 +46,7 @@ JsModule {
       5: (empty)
   3: EOF@20..21 "" [Newline("\n")] []
 --
-class_in_single_statement_context.js:1:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+class_in_single_statement_context.js:1:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Classes can only be declared at top level or inside a block
   

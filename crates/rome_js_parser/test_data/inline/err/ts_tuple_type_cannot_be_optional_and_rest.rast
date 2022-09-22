@@ -68,7 +68,7 @@ JsModule {
         2: R_BRACK@30..31 "]" [] []
   3: EOF@31..32 "" [Newline("\n")] []
 --
-ts_tuple_type_cannot_be_optional_and_rest.ts:1:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_tuple_type_cannot_be_optional_and_rest.ts:1:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A tuple member cannot be both optional and rest.
   

@@ -26,7 +26,7 @@ JsModule {
       1: SEMICOLON@2..3 ";" [] []
   3: EOF@3..4 "" [Newline("\n")] []
 --
-empty_parenthesized_expression.js:1:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+empty_parenthesized_expression.js:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Parenthesized expression didnt contain anything
   

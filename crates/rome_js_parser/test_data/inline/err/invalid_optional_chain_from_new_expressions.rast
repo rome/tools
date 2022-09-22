@@ -380,7 +380,7 @@ JsModule {
       1: (empty)
   3: EOF@103..104 "" [Newline("\n")] []
 --
-invalid_optional_chain_from_new_expressions.ts:1:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid_optional_chain_from_new_expressions.ts:1:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid optional chain from new expression.
   
@@ -392,7 +392,7 @@ invalid_optional_chain_from_new_expressions.ts:1:17 SyntaxError ━━━━━�
     │                 ^^
   
 --
-invalid_optional_chain_from_new_expressions.ts:2:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid_optional_chain_from_new_expressions.ts:2:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid optional chain from new expression.
   
@@ -404,7 +404,7 @@ invalid_optional_chain_from_new_expressions.ts:2:9 SyntaxError ━━━━━�
     │         ^^
   
 --
-invalid_optional_chain_from_new_expressions.ts:3:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid_optional_chain_from_new_expressions.ts:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid optional chain from new expression.
   
@@ -416,7 +416,7 @@ invalid_optional_chain_from_new_expressions.ts:3:8 SyntaxError ━━━━━�
     │        ^^
   
 --
-invalid_optional_chain_from_new_expressions.ts:4:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid_optional_chain_from_new_expressions.ts:4:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid optional chain from new expression.
   
@@ -428,7 +428,7 @@ invalid_optional_chain_from_new_expressions.ts:4:10 SyntaxError ━━━━━�
     │          ^^
   
 --
-invalid_optional_chain_from_new_expressions.ts:6:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid_optional_chain_from_new_expressions.ts:6:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid optional chain from new expression.
   

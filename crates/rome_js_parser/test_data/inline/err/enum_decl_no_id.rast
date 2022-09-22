@@ -117,7 +117,7 @@ JsModule {
       5: R_CURLY@26..27 "}" [] []
   3: EOF@27..28 "" [Newline("\n")] []
 --
-enum_decl_no_id.ts:1:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+enum_decl_no_id.ts:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `enum` statements must have a name
   
@@ -127,7 +127,7 @@ enum_decl_no_id.ts:1:1 SyntaxError ━━━━━━━━━━━━━━━
     │ ^^^^^
   
 --
-enum_decl_no_id.ts:2:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+enum_decl_no_id.ts:2:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × invalid `enum` name
   

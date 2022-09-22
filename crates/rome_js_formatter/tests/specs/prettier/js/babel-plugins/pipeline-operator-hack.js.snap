@@ -51,7 +51,7 @@ return list
 
 # Errors
 ```
-pipeline-operator-hack.js:5:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline-operator-hack.js:5:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -62,7 +62,7 @@ pipeline-operator-hack.js:5:3 SyntaxError ━━━━━━━━━━━━�
   5 │  |> take(prefix.length, %)
     │   ^
   
-pipeline-operator-hack.js:5:25 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline-operator-hack.js:5:25 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `%` operator.
   
@@ -73,7 +73,7 @@ pipeline-operator-hack.js:5:25 SyntaxError ━━━━━━━━━━━━�
   5 │  |> take(prefix.length, %)
     │                         ^
   
-pipeline-operator-hack.js:5:26 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline-operator-hack.js:5:26 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression but instead found ')'
   
@@ -84,7 +84,7 @@ pipeline-operator-hack.js:5:26 SyntaxError ━━━━━━━━━━━━�
   5 │  |> take(prefix.length, %)
     │                          ^
   
-pipeline-operator-hack.js:6:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline-operator-hack.js:6:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -95,7 +95,7 @@ pipeline-operator-hack.js:6:3 SyntaxError ━━━━━━━━━━━━�
   6 │  |> equals(%, prefix);
     │   ^
   
-pipeline-operator-hack.js:6:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline-operator-hack.js:6:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `%` operator.
   
@@ -106,7 +106,7 @@ pipeline-operator-hack.js:6:12 SyntaxError ━━━━━━━━━━━━�
   6 │  |> equals(%, prefix);
     │            ^
   
-pipeline-operator-hack.js:6:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline-operator-hack.js:6:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression but instead found ','
   
@@ -117,7 +117,7 @@ pipeline-operator-hack.js:6:13 SyntaxError ━━━━━━━━━━━━�
   6 │  |> equals(%, prefix);
     │             ^
   
-pipeline-operator-hack.js:4:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline-operator-hack.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal return statement outside of a function
   

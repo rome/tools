@@ -112,7 +112,7 @@ JsModule {
         3: R_CURLY@55..57 "}" [Newline("\n")] []
   3: EOF@57..58 "" [Newline("\n")] []
 --
-jsx_element_attribute_missing_value.jsx:2:33 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_element_attribute_missing_value.jsx:2:33 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a JSX attribute value but instead found '>'
   

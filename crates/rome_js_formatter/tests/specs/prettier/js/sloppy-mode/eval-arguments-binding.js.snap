@@ -39,7 +39,7 @@ function myfunc() {
 
 # Errors
 ```
-eval-arguments-binding.js:2:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+eval-arguments-binding.js:2:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `eval` as an identifier in strict mode
   
@@ -48,7 +48,7 @@ eval-arguments-binding.js:2:7 SyntaxError ━━━━━━━━━━━━�
   2 │   var eval
     │       ^^^^
   
-eval-arguments-binding.js:3:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+eval-arguments-binding.js:3:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `arguments` as an identifier in strict mode
   

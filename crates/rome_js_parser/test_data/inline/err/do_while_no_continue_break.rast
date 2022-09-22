@@ -130,7 +130,7 @@ JsModule {
       0: R_PAREN@46..47 ")" [] []
   3: EOF@47..48 "" [Newline("\n")] []
 --
-do_while_no_continue_break.js:1:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+do_while_no_continue_break.js:1:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `while` but instead found `break`
   
@@ -142,7 +142,7 @@ do_while_no_continue_break.js:1:8 SyntaxError ━━━━━━━━━━━�
     │        ^^^^^
   
 --
-do_while_no_continue_break.js:1:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+do_while_no_continue_break.js:1:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
@@ -161,7 +161,7 @@ do_while_no_continue_break.js:1:14 SyntaxError ━━━━━━━━━━━
     │        ^^^^^^^
   
 --
-do_while_no_continue_break.js:1:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+do_while_no_continue_break.js:1:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A `break` statement can only be used within an enclosing iteration or switch statement.
   
@@ -171,7 +171,7 @@ do_while_no_continue_break.js:1:8 SyntaxError ━━━━━━━━━━━�
     │        ^^^^^
   
 --
-do_while_no_continue_break.js:1:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+do_while_no_continue_break.js:1:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `continue`
   
@@ -183,7 +183,7 @@ do_while_no_continue_break.js:1:15 SyntaxError ━━━━━━━━━━━
     │               ^^^^^^^^
   
 --
-do_while_no_continue_break.js:1:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+do_while_no_continue_break.js:1:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
@@ -202,7 +202,7 @@ do_while_no_continue_break.js:1:23 SyntaxError ━━━━━━━━━━━
     │               ^^^^^^^^^
   
 --
-do_while_no_continue_break.js:1:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+do_while_no_continue_break.js:1:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A `continue` statement can only be used within an enclosing `for`, `while` or `do while` statement.
   
@@ -212,7 +212,7 @@ do_while_no_continue_break.js:1:15 SyntaxError ━━━━━━━━━━━
     │               ^^^^^^^^
   
 --
-do_while_no_continue_break.js:1:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+do_while_no_continue_break.js:1:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ')'
   
@@ -224,7 +224,7 @@ do_while_no_continue_break.js:1:23 SyntaxError ━━━━━━━━━━━
     │                       ^
   
 --
-do_while_no_continue_break.js:2:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+do_while_no_continue_break.js:2:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `while` but instead found `continue`
   
@@ -236,7 +236,7 @@ do_while_no_continue_break.js:2:8 SyntaxError ━━━━━━━━━━━�
     │        ^^^^^^^^
   
 --
-do_while_no_continue_break.js:2:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+do_while_no_continue_break.js:2:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
@@ -255,7 +255,7 @@ do_while_no_continue_break.js:2:17 SyntaxError ━━━━━━━━━━━
     │        ^^^^^^^^^^
   
 --
-do_while_no_continue_break.js:2:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+do_while_no_continue_break.js:2:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A `continue` statement can only be used within an enclosing `for`, `while` or `do while` statement.
   
@@ -265,7 +265,7 @@ do_while_no_continue_break.js:2:8 SyntaxError ━━━━━━━━━━━�
     │        ^^^^^^^^
   
 --
-do_while_no_continue_break.js:2:18 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+do_while_no_continue_break.js:2:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `break`
   
@@ -277,7 +277,7 @@ do_while_no_continue_break.js:2:18 SyntaxError ━━━━━━━━━━━
     │                  ^^^^^
   
 --
-do_while_no_continue_break.js:2:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+do_while_no_continue_break.js:2:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
@@ -296,7 +296,7 @@ do_while_no_continue_break.js:2:23 SyntaxError ━━━━━━━━━━━
     │                  ^^^^^^
   
 --
-do_while_no_continue_break.js:2:18 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+do_while_no_continue_break.js:2:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A `break` statement can only be used within an enclosing iteration or switch statement.
   
@@ -306,7 +306,7 @@ do_while_no_continue_break.js:2:18 SyntaxError ━━━━━━━━━━━
     │                  ^^^^^
   
 --
-do_while_no_continue_break.js:2:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+do_while_no_continue_break.js:2:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ')'
   

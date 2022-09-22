@@ -156,7 +156,7 @@ JsModule {
       8: R_CURLY@61..62 "}" [] []
   3: EOF@62..63 "" [Newline("\n")] []
 --
-ts_property_parameter_pattern.ts:1:31 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_property_parameter_pattern.ts:1:31 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A parameter property may not be declared using a binding pattern.
   
@@ -166,7 +166,7 @@ ts_property_parameter_pattern.ts:1:31 SyntaxError ━━━━━━━━━━
     │                               ^^^^^^^^
   
 --
-ts_property_parameter_pattern.ts:1:51 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_property_parameter_pattern.ts:1:51 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A parameter property may not be declared using a binding pattern.
   

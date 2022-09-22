@@ -130,7 +130,7 @@ JsModule {
       8: R_CURLY@86..87 "}" [] []
   3: EOF@87..88 "" [Newline("\n")] []
 --
-typescript_abstract_classes_invalid_static_abstract_member.ts:1:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━
+typescript_abstract_classes_invalid_static_abstract_member.ts:1:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'abstract' cannot be used with 'static' modifier.
   
@@ -147,7 +147,7 @@ typescript_abstract_classes_invalid_static_abstract_member.ts:1:20 SyntaxError �
     │                             ^^^^^^
   
 --
-typescript_abstract_classes_invalid_static_abstract_member.ts:2:27 SyntaxError ━━━━━━━━━━━━━━━━━━━━━
+typescript_abstract_classes_invalid_static_abstract_member.ts:2:27 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'abstract' cannot be used with 'static' modifier.
   

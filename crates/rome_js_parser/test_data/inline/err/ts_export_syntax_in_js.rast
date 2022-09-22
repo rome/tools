@@ -311,7 +311,7 @@ JsModule {
         5: SEMICOLON@170..171 ";" [] []
   3: EOF@171..172 "" [Newline("\n")] []
 --
-ts_export_syntax_in_js.js:2:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_export_syntax_in_js.js:2:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'export type' declarations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   
@@ -323,7 +323,7 @@ ts_export_syntax_in_js.js:2:8 SyntaxError ━━━━━━━━━━━━�
     │        ^^^^^^^^^^^
   
 --
-ts_export_syntax_in_js.js:3:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_export_syntax_in_js.js:3:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × export { type ident }' are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   
@@ -335,7 +335,7 @@ ts_export_syntax_in_js.js:3:10 SyntaxError ━━━━━━━━━━━━�
     │          ^^^^^^
   
 --
-ts_export_syntax_in_js.js:4:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_export_syntax_in_js.js:4:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × export { type ident }' are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   
@@ -347,7 +347,7 @@ ts_export_syntax_in_js.js:4:10 SyntaxError ━━━━━━━━━━━━�
     │          ^^^^^^^^^^^^
   
 --
-ts_export_syntax_in_js.js:5:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_export_syntax_in_js.js:5:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'export type' declarations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   
@@ -359,7 +359,7 @@ ts_export_syntax_in_js.js:5:8 SyntaxError ━━━━━━━━━━━━�
     │        ^^^^^^^^^^^^^^^^^^^^^^
   
 --
-ts_export_syntax_in_js.js:6:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_export_syntax_in_js.js:6:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × export { type ident }'' are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   
@@ -371,7 +371,7 @@ ts_export_syntax_in_js.js:6:10 SyntaxError ━━━━━━━━━━━━�
     │          ^^^^^^
   
 --
-ts_export_syntax_in_js.js:7:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_export_syntax_in_js.js:7:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × export { type ident }'' are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   

@@ -213,7 +213,7 @@ JsModule {
       8: R_CURLY@123..125 "}" [Newline("\n")] []
   3: EOF@125..126 "" [Newline("\n")] []
 --
-ts_method_signature_generator.ts:1:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_method_signature_generator.ts:1:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A method signature cannot be declared as a generator.
   
@@ -223,7 +223,7 @@ ts_method_signature_generator.ts:1:19 SyntaxError ━━━━━━━━━━
     │                   ^^^^^^^^^^^
   
 --
-ts_method_signature_generator.ts:2:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_method_signature_generator.ts:2:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A method signature cannot be declared as a generator.
   
@@ -233,7 +233,7 @@ ts_method_signature_generator.ts:2:20 SyntaxError ━━━━━━━━━━
     │                    ^^^^^^^^^^^^^^^^^^^^
   
 --
-ts_method_signature_generator.ts:4:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_method_signature_generator.ts:4:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A method signature cannot be declared as a generator.
   

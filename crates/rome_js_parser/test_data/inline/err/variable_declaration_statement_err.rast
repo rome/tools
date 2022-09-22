@@ -284,7 +284,7 @@ JsModule {
       1: SEMICOLON@85..86 ";" [] []
   3: EOF@86..87 "" [Newline("\n")] []
 --
-variable_declaration_statement_err.js:3:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+variable_declaration_statement_err.js:3:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Const var declarations must have an initialized value
   
@@ -296,7 +296,7 @@ variable_declaration_statement_err.js:3:7 SyntaxError ━━━━━━━━�
     │       ^
   
 --
-variable_declaration_statement_err.js:4:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+variable_declaration_statement_err.js:4:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Object and Array patterns require initializers
   
@@ -308,7 +308,7 @@ variable_declaration_statement_err.js:4:5 SyntaxError ━━━━━━━━�
     │     ^^^
   
 --
-variable_declaration_statement_err.js:5:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+variable_declaration_statement_err.js:5:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Object and Array patterns require initializers
   

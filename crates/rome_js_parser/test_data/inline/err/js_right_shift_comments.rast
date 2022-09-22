@@ -39,7 +39,7 @@ JsModule {
       1: SEMICOLON@24..25 ";" [] []
   3: EOF@25..26 "" [Newline("\n")] []
 --
-js_right_shift_comments.js:1:22 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+js_right_shift_comments.js:1:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression but instead found '>'
   

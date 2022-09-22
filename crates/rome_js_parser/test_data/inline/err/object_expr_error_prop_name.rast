@@ -142,7 +142,7 @@ JsModule {
       0: R_CURLY@38..39 "}" [] []
   3: EOF@39..40 "" [Newline("\n")] []
 --
-object_expr_error_prop_name.js:1:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+object_expr_error_prop_name.js:1:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a property, a shorthand property, a getter, a setter, or a method but instead found '/'
   
@@ -154,7 +154,7 @@ object_expr_error_prop_name.js:1:11 SyntaxError ━━━━━━━━━━�
     │           ^
   
 --
-object_expr_error_prop_name.js:1:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+object_expr_error_prop_name.js:1:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a property, a shorthand property, a getter, a setter, or a method but instead found '/'
   
@@ -166,7 +166,7 @@ object_expr_error_prop_name.js:1:17 SyntaxError ━━━━━━━━━━�
     │                 ^
   
 --
-object_expr_error_prop_name.js:2:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+object_expr_error_prop_name.js:2:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a property, a shorthand property, a getter, a setter, or a method but instead found '{'
   
@@ -178,7 +178,7 @@ object_expr_error_prop_name.js:2:10 SyntaxError ━━━━━━━━━━�
     │          ^
   
 --
-object_expr_error_prop_name.js:2:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+object_expr_error_prop_name.js:2:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found '}'
   

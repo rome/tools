@@ -119,7 +119,7 @@ JsModule {
       1: (empty)
   3: EOF@46..47 "" [Newline("\n")] []
 --
-jsx_opening_element_missing_r_angle.jsx:1:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_opening_element_missing_r_angle.jsx:1:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `>` but instead found `<`
   

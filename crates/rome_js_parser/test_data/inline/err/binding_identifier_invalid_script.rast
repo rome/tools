@@ -82,7 +82,7 @@ JsScript {
       1: SEMICOLON@36..37 ";" [] []
   3: EOF@37..38 "" [Newline("\n")] []
 --
-binding_identifier_invalid_script.js:2:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+binding_identifier_invalid_script.js:2:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `let` cannot be declared as a variable name inside of a `let` declaration
   
@@ -94,7 +94,7 @@ binding_identifier_invalid_script.js:2:5 SyntaxError ━━━━━━━━━
     │     ^^^
   
 --
-binding_identifier_invalid_script.js:3:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+binding_identifier_invalid_script.js:3:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `let` cannot be declared as a variable name inside of a `const` declaration
   

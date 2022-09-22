@@ -108,7 +108,7 @@ JsModule {
       1: SEMICOLON@30..31 ";" [] []
   3: EOF@31..32 "" [Newline("\n")] []
 --
-var_decl_err.js:1:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+var_decl_err.js:1:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression, or an assignment but instead found ';'
   
@@ -120,7 +120,7 @@ var_decl_err.js:1:8 SyntaxError ━━━━━━━━━━━━━━━━
     │        ^
   
 --
-var_decl_err.js:2:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+var_decl_err.js:2:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   

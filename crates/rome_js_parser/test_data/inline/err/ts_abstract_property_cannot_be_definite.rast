@@ -74,7 +74,7 @@ JsModule {
       8: R_CURLY@47..49 "}" [Newline("\n")] []
   3: EOF@49..50 "" [Newline("\n")] []
 --
-ts_abstract_property_cannot_be_definite.ts:2:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_abstract_property_cannot_be_definite.ts:2:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A definite assignment operator '!' cannot appear on an 'abstract' property.
   

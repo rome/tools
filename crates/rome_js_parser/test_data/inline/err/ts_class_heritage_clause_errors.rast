@@ -256,7 +256,7 @@ JsModule {
       5: R_CURLY@166..167 "}" [] []
   3: EOF@167..168 "" [Newline("\n")] []
 --
-ts_class_heritage_clause_errors.ts:3:24 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_heritage_clause_errors.ts:3:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'extends' clause must precede 'implements' clause.
   
@@ -271,7 +271,7 @@ ts_class_heritage_clause_errors.ts:3:24 SyntaxError ━━━━━━━━━�
     │         ^^^^^^^^^^^^^^
   
 --
-ts_class_heritage_clause_errors.ts:4:24 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_heritage_clause_errors.ts:4:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'implements' clause already seen.
   
@@ -288,7 +288,7 @@ ts_class_heritage_clause_errors.ts:4:24 SyntaxError ━━━━━━━━━�
     │         ^^^^^^^^^^^^^^
   
 --
-ts_class_heritage_clause_errors.ts:5:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_heritage_clause_errors.ts:5:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'implements' list cannot be empty.
   
@@ -298,7 +298,7 @@ ts_class_heritage_clause_errors.ts:5:20 SyntaxError ━━━━━━━━━�
     │                    ^
   
 --
-ts_class_heritage_clause_errors.ts:6:16 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_heritage_clause_errors.ts:6:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'extends' list cannot be empty.
   
@@ -308,7 +308,7 @@ ts_class_heritage_clause_errors.ts:6:16 SyntaxError ━━━━━━━━━�
     │                ^
   
 --
-ts_class_heritage_clause_errors.ts:7:18 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_heritage_clause_errors.ts:7:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Trailing comma not allowed.
   

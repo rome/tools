@@ -95,7 +95,7 @@ JsModule {
       8: R_CURLY@38..39 "}" [] []
   3: EOF@39..40 "" [Newline("\n")] []
 --
-class_constructor_parameter.js:1:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+class_constructor_parameter.js:1:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'protected' modifier can only be used in TypeScript files
   

@@ -517,7 +517,7 @@ JsModule {
       8: R_CURLY@444..446 "}" [Newline("\n")] []
   3: EOF@446..447 "" [Newline("\n")] []
 --
-ts_class_invalid_modifier_combinations.ts:3:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_invalid_modifier_combinations.ts:3:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'override' already seen
   
@@ -536,7 +536,7 @@ ts_class_invalid_modifier_combinations.ts:3:14 SyntaxError ━━━━━━━
     │     ^^^^^^^^
   
 --
-ts_class_invalid_modifier_combinations.ts:4:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_invalid_modifier_combinations.ts:4:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'declare' already seen
   
@@ -555,7 +555,7 @@ ts_class_invalid_modifier_combinations.ts:4:13 SyntaxError ━━━━━━━
     │     ^^^^^^^
   
 --
-ts_class_invalid_modifier_combinations.ts:5:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_invalid_modifier_combinations.ts:5:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Accessibility modifier already seen.
   
@@ -574,7 +574,7 @@ ts_class_invalid_modifier_combinations.ts:5:13 SyntaxError ━━━━━━━
     │     ^^^^^^^
   
 --
-ts_class_invalid_modifier_combinations.ts:5:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_invalid_modifier_combinations.ts:5:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Accessibility modifier already seen.
   
@@ -593,7 +593,7 @@ ts_class_invalid_modifier_combinations.ts:5:23 SyntaxError ━━━━━━━
     │     ^^^^^^^
   
 --
-ts_class_invalid_modifier_combinations.ts:6:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_invalid_modifier_combinations.ts:6:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Accessibility modifier already seen.
   
@@ -612,7 +612,7 @@ ts_class_invalid_modifier_combinations.ts:6:13 SyntaxError ━━━━━━━
     │     ^^^^^^^
   
 --
-ts_class_invalid_modifier_combinations.ts:7:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_invalid_modifier_combinations.ts:7:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Accessibility modifier already seen.
   
@@ -631,7 +631,7 @@ ts_class_invalid_modifier_combinations.ts:7:15 SyntaxError ━━━━━━━
     │     ^^^^^^^^^
   
 --
-ts_class_invalid_modifier_combinations.ts:8:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_invalid_modifier_combinations.ts:8:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Accessibility modifier already seen.
   
@@ -650,7 +650,7 @@ ts_class_invalid_modifier_combinations.ts:8:12 SyntaxError ━━━━━━━
     │     ^^^^^^
   
 --
-ts_class_invalid_modifier_combinations.ts:9:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_invalid_modifier_combinations.ts:9:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'abstract' already seen
   
@@ -669,7 +669,7 @@ ts_class_invalid_modifier_combinations.ts:9:14 SyntaxError ━━━━━━━
     │     ^^^^^^^^
   
 --
-ts_class_invalid_modifier_combinations.ts:10:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_invalid_modifier_combinations.ts:10:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'static' already seen
   
@@ -688,7 +688,7 @@ ts_class_invalid_modifier_combinations.ts:10:12 SyntaxError ━━━━━━�
      │     ^^^^^^
   
 --
-ts_class_invalid_modifier_combinations.ts:11:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_invalid_modifier_combinations.ts:11:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'readonly' already seen
   
@@ -707,7 +707,7 @@ ts_class_invalid_modifier_combinations.ts:11:14 SyntaxError ━━━━━━�
      │     ^^^^^^^^
   
 --
-ts_class_invalid_modifier_combinations.ts:12:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_invalid_modifier_combinations.ts:12:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'declare' cannot be used with 'override' modifier.
   
@@ -724,7 +724,7 @@ ts_class_invalid_modifier_combinations.ts:12:14 SyntaxError ━━━━━━�
      │     ^^^^^^^^
   
 --
-ts_class_invalid_modifier_combinations.ts:13:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_invalid_modifier_combinations.ts:13:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'private' cannot be used with 'abstract' modifier.
   
@@ -741,7 +741,7 @@ ts_class_invalid_modifier_combinations.ts:13:5 SyntaxError ━━━━━━━
      │             ^^^^^^^^
   
 --
-ts_class_invalid_modifier_combinations.ts:14:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_invalid_modifier_combinations.ts:14:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'abstract' modifier cannot be used with a private identifier'.
   
@@ -751,7 +751,7 @@ ts_class_invalid_modifier_combinations.ts:14:5 SyntaxError ━━━━━━━
      │     ^^^^^^^^
   
 --
-ts_class_invalid_modifier_combinations.ts:15:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_invalid_modifier_combinations.ts:15:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'abstract' cannot be used with 'static' modifier.
   
@@ -768,7 +768,7 @@ ts_class_invalid_modifier_combinations.ts:15:5 SyntaxError ━━━━━━━
      │              ^^^^^^
   
 --
-ts_class_invalid_modifier_combinations.ts:16:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_invalid_modifier_combinations.ts:16:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × async members cannot be abstract
   
@@ -778,7 +778,7 @@ ts_class_invalid_modifier_combinations.ts:16:5 SyntaxError ━━━━━━━
      │     ^^^^^^^^
   
 --
-ts_class_invalid_modifier_combinations.ts:17:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_invalid_modifier_combinations.ts:17:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'declare' modifier is only allowed on properties.
   
@@ -788,7 +788,7 @@ ts_class_invalid_modifier_combinations.ts:17:5 SyntaxError ━━━━━━━
      │     ^^^^^^^
   
 --
-ts_class_invalid_modifier_combinations.ts:18:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_invalid_modifier_combinations.ts:18:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'declare' modifier cannot be used with a private identifier'.
   

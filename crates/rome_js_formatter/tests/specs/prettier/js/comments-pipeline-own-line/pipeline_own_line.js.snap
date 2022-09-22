@@ -159,7 +159,7 @@ bifornCringerMoshedPerplexSawder[
 
 # Errors
 ```
-pipeline_own_line.js:4:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline_own_line.js:4:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -170,7 +170,7 @@ pipeline_own_line.js:4:3 SyntaxError ━━━━━━━━━━━━━━�
   4 │     |> x
     │      ^
   
-pipeline_own_line.js:12:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline_own_line.js:12:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -181,7 +181,7 @@ pipeline_own_line.js:12:2 SyntaxError ━━━━━━━━━━━━━━
   12 │ |> kochabCooieGameOnOboleUnweave
      │  ^
   
-pipeline_own_line.js:13:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline_own_line.js:13:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -192,7 +192,7 @@ pipeline_own_line.js:13:2 SyntaxError ━━━━━━━━━━━━━━
   13 │ |> glimseGlyphsHazardNoopsTieTie;
      │  ^
   
-pipeline_own_line.js:19:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline_own_line.js:19:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -203,7 +203,7 @@ pipeline_own_line.js:19:2 SyntaxError ━━━━━━━━━━━━━━
   19 │ |> foo // comment
      │  ^
   
-pipeline_own_line.js:20:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline_own_line.js:20:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -214,7 +214,7 @@ pipeline_own_line.js:20:2 SyntaxError ━━━━━━━━━━━━━━
   20 │ |> kochabCooieGameOnOboleUnweave
      │  ^
   
-pipeline_own_line.js:21:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline_own_line.js:21:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -225,7 +225,7 @@ pipeline_own_line.js:21:2 SyntaxError ━━━━━━━━━━━━━━
   21 │ |> glimseGlyphsHazardNoopsTieTie;
      │  ^
   
-pipeline_own_line.js:28:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline_own_line.js:28:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -236,7 +236,7 @@ pipeline_own_line.js:28:2 SyntaxError ━━━━━━━━━━━━━━
   28 │ |> kochabCooieGameOnOboleUnweave
      │  ^
   
-pipeline_own_line.js:29:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline_own_line.js:29:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -247,7 +247,7 @@ pipeline_own_line.js:29:2 SyntaxError ━━━━━━━━━━━━━━
   29 │ |> glimseGlyphsHazardNoopsTieTie;
      │  ^
   
-pipeline_own_line.js:36:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline_own_line.js:36:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -258,7 +258,7 @@ pipeline_own_line.js:36:2 SyntaxError ━━━━━━━━━━━━━━
   36 │ |> foo // comment
      │  ^
   
-pipeline_own_line.js:37:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline_own_line.js:37:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -269,7 +269,7 @@ pipeline_own_line.js:37:2 SyntaxError ━━━━━━━━━━━━━━
   37 │ |> kochabCooieGameOnOboleUnweave
      │  ^
   
-pipeline_own_line.js:38:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline_own_line.js:38:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   

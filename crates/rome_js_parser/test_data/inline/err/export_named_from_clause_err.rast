@@ -220,7 +220,7 @@ JsModule {
         5: SEMICOLON@115..116 ";" [] []
   3: EOF@116..117 "" [Newline("\n")] []
 --
-export_named_from_clause_err.js:1:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export_named_from_clause_err.js:1:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a string literal, or an identifier but instead found ''
   
@@ -232,7 +232,7 @@ export_named_from_clause_err.js:1:10 SyntaxError ━━━━━━━━━━�
     │          ^
   
 --
-export_named_from_clause_err.js:2:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export_named_from_clause_err.js:2:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a string literal, or an identifier but instead found '5'
   
@@ -244,7 +244,7 @@ export_named_from_clause_err.js:2:15 SyntaxError ━━━━━━━━━━�
     │               ^
   
 --
-export_named_from_clause_err.js:3:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export_named_from_clause_err.js:3:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `b`
   
@@ -256,7 +256,7 @@ export_named_from_clause_err.js:3:12 SyntaxError ━━━━━━━━━━�
     │            ^
   
 --
-export_named_from_clause_err.js:3:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export_named_from_clause_err.js:3:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `c`
   
@@ -268,7 +268,7 @@ export_named_from_clause_err.js:3:14 SyntaxError ━━━━━━━━━━�
     │              ^
   
 --
-export_named_from_clause_err.js:4:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export_named_from_clause_err.js:4:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a string literal, or an identifier but instead found '5 as b'
   

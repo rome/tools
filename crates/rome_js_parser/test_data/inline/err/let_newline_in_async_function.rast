@@ -88,7 +88,7 @@ JsModule {
         3: R_CURLY@37..39 "}" [Newline("\n")] []
   3: EOF@39..40 "" [Newline("\n")] []
 --
-let_newline_in_async_function.js:3:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+let_newline_in_async_function.js:3:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `await` as an identifier in an async context
   
@@ -98,7 +98,7 @@ let_newline_in_async_function.js:3:3 SyntaxError ━━━━━━━━━━�
     │   ^^^^^
   
 --
-let_newline_in_async_function.js:3:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+let_newline_in_async_function.js:3:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   

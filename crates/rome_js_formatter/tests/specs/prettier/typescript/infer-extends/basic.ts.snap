@@ -62,7 +62,7 @@ type X9<U, T> = T extends (infer U extends number ? U : T) ? U : T;
 
 # Errors
 ```
-basic.ts:1:47 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+basic.ts:1:47 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `?` but instead found `]`
   
@@ -73,7 +73,7 @@ basic.ts:1:47 SyntaxError ━━━━━━━━━━━━━━━━━━
   1 │ type X3<T> = T extends [infer U extends number] ? MustBeNumber<U> : never;
     │                                               ^
   
-basic.ts:2:47 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+basic.ts:2:47 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `?` but instead found `,`
   
@@ -84,7 +84,7 @@ basic.ts:2:47 SyntaxError ━━━━━━━━━━━━━━━━━━
   2 │ type X4<T> = T extends [infer U extends number, infer U extends number] ? MustBeNumber<U> : never;
     │                                               ^
   
-basic.ts:2:71 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+basic.ts:2:71 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `?` but instead found `]`
   
@@ -95,7 +95,7 @@ basic.ts:2:71 SyntaxError ━━━━━━━━━━━━━━━━━━
   2 │ type X4<T> = T extends [infer U extends number, infer U extends number] ? MustBeNumber<U> : never;
     │                                                                       ^
   
-basic.ts:3:47 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+basic.ts:3:47 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `?` but instead found `,`
   
@@ -106,7 +106,7 @@ basic.ts:3:47 SyntaxError ━━━━━━━━━━━━━━━━━━
   3 │ type X5<T> = T extends [infer U extends number, infer U] ? MustBeNumber<U> : never;
     │                                               ^
   
-basic.ts:4:56 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+basic.ts:4:56 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `?` but instead found `]`
   
@@ -117,7 +117,7 @@ basic.ts:4:56 SyntaxError ━━━━━━━━━━━━━━━━━━
   4 │ type X6<T> = T extends [infer U, infer U extends number] ? MustBeNumber<U> : never;
     │                                                        ^
   
-basic.ts:5:47 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+basic.ts:5:47 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `?` but instead found `,`
   
@@ -128,7 +128,7 @@ basic.ts:5:47 SyntaxError ━━━━━━━━━━━━━━━━━━
   5 │ type X7<T> = T extends [infer U extends string, infer U extends number] ? U : never;
     │                                               ^
   
-basic.ts:5:71 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+basic.ts:5:71 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `?` but instead found `]`
   
@@ -139,7 +139,7 @@ basic.ts:5:71 SyntaxError ━━━━━━━━━━━━━━━━━━
   5 │ type X7<T> = T extends [infer U extends string, infer U extends number] ? U : never;
     │                                                                       ^
   
-basic.ts:6:35 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+basic.ts:6:35 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `?` but instead found `extends`
   
@@ -150,7 +150,7 @@ basic.ts:6:35 SyntaxError ━━━━━━━━━━━━━━━━━━
   6 │ type X8<U, T> = T extends infer U extends number ? U : T;
     │                                   ^^^^^^^
   
-basic.ts:6:43 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+basic.ts:6:43 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `:` but instead found `number`
   
@@ -161,7 +161,7 @@ basic.ts:6:43 SyntaxError ━━━━━━━━━━━━━━━━━━
   6 │ type X8<U, T> = T extends infer U extends number ? U : T;
     │                                           ^^^^^^
   
-basic.ts:6:50 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+basic.ts:6:50 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   

@@ -136,7 +136,7 @@ class H {
 
 # Errors
 ```
-classAbstractInstantiations2.ts:49:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+classAbstractInstantiations2.ts:49:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Only abstract classes can have abstract members
   

@@ -112,7 +112,7 @@ JsModule {
       8: (empty)
   3: EOF@20..21 "" [Newline("\n")] []
 --
-class_member_method_parameters.js:1:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+class_member_method_parameters.js:1:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `{`
   
@@ -124,7 +124,7 @@ class_member_method_parameters.js:1:17 SyntaxError ━━━━━━━━━�
     │                 ^
   
 --
-class_member_method_parameters.js:1:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+class_member_method_parameters.js:1:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `}`
   
@@ -136,7 +136,7 @@ class_member_method_parameters.js:1:20 SyntaxError ━━━━━━━━━�
     │                    ^
   
 --
-class_member_method_parameters.js:2:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+class_member_method_parameters.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead the file ends
   

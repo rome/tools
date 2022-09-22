@@ -42,7 +42,7 @@ JsModule {
       1: SEMICOLON@6..7 ";" [] []
   3: EOF@7..8 "" [Newline("\n")] []
 --
-ts_variable_annotation_err.ts:1:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_variable_annotation_err.ts:1:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `:` but instead found `;`
   

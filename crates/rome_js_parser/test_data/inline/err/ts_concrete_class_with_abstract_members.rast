@@ -182,7 +182,7 @@ JsModule {
       8: R_CURLY@120..122 "}" [Newline("\n")] []
   3: EOF@122..123 "" [Newline("\n")] []
 --
-ts_concrete_class_with_abstract_members.ts:2:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_concrete_class_with_abstract_members.ts:2:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Only abstract classes can have abstract members
   
@@ -192,7 +192,7 @@ ts_concrete_class_with_abstract_members.ts:2:4 SyntaxError ━━━━━━━
     │    ^^^^^^^^
   
 --
-ts_concrete_class_with_abstract_members.ts:3:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_concrete_class_with_abstract_members.ts:3:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Only abstract classes can have abstract members
   
@@ -202,7 +202,7 @@ ts_concrete_class_with_abstract_members.ts:3:4 SyntaxError ━━━━━━━
     │    ^^^^^^^^
   
 --
-ts_concrete_class_with_abstract_members.ts:4:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_concrete_class_with_abstract_members.ts:4:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Only abstract classes can have abstract members
   
@@ -212,7 +212,7 @@ ts_concrete_class_with_abstract_members.ts:4:4 SyntaxError ━━━━━━━
     │    ^^^^^^^^
   
 --
-ts_concrete_class_with_abstract_members.ts:5:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_concrete_class_with_abstract_members.ts:5:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Only abstract classes can have abstract members
   

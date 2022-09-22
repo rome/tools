@@ -78,7 +78,7 @@ JsModule {
       1: SEMICOLON@19..20 ";" [] []
   3: EOF@20..21 "" [Newline("\n")] []
 --
-ts_new_operator.ts:1:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_new_operator.ts:1:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Parenthesized expression didnt contain anything
   

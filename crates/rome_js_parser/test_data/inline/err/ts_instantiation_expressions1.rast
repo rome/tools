@@ -138,7 +138,7 @@ JsModule {
       1: SEMICOLON@82..107 ";" [] [Whitespace("  "), Comments("// Error, `(` expected")]
   3: EOF@107..108 "" [Newline("\n")] []
 --
-ts_instantiation_expressions1.ts:1:29 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_instantiation_expressions1.ts:1:29 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression but instead found ';'
   
@@ -150,7 +150,7 @@ ts_instantiation_expressions1.ts:1:29 SyntaxError ━━━━━━━━━━
     │                             ^
   
 --
-ts_instantiation_expressions1.ts:2:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_instantiation_expressions1.ts:2:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `(` but instead found `;`
   

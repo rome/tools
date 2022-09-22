@@ -30,7 +30,7 @@ while (false) function foo(){}
 
 # Errors
 ```
-function-declaration-in-while.js:1:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function-declaration-in-while.js:1:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × In strict mode code, functions can only be declared at top level or inside a block
   

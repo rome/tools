@@ -141,7 +141,7 @@ JsModule {
       8: R_CURLY@72..74 "}" [Newline("\n")] []
   3: EOF@74..75 "" [Newline("\n")] []
 --
-ts_method_members_with_missing_body.ts:2:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_method_members_with_missing_body.ts:2:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a class method body but instead found 'method'
   
@@ -153,7 +153,7 @@ ts_method_members_with_missing_body.ts:2:20 SyntaxError ━━━━━━━━
     │                    ^^^^^^
   
 --
-ts_method_members_with_missing_body.ts:2:29 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_method_members_with_missing_body.ts:2:29 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a class method body but instead found 'get'
   
@@ -165,7 +165,7 @@ ts_method_members_with_missing_body.ts:2:29 SyntaxError ━━━━━━━━
     │                             ^^^
   
 --
-ts_method_members_with_missing_body.ts:3:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_method_members_with_missing_body.ts:3:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a class method body but instead found 'set'
   
@@ -177,7 +177,7 @@ ts_method_members_with_missing_body.ts:3:6 SyntaxError ━━━━━━━━�
     │      ^^^
   
 --
-ts_method_members_with_missing_body.ts:4:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_method_members_with_missing_body.ts:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a class method body but instead found '}'
   

@@ -98,7 +98,7 @@ JsModule {
       1: SEMICOLON@22..23 ";" [] []
   3: EOF@23..24 "" [Newline("\n")] []
 --
-ts_object_getter_type_parameters.ts:1:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_object_getter_type_parameters.ts:1:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × An accessor cannot have type parameters.
   

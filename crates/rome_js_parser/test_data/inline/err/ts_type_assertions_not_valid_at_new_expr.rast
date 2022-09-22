@@ -93,7 +93,7 @@ JsModule {
       1: SEMICOLON@28..29 ";" [] []
   3: EOF@29..30 "" [Newline("\n")] []
 --
-ts_type_assertions_not_valid_at_new_expr.ts:1:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_type_assertions_not_valid_at_new_expr.ts:1:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression but instead found '<'
   

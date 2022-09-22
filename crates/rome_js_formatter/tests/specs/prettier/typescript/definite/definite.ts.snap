@@ -47,7 +47,7 @@ var y!: MyComponent;
 
 # Errors
 ```
-definite.ts:5:18 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+definite.ts:5:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Declarations with initializers cannot also have definite assignment assertions.
   

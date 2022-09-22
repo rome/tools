@@ -88,7 +88,7 @@ JsModule {
       1: (empty)
   3: EOF@34..35 "" [Newline("\n")] []
 --
-jsx_fragment_closing_missing_r_angle.jsx:1:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_fragment_closing_missing_r_angle.jsx:1:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `>` but instead found `5`
   

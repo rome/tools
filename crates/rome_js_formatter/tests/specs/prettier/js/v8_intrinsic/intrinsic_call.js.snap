@@ -98,7 +98,7 @@ function printFunc(f) {
 
 # Errors
 ```
-intrinsic_call.js:2:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+intrinsic_call.js:2:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found '%DebugPrint
             (
@@ -113,7 +113,7 @@ intrinsic_call.js:2:13 SyntaxError ━━━━━━━━━━━━━━━
   4 │ │                 foo )
     │ └─────────────────────^
   
-intrinsic_call.js:10:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+intrinsic_call.js:10:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `%` operator.
   
@@ -124,7 +124,7 @@ intrinsic_call.js:10:8 SyntaxError ━━━━━━━━━━━━━━━
   10 │     if(%
      │        ^
   
-intrinsic_call.js:14:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+intrinsic_call.js:14:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `%` operator.
   
@@ -135,7 +135,7 @@ intrinsic_call.js:14:9 SyntaxError ━━━━━━━━━━━━━━━
   14 │         % IsWasmCode(
      │         ^
   
-intrinsic_call.js:21:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+intrinsic_call.js:21:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `%` operator.
   

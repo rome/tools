@@ -259,7 +259,7 @@ JsModule {
       1: SEMICOLON@168..169 ";" [] []
   3: EOF@169..170 "" [Newline("\n")] []
 --
-jsx_spread_attribute_error.jsx:2:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_spread_attribute_error.jsx:2:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Comma operator isn't a valid value for a JSX spread argument.
   
@@ -269,7 +269,7 @@ jsx_spread_attribute_error.jsx:2:8 SyntaxError ━━━━━━━━━━━
     │        ^^^^^^^^^^
   
 --
-jsx_spread_attribute_error.jsx:3:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_spread_attribute_error.jsx:3:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `{` but instead found `...`
   
@@ -281,7 +281,7 @@ jsx_spread_attribute_error.jsx:3:4 SyntaxError ━━━━━━━━━━━
     │    ^^^
   
 --
-jsx_spread_attribute_error.jsx:4:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_spread_attribute_error.jsx:4:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `...` but instead found `obj`
   
@@ -293,7 +293,7 @@ jsx_spread_attribute_error.jsx:4:5 SyntaxError ━━━━━━━━━━━
     │     ^^^
   
 --
-jsx_spread_attribute_error.jsx:8:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_spread_attribute_error.jsx:8:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `}` but instead found `invalidProp`
   

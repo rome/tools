@@ -62,7 +62,7 @@ JsModule {
       1: (empty)
   3: EOF@11..12 "" [Newline("\n")] []
 --
-object_expr_non_ident_literal_prop.js:1:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+object_expr_non_ident_literal_prop.js:1:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `:` but instead found `}`
   

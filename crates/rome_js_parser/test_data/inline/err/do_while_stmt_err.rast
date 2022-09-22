@@ -98,7 +98,7 @@ JsModule {
       6: (empty)
   3: EOF@41..42 "" [Newline("\n")] []
 --
-do_while_stmt_err.js:2:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+do_while_stmt_err.js:2:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression but instead found ')'
   
@@ -110,7 +110,7 @@ do_while_stmt_err.js:2:11 SyntaxError ━━━━━━━━━━━━━━
     │           ^
   
 --
-do_while_stmt_err.js:3:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+do_while_stmt_err.js:3:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `(` but instead found `true`
   
@@ -122,7 +122,7 @@ do_while_stmt_err.js:3:10 SyntaxError ━━━━━━━━━━━━━━
     │          ^^^^
   
 --
-do_while_stmt_err.js:4:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+do_while_stmt_err.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead the file ends
   
