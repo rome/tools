@@ -335,6 +335,7 @@ export type MarkupElement =
 	| "Success"
 	| "Warn"
 	| "Info"
+	| "Inverse"
 	| { Hyperlink: { href: string } };
 export interface PullActionsParams {
 	path: RomePath;

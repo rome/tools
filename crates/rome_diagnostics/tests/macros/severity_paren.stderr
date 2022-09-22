@@ -1,0 +1,5 @@
+error: failed to parse "diagnostic" attribute: expected `=`
+ --> tests/macros/severity_paren.rs:4:22
+  |
+4 | #[diagnostic(severity(Error))]
+  |                      ^

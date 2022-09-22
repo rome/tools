@@ -23,7 +23,7 @@ switch (foo) {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/useSingleCaseStatement/">correctness/useSingleCaseStatement</a></span><span style="color: Tomato;">]</span><em>: </em><em>A switch case should only have a single statement. If you want more, then wrap it in a block.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/useSingleCaseStatement/">correctness/useSingleCaseStatement</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong>A switch case should only have a single statement. If you want more, then wrap it in a block.</strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/useSingleCaseStatement.js:4:9
   <span style="color: rgb(38, 148, 255);">│</span>  
 <span style="color: rgb(38, 148, 255);">4</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">┌</span>         <span style="color: Tomato;">l</span><span style="color: Tomato;">e</span><span style="color: Tomato;">t</span><span style="color: Tomato;"> </span><span style="color: Tomato;">f</span><span style="color: Tomato;">o</span><span style="color: Tomato;">o</span><span style="color: Tomato;"> </span><span style="color: Tomato;">=</span><span style="color: Tomato;"> </span><span style="color: Tomato;">'</span><span style="color: Tomato;">'</span><span style="color: Tomato;">;</span>

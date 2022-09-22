@@ -4,6 +4,7 @@ pub use crate::write::{Termcolor, Write, HTML};
 use crate::{markup, Markup, MarkupElement};
 
 /// A stack-allocated linked-list of [MarkupElement] slices
+#[derive(Clone, Copy)]
 pub enum MarkupElements<'a> {
     Root,
     Node(&'a Self, &'a [MarkupElement<'a>]),
@@ -56,6 +57,16 @@ impl<'fmt> Formatter<'fmt> {
         Self {
             state: MarkupElements::Root,
             writer,
+        }
+    }
+
+    pub fn wrap_writer<'b: 'c, 'c>(
+        &'b mut self,
+        wrap: impl FnOnce(&'b mut dyn Write) -> &'c mut dyn Write,
+    ) -> Formatter<'c> {
+        Formatter {
+            state: self.state,
+            writer: wrap(self.writer),
         }
     }
 

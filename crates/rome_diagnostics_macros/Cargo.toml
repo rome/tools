@@ -1,0 +1,16 @@
+[package]
+name = "rome_diagnostics_macros"
+version = "0.0.0"
+authors = ["Rome Tools Developers and Contributors"]
+repository = "https://github.com/rome/tools"
+license = "MIT"
+edition = "2021"
+
+[lib]
+proc-macro = true
+
+[dependencies]
+proc-macro2 = "1.0.36"
+syn = "1.0.85"
+quote = "1.0.14"
+proc-macro-error = { version = "1.0.4", default-features = false }

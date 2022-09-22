@@ -17,7 +17,7 @@ Disallow multiple variable declarations in the same variable statement
 let foo, bar;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/useSingleVarDeclarator/">correctness/useSingleVarDeclarator</a></span><span style="color: Tomato;">]</span><em>: </em><em>Declare variables separately</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/useSingleVarDeclarator/">correctness/useSingleVarDeclarator</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong>Declare variables separately</strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/useSingleVarDeclarator.js:1:1
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">l</span><span style="color: Tomato;">e</span><span style="color: Tomato;">t</span><span style="color: Tomato;"> </span><span style="color: Tomato;">f</span><span style="color: Tomato;">o</span><span style="color: Tomato;">o</span><span style="color: Tomato;">,</span><span style="color: Tomato;"> </span><span style="color: Tomato;">b</span><span style="color: Tomato;">a</span><span style="color: Tomato;">r</span><span style="color: Tomato;">;</span>

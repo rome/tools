@@ -3,7 +3,7 @@ use std::{
     io,
 };
 
-use termcolor::{ColorSpec, WriteColor};
+use termcolor::{Color, ColorSpec, WriteColor};
 use unicode_width::UnicodeWidthChar;
 
 use crate::{fmt::MarkupElements, MarkupElement};
@@ -75,18 +75,32 @@ where
 {
     let mut color = ColorSpec::new();
     let mut link = None;
+    let mut inverse = false;
 
     state.for_each(&mut |elements| {
         for element in elements {
-            if let MarkupElement::Hyperlink { href } = element {
-                link = Some(href);
-            } else {
-                element.update_color(&mut color);
+            match element {
+                MarkupElement::Inverse => {
+                    inverse = !inverse;
+                }
+                MarkupElement::Hyperlink { href } => {
+                    link = Some(href);
+                }
+                _ => {
+                    element.update_color(&mut color);
+                }
             }
         }
 
         Ok(())
     })?;
+
+    if inverse {
+        let fg = color.fg().map_or(Color::White, |c| *c);
+        let bg = color.bg().map_or(Color::Black, |c| *c);
+        color.set_bg(Some(fg));
+        color.set_fg(Some(bg));
+    }
 
     if let Err(err) = writer.set_color(&color) {
         writer.reset()?;
@@ -98,7 +112,7 @@ where
         // `is_synchronous` is used to check if the underlying writer
         // is using the Windows Console API, that does not support ANSI
         // escape codes. Generally this would only be true when running
-        // in the legacy `cmd.exe` terminal emulator, since int modern
+        // in the legacy `cmd.exe` terminal emulator, since in modern
         // clients like the Windows Terminal ANSI is used instead
         if writer.supports_color() && !writer.is_synchronous() {
             write!(writer, "\x1b]8;;{href}\x1b\\")?;
@@ -124,7 +138,10 @@ struct SanitizeAdapter<W> {
     error: io::Result<()>,
 }
 
-impl<W: io::Write> fmt::Write for SanitizeAdapter<W> {
+impl<W> fmt::Write for SanitizeAdapter<W>
+where
+    W: WriteColor,
+{
     fn write_str(&mut self, content: &str) -> fmt::Result {
         let mut buffer = [0; 4];
 
@@ -134,6 +151,10 @@ impl<W: io::Write> fmt::Write for SanitizeAdapter<W> {
             let is_zero_width = UnicodeWidthChar::width(item).map_or(true, |width| width == 0);
             let item = if !is_whitespace && is_zero_width {
                 char::REPLACEMENT_CHARACTER
+            } else if cfg!(windows) || !self.writer.supports_color() {
+                // Unicode is currently poorly supported on most Windows
+                // terminal clients, so we always strip emojis in Windows
+                unicode_to_ascii(item)
             } else {
                 item
             };
@@ -146,6 +167,18 @@ impl<W: io::Write> fmt::Write for SanitizeAdapter<W> {
         }
 
         Ok(())
+    }
+}
+
+/// Replace emoji characters with similar but more widely supported ASCII
+/// characters
+fn unicode_to_ascii(c: char) -> char {
+    match c {
+        '\u{2714}' => '\u{221a}',
+        '\u{2139}' => 'i',
+        '\u{26a0}' => '!',
+        '\u{2716}' => '\u{00d7}',
+        _ => c,
     }
 }
 
@@ -173,8 +206,9 @@ mod tests {
         let mut buffer = Vec::new();
 
         {
+            let writer = termcolor::Ansi::new(&mut buffer);
             let mut adapter = SanitizeAdapter {
-                writer: &mut buffer,
+                writer,
                 error: Ok(()),
             };
 

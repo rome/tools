@@ -18,7 +18,7 @@ function createMarkup() {
 <div dangerouslySetInnerHTML={createMarkup()}></div>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtml/">nursery/noDangerouslySetInnerHtml</a></span><span style="color: Orange;">]</span><em>: </em><em>Avoid passing content using the </em><em><em>dangerouslySetInnerHTML</em></em><em> prop.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtml/">nursery/noDangerouslySetInnerHtml</a></span><span style="color: Orange;">]</span><strong>: </strong><strong>Avoid passing content using the </strong><strong><strong>dangerouslySetInnerHTML</strong></strong><strong> prop.</strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noDangerouslySetInnerHtml.js:4:6
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">4</span> <span style="color: rgb(38, 148, 255);">│</span> &lt;div dangerouslySetInnerHTML={createMarkup()}&gt;&lt;/div&gt;
@@ -34,7 +34,7 @@ React.createElement('div', {
 });
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtml/">nursery/noDangerouslySetInnerHtml</a></span><span style="color: Orange;">]</span><em>: </em><em>Avoid passing content using the </em><em><em>dangerouslySetInnerHTML</em></em><em> prop.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtml/">nursery/noDangerouslySetInnerHtml</a></span><span style="color: Orange;">]</span><strong>: </strong><strong>Avoid passing content using the </strong><strong><strong>dangerouslySetInnerHTML</strong></strong><strong> prop.</strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noDangerouslySetInnerHtml.js:2:5
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span>     dangerouslySetInnerHTML: { __html: 'child' }

@@ -2,7 +2,8 @@
 
 use crate::token_source::Trivia;
 use crate::*;
-use rome_diagnostics::{file::FileId, Severity};
+pub use rome_diagnostics::file::FileId;
+use rome_diagnostics::Severity;
 use rome_js_syntax::{
     JsAnyRoot, JsExpressionSnipped, JsLanguage, JsModule, JsScript, JsSyntaxNode, ModuleKind,
     SourceType,

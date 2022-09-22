@@ -32,7 +32,7 @@ fn push_styles<W: io::Write>(fmt: &mut W, elements: &MarkupElements) -> io::Resu
     elements.for_each(&mut |styles| {
         for style in styles {
             match style {
-                MarkupElement::Emphasis => write!(fmt, "<em>")?,
+                MarkupElement::Emphasis => write!(fmt, "<strong>")?,
                 MarkupElement::Dim => write!(fmt, "<span style=\"opacity: 0.8;\">")?,
                 MarkupElement::Italic => write!(fmt, "<i>")?,
                 MarkupElement::Underline => write!(fmt, "<u>")?,
@@ -40,6 +40,9 @@ fn push_styles<W: io::Write>(fmt: &mut W, elements: &MarkupElements) -> io::Resu
                 MarkupElement::Success => write!(fmt, "<span style=\"color: MediumSeaGreen;\">")?,
                 MarkupElement::Warn => write!(fmt, "<span style=\"color: Orange;\">")?,
                 MarkupElement::Info => write!(fmt, "<span style=\"color: rgb(38, 148, 255);\">")?,
+                MarkupElement::Inverse => {
+                    write!(fmt, "<span style=\"color: #000; background-color: #ddd;\">")?
+                }
                 MarkupElement::Hyperlink { href } => write!(fmt, "<a href=\"{href}\">")?,
             }
         }
@@ -52,14 +55,15 @@ fn pop_styles<W: io::Write>(fmt: &mut W, elements: &MarkupElements) -> io::Resul
     elements.for_each_rev(&mut |styles| {
         for style in styles.iter().rev() {
             match style {
-                MarkupElement::Emphasis => write!(fmt, "</em>")?,
+                MarkupElement::Emphasis => write!(fmt, "</strong>")?,
                 MarkupElement::Italic => write!(fmt, "</i>")?,
                 MarkupElement::Underline => write!(fmt, "</u>")?,
                 MarkupElement::Dim
                 | MarkupElement::Error
                 | MarkupElement::Success
                 | MarkupElement::Warn
-                | MarkupElement::Info => write!(fmt, "</span>")?,
+                | MarkupElement::Info
+                | MarkupElement::Inverse => write!(fmt, "</span>")?,
                 MarkupElement::Hyperlink { .. } => write!(fmt, "</a>")?,
             }
         }

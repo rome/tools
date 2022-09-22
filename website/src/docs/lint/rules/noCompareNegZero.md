@@ -17,7 +17,7 @@ Disallow comparing against `-0`
 (1 >= -0)
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noCompareNegZero/">correctness/noCompareNegZero</a></span><span style="color: Tomato;">]</span><em>: </em><em>Do not use the &gt;= operator to compare against -0.</em>
+{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noCompareNegZero/">correctness/noCompareNegZero</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong>Do not use the &gt;= operator to compare against -0.</strong>
   <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noCompareNegZero.js:1:2
   <span style="color: rgb(38, 148, 255);">│</span>
 <span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> (<span style="color: Tomato;">1</span><span style="color: Tomato;"> </span><span style="color: Tomato;">&gt;</span><span style="color: Tomato;">=</span><span style="color: Tomato;"> </span><span style="color: Tomato;">-</span><span style="color: Tomato;">0</span>)
