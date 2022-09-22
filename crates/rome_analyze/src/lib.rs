@@ -3,6 +3,7 @@
 use rome_console::codespan::Severity;
 use std::cmp::Ordering;
 use std::collections::{BTreeMap, BinaryHeap};
+use std::fmt::Display;
 use std::ops;
 
 mod categories;
@@ -398,14 +399,14 @@ where
                             let diag = match group_rule {
                             Some((group, rule)) => Diagnostic::warning(
                                 file_id,
-                                "Linter",
+                                "suppressions/invalidRule",
                                 markup! {
                                     "Unknown lint rule "{group}"/"{rule}" in suppression comment"
                                 },
                             ).primary(range, ""),
                             None => Diagnostic::warning(
                                 file_id,
-                                "Linter",
+                                "suppressions/invalidGroup",
                                 markup! {
                                     "Unknown lint rule group "{rule}" in suppression comment"
                                 },
@@ -602,13 +603,13 @@ impl AnalyzerDiagnostic {
 
     pub fn from_rule_diagnostic(
         file_id: FileId,
-        code: impl Into<String>,
+        code: impl Display,
         code_link: String,
         rule_diagnostic: RuleDiagnostic,
     ) -> Self {
         Self::Rule {
             file_id,
-            code: code.into(),
+            code: format!("lint/{code}"),
             code_link,
             rule_diagnostic,
         }

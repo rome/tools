@@ -3,14 +3,11 @@ use crate::{
     ReportDiagnostic, ReportDiff, ReportErrorKind, ReportKind, Termination, TraversalMode,
 };
 use crossbeam::channel::{unbounded, Receiver, Sender};
-use rome_console::{
-    codespan::Locus,
-    diff::{Diff, DiffMode},
-    markup, Console, ConsoleExt,
-};
+use rome_console::{markup, Console, ConsoleExt};
 use rome_diagnostics::{
     file::{FileId, SimpleFile},
-    Diagnostic, DiagnosticHeader, Severity, MAXIMUM_DISPLAYABLE_DIAGNOSTICS,
+    v2::{self, Advices, Category, LogCategory, PrintDiagnostic, Visit},
+    Diagnostic, Severity, MAXIMUM_DISPLAYABLE_DIAGNOSTICS,
 };
 use rome_fs::{AtomicInterner, FileSystem, OpenOptions, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
@@ -26,6 +23,7 @@ use std::{
     ffi::OsString,
     fmt::Display,
     io,
+    ops::Deref,
     panic::catch_unwind,
     path::{Path, PathBuf},
     sync::atomic::{AtomicUsize, Ordering},
@@ -203,6 +201,62 @@ struct ProcessMessagesOptions<'ctx> {
     sender_reports: Sender<ReportKind>,
 }
 
+#[derive(Debug, v2::Diagnostic)]
+#[diagnostic(
+    category = "ci/formatMismatch",
+    message = "File content differs from formatting output"
+)]
+struct CIDiffDiagnostic<'a> {
+    #[location(resource)]
+    file_name: &'a str,
+    #[advice]
+    diff: FormatDiffAdvice<'a>,
+}
+
+#[derive(Debug, v2::Diagnostic)]
+#[diagnostic(
+    severity = Information,
+    category = "format/diff",
+    message = "Formatter would have printed the following content:"
+)]
+struct FormatDiffDiagnostic<'a> {
+    #[location(resource)]
+    file_name: &'a str,
+    #[advice]
+    diff: FormatDiffAdvice<'a>,
+}
+
+#[derive(Debug)]
+struct FormatDiffAdvice<'a> {
+    old: &'a str,
+    new: &'a str,
+}
+
+impl Advices for FormatDiffAdvice<'_> {
+    fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
+        // Skip printing the diff for files over 1Mb (probably a minified file)
+        let max_len = self.old.len().max(self.new.len());
+        if max_len >= 1_000_000 {
+            visitor.record_log(LogCategory::Info, &"[Diff not printed for file over 1Mb]")
+        } else {
+            visitor.record_diff(self.old, self.new)
+        }
+    }
+}
+
+#[derive(Debug, v2::Diagnostic)]
+struct TraversalDiagnostic<'a> {
+    #[location(resource)]
+    file_name: Option<&'a str>,
+    #[severity]
+    severity: v2::Severity,
+    #[category]
+    category: &'static Category,
+    #[message]
+    #[description]
+    message: &'a str,
+}
+
 /// This thread receives [Message]s from the workers through the `recv_msgs`
 /// and `recv_files` channels and handles them based on [Execution]
 fn process_messages(options: ProcessMessagesOptions) -> bool {
@@ -250,13 +304,25 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
                 };
 
                 if mode.should_report_to_terminal() {
+                    let diag = TraversalDiagnostic {
+                        file_name: file_name.map(Deref::deref),
+                        severity: match err.severity {
+                            Severity::Help => v2::Severity::Hint,
+                            Severity::Note => v2::Severity::Information,
+                            Severity::Warning => v2::Severity::Warning,
+                            Severity::Error => v2::Severity::Error,
+                            Severity::Bug => v2::Severity::Fatal,
+                        },
+                        category: err.code.parse().unwrap_or_else(|()| {
+                            panic!(
+                                "Error code {:?} is not a registered Diagnostic category",
+                                err.code
+                            )
+                        }),
+                        message: &err.message,
+                    };
                     console.error(markup! {
-                        {DiagnosticHeader {
-                            locus: file_name.map(|name| Locus::File { name }),
-                            severity: err.severity,
-                            code: Some(markup!({ err.code })),
-                            title: markup! { {err.message} },
-                        }}
+                        {PrintDiagnostic(&diag)}
                     });
                 } else {
                     sender_reports
@@ -327,46 +393,37 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
                 old,
                 new,
             } => {
-                let header = if mode.is_ci() {
+                if mode.is_ci() {
                     // A diff is an error in CI mode
                     has_errors = true;
-
-                    DiagnosticHeader {
-                        locus: Some(Locus::File { name: &file_name }),
-                        severity: Severity::Error,
-                        code: Some(markup!("CI")),
-                        title: markup! { "File content differs from formatting output" },
-                    }
-                } else {
-                    DiagnosticHeader {
-                        locus: Some(Locus::File { name: &file_name }),
-                        severity: Severity::Help,
-                        code: Some(markup!("Formatter")),
-                        title: markup! { "Formatter would have printed the following content:" },
-                    }
-                };
-
-                // Skip printing the diff for files over 1Mb (probably a minified file)
-                let max_len = old.len().max(new.len());
-                if max_len >= 1_000_000 {
-                    console.error(markup! {
-                        {header}"\n"
-                        <Info>"[Diff not printed for file over 1Mb]\n"</Info>
-                    });
-                    continue;
                 }
 
-                let diff = Diff {
-                    mode: DiffMode::Unified,
-                    left: &old,
-                    right: &new,
-                };
-
                 if mode.should_report_to_terminal() {
-                    console.error(markup! {
-                        {header}"\n"
-                        {diff}
-                    });
+                    if mode.is_ci() {
+                        let diag = CIDiffDiagnostic {
+                            file_name: &file_name,
+                            diff: FormatDiffAdvice {
+                                old: &old,
+                                new: &new,
+                            },
+                        };
+
+                        console.error(markup! {
+                            {PrintDiagnostic(&diag)}
+                        });
+                    } else {
+                        let diag = FormatDiffDiagnostic {
+                            file_name: &file_name,
+                            diff: FormatDiffAdvice {
+                                old: &old,
+                                new: &new,
+                            },
+                        };
+
+                        console.error(markup! {
+                            {PrintDiagnostic(&diag)}
+                        });
+                    }
                 } else {
                     sender_reports
                         .send(ReportKind::Error(

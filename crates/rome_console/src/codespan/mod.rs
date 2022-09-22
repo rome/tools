@@ -398,7 +398,7 @@ pub struct SourceFile<'diagnostic> {
     /// The source code of the file.
     pub source: &'diagnostic str,
     /// The starting byte indices in the source code.
-    line_starts: &'diagnostic [TextSize],
+    pub line_starts: &'diagnostic [TextSize],
 }
 
 impl<'diagnostic> SourceFile<'diagnostic> {
