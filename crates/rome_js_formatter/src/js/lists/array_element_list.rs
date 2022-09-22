@@ -1,10 +1,9 @@
 use crate::prelude::*;
-use rome_formatter::{write, FormatRuleWithOptions, GroupId};
+use rome_formatter::{write, CstFormatContext, FormatRuleWithOptions, GroupId};
 
 use crate::utils::array::write_array_node;
 
-use crate::utils::{has_token_trailing_line_comment, has_trailing_line_comment};
-use rome_js_syntax::{JsArrayElementList, JsSyntaxKind};
+use rome_js_syntax::JsArrayElementList;
 use rome_rowan::{AstNode, AstSeparatedList};
 
 #[derive(Debug, Clone, Default)]
@@ -25,7 +24,7 @@ impl FormatRule<JsArrayElementList> for FormatJsArrayElementList {
     type Context = JsFormatContext;
 
     fn fmt(&self, node: &JsArrayElementList, f: &mut JsFormatter) -> FormatResult<()> {
-        let layout = if can_print_fill(node) {
+        let layout = if can_print_fill(node, f.context().comments()) {
             ArrayLayout::Fill
         } else {
             ArrayLayout::OnePerLine
@@ -36,10 +35,10 @@ impl FormatRule<JsArrayElementList> for FormatJsArrayElementList {
                 let mut filler = f.fill();
 
                 // Using format_separated is valid in this case as can_print_fill does not allow holes
-                for (element, formatted) in node.iter().zip(
-                    node.format_separated(JsSyntaxKind::COMMA)
-                        .with_group_id(self.group_id),
-                ) {
+                for (element, formatted) in node
+                    .iter()
+                    .zip(node.format_separated(",").with_group_id(self.group_id))
+                {
                     filler.entry(
                         &format_once(|f| {
                             if get_lines_before(element?.syntax()) > 1 {
@@ -90,7 +89,7 @@ enum ArrayLayout {
 /// The underlying logic only allows lists of literal expressions
 /// with 10 or less characters, potentially wrapped in a "short"
 /// unary expression (+, -, ~ or !)
-fn can_print_fill(list: &JsArrayElementList) -> bool {
+fn can_print_fill(list: &JsArrayElementList, comments: &JsComments) -> bool {
     use rome_js_syntax::JsAnyArrayElement::*;
     use rome_js_syntax::JsAnyExpression::*;
     use rome_js_syntax::JsUnaryOperator::*;
@@ -100,16 +99,6 @@ fn can_print_fill(list: &JsArrayElementList) -> bool {
     }
 
     list.elements().all(|item| {
-        let separator_has_trailing = item.trailing_separator().map_or(true, |separator| {
-            separator.map_or(false, |separator| {
-                has_token_trailing_line_comment(separator)
-            })
-        });
-
-        if separator_has_trailing {
-            return false;
-        }
-
         let syntax = match item.into_node() {
             Ok(JsAnyExpression(JsAnyLiteralExpression(
                 rome_js_syntax::JsAnyLiteralExpression::JsNumberLiteralExpression(literal),
@@ -123,15 +112,8 @@ fn can_print_fill(list: &JsArrayElementList) -> bool {
                     Ok(JsAnyLiteralExpression(
                         rome_js_syntax::JsAnyLiteralExpression::JsNumberLiteralExpression(literal),
                     )) => {
-                        let has_operator_comments = expr
-                            .operator_token()
-                            .map_or(false, |operator| operator.has_trailing_comments());
-
-                        if signed
-                            && !literal.syntax().has_leading_comments()
-                            && !has_operator_comments
-                        {
-                            literal.into_syntax()
+                        if signed && !comments.has_comments(literal.syntax()) {
+                            expr.into_syntax()
                         } else {
                             return false;
                         }
@@ -147,6 +129,20 @@ fn can_print_fill(list: &JsArrayElementList) -> bool {
             }
         };
 
-        !has_trailing_line_comment(&syntax)
+        // Does not have a line comment ending on the same line
+        // ```javascript
+        // [ a // not this
+        //  b];
+        //
+        // [
+        //   // This is fine
+        //   thats
+        // ]
+        // ```
+        !comments
+            .trailing_comments(&syntax)
+            .iter()
+            .filter(|comment| comment.kind().is_line())
+            .any(|comment| comment.lines_before() == 0)
     })
 }

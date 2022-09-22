@@ -1,15 +1,11 @@
 use crate::prelude::*;
-use crate::{
-    format_element, write, Argument, Arguments, BufferSnapshot, FormatState, GroupId, TextRange,
-    TextSize,
-};
+use crate::{format_element, write, Argument, Arguments, GroupId, TextRange, TextSize};
 use crate::{Buffer, VecBuffer};
 use rome_rowan::{Language, SyntaxNode, SyntaxToken, SyntaxTokenText, TextLen};
 use std::borrow::Cow;
 use std::cell::Cell;
 use std::marker::PhantomData;
 use std::num::NonZeroU8;
-use std::ops::Deref;
 
 /// A line break that only gets printed if the enclosing `Group` doesn't fit on a single line.
 /// It's omitted if the enclosing `Group` fits on a single line.
@@ -454,73 +450,6 @@ pub struct LineSuffixBoundary;
 impl<Context> Format<Context> for LineSuffixBoundary {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         f.write_element(FormatElement::LineSuffixBoundary)
-    }
-}
-
-/// Marks some content as a comment trivia.
-///
-/// This does not directly influence how this content will be printed, but some
-/// parts of the formatter may chose to handle this element in a specific way
-///
-/// ## Examples
-///
-/// ```
-/// use rome_formatter::{format, write, format_args};
-/// use rome_formatter::prelude::*;
-///
-/// let elements = format!(
-///     SimpleFormatContext::default(),
-///     [
-///         group(&format_args![
-///             comment(&format_args![text("// test"), hard_line_break()]),
-///             format_with(|f| {
-///                 write!(f, [
-///                     comment(&format_args![text("/* inline */"), hard_line_break()]).memoized(),
-///                     text("a"),
-///                     soft_line_break_or_space(),
-///                 ])
-///             }).memoized(),
-///             text("b"),
-///             soft_line_break_or_space(),
-///             text("c")
-///         ])
-///     ]
-/// ).unwrap();
-///
-/// assert_eq!(
-///     "// test\n/* inline */\na b c",
-///     elements.print().as_code()
-/// );
-/// ```
-#[inline]
-pub fn comment<Content, Context>(content: &Content) -> FormatComment<Context>
-where
-    Content: Format<Context>,
-{
-    FormatComment {
-        content: Argument::new(content),
-    }
-}
-
-#[derive(Copy, Clone)]
-pub struct FormatComment<'a, Context> {
-    content: Argument<'a, Context>,
-}
-
-impl<Context> Format<Context> for FormatComment<'_, Context> {
-    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        let mut buffer = VecBuffer::new(f.state_mut());
-
-        buffer.write_fmt(Arguments::from(&self.content))?;
-        let content = buffer.into_vec();
-
-        f.write_element(FormatElement::Comment(content.into_boxed_slice()))
-    }
-}
-
-impl<Context> std::fmt::Debug for FormatComment<'_, Context> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_tuple("Comment").field(&"{{content}}").finish()
     }
 }
 
@@ -1152,6 +1081,7 @@ pub struct BlockIndent<'a, Context> {
 enum IndentMode {
     Soft,
     Block,
+    SoftSpace,
     SoftLineOrSpace,
 }
 
@@ -1162,7 +1092,9 @@ impl<Context> Format<Context> for BlockIndent<'_, Context> {
         match self.mode {
             IndentMode::Soft => write!(buffer, [soft_line_break()])?,
             IndentMode::Block => write!(buffer, [hard_line_break()])?,
-            IndentMode::SoftLineOrSpace => write!(buffer, [soft_line_break_or_space()])?,
+            IndentMode::SoftLineOrSpace | IndentMode::SoftSpace => {
+                write!(buffer, [soft_line_break_or_space()])?
+            }
         };
 
         buffer.write_fmt(Arguments::from(&self.content))?;
@@ -1179,6 +1111,7 @@ impl<Context> Format<Context> for BlockIndent<'_, Context> {
         match self.mode {
             IndentMode::Soft => write!(f, [soft_line_break()])?,
             IndentMode::Block => write!(f, [hard_line_break()])?,
+            IndentMode::SoftSpace => write!(f, [soft_line_break_or_space()])?,
             IndentMode::SoftLineOrSpace => {}
         }
 
@@ -1192,9 +1125,74 @@ impl<Context> std::fmt::Debug for BlockIndent<'_, Context> {
             IndentMode::Soft => "SoftBlockIndent",
             IndentMode::Block => "HardBlockIndent",
             IndentMode::SoftLineOrSpace => "SoftLineIndentOrSpace",
+            IndentMode::SoftSpace => "SoftSpaceBlockIndent",
         };
 
         f.debug_tuple(name).field(&"{{content}}").finish()
+    }
+}
+
+/// Adds spaces around the content if its enclosing group fits on a line, otherwise indents the content and separates it by line breaks.
+///
+/// # Examples
+///
+/// Adds line breaks and indents the content if the enclosing group doesn't fit on the line.
+///
+/// ```
+/// use rome_formatter::{format, format_args, LineWidth, SimpleFormatOptions};
+/// use rome_formatter::prelude::*;
+///
+/// let context = SimpleFormatContext::new(SimpleFormatOptions {
+///     line_width: LineWidth::try_from(10).unwrap(),
+///     ..SimpleFormatOptions::default()
+/// });
+///
+/// let elements = format!(context, [
+///     group(&format_args![
+///         text("{"),
+///         soft_space_or_block_indent(&format_args![
+///             text("aPropertyThatExceeds"),
+///             text(":"),
+///             space(),
+///             text("'line width'"),
+///         ]),
+///         text("}")
+///     ])
+/// ]).unwrap();
+///
+/// assert_eq!(
+///     "{\n\taPropertyThatExceeds: 'line width'\n}",
+///     elements.print().as_code()
+/// );
+/// ```
+///
+/// Adds spaces around the content if the group fits on the line
+/// ```
+/// use rome_formatter::{format, format_args};
+/// use rome_formatter::prelude::*;
+///
+/// let elements = format!(SimpleFormatContext::default(), [
+///     group(&format_args![
+///         text("{"),
+///         soft_space_or_block_indent(&format_args![
+///             text("a"),
+///             text(":"),
+///             space(),
+///             text("5"),
+///         ]),
+///         text("}")
+///     ])
+/// ]).unwrap();
+///
+/// assert_eq!(
+///     "{ a: 5 }",
+///     elements.print().as_code()
+/// );
+/// ```
+pub fn soft_space_or_block_indent<Context>(content: &impl Format<Context>) -> BlockIndent<Context> {
+    BlockIndent {
+        content: Argument::new(content),
+        mode: IndentMode::SoftSpace,
     }
 }
 
@@ -1307,7 +1305,7 @@ impl<Context> Format<Context> for Group<'_, Context> {
             return f.write_fmt(Arguments::from(&self.content));
         }
 
-        let mut buffer = GroupBuffer::new(f);
+        let mut buffer = VecBuffer::new(f.state_mut());
 
         buffer.write_fmt(Arguments::from(&self.content))?;
 
@@ -1322,9 +1320,7 @@ impl<Context> Format<Context> for Group<'_, Context> {
 
         let group = format_element::Group::new(content).with_id(self.group_id);
 
-        f.write_element(FormatElement::Group(group))?;
-
-        Ok(())
+        f.write_element(FormatElement::Group(group))
     }
 }
 
@@ -1336,154 +1332,6 @@ impl<Context> std::fmt::Debug for Group<'_, Context> {
             .field("content", &"{{content}}")
             .finish()
     }
-}
-
-/// Custom buffer implementation for `GroupElements` that moves the leading comments out of the group
-/// to prevent that a leading line comment expands the token's enclosing group.
-///
-/// # Examples
-///
-/// ```javascript
-/// /* a comment */
-/// [1]
-/// ```
-///
-/// The `/* a comment */` belongs to the `[` group token that is part of a group wrapping the whole
-/// `[1]` expression. It's important that the comment `/* a comment */` gets moved out of the group element
-/// to avoid that the `[1]` group expands because of the line break inserted by the comment.
-struct GroupBuffer<'inner, Context> {
-    inner: &'inner mut dyn Buffer<Context = Context>,
-
-    /// The group inner content
-    content: Vec<FormatElement>,
-}
-
-impl<'inner, Context> GroupBuffer<'inner, Context> {
-    fn new(inner: &'inner mut dyn Buffer<Context = Context>) -> Self {
-        Self {
-            inner,
-            content: Vec::new(),
-        }
-    }
-
-    fn into_vec(self) -> Vec<FormatElement> {
-        self.content
-    }
-
-    fn write_interned(&mut self, interned: Interned) -> FormatResult<()> {
-        debug_assert!(self.content.is_empty());
-
-        match interned.deref() {
-            FormatElement::Comment(_) => {
-                self.inner.write_element(FormatElement::Interned(interned))
-            }
-            FormatElement::List(list) => {
-                let mut content_start = 0;
-
-                for element in list.iter() {
-                    match element {
-                        element @ FormatElement::Comment(_) => {
-                            content_start += 1;
-                            // Cloning comments should be alright as they are rarely nested
-                            // and the case where all elements of an interned data structure are comments
-                            // are rare
-                            self.inner.write_element(element.clone())?;
-                        }
-                        FormatElement::Interned(interned) => {
-                            self.write_interned(interned.clone())?;
-                            content_start += 1;
-
-                            if !self.content.is_empty() {
-                                // Interned struct contained non-comment
-                                break;
-                            }
-                        }
-                        _ => {
-                            // Found the first non-comment / nested interned element
-                            break;
-                        }
-                    }
-                }
-
-                // No leading comments, this group has no comments
-                if content_start == 0 {
-                    self.content.push(FormatElement::Interned(interned));
-                    return Ok(());
-                }
-
-                let content = &list[content_start..];
-
-                // It is necessary to mutate the interned elements, write cloned elements
-                self.write_elements(content.iter().cloned())
-            }
-            FormatElement::Interned(interned) => self.write_interned(interned.clone()),
-            _ => {
-                self.content.push(FormatElement::Interned(interned));
-                Ok(())
-            }
-        }
-    }
-}
-
-impl<Context> Buffer for GroupBuffer<'_, Context> {
-    type Context = Context;
-
-    fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
-        if self.content.is_empty() {
-            match element {
-                FormatElement::List(list) => {
-                    self.write_elements(list.into_vec())?;
-                }
-                FormatElement::Interned(interned) => match Interned::try_unwrap(interned) {
-                    Ok(owned) => self.write_element(owned)?,
-                    Err(interned) => self.write_interned(interned)?,
-                },
-                comment @ FormatElement::Comment { .. } => {
-                    self.inner.write_element(comment)?;
-                }
-                element => self.content.push(element),
-            }
-        } else {
-            match element {
-                FormatElement::List(list) => {
-                    self.content.extend(list.into_vec());
-                }
-                element => self.content.push(element),
-            }
-        }
-
-        Ok(())
-    }
-
-    fn elements(&self) -> &[FormatElement] {
-        &self.content
-    }
-
-    fn state(&self) -> &FormatState<Self::Context> {
-        self.inner.state()
-    }
-
-    fn state_mut(&mut self) -> &mut FormatState<Self::Context> {
-        self.inner.state_mut()
-    }
-
-    fn snapshot(&self) -> BufferSnapshot {
-        BufferSnapshot::Any(Box::new(GroupElementsBufferSnapshot {
-            inner: self.inner.snapshot(),
-            content_len: self.content.len(),
-        }))
-    }
-
-    fn restore_snapshot(&mut self, snapshot: BufferSnapshot) {
-        let snapshot = snapshot.unwrap_any::<GroupElementsBufferSnapshot>();
-        self.inner.restore_snapshot(snapshot.inner);
-        self.content.truncate(snapshot.content_len);
-    }
-}
-
-struct GroupElementsBufferSnapshot {
-    inner: BufferSnapshot,
-    content_len: usize,
 }
 
 /// IR element that forces the parent group to print in expanded mode.
@@ -2213,9 +2061,9 @@ pub fn get_lines_before<L: Language>(next_node: &SyntaxNode<L>) -> usize {
         leading_trivia
             .pieces()
             .take_while(|piece| {
-                // Stop at the first comment piece, the comment printer
+                // Stop at the first comment or skipped piece, the comment printer
                 // will handle newlines between the comment and the node
-                !piece.is_comments()
+                !(piece.is_comments() || piece.is_skipped())
             })
             .filter(|piece| piece.is_newline())
             .count()

@@ -1,6 +1,7 @@
 use crate::prelude::*;
 use rome_formatter::{
-    write, FormatContext, FormatOwnedWithRule, FormatRefWithRule, FormatRuleWithOptions,
+    write, CstFormatContext, FormatContext, FormatOwnedWithRule, FormatRefWithRule,
+    FormatRuleWithOptions,
 };
 
 use crate::{AsFormat, IntoFormat};
@@ -187,8 +188,7 @@ impl FormatRule<JsAnyConditional> for FormatJsAnyConditionalRule {
                 write!(f, [soft_line_break()])?;
             }
 
-            // Make sure that line suffix comments to not escape
-            write!(f, [line_suffix_boundary()])
+            Ok(())
         });
 
         let grouped = format_with(|f| {
@@ -199,9 +199,39 @@ impl FormatRule<JsAnyConditional> for FormatJsAnyConditionalRule {
             }
         });
 
+        let has_multiline_comment = {
+            let comments = f.context().comments();
+
+            let has_block_comment = |syntax: &JsSyntaxNode| {
+                comments
+                    .leading_trailing_comments(syntax)
+                    .any(|comment| comment.kind().is_block())
+            };
+
+            let test_has_block_comments = match conditional {
+                JsAnyConditional::JsConditionalExpression(expression) => {
+                    has_block_comment(expression.test()?.syntax())
+                }
+                JsAnyConditional::TsConditionalType(ty) => {
+                    has_block_comment(ty.check_type()?.syntax())
+                        || has_block_comment(ty.extends_type()?.syntax())
+                }
+            };
+
+            test_has_block_comments
+                || has_block_comment(consequent.syntax())
+                || has_block_comment(alternate.syntax())
+        };
+
         if layout.is_nested_test() || should_extra_indent {
-            group(&soft_block_indent(&grouped)).fmt(f)
+            group(&soft_block_indent(&grouped))
+                .should_expand(has_multiline_comment)
+                .fmt(f)
         } else {
+            if has_multiline_comment {
+                write!(f, [expand_parent()])?;
+            }
+
             grouped.fmt(f)
         }
     }
@@ -660,7 +690,7 @@ impl JsAnyConditional {
         }
     }
 
-    fn question_mark_token(&self) -> SyntaxResult<JsSyntaxToken> {
+    pub(crate) fn question_mark_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
             JsAnyConditional::JsConditionalExpression(conditional) => {
                 conditional.question_mark_token()
@@ -680,7 +710,7 @@ impl JsAnyConditional {
         }
     }
 
-    fn colon_token(&self) -> SyntaxResult<JsSyntaxToken> {
+    pub(crate) fn colon_token(&self) -> SyntaxResult<JsSyntaxToken> {
         match self {
             JsAnyConditional::JsConditionalExpression(conditional) => conditional.colon_token(),
             JsAnyConditional::TsConditionalType(conditional) => conditional.colon_token(),

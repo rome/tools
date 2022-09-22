@@ -1,7 +1,7 @@
 use crate::prelude::*;
 use crate::AsFormat;
 use rome_formatter::{write, GroupId};
-use rome_js_syntax::{JsLanguage, JsSyntaxKind};
+use rome_js_syntax::JsLanguage;
 use rome_rowan::{
     AstNode, AstSeparatedElement, AstSeparatedList, AstSeparatedListElementsIterator, Language,
 };
@@ -13,7 +13,7 @@ pub struct FormatSeparatedElement<L: Language, N> {
     element: AstSeparatedElement<L, N>,
     is_last: bool,
     /// The separator to write if the element has no separator yet.
-    separator: JsSyntaxKind,
+    separator: &'static str,
     options: FormatSeparatedOptions,
 }
 
@@ -63,12 +63,12 @@ where
                 TrailingSeparator::Allowed => {
                     write!(
                         f,
-                        [if_group_breaks(&format_inserted(self.separator))
+                        [if_group_breaks(&text(self.separator))
                             .with_group_id(self.options.group_id)]
                     )?;
                 }
                 TrailingSeparator::Mandatory => {
-                    format_inserted(self.separator).fmt(f)?;
+                    text(self.separator).fmt(f)?;
                 }
                 TrailingSeparator::Omit | TrailingSeparator::Disallowed => { /* no op */ }
             }
@@ -90,7 +90,7 @@ where
 {
     next: Option<AstSeparatedElement<Language, Node>>,
     inner: I,
-    separator: JsSyntaxKind,
+    separator: &'static str,
     options: FormatSeparatedOptions,
 }
 
@@ -98,7 +98,7 @@ impl<I, L, Node> FormatSeparatedIter<I, L, Node>
 where
     L: Language,
 {
-    fn new(inner: I, separator: JsSyntaxKind) -> Self {
+    fn new(inner: I, separator: &'static str) -> Self {
         Self {
             inner,
             separator,
@@ -166,7 +166,7 @@ pub trait FormatAstSeparatedListExtension: AstSeparatedList<Language = JsLanguag
     /// if the outer group breaks.
     fn format_separated(
         &self,
-        separator: JsSyntaxKind,
+        separator: &'static str,
     ) -> FormatSeparatedIter<
         AstSeparatedListElementsIterator<JsLanguage, Self::Node>,
         JsLanguage,

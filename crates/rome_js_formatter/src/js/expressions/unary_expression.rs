@@ -1,10 +1,10 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write};
+use rome_formatter::{format_args, write, CstFormatContext};
 
 use crate::parentheses::{unary_like_expression_needs_parentheses, NeedsParentheses};
 
 use rome_js_syntax::JsSyntaxNode;
-use rome_js_syntax::{JsSyntaxKind, JsUnaryExpression};
+use rome_js_syntax::JsUnaryExpression;
 use rome_js_syntax::{JsUnaryExpressionFields, JsUnaryOperator};
 use rome_rowan::match_ast;
 
@@ -33,13 +33,13 @@ impl FormatNodeRule<JsUnaryExpression> for FormatJsUnaryExpression {
             write!(f, [space()])?;
         }
 
-        if argument.syntax().has_leading_comments() {
+        if f.context().comments().has_comments(argument.syntax()) {
             write!(
                 f,
                 [group(&format_args![
-                    format_inserted(JsSyntaxKind::L_PAREN),
+                    text("("),
                     soft_block_indent(&argument.format()),
-                    format_inserted(JsSyntaxKind::R_PAREN)
+                    text(")")
                 ])]
             )
         } else {

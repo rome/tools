@@ -24,8 +24,9 @@ impl FormatNodeRule<TsTypeAssertionExpression> for FormatTsTypeAssertionExpressi
         write![
             f,
             [
-                format_delimited(&l_angle_token?, &ty.format(), &r_angle_token?,)
-                    .soft_block_indent(),
+                l_angle_token.format(),
+                group(&soft_block_indent(&ty.format())),
+                r_angle_token.format(),
                 expression.format()
             ]
         ]

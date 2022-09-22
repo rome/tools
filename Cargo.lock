@@ -1608,7 +1608,11 @@ name = "rome_formatter"
 version = "0.0.0"
 dependencies = [
  "cfg-if",
+ "countme",
  "indexmap",
+ "rome_diagnostics",
+ "rome_js_parser",
+ "rome_js_syntax",
  "rome_rowan",
  "rustc-hash",
  "schemars",
@@ -2859,6 +2863,7 @@ name = "xtask_bench"
 version = "0.0.0"
 dependencies = [
  "ansi_rgb",
+ "countme",
  "criterion",
  "dhat",
  "humansize",

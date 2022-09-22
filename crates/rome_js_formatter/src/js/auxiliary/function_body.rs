@@ -16,14 +16,31 @@ impl FormatNodeRule<JsFunctionBody> for FormatJsFunctionBody {
             r_curly_token,
         } = node.as_fields();
 
-        write!(
-            f,
-            [format_delimited(
-                &l_curly_token?,
-                &format_args![directives.format(), statements.format()],
-                &r_curly_token?,
+        let r_curly_token = r_curly_token?;
+
+        if statements.is_empty() && directives.is_empty() {
+            write!(
+                f,
+                [
+                    l_curly_token.format(),
+                    format_dangling_comments(node.syntax()).with_block_indent(),
+                    r_curly_token.format()
+                ]
             )
-            .block_indent()]
-        )
+        } else {
+            write!(
+                f,
+                [
+                    l_curly_token.format(),
+                    block_indent(&format_args![directives.format(), statements.format()]),
+                    r_curly_token.format(),
+                ]
+            )
+        }
+    }
+
+    fn fmt_dangling_comments(&self, _: &JsFunctionBody, _: &mut JsFormatter) -> FormatResult<()> {
+        // Formatted as part of `fmt_fields`
+        Ok(())
     }
 }

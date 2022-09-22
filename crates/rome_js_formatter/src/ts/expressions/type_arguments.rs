@@ -1,6 +1,7 @@
 use crate::utils::should_hug_type;
 use crate::{prelude::*, utils::is_object_like_type};
 use rome_formatter::write;
+use rome_formatter::FormatError::SyntaxError;
 use rome_js_syntax::{
     JsAnyExpression, JsSyntaxKind, JsVariableDeclarator, TsType, TsTypeArguments,
     TsTypeArgumentsFields,
@@ -16,6 +17,10 @@ impl FormatNodeRule<TsTypeArguments> for FormatTsTypeArguments {
             ts_type_argument_list,
             r_angle_token,
         } = node.as_fields();
+
+        if ts_type_argument_list.is_empty() {
+            return Err(SyntaxError);
+        }
 
         // We want to check if we are inside something like this:
         // const foo: SomeThing<{ [P in "x" | "y"]: number }> = func();
@@ -71,25 +76,17 @@ impl FormatNodeRule<TsTypeArguments> for FormatTsTypeArguments {
         let should_inline = !is_arrow_function_variables
             && (ts_type_argument_list.len() == 0 || first_argument_can_be_hugged_or_is_null_type);
 
+        write!(f, [l_angle_token.format(),])?;
+
         if should_inline {
-            write!(
-                f,
-                [
-                    l_angle_token.format(),
-                    ts_type_argument_list.format(),
-                    r_angle_token.format(),
-                ]
-            )
+            write!(f, [ts_type_argument_list.format()])?;
         } else {
             write!(
                 f,
-                [format_delimited(
-                    &l_angle_token?,
-                    &ts_type_argument_list.format(),
-                    &r_angle_token?,
-                )
-                .soft_block_indent()]
-            )
+                [group(&soft_block_indent(&ts_type_argument_list.format()))]
+            )?;
         }
+
+        write!(f, [r_angle_token.format()])
     }
 }

@@ -13,7 +13,6 @@ info:
 
 <div>{/* comment */...a}</div>;
 
-// rome-ignore format: Instability issue
 <div>{...a //comment
 }</div>;
 
@@ -26,7 +25,6 @@ info:
   ...a
 }</div>;
 
-// rome-ignore format: Instability issue
 <div>{//comment
   ...a // comment
 }</div>;
@@ -38,47 +36,34 @@ info:
 ```diff
 --- Prettier
 +++ Rome
-@@ -4,29 +4,23 @@
+@@ -2,7 +2,7 @@
  
- <div>{/* comment */ ...a}</div>;
+ <div>{...a /* comment */}</div>;
  
--<div>
--  {
--    ...a //comment
--  }
--</div>;
-+// rome-ignore format: Instability issue
-+<div>{...a //comment
-+}</div>;
+-<div>{/* comment */ ...a}</div>;
++<div>{.../* comment */ a}</div>;
  
  <div>
--  {
--    ...a
+   {
+@@ -19,14 +19,14 @@
+ 
+ <div>
+   {
 -    //comment
-+  {...a
-+  //comment
+-    ...a
++    ...//comment
++    a
    }
  </div>;
  
  <div>
    {
 -    //comment
--    ...a
--  }
-+  //comment
-+  ...a}
- </div>;
- 
--<div>
--  {
--    //comment
 -    ...a // comment
--  }
--</div>;
-+// rome-ignore format: Instability issue
-+<div>{//comment
-+  ...a // comment
-+}</div>;
++    ...//comment
++    a // comment
+   }
+ </div>;
 ```
 
 # Output
@@ -88,28 +73,34 @@ info:
 
 <div>{...a /* comment */}</div>;
 
-<div>{/* comment */ ...a}</div>;
-
-// rome-ignore format: Instability issue
-<div>{...a //comment
-}</div>;
+<div>{.../* comment */ a}</div>;
 
 <div>
-  {...a
-  //comment
+  {
+    ...a //comment
   }
 </div>;
 
 <div>
   {
-  //comment
-  ...a}
+    ...a
+    //comment
+  }
 </div>;
 
-// rome-ignore format: Instability issue
-<div>{//comment
-  ...a // comment
-}</div>;
+<div>
+  {
+    ...//comment
+    a
+  }
+</div>;
+
+<div>
+  {
+    ...//comment
+    a // comment
+  }
+</div>;
 ```
 
 

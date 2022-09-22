@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/comments-closure-typecast/closure-compiler-type-cast.js
 ---
 
 # Input
@@ -73,14 +75,39 @@ const style2 =/**
 ```diff
 --- Prettier
 +++ Rome
-@@ -57,6 +57,6 @@
-  * @type {{
-  *   width: number,
-  * }}
-- */ ({
-+*/ ({
-   width,
- });
+@@ -10,7 +10,8 @@
+ 
+ // preserve parens only for type casts
+ let assignment = /** @type {string} */ (getValue());
+-let value = /** @type {string} */ (this.members[0]).functionCall();
++let value = /** @type {string} */ (this.members[0])
++  .functionCall();
+ 
+ functionCall(1 + /** @type {string} */ (value), /** @type {!Foo} */ ({}));
+ 
+@@ -19,10 +20,18 @@
+ }
+ 
+ // Only numberOrString is typecast
+-var newArray = /** @type {array} */ (numberOrString).map((x) => x);
+-var newArray = /** @type {array} */ (numberOrString).map((x) => x);
+-var newArray = test(/** @type {array} */ (numberOrString).map((x) => x));
+-var newArray = test(/** @type {array} */ (numberOrString).map((x) => x));
++var newArray = /** @type {array} */ (numberOrString)
++  .map((x) => x);
++var newArray = /** @type {array} */ (numberOrString)
++  .map((x) => x);
++var newArray = test(
++  /** @type {array} */ (numberOrString)
++    .map((x) => x),
++);
++var newArray = test(
++  /** @type {array} */ (numberOrString)
++    .map((x) => x),
++);
+ 
+ // The numberOrString.map CallExpression is typecast
+ var newArray = /** @type {array} */ (numberOrString.map((x) => x));
 ```
 
 # Output
@@ -98,7 +125,8 @@ let object = {
 
 // preserve parens only for type casts
 let assignment = /** @type {string} */ (getValue());
-let value = /** @type {string} */ (this.members[0]).functionCall();
+let value = /** @type {string} */ (this.members[0])
+  .functionCall();
 
 functionCall(1 + /** @type {string} */ (value), /** @type {!Foo} */ ({}));
 
@@ -107,10 +135,18 @@ function returnValue() {
 }
 
 // Only numberOrString is typecast
-var newArray = /** @type {array} */ (numberOrString).map((x) => x);
-var newArray = /** @type {array} */ (numberOrString).map((x) => x);
-var newArray = test(/** @type {array} */ (numberOrString).map((x) => x));
-var newArray = test(/** @type {array} */ (numberOrString).map((x) => x));
+var newArray = /** @type {array} */ (numberOrString)
+  .map((x) => x);
+var newArray = /** @type {array} */ (numberOrString)
+  .map((x) => x);
+var newArray = test(
+  /** @type {array} */ (numberOrString)
+    .map((x) => x),
+);
+var newArray = test(
+  /** @type {array} */ (numberOrString)
+    .map((x) => x),
+);
 
 // The numberOrString.map CallExpression is typecast
 var newArray = /** @type {array} */ (numberOrString.map((x) => x));
@@ -145,7 +181,7 @@ const style2 = /**
  * @type {{
  *   width: number,
  * }}
-*/ ({
+ */ ({
   width,
 });
 ```

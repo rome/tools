@@ -34,13 +34,30 @@ impl FormatNodeRule<JsImportAssertionEntry> for FormatJsImportAssertionEntry {
             }
         };
 
-        write![
+        write![f, [colon_token.format(), space()]]?;
+
+        if f.comments().has_dangling_comments(node.syntax()) {
+            write!(
+                f,
+                [space(), format_dangling_comments(node.syntax()), space()]
+            )?;
+        }
+
+        write!(
             f,
-            [
-                colon_token.format(),
-                space(),
-                FormatLiteralStringToken::new(&value_token?, StringLiteralParentKind::Expression),
-            ]
-        ]
+            [FormatLiteralStringToken::new(
+                &value_token?,
+                StringLiteralParentKind::Expression
+            )]
+        )
+    }
+
+    fn fmt_dangling_comments(
+        &self,
+        _: &JsImportAssertionEntry,
+        _: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        // Handled inside `fmt_fields`
+        Ok(())
     }
 }

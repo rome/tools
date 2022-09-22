@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_js_syntax::{JsImportAssertionEntryList, JsSyntaxKind};
+use rome_js_syntax::JsImportAssertionEntryList;
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsImportAssertionEntryList;
@@ -9,7 +9,7 @@ impl FormatRule<JsImportAssertionEntryList> for FormatJsImportAssertionEntryList
 
     fn fmt(&self, node: &JsImportAssertionEntryList, f: &mut JsFormatter) -> FormatResult<()> {
         f.join_with(&soft_line_break_or_space())
-            .entries(node.format_separated(JsSyntaxKind::COMMA))
+            .entries(node.format_separated(","))
             .finish()
     }
 }

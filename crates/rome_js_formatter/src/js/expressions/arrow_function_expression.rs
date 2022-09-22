@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write, Comments, CstFormatContext, FormatRuleWithOptions};
+use rome_formatter::{format_args, write, CstFormatContext, FormatRuleWithOptions};
 use std::iter::once;
 
 use crate::parentheses::{
@@ -11,7 +11,7 @@ use crate::utils::{
 };
 use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyBindingPattern, JsAnyExpression, JsAnyFormalParameter,
-    JsAnyFunctionBody, JsAnyParameter, JsAnyTemplateElement, JsArrowFunctionExpression, JsLanguage,
+    JsAnyFunctionBody, JsAnyParameter, JsAnyTemplateElement, JsArrowFunctionExpression,
     JsSyntaxKind, JsSyntaxNode, JsTemplate,
 };
 use rome_rowan::SyntaxResult;
@@ -107,6 +107,10 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                         _ => false,
                     },
                 };
+                let body_has_leading_line_comment = f
+                    .context()
+                    .comments()
+                    .has_leading_own_line_comment(body.syntax());
 
                 // Add parentheses to avoid confusion between `a => b ? c : d` and `a <= b ? c : d`
                 // but only if the body isn't an object/function or class expression because parentheses are always required in that
@@ -128,7 +132,8 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                     _ => false,
                 };
 
-                if body_has_soft_line_break && !should_add_parens {
+                if body_has_soft_line_break && !should_add_parens && !body_has_leading_line_comment
+                {
                     write![f, [format_signature, space(), body.format()]]
                 } else {
                     write!(
@@ -158,6 +163,15 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
     fn needs_parentheses(&self, item: &JsArrowFunctionExpression) -> bool {
         item.needs_parentheses()
     }
+
+    fn fmt_dangling_comments(
+        &self,
+        _: &JsArrowFunctionExpression,
+        _: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        // Formatted inside of `fmt_fields`
+        Ok(())
+    }
 }
 
 /// writes the arrow function type parameters, parameters, and return type annotation
@@ -173,14 +187,14 @@ fn format_signature(arrow: &JsArrowFunctionExpression) -> impl Format<JsFormatCo
             match arrow.parameters()? {
                 JsAnyArrowFunctionParameters::JsAnyBinding(binding) => write!(
                     f,
-                    [format_parenthesize(
-                        binding.syntax().first_token().as_ref(),
+                    [
+                        text("("),
                         &soft_block_indent(&format_args![
                             binding.format(),
                             if_group_breaks(&text(","))
                         ]),
-                        binding.syntax().last_token().as_ref(),
-                    )]
+                        text(")")
+                    ]
                 )?,
                 JsAnyArrowFunctionParameters::JsParameters(params) => {
                     write!(f, [params.format()])?;
@@ -190,7 +204,13 @@ fn format_signature(arrow: &JsArrowFunctionExpression) -> impl Format<JsFormatCo
             write!(f, [arrow.return_type_annotation().format()])
         });
 
-        write!(f, [group(&format_parameters)])
+        write!(f, [group(&format_parameters)])?;
+
+        if f.comments().has_dangling_comments(arrow.syntax()) {
+            write!(f, [space(), format_dangling_comments(arrow.syntax())])?;
+        }
+
+        Ok(())
     })
 }
 
@@ -330,7 +350,13 @@ impl Format<JsFormatContext> for ArrowChain {
 
             let join_signatures = format_with(|f| {
                 for arrow in self.arrows() {
-                    write!(f, [format_signature(arrow)])?;
+                    write!(
+                        f,
+                        [
+                            format_leading_comments(arrow.syntax()),
+                            format_signature(arrow)
+                        ]
+                    )?;
 
                     // The arrow of the tail is formatted outside of the group to ensure it never
                     // breaks from the body
@@ -365,9 +391,9 @@ impl Format<JsFormatContext> for ArrowChain {
                 write!(
                     f,
                     [group(&format_args![
-                        format_inserted(JsSyntaxKind::L_PAREN,),
+                        text("("),
                         soft_block_indent(&tail_body.format()),
-                        format_inserted(JsSyntaxKind::R_PAREN)
+                        text(")")
                     ])]
                 )
             } else {
@@ -423,7 +449,7 @@ impl ArrowFunctionLayout {
     /// of the different layouts.
     fn for_arrow(
         arrow: JsArrowFunctionExpression,
-        comments: &Comments<JsLanguage>,
+        comments: &JsComments,
         assignment_layout: Option<AssignmentLikeLayout>,
     ) -> SyntaxResult<ArrowFunctionLayout> {
         let mut head = None;

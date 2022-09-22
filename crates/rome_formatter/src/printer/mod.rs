@@ -264,10 +264,6 @@ impl<'a> Printer<'a> {
                 self.queue_line_suffixes(HARD_BREAK, args, queue);
             }
 
-            FormatElement::Comment(content) => {
-                queue.extend_with_args(content.iter(), args);
-            }
-
             FormatElement::Verbatim(verbatim) => {
                 if let VerbatimKind::Verbatim { length } = &verbatim.kind {
                     self.state.verbatim_markers.push(TextRange::at(
@@ -355,28 +351,10 @@ impl<'a> Printer<'a> {
             return;
         }
 
-        // If the indentation level has changed since these line suffixes were queued,
-        // insert a line break before to push the comments into the new indent block
-        // SAFETY: Indexing into line_suffixes is guarded by the above call to is_empty
-        let has_line_break = self.state.line_suffixes[0].args.indent.level() < args.indent.level();
-
         // Print this line break element again once all the line suffixes have been flushed
         let call_self = PrintElementCall::new(line_break, args);
 
-        let line_break = if has_line_break {
-            // Duplicate this line break element before the line
-            // suffixes if a line break is required
-            Some(call_self.clone())
-        } else {
-            None
-        };
-
-        queue.extend(
-            line_break
-                .into_iter()
-                .chain(self.state.line_suffixes.drain(..))
-                .chain(once(call_self)),
-        );
+        queue.extend(self.state.line_suffixes.drain(..).chain(once(call_self)));
     }
 
     /// Tries to fit as much content as possible on a single line.
@@ -606,9 +584,9 @@ impl GroupModes {
     }
 
     fn unwrap_print_mode(&self, group_id: GroupId, next_element: &FormatElement) -> PrintMode {
-        self.get_print_mode(group_id).unwrap_or_else(||
+        self.get_print_mode(group_id).unwrap_or_else(|| {
             panic!("Expected group with id {group_id:?} to exist but it wasn't present in the document. Ensure that a group with such a document appears in the document before the element {next_element:?}.")
-        )
+        })
     }
 }
 
@@ -1031,8 +1009,6 @@ fn fits_element_on_line<'a, 'rest>(
             }
         }
 
-        FormatElement::Comment(content) => queue.extend(content.iter(), args),
-
         FormatElement::Verbatim(verbatim) => queue.extend(verbatim.content.iter(), args),
         FormatElement::BestFitting(best_fitting) => {
             let content = match args.mode {
@@ -1438,11 +1414,7 @@ two lines`,
                 text("]")
             ]),
             text(";"),
-            comment(&line_suffix(&format_args![
-                space(),
-                text("// trailing"),
-                space()
-            ]),)
+            &line_suffix(&format_args![space(), text("// trailing"), space()])
         ]);
 
         assert_eq!(printed.as_code(), "[1, 2, 3]; // trailing")

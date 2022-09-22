@@ -194,6 +194,7 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
         if let Some(description) = description {
             let comment = format!("/**\n\t* {} \n\t */\n", description);
             let trivia = vec![
+                (TriviaPieceKind::Newline, "\n"),
                 (TriviaPieceKind::MultiLineComment, comment.as_str()),
                 (TriviaPieceKind::Newline, "\n"),
             ];

@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_js_syntax::{JsSyntaxKind, TsTypeList};
+use rome_js_syntax::TsTypeList;
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsTypeList;
@@ -11,7 +11,7 @@ impl FormatRule<TsTypeList> for FormatTsTypeList {
         // the grouping will be applied by the parent
         f.join_with(&soft_line_break_or_space())
             .entries(
-                node.format_separated(JsSyntaxKind::COMMA)
+                node.format_separated(",")
                     .with_trailing_separator(TrailingSeparator::Disallowed),
             )
             .finish()

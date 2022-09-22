@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_js_syntax::{JsObjectMemberList, JsSyntaxKind};
+use rome_js_syntax::JsObjectMemberList;
 use rome_rowan::{AstNode, AstSeparatedList};
 
 #[derive(Debug, Clone, Default)]
@@ -11,10 +11,7 @@ impl FormatRule<JsObjectMemberList> for FormatJsObjectMemberList {
     fn fmt(&self, node: &JsObjectMemberList, f: &mut JsFormatter) -> FormatResult<()> {
         let mut join = f.join_nodes_with_soft_line();
 
-        for (element, formatted) in node
-            .elements()
-            .zip(node.format_separated(JsSyntaxKind::COMMA))
-        {
+        for (element, formatted) in node.elements().zip(node.format_separated(",")) {
             join.entry(element.node()?.syntax(), &formatted);
         }
 

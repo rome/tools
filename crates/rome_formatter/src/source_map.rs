@@ -88,6 +88,26 @@ impl TransformSourceMap {
         self.trimmed_source_range_from_transformed_range(node.text_trimmed_range())
     }
 
+    fn resolve_trimmed_range(&self, mut source_range: TextRange) -> TextRange {
+        let start_mapping = self.mapped_node_ranges.get(&source_range.start());
+        if let Some(mapping) = start_mapping {
+            // If the queried node fully encloses the original range of the node, then extend the range
+            if source_range.contains_range(mapping.original_range) {
+                source_range = TextRange::new(mapping.extended_range.start(), source_range.end());
+            }
+        }
+
+        let end_mapping = self.mapped_node_ranges.get(&source_range.end());
+        if let Some(mapping) = end_mapping {
+            // If the queried node fully encloses the original range of the node, then extend the range
+            if source_range.contains_range(mapping.original_range) {
+                source_range = TextRange::new(source_range.start(), mapping.extended_range.end());
+            }
+        }
+
+        source_range
+    }
+
     fn trimmed_source_range_from_transformed_range(
         &self,
         transformed_range: TextRange,
@@ -97,34 +117,14 @@ impl TransformSourceMap {
         let mut mapped_range = source_range;
 
         loop {
-            let mut widened = false;
+            let resolved = self.resolve_trimmed_range(mapped_range);
 
-            let start_mapping = self.mapped_node_ranges.get(&mapped_range.start());
-            if let Some(mapping) = start_mapping {
-                // If the queried node fully encloses the original range of the node, then extend the range
-                if mapped_range.contains_range(mapping.original_range) {
-                    mapped_range =
-                        TextRange::new(mapping.extended_range.start(), mapped_range.end());
-                    widened = true;
-                }
-            }
-
-            let end_mapping = self.mapped_node_ranges.get(&mapped_range.end());
-            if let Some(mapping) = end_mapping {
-                // If the queried node fully encloses the original range of the node, then extend the range
-                if mapped_range.contains_range(mapping.original_range) {
-                    mapped_range =
-                        TextRange::new(mapped_range.start(), mapping.extended_range.end());
-                    widened = true;
-                }
-            }
-
-            if !widened {
-                break;
+            if resolved == mapped_range {
+                break resolved;
+            } else {
+                mapped_range = resolved;
             }
         }
-
-        mapped_range
     }
 
     /// Returns the source text of the trimmed range of `node`.
@@ -382,12 +382,18 @@ pub struct TransformSourceMapBuilder {
 }
 
 impl TransformSourceMapBuilder {
-    /// Creates a new builder for a source map that maps positions back to the passed `root` tree.
+    /// Creates a new builder.
     pub fn new() -> Self {
         Self {
-            source_text: String::new(),
-            deleted_ranges: Vec::new(),
-            mapped_node_ranges: FxHashMap::default(),
+            ..Default::default()
+        }
+    }
+
+    /// Creates a new builder for a document with the given source.
+    pub fn with_source(source: String) -> Self {
+        Self {
+            source_text: source,
+            ..Default::default()
         }
     }
 

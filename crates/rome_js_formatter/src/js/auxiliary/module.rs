@@ -22,6 +22,7 @@ impl FormatNodeRule<JsModule> for FormatJsModule {
             f,
             [
                 FormatInterpreterToken::new(interpreter_token.as_ref()),
+                format_leading_comments(node.syntax()),
                 directives.format()
             ]
         ]?;
@@ -30,9 +31,28 @@ impl FormatNodeRule<JsModule> for FormatJsModule {
             f,
             [
                 items.format(),
+                format_trailing_comments(node.syntax()),
                 format_removed(&eof_token?),
                 hard_line_break()
             ]
         )
+    }
+
+    fn fmt_leading_comments(&self, _: &JsModule, _: &mut JsFormatter) -> FormatResult<()> {
+        // Formatted as part of `fmt_fields`
+        Ok(())
+    }
+
+    fn fmt_dangling_comments(&self, module: &JsModule, f: &mut JsFormatter) -> FormatResult<()> {
+        debug_assert!(
+            !f.comments().has_dangling_comments(module.syntax()),
+            "Module should never have dangling comments."
+        );
+        Ok(())
+    }
+
+    fn fmt_trailing_comments(&self, _: &JsModule, _: &mut JsFormatter) -> FormatResult<()> {
+        // Formatted as part of `fmt_fields`
+        Ok(())
     }
 }

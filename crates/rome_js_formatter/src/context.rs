@@ -1,8 +1,7 @@
-use crate::comments::{FormatJsLeadingComment, JsCommentStyle};
+use crate::comments::{FormatJsLeadingComment, JsCommentStyle, JsComments};
 use rome_formatter::printer::PrinterOptions;
 use rome_formatter::{
-    Comments, CstFormatContext, FormatContext, FormatOptions, IndentStyle, LineWidth,
-    TransformSourceMap,
+    CstFormatContext, FormatContext, FormatOptions, IndentStyle, LineWidth, TransformSourceMap,
 };
 use rome_js_syntax::{JsLanguage, SourceType};
 use std::fmt;
@@ -15,13 +14,13 @@ pub struct JsFormatContext {
     options: JsFormatOptions,
 
     /// The comments of the nodes and tokens in the program.
-    comments: Rc<Comments<JsLanguage>>,
+    comments: Rc<JsComments>,
 
     source_map: Option<TransformSourceMap>,
 }
 
 impl JsFormatContext {
-    pub fn new(options: JsFormatOptions, comments: Comments<JsLanguage>) -> Self {
+    pub fn new(options: JsFormatOptions, comments: JsComments) -> Self {
         Self {
             options,
             comments: Rc::new(comments),
@@ -65,13 +64,9 @@ impl FormatContext for JsFormatContext {
 impl CstFormatContext for JsFormatContext {
     type Language = JsLanguage;
     type Style = JsCommentStyle;
-    type LeadingCommentRule = FormatJsLeadingComment;
+    type CommentRule = FormatJsLeadingComment;
 
-    fn comment_style(&self) -> Self::Style {
-        JsCommentStyle
-    }
-
-    fn comments(&self) -> &Comments<JsLanguage> {
+    fn comments(&self) -> &JsComments {
         &self.comments
     }
 }

@@ -1,7 +1,7 @@
 use crate::parentheses::{is_callee, is_tag, NeedsParentheses};
 use crate::prelude::*;
 use crate::utils::jsx::{get_wrap_state, WrapState};
-use rome_formatter::write;
+use rome_formatter::{format_args, write};
 use rome_js_syntax::{
     JsArrowFunctionExpression, JsBinaryExpression, JsBinaryOperator, JsCallArgumentList,
     JsCallExpression, JsSyntaxKind, JsSyntaxNode, JsxExpressionChild, JsxTagExpression,
@@ -17,7 +17,14 @@ impl FormatNodeRule<JsxTagExpression> for FormatJsxTagExpression {
 
         match wrap {
             WrapState::NoWrap => {
-                write![f, [node.tag().format()]]
+                write![
+                    f,
+                    [
+                        format_leading_comments(node.syntax()),
+                        node.tag().format(),
+                        format_trailing_comments(node.syntax())
+                    ]
+                ]
             }
             WrapState::WrapOnBreak => {
                 let should_expand = should_expand(node);
@@ -28,7 +35,14 @@ impl FormatNodeRule<JsxTagExpression> for FormatJsxTagExpression {
                         write!(f, [if_group_breaks(&text("("))])?;
                     }
 
-                    write!(f, [soft_block_indent(&node.tag().format())])?;
+                    write!(
+                        f,
+                        [soft_block_indent(&format_args![
+                            format_leading_comments(node.syntax()),
+                            node.tag().format(),
+                            format_trailing_comments(node.syntax())
+                        ])]
+                    )?;
 
                     if !needs_parentheses {
                         write!(f, [if_group_breaks(&text(")"))])?;
@@ -44,6 +58,16 @@ impl FormatNodeRule<JsxTagExpression> for FormatJsxTagExpression {
 
     fn needs_parentheses(&self, item: &JsxTagExpression) -> bool {
         item.needs_parentheses()
+    }
+
+    fn fmt_leading_comments(&self, _: &JsxTagExpression, _: &mut JsFormatter) -> FormatResult<()> {
+        // Handled as part of `fmt_fields`
+        Ok(())
+    }
+
+    fn fmt_trailing_comments(&self, _: &JsxTagExpression, _: &mut JsFormatter) -> FormatResult<()> {
+        // handled as part of `fmt_fields`
+        Ok(())
     }
 }
 
