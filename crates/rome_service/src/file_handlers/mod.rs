@@ -56,7 +56,7 @@ impl Language {
 
     /// Returns the language corresponding to this language ID
     ///
-    /// See the [microsoft spec] https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocumentItem
+    /// See the [microsoft spec] <https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocumentItem>
     /// for a list of language identifiers
     ///
     /// [microsoft spec]: https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocumentItem
