@@ -207,8 +207,15 @@ mod tests {
             params.signal_queue.push(SignalEntry {
                 signal: Box::new(DiagnosticSignal::new(move || {
                     AnalyzerDiagnostic::from_diagnostic(
-                        Diagnostic::warning(FileId::zero(), "test_suppression", "test_suppression")
-                            .primary(span, ""),
+                        Diagnostic::warning(
+                            FileId::zero(),
+                            // This is a random category for testing that's
+                            // pretty much guaranteed to never be emitted by
+                            // the analyzer
+                            "args/fileNotFound",
+                            "test_suppression",
+                        )
+                        .primary(span, ""),
                     )
                 })),
                 rule: RuleKey::new("group", "rule"),
@@ -351,19 +358,19 @@ mod tests {
             diagnostics.as_slice(),
             &[
                 (
-                    String::from("Linter"),
+                    String::from("suppressions/invalidGroup"),
                     TextRange::new(TextSize::from(47), TextSize::from(62))
                 ),
                 (
-                    String::from("test_suppression"),
+                    String::from("args/fileNotFound"),
                     TextRange::new(TextSize::from(63), TextSize::from(74))
                 ),
                 (
-                    String::from("Linter"),
+                    String::from("suppressions/invalidRule"),
                     TextRange::new(TextSize::from(76), TextSize::from(96))
                 ),
                 (
-                    String::from("test_suppression"),
+                    String::from("args/fileNotFound"),
                     TextRange::new(TextSize::from(97), TextSize::from(108))
                 ),
             ]

@@ -15,10 +15,20 @@ pub(crate) fn generate_diagnostic(input: DeriveInput) -> TokenStream {
     let tags = generate_tags(&input);
     let source = generate_source(&input);
 
+    let generic_params = if !input.generics.params.is_empty() {
+        let lt_token = &input.generics.lt_token;
+        let params = &input.generics.params;
+        let gt_token = &input.generics.gt_token;
+        quote! { #lt_token #params #gt_token }
+    } else {
+        quote!()
+    };
+
     let ident = input.ident;
+    let generics = input.generics;
 
     quote! {
-        impl rome_diagnostics::v2::Diagnostic for #ident {
+        impl #generic_params rome_diagnostics::v2::Diagnostic for #ident #generics {
             #category
             #severity
             #description

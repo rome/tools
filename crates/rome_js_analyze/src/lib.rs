@@ -182,7 +182,7 @@ import AwesomeReact, { Fragment as AwesomeFragment } from "react";
                     let code = diag.code.as_deref().unwrap();
                     let primary = diag.primary.as_ref().unwrap();
 
-                    if code == "correctness/noDoubleEquals" {
+                    if code == "lint/correctness/noDoubleEquals" {
                         error_ranges.push(primary.span.range);
                     }
                 }
