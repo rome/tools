@@ -40,7 +40,12 @@ where
             match element {
                 SyntaxElement::Token(token) => f.state_mut().track_token(&token),
                 SyntaxElement::Node(node) => {
-                    f.context().comments().mark_suppression_checked(&node);
+                    let comments = f.context().comments();
+                    comments.mark_suppression_checked(&node);
+
+                    for comment in comments.leading_dangling_trailing_comments(&node) {
+                        comment.mark_formatted();
+                    }
                 }
             }
         }
@@ -76,12 +81,14 @@ where
                         comment.piece().text_range().end() <= trimmed_source_range.start()
                     });
 
-                    write!(
-                        f,
-                        [FormatLeadingComments::Comments(
-                            &leading_comments[..outside_trimmed_range]
-                        )]
-                    )?;
+                    let (outside_trimmed_range, in_trimmed_range) =
+                        leading_comments.split_at(outside_trimmed_range);
+
+                    write!(f, [FormatLeadingComments::Comments(outside_trimmed_range)])?;
+
+                    for comment in in_trimmed_range {
+                        comment.mark_formatted();
+                    }
                 }
 
                 // Find the first skipped token trivia, if any, and include it in the verbatim range because
@@ -111,6 +118,10 @@ where
                 )
                 .fmt(f)?;
 
+                for comment in f.context().comments().dangling_comments(self.node) {
+                    comment.mark_formatted();
+                }
+
                 // Format all trailing comments that are outside of the trimmed range.
                 if self.format_comments {
                     let comments = f.context().comments().clone();
@@ -123,12 +134,14 @@ where
                                 <= trimmed_source_range.end()
                         });
 
-                    write!(
-                        f,
-                        [FormatTrailingComments::Comments(
-                            &trailing_comments[outside_trimmed_range_start..]
-                        )]
-                    )?;
+                    let (in_trimmed_range, outside_trimmed_range) =
+                        trailing_comments.split_at(outside_trimmed_range_start);
+
+                    for comment in in_trimmed_range {
+                        comment.mark_formatted();
+                    }
+
+                    write!(f, [FormatTrailingComments::Comments(outside_trimmed_range)])?;
                 }
 
                 Ok(())

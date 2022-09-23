@@ -6,10 +6,10 @@ use crate::{
     FormatResult, Formatter, GroupId, IndentStyle, LineWidth, PrinterOptions, TextSize,
     TransformSourceMap,
 };
-use indexmap::IndexSet;
 #[cfg(target_pointer_width = "64")]
 use rome_rowan::static_assert;
 use rome_rowan::SyntaxTokenText;
+use rustc_hash::FxHashMap;
 #[cfg(debug_assertions)]
 use std::any::type_name;
 use std::any::TypeId;
@@ -757,7 +757,7 @@ impl From<ConditionalGroupContent> for FormatElement {
 #[derive(Clone, Default, Debug)]
 struct IrFormatContext {
     /// The interned elements that have been printed to this point
-    printed_interned_elements: IndexSet<Interned>,
+    printed_interned_elements: FxHashMap<Interned, usize>,
 }
 
 impl FormatContext for IrFormatContext {
@@ -964,10 +964,16 @@ impl Format<IrFormatContext> for FormatElement {
                 )
             }
             FormatElement::Interned(interned) => {
-                let (index, inserted) = f
-                    .context_mut()
-                    .printed_interned_elements
-                    .insert_full(interned.clone());
+                let interned_elements = &mut f.context_mut().printed_interned_elements;
+
+                let (index, inserted) = match interned_elements.get(interned) {
+                    None => {
+                        let index = interned_elements.len();
+                        interned_elements.insert(interned.clone(), index);
+                        (index, true)
+                    }
+                    Some(index) => (*index, false),
+                };
 
                 if inserted {
                     write!(

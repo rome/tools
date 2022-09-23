@@ -1609,7 +1609,6 @@ version = "0.0.0"
 dependencies = [
  "cfg-if",
  "countme",
- "indexmap",
  "rome_diagnostics",
  "rome_js_parser",
  "rome_js_syntax",
