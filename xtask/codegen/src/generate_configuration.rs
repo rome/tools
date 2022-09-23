@@ -214,7 +214,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
                 })
         });
         group_match_code.push(quote! {
-           #group => #group_struct_name::has_rule(rule_name).then(|| (category, rule_name))
+           #group => #group_struct_name::has_rule(rule_name).then_some((category, rule_name))
         });
     }
 
