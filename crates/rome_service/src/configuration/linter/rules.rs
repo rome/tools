@@ -41,9 +41,9 @@ impl Rules {
     ) -> Option<(&'a str, &'a str)> {
         match (category, rule_name) {
             (Some(category), Some(rule_name)) => match category {
-                "correctness" => Correctness::has_rule(rule_name).then_some( (category, rule_name)),
-                "nursery" => Nursery::has_rule(rule_name).then_some( (category, rule_name)),
-                "style" => Style::has_rule(rule_name).then_some( (category, rule_name)),
+                "correctness" => Correctness::has_rule(rule_name).then(|| (category, rule_name)),
+                "nursery" => Nursery::has_rule(rule_name).then(|| (category, rule_name)),
+                "style" => Style::has_rule(rule_name).then(|| (category, rule_name)),
                 _ => None,
             },
             _ => None,
