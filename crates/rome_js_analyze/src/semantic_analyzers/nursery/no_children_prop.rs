@@ -6,7 +6,22 @@ use rome_console::markup;
 use rome_js_syntax::{JsCallExpression, JsPropertyObjectMember, JsxAttribute, JsxName};
 use rome_rowan::{declare_node_union, AstNode};
 declare_rule! {
+    /// Prevent passing of **children** as props.
     ///
+    /// When using JSX, the children should be nested between the opening and closing tags.
+    /// When not using JSX, the children should be passed as additional arguments to `React.createElement`.
+    ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// <FirstComponent children={'foo'} />
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// React.createElement('div', { children: 'foo' });
+    /// ```
     pub(crate) NoChildrenProp {
         version: "0.10.0",
         name: "noChildrenProp",
@@ -57,7 +72,7 @@ impl Rule for NoChildrenProp {
         }
     }
 
-    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let range = match state {
             NoChildrenPropState::JsxProp(name) => name.syntax().text_trimmed_range(),
             NoChildrenPropState::MemberProp(children_prop) => {

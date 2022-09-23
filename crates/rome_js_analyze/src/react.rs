@@ -21,7 +21,7 @@ pub(crate) struct ReactCreateElementCall {
 }
 
 impl ReactCreateElementCall {
-    /// It scans the current props and returns the one that matches the given name
+    /// It scans the current props and returns the property that matches the passed name
     pub(crate) fn find_prop_by_name(&self, prop_name: &str) -> Option<JsPropertyObjectMember> {
         self.props.as_ref().and_then(|props| {
             let members = props.members();

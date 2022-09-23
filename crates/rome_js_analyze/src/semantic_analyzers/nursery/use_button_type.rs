@@ -1,4 +1,4 @@
-use crate::react::{is_react_create_element, ReactCreateElementCall};
+use crate::react::is_react_create_element;
 use crate::semantic_services::Semantic;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::codespan::Severity;
