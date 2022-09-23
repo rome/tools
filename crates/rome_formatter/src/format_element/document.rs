@@ -1,5 +1,5 @@
-use super::signal::Signal;
-use crate::format_element::signal::DedentMode;
+use super::tag::Tag;
+use crate::format_element::tag::DedentMode;
 use crate::prelude::*;
 use crate::printer::LineEnding;
 use crate::{format, write};
@@ -87,18 +87,18 @@ impl FormatOptions for IrFormatOptions {
 
 impl Format<IrFormatContext> for &[FormatElement] {
     fn fmt(&self, f: &mut Formatter<IrFormatContext>) -> FormatResult<()> {
-        use Signal::*;
+        use Tag::*;
 
         write!(f, [ContentArrayStart])?;
 
-        let mut signal_stack = Vec::new();
+        let mut tag_stack = Vec::new();
         let mut first_element = true;
         let mut in_text = false;
 
         let mut iter = self.iter().peekable();
 
         while let Some(element) = iter.next() {
-            if !first_element && !in_text && !element.is_end_signal() {
+            if !first_element && !in_text && !element.is_end_tag() {
                 // Write a separator between every two elements
                 write!(f, [text(","), soft_line_break_or_space()])?;
             }
@@ -157,7 +157,7 @@ impl Format<IrFormatContext> for &[FormatElement] {
                 FormatElement::BestFitting(best_fitting) => {
                     write!(f, [text("best_fitting([")])?;
                     f.write_elements([
-                        FormatElement::Signal(StartIndent),
+                        FormatElement::Tag(StartIndent),
                         FormatElement::Line(LineMode::Hard),
                     ])?;
 
@@ -166,7 +166,7 @@ impl Format<IrFormatContext> for &[FormatElement] {
                     }
 
                     f.write_elements([
-                        FormatElement::Signal(EndIndent),
+                        FormatElement::Tag(EndIndent),
                         FormatElement::Line(LineMode::Hard),
                     ])?;
 
@@ -205,22 +205,22 @@ impl Format<IrFormatContext> for &[FormatElement] {
                     }
                 }
 
-                FormatElement::Signal(signal) => {
-                    if signal.is_start() {
+                FormatElement::Tag(tag) => {
+                    if tag.is_start() {
                         first_element = true;
-                        signal_stack.push(signal.kind());
+                        tag_stack.push(tag.kind());
                     }
-                    // Handle documents with mismatching start/end or superfluous end signals
+                    // Handle documents with mismatching start/end or superfluous end tags
                     else {
-                        match signal_stack.pop() {
+                        match tag_stack.pop() {
                             None => {
-                                // Only write the end signal without any indent to ensure the output document is valid.
+                                // Only write the end tag without any indent to ensure the output document is valid.
                                 write!(
                                     f,
                                     [
-                                        text("<END_SIGNAL_WITHOUT_START<"),
+                                        text("<END_TAG_WITHOUT_START<"),
                                         dynamic_text(
-                                            &std::format!("{:?}", signal.kind()),
+                                            &std::format!("{:?}", tag.kind()),
                                             TextSize::default()
                                         ),
                                         text(">>"),
@@ -229,21 +229,21 @@ impl Format<IrFormatContext> for &[FormatElement] {
                                 first_element = false;
                                 continue;
                             }
-                            Some(start_kind) if start_kind != signal.kind() => {
+                            Some(start_kind) if start_kind != tag.kind() => {
                                 write!(
                                     f,
                                     [
                                         ContentArrayEnd,
                                         text(")"),
                                         soft_line_break_or_space(),
-                                        text("ERROR<START_END_SIGNAL_MISMATCH<start: "),
+                                        text("ERROR<START_END_TAG_MISMATCH<start: "),
                                         dynamic_text(
                                             &std::format!("{start_kind:?}"),
                                             TextSize::default()
                                         ),
                                         text(", end: "),
                                         dynamic_text(
-                                            &std::format!("{:?}", signal.kind()),
+                                            &std::format!("{:?}", tag.kind()),
                                             TextSize::default()
                                         ),
                                         text(">>")
@@ -258,7 +258,7 @@ impl Format<IrFormatContext> for &[FormatElement] {
                         }
                     }
 
-                    match signal {
+                    match tag {
                         StartIndent => {
                             write!(f, [text("indent(")])?;
                         }
@@ -272,7 +272,7 @@ impl Format<IrFormatContext> for &[FormatElement] {
                             write!(f, [text(label), text("(")])?;
                         }
 
-                        StartAlign(signal::Align(count)) => {
+                        StartAlign(tag::Align(count)) => {
                             write!(
                                 f,
                                 [
@@ -367,7 +367,7 @@ impl Format<IrFormatContext> for &[FormatElement] {
                         }
 
                         StartEntry => {
-                            // handled after the match for all start signals
+                            // handled after the match for all start tags
                         }
                         EndEntry => write!(f, [ContentArrayEnd])?,
 
@@ -385,14 +385,14 @@ impl Format<IrFormatContext> for &[FormatElement] {
                         }
                     };
 
-                    if signal.is_start() {
+                    if tag.is_start() {
                         write!(f, [ContentArrayStart])?;
                     }
                 }
             }
         }
 
-        while let Some(top) = signal_stack.pop() {
+        while let Some(top) = tag_stack.pop() {
             write!(
                 f,
                 [
@@ -415,13 +415,13 @@ struct ContentArrayStart;
 
 impl Format<IrFormatContext> for ContentArrayStart {
     fn fmt(&self, f: &mut Formatter<IrFormatContext>) -> FormatResult<()> {
-        use Signal::*;
+        use Tag::*;
 
         write!(f, [text("[")])?;
 
         f.write_elements([
-            FormatElement::Signal(StartGroup(None)),
-            FormatElement::Signal(StartIndent),
+            FormatElement::Tag(StartGroup(None)),
+            FormatElement::Tag(StartIndent),
             FormatElement::Line(LineMode::Soft),
         ])
     }
@@ -431,11 +431,11 @@ struct ContentArrayEnd;
 
 impl Format<IrFormatContext> for ContentArrayEnd {
     fn fmt(&self, f: &mut Formatter<IrFormatContext>) -> FormatResult<()> {
-        use Signal::*;
+        use Tag::*;
         f.write_elements([
-            FormatElement::Signal(EndIndent),
+            FormatElement::Tag(EndIndent),
             FormatElement::Line(LineMode::Soft),
-            FormatElement::Signal(EndGroup),
+            FormatElement::Tag(EndGroup),
         ])?;
 
         write!(f, [text("]")])
@@ -444,17 +444,17 @@ impl Format<IrFormatContext> for ContentArrayEnd {
 
 impl FormatElements for [FormatElement] {
     fn will_break(&self) -> bool {
-        use Signal::*;
+        use Tag::*;
         let mut ignore_depth = 0usize;
 
         for element in self {
             match element {
                 // Line suffix
                 // Ignore if any of its content breaks
-                FormatElement::Signal(StartLineSuffix) => {
+                FormatElement::Tag(StartLineSuffix) => {
                     ignore_depth += 1;
                 }
-                FormatElement::Signal(EndLineSuffix) => {
+                FormatElement::Tag(EndLineSuffix) => {
                     ignore_depth -= 1;
                 }
                 FormatElement::Interned(interned) if ignore_depth == 0 => {
@@ -480,24 +480,24 @@ impl FormatElements for [FormatElement] {
             .map_or(false, |element| element.has_label(expected))
     }
 
-    fn start_signal(&self, kind: SignalKind) -> Option<&Signal> {
-        // Assert that the document ends at a signal with the specified kind;
-        let _ = self.end_signal(kind)?;
+    fn start_tag(&self, kind: TagKind) -> Option<&Tag> {
+        // Assert that the document ends at a tag with the specified kind;
+        let _ = self.end_tag(kind)?;
 
         fn traverse_slice<'a>(
             slice: &'a [FormatElement],
-            kind: SignalKind,
+            kind: TagKind,
             depth: &mut usize,
-        ) -> Option<&'a Signal> {
+        ) -> Option<&'a Tag> {
             for element in slice.iter().rev() {
                 match element {
-                    FormatElement::Signal(signal) if signal.kind() == kind => {
-                        if signal.is_start() {
+                    FormatElement::Tag(tag) if tag.kind() == kind => {
+                        if tag.is_start() {
                             if *depth == 0 {
                                 // Invalid document
                                 return None;
                             } else if *depth == 1 {
-                                return Some(signal);
+                                return Some(tag);
                             } else {
                                 *depth -= 1;
                             }
@@ -531,8 +531,8 @@ impl FormatElements for [FormatElement] {
         traverse_slice(self, kind, &mut depth)
     }
 
-    fn end_signal(&self, kind: SignalKind) -> Option<&Signal> {
-        self.last().and_then(|element| element.end_signal(kind))
+    fn end_tag(&self, kind: TagKind) -> Option<&Tag> {
+        self.last().and_then(|element| element.end_tag(kind))
     }
 }
 
@@ -581,23 +581,23 @@ mod tests {
 
     #[test]
     fn display_invalid_document() {
-        use Signal::*;
+        use Tag::*;
 
         let document = Document::from(vec![
             FormatElement::Text(Text::Static { text: "[" }),
-            FormatElement::Signal(StartGroup(None)),
-            FormatElement::Signal(StartIndent),
+            FormatElement::Tag(StartGroup(None)),
+            FormatElement::Tag(StartIndent),
             FormatElement::Line(LineMode::Soft),
             FormatElement::Text(Text::Static { text: "a" }),
             // Close group instead of indent
-            FormatElement::Signal(EndGroup),
+            FormatElement::Tag(EndGroup),
             FormatElement::Line(LineMode::Soft),
-            FormatElement::Signal(EndIndent),
+            FormatElement::Tag(EndIndent),
             FormatElement::Text(Text::Static { text: "]" }),
-            // End signal without start
-            FormatElement::Signal(EndIndent),
-            // Start signal without an end
-            FormatElement::Signal(StartIndent),
+            // End tag without start
+            FormatElement::Tag(EndIndent),
+            // Start tag without an end
+            FormatElement::Tag(StartIndent),
         ]);
 
         assert_eq!(
@@ -606,11 +606,11 @@ mod tests {
   "[",
   group([
     indent([soft_line_break, "a"])
-    ERROR<START_END_SIGNAL_MISMATCH<start: Indent, end: Group>>,
+    ERROR<START_END_TAG_MISMATCH<start: Indent, end: Group>>,
     soft_line_break
   ])
-  ERROR<START_END_SIGNAL_MISMATCH<start: Group, end: Indent>>,
-  "]"<END_SIGNAL_WITHOUT_START<Indent>>,
+  ERROR<START_END_TAG_MISMATCH<start: Group, end: Indent>>,
+  "]"<END_TAG_WITHOUT_START<Indent>>,
   indent([])
   <START_WITHOUT_END<Indent>>
 ]"#

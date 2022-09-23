@@ -1,7 +1,7 @@
-use crate::format_element::signal::SignalKind;
-use crate::prelude::Signal;
+use crate::format_element::tag::TagKind;
+use crate::prelude::Tag;
 use crate::printer::stack::{Stack, StackedStack};
-use crate::printer::{invalid_end_signal, invalid_start_signal};
+use crate::printer::{invalid_end_tag, invalid_start_tag};
 use crate::{FormatElement, PrintResult};
 use std::fmt::Debug;
 use std::iter::FusedIterator;
@@ -88,8 +88,8 @@ pub(super) trait Queue<'a> {
         self.stack_mut().pop()
     }
 
-    /// Skips all content until it finds the corresponding end signal with the given kind.
-    fn skip_content(&mut self, kind: SignalKind)
+    /// Skips all content until it finds the corresponding end tag with the given kind.
+    fn skip_content(&mut self, kind: TagKind)
     where
         Self: Sized,
     {
@@ -100,8 +100,8 @@ pub(super) trait Queue<'a> {
         }
     }
 
-    /// Iterates over all elements until it finds the matching end signal of the specified kind.
-    fn iter_content<'q>(&'q mut self, kind: SignalKind) -> QueueContentIterator<'a, 'q, Self>
+    /// Iterates over all elements until it finds the matching end tag of the specified kind.
+    fn iter_content<'q>(&'q mut self, kind: TagKind) -> QueueContentIterator<'a, 'q, Self>
     where
         Self: Sized,
     {
@@ -226,7 +226,7 @@ impl<'a, Q> FusedIterator for QueueIterator<'a, '_, Q> where Q: Queue<'a> {}
 
 pub(super) struct QueueContentIterator<'a, 'q, Q: Queue<'a>> {
     queue: &'q mut Q,
-    kind: SignalKind,
+    kind: TagKind,
     depth: usize,
     lifetime: PhantomData<&'a ()>,
 }
@@ -235,7 +235,7 @@ impl<'a, 'q, Q> QueueContentIterator<'a, 'q, Q>
 where
     Q: Queue<'a>,
 {
-    fn new(queue: &'q mut Q, kind: SignalKind) -> Self {
+    fn new(queue: &'q mut Q, kind: TagKind) -> Self {
         Self {
             queue,
             kind,
@@ -263,8 +263,8 @@ where
                 }
 
                 match top.expect("Missing end signal.") {
-                    element @ FormatElement::Signal(signal) if signal.kind() == self.kind => {
-                        if signal.is_start() {
+                    element @ FormatElement::Tag(tag) if tag.kind() == self.kind => {
+                        if tag.is_start() {
                             self.depth += 1;
                         } else {
                             self.depth -= 1;
@@ -303,7 +303,7 @@ impl FitsPredicate for AllPredicate {
     }
 }
 
-/// Filter that takes all elements between two matching [Signal::StartEntry] and [Signal::EndEntry] signals.
+/// Filter that takes all elements between two matching [Tag::StartEntry] and [Tag::EndEntry] tags.
 #[derive(Debug)]
 pub(super) enum SingleEntryPredicate {
     Entry { depth: usize },
@@ -321,14 +321,14 @@ impl FitsPredicate for SingleEntryPredicate {
         let result = match self {
             SingleEntryPredicate::Done => false,
             SingleEntryPredicate::Entry { depth } => match element {
-                FormatElement::Signal(Signal::StartEntry) => {
+                FormatElement::Tag(Tag::StartEntry) => {
                     *depth += 1;
 
                     true
                 }
-                FormatElement::Signal(Signal::EndEntry) => {
+                FormatElement::Tag(Tag::EndEntry) => {
                     if *depth == 0 {
-                        return invalid_end_signal(SignalKind::Entry, None);
+                        return invalid_end_tag(TagKind::Entry, None);
                     }
 
                     *depth -= 1;
@@ -341,7 +341,7 @@ impl FitsPredicate for SingleEntryPredicate {
                 }
                 FormatElement::Interned(_) => true,
                 element if *depth == 0 => {
-                    return invalid_start_signal(SignalKind::Entry, Some(element));
+                    return invalid_start_tag(TagKind::Entry, Some(element));
                 }
                 _ => true,
             },
@@ -353,9 +353,9 @@ impl FitsPredicate for SingleEntryPredicate {
 
 /// Queue filter that returns all elements belonging to the separator and the following item of a fill pair.
 ///
-/// The fill element consists of entries where each entry is separated by [Signal::StartEntry] and [Signal::EndEntry].
-/// This filter takes up to two [Signal::StartEntry]/[Signal::StopEntry] but may end after one if
-/// it reaches the [Signal::EndFill] element (last item without a separator).
+/// The fill element consists of entries where each entry is separated by [Tag::StartEntry] and [Tag::EndEntry].
+/// This filter takes up to two [Tag::StartEntry]/[Tag::StopEntry] but may end after one if
+/// it reaches the [Tag::EndFill] element (last item without a separator).
 #[derive(Debug)]
 pub(super) enum SeparatorItemPairPredicate {
     Separator { depth: usize },
@@ -383,14 +383,14 @@ impl FitsPredicate for SeparatorItemPairPredicate {
             SeparatorItemPairPredicate::Item { depth }
             | SeparatorItemPairPredicate::Separator { depth } => {
                 match element {
-                    FormatElement::Signal(Signal::StartEntry) => {
+                    FormatElement::Tag(Tag::StartEntry) => {
                         *depth += 1;
 
                         true
                     }
-                    FormatElement::Signal(Signal::EndEntry) => {
+                    FormatElement::Tag(Tag::EndEntry) => {
                         if *depth == 0 {
-                            return invalid_end_signal(SignalKind::Entry, None);
+                            return invalid_end_tag(TagKind::Entry, None);
                         }
 
                         *depth -= 1;
@@ -406,13 +406,13 @@ impl FitsPredicate for SeparatorItemPairPredicate {
                         true
                     }
                     // No item, trailing separator only
-                    FormatElement::Signal(Signal::EndFill) if *depth == 0 && is_item => {
+                    FormatElement::Tag(Tag::EndFill) if *depth == 0 && is_item => {
                         *self = SeparatorItemPairPredicate::Done;
                         false
                     }
                     FormatElement::Interned(_) => true,
                     element if *depth == 0 => {
-                        return invalid_start_signal(SignalKind::Entry, Some(element));
+                        return invalid_start_tag(TagKind::Entry, Some(element));
                     }
                     _ => true,
                 }
@@ -427,21 +427,16 @@ impl FitsPredicate for SeparatorItemPairPredicate {
 #[cfg(test)]
 mod tests {
     use crate::format_element::LineMode;
-    use crate::prelude::Signal;
+    use crate::prelude::Tag;
     use crate::printer::queue::{PrintQueue, Queue};
     use crate::FormatElement;
 
     #[test]
     fn extend_back_pop_last() {
-        let mut queue = PrintQueue::new(&[
-            FormatElement::Signal(Signal::StartEntry),
-            FormatElement::Space,
-        ]);
+        let mut queue =
+            PrintQueue::new(&[FormatElement::Tag(Tag::StartEntry), FormatElement::Space]);
 
-        assert_eq!(
-            queue.pop(),
-            Some(&FormatElement::Signal(Signal::StartEntry))
-        );
+        assert_eq!(queue.pop(), Some(&FormatElement::Tag(Tag::StartEntry)));
 
         queue.extend_back(&[FormatElement::Line(LineMode::SoftOrSpace)]);
 
@@ -456,15 +451,10 @@ mod tests {
 
     #[test]
     fn extend_back_empty_queue() {
-        let mut queue = PrintQueue::new(&[
-            FormatElement::Signal(Signal::StartEntry),
-            FormatElement::Space,
-        ]);
+        let mut queue =
+            PrintQueue::new(&[FormatElement::Tag(Tag::StartEntry), FormatElement::Space]);
 
-        assert_eq!(
-            queue.pop(),
-            Some(&FormatElement::Signal(Signal::StartEntry))
-        );
+        assert_eq!(queue.pop(), Some(&FormatElement::Tag(Tag::StartEntry)));
         assert_eq!(queue.pop(), Some(&FormatElement::Space));
 
         queue.extend_back(&[FormatElement::Line(LineMode::SoftOrSpace)]);

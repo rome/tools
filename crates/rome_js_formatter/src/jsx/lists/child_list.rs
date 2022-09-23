@@ -4,7 +4,7 @@ use crate::utils::jsx::{
     JsxRawSpace, JsxSpace,
 };
 use crate::JsFormatter;
-use rome_formatter::format_element::signal::Signal;
+use rome_formatter::format_element::tag::Tag;
 use rome_formatter::{format_args, write, CstFormatContext, FormatRuleWithOptions, VecBuffer};
 use rome_js_syntax::{JsxAnyChild, JsxChildList};
 use std::cell::RefCell;
@@ -498,13 +498,13 @@ impl MultilineBuilder {
                 match self.layout {
                     MultilineLayout::Fill => {
                         // Make sure that the separator and content only ever write a single element
-                        buffer.write_element(FormatElement::Signal(Signal::StartEntry))?;
+                        buffer.write_element(FormatElement::Tag(Tag::StartEntry))?;
                         write!(buffer, [content])?;
-                        buffer.write_element(FormatElement::Signal(Signal::EndEntry))?;
+                        buffer.write_element(FormatElement::Tag(Tag::EndEntry))?;
 
-                        buffer.write_element(FormatElement::Signal(Signal::StartEntry))?;
+                        buffer.write_element(FormatElement::Tag(Tag::StartEntry))?;
                         write!(buffer, [separator])?;
-                        buffer.write_element(FormatElement::Signal(Signal::EndEntry))?;
+                        buffer.write_element(FormatElement::Tag(Tag::EndEntry))?;
                     }
                     MultilineLayout::NoFill => {
                         write!(buffer, [content, separator])?;
@@ -535,9 +535,9 @@ impl Format<JsFormatContext> for FormatMultilineChildren {
             if let Some(elements) = f.intern_vec(self.elements.take()) {
                 match self.layout {
                     MultilineLayout::Fill => f.write_elements([
-                        FormatElement::Signal(Signal::StartFill),
+                        FormatElement::Tag(Tag::StartFill),
                         elements,
-                        FormatElement::Signal(Signal::EndFill),
+                        FormatElement::Tag(Tag::EndFill),
                     ])?,
                     MultilineLayout::NoFill => f.write_element(elements)?,
                 };

@@ -1,9 +1,9 @@
 pub mod document;
-pub mod signal;
+pub mod tag;
 
-use crate::format_element::signal::{LabelId, Signal};
+use crate::format_element::tag::{LabelId, Tag};
 
-use crate::{SignalKind, TextSize};
+use crate::{TagKind, TextSize};
 #[cfg(target_pointer_width = "64")]
 use rome_rowan::static_assert;
 use rome_rowan::SyntaxTokenText;
@@ -41,8 +41,8 @@ pub enum FormatElement {
     /// Line breaks inside of a best fitting don't propagate to parent groups.
     BestFitting(BestFitting),
 
-    /// A signal that marks the start/end of some content to which some special formatting is applied.
-    Signal(Signal),
+    /// A [Tag] that marks the start/end of some content to which some special formatting is applied.
+    Tag(Tag),
 }
 
 impl std::fmt::Debug for FormatElement {
@@ -59,7 +59,7 @@ impl std::fmt::Debug for FormatElement {
             FormatElement::Interned(interned) => {
                 fmt.debug_list().entries(interned.deref()).finish()
             }
-            FormatElement::Signal(signal) => fmt.debug_tuple("Signal").field(signal).finish(),
+            FormatElement::Tag(tag) => fmt.debug_tuple("Tag").field(tag).finish(),
         }
     }
 }
@@ -248,23 +248,23 @@ impl Deref for Text {
 }
 
 impl FormatElement {
-    /// Returns `true` if self is a [FormatElement::Signal]
-    pub const fn is_signal(&self) -> bool {
-        matches!(self, FormatElement::Signal(_))
+    /// Returns `true` if self is a [FormatElement::Tag]
+    pub const fn is_tag(&self) -> bool {
+        matches!(self, FormatElement::Tag(_))
     }
 
-    /// Returns `true` if self is a [FormatElement::Signal] and `Signal::is_start` is `true`.
-    pub const fn is_start_signal(&self) -> bool {
+    /// Returns `true` if self is a [FormatElement::Tag] and [Tag::is_start] is `true`.
+    pub const fn is_start_tag(&self) -> bool {
         match self {
-            FormatElement::Signal(signal) => signal.is_start(),
+            FormatElement::Tag(tag) => tag.is_start(),
             _ => false,
         }
     }
 
-    /// Returns `true` if self is a [FormatElement::Signal] and `Signal::is_end` is `true`.
-    pub const fn is_end_signal(&self) -> bool {
+    /// Returns `true` if self is a [FormatElement::Tag] and [Tag::is_end] is `true`.
+    pub const fn is_end_tag(&self) -> bool {
         match self {
-            FormatElement::Signal(signal) => signal.is_end(),
+            FormatElement::Tag(tag) => tag.is_end(),
             _ => false,
         }
     }
@@ -279,28 +279,26 @@ impl FormatElements for FormatElement {
             FormatElement::Interned(interned) => interned.will_break(),
             FormatElement::LineSuffixBoundary
             | FormatElement::Space
-            | FormatElement::Signal(_)
+            | FormatElement::Tag(_)
             | FormatElement::BestFitting(_) => false,
         }
     }
 
     fn has_label(&self, label_id: LabelId) -> bool {
         match self {
-            FormatElement::Signal(Signal::StartLabelled(actual)) => *actual == label_id,
+            FormatElement::Tag(Tag::StartLabelled(actual)) => *actual == label_id,
             FormatElement::Interned(interned) => interned.deref().has_label(label_id),
             _ => false,
         }
     }
 
-    fn start_signal(&self, _: SignalKind) -> Option<&Signal> {
+    fn start_tag(&self, _: TagKind) -> Option<&Tag> {
         None
     }
 
-    fn end_signal(&self, kind: SignalKind) -> Option<&Signal> {
+    fn end_tag(&self, kind: TagKind) -> Option<&Tag> {
         match self {
-            FormatElement::Signal(signal) if signal.kind() == kind && signal.is_end() => {
-                Some(signal)
-            }
+            FormatElement::Tag(tag) if tag.kind() == kind && tag.is_end() => Some(tag),
             _ => None,
         }
     }
@@ -383,14 +381,14 @@ pub trait FormatElements {
     /// Returns true if the element has the given label.
     fn has_label(&self, label: LabelId) -> bool;
 
-    /// Returns the start signal of `kind` if:
-    /// * the last element is an end signal of `kind`.
-    /// * there's a matching start signal in this document (may not be true if this slice is an interned element and the `start` is in the document storing the interned element).
-    fn start_signal(&self, kind: SignalKind) -> Option<&Signal>;
+    /// Returns the start tag of `kind` if:
+    /// * the last element is an end tag of `kind`.
+    /// * there's a matching start tag in this document (may not be true if this slice is an interned element and the `start` is in the document storing the interned element).
+    fn start_tag(&self, kind: TagKind) -> Option<&Tag>;
 
-    /// Returns the end signal if:
-    /// * the last element is an end signal of `kind`
-    fn end_signal(&self, kind: SignalKind) -> Option<&Signal>;
+    /// Returns the end tag if:
+    /// * the last element is an end tag of `kind`
+    fn end_tag(&self, kind: TagKind) -> Option<&Tag>;
 }
 
 #[cfg(test)]
@@ -412,14 +410,14 @@ mod tests {
 static_assert!(std::mem::size_of::<rome_rowan::TextRange>() == 8usize);
 
 #[cfg(target_pointer_width = "64")]
-static_assert!(std::mem::size_of::<crate::format_element::signal::VerbatimKind>() == 8usize);
+static_assert!(std::mem::size_of::<crate::format_element::tag::VerbatimKind>() == 8usize);
 
 #[cfg(target_pointer_width = "64")]
 static_assert!(std::mem::size_of::<crate::format_element::Text>() == 24usize);
 
 #[cfg(not(debug_assertions))]
 #[cfg(target_pointer_width = "64")]
-static_assert!(std::mem::size_of::<crate::format_element::Signal>() == 16usize);
+static_assert!(std::mem::size_of::<crate::format_element::Tag>() == 16usize);
 
 // Increasing the size of FormatElement has serious consequences on runtime performance and memory footprint.
 // Is there a more efficient way to encode the data to avoid increasing its size? Can the information

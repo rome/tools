@@ -198,12 +198,13 @@ impl Format<JsFormatContext> for FormatWithSemicolon<'_> {
 
         let written = recording.stop();
 
-        let is_unknown = written
-            .start_signal(SignalKind::Verbatim)
-            .map_or(false, |signal| match signal {
-                Signal::StartVerbatim(kind) => kind.is_unknown(),
-                _ => unreachable!(),
-            });
+        let is_unknown =
+            written
+                .start_tag(TagKind::Verbatim)
+                .map_or(false, |signal| match signal {
+                    Tag::StartVerbatim(kind) => kind.is_unknown(),
+                    _ => unreachable!(),
+                });
 
         if let Some(semicolon) = self.semicolon {
             write!(f, [semicolon.format()])?;

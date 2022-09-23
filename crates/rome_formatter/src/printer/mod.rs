@@ -13,9 +13,9 @@ use crate::{
 };
 
 use crate::format_element::document::Document;
-use crate::format_element::signal::Condition;
-use crate::prelude::signal::{DedentMode, Signal, SignalKind, VerbatimKind};
-use crate::prelude::Signal::EndFill;
+use crate::format_element::tag::Condition;
+use crate::prelude::tag::{DedentMode, Tag, TagKind, VerbatimKind};
+use crate::prelude::Tag::EndFill;
 use crate::printer::call_stack::{
     CallStack, FitsCallStack, PrintCallStack, PrintElementArgs, StackFrame,
 };
@@ -82,7 +82,7 @@ impl<'a> Printer<'a> {
         queue: &mut PrintQueue<'a>,
         element: &'a FormatElement,
     ) -> PrintResult<()> {
-        use Signal::*;
+        use Tag::*;
 
         let args = stack.top();
 
@@ -203,12 +203,12 @@ impl<'a> Printer<'a> {
                 queue.extend_back(content);
             }
 
-            FormatElement::Signal(StartGroup(id)) => {
+            FormatElement::Tag(StartGroup(id)) => {
                 let group_mode = match args.mode() {
                     PrintMode::Flat if self.state.measured_group_fits => {
                         // A parent group has already verified that this group fits on a single line
                         // Thus, just continue in flat mode
-                        stack.push(SignalKind::Group, args);
+                        stack.push(TagKind::Group, args);
                         PrintMode::Flat
                     }
                     // The printer is either in expanded mode or it's necessary to re-measure if the group fits
@@ -216,9 +216,9 @@ impl<'a> Printer<'a> {
                     _ => {
                         // Measure to see if the group fits up on a single line. If that's the case,
                         // print the group in "flat" mode, otherwise continue in expanded mode
-                        stack.push(SignalKind::Group, args.with_print_mode(PrintMode::Flat));
+                        stack.push(TagKind::Group, args.with_print_mode(PrintMode::Flat));
                         let fits = fits_on_line(AllPredicate, queue, stack, self)?;
-                        stack.pop(SignalKind::Group)?;
+                        stack.pop(TagKind::Group)?;
 
                         let mode = if fits {
                             self.state.measured_group_fits = true;
@@ -227,7 +227,7 @@ impl<'a> Printer<'a> {
                             PrintMode::Expanded
                         };
 
-                        stack.push(SignalKind::Group, args.with_print_mode(mode));
+                        stack.push(TagKind::Group, args.with_print_mode(mode));
 
                         mode
                     }
@@ -238,44 +238,44 @@ impl<'a> Printer<'a> {
                 }
             }
 
-            FormatElement::Signal(StartFill) => {
-                stack.push(SignalKind::Fill, args);
+            FormatElement::Tag(StartFill) => {
+                stack.push(TagKind::Fill, args);
                 self.print_fill_entries(queue, stack)?;
             }
 
-            FormatElement::Signal(StartIndent) => {
+            FormatElement::Tag(StartIndent) => {
                 stack.push(
-                    SignalKind::Indent,
+                    TagKind::Indent,
                     args.increment_indent_level(self.options.indent_style()),
                 );
             }
 
-            FormatElement::Signal(StartDedent(mode)) => {
+            FormatElement::Tag(StartDedent(mode)) => {
                 let args = match mode {
                     DedentMode::Level => args.decrement_indent(),
                     DedentMode::Root => args.reset_indent(),
                 };
-                stack.push(SignalKind::Dedent, args);
+                stack.push(TagKind::Dedent, args);
             }
 
-            FormatElement::Signal(StartAlign(align)) => {
-                stack.push(SignalKind::Align, args.set_indent_align(align.count()));
+            FormatElement::Tag(StartAlign(align)) => {
+                stack.push(TagKind::Align, args.set_indent_align(align.count()));
             }
 
-            FormatElement::Signal(StartConditionalContent(Condition { mode, group_id })) => {
+            FormatElement::Tag(StartConditionalContent(Condition { mode, group_id })) => {
                 let group_mode = match group_id {
                     None => args.mode(),
                     Some(id) => self.state.group_modes.unwrap_print_mode(*id, element),
                 };
 
                 if group_mode != *mode {
-                    queue.skip_content(SignalKind::ConditionalContent);
+                    queue.skip_content(TagKind::ConditionalContent);
                 } else {
-                    stack.push(SignalKind::ConditionalContent, args);
+                    stack.push(TagKind::ConditionalContent, args);
                 }
             }
 
-            FormatElement::Signal(StartIndentIfGroupBreaks(group_id)) => {
+            FormatElement::Tag(StartIndentIfGroupBreaks(group_id)) => {
                 let group_mode = self.state.group_modes.unwrap_print_mode(*group_id, element);
 
                 let args = match group_mode {
@@ -283,16 +283,16 @@ impl<'a> Printer<'a> {
                     PrintMode::Expanded => args.increment_indent_level(self.options.indent_style),
                 };
 
-                stack.push(SignalKind::IndentIfGroupBreaks, args);
+                stack.push(TagKind::IndentIfGroupBreaks, args);
             }
 
-            FormatElement::Signal(StartLineSuffix) => {
+            FormatElement::Tag(StartLineSuffix) => {
                 self.state
                     .line_suffixes
-                    .extend(args, queue.iter_content(SignalKind::LineSuffix));
+                    .extend(args, queue.iter_content(TagKind::LineSuffix));
             }
 
-            FormatElement::Signal(StartVerbatim(kind)) => {
+            FormatElement::Tag(StartVerbatim(kind)) => {
                 if let VerbatimKind::Verbatim { length } = kind {
                     self.state.verbatim_markers.push(TextRange::at(
                         TextSize::from(self.state.buffer.len() as u32),
@@ -300,14 +300,14 @@ impl<'a> Printer<'a> {
                     ));
                 }
 
-                stack.push(SignalKind::Verbatim, args);
+                stack.push(TagKind::Verbatim, args);
             }
 
-            FormatElement::Signal(signal @ (StartLabelled(_) | StartEntry)) => {
-                stack.push(signal.kind(), args);
+            FormatElement::Tag(tag @ (StartLabelled(_) | StartEntry)) => {
+                stack.push(tag.kind(), args);
             }
-            FormatElement::Signal(
-                signal @ (EndLabelled
+            FormatElement::Tag(
+                tag @ (EndLabelled
                 | EndEntry
                 | EndGroup
                 | EndIndent
@@ -319,7 +319,7 @@ impl<'a> Printer<'a> {
                 | EndLineSuffix
                 | EndFill),
             ) => {
-                stack.pop(signal.kind())?;
+                stack.pop(tag.kind())?;
             }
         };
 
@@ -356,9 +356,9 @@ impl<'a> Printer<'a> {
                         queue.push(suffix);
                     }
                     LineSuffixEntry::Args(args) => {
-                        stack.push(SignalKind::LineSuffix, args);
+                        stack.push(TagKind::LineSuffix, args);
                         const LINE_SUFFIX_END: &FormatElement =
-                            &FormatElement::Signal(Signal::EndLineSuffix);
+                            &FormatElement::Tag(Tag::EndLineSuffix);
 
                         queue.push(LINE_SUFFIX_END);
                     }
@@ -392,11 +392,8 @@ impl<'a> Printer<'a> {
                     PrintMode::Expanded
                 };
 
-                if !matches!(
-                    variant.first(),
-                    Some(&FormatElement::Signal(Signal::StartEntry))
-                ) {
-                    return invalid_start_signal(SignalKind::Entry, variant.first());
+                if !matches!(variant.first(), Some(&FormatElement::Tag(Tag::StartEntry))) {
+                    return invalid_start_tag(TagKind::Entry, variant.first());
                 }
 
                 // Skip the first element because we want to override the args for the entry and the
@@ -404,9 +401,9 @@ impl<'a> Printer<'a> {
                 let content = &variant[1..];
 
                 queue.extend_back(content);
-                stack.push(SignalKind::Entry, args.with_print_mode(mode));
+                stack.push(TagKind::Entry, args.with_print_mode(mode));
                 let variant_fits = fits_on_line(AllPredicate, queue, stack, self)?;
-                stack.pop(SignalKind::Entry)?;
+                stack.pop(TagKind::Entry)?;
 
                 // Remove the content slice because printing needs the variant WITH the start entry
                 let popped_slice = queue.pop_slice();
@@ -441,7 +438,7 @@ impl<'a> Printer<'a> {
     ) -> PrintResult<()> {
         let args = stack.top();
 
-        if matches!(queue.top(), Some(FormatElement::Signal(Signal::EndFill))) {
+        if matches!(queue.top(), Some(FormatElement::Tag(Tag::EndFill))) {
             // Empty fill
             return Ok(());
         }
@@ -465,7 +462,7 @@ impl<'a> Printer<'a> {
         )?;
 
         // Process remaining items, it's a sequence of separator, item, separator, item...
-        while matches!(queue.top(), Some(FormatElement::Signal(Signal::StartEntry))) {
+        while matches!(queue.top(), Some(FormatElement::Tag(Tag::StartEntry))) {
             // A line break in expanded mode is always necessary if the current item didn't fit.
             // otherwise see if both contents fit on the line.
             let all_fits = if current_fits {
@@ -489,7 +486,7 @@ impl<'a> Printer<'a> {
             self.print_entry(queue, stack, args.with_print_mode(separator_mode))?;
 
             // If this was a trailing separator, exit
-            if !matches!(queue.top(), Some(FormatElement::Signal(Signal::StartEntry))) {
+            if !matches!(queue.top(), Some(FormatElement::Tag(Tag::StartEntry))) {
                 break;
             }
 
@@ -519,10 +516,10 @@ impl<'a> Printer<'a> {
             }
         }
 
-        if queue.top() == Some(&FormatElement::Signal(EndFill)) {
+        if queue.top() == Some(&FormatElement::Tag(EndFill)) {
             Ok(())
         } else {
-            invalid_end_signal(SignalKind::Fill, stack.top_kind())
+            invalid_end_tag(TagKind::Fill, stack.top_kind())
         }
     }
 
@@ -538,17 +535,14 @@ impl<'a> Printer<'a> {
     {
         let start_entry = queue.top();
 
-        if !matches!(
-            start_entry,
-            Some(&FormatElement::Signal(Signal::StartEntry))
-        ) {
-            return invalid_start_signal(SignalKind::Entry, start_entry);
+        if !matches!(start_entry, Some(&FormatElement::Tag(Tag::StartEntry))) {
+            return invalid_start_tag(TagKind::Entry, start_entry);
         }
 
         // Create a virtual group around each fill entry
-        stack.push(SignalKind::Group, stack.top().with_print_mode(mode));
+        stack.push(TagKind::Group, stack.top().with_print_mode(mode));
         let fits = fits_on_line(predicate, queue, stack, self)?;
-        stack.pop(SignalKind::Group)?;
+        stack.pop(TagKind::Group)?;
 
         Ok(fits)
     }
@@ -565,32 +559,29 @@ impl<'a> Printer<'a> {
     ) -> PrintResult<()> {
         let start_entry = queue.top();
 
-        if !matches!(
-            start_entry,
-            Some(&FormatElement::Signal(Signal::StartEntry))
-        ) {
-            return invalid_start_signal(SignalKind::Entry, start_entry);
+        if !matches!(start_entry, Some(&FormatElement::Tag(Tag::StartEntry))) {
+            return invalid_start_tag(TagKind::Entry, start_entry);
         }
 
         let mut depth = 0;
 
         while let Some(element) = queue.pop() {
             match element {
-                FormatElement::Signal(Signal::StartEntry) => {
+                FormatElement::Tag(Tag::StartEntry) => {
                     // Handle the start of the first element by pushing the args on the stack.
                     if depth == 0 {
                         depth = 1;
-                        stack.push(SignalKind::Entry, args);
+                        stack.push(TagKind::Entry, args);
                         continue;
                     }
 
                     depth += 1;
                 }
-                FormatElement::Signal(Signal::EndEntry) => {
+                FormatElement::Tag(Tag::EndEntry) => {
                     depth -= 1;
                     // Reached the end entry, pop the entry from the stack and return.
                     if depth == 0 {
-                        stack.pop(SignalKind::Entry)?;
+                        stack.pop(TagKind::Entry)?;
                         return Ok(());
                     }
                 }
@@ -602,7 +593,7 @@ impl<'a> Printer<'a> {
             self.print_element(stack, queue, element)?;
         }
 
-        invalid_end_signal(SignalKind::Entry, stack.top_kind())
+        invalid_end_tag(TagKind::Entry, stack.top_kind())
     }
 
     fn print_str(&mut self, content: &str) {
@@ -871,7 +862,7 @@ fn fits_element_on_line<'a, 'rest>(
     stack: &mut FitsCallStack<'rest>,
     options: &PrinterOptions,
 ) -> PrintResult<Fits> {
-    use Signal::*;
+    use Tag::*;
 
     let args = stack.top();
 
@@ -953,34 +944,34 @@ fn fits_element_on_line<'a, 'rest>(
 
         FormatElement::Interned(content) => queue.extend_back(content),
 
-        FormatElement::Signal(StartIndent) => {
+        FormatElement::Tag(StartIndent) => {
             stack.push(
-                SignalKind::Indent,
+                TagKind::Indent,
                 args.increment_indent_level(options.indent_style()),
             );
         }
 
-        FormatElement::Signal(StartDedent(mode)) => {
+        FormatElement::Tag(StartDedent(mode)) => {
             let args = match mode {
                 DedentMode::Level => args.decrement_indent(),
                 DedentMode::Root => args.reset_indent(),
             };
-            stack.push(SignalKind::Dedent, args);
+            stack.push(TagKind::Dedent, args);
         }
 
-        FormatElement::Signal(StartAlign(align)) => {
-            stack.push(SignalKind::Align, args.set_indent_align(align.count()));
+        FormatElement::Tag(StartAlign(align)) => {
+            stack.push(TagKind::Align, args.set_indent_align(align.count()));
         }
 
-        FormatElement::Signal(StartGroup(id)) => {
-            stack.push(SignalKind::Group, args);
+        FormatElement::Tag(StartGroup(id)) => {
+            stack.push(TagKind::Group, args);
 
             if let Some(id) = id {
                 state.group_modes.insert_print_mode(*id, args.mode());
             }
         }
 
-        FormatElement::Signal(StartConditionalContent(condition)) => {
+        FormatElement::Tag(StartConditionalContent(condition)) => {
             let group_mode = match condition.group_id {
                 None => args.mode(),
                 Some(group_id) => state
@@ -990,13 +981,13 @@ fn fits_element_on_line<'a, 'rest>(
             };
 
             if group_mode != condition.mode {
-                queue.skip_content(SignalKind::ConditionalContent);
+                queue.skip_content(TagKind::ConditionalContent);
             } else {
-                stack.push(SignalKind::ConditionalContent, args);
+                stack.push(TagKind::ConditionalContent, args);
             }
         }
 
-        FormatElement::Signal(StartIndentIfGroupBreaks(id)) => {
+        FormatElement::Tag(StartIndentIfGroupBreaks(id)) => {
             let group_mode = state
                 .group_modes
                 .get_print_mode(*id)
@@ -1004,33 +995,33 @@ fn fits_element_on_line<'a, 'rest>(
 
             match group_mode {
                 PrintMode::Flat => {
-                    stack.push(SignalKind::IndentIfGroupBreaks, args);
+                    stack.push(TagKind::IndentIfGroupBreaks, args);
                 }
                 PrintMode::Expanded => {
                     stack.push(
-                        SignalKind::IndentIfGroupBreaks,
+                        TagKind::IndentIfGroupBreaks,
                         args.increment_indent_level(options.indent_style()),
                     );
                 }
             }
         }
 
-        FormatElement::Signal(StartLineSuffix) => {
-            queue.skip_content(SignalKind::LineSuffix);
+        FormatElement::Tag(StartLineSuffix) => {
+            queue.skip_content(TagKind::LineSuffix);
             state.has_line_suffix = true;
         }
 
-        FormatElement::Signal(EndLineSuffix) => {
-            return invalid_end_signal(SignalKind::LineSuffix, stack.top_kind());
+        FormatElement::Tag(EndLineSuffix) => {
+            return invalid_end_tag(TagKind::LineSuffix, stack.top_kind());
         }
 
-        FormatElement::Signal(
-            signal @ (StartFill | StartVerbatim(_) | StartLabelled(_) | StartEntry),
+        FormatElement::Tag(
+            tag @ (StartFill | StartVerbatim(_) | StartLabelled(_) | StartEntry),
         ) => {
-            stack.push(signal.kind(), args);
+            stack.push(tag.kind(), args);
         }
-        FormatElement::Signal(
-            signal @ (EndFill
+        FormatElement::Tag(
+            tag @ (EndFill
             | EndVerbatim
             | EndLabelled
             | EndEntry
@@ -1041,7 +1032,7 @@ fn fits_element_on_line<'a, 'rest>(
             | EndDedent
             | EndIndent),
         ) => {
-            stack.pop(signal.kind())?;
+            stack.pop(tag.kind())?;
         }
     }
 
@@ -1049,28 +1040,25 @@ fn fits_element_on_line<'a, 'rest>(
 }
 
 #[cold]
-fn invalid_end_signal<R>(
-    end_signal: SignalKind,
-    start_signal: Option<SignalKind>,
-) -> PrintResult<R> {
-    Err(PrintError::InvalidDocument(match start_signal {
-        None => InvalidDocumentError::StartSignalMissing { kind: end_signal },
-        Some(kind) => InvalidDocumentError::StartEndSignalMismatch {
-            start_kind: end_signal,
+fn invalid_end_tag<R>(end_tag: TagKind, start_tag: Option<TagKind>) -> PrintResult<R> {
+    Err(PrintError::InvalidDocument(match start_tag {
+        None => InvalidDocumentError::StartTagMissing { kind: end_tag },
+        Some(kind) => InvalidDocumentError::StartEndTagMismatch {
+            start_kind: end_tag,
             end_kind: kind,
         },
     }))
 }
 
 #[cold]
-fn invalid_start_signal<R>(expected: SignalKind, actual: Option<&FormatElement>) -> PrintResult<R> {
+fn invalid_start_tag<R>(expected: TagKind, actual: Option<&FormatElement>) -> PrintResult<R> {
     let start = match actual {
         None => ActualStart::EndOfDocument,
-        Some(FormatElement::Signal(signal)) => {
-            if signal.is_start() {
-                ActualStart::Start(signal.kind())
+        Some(FormatElement::Tag(tag)) => {
+            if tag.is_start() {
+                ActualStart::Start(tag.kind())
             } else {
-                ActualStart::End(signal.kind())
+                ActualStart::End(tag.kind())
             }
         }
         Some(_) => ActualStart::Content,

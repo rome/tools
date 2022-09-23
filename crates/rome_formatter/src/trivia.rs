@@ -1,6 +1,6 @@
 //! Provides builders for comments and skipped token trivia.
 
-use crate::format_element::signal::VerbatimKind;
+use crate::format_element::tag::VerbatimKind;
 use crate::prelude::*;
 use crate::{
     comments::{CommentKind, CommentStyle},
@@ -542,13 +542,13 @@ impl<L: Language> FormatSkippedTokenTrivia<'_, L> {
         let skipped_range =
             skipped_range.unwrap_or_else(|| TextRange::empty(self.token.text_range().start()));
 
-        f.write_element(FormatElement::Signal(Signal::StartVerbatim(
+        f.write_element(FormatElement::Tag(Tag::StartVerbatim(
             VerbatimKind::Verbatim {
                 length: skipped_range.len(),
             },
         )))?;
         write!(f, [syntax_token_text_slice(self.token, skipped_range)])?;
-        f.write_element(FormatElement::Signal(Signal::EndVerbatim))?;
+        f.write_element(FormatElement::Tag(Tag::EndVerbatim))?;
 
         // Write whitespace separator between skipped/last comment and token
         if dangling_comments.is_empty() {

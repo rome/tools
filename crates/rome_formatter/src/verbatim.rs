@@ -1,4 +1,4 @@
-use crate::format_element::signal::VerbatimKind;
+use crate::format_element::tag::VerbatimKind;
 use crate::prelude::*;
 use crate::trivia::{FormatLeadingComments, FormatTrailingComments};
 use crate::{write, CstFormatContext};
@@ -58,7 +58,7 @@ where
             |source_map| source_map.trimmed_source_range(self.node),
         );
 
-        f.write_element(FormatElement::Signal(Signal::StartVerbatim(self.kind)))?;
+        f.write_element(FormatElement::Tag(Tag::StartVerbatim(self.kind)))?;
 
         fn source_range<Context>(f: &Formatter<Context>, range: TextRange) -> TextRange
         where
@@ -138,7 +138,7 @@ where
             write!(f, [FormatTrailingComments::Comments(outside_trimmed_range)])?;
         }
 
-        f.write_element(FormatElement::Signal(Signal::EndVerbatim))
+        f.write_element(FormatElement::Tag(Tag::EndVerbatim))
     }
 }
 

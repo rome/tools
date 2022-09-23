@@ -1,4 +1,4 @@
-use crate::format_element::signal::SignalKind;
+use crate::format_element::tag::TagKind;
 use crate::format_element::PrintMode;
 use crate::printer::stack::{Stack, StackedStack};
 use crate::printer::Indention;
@@ -9,7 +9,7 @@ use std::num::NonZeroU8;
 #[derive(Copy, Clone, Eq, PartialEq, Debug)]
 pub(super) enum StackFrameKind {
     Root,
-    Signal(SignalKind),
+    Tag(TagKind),
 }
 
 #[derive(Copy, Clone, Eq, PartialEq, Debug)]
@@ -83,8 +83,8 @@ impl Default for PrintElementArgs {
 
 /// Call stack that stores the [PrintElementCallArgs].
 ///
-/// New [PrintElementCallArgs] are pushed onto the stack for every [`start`](Signal::is_start) [`Signal`](FormatElement::Signal)
-/// and popped when reaching the corresponding [`end`](Signal::is_end) [`Signal`](FormatElement::Signal).
+/// New [PrintElementCallArgs] are pushed onto the stack for every [`start`](Tag::is_start) [`Tag`](FormatElement::Tag)
+/// and popped when reaching the corresponding [`end`](Tag::is_end) [`Tag`](FormatElement::Tag).
 pub(super) trait CallStack {
     type Stack: Stack<StackFrame> + Debug;
 
@@ -92,21 +92,21 @@ pub(super) trait CallStack {
 
     fn stack_mut(&mut self) -> &mut Self::Stack;
 
-    /// Pops the call arguments at the top and asserts that they correspond to a start signal of `kind`.
+    /// Pops the call arguments at the top and asserts that they correspond to a start tag of `kind`.
     ///
     /// Returns `Ok` with the arguments if the kind of the top stack frame matches `kind`, otherwise
     /// returns `Err`.
-    fn pop(&mut self, kind: SignalKind) -> PrintResult<PrintElementArgs> {
+    fn pop(&mut self, kind: TagKind) -> PrintResult<PrintElementArgs> {
         let last = self.stack_mut().pop();
 
         match last {
             Some(StackFrame {
-                kind: StackFrameKind::Signal(actual_kind),
+                kind: StackFrameKind::Tag(actual_kind),
                 args,
             }) if actual_kind == kind => Ok(args),
             // Start / End kind don't match
             Some(StackFrame {
-                kind: StackFrameKind::Signal(expected_kind),
+                kind: StackFrameKind::Tag(expected_kind),
                 ..
             }) => Err(PrintError::InvalidDocument(Self::invalid_document_error(
                 kind,
@@ -135,12 +135,12 @@ pub(super) trait CallStack {
 
     #[cold]
     fn invalid_document_error(
-        end_kind: SignalKind,
-        start_kind: Option<SignalKind>,
+        end_kind: TagKind,
+        start_kind: Option<TagKind>,
     ) -> InvalidDocumentError {
         match start_kind {
-            None => InvalidDocumentError::StartSignalMissing { kind: end_kind },
-            Some(start_kind) => InvalidDocumentError::StartEndSignalMismatch {
+            None => InvalidDocumentError::StartTagMissing { kind: end_kind },
+            Some(start_kind) => InvalidDocumentError::StartEndTagMismatch {
                 start_kind,
                 end_kind,
             },
@@ -155,8 +155,8 @@ pub(super) trait CallStack {
             .args
     }
 
-    /// Returns the [SignalKind] of the current stack frame or [None] if this is the root stack frame.
-    fn top_kind(&self) -> Option<SignalKind> {
+    /// Returns the [TagKind] of the current stack frame or [None] if this is the root stack frame.
+    fn top_kind(&self) -> Option<TagKind> {
         match self
             .stack()
             .top()
@@ -164,14 +164,14 @@ pub(super) trait CallStack {
             .kind
         {
             StackFrameKind::Root => None,
-            StackFrameKind::Signal(kind) => Some(kind),
+            StackFrameKind::Tag(kind) => Some(kind),
         }
     }
 
-    /// Creates a new stack frame for a [FormatElement::Signal] of `kind` with `args` as the call arguments.
-    fn push(&mut self, kind: SignalKind, args: PrintElementArgs) {
+    /// Creates a new stack frame for a [FormatElement::Tag] of `kind` with `args` as the call arguments.
+    fn push(&mut self, kind: TagKind, args: PrintElementArgs) {
         self.stack_mut().push(StackFrame {
-            kind: StackFrameKind::Signal(kind),
+            kind: StackFrameKind::Tag(kind),
             args,
         })
     }

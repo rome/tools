@@ -121,7 +121,7 @@ impl<'fmt, Context> From<&'fmt Argument<'fmt, Context>> for Arguments<'fmt, Cont
 
 #[cfg(test)]
 mod tests {
-    use crate::format_element::signal::Signal;
+    use crate::format_element::tag::Tag;
     use crate::prelude::*;
     use crate::{format_args, write, FormatState, VecBuffer};
 
@@ -150,10 +150,10 @@ mod tests {
                 FormatElement::Text(Text::Static { text: "a" }),
                 FormatElement::Space,
                 // Group
-                FormatElement::Signal(Signal::StartGroup(None)),
+                FormatElement::Tag(Tag::StartGroup(None)),
                 FormatElement::Text(Text::Static { text: "(" }),
                 FormatElement::Text(Text::Static { text: ")" }),
-                FormatElement::Signal(Signal::EndGroup)
+                FormatElement::Tag(Tag::EndGroup)
             ]
         );
     }

@@ -40,7 +40,7 @@ mod verbatim;
 
 use crate::formatter::Formatter;
 use crate::group_id::UniqueGroupIdBuilder;
-use crate::prelude::{syntax_token_cow_slice, SignalKind};
+use crate::prelude::{syntax_token_cow_slice, TagKind};
 
 use crate::format_element::document::Document;
 #[cfg(debug_assertions)]
@@ -383,25 +383,25 @@ pub enum InvalidDocumentError {
     /// ...
     /// EndGroup
     /// ```
-    StartEndSignalMismatch {
-        start_kind: SignalKind,
-        end_kind: SignalKind,
+    StartEndTagMismatch {
+        start_kind: TagKind,
+        end_kind: TagKind,
     },
 
-    /// End signal without a corresponding start signal.
+    /// End tag without a corresponding start tag.
     ///
     /// ```plain
     /// Text
     /// EndGroup
     /// ```
-    StartSignalMissing { kind: SignalKind },
+    StartTagMissing { kind: TagKind },
 
-    /// Expected a specific start signal but instead is:
+    /// Expected a specific start tag but instead is:
     /// * at the end of the document
-    /// * at another start signal
-    /// * at an end signal
+    /// * at another start tag
+    /// * at an end tag
     ExpectedStart {
-        expected_start: SignalKind,
+        expected_start: TagKind,
         actual: ActualStart,
     },
 }
@@ -409,14 +409,14 @@ pub enum InvalidDocumentError {
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum ActualStart {
-    /// The actual element is not a signal.
+    /// The actual element is not a tag.
     Content,
 
-    /// The actual element was a start signal of another kind.
-    Start(SignalKind),
+    /// The actual element was a start tag of another kind.
+    Start(TagKind),
 
-    /// The actual element is an end signal instead of a start signal.
-    End(SignalKind),
+    /// The actual element is an end tag instead of a start tag.
+    End(TagKind),
 
     /// Reached the end of the document
     EndOfDocument,
@@ -425,38 +425,37 @@ pub enum ActualStart {
 impl std::fmt::Display for InvalidDocumentError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            InvalidDocumentError::StartEndSignalMismatch {
+            InvalidDocumentError::StartEndTagMismatch {
                 start_kind,
                 end_kind,
             } => {
                 std::write!(
                     f,
-                    "Expected end signal of kind {start_kind:?} but found {end_kind:?}."
+                    "Expected end tag of kind {start_kind:?} but found {end_kind:?}."
                 )
             }
-            InvalidDocumentError::StartSignalMissing { kind } => {
-                std::write!(
-                    f,
-                    "End signal of kind {kind:?} without matching start signal."
-                )
+            InvalidDocumentError::StartTagMissing { kind } => {
+                std::write!(f, "End tag of kind {kind:?} without matching start tag.")
             }
             InvalidDocumentError::ExpectedStart {
                 expected_start,
                 actual,
-            } => match actual {
-                ActualStart::EndOfDocument => {
-                    std::write!(f, "Expected start signal of kind {expected_start:?} but at the end of document.")
+            } => {
+                match actual {
+                    ActualStart::EndOfDocument => {
+                        std::write!(f, "Expected start tag of kind {expected_start:?} but at the end of document.")
+                    }
+                    ActualStart::Start(start) => {
+                        std::write!(f, "Expected start tag of kind {expected_start:?} but found start tag of kind {start:?}.")
+                    }
+                    ActualStart::End(end) => {
+                        std::write!(f, "Expected start tag of kind {expected_start:?} but found end tag of kind {end:?}.")
+                    }
+                    ActualStart::Content => {
+                        std::write!(f, "Expected start tag of kind {expected_start:?} but found non-tag element.")
+                    }
                 }
-                ActualStart::Start(start) => {
-                    std::write!(f, "Expected start signal of kind {expected_start:?} but found start signal of kind {start:?}.")
-                }
-                ActualStart::End(end) => {
-                    std::write!(f, "Expected start signal of kind {expected_start:?} but found end signal of kind {end:?}.")
-                }
-                ActualStart::Content => {
-                    std::write!(f, "Expected start signal of kind {expected_start:?} but found non-signal element.")
-                }
-            },
+            }
         }
     }
 }

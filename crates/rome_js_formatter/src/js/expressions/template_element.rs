@@ -1,6 +1,6 @@
 use crate::prelude::*;
 use rome_formatter::format_element::document::Document;
-use rome_formatter::prelude::signal::Signal;
+use rome_formatter::prelude::tag::Tag;
 use rome_formatter::printer::{PrintWidth, Printer};
 use rome_formatter::{
     format_args, write, CstFormatContext, FormatOptions, FormatRuleWithOptions, VecBuffer,
@@ -218,13 +218,13 @@ where
     // Adds as many nested `indent` elements until it reaches the desired indention level.
     let format_indented = format_with(|f| {
         for _ in 0..level {
-            f.write_element(FormatElement::Signal(Signal::StartIndent))?;
+            f.write_element(FormatElement::Tag(Tag::StartIndent))?;
         }
 
         write!(f, [content])?;
 
         for _ in 0..level {
-            f.write_element(FormatElement::Signal(Signal::EndIndent))?;
+            f.write_element(FormatElement::Tag(Tag::EndIndent))?;
         }
 
         Ok(())

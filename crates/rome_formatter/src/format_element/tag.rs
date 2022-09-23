@@ -5,20 +5,20 @@ use std::any::type_name;
 use std::any::TypeId;
 use std::num::NonZeroU8;
 
-/// Signal marking the start and end of some content to which some special formatting should be applied.
+/// A Tag marking the start and end of some content to which some special formatting should be applied.
 ///
-/// Signals always come in pairs of a start and an end signal and the styling defined by this signal
-/// will be applied to all elements in between the start/end signals.
+/// Tags always come in pairs of a start and an end tag and the styling defined by this tag
+/// will be applied to all elements in between the start/end tags.
 #[derive(Clone, Debug, Eq, PartialEq)]
-pub enum Signal {
+pub enum Tag {
     /// Indents the content one level deeper, see [crate::indent] for documentation and examples.
     StartIndent,
     EndIndent,
 
-    /// Variant of [SignalKind::Indent] that indents content by a number of spaces. For example, `Align(2)`
+    /// Variant of [TagKind::Indent] that indents content by a number of spaces. For example, `Align(2)`
     /// indents any content following a line break by an additional two spaces.
     ///
-    /// Nesting (Aligns)[SignalKind::Align] has the effect that all except the most inner align are handled as (Indent)[SignalKind::Indent].
+    /// Nesting (Aligns)[TagKind::Align] has the effect that all except the most inner align are handled as (Indent)[TagKind::Indent].
     StartAlign(Align),
     EndAlign,
 
@@ -40,7 +40,7 @@ pub enum Signal {
     StartConditionalContent(Condition),
     EndConditionalContent,
 
-    /// Optimized version of [Signal::StartConditionalContent] for the case where some content
+    /// Optimized version of [Tag::StartConditionalContent] for the case where some content
     /// should be indented if the specified group breaks.
     StartIndentIfGroupBreaks(GroupId),
     EndIndentIfGroupBreaks,
@@ -51,7 +51,7 @@ pub enum Signal {
     StartFill,
     EndFill,
 
-    /// Entry inside of a [Signal::StartFill]
+    /// Entry inside of a [Tag::StartFill]
     StartEntry,
     EndEntry,
 
@@ -71,55 +71,55 @@ pub enum Signal {
     EndLabelled,
 }
 
-impl Signal {
-    /// Returns `true` if `self` is any start signal.
+impl Tag {
+    /// Returns `true` if `self` is any start tag.
     pub const fn is_start(&self) -> bool {
         matches!(
             self,
-            Signal::StartIndent
-                | Signal::StartAlign(_)
-                | Signal::StartDedent(_)
-                | Signal::StartGroup(_)
-                | Signal::StartConditionalContent(_)
-                | Signal::StartIndentIfGroupBreaks(_)
-                | Signal::StartFill
-                | Signal::StartEntry
-                | Signal::StartLineSuffix
-                | Signal::StartVerbatim(_)
-                | Signal::StartLabelled(_)
+            Tag::StartIndent
+                | Tag::StartAlign(_)
+                | Tag::StartDedent(_)
+                | Tag::StartGroup(_)
+                | Tag::StartConditionalContent(_)
+                | Tag::StartIndentIfGroupBreaks(_)
+                | Tag::StartFill
+                | Tag::StartEntry
+                | Tag::StartLineSuffix
+                | Tag::StartVerbatim(_)
+                | Tag::StartLabelled(_)
         )
     }
 
-    /// Returns `true` if `self` is any end signal.
+    /// Returns `true` if `self` is any end tag.
     pub const fn is_end(&self) -> bool {
         !self.is_start()
     }
 
-    pub const fn kind(&self) -> SignalKind {
-        use Signal::*;
+    pub const fn kind(&self) -> TagKind {
+        use Tag::*;
 
         match self {
-            StartIndent | EndIndent => SignalKind::Indent,
-            StartAlign(_) | EndAlign => SignalKind::Align,
-            StartDedent(_) | EndDedent => SignalKind::Dedent,
-            StartGroup(_) | EndGroup => SignalKind::Group,
-            StartConditionalContent(_) | EndConditionalContent => SignalKind::ConditionalContent,
-            StartIndentIfGroupBreaks(_) | EndIndentIfGroupBreaks => SignalKind::IndentIfGroupBreaks,
-            StartFill | EndFill => SignalKind::Fill,
-            StartEntry | EndEntry => SignalKind::Entry,
-            StartLineSuffix | EndLineSuffix => SignalKind::LineSuffix,
-            StartVerbatim(_) | EndVerbatim => SignalKind::Verbatim,
-            StartLabelled(_) | EndLabelled => SignalKind::Labelled,
+            StartIndent | EndIndent => TagKind::Indent,
+            StartAlign(_) | EndAlign => TagKind::Align,
+            StartDedent(_) | EndDedent => TagKind::Dedent,
+            StartGroup(_) | EndGroup => TagKind::Group,
+            StartConditionalContent(_) | EndConditionalContent => TagKind::ConditionalContent,
+            StartIndentIfGroupBreaks(_) | EndIndentIfGroupBreaks => TagKind::IndentIfGroupBreaks,
+            StartFill | EndFill => TagKind::Fill,
+            StartEntry | EndEntry => TagKind::Entry,
+            StartLineSuffix | EndLineSuffix => TagKind::LineSuffix,
+            StartVerbatim(_) | EndVerbatim => TagKind::Verbatim,
+            StartLabelled(_) | EndLabelled => TagKind::Labelled,
         }
     }
 }
 
-/// The kind of a signal.
+/// The kind of a [Tag].
 ///
-/// Each start end signal pair has its own signal kind.
+/// Each start end tag pair has its own [tag kind](TagKind).
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
-pub enum SignalKind {
+pub enum TagKind {
     Indent,
     Align,
     Dedent,

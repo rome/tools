@@ -38,7 +38,7 @@ impl Format<JsFormatContext> for TsTypeMemberItem {
                 let mut recording = f.start_recording();
                 write!(recording, [self.member.format()])?;
 
-                is_verbatim = recording.stop().end_signal(SignalKind::Verbatim).is_some();
+                is_verbatim = recording.stop().end_tag(TagKind::Verbatim).is_some();
 
                 Ok(())
             }))]
