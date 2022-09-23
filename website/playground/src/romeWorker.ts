@@ -119,7 +119,7 @@ self.addEventListener("message", async (e) => {
 							noRenderReturnValue: "error",
 							useButtonType: "error",
 							useOptionalChain: "error",
-							noUselessFragments: "error"
+							noUselessFragments: "error",
 						},
 					},
 				};
