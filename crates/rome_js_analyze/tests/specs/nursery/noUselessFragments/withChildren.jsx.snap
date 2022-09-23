@@ -14,7 +14,7 @@ expression: withChildren.jsx
 
 # Diagnostics
 ```
-withChildren.jsx:2:5 lint/nursery/noUselessFragments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+withChildren.jsx:2:5 lint/nursery/noUselessFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid using unnecessary Fragment.
   
@@ -23,11 +23,21 @@ withChildren.jsx:2:5 lint/nursery/noUselessFragments ━━━━━━━━━
   2 │     <>foo</>
     │     ^^^^^^^^
   
+  i Suggested fix: Remove the Fragment
+  
+      | @@ -1,5 +1,5 @@
+  0 0 |   <>
+  1   | -     <>foo</>
+    1 | +     foo
+  2 2 |       <React.Fragment>foo</React.Fragment>
+  3 3 |       <Fragment>foo</Fragment>
+  4 4 |   </>
+  
 
 ```
 
 ```
-withChildren.jsx:3:5 lint/nursery/noUselessFragments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+withChildren.jsx:3:5 lint/nursery/noUselessFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid using unnecessary Fragment.
   
@@ -36,11 +46,21 @@ withChildren.jsx:3:5 lint/nursery/noUselessFragments ━━━━━━━━━
   3 │     <React.Fragment>foo</React.Fragment>
     │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   
+  i Suggested fix: Remove the Fragment
+  
+      | @@ -1,5 +1,5 @@
+  0 0 |   <>
+  1 1 |       <>foo</>
+  2   | -     <React.Fragment>foo</React.Fragment>
+    2 | +     foo
+  3 3 |       <Fragment>foo</Fragment>
+  4 4 |   </>
+  
 
 ```
 
 ```
-withChildren.jsx:4:5 lint/nursery/noUselessFragments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+withChildren.jsx:4:5 lint/nursery/noUselessFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid using unnecessary Fragment.
   
@@ -48,6 +68,16 @@ withChildren.jsx:4:5 lint/nursery/noUselessFragments ━━━━━━━━━
     │
   4 │     <Fragment>foo</Fragment>
     │     ^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i Suggested fix: Remove the Fragment
+  
+      | @@ -1,5 +1,5 @@
+  0 0 |   <>
+  1 1 |       <>foo</>
+  2 2 |       <React.Fragment>foo</React.Fragment>
+  3   | -     <Fragment>foo</Fragment>
+    3 | +     foo
+  4 4 |   </>
   
 
 ```

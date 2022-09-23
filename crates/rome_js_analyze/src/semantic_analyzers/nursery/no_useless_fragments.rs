@@ -10,12 +10,9 @@ use rome_js_factory::make;
 use rome_js_factory::make::{jsx_expression_child, jsx_ident, jsx_text};
 use rome_js_syntax::{
     JsLanguage, JsSyntaxKind, JsxAnyChild, JsxAnyElementName, JsxChildList, JsxElement,
-    JsxFragment, JsxMemberName, JsxReferenceIdentifier, JsxTagExpression, T,
+    JsxFragment, JsxMemberName, JsxReferenceIdentifier, JsxTagExpression,
 };
-use rome_rowan::{
-    declare_node_union, AstNode, AstNodeExt, AstNodeList, BatchMutation, BatchMutationExt,
-    SyntaxTriviaPiece,
-};
+use rome_rowan::{declare_node_union, AstNode, AstNodeList, BatchMutation, BatchMutationExt};
 
 declare_rule! {
     /// Disallow unnecessary fragments
@@ -203,21 +200,7 @@ impl Rule for NoUselessFragments {
         if is_in_list {
             let new_child = match state {
                 NoUselessFragmentsState::Empty => None,
-                NoUselessFragmentsState::Child(child) => {
-                    let child = child.clone();
-                    let new_child = match child {
-                        JsxAnyChild::JsxText(text) => {
-                            let mut new_text = String::new();
-                            new_text.push_str(text.value_token().ok()?.text_trimmed());
-
-                            let new_jsx_text = jsx_text(jsx_ident(&new_text));
-                            JsxAnyChild::JsxText(text)
-                        }
-                        _ => child,
-                    };
-
-                    Some(new_child)
-                }
+                NoUselessFragmentsState::Child(child) => Some(child.clone()),
             };
 
             if let Some(new_child) = new_child {
