@@ -158,26 +158,35 @@ JsModule {
       1: (empty)
   3: EOF@78..79 "" [Newline("\n")] []
 --
-error[SyntaxError]: `import()` requires exactly one or two arguments. 
-  ┌─ import_invalid_args.js:1:8
-  │
-1 │ import()
-  │        ^
+import_invalid_args.js:1:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × `import()` requires exactly one or two arguments. 
+  
+    ┌─ import_invalid_args.js:1:8
+    │
+  1 │ import()
+    │        ^
+  
 --
-error[SyntaxError]: `...` is not allowed in `import()`
-  ┌─ import_invalid_args.js:2:8
-  │
-2 │ import(...["foo"])
-  │        ^^^^^^^^^^
+import_invalid_args.js:2:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × `...` is not allowed in `import()`
+  
+    ┌─ import_invalid_args.js:2:8
+    │
+  2 │ import(...["foo"])
+    │        ^^^^^^^^^^
+  
 --
-error[SyntaxError]: `import()` requires exactly one or two arguments. 
-  ┌─ import_invalid_args.js:3:45
-  │
-3 │ import("foo", { assert: { type: 'json' } }, "bar")
-  │                                             ^^^^^^
+import_invalid_args.js:3:45 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × `import()` requires exactly one or two arguments. 
+  
+    ┌─ import_invalid_args.js:3:45
+    │
+  3 │ import("foo", { assert: { type: 'json' } }, "bar")
+    │                                             ^^^^^^
+  
 --
 import()
 import(...["foo"])

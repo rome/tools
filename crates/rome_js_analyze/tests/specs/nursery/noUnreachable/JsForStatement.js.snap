@@ -14,14 +14,24 @@ function JsForStatement1() {
 
 # Diagnostics
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-  ┌─ JsForStatement.js:2:29
-  │
-2 │     for (let i = 0; i < 10; ++i) {
-  │                             --- This code will never be reached ...
-3 │         break;
-  │         ------ ... because this statement will break the flow of the code beforehand
+JsForStatement.js:2:29 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! This code is unreachable
+  
+  ! This code will never be reached ...
+  
+    ┌─ JsForStatement.js:2:29
+    │
+  2 │     for (let i = 0; i < 10; ++i) {
+    │                             ^^^
+  
+  i ... because this statement will break the flow of the code beforehand
+  
+    ┌─ JsForStatement.js:3:9
+    │
+  3 │         break;
+    │         ^^^^^^
+  
 
 ```
 

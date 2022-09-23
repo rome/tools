@@ -99,28 +99,41 @@ JsModule {
       1: (empty)
   3: EOF@21..21 "" [] []
 --
-error[SyntaxError]: expected an expression but instead found ']'
-  ┌─ subscripts_err.js:1:12
-  │
-1 │ foo()?.baz[].;
-  │            ^ Expected an expression here
+subscripts_err.js:1:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an expression but instead found ']'
+  
+  × Expected an expression here
+  
+    ┌─ subscripts_err.js:1:12
+    │
+  1 │ foo()?.baz[].;
+    │            ^
+  
 --
-error[SyntaxError]: expected an identifier but instead found ';'
-  ┌─ subscripts_err.js:1:14
-  │
-1 │ foo()?.baz[].;
-  │              ^ Expected an identifier here
+subscripts_err.js:1:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier but instead found ';'
+  
+  × Expected an identifier here
+  
+    ┌─ subscripts_err.js:1:14
+    │
+  1 │ foo()?.baz[].;
+    │              ^
+  
 --
-error: unterminated template literal
-  ┌─ subscripts_err.js:2:5
-  │  
-2 │   BAR`b
-  │ ┌─────^
-3 │ │ 
-  │ └^
+subscripts_err.js:2:5 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × unterminated template literal
+  
+    ┌─ subscripts_err.js:2:5
+    │  
+  2 │   BAR`b
+    │ ┌─────^
+  3 │ │ 
+    │ └^
+  
 --
 foo()?.baz[].;
 BAR`b

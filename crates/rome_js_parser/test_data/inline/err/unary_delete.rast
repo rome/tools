@@ -186,40 +186,55 @@ JsModule {
       1: SEMICOLON@103..104 ";" [] []
   3: EOF@104..105 "" [Newline("\n")] []
 --
-error[SyntaxError]: the target for a delete operator cannot be a single identifier
-  ┌─ unary_delete.js:1:8
-  │
-1 │ delete ident;
-  │        ^^^^^
+unary_delete.js:1:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × the target for a delete operator cannot be a single identifier
+  
+    ┌─ unary_delete.js:1:8
+    │
+  1 │ delete ident;
+    │        ^^^^^
+  
 --
-error[SyntaxError]: the target for a delete operator cannot be a private member
-  ┌─ unary_delete.js:2:8
-  │
-2 │ delete obj.#member;
-  │        ^^^^^^^^^^^
+unary_delete.js:2:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × the target for a delete operator cannot be a private member
+  
+    ┌─ unary_delete.js:2:8
+    │
+  2 │ delete obj.#member;
+    │        ^^^^^^^^^^^
+  
 --
-error[SyntaxError]: the target for a delete operator cannot be a private member
-  ┌─ unary_delete.js:3:8
-  │
-3 │ delete func().#member;
-  │        ^^^^^^^^^^^^^^
+unary_delete.js:3:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × the target for a delete operator cannot be a private member
+  
+    ┌─ unary_delete.js:3:8
+    │
+  3 │ delete func().#member;
+    │        ^^^^^^^^^^^^^^
+  
 --
-error[SyntaxError]: the target for a delete operator cannot be a private member
-  ┌─ unary_delete.js:4:8
-  │
-4 │ delete obj?.#member;
-  │        ^^^^^^^^^^^^
+unary_delete.js:4:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × the target for a delete operator cannot be a private member
+  
+    ┌─ unary_delete.js:4:8
+    │
+  4 │ delete obj?.#member;
+    │        ^^^^^^^^^^^^
+  
 --
-error[SyntaxError]: the target for a delete operator cannot be a private member
-  ┌─ unary_delete.js:5:8
-  │
-5 │ delete obj?.inner.#member;
-  │        ^^^^^^^^^^^^^^^^^^
+unary_delete.js:5:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × the target for a delete operator cannot be a private member
+  
+    ┌─ unary_delete.js:5:8
+    │
+  5 │ delete obj?.inner.#member;
+    │        ^^^^^^^^^^^^^^^^^^
+  
 --
 delete ident;
 delete obj.#member;

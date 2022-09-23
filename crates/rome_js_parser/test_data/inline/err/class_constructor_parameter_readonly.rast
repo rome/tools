@@ -95,11 +95,14 @@ JsModule {
       8: R_CURLY@37..38 "}" [] []
   3: EOF@38..39 "" [Newline("\n")] []
 --
-error[SyntaxError]: 'readonly' modifier can only be used in TypeScript files
-  ┌─ class_constructor_parameter_readonly.js:1:23
-  │
-1 │ class B { constructor(readonly b) {} }
-  │                       ^^^^^^^^
+class_constructor_parameter_readonly.js:1:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'readonly' modifier can only be used in TypeScript files
+  
+    ┌─ class_constructor_parameter_readonly.js:1:23
+    │
+  1 │ class B { constructor(readonly b) {} }
+    │                       ^^^^^^^^
+  
 --
 class B { constructor(readonly b) {} }

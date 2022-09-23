@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\arrows-bind\\arrows-bind.js"
 ---
 
 # Input
@@ -42,27 +44,46 @@ a:
 
 # Errors
 ```
-error[SyntaxError]: expected `)` but instead found `:`
-  ┌─ arrows-bind.js:1:9
-  │
-1 │ a => ({}::b()``[''].c++ && 0 ? 0 : 0);
-  │         ^ unexpected
+arrows-bind.js:1:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ arrows-bind.js:2:9
-  │
-2 │ (a => b)::c;
-  │ --------^
-  │ │       │
-  │ │       An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
+  × expected `)` but instead found `:`
+  
+  × unexpected
+  
+    ┌─ arrows-bind.js:1:9
+    │
+  1 │ a => ({}::b()``[''].c++ && 0 ? 0 : 0);
+    │         ^
+  
+arrows-bind.js:2:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a statement but instead found ':'
-  ┌─ arrows-bind.js:3:3
-  │
-3 │ a::(b => c);
-  │   ^ Expected a statement here
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ arrows-bind.js:2:9
+    │
+  2 │ (a => b)::c;
+    │         ^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ arrows-bind.js:2:1
+    │
+  2 │ (a => b)::c;
+    │ ^^^^^^^^^
+  
+arrows-bind.js:3:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a statement but instead found ':'
+  
+  × Expected a statement here
+  
+    ┌─ arrows-bind.js:3:3
+    │
+  3 │ a::(b => c);
+    │   ^
+  
 
 ```
 

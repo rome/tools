@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "typescript\\definite\\without-annotation.ts"
 ---
 
 # Input
@@ -69,60 +71,95 @@ export const d! = x
 
 # Errors
 ```
-error[SyntaxError]: Properties with definite assignment assertions must also have type annotations.
-  ┌─ without-annotation.ts:3:3
-  │
-3 │   #b!
-  │   ^
+without-annotation.ts:3:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Properties with definite assignment assertions must also have type annotations.
-  ┌─ without-annotation.ts:4:3
-  │
-4 │   static c!
-  │   ^^^^^^
+  × Properties with definite assignment assertions must also have type annotations.
+  
+    ┌─ without-annotation.ts:3:3
+    │
+  3 │   #b!
+    │   ^
+  
+without-annotation.ts:4:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Properties with definite assignment assertions must also have type annotations.
-  ┌─ without-annotation.ts:5:3
-  │
-5 │   [d]! = 1
-  │   ^
+  × Properties with definite assignment assertions must also have type annotations.
+  
+    ┌─ without-annotation.ts:4:3
+    │
+  4 │   static c!
+    │   ^^^^^^
+  
+without-annotation.ts:5:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Properties with definite assignment assertions must also have type annotations.
-  ┌─ without-annotation.ts:5:8
-  │
-5 │   [d]! = 1
-  │        ^
+  × Properties with definite assignment assertions must also have type annotations.
+  
+    ┌─ without-annotation.ts:5:3
+    │
+  5 │   [d]! = 1
+    │   ^
+  
+without-annotation.ts:5:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Properties with definite assignment assertions must also have type annotations.
-  ┌─ without-annotation.ts:7:1
-  │
-7 │ }
-  │ ^
+  × Properties with definite assignment assertions must also have type annotations.
+  
+    ┌─ without-annotation.ts:5:8
+    │
+  5 │   [d]! = 1
+    │        ^
+  
+without-annotation.ts:7:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `:` but instead found `=`
-  ┌─ without-annotation.ts:9:8
-  │
-9 │ let a! = x
-  │        ^ unexpected
+  × Properties with definite assignment assertions must also have type annotations.
+  
+    ┌─ without-annotation.ts:7:1
+    │
+  7 │ }
+    │ ^
+  
+without-annotation.ts:9:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `:` but instead found `=`
-   ┌─ without-annotation.ts:10:10
-   │
-10 │ const b! = x
-   │          ^ unexpected
+  × expected `:` but instead found `=`
+  
+  × unexpected
+  
+    ┌─ without-annotation.ts:9:8
+    │
+  9 │ let a! = x
+    │        ^
+  
+without-annotation.ts:10:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `:` but instead found `=`
-   ┌─ without-annotation.ts:11:13
-   │
-11 │ var c/* */! = x
-   │             ^ unexpected
+  × expected `:` but instead found `=`
+  
+  × unexpected
+  
+     ┌─ without-annotation.ts:10:10
+     │
+  10 │ const b! = x
+     │          ^
+  
+without-annotation.ts:11:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `:` but instead found `=`
-   ┌─ without-annotation.ts:12:17
-   │
-12 │ export const d! = x
-   │                 ^ unexpected
+  × expected `:` but instead found `=`
+  
+  × unexpected
+  
+     ┌─ without-annotation.ts:11:13
+     │
+  11 │ var c/* */! = x
+     │             ^
+  
+without-annotation.ts:12:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `:` but instead found `=`
+  
+  × unexpected
+  
+     ┌─ without-annotation.ts:12:17
+     │
+  12 │ export const d! = x
+     │                 ^
+  
 
 ```
 

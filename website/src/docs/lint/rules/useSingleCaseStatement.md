@@ -23,24 +23,28 @@ switch (foo) {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/useSingleCaseStatement/">correctness/useSingleCaseStatement</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong>A switch case should only have a single statement. If you want more, then wrap it in a block.</strong>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/useSingleCaseStatement.js:4:9
-  <span style="color: rgb(38, 148, 255);">│</span>  
-<span style="color: rgb(38, 148, 255);">4</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">┌</span>         <span style="color: Tomato;">l</span><span style="color: Tomato;">e</span><span style="color: Tomato;">t</span><span style="color: Tomato;"> </span><span style="color: Tomato;">f</span><span style="color: Tomato;">o</span><span style="color: Tomato;">o</span><span style="color: Tomato;"> </span><span style="color: Tomato;">=</span><span style="color: Tomato;"> </span><span style="color: Tomato;">'</span><span style="color: Tomato;">'</span><span style="color: Tomato;">;</span>
-<span style="color: rgb(38, 148, 255);">5</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">│</span> <span style="color: Tomato;"> </span><span style="color: Tomato;"> </span><span style="color: Tomato;"> </span><span style="color: Tomato;"> </span><span style="color: Tomato;"> </span><span style="color: Tomato;"> </span><span style="color: Tomato;"> </span><span style="color: Tomato;"> </span><span style="color: Tomato;">f</span><span style="color: Tomato;">o</span><span style="color: Tomato;">o</span><span style="color: Tomato;">;</span>
-  <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">└</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">^</span>
+{% raw %}<pre class="language-text"><code class="language-text">correctness/useSingleCaseStatement.js:4:9 <a href="https://rome.tools/docs/lint/rules/useSingleCaseStatement">lint/correctness/useSingleCaseStatement</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━
 
-<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Wrap the statements in a block</span>
-    | <span style="color: rgb(38, 148, 255);">@@ -1,6 +1,7 @@</span>
-0 0 |   switch (foo) {
-1 1 |       case true:
-2   | <span style="color: Tomato;">- </span><span style="color: Tomato;">    case false:</span>
-  2 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">    case false: {</span>
-3 3 |           let foo = '';
-4 4 |           foo;
-  5 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">    }</span>
-5 6 |   }
-
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">A switch case should only have a single statement. If you want more, then wrap it in a block.</span>
+  
+    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/useSingleCaseStatement.js:4:9
+    <span style="color: rgb(38, 148, 255);">│</span>  
+<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">4</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">┌</span>         <span style="color: Tomato;">l</span><span style="color: Tomato;">e</span><span style="color: Tomato;">t</span><span style="color: Tomato;"> </span><span style="color: Tomato;">f</span><span style="color: Tomato;">o</span><span style="color: Tomato;">o</span><span style="color: Tomato;"> </span><span style="color: Tomato;">=</span><span style="color: Tomato;"> </span><span style="color: Tomato;">'</span><span style="color: Tomato;">'</span><span style="color: Tomato;">;</span>
+<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">5</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">│</span> <span style="color: Tomato;"> </span><span style="color: Tomato;"> </span><span style="color: Tomato;"> </span><span style="color: Tomato;"> </span><span style="color: Tomato;"> </span><span style="color: Tomato;"> </span><span style="color: Tomato;"> </span><span style="color: Tomato;"> </span><span style="color: Tomato;">f</span><span style="color: Tomato;">o</span><span style="color: Tomato;">o</span><span style="color: Tomato;">;</span>
+    <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">└</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">^</span>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Wrap the statements in a block</span>
+  
+      | <span style="color: rgb(38, 148, 255);">@@ -1,6 +1,7 @@</span>
+  0 0 |   switch (foo) {
+  1 1 |       case true:
+  2   | <span style="color: Tomato;">- </span><span style="color: Tomato;">    case false:</span>
+    2 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">    case false: {</span>
+  3 3 |           let foo = '';
+  4 4 |           foo;
+    5 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">    }</span>
+  5 6 |   }
+  
 </code></pre>{% endraw %}
 
 ### Valid

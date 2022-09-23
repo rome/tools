@@ -138,19 +138,29 @@ JsModule {
       1: SEMICOLON@45..46 ";" [] []
   3: EOF@46..47 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected an identifier but instead found ';'
-  ┌─ optional_chain_call_without_arguments.ts:2:9
-  │
-2 │ a.test?.;
-  │         ^ Expected an identifier here
+optional_chain_call_without_arguments.ts:2:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier but instead found ';'
+  
+  × Expected an identifier here
+  
+    ┌─ optional_chain_call_without_arguments.ts:2:9
+    │
+  2 │ a.test?.;
+    │         ^
+  
 --
-error[SyntaxError]: expected an identifier but instead found '<'
-  ┌─ optional_chain_call_without_arguments.ts:3:9
-  │
-3 │ a.test?.<ab;
-  │         ^ Expected an identifier here
+optional_chain_call_without_arguments.ts:3:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier but instead found '<'
+  
+  × Expected an identifier here
+  
+    ┌─ optional_chain_call_without_arguments.ts:3:9
+    │
+  3 │ a.test?.<ab;
+    │         ^
+  
 --
 let a = { test: null };
 a.test?.;

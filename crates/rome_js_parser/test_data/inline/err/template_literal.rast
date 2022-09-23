@@ -134,19 +134,29 @@ JsModule {
       1: (empty)
   3: EOF@34..35 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected an expression but instead found '}'
-  ┌─ template_literal.js:1:16
-  │
-1 │ let a = `foo ${}`
-  │                ^ Expected an expression here
+template_literal.js:1:16 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an expression but instead found '}'
+  
+  × Expected an expression here
+  
+    ┌─ template_literal.js:1:16
+    │
+  1 │ let a = `foo ${}`
+    │                ^
+  
 --
-error[SyntaxError]: expected `}` but instead found `a`
-  ┌─ template_literal.js:2:14
-  │
-2 │ let b = `${a a}`
-  │              ^ unexpected
+template_literal.js:2:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `}` but instead found `a`
+  
+  × unexpected
+  
+    ┌─ template_literal.js:2:14
+    │
+  2 │ let b = `${a a}`
+    │              ^
+  
 --
 let a = `foo ${}`
 let b = `${a a}`

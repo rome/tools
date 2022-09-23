@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\record\\shorthand.js"
 ---
 
 # Input
@@ -40,26 +42,44 @@ console.log(record.url); // https://github.com/tc39/proposal-record-tuple
 
 # Errors
 ```
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ shorthand.js:2:17
-  │
-2 │ const record = #{ url }
-  │                 ^ Expected an identifier here
+shorthand.js:2:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ shorthand.js:2:16
-  │
-2 │ const record = #{ url }
-  │                ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    ┌─ shorthand.js:2:17
+    │
+  2 │ const record = #{ url }
+    │                 ^
+  
+shorthand.js:2:16 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ shorthand.js:2:17
-  │
-2 │ const record = #{ url }
-  │ ----------------^ An explicit or implicit semicolon is expected here...
-  │ │                
-  │ ...Which is required to end this statement
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    ┌─ shorthand.js:2:16
+    │
+  2 │ const record = #{ url }
+    │                ^
+  
+shorthand.js:2:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ shorthand.js:2:17
+    │
+  2 │ const record = #{ url }
+    │                 ^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ shorthand.js:2:1
+    │
+  2 │ const record = #{ url }
+    │ ^^^^^^^^^^^^^^^^
+  
 
 ```
 

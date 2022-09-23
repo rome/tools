@@ -410,61 +410,85 @@ JsModule {
           2: R_CURLY@273..275 "}" [Newline("\n")] []
   3: EOF@275..276 "" [Newline("\n")] []
 --
-error[SyntaxError]: members inside ambient contexts should not have a body
-  ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:2:19
-  │
-2 │     constructor() {}
-  │                   ^^
+typescript_members_with_body_in_ambient_context_should_err.ts:2:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━
 
+  × members inside ambient contexts should not have a body
+  
+    ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:2:19
+    │
+  2 │     constructor() {}
+    │                   ^^
+  
 --
-error[SyntaxError]: members inside ambient contexts should not have a body
-  ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:3:12
-  │
-3 │     name() {}
-  │            ^^
+typescript_members_with_body_in_ambient_context_should_err.ts:3:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━
 
+  × members inside ambient contexts should not have a body
+  
+    ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:3:12
+    │
+  3 │     name() {}
+    │            ^^
+  
 --
-error[SyntaxError]: members inside ambient contexts should not have a body
-  ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:4:24
-  │
-4 │     get test(): string { return ""; }
-  │                        ^^^^^^^^^^^^^^
+typescript_members_with_body_in_ambient_context_should_err.ts:4:24 SyntaxError ━━━━━━━━━━━━━━━━━━━━━
 
+  × members inside ambient contexts should not have a body
+  
+    ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:4:24
+    │
+  4 │     get test(): string { return ""; }
+    │                        ^^^^^^^^^^^^^^
+  
 --
-error[SyntaxError]: members inside ambient contexts should not have a body
-  ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:5:17
-  │
-5 │     set test(v) {}
-  │                 ^^
+typescript_members_with_body_in_ambient_context_should_err.ts:5:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━
 
+  × members inside ambient contexts should not have a body
+  
+    ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:5:17
+    │
+  5 │     set test(v) {}
+    │                 ^^
+  
 --
-error[SyntaxError]: members inside ambient contexts should not have a body
-  ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:9:24
-  │
-9 │          constructor() {}
-  │                        ^^
+typescript_members_with_body_in_ambient_context_should_err.ts:9:24 SyntaxError ━━━━━━━━━━━━━━━━━━━━━
 
+  × members inside ambient contexts should not have a body
+  
+    ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:9:24
+    │
+  9 │          constructor() {}
+    │                        ^^
+  
 --
-error[SyntaxError]: members inside ambient contexts should not have a body
-   ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:10:17
-   │
-10 │          name() {}
-   │                 ^^
+typescript_members_with_body_in_ambient_context_should_err.ts:10:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━
 
+  × members inside ambient contexts should not have a body
+  
+     ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:10:17
+     │
+  10 │          name() {}
+     │                 ^^
+  
 --
-error[SyntaxError]: members inside ambient contexts should not have a body
-   ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:11:29
-   │
-11 │          get test(): string { return ""; }
-   │                             ^^^^^^^^^^^^^^
+typescript_members_with_body_in_ambient_context_should_err.ts:11:29 SyntaxError ━━━━━━━━━━━━━━━━━━━━
 
+  × members inside ambient contexts should not have a body
+  
+     ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:11:29
+     │
+  11 │          get test(): string { return ""; }
+     │                             ^^^^^^^^^^^^^^
+  
 --
-error[SyntaxError]: members inside ambient contexts should not have a body
-   ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:12:22
-   │
-12 │          set test(v) {}
-   │                      ^^
+typescript_members_with_body_in_ambient_context_should_err.ts:12:22 SyntaxError ━━━━━━━━━━━━━━━━━━━━
 
+  × members inside ambient contexts should not have a body
+  
+     ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:12:22
+     │
+  12 │          set test(v) {}
+     │                      ^^
+  
 --
 declare class Test {
     constructor() {}

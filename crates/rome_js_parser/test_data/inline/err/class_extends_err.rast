@@ -146,28 +146,42 @@ JsModule {
       5: R_CURLY@85..86 "}" [] []
   3: EOF@86..87 "" [Newline("\n")] []
 --
-error[SyntaxError]: 'extends' clause already seen.
-  ┌─ class_extends_err.js:1:21
-  │
-1 │ class A extends bar extends foo {}
-  │         ----------- ^^^^^^^^^^^
-  │         │            
-  │         first 'extends' clause
+class_extends_err.js:1:21 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'extends' clause already seen.
+  
+    ┌─ class_extends_err.js:1:21
+    │
+  1 │ class A extends bar extends foo {}
+    │                     ^^^^^^^^^^^
+  
+  i first 'extends' clause
+  
+    ┌─ class_extends_err.js:1:9
+    │
+  1 │ class A extends bar extends foo {}
+    │         ^^^^^^^^^^^
+  
 --
-error[SyntaxError]: Classes can only extend a single class.
-  ┌─ class_extends_err.js:2:22
-  │
-2 │ class B extends bar, foo {}
-  │                      ^^^
+class_extends_err.js:2:22 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Classes can only extend a single class.
+  
+    ┌─ class_extends_err.js:2:22
+    │
+  2 │ class B extends bar, foo {}
+    │                      ^^^
+  
 --
-error[SyntaxError]: classes can only implement interfaces in TypeScript files
-  ┌─ class_extends_err.js:3:9
-  │
-3 │ class C implements B {}
-  │         ^^^^^^^^^^^^
+class_extends_err.js:3:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × classes can only implement interfaces in TypeScript files
+  
+    ┌─ class_extends_err.js:3:9
+    │
+  3 │ class C implements B {}
+    │         ^^^^^^^^^^^^
+  
 --
 class A extends bar extends foo {}
 class B extends bar, foo {}

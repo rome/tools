@@ -181,19 +181,25 @@ JsModule {
       8: R_CURLY@53..55 "}" [Newline("\n")] []
   3: EOF@55..56 "" [Newline("\n")] []
 --
-error[SyntaxError]: An accessor cannot have type parameters.
-  ┌─ ts_getter_setter_type_parameters.ts:2:7
-  │
-2 │  get a<A>(): A {}
-  │       ^^^
+ts_getter_setter_type_parameters.ts:2:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × An accessor cannot have type parameters.
+  
+    ┌─ ts_getter_setter_type_parameters.ts:2:7
+    │
+  2 │  get a<A>(): A {}
+    │       ^^^
+  
 --
-error[SyntaxError]: An accessor cannot have type parameters.
-  ┌─ ts_getter_setter_type_parameters.ts:3:7
-  │
-3 │  set a<A>(value: A) {}
-  │       ^^^
+ts_getter_setter_type_parameters.ts:3:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × An accessor cannot have type parameters.
+  
+    ┌─ ts_getter_setter_type_parameters.ts:3:7
+    │
+  3 │  set a<A>(value: A) {}
+    │       ^^^
+  
 --
 class Test {
  get a<A>(): A {}

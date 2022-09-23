@@ -112,25 +112,40 @@ JsModule {
       8: (empty)
   3: EOF@20..21 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `,` but instead found `{`
-  ┌─ class_member_method_parameters.js:1:17
-  │
-1 │ class B { foo(a {} }
-  │                 ^ unexpected
+class_member_method_parameters.js:1:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `{`
+  
+  × unexpected
+  
+    ┌─ class_member_method_parameters.js:1:17
+    │
+  1 │ class B { foo(a {} }
+    │                 ^
+  
 --
-error[SyntaxError]: expected `,` but instead found `}`
-  ┌─ class_member_method_parameters.js:1:20
-  │
-1 │ class B { foo(a {} }
-  │                    ^ unexpected
+class_member_method_parameters.js:1:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `}`
+  
+  × unexpected
+  
+    ┌─ class_member_method_parameters.js:1:20
+    │
+  1 │ class B { foo(a {} }
+    │                    ^
+  
 --
-error[SyntaxError]: expected `)` but instead the file ends
-  ┌─ class_member_method_parameters.js:2:1
-  │
-2 │ 
-  │ ^ the file ends here
+class_member_method_parameters.js:2:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `)` but instead the file ends
+  
+  × the file ends here
+  
+    ┌─ class_member_method_parameters.js:2:1
+    │
+  2 │ 
+    │ ^
+  
 --
 class B { foo(a {} }

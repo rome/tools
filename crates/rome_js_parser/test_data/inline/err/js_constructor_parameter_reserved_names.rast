@@ -136,26 +136,35 @@ JsScript {
       8: R_CURLY@73..74 "}" [] []
   3: EOF@74..75 "" [Newline("\n")] []
 --
-error[SyntaxError]: Illegal use of reserved keyword `private` as an identifier in strict mode
-  ┌─ js_constructor_parameter_reserved_names.js:2:33
-  │
-2 │ class A { constructor(readonly, private, protected, public) {} }
-  │                                 ^^^^^^^
+js_constructor_parameter_reserved_names.js:2:33 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of reserved keyword `private` as an identifier in strict mode
+  
+    ┌─ js_constructor_parameter_reserved_names.js:2:33
+    │
+  2 │ class A { constructor(readonly, private, protected, public) {} }
+    │                                 ^^^^^^^
+  
 --
-error[SyntaxError]: Illegal use of reserved keyword `protected` as an identifier in strict mode
-  ┌─ js_constructor_parameter_reserved_names.js:2:42
-  │
-2 │ class A { constructor(readonly, private, protected, public) {} }
-  │                                          ^^^^^^^^^
+js_constructor_parameter_reserved_names.js:2:42 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of reserved keyword `protected` as an identifier in strict mode
+  
+    ┌─ js_constructor_parameter_reserved_names.js:2:42
+    │
+  2 │ class A { constructor(readonly, private, protected, public) {} }
+    │                                          ^^^^^^^^^
+  
 --
-error[SyntaxError]: Illegal use of reserved keyword `public` as an identifier in strict mode
-  ┌─ js_constructor_parameter_reserved_names.js:2:53
-  │
-2 │ class A { constructor(readonly, private, protected, public) {} }
-  │                                                     ^^^^^^
+js_constructor_parameter_reserved_names.js:2:53 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of reserved keyword `public` as an identifier in strict mode
+  
+    ┌─ js_constructor_parameter_reserved_names.js:2:53
+    │
+  2 │ class A { constructor(readonly, private, protected, public) {} }
+    │                                                     ^^^^^^
+  
 --
 // SCRIPT
 class A { constructor(readonly, private, protected, public) {} }

@@ -22,17 +22,24 @@ try {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noCatchAssign/">correctness/noCatchAssign</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong> Do not </strong><strong><strong>reassign catch parameters.</strong></strong><strong></strong>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noCatchAssign.js:5:3
-  <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">3</span> <span style="color: rgb(38, 148, 255);">│</span> } catch (e) {
-  <span style="color: rgb(38, 148, 255);">│</span>          <span style="color: rgb(38, 148, 255);">-</span> <span style="color: rgb(38, 148, 255);">The catch parameter is declared here</span>
-<span style="color: rgb(38, 148, 255);">4</span> <span style="color: rgb(38, 148, 255);">│</span>   e;
-<span style="color: rgb(38, 148, 255);">5</span> <span style="color: rgb(38, 148, 255);">│</span>   <span style="color: Tomato;">e</span> = 10;
-  <span style="color: rgb(38, 148, 255);">│</span>   <span style="color: Tomato;">^</span>
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noCatchAssign.js:5:3 <a href="https://rome.tools/docs/lint/rules/noCatchAssign">lint/correctness/noCatchAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Use a local variable instead.
-
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;"> Do not </span><span style="color: Tomato;"><strong>reassign catch parameters.</strong></span>
+  
+    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noCatchAssign.js:5:3
+    <span style="color: rgb(38, 148, 255);">│</span>
+<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">5</span> <span style="color: rgb(38, 148, 255);">│</span>   <span style="color: Tomato;">e</span> = 10;
+    <span style="color: rgb(38, 148, 255);">│</span>   <span style="color: Tomato;">^</span>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">The catch parameter is declared here</span>
+  
+    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noCatchAssign.js:3:10
+    <span style="color: rgb(38, 148, 255);">│</span>
+<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">3</span> <span style="color: rgb(38, 148, 255);">│</span> } catch (<span style="color: Tomato;">e</span>) {
+    <span style="color: rgb(38, 148, 255);">│</span>          <span style="color: Tomato;">^</span>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Use a local variable instead.</span>
+  
 </code></pre>{% endraw %}
 
 ### Valid

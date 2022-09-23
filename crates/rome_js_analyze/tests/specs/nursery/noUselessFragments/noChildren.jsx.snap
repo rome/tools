@@ -15,32 +15,41 @@ expression: noChildren.jsx
 
 # Diagnostics
 ```
-warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
-  ┌─ noChildren.jsx:4:5
-  │
-4 │     <></>
-  │     -----
+noChildren.jsx:4:5 lint/nursery/noUselessFragments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-
-```
-
-```
-warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
-  ┌─ noChildren.jsx:5:5
-  │
-5 │     <React.Fragment></React.Fragment>
-  │     ---------------------------------
-
+  ! Avoid using unnecessary Fragment.
+  
+    ┌─ noChildren.jsx:4:5
+    │
+  4 │     <></>
+    │     ^^^^^
+  
 
 ```
 
 ```
-warning[nursery/noUselessFragments]: Avoid using unnecessary Fragment.
-  ┌─ noChildren.jsx:6:5
-  │
-6 │     <Fragment></Fragment>
-  │     ---------------------
+noChildren.jsx:5:5 lint/nursery/noUselessFragments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! Avoid using unnecessary Fragment.
+  
+    ┌─ noChildren.jsx:5:5
+    │
+  5 │     <React.Fragment></React.Fragment>
+    │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+
+```
+
+```
+noChildren.jsx:6:5 lint/nursery/noUselessFragments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using unnecessary Fragment.
+  
+    ┌─ noChildren.jsx:6:5
+    │
+  6 │     <Fragment></Fragment>
+    │     ^^^^^^^^^^^^^^^^^^^^^
+  
 
 ```
 

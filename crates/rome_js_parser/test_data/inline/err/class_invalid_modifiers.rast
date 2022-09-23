@@ -143,21 +143,34 @@ JsModule {
       8: R_CURLY@61..62 "}" [] []
   3: EOF@62..63 "" [Newline("\n")] []
 --
-error[SyntaxError]: 'public' modifier can only be used in TypeScript files
-  ┌─ class_invalid_modifiers.js:1:11
-  │
-1 │ class A { public foo() {} }
-  │           ^^^^^^
+class_invalid_modifiers.js:1:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'public' modifier can only be used in TypeScript files
+  
+    ┌─ class_invalid_modifiers.js:1:11
+    │
+  1 │ class A { public foo() {} }
+    │           ^^^^^^
+  
 --
-error[SyntaxError]: 'static' already seen
-  ┌─ class_invalid_modifiers.js:2:18
-  │
-2 │ class B { static static foo() {} }
-  │           ------ ^^^^^^ duplicate modifier
-  │           │       
-  │           first seen here
+class_invalid_modifiers.js:2:18 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'static' already seen
+  
+  × duplicate modifier
+  
+    ┌─ class_invalid_modifiers.js:2:18
+    │
+  2 │ class B { static static foo() {} }
+    │                  ^^^^^^
+  
+  i first seen here
+  
+    ┌─ class_invalid_modifiers.js:2:11
+    │
+  2 │ class B { static static foo() {} }
+    │           ^^^^^^
+  
 --
 class A { public foo() {} }
 class B { static static foo() {} }

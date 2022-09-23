@@ -75,11 +75,14 @@ JsModule {
       8: R_CURLY@31..32 "}" [] []
   3: EOF@32..33 "" [Newline("\n")] []
 --
-error[SyntaxError]: A constructor cannot have a 'this' parameter.
-  ┌─ ts_constructor_this_parameter.ts:1:23
-  │
-1 │ class C { constructor(this) {} }
-  │                       ^^^^
+ts_constructor_this_parameter.ts:1:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × A constructor cannot have a 'this' parameter.
+  
+    ┌─ ts_constructor_this_parameter.ts:1:23
+    │
+  1 │ class C { constructor(this) {} }
+    │                       ^^^^
+  
 --
 class C { constructor(this) {} }

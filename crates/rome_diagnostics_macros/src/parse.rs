@@ -6,11 +6,13 @@ use syn::{
     punctuated::Punctuated,
     spanned::Spanned,
     token::Paren,
-    Token,
+    Generics, Token,
 };
 
 pub(crate) struct DeriveInput {
     pub(crate) ident: Ident,
+    pub(crate) generics: Generics,
+
     pub(crate) severity: Option<StaticOrDynamic<Ident>>,
     pub(crate) category: Option<StaticOrDynamic<syn::LitStr>>,
     pub(crate) description: Option<StaticOrDynamic<StringOrMarkup>>,
@@ -26,6 +28,8 @@ impl DeriveInput {
     pub(crate) fn parse(input: syn::DeriveInput) -> Self {
         let mut result = Self {
             ident: input.ident,
+            generics: input.generics,
+
             severity: None,
             category: None,
             description: None,
@@ -112,6 +116,11 @@ impl DeriveInput {
             for attr in field.attrs {
                 if attr.path.is_ident("category") {
                     result.category = Some(StaticOrDynamic::Dynamic(ident.clone()));
+                    continue;
+                }
+
+                if attr.path.is_ident("severity") {
+                    result.severity = Some(StaticOrDynamic::Dynamic(ident.clone()));
                     continue;
                 }
 

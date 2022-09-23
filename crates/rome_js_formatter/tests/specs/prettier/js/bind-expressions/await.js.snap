@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\bind-expressions\\await.js"
 ---
 
 # Input
@@ -39,15 +41,24 @@ const doBothThings = async () => {
 
 # Errors
 ```
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ await.js:3:27
-  │
-3 │     return (await request)::doSyncThing();
-  │     ----------------------^
-  │     │                     │
-  │     │                     An explicit or implicit semicolon is expected here...
-  │     ...Which is required to end this statement
+await.js:3:27 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ await.js:3:27
+    │
+  3 │     return (await request)::doSyncThing();
+    │                           ^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ await.js:3:5
+    │
+  3 │     return (await request)::doSyncThing();
+    │     ^^^^^^^^^^^^^^^^^^^^^^^
+  
 
 ```
 

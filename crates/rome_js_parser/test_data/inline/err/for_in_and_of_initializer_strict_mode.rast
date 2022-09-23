@@ -342,47 +342,65 @@ JsModule {
         2: R_CURLY@152..153 "}" [] []
   3: EOF@153..154 "" [Newline("\n")] []
 --
-error[SyntaxError]: `for..in` statement declarators cannot have an initializer expression
-  ┌─ for_in_and_of_initializer_strict_mode.js:1:12
-  │
-1 │ for (var i = 0 in []) {}
-  │            ^^^
+for_in_and_of_initializer_strict_mode.js:1:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × `for..in` statement declarators cannot have an initializer expression
+  
+    ┌─ for_in_and_of_initializer_strict_mode.js:1:12
+    │
+  1 │ for (var i = 0 in []) {}
+    │            ^^^
+  
 --
-error[SyntaxError]: `for..in` statement declarators cannot have an initializer expression
-  ┌─ for_in_and_of_initializer_strict_mode.js:2:12
-  │
-2 │ for (let i = 0 in []) {}
-  │            ^^^
+for_in_and_of_initializer_strict_mode.js:2:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × `for..in` statement declarators cannot have an initializer expression
+  
+    ┌─ for_in_and_of_initializer_strict_mode.js:2:12
+    │
+  2 │ for (let i = 0 in []) {}
+    │            ^^^
+  
 --
-error[SyntaxError]: `for..in` statement declarators cannot have an initializer expression
-  ┌─ for_in_and_of_initializer_strict_mode.js:3:14
-  │
-3 │ for (const i = 0 in []) {}
-  │              ^^^
+for_in_and_of_initializer_strict_mode.js:3:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × `for..in` statement declarators cannot have an initializer expression
+  
+    ┌─ for_in_and_of_initializer_strict_mode.js:3:14
+    │
+  3 │ for (const i = 0 in []) {}
+    │              ^^^
+  
 --
-error[SyntaxError]: `for..of` statement declarators cannot have an initializer expression
-  ┌─ for_in_and_of_initializer_strict_mode.js:4:12
-  │
-4 │ for (var i = 0 of []) {}
-  │            ^^^
+for_in_and_of_initializer_strict_mode.js:4:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × `for..of` statement declarators cannot have an initializer expression
+  
+    ┌─ for_in_and_of_initializer_strict_mode.js:4:12
+    │
+  4 │ for (var i = 0 of []) {}
+    │            ^^^
+  
 --
-error[SyntaxError]: `for..of` statement declarators cannot have an initializer expression
-  ┌─ for_in_and_of_initializer_strict_mode.js:5:12
-  │
-5 │ for (let i = 0 of []) {}
-  │            ^^^
+for_in_and_of_initializer_strict_mode.js:5:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × `for..of` statement declarators cannot have an initializer expression
+  
+    ┌─ for_in_and_of_initializer_strict_mode.js:5:12
+    │
+  5 │ for (let i = 0 of []) {}
+    │            ^^^
+  
 --
-error[SyntaxError]: `for..of` statement declarators cannot have an initializer expression
-  ┌─ for_in_and_of_initializer_strict_mode.js:6:14
-  │
-6 │ for (const i = 0 of []) {}
-  │              ^^^
+for_in_and_of_initializer_strict_mode.js:6:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × `for..of` statement declarators cannot have an initializer expression
+  
+    ┌─ for_in_and_of_initializer_strict_mode.js:6:14
+    │
+  6 │ for (const i = 0 of []) {}
+    │              ^^^
+  
 --
 for (var i = 0 in []) {}
 for (let i = 0 in []) {}

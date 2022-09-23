@@ -22,14 +22,24 @@ function SuppressionComments2() {
 
 # Diagnostics
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-  ┌─ SuppressionComments.js:5:5
-  │
-4 │     return;
-  │     ------- This statement will return from the function ...
-5 │     afterReturn();
-  │     -------------- ... before it can reach this code
+SuppressionComments.js:5:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+    ┌─ SuppressionComments.js:5:5
+    │
+  5 │     afterReturn();
+    │     ^^^^^^^^^^^^^^
+  
+  i This statement will return from the function ...
+  
+    ┌─ SuppressionComments.js:4:5
+    │
+  4 │     return;
+    │     ^^^^^^^
+  
 
 ```
 

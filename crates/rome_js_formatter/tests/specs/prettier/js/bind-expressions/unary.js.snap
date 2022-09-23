@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\bind-expressions\\unary.js"
 ---
 
 # Input
@@ -87,45 +89,79 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
 
 # Errors
 ```
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ unary.js:1:3
-  │
-1 │ !x::y;
-  │ --^
-  │ │ │
-  │ │ An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
+unary.js:1:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `)` but instead found `:`
-  ┌─ unary.js:2:4
-  │
-2 │ !(x::y /* foo */);
-  │    ^ unexpected
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ unary.js:1:3
+    │
+  1 │ !x::y;
+    │   ^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ unary.js:1:1
+    │
+  1 │ !x::y;
+    │ ^^^
+  
+unary.js:2:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `)` but instead found `:`
-  ┌─ unary.js:3:14
-  │
-3 │ !(/* foo */ x::y);
-  │              ^ unexpected
+  × expected `)` but instead found `:`
+  
+  × unexpected
+  
+    ┌─ unary.js:2:4
+    │
+  2 │ !(x::y /* foo */);
+    │    ^
+  
+unary.js:3:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `)` but instead found `:`
-  ┌─ unary.js:6:4
-  │
-6 │   x::y
-  │    ^ unexpected
+  × expected `)` but instead found `:`
+  
+  × unexpected
+  
+    ┌─ unary.js:3:14
+    │
+  3 │ !(/* foo */ x::y);
+    │              ^
+  
+unary.js:6:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `)` but instead found `:`
-  ┌─ unary.js:9:4
-  │
-9 │   x::y
-  │    ^ unexpected
+  × expected `)` but instead found `:`
+  
+  × unexpected
+  
+    ┌─ unary.js:6:4
+    │
+  6 │   x::y
+    │    ^
+  
+unary.js:9:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `)` but instead found `:`
-   ┌─ unary.js:13:4
-   │
-13 │   x::y // foo
-   │    ^ unexpected
+  × expected `)` but instead found `:`
+  
+  × unexpected
+  
+    ┌─ unary.js:9:4
+    │
+  9 │   x::y
+    │    ^
+  
+unary.js:13:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `)` but instead found `:`
+  
+  × unexpected
+  
+     ┌─ unary.js:13:4
+     │
+  13 │   x::y // foo
+     │    ^
+  
 
 ```
 

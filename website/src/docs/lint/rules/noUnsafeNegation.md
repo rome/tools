@@ -17,34 +17,42 @@ Disallow using unsafe negation.
 !1 in [1,2];
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noUnsafeNegation/">correctness/noUnsafeNegation</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong>The negation operator is used unsafely on the left side of this binary expression.</strong>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noUnsafeNegation.js:1:1
-  <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">!</span><span style="color: Tomato;">1</span><span style="color: Tomato;"> </span><span style="color: Tomato;">i</span><span style="color: Tomato;">n</span><span style="color: Tomato;"> </span><span style="color: Tomato;">[</span><span style="color: Tomato;">1</span><span style="color: Tomato;">,</span><span style="color: Tomato;">2</span><span style="color: Tomato;">]</span>;
-  <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span>
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noUnsafeNegation.js:1:1 <a href="https://rome.tools/docs/lint/rules/noUnsafeNegation">lint/correctness/noUnsafeNegation</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━
 
-<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Wrap the expression with a parenthesis</span>
-    | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
-0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">!1 in [1,2];</span>
-  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">!(1 in [1,2]);</span>
-
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The negation operator is used unsafely on the left side of this binary expression.</span>
+  
+    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noUnsafeNegation.js:1:1
+    <span style="color: rgb(38, 148, 255);">│</span>
+<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">!</span><span style="color: Tomato;">1</span><span style="color: Tomato;"> </span><span style="color: Tomato;">i</span><span style="color: Tomato;">n</span><span style="color: Tomato;"> </span><span style="color: Tomato;">[</span><span style="color: Tomato;">1</span><span style="color: Tomato;">,</span><span style="color: Tomato;">2</span><span style="color: Tomato;">]</span>;
+    <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Wrap the expression with a parenthesis</span>
+  
+      | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
+  0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">!1 in [1,2];</span>
+    0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">!(1 in [1,2]);</span>
+  
 </code></pre>{% endraw %}
 
 ```jsx
 /**test*/!/** test*/1 instanceof [1,2];
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Tomato;">error</span><span style="color: Tomato;">[</span><span style="color: Tomato;"><a href="https://rome.tools/docs/lint/rules/noUnsafeNegation/">correctness/noUnsafeNegation</a></span><span style="color: Tomato;">]</span><strong>: </strong><strong>The negation operator is used unsafely on the left side of this binary expression.</strong>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noUnsafeNegation.js:1:10
-  <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> /**test*/<span style="color: Tomato;">!</span><span style="color: Tomato;">/</span><span style="color: Tomato;">*</span><span style="color: Tomato;">*</span><span style="color: Tomato;"> </span><span style="color: Tomato;">t</span><span style="color: Tomato;">e</span><span style="color: Tomato;">s</span><span style="color: Tomato;">t</span><span style="color: Tomato;">*</span><span style="color: Tomato;">/</span><span style="color: Tomato;">1</span><span style="color: Tomato;"> </span><span style="color: Tomato;">i</span><span style="color: Tomato;">n</span><span style="color: Tomato;">s</span><span style="color: Tomato;">t</span><span style="color: Tomato;">a</span><span style="color: Tomato;">n</span><span style="color: Tomato;">c</span><span style="color: Tomato;">e</span><span style="color: Tomato;">o</span><span style="color: Tomato;">f</span><span style="color: Tomato;"> </span><span style="color: Tomato;">[</span><span style="color: Tomato;">1</span><span style="color: Tomato;">,</span><span style="color: Tomato;">2</span><span style="color: Tomato;">]</span>;
-  <span style="color: rgb(38, 148, 255);">│</span>          <span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span>
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noUnsafeNegation.js:1:10 <a href="https://rome.tools/docs/lint/rules/noUnsafeNegation">lint/correctness/noUnsafeNegation</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
 
-<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Wrap the expression with a parenthesis</span>
-    | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
-0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">/**test*/!/** test*/1 instanceof [1,2];</span>
-  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">/**test*/!/** test*/(1 instanceof [1,2]);</span>
-
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The negation operator is used unsafely on the left side of this binary expression.</span>
+  
+    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noUnsafeNegation.js:1:10
+    <span style="color: rgb(38, 148, 255);">│</span>
+<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> /**test*/<span style="color: Tomato;">!</span><span style="color: Tomato;">/</span><span style="color: Tomato;">*</span><span style="color: Tomato;">*</span><span style="color: Tomato;"> </span><span style="color: Tomato;">t</span><span style="color: Tomato;">e</span><span style="color: Tomato;">s</span><span style="color: Tomato;">t</span><span style="color: Tomato;">*</span><span style="color: Tomato;">/</span><span style="color: Tomato;">1</span><span style="color: Tomato;"> </span><span style="color: Tomato;">i</span><span style="color: Tomato;">n</span><span style="color: Tomato;">s</span><span style="color: Tomato;">t</span><span style="color: Tomato;">a</span><span style="color: Tomato;">n</span><span style="color: Tomato;">c</span><span style="color: Tomato;">e</span><span style="color: Tomato;">o</span><span style="color: Tomato;">f</span><span style="color: Tomato;"> </span><span style="color: Tomato;">[</span><span style="color: Tomato;">1</span><span style="color: Tomato;">,</span><span style="color: Tomato;">2</span><span style="color: Tomato;">]</span>;
+    <span style="color: rgb(38, 148, 255);">│</span>          <span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Wrap the expression with a parenthesis</span>
+  
+      | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
+  0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">/**test*/!/** test*/1 instanceof [1,2];</span>
+    0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">/**test*/!/** test*/(1 instanceof [1,2]);</span>
+  
 </code></pre>{% endraw %}
 
 ### Valid

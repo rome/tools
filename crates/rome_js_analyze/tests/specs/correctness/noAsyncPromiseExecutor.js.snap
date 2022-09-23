@@ -17,32 +17,41 @@ new Promise(((((async () => {})))))
 
 # Diagnostics
 ```
-warning[correctness/noAsyncPromiseExecutor]: Promise executor functions should not be `async`.
-  ┌─ noAsyncPromiseExecutor.js:7:13
-  │
-7 │ new Promise(async function foo(resolve, reject) {})
-  │             --------------------------------------
+noAsyncPromiseExecutor.js:7:13 lint/correctness/noAsyncPromiseExecutor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-
-```
-
-```
-warning[correctness/noAsyncPromiseExecutor]: Promise executor functions should not be `async`.
-  ┌─ noAsyncPromiseExecutor.js:8:13
-  │
-8 │ new Promise(async (resolve, reject) => {})
-  │             -----------------------------
-
+  ! Promise executor functions should not be `async`.
+  
+    ┌─ noAsyncPromiseExecutor.js:7:13
+    │
+  7 │ new Promise(async function foo(resolve, reject) {})
+    │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
 
 ```
 
 ```
-warning[correctness/noAsyncPromiseExecutor]: Promise executor functions should not be `async`.
-  ┌─ noAsyncPromiseExecutor.js:9:17
-  │
-9 │ new Promise(((((async () => {})))))
-  │                 --------------
+noAsyncPromiseExecutor.js:8:13 lint/correctness/noAsyncPromiseExecutor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! Promise executor functions should not be `async`.
+  
+    ┌─ noAsyncPromiseExecutor.js:8:13
+    │
+  8 │ new Promise(async (resolve, reject) => {})
+    │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+
+```
+
+```
+noAsyncPromiseExecutor.js:9:17 lint/correctness/noAsyncPromiseExecutor ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Promise executor functions should not be `async`.
+  
+    ┌─ noAsyncPromiseExecutor.js:9:17
+    │
+  9 │ new Promise(((((async () => {})))))
+    │                 ^^^^^^^^^^^^^^
+  
 
 ```
 

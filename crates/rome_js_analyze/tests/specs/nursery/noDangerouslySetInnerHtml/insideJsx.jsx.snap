@@ -13,14 +13,17 @@ let b = <div foo="" />
 
 # Diagnostics
 ```
-warning[nursery/noDangerouslySetInnerHtml]: Avoid passing content using the dangerouslySetInnerHTML prop.
-  ┌─ insideJsx.jsx:2:14
-  │
-2 │ let a = <div dangerouslySetInnerHTML={{ __html: 'child' }} />
-  │              -----------------------
+insideJsx.jsx:2:14 lint/nursery/noDangerouslySetInnerHtml ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-= warning: Setting content using code can expose users to cross-site scripting (XSS) attacks
-
+  ! Avoid passing content using the dangerouslySetInnerHTML prop.
+  
+    ┌─ insideJsx.jsx:2:14
+    │
+  2 │ let a = <div dangerouslySetInnerHTML={{ __html: 'child' }} />
+    │              ^^^^^^^^^^^^^^^^^^^^^^^
+  
+  ! Setting content using code can expose users to cross-site scripting (XSS) attacks
+  
 
 ```
 

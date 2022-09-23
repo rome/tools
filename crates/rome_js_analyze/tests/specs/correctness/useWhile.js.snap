@@ -12,19 +12,23 @@ for (; true; ) {}
 
 # Diagnostics
 ```
-warning[correctness/useWhile]: Use while loops instead of for loops.
-  ┌─ useWhile.js:3:1
-  │
-3 │ for (; true; ) {}
-  │ --------------
+useWhile.js:3:1 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Use a while loop
-    | @@ -1,3 +1,3 @@
-0 0 |   for (let i = 0; i < 16; ++i) {}
-1 1 |   
-2   | - for (; true; ) {}
-  2 | + while (true) {}
-
+  ! Use while loops instead of for loops.
+  
+    ┌─ useWhile.js:3:1
+    │
+  3 │ for (; true; ) {}
+    │ ^^^^^^^^^^^^^^
+  
+  i Suggested fix: Use a while loop
+  
+      | @@ -1,3 +1,3 @@
+  0 0 |   for (let i = 0; i < 16; ++i) {}
+  1 1 |   
+  2   | - for (; true; ) {}
+    2 | + while (true) {}
+  
 
 ```
 

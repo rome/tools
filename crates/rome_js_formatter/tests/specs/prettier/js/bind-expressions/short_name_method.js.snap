@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\bind-expressions\\short_name_method.js"
 ---
 
 # Input
@@ -50,12 +52,17 @@ class X {
 
 # Errors
 ```
-error[SyntaxError]: expected an expression, or an assignment but instead found ':'
-  ┌─ short_name_method.js:3:24
-  │
-3 │     this.shortMethod = ::this.shortMethod;
-  │                        ^ Expected an expression, or an assignment here
+short_name_method.js:3:24 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an expression, or an assignment but instead found ':'
+  
+  × Expected an expression, or an assignment here
+  
+    ┌─ short_name_method.js:3:24
+    │
+  3 │     this.shortMethod = ::this.shortMethod;
+    │                        ^
+  
 
 ```
 

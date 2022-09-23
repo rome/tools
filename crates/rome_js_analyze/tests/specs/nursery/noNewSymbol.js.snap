@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 97
 expression: noNewSymbol.js
 ---
 # Input
@@ -20,80 +19,96 @@ var s = /* prefix_cmt */ new /* suffix_cmt */ Symbol() // comment
 
 # Diagnostics
 ```
-warning[nursery/noNewSymbol]: Symbol cannot be called as a constructor.
-  ┌─ noNewSymbol.js:8:11
-  │
-8 │ var foo = new Symbol('foo');
-  │           -----------------
+noNewSymbol.js:8:11 lint/nursery/noNewSymbol  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Remove new.
-    | @@ -5,7 +5,7 @@
-4 4 |       new Symbol();
-5 5 |   }
-6 6 |   // invalid
-7   | - var foo = new Symbol('foo');
-  7 | + var foo = Symbol('foo');
-8 8 |   var foo2 = new Symbol();
-9 9 |   var lorem = new Symbol() // comment
-10 10 |   var s = /* prefix_cmt */ new /* suffix_cmt */ Symbol() // comment
-
-
-```
-
-```
-warning[nursery/noNewSymbol]: Symbol cannot be called as a constructor.
-  ┌─ noNewSymbol.js:9:12
-  │
-9 │ var foo2 = new Symbol();
-  │            ------------
-
-Suggested fix: Remove new.
-    | @@ -6,6 +6,6 @@
-5 5 |   }
-6 6 |   // invalid
-7 7 |   var foo = new Symbol('foo');
-8   | - var foo2 = new Symbol();
-  8 | + var foo2 = Symbol();
-9 9 |   var lorem = new Symbol() // comment
-10 10 |   var s = /* prefix_cmt */ new /* suffix_cmt */ Symbol() // comment
-
+  ! Symbol cannot be called as a constructor.
+  
+    ┌─ noNewSymbol.js:8:11
+    │
+  8 │ var foo = new Symbol('foo');
+    │           ^^^^^^^^^^^^^^^^^
+  
+  i Suggested fix: Remove new.
+  
+      | @@ -5,7 +5,7 @@
+  4 4 |       new Symbol();
+  5 5 |   }
+  6 6 |   // invalid
+  7   | - var foo = new Symbol('foo');
+    7 | + var foo = Symbol('foo');
+  8 8 |   var foo2 = new Symbol();
+  9 9 |   var lorem = new Symbol() // comment
+  10 10 |   var s = /* prefix_cmt */ new /* suffix_cmt */ Symbol() // comment
+  
 
 ```
 
 ```
-warning[nursery/noNewSymbol]: Symbol cannot be called as a constructor.
-   ┌─ noNewSymbol.js:10:13
-   │
-10 │ var lorem = new Symbol() // comment
-   │             ------------
+noNewSymbol.js:9:12 lint/nursery/noNewSymbol  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Remove new.
-      | @@ -7,5 +7,5 @@
- 6  6 |   // invalid
- 7  7 |   var foo = new Symbol('foo');
- 8  8 |   var foo2 = new Symbol();
- 9    | - var lorem = new Symbol() // comment
-    9 | + var lorem = Symbol() // comment
-10 10 |   var s = /* prefix_cmt */ new /* suffix_cmt */ Symbol() // comment
-
+  ! Symbol cannot be called as a constructor.
+  
+    ┌─ noNewSymbol.js:9:12
+    │
+  9 │ var foo2 = new Symbol();
+    │            ^^^^^^^^^^^^
+  
+  i Suggested fix: Remove new.
+  
+      | @@ -6,6 +6,6 @@
+  5 5 |   }
+  6 6 |   // invalid
+  7 7 |   var foo = new Symbol('foo');
+  8   | - var foo2 = new Symbol();
+    8 | + var foo2 = Symbol();
+  9 9 |   var lorem = new Symbol() // comment
+  10 10 |   var s = /* prefix_cmt */ new /* suffix_cmt */ Symbol() // comment
+  
 
 ```
 
 ```
-warning[nursery/noNewSymbol]: Symbol cannot be called as a constructor.
-   ┌─ noNewSymbol.js:11:26
-   │
-11 │ var s = /* prefix_cmt */ new /* suffix_cmt */ Symbol() // comment
-   │                          -----------------------------
+noNewSymbol.js:10:13 lint/nursery/noNewSymbol  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Remove new.
-      | @@ -8,4 +8,4 @@
- 7  7 |   var foo = new Symbol('foo');
- 8  8 |   var foo2 = new Symbol();
- 9  9 |   var lorem = new Symbol() // comment
-10    | - var s = /* prefix_cmt */ new /* suffix_cmt */ Symbol() // comment
-   10 | + var s = /* prefix_cmt */  /* suffix_cmt */ Symbol() // comment
+  ! Symbol cannot be called as a constructor.
+  
+     ┌─ noNewSymbol.js:10:13
+     │
+  10 │ var lorem = new Symbol() // comment
+     │             ^^^^^^^^^^^^
+  
+  i Suggested fix: Remove new.
+  
+        | @@ -7,5 +7,5 @@
+   6  6 |   // invalid
+   7  7 |   var foo = new Symbol('foo');
+   8  8 |   var foo2 = new Symbol();
+   9    | - var lorem = new Symbol() // comment
+      9 | + var lorem = Symbol() // comment
+  10 10 |   var s = /* prefix_cmt */ new /* suffix_cmt */ Symbol() // comment
+  
 
+```
+
+```
+noNewSymbol.js:11:26 lint/nursery/noNewSymbol  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Symbol cannot be called as a constructor.
+  
+     ┌─ noNewSymbol.js:11:26
+     │
+  11 │ var s = /* prefix_cmt */ new /* suffix_cmt */ Symbol() // comment
+     │                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i Suggested fix: Remove new.
+  
+        | @@ -8,4 +8,4 @@
+   7  7 |   var foo = new Symbol('foo');
+   8  8 |   var foo2 = new Symbol();
+   9  9 |   var lorem = new Symbol() // comment
+  10    | - var s = /* prefix_cmt */ new /* suffix_cmt */ Symbol() // comment
+     10 | + var s = /* prefix_cmt */  /* suffix_cmt */ Symbol() // comment
+  
 
 ```
 

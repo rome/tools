@@ -129,18 +129,24 @@ JsModule {
         8: R_CURLY@47..48 "}" [] []
   3: EOF@48..49 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected a semicolon to end the method declaration, but found none
-  ┌─ ts_ambient_context_semi.ts:1:19
-  │
-1 │ declare class A { method() method2() method3() }
-  │                   ^^^^^^^^
+ts_ambient_context_semi.ts:1:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a semicolon to end the method declaration, but found none
+  
+    ┌─ ts_ambient_context_semi.ts:1:19
+    │
+  1 │ declare class A { method() method2() method3() }
+    │                   ^^^^^^^^
+  
 --
-error[SyntaxError]: expected a semicolon to end the method declaration, but found none
-  ┌─ ts_ambient_context_semi.ts:1:28
-  │
-1 │ declare class A { method() method2() method3() }
-  │                            ^^^^^^^^^
+ts_ambient_context_semi.ts:1:28 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a semicolon to end the method declaration, but found none
+  
+    ┌─ ts_ambient_context_semi.ts:1:28
+    │
+  1 │ declare class A { method() method2() method3() }
+    │                            ^^^^^^^^^
+  
 --
 declare class A { method() method2() method3() }

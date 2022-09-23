@@ -30,11 +30,16 @@ JsModule {
       4: R_CURLY@8..9 "}" [] []
   3: EOF@9..10 "" [Newline("\n")] []
 --
-error[SyntaxError]: 'enum's are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  ┌─ enum_in_js.js:1:1
-  │
-1 │ enum A {}
-  │ ^^^^^^^^^ TypeScript only syntax
+enum_in_js.js:1:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'enum's are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  
+  × TypeScript only syntax
+  
+    ┌─ enum_in_js.js:1:1
+    │
+  1 │ enum A {}
+    │ ^^^^^^^^^
+  
 --
 enum A {}

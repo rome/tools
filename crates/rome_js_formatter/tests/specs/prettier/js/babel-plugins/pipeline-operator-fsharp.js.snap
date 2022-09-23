@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\babel-plugins\\pipeline-operator-fsharp.js"
 ---
 
 # Input
@@ -134,72 +136,134 @@ let newScore = boundScore(0, 100, add(7, double(person.score)));
 
 # Errors
 ```
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-  ┌─ pipeline-operator-fsharp.js:5:4
-  │
-5 │   |> await
-  │    ^ This operator requires a left hand side value
+pipeline-operator-fsharp.js:5:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an unary expression but instead found '|'
-  ┌─ pipeline-operator-fsharp.js:6:3
-  │
-6 │   |> x => doubleSay(x, ', ')
-  │   ^ Expected an unary expression here
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+    ┌─ pipeline-operator-fsharp.js:5:4
+    │
+  5 │   |> await
+    │    ^
+  
+pipeline-operator-fsharp.js:6:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-  ┌─ pipeline-operator-fsharp.js:6:4
-  │
-6 │   |> x => doubleSay(x, ', ')
-  │    ^ This operator requires a left hand side value
+  × expected an unary expression but instead found '|'
+  
+  × Expected an unary expression here
+  
+    ┌─ pipeline-operator-fsharp.js:6:3
+    │
+  6 │   |> x => doubleSay(x, ', ')
+    │   ^
+  
+pipeline-operator-fsharp.js:6:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ pipeline-operator-fsharp.js:6:8
-  │  
-4 │ ┌ promise
-5 │ │   |> await
-6 │ │   |> x => doubleSay(x, ', ')
-  │ │        ^^ An explicit or implicit semicolon is expected here...
-  │ └─────────' ...Which is required to end this statement
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+    ┌─ pipeline-operator-fsharp.js:6:4
+    │
+  6 │   |> x => doubleSay(x, ', ')
+    │    ^
+  
+pipeline-operator-fsharp.js:6:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ pipeline-operator-fsharp.js:18:4
-   │
-18 │   |> doubleSay
-   │    ^ This operator requires a left hand side value
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ pipeline-operator-fsharp.js:6:8
+    │
+  6 │   |> x => doubleSay(x, ', ')
+    │        ^^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ pipeline-operator-fsharp.js:4:1
+    │  
+  4 │ ┌ promise
+  5 │ │   |> await
+  6 │ │   |> x => doubleSay(x, ', ')
+    │ └─────────^
+  
+pipeline-operator-fsharp.js:18:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ pipeline-operator-fsharp.js:19:4
-   │
-19 │   |> capitalize
-   │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ pipeline-operator-fsharp.js:18:4
+     │
+  18 │   |> doubleSay
+     │    ^
+  
+pipeline-operator-fsharp.js:19:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ pipeline-operator-fsharp.js:20:4
-   │
-20 │   |> exclaim;
-   │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ pipeline-operator-fsharp.js:19:4
+     │
+  19 │   |> capitalize
+     │    ^
+  
+pipeline-operator-fsharp.js:20:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ pipeline-operator-fsharp.js:27:4
-   │
-27 │   |> double
-   │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ pipeline-operator-fsharp.js:20:4
+     │
+  20 │   |> exclaim;
+     │    ^
+  
+pipeline-operator-fsharp.js:27:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-   ┌─ pipeline-operator-fsharp.js:28:4
-   │
-28 │   |> n => add(7, n)
-   │    ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ pipeline-operator-fsharp.js:27:4
+     │
+  27 │   |> double
+     │    ^
+  
+pipeline-operator-fsharp.js:28:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-   ┌─ pipeline-operator-fsharp.js:28:8
-   │  
-26 │ ┌ const newScore = person.score
-27 │ │   |> double
-28 │ │   |> n => add(7, n)
-   │ │        ^^ An explicit or implicit semicolon is expected here...
-   │ └───────' ...Which is required to end this statement
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+     ┌─ pipeline-operator-fsharp.js:28:4
+     │
+  28 │   |> n => add(7, n)
+     │    ^
+  
+pipeline-operator-fsharp.js:28:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+     ┌─ pipeline-operator-fsharp.js:28:8
+     │
+  28 │   |> n => add(7, n)
+     │        ^^
+  
+  i ...Which is required to end this statement
+  
+     ┌─ pipeline-operator-fsharp.js:26:1
+     │  
+  26 │ ┌ const newScore = person.score
+  27 │ │   |> double
+  28 │ │   |> n => add(7, n)
+     │ └───────^
+  
 
 ```
 

@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "typescript\\conformance\\classes\\classDeclarations\\classAbstractKeyword\\classAbstractProperties.ts"
 ---
 
 # Input
@@ -63,18 +65,38 @@ abstract class A {
 
 # Errors
 ```
-error[SyntaxError]: 'private' cannot be used with 'abstract' modifier.
-  ┌─ classAbstractProperties.ts:5:5
-  │
-5 │     private abstract w : number;
-  │     ^^^^^^^ -------- 'abstract' modifier
+classAbstractProperties.ts:5:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: 'private' cannot be used with 'abstract' modifier.
-   ┌─ classAbstractProperties.ts:12:5
-   │
-12 │     private abstract foo_w() : number;
-   │     ^^^^^^^ -------- 'abstract' modifier
+  × 'private' cannot be used with 'abstract' modifier.
+  
+    ┌─ classAbstractProperties.ts:5:5
+    │
+  5 │     private abstract w : number;
+    │     ^^^^^^^
+  
+  i 'abstract' modifier
+  
+    ┌─ classAbstractProperties.ts:5:13
+    │
+  5 │     private abstract w : number;
+    │             ^^^^^^^^
+  
+classAbstractProperties.ts:12:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'private' cannot be used with 'abstract' modifier.
+  
+     ┌─ classAbstractProperties.ts:12:5
+     │
+  12 │     private abstract foo_w() : number;
+     │     ^^^^^^^
+  
+  i 'abstract' modifier
+  
+     ┌─ classAbstractProperties.ts:12:13
+     │
+  12 │     private abstract foo_w() : number;
+     │             ^^^^^^^^
+  
 
 ```
 

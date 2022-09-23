@@ -51,18 +51,28 @@ JsModule {
       0: R_CURLY@10..11 "}" [] []
   3: EOF@11..12 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
-  ┌─ block_stmt_in_class.js:1:9
-  │
-1 │ class S{{}}
-  │         ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+block_stmt_in_class.js:1:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
+  
+  × Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+  
+    ┌─ block_stmt_in_class.js:1:9
+    │
+  1 │ class S{{}}
+    │         ^
+  
 --
-error[SyntaxError]: expected a statement but instead found '}'
-  ┌─ block_stmt_in_class.js:1:11
-  │
-1 │ class S{{}}
-  │           ^ Expected a statement here
+block_stmt_in_class.js:1:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a statement but instead found '}'
+  
+  × Expected a statement here
+  
+    ┌─ block_stmt_in_class.js:1:11
+    │
+  1 │ class S{{}}
+    │           ^
+  
 --
 class S{{}}

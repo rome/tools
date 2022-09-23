@@ -27,28 +27,34 @@ For the time being this rule will ignore it, but this **might change in the futu
 const a = 4;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noUnusedVariables/">nursery/noUnusedVariables</a></span><span style="color: Orange;">]</span><strong>: </strong><strong>This variable is unused.</strong>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noUnusedVariables.js:1:7
-  <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> const a = 4;
-  <span style="color: rgb(38, 148, 255);">│</span>       <span style="color: rgb(38, 148, 255);">-</span>
+{% raw %}<pre class="language-text"><code class="language-text">nursery/noUnusedVariables.js:1:7 <a href="https://rome.tools/docs/lint/rules/noUnusedVariables">lint/nursery/noUnusedVariables</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This variable is unused.</span>
+  
+    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noUnusedVariables.js:1:7
+    <span style="color: rgb(38, 148, 255);">│</span>
+<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> const <span style="color: Tomato;">a</span> = 4;
+    <span style="color: rgb(38, 148, 255);">│</span>       <span style="color: Tomato;">^</span>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Unused variables usually are result of incomplete refactoring, typos and other source of bugs.</span>
+  
 </code></pre>{% endraw %}
 
 ```jsx
 let a = 4;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noUnusedVariables/">nursery/noUnusedVariables</a></span><span style="color: Orange;">]</span><strong>: </strong><strong>This variable is unused.</strong>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noUnusedVariables.js:1:5
-  <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> let a = 4;
-  <span style="color: rgb(38, 148, 255);">│</span>     <span style="color: rgb(38, 148, 255);">-</span>
+{% raw %}<pre class="language-text"><code class="language-text">nursery/noUnusedVariables.js:1:5 <a href="https://rome.tools/docs/lint/rules/noUnusedVariables">lint/nursery/noUnusedVariables</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This variable is unused.</span>
+  
+    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noUnusedVariables.js:1:5
+    <span style="color: rgb(38, 148, 255);">│</span>
+<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> let <span style="color: Tomato;">a</span> = 4;
+    <span style="color: rgb(38, 148, 255);">│</span>     <span style="color: Tomato;">^</span>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Unused variables usually are result of incomplete refactoring, typos and other source of bugs.</span>
+  
 </code></pre>{% endraw %}
 
 ```jsx
@@ -56,14 +62,17 @@ function foo() {
 };
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noUnusedVariables/">nursery/noUnusedVariables</a></span><span style="color: Orange;">]</span><strong>: </strong><strong>This function is unused.</strong>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noUnusedVariables.js:1:10
-  <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> function foo() {
-  <span style="color: rgb(38, 148, 255);">│</span>          <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span>
+{% raw %}<pre class="language-text"><code class="language-text">nursery/noUnusedVariables.js:1:10 <a href="https://rome.tools/docs/lint/rules/noUnusedVariables">lint/nursery/noUnusedVariables</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This function is unused.</span>
+  
+    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noUnusedVariables.js:1:10
+    <span style="color: rgb(38, 148, 255);">│</span>
+<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> function <span style="color: Tomato;">f</span><span style="color: Tomato;">o</span><span style="color: Tomato;">o</span>() {
+    <span style="color: rgb(38, 148, 255);">│</span>          <span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Unused variables usually are result of incomplete refactoring, typos and other source of bugs.</span>
+  
 </code></pre>{% endraw %}
 
 ```jsx
@@ -73,14 +82,17 @@ function foo(myVar) {
 foo();
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noUnusedVariables/">nursery/noUnusedVariables</a></span><span style="color: Orange;">]</span><strong>: </strong><strong>This parameter is unused.</strong>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noUnusedVariables.js:1:14
-  <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> function foo(myVar) {
-  <span style="color: rgb(38, 148, 255);">│</span>              <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span>
+{% raw %}<pre class="language-text"><code class="language-text">nursery/noUnusedVariables.js:1:14 <a href="https://rome.tools/docs/lint/rules/noUnusedVariables">lint/nursery/noUnusedVariables</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This parameter is unused.</span>
+  
+    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noUnusedVariables.js:1:14
+    <span style="color: rgb(38, 148, 255);">│</span>
+<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> function foo(<span style="color: Tomato;">m</span><span style="color: Tomato;">y</span><span style="color: Tomato;">V</span><span style="color: Tomato;">a</span><span style="color: Tomato;">r</span>) {
+    <span style="color: rgb(38, 148, 255);">│</span>              <span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Unused variables usually are result of incomplete refactoring, typos and other source of bugs.</span>
+  
 </code></pre>{% endraw %}
 
 ```jsx
@@ -88,14 +100,17 @@ const foo = () => {
 };
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noUnusedVariables/">nursery/noUnusedVariables</a></span><span style="color: Orange;">]</span><strong>: </strong><strong>This variable is unused.</strong>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noUnusedVariables.js:1:7
-  <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> const foo = () =&gt; {
-  <span style="color: rgb(38, 148, 255);">│</span>       <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span>
+{% raw %}<pre class="language-text"><code class="language-text">nursery/noUnusedVariables.js:1:7 <a href="https://rome.tools/docs/lint/rules/noUnusedVariables">lint/nursery/noUnusedVariables</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This variable is unused.</span>
+  
+    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noUnusedVariables.js:1:7
+    <span style="color: rgb(38, 148, 255);">│</span>
+<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> const <span style="color: Tomato;">f</span><span style="color: Tomato;">o</span><span style="color: Tomato;">o</span> = () =&gt; {
+    <span style="color: rgb(38, 148, 255);">│</span>       <span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Unused variables usually are result of incomplete refactoring, typos and other source of bugs.</span>
+  
 </code></pre>{% endraw %}
 
 ```jsx
@@ -104,14 +119,17 @@ function foo() {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noUnusedVariables/">nursery/noUnusedVariables</a></span><span style="color: Orange;">]</span><strong>: </strong><strong>This function is unused.</strong>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noUnusedVariables.js:1:10
-  <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> function foo() {
-  <span style="color: rgb(38, 148, 255);">│</span>          <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span>
+{% raw %}<pre class="language-text"><code class="language-text">nursery/noUnusedVariables.js:1:10 <a href="https://rome.tools/docs/lint/rules/noUnusedVariables">lint/nursery/noUnusedVariables</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This function is unused.</span>
+  
+    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noUnusedVariables.js:1:10
+    <span style="color: rgb(38, 148, 255);">│</span>
+<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> function <span style="color: Tomato;">f</span><span style="color: Tomato;">o</span><span style="color: Tomato;">o</span>() {
+    <span style="color: rgb(38, 148, 255);">│</span>          <span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Unused variables usually are result of incomplete refactoring, typos and other source of bugs.</span>
+  
 </code></pre>{% endraw %}
 
 ```jsx
@@ -121,14 +139,17 @@ const foo = () => {
 };
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noUnusedVariables/">nursery/noUnusedVariables</a></span><span style="color: Orange;">]</span><strong>: </strong><strong>This variable is unused.</strong>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noUnusedVariables.js:1:7
-  <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> const foo = () =&gt; {
-  <span style="color: rgb(38, 148, 255);">│</span>       <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span>
+{% raw %}<pre class="language-text"><code class="language-text">nursery/noUnusedVariables.js:1:7 <a href="https://rome.tools/docs/lint/rules/noUnusedVariables">lint/nursery/noUnusedVariables</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This variable is unused.</span>
+  
+    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> nursery/noUnusedVariables.js:1:7
+    <span style="color: rgb(38, 148, 255);">│</span>
+<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> const <span style="color: Tomato;">f</span><span style="color: Tomato;">o</span><span style="color: Tomato;">o</span> = () =&gt; {
+    <span style="color: rgb(38, 148, 255);">│</span>       <span style="color: Tomato;">^</span><span style="color: Tomato;">^</span><span style="color: Tomato;">^</span>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Unused variables usually are result of incomplete refactoring, typos and other source of bugs.</span>
+  
 </code></pre>{% endraw %}
 
 # Valid

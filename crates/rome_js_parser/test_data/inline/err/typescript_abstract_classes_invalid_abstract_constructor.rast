@@ -73,11 +73,14 @@ JsModule {
       0: SEMICOLON@43..44 ";" [] []
   3: EOF@44..45 "" [Newline("\n")] []
 --
-error[SyntaxError]: 'abstract' cannot appear on a constructor declaration.
-  ┌─ typescript_abstract_classes_invalid_abstract_constructor.ts:1:20
-  │
-1 │ abstract class A { abstract constructor();};
-  │                    ^^^^^^^^
+typescript_abstract_classes_invalid_abstract_constructor.ts:1:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'abstract' cannot appear on a constructor declaration.
+  
+    ┌─ typescript_abstract_classes_invalid_abstract_constructor.ts:1:20
+    │
+  1 │ abstract class A { abstract constructor();};
+    │                    ^^^^^^^^
+  
 --
 abstract class A { abstract constructor();};

@@ -55,26 +55,39 @@ JsModule {
       0: SEMICOLON@12..13 ";" [] []
   3: EOF@13..14 "" [Newline("\n")] []
 --
-error[SyntaxError]: `enum` statements must have a name
-  ┌─ enum_no_l_curly.ts:1:1
-  │
-1 │ enum;
-  │ ^^^^
+enum_no_l_curly.ts:1:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × `enum` statements must have a name
+  
+    ┌─ enum_no_l_curly.ts:1:1
+    │
+  1 │ enum;
+    │ ^^^^
+  
 --
-error[SyntaxError]: expected `{` but instead found `;`
-  ┌─ enum_no_l_curly.ts:1:5
-  │
-1 │ enum;
-  │     ^ unexpected
+enum_no_l_curly.ts:1:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `{` but instead found `;`
+  
+  × unexpected
+  
+    ┌─ enum_no_l_curly.ts:1:5
+    │
+  1 │ enum;
+    │     ^
+  
 --
-error[SyntaxError]: expected `{` but instead found `;`
-  ┌─ enum_no_l_curly.ts:2:7
-  │
-2 │ enum A;
-  │       ^ unexpected
+enum_no_l_curly.ts:2:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `{` but instead found `;`
+  
+  × unexpected
+  
+    ┌─ enum_no_l_curly.ts:2:7
+    │
+  2 │ enum A;
+    │       ^
+  
 --
 enum;
 enum A;

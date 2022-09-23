@@ -117,19 +117,25 @@ JsModule {
       5: R_CURLY@26..27 "}" [] []
   3: EOF@27..28 "" [Newline("\n")] []
 --
-error[SyntaxError]: `enum` statements must have a name
-  ┌─ enum_decl_no_id.ts:1:1
-  │
-1 │ enum {A,B,C}
-  │ ^^^^^
+enum_decl_no_id.ts:1:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × `enum` statements must have a name
+  
+    ┌─ enum_decl_no_id.ts:1:1
+    │
+  1 │ enum {A,B,C}
+    │ ^^^^^
+  
 --
-error[SyntaxError]: invalid `enum` name
-  ┌─ enum_decl_no_id.ts:2:6
-  │
-2 │ enum 1 {A,B,C}
-  │      ^
+enum_decl_no_id.ts:2:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × invalid `enum` name
+  
+    ┌─ enum_decl_no_id.ts:2:6
+    │
+  2 │ enum 1 {A,B,C}
+    │      ^
+  
 --
 enum {A,B,C}
 enum 1 {A,B,C}

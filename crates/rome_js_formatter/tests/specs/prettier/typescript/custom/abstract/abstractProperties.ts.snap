@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "typescript\\custom\\abstract\\abstractProperties.ts"
 ---
 
 # Input
@@ -52,50 +54,102 @@ abstract class Foo {
 
 # Errors
 ```
-error[SyntaxError]: 'private' cannot be used with 'abstract' modifier.
-  ┌─ abstractProperties.ts:2:14
-  │
-2 │     abstract private a: 1;
-  │     -------- ^^^^^^^
-  │     │         
-  │     'abstract' modifier
+abstractProperties.ts:2:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: 'private' cannot be used with 'abstract' modifier.
-  ┌─ abstractProperties.ts:3:5
-  │
-3 │     private abstract b: 2;
-  │     ^^^^^^^ -------- 'abstract' modifier
+  × 'private' cannot be used with 'abstract' modifier.
+  
+    ┌─ abstractProperties.ts:2:14
+    │
+  2 │     abstract private a: 1;
+    │              ^^^^^^^
+  
+  i 'abstract' modifier
+  
+    ┌─ abstractProperties.ts:2:5
+    │
+  2 │     abstract private a: 1;
+    │     ^^^^^^^^
+  
+abstractProperties.ts:3:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: 'abstract' cannot be used with 'static' modifier.
-  ┌─ abstractProperties.ts:4:12
-  │
-4 │     static abstract c: 3;
-  │     ------ ^^^^^^^^
-  │     │       
-  │     'static' modifier
+  × 'private' cannot be used with 'abstract' modifier.
+  
+    ┌─ abstractProperties.ts:3:5
+    │
+  3 │     private abstract b: 2;
+    │     ^^^^^^^
+  
+  i 'abstract' modifier
+  
+    ┌─ abstractProperties.ts:3:13
+    │
+  3 │     private abstract b: 2;
+    │             ^^^^^^^^
+  
+abstractProperties.ts:4:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: 'private' cannot be used with 'abstract' modifier.
-  ┌─ abstractProperties.ts:5:14
-  │
-5 │     abstract private ['g'];
-  │     -------- ^^^^^^^
-  │     │         
-  │     'abstract' modifier
+  × 'abstract' cannot be used with 'static' modifier.
+  
+    ┌─ abstractProperties.ts:4:12
+    │
+  4 │     static abstract c: 3;
+    │            ^^^^^^^^
+  
+  i 'static' modifier
+  
+    ┌─ abstractProperties.ts:4:5
+    │
+  4 │     static abstract c: 3;
+    │     ^^^^^^
+  
+abstractProperties.ts:5:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: 'private' cannot be used with 'abstract' modifier.
-  ┌─ abstractProperties.ts:6:5
-  │
-6 │     private abstract ['h'];
-  │     ^^^^^^^ -------- 'abstract' modifier
+  × 'private' cannot be used with 'abstract' modifier.
+  
+    ┌─ abstractProperties.ts:5:14
+    │
+  5 │     abstract private ['g'];
+    │              ^^^^^^^
+  
+  i 'abstract' modifier
+  
+    ┌─ abstractProperties.ts:5:5
+    │
+  5 │     abstract private ['g'];
+    │     ^^^^^^^^
+  
+abstractProperties.ts:6:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: 'abstract' cannot be used with 'static' modifier.
-  ┌─ abstractProperties.ts:7:12
-  │
-7 │     static abstract ['i'];
-  │     ------ ^^^^^^^^
-  │     │       
-  │     'static' modifier
+  × 'private' cannot be used with 'abstract' modifier.
+  
+    ┌─ abstractProperties.ts:6:5
+    │
+  6 │     private abstract ['h'];
+    │     ^^^^^^^
+  
+  i 'abstract' modifier
+  
+    ┌─ abstractProperties.ts:6:13
+    │
+  6 │     private abstract ['h'];
+    │             ^^^^^^^^
+  
+abstractProperties.ts:7:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'abstract' cannot be used with 'static' modifier.
+  
+    ┌─ abstractProperties.ts:7:12
+    │
+  7 │     static abstract ['i'];
+    │            ^^^^^^^^
+  
+  i 'static' modifier
+  
+    ┌─ abstractProperties.ts:7:5
+    │
+  7 │     static abstract ['i'];
+    │     ^^^^^^
+  
 
 ```
 

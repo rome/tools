@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: jsx/do/do.js
+  test_file: "jsx\\do\\do.js"
 ---
 
 # Input
@@ -43,18 +43,26 @@ info:
 
 # Errors
 ```
-error[SyntaxError]: expected `}` but instead found `do`
-  ┌─ do.js:2:4
-  │
-2 │   {do {
-  │    ^^ unexpected
+do.js:2:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-  ┌─ do.js:4:4
-  │
-4 │   }}
-  │    ^
+  × expected `}` but instead found `do`
+  
+  × unexpected
+  
+    ┌─ do.js:2:4
+    │
+  2 │   {do {
+    │    ^^
+  
+do.js:4:4 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+  
+    ┌─ do.js:4:4
+    │
+  4 │   }}
+    │    ^
+  
 
 ```
 

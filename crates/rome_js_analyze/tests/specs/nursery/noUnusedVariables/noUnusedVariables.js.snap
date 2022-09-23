@@ -64,134 +64,167 @@ new (class C {
 
 # Diagnostics
 ```
-warning[nursery/noUnusedVariables]: This variable is unused.
-  ┌─ noUnusedVariables.js:3:7
-  │
-3 │ const a = 1;
-  │       -
+noUnusedVariables.js:3:7 lint/nursery/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-
-
-```
-
-```
-warning[nursery/noUnusedVariables]: This variable is unused.
-  ┌─ noUnusedVariables.js:4:7
-  │
-4 │ const b = 2,
-  │       -
-
-=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-
+  ! This variable is unused.
+  
+    ┌─ noUnusedVariables.js:3:7
+    │
+  3 │ const a = 1;
+    │       ^
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
 
 ```
 
 ```
-warning[nursery/noUnusedVariables]: This function is unused.
-  ┌─ noUnusedVariables.js:8:10
-  │
-8 │ function f1() {}
-  │          --
+noUnusedVariables.js:4:7 lint/nursery/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-
-
-```
-
-```
-warning[nursery/noUnusedVariables]: This function is unused.
-   ┌─ noUnusedVariables.js:10:10
-   │
-10 │ function f2() {
-   │          --
-
-=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-
+  ! This variable is unused.
+  
+    ┌─ noUnusedVariables.js:4:7
+    │
+  4 │ const b = 2,
+    │       ^
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
 
 ```
 
 ```
-warning[nursery/noUnusedVariables]: This function is unused.
-   ┌─ noUnusedVariables.js:14:10
-   │
-14 │ function f3() {
-   │          --
+noUnusedVariables.js:8:10 lint/nursery/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-
-
-```
-
-```
-warning[nursery/noUnusedVariables]: This parameter is unused.
-   ┌─ noUnusedVariables.js:21:14
-   │
-21 │ function f41(a) {}
-   │              -
-
-=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-
+  ! This function is unused.
+  
+    ┌─ noUnusedVariables.js:8:10
+    │
+  8 │ function f1() {}
+    │          ^^
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
 
 ```
 
 ```
-warning[nursery/noUnusedVariables]: This parameter is unused.
-   ┌─ noUnusedVariables.js:24:17
-   │
-24 │ function f42(a, b) {
-   │                 -
+noUnusedVariables.js:10:10 lint/nursery/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-
-
-```
-
-```
-warning[nursery/noUnusedVariables]: This parameter is unused.
-   ┌─ noUnusedVariables.js:29:17
-   │
-29 │ function f43(a, b) {
-   │                 -
-
-=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-
+  ! This function is unused.
+  
+     ┌─ noUnusedVariables.js:10:10
+     │
+  10 │ function f2() {
+     │          ^^
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
 
 ```
 
 ```
-warning[nursery/noUnusedVariables]: This variable is unused.
-   ┌─ noUnusedVariables.js:34:7
-   │
-34 │ const f5 = () => {};
-   │       --
+noUnusedVariables.js:14:10 lint/nursery/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-
-
-```
-
-```
-warning[nursery/noUnusedVariables]: This variable is unused.
-   ┌─ noUnusedVariables.js:36:7
-   │
-36 │ const f6 = () => {
-   │       --
-
-=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-
+  ! This function is unused.
+  
+     ┌─ noUnusedVariables.js:14:10
+     │
+  14 │ function f3() {
+     │          ^^
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
 
 ```
 
 ```
-warning[nursery/noUnusedVariables]: This variable is unused.
-   ┌─ noUnusedVariables.js:41:10
-   │
-41 │ } catch (e) {}
-   │          -
+noUnusedVariables.js:21:14 lint/nursery/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  ! This parameter is unused.
+  
+     ┌─ noUnusedVariables.js:21:14
+     │
+  21 │ function f41(a) {}
+     │              ^
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
 
+```
+
+```
+noUnusedVariables.js:24:17 lint/nursery/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This parameter is unused.
+  
+     ┌─ noUnusedVariables.js:24:17
+     │
+  24 │ function f42(a, b) {
+     │                 ^
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
+
+```
+
+```
+noUnusedVariables.js:29:17 lint/nursery/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This parameter is unused.
+  
+     ┌─ noUnusedVariables.js:29:17
+     │
+  29 │ function f43(a, b) {
+     │                 ^
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
+
+```
+
+```
+noUnusedVariables.js:34:7 lint/nursery/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This variable is unused.
+  
+     ┌─ noUnusedVariables.js:34:7
+     │
+  34 │ const f5 = () => {};
+     │       ^^
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
+
+```
+
+```
+noUnusedVariables.js:36:7 lint/nursery/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This variable is unused.
+  
+     ┌─ noUnusedVariables.js:36:7
+     │
+  36 │ const f6 = () => {
+     │       ^^
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
+
+```
+
+```
+noUnusedVariables.js:41:10 lint/nursery/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This variable is unused.
+  
+     ┌─ noUnusedVariables.js:41:10
+     │
+  41 │ } catch (e) {}
+     │          ^
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
 
 ```
 

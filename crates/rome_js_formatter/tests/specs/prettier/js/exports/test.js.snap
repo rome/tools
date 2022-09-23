@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\exports\\test.js"
 ---
 
 # Input
@@ -78,45 +80,82 @@ export { undefinedExport };
 
 # Errors
 ```
-error[SyntaxError]: expected a class, a function, or a variable declaration but instead found 'a'
-  ┌─ test.js:3:8
-  │
-3 │ export a,{b} from "./baz";
-  │        ^ Expected a class, a function, or a variable declaration here
+test.js:3:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ test.js:3:14
-  │
-3 │ export a,{b} from "./baz";
-  │        ------^^^^
-  │        │     │
-  │        │     An explicit or implicit semicolon is expected here...
-  │        ...Which is required to end this statement
+  × expected a class, a function, or a variable declaration but instead found 'a'
+  
+  × Expected a class, a function, or a variable declaration here
+  
+    ┌─ test.js:3:8
+    │
+  3 │ export a,{b} from "./baz";
+    │        ^
+  
+test.js:3:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ test.js:3:19
-  │
-3 │ export a,{b} from "./baz";
-  │              -----^^^^^^^
-  │              │    │
-  │              │    An explicit or implicit semicolon is expected here...
-  │              ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ test.js:3:14
+    │
+  3 │ export a,{b} from "./baz";
+    │              ^^^^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ test.js:3:8
+    │
+  3 │ export a,{b} from "./baz";
+    │        ^^^^^^^^^^
+  
+test.js:3:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `from` but instead found `,`
-  ┌─ test.js:7:16
-  │
-7 │ export * as foo,{bar} from "./baz";
-  │                ^ unexpected
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ test.js:3:19
+    │
+  3 │ export a,{b} from "./baz";
+    │                   ^^^^^^^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ test.js:3:14
+    │
+  3 │ export a,{b} from "./baz";
+    │              ^^^^^^^^^^^^
+  
+test.js:7:16 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ test.js:7:28
-  │
-7 │ export * as foo,{bar} from "./baz";
-  │                       -----^^^^^^^
-  │                       │    │
-  │                       │    An explicit or implicit semicolon is expected here...
-  │                       ...Which is required to end this statement
+  × expected `from` but instead found `,`
+  
+  × unexpected
+  
+    ┌─ test.js:7:16
+    │
+  7 │ export * as foo,{bar} from "./baz";
+    │                ^
+  
+test.js:7:28 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ test.js:7:28
+    │
+  7 │ export * as foo,{bar} from "./baz";
+    │                            ^^^^^^^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ test.js:7:23
+    │
+  7 │ export * as foo,{bar} from "./baz";
+    │                       ^^^^^^^^^^^^
+  
 
 ```
 

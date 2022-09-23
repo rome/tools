@@ -272,6 +272,9 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
             pub fn get_severity_from_code(&self, code: &str) -> Option<Severity> {
                 let mut split_code = code.split('/');
 
+                let _lint = split_code.next();
+                debug_assert_eq!(_lint, Some("lint"));
+
                 let group = split_code.next();
                 let rule_name = split_code.next();
 

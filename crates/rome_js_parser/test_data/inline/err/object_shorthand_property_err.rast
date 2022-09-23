@@ -186,26 +186,41 @@ JsModule {
       1: (empty)
   3: EOF@52..53 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `,` but instead found `b`
-  ┌─ object_shorthand_property_err.js:1:9
-  │
-1 │ let { a b } = c
-  │         ^ unexpected
+object_shorthand_property_err.js:1:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `b`
+  
+  × unexpected
+  
+    ┌─ object_shorthand_property_err.js:1:9
+    │
+  1 │ let { a b } = c
+    │         ^
+  
 --
-error[SyntaxError]: expected an identifier but instead found '='
-  ┌─ object_shorthand_property_err.js:2:7
-  │
-2 │ let { = "test" } = c
-  │       ^ Expected an identifier here
+object_shorthand_property_err.js:2:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier but instead found '='
+  
+  × Expected an identifier here
+  
+    ┌─ object_shorthand_property_err.js:2:7
+    │
+  2 │ let { = "test" } = c
+    │       ^
+  
 --
-error[SyntaxError]: expected an identifier, a member name, or a rest pattern but instead found ','
-  ┌─ object_shorthand_property_err.js:3:7
-  │
-3 │ let { , d } = c
-  │       ^ Expected an identifier, a member name, or a rest pattern here
+object_shorthand_property_err.js:3:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier, a member name, or a rest pattern but instead found ','
+  
+  × Expected an identifier, a member name, or a rest pattern here
+  
+    ┌─ object_shorthand_property_err.js:3:7
+    │
+  3 │ let { , d } = c
+    │       ^
+  
 --
 let { a b } = c
 let { = "test" } = c

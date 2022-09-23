@@ -89,14 +89,24 @@ JsModule {
       8: R_CURLY@50..52 "}" [Newline("\n")] []
   3: EOF@52..53 "" [Newline("\n")] []
 --
-error[SyntaxError]: 'static' must precede 'readonly'
-  ┌─ ts_index_signature_class_member_static_readonly_precedence.ts:2:14
-  │
-2 │     readonly static [a: number]: string;
-  │     -------- ^^^^^^ move this modifier
-  │     │         
-  │     before this modifier
+ts_index_signature_class_member_static_readonly_precedence.ts:2:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━
 
+  × 'static' must precede 'readonly'
+  
+  × move this modifier
+  
+    ┌─ ts_index_signature_class_member_static_readonly_precedence.ts:2:14
+    │
+  2 │     readonly static [a: number]: string;
+    │              ^^^^^^
+  
+  i before this modifier
+  
+    ┌─ ts_index_signature_class_member_static_readonly_precedence.ts:2:5
+    │
+  2 │     readonly static [a: number]: string;
+    │     ^^^^^^^^
+  
 --
 class A {
     readonly static [a: number]: string;

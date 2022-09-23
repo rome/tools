@@ -19,39 +19,47 @@ delete 1 in [1,2];
 
 # Diagnostics
 ```
-warning[correctness/noUnsafeNegation]: The negation operator is used unsafely on the left side of this binary expression.
-  ┌─ noUnsafeNegation.js:9:1
-  │
-9 │ !1 in [1,2];
-  │ -----------
+noUnsafeNegation.js:9:1 lint/correctness/noUnsafeNegation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Wrap the expression with a parenthesis
-    | @@ -6,5 +6,5 @@
-5 5 |   delete 1 in [1,2];
-6 6 |   +1 instanceof [1,2];
-7 7 |   // invalid
-8   | - !1 in [1,2];
-  8 | + !(1 in [1,2]);
-9 9 |   /**test*/!/** test*/1 instanceof [1,2];
-
+  ! The negation operator is used unsafely on the left side of this binary expression.
+  
+    ┌─ noUnsafeNegation.js:9:1
+    │
+  9 │ !1 in [1,2];
+    │ ^^^^^^^^^^^
+  
+  i Suggested fix: Wrap the expression with a parenthesis
+  
+      | @@ -6,5 +6,5 @@
+  5 5 |   delete 1 in [1,2];
+  6 6 |   +1 instanceof [1,2];
+  7 7 |   // invalid
+  8   | - !1 in [1,2];
+    8 | + !(1 in [1,2]);
+  9 9 |   /**test*/!/** test*/1 instanceof [1,2];
+  
 
 ```
 
 ```
-warning[correctness/noUnsafeNegation]: The negation operator is used unsafely on the left side of this binary expression.
-   ┌─ noUnsafeNegation.js:10:10
-   │
-10 │ /**test*/!/** test*/1 instanceof [1,2];
-   │          -----------------------------
+noUnsafeNegation.js:10:10 lint/correctness/noUnsafeNegation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Wrap the expression with a parenthesis
-      | @@ -7,4 +7,4 @@
- 6  6 |   +1 instanceof [1,2];
- 7  7 |   // invalid
- 8  8 |   !1 in [1,2];
- 9    | - /**test*/!/** test*/1 instanceof [1,2];
-    9 | + /**test*/!/** test*/(1 instanceof [1,2]);
-
+  ! The negation operator is used unsafely on the left side of this binary expression.
+  
+     ┌─ noUnsafeNegation.js:10:10
+     │
+  10 │ /**test*/!/** test*/1 instanceof [1,2];
+     │          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i Suggested fix: Wrap the expression with a parenthesis
+  
+        | @@ -7,4 +7,4 @@
+   6  6 |   +1 instanceof [1,2];
+   7  7 |   // invalid
+   8  8 |   !1 in [1,2];
+   9    | - /**test*/!/** test*/1 instanceof [1,2];
+      9 | + /**test*/!/** test*/(1 instanceof [1,2]);
+  
 
 ```
 

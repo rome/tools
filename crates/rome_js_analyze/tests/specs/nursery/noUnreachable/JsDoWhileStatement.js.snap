@@ -21,26 +21,46 @@ function JsDoWhileStatement2() {
 
 # Diagnostics
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-  ┌─ JsDoWhileStatement.js:4:14
-  │
-3 │         break;
-  │         ------ This statement will break the flow of the code ...
-4 │     } while (true); // afterBreak
-  │              ---- ... before it can reach this code
+JsDoWhileStatement.js:4:14 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+    ┌─ JsDoWhileStatement.js:4:14
+    │
+  4 │     } while (true); // afterBreak
+    │              ^^^^
+  
+  i This statement will break the flow of the code ...
+  
+    ┌─ JsDoWhileStatement.js:3:9
+    │
+  3 │         break;
+    │         ^^^^^^
+  
 
 ```
 
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-   ┌─ JsDoWhileStatement.js:10:9
-   │
- 9 │         continue;
-   │         --------- This statement will continue the loop ...
-10 │         afterContinue();
-   │         ---------------- ... before it can reach this code
+JsDoWhileStatement.js:10:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+     ┌─ JsDoWhileStatement.js:10:9
+     │
+  10 │         afterContinue();
+     │         ^^^^^^^^^^^^^^^^
+  
+  i This statement will continue the loop ...
+  
+    ┌─ JsDoWhileStatement.js:9:9
+    │
+  9 │         continue;
+    │         ^^^^^^^^^
+  
 
 ```
 

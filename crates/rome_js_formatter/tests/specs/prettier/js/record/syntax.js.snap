@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\record\\syntax.js"
 ---
 
 # Input
@@ -64,84 +66,149 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
 
 # Errors
 ```
-error[SyntaxError]: expected a statement but instead found '#'
-  ┌─ syntax.js:1:1
-  │
-1 │ #{}
-  │ ^ Expected a statement here
+syntax.js:1:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ syntax.js:2:2
-  │
-2 │ #{ a: 1, b: 2 }
-  │  ^ Expected an identifier here
+  × expected a statement but instead found '#'
+  
+  × Expected a statement here
+  
+    ┌─ syntax.js:1:1
+    │
+  1 │ #{}
+    │ ^
+  
+syntax.js:2:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ syntax.js:2:1
-  │
-2 │ #{ a: 1, b: 2 }
-  │ ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    ┌─ syntax.js:2:2
+    │
+  2 │ #{ a: 1, b: 2 }
+    │  ^
+  
+syntax.js:2:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ syntax.js:2:2
-  │
-2 │ #{ a: 1, b: 2 }
-  │ -^
-  │ ││
-  │ │An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    ┌─ syntax.js:2:1
+    │
+  2 │ #{ a: 1, b: 2 }
+    │ ^
+  
+syntax.js:2:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ syntax.js:2:11
-  │
-2 │ #{ a: 1, b: 2 }
-  │       ----^
-  │       │   │
-  │       │   An explicit or implicit semicolon is expected here...
-  │       ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ syntax.js:2:2
+    │
+  2 │ #{ a: 1, b: 2 }
+    │  ^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ syntax.js:2:1
+    │
+  2 │ #{ a: 1, b: 2 }
+    │ ^^
+  
+syntax.js:2:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ syntax.js:3:2
-  │
-3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
-  │  ^ Expected an identifier here
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ syntax.js:2:11
+    │
+  2 │ #{ a: 1, b: 2 }
+    │           ^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ syntax.js:2:7
+    │
+  2 │ #{ a: 1, b: 2 }
+    │       ^^^^^
+  
+syntax.js:3:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ syntax.js:3:1
-  │
-3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
-  │ ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    ┌─ syntax.js:3:2
+    │
+  3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
+    │  ^
+  
+syntax.js:3:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ syntax.js:3:2
-  │
-3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
-  │ -^
-  │ ││
-  │ │An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    ┌─ syntax.js:3:1
+    │
+  3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
+    │ ^
+  
+syntax.js:3:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ syntax.js:3:11
-  │
-3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
-  │       ----^
-  │       │   │
-  │       │   An explicit or implicit semicolon is expected here...
-  │       ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ syntax.js:3:2
+    │
+  3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
+    │  ^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ syntax.js:3:1
+    │
+  3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
+    │ ^^
+  
+syntax.js:3:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a statement but instead found ']'
-  ┌─ syntax.js:3:30
-  │
-3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
-  │                              ^ Expected a statement here
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ syntax.js:3:11
+    │
+  3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
+    │           ^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ syntax.js:3:7
+    │
+  3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
+    │       ^^^^^
+  
+syntax.js:3:30 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error: expected `!` following a `#`, but found none
-  ┌─ syntax.js:1:1
-  │
-1 │ #{}
-  │ ^
+  × expected a statement but instead found ']'
+  
+  × Expected a statement here
+  
+    ┌─ syntax.js:3:30
+    │
+  3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
+    │                              ^
+  
+syntax.js:1:1 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `!` following a `#`, but found none
+  
+    ┌─ syntax.js:1:1
+    │
+  1 │ #{}
+    │ ^
+  
 
 ```
 

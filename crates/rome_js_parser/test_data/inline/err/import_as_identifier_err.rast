@@ -59,11 +59,16 @@ JsModule {
       2: SEMICOLON@27..28 ";" [] []
   3: EOF@28..29 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected a string literal, or an identifier but instead found ''
-  ┌─ import_as_identifier_err.js:1:10
-  │
-1 │ import { as c } from "test";
-  │          ^ Expected a string literal, or an identifier here
+import_as_identifier_err.js:1:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a string literal, or an identifier but instead found ''
+  
+  × Expected a string literal, or an identifier here
+  
+    ┌─ import_as_identifier_err.js:1:10
+    │
+  1 │ import { as c } from "test";
+    │          ^
+  
 --
 import { as c } from "test";

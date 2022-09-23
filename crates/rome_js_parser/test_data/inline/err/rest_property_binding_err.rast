@@ -397,51 +397,89 @@ JsModule {
         3: R_CURLY@176..178 "}" [Newline("\n")] []
   3: EOF@178..179 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected an identifier but instead found '}'
-  ┌─ rest_property_binding_err.js:1:11
-  │
-1 │ let { ... } = a;
-  │           ^ Expected an identifier here
+rest_property_binding_err.js:1:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier but instead found '}'
+  
+  × Expected an identifier here
+  
+    ┌─ rest_property_binding_err.js:1:11
+    │
+  1 │ let { ... } = a;
+    │           ^
+  
 --
-error[SyntaxError]: rest element cannot have a default
-  ┌─ rest_property_binding_err.js:2:12
-  │
-2 │ let { ...c = "default" } = a;
-  │       ---- ^^^^^^^^^^^^ Remove the default value here
-  │       │     
-  │       Rest element
+rest_property_binding_err.js:2:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × rest element cannot have a default
+  
+  × Remove the default value here
+  
+    ┌─ rest_property_binding_err.js:2:12
+    │
+  2 │ let { ...c = "default" } = a;
+    │            ^^^^^^^^^^^^
+  
+  i Rest element
+  
+    ┌─ rest_property_binding_err.js:2:7
+    │
+  2 │ let { ...c = "default" } = a;
+    │       ^^^^
+  
 --
-error[SyntaxError]: Expected identifier binding
-  ┌─ rest_property_binding_err.js:3:10
-  │
-3 │ let { ...{a} } = b;
-  │          ^^^ Object rest patterns must bind to an identifier, other patterns are not allowed.
+rest_property_binding_err.js:3:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected identifier binding
+  
+  × Object rest patterns must bind to an identifier, other patterns are not allowed.
+  
+    ┌─ rest_property_binding_err.js:3:10
+    │
+  3 │ let { ...{a} } = b;
+    │          ^^^
+  
 --
-error[SyntaxError]: rest element must be the last element
-  ┌─ rest_property_binding_err.js:4:7
-  │
-4 │ let { ...rest, other_assignment } = a;
-  │       ^^^^^^^ Move the rest element to the end of the pattern, right before the closing '}'
+rest_property_binding_err.js:4:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × rest element must be the last element
+  
+  × Move the rest element to the end of the pattern, right before the closing '}'
+  
+    ┌─ rest_property_binding_err.js:4:7
+    │
+  4 │ let { ...rest, other_assignment } = a;
+    │       ^^^^^^^
+  
 --
-error[SyntaxError]: rest element may not have a trailing comma
-  ┌─ rest_property_binding_err.js:5:15
-  │
-5 │ let { ...rest2, } = a;
-  │       --------^ Remove the trailing comma here
-  │       │        
-  │       Rest element
+rest_property_binding_err.js:5:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × rest element may not have a trailing comma
+  
+  × Remove the trailing comma here
+  
+    ┌─ rest_property_binding_err.js:5:15
+    │
+  5 │ let { ...rest2, } = a;
+    │               ^
+  
+  i Rest element
+  
+    ┌─ rest_property_binding_err.js:5:7
+    │
+  5 │ let { ...rest2, } = a;
+    │       ^^^^^^^^
+  
 --
-error[SyntaxError]: Illegal use of `await` as an identifier in an async context
-  ┌─ rest_property_binding_err.js:7:12
-  │
-7 │   let { ...await } = a;
-  │            ^^^^^
+rest_property_binding_err.js:7:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of `await` as an identifier in an async context
+  
+    ┌─ rest_property_binding_err.js:7:12
+    │
+  7 │   let { ...await } = a;
+    │            ^^^^^
+  
 --
 let { ... } = a;
 let { ...c = "default" } = a;

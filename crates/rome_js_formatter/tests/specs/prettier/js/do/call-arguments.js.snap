@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\do\\call-arguments.js"
 ---
 
 # Input
@@ -168,92 +170,162 @@ bar;
 
 # Errors
 ```
-error[SyntaxError]: expected an expression but instead found 'do'
-  ┌─ call-arguments.js:3:3
-  │
-3 │   do {
-  │   ^^ Expected an expression here
+call-arguments.js:3:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `while` but instead found `)`
-   ┌─ call-arguments.js:10:1
-   │
-10 │ ).toBe("foo");
-   │ ^ unexpected
+  × expected an expression but instead found 'do'
+  
+  × Expected an expression here
+  
+    ┌─ call-arguments.js:3:3
+    │
+  3 │   do {
+    │   ^^
+  
+call-arguments.js:10:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a statement but instead found '.toBe("foo")'
-   ┌─ call-arguments.js:10:2
-   │
-10 │ ).toBe("foo");
-   │  ^^^^^^^^^^^^ Expected a statement here
+  × expected `while` but instead found `)`
+  
+  × unexpected
+  
+     ┌─ call-arguments.js:10:1
+     │
+  10 │ ).toBe("foo");
+     │ ^
+  
+call-arguments.js:10:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an expression, or an assignment but instead found 'do'
-   ┌─ call-arguments.js:13:9
-   │
-13 │ var x = do {
-   │         ^^ Expected an expression, or an assignment here
+  × expected a statement but instead found '.toBe("foo")'
+  
+  × Expected a statement here
+  
+     ┌─ call-arguments.js:10:2
+     │
+  10 │ ).toBe("foo");
+     │  ^^^^^^^^^^^^
+  
+call-arguments.js:13:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `while` but instead found `;`
-   ┌─ call-arguments.js:19:2
-   │
-19 │ };
-   │  ^ unexpected
+  × expected an expression, or an assignment but instead found 'do'
+  
+  × Expected an expression, or an assignment here
+  
+     ┌─ call-arguments.js:13:9
+     │
+  13 │ var x = do {
+     │         ^^
+  
+call-arguments.js:19:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an expression but instead found 'do'
-   ┌─ call-arguments.js:22:3
-   │
-22 │   do {
-   │   ^^ Expected an expression here
+  × expected `while` but instead found `;`
+  
+  × unexpected
+  
+     ┌─ call-arguments.js:19:2
+     │
+  19 │ };
+     │  ^
+  
+call-arguments.js:22:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `while` but instead found `)`
-   ┌─ call-arguments.js:26:1
-   │
-26 │ ).toBe("foo");
-   │ ^ unexpected
+  × expected an expression but instead found 'do'
+  
+  × Expected an expression here
+  
+     ┌─ call-arguments.js:22:3
+     │
+  22 │   do {
+     │   ^^
+  
+call-arguments.js:26:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a statement but instead found '.toBe("foo")'
-   ┌─ call-arguments.js:26:2
-   │
-26 │ ).toBe("foo");
-   │  ^^^^^^^^^^^^ Expected a statement here
+  × expected `while` but instead found `)`
+  
+  × unexpected
+  
+     ┌─ call-arguments.js:26:1
+     │
+  26 │ ).toBe("foo");
+     │ ^
+  
+call-arguments.js:26:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an expression, or an assignment but instead found 'do'
-   ┌─ call-arguments.js:29:9
-   │
-29 │ var x = do {
-   │         ^^ Expected an expression, or an assignment here
+  × expected a statement but instead found '.toBe("foo")'
+  
+  × Expected a statement here
+  
+     ┌─ call-arguments.js:26:2
+     │
+  26 │ ).toBe("foo");
+     │  ^^^^^^^^^^^^
+  
+call-arguments.js:29:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `while` but instead found `;`
-   ┌─ call-arguments.js:32:2
-   │
-32 │ };
-   │  ^ unexpected
+  × expected an expression, or an assignment but instead found 'do'
+  
+  × Expected an expression, or an assignment here
+  
+     ┌─ call-arguments.js:29:9
+     │
+  29 │ var x = do {
+     │         ^^
+  
+call-arguments.js:32:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a function body, or an expression but instead found 'do'
-   ┌─ call-arguments.js:35:9
-   │
-35 │   () => do {
-   │         ^^ Expected a function body, or an expression here
+  × expected `while` but instead found `;`
+  
+  × unexpected
+  
+     ┌─ call-arguments.js:32:2
+     │
+  32 │ };
+     │  ^
+  
+call-arguments.js:35:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `(`
-   ┌─ call-arguments.js:36:5
-   │
-36 │     () => {
-   │     ^ unexpected
+  × expected a function body, or an expression but instead found 'do'
+  
+  × Expected a function body, or an expression here
+  
+     ┌─ call-arguments.js:35:9
+     │
+  35 │   () => do {
+     │         ^^
+  
+call-arguments.js:36:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `;`
-   ┌─ call-arguments.js:38:6
-   │
-38 │     };
-   │      ^ unexpected
+  × expected `,` but instead found `(`
+  
+  × unexpected
+  
+     ┌─ call-arguments.js:36:5
+     │
+  36 │     () => {
+     │     ^
+  
+call-arguments.js:38:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a statement but instead found '}
-).toThrow(ReferenceError)'
-   ┌─ call-arguments.js:40:3
-   │  
-40 │ ┌   }
-41 │ │ ).toThrow(ReferenceError);
-   │ └─────────────────────────^ Expected a statement here
+  × expected `,` but instead found `;`
+  
+  × unexpected
+  
+     ┌─ call-arguments.js:38:6
+     │
+  38 │     };
+     │      ^
+  
+call-arguments.js:40:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a statement but instead found '}
+    ).toThrow(ReferenceError)'
+  
+  × Expected a statement here
+  
+     ┌─ call-arguments.js:40:3
+     │  
+  40 │ ┌   }
+  41 │ │ ).toThrow(ReferenceError);
+     │ └─────────────────────────^
+  
 
 ```
 

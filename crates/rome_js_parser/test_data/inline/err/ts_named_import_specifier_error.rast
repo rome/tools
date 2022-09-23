@@ -229,40 +229,65 @@ JsModule {
       2: (empty)
   3: EOF@164..165 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `as` but instead found `}`
-  ┌─ ts_named_import_specifier_error.ts:1:18
-  │
-1 │ import { default } from "./mod";
-  │                  ^ unexpected
+ts_named_import_specifier_error.ts:1:18 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `as` but instead found `}`
+  
+  × unexpected
+  
+    ┌─ ts_named_import_specifier_error.ts:1:18
+    │
+  1 │ import { default } from "./mod";
+    │                  ^
+  
 --
-error[SyntaxError]: expected `as` but instead found `}`
-  ┌─ ts_named_import_specifier_error.ts:2:23
-  │
-2 │ import { type default } from "./mod";
-  │                       ^ unexpected
+ts_named_import_specifier_error.ts:2:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `as` but instead found `}`
+  
+  × unexpected
+  
+    ┌─ ts_named_import_specifier_error.ts:2:23
+    │
+  2 │ import { type default } from "./mod";
+    │                       ^
+  
 --
-error[SyntaxError]: expected `as` but instead found `}`
-  ┌─ ts_named_import_specifier_error.ts:3:25
-  │
-3 │ import { "literal-name" } from "./mod";
-  │                         ^ unexpected
+ts_named_import_specifier_error.ts:3:25 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `as` but instead found `}`
+  
+  × unexpected
+  
+    ┌─ ts_named_import_specifier_error.ts:3:25
+    │
+  3 │ import { "literal-name" } from "./mod";
+    │                         ^
+  
 --
-error[SyntaxError]: expected `as` but instead found `}`
-  ┌─ ts_named_import_specifier_error.ts:4:30
-  │
-4 │ import { type "literal-name" } from "./mod";
-  │                              ^ unexpected
+ts_named_import_specifier_error.ts:4:30 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `as` but instead found `}`
+  
+  × unexpected
+  
+    ┌─ ts_named_import_specifier_error.ts:4:30
+    │
+  4 │ import { type "literal-name" } from "./mod";
+    │                              ^
+  
 --
-error[SyntaxError]: expected `}` but instead the file ends
-  ┌─ ts_named_import_specifier_error.ts:6:1
-  │
-6 │ 
-  │ ^ the file ends here
+ts_named_import_specifier_error.ts:6:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `}` but instead the file ends
+  
+  × the file ends here
+  
+    ┌─ ts_named_import_specifier_error.ts:6:1
+    │
+  6 │ 
+    │ ^
+  
 --
 import { default } from "./mod";
 import { type default } from "./mod";

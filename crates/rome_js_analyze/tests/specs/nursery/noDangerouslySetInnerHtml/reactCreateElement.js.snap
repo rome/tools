@@ -11,14 +11,17 @@ React.createElement('div', {
 
 # Diagnostics
 ```
-warning[nursery/noDangerouslySetInnerHtml]: Avoid passing content using the dangerouslySetInnerHTML prop.
-  ┌─ reactCreateElement.js:2:5
-  │
-2 │     dangerouslySetInnerHTML: { __html: 'child' }
-  │     -----------------------
+reactCreateElement.js:2:5 lint/nursery/noDangerouslySetInnerHtml ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-= warning: Setting content using code can expose users to cross-site scripting (XSS) attacks
-
+  ! Avoid passing content using the dangerouslySetInnerHTML prop.
+  
+    ┌─ reactCreateElement.js:2:5
+    │
+  2 │     dangerouslySetInnerHTML: { __html: 'child' }
+    │     ^^^^^^^^^^^^^^^^^^^^^^^
+  
+  ! Setting content using code can expose users to cross-site scripting (XSS) attacks
+  
 
 ```
 

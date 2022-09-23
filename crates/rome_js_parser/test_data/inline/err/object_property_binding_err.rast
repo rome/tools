@@ -207,26 +207,41 @@ JsModule {
       1: (empty)
   3: EOF@80..81 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected an identifier, an array pattern, or an object pattern but instead found ','
-  ┌─ object_property_binding_err.js:1:12
-  │
-1 │ let { foo: , bar } = {}
-  │            ^ Expected an identifier, an array pattern, or an object pattern here
+object_property_binding_err.js:1:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier, an array pattern, or an object pattern but instead found ','
+  
+  × Expected an identifier, an array pattern, or an object pattern here
+  
+    ┌─ object_property_binding_err.js:1:12
+    │
+  1 │ let { foo: , bar } = {}
+    │            ^
+  
 --
-error[SyntaxError]: expected an identifier, a string literal, a number literal, or a computed property but instead found ':'
-  ┌─ object_property_binding_err.js:2:7
-  │
-2 │ let { : lorem = "test" } = {}
-  │       ^ Expected an identifier, a string literal, a number literal, or a computed property here
+object_property_binding_err.js:2:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier, a string literal, a number literal, or a computed property but instead found ':'
+  
+  × Expected an identifier, a string literal, a number literal, or a computed property here
+  
+    ┌─ object_property_binding_err.js:2:7
+    │
+  2 │ let { : lorem = "test" } = {}
+    │       ^
+  
 --
-error[SyntaxError]: expected an identifier, a member name, or a rest pattern but instead found ','
-  ┌─ object_property_binding_err.js:3:7
-  │
-3 │ let { , ipsum: bazz } = {}
-  │       ^ Expected an identifier, a member name, or a rest pattern here
+object_property_binding_err.js:3:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier, a member name, or a rest pattern but instead found ','
+  
+  × Expected an identifier, a member name, or a rest pattern here
+  
+    ┌─ object_property_binding_err.js:3:7
+    │
+  3 │ let { , ipsum: bazz } = {}
+    │       ^
+  
 --
 let { foo: , bar } = {}
 let { : lorem = "test" } = {}

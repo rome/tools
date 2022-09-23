@@ -1,19 +1,24 @@
 //! Implementation of converting, and emitting diagnostics
 //! using `codespan`.
 
+use crate::file::FileSpan;
+use crate::v2::advice::{LogCategory, Visit};
+use crate::v2::{
+    self, advice, Category, DiagnosticTags, FilePath, Location, PrintDiagnostic, Resource,
+    SourceCode,
+};
 use crate::{file::Files, Diagnostic};
-use crate::{Applicability, SuggestionChange, SuggestionStyle};
-use rome_console::Markup;
+use crate::{Applicability, SubDiagnostic, SuggestionChange, SuggestionStyle};
+use rome_console::codespan::Severity;
 use rome_console::{
-    codespan::{Codespan, Label, LabelStyle, Locus, Severity, WithSeverity},
-    diff::{Diff, DiffMode},
     fmt::{Display, Formatter, Termcolor},
-    markup, MarkupBuf,
+    markup,
 };
 use rome_text_edit::apply_indels;
+use std::fmt::Debug;
 use std::io;
 use std::ops::Range;
-use termcolor::{ColorChoice, StandardStream, WriteColor};
+use termcolor::{ColorChoice, NoColor, StandardStream, WriteColor};
 
 /// The emitter is responsible for emitting
 /// diagnostics to a given output.
@@ -54,8 +59,20 @@ impl Emitter<'_> {
 }
 
 impl Diagnostic {
+    pub fn as_diagnostic<'a>(&'a self, files: &'a dyn Files) -> impl v2::Diagnostic + 'a {
+        DiagnosticPrinter {
+            files,
+            d: self,
+            include_source: false,
+        }
+    }
+
     pub fn display<'a>(&'a self, files: &'a dyn Files) -> impl Display + 'a {
-        DiagnosticPrinter { files, d: self }
+        DiagnosticPrinter {
+            files,
+            d: self,
+            include_source: true,
+        }
     }
 }
 
@@ -63,105 +80,117 @@ impl Diagnostic {
 struct DiagnosticPrinter<'a> {
     files: &'a dyn Files,
     d: &'a Diagnostic,
+    include_source: bool,
+}
+
+impl DiagnosticPrinter<'_> {
+    fn lookup_location(&self, span: FileSpan) -> Option<Location<'_>> {
+        let path = self.files.name(span.file)?;
+        let source = self.files.source(span.file);
+
+        Some(Location {
+            resource: Resource::File(FilePath::PathAndId {
+                path,
+                file_id: span.file,
+            }),
+            span: Some(span.range),
+            source_code: if self.include_source {
+                source.map(|source| SourceCode {
+                    text: source.source,
+                    line_starts: Some(source.line_starts),
+                })
+            } else {
+                None
+            },
+        })
+    }
+
+    fn record_label(&self, visitor: &mut dyn Visit, label: &SubDiagnostic) -> io::Result<()> {
+        if !label.msg.is_empty() {
+            visitor.record_log(map_severity_to_log_category(label.severity), &label.msg)?;
+        }
+
+        if let Some(location) = self.lookup_location(label.span) {
+            visitor.record_frame(location)?;
+        }
+
+        Ok(())
+    }
+}
+
+fn map_severity_to_log_category(severity: Severity) -> LogCategory {
+    match severity {
+        Severity::Help => LogCategory::Info,
+        Severity::Note => LogCategory::Info,
+        Severity::Warning => LogCategory::Warn,
+        Severity::Error => LogCategory::Error,
+        Severity::Bug => LogCategory::Error,
+    }
+}
+
+impl Debug for DiagnosticPrinter<'_> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("DiagnosticPrinter")
+            .field("d", &self.d)
+            .finish()
+    }
 }
 
 impl<'a> Display for DiagnosticPrinter<'a> {
     fn fmt(&self, fmt: &mut Formatter<'_>) -> io::Result<()> {
-        let name = self
-            .files
-            .name(self.d.file_id)
-            .ok_or_else(|| io::Error::new(io::ErrorKind::NotFound, "file not found"))?;
+        PrintDiagnostic(self).fmt(fmt)?;
+        Ok(())
+    }
+}
 
-        let source_file = self
-            .files
-            .source(self.d.file_id)
-            .ok_or_else(|| io::Error::new(io::ErrorKind::NotFound, "file not found"))?;
+impl v2::Diagnostic for DiagnosticPrinter<'_> {
+    fn category(&self) -> Option<&Category> {
+        self.d.code.as_deref().map(|code| {
+            code.parse()
+                .unwrap_or_else(|()| panic!("code {code:?} is not a valid diagnostic category"))
+        })
+    }
 
-        let locus = if let Some(label) = &self.d.primary {
-            Locus::FileLocation {
-                name,
-                location: source_file.location(label.span.range.start())?,
-            }
+    fn severity(&self) -> v2::Severity {
+        match self.d.severity {
+            Severity::Help => v2::Severity::Hint,
+            Severity::Note => v2::Severity::Information,
+            Severity::Warning => v2::Severity::Warning,
+            Severity::Error | Severity::Bug => v2::Severity::Error,
+        }
+    }
+
+    fn description(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        if let Some(summary) = &self.d.summary {
+            fmt.write_str(summary)
         } else {
-            Locus::File { name }
-        };
+            let mut message = Termcolor(NoColor::new(Vec::new()));
+            Display::fmt(&self.d.title, &mut Formatter::new(&mut message))
+                .map_err(|_| std::fmt::Error)?;
 
-        // If the diagnostic doesn't have a codespan, show the locus in the header instead
-        let has_codespan = self.d.primary.is_some() || !self.d.children.is_empty();
+            let message = message.0.into_inner();
+            let message: String = String::from_utf8(message).map_err(|_| std::fmt::Error)?;
+            fmt.write_str(&message)
+        }
+    }
 
-        let header_locus = if !has_codespan { Some(locus) } else { None };
+    fn message(&self, fmt: &mut Formatter<'_>) -> io::Result<()> {
+        fmt.write_markup(markup! {
+            {self.d.title}
+        })
+    }
 
-        let code = self.d.code.as_ref().filter(|code| !code.is_empty());
-        match (code, &self.d.code_link) {
-            (Some(code), Some(href)) => fmt.write_markup(markup! {
-                {DiagnosticHeader {
-                    locus: header_locus,
-                    severity: self.d.severity,
-                    code: Some(markup! {
-                        <Hyperlink href={href}>
-                            {code}
-                        </Hyperlink>
-                    }),
-                    title: markup! { {self.d.title} },
-                }}
-                "\n"
-            })?,
-            (Some(code), None) => fmt.write_markup(markup! {
-                {DiagnosticHeader {
-                    locus: header_locus,
-                    severity: self.d.severity,
-                    code: Some(markup!( {code} )),
-                    title: markup! { {self.d.title} },
-                }}
-                "\n"
-            })?,
-            (None, _) => fmt.write_markup(markup! {
-                {DiagnosticHeader {
-                    locus: header_locus,
-                    severity: self.d.severity,
-                    code: None,
-                    title: markup! { {self.d.title} },
-                }}
-                "\n"
-            })?,
+    fn advices(&self, visitor: &mut dyn advice::Visit) -> io::Result<()> {
+        if let Some(label) = &self.d.primary {
+            self.record_label(visitor, label)?;
         }
 
-        if has_codespan {
-            let labels: Vec<_> = self
-                .d
-                .children
-                .iter()
-                .chain(self.d.primary.as_ref())
-                .map(|sub| {
-                    let style = if sub.severity == Severity::Bug || sub.severity == Severity::Error
-                    {
-                        LabelStyle::Primary
-                    } else {
-                        LabelStyle::Secondary
-                    };
+        for label in &self.d.children {
+            self.record_label(visitor, label)?;
+        }
 
-                    if sub.msg.is_empty() {
-                        Label {
-                            style,
-                            range: sub.span.range,
-                            message: MarkupBuf::default(),
-                        }
-                    } else {
-                        Label {
-                            style,
-                            range: sub.span.range,
-                            message: markup! {
-                                {sub.msg}
-                            }
-                            .to_owned(),
-                        }
-                    }
-                })
-                .collect();
-
-            fmt.write_markup(markup! {
-                {Codespan { source_file, severity: self.d.severity, locus: Some(locus), labels: &labels }}"\n"
-            })?;
+        for footer in &self.d.footers {
+            visitor.record_log(map_severity_to_log_category(footer.severity), &footer.msg)?;
         }
 
         for suggestion in &self.d.suggestions {
@@ -194,10 +223,14 @@ impl<'a> Display for DiagnosticPrinter<'a> {
                         }
                     };
 
-                    fmt.write_markup(markup! {
-                        <Info>{applicability}": "{suggestion.msg}</Info>"\n"
-                        {Diff { mode: DiffMode::Unified, left: old, right: &new }}
-                    })?;
+                    visitor.record_log(
+                        LogCategory::Info,
+                        &markup! {
+                            {applicability}": "{suggestion.msg}
+                        },
+                    )?;
+
+                    visitor.record_diff(old, &new)?;
                 }
                 SuggestionStyle::Inline => {
                     let replacement = match &suggestion.substitution {
@@ -214,92 +247,70 @@ impl<'a> Display for DiagnosticPrinter<'a> {
                         SuggestionChange::String(string) => string.clone(),
                     };
 
-                    fmt.write_markup(markup! {
-                        <Info>{applicability}": "{suggestion.msg}"\n`"{replacement}"`"</Info>"\n"
-                    })?;
+                    visitor.record_log(
+                        LogCategory::Info,
+                        &markup! {
+                            {applicability}": "{suggestion.msg}"\n`"{replacement}"`"
+                        },
+                    )?;
                 }
                 SuggestionStyle::HideCode => {
-                    fmt.write_markup(markup! {
-                        <Info>{applicability}": "{suggestion.msg}</Info>"\n"
-                    })?;
+                    visitor.record_log(
+                        LogCategory::Info,
+                        &markup! {
+                            {applicability}": "{suggestion.msg}"\n"
+                        },
+                    )?;
                 }
                 SuggestionStyle::DontShow => {}
             }
         }
 
-        if !self.d.suggestions.is_empty() {
-            writeln!(fmt)?;
-        }
-
-        for footer in &self.d.footers {
-            let level = match footer.severity {
-                Severity::Note => {
-                    fmt.write_markup(markup! {
-                        "=  note: "{footer.msg}"\n"
-                    })?;
-                    continue;
-                }
-                level => <&str>::from(level),
-            };
-
-            fmt.write_markup(markup! {
-                "= "
-                {WithSeverity(LabelStyle::Primary, footer.severity, &markup! {
-                    {level}": "
-                })}
-                {footer.msg}"\n"
-            })?;
-        }
-
-        if !self.d.footers.is_empty() {
-            writeln!(fmt)?;
-        }
-
         Ok(())
     }
-}
 
-pub struct DiagnosticHeader<'a> {
-    pub locus: Option<Locus<'a>>,
-    pub severity: Severity,
-    pub code: Option<Markup<'a>>,
-    pub title: Markup<'a>,
-}
+    fn location(&self) -> Option<Location<'_>> {
+        let path = self.files.name(self.d.file_id)?;
+        let source = self.files.source(self.d.file_id);
 
-impl<'a> Display for DiagnosticHeader<'a> {
-    fn fmt(&self, fmt: &mut Formatter<'_>) -> io::Result<()> {
-        if let Some(locus) = &self.locus {
-            fmt.write_markup(markup! {
-                {locus}": "
-            })?;
-        }
-
-        let level = <&str>::from(self.severity);
-
-        match self.code {
-            Some(code) => fmt.write_markup(markup! {
-                {WithSeverity(LabelStyle::Primary, self.severity, &markup!{ {level}"["{code}"]" })}
-            })?,
-            None => fmt.write_markup(markup! {
-                {WithSeverity(LabelStyle::Primary, self.severity, &level)}
-            })?,
-        }
-
-        fmt.write_markup(markup! {
-            <Emphasis>": "{self.title}</Emphasis>
+        Some(Location {
+            resource: Resource::File(FilePath::PathAndId {
+                path,
+                file_id: self.d.file_id,
+            }),
+            span: self.d.primary.as_ref().map(|label| label.span.range),
+            source_code: if self.include_source {
+                source.map(|source| SourceCode {
+                    text: source.source,
+                    line_starts: Some(source.line_starts),
+                })
+            } else {
+                None
+            },
         })
+    }
+
+    fn tags(&self) -> DiagnosticTags {
+        let mut tags = DiagnosticTags::empty();
+
+        if !self.d.suggestions.is_empty() {
+            tags |= DiagnosticTags::FIXABLE;
+        }
+
+        if self.d.severity == Severity::Bug {
+            tags |= DiagnosticTags::INTERNAL;
+        }
+
+        tags
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use rome_console::{codespan::Severity, markup, BufferConsole, ConsoleExt, Markup};
-    use rome_rowan::{TextRange, TextSize};
+    use rome_console::{codespan::Severity, markup, BufferConsole, ConsoleExt};
+    use rome_text_edit::{TextRange, TextSize};
 
-    use crate::{
-        file::{FileId, SimpleFile},
-        Applicability, Diagnostic,
-    };
+    use crate::{file::SimpleFile, v2::FileId, Applicability, Diagnostic};
 
     #[test]
     fn test_error_diagnostic() {
@@ -308,30 +319,37 @@ consectetur adipiscing elit,
 sed do eiusmod tempor incididunt ut
 labore et dolore magna aliqua";
 
-        const DIAGNOSTIC: Markup<'static> = markup! {
-            <Error>"error[CODE]"</Error><Emphasis>": message"</Emphasis>"\n"
-            "  "<Info>"┌─"</Info>" file_name\n"
-            "  "<Info>"│"</Info>"\n"
-                <Info>"2"</Info>" "<Info>"│"</Info>" consectetur "<Error>"adipiscing elit"</Error>",\n"
-            "  "<Info>"│"</Info>                   "             "<Error>"^^^^^^^^^^^^^^^"</Error>" "<Error>"label"</Error>"\n"
+        let expected = markup! {
+            "file_name "<Hyperlink href="https://rome.tools/docs/lint/rules/noArguments">"lint/correctness/noArguments"</Hyperlink>" "<Inverse>" FIXABLE "</Inverse>" ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
             "\n"
-            <Info>"Safe fix: suggestion"</Info>"\n"
-            "    | "<Info>"@@ -1,4 +1,5 @@"</Info>"\n"
-            "0 0 |   Lorem ipsum dolor sit amet,\n"
-            "1   | "<Error>"- consectetur adipiscing elit,"</Error>"\n"
-            "  1 | "<Success>"+ consectetur completely different"</Success>"\n"
-            "  2 | "<Success>"+ text,"</Success>"\n"
-            "2 3 |   sed do eiusmod tempor incididunt ut\n"
-            "3 4 |   labore et dolore magna aliqua\n"
-            "\n"
-            "=  note: footer note\n"
-            "= "<Info>"help: "</Info>"footer help\n"
-            "\n"
-        };
+            <Emphasis><Error>"  ✖"</Error></Emphasis>" "<Error>"message"</Error>"\n"
+            "  \n"
+            <Emphasis><Error>"  ✖"</Error></Emphasis>" "<Error>"label"</Error>"\n"
+            "  \n"
+            "    "<Info>"┌─"</Info>" file_name:2:13\n"
+            "    "<Info>"│"</Info>"\n"
+            <Info>"  2"</Info>" "<Info>"│"</Info>" consectetur "<Error>"adipiscing elit"</Error>",\n"
+            "    "<Info>"│"</Info>"             "<Error>"^^^^^^^^^^^^^^^"</Error>"\n"
+            "  \n"
+            <Emphasis><Info>"  ℹ"</Info></Emphasis>" "<Info>"footer note"</Info>"\n"
+            "  \n"
+            <Emphasis><Info>"  ℹ"</Info></Emphasis>" "<Info>"footer help"</Info>"\n"
+            "  \n"
+            <Emphasis><Info>"  ℹ"</Info></Emphasis>" "<Info>"Safe fix: suggestion"</Info>"\n"
+            "  \n"
+            "      | "<Info>"@@ -1,4 +1,5 @@"</Info>"\n"
+            "  0 0 |   Lorem ipsum dolor sit amet,\n"
+            "  1   | "<Error>"- consectetur adipiscing elit,"</Error>"\n"
+            "    1 | "<Success>"+ consectetur completely different"</Success>"\n"
+            "    2 | "<Success>"+ text,"</Success>"\n"
+            "  2 3 |   sed do eiusmod tempor incididunt ut\n"
+            "  3 4 |   labore et dolore magna aliqua\n"
+            "  \n"
+        }.to_owned();
 
         let files = SimpleFile::new(String::from("file_name"), SOURCE.into());
 
-        let diag = Diagnostic::error(FileId::zero(), "CODE", "message")
+        let diag = Diagnostic::error(FileId::zero(), "lint/correctness/noArguments", "message")
             .label(
                 Severity::Error,
                 TextRange::new(TextSize::from(40u32), TextSize::from(55u32)),
@@ -358,7 +376,7 @@ labore et dolore magna aliqua";
             other => panic!("unexpected message {other:?}"),
         };
 
-        assert_eq!(message.content, DIAGNOSTIC.to_owned());
+        assert_eq!(message.content, expected);
 
         assert!(iter.next().is_none());
     }

@@ -101,47 +101,77 @@ JsModule {
       0: R_CURLY@50..51 "}" [] []
   3: EOF@51..52 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `(` but instead found `true`
-  ┌─ while_stmt_err.js:1:7
-  │
-1 │ while true {}
-  │       ^^^^ unexpected
+while_stmt_err.js:1:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `(` but instead found `true`
+  
+  × unexpected
+  
+    ┌─ while_stmt_err.js:1:7
+    │
+  1 │ while true {}
+    │       ^^^^
+  
 --
-error[SyntaxError]: expected `)` but instead found `{`
-  ┌─ while_stmt_err.js:1:12
-  │
-1 │ while true {}
-  │            ^ unexpected
+while_stmt_err.js:1:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `)` but instead found `{`
+  
+  × unexpected
+  
+    ┌─ while_stmt_err.js:1:12
+    │
+  1 │ while true {}
+    │            ^
+  
 --
-error[SyntaxError]: expected `(` but instead found `{`
-  ┌─ while_stmt_err.js:2:7
-  │
-2 │ while {}
-  │       ^ unexpected
+while_stmt_err.js:2:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `(` but instead found `{`
+  
+  × unexpected
+  
+    ┌─ while_stmt_err.js:2:7
+    │
+  2 │ while {}
+    │       ^
+  
 --
-error[SyntaxError]: expected `)` but instead found `{`
-  ┌─ while_stmt_err.js:3:13
-  │
-3 │ while (true {}
-  │             ^ unexpected
+while_stmt_err.js:3:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `)` but instead found `{`
+  
+  × unexpected
+  
+    ┌─ while_stmt_err.js:3:13
+    │
+  3 │ while (true {}
+    │             ^
+  
 --
-error[SyntaxError]: expected `(` but instead found `true`
-  ┌─ while_stmt_err.js:4:7
-  │
-4 │ while true) }
-  │       ^^^^ unexpected
+while_stmt_err.js:4:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `(` but instead found `true`
+  
+  × unexpected
+  
+    ┌─ while_stmt_err.js:4:7
+    │
+  4 │ while true) }
+    │       ^^^^
+  
 --
-error[SyntaxError]: expected a statement but instead found '}'
-  ┌─ while_stmt_err.js:4:13
-  │
-4 │ while true) }
-  │             ^ Expected a statement here
+while_stmt_err.js:4:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a statement but instead found '}'
+  
+  × Expected a statement here
+  
+    ┌─ while_stmt_err.js:4:13
+    │
+  4 │ while true) }
+    │             ^
+  
 --
 while true {}
 while {}

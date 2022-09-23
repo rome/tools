@@ -485,81 +485,139 @@ JsModule {
         2: R_CURLY@195..196 "}" [] []
   3: EOF@196..197 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `(` but instead found `;`
-  ┌─ for_stmt_err.js:1:5
-  │
-1 │ for ;; {}
-  │     ^ unexpected
+for_stmt_err.js:1:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `(` but instead found `;`
+  
+  × unexpected
+  
+    ┌─ for_stmt_err.js:1:5
+    │
+  1 │ for ;; {}
+    │     ^
+  
 --
-error[SyntaxError]: expected `)` but instead found `for`
-  ┌─ for_stmt_err.js:2:1
-  │
-2 │ for let i = 5; i < 10; i++ {}
-  │ ^^^ unexpected
+for_stmt_err.js:2:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `)` but instead found `for`
+  
+  × unexpected
+  
+    ┌─ for_stmt_err.js:2:1
+    │
+  2 │ for let i = 5; i < 10; i++ {}
+    │ ^^^
+  
 --
-error[SyntaxError]: expected `(` but instead found `let`
-  ┌─ for_stmt_err.js:2:5
-  │
-2 │ for let i = 5; i < 10; i++ {}
-  │     ^^^ unexpected
+for_stmt_err.js:2:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `(` but instead found `let`
+  
+  × unexpected
+  
+    ┌─ for_stmt_err.js:2:5
+    │
+  2 │ for let i = 5; i < 10; i++ {}
+    │     ^^^
+  
 --
-error[SyntaxError]: expected `)` but instead found `{`
-  ┌─ for_stmt_err.js:2:28
-  │
-2 │ for let i = 5; i < 10; i++ {}
-  │                            ^ unexpected
+for_stmt_err.js:2:28 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `)` but instead found `{`
+  
+  × unexpected
+  
+    ┌─ for_stmt_err.js:2:28
+    │
+  2 │ for let i = 5; i < 10; i++ {}
+    │                            ^
+  
 --
-error[SyntaxError]: expected `(` but instead found `let`
-  ┌─ for_stmt_err.js:3:5
-  │
-3 │ for let i = 5; i < 10; ++i {}
-  │     ^^^ unexpected
+for_stmt_err.js:3:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `(` but instead found `let`
+  
+  × unexpected
+  
+    ┌─ for_stmt_err.js:3:5
+    │
+  3 │ for let i = 5; i < 10; ++i {}
+    │     ^^^
+  
 --
-error[SyntaxError]: expected `)` but instead found `{`
-  ┌─ for_stmt_err.js:3:28
-  │
-3 │ for let i = 5; i < 10; ++i {}
-  │                            ^ unexpected
+for_stmt_err.js:3:28 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `)` but instead found `{`
+  
+  × unexpected
+  
+    ┌─ for_stmt_err.js:3:28
+    │
+  3 │ for let i = 5; i < 10; ++i {}
+    │                            ^
+  
 --
-error[SyntaxError]: Only a single declaration is allowed in a `for...of` statement.
-  ┌─ for_stmt_err.js:5:13
-  │
-5 │ for (let i, j = 6 of []) {}
-  │             ^^^^^ additional declarations
+for_stmt_err.js:5:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Only a single declaration is allowed in a `for...of` statement.
+  
+  × additional declarations
+  
+    ┌─ for_stmt_err.js:5:13
+    │
+  5 │ for (let i, j = 6 of []) {}
+    │             ^^^^^
+  
 --
-error[SyntaxError]: await can only be used in conjunction with `for...of` statements
-  ┌─ for_stmt_err.js:6:5
-  │
-6 │ for await (let a in []) {}
-  │ ----^^^^^-----------------
-  │ │   │
-  │ │   Remove the await here
-  │ or convert this to a `for...of` statement
+for_stmt_err.js:6:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × await can only be used in conjunction with `for...of` statements
+  
+  × Remove the await here
+  
+    ┌─ for_stmt_err.js:6:5
+    │
+  6 │ for await (let a in []) {}
+    │     ^^^^^
+  
+  i or convert this to a `for...of` statement
+  
+    ┌─ for_stmt_err.js:6:1
+    │
+  6 │ for await (let a in []) {}
+    │ ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
 --
-error[SyntaxError]: await can only be used in conjunction with `for...of` statements
-  ┌─ for_stmt_err.js:7:5
-  │
-7 │ for await (let i = 0; i < 10; ++i) {}
-  │ ----^^^^^----------------------------
-  │ │   │
-  │ │   Remove the await here
-  │ or convert this to a `for...of` statement
+for_stmt_err.js:7:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × await can only be used in conjunction with `for...of` statements
+  
+  × Remove the await here
+  
+    ┌─ for_stmt_err.js:7:5
+    │
+  7 │ for await (let i = 0; i < 10; ++i) {}
+    │     ^^^^^
+  
+  i or convert this to a `for...of` statement
+  
+    ┌─ for_stmt_err.js:7:1
+    │
+  7 │ for await (let i = 0; i < 10; ++i) {}
+    │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
 --
-error[SyntaxError]: Object and Array patterns require initializers
-  ┌─ for_stmt_err.js:8:10
-  │
-8 │ for (let [a];;) {}
-  │          ^^^ this pattern is declared, but it is not given an initialized value
+for_stmt_err.js:8:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Object and Array patterns require initializers
+  
+  × this pattern is declared, but it is not given an initialized value
+  
+    ┌─ for_stmt_err.js:8:10
+    │
+  8 │ for (let [a];;) {}
+    │          ^^^
+  
 --
 for ;; {}
 for let i = 5; i < 10; i++ {}

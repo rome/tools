@@ -192,26 +192,35 @@ JsModule {
       4: R_CURLY@151..153 "}" [Newline("\n")] []
   3: EOF@153..154 "" [Newline("\n")] []
 --
-error[SyntaxError]: index signature members cannot be static
-  ┌─ ts_index_signature_interface_member_cannot_be_static.ts:2:5
-  │
-2 │     static [index: string]: string
-  │     ^^^^^^
+ts_index_signature_interface_member_cannot_be_static.ts:2:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × index signature members cannot be static
+  
+    ┌─ ts_index_signature_interface_member_cannot_be_static.ts:2:5
+    │
+  2 │     static [index: string]: string
+    │     ^^^^^^
+  
 --
-error[SyntaxError]: index signature members cannot be public
-  ┌─ ts_index_signature_interface_member_cannot_be_static.ts:5:5
-  │
-5 │     public [index: string]: string
-  │     ^^^^^^
+ts_index_signature_interface_member_cannot_be_static.ts:5:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × index signature members cannot be public
+  
+    ┌─ ts_index_signature_interface_member_cannot_be_static.ts:5:5
+    │
+  5 │     public [index: string]: string
+    │     ^^^^^^
+  
 --
-error[SyntaxError]: index signature members cannot be private
-  ┌─ ts_index_signature_interface_member_cannot_be_static.ts:8:5
-  │
-8 │     private [index: string]: string
-  │     ^^^^^^^
+ts_index_signature_interface_member_cannot_be_static.ts:8:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × index signature members cannot be private
+  
+    ┌─ ts_index_signature_interface_member_cannot_be_static.ts:8:5
+    │
+  8 │     private [index: string]: string
+    │     ^^^^^^^
+  
 --
 interface A {
     static [index: string]: string

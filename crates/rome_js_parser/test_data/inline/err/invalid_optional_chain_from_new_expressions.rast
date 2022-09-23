@@ -380,40 +380,65 @@ JsModule {
       1: (empty)
   3: EOF@103..104 "" [Newline("\n")] []
 --
-error[SyntaxError]: Invalid optional chain from new expression.
-  ┌─ invalid_optional_chain_from_new_expressions.ts:1:17
-  │
-1 │ new Test<string>?.test();
-  │                 ^^ Did you mean to call 'Test<string>()'?
+invalid_optional_chain_from_new_expressions.ts:1:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Invalid optional chain from new expression.
+  
+  × Did you mean to call 'Test<string>()'?
+  
+    ┌─ invalid_optional_chain_from_new_expressions.ts:1:17
+    │
+  1 │ new Test<string>?.test();
+    │                 ^^
+  
 --
-error[SyntaxError]: Invalid optional chain from new expression.
-  ┌─ invalid_optional_chain_from_new_expressions.ts:2:9
-  │
-2 │ new Test?.test();
-  │         ^^ Did you mean to call 'Test()'?
+invalid_optional_chain_from_new_expressions.ts:2:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Invalid optional chain from new expression.
+  
+  × Did you mean to call 'Test()'?
+  
+    ┌─ invalid_optional_chain_from_new_expressions.ts:2:9
+    │
+  2 │ new Test?.test();
+    │         ^^
+  
 --
-error[SyntaxError]: Invalid optional chain from new expression.
-  ┌─ invalid_optional_chain_from_new_expressions.ts:3:8
-  │
-3 │ new A.b?.c()
-  │        ^^ Did you mean to call 'A.b()'?
+invalid_optional_chain_from_new_expressions.ts:3:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Invalid optional chain from new expression.
+  
+  × Did you mean to call 'A.b()'?
+  
+    ┌─ invalid_optional_chain_from_new_expressions.ts:3:8
+    │
+  3 │ new A.b?.c()
+    │        ^^
+  
 --
-error[SyntaxError]: Invalid optional chain from new expression.
-  ┌─ invalid_optional_chain_from_new_expressions.ts:4:10
-  │
-4 │ new (A.b)?.c()
-  │          ^^ Did you mean to call '(A.b)()'?
+invalid_optional_chain_from_new_expressions.ts:4:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Invalid optional chain from new expression.
+  
+  × Did you mean to call '(A.b)()'?
+  
+    ┌─ invalid_optional_chain_from_new_expressions.ts:4:10
+    │
+  4 │ new (A.b)?.c()
+    │          ^^
+  
 --
-error[SyntaxError]: Invalid optional chain from new expression.
-  ┌─ invalid_optional_chain_from_new_expressions.ts:6:8
-  │
-6 │ new A.b?.()()
-  │        ^^ Did you mean to call 'A.b()'?
+invalid_optional_chain_from_new_expressions.ts:6:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Invalid optional chain from new expression.
+  
+  × Did you mean to call 'A.b()'?
+  
+    ┌─ invalid_optional_chain_from_new_expressions.ts:6:8
+    │
+  6 │ new A.b?.()()
+    │        ^^
+  
 --
 new Test<string>?.test();
 new Test?.test();

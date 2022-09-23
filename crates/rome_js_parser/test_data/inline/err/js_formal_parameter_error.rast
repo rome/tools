@@ -124,19 +124,29 @@ JsModule {
         3: R_CURLY@41..42 "}" [] []
   3: EOF@42..43 "" [Newline("\n")] []
 --
-error[SyntaxError]: Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  ┌─ js_formal_parameter_error.js:1:13
-  │
-1 │ function a(x: string) {}
-  │             ^^^^^^^^ TypeScript only syntax
+js_formal_parameter_error.js:1:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  
+  × TypeScript only syntax
+  
+    ┌─ js_formal_parameter_error.js:1:13
+    │
+  1 │ function a(x: string) {}
+    │             ^^^^^^^^
+  
 --
-error[SyntaxError]: optional parameters are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  ┌─ js_formal_parameter_error.js:2:13
-  │
-2 │ function b(x?) {}
-  │             ^ TypeScript only syntax
+js_formal_parameter_error.js:2:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × optional parameters are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  
+  × TypeScript only syntax
+  
+    ┌─ js_formal_parameter_error.js:2:13
+    │
+  2 │ function b(x?) {}
+    │             ^
+  
 --
 function a(x: string) {}
 function b(x?) {}

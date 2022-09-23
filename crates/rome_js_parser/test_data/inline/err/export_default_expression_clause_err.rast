@@ -46,13 +46,23 @@ JsModule {
       0: SEMICOLON@19..20 ";" [] []
   3: EOF@20..21 "" [Newline("\n")] []
 --
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ export_default_expression_clause_err.js:1:17
-  │
-1 │ export default a, b;
-  │        ---------^ An explicit or implicit semicolon is expected here...
-  │        │         
-  │        ...Which is required to end this statement
+export_default_expression_clause_err.js:1:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ export_default_expression_clause_err.js:1:17
+    │
+  1 │ export default a, b;
+    │                 ^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ export_default_expression_clause_err.js:1:8
+    │
+  1 │ export default a, b;
+    │        ^^^^^^^^^
+  
 --
 export default a, b;

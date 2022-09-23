@@ -124,11 +124,16 @@ JsModule {
           3: R_CURLY@80..81 "}" [] []
   3: EOF@81..82 "" [Newline("\n")] []
 --
-error[SyntaxError]: A 'declare' function cannot have a function body
-  ┌─ ts_declare_function_with_body.ts:1:40
-  │
-1 │ declare function test<A>(a: A): string { return "ambient function with a body"; }
-  │                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ remove this body
+ts_declare_function_with_body.ts:1:40 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × A 'declare' function cannot have a function body
+  
+  × remove this body
+  
+    ┌─ ts_declare_function_with_body.ts:1:40
+    │
+  1 │ declare function test<A>(a: A): string { return "ambient function with a body"; }
+    │                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
 --
 declare function test<A>(a: A): string { return "ambient function with a body"; }

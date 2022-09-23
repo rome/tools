@@ -63,13 +63,23 @@ JsModule {
       2: (empty)
   3: EOF@23..24 "" [Newline("\n")] []
 --
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ semicolons_err.js:1:15
-  │
-1 │ let foo = bar throw foo
-  │ --------------^^^^^ An explicit or implicit semicolon is expected here...
-  │ │              
-  │ ...Which is required to end this statement
+semicolons_err.js:1:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    ┌─ semicolons_err.js:1:15
+    │
+  1 │ let foo = bar throw foo
+    │               ^^^^^
+  
+  i ...Which is required to end this statement
+  
+    ┌─ semicolons_err.js:1:1
+    │
+  1 │ let foo = bar throw foo
+    │ ^^^^^^^^^^^^^^
+  
 --
 let foo = bar throw foo

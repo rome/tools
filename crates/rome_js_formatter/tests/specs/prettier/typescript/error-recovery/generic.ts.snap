@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: typescript/error-recovery/generic.ts
+  test_file: "typescript\\error-recovery\\generic.ts"
 ---
 
 # Input
@@ -79,66 +79,114 @@ class f7<> {
 
 # Errors
 ```
-error[SyntaxError]: expected a type parameter but instead found '>'
-  ┌─ generic.ts:1:4
-  │
-1 │ f1<>();
-  │    ^ Expected a type parameter here
+generic.ts:1:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type parameter but instead found '>'
-  ┌─ generic.ts:3:8
-  │
-3 │ new f2<>();
-  │        ^ Expected a type parameter here
+  × expected a type parameter but instead found '>'
+  
+  × Expected a type parameter here
+  
+    ┌─ generic.ts:1:4
+    │
+  1 │ f1<>();
+    │    ^
+  
+generic.ts:3:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type parameter but instead found '>'
-  ┌─ generic.ts:5:13
-  │
-5 │ function f3<>() {}
-  │             ^ Expected a type parameter here
+  × expected a type parameter but instead found '>'
+  
+  × Expected a type parameter here
+  
+    ┌─ generic.ts:3:8
+    │
+  3 │ new f2<>();
+    │        ^
+  
+generic.ts:5:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type parameter but instead found '>'
-  ┌─ generic.ts:8:17
-  │
-8 │     constructor<>() {}
-  │                 ^ Expected a type parameter here
+  × expected a type parameter but instead found '>'
+  
+  × Expected a type parameter here
+  
+    ┌─ generic.ts:5:13
+    │
+  5 │ function f3<>() {}
+    │             ^
+  
+generic.ts:8:17 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: constructors cannot have type parameters.
-  ┌─ generic.ts:8:16
-  │
-8 │     constructor<>() {}
-  │                ^^
+  × expected a type parameter but instead found '>'
+  
+  × Expected a type parameter here
+  
+    ┌─ generic.ts:8:17
+    │
+  8 │     constructor<>() {}
+    │                 ^
+  
+generic.ts:8:16 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type parameter but instead found '>'
-   ┌─ generic.ts:11:21
-   │
-11 │ const f5 = function<>() {}
-   │                     ^ Expected a type parameter here
+  × constructors cannot have type parameters.
+  
+    ┌─ generic.ts:8:16
+    │
+  8 │     constructor<>() {}
+    │                ^^
+  
+generic.ts:11:21 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type parameter but instead found '>'
-   ┌─ generic.ts:13:14
-   │
-13 │ interface f6<> {
-   │              ^ Expected a type parameter here
+  × expected a type parameter but instead found '>'
+  
+  × Expected a type parameter here
+  
+     ┌─ generic.ts:11:21
+     │
+  11 │ const f5 = function<>() {}
+     │                     ^
+  
+generic.ts:13:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type parameter but instead found '>'
-   ┌─ generic.ts:14:10
-   │
-14 │     test<>();
-   │          ^ Expected a type parameter here
+  × expected a type parameter but instead found '>'
+  
+  × Expected a type parameter here
+  
+     ┌─ generic.ts:13:14
+     │
+  13 │ interface f6<> {
+     │              ^
+  
+generic.ts:14:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type parameter but instead found '>'
-   ┌─ generic.ts:17:10
-   │
-17 │ class f7<> {
-   │          ^ Expected a type parameter here
+  × expected a type parameter but instead found '>'
+  
+  × Expected a type parameter here
+  
+     ┌─ generic.ts:14:10
+     │
+  14 │     test<>();
+     │          ^
+  
+generic.ts:17:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type parameter but instead found '>'
-   ┌─ generic.ts:18:10
-   │
-18 │     test<>() {}
-   │          ^ Expected a type parameter here
+  × expected a type parameter but instead found '>'
+  
+  × Expected a type parameter here
+  
+     ┌─ generic.ts:17:10
+     │
+  17 │ class f7<> {
+     │          ^
+  
+generic.ts:18:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a type parameter but instead found '>'
+  
+  × Expected a type parameter here
+  
+     ┌─ generic.ts:18:10
+     │
+  18 │     test<>() {}
+     │          ^
+  
 
 ```
 

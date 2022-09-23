@@ -250,22 +250,28 @@ function HighComplexity2() {
 
 # Diagnostics
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-   ┌─ HighComplexity.js:29:5
-   │
-29 │     afterReturn();
-   │     --------------
+HighComplexity.js:29:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! This code is unreachable
+  
+     ┌─ HighComplexity.js:29:5
+     │
+  29 │     afterReturn();
+     │     ^^^^^^^^^^^^^^
+  
 
 ```
 
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-    ┌─ HighComplexity.js:240:5
-    │
-240 │     afterReturn();
-    │     --------------
+HighComplexity.js:240:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! This code is unreachable
+  
+      ┌─ HighComplexity.js:240:5
+      │
+  240 │     afterReturn();
+      │     ^^^^^^^^^^^^^^
+  
 
 ```
 

@@ -18,26 +18,46 @@ function JsReturnStatement2() {
 
 # Diagnostics
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-  ┌─ JsReturnStatement.js:3:5
-  │
-2 │     return;
-  │     ------- This statement will return from the function ...
-3 │     afterReturn();
-  │     -------------- ... before it can reach this code
+JsReturnStatement.js:3:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+    ┌─ JsReturnStatement.js:3:5
+    │
+  3 │     afterReturn();
+    │     ^^^^^^^^^^^^^^
+  
+  i This statement will return from the function ...
+  
+    ┌─ JsReturnStatement.js:2:5
+    │
+  2 │     return;
+    │     ^^^^^^^
+  
 
 ```
 
 ```
-warning[nursery/noUnreachable]: This code is unreachable
-  ┌─ JsReturnStatement.js:8:5
-  │
-7 │     return;
-  │     ------- This statement will return from the function ...
-8 │     return; // afterReturn
-  │     ------- ... before it can reach this code
+JsReturnStatement.js:8:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+    ┌─ JsReturnStatement.js:8:5
+    │
+  8 │     return; // afterReturn
+    │     ^^^^^^^
+  
+  i This statement will return from the function ...
+  
+    ┌─ JsReturnStatement.js:7:5
+    │
+  7 │     return;
+    │     ^^^^^^^
+  
 
 ```
 

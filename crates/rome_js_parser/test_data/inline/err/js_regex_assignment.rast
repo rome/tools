@@ -31,27 +31,47 @@ JsModule {
       1: (empty)
   3: EOF@15..15 "" [] []
 --
-error[SyntaxError]: Invalid assignment to `/=0*_:m/`
-  ┌─ js_regex_assignment.js:1:1
-  │
-1 │ /=0*_:m/=/*_:|
-  │ ^^^^^^^^ This expression cannot be assigned to
+js_regex_assignment.js:1:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Invalid assignment to `/=0*_:m/`
+  
+  × This expression cannot be assigned to
+  
+    ┌─ js_regex_assignment.js:1:1
+    │
+  1 │ /=0*_:m/=/*_:|
+    │ ^^^^^^^^
+  
 --
-error[SyntaxError]: expected an expression, or an assignment but instead found ''
-  ┌─ js_regex_assignment.js:2:1
-  │
-2 │ 
-  │ ^ Expected an expression, or an assignment here
+js_regex_assignment.js:2:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an expression, or an assignment but instead found ''
+  
+  × Expected an expression, or an assignment here
+  
+    ┌─ js_regex_assignment.js:2:1
+    │
+  2 │ 
+    │ ^
+  
 --
-error: unterminated block comment
-  ┌─ js_regex_assignment.js:2:1
-  │
-1 │ /=0*_:m/=/*_:|
-  │          -- A block comment starts here
-2 │ 
-  │ ^ ... but the file ends here
+js_regex_assignment.js:2:1 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × unterminated block comment
+  
+  × ... but the file ends here
+  
+    ┌─ js_regex_assignment.js:2:1
+    │
+  2 │ 
+    │ ^
+  
+  i A block comment starts here
+  
+    ┌─ js_regex_assignment.js:1:10
+    │
+  1 │ /=0*_:m/=/*_:|
+    │          ^^
+  
 --
 /=0*_:m/=/*_:|

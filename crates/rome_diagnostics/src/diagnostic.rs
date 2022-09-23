@@ -1,4 +1,5 @@
 use crate::suggestion::SuggestionChange;
+use crate::v2;
 use crate::{
     file::{FileId, FileSpan, Span},
     Applicability, CodeSuggestion, DiagnosticTag, Severity, SuggestionStyle,
@@ -68,6 +69,13 @@ impl Diagnostic {
         title: impl Display,
         code: Option<String>,
     ) -> Self {
+        let code = code.filter(|code| !code.is_empty());
+        if let Some(code) = &code {
+            if code.parse::<&'static v2::Category>().is_err() {
+                panic!("code {code:?} is not a registered diagnostic category");
+            }
+        }
+
         Self {
             file_id,
             code,

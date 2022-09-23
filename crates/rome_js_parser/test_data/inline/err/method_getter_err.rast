@@ -67,26 +67,39 @@ JsModule {
       0: R_CURLY@19..21 "}" [Newline("\n")] []
   3: EOF@21..22 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-  ┌─ method_getter_err.js:2:2
-  │
-2 │  get {}
-  │  ^^^
+method_getter_err.js:2:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a semicolon to end the class property, but found none
+  
+    ┌─ method_getter_err.js:2:2
+    │
+  2 │  get {}
+    │  ^^^
+  
 --
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
-  ┌─ method_getter_err.js:2:6
-  │
-2 │  get {}
-  │      ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+method_getter_err.js:2:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
+  
+  × Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+  
+    ┌─ method_getter_err.js:2:6
+    │
+  2 │  get {}
+    │      ^
+  
 --
-error[SyntaxError]: expected a statement but instead found '}'
-  ┌─ method_getter_err.js:3:1
-  │
-3 │ }
-  │ ^ Expected a statement here
+method_getter_err.js:3:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a statement but instead found '}'
+  
+  × Expected a statement here
+  
+    ┌─ method_getter_err.js:3:1
+    │
+  3 │ }
+    │ ^
+  
 --
 class foo {
  get {}

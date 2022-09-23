@@ -26,114 +26,161 @@ typeof foo == -5
 
 # Diagnostics
 ```
-warning[correctness/useValidTypeof]: Invalid `typeof` comparison value
-  ┌─ useValidTypeof.js:7:16
-  │
-7 │ typeof foo === "strnig"
-  │                -------- not a valid type name
+useValidTypeof.js:7:16 lint/correctness/useValidTypeof ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-
-```
-
-```
-warning[correctness/useValidTypeof]: Invalid `typeof` comparison value
-  ┌─ useValidTypeof.js:8:15
-  │
-8 │ typeof foo == "undefimed"
-  │               ----------- not a valid type name
-
+  ! Invalid `typeof` comparison value
+  
+  ! not a valid type name
+  
+    ┌─ useValidTypeof.js:7:16
+    │
+  7 │ typeof foo === "strnig"
+    │                ^^^^^^^^
+  
 
 ```
 
 ```
-warning[correctness/useValidTypeof]: Invalid `typeof` comparison value
-  ┌─ useValidTypeof.js:9:15
-  │
-9 │ typeof bar != "nunber"
-  │               -------- not a valid type name
+useValidTypeof.js:8:15 lint/correctness/useValidTypeof ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-
-```
-
-```
-warning[correctness/useValidTypeof]: Invalid `typeof` comparison value
-   ┌─ useValidTypeof.js:10:16
-   │
-10 │ typeof bar !== "fucntion"
-   │                ---------- not a valid type name
-
+  ! Invalid `typeof` comparison value
+  
+  ! not a valid type name
+  
+    ┌─ useValidTypeof.js:8:15
+    │
+  8 │ typeof foo == "undefimed"
+    │               ^^^^^^^^^^^
+  
 
 ```
 
 ```
-warning[correctness/useValidTypeof]: Invalid `typeof` comparison value
-   ┌─ useValidTypeof.js:13:16
-   │
-13 │ typeof foo === undefined
-   │                --------- not a string literal
+useValidTypeof.js:9:15 lint/correctness/useValidTypeof ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Compare the result of `typeof` with a valid type name
-      | @@ -10,7 +10,7 @@
- 9  9 |   typeof bar !== "fucntion"
-10 10 |   
-11 11 |   // Invalid expressions
-12    | - typeof foo === undefined
-   12 | + typeof foo === "undefined"
-13 13 |   typeof bar == Object
-14 14 |   typeof foo === baz
-15 15 |   typeof foo == 5
-
+  ! Invalid `typeof` comparison value
+  
+  ! not a valid type name
+  
+    ┌─ useValidTypeof.js:9:15
+    │
+  9 │ typeof bar != "nunber"
+    │               ^^^^^^^^
+  
 
 ```
 
 ```
-warning[correctness/useValidTypeof]: Invalid `typeof` comparison value
-   ┌─ useValidTypeof.js:14:15
-   │
-14 │ typeof bar == Object
-   │               ------ not a string literal
+useValidTypeof.js:10:16 lint/correctness/useValidTypeof ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Suggested fix: Compare the result of `typeof` with a valid type name
-      | @@ -11,7 +11,7 @@
-10 10 |   
-11 11 |   // Invalid expressions
-12 12 |   typeof foo === undefined
-13    | - typeof bar == Object
-   13 | + typeof bar == "object"
-14 14 |   typeof foo === baz
-15 15 |   typeof foo == 5
-16 16 |   typeof foo == -5
-
+  ! Invalid `typeof` comparison value
+  
+  ! not a valid type name
+  
+     ┌─ useValidTypeof.js:10:16
+     │
+  10 │ typeof bar !== "fucntion"
+     │                ^^^^^^^^^^
+  
 
 ```
 
 ```
-warning[correctness/useValidTypeof]: Invalid `typeof` comparison value
-   ┌─ useValidTypeof.js:15:16
-   │
-15 │ typeof foo === baz
-   │                --- not a string literal
+useValidTypeof.js:13:16 lint/correctness/useValidTypeof  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! Invalid `typeof` comparison value
+  
+  ! not a string literal
+  
+     ┌─ useValidTypeof.js:13:16
+     │
+  13 │ typeof foo === undefined
+     │                ^^^^^^^^^
+  
+  i Suggested fix: Compare the result of `typeof` with a valid type name
+  
+        | @@ -10,7 +10,7 @@
+   9  9 |   typeof bar !== "fucntion"
+  10 10 |   
+  11 11 |   // Invalid expressions
+  12    | - typeof foo === undefined
+     12 | + typeof foo === "undefined"
+  13 13 |   typeof bar == Object
+  14 14 |   typeof foo === baz
+  15 15 |   typeof foo == 5
+  
 
 ```
 
 ```
-warning[correctness/useValidTypeof]: Invalid `typeof` comparison value
-   ┌─ useValidTypeof.js:16:15
-   │
-16 │ typeof foo == 5
-   │               - not a string literal
+useValidTypeof.js:14:15 lint/correctness/useValidTypeof  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! Invalid `typeof` comparison value
+  
+  ! not a string literal
+  
+     ┌─ useValidTypeof.js:14:15
+     │
+  14 │ typeof bar == Object
+     │               ^^^^^^
+  
+  i Suggested fix: Compare the result of `typeof` with a valid type name
+  
+        | @@ -11,7 +11,7 @@
+  10 10 |   
+  11 11 |   // Invalid expressions
+  12 12 |   typeof foo === undefined
+  13    | - typeof bar == Object
+     13 | + typeof bar == "object"
+  14 14 |   typeof foo === baz
+  15 15 |   typeof foo == 5
+  16 16 |   typeof foo == -5
+  
 
 ```
 
 ```
-warning[correctness/useValidTypeof]: Invalid `typeof` comparison value
-   ┌─ useValidTypeof.js:17:15
-   │
-17 │ typeof foo == -5
-   │               -- not a string literal
+useValidTypeof.js:15:16 lint/correctness/useValidTypeof ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  ! Invalid `typeof` comparison value
+  
+  ! not a string literal
+  
+     ┌─ useValidTypeof.js:15:16
+     │
+  15 │ typeof foo === baz
+     │                ^^^
+  
+
+```
+
+```
+useValidTypeof.js:16:15 lint/correctness/useValidTypeof ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Invalid `typeof` comparison value
+  
+  ! not a string literal
+  
+     ┌─ useValidTypeof.js:16:15
+     │
+  16 │ typeof foo == 5
+     │               ^
+  
+
+```
+
+```
+useValidTypeof.js:17:15 lint/correctness/useValidTypeof ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Invalid `typeof` comparison value
+  
+  ! not a string literal
+  
+     ┌─ useValidTypeof.js:17:15
+     │
+  17 │ typeof foo == -5
+     │               ^^
+  
 
 ```
 
