@@ -28,13 +28,14 @@ where
         match self.node.format().fmt(f) {
             Ok(result) => Ok(result),
 
-            Err(_) => {
+            Err(FormatError::SyntaxError) => {
                 f.restore_state_snapshot(snapshot);
 
                 // Lists that yield errors are formatted as they were suppressed nodes.
                 // Doing so, the formatter formats the nodes/tokens as is.
                 format_suppressed_node(self.node.syntax()).fmt(f)
             }
+            Err(err) => Err(err),
         }
     }
 }

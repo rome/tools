@@ -14,11 +14,14 @@
 /// use rome_formatter::{SimpleFormatContext, format, format_args};
 /// use rome_formatter::prelude::*;
 ///
+/// # fn main() -> FormatResult<()> {
 /// let formatted = format!(SimpleFormatContext::default(), [
 ///     format_args!(text("Hello World"))
-/// ]).unwrap();
+/// ])?;
 ///
-/// assert_eq!("Hello World", formatted.print().as_code());
+/// assert_eq!("Hello World", formatted.print()?.as_code());
+/// # Ok(())
+/// # }
 /// ```
 ///
 /// [`Format`]: crate::Format
@@ -46,23 +49,22 @@ macro_rules! format_args {
 /// use rome_formatter::prelude::*;
 /// use rome_formatter::{Buffer, FormatState, SimpleFormatContext, VecBuffer, write};
 ///
-/// fn main() -> FormatResult<()> {
-///     let mut state = FormatState::new(SimpleFormatContext::default());
-///     let mut buffer = VecBuffer::new(&mut state);
-///     write!(&mut buffer, [text("Hello"), space()])?;
-///     write!(&mut buffer, [text("World")])?;
+/// # fn main() -> FormatResult<()> {
+/// let mut state = FormatState::new(SimpleFormatContext::default());
+/// let mut buffer = VecBuffer::new(&mut state);
+/// write!(&mut buffer, [text("Hello"), space()])?;
+/// write!(&mut buffer, [text("World")])?;
 ///
-///     assert_eq!(
-///         buffer.into_element(),
-///         FormatElement::from_iter([
-///             FormatElement::Text(Text::Static { text: "Hello" }),
-///             FormatElement::Space,
-///             FormatElement::Text(Text::Static { text: "World" }),
-///         ])
-///     );
-///
-///     Ok(())
-/// }
+/// assert_eq!(
+///     buffer.into_vec(),
+///     vec![
+///         FormatElement::Text(Text::Static { text: "Hello" }),
+///         FormatElement::Space,
+///         FormatElement::Text(Text::Static { text: "World" }),
+///     ]
+///  );
+/// #  Ok(())
+/// # }
 /// ```
 #[macro_export]
 macro_rules! write {
@@ -80,13 +82,16 @@ macro_rules! write {
 /// use rome_formatter::prelude::*;
 /// use rome_formatter::{FormatState, VecBuffer};
 ///
+/// # fn main() -> FormatResult<()> {
 /// let mut state = FormatState::new(SimpleFormatContext::default());
 /// let mut buffer = VecBuffer::new(&mut state);
 ///
-/// dbg_write!(buffer, [text("Hello")]).unwrap();
+/// dbg_write!(buffer, [text("Hello")])?;
 /// // ^-- prints: [src/main.rs:7][0] = StaticToken("Hello")
 ///
-/// assert_eq!(buffer.into_element(), FormatElement::Text(Text::Static { text: "Hello" }));
+/// assert_eq!(buffer.into_vec(), vec![FormatElement::Text(Text::Static { text: "Hello" })]);
+/// # Ok(())
+/// # }
 /// ```
 ///
 /// Note that the macro is intended as debugging tool and therefore you should avoid having
@@ -124,8 +129,8 @@ macro_rules! dbg_write {
 /// let formatted = format!(SimpleFormatContext::default(), [text("("), text("a"), text(")")]).unwrap();
 ///
 /// assert_eq!(
-///     formatted.into_format_element(),
-///     FormatElement::from_iter([
+///     formatted.into_document(),
+///     Document::from(vec![
 ///         FormatElement::Text(Text::Static { text: "(" }),
 ///         FormatElement::Text(Text::Static { text: "a" }),
 ///         FormatElement::Text(Text::Static { text: ")" }),
@@ -151,6 +156,7 @@ macro_rules! format {
 /// use rome_formatter::{Formatted, LineWidth, format, format_args, SimpleFormatOptions};
 /// use rome_formatter::prelude::*;
 ///
+/// # fn main() -> FormatResult<()> {
 /// let formatted = format!(
 ///     SimpleFormatContext::default(),
 ///     [
@@ -200,15 +206,15 @@ macro_rules! format {
 ///             )
 ///         )
 ///     ]
-/// ).unwrap();
+/// )?;
 ///
-/// let elements = formatted.into_format_element();
+/// let document = formatted.into_document();
 ///
 /// // Takes the first variant if everything fits on a single line
 /// assert_eq!(
 ///     "aVeryLongIdentifier([1, 2, 3])",
-///     Formatted::new(elements.clone(), SimpleFormatContext::default())
-///         .print()
+///     Formatted::new(document.clone(), SimpleFormatContext::default())
+///         .print()?
 ///         .as_code()
 /// );
 ///
@@ -216,18 +222,20 @@ macro_rules! format {
 /// // has some additional line breaks to make sure inner groups don't break
 /// assert_eq!(
 ///     "aVeryLongIdentifier([\n\t1, 2, 3\n])",
-///     Formatted::new(elements.clone(), SimpleFormatContext::new(SimpleFormatOptions { line_width: 21.try_into().unwrap(), ..SimpleFormatOptions::default() }))
-///         .print()
+///     Formatted::new(document.clone(), SimpleFormatContext::new(SimpleFormatOptions { line_width: 21.try_into().unwrap(), ..SimpleFormatOptions::default() }))
+///         .print()?
 ///         .as_code()
 /// );
 ///
 /// // Prints the last option as last resort
 /// assert_eq!(
 ///     "aVeryLongIdentifier(\n\t[\n\t\t1,\n\t\t2,\n\t\t3\n\t]\n)",
-///     Formatted::new(elements.clone(), SimpleFormatContext::new(SimpleFormatOptions { line_width: 20.try_into().unwrap(), ..SimpleFormatOptions::default() }))
-///         .print()
+///     Formatted::new(document.clone(), SimpleFormatContext::new(SimpleFormatOptions { line_width: 20.try_into().unwrap(), ..SimpleFormatOptions::default() }))
+///         .print()?
 ///         .as_code()
 /// );
+/// # Ok(())
+/// # }
 /// ```
 ///
 /// ## Complexity
@@ -281,8 +289,8 @@ mod tests {
         write![&mut buffer, [TestFormat]].unwrap();
 
         assert_eq!(
-            buffer.into_element(),
-            FormatElement::Text(Text::Static { text: "test" })
+            buffer.into_vec(),
+            vec![FormatElement::Text(Text::Static { text: "test" })]
         );
     }
 
@@ -298,14 +306,14 @@ mod tests {
         .unwrap();
 
         assert_eq!(
-            buffer.into_element(),
-            FormatElement::List(List::new(vec![
+            buffer.into_vec(),
+            vec![
                 FormatElement::Text(Text::Static { text: "a" }),
                 FormatElement::Space,
                 FormatElement::Text(Text::Static { text: "simple" }),
                 FormatElement::Space,
                 FormatElement::Text(Text::Static { text: "test" })
-            ]))
+            ]
         );
     }
 
@@ -396,24 +404,26 @@ mod tests {
         .unwrap();
 
         let best_fitting_code = Formatted::new(
-            formatted_best_fitting.into_format_element(),
+            formatted_best_fitting.into_document(),
             SimpleFormatContext::new(SimpleFormatOptions {
                 line_width: 30.try_into().unwrap(),
                 ..SimpleFormatOptions::default()
             }),
         )
         .print()
+        .expect("Document to be valid")
         .as_code()
         .to_string();
 
         let normal_list_code = Formatted::new(
-            formatted_normal_list.into_format_element(),
+            formatted_normal_list.into_document(),
             SimpleFormatContext::new(SimpleFormatOptions {
                 line_width: 30.try_into().unwrap(),
                 ..SimpleFormatOptions::default()
             }),
         )
         .print()
+        .expect("Document to be valid")
         .as_code()
         .to_string();
 

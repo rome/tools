@@ -67,11 +67,14 @@ impl<'fmt, Context> Argument<'fmt, Context> {
 /// use rome_formatter::prelude::*;
 /// use rome_formatter::{format, format_args};
 ///
+/// # fn main() -> FormatResult<()> {
 /// let formatted = format!(SimpleFormatContext::default(), [
 ///     format_args!(text("a"), space(), text("b"))
-/// ]).unwrap();
+/// ])?;
 ///
-/// assert_eq!("a b", formatted.print().as_code());
+/// assert_eq!("a b", formatted.print()?.as_code());
+/// # Ok(())
+/// # }
 /// ```
 pub struct Arguments<'fmt, Context>(pub &'fmt [Argument<'fmt, Context>]);
 
@@ -118,8 +121,9 @@ impl<'fmt, Context> From<&'fmt Argument<'fmt, Context>> for Arguments<'fmt, Cont
 
 #[cfg(test)]
 mod tests {
+    use crate::format_element::tag::Tag;
     use crate::prelude::*;
-    use crate::{format_args, format_element, write, FormatState, VecBuffer};
+    use crate::{format_args, write, FormatState, VecBuffer};
 
     #[test]
     fn test_nesting() {
@@ -139,17 +143,18 @@ mod tests {
         .unwrap();
 
         assert_eq!(
-            buffer.into_element(),
-            FormatElement::List(List::new(vec![
+            buffer.into_vec(),
+            vec![
                 FormatElement::Text(Text::Static { text: "function" }),
                 FormatElement::Space,
                 FormatElement::Text(Text::Static { text: "a" }),
                 FormatElement::Space,
-                FormatElement::Group(format_element::Group::new(vec![
-                    FormatElement::Text(Text::Static { text: "(" }),
-                    FormatElement::Text(Text::Static { text: ")" }),
-                ]))
-            ]))
+                // Group
+                FormatElement::Tag(Tag::StartGroup(None)),
+                FormatElement::Text(Text::Static { text: "(" }),
+                FormatElement::Text(Text::Static { text: ")" }),
+                FormatElement::Tag(Tag::EndGroup)
+            ]
         );
     }
 }

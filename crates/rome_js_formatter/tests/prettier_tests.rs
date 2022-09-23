@@ -87,7 +87,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
             )
         }
         _ => rome_js_formatter::format_node(options.clone(), &syntax)
-            .map(|formatted| formatted.print()),
+            .map(|formatted| formatted.print().unwrap()),
     };
 
     let formatted = result.expect("formatting failed");

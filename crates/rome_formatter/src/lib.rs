@@ -29,7 +29,6 @@ pub mod format_element;
 mod format_extensions;
 pub mod formatter;
 pub mod group_id;
-pub mod intersperse;
 pub mod macros;
 pub mod prelude;
 #[cfg(debug_assertions)]
@@ -41,8 +40,9 @@ mod verbatim;
 
 use crate::formatter::Formatter;
 use crate::group_id::UniqueGroupIdBuilder;
-use crate::prelude::syntax_token_cow_slice;
+use crate::prelude::{syntax_token_cow_slice, TagKind};
 
+use crate::format_element::document::Document;
 #[cfg(debug_assertions)]
 use crate::printed_tokens::PrintedTokens;
 use crate::printer::{Printer, PrinterOptions};
@@ -55,7 +55,7 @@ pub use builders::{
 };
 
 use crate::comments::{CommentStyle, Comments, SourceComment};
-pub use format_element::{normalize_newlines, FormatElement, Text, Verbatim, LINE_TERMINATORS};
+pub use format_element::{normalize_newlines, FormatElement, Text, LINE_TERMINATORS};
 pub use group_id::GroupId;
 use rome_rowan::{
     Language, SyntaxElement, SyntaxError, SyntaxNode, SyntaxResult, SyntaxToken, SyntaxTriviaPiece,
@@ -301,21 +301,28 @@ pub struct SourceMarker {
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Formatted<Context> {
-    root: FormatElement,
+    document: Document,
     context: Context,
 }
 
 impl<Context> Formatted<Context> {
-    pub fn new(root: FormatElement, context: Context) -> Self {
-        Self { root, context }
+    pub fn new(document: Document, context: Context) -> Self {
+        Self { document, context }
     }
 
+    /// Returns the context used during formatting.
     pub fn context(&self) -> &Context {
         &self.context
     }
 
-    pub fn into_format_element(self) -> FormatElement {
-        self.root
+    /// Returns the formatted document.
+    pub fn document(&self) -> &Document {
+        &self.document
+    }
+
+    /// Consumes `self` and returns the formatted document.
+    pub fn into_document(self) -> Document {
+        self.document
     }
 }
 
@@ -323,27 +330,137 @@ impl<Context> Formatted<Context>
 where
     Context: FormatContext,
 {
-    pub fn print(&self) -> Printed {
+    pub fn print(&self) -> PrintResult<Printed> {
         let print_options = self.context.options().as_print_options();
 
-        let printed = Printer::new(print_options).print(&self.root);
+        let printed = Printer::new(print_options).print(&self.document)?;
 
-        match self.context.source_map() {
+        let printed = match self.context.source_map() {
             Some(source_map) => source_map.map_printed(printed),
             None => printed,
-        }
+        };
+
+        Ok(printed)
     }
 
-    pub fn print_with_indent(&self, indent: u16) -> Printed {
+    pub fn print_with_indent(&self, indent: u16) -> PrintResult<Printed> {
         let print_options = self.context.options().as_print_options();
-        let printed = Printer::new(print_options).print_with_indent(&self.root, indent);
+        let printed = Printer::new(print_options).print_with_indent(&self.document, indent)?;
 
-        match self.context.source_map() {
+        let printed = match self.context.source_map() {
             Some(source_map) => source_map.map_printed(printed),
             None => printed,
+        };
+
+        Ok(printed)
+    }
+}
+
+#[derive(Debug, Clone, Eq, PartialEq)]
+pub enum PrintError {
+    InvalidDocument(InvalidDocumentError),
+}
+
+impl Error for PrintError {}
+
+impl std::fmt::Display for PrintError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PrintError::InvalidDocument(inner) => {
+                std::write!(f, "Invalid document: {inner}")
+            }
         }
     }
 }
+
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub enum InvalidDocumentError {
+    /// Mismatching start/end kinds
+    ///
+    /// ```plain
+    /// StartIndent
+    /// ...
+    /// EndGroup
+    /// ```
+    StartEndTagMismatch {
+        start_kind: TagKind,
+        end_kind: TagKind,
+    },
+
+    /// End tag without a corresponding start tag.
+    ///
+    /// ```plain
+    /// Text
+    /// EndGroup
+    /// ```
+    StartTagMissing { kind: TagKind },
+
+    /// Expected a specific start tag but instead is:
+    /// * at the end of the document
+    /// * at another start tag
+    /// * at an end tag
+    ExpectedStart {
+        expected_start: TagKind,
+        actual: ActualStart,
+    },
+}
+
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub enum ActualStart {
+    /// The actual element is not a tag.
+    Content,
+
+    /// The actual element was a start tag of another kind.
+    Start(TagKind),
+
+    /// The actual element is an end tag instead of a start tag.
+    End(TagKind),
+
+    /// Reached the end of the document
+    EndOfDocument,
+}
+
+impl std::fmt::Display for InvalidDocumentError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            InvalidDocumentError::StartEndTagMismatch {
+                start_kind,
+                end_kind,
+            } => {
+                std::write!(
+                    f,
+                    "Expected end tag of kind {start_kind:?} but found {end_kind:?}."
+                )
+            }
+            InvalidDocumentError::StartTagMissing { kind } => {
+                std::write!(f, "End tag of kind {kind:?} without matching start tag.")
+            }
+            InvalidDocumentError::ExpectedStart {
+                expected_start,
+                actual,
+            } => {
+                match actual {
+                    ActualStart::EndOfDocument => {
+                        std::write!(f, "Expected start tag of kind {expected_start:?} but at the end of document.")
+                    }
+                    ActualStart::Start(start) => {
+                        std::write!(f, "Expected start tag of kind {expected_start:?} but found start tag of kind {start:?}.")
+                    }
+                    ActualStart::End(end) => {
+                        std::write!(f, "Expected start tag of kind {expected_start:?} but found end tag of kind {end:?}.")
+                    }
+                    ActualStart::Content => {
+                        std::write!(f, "Expected start tag of kind {expected_start:?} but found non-tag element.")
+                    }
+                }
+            }
+        }
+    }
+}
+
+pub type PrintResult<T> = Result<T, PrintError>;
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 #[cfg_attr(
@@ -448,6 +565,9 @@ pub enum FormatError {
     /// In case range formatting failed because the provided range was larger
     /// than the formatted syntax tree
     RangeError { input: TextRange, tree: TextRange },
+
+    /// In case printing the document failed because it has an invalid structure.
+    InvalidDocument(InvalidDocumentError),
 }
 
 impl std::fmt::Display for FormatError {
@@ -458,6 +578,7 @@ impl std::fmt::Display for FormatError {
                 fmt,
                 "formatting range {input:?} is larger than syntax tree {tree:?}"
             ),
+            FormatError::InvalidDocument(error) => std::write!(fmt, "Invalid document: {error}\n\n This is an internal Rome error. Please report if necessary."),
         }
     }
 }
@@ -474,6 +595,20 @@ impl From<&SyntaxError> for FormatError {
     fn from(syntax_error: &SyntaxError) -> Self {
         match syntax_error {
             SyntaxError::MissingRequiredChild => FormatError::SyntaxError,
+        }
+    }
+}
+
+impl From<PrintError> for FormatError {
+    fn from(error: PrintError) -> Self {
+        FormatError::from(&error)
+    }
+}
+
+impl From<&PrintError> for FormatError {
+    fn from(error: &PrintError) -> Self {
+        match error {
+            PrintError::InvalidDocument(reason) => FormatError::InvalidDocument(*reason),
         }
     }
 }
@@ -501,10 +636,13 @@ impl From<&SyntaxError> for FormatError {
 ///     }
 /// }
 ///
+/// # fn main() -> FormatResult<()> {
 /// let paragraph = Paragraph(String::from("test"));
-/// let formatted = format!(SimpleFormatContext::default(), [paragraph]).unwrap();
+/// let formatted = format!(SimpleFormatContext::default(), [paragraph])?;
 ///
-/// assert_eq!("test\n", formatted.print().as_code())
+/// assert_eq!("test\n", formatted.print()?.as_code());
+/// # Ok(())
+/// # }
 /// ```
 pub trait Format<Context> {
     /// Formats the object using the given formatter.
@@ -737,14 +875,17 @@ where
 /// use rome_formatter::prelude::*;
 /// use rome_formatter::{VecBuffer, format_args, FormatState, write, Formatted};
 ///
+/// # fn main() -> FormatResult<()> {
 /// let mut state = FormatState::new(SimpleFormatContext::default());
 /// let mut buffer = VecBuffer::new(&mut state);
 ///
-/// write!(&mut buffer, [format_args!(text("Hello World"))]).unwrap();
+/// write!(&mut buffer, [format_args!(text("Hello World"))])?;
 ///
-/// let formatted = Formatted::new(buffer.into_element(), SimpleFormatContext::default());
+/// let formatted = Formatted::new(Document::from(buffer.into_vec()), SimpleFormatContext::default());
 ///
-/// assert_eq!("Hello World", formatted.print().as_code())
+/// assert_eq!("Hello World", formatted.print()?.as_code());
+/// # Ok(())
+/// # }
 /// ```
 ///
 /// Please note that using [`write!`] might be preferable. Example:
@@ -753,14 +894,17 @@ where
 /// use rome_formatter::prelude::*;
 /// use rome_formatter::{VecBuffer, format_args, FormatState, write, Formatted};
 ///
+/// # fn main() -> FormatResult<()> {
 /// let mut state = FormatState::new(SimpleFormatContext::default());
 /// let mut buffer = VecBuffer::new(&mut state);
 ///
-/// write!(&mut buffer, [text("Hello World")]).unwrap();
+/// write!(&mut buffer, [text("Hello World")])?;
 ///
-/// let formatted = Formatted::new(buffer.into_element(), SimpleFormatContext::default());
+/// let formatted = Formatted::new(Document::from(buffer.into_vec()), SimpleFormatContext::default());
 ///
-/// assert_eq!("Hello World", formatted.print().as_code())
+/// assert_eq!("Hello World", formatted.print()?.as_code());
+/// # Ok(())
+/// # }
 /// ```
 ///
 #[inline(always)]
@@ -785,8 +929,11 @@ pub fn write<Context>(
 /// use rome_formatter::prelude::*;
 /// use rome_formatter::{format, format_args};
 ///
-/// let formatted = format!(SimpleFormatContext::default(), [&format_args!(text("test"))]).unwrap();
-/// assert_eq!("test", formatted.print().as_code());
+/// # fn main() -> FormatResult<()> {
+/// let formatted = format!(SimpleFormatContext::default(), [&format_args!(text("test"))])?;
+/// assert_eq!("test", formatted.print()?.as_code());
+/// # Ok(())
+/// # }
 /// ```
 ///
 /// Please note that using [`format!`] might be preferable. Example:
@@ -795,8 +942,11 @@ pub fn write<Context>(
 /// use rome_formatter::prelude::*;
 /// use rome_formatter::{format};
 ///
-/// let formatted = format!(SimpleFormatContext::default(), [text("test")]).unwrap();
-/// assert_eq!("test", formatted.print().as_code());
+/// # fn main() -> FormatResult<()> {
+/// let formatted = format!(SimpleFormatContext::default(), [text("test")])?;
+/// assert_eq!("test", formatted.print()?.as_code());
+/// # Ok(())
+/// # }
 /// ```
 pub fn format<Context>(
     context: Context,
@@ -810,7 +960,10 @@ where
 
     buffer.write_fmt(arguments)?;
 
-    Ok(Formatted::new(buffer.into_element(), state.into_context()))
+    Ok(Formatted::new(
+        Document::from(buffer.into_vec()),
+        state.into_context(),
+    ))
 }
 
 /// Entry point for formatting a [SyntaxNode] for a specific language.
@@ -879,7 +1032,7 @@ pub fn format_node<L: FormatLanguage>(
 
         write!(buffer, [format_node])?;
 
-        let document = buffer.into_element();
+        let document = Document::from(buffer.into_vec());
 
         state.assert_formatted_all_tokens(&root);
         {
@@ -1226,7 +1379,7 @@ pub fn format_sub_tree<L: FormatLanguage>(
     };
 
     let formatted = format_node(root, language)?;
-    let mut printed = formatted.print_with_indent(initial_indent);
+    let mut printed = formatted.print_with_indent(initial_indent)?;
     let sourcemap = printed.take_sourcemap();
     let verbatim_ranges = printed.take_verbatim_ranges();
 

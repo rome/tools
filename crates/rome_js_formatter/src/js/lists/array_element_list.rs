@@ -58,7 +58,7 @@ impl FormatRule<JsArrayElementList> for FormatJsArrayElementList {
     }
 }
 
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Debug)]
 enum ArrayLayout {
     /// Tries to fit as many array elements on a single line as possible.
     ///

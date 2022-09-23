@@ -232,7 +232,7 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
         // we ignore the error for now
         let options = JsFormatOptions::new(source_type);
         let formatted = format_node(options.clone(), &root).unwrap();
-        let printed = formatted.print();
+        let printed = formatted.print().unwrap();
         let file_name = spec_input_file.file_name().unwrap().to_str().unwrap();
 
         if !has_errors {
@@ -261,7 +261,7 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
                     // we don't track the source type inside the serializable structs, so we
                     // inject it here
                     let formatted = format_node(format_options.clone(), &root).unwrap();
-                    let printed = formatted.print();
+                    let printed = formatted.print().unwrap();
 
                     if !has_errors {
                         check_reformat::check_reformat(check_reformat::CheckReformatParams {

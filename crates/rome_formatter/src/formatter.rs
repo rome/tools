@@ -52,6 +52,7 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// use rome_formatter::format;
     /// use rome_formatter::prelude::*;
     ///
+    /// # fn main() -> FormatResult<()> {
     /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
     ///     f.join()
     ///         .entry(&text("a"))
@@ -60,12 +61,14 @@ impl<'buf, Context> Formatter<'buf, Context> {
     ///         .entry(&space())
     ///         .entry(&text("b"))
     ///         .finish()
-    /// })]).unwrap();
+    /// })])?;
     ///
     /// assert_eq!(
     ///     "a + b",
-    ///     formatted.print().as_code()
-    /// )
+    ///     formatted.print()?.as_code()
+    /// );
+    /// # Ok(())
+    /// # }
     /// ```
     pub fn join<'a>(&'a mut self) -> JoinBuilder<'a, 'buf, (), Context> {
         JoinBuilder::new(self)
@@ -81,6 +84,7 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// use rome_formatter::{format, format_args};
     /// use rome_formatter::prelude::*;
     ///
+    /// # fn main() -> FormatResult<()> {
     /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
     ///     f.join_with(&format_args!(text(","), space()))
     ///         .entry(&text("1"))
@@ -88,12 +92,14 @@ impl<'buf, Context> Formatter<'buf, Context> {
     ///         .entry(&text("3"))
     ///         .entry(&text("4"))
     ///         .finish()
-    /// })]).unwrap();
+    /// })])?;
     ///
     /// assert_eq!(
     ///     "1, 2, 3, 4",
-    ///     formatted.print().as_code()
+    ///     formatted.print()?.as_code()
     /// );
+    /// # Ok(())
+    /// # }
     /// ```
     pub fn join_with<'a, Joiner>(
         &'a mut self,
@@ -137,6 +143,7 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// use rome_formatter::prelude::*;
     /// use rome_formatter::{format, format_args};
     ///
+    /// # fn main() -> FormatResult<()> {
     /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
     ///     f.fill()
     ///         .entry(&soft_line_break_or_space(), &text("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"))
@@ -144,18 +151,21 @@ impl<'buf, Context> Formatter<'buf, Context> {
     ///         .entry(&soft_line_break_or_space(), &text("cccccccccccccccccccccccccccccc"))
     ///         .entry(&soft_line_break_or_space(), &text("dddddddddddddddddddddddddddddd"))
     ///         .finish()
-    /// })]).unwrap();
+    /// })])?;
     ///
     /// assert_eq!(
     ///     "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\ncccccccccccccccccccccccccccccc dddddddddddddddddddddddddddddd",
-    ///     formatted.print().as_code()
-    /// )
+    ///     formatted.print()?.as_code()
+    /// );
+    /// # Ok(())
+    /// # }
     /// ```
     ///
     /// ```rust
     /// use rome_formatter::prelude::*;
     /// use rome_formatter::{format, format_args};
     ///
+    /// # fn main() -> FormatResult<()> {
     /// let entries = vec![
     ///     text("<b>Important: </b>"),
     ///     text("Please do not commit memory bugs such as segfaults, buffer overflows, etc. otherwise you "),
@@ -165,31 +175,36 @@ impl<'buf, Context> Formatter<'buf, Context> {
     ///
     /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
     ///     f.fill().entries(&soft_line_break(), entries.iter()).finish()
-    /// })]).unwrap();
+    /// })])?;
     ///
     /// assert_eq!(
     ///     &std::format!("<b>Important: </b>\nPlease do not commit memory bugs such as segfaults, buffer overflows, etc. otherwise you \n<em>will</em> be reprimanded"),
-    ///     formatted.print().as_code()
-    /// )
+    ///     formatted.print()?.as_code()
+    /// );
+    /// # Ok(())
+    /// # }
     /// ```
     pub fn fill<'a>(&'a mut self) -> FillBuilder<'a, 'buf, Context> {
         FillBuilder::new(self)
     }
 
     /// Formats `content` into an interned element without writing it to the formatter's buffer.
-    pub fn intern(&mut self, content: &dyn Format<Context>) -> FormatResult<FormatElement> {
+    pub fn intern(&mut self, content: &dyn Format<Context>) -> FormatResult<Option<FormatElement>> {
         let mut buffer = VecBuffer::new(self.state_mut());
-
         crate::write!(&mut buffer, [content])?;
+        let elements = buffer.into_vec();
 
-        let interned = match buffer.into_element() {
-            // No point in interning an empty list as that would only result in an unnecessary allocation.
-            FormatElement::List(list) if list.is_empty() => FormatElement::List(list),
-            interned @ FormatElement::Interned(_) => interned,
-            element => FormatElement::Interned(Interned::new(element)),
-        };
+        Ok(self.intern_vec(elements))
+    }
 
-        Ok(interned)
+    pub fn intern_vec(&mut self, mut elements: Vec<FormatElement>) -> Option<FormatElement> {
+        match elements.len() {
+            0 => None,
+            // Doesn't get cheaper than calling clone, use the element directly
+            // SAFETY: Safe because of the `len == 1` check in the match arm.
+            1 => Some(elements.pop().unwrap()),
+            _ => Some(FormatElement::Interned(Interned::new(elements))),
+        }
     }
 }
 

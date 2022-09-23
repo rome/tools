@@ -4,7 +4,7 @@ use std::fmt::Write;
 use xtask::glue::fs2;
 use xtask::*;
 
-/// A token is needed to run this script. To create a token, go to https://github.com/settings/tokens
+/// A token is needed to run this script. To create a token, go to <https://github.com/settings/tokens>
 /// and give it read access to the repository.
 ///
 /// Only users that have read rights can run this script

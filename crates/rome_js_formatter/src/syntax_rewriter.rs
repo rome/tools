@@ -911,7 +911,7 @@ mod tests {
 
         let formatted =
             format_node(JsFormatOptions::new(SourceType::default()), &transformed).unwrap();
-        let printed = formatted.print();
+        let printed = formatted.print().unwrap();
 
         assert_eq!(printed.as_code(), "(a * b * c) / 3;\n");
 

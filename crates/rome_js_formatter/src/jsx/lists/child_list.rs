@@ -4,6 +4,7 @@ use crate::utils::jsx::{
     JsxRawSpace, JsxSpace,
 };
 use crate::JsFormatter;
+use rome_formatter::format_element::tag::Tag;
 use rome_formatter::{format_args, write, CstFormatContext, FormatRuleWithOptions, VecBuffer};
 use rome_js_syntax::{JsxAnyChild, JsxChildList};
 use std::cell::RefCell;
@@ -480,32 +481,7 @@ impl MultilineBuilder {
         content: &dyn Format<JsFormatContext>,
         f: &mut JsFormatter,
     ) {
-        let result = std::mem::replace(&mut self.result, Ok(Vec::new()));
-
-        self.result = result.and_then(|mut elements| {
-            let elements = match self.layout {
-                MultilineLayout::Fill => {
-                    // Make sure that the separator and content only ever write a single element
-                    let mut buffer = VecBuffer::new(f.state_mut());
-                    write!(buffer, [content])?;
-
-                    elements.push(buffer.into_element());
-
-                    // Fill requires a sequence of [element, separator, element, separator]
-                    // Push an empty list as separator
-                    elements.push(FormatElement::List(List::default()));
-                    elements
-                }
-                MultilineLayout::NoFill => {
-                    let mut buffer = VecBuffer::new_with_vec(f.state_mut(), elements);
-                    write!(buffer, [content])?;
-
-                    buffer.into_vec()
-                }
-            };
-
-            Ok(elements)
-        })
+        self.write(content, &format_with(|_| Ok(())), f)
     }
 
     fn write(
@@ -516,25 +492,25 @@ impl MultilineBuilder {
     ) {
         let result = std::mem::replace(&mut self.result, Ok(Vec::new()));
 
-        self.result = result.and_then(|mut elements| {
-            let elements = match self.layout {
-                MultilineLayout::Fill => {
-                    // Make sure that the separator and content only ever write a single element
-                    let mut buffer = VecBuffer::new(f.state_mut());
-                    write!(buffer, [content])?;
+        self.result = result.and_then(|elements| {
+            let elements = {
+                let mut buffer = VecBuffer::new_with_vec(f.state_mut(), elements);
+                match self.layout {
+                    MultilineLayout::Fill => {
+                        // Make sure that the separator and content only ever write a single element
+                        buffer.write_element(FormatElement::Tag(Tag::StartEntry))?;
+                        write!(buffer, [content])?;
+                        buffer.write_element(FormatElement::Tag(Tag::EndEntry))?;
 
-                    elements.push(buffer.into_element());
-
-                    let mut buffer = VecBuffer::new_with_vec(f.state_mut(), elements);
-                    write!(buffer, [separator])?;
-                    buffer.into_vec()
-                }
-                MultilineLayout::NoFill => {
-                    let mut buffer = VecBuffer::new_with_vec(f.state_mut(), elements);
-                    write!(buffer, [content, separator])?;
-
-                    buffer.into_vec()
-                }
+                        buffer.write_element(FormatElement::Tag(Tag::StartEntry))?;
+                        write!(buffer, [separator])?;
+                        buffer.write_element(FormatElement::Tag(Tag::EndEntry))?;
+                    }
+                    MultilineLayout::NoFill => {
+                        write!(buffer, [content, separator])?;
+                    }
+                };
+                buffer.into_vec()
             };
             Ok(elements)
         })
@@ -555,12 +531,19 @@ pub(crate) struct FormatMultilineChildren {
 
 impl Format<JsFormatContext> for FormatMultilineChildren {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        let elements = self.elements.take();
-        let format_inner = format_once(|f| match self.layout {
-            MultilineLayout::Fill => {
-                f.write_element(FormatElement::Fill(elements.into_boxed_slice()))
+        let format_inner = format_once(|f| {
+            if let Some(elements) = f.intern_vec(self.elements.take()) {
+                match self.layout {
+                    MultilineLayout::Fill => f.write_elements([
+                        FormatElement::Tag(Tag::StartFill),
+                        elements,
+                        FormatElement::Tag(Tag::EndFill),
+                    ])?,
+                    MultilineLayout::NoFill => f.write_element(elements)?,
+                };
             }
-            MultilineLayout::NoFill => f.write_elements(elements),
+
+            Ok(())
         });
 
         write!(f, [block_indent(&format_inner)])
@@ -616,7 +599,9 @@ pub(crate) struct FormatFlatChildren {
 
 impl Format<JsFormatContext> for FormatFlatChildren {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        let elements = self.elements.take();
-        f.write_elements(elements)
+        if let Some(elements) = f.intern_vec(self.elements.take()) {
+            f.write_element(elements)?;
+        }
+        Ok(())
     }
 }

@@ -52,7 +52,7 @@ pub fn run_format(root: &JsSyntaxNode, source_type: SourceType) -> Printed {
         print_diff(stats, dhat::HeapStats::get());
     }
 
-    printed
+    printed.expect("Document to be valid")
 }
 
 impl FormatterMeasurement {
