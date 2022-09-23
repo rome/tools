@@ -122,7 +122,7 @@ impl Hash for Interned {
     where
         H: Hasher,
     {
-        hasher.write_usize(Rc::as_ptr(&self.0) as *const usize as usize);
+        Rc::as_ptr(&self.0).hash(hasher);
     }
 }
 
