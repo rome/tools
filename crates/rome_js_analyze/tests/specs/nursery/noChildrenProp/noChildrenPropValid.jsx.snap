@@ -1,0 +1,16 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noChildrenPropValid.jsx
+---
+# Input
+```js
+// invalid
+<>
+    <Component><AnotherComponent /></Component>
+</>
+
+createElement('div', {}, 'foo')
+
+```
+
+
