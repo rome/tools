@@ -642,47 +642,31 @@ impl SemanticAssertions {
         // Check every no event assertion
 
         for assertion in self.no_events.iter() {
-            match events_by_pos.get(&assertion.range.start()) {
-                Some(_) => panic!("unexpected event at this position"),
-                None => {
-                    // Ok
-                }
+            if events_by_pos.get(&assertion.range.start()).is_some() {
+                panic!("unexpected event at this position")
             }
 
-            match events_by_pos.get(&assertion.range.end()) {
-                Some(_) => panic!("unexpected event at this position"),
-                None => {
-                    // Ok
-                }
+            if events_by_pos.get(&assertion.range.end()).is_some() {
+                panic!("unexpected event at this position")
             }
         }
 
         // Check every unique assertion
 
         for unique in self.uniques.iter() {
-            match events_by_pos.get(&unique.range.start()) {
-                Some(v) => {
-                    if v.len() > 1 {
-                        panic!("unexpected more than one event");
-                    } else if v.is_empty() {
-                        panic!("unexpected no events");
-                    }
-                }
-                None => {
-                    // Ok
+            if let Some(v) = events_by_pos.get(&unique.range.start()) {
+                if v.len() > 1 {
+                    panic!("unexpected more than one event");
+                } else if v.is_empty() {
+                    panic!("unexpected no events");
                 }
             }
 
-            match events_by_pos.get(&unique.range.end()) {
-                Some(v) => {
-                    if v.len() > 1 {
-                        panic!("unexpected more than one event");
-                    } else if v.is_empty() {
-                        panic!("unexpected no events");
-                    }
-                }
-                None => {
-                    // Ok
+            if let Some(v) = events_by_pos.get(&unique.range.end()) {
+                if v.len() > 1 {
+                    panic!("unexpected more than one event");
+                } else if v.is_empty() {
+                    panic!("unexpected no events");
                 }
             }
         }

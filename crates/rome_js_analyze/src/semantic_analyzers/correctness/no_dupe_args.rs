@@ -146,7 +146,7 @@ fn traverse_binding(
                 let prop = prop.ok()?;
                 match prop {
                     JsAnyObjectBindingPatternMember::JsIdentifierBinding(id_binding) => {
-                        track_binding(&id_binding, tracked_bindings).then(|| id_binding)
+                        track_binding(&id_binding, tracked_bindings).then_some(id_binding)
                     }
                     JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(pattern) => {
                         let pattern = pattern.pattern().ok()?;
@@ -156,7 +156,7 @@ fn traverse_binding(
                         let pattern = rest.binding().ok()?;
                         match pattern {
                             JsAnyBinding::JsIdentifierBinding(binding) => {
-                                track_binding(&binding, tracked_bindings).then(|| binding)
+                                track_binding(&binding, tracked_bindings).then_some(binding)
                             }
                             JsAnyBinding::JsUnknownBinding(_) => None,
                         }
@@ -165,7 +165,7 @@ fn traverse_binding(
                         shorthand_binding,
                     ) => match shorthand_binding.identifier().ok()? {
                         JsAnyBinding::JsIdentifierBinding(id_binding) => {
-                            track_binding(&id_binding, tracked_bindings).then(|| id_binding)
+                            track_binding(&id_binding, tracked_bindings).then_some(id_binding)
                         }
                         JsAnyBinding::JsUnknownBinding(_) => None,
                     },

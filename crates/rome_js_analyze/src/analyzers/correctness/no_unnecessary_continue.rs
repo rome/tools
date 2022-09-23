@@ -88,7 +88,7 @@ impl Rule for NoUnnecessaryContinue {
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let node = ctx.query();
-        is_continue_un_necessary(node)?.then(|| ())
+        is_continue_un_necessary(node)?.then_some(())
     }
 
     fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {

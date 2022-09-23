@@ -245,7 +245,7 @@ impl<Context> Buffer for VecBuffer<'_, Context> {
     }
 
     fn state_mut(&mut self) -> &mut FormatState<Self::Context> {
-        &mut self.state
+        self.state
     }
 
     fn snapshot(&self) -> BufferSnapshot {

@@ -1,4 +1,3 @@
-#![allow(rustdoc::broken_intra_doc_links)]
 use std::collections::BinaryHeap;
 
 use rome_diagnostics::file::FileId;
@@ -64,7 +63,7 @@ pub trait Visitor {
 ///
 /// Due to these specificities node visitors do not implement [Visitor]
 /// directly, instead one or more of these must the merged into a single
-/// visitor type using the [merge_node_visitors] macro
+/// visitor type using the [crate::merge_node_visitors] macro
 pub trait NodeVisitor<V>: Sized {
     type Node: AstNode;
 
