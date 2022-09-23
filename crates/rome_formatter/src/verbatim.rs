@@ -84,7 +84,7 @@ where
                     let (outside_trimmed_range, in_trimmed_range) =
                         leading_comments.split_at(outside_trimmed_range);
 
-                    write!(f, [FormatLeadingComments::Comments(&outside_trimmed_range)])?;
+                    write!(f, [FormatLeadingComments::Comments(outside_trimmed_range)])?;
 
                     for comment in in_trimmed_range {
                         comment.mark_formatted();
