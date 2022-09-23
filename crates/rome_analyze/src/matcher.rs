@@ -358,7 +358,7 @@ mod tests {
             diagnostics.as_slice(),
             &[
                 (
-                    String::from("suppressions/invalidGroup"),
+                    String::from("suppressions/unknownGroup"),
                     TextRange::new(TextSize::from(47), TextSize::from(62))
                 ),
                 (
@@ -366,7 +366,7 @@ mod tests {
                     TextRange::new(TextSize::from(63), TextSize::from(74))
                 ),
                 (
-                    String::from("suppressions/invalidRule"),
+                    String::from("suppressions/unknownRule"),
                     TextRange::new(TextSize::from(76), TextSize::from(96))
                 ),
                 (

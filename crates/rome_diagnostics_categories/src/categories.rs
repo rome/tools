@@ -61,8 +61,8 @@ define_dategories! {
     "internalError/panic",
     "io/skippedFile",
     "io/unhandledFile",
-    "suppressions/invalidGroup",
-    "suppressions/invalidRule",
+    "suppressions/unknownGroup",
+    "suppressions/unknownRule",
     // Legacy codes
     "SyntaxError",
     "IO",

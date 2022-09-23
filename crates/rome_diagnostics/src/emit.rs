@@ -107,7 +107,7 @@ impl DiagnosticPrinter<'_> {
 
     fn record_label(&self, visitor: &mut dyn Visit, label: &SubDiagnostic) -> io::Result<()> {
         if !label.msg.is_empty() {
-            visitor.record_log(map_severity(label.severity), &label.msg)?;
+            visitor.record_log(map_severity_to_log_category(label.severity), &label.msg)?;
         }
 
         if let Some(location) = self.lookup_location(label.span) {
@@ -118,7 +118,7 @@ impl DiagnosticPrinter<'_> {
     }
 }
 
-fn map_severity(severity: Severity) -> LogCategory {
+fn map_severity_to_log_category(severity: Severity) -> LogCategory {
     match severity {
         Severity::Help => LogCategory::Info,
         Severity::Note => LogCategory::Info,
@@ -190,7 +190,7 @@ impl v2::Diagnostic for DiagnosticPrinter<'_> {
         }
 
         for footer in &self.d.footers {
-            visitor.record_log(map_severity(footer.severity), &footer.msg)?;
+            visitor.record_log(map_severity_to_log_category(footer.severity), &footer.msg)?;
         }
 
         for suggestion in &self.d.suggestions {

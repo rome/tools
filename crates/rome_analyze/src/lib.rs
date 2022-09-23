@@ -399,14 +399,14 @@ where
                             let diag = match group_rule {
                             Some((group, rule)) => Diagnostic::warning(
                                 file_id,
-                                "suppressions/invalidRule",
+                                "suppressions/unknownRule",
                                 markup! {
                                     "Unknown lint rule "{group}"/"{rule}" in suppression comment"
                                 },
                             ).primary(range, ""),
                             None => Diagnostic::warning(
                                 file_id,
-                                "suppressions/invalidGroup",
+                                "suppressions/unknownGroup",
                                 markup! {
                                     "Unknown lint rule group "{rule}" in suppression comment"
                                 },
