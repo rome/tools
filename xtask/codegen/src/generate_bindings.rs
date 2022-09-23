@@ -396,7 +396,7 @@ pub(crate) fn generate_workspace_bindings(mode: Mode) -> Result<()> {
     .build();
 
     let formatted = format_node(JsFormatOptions::new(SourceType::ts()), module.syntax()).unwrap();
-    let printed = formatted.print();
+    let printed = formatted.print().unwrap();
     let code = printed.into_code();
 
     update(&bindings_path, &code, &mode)?;

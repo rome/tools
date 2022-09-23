@@ -578,7 +578,7 @@ impl std::fmt::Display for FormatError {
                 fmt,
                 "formatting range {input:?} is larger than syntax tree {tree:?}"
             ),
-            FormatError::InvalidDocument(error) => std::write!(fmt, "Invalid document: {error}\n\n This is an internal Rome error. Please open an issue https://github.com/rome/tools/issues."),
+            FormatError::InvalidDocument(error) => std::write!(fmt, "Invalid document: {error}\n\n This is an internal Rome error. Please report if necessary."),
         }
     }
 }
