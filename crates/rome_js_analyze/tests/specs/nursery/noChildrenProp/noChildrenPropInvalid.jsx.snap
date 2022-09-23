@@ -4,7 +4,6 @@ expression: noChildrenPropInvalid.jsx
 ---
 # Input
 ```js
-// invalid
 <>
     <Component children={'foo'}></Component>
 </>
@@ -21,46 +20,46 @@ React.createElement('div', {
 
 # Diagnostics
 ```
-noChildrenPropInvalid.jsx:3:16 lint/nursery/noChildrenProp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noChildrenPropInvalid.jsx:2:16 lint/nursery/noChildrenProp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid passing children using a prop
   
-    ┌─ noChildrenPropInvalid.jsx:3:16
+    ┌─ noChildrenPropInvalid.jsx:2:16
     │
-  3 │     <Component children={'foo'}></Component>
+  2 │     <Component children={'foo'}></Component>
     │                ^^^^^^^^
   
-  i The canonical way to pass children in React is to use JSX elements or additional arguments to React.createElement.
+  i The canonical way to pass children in React is to use JSX elements
   
 
 ```
 
 ```
-noChildrenPropInvalid.jsx:7:5 lint/nursery/noChildrenProp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noChildrenPropInvalid.jsx:6:5 lint/nursery/noChildrenProp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid passing children using a prop
   
-    ┌─ noChildrenPropInvalid.jsx:7:5
+    ┌─ noChildrenPropInvalid.jsx:6:5
     │
-  7 │     children: 'foo'
+  6 │     children: 'foo'
     │     ^^^^^^^^
   
-  i The canonical way to pass children in React is to use JSX elements or additional arguments to React.createElement.
+  i The canonical way to pass children in React is to use additional arguments to React.createElement
   
 
 ```
 
 ```
-noChildrenPropInvalid.jsx:11:5 lint/nursery/noChildrenProp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noChildrenPropInvalid.jsx:10:5 lint/nursery/noChildrenProp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid passing children using a prop
   
-     ┌─ noChildrenPropInvalid.jsx:11:5
+     ┌─ noChildrenPropInvalid.jsx:10:5
      │
-  11 │     children: 'foo'
+  10 │     children: 'foo'
      │     ^^^^^^^^
   
-  i The canonical way to pass children in React is to use JSX elements or additional arguments to React.createElement.
+  i The canonical way to pass children in React is to use additional arguments to React.createElement
   
 
 ```

@@ -73,11 +73,21 @@ impl Rule for NoChildrenProp {
     }
 
     fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
-        let range = match state {
-            NoChildrenPropState::JsxProp(name) => name.syntax().text_trimmed_range(),
-            NoChildrenPropState::MemberProp(children_prop) => {
-                children_prop.name().ok()?.syntax().text_trimmed_range()
+        let (range, footer_help) = match state {
+            NoChildrenPropState::JsxProp(name) => {
+                (
+                    name.syntax().text_trimmed_range(),
+                    (markup! {
+                     "The canonical way to pass children in React is to use JSX elements"
+                    }).to_owned()
+                )
             }
+            NoChildrenPropState::MemberProp(children_prop) => (
+                children_prop.name().ok()?.syntax().text_trimmed_range(),
+                (markup! {
+                     "The canonical way to pass children in React is to use additional arguments to React.createElement"
+                }).to_owned()
+            ),
         };
 
         Some(
@@ -87,9 +97,7 @@ impl Rule for NoChildrenProp {
                     "Avoid passing "<Emphasis>"children"</Emphasis>" using a prop"
                 },
             )
-            .footer_note(markup! {
-                "The canonical way to pass children in React is to use JSX elements or additional arguments to React.createElement."
-            }),
+            .footer_note(footer_help),
         )
     }
 }

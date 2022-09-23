@@ -1,4 +1,3 @@
-// invalid
 <>
     <Component children={'foo'}></Component>
 </>

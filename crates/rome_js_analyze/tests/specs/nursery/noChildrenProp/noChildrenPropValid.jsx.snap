@@ -4,7 +4,6 @@ expression: noChildrenPropValid.jsx
 ---
 # Input
 ```js
-// invalid
 <>
     <Component><AnotherComponent /></Component>
 </>
