@@ -93,82 +93,6 @@ impl NoUselessFragmentsQuery {
             }
         }
     }
-
-    fn opening_comments(&self) -> Option<Vec<SyntaxTriviaPiece<JsLanguage>>> {
-        let mut comments = Vec::new();
-        let l_angle = match self {
-            NoUselessFragmentsQuery::JsxFragment(fragment) => {
-                let opening_fragment = fragment.opening_fragment().ok()?;
-                opening_fragment.l_angle_token().ok()?
-            }
-            NoUselessFragmentsQuery::JsxElement(element) => {
-                let opening_element = element.opening_element().ok()?;
-                opening_element.l_angle_token().ok()?
-            }
-        };
-
-        comments.extend(
-            l_angle
-                .leading_trivia()
-                .pieces()
-                .filter(|piece| piece.is_comments())
-                .chain(
-                    l_angle
-                        .trailing_trivia()
-                        .pieces()
-                        .filter(|piece| piece.is_comments()),
-                ),
-        );
-
-        Some(comments)
-    }
-
-    fn closing_comments(&self) -> Option<Vec<SyntaxTriviaPiece<JsLanguage>>> {
-        let mut comments = Vec::new();
-        let (l_angle, slash) = match self {
-            NoUselessFragmentsQuery::JsxFragment(fragment) => {
-                let closing_fragment = fragment.closing_fragment().ok()?;
-                (
-                    closing_fragment.l_angle_token().ok()?,
-                    closing_fragment.slash_token().ok()?,
-                )
-            }
-            NoUselessFragmentsQuery::JsxElement(element) => {
-                let closing_element = element.closing_element().ok()?;
-                (
-                    closing_element.l_angle_token().ok()?,
-                    closing_element.slash_token().ok()?,
-                )
-            }
-        };
-
-        comments.extend(
-            l_angle
-                .leading_trivia()
-                .pieces()
-                .filter(|piece| piece.is_comments())
-                .chain(
-                    l_angle
-                        .trailing_trivia()
-                        .pieces()
-                        .filter(|piece| piece.is_comments()),
-                )
-                .chain(
-                    slash
-                        .leading_trivia()
-                        .pieces()
-                        .filter(|piece| piece.is_comments()),
-                )
-                .chain(
-                    slash
-                        .trailing_trivia()
-                        .pieces()
-                        .filter(|piece| piece.is_comments()),
-                ),
-        );
-
-        Some(comments)
-    }
 }
 
 impl Rule for NoUselessFragments {
@@ -272,64 +196,24 @@ impl Rule for NoUselessFragments {
         let node = ctx.query();
         let mut mutation = ctx.root().begin();
 
-        let opening_leading_comments = node.opening_comments()?;
-        let closing_leading_comments = node.closing_comments()?;
-
         let is_in_list = node
             .syntax()
             .parent()
             .map_or(false, |parent| JsxChildList::can_cast(parent.kind()));
         if is_in_list {
             let new_child = match state {
-                NoUselessFragmentsState::Empty => {
-                    if !opening_leading_comments.is_empty() || !closing_leading_comments.is_empty()
-                    {
-                        let open_curly = make::token(T!['{'])
-                            .with_trailing_trivia_pieces(opening_leading_comments);
-                        let close_curly = make::token(T!['}'])
-                            .with_leading_trivia_pieces(closing_leading_comments);
-                        Some(JsxAnyChild::JsxExpressionChild(
-                            jsx_expression_child(open_curly, close_curly).build(),
-                        ))
-                    } else {
-                        None
-                    }
-                }
+                NoUselessFragmentsState::Empty => None,
                 NoUselessFragmentsState::Child(child) => {
                     let child = child.clone();
                     let new_child = match child {
                         JsxAnyChild::JsxText(text) => {
-                            // `JsxText` doesn't have any valid tokens to which we can attach comments.
-                            // In this case, we create a new `JsxText` with a new content, which will contain
-                            // the old comments.
-                            // Leading comments are prepended to the existing content, and the trailing comments
-                            // are appended to the to the existing content
-                            //
-                            // Example:
-                            // </*comment/*> content </ /*comment*/>
-                            //
-                            // Will become
-                            //
-                            // /*comment*/ content /*comment*/
                             let mut new_text = String::new();
-                            opening_leading_comments
-                                .into_iter()
-                                .for_each(|piece| new_text.push_str(piece.text()));
                             new_text.push_str(text.value_token().ok()?.text_trimmed());
-                            closing_leading_comments
-                                .into_iter()
-                                .for_each(|piece| new_text.push_str(piece.text()));
 
                             let new_jsx_text = jsx_text(jsx_ident(&new_text));
-                            JsxAnyChild::JsxText(new_jsx_text)
+                            JsxAnyChild::JsxText(text)
                         }
-                        _ => {
-                            let token = child.syntax().first_token()?;
-                            let new_token = token
-                                .with_leading_trivia_pieces(opening_leading_comments)
-                                .with_trailing_trivia_pieces(closing_leading_comments);
-                            child.replace_token_discard_trivia(token, new_token)?
-                        }
+                        _ => child,
                     };
 
                     Some(new_child)
