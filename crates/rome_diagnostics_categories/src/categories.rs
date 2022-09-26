@@ -46,6 +46,7 @@ define_dategories! {
     "lint/nursery/useButtonType": "https://rome.tools/docs/lint/rules/useButtonType",
     "lint/nursery/useCamelCase": "https://rome.tools/docs/lint/rules/useCamelCase",
     "lint/nursery/useOptionalChain": "https://rome.tools/docs/lint/rules/useOptionalChain",
+    "lint/nursery/useFragmentSyntax": "https://rome.tools/docs/lint/rules/useFragmentSyntax",
     "lint/style/noNegationElse": "https://rome.tools/docs/lint/rules/noNegationElse",
     "lint/style/noShoutyConstants": "https://rome.tools/docs/lint/rules/noShoutyConstants",
     "lint/style/useSelfClosingElements": "https://rome.tools/docs/lint/rules/useSelfClosingElements",

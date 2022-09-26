@@ -167,6 +167,7 @@ export interface Nursery {
 	recommended?: boolean;
 	useButtonType?: RuleConfiguration;
 	useCamelCase?: RuleConfiguration;
+	useFragmentSyntax?: RuleConfiguration;
 	useOptionalChain?: RuleConfiguration;
 }
 /**

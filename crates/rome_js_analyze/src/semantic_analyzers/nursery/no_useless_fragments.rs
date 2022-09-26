@@ -1,11 +1,10 @@
+use crate::react::{jsx_member_name_is_react_fragment, jsx_reference_identifier_is_fragment};
 use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
-    JsImport, JsSyntaxKind, JsxAnyChild, JsxAnyElementName, JsxElement, JsxFragment, JsxMemberName,
-    JsxReferenceIdentifier, JsxTagExpression,
+    JsSyntaxKind, JsxAnyChild, JsxAnyElementName, JsxElement, JsxFragment, JsxTagExpression,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeList};
 
@@ -130,53 +129,4 @@ impl Rule for NoUselessFragments {
             },
         ))
     }
-}
-
-fn jsx_member_name_is_react_fragment(
-    member_name: &JsxMemberName,
-    model: &SemanticModel,
-) -> Option<bool> {
-    let object = member_name.object().ok()?;
-    let member = member_name.member().ok()?;
-    let object = object.as_jsx_reference_identifier()?;
-    let mut maybe_react_fragment = object.value_token().ok()?.text_trimmed() == "React"
-        && member.value_token().ok()?.text_trimmed() == "Fragment";
-    if let Some(reference) = model.declaration(object) {
-        if let Some(js_import) = reference
-            .syntax()
-            .ancestors()
-            .find_map(|ancestor| JsImport::cast_ref(&ancestor))
-        {
-            let source_is_react = js_import.source_is("react").ok()?;
-            maybe_react_fragment = source_is_react;
-        } else {
-            // `React.Fragment` is a binding but it doesn't come from the "react" package
-            maybe_react_fragment = false;
-        }
-    }
-
-    Some(maybe_react_fragment)
-}
-
-fn jsx_reference_identifier_is_fragment(
-    name: &JsxReferenceIdentifier,
-    model: &SemanticModel,
-) -> Option<bool> {
-    let value_token = name.value_token().ok()?;
-    let mut maybe_react_fragment = value_token.text_trimmed() == "Fragment";
-    if let Some(reference) = model.declaration(name) {
-        if let Some(js_import) = reference
-            .syntax()
-            .ancestors()
-            .find_map(|ancestor| JsImport::cast_ref(&ancestor))
-        {
-            let source_is_react = js_import.source_is("react").ok()?;
-            maybe_react_fragment = source_is_react;
-        } else {
-            // `Fragment` is a binding g but it doesn't come from the "react" package
-            maybe_react_fragment = false;
-        }
-    }
-
-    Some(maybe_react_fragment)
 }

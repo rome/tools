@@ -7,4 +7,5 @@ mod no_unused_variables;
 mod no_useless_fragments;
 mod use_button_type;
 mod use_camel_case;
-declare_group! { pub (crate) Nursery { name : "nursery" , rules : [self :: no_dangerously_set_inner_html :: NoDangerouslySetInnerHtml , self :: no_render_return_value :: NoRenderReturnValue , self :: no_unused_variables :: NoUnusedVariables , self :: no_useless_fragments :: NoUselessFragments , self :: use_button_type :: UseButtonType , self :: use_camel_case :: UseCamelCase ,] } }
+mod use_fragment_syntax;
+declare_group! { pub (crate) Nursery { name : "nursery" , rules : [self :: no_dangerously_set_inner_html :: NoDangerouslySetInnerHtml , self :: no_render_return_value :: NoRenderReturnValue , self :: no_unused_variables :: NoUnusedVariables , self :: no_useless_fragments :: NoUselessFragments , self :: use_button_type :: UseButtonType , self :: use_camel_case :: UseCamelCase , self :: use_fragment_syntax :: UseFragmentSyntax ,] } }

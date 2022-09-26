@@ -1,7 +1,9 @@
+//! A series of utilities to work with the React library
+
 use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
     JsAnyCallArgument, JsAnyExpression, JsArrayExpression, JsCallExpression, JsIdentifierBinding,
-    JsImport, JsObjectExpression,
+    JsImport, JsObjectExpression, JsxMemberName, JsxReferenceIdentifier,
 };
 use rome_rowan::{AstNode, AstSeparatedList};
 
@@ -122,4 +124,65 @@ pub(crate) fn is_react_create_element(
     } else {
         None
     }
+}
+
+/// Checks if the node `JsxMemberName` is a react fragment.
+///
+/// e.g. `<React.Fragment>` is a fragment, but no `<React.StrictMode>`.
+///
+/// In case the `React` is a valid reference, the function checks if it is exported from the
+/// `"react"` library
+pub(crate) fn jsx_member_name_is_react_fragment(
+    member_name: &JsxMemberName,
+    model: &SemanticModel,
+) -> Option<bool> {
+    let object = member_name.object().ok()?;
+    let member = member_name.member().ok()?;
+    let object = object.as_jsx_reference_identifier()?;
+    let mut maybe_react_fragment = object.value_token().ok()?.text_trimmed() == "React"
+        && member.value_token().ok()?.text_trimmed() == "Fragment";
+    if let Some(reference) = model.declaration(object) {
+        if let Some(js_import) = reference
+            .syntax()
+            .ancestors()
+            .find_map(|ancestor| JsImport::cast_ref(&ancestor))
+        {
+            let source_is_react = js_import.source_is("react").ok()?;
+            maybe_react_fragment = source_is_react;
+        } else {
+            // `React.Fragment` is a binding but it doesn't come from the "react" package
+            maybe_react_fragment = false;
+        }
+    }
+
+    Some(maybe_react_fragment)
+}
+
+/// Checks if the node `JsxReferenceIdentifier` is a react fragment.
+///
+/// e.g. `<Fragment>` is a fragment
+///
+/// In case the `Fragment` is a valid reference, the function checks if it is exported from the
+/// `"react"` library
+pub(crate) fn jsx_reference_identifier_is_fragment(
+    name: &JsxReferenceIdentifier,
+    model: &SemanticModel,
+) -> Option<bool> {
+    let value_token = name.value_token().ok()?;
+    let mut maybe_react_fragment = value_token.text_trimmed() == "Fragment";
+    if let Some(reference) = model.declaration(name) {
+        if let Some(js_import) = reference
+            .syntax()
+            .ancestors()
+            .find_map(|ancestor| JsImport::cast_ref(&ancestor))
+        {
+            let source_is_react = js_import.source_is("react").ok()?;
+            maybe_react_fragment = source_is_react;
+        } else {
+            // `Fragment` is a binding g but it doesn't come from the "react" package
+            maybe_react_fragment = false;
+        }
+    }
+
+    Some(maybe_react_fragment)
 }
