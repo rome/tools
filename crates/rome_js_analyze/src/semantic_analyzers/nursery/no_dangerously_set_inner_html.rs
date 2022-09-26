@@ -2,8 +2,8 @@ use crate::react::ReactCreateElementCall;
 use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleCategory, RuleDiagnostic};
-use rome_console::codespan::Severity;
 use rome_console::markup;
+use rome_diagnostics::Severity;
 use rome_js_syntax::{JsCallExpression, JsLiteralMemberName, JsxAnyAttributeName, JsxAttribute};
 use rome_rowan::{declare_node_union, AstNode};
 

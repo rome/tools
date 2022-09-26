@@ -9,12 +9,11 @@ mod diagnostic;
 mod emit;
 mod suggestion;
 
-pub use diagnostic::{Diagnostic, Footer, SubDiagnostic};
+pub use diagnostic::{Diagnostic, Footer, Severity, SubDiagnostic};
 pub use emit::Emitter;
 pub use file::Span;
 pub use suggestion::*;
 
-pub use rome_console::codespan::Severity;
 pub use termcolor;
 
 #[derive(Clone, Copy, Debug, Eq, PartialEq, Hash, Serialize, Deserialize)]

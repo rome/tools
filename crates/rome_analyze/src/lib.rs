@@ -1,7 +1,5 @@
 #![deny(rustdoc::broken_intra_doc_links)]
 
-use rome_console::codespan::Severity;
-use rome_diagnostics::v2::{category, Category};
 use std::cmp::Ordering;
 use std::collections::{BTreeMap, BinaryHeap};
 use std::ops;
@@ -36,6 +34,10 @@ pub use crate::syntax::SyntaxVisitor;
 pub use crate::visitor::{NodeVisitor, Visitor, VisitorContext, VisitorFinishContext};
 use rome_console::markup;
 use rome_diagnostics::file::{FileId, FileSpan};
+use rome_diagnostics::{
+    v2::{category, Category},
+    Severity,
+};
 use rome_diagnostics::{Diagnostic, SubDiagnostic};
 use rome_rowan::{
     AstNode, Direction, Language, SyntaxElement, SyntaxToken, TextRange, TextSize, TriviaPieceKind,

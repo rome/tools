@@ -1,9 +1,9 @@
-use rome_console::codespan::SourceFile;
 use rome_rowan::{Language, SyntaxElement, SyntaxNode, SyntaxToken, TextRange, TextSize};
 use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, fmt::Debug, ops::Range};
 
 pub use crate::v2::FileId;
+use crate::v2::{LineIndex, LineIndexBuf, SourceCode};
 
 /// A value which can be used as the range inside of a diagnostic.
 ///
@@ -132,7 +132,7 @@ pub trait Files {
     fn name(&self, id: FileId) -> Option<&str>;
 
     /// Returns the source of the file identified by the id.
-    fn source(&self, id: FileId) -> Option<SourceFile<'_>>;
+    fn source(&self, id: FileId) -> Option<SourceCode<&'_ str, &'_ LineIndex>>;
 }
 
 /// A file database that contains only one file.
@@ -140,14 +140,14 @@ pub trait Files {
 pub struct SimpleFile {
     name: String,
     source: String,
-    line_starts: Vec<TextSize>,
+    line_starts: LineIndexBuf,
 }
 
 impl SimpleFile {
     /// Create a new file with the name and source.
     pub fn new(name: String, source: String) -> Self {
         Self {
-            line_starts: SourceFile::line_starts(&source).collect(),
+            line_starts: LineIndexBuf::from_source_text(&source),
             name,
             source,
         }
@@ -164,8 +164,11 @@ impl Files for SimpleFile {
         Some(&self.name)
     }
 
-    fn source(&self, _id: FileId) -> Option<SourceFile<'_>> {
-        Some(SourceFile::new(&self.source, &self.line_starts))
+    fn source(&self, _id: FileId) -> Option<SourceCode<&'_ str, &'_ LineIndex>> {
+        Some(SourceCode {
+            text: &self.source,
+            line_starts: Some(&self.line_starts),
+        })
     }
 }
 
@@ -199,7 +202,7 @@ impl Files for SimpleFiles {
         self.files.get(&id)?.name(id)
     }
 
-    fn source(&self, id: FileId) -> Option<SourceFile<'_>> {
+    fn source(&self, id: FileId) -> Option<SourceCode<&'_ str, &'_ LineIndex>> {
         self.files.get(&id)?.source(id)
     }
 }

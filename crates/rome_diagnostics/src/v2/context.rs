@@ -154,11 +154,11 @@ mod internal {
     use std::{fmt::Debug, io};
 
     use rome_console::{fmt, markup};
-    use rome_text_edit::TextSize;
 
     use crate::v2::{
         diagnostic::internal::AsDiagnostic, Advices, Backtrace, Category, Diagnostic,
-        DiagnosticTags, Location, LogCategory, Resource, Severity, SourceCode, Visit,
+        DiagnosticTags, LineIndex, LineIndexBuf, Location, LogCategory, Resource, Severity,
+        SourceCode, Visit,
     };
 
     /// This trait is inherited by `DiagnosticExt` and `Context`, since it's
@@ -395,7 +395,7 @@ mod internal {
     /// uses `source_code` as its location source code if `source` doesn't
     /// return one.
     pub struct FileSourceCodeDiagnostic<E> {
-        pub(super) source_code: Option<SourceCode<String, Vec<TextSize>>>,
+        pub(super) source_code: Option<SourceCode<String, LineIndexBuf>>,
         pub(super) source: E,
     }
 
@@ -470,7 +470,7 @@ mod internal {
     /// the location of code frame advices if they don't have one already.
     struct FileSourceCodeVisitor<'a> {
         visitor: &'a mut dyn Visit,
-        source_code: SourceCode<&'a str, &'a [TextSize]>,
+        source_code: SourceCode<&'a str, &'a LineIndex>,
     }
 
     impl Visit for FileSourceCodeVisitor<'_> {

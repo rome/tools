@@ -22,7 +22,7 @@ pub use context::{Context, DiagnosticExt};
 pub use diagnostic::{Diagnostic, DiagnosticTags, Severity};
 pub use display::{set_bottom_frame, Backtrace, PrintDescription, PrintDiagnostic};
 pub use error::{Error, Result};
-pub use location::{FileId, FilePath, Location, Resource, SourceCode};
+pub use location::{FileId, FilePath, LineIndex, LineIndexBuf, Location, Resource, SourceCode};
 
 pub mod prelude {
     //! Anonymously re-exports all the traits declared by this module, this is

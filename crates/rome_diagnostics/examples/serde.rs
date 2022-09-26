@@ -1,5 +1,7 @@
-use rome_console::{codespan::SourceFile, markup, ConsoleExt, EnvConsole};
-use rome_diagnostics::v2::{Diagnostic, PrintDiagnostic, Resource, Result, SourceCode};
+use rome_console::{markup, ConsoleExt, EnvConsole};
+use rome_diagnostics::v2::{
+    Diagnostic, LineIndexBuf, PrintDiagnostic, Resource, Result, SourceCode,
+};
 use rome_rowan::{TextRange, TextSize};
 use serde_json::Error;
 
@@ -14,12 +16,12 @@ struct SerdeDiagnostic {
     #[location(span)]
     span: Option<TextRange>,
     #[location(source_code)]
-    source_code: SourceCode<String, Vec<TextSize>>,
+    source_code: SourceCode<String, LineIndexBuf>,
 }
 
 impl SerdeDiagnostic {
     fn new(input: &str, error: Error) -> Self {
-        let line_starts: Vec<_> = SourceFile::line_starts(input).collect();
+        let line_starts = LineIndexBuf::from_source_text(input);
 
         let line_index = error.line().checked_sub(1);
         let span = line_index.and_then(|line_index| {

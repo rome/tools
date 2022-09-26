@@ -1,15 +1,13 @@
 //! Implementation of converting, and emitting diagnostics
-//! using `codespan`.
+//! into the console
 
 use crate::file::FileSpan;
 use crate::v2::advice::{LogCategory, Visit};
 use crate::v2::{
     self, advice, Category, DiagnosticTags, FilePath, Location, PrintDiagnostic, Resource,
-    SourceCode,
 };
 use crate::{file::Files, Diagnostic};
-use crate::{Applicability, SubDiagnostic, SuggestionChange, SuggestionStyle};
-use rome_console::codespan::Severity;
+use crate::{Applicability, Severity, SubDiagnostic, SuggestionChange, SuggestionStyle};
 use rome_console::{
     fmt::{Display, Formatter, Termcolor},
     markup,
@@ -86,7 +84,6 @@ struct DiagnosticPrinter<'a> {
 impl DiagnosticPrinter<'_> {
     fn lookup_location(&self, span: FileSpan) -> Option<Location<'_>> {
         let path = self.files.name(span.file)?;
-        let source = self.files.source(span.file);
 
         Some(Location {
             resource: Resource::File(FilePath::PathAndId {
@@ -95,10 +92,7 @@ impl DiagnosticPrinter<'_> {
             }),
             span: Some(span.range),
             source_code: if self.include_source {
-                source.map(|source| SourceCode {
-                    text: source.source,
-                    line_starts: Some(source.line_starts),
-                })
+                self.files.source(span.file)
             } else {
                 None
             },
@@ -202,7 +196,7 @@ impl v2::Diagnostic for DiagnosticPrinter<'_> {
                         .files
                         .source(suggestion.span.file)
                         .expect("Non existant file id")
-                        .source;
+                        .text;
 
                     let new = match &suggestion.substitution {
                         SuggestionChange::Indels(indels) => {
@@ -234,7 +228,7 @@ impl v2::Diagnostic for DiagnosticPrinter<'_> {
                                 .files
                                 .source(suggestion.span.file)
                                 .expect("Non existant file id")
-                                .source
+                                .text
                                 .to_string();
                             apply_indels(indels, &mut new);
                             new
@@ -257,7 +251,6 @@ impl v2::Diagnostic for DiagnosticPrinter<'_> {
 
     fn location(&self) -> Option<Location<'_>> {
         let path = self.files.name(self.d.file_id)?;
-        let source = self.files.source(self.d.file_id);
 
         Some(Location {
             resource: Resource::File(FilePath::PathAndId {
@@ -266,10 +259,7 @@ impl v2::Diagnostic for DiagnosticPrinter<'_> {
             }),
             span: self.d.primary.as_ref().map(|label| label.span.range),
             source_code: if self.include_source {
-                source.map(|source| SourceCode {
-                    text: source.source,
-                    line_starts: Some(source.line_starts),
-                })
+                self.files.source(self.d.file_id)
             } else {
                 None
             },
@@ -301,13 +291,13 @@ impl v2::Diagnostic for DiagnosticPrinter<'_> {
 
 #[cfg(test)]
 mod tests {
-    use rome_console::{codespan::Severity, markup, BufferConsole, ConsoleExt};
+    use rome_console::{markup, BufferConsole, ConsoleExt};
     use rome_text_edit::{TextRange, TextSize};
 
     use crate::{
         file::SimpleFile,
         v2::{category, FileId},
-        Applicability, Diagnostic,
+        Applicability, Diagnostic, Severity,
     };
 
     #[test]
@@ -324,10 +314,11 @@ labore et dolore magna aliqua";
             "  \n"
             <Emphasis><Error>"  ✖"</Error></Emphasis>" "<Error>"label"</Error>"\n"
             "  \n"
-            "    "<Info>"┌─"</Info>" file_name:2:13\n"
-            "    "<Info>"│"</Info>"\n"
-            <Info>"  2"</Info>" "<Info>"│"</Info>" consectetur "<Error>"adipiscing elit"</Error>",\n"
-            "    "<Info>"│"</Info>"             "<Error>"^^^^^^^^^^^^^^^"</Error>"\n"
+            "    "<Emphasis>"1 │ "</Emphasis>"Lorem ipsum dolor sit amet,\n"
+            <Emphasis><Error>"  >"</Error></Emphasis>" "<Emphasis>"2 │ "</Emphasis>"consectetur adipiscing elit,\n"
+            "   "<Emphasis>"   │ "</Emphasis>"            "<Emphasis><Error>"^^^^^^^^^^^^^^^"</Error></Emphasis>"\n"
+            "    "<Emphasis>"3 │ "</Emphasis>"sed do eiusmod tempor incididunt ut\n"
+            "    "<Emphasis>"4 │ "</Emphasis>"labore et dolore magna aliqua\n"
             "  \n"
             <Emphasis><Info>"  ℹ"</Info></Emphasis>" "<Info>"footer note"</Info>"\n"
             "  \n"
@@ -378,7 +369,11 @@ labore et dolore magna aliqua";
             other => panic!("unexpected message {other:?}"),
         };
 
-        assert_eq!(message.content, expected);
+        assert_eq!(
+            message.content, expected,
+            "\nactual:\n{:#?}\nexpected:\n{expected:#?}",
+            message.content
+        );
 
         assert!(iter.next().is_none());
     }

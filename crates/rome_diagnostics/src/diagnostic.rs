@@ -2,7 +2,7 @@ use crate::suggestion::SuggestionChange;
 use crate::{
     file::{FileId, FileSpan, Span},
     v2::Category,
-    Applicability, CodeSuggestion, DiagnosticTag, Severity, SuggestionStyle,
+    Applicability, CodeSuggestion, DiagnosticTag, SuggestionStyle,
 };
 use rome_console::fmt::Display;
 use rome_console::{markup, MarkupBuf};
@@ -421,6 +421,36 @@ impl Diagnostic {
     /// Checks if the severity of the current diagnostic is [Severity::Error] or higher
     pub fn is_error(&self) -> bool {
         self.severity >= Severity::Error
+    }
+}
+
+/// A severity level for diagnostic messages.
+///
+/// These are ordered in the following way:
+#[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Debug, Serialize, Deserialize)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
+pub enum Severity {
+    /// A help message.
+    Help,
+    /// A note.
+    Note,
+    /// A warning.
+    Warning,
+    /// An error.
+    Error,
+    /// An unexpected bug.
+    Bug,
+}
+
+impl From<Severity> for &'static str {
+    fn from(level: Severity) -> Self {
+        match level {
+            Severity::Bug => "bug",
+            Severity::Error => "error",
+            Severity::Warning => "warning",
+            Severity::Help => "help",
+            Severity::Note => "note",
+        }
     }
 }
 

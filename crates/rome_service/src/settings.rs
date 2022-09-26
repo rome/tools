@@ -1,7 +1,7 @@
 use crate::{Configuration, MatchOptions, Matcher, RomeError, Rules};
 use indexmap::IndexSet;
-use rome_console::codespan::Severity;
 use rome_diagnostics::v2::Category;
+use rome_diagnostics::Severity;
 use rome_formatter::{IndentStyle, LineWidth};
 use rome_fs::RomePath;
 use rome_js_syntax::JsLanguage;
