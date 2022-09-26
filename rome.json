@@ -11,7 +11,8 @@
 				"useButtonType": "error",
 				"useOptionalChain": "error",
 				"noUselessFragments": "error",
-				"noNewSymbol": "error"
+				"noNewSymbol": "error",
+				"noVoidElementsWithChildren": "error"
 			}
 		}
 	}

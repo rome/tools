@@ -295,6 +295,13 @@ Disallow unused variables.
 Disallow unnecessary fragments
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noVoidElementsWithChildren">
+	<a href="/docs/lint/rules/noVoidElementsWithChildren">noVoidElementsWithChildren (since v0.10.0)</a>
+	<a class="header-anchor" href="#noVoidElementsWithChildren"></a>
+</h3>
+This rules prevents void elements (AKA self-closing elements) from having children.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useButtonType">
 	<a href="/docs/lint/rules/useButtonType">useButtonType (since v0.10.0)</a>
 	<a class="header-anchor" href="#useButtonType"></a>

@@ -161,6 +161,7 @@ export interface Nursery {
 	noUnreachable?: RuleConfiguration;
 	noUnusedVariables?: RuleConfiguration;
 	noUselessFragments?: RuleConfiguration;
+	noVoidElementsWithChildren?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */

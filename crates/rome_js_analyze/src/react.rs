@@ -16,8 +16,28 @@ pub(crate) struct ReactCreateElementCall {
     /// Optional props
     pub(crate) props: Option<JsObjectExpression>,
     /// Optional children
-    #[allow(dead_code)]
-    pub(crate) children: Option<JsArrayExpression>,
+    pub(crate) children: Option<JsAnyExpression>,
+}
+
+impl ReactCreateElementCall {
+    /// It scans the current props and returns the property that matches the passed name
+    pub(crate) fn find_prop_by_name(&self, prop_name: &str) -> Option<JsPropertyObjectMember> {
+        self.props.as_ref().and_then(|props| {
+            let members = props.members();
+            members.into_iter().find_map(|member| {
+                let member = member.ok()?;
+                let property = member.as_js_property_object_member()?;
+                let property_name = property.name().ok()?;
+
+                let property_name = property_name.as_js_literal_member_name()?;
+                if property_name.name().ok()? == prop_name {
+                    Some(property.clone())
+                } else {
+                    None
+                }
+            })
+        })
+    }
 }
 
 impl ReactCreateElementCall {
@@ -124,15 +144,10 @@ pub(crate) fn is_react_create_element(
                             .as_js_object_expression()
                             .cloned()
                     });
-            let third_argument =
-                iter.next()
-                    .and_then(|argument| argument.ok())
-                    .and_then(|argument| {
-                        argument
-                            .as_js_any_expression()?
-                            .as_js_array_expression()
-                            .cloned()
-                    });
+            let third_argument = iter
+                .next()
+                .and_then(|argument| argument.ok())
+                .and_then(|argument| argument.as_js_any_expression().cloned());
 
             Some(ReactCreateElementCall {
                 element_type: first_argument,
