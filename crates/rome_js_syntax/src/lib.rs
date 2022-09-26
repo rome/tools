@@ -293,10 +293,12 @@ pub enum OperatorPrecedence {
     Exponential = 15,
     Unary = 16,
     Update = 17,
-    LeftHandSide = 18,
-    Member = 19,
-    Primary = 20,
-    Group = 21,
+    // `new` without arguments list
+    New = 18,
+    LeftHandSide = 19,
+    Member = 20,
+    Primary = 21,
+    Group = 22,
 }
 
 impl OperatorPrecedence {

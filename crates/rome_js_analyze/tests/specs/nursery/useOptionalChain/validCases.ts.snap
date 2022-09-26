@@ -43,6 +43,31 @@ foo[/\w+/] && foo[/ab+c/].baz;
 
 ((foo || {})()).bar;
 
+(new foo || {}).bar
+
+```
+
+# Diagnostics
+```
+validCases.ts:40:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Change to an optional chain.
+  
+     ┌─ validCases.ts:40:1
+     │
+  40 │ (new foo || {}).bar
+     │ ^^^^^^^^^^^^^^^^^^^
+  
+  i Suggested fix: Change to an optional chain.
+  
+        | @@ -37,4 +37,4 @@
+  36 36 |   
+  37 37 |   ((foo || {})()).bar;
+  38 38 |   
+  39    | - (new foo || {}).bar
+     39 | + (new foo)?.bar
+  
+
 ```
 
 
