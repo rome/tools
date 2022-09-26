@@ -38,3 +38,7 @@ else
     bar
   else
     bar
+
+if (test) {
+  correct;
+} else console.log("false") // comment

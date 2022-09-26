@@ -45,6 +45,10 @@ else
   else
     bar
 
+if (test) {
+  correct;
+} else console.log("false") // comment
+
 ```
 
 # Diagnostics
@@ -546,7 +550,7 @@ useBlockStatements.js:37:8 lint/correctness/useBlockStatements  FIXABLE  ━━�
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
-        | @@ -34,7 +34,8 @@
+        | @@ -34,8 +34,9 @@
   33 33 |   
   34 34 |     if (test)
   35 35 |       bar
@@ -556,6 +560,7 @@ useBlockStatements.js:37:8 lint/correctness/useBlockStatements  FIXABLE  ━━�
      38 | +   }
   38 39 |     else
   39 40 |       bar
+  40 41 |   
   
 
 ```
@@ -573,7 +578,7 @@ useBlockStatements.js:39:3 lint/correctness/useBlockStatements  FIXABLE  ━━�
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
-        | @@ -36,5 +36,6 @@
+        | @@ -36,8 +36,9 @@
   35 35 |       bar
   36 36 |     else if(test)
   37 37 |       bar
@@ -581,6 +586,32 @@ useBlockStatements.js:39:3 lint/correctness/useBlockStatements  FIXABLE  ━━�
      38 | +   else {
   39 39 |       bar
      40 | +   }
+  40 41 |   
+  41 42 |   if (test) {
+  42 43 |     correct;
+  
+
+```
+
+```
+useBlockStatements.js:44:3 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Block statements are preferred in this position.
+  
+     ┌─ useBlockStatements.js:44:3
+     │
+  44 │ } else console.log("false") // comment
+     │   ^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i Suggested fix: Wrap the statement with a `JsBlockStatement`
+  
+        | @@ -41,4 +41,5 @@
+  40 40 |   
+  41 41 |   if (test) {
+  42 42 |     correct;
+  43    | - } else console.log("false") // comment
+     43 | + } else { console.log("false") // comment
+     44 | + }
   
 
 ```
