@@ -36,10 +36,12 @@ noUnusedTemplateLiteral.js:13:11 lint/correctness/noUnusedTemplateLiteral  FIXAB
 
   ! Do not use template literals if interpolation and special-character handling are not needed.
   
-     ┌─ noUnusedTemplateLiteral.js:13:11
-     │
-  13 │ var foo = `bar`;
-     │           ^^^^^
+    11 │ else`;
+    12 │ //invalid
+  > 13 │ var foo = `bar`;
+       │           ^^^^^
+    14 │ var foo1 = `bar `;
+    15 │ var foo = `back\rtick`;
   
   i Suggested fix: Replace with string literal
   
@@ -61,10 +63,12 @@ noUnusedTemplateLiteral.js:14:12 lint/correctness/noUnusedTemplateLiteral  FIXAB
 
   ! Do not use template literals if interpolation and special-character handling are not needed.
   
-     ┌─ noUnusedTemplateLiteral.js:14:12
-     │
-  14 │ var foo1 = `bar `;
-     │            ^^^^^^
+    12 │ //invalid
+    13 │ var foo = `bar`;
+  > 14 │ var foo1 = `bar `;
+       │            ^^^^^^
+    15 │ var foo = `back\rtick`;
+    16 │ var foo = `back\ntick`;
   
   i Suggested fix: Replace with string literal
   
@@ -86,10 +90,12 @@ noUnusedTemplateLiteral.js:15:11 lint/correctness/noUnusedTemplateLiteral  FIXAB
 
   ! Do not use template literals if interpolation and special-character handling are not needed.
   
-     ┌─ noUnusedTemplateLiteral.js:15:11
-     │
-  15 │ var foo = `back\rtick`;
-     │           ^^^^^^^^^^^^
+    13 │ var foo = `bar`;
+    14 │ var foo1 = `bar `;
+  > 15 │ var foo = `back\rtick`;
+       │           ^^^^^^^^^^^^
+    16 │ var foo = `back\ntick`;
+    17 │ var foo = `back\u2028tick`
   
   i Suggested fix: Replace with string literal
   
@@ -111,10 +117,12 @@ noUnusedTemplateLiteral.js:16:11 lint/correctness/noUnusedTemplateLiteral  FIXAB
 
   ! Do not use template literals if interpolation and special-character handling are not needed.
   
-     ┌─ noUnusedTemplateLiteral.js:16:11
-     │
-  16 │ var foo = `back\ntick`;
-     │           ^^^^^^^^^^^^
+    14 │ var foo1 = `bar `;
+    15 │ var foo = `back\rtick`;
+  > 16 │ var foo = `back\ntick`;
+       │           ^^^^^^^^^^^^
+    17 │ var foo = `back\u2028tick`
+    18 │ var foo = `back\u2029tick`;
   
   i Suggested fix: Replace with string literal
   
@@ -136,10 +144,12 @@ noUnusedTemplateLiteral.js:17:11 lint/correctness/noUnusedTemplateLiteral  FIXAB
 
   ! Do not use template literals if interpolation and special-character handling are not needed.
   
-     ┌─ noUnusedTemplateLiteral.js:17:11
-     │
-  17 │ var foo = `back\u2028tick`
-     │           ^^^^^^^^^^^^^^^^
+    15 │ var foo = `back\rtick`;
+    16 │ var foo = `back\ntick`;
+  > 17 │ var foo = `back\u2028tick`
+       │           ^^^^^^^^^^^^^^^^
+    18 │ var foo = `back\u2029tick`;
+    19 │ var foo = `back\\\\\ntick`;
   
   i Suggested fix: Replace with string literal
   
@@ -161,10 +171,12 @@ noUnusedTemplateLiteral.js:18:11 lint/correctness/noUnusedTemplateLiteral  FIXAB
 
   ! Do not use template literals if interpolation and special-character handling are not needed.
   
-     ┌─ noUnusedTemplateLiteral.js:18:11
-     │
-  18 │ var foo = `back\u2029tick`;
-     │           ^^^^^^^^^^^^^^^^
+    16 │ var foo = `back\ntick`;
+    17 │ var foo = `back\u2028tick`
+  > 18 │ var foo = `back\u2029tick`;
+       │           ^^^^^^^^^^^^^^^^
+    19 │ var foo = `back\\\\\ntick`;
+    20 │ var foo = `\n`;
   
   i Suggested fix: Replace with string literal
   
@@ -186,10 +198,12 @@ noUnusedTemplateLiteral.js:19:11 lint/correctness/noUnusedTemplateLiteral  FIXAB
 
   ! Do not use template literals if interpolation and special-character handling are not needed.
   
-     ┌─ noUnusedTemplateLiteral.js:19:11
-     │
-  19 │ var foo = `back\\\\\ntick`;
-     │           ^^^^^^^^^^^^^^^^
+    17 │ var foo = `back\u2028tick`
+    18 │ var foo = `back\u2029tick`;
+  > 19 │ var foo = `back\\\\\ntick`;
+       │           ^^^^^^^^^^^^^^^^
+    20 │ var foo = `\n`;
+    21 │ function foo() { `use strict`; foo(); }
   
   i Suggested fix: Replace with string literal
   
@@ -211,10 +225,12 @@ noUnusedTemplateLiteral.js:20:11 lint/correctness/noUnusedTemplateLiteral  FIXAB
 
   ! Do not use template literals if interpolation and special-character handling are not needed.
   
-     ┌─ noUnusedTemplateLiteral.js:20:11
-     │
-  20 │ var foo = `\n`;
-     │           ^^^^
+    18 │ var foo = `back\u2029tick`;
+    19 │ var foo = `back\\\\\ntick`;
+  > 20 │ var foo = `\n`;
+       │           ^^^^
+    21 │ function foo() { `use strict`; foo(); }
+    22 │ var foo = `foo\\nbar`;
   
   i Suggested fix: Replace with string literal
   
@@ -236,10 +252,12 @@ noUnusedTemplateLiteral.js:21:18 lint/correctness/noUnusedTemplateLiteral  FIXAB
 
   ! Do not use template literals if interpolation and special-character handling are not needed.
   
-     ┌─ noUnusedTemplateLiteral.js:21:18
-     │
-  21 │ function foo() { `use strict`; foo(); }
-     │                  ^^^^^^^^^^^^
+    19 │ var foo = `back\\\\\ntick`;
+    20 │ var foo = `\n`;
+  > 21 │ function foo() { `use strict`; foo(); }
+       │                  ^^^^^^^^^^^^
+    22 │ var foo = `foo\\nbar`;
+    23 │ var foo = `foo\\\nbar`;
   
   i Suggested fix: Replace with string literal
   
@@ -261,10 +279,12 @@ noUnusedTemplateLiteral.js:22:11 lint/correctness/noUnusedTemplateLiteral  FIXAB
 
   ! Do not use template literals if interpolation and special-character handling are not needed.
   
-     ┌─ noUnusedTemplateLiteral.js:22:11
-     │
-  22 │ var foo = `foo\\nbar`;
-     │           ^^^^^^^^^^^
+    20 │ var foo = `\n`;
+    21 │ function foo() { `use strict`; foo(); }
+  > 22 │ var foo = `foo\\nbar`;
+       │           ^^^^^^^^^^^
+    23 │ var foo = `foo\\\nbar`;
+    24 │ var foo = `foo\\\\\\\nbar`;
   
   i Suggested fix: Replace with string literal
   
@@ -285,10 +305,11 @@ noUnusedTemplateLiteral.js:23:11 lint/correctness/noUnusedTemplateLiteral  FIXAB
 
   ! Do not use template literals if interpolation and special-character handling are not needed.
   
-     ┌─ noUnusedTemplateLiteral.js:23:11
-     │
-  23 │ var foo = `foo\\\nbar`;
-     │           ^^^^^^^^^^^^
+    21 │ function foo() { `use strict`; foo(); }
+    22 │ var foo = `foo\\nbar`;
+  > 23 │ var foo = `foo\\\nbar`;
+       │           ^^^^^^^^^^^^
+    24 │ var foo = `foo\\\\\\\nbar`;
   
   i Suggested fix: Replace with string literal
   
@@ -308,10 +329,10 @@ noUnusedTemplateLiteral.js:24:11 lint/correctness/noUnusedTemplateLiteral  FIXAB
 
   ! Do not use template literals if interpolation and special-character handling are not needed.
   
-     ┌─ noUnusedTemplateLiteral.js:24:11
-     │
-  24 │ var foo = `foo\\\\\\\nbar`;
-     │           ^^^^^^^^^^^^^^^^
+    22 │ var foo = `foo\\nbar`;
+    23 │ var foo = `foo\\\nbar`;
+  > 24 │ var foo = `foo\\\\\\\nbar`;
+       │           ^^^^^^^^^^^^^^^^
   
   i Suggested fix: Replace with string literal
   

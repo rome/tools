@@ -81,10 +81,9 @@ object_shorthand_with_initializer.js:1:10 parse ━━━━━━━━━━�
 
   × Did you mean to use a `:`? An `=` can only follow a property name when the containing object literal is part of a destructuring pattern.
   
-    ┌─ object_shorthand_with_initializer.js:1:10
-    │
-  1 │ ({ arrow = () => {} })
-    │          ^
+  > 1 │ ({ arrow = () => {} })
+      │          ^
+    2 │ 
   
 --
 ({ arrow = () => {} })

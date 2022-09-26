@@ -274,10 +274,10 @@ switch_stmt_err.js:1:8 parse ━━━━━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ switch_stmt_err.js:1:8
-    │
-  1 │ switch foo {}
-    │        ^^^
+  > 1 │ switch foo {}
+      │        ^^^
+    2 │ switch {}
+    3 │ switch { var i = 0 }
   
 --
 switch_stmt_err.js:1:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -286,10 +286,10 @@ switch_stmt_err.js:1:12 parse ━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ switch_stmt_err.js:1:12
-    │
-  1 │ switch foo {}
-    │            ^
+  > 1 │ switch foo {}
+      │            ^
+    2 │ switch {}
+    3 │ switch { var i = 0 }
   
 --
 switch_stmt_err.js:2:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -298,10 +298,11 @@ switch_stmt_err.js:2:8 parse ━━━━━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ switch_stmt_err.js:2:8
-    │
-  2 │ switch {}
-    │        ^
+    1 │ switch foo {}
+  > 2 │ switch {}
+      │        ^
+    3 │ switch { var i = 0 }
+    4 │ switch { var i = 0; case "bar": {} }
   
 --
 switch_stmt_err.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -310,10 +311,12 @@ switch_stmt_err.js:3:8 parse ━━━━━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ switch_stmt_err.js:3:8
-    │
-  3 │ switch { var i = 0 }
-    │        ^
+    1 │ switch foo {}
+    2 │ switch {}
+  > 3 │ switch { var i = 0 }
+      │        ^
+    4 │ switch { var i = 0; case "bar": {} }
+    5 │ switch (foo) {
   
 --
 switch_stmt_err.js:3:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -322,10 +325,12 @@ switch_stmt_err.js:3:10 parse ━━━━━━━━━━━━━━━━�
   
   × Expected a default, or a case here
   
-    ┌─ switch_stmt_err.js:3:10
-    │
-  3 │ switch { var i = 0 }
-    │          ^^^^^^^^^
+    1 │ switch foo {}
+    2 │ switch {}
+  > 3 │ switch { var i = 0 }
+      │          ^^^^^^^^^
+    4 │ switch { var i = 0; case "bar": {} }
+    5 │ switch (foo) {
   
 --
 switch_stmt_err.js:4:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -334,10 +339,12 @@ switch_stmt_err.js:4:8 parse ━━━━━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ switch_stmt_err.js:4:8
-    │
-  4 │ switch { var i = 0; case "bar": {} }
-    │        ^
+    2 │ switch {}
+    3 │ switch { var i = 0 }
+  > 4 │ switch { var i = 0; case "bar": {} }
+      │        ^
+    5 │ switch (foo) {
+    6 │   default: {}
   
 --
 switch_stmt_err.js:4:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -346,10 +353,12 @@ switch_stmt_err.js:4:10 parse ━━━━━━━━━━━━━━━━�
   
   × Expected a default, or a case here
   
-    ┌─ switch_stmt_err.js:4:10
-    │
-  4 │ switch { var i = 0; case "bar": {} }
-    │          ^^^^^^^^^^
+    2 │ switch {}
+    3 │ switch { var i = 0 }
+  > 4 │ switch { var i = 0; case "bar": {} }
+      │          ^^^^^^^^^^
+    5 │ switch (foo) {
+    6 │   default: {}
   
 --
 switch_stmt_err.js:7:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -358,17 +367,21 @@ switch_stmt_err.js:7:3 parse ━━━━━━━━━━━━━━━━━
   
   × a second clause here is not allowed
   
-    ┌─ switch_stmt_err.js:7:3
-    │
-  7 │   default: {}
-    │   ^^^^^^^^^^^
+    5 │ switch (foo) {
+    6 │   default: {}
+  > 7 │   default: {}
+      │   ^^^^^^^^^^^
+    8 │ }
+    9 │ switch (foo) { case : }
   
   i the first default clause is defined here
   
-    ┌─ switch_stmt_err.js:6:3
-    │
-  6 │   default: {}
-    │   ^^^^^^^^^^^
+    4 │ switch { var i = 0; case "bar": {} }
+    5 │ switch (foo) {
+  > 6 │   default: {}
+      │   ^^^^^^^^^^^
+    7 │   default: {}
+    8 │ }
   
 --
 switch_stmt_err.js:9:21 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -377,10 +390,11 @@ switch_stmt_err.js:9:21 parse ━━━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ switch_stmt_err.js:9:21
-    │
-  9 │ switch (foo) { case : }
-    │                     ^
+     7 │   default: {}
+     8 │ }
+   > 9 │ switch (foo) { case : }
+       │                     ^
+    10 │ 
   
 --
 switch foo {}

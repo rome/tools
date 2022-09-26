@@ -17,10 +17,11 @@ insideJsx.jsx:2:14 lint/nursery/noDangerouslySetInnerHtml ━━━━━━━�
 
   ! Avoid passing content using the dangerouslySetInnerHTML prop.
   
-    ┌─ insideJsx.jsx:2:14
-    │
-  2 │ let a = <div dangerouslySetInnerHTML={{ __html: 'child' }} />
-    │              ^^^^^^^^^^^^^^^^^^^^^^^
+    1 │ // invalid
+  > 2 │ let a = <div dangerouslySetInnerHTML={{ __html: 'child' }} />
+      │              ^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ 
+    4 │ // valid
   
   ! Setting content using code can expose users to cross-site scripting (XSS) attacks
   

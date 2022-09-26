@@ -104,10 +104,11 @@ do_while_stmt_err.js:2:11 parse ━━━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-    ┌─ do_while_stmt_err.js:2:11
-    │
-  2 │ do while ()
-    │           ^
+    1 │ do while (true)
+  > 2 │ do while ()
+      │           ^
+    3 │ do while true
+    4 │ 
   
 --
 do_while_stmt_err.js:3:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -116,10 +117,11 @@ do_while_stmt_err.js:3:10 parse ━━━━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ do_while_stmt_err.js:3:10
-    │
-  3 │ do while true
-    │          ^^^^
+    1 │ do while (true)
+    2 │ do while ()
+  > 3 │ do while true
+      │          ^^^^
+    4 │ 
   
 --
 do_while_stmt_err.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -128,10 +130,10 @@ do_while_stmt_err.js:4:1 parse ━━━━━━━━━━━━━━━━�
   
   × the file ends here
   
-    ┌─ do_while_stmt_err.js:4:1
-    │
-  4 │ 
-    │ ^
+    2 │ do while ()
+    3 │ do while true
+  > 4 │ 
+      │ 
   
 --
 do while (true)

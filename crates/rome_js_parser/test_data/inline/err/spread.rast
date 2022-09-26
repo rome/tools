@@ -40,10 +40,9 @@ spread.js:1:5 parse ━━━━━━━━━━━━━━━━━━━━
   
   × Expected an expression, or an assignment here
   
-    ┌─ spread.js:1:5
-    │
-  1 │ [...]
-    │     ^
+  > 1 │ [...]
+      │     ^
+    2 │ 
   
 --
 [...]

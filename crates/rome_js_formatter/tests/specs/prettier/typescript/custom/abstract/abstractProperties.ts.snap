@@ -58,97 +58,119 @@ abstractProperties.ts:2:14 parse ━━━━━━━━━━━━━━━�
 
   × 'private' cannot be used with 'abstract' modifier.
   
-    ┌─ abstractProperties.ts:2:14
-    │
-  2 │     abstract private a: 1;
-    │              ^^^^^^^
+    1 │ abstract class Foo {
+  > 2 │     abstract private a: 1;
+      │              ^^^^^^^
+    3 │     private abstract b: 2;
+    4 │     static abstract c: 3;
   
   i 'abstract' modifier
   
-    ┌─ abstractProperties.ts:2:5
-    │
-  2 │     abstract private a: 1;
-    │     ^^^^^^^^
+    1 │ abstract class Foo {
+  > 2 │     abstract private a: 1;
+      │     ^^^^^^^^
+    3 │     private abstract b: 2;
+    4 │     static abstract c: 3;
   
 abstractProperties.ts:3:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'private' cannot be used with 'abstract' modifier.
   
-    ┌─ abstractProperties.ts:3:5
-    │
-  3 │     private abstract b: 2;
-    │     ^^^^^^^
+    1 │ abstract class Foo {
+    2 │     abstract private a: 1;
+  > 3 │     private abstract b: 2;
+      │     ^^^^^^^
+    4 │     static abstract c: 3;
+    5 │     abstract private ['g'];
   
   i 'abstract' modifier
   
-    ┌─ abstractProperties.ts:3:13
-    │
-  3 │     private abstract b: 2;
-    │             ^^^^^^^^
+    1 │ abstract class Foo {
+    2 │     abstract private a: 1;
+  > 3 │     private abstract b: 2;
+      │             ^^^^^^^^
+    4 │     static abstract c: 3;
+    5 │     abstract private ['g'];
   
 abstractProperties.ts:4:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'abstract' cannot be used with 'static' modifier.
   
-    ┌─ abstractProperties.ts:4:12
-    │
-  4 │     static abstract c: 3;
-    │            ^^^^^^^^
+    2 │     abstract private a: 1;
+    3 │     private abstract b: 2;
+  > 4 │     static abstract c: 3;
+      │            ^^^^^^^^
+    5 │     abstract private ['g'];
+    6 │     private abstract ['h'];
   
   i 'static' modifier
   
-    ┌─ abstractProperties.ts:4:5
-    │
-  4 │     static abstract c: 3;
-    │     ^^^^^^
+    2 │     abstract private a: 1;
+    3 │     private abstract b: 2;
+  > 4 │     static abstract c: 3;
+      │     ^^^^^^
+    5 │     abstract private ['g'];
+    6 │     private abstract ['h'];
   
 abstractProperties.ts:5:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'private' cannot be used with 'abstract' modifier.
   
-    ┌─ abstractProperties.ts:5:14
-    │
-  5 │     abstract private ['g'];
-    │              ^^^^^^^
+    3 │     private abstract b: 2;
+    4 │     static abstract c: 3;
+  > 5 │     abstract private ['g'];
+      │              ^^^^^^^
+    6 │     private abstract ['h'];
+    7 │     static abstract ['i'];
   
   i 'abstract' modifier
   
-    ┌─ abstractProperties.ts:5:5
-    │
-  5 │     abstract private ['g'];
-    │     ^^^^^^^^
+    3 │     private abstract b: 2;
+    4 │     static abstract c: 3;
+  > 5 │     abstract private ['g'];
+      │     ^^^^^^^^
+    6 │     private abstract ['h'];
+    7 │     static abstract ['i'];
   
 abstractProperties.ts:6:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'private' cannot be used with 'abstract' modifier.
   
-    ┌─ abstractProperties.ts:6:5
-    │
-  6 │     private abstract ['h'];
-    │     ^^^^^^^
+    4 │     static abstract c: 3;
+    5 │     abstract private ['g'];
+  > 6 │     private abstract ['h'];
+      │     ^^^^^^^
+    7 │     static abstract ['i'];
+    8 │ }
   
   i 'abstract' modifier
   
-    ┌─ abstractProperties.ts:6:13
-    │
-  6 │     private abstract ['h'];
-    │             ^^^^^^^^
+    4 │     static abstract c: 3;
+    5 │     abstract private ['g'];
+  > 6 │     private abstract ['h'];
+      │             ^^^^^^^^
+    7 │     static abstract ['i'];
+    8 │ }
   
 abstractProperties.ts:7:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'abstract' cannot be used with 'static' modifier.
   
-    ┌─ abstractProperties.ts:7:12
-    │
-  7 │     static abstract ['i'];
-    │            ^^^^^^^^
+    5 │     abstract private ['g'];
+    6 │     private abstract ['h'];
+  > 7 │     static abstract ['i'];
+      │            ^^^^^^^^
+    8 │ }
+    9 │ 
   
   i 'static' modifier
   
-    ┌─ abstractProperties.ts:7:5
-    │
-  7 │     static abstract ['i'];
-    │     ^^^^^^
+    5 │     abstract private ['g'];
+    6 │     private abstract ['h'];
+  > 7 │     static abstract ['i'];
+      │     ^^^^^^
+    8 │ }
+    9 │ 
   
 
 ```

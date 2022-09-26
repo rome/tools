@@ -88,10 +88,9 @@ js_type_variable_annotation.js:1:6 parse ━━━━━━━━━━━━━
   
   × TypeScript only syntax
   
-    ┌─ js_type_variable_annotation.js:1:6
-    │
-  1 │ let a: string, b!: number;
-    │      ^^^^^^^^
+  > 1 │ let a: string, b!: number;
+      │      ^^^^^^^^
+    2 │ 
   
 --
 js_type_variable_annotation.js:1:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -100,10 +99,9 @@ js_type_variable_annotation.js:1:17 parse ━━━━━━━━━━━━�
   
   × TypeScript only syntax
   
-    ┌─ js_type_variable_annotation.js:1:17
-    │
-  1 │ let a: string, b!: number;
-    │                 ^^^^^^^^^
+  > 1 │ let a: string, b!: number;
+      │                 ^^^^^^^^^
+    2 │ 
   
 --
 let a: string, b!: number;

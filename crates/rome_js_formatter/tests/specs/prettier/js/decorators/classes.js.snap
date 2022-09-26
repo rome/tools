@@ -97,19 +97,23 @@ classes.js:7:13 parse ━━━━━━━━━━━━━━━━━━━�
   
   × Expected an expression, or an assignment here
   
-    ┌─ classes.js:7:13
-    │
-  7 │ const foo = @deco class {
-    │             ^
+    5 │ @deco export default class Baz {}
+    6 │ 
+  > 7 │ const foo = @deco class {
+      │             ^
+    8 │   //
+    9 │ };
   
 classes.js:7:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × class declarations must have a name
   
-    ┌─ classes.js:7:19
-    │
-  7 │ const foo = @deco class {
-    │                   ^^^^^^
+    5 │ @deco export default class Baz {}
+    6 │ 
+  > 7 │ const foo = @deco class {
+      │                   ^^^^^^
+    8 │   //
+    9 │ };
   
 classes.js:12:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -117,19 +121,22 @@ classes.js:12:3 parse ━━━━━━━━━━━━━━━━━━━�
   
   × Expected an expression, or an assignment here
   
-     ┌─ classes.js:12:3
-     │
-  12 │   @deco
-     │   ^
+    11 │ const bar =
+  > 12 │   @deco
+       │   ^
+    13 │   class {
+    14 │     //
   
 classes.js:13:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × class declarations must have a name
   
-     ┌─ classes.js:13:3
-     │
-  13 │   class {
-     │   ^^^^^^
+    11 │ const bar =
+    12 │   @deco
+  > 13 │   class {
+       │   ^^^^^^
+    14 │     //
+    15 │   };
   
 
 ```

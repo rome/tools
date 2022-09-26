@@ -39,10 +39,9 @@ return-outside-function.js:1:1 parse ━━━━━━━━━━━━━━�
 
   × Illegal return statement outside of a function
   
-    ┌─ return-outside-function.js:1:1
-    │
-  1 │ return someVeryLongStringA && someVeryLongStringB && someVeryLongStringC && someVeryLongStringD
-    │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 1 │ return someVeryLongStringA && someVeryLongStringB && someVeryLongStringC && someVeryLongStringD
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    2 │ 
   
 
 ```

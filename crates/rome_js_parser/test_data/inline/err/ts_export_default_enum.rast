@@ -83,10 +83,9 @@ ts_export_default_enum.ts:1:16 parse ━━━━━━━━━━━━━━�
 
   × 'export default' isn't allowed for 'enum's. Move the 'enum' declaration in its own statement and then export the enum's name.
   
-    ┌─ ts_export_default_enum.ts:1:16
-    │
-  1 │ export default enum A { X, Y, Z }
-    │                ^^^^^^^^^^^^^^^^^^
+  > 1 │ export default enum A { X, Y, Z }
+      │                ^^^^^^^^^^^^^^^^^^
+    2 │ 
   
 --
 export default enum A { X, Y, Z }

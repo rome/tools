@@ -27,17 +27,20 @@ noLabelVar.js:3:1 lint/correctness/noLabelVar ━━━━━━━━━━━�
 
   ! Do not use the x1 variable name as a label
   
-    ┌─ noLabelVar.js:3:1
-    │
-  3 │ x1: expr;
-    │ ^^
+    1 │ // invalid
+    2 │ const x1 = "test";
+  > 3 │ x1: expr;
+      │ ^^
+    4 │ // nested scope·
+    5 │ function test() {
   
   i The variable is declared here
   
-    ┌─ noLabelVar.js:2:7
-    │
-  2 │ const x1 = "test";
-    │       ^^
+    1 │ // invalid
+  > 2 │ const x1 = "test";
+      │       ^^
+    3 │ x1: expr;
+    4 │ // nested scope·
   
   i Creating a label with the same name as an in-scope variable leads to confusion.
   
@@ -49,17 +52,20 @@ noLabelVar.js:7:5 lint/correctness/noLabelVar ━━━━━━━━━━━�
 
   ! Do not use the x1 variable name as a label
   
-    ┌─ noLabelVar.js:7:5
-    │
-  7 │     x1: for (let i = 0; i < 10; i++) {
-    │     ^^
+    5 │ function test() {
+    6 │   {
+  > 7 │     x1: for (let i = 0; i < 10; i++) {
+      │     ^^
+    8 │     }
+    9 │   }
   
   i The variable is declared here
   
-    ┌─ noLabelVar.js:2:7
-    │
-  2 │ const x1 = "test";
-    │       ^^
+    1 │ // invalid
+  > 2 │ const x1 = "test";
+      │       ^^
+    3 │ x1: expr;
+    4 │ // nested scope·
   
   i Creating a label with the same name as an in-scope variable leads to confusion.
   

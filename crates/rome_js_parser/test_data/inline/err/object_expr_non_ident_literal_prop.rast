@@ -68,10 +68,9 @@ object_expr_non_ident_literal_prop.js:1:11 parse ━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ object_expr_non_ident_literal_prop.js:1:11
-    │
-  1 │ let d = {5}
-    │           ^
+  > 1 │ let d = {5}
+      │           ^
+    2 │ 
   
 --
 let d = {5}

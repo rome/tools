@@ -189,30 +189,35 @@ super_expression_err.js:3:5 parse ━━━━━━━━━━━━━━━�
 
   × `super` is only valid inside of a class constructor of a subclass.
   
-    ┌─ super_expression_err.js:3:5
-    │
-  3 │     super();
-    │     ^^^^^
+    1 │ class Test extends B {
+    2 │   test() {
+  > 3 │     super();
+      │     ^^^^^
+    4 │     super?.test();
+    5 │   }
   
 --
 super_expression_err.js:4:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Super doesn't support optional chaining as super can never be null
   
-    ┌─ super_expression_err.js:4:5
-    │
-  4 │     super?.test();
-    │     ^^^^^
+    2 │   test() {
+    3 │     super();
+  > 4 │     super?.test();
+      │     ^^^^^
+    5 │   }
+    6 │ }
   
 --
 super_expression_err.js:7:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `super` is only valid inside of a class constructor of a subclass.
   
-    ┌─ super_expression_err.js:7:1
-    │
-  7 │ super();
-    │ ^^^^^
+    5 │   }
+    6 │ }
+  > 7 │ super();
+      │ ^^^^^
+    8 │ 
   
 --
 class Test extends B {

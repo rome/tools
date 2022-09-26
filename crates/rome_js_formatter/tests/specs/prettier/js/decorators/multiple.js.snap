@@ -86,10 +86,11 @@ multiple.js:2:3 parse ━━━━━━━━━━━━━━━━━━━�
   
   × Expected a property, a shorthand property, a getter, a setter, or a method here
   
-    ┌─ multiple.js:2:3
-    │
-  2 │   @readonly
-    │   ^
+    1 │ const dog = {
+  > 2 │   @readonly
+      │   ^
+    3 │   @nonenumerable
+    4 │   @doubledValue
   
 multiple.js:7:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -97,10 +98,12 @@ multiple.js:7:3 parse ━━━━━━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ multiple.js:7:3
-    │
-  7 │   @readonly
-    │   ^
+    5 │   legs: 4,
+    6 │ 
+  > 7 │   @readonly
+      │   ^
+    8 │   @nonenumerable
+    9 │   @doubledValue
   
 multiple.js:11:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -108,10 +111,12 @@ multiple.js:11:1 parse ━━━━━━━━━━━━━━━━━━━
   
   × Expected a statement here
   
-     ┌─ multiple.js:11:1
-     │
-  11 │ };
-     │ ^
+     9 │   @doubledValue
+    10 │   eyes: 2
+  > 11 │ };
+       │ ^
+    12 │ 
+    13 │ const foo = {
   
 multiple.js:14:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -119,10 +124,11 @@ multiple.js:14:3 parse ━━━━━━━━━━━━━━━━━━━
   
   × Expected a property, a shorthand property, a getter, a setter, or a method here
   
-     ┌─ multiple.js:14:3
-     │
-  14 │   @multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value"
-     │   ^
+    13 │ const foo = {
+  > 14 │   @multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value"
+       │   ^
+    15 │ };
+    16 │ 
   
 multiple.js:15:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -130,10 +136,11 @@ multiple.js:15:1 parse ━━━━━━━━━━━━━━━━━━━
   
   × Expected a statement here
   
-     ┌─ multiple.js:15:1
-     │
-  15 │ };
-     │ ^
+    13 │ const foo = {
+    14 │   @multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value"
+  > 15 │ };
+       │ ^
+    16 │ 
   
 
 ```

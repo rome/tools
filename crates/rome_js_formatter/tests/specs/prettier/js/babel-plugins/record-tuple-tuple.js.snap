@@ -38,19 +38,17 @@ record-tuple-tuple.js:1:17 parse ━━━━━━━━━━━━━━━�
   
   × Expected an identifier here
   
-    ┌─ record-tuple-tuple.js:1:17
-    │
-  1 │ const tuple1 = #[1, 2, 3];
-    │                 ^
+  > 1 │ const tuple1 = #[1, 2, 3];
+      │                 ^
+    2 │ 
   
 record-tuple-tuple.js:1:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Private names are only allowed on the left side of a 'in' expression
   
-    ┌─ record-tuple-tuple.js:1:16
-    │
-  1 │ const tuple1 = #[1, 2, 3];
-    │                ^
+  > 1 │ const tuple1 = #[1, 2, 3];
+      │                ^
+    2 │ 
   
 record-tuple-tuple.js:1:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -58,17 +56,15 @@ record-tuple-tuple.js:1:17 parse ━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ record-tuple-tuple.js:1:17
-    │
-  1 │ const tuple1 = #[1, 2, 3];
-    │                 ^
+  > 1 │ const tuple1 = #[1, 2, 3];
+      │                 ^
+    2 │ 
   
   i ...Which is required to end this statement
   
-    ┌─ record-tuple-tuple.js:1:1
-    │
-  1 │ const tuple1 = #[1, 2, 3];
-    │ ^^^^^^^^^^^^^^^^
+  > 1 │ const tuple1 = #[1, 2, 3];
+      │ ^^^^^^^^^^^^^^^^
+    2 │ 
   
 
 ```

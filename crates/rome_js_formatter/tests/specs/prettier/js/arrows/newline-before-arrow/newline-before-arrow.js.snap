@@ -41,17 +41,17 @@ newline-before-arrow.js:1:7 parse ━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ newline-before-arrow.js:1:7
-    │
-  1 │ async x
-    │       ^
+  > 1 │ async x
+      │       ^
+    2 │ => x
+    3 │ 
   
   i ...Which is required to end this statement
   
-    ┌─ newline-before-arrow.js:1:1
-    │
-  1 │ async x
-    │ ^^^^^^^
+  > 1 │ async x
+      │ ^^^^^^^
+    2 │ => x
+    3 │ 
   
 newline-before-arrow.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -59,10 +59,10 @@ newline-before-arrow.js:2:1 parse ━━━━━━━━━━━━━━━�
   
   × Expected a statement here
   
-    ┌─ newline-before-arrow.js:2:1
-    │
-  2 │ => x
-    │ ^^^^
+    1 │ async x
+  > 2 │ => x
+      │ ^^^^
+    3 │ 
   
 
 ```

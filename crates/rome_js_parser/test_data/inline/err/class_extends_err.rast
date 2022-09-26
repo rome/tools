@@ -150,37 +150,39 @@ class_extends_err.js:1:21 parse ━━━━━━━━━━━━━━━━
 
   × 'extends' clause already seen.
   
-    ┌─ class_extends_err.js:1:21
-    │
-  1 │ class A extends bar extends foo {}
-    │                     ^^^^^^^^^^^
+  > 1 │ class A extends bar extends foo {}
+      │                     ^^^^^^^^^^^
+    2 │ class B extends bar, foo {}
+    3 │ class C implements B {}
   
   i first 'extends' clause
   
-    ┌─ class_extends_err.js:1:9
-    │
-  1 │ class A extends bar extends foo {}
-    │         ^^^^^^^^^^^
+  > 1 │ class A extends bar extends foo {}
+      │         ^^^^^^^^^^^
+    2 │ class B extends bar, foo {}
+    3 │ class C implements B {}
   
 --
 class_extends_err.js:2:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Classes can only extend a single class.
   
-    ┌─ class_extends_err.js:2:22
-    │
-  2 │ class B extends bar, foo {}
-    │                      ^^^
+    1 │ class A extends bar extends foo {}
+  > 2 │ class B extends bar, foo {}
+      │                      ^^^
+    3 │ class C implements B {}
+    4 │ 
   
 --
 class_extends_err.js:3:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × classes can only implement interfaces in TypeScript files
   
-    ┌─ class_extends_err.js:3:9
-    │
-  3 │ class C implements B {}
-    │         ^^^^^^^^^^^^
+    1 │ class A extends bar extends foo {}
+    2 │ class B extends bar, foo {}
+  > 3 │ class C implements B {}
+      │         ^^^^^^^^^^^^
+    4 │ 
   
 --
 class A extends bar extends foo {}

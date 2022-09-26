@@ -93,10 +93,9 @@ ts_arrow_function_this_parameter.ts:1:10 parse ━━━━━━━━━━━
 
   × An arrow function cannot have a 'this' parameter.
   
-    ┌─ ts_arrow_function_this_parameter.ts:1:10
-    │
-  1 │ let a = (this: string) => {}
-    │          ^^^^^^^^^^^^
+  > 1 │ let a = (this: string) => {}
+      │          ^^^^^^^^^^^^
+    2 │ 
   
 --
 let a = (this: string) => {}

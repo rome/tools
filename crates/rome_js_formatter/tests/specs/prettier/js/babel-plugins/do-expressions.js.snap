@@ -70,10 +70,12 @@ do-expressions.js:3:9 parse ━━━━━━━━━━━━━━━━━�
   
   × Expected an expression, or an assignment here
   
-    ┌─ do-expressions.js:3:9
-    │
-  3 │ let a = do {
-    │         ^^
+    1 │ // https://babeljs.io/docs/en/babel-plugin-proposal-do-expressions
+    2 │ 
+  > 3 │ let a = do {
+      │         ^^
+    4 │   if(x > 10) {
+    5 │     'big';
   
 do-expressions.js:9:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -81,10 +83,12 @@ do-expressions.js:9:2 parse ━━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ do-expressions.js:9:2
-    │
-  9 │ };
-    │  ^
+     7 │     'small';
+     8 │   }
+   > 9 │ };
+       │  ^
+    10 │ // is equivalent to:
+    11 │ let a = x > 10 ? 'big' : 'small';
   
 
 ```

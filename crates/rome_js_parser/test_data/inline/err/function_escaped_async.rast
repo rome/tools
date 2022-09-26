@@ -60,10 +60,9 @@ function_escaped_async.js:1:6 parse ━━━━━━━━━━━━━━�
 
   × 'async' keyword cannot contain escape character.
   
-    ┌─ function_escaped_async.js:1:6
-    │
-  1 │ void \u0061sync function f(){}
-    │      ^^^^^^^^^^
+  > 1 │ void \u0061sync function f(){}
+      │      ^^^^^^^^^^
+    2 │ 
   
 --
 void \u0061sync function f(){}

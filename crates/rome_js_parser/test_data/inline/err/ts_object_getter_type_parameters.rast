@@ -102,10 +102,9 @@ ts_object_getter_type_parameters.ts:1:9 parse ━━━━━━━━━━━�
 
   × An accessor cannot have type parameters.
   
-    ┌─ ts_object_getter_type_parameters.ts:1:9
-    │
-  1 │ ({ get a<A>(): A {} });
-    │         ^^^
+  > 1 │ ({ get a<A>(): A {} });
+      │         ^^^
+    2 │ 
   
 --
 ({ get a<A>(): A {} });

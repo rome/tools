@@ -141,10 +141,10 @@ invalid_method_recover.js:1:1 parse ━━━━━━━━━━━━━━�
 
   × class declarations must have a name
   
-    ┌─ invalid_method_recover.js:1:1
-    │
-  1 │ class {
-    │ ^^^^^^
+  > 1 │ class {
+      │ ^^^^^^
+    2 │   [1 + 1] = () => {
+    3 │     let a=;
   
 --
 invalid_method_recover.js:3:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -153,10 +153,12 @@ invalid_method_recover.js:3:11 parse ━━━━━━━━━━━━━━�
   
   × Expected an expression, or an assignment here
   
-    ┌─ invalid_method_recover.js:3:11
-    │
-  3 │     let a=;
-    │           ^
+    1 │ class {
+    2 │   [1 + 1] = () => {
+  > 3 │     let a=;
+      │           ^
+    4 │   };
+    5 │ };
   
 --
 class {

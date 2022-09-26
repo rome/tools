@@ -31,10 +31,9 @@ foo == bar
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;"><strong>==</strong></span><span style="color: Tomato;"> is only allowed when comparing against </span><span style="color: Tomato;"><strong>null</strong></span>
   
-    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noDoubleEquals.js:1:5
-    <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> foo <span style="color: Tomato;">=</span><span style="color: Tomato;">=</span> bar
-    <span style="color: rgb(38, 148, 255);">│</span>     <span style="color: Tomato;">^</span><span style="color: Tomato;">^</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>foo == bar
+   <strong>   │ </strong>    <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
+    <strong>2 │ </strong>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Using </span><span style="color: rgb(38, 148, 255);"><strong>===</strong></span><span style="color: rgb(38, 148, 255);"> may be unsafe if you are relying on type coercion</span>
   

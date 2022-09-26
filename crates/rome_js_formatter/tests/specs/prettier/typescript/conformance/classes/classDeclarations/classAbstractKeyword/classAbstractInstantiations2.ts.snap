@@ -140,10 +140,10 @@ classAbstractInstantiations2.ts:49:5 parse ━━━━━━━━━━━━�
 
   × Only abstract classes can have abstract members
   
-     ┌─ classAbstractInstantiations2.ts:49:5
-     │
-  49 │     abstract baz() : number;
-     │     ^^^^^^^^
+    48 │ class H {
+  > 49 │     abstract baz() : number;
+       │     ^^^^^^^^
+    50 │ }
   
 
 ```

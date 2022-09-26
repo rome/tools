@@ -188,30 +188,32 @@ template_after_optional_chain.js:1:1 parse ━━━━━━━━━━━━�
 
   × Tagged template expressions are not permitted in an optional chain.
   
-    ┌─ template_after_optional_chain.js:1:1
-    │
-  1 │ obj.val?.prop`template`
-    │ ^^^^^^^^^^^^^^^^^^^^^^^
+  > 1 │ obj.val?.prop`template`
+      │ ^^^^^^^^^^^^^^^^^^^^^^^
+    2 │ obj.val?.[expr]`template`
+    3 │ obj.func?.(args)`template`
   
 --
 template_after_optional_chain.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Tagged template expressions are not permitted in an optional chain.
   
-    ┌─ template_after_optional_chain.js:2:1
-    │
-  2 │ obj.val?.[expr]`template`
-    │ ^^^^^^^^^^^^^^^^^^^^^^^^^
+    1 │ obj.val?.prop`template`
+  > 2 │ obj.val?.[expr]`template`
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ obj.func?.(args)`template`
+    4 │ 
   
 --
 template_after_optional_chain.js:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Tagged template expressions are not permitted in an optional chain.
   
-    ┌─ template_after_optional_chain.js:3:1
-    │
-  3 │ obj.func?.(args)`template`
-    │ ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    1 │ obj.val?.prop`template`
+    2 │ obj.val?.[expr]`template`
+  > 3 │ obj.func?.(args)`template`
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │ 
   
 --
 obj.val?.prop`template`

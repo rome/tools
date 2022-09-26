@@ -19,17 +19,20 @@ JsThrowStatement.js:3:5 lint/nursery/noUnreachable ━━━━━━━━━�
   
   ! ... before it can reach this code
   
-    ┌─ JsThrowStatement.js:3:5
-    │
-  3 │     afterThrow();
-    │     ^^^^^^^^^^^^^
+    1 │ function JsThrowStatement1() {
+    2 │     throw new Error();
+  > 3 │     afterThrow();
+      │     ^^^^^^^^^^^^^
+    4 │ }
+    5 │ 
   
   i This statement will throw an exception ...
   
-    ┌─ JsThrowStatement.js:2:5
-    │
-  2 │     throw new Error();
-    │     ^^^^^^^^^^^^^^^^^^
+    1 │ function JsThrowStatement1() {
+  > 2 │     throw new Error();
+      │     ^^^^^^^^^^^^^^^^^^
+    3 │     afterThrow();
+    4 │ }
   
 
 ```

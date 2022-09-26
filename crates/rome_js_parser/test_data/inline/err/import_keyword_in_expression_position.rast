@@ -57,10 +57,9 @@ import_keyword_in_expression_position.js:1:9 parse ━━━━━━━━━�
   
   × Expected an expression, or an assignment here
   
-    ┌─ import_keyword_in_expression_position.js:1:9
-    │
-  1 │ let a = import;
-    │         ^^^^^^
+  > 1 │ let a = import;
+      │         ^^^^^^
+    2 │ 
   
 --
 import_keyword_in_expression_position.js:1:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -69,10 +68,9 @@ import_keyword_in_expression_position.js:1:15 parse ━━━━━━━━━�
   
   × Expected a default import, a namespace import, or a named import here
   
-    ┌─ import_keyword_in_expression_position.js:1:15
-    │
-  1 │ let a = import;
-    │               ^
+  > 1 │ let a = import;
+      │               ^
+    2 │ 
   
 --
 let a = import;

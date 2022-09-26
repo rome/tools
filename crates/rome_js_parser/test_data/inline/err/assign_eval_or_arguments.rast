@@ -244,60 +244,69 @@ assign_eval_or_arguments.js:1:1 parse ━━━━━━━━━━━━━━
 
   × Illegal use of `eval` as an identifier in strict mode
   
-    ┌─ assign_eval_or_arguments.js:1:1
-    │
-  1 │ eval = 0
-    │ ^^^^
+  > 1 │ eval = 0
+      │ ^^^^
+    2 │ eval ??= 2
+    3 │ eval *= 4
   
 --
 assign_eval_or_arguments.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `eval` as an identifier in strict mode
   
-    ┌─ assign_eval_or_arguments.js:2:1
-    │
-  2 │ eval ??= 2
-    │ ^^^^
+    1 │ eval = 0
+  > 2 │ eval ??= 2
+      │ ^^^^
+    3 │ eval *= 4
+    4 │ arguments = "foo"
   
 --
 assign_eval_or_arguments.js:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `eval` as an identifier in strict mode
   
-    ┌─ assign_eval_or_arguments.js:3:1
-    │
-  3 │ eval *= 4
-    │ ^^^^
+    1 │ eval = 0
+    2 │ eval ??= 2
+  > 3 │ eval *= 4
+      │ ^^^^
+    4 │ arguments = "foo"
+    5 │ arguments ||= "baz"
   
 --
 assign_eval_or_arguments.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `arguments` as an identifier in strict mode
   
-    ┌─ assign_eval_or_arguments.js:4:1
-    │
-  4 │ arguments = "foo"
-    │ ^^^^^^^^^
+    2 │ eval ??= 2
+    3 │ eval *= 4
+  > 4 │ arguments = "foo"
+      │ ^^^^^^^^^
+    5 │ arguments ||= "baz"
+    6 │ ({ eval } = o)
   
 --
 assign_eval_or_arguments.js:5:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `arguments` as an identifier in strict mode
   
-    ┌─ assign_eval_or_arguments.js:5:1
-    │
-  5 │ arguments ||= "baz"
-    │ ^^^^^^^^^
+    3 │ eval *= 4
+    4 │ arguments = "foo"
+  > 5 │ arguments ||= "baz"
+      │ ^^^^^^^^^
+    6 │ ({ eval } = o)
+    7 │ ({ foo: { eval }}) = o
   
 --
 assign_eval_or_arguments.js:6:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `eval` as an identifier in strict mode
   
-    ┌─ assign_eval_or_arguments.js:6:4
-    │
-  6 │ ({ eval } = o)
-    │    ^^^^
+    4 │ arguments = "foo"
+    5 │ arguments ||= "baz"
+  > 6 │ ({ eval } = o)
+      │    ^^^^
+    7 │ ({ foo: { eval }}) = o
+    8 │ 
   
 --
 assign_eval_or_arguments.js:5:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -308,13 +317,14 @@ assign_eval_or_arguments.js:5:15 parse ━━━━━━━━━━━━━�
   
   × This expression cannot be assigned to
   
-    ┌─ assign_eval_or_arguments.js:5:15
-    │  
-  5 │   arguments ||= "baz"
-    │ ┌───────────────^
-  6 │ │ ({ eval } = o)
-  7 │ │ ({ foo: { eval }}) = o
-    │ └──────────────────^
+    3 │ eval *= 4
+    4 │ arguments = "foo"
+  > 5 │ arguments ||= "baz"
+      │               ^^^^^
+  > 6 │ ({ eval } = o)
+  > 7 │ ({ foo: { eval }}) = o
+      │ ^^^^^^^^^^^^^^^^^^
+    8 │ 
   
 --
 eval = 0

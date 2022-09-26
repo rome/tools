@@ -94,10 +94,9 @@ jsx_fragment_closing_missing_r_angle.jsx:1:15 parse ━━━━━━━━━�
   
   × unexpected
   
-    ┌─ jsx_fragment_closing_missing_r_angle.jsx:1:15
-    │
-  1 │ <div><>test</ 5 more content</div>
-    │               ^
+  > 1 │ <div><>test</ 5 more content</div>
+      │               ^
+    2 │ 
   
 --
 <div><>test</ 5 more content</div>

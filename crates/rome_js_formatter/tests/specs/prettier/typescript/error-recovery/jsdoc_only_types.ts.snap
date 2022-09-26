@@ -77,10 +77,10 @@ jsdoc_only_types.ts:1:8 parse ━━━━━━━━━━━━━━━━�
   
   × Expected a type here
   
-    ┌─ jsdoc_only_types.ts:1:8
-    │
-  1 │ let a: *;
-    │        ^
+  > 1 │ let a: *;
+      │        ^
+    2 │ function b(x: ?) {}
+    3 │ let c: ?string;
   
 jsdoc_only_types.ts:2:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -88,10 +88,11 @@ jsdoc_only_types.ts:2:15 parse ━━━━━━━━━━━━━━━━�
   
   × Expected a type here
   
-    ┌─ jsdoc_only_types.ts:2:15
-    │
-  2 │ function b(x: ?) {}
-    │               ^
+    1 │ let a: *;
+  > 2 │ function b(x: ?) {}
+      │               ^
+    3 │ let c: ?string;
+    4 │ let d: string?;
   
 jsdoc_only_types.ts:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -99,10 +100,12 @@ jsdoc_only_types.ts:3:8 parse ━━━━━━━━━━━━━━━━�
   
   × Expected a type here
   
-    ┌─ jsdoc_only_types.ts:3:8
-    │
-  3 │ let c: ?string;
-    │        ^
+    1 │ let a: *;
+    2 │ function b(x: ?) {}
+  > 3 │ let c: ?string;
+      │        ^
+    4 │ let d: string?;
+    5 │ let e: ?(string | number);
   
 jsdoc_only_types.ts:4:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -110,17 +113,21 @@ jsdoc_only_types.ts:4:14 parse ━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ jsdoc_only_types.ts:4:14
-    │
-  4 │ let d: string?;
-    │              ^
+    2 │ function b(x: ?) {}
+    3 │ let c: ?string;
+  > 4 │ let d: string?;
+      │              ^
+    5 │ let e: ?(string | number);
+    6 │ let f: !string;
   
   i ...Which is required to end this statement
   
-    ┌─ jsdoc_only_types.ts:4:1
-    │
-  4 │ let d: string?;
-    │ ^^^^^^^^^^^^^
+    2 │ function b(x: ?) {}
+    3 │ let c: ?string;
+  > 4 │ let d: string?;
+      │ ^^^^^^^^^^^^^
+    5 │ let e: ?(string | number);
+    6 │ let f: !string;
   
 jsdoc_only_types.ts:5:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -128,10 +135,12 @@ jsdoc_only_types.ts:5:8 parse ━━━━━━━━━━━━━━━━�
   
   × Expected a type here
   
-    ┌─ jsdoc_only_types.ts:5:8
-    │
-  5 │ let e: ?(string | number);
-    │        ^
+    3 │ let c: ?string;
+    4 │ let d: string?;
+  > 5 │ let e: ?(string | number);
+      │        ^
+    6 │ let f: !string;
+    7 │ let g: string!;
   
 jsdoc_only_types.ts:6:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -139,10 +148,12 @@ jsdoc_only_types.ts:6:8 parse ━━━━━━━━━━━━━━━━�
   
   × Expected a type here
   
-    ┌─ jsdoc_only_types.ts:6:8
-    │
-  6 │ let f: !string;
-    │        ^
+    4 │ let d: string?;
+    5 │ let e: ?(string | number);
+  > 6 │ let f: !string;
+      │        ^
+    7 │ let g: string!;
+    8 │ let h: !(string | number);
   
 jsdoc_only_types.ts:7:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -150,17 +161,21 @@ jsdoc_only_types.ts:7:14 parse ━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ jsdoc_only_types.ts:7:14
-    │
-  7 │ let g: string!;
-    │              ^
+    5 │ let e: ?(string | number);
+    6 │ let f: !string;
+  > 7 │ let g: string!;
+      │              ^
+    8 │ let h: !(string | number);
+    9 │ 
   
   i ...Which is required to end this statement
   
-    ┌─ jsdoc_only_types.ts:7:1
-    │
-  7 │ let g: string!;
-    │ ^^^^^^^^^^^^^
+    5 │ let e: ?(string | number);
+    6 │ let f: !string;
+  > 7 │ let g: string!;
+      │ ^^^^^^^^^^^^^
+    8 │ let h: !(string | number);
+    9 │ 
   
 jsdoc_only_types.ts:8:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -168,10 +183,11 @@ jsdoc_only_types.ts:8:8 parse ━━━━━━━━━━━━━━━━�
   
   × Expected a type here
   
-    ┌─ jsdoc_only_types.ts:8:8
-    │
-  8 │ let h: !(string | number);
-    │        ^
+    6 │ let f: !string;
+    7 │ let g: string!;
+  > 8 │ let h: !(string | number);
+      │        ^
+    9 │ 
   
 
 ```

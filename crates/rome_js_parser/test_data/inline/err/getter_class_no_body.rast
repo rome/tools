@@ -63,10 +63,11 @@ getter_class_no_body.js:3:1 parse ━━━━━━━━━━━━━━━�
   
   × Expected a class method body here
   
-    ┌─ getter_class_no_body.js:3:1
-    │
-  3 │ }
-    │ ^
+    1 │ class Getters {
+    2 │   get foo()
+  > 3 │ }
+      │ ^
+    4 │ 
   
 --
 class Getters {

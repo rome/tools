@@ -138,17 +138,17 @@ async-do-expressions.js:1:7 parse ━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ async-do-expressions.js:1:7
-    │
-  1 │ async do {
-    │       ^^
+  > 1 │ async do {
+      │       ^^
+    2 │   1;
+    3 │ };
   
   i ...Which is required to end this statement
   
-    ┌─ async-do-expressions.js:1:1
-    │
-  1 │ async do {
-    │ ^^^^^^^^
+  > 1 │ async do {
+      │ ^^^^^^^^
+    2 │   1;
+    3 │ };
   
 async-do-expressions.js:3:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -156,10 +156,12 @@ async-do-expressions.js:3:2 parse ━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ async-do-expressions.js:3:2
-    │
-  3 │ };
-    │  ^
+    1 │ async do {
+    2 │   1;
+  > 3 │ };
+      │  ^
+    4 │ 
+    5 │ (async do {});
   
 async-do-expressions.js:5:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -167,10 +169,12 @@ async-do-expressions.js:5:8 parse ━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ async-do-expressions.js:5:8
-    │
-  5 │ (async do {});
-    │        ^^
+    3 │ };
+    4 │ 
+  > 5 │ (async do {});
+      │        ^^
+    6 │ 
+    7 │ let x = async do {
   
 async-do-expressions.js:5:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -178,10 +182,12 @@ async-do-expressions.js:5:13 parse ━━━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ async-do-expressions.js:5:13
-    │
-  5 │ (async do {});
-    │             ^
+    3 │ };
+    4 │ 
+  > 5 │ (async do {});
+      │             ^
+    6 │ 
+    7 │ let x = async do {
   
 async-do-expressions.js:7:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -189,17 +195,21 @@ async-do-expressions.js:7:15 parse ━━━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ async-do-expressions.js:7:15
-    │
-  7 │ let x = async do {
-    │               ^^
+    5 │ (async do {});
+    6 │ 
+  > 7 │ let x = async do {
+      │               ^^
+    8 │   if (foo()) { f() }
+    9 │   else if (bar()) { g() }
   
   i ...Which is required to end this statement
   
-    ┌─ async-do-expressions.js:7:1
-    │
-  7 │ let x = async do {
-    │ ^^^^^^^^^^^^^^
+    5 │ (async do {});
+    6 │ 
+  > 7 │ let x = async do {
+      │ ^^^^^^^^^^^^^^
+    8 │   if (foo()) { f() }
+    9 │   else if (bar()) { g() }
   
 async-do-expressions.js:11:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -207,10 +217,12 @@ async-do-expressions.js:11:2 parse ━━━━━━━━━━━━━━━
   
   × unexpected
   
-     ┌─ async-do-expressions.js:11:2
-     │
-  11 │ };
-     │  ^
+     9 │   else if (bar()) { g() }
+    10 │   else { h() }
+  > 11 │ };
+       │  ^
+    12 │ 
+    13 │ async do {
   
 async-do-expressions.js:13:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -218,17 +230,21 @@ async-do-expressions.js:13:7 parse ━━━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-     ┌─ async-do-expressions.js:13:7
-     │
-  13 │ async do {
-     │       ^^
+    11 │ };
+    12 │ 
+  > 13 │ async do {
+       │       ^^
+    14 │   await 42
+    15 │ }
   
   i ...Which is required to end this statement
   
-     ┌─ async-do-expressions.js:13:1
-     │
-  13 │ async do {
-     │ ^^^^^^^^
+    11 │ };
+    12 │ 
+  > 13 │ async do {
+       │ ^^^^^^^^
+    14 │   await 42
+    15 │ }
   
 async-do-expressions.js:17:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -236,10 +252,12 @@ async-do-expressions.js:17:1 parse ━━━━━━━━━━━━━━━
   
   × unexpected
   
-     ┌─ async-do-expressions.js:17:1
-     │
-  17 │ function iter() {
-     │ ^^^^^^^^
+    15 │ }
+    16 │ 
+  > 17 │ function iter() {
+       │ ^^^^^^^^
+    18 │   return async do {
+    19 │     return 1;
   
 async-do-expressions.js:18:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -247,17 +265,19 @@ async-do-expressions.js:18:16 parse ━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-     ┌─ async-do-expressions.js:18:16
-     │
-  18 │   return async do {
-     │                ^^
+    17 │ function iter() {
+  > 18 │   return async do {
+       │                ^^
+    19 │     return 1;
+    20 │   }
   
   i ...Which is required to end this statement
   
-     ┌─ async-do-expressions.js:18:3
-     │
-  18 │   return async do {
-     │   ^^^^^^^^^^^^^^^
+    17 │ function iter() {
+  > 18 │   return async do {
+       │   ^^^^^^^^^^^^^^^
+    19 │     return 1;
+    20 │   }
   
 async-do-expressions.js:21:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -265,10 +285,12 @@ async-do-expressions.js:21:1 parse ━━━━━━━━━━━━━━━
   
   × unexpected
   
-     ┌─ async-do-expressions.js:21:1
-     │
-  21 │ };
-     │ ^
+    19 │     return 1;
+    20 │   }
+  > 21 │ };
+       │ ^
+    22 │ 
+    23 │ let x = async do {
   
 async-do-expressions.js:21:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -276,10 +298,12 @@ async-do-expressions.js:21:2 parse ━━━━━━━━━━━━━━━
   
   × unexpected
   
-     ┌─ async-do-expressions.js:21:2
-     │
-  21 │ };
-     │  ^
+    19 │     return 1;
+    20 │   }
+  > 21 │ };
+       │  ^
+    22 │ 
+    23 │ let x = async do {
   
 async-do-expressions.js:23:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -287,17 +311,21 @@ async-do-expressions.js:23:15 parse ━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-     ┌─ async-do-expressions.js:23:15
-     │
-  23 │ let x = async do {
-     │               ^^
+    21 │ };
+    22 │ 
+  > 23 │ let x = async do {
+       │               ^^
+    24 │   let tmp = f();
+    25 │   tmp * tmp + 1
   
   i ...Which is required to end this statement
   
-     ┌─ async-do-expressions.js:23:1
-     │
-  23 │ let x = async do {
-     │ ^^^^^^^^^^^^^^
+    21 │ };
+    22 │ 
+  > 23 │ let x = async do {
+       │ ^^^^^^^^^^^^^^
+    24 │   let tmp = f();
+    25 │   tmp * tmp + 1
   
 async-do-expressions.js:26:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -305,10 +333,11 @@ async-do-expressions.js:26:2 parse ━━━━━━━━━━━━━━━
   
   × unexpected
   
-     ┌─ async-do-expressions.js:26:2
-     │
-  26 │ };
-     │  ^
+    24 │   let tmp = f();
+    25 │   tmp * tmp + 1
+  > 26 │ };
+       │  ^
+    27 │ 
   
 
 ```

@@ -111,10 +111,12 @@ class_yield_property_initializer.js:4:12 parse ━━━━━━━━━━━
 
   × Illegal use of reserved keyword `yield` as an identifier in strict mode
   
-    ┌─ class_yield_property_initializer.js:4:12
-    │
-  4 │     prop = yield;
-    │            ^^^^^
+    2 │ async function* test() {
+    3 │   class A {
+  > 4 │     prop = yield;
+      │            ^^^^^
+    5 │   }
+    6 │ }
   
 --
 // SCRIPT

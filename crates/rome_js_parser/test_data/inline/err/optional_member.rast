@@ -62,10 +62,9 @@ optional_member.js:1:14 parse ━━━━━━━━━━━━━━━━�
 
   × `?` modifiers can only be used in TypeScript files
   
-    ┌─ optional_member.js:1:14
-    │
-  1 │ class B { foo?; }
-    │              ^
+  > 1 │ class B { foo?; }
+      │              ^
+    2 │ 
   
 --
 class B { foo?; }

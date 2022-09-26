@@ -20,10 +20,11 @@ noArguments.cjs:2:17 lint/correctness/noArguments ━━━━━━━━━━
 
   ! Use the rest parameters instead of arguments.
   
-    ┌─ noArguments.cjs:2:17
-    │
-  2 │     console.log(arguments);
-    │                 ^^^^^^^^^
+    1 │ function f() {
+  > 2 │     console.log(arguments);
+      │                 ^^^^^^^^^
+    3 │ }
+    4 │ 
   
   i arguments does not have Array.prototype methods and can be inconvenient to use.
   

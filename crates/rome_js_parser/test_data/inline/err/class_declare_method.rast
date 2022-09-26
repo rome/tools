@@ -81,10 +81,9 @@ class_declare_method.js:1:11 parse ━━━━━━━━━━━━━━━
 
   × 'declare' modifier can only be used in TypeScript files
   
-    ┌─ class_declare_method.js:1:11
-    │
-  1 │ class B { declare fn() {} }
-    │           ^^^^^^^
+  > 1 │ class B { declare fn() {} }
+      │           ^^^^^^^
+    2 │ 
   
 --
 class B { declare fn() {} }

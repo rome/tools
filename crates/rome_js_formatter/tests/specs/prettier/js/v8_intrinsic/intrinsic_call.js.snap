@@ -106,12 +106,14 @@ intrinsic_call.js:2:13 parse ━━━━━━━━━━━━━━━━━
   
   × Expected a statement here
   
-    ┌─ intrinsic_call.js:2:13
-    │  
-  2 │ ┌             %DebugPrint
-  3 │ │         (
-  4 │ │                 foo )
-    │ └─────────────────────^
+    1 │ function doSmth()     {
+  > 2 │             %DebugPrint
+      │             ^^^^^^^^^^^
+  > 3 │         (
+  > 4 │                 foo )
+      │                 ^^^^^
+    5 │   }
+    6 │ 
   
 intrinsic_call.js:10:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -119,10 +121,12 @@ intrinsic_call.js:10:8 parse ━━━━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ intrinsic_call.js:10:8
-     │
-  10 │     if(%
-     │        ^
+     8 │         f
+     9 │ ) {
+  > 10 │     if(%
+       │        ^
+    11 │     IsAsmWasmCode(f))              console.log("asm.js");
+    12 │         if(
   
 intrinsic_call.js:14:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -130,10 +134,12 @@ intrinsic_call.js:14:9 parse ━━━━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ intrinsic_call.js:14:9
-     │
-  14 │         % IsWasmCode(
-     │         ^
+    12 │         if(
+    13 │ 
+  > 14 │         % IsWasmCode(
+       │         ^
+    15 │         f))
+    16 │             console.log (
   
 intrinsic_call.js:21:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -141,10 +147,11 @@ intrinsic_call.js:21:6 parse ━━━━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ intrinsic_call.js:21:6
-     │
-  21 │     (%
-     │      ^
+    20 │     console.log
+  > 21 │     (%
+       │      ^
+    22 │         GetFunctioName(f)
+    23 │         );
   
 
 ```

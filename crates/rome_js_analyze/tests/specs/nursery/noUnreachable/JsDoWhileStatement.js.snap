@@ -27,17 +27,21 @@ JsDoWhileStatement.js:4:14 lint/nursery/noUnreachable ━━━━━━━━�
   
   ! ... before it can reach this code
   
-    ┌─ JsDoWhileStatement.js:4:14
-    │
-  4 │     } while (true); // afterBreak
-    │              ^^^^
+    2 │     do {
+    3 │         break;
+  > 4 │     } while (true); // afterBreak
+      │              ^^^^
+    5 │ }
+    6 │ 
   
   i This statement will break the flow of the code ...
   
-    ┌─ JsDoWhileStatement.js:3:9
-    │
-  3 │         break;
-    │         ^^^^^^
+    1 │ function JsDoWhileStatement1() {
+    2 │     do {
+  > 3 │         break;
+      │         ^^^^^^
+    4 │     } while (true); // afterBreak
+    5 │ }
   
 
 ```
@@ -49,17 +53,21 @@ JsDoWhileStatement.js:10:9 lint/nursery/noUnreachable ━━━━━━━━�
   
   ! ... before it can reach this code
   
-     ┌─ JsDoWhileStatement.js:10:9
-     │
-  10 │         afterContinue();
-     │         ^^^^^^^^^^^^^^^^
+     8 │     do {
+     9 │         continue;
+  > 10 │         afterContinue();
+       │         ^^^^^^^^^^^^^^^^
+    11 │     } while (true);
+    12 │ }
   
   i This statement will continue the loop ...
   
-    ┌─ JsDoWhileStatement.js:9:9
-    │
-  9 │         continue;
-    │         ^^^^^^^^^
+     7 │ function JsDoWhileStatement2() {
+     8 │     do {
+   > 9 │         continue;
+       │         ^^^^^^^^^
+    10 │         afterContinue();
+    11 │     } while (true);
   
 
 ```

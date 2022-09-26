@@ -109,10 +109,10 @@ index-signature.ts:1:26 parse ━━━━━━━━━━━━━━━━�
 
   × An index signature must have a type annotation
   
-    ┌─ index-signature.ts:1:26
-    │
-  1 │ type A = { [key: string] };
-    │                          ^
+  > 1 │ type A = { [key: string] };
+      │                          ^
+    2 │ 
+    3 │ type TwoParams = {
   
 index-signature.ts:4:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -120,10 +120,11 @@ index-signature.ts:4:13 parse ━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ index-signature.ts:4:13
-    │
-  4 │   [a: string, b: string]: string;
-    │             ^
+    3 │ type TwoParams = {
+  > 4 │   [a: string, b: string]: string;
+      │             ^
+    5 │ };
+    6 │ type ThreeParams = {
   
 index-signature.ts:4:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -131,10 +132,11 @@ index-signature.ts:4:24 parse ━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ index-signature.ts:4:24
-    │
-  4 │   [a: string, b: string]: string;
-    │                        ^
+    3 │ type TwoParams = {
+  > 4 │   [a: string, b: string]: string;
+      │                        ^
+    5 │ };
+    6 │ type ThreeParams = {
   
 index-signature.ts:4:33 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -142,10 +144,11 @@ index-signature.ts:4:33 parse ━━━━━━━━━━━━━━━━�
   
   × Expected a property, or a signature here
   
-    ┌─ index-signature.ts:4:33
-    │
-  4 │   [a: string, b: string]: string;
-    │                                 ^
+    3 │ type TwoParams = {
+  > 4 │   [a: string, b: string]: string;
+      │                                 ^
+    5 │ };
+    6 │ type ThreeParams = {
   
 index-signature.ts:5:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -153,10 +156,12 @@ index-signature.ts:5:1 parse ━━━━━━━━━━━━━━━━━
   
   × Expected a statement here
   
-    ┌─ index-signature.ts:5:1
-    │
-  5 │ };
-    │ ^
+    3 │ type TwoParams = {
+    4 │   [a: string, b: string]: string;
+  > 5 │ };
+      │ ^
+    6 │ type ThreeParams = {
+    7 │   [a: string, b: string, c: string]: string;
   
 index-signature.ts:7:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -164,10 +169,12 @@ index-signature.ts:7:13 parse ━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ index-signature.ts:7:13
-    │
-  7 │   [a: string, b: string, c: string]: string;
-    │             ^
+    5 │ };
+    6 │ type ThreeParams = {
+  > 7 │   [a: string, b: string, c: string]: string;
+      │             ^
+    8 │ };
+    9 │ 
   
 index-signature.ts:7:35 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -175,10 +182,12 @@ index-signature.ts:7:35 parse ━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ index-signature.ts:7:35
-    │
-  7 │   [a: string, b: string, c: string]: string;
-    │                                   ^
+    5 │ };
+    6 │ type ThreeParams = {
+  > 7 │   [a: string, b: string, c: string]: string;
+      │                                   ^
+    8 │ };
+    9 │ 
   
 index-signature.ts:7:44 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -186,10 +195,12 @@ index-signature.ts:7:44 parse ━━━━━━━━━━━━━━━━�
   
   × Expected a property, or a signature here
   
-    ┌─ index-signature.ts:7:44
-    │
-  7 │   [a: string, b: string, c: string]: string;
-    │                                            ^
+    5 │ };
+    6 │ type ThreeParams = {
+  > 7 │   [a: string, b: string, c: string]: string;
+      │                                            ^
+    8 │ };
+    9 │ 
   
 index-signature.ts:8:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -197,10 +208,12 @@ index-signature.ts:8:1 parse ━━━━━━━━━━━━━━━━━
   
   × Expected a statement here
   
-    ┌─ index-signature.ts:8:1
-    │
-  8 │ };
-    │ ^
+     6 │ type ThreeParams = {
+     7 │   [a: string, b: string, c: string]: string;
+   > 8 │ };
+       │ ^
+     9 │ 
+    10 │ type TooLong = {
   
 index-signature.ts:11:41 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -208,10 +221,11 @@ index-signature.ts:11:41 parse ━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-     ┌─ index-signature.ts:11:41
-     │
-  11 │   [loooooooooooooooooooooooooong: string, looooooooooooooooooooooooooooooooooooooong: string]: string;
-     │                                         ^
+    10 │ type TooLong = {
+  > 11 │   [loooooooooooooooooooooooooong: string, looooooooooooooooooooooooooooooooooooooong: string]: string;
+       │                                         ^
+    12 │ }
+    13 │ type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string; }
   
 index-signature.ts:11:93 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -219,10 +233,11 @@ index-signature.ts:11:93 parse ━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-     ┌─ index-signature.ts:11:93
-     │
-  11 │   [loooooooooooooooooooooooooong: string, looooooooooooooooooooooooooooooooooooooong: string]: string;
-     │                                                                                             ^
+    10 │ type TooLong = {
+  > 11 │   [loooooooooooooooooooooooooong: string, looooooooooooooooooooooooooooooooooooooong: string]: string;
+       │                                                                                             ^
+    12 │ }
+    13 │ type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string; }
   
 index-signature.ts:11:102 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -230,10 +245,11 @@ index-signature.ts:11:102 parse ━━━━━━━━━━━━━━━━
   
   × Expected a property, or a signature here
   
-     ┌─ index-signature.ts:11:102
-     │
-  11 │   [loooooooooooooooooooooooooong: string, looooooooooooooooooooooooooooooooooooooong: string]: string;
-     │                                                                                                      ^
+    10 │ type TooLong = {
+  > 11 │   [loooooooooooooooooooooooooong: string, looooooooooooooooooooooooooooooooooooooong: string]: string;
+       │                                                                                                      ^
+    12 │ }
+    13 │ type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string; }
   
 index-signature.ts:12:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -241,10 +257,12 @@ index-signature.ts:12:1 parse ━━━━━━━━━━━━━━━━�
   
   × Expected a statement here
   
-     ┌─ index-signature.ts:12:1
-     │
-  12 │ }
-     │ ^
+    10 │ type TooLong = {
+    11 │   [loooooooooooooooooooooooooong: string, looooooooooooooooooooooooooooooooooooooong: string]: string;
+  > 12 │ }
+       │ ^
+    13 │ type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string; }
+    14 │ type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string; }
   
 index-signature.ts:13:58 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -252,10 +270,12 @@ index-signature.ts:13:58 parse ━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-     ┌─ index-signature.ts:13:58
-     │
-  13 │ type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string; }
-     │                                                          ^
+    11 │   [loooooooooooooooooooooooooong: string, looooooooooooooooooooooooooooooooooooooong: string]: string;
+    12 │ }
+  > 13 │ type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string; }
+       │                                                          ^
+    14 │ type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string; }
+    15 │ 
   
 index-signature.ts:13:89 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -263,10 +283,12 @@ index-signature.ts:13:89 parse ━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-     ┌─ index-signature.ts:13:89
-     │
-  13 │ type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string; }
-     │                                                                                         ^
+    11 │   [loooooooooooooooooooooooooong: string, looooooooooooooooooooooooooooooooooooooong: string]: string;
+    12 │ }
+  > 13 │ type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string; }
+       │                                                                                         ^
+    14 │ type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string; }
+    15 │ 
   
 index-signature.ts:13:98 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -274,10 +296,12 @@ index-signature.ts:13:98 parse ━━━━━━━━━━━━━━━━�
   
   × Expected a property, or a signature here
   
-     ┌─ index-signature.ts:13:98
-     │
-  13 │ type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string; }
-     │                                                                                                  ^
+    11 │   [loooooooooooooooooooooooooong: string, looooooooooooooooooooooooooooooooooooooong: string]: string;
+    12 │ }
+  > 13 │ type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string; }
+       │                                                                                                  ^
+    14 │ type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string; }
+    15 │ 
   
 index-signature.ts:13:100 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -285,10 +309,12 @@ index-signature.ts:13:100 parse ━━━━━━━━━━━━━━━━
   
   × Expected a statement here
   
-     ┌─ index-signature.ts:13:100
-     │
-  13 │ type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string; }
-     │                                                                                                    ^
+    11 │   [loooooooooooooooooooooooooong: string, looooooooooooooooooooooooooooooooooooooong: string]: string;
+    12 │ }
+  > 13 │ type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string; }
+       │                                                                                                    ^
+    14 │ type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string; }
+    15 │ 
   
 index-signature.ts:14:58 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -296,10 +322,12 @@ index-signature.ts:14:58 parse ━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-     ┌─ index-signature.ts:14:58
-     │
-  14 │ type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string; }
-     │                                                          ^
+    12 │ }
+    13 │ type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string; }
+  > 14 │ type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string; }
+       │                                                          ^
+    15 │ 
+    16 │ // note lack of trailing comma in the index signature
   
 index-signature.ts:14:88 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -307,10 +335,12 @@ index-signature.ts:14:88 parse ━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-     ┌─ index-signature.ts:14:88
-     │
-  14 │ type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string; }
-     │                                                                                        ^
+    12 │ }
+    13 │ type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string; }
+  > 14 │ type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string; }
+       │                                                                                        ^
+    15 │ 
+    16 │ // note lack of trailing comma in the index signature
   
 index-signature.ts:14:97 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -318,10 +348,12 @@ index-signature.ts:14:97 parse ━━━━━━━━━━━━━━━━�
   
   × Expected a property, or a signature here
   
-     ┌─ index-signature.ts:14:97
-     │
-  14 │ type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string; }
-     │                                                                                                 ^
+    12 │ }
+    13 │ type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string; }
+  > 14 │ type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string; }
+       │                                                                                                 ^
+    15 │ 
+    16 │ // note lack of trailing comma in the index signature
   
 index-signature.ts:14:99 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -329,10 +361,12 @@ index-signature.ts:14:99 parse ━━━━━━━━━━━━━━━━�
   
   × Expected a statement here
   
-     ┌─ index-signature.ts:14:99
-     │
-  14 │ type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string; }
-     │                                                                                                   ^
+    12 │ }
+    13 │ type TooLong81 = { [loooooooooooooooooooooooooong: string, loooooooooooooooooong: string]: string; }
+  > 14 │ type TooLong80 = { [loooooooooooooooooooooooooong: string, looooooooooooooooong: string]: string; }
+       │                                                                                                   ^
+    15 │ 
+    16 │ // note lack of trailing comma in the index signature
   
 
 ```

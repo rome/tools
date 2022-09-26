@@ -43,10 +43,11 @@ issue-5370.ts:3:1 parse ━━━━━━━━━━━━━━━━━━�
   
   × Expected a type parameter here
   
-    ┌─ issue-5370.ts:3:1
-    │
-  3 │ > = myExperienceSelectable.concat(otherDurabilityMetricsSelectable);
-    │ ^
+    1 │ const durabilityMetricsSelectable: Immutable.OrderedSet<
+    2 │   SomeReportingMetric,
+  > 3 │ > = myExperienceSelectable.concat(otherDurabilityMetricsSelectable);
+      │ ^
+    4 │ 
   
 
 ```

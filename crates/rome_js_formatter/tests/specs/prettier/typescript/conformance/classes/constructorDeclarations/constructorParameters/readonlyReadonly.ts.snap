@@ -45,17 +45,19 @@ readonlyReadonly.ts:2:14 parse ━━━━━━━━━━━━━━━━�
   
   × duplicate modifier
   
-    ┌─ readonlyReadonly.ts:2:14
-    │
-  2 │     readonly readonly x: number;
-    │              ^^^^^^^^
+    1 │ class C {
+  > 2 │     readonly readonly x: number;
+      │              ^^^^^^^^
+    3 │     constructor(readonly readonly y: number) {}
+    4 │ }
   
   i first seen here
   
-    ┌─ readonlyReadonly.ts:2:5
-    │
-  2 │     readonly readonly x: number;
-    │     ^^^^^^^^
+    1 │ class C {
+  > 2 │     readonly readonly x: number;
+      │     ^^^^^^^^
+    3 │     constructor(readonly readonly y: number) {}
+    4 │ }
   
 readonlyReadonly.ts:3:26 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -63,17 +65,19 @@ readonlyReadonly.ts:3:26 parse ━━━━━━━━━━━━━━━━�
   
   × duplicate modifier
   
-    ┌─ readonlyReadonly.ts:3:26
-    │
-  3 │     constructor(readonly readonly y: number) {}
-    │                          ^^^^^^^^
+    1 │ class C {
+    2 │     readonly readonly x: number;
+  > 3 │     constructor(readonly readonly y: number) {}
+      │                          ^^^^^^^^
+    4 │ }
   
   i first seen here
   
-    ┌─ readonlyReadonly.ts:3:17
-    │
-  3 │     constructor(readonly readonly y: number) {}
-    │                 ^^^^^^^^
+    1 │ class C {
+    2 │     readonly readonly x: number;
+  > 3 │     constructor(readonly readonly y: number) {}
+      │                 ^^^^^^^^
+    4 │ }
   
 
 ```

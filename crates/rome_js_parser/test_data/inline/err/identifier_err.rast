@@ -203,10 +203,10 @@ identifier_err.js:1:1 parse ━━━━━━━━━━━━━━━━━�
 
   × Illegal use of reserved keyword `yield` as an identifier in strict mode
   
-    ┌─ identifier_err.js:1:1
-    │
-  1 │ yield;
-    │ ^^^^^
+  > 1 │ yield;
+      │ ^^^^^
+    2 │ await;
+    3 │ async function test(await) {}
   
 --
 identifier_err.js:2:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -215,30 +215,35 @@ identifier_err.js:2:6 parse ━━━━━━━━━━━━━━━━━�
   
   × Expected an unary expression here
   
-    ┌─ identifier_err.js:2:6
-    │
-  2 │ await;
-    │      ^
+    1 │ yield;
+  > 2 │ await;
+      │      ^
+    3 │ async function test(await) {}
+    4 │ function* test(yield) {}
   
 --
 identifier_err.js:3:21 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `await` as an identifier in an async context
   
-    ┌─ identifier_err.js:3:21
-    │
-  3 │ async function test(await) {}
-    │                     ^^^^^
+    1 │ yield;
+    2 │ await;
+  > 3 │ async function test(await) {}
+      │                     ^^^^^
+    4 │ function* test(yield) {}
+    5 │ enum;
   
 --
 identifier_err.js:4:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `yield` as an identifier in generator function
   
-    ┌─ identifier_err.js:4:16
-    │
-  4 │ function* test(yield) {}
-    │                ^^^^^
+    2 │ await;
+    3 │ async function test(await) {}
+  > 4 │ function* test(yield) {}
+      │                ^^^^^
+    5 │ enum;
+    6 │ implements;
   
 --
 identifier_err.js:5:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -247,30 +252,35 @@ identifier_err.js:5:1 parse ━━━━━━━━━━━━━━━━━�
   
   × TypeScript only syntax
   
-    ┌─ identifier_err.js:5:1
-    │
-  5 │ enum;
-    │ ^^^^
+    3 │ async function test(await) {}
+    4 │ function* test(yield) {}
+  > 5 │ enum;
+      │ ^^^^
+    6 │ implements;
+    7 │ interface;
   
 --
 identifier_err.js:6:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of reserved keyword `implements` as an identifier in strict mode
   
-    ┌─ identifier_err.js:6:1
-    │
-  6 │ implements;
-    │ ^^^^^^^^^^
+    4 │ function* test(yield) {}
+    5 │ enum;
+  > 6 │ implements;
+      │ ^^^^^^^^^^
+    7 │ interface;
+    8 │ 
   
 --
 identifier_err.js:7:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of reserved keyword `interface` as an identifier in strict mode
   
-    ┌─ identifier_err.js:7:1
-    │
-  7 │ interface;
-    │ ^^^^^^^^^
+    5 │ enum;
+    6 │ implements;
+  > 7 │ interface;
+      │ ^^^^^^^^^
+    8 │ 
   
 --
 yield;

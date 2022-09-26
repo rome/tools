@@ -74,19 +74,19 @@ spread.js:1:19 parse ━━━━━━━━━━━━━━━━━━━�
   
   × Expected an identifier here
   
-    ┌─ spread.js:1:19
-    │
-  1 │ const formData = #{ title: "Implement all the things" }
-    │                   ^
+  > 1 │ const formData = #{ title: "Implement all the things" }
+      │                   ^
+    2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
   
 spread.js:1:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Private names are only allowed on the left side of a 'in' expression
   
-    ┌─ spread.js:1:18
-    │
-  1 │ const formData = #{ title: "Implement all the things" }
-    │                  ^
+  > 1 │ const formData = #{ title: "Implement all the things" }
+      │                  ^
+    2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
   
 spread.js:1:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -94,17 +94,17 @@ spread.js:1:19 parse ━━━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ spread.js:1:19
-    │
-  1 │ const formData = #{ title: "Implement all the things" }
-    │                   ^
+  > 1 │ const formData = #{ title: "Implement all the things" }
+      │                   ^
+    2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
   
   i ...Which is required to end this statement
   
-    ┌─ spread.js:1:1
-    │
-  1 │ const formData = #{ title: "Implement all the things" }
-    │ ^^^^^^^^^^^^^^^^^^
+  > 1 │ const formData = #{ title: "Implement all the things" }
+      │ ^^^^^^^^^^^^^^^^^^
+    2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
   
 spread.js:2:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -112,19 +112,21 @@ spread.js:2:18 parse ━━━━━━━━━━━━━━━━━━━�
   
   × Expected an identifier here
   
-    ┌─ spread.js:2:18
-    │
-  2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
-    │                  ^
+    1 │ const formData = #{ title: "Implement all the things" }
+  > 2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+      │                  ^
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+    4 │ 
   
 spread.js:2:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Private names are only allowed on the left side of a 'in' expression
   
-    ┌─ spread.js:2:17
-    │
-  2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
-    │                 ^
+    1 │ const formData = #{ title: "Implement all the things" }
+  > 2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+      │                 ^
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+    4 │ 
   
 spread.js:2:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -132,17 +134,19 @@ spread.js:2:18 parse ━━━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ spread.js:2:18
-    │
-  2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
-    │                  ^
+    1 │ const formData = #{ title: "Implement all the things" }
+  > 2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+      │                  ^
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+    4 │ 
   
   i ...Which is required to end this statement
   
-    ┌─ spread.js:2:1
-    │
-  2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
-    │ ^^^^^^^^^^^^^^^^^
+    1 │ const formData = #{ title: "Implement all the things" }
+  > 2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+      │ ^^^^^^^^^^^^^^^^^
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+    4 │ 
   
 spread.js:2:34 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -150,17 +154,19 @@ spread.js:2:34 parse ━━━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ spread.js:2:34
-    │
-  2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
-    │                                  ^
+    1 │ const formData = #{ title: "Implement all the things" }
+  > 2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+      │                                  ^
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+    4 │ 
   
   i ...Which is required to end this statement
   
-    ┌─ spread.js:2:24
-    │
-  2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
-    │                        ^^^^^^^^^^^
+    1 │ const formData = #{ title: "Implement all the things" }
+  > 2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+      │                        ^^^^^^^^^^^
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+    4 │ 
   
 spread.js:3:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -168,19 +174,23 @@ spread.js:3:20 parse ━━━━━━━━━━━━━━━━━━━�
   
   × Expected an identifier here
   
-    ┌─ spread.js:3:20
-    │
-  3 │ const taskLater = #{ ...taskNow, status: "DONE" }
-    │                    ^
+    1 │ const formData = #{ title: "Implement all the things" }
+    2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+  > 3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+      │                    ^
+    4 │ 
+    5 │ // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
   
 spread.js:3:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Private names are only allowed on the left side of a 'in' expression
   
-    ┌─ spread.js:3:19
-    │
-  3 │ const taskLater = #{ ...taskNow, status: "DONE" }
-    │                   ^
+    1 │ const formData = #{ title: "Implement all the things" }
+    2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+  > 3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+      │                   ^
+    4 │ 
+    5 │ // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
   
 spread.js:3:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -188,17 +198,21 @@ spread.js:3:20 parse ━━━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ spread.js:3:20
-    │
-  3 │ const taskLater = #{ ...taskNow, status: "DONE" }
-    │                    ^
+    1 │ const formData = #{ title: "Implement all the things" }
+    2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+  > 3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+      │                    ^
+    4 │ 
+    5 │ // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
   
   i ...Which is required to end this statement
   
-    ┌─ spread.js:3:1
-    │
-  3 │ const taskLater = #{ ...taskNow, status: "DONE" }
-    │ ^^^^^^^^^^^^^^^^^^^
+    1 │ const formData = #{ title: "Implement all the things" }
+    2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+  > 3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+      │ ^^^^^^^^^^^^^^^^^^^
+    4 │ 
+    5 │ // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
   
 spread.js:3:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -206,10 +220,12 @@ spread.js:3:22 parse ━━━━━━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ spread.js:3:22
-    │
-  3 │ const taskLater = #{ ...taskNow, status: "DONE" }
-    │                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    1 │ const formData = #{ title: "Implement all the things" }
+    2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+  > 3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+      │                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │ 
+    5 │ // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
   
 spread.js:6:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -217,19 +233,19 @@ spread.js:6:23 parse ━━━━━━━━━━━━━━━━━━━�
   
   × Expected an identifier here
   
-    ┌─ spread.js:6:23
-    │
-  6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
-    │                       ^
+    5 │ // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
+  > 6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
+      │                       ^
+    7 │ 
   
 spread.js:6:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Private names are only allowed on the left side of a 'in' expression
   
-    ┌─ spread.js:6:22
-    │
-  6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
-    │                      ^
+    5 │ // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
+  > 6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
+      │                      ^
+    7 │ 
   
 spread.js:6:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -237,10 +253,10 @@ spread.js:6:23 parse ━━━━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ spread.js:6:23
-    │
-  6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
-    │                       ^
+    5 │ // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
+  > 6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
+      │                       ^
+    7 │ 
   
 
 ```

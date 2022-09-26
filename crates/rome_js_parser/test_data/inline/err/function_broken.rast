@@ -99,10 +99,9 @@ function_broken.js:1:15 parse ━━━━━━━━━━━━━━━━�
   
   × Expected a function body here
   
-    ┌─ function_broken.js:1:15
-    │
-  1 │ function foo())})}{{{  {}
-    │               ^
+  > 1 │ function foo())})}{{{  {}
+      │               ^
+    2 │ 
   
 --
 function_broken.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -111,10 +110,9 @@ function_broken.js:2:1 parse ━━━━━━━━━━━━━━━━━
   
   × the file ends here
   
-    ┌─ function_broken.js:2:1
-    │
-  2 │ 
-    │ ^
+    1 │ function foo())})}{{{  {}
+  > 2 │ 
+      │ 
   
 --
 function foo())})}{{{  {}

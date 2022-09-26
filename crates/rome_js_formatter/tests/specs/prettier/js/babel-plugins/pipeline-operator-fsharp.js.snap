@@ -142,10 +142,11 @@ pipeline-operator-fsharp.js:5:4 parse ━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-    ┌─ pipeline-operator-fsharp.js:5:4
-    │
-  5 │   |> await
-    │    ^
+    4 │ promise
+  > 5 │   |> await
+      │    ^
+    6 │   |> x => doubleSay(x, ', ')
+    7 │   |> capitalize
   
 pipeline-operator-fsharp.js:6:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -153,10 +154,12 @@ pipeline-operator-fsharp.js:6:3 parse ━━━━━━━━━━━━━━
   
   × Expected an unary expression here
   
-    ┌─ pipeline-operator-fsharp.js:6:3
-    │
-  6 │   |> x => doubleSay(x, ', ')
-    │   ^
+    4 │ promise
+    5 │   |> await
+  > 6 │   |> x => doubleSay(x, ', ')
+      │   ^
+    7 │   |> capitalize
+    8 │   |> x => x + '!'
   
 pipeline-operator-fsharp.js:6:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -164,10 +167,12 @@ pipeline-operator-fsharp.js:6:4 parse ━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-    ┌─ pipeline-operator-fsharp.js:6:4
-    │
-  6 │   |> x => doubleSay(x, ', ')
-    │    ^
+    4 │ promise
+    5 │   |> await
+  > 6 │   |> x => doubleSay(x, ', ')
+      │    ^
+    7 │   |> capitalize
+    8 │   |> x => x + '!'
   
 pipeline-operator-fsharp.js:6:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -175,19 +180,24 @@ pipeline-operator-fsharp.js:6:8 parse ━━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ pipeline-operator-fsharp.js:6:8
-    │
-  6 │   |> x => doubleSay(x, ', ')
-    │        ^^
+    4 │ promise
+    5 │   |> await
+  > 6 │   |> x => doubleSay(x, ', ')
+      │        ^^
+    7 │   |> capitalize
+    8 │   |> x => x + '!'
   
   i ...Which is required to end this statement
   
-    ┌─ pipeline-operator-fsharp.js:4:1
-    │  
-  4 │ ┌ promise
-  5 │ │   |> await
-  6 │ │   |> x => doubleSay(x, ', ')
-    │ └─────────^
+    2 │ // https://github.com/valtech-nyc/proposal-fsharp-pipelines
+    3 │ 
+  > 4 │ promise
+      │ ^^^^^^^
+  > 5 │   |> await
+  > 6 │   |> x => doubleSay(x, ', ')
+      │   ^^^^^^^
+    7 │   |> capitalize
+    8 │   |> x => x + '!'
   
 pipeline-operator-fsharp.js:18:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -195,10 +205,11 @@ pipeline-operator-fsharp.js:18:4 parse ━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ pipeline-operator-fsharp.js:18:4
-     │
-  18 │   |> doubleSay
-     │    ^
+    17 │ const result = "hello"
+  > 18 │   |> doubleSay
+       │    ^
+    19 │   |> capitalize
+    20 │   |> exclaim;
   
 pipeline-operator-fsharp.js:19:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -206,10 +217,12 @@ pipeline-operator-fsharp.js:19:4 parse ━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ pipeline-operator-fsharp.js:19:4
-     │
-  19 │   |> capitalize
-     │    ^
+    17 │ const result = "hello"
+    18 │   |> doubleSay
+  > 19 │   |> capitalize
+       │    ^
+    20 │   |> exclaim;
+    21 │ 
   
 pipeline-operator-fsharp.js:20:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -217,10 +230,12 @@ pipeline-operator-fsharp.js:20:4 parse ━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ pipeline-operator-fsharp.js:20:4
-     │
-  20 │   |> exclaim;
-     │    ^
+    18 │   |> doubleSay
+    19 │   |> capitalize
+  > 20 │   |> exclaim;
+       │    ^
+    21 │ 
+    22 │ result //=> "Hello, hello!"
   
 pipeline-operator-fsharp.js:27:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -228,10 +243,11 @@ pipeline-operator-fsharp.js:27:4 parse ━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ pipeline-operator-fsharp.js:27:4
-     │
-  27 │   |> double
-     │    ^
+    26 │ const newScore = person.score
+  > 27 │   |> double
+       │    ^
+    28 │   |> n => add(7, n)
+    29 │   |> n => boundScore(0, 100, n);
   
 pipeline-operator-fsharp.js:28:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -239,10 +255,12 @@ pipeline-operator-fsharp.js:28:4 parse ━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ pipeline-operator-fsharp.js:28:4
-     │
-  28 │   |> n => add(7, n)
-     │    ^
+    26 │ const newScore = person.score
+    27 │   |> double
+  > 28 │   |> n => add(7, n)
+       │    ^
+    29 │   |> n => boundScore(0, 100, n);
+    30 │ 
   
 pipeline-operator-fsharp.js:28:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -250,19 +268,24 @@ pipeline-operator-fsharp.js:28:8 parse ━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-     ┌─ pipeline-operator-fsharp.js:28:8
-     │
-  28 │   |> n => add(7, n)
-     │        ^^
+    26 │ const newScore = person.score
+    27 │   |> double
+  > 28 │   |> n => add(7, n)
+       │        ^^
+    29 │   |> n => boundScore(0, 100, n);
+    30 │ 
   
   i ...Which is required to end this statement
   
-     ┌─ pipeline-operator-fsharp.js:26:1
-     │  
-  26 │ ┌ const newScore = person.score
-  27 │ │   |> double
-  28 │ │   |> n => add(7, n)
-     │ └───────^
+    24 │ const person = { score: 25 };
+    25 │ 
+  > 26 │ const newScore = person.score
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 27 │   |> double
+  > 28 │   |> n => add(7, n)
+       │   ^^^^^
+    29 │   |> n => boundScore(0, 100, n);
+    30 │ 
   
 
 ```

@@ -133,20 +133,18 @@ ts_ambient_context_semi.ts:1:19 parse ━━━━━━━━━━━━━━
 
   × expected a semicolon to end the method declaration, but found none
   
-    ┌─ ts_ambient_context_semi.ts:1:19
-    │
-  1 │ declare class A { method() method2() method3() }
-    │                   ^^^^^^^^
+  > 1 │ declare class A { method() method2() method3() }
+      │                   ^^^^^^^^
+    2 │ 
   
 --
 ts_ambient_context_semi.ts:1:28 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a semicolon to end the method declaration, but found none
   
-    ┌─ ts_ambient_context_semi.ts:1:28
-    │
-  1 │ declare class A { method() method2() method3() }
-    │                            ^^^^^^^^^
+  > 1 │ declare class A { method() method2() method3() }
+      │                            ^^^^^^^^^
+    2 │ 
   
 --
 declare class A { method() method2() method3() }

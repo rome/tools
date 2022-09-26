@@ -64,10 +64,9 @@ class_property_initializer.js:1:19 parse ━━━━━━━━━━━━━
   
   × Expected an expression, or an assignment here
   
-    ┌─ class_property_initializer.js:1:19
-    │
-  1 │ class B { lorem = ; }
-    │                   ^
+  > 1 │ class B { lorem = ; }
+      │                   ^
+    2 │ 
   
 --
 class B { lorem = ; }

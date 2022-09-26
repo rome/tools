@@ -86,10 +86,12 @@ partial-application.js:5:23 parse ━━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ partial-application.js:5:23
-    │
-  5 │ const addOne = add(1, ?); // apply from the left
-    │                       ^
+    3 │ function add(x, y) { return x + y; }
+    4 │ 
+  > 5 │ const addOne = add(1, ?); // apply from the left
+      │                       ^
+    6 │ addOne(2); // 3
+    7 │ 
   
 partial-application.js:8:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -97,10 +99,12 @@ partial-application.js:8:20 parse ━━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ partial-application.js:8:20
-    │
-  8 │ const addTen = add(?, 10); // apply from the right
-    │                    ^^^^^
+     6 │ addOne(2); // 3
+     7 │ 
+   > 8 │ const addTen = add(?, 10); // apply from the right
+       │                    ^^^^^
+     9 │ addTen(2); // 12
+    10 │ 
   
 partial-application.js:12:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -108,10 +112,11 @@ partial-application.js:12:4 parse ━━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ partial-application.js:12:4
-     │
-  12 │   |> add(7, ?)
-     │    ^
+    11 │ let newScore = player.score
+  > 12 │   |> add(7, ?)
+       │    ^
+    13 │   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
+    14 │ 
   
 partial-application.js:12:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -119,10 +124,11 @@ partial-application.js:12:13 parse ━━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-     ┌─ partial-application.js:12:13
-     │
-  12 │   |> add(7, ?)
-     │             ^
+    11 │ let newScore = player.score
+  > 12 │   |> add(7, ?)
+       │             ^
+    13 │   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
+    14 │ 
   
 partial-application.js:13:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -130,10 +136,12 @@ partial-application.js:13:4 parse ━━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ partial-application.js:13:4
-     │
-  13 │   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
-     │    ^
+    11 │ let newScore = player.score
+    12 │   |> add(7, ?)
+  > 13 │   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
+       │    ^
+    14 │ 
+    15 │ f(x, ?)           // partial application from left
   
 partial-application.js:13:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -141,10 +149,12 @@ partial-application.js:13:20 parse ━━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-     ┌─ partial-application.js:13:20
-     │
-  13 │   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
-     │                    ^
+    11 │ let newScore = player.score
+    12 │   |> add(7, ?)
+  > 13 │   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
+       │                    ^
+    14 │ 
+    15 │ f(x, ?)           // partial application from left
   
 partial-application.js:15:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -152,10 +162,12 @@ partial-application.js:15:6 parse ━━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-     ┌─ partial-application.js:15:6
-     │
-  15 │ f(x, ?)           // partial application from left
-     │      ^
+    13 │   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
+    14 │ 
+  > 15 │ f(x, ?)           // partial application from left
+       │      ^
+    16 │ f(?, x)           // partial application from right
+    17 │ f(?, x, ?)        // partial application for any arg
   
 partial-application.js:16:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -163,10 +175,11 @@ partial-application.js:16:3 parse ━━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-     ┌─ partial-application.js:16:3
-     │
-  16 │ f(?, x)           // partial application from right
-     │   ^^^^
+    15 │ f(x, ?)           // partial application from left
+  > 16 │ f(?, x)           // partial application from right
+       │   ^^^^
+    17 │ f(?, x, ?)        // partial application for any arg
+    18 │ o.f(x, ?)         // partial application from left
   
 partial-application.js:17:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -174,10 +187,12 @@ partial-application.js:17:3 parse ━━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-     ┌─ partial-application.js:17:3
-     │
-  17 │ f(?, x, ?)        // partial application for any arg
-     │   ^^^^^^^
+    15 │ f(x, ?)           // partial application from left
+    16 │ f(?, x)           // partial application from right
+  > 17 │ f(?, x, ?)        // partial application for any arg
+       │   ^^^^^^^
+    18 │ o.f(x, ?)         // partial application from left
+    19 │ o.f(?, x)         // partial application from right
   
 partial-application.js:18:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -185,10 +200,12 @@ partial-application.js:18:8 parse ━━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-     ┌─ partial-application.js:18:8
-     │
-  18 │ o.f(x, ?)         // partial application from left
-     │        ^
+    16 │ f(?, x)           // partial application from right
+    17 │ f(?, x, ?)        // partial application for any arg
+  > 18 │ o.f(x, ?)         // partial application from left
+       │        ^
+    19 │ o.f(?, x)         // partial application from right
+    20 │ o.f(?, x, ?)      // partial application for any arg
   
 partial-application.js:19:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -196,10 +213,12 @@ partial-application.js:19:5 parse ━━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-     ┌─ partial-application.js:19:5
-     │
-  19 │ o.f(?, x)         // partial application from right
-     │     ^^^^
+    17 │ f(?, x, ?)        // partial application for any arg
+    18 │ o.f(x, ?)         // partial application from left
+  > 19 │ o.f(?, x)         // partial application from right
+       │     ^^^^
+    20 │ o.f(?, x, ?)      // partial application for any arg
+    21 │ super.f(?)        // partial application allowed for call on |SuperProperty|
   
 partial-application.js:20:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -207,10 +226,12 @@ partial-application.js:20:5 parse ━━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-     ┌─ partial-application.js:20:5
-     │
-  20 │ o.f(?, x, ?)      // partial application for any arg
-     │     ^^^^^^^
+    18 │ o.f(x, ?)         // partial application from left
+    19 │ o.f(?, x)         // partial application from right
+  > 20 │ o.f(?, x, ?)      // partial application for any arg
+       │     ^^^^^^^
+    21 │ super.f(?)        // partial application allowed for call on |SuperProperty|
+    22 │ 
   
 partial-application.js:21:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -218,10 +239,11 @@ partial-application.js:21:9 parse ━━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-     ┌─ partial-application.js:21:9
-     │
-  21 │ super.f(?)        // partial application allowed for call on |SuperProperty|
-     │         ^
+    19 │ o.f(?, x)         // partial application from right
+    20 │ o.f(?, x, ?)      // partial application for any arg
+  > 21 │ super.f(?)        // partial application allowed for call on |SuperProperty|
+       │         ^
+    22 │ 
   
 
 ```

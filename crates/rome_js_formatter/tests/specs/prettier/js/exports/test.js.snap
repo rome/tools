@@ -86,10 +86,12 @@ test.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━�
   
   × Expected a class, a function, or a variable declaration here
   
-    ┌─ test.js:3:8
-    │
-  3 │ export a,{b} from "./baz";
-    │        ^
+    1 │ export { value1, value2 as value2_renamed, value3, value4 as value4_renamed, value5 } from "exports";
+    2 │ 
+  > 3 │ export a,{b} from "./baz";
+      │        ^
+    4 │ 
+    5 │ export * as ns from "mod";
   
 test.js:3:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -97,17 +99,21 @@ test.js:3:14 parse ━━━━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ test.js:3:14
-    │
-  3 │ export a,{b} from "./baz";
-    │              ^^^^
+    1 │ export { value1, value2 as value2_renamed, value3, value4 as value4_renamed, value5 } from "exports";
+    2 │ 
+  > 3 │ export a,{b} from "./baz";
+      │              ^^^^
+    4 │ 
+    5 │ export * as ns from "mod";
   
   i ...Which is required to end this statement
   
-    ┌─ test.js:3:8
-    │
-  3 │ export a,{b} from "./baz";
-    │        ^^^^^^^^^^
+    1 │ export { value1, value2 as value2_renamed, value3, value4 as value4_renamed, value5 } from "exports";
+    2 │ 
+  > 3 │ export a,{b} from "./baz";
+      │        ^^^^^^^^^^
+    4 │ 
+    5 │ export * as ns from "mod";
   
 test.js:3:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -115,17 +121,21 @@ test.js:3:19 parse ━━━━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ test.js:3:19
-    │
-  3 │ export a,{b} from "./baz";
-    │                   ^^^^^^^
+    1 │ export { value1, value2 as value2_renamed, value3, value4 as value4_renamed, value5 } from "exports";
+    2 │ 
+  > 3 │ export a,{b} from "./baz";
+      │                   ^^^^^^^
+    4 │ 
+    5 │ export * as ns from "mod";
   
   i ...Which is required to end this statement
   
-    ┌─ test.js:3:14
-    │
-  3 │ export a,{b} from "./baz";
-    │              ^^^^^^^^^^^^
+    1 │ export { value1, value2 as value2_renamed, value3, value4 as value4_renamed, value5 } from "exports";
+    2 │ 
+  > 3 │ export a,{b} from "./baz";
+      │              ^^^^^^^^^^^^
+    4 │ 
+    5 │ export * as ns from "mod";
   
 test.js:7:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -133,10 +143,12 @@ test.js:7:16 parse ━━━━━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ test.js:7:16
-    │
-  7 │ export * as foo,{bar} from "./baz";
-    │                ^
+    5 │ export * as ns from "mod";
+    6 │ 
+  > 7 │ export * as foo,{bar} from "./baz";
+      │                ^
+    8 │ 
+    9 │ export { undefinedExport };
   
 test.js:7:28 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -144,17 +156,21 @@ test.js:7:28 parse ━━━━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ test.js:7:28
-    │
-  7 │ export * as foo,{bar} from "./baz";
-    │                            ^^^^^^^
+    5 │ export * as ns from "mod";
+    6 │ 
+  > 7 │ export * as foo,{bar} from "./baz";
+      │                            ^^^^^^^
+    8 │ 
+    9 │ export { undefinedExport };
   
   i ...Which is required to end this statement
   
-    ┌─ test.js:7:23
-    │
-  7 │ export * as foo,{bar} from "./baz";
-    │                       ^^^^^^^^^^^^
+    5 │ export * as ns from "mod";
+    6 │ 
+  > 7 │ export * as foo,{bar} from "./baz";
+      │                       ^^^^^^^^^^^^
+    8 │ 
+    9 │ export { undefinedExport };
   
 
 ```

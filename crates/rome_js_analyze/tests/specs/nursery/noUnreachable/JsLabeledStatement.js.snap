@@ -36,24 +36,30 @@ JsLabeledStatement.js:9:9 lint/nursery/noUnreachable ━━━━━━━━━
   
   ! ... before it can reach this code
   
-    ┌─ JsLabeledStatement.js:9:9
-    │
-  9 │         afterLabelJump();
-    │         ^^^^^^^^^^^^^^^^^
+     7 │         }
+     8 │ 
+   > 9 │         afterLabelJump();
+       │         ^^^^^^^^^^^^^^^^^
+    10 │     }
+    11 │ }
   
   i Either this statement will continue the loop ...
   
-    ┌─ JsLabeledStatement.js:4:13
-    │
-  4 │             continue label;
-    │             ^^^^^^^^^^^^^^^
+    2 │     label: while (true) {
+    3 │         if (true) {
+  > 4 │             continue label;
+      │             ^^^^^^^^^^^^^^^
+    5 │         } else {
+    6 │             break label;
   
   i ... or this statement will break the flow of the code ...
   
-    ┌─ JsLabeledStatement.js:6:13
-    │
-  6 │             break label;
-    │             ^^^^^^^^^^^^
+    4 │             continue label;
+    5 │         } else {
+  > 6 │             break label;
+      │             ^^^^^^^^^^^^
+    7 │         }
+    8 │ 
   
 
 ```
@@ -65,17 +71,21 @@ JsLabeledStatement.js:17:9 lint/nursery/noUnreachable ━━━━━━━━�
   
   ! ... before it can reach this code
   
-     ┌─ JsLabeledStatement.js:17:9
-     │
-  17 │         afterBreak();
-     │         ^^^^^^^^^^^^^
+    15 │         beforeBreak();
+    16 │         break label;
+  > 17 │         afterBreak();
+       │         ^^^^^^^^^^^^^
+    18 │     }
+    19 │ 
   
   i This statement will break the flow of the code ...
   
-     ┌─ JsLabeledStatement.js:16:9
-     │
-  16 │         break label;
-     │         ^^^^^^^^^^^^
+    14 │     label: {
+    15 │         beforeBreak();
+  > 16 │         break label;
+       │         ^^^^^^^^^^^^
+    17 │         afterBreak();
+    18 │     }
   
 
 ```

@@ -59,10 +59,11 @@ ts_class_initializer_with_modifiers.ts:2:3 parse ━━━━━━━━━━�
 
   × Static class blocks cannot have any modifier.
   
-    ┌─ ts_class_initializer_with_modifiers.ts:2:3
-    │
-  2 │   public static { }
-    │   ^^^^^^
+    1 │ class A {
+  > 2 │   public static { }
+      │   ^^^^^^
+    3 │ }
+    4 │ 
   
 --
 class A {

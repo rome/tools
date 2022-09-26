@@ -299,10 +299,10 @@ array_assignment_target_err.js:1:4 parse ━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ array_assignment_target_err.js:1:4
-    │
-  1 │ [a a, ++b, ] = test;
-    │    ^
+  > 1 │ [a a, ++b, ] = test;
+      │    ^
+    2 │ [a, c, ...rest,] = test;
+    3 │ [a = , = "test"] = test;
   
 --
 array_assignment_target_err.js:1:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -311,10 +311,10 @@ array_assignment_target_err.js:1:7 parse ━━━━━━━━━━━━━
   
   × This expression cannot be assigned to
   
-    ┌─ array_assignment_target_err.js:1:7
-    │
-  1 │ [a a, ++b, ] = test;
-    │       ^^^
+  > 1 │ [a a, ++b, ] = test;
+      │       ^^^
+    2 │ [a, c, ...rest,] = test;
+    3 │ [a = , = "test"] = test;
   
 --
 array_assignment_target_err.js:2:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -323,17 +323,19 @@ array_assignment_target_err.js:2:15 parse ━━━━━━━━━━━━�
   
   × Remove the trailing comma here
   
-    ┌─ array_assignment_target_err.js:2:15
-    │
-  2 │ [a, c, ...rest,] = test;
-    │               ^
+    1 │ [a a, ++b, ] = test;
+  > 2 │ [a, c, ...rest,] = test;
+      │               ^
+    3 │ [a = , = "test"] = test;
+    4 │ [[a b] [c]]= test;
   
   i Rest element
   
-    ┌─ array_assignment_target_err.js:2:8
-    │
-  2 │ [a, c, ...rest,] = test;
-    │        ^^^^^^^
+    1 │ [a a, ++b, ] = test;
+  > 2 │ [a, c, ...rest,] = test;
+      │        ^^^^^^^
+    3 │ [a = , = "test"] = test;
+    4 │ [[a b] [c]]= test;
   
 --
 array_assignment_target_err.js:3:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -342,10 +344,12 @@ array_assignment_target_err.js:3:6 parse ━━━━━━━━━━━━━
   
   × Expected an expression, or an assignment here
   
-    ┌─ array_assignment_target_err.js:3:6
-    │
-  3 │ [a = , = "test"] = test;
-    │      ^
+    1 │ [a a, ++b, ] = test;
+    2 │ [a, c, ...rest,] = test;
+  > 3 │ [a = , = "test"] = test;
+      │      ^
+    4 │ [[a b] [c]]= test;
+    5 │ [a: b] = c
   
 --
 array_assignment_target_err.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -354,10 +358,12 @@ array_assignment_target_err.js:3:8 parse ━━━━━━━━━━━━━
   
   × Expected an identifier, or an assignment target here
   
-    ┌─ array_assignment_target_err.js:3:8
-    │
-  3 │ [a = , = "test"] = test;
-    │        ^
+    1 │ [a a, ++b, ] = test;
+    2 │ [a, c, ...rest,] = test;
+  > 3 │ [a = , = "test"] = test;
+      │        ^
+    4 │ [[a b] [c]]= test;
+    5 │ [a: b] = c
   
 --
 array_assignment_target_err.js:4:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -366,10 +372,12 @@ array_assignment_target_err.js:4:5 parse ━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ array_assignment_target_err.js:4:5
-    │
-  4 │ [[a b] [c]]= test;
-    │     ^
+    2 │ [a, c, ...rest,] = test;
+    3 │ [a = , = "test"] = test;
+  > 4 │ [[a b] [c]]= test;
+      │     ^
+    5 │ [a: b] = c
+    6 │ 
   
 --
 array_assignment_target_err.js:5:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -378,10 +386,11 @@ array_assignment_target_err.js:5:3 parse ━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ array_assignment_target_err.js:5:3
-    │
-  5 │ [a: b] = c
-    │   ^
+    3 │ [a = , = "test"] = test;
+    4 │ [[a b] [c]]= test;
+  > 5 │ [a: b] = c
+      │   ^
+    6 │ 
   
 --
 [a a, ++b, ] = test;

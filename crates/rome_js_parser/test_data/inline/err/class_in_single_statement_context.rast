@@ -52,10 +52,9 @@ class_in_single_statement_context.js:1:11 parse ━━━━━━━━━━�
   
   × wrap the class in a block statement
   
-    ┌─ class_in_single_statement_context.js:1:11
-    │
-  1 │ if (true) class A {}
-    │           ^^^^^^^^^^
+  > 1 │ if (true) class A {}
+      │           ^^^^^^^^^^
+    2 │ 
   
 --
 if (true) class A {}

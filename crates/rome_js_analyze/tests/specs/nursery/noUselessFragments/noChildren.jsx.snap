@@ -19,10 +19,11 @@ noChildren.jsx:4:5 lint/nursery/noUselessFragments  FIXABLE  ━━━━━━�
 
   ! Avoid using unnecessary Fragment.
   
-    ┌─ noChildren.jsx:4:5
-    │
-  4 │     <></>
-    │     ^^^^^
+    3 │ <>
+  > 4 │     <></>
+      │     ^^^^^
+    5 │     <React.Fragment></React.Fragment>
+    6 │     <Fragment></Fragment>
   
   i Suggested fix: Remove the Fragment
   
@@ -44,10 +45,12 @@ noChildren.jsx:5:5 lint/nursery/noUselessFragments  FIXABLE  ━━━━━━�
 
   ! Avoid using unnecessary Fragment.
   
-    ┌─ noChildren.jsx:5:5
-    │
-  5 │     <React.Fragment></React.Fragment>
-    │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ <>
+    4 │     <></>
+  > 5 │     <React.Fragment></React.Fragment>
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    6 │     <Fragment></Fragment>
+    7 │ </>
   
   i Suggested fix: Remove the Fragment
   
@@ -68,10 +71,11 @@ noChildren.jsx:6:5 lint/nursery/noUselessFragments  FIXABLE  ━━━━━━�
 
   ! Avoid using unnecessary Fragment.
   
-    ┌─ noChildren.jsx:6:5
-    │
-  6 │     <Fragment></Fragment>
-    │     ^^^^^^^^^^^^^^^^^^^^^
+    4 │     <></>
+    5 │     <React.Fragment></React.Fragment>
+  > 6 │     <Fragment></Fragment>
+      │     ^^^^^^^^^^^^^^^^^^^^^
+    7 │ </>
   
   i Suggested fix: Remove the Fragment
   

@@ -45,10 +45,9 @@ js_right_shift_comments.js:1:22 parse ━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-    ┌─ js_right_shift_comments.js:1:22
-    │
-  1 │ 1 >> /* a comment */ > 2;
-    │                      ^
+  > 1 │ 1 >> /* a comment */ > 2;
+      │                      ^
+    2 │ 
   
 --
 1 >> /* a comment */ > 2;

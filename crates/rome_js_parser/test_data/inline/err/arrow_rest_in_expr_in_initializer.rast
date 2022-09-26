@@ -110,10 +110,9 @@ arrow_rest_in_expr_in_initializer.js:1:12 parse ━━━━━━━━━━�
 
   × rest elements may not have default initializers
   
-    ┌─ arrow_rest_in_expr_in_initializer.js:1:12
-    │
-  1 │ for ((...a = "b" in {}) => {};;) {}
-    │            ^^^^^^^^^^^
+  > 1 │ for ((...a = "b" in {}) => {};;) {}
+      │            ^^^^^^^^^^^
+    2 │ 
   
 --
 for ((...a = "b" in {}) => {};;) {}

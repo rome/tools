@@ -202,10 +202,11 @@ keywords.ts:4:5 parse ━━━━━━━━━━━━━━━━━━━�
 
   × Illegal use of reserved keyword `public` as an identifier in strict mode
   
-    ┌─ keywords.ts:4:5
-    │
-  4 │     public module Module {
-    │     ^^^^^^
+    3 │ module Y3 {
+  > 4 │     public module Module {
+      │     ^^^^^^
+    5 │         class A { s: string }
+    6 │     }
   
 keywords.ts:4:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -213,17 +214,19 @@ keywords.ts:4:12 parse ━━━━━━━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ keywords.ts:4:12
-    │
-  4 │     public module Module {
-    │            ^^^^^^
+    3 │ module Y3 {
+  > 4 │     public module Module {
+      │            ^^^^^^
+    5 │         class A { s: string }
+    6 │     }
   
   i ...Which is required to end this statement
   
-    ┌─ keywords.ts:4:5
-    │
-  4 │     public module Module {
-    │     ^^^^^^^^^^^^^
+    3 │ module Y3 {
+  > 4 │     public module Module {
+      │     ^^^^^^^^^^^^^
+    5 │         class A { s: string }
+    6 │     }
   
 keywords.ts:9:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -231,10 +234,11 @@ keywords.ts:9:12 parse ━━━━━━━━━━━━━━━━━━━
   
   × Expected a class, a function, or a variable declaration here
   
-    ┌─ keywords.ts:9:12
-    │
-  9 │     export private public protected static readonly abstract async enum X { }
-    │            ^^^^^^^
+     8 │     // Apparently this parses :P
+   > 9 │     export private public protected static readonly abstract async enum X { }
+       │            ^^^^^^^
+    10 │ 
+    11 │     interface x {
   
 keywords.ts:9:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -242,17 +246,19 @@ keywords.ts:9:20 parse ━━━━━━━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ keywords.ts:9:20
-    │
-  9 │     export private public protected static readonly abstract async enum X { }
-    │                    ^^^^^^
+     8 │     // Apparently this parses :P
+   > 9 │     export private public protected static readonly abstract async enum X { }
+       │                    ^^^^^^
+    10 │ 
+    11 │     interface x {
   
   i ...Which is required to end this statement
   
-    ┌─ keywords.ts:9:12
-    │
-  9 │     export private public protected static readonly abstract async enum X { }
-    │            ^^^^^^^^^^^^^^
+     8 │     // Apparently this parses :P
+   > 9 │     export private public protected static readonly abstract async enum X { }
+       │            ^^^^^^^^^^^^^^
+    10 │ 
+    11 │     interface x {
   
 keywords.ts:9:27 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -260,17 +266,19 @@ keywords.ts:9:27 parse ━━━━━━━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ keywords.ts:9:27
-    │
-  9 │     export private public protected static readonly abstract async enum X { }
-    │                           ^^^^^^^^^
+     8 │     // Apparently this parses :P
+   > 9 │     export private public protected static readonly abstract async enum X { }
+       │                           ^^^^^^^^^
+    10 │ 
+    11 │     interface x {
   
   i ...Which is required to end this statement
   
-    ┌─ keywords.ts:9:20
-    │
-  9 │     export private public protected static readonly abstract async enum X { }
-    │                    ^^^^^^^^^^^^^^^^
+     8 │     // Apparently this parses :P
+   > 9 │     export private public protected static readonly abstract async enum X { }
+       │                    ^^^^^^^^^^^^^^^^
+    10 │ 
+    11 │     interface x {
   
 keywords.ts:9:37 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -278,17 +286,19 @@ keywords.ts:9:37 parse ━━━━━━━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ keywords.ts:9:37
-    │
-  9 │     export private public protected static readonly abstract async enum X { }
-    │                                     ^^^^^^
+     8 │     // Apparently this parses :P
+   > 9 │     export private public protected static readonly abstract async enum X { }
+       │                                     ^^^^^^
+    10 │ 
+    11 │     interface x {
   
   i ...Which is required to end this statement
   
-    ┌─ keywords.ts:9:27
-    │
-  9 │     export private public protected static readonly abstract async enum X { }
-    │                           ^^^^^^^^^^^^^^^^
+     8 │     // Apparently this parses :P
+   > 9 │     export private public protected static readonly abstract async enum X { }
+       │                           ^^^^^^^^^^^^^^^^
+    10 │ 
+    11 │     interface x {
   
 keywords.ts:9:44 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -296,17 +306,19 @@ keywords.ts:9:44 parse ━━━━━━━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ keywords.ts:9:44
-    │
-  9 │     export private public protected static readonly abstract async enum X { }
-    │                                            ^^^^^^^^
+     8 │     // Apparently this parses :P
+   > 9 │     export private public protected static readonly abstract async enum X { }
+       │                                            ^^^^^^^^
+    10 │ 
+    11 │     interface x {
   
   i ...Which is required to end this statement
   
-    ┌─ keywords.ts:9:37
-    │
-  9 │     export private public protected static readonly abstract async enum X { }
-    │                                     ^^^^^^^^^^^^^^^
+     8 │     // Apparently this parses :P
+   > 9 │     export private public protected static readonly abstract async enum X { }
+       │                                     ^^^^^^^^^^^^^^^
+    10 │ 
+    11 │     interface x {
   
 keywords.ts:9:53 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -314,17 +326,19 @@ keywords.ts:9:53 parse ━━━━━━━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ keywords.ts:9:53
-    │
-  9 │     export private public protected static readonly abstract async enum X { }
-    │                                                     ^^^^^^^^
+     8 │     // Apparently this parses :P
+   > 9 │     export private public protected static readonly abstract async enum X { }
+       │                                                     ^^^^^^^^
+    10 │ 
+    11 │     interface x {
   
   i ...Which is required to end this statement
   
-    ┌─ keywords.ts:9:44
-    │
-  9 │     export private public protected static readonly abstract async enum X { }
-    │                                            ^^^^^^^^^^^^^^^^^
+     8 │     // Apparently this parses :P
+   > 9 │     export private public protected static readonly abstract async enum X { }
+       │                                            ^^^^^^^^^^^^^^^^^
+    10 │ 
+    11 │     interface x {
   
 keywords.ts:9:62 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -332,17 +346,19 @@ keywords.ts:9:62 parse ━━━━━━━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ keywords.ts:9:62
-    │
-  9 │     export private public protected static readonly abstract async enum X { }
-    │                                                              ^^^^^
+     8 │     // Apparently this parses :P
+   > 9 │     export private public protected static readonly abstract async enum X { }
+       │                                                              ^^^^^
+    10 │ 
+    11 │     interface x {
   
   i ...Which is required to end this statement
   
-    ┌─ keywords.ts:9:53
-    │
-  9 │     export private public protected static readonly abstract async enum X { }
-    │                                                     ^^^^^^^^^^^^^^
+     8 │     // Apparently this parses :P
+   > 9 │     export private public protected static readonly abstract async enum X { }
+       │                                                     ^^^^^^^^^^^^^^
+    10 │ 
+    11 │     interface x {
   
 keywords.ts:9:68 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -350,17 +366,19 @@ keywords.ts:9:68 parse ━━━━━━━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ keywords.ts:9:68
-    │
-  9 │     export private public protected static readonly abstract async enum X { }
-    │                                                                    ^^^^
+     8 │     // Apparently this parses :P
+   > 9 │     export private public protected static readonly abstract async enum X { }
+       │                                                                    ^^^^
+    10 │ 
+    11 │     interface x {
   
   i ...Which is required to end this statement
   
-    ┌─ keywords.ts:9:62
-    │
-  9 │     export private public protected static readonly abstract async enum X { }
-    │                                                              ^^^^^^^^^^
+     8 │     // Apparently this parses :P
+   > 9 │     export private public protected static readonly abstract async enum X { }
+       │                                                              ^^^^^^^^^^
+    10 │ 
+    11 │     interface x {
   
 keywords.ts:12:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -368,28 +386,31 @@ keywords.ts:12:16 parse ━━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-     ┌─ keywords.ts:12:16
-     │
-  12 │         export private static readonly [x: any]: any;
-     │                ^^^^^^^
+    11 │     interface x {
+  > 12 │         export private static readonly [x: any]: any;
+       │                ^^^^^^^
+    13 │     }
+    14 │ }
   
 keywords.ts:12:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × index signature members cannot be static
   
-     ┌─ keywords.ts:12:24
-     │
-  12 │         export private static readonly [x: any]: any;
-     │                        ^^^^^^
+    11 │     interface x {
+  > 12 │         export private static readonly [x: any]: any;
+       │                        ^^^^^^
+    13 │     }
+    14 │ }
   
 keywords.ts:17:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of reserved keyword `public` as an identifier in strict mode
   
-     ┌─ keywords.ts:17:5
-     │
-  17 │     public enum Color { Blue, Red }
-     │     ^^^^^^
+    16 │ module Y4 {
+  > 17 │     public enum Color { Blue, Red }
+       │     ^^^^^^
+    18 │ }
+    19 │ 
   
 keywords.ts:17:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -397,26 +418,29 @@ keywords.ts:17:12 parse ━━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-     ┌─ keywords.ts:17:12
-     │
-  17 │     public enum Color { Blue, Red }
-     │            ^^^^
+    16 │ module Y4 {
+  > 17 │     public enum Color { Blue, Red }
+       │            ^^^^
+    18 │ }
+    19 │ 
   
   i ...Which is required to end this statement
   
-     ┌─ keywords.ts:17:5
-     │
-  17 │     public enum Color { Blue, Red }
-     │     ^^^^^^^^^^^
+    16 │ module Y4 {
+  > 17 │     public enum Color { Blue, Red }
+       │     ^^^^^^^^^^^
+    18 │ }
+    19 │ 
   
 keywords.ts:21:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of reserved keyword `private` as an identifier in strict mode
   
-     ┌─ keywords.ts:21:5
-     │
-  21 │     private module Module {
-     │     ^^^^^^^
+    20 │ module YY3 {
+  > 21 │     private module Module {
+       │     ^^^^^^^
+    22 │         class A { s: string }
+    23 │     }
   
 keywords.ts:21:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -424,26 +448,29 @@ keywords.ts:21:13 parse ━━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-     ┌─ keywords.ts:21:13
-     │
-  21 │     private module Module {
-     │             ^^^^^^
+    20 │ module YY3 {
+  > 21 │     private module Module {
+       │             ^^^^^^
+    22 │         class A { s: string }
+    23 │     }
   
   i ...Which is required to end this statement
   
-     ┌─ keywords.ts:21:5
-     │
-  21 │     private module Module {
-     │     ^^^^^^^^^^^^^^
+    20 │ module YY3 {
+  > 21 │     private module Module {
+       │     ^^^^^^^^^^^^^^
+    22 │         class A { s: string }
+    23 │     }
   
 keywords.ts:27:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of reserved keyword `private` as an identifier in strict mode
   
-     ┌─ keywords.ts:27:5
-     │
-  27 │     private enum Color { Blue, Red }
-     │     ^^^^^^^
+    26 │ module YY4 {
+  > 27 │     private enum Color { Blue, Red }
+       │     ^^^^^^^
+    28 │ }
+    29 │ 
   
 keywords.ts:27:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -451,26 +478,29 @@ keywords.ts:27:13 parse ━━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-     ┌─ keywords.ts:27:13
-     │
-  27 │     private enum Color { Blue, Red }
-     │             ^^^^
+    26 │ module YY4 {
+  > 27 │     private enum Color { Blue, Red }
+       │             ^^^^
+    28 │ }
+    29 │ 
   
   i ...Which is required to end this statement
   
-     ┌─ keywords.ts:27:5
-     │
-  27 │     private enum Color { Blue, Red }
-     │     ^^^^^^^^^^^^
+    26 │ module YY4 {
+  > 27 │     private enum Color { Blue, Red }
+       │     ^^^^^^^^^^^^
+    28 │ }
+    29 │ 
   
 keywords.ts:31:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of reserved keyword `static` as an identifier in strict mode
   
-     ┌─ keywords.ts:31:5
-     │
-  31 │     static module Module {
-     │     ^^^^^^
+    30 │ module YYY3 {
+  > 31 │     static module Module {
+       │     ^^^^^^
+    32 │         class A { s: string }
+    33 │     }
   
 keywords.ts:31:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -478,26 +508,29 @@ keywords.ts:31:12 parse ━━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-     ┌─ keywords.ts:31:12
-     │
-  31 │     static module Module {
-     │            ^^^^^^
+    30 │ module YYY3 {
+  > 31 │     static module Module {
+       │            ^^^^^^
+    32 │         class A { s: string }
+    33 │     }
   
   i ...Which is required to end this statement
   
-     ┌─ keywords.ts:31:5
-     │
-  31 │     static module Module {
-     │     ^^^^^^^^^^^^^
+    30 │ module YYY3 {
+  > 31 │     static module Module {
+       │     ^^^^^^^^^^^^^
+    32 │         class A { s: string }
+    33 │     }
   
 keywords.ts:37:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of reserved keyword `static` as an identifier in strict mode
   
-     ┌─ keywords.ts:37:5
-     │
-  37 │     static enum Color { Blue, Red }
-     │     ^^^^^^
+    36 │ module YYY4 {
+  > 37 │     static enum Color { Blue, Red }
+       │     ^^^^^^
+    38 │ }
+    39 │ 
   
 keywords.ts:37:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -505,17 +538,19 @@ keywords.ts:37:12 parse ━━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-     ┌─ keywords.ts:37:12
-     │
-  37 │     static enum Color { Blue, Red }
-     │            ^^^^
+    36 │ module YYY4 {
+  > 37 │     static enum Color { Blue, Red }
+       │            ^^^^
+    38 │ }
+    39 │ 
   
   i ...Which is required to end this statement
   
-     ┌─ keywords.ts:37:5
-     │
-  37 │     static enum Color { Blue, Red }
-     │     ^^^^^^^^^^^
+    36 │ module YYY4 {
+  > 37 │     static enum Color { Blue, Red }
+       │     ^^^^^^^^^^^
+    38 │ }
+    39 │ 
   
 
 ```

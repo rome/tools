@@ -48,10 +48,9 @@ ts_declare_async_function.ts:1:9 parse ━━━━━━━━━━━━━�
 
   × 'async' modifier cannot be used in an ambient context.
   
-    ┌─ ts_declare_async_function.ts:1:9
-    │
-  1 │ declare async function test();
-    │         ^^^^^
+  > 1 │ declare async function test();
+      │         ^^^^^
+    2 │ 
   
 --
 declare async function test();

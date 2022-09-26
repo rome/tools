@@ -160,20 +160,18 @@ ts_property_parameter_pattern.ts:1:31 parse ━━━━━━━━━━━━
 
   × A parameter property may not be declared using a binding pattern.
   
-    ┌─ ts_property_parameter_pattern.ts:1:31
-    │
-  1 │ class A { constructor(private { x, y }, protected [a, b]) {} }
-    │                               ^^^^^^^^
+  > 1 │ class A { constructor(private { x, y }, protected [a, b]) {} }
+      │                               ^^^^^^^^
+    2 │ 
   
 --
 ts_property_parameter_pattern.ts:1:51 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A parameter property may not be declared using a binding pattern.
   
-    ┌─ ts_property_parameter_pattern.ts:1:51
-    │
-  1 │ class A { constructor(private { x, y }, protected [a, b]) {} }
-    │                                                   ^^^^^^
+  > 1 │ class A { constructor(private { x, y }, protected [a, b]) {} }
+      │                                                   ^^^^^^
+    2 │ 
   
 --
 class A { constructor(private { x, y }, protected [a, b]) {} }

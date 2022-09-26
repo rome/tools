@@ -49,10 +49,12 @@ comments.js:4:20 parse ━━━━━━━━━━━━━━━━━━━
   
   × remove this type annotation
   
-    ┌─ comments.js:4:20
-    │
-  4 │     static property: Array<string>;
-    │                    ^^^^^^^^^^^^^^^
+    2 │     @Annotateme()
+    3 │     // comment
+  > 4 │     static property: Array<string>;
+      │                    ^^^^^^^^^^^^^^^
+    5 │ }
+    6 │ 
   
 
 ```

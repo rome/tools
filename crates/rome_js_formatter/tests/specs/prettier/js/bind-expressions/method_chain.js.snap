@@ -92,16 +92,17 @@ method_chain.js:10:9 parse ━━━━━━━━━━━━━━━━━�
   
   × Expected a statement here
   
-     ┌─ method_chain.js:10:9
-     │  
-  10 │ ┌         ::filter(data => data.someTest)
-  11 │ │         ::throttle(() =>
-  12 │ │             interval(10)
-  13 │ │                 ::take(1)
-  14 │ │                 ::takeUntil(observable::filter(data => someOtherTest))
-  15 │ │         )
-  16 │ │         ::map(someFunction);
-     │ └───────────────────────────^
+     8 │ function test(observable) {
+     9 │     return observable
+  > 10 │         ::filter(data => data.someTest)
+       │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 11 │         ::throttle(() =>
+        ...
+  > 15 │         )
+  > 16 │         ::map(someFunction);
+       │         ^^^^^^^^^^^^^^^^^^^
+    17 │ }
+    18 │ 
   
 
 ```

@@ -65,10 +65,11 @@ type-modifier.ts:15:8 parse ━━━━━━━━━━━━━━━━━�
 
   × A type-only import can specify a default import or named bindings, but not both.
   
-     ┌─ type-modifier.ts:15:8
-     │
-  15 │ import type foo, { bar } from 'bar';
-     │        ^^^^^^^^^^^^^^^^^
+    13 │ import type * as foo from './bar';
+    14 │ import type foo from 'bar';
+  > 15 │ import type foo, { bar } from 'bar';
+       │        ^^^^^^^^^^^^^^^^^
+    16 │ 
   
 
 ```

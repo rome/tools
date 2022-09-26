@@ -50,10 +50,9 @@ arrow_escaped_async.js:1:1 parse ━━━━━━━━━━━━━━━�
 
   × 'async' keyword cannot contain escape character.
   
-    ┌─ arrow_escaped_async.js:1:1
-    │
-  1 │ \u0061sync () => {}
-    │ ^^^^^^^^^^
+  > 1 │ \u0061sync () => {}
+      │ ^^^^^^^^^^
+    2 │ 
   
 --
 \u0061sync () => {}

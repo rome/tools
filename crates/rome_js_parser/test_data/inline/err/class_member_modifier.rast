@@ -61,10 +61,9 @@ class_member_modifier.js:1:11 parse ━━━━━━━━━━━━━━�
 
   × Only abstract classes can have abstract members
   
-    ┌─ class_member_modifier.js:1:11
-    │
-  1 │ class A { abstract foo; }
-    │           ^^^^^^^^
+  > 1 │ class A { abstract foo; }
+      │           ^^^^^^^^
+    2 │ 
   
 --
 class A { abstract foo; }

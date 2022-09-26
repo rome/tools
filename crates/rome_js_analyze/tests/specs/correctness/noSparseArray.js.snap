@@ -23,10 +23,11 @@ noSparseArray.js:5:11 lint/correctness/noSparseArray  FIXABLE  ━━━━━�
 
   ! This array contains an empty slot.
   
-    ┌─ noSparseArray.js:5:11
-    │
-  5 │ const b = [/**test*/,];
-    │           ^^^^^^^^^^^^
+    4 │ // invalid
+  > 5 │ const b = [/**test*/,];
+      │           ^^^^^^^^^^^^
+    6 │ const c = [,,];
+    7 │ const d = [,2];
   
   i Suggested fix: Replace hole with undefined
   
@@ -48,10 +49,12 @@ noSparseArray.js:6:11 lint/correctness/noSparseArray  FIXABLE  ━━━━━�
 
   ! This array contains an empty slot.
   
-    ┌─ noSparseArray.js:6:11
-    │
-  6 │ const c = [,,];
-    │           ^^^^
+    4 │ // invalid
+    5 │ const b = [/**test*/,];
+  > 6 │ const c = [,,];
+      │           ^^^^
+    7 │ const d = [,2];
+    8 │ 
   
   i Suggested fix: Replace hole with undefined
   
@@ -73,10 +76,12 @@ noSparseArray.js:7:11 lint/correctness/noSparseArray  FIXABLE  ━━━━━�
 
   ! This array contains an empty slot.
   
-    ┌─ noSparseArray.js:7:11
-    │
-  7 │ const d = [,2];
-    │           ^^^^
+    5 │ const b = [/**test*/,];
+    6 │ const c = [,,];
+  > 7 │ const d = [,2];
+      │           ^^^^
+    8 │ 
+    9 │ const e = [1,,]
   
   i Suggested fix: Replace hole with undefined
   
@@ -98,10 +103,12 @@ noSparseArray.js:9:11 lint/correctness/noSparseArray  FIXABLE  ━━━━━�
 
   ! This array contains an empty slot.
   
-    ┌─ noSparseArray.js:9:11
-    │
-  9 │ const e = [1,,]
-    │           ^^^^^
+     7 │ const d = [,2];
+     8 │ 
+   > 9 │ const e = [1,,]
+       │           ^^^^^
+    10 │ const f = [1,,2]
+    11 │ 
   
   i Suggested fix: Replace hole with undefined
   
@@ -121,10 +128,10 @@ noSparseArray.js:10:11 lint/correctness/noSparseArray  FIXABLE  ━━━━━�
 
   ! This array contains an empty slot.
   
-     ┌─ noSparseArray.js:10:11
-     │
-  10 │ const f = [1,,2]
-     │           ^^^^^^
+     9 │ const e = [1,,]
+  > 10 │ const f = [1,,2]
+       │           ^^^^^^
+    11 │ 
   
   i Suggested fix: Replace hole with undefined
   

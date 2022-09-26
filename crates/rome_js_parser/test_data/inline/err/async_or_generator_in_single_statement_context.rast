@@ -116,20 +116,20 @@ async_or_generator_in_single_statement_context.js:1:11 parse ━━━━━━�
 
   × `async` and generator functions can only be declared at top level or inside a block
   
-    ┌─ async_or_generator_in_single_statement_context.js:1:11
-    │
-  1 │ if (true) async function t() {}
-    │           ^^^^^^^^^^^^^^^^^^^^^
+  > 1 │ if (true) async function t() {}
+      │           ^^^^^^^^^^^^^^^^^^^^^
+    2 │ if (true) function* t() {}
+    3 │ 
   
 --
 async_or_generator_in_single_statement_context.js:2:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `async` and generator functions can only be declared at top level or inside a block
   
-    ┌─ async_or_generator_in_single_statement_context.js:2:11
-    │
-  2 │ if (true) function* t() {}
-    │           ^^^^^^^^^^^^^^^^
+    1 │ if (true) async function t() {}
+  > 2 │ if (true) function* t() {}
+      │           ^^^^^^^^^^^^^^^^
+    3 │ 
   
 --
 if (true) async function t() {}

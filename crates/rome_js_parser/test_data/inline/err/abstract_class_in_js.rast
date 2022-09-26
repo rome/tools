@@ -38,10 +38,9 @@ abstract_class_in_js.js:1:1 parse ━━━━━━━━━━━━━━━�
   
   × TypeScript only syntax
   
-    ┌─ abstract_class_in_js.js:1:1
-    │
-  1 │ abstract class A {}
-    │ ^^^^^^^^^^^^^^^^^^^
+  > 1 │ abstract class A {}
+      │ ^^^^^^^^^^^^^^^^^^^
+    2 │ 
   
 --
 abstract class A {}

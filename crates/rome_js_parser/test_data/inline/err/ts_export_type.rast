@@ -38,10 +38,9 @@ ts_export_type.ts:1:8 parse ━━━━━━━━━━━━━━━━━�
   
   × Expected a class, a function, or a variable declaration here
   
-    ┌─ ts_export_type.ts:1:8
-    │
-  1 │ export type
-    │        ^^^^
+  > 1 │ export type
+      │        ^^^^
+    2 │ 
   
 --
 export type

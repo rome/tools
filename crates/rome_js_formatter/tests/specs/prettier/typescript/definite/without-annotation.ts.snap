@@ -75,46 +75,56 @@ without-annotation.ts:3:3 parse ━━━━━━━━━━━━━━━━
 
   × Properties with definite assignment assertions must also have type annotations.
   
-    ┌─ without-annotation.ts:3:3
-    │
-  3 │   #b!
-    │   ^
+    1 │ class Foo {
+    2 │   a!
+  > 3 │   #b!
+      │   ^
+    4 │   static c!
+    5 │   [d]! = 1
   
 without-annotation.ts:4:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Properties with definite assignment assertions must also have type annotations.
   
-    ┌─ without-annotation.ts:4:3
-    │
-  4 │   static c!
-    │   ^^^^^^
+    2 │   a!
+    3 │   #b!
+  > 4 │   static c!
+      │   ^^^^^^
+    5 │   [d]! = 1
+    6 │   'e'!
   
 without-annotation.ts:5:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Properties with definite assignment assertions must also have type annotations.
   
-    ┌─ without-annotation.ts:5:3
-    │
-  5 │   [d]! = 1
-    │   ^
+    3 │   #b!
+    4 │   static c!
+  > 5 │   [d]! = 1
+      │   ^
+    6 │   'e'!
+    7 │ }
   
 without-annotation.ts:5:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Properties with definite assignment assertions must also have type annotations.
   
-    ┌─ without-annotation.ts:5:8
-    │
-  5 │   [d]! = 1
-    │        ^
+    3 │   #b!
+    4 │   static c!
+  > 5 │   [d]! = 1
+      │        ^
+    6 │   'e'!
+    7 │ }
   
 without-annotation.ts:7:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Properties with definite assignment assertions must also have type annotations.
   
-    ┌─ without-annotation.ts:7:1
-    │
-  7 │ }
-    │ ^
+    5 │   [d]! = 1
+    6 │   'e'!
+  > 7 │ }
+      │ ^
+    8 │ 
+    9 │ let a! = x
   
 without-annotation.ts:9:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -122,10 +132,12 @@ without-annotation.ts:9:8 parse ━━━━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ without-annotation.ts:9:8
-    │
-  9 │ let a! = x
-    │        ^
+     7 │ }
+     8 │ 
+   > 9 │ let a! = x
+       │        ^
+    10 │ const b! = x
+    11 │ var c/* */! = x
   
 without-annotation.ts:10:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -133,10 +145,11 @@ without-annotation.ts:10:10 parse ━━━━━━━━━━━━━━━�
   
   × unexpected
   
-     ┌─ without-annotation.ts:10:10
-     │
-  10 │ const b! = x
-     │          ^
+     9 │ let a! = x
+  > 10 │ const b! = x
+       │          ^
+    11 │ var c/* */! = x
+    12 │ export const d! = x
   
 without-annotation.ts:11:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -144,10 +157,12 @@ without-annotation.ts:11:13 parse ━━━━━━━━━━━━━━━�
   
   × unexpected
   
-     ┌─ without-annotation.ts:11:13
-     │
-  11 │ var c/* */! = x
-     │             ^
+     9 │ let a! = x
+    10 │ const b! = x
+  > 11 │ var c/* */! = x
+       │             ^
+    12 │ export const d! = x
+    13 │ 
   
 without-annotation.ts:12:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -155,10 +170,11 @@ without-annotation.ts:12:17 parse ━━━━━━━━━━━━━━━�
   
   × unexpected
   
-     ┌─ without-annotation.ts:12:17
-     │
-  12 │ export const d! = x
-     │                 ^
+    10 │ const b! = x
+    11 │ var c/* */! = x
+  > 12 │ export const d! = x
+       │                 ^
+    13 │ 
   
 
 ```

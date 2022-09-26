@@ -45,10 +45,10 @@ identifier.js:1:1 parse ━━━━━━━━━━━━━━━━━━�
 
   × Illegal use of reserved keyword `yield` as an identifier in strict mode
   
-    ┌─ identifier.js:1:1
-    │
-  1 │ yield;
-    │ ^^^^^
+  > 1 │ yield;
+      │ ^^^^^
+    2 │ await;
+    3 │ 
   
 --
 identifier.js:2:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -57,10 +57,10 @@ identifier.js:2:6 parse ━━━━━━━━━━━━━━━━━━�
   
   × Expected an unary expression here
   
-    ┌─ identifier.js:2:6
-    │
-  2 │ await;
-    │      ^
+    1 │ yield;
+  > 2 │ await;
+      │      ^
+    3 │ 
   
 --
 yield;

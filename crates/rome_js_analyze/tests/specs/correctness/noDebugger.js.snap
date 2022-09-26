@@ -22,10 +22,12 @@ noDebugger.js:3:10 lint/correctness/noDebugger  FIXABLE  ━━━━━━━�
 
   ! This is an unexpected use of the debugger statement.
   
-    ┌─ noDebugger.js:3:10
-    │
-  3 │ if (foo) debugger
-    │          ^^^^^^^^
+    1 │ const test = { debugger: 1 }; test.debugger;
+    2 │ 
+  > 3 │ if (foo) debugger
+      │          ^^^^^^^^
+    4 │ 
+    5 │ debugger;
   
   i Suggested fix: Remove debugger statement
   
@@ -46,10 +48,12 @@ noDebugger.js:5:1 lint/correctness/noDebugger  FIXABLE  ━━━━━━━━
 
   ! This is an unexpected use of the debugger statement.
   
-    ┌─ noDebugger.js:5:1
-    │
-  5 │ debugger;
-    │ ^^^^^^^^^
+    3 │ if (foo) debugger
+    4 │ 
+  > 5 │ debugger;
+      │ ^^^^^^^^^
+    6 │ 
+    7 │ function test() {
   
   i Suggested fix: Remove debugger statement
   
@@ -71,10 +75,11 @@ noDebugger.js:9:3 lint/correctness/noDebugger  FIXABLE  ━━━━━━━━
 
   ! This is an unexpected use of the debugger statement.
   
-    ┌─ noDebugger.js:9:3
-    │
-  9 │   debugger;
-    │   ^^^^^^^^^
+     7 │ function test() {
+     8 │   let a = 3;
+   > 9 │   debugger;
+       │   ^^^^^^^^^
+    10 │ }
   
   i Suggested fix: Remove debugger statement
   

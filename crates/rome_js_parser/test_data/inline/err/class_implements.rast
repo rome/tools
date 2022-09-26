@@ -54,10 +54,9 @@ class_implements.js:1:9 parse ━━━━━━━━━━━━━━━━�
 
   × classes can only implement interfaces in TypeScript files
   
-    ┌─ class_implements.js:1:9
-    │
-  1 │ class B implements C {}
-    │         ^^^^^^^^^^^^
+  > 1 │ class B implements C {}
+      │         ^^^^^^^^^^^^
+    2 │ 
   
 --
 class B implements C {}

@@ -74,10 +74,9 @@ ts_definite_variable_with_initializer.js:1:6 parse ━━━━━━━━━�
   
   × TypeScript only syntax
   
-    ┌─ ts_definite_variable_with_initializer.js:1:6
-    │
-  1 │ let a!: string = "test";
-    │      ^^^^^^^^^
+  > 1 │ let a!: string = "test";
+      │      ^^^^^^^^^
+    2 │ 
   
 --
 let a!: string = "test";

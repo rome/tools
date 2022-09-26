@@ -186,40 +186,47 @@ ts_concrete_class_with_abstract_members.ts:2:4 parse ━━━━━━━━━
 
   × Only abstract classes can have abstract members
   
-    ┌─ ts_concrete_class_with_abstract_members.ts:2:4
-    │
-  2 │    abstract my_age: number;
-    │    ^^^^^^^^
+    1 │ class A {
+  > 2 │    abstract my_age: number;
+      │    ^^^^^^^^
+    3 │    abstract name(): string;
+    4 │    abstract get age(): number;
   
 --
 ts_concrete_class_with_abstract_members.ts:3:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Only abstract classes can have abstract members
   
-    ┌─ ts_concrete_class_with_abstract_members.ts:3:4
-    │
-  3 │    abstract name(): string;
-    │    ^^^^^^^^
+    1 │ class A {
+    2 │    abstract my_age: number;
+  > 3 │    abstract name(): string;
+      │    ^^^^^^^^
+    4 │    abstract get age(): number;
+    5 │    abstract set age(v);
   
 --
 ts_concrete_class_with_abstract_members.ts:4:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Only abstract classes can have abstract members
   
-    ┌─ ts_concrete_class_with_abstract_members.ts:4:4
-    │
-  4 │    abstract get age(): number;
-    │    ^^^^^^^^
+    2 │    abstract my_age: number;
+    3 │    abstract name(): string;
+  > 4 │    abstract get age(): number;
+      │    ^^^^^^^^
+    5 │    abstract set age(v);
+    6 │ }
   
 --
 ts_concrete_class_with_abstract_members.ts:5:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Only abstract classes can have abstract members
   
-    ┌─ ts_concrete_class_with_abstract_members.ts:5:4
-    │
-  5 │    abstract set age(v);
-    │    ^^^^^^^^
+    3 │    abstract name(): string;
+    4 │    abstract get age(): number;
+  > 5 │    abstract set age(v);
+      │    ^^^^^^^^
+    6 │ }
+    7 │ 
   
 --
 class A {

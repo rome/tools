@@ -79,10 +79,9 @@ ts_declare_property_private_name.ts:1:11 parse ━━━━━━━━━━━
 
   × 'declare' modifier is only allowed on properties.
   
-    ┌─ ts_declare_property_private_name.ts:1:11
-    │
-  1 │ class A { declare #name(); };
-    │           ^^^^^^^
+  > 1 │ class A { declare #name(); };
+      │           ^^^^^^^
+    2 │ 
   
 --
 class A { declare #name(); };

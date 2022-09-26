@@ -22,10 +22,9 @@ check.js:1:1 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━
 
   × Block statements are preferred in this position.
   
-    ┌─ check.js:1:1
-    │
-  1 │ for(;true;);
-    │ ^^^^^^^^^^^^
+  > 1 │ for(;true;);
+      │ ^^^^^^^^^^^^
+    2 │ 
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
@@ -41,10 +40,9 @@ check.js:1:1 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━�
 
   × Use while loops instead of for loops.
   
-    ┌─ check.js:1:1
-    │
-  1 │ for(;true;);
-    │ ^^^^^^^^^^^
+  > 1 │ for(;true;);
+      │ ^^^^^^^^^^^
+    2 │ 
   
   i Suggested fix: Use a while loop
   

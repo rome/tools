@@ -21,10 +21,11 @@ inJsx.jsx:2:5 lint/nursery/noVoidElementsWithChildren  FIXABLE  ━━━━━�
 
   ! br is a void element tag and must not have children.
   
-    ┌─ inJsx.jsx:2:5
-    │
-  2 │     <br>invalid child</br>
-    │     ^^^^^^^^^^^^^^^^^^^^^^
+    1 │ <>
+  > 2 │     <br>invalid child</br>
+      │     ^^^^^^^^^^^^^^^^^^^^^^
+    3 │     <img alt="some text">invalid child</img>
+    4 │     <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }}></img>
   
   i Suggested fix: Remove the children.
   
@@ -44,10 +45,12 @@ inJsx.jsx:3:5 lint/nursery/noVoidElementsWithChildren  FIXABLE  ━━━━━�
 
   ! img is a void element tag and must not have children.
   
-    ┌─ inJsx.jsx:3:5
-    │
-  3 │     <img alt="some text">invalid child</img>
-    │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    1 │ <>
+    2 │     <br>invalid child</br>
+  > 3 │     <img alt="some text">invalid child</img>
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │     <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }}></img>
+    5 │     <img alt="some text" children={"some child"}></img>
   
   i Suggested fix: Remove the children.
   
@@ -68,10 +71,12 @@ inJsx.jsx:4:5 lint/nursery/noVoidElementsWithChildren  FIXABLE  ━━━━━�
 
   ! img is a void element tag and must not have the dangerouslySetInnerHTML prop.
   
-    ┌─ inJsx.jsx:4:5
-    │
-  4 │     <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }}></img>
-    │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    2 │     <br>invalid child</br>
+    3 │     <img alt="some text">invalid child</img>
+  > 4 │     <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }}></img>
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    5 │     <img alt="some text" children={"some child"}></img>
+    6 │     <img alt="some text" children={"some child"} />
   
   i Suggested fix: Remove the dangerouslySetInnerHTML prop.
   
@@ -93,10 +98,12 @@ inJsx.jsx:5:5 lint/nursery/noVoidElementsWithChildren  FIXABLE  ━━━━━�
 
   ! img is a void element tag and must not have children.
   
-    ┌─ inJsx.jsx:5:5
-    │
-  5 │     <img alt="some text" children={"some child"}></img>
-    │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │     <img alt="some text">invalid child</img>
+    4 │     <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }}></img>
+  > 5 │     <img alt="some text" children={"some child"}></img>
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    6 │     <img alt="some text" children={"some child"} />
+    7 │     <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }} >invalid child</img>
   
   i Suggested fix: Remove the children.
   
@@ -118,10 +125,12 @@ inJsx.jsx:6:5 lint/nursery/noVoidElementsWithChildren  FIXABLE  ━━━━━�
 
   ! img is a void element tag and must not have children.
   
-    ┌─ inJsx.jsx:6:5
-    │
-  6 │     <img alt="some text" children={"some child"} />
-    │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │     <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }}></img>
+    5 │     <img alt="some text" children={"some child"}></img>
+  > 6 │     <img alt="some text" children={"some child"} />
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    7 │     <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }} >invalid child</img>
+    8 │ </>
   
   i Suggested fix: Remove the children.
   
@@ -142,10 +151,12 @@ inJsx.jsx:7:5 lint/nursery/noVoidElementsWithChildren  FIXABLE  ━━━━━�
 
   ! img is a void element tag and must not have children, or the dangerouslySetInnerHTML prop.
   
-    ┌─ inJsx.jsx:7:5
-    │
-  7 │     <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }} >invalid child</img>
-    │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    5 │     <img alt="some text" children={"some child"}></img>
+    6 │     <img alt="some text" children={"some child"} />
+  > 7 │     <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }} >invalid child</img>
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │ </>
+    9 │ 
   
   i Suggested fix: Remove the children and the dangerouslySetInnerHTML prop.
   

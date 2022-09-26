@@ -77,10 +77,9 @@ typescript_abstract_classes_invalid_abstract_private_member.ts:1:20 parse ━━
 
   × 'abstract' modifier cannot be used with a private identifier'.
   
-    ┌─ typescript_abstract_classes_invalid_abstract_private_member.ts:1:20
-    │
-  1 │ abstract class A { abstract #name(); };
-    │                    ^^^^^^^^
+  > 1 │ abstract class A { abstract #name(); };
+      │                    ^^^^^^^^
+    2 │ 
   
 --
 abstract class A { abstract #name(); };

@@ -97,10 +97,9 @@ ts_object_setter_return_type.ts:1:24 parse ━━━━━━━━━━━━�
 
   × A 'set' accessor cannot have a return type annotation.
   
-    ┌─ ts_object_setter_return_type.ts:1:24
-    │
-  1 │ ({ set a(value: string): void {} });
-    │                        ^^^^^^
+  > 1 │ ({ set a(value: string): void {} });
+      │                        ^^^^^^
+    2 │ 
   
 --
 ({ set a(value: string): void {} });

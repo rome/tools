@@ -121,20 +121,20 @@ enum_decl_no_id.ts:1:1 parse ━━━━━━━━━━━━━━━━━
 
   × `enum` statements must have a name
   
-    ┌─ enum_decl_no_id.ts:1:1
-    │
-  1 │ enum {A,B,C}
-    │ ^^^^^
+  > 1 │ enum {A,B,C}
+      │ ^^^^^
+    2 │ enum 1 {A,B,C}
+    3 │ 
   
 --
 enum_decl_no_id.ts:2:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × invalid `enum` name
   
-    ┌─ enum_decl_no_id.ts:2:6
-    │
-  2 │ enum 1 {A,B,C}
-    │      ^
+    1 │ enum {A,B,C}
+  > 2 │ enum 1 {A,B,C}
+      │      ^
+    3 │ 
   
 --
 enum {A,B,C}

@@ -25,10 +25,12 @@ noMultipleSpacesInRegularExpressionLiterals.js:7:2 lint/correctness/noMultipleSp
 
   ! This regular expression contains unclear uses of multiple spaces.
   
-    ┌─ noMultipleSpacesInRegularExpressionLiterals.js:7:2
-    │
-  7 │ /   /;
-    │  ^^^
+    5 │ /foo /;
+    6 │ // invalid
+  > 7 │ /   /;
+      │  ^^^
+    8 │ /  foo/;
+    9 │ /foo   /;
   
   i Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {3}/
   
@@ -50,10 +52,12 @@ noMultipleSpacesInRegularExpressionLiterals.js:8:2 lint/correctness/noMultipleSp
 
   ! This regular expression contains unclear uses of multiple spaces.
   
-    ┌─ noMultipleSpacesInRegularExpressionLiterals.js:8:2
-    │
-  8 │ /  foo/;
-    │  ^^
+     6 │ // invalid
+     7 │ /   /;
+   > 8 │ /  foo/;
+       │  ^^
+     9 │ /foo   /;
+    10 │ /foo  bar/;
   
   i Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {2}/
   
@@ -75,10 +79,12 @@ noMultipleSpacesInRegularExpressionLiterals.js:9:5 lint/correctness/noMultipleSp
 
   ! This regular expression contains unclear uses of multiple spaces.
   
-    ┌─ noMultipleSpacesInRegularExpressionLiterals.js:9:5
-    │
-  9 │ /foo   /;
-    │     ^^^
+     7 │ /   /;
+     8 │ /  foo/;
+   > 9 │ /foo   /;
+       │     ^^^
+    10 │ /foo  bar/;
+    11 │ /foo   bar    baz/;
   
   i Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {3}/
   
@@ -100,10 +106,12 @@ noMultipleSpacesInRegularExpressionLiterals.js:10:5 lint/correctness/noMultipleS
 
   ! This regular expression contains unclear uses of multiple spaces.
   
-     ┌─ noMultipleSpacesInRegularExpressionLiterals.js:10:5
-     │
-  10 │ /foo  bar/;
-     │     ^^
+     8 │ /  foo/;
+     9 │ /foo   /;
+  > 10 │ /foo  bar/;
+       │     ^^
+    11 │ /foo   bar    baz/;
+    12 │ /foo [ba]r  b(a|z)/;
   
   i Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {2}/
   
@@ -124,10 +132,12 @@ noMultipleSpacesInRegularExpressionLiterals.js:11:5 lint/correctness/noMultipleS
 
   ! This regular expression contains unclear uses of multiple spaces.
   
-     ┌─ noMultipleSpacesInRegularExpressionLiterals.js:11:5
-     │
-  11 │ /foo   bar    baz/;
-     │     ^^^^^^^^^^
+     9 │ /foo   /;
+    10 │ /foo  bar/;
+  > 11 │ /foo   bar    baz/;
+       │     ^^^^^^^^^^
+    12 │ /foo [ba]r  b(a|z)/;
+    13 │ 
   
   i Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {7}/
   
@@ -147,10 +157,11 @@ noMultipleSpacesInRegularExpressionLiterals.js:12:11 lint/correctness/noMultiple
 
   ! This regular expression contains unclear uses of multiple spaces.
   
-     ┌─ noMultipleSpacesInRegularExpressionLiterals.js:12:11
-     │
-  12 │ /foo [ba]r  b(a|z)/;
-     │           ^^
+    10 │ /foo  bar/;
+    11 │ /foo   bar    baz/;
+  > 12 │ /foo [ba]r  b(a|z)/;
+       │           ^^
+    13 │ 
   
   i Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {2}/
   

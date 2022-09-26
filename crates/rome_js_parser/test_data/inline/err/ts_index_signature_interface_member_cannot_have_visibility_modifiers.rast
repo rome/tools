@@ -202,30 +202,35 @@ ts_index_signature_interface_member_cannot_have_visibility_modifiers.ts:2:5 pars
 
   × index signature members cannot be public
   
-    ┌─ ts_index_signature_interface_member_cannot_have_visibility_modifiers.ts:2:5
-    │
-  2 │     public  [a: number]: string;
-    │     ^^^^^^
+    1 │ interface A {
+  > 2 │     public  [a: number]: string;
+      │     ^^^^^^
+    3 │ }
+    4 │ interface B {
   
 --
 ts_index_signature_interface_member_cannot_have_visibility_modifiers.ts:5:5 parse ━━━━━━━━━━━━━━━━━━
 
   × index signature members cannot be private
   
-    ┌─ ts_index_signature_interface_member_cannot_have_visibility_modifiers.ts:5:5
-    │
-  5 │     private  [a: number]: string;
-    │     ^^^^^^^
+    3 │ }
+    4 │ interface B {
+  > 5 │     private  [a: number]: string;
+      │     ^^^^^^^
+    6 │ }
+    7 │ interface C {
   
 --
 ts_index_signature_interface_member_cannot_have_visibility_modifiers.ts:8:5 parse ━━━━━━━━━━━━━━━━━━
 
   × index signature members cannot be protected
   
-    ┌─ ts_index_signature_interface_member_cannot_have_visibility_modifiers.ts:8:5
-    │
-  8 │     protected  [a: number]: string;
-    │     ^^^^^^^^^
+     6 │ }
+     7 │ interface C {
+   > 8 │     protected  [a: number]: string;
+       │     ^^^^^^^^^
+     9 │ }
+    10 │ 
   
 --
 interface A {

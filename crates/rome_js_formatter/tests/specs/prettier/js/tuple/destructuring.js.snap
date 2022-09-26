@@ -64,19 +64,19 @@ destructuring.js:1:17 parse ━━━━━━━━━━━━━━━━━�
   
   × Expected an identifier here
   
-    ┌─ destructuring.js:1:17
-    │
-  1 │ const [a, b] = #[1, 2];
-    │                 ^
+  > 1 │ const [a, b] = #[1, 2];
+      │                 ^
+    2 │ assert(a === 1);
+    3 │ assert(b === 2);
   
 destructuring.js:1:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Private names are only allowed on the left side of a 'in' expression
   
-    ┌─ destructuring.js:1:16
-    │
-  1 │ const [a, b] = #[1, 2];
-    │                ^
+  > 1 │ const [a, b] = #[1, 2];
+      │                ^
+    2 │ assert(a === 1);
+    3 │ assert(b === 2);
   
 destructuring.js:1:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -84,17 +84,17 @@ destructuring.js:1:17 parse ━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ destructuring.js:1:17
-    │
-  1 │ const [a, b] = #[1, 2];
-    │                 ^
+  > 1 │ const [a, b] = #[1, 2];
+      │                 ^
+    2 │ assert(a === 1);
+    3 │ assert(b === 2);
   
   i ...Which is required to end this statement
   
-    ┌─ destructuring.js:1:1
-    │
-  1 │ const [a, b] = #[1, 2];
-    │ ^^^^^^^^^^^^^^^^
+  > 1 │ const [a, b] = #[1, 2];
+      │ ^^^^^^^^^^^^^^^^
+    2 │ assert(a === 1);
+    3 │ assert(b === 2);
   
 destructuring.js:5:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -102,19 +102,23 @@ destructuring.js:5:23 parse ━━━━━━━━━━━━━━━━━�
   
   × Expected an identifier here
   
-    ┌─ destructuring.js:5:23
-    │
-  5 │ const [a, ...rest] = #[1, 2, 3];
-    │                       ^
+    3 │ assert(b === 2);
+    4 │ 
+  > 5 │ const [a, ...rest] = #[1, 2, 3];
+      │                       ^
+    6 │ assert(a === 1);
+    7 │ assert(Array.isArray(rest));
   
 destructuring.js:5:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Private names are only allowed on the left side of a 'in' expression
   
-    ┌─ destructuring.js:5:22
-    │
-  5 │ const [a, ...rest] = #[1, 2, 3];
-    │                      ^
+    3 │ assert(b === 2);
+    4 │ 
+  > 5 │ const [a, ...rest] = #[1, 2, 3];
+      │                      ^
+    6 │ assert(a === 1);
+    7 │ assert(Array.isArray(rest));
   
 destructuring.js:5:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -122,17 +126,21 @@ destructuring.js:5:23 parse ━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ destructuring.js:5:23
-    │
-  5 │ const [a, ...rest] = #[1, 2, 3];
-    │                       ^
+    3 │ assert(b === 2);
+    4 │ 
+  > 5 │ const [a, ...rest] = #[1, 2, 3];
+      │                       ^
+    6 │ assert(a === 1);
+    7 │ assert(Array.isArray(rest));
   
   i ...Which is required to end this statement
   
-    ┌─ destructuring.js:5:1
-    │
-  5 │ const [a, ...rest] = #[1, 2, 3];
-    │ ^^^^^^^^^^^^^^^^^^^^^^
+    3 │ assert(b === 2);
+    4 │ 
+  > 5 │ const [a, ...rest] = #[1, 2, 3];
+      │ ^^^^^^^^^^^^^^^^^^^^^^
+    6 │ assert(a === 1);
+    7 │ assert(Array.isArray(rest));
   
 
 ```

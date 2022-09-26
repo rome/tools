@@ -122,10 +122,10 @@ class-expression.js:1:13 parse ━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ class-expression.js:1:13
-    │
-  1 │ const a1 = (@deco class Foo {});
-    │             ^
+  > 1 │ const a1 = (@deco class Foo {});
+      │             ^
+    2 │ const a2 = (@deco class {});
+    3 │ 
   
 class-expression.js:1:31 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -133,10 +133,10 @@ class-expression.js:1:31 parse ━━━━━━━━━━━━━━━━�
   
   × Expected a statement here
   
-    ┌─ class-expression.js:1:31
-    │
-  1 │ const a1 = (@deco class Foo {});
-    │                               ^
+  > 1 │ const a1 = (@deco class Foo {});
+      │                               ^
+    2 │ const a2 = (@deco class {});
+    3 │ 
   
 class-expression.js:2:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -144,19 +144,21 @@ class-expression.js:2:13 parse ━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ class-expression.js:2:13
-    │
-  2 │ const a2 = (@deco class {});
-    │             ^
+    1 │ const a1 = (@deco class Foo {});
+  > 2 │ const a2 = (@deco class {});
+      │             ^
+    3 │ 
+    4 │ (@deco class Foo {});
   
 class-expression.js:2:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × class declarations must have a name
   
-    ┌─ class-expression.js:2:19
-    │
-  2 │ const a2 = (@deco class {});
-    │                   ^^^^^^
+    1 │ const a1 = (@deco class Foo {});
+  > 2 │ const a2 = (@deco class {});
+      │                   ^^^^^^
+    3 │ 
+    4 │ (@deco class Foo {});
   
 class-expression.js:2:27 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -164,10 +166,11 @@ class-expression.js:2:27 parse ━━━━━━━━━━━━━━━━�
   
   × Expected a statement here
   
-    ┌─ class-expression.js:2:27
-    │
-  2 │ const a2 = (@deco class {});
-    │                           ^
+    1 │ const a1 = (@deco class Foo {});
+  > 2 │ const a2 = (@deco class {});
+      │                           ^
+    3 │ 
+    4 │ (@deco class Foo {});
   
 class-expression.js:4:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -175,10 +178,12 @@ class-expression.js:4:2 parse ━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ class-expression.js:4:2
-    │
-  4 │ (@deco class Foo {});
-    │  ^
+    2 │ const a2 = (@deco class {});
+    3 │ 
+  > 4 │ (@deco class Foo {});
+      │  ^
+    5 │ (@deco class {});
+    6 │ 
   
 class-expression.js:4:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -186,10 +191,12 @@ class-expression.js:4:20 parse ━━━━━━━━━━━━━━━━�
   
   × Expected a statement here
   
-    ┌─ class-expression.js:4:20
-    │
-  4 │ (@deco class Foo {});
-    │                    ^
+    2 │ const a2 = (@deco class {});
+    3 │ 
+  > 4 │ (@deco class Foo {});
+      │                    ^
+    5 │ (@deco class {});
+    6 │ 
   
 class-expression.js:5:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -197,19 +204,21 @@ class-expression.js:5:2 parse ━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ class-expression.js:5:2
-    │
-  5 │ (@deco class {});
-    │  ^
+    4 │ (@deco class Foo {});
+  > 5 │ (@deco class {});
+      │  ^
+    6 │ 
+    7 │ const b1 = []
   
 class-expression.js:5:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × class declarations must have a name
   
-    ┌─ class-expression.js:5:8
-    │
-  5 │ (@deco class {});
-    │        ^^^^^^
+    4 │ (@deco class Foo {});
+  > 5 │ (@deco class {});
+      │        ^^^^^^
+    6 │ 
+    7 │ const b1 = []
   
 class-expression.js:5:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -217,10 +226,11 @@ class-expression.js:5:16 parse ━━━━━━━━━━━━━━━━�
   
   × Expected a statement here
   
-    ┌─ class-expression.js:5:16
-    │
-  5 │ (@deco class {});
-    │                ^
+    4 │ (@deco class Foo {});
+  > 5 │ (@deco class {});
+      │                ^
+    6 │ 
+    7 │ const b1 = []
   
 class-expression.js:8:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -228,10 +238,11 @@ class-expression.js:8:3 parse ━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ class-expression.js:8:3
-    │
-  8 │ ;(@deco class Foo {})
-    │   ^
+     7 │ const b1 = []
+   > 8 │ ;(@deco class Foo {})
+       │   ^
+     9 │ 
+    10 │ const b2 = []
   
 class-expression.js:8:21 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -239,10 +250,11 @@ class-expression.js:8:21 parse ━━━━━━━━━━━━━━━━�
   
   × Expected a statement here
   
-    ┌─ class-expression.js:8:21
-    │
-  8 │ ;(@deco class Foo {})
-    │                     ^
+     7 │ const b1 = []
+   > 8 │ ;(@deco class Foo {})
+       │                     ^
+     9 │ 
+    10 │ const b2 = []
   
 class-expression.js:11:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -250,19 +262,21 @@ class-expression.js:11:3 parse ━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-     ┌─ class-expression.js:11:3
-     │
-  11 │ ;(@deco class {})
-     │   ^
+    10 │ const b2 = []
+  > 11 │ ;(@deco class {})
+       │   ^
+    12 │ 
+    13 │ // This is not a `ClassExpression` but `ClassDeclaration`
   
 class-expression.js:11:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × class declarations must have a name
   
-     ┌─ class-expression.js:11:9
-     │
-  11 │ ;(@deco class {})
-     │         ^^^^^^
+    10 │ const b2 = []
+  > 11 │ ;(@deco class {})
+       │         ^^^^^^
+    12 │ 
+    13 │ // This is not a `ClassExpression` but `ClassDeclaration`
   
 class-expression.js:11:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -270,10 +284,11 @@ class-expression.js:11:17 parse ━━━━━━━━━━━━━━━━
   
   × Expected a statement here
   
-     ┌─ class-expression.js:11:17
-     │
-  11 │ ;(@deco class {})
-     │                 ^
+    10 │ const b2 = []
+  > 11 │ ;(@deco class {})
+       │                 ^
+    12 │ 
+    13 │ // This is not a `ClassExpression` but `ClassDeclaration`
   
 
 ```

@@ -40,17 +40,15 @@ async-do-expressions.js:1:7 parse ━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ async-do-expressions.js:1:7
-    │
-  1 │ async do { await requestAPI().json() };
-    │       ^^
+  > 1 │ async do { await requestAPI().json() };
+      │       ^^
+    2 │ 
   
   i ...Which is required to end this statement
   
-    ┌─ async-do-expressions.js:1:1
-    │
-  1 │ async do { await requestAPI().json() };
-    │ ^^^^^^^^
+  > 1 │ async do { await requestAPI().json() };
+      │ ^^^^^^^^
+    2 │ 
   
 async-do-expressions.js:1:39 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -58,10 +56,9 @@ async-do-expressions.js:1:39 parse ━━━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ async-do-expressions.js:1:39
-    │
-  1 │ async do { await requestAPI().json() };
-    │                                       ^
+  > 1 │ async do { await requestAPI().json() };
+      │                                       ^
+    2 │ 
   
 
 ```

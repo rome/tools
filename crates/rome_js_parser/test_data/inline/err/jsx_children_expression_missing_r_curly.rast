@@ -94,10 +94,12 @@ jsx_children_expression_missing_r_curly.jsx:3:3 parse ━━━━━━━━�
   
   × unexpected
   
-    ┌─ jsx_children_expression_missing_r_curly.jsx:3:3
-    │
-  3 │   some text
-    │   ^^^^
+    1 │ <test>
+    2 │   { 5 + 3
+  > 3 │   some text
+      │   ^^^^
+    4 │ </test>
+    5 │ 
   
 --
 <test>

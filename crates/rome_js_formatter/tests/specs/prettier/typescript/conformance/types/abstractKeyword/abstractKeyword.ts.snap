@@ -38,17 +38,15 @@ abstractKeyword.ts:1:10 parse ━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ abstractKeyword.ts:1:10
-    │
-  1 │ abstract interface I {}
-    │          ^^^^^^^^^
+  > 1 │ abstract interface I {}
+      │          ^^^^^^^^^
+    2 │ 
   
   i ...Which is required to end this statement
   
-    ┌─ abstractKeyword.ts:1:1
-    │
-  1 │ abstract interface I {}
-    │ ^^^^^^^^^^^^^^^^^^
+  > 1 │ abstract interface I {}
+      │ ^^^^^^^^^^^^^^^^^^
+    2 │ 
   
 
 ```

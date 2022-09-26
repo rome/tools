@@ -196,30 +196,35 @@ ts_index_signature_interface_member_cannot_be_static.ts:2:5 parse ━━━━�
 
   × index signature members cannot be static
   
-    ┌─ ts_index_signature_interface_member_cannot_be_static.ts:2:5
-    │
-  2 │     static [index: string]: string
-    │     ^^^^^^
+    1 │ interface A {
+  > 2 │     static [index: string]: string
+      │     ^^^^^^
+    3 │ }
+    4 │ interface B {
   
 --
 ts_index_signature_interface_member_cannot_be_static.ts:5:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × index signature members cannot be public
   
-    ┌─ ts_index_signature_interface_member_cannot_be_static.ts:5:5
-    │
-  5 │     public [index: string]: string
-    │     ^^^^^^
+    3 │ }
+    4 │ interface B {
+  > 5 │     public [index: string]: string
+      │     ^^^^^^
+    6 │ }
+    7 │ interface C {
   
 --
 ts_index_signature_interface_member_cannot_be_static.ts:8:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × index signature members cannot be private
   
-    ┌─ ts_index_signature_interface_member_cannot_be_static.ts:8:5
-    │
-  8 │     private [index: string]: string
-    │     ^^^^^^^
+     6 │ }
+     7 │ interface C {
+   > 8 │     private [index: string]: string
+       │     ^^^^^^^
+     9 │ }
+    10 │ 
   
 --
 interface A {

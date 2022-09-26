@@ -171,10 +171,10 @@ async_arrow_expr_await_parameter.js:1:15 parse ━━━━━━━━━━━
 
   × Illegal use of `await` as an identifier in an async context
   
-    ┌─ async_arrow_expr_await_parameter.js:1:15
-    │
-  1 │ let a = async await => {}
-    │               ^^^^^
+  > 1 │ let a = async await => {}
+      │               ^^^^^
+    2 │ async() => { (a = await) => {} };
+    3 │ 
   
 --
 async_arrow_expr_await_parameter.js:2:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -183,20 +183,20 @@ async_arrow_expr_await_parameter.js:2:24 parse ━━━━━━━━━━━
   
   × Expected an unary expression here
   
-    ┌─ async_arrow_expr_await_parameter.js:2:24
-    │
-  2 │ async() => { (a = await) => {} };
-    │                        ^
+    1 │ let a = async await => {}
+  > 2 │ async() => { (a = await) => {} };
+      │                        ^
+    3 │ 
   
 --
 async_arrow_expr_await_parameter.js:2:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `await` is only allowed within async functions and at the top levels of modules.
   
-    ┌─ async_arrow_expr_await_parameter.js:2:19
-    │
-  2 │ async() => { (a = await) => {} };
-    │                   ^^^^^
+    1 │ let a = async await => {}
+  > 2 │ async() => { (a = await) => {} };
+      │                   ^^^^^
+    3 │ 
   
 --
 let a = async await => {}

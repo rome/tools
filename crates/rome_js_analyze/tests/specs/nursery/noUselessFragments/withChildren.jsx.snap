@@ -20,10 +20,11 @@ withChildren.jsx:2:5 lint/nursery/noUselessFragments  FIXABLE  ━━━━━�
 
   ! Avoid using unnecessary Fragment.
   
-    ┌─ withChildren.jsx:2:5
-    │
-  2 │     <>foo</>
-    │     ^^^^^^^^
+    1 │ <>
+  > 2 │     <>foo</>
+      │     ^^^^^^^^
+    3 │     <React.Fragment>foo</React.Fragment>
+    4 │     <Fragment>foo</Fragment>
   
   i Suggested fix: Remove the Fragment
   
@@ -43,10 +44,12 @@ withChildren.jsx:3:5 lint/nursery/noUselessFragments  FIXABLE  ━━━━━�
 
   ! Avoid using unnecessary Fragment.
   
-    ┌─ withChildren.jsx:3:5
-    │
-  3 │     <React.Fragment>foo</React.Fragment>
-    │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    1 │ <>
+    2 │     <>foo</>
+  > 3 │     <React.Fragment>foo</React.Fragment>
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │     <Fragment>foo</Fragment>
+    5 │     {/*  valid   */}
   
   i Suggested fix: Remove the Fragment
   
@@ -67,10 +70,12 @@ withChildren.jsx:4:5 lint/nursery/noUselessFragments  FIXABLE  ━━━━━�
 
   ! Avoid using unnecessary Fragment.
   
-    ┌─ withChildren.jsx:4:5
-    │
-  4 │     <Fragment>foo</Fragment>
-    │     ^^^^^^^^^^^^^^^^^^^^^^^^
+    2 │     <>foo</>
+    3 │     <React.Fragment>foo</React.Fragment>
+  > 4 │     <Fragment>foo</Fragment>
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^
+    5 │     {/*  valid   */}
+    6 │     <React.StrictMode><App /></React.StrictMode>
   
   i Suggested fix: Remove the Fragment
   

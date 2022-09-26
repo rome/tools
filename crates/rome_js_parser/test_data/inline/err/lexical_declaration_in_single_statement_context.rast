@@ -110,10 +110,10 @@ lexical_declaration_in_single_statement_context.js:1:11 parse ━━━━━━
   
   × Wrap this declaration in a block statement
   
-    ┌─ lexical_declaration_in_single_statement_context.js:1:11
-    │
-  1 │ if (true) let a;
-    │           ^^^^^^
+  > 1 │ if (true) let a;
+      │           ^^^^^^
+    2 │ while (true) const b = 5;
+    3 │ 
   
 --
 lexical_declaration_in_single_statement_context.js:2:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -122,10 +122,10 @@ lexical_declaration_in_single_statement_context.js:2:14 parse ━━━━━━
   
   × Wrap this declaration in a block statement
   
-    ┌─ lexical_declaration_in_single_statement_context.js:2:14
-    │
-  2 │ while (true) const b = 5;
-    │              ^^^^^^^^^^^^
+    1 │ if (true) let a;
+  > 2 │ while (true) const b = 5;
+      │              ^^^^^^^^^^^^
+    3 │ 
   
 --
 if (true) let a;

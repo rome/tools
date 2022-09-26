@@ -57,10 +57,12 @@ nested-bindings.js:4:17 parse ━━━━━━━━━━━━━━━━�
   
   × Expected an identifier, a member name, or a rest pattern here
   
-    ┌─ nested-bindings.js:4:17
-    │
-  4 │     const {x: { #x: [x] }, y: [...{ #x: y }]} = this;
-    │                 ^^^^^^^
+    2 │   #x = 1;
+    3 │   m() {
+  > 4 │     const {x: { #x: [x] }, y: [...{ #x: y }]} = this;
+      │                 ^^^^^^^
+    5 │   }
+    6 │ }
   
 nested-bindings.js:4:37 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -68,10 +70,12 @@ nested-bindings.js:4:37 parse ━━━━━━━━━━━━━━━━�
   
   × Expected an identifier, a member name, or a rest pattern here
   
-    ┌─ nested-bindings.js:4:37
-    │
-  4 │     const {x: { #x: [x] }, y: [...{ #x: y }]} = this;
-    │                                     ^^^^^
+    2 │   #x = 1;
+    3 │   m() {
+  > 4 │     const {x: { #x: [x] }, y: [...{ #x: y }]} = this;
+      │                                     ^^^^^
+    5 │   }
+    6 │ }
   
 
 ```

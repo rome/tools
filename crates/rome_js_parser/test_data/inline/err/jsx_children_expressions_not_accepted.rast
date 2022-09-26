@@ -176,40 +176,47 @@ jsx_children_expressions_not_accepted.jsx:2:4 parse ━━━━━━━━━�
 
   × This expression is not valid as a JSX expression.
   
-    ┌─ jsx_children_expressions_not_accepted.jsx:2:4
-    │
-  2 │   {import.meta}
-    │    ^^^^^^^^^^^
+    1 │ <div>
+  > 2 │   {import.meta}
+      │    ^^^^^^^^^^^
+    3 │   {class A{}}
+    4 │   {super()}
   
 --
 jsx_children_expressions_not_accepted.jsx:3:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × This expression is not valid as a JSX expression.
   
-    ┌─ jsx_children_expressions_not_accepted.jsx:3:4
-    │
-  3 │   {class A{}}
-    │    ^^^^^^^^^
+    1 │ <div>
+    2 │   {import.meta}
+  > 3 │   {class A{}}
+      │    ^^^^^^^^^
+    4 │   {super()}
+    5 │   {new.target}
   
 --
 jsx_children_expressions_not_accepted.jsx:4:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `super` is only valid inside of a class constructor of a subclass.
   
-    ┌─ jsx_children_expressions_not_accepted.jsx:4:4
-    │
-  4 │   {super()}
-    │    ^^^^^
+    2 │   {import.meta}
+    3 │   {class A{}}
+  > 4 │   {super()}
+      │    ^^^^^
+    5 │   {new.target}
+    6 │ </div>
   
 --
 jsx_children_expressions_not_accepted.jsx:5:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × This expression is not valid as a JSX expression.
   
-    ┌─ jsx_children_expressions_not_accepted.jsx:5:4
-    │
-  5 │   {new.target}
-    │    ^^^^^^^^^^
+    3 │   {class A{}}
+    4 │   {super()}
+  > 5 │   {new.target}
+      │    ^^^^^^^^^^
+    6 │ </div>
+    7 │ 
   
 --
 <div>

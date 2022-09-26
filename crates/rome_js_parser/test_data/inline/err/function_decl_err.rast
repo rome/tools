@@ -437,10 +437,10 @@ function_decl_err.js:1:9 parse ━━━━━━━━━━━━━━━━�
 
   × expected a name for the function in a function declaration, but found none
   
-    ┌─ function_decl_err.js:1:9
-    │
-  1 │ function() {}
-    │         ^
+  > 1 │ function() {}
+      │         ^
+    2 │ function foo {}
+    3 │ function {}
   
 --
 function_decl_err.js:2:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -449,60 +449,71 @@ function_decl_err.js:2:14 parse ━━━━━━━━━━━━━━━━
   
   × Expected a parenthesis '(' here
   
-    ┌─ function_decl_err.js:2:14
-    │
-  2 │ function foo {}
-    │              ^
+    1 │ function() {}
+  > 2 │ function foo {}
+      │              ^
+    3 │ function {}
+    4 │ function *() {}
   
 --
 function_decl_err.js:3:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a name for the function in a function declaration, but found none
   
-    ┌─ function_decl_err.js:3:10
-    │
-  3 │ function {}
-    │          ^
+    1 │ function() {}
+    2 │ function foo {}
+  > 3 │ function {}
+      │          ^
+    4 │ function *() {}
+    5 │ async function() {}
   
 --
 function_decl_err.js:4:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a name for the function in a function declaration, but found none
   
-    ┌─ function_decl_err.js:4:11
-    │
-  4 │ function *() {}
-    │           ^
+    2 │ function foo {}
+    3 │ function {}
+  > 4 │ function *() {}
+      │           ^
+    5 │ async function() {}
+    6 │ async function *() {}
   
 --
 function_decl_err.js:5:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a name for the function in a function declaration, but found none
   
-    ┌─ function_decl_err.js:5:15
-    │
-  5 │ async function() {}
-    │               ^
+    3 │ function {}
+    4 │ function *() {}
+  > 5 │ async function() {}
+      │               ^
+    6 │ async function *() {}
+    7 │ function *foo2() {}
   
 --
 function_decl_err.js:6:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a name for the function in a function declaration, but found none
   
-    ┌─ function_decl_err.js:6:17
-    │
-  6 │ async function *() {}
-    │                 ^
+    4 │ function *() {}
+    5 │ async function() {}
+  > 6 │ async function *() {}
+      │                 ^
+    7 │ function *foo2() {}
+    8 │ yield foo3;
   
 --
 function_decl_err.js:8:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of reserved keyword `yield` as an identifier in strict mode
   
-    ┌─ function_decl_err.js:8:1
-    │
-  8 │ yield foo3;
-    │ ^^^^^
+     6 │ async function *() {}
+     7 │ function *foo2() {}
+   > 8 │ yield foo3;
+       │ ^^^^^
+     9 │ function test2(): number {}
+    10 │ function foo4(await) {}
   
 --
 function_decl_err.js:8:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -511,47 +522,56 @@ function_decl_err.js:8:7 parse ━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ function_decl_err.js:8:7
-    │
-  8 │ yield foo3;
-    │       ^^^^
+     6 │ async function *() {}
+     7 │ function *foo2() {}
+   > 8 │ yield foo3;
+       │       ^^^^
+     9 │ function test2(): number {}
+    10 │ function foo4(await) {}
   
   i ...Which is required to end this statement
   
-    ┌─ function_decl_err.js:8:1
-    │
-  8 │ yield foo3;
-    │ ^^^^^^^^^^
+     6 │ async function *() {}
+     7 │ function *foo2() {}
+   > 8 │ yield foo3;
+       │ ^^^^^^^^^^
+     9 │ function test2(): number {}
+    10 │ function foo4(await) {}
   
 --
 function_decl_err.js:9:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × return types can only be used in TypeScript files
   
-    ┌─ function_decl_err.js:9:17
-    │
-  9 │ function test2(): number {}
-    │                 ^^^^^^^^
+     7 │ function *foo2() {}
+     8 │ yield foo3;
+   > 9 │ function test2(): number {}
+       │                 ^^^^^^^^
+    10 │ function foo4(await) {}
+    11 │ function foo5(yield) {}
   
 --
 function_decl_err.js:10:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `await` as an identifier inside of a module
   
-     ┌─ function_decl_err.js:10:15
-     │
-  10 │ function foo4(await) {}
-     │               ^^^^^
+     8 │ yield foo3;
+     9 │ function test2(): number {}
+  > 10 │ function foo4(await) {}
+       │               ^^^^^
+    11 │ function foo5(yield) {}
+    12 │ 
   
 --
 function_decl_err.js:11:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of reserved keyword `yield` as an identifier in strict mode
   
-     ┌─ function_decl_err.js:11:15
-     │
-  11 │ function foo5(yield) {}
-     │               ^^^^^
+     9 │ function test2(): number {}
+    10 │ function foo4(await) {}
+  > 11 │ function foo5(yield) {}
+       │               ^^^^^
+    12 │ 
   
 --
 function() {}

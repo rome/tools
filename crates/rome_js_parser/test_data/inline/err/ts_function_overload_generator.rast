@@ -125,10 +125,10 @@ ts_function_overload_generator.ts:1:9 parse ━━━━━━━━━━━━
 
   × An overload signature cannot be declared as a generator.
   
-    ┌─ ts_function_overload_generator.ts:1:9
-    │
-  1 │ function* test(a: string);
-    │         ^
+  > 1 │ function* test(a: string);
+      │         ^
+    2 │ function* test(a: string) {}
+    3 │ 
   
 --
 function* test(a: string);

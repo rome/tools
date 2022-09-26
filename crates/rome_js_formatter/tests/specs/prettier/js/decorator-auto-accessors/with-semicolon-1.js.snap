@@ -45,10 +45,11 @@ with-semicolon-1.js:2:3 parse ━━━━━━━━━━━━━━━━�
 
   × expected a semicolon to end the class property, but found none
   
-    ┌─ with-semicolon-1.js:2:3
-    │
-  2 │   accessor clicked = "value";
-    │   ^^^^^^^^
+    1 │ class C {
+  > 2 │   accessor clicked = "value";
+      │   ^^^^^^^^
+    3 │   [foo]() {}
+    4 │ }
   
 
 ```

@@ -68,17 +68,19 @@ double_label.js:3:5 parse ━━━━━━━━━━━━━━━━━━
   
   × a second use of `label1` here is not allowed
   
-    ┌─ double_label.js:3:5
-    │
-  3 │     label1: {}
-    │     ^^^^^^
+    1 │ label1: {
+    2 │   label2: {
+  > 3 │     label1: {}
+      │     ^^^^^^
+    4 │   }
+    5 │ }
   
   i `label1` is first used as a label here
   
-    ┌─ double_label.js:1:1
-    │
-  1 │ label1: {
-    │ ^^^^^^
+  > 1 │ label1: {
+      │ ^^^^^^
+    2 │   label2: {
+    3 │     label1: {}
   
 --
 label1: {

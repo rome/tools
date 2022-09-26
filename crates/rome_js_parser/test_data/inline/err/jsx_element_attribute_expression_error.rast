@@ -73,10 +73,9 @@ jsx_element_attribute_expression_error.jsx:1:22 parse ━━━━━━━━�
   
   × unexpected
   
-    ┌─ jsx_element_attribute_expression_error.jsx:1:22
-    │
-  1 │ <div className={asdf asdf} />;
-    │                      ^^^^
+  > 1 │ <div className={asdf asdf} />;
+      │                      ^^^^
+    2 │ 
   
 --
 <div className={asdf asdf} />;

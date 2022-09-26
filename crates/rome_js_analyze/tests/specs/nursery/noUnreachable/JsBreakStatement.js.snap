@@ -28,17 +28,21 @@ JsBreakStatement.js:4:9 lint/nursery/noUnreachable ━━━━━━━━━�
   
   ! ... before it can reach this code
   
-    ┌─ JsBreakStatement.js:4:9
-    │
-  4 │         break; // afterBreak
-    │         ^^^^^^
+    2 │     while (true) {
+    3 │         break;
+  > 4 │         break; // afterBreak
+      │         ^^^^^^
+    5 │     }
+    6 │ }
   
   i This statement will break the flow of the code ...
   
-    ┌─ JsBreakStatement.js:3:9
-    │
-  3 │         break;
-    │         ^^^^^^
+    1 │ function JsBreakStatement1() {
+    2 │     while (true) {
+  > 3 │         break;
+      │         ^^^^^^
+    4 │         break; // afterBreak
+    5 │     }
   
 
 ```
@@ -50,17 +54,21 @@ JsBreakStatement.js:11:9 lint/nursery/noUnreachable ━━━━━━━━━�
   
   ! ... before it can reach this code
   
-     ┌─ JsBreakStatement.js:11:9
-     │
-  11 │         continue; // afterBreak
-     │         ^^^^^^^^^
+     9 │     while (true) {
+    10 │         break;
+  > 11 │         continue; // afterBreak
+       │         ^^^^^^^^^
+    12 │     }
+    13 │ }
   
   i This statement will break the flow of the code ...
   
-     ┌─ JsBreakStatement.js:10:9
-     │
-  10 │         break;
-     │         ^^^^^^
+     8 │ function JsBreakStatement2() {
+     9 │     while (true) {
+  > 10 │         break;
+       │         ^^^^^^
+    11 │         continue; // afterBreak
+    12 │     }
   
 
 ```

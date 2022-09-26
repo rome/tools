@@ -308,50 +308,58 @@ binding_identifier_invalid.js:1:19 parse ━━━━━━━━━━━━━
 
   × Illegal use of `await` as an identifier in an async context
   
-    ┌─ binding_identifier_invalid.js:1:19
-    │
-  1 │ async () => { let await = 5; }
-    │                   ^^^^^
+  > 1 │ async () => { let await = 5; }
+      │                   ^^^^^
+    2 │ function *foo() {
+    3 │    let yield = 5;
   
 --
 binding_identifier_invalid.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `yield` as an identifier in generator function
   
-    ┌─ binding_identifier_invalid.js:3:8
-    │
-  3 │    let yield = 5;
-    │        ^^^^^
+    1 │ async () => { let await = 5; }
+    2 │ function *foo() {
+  > 3 │    let yield = 5;
+      │        ^^^^^
+    4 │ }
+    5 │ let eval = 5;
   
 --
 binding_identifier_invalid.js:5:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `eval` as an identifier in strict mode
   
-    ┌─ binding_identifier_invalid.js:5:5
-    │
-  5 │ let eval = 5;
-    │     ^^^^
+    3 │    let yield = 5;
+    4 │ }
+  > 5 │ let eval = 5;
+      │     ^^^^
+    6 │ let let = 5;
+    7 │ const let = 5;
   
 --
 binding_identifier_invalid.js:6:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of reserved keyword `let` as an identifier in strict mode
   
-    ┌─ binding_identifier_invalid.js:6:5
-    │
-  6 │ let let = 5;
-    │     ^^^
+    4 │ }
+    5 │ let eval = 5;
+  > 6 │ let let = 5;
+      │     ^^^
+    7 │ const let = 5;
+    8 │ let a, a;
   
 --
 binding_identifier_invalid.js:7:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of reserved keyword `let` as an identifier in strict mode
   
-    ┌─ binding_identifier_invalid.js:7:7
-    │
-  7 │ const let = 5;
-    │       ^^^
+    5 │ let eval = 5;
+    6 │ let let = 5;
+  > 7 │ const let = 5;
+      │       ^^^
+    8 │ let a, a;
+    9 │ 
   
 --
 binding_identifier_invalid.js:8:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -360,17 +368,19 @@ binding_identifier_invalid.js:8:8 parse ━━━━━━━━━━━━━�
   
   × a second declaration of `a` is not allowed
   
-    ┌─ binding_identifier_invalid.js:8:8
-    │
-  8 │ let a, a;
-    │        ^
+    6 │ let let = 5;
+    7 │ const let = 5;
+  > 8 │ let a, a;
+      │        ^
+    9 │ 
   
   i `a` is first declared here
   
-    ┌─ binding_identifier_invalid.js:8:5
-    │
-  8 │ let a, a;
-    │     ^
+    6 │ let let = 5;
+    7 │ const let = 5;
+  > 8 │ let a, a;
+      │     ^
+    9 │ 
   
 --
 async () => { let await = 5; }

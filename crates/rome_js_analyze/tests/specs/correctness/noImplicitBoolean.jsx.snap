@@ -26,10 +26,11 @@ noImplicitBoolean.jsx:11:8 lint/correctness/noImplicitBoolean  FIXABLE  ━━�
 
   ! Use explicit boolean values for boolean JSX props.
   
-     ┌─ noImplicitBoolean.jsx:11:8
-     │
-  11 │ <input disabled />;
-     │        ^^^^^^^^
+    10 │ //invalid
+  > 11 │ <input disabled />;
+       │        ^^^^^^^^
+    12 │ <input accept/** some comment */ />;
+    13 │ <input /** some comment */ accept />;
   
   i Safe fix: Add explicit `true` literal for this attribute
   
@@ -50,10 +51,12 @@ noImplicitBoolean.jsx:12:8 lint/correctness/noImplicitBoolean  FIXABLE  ━━�
 
   ! Use explicit boolean values for boolean JSX props.
   
-     ┌─ noImplicitBoolean.jsx:12:8
-     │
-  12 │ <input accept/** some comment */ />;
-     │        ^^^^^^
+    10 │ //invalid
+    11 │ <input disabled />;
+  > 12 │ <input accept/** some comment */ />;
+       │        ^^^^^^
+    13 │ <input /** some comment */ accept />;
+    14 │ 
   
   i Safe fix: Add explicit `true` literal for this attribute
   
@@ -73,10 +76,11 @@ noImplicitBoolean.jsx:13:28 lint/correctness/noImplicitBoolean  FIXABLE  ━━�
 
   ! Use explicit boolean values for boolean JSX props.
   
-     ┌─ noImplicitBoolean.jsx:13:28
-     │
-  13 │ <input /** some comment */ accept />;
-     │                            ^^^^^^
+    11 │ <input disabled />;
+    12 │ <input accept/** some comment */ />;
+  > 13 │ <input /** some comment */ accept />;
+       │                            ^^^^^^
+    14 │ 
   
   i Safe fix: Add explicit `true` literal for this attribute
   

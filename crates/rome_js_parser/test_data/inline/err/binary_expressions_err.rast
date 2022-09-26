@@ -124,10 +124,10 @@ binary_expressions_err.js:1:10 parse ━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ binary_expressions_err.js:1:10
-    │
-  1 │ foo(foo +);
-    │          ^
+  > 1 │ foo(foo +);
+      │          ^
+    2 │ foo + * 2;
+    3 │ !foo * bar;
   
 --
 binary_expressions_err.js:2:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -136,10 +136,11 @@ binary_expressions_err.js:2:7 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ binary_expressions_err.js:2:7
-    │
-  2 │ foo + * 2;
-    │       ^
+    1 │ foo(foo +);
+  > 2 │ foo + * 2;
+      │       ^
+    3 │ !foo * bar;
+    4 │ 
   
 --
 foo(foo +);

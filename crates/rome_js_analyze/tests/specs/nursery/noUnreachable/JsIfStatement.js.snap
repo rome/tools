@@ -24,24 +24,30 @@ JsIfStatement.js:8:5 lint/nursery/noUnreachable ━━━━━━━━━━�
   
   ! ... before it can reach this code
   
-    ┌─ JsIfStatement.js:8:5
-    │
-  8 │     afterIfElseReturn();
-    │     ^^^^^^^^^^^^^^^^^^^^
+     6 │     }
+     7 │ 
+   > 8 │     afterIfElseReturn();
+       │     ^^^^^^^^^^^^^^^^^^^^
+     9 │ }
+    10 │ 
   
   i Either this statement ...
   
-    ┌─ JsIfStatement.js:3:9
-    │
-  3 │         return;
-    │         ^^^^^^^
+    1 │ function JsIfStatement1() {
+    2 │     if (true) {
+  > 3 │         return;
+      │         ^^^^^^^
+    4 │     } else {
+    5 │         return;
   
   i ... or this statement will return from the function ...
   
-    ┌─ JsIfStatement.js:5:9
-    │
-  5 │         return;
-    │         ^^^^^^^
+    3 │         return;
+    4 │     } else {
+  > 5 │         return;
+      │         ^^^^^^^
+    6 │     }
+    7 │ 
   
 
 ```

@@ -22,17 +22,17 @@ x = 1;
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>x</strong></span><span style="color: Tomato;"> is read-only</span>
   
-    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noImportAssign.js:2:1
-    <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">x</span> = 1;
-    <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">^</span>
+    <strong>1 │ </strong>import x from &quot;y&quot;;
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>x = 1;
+   <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong>
+    <strong>3 │ </strong>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">The variable is imported here</span>
   
-    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noImportAssign.js:1:8
-    <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> import <span style="color: Tomato;">x</span> from &quot;y&quot;;
-    <span style="color: rgb(38, 148, 255);">│</span>        <span style="color: Tomato;">^</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>import x from &quot;y&quot;;
+   <strong>   │ </strong>       <strong><span style="color: Tomato;">^</span></strong>
+    <strong>2 │ </strong>x = 1;
+    <strong>3 │ </strong>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
   
@@ -47,17 +47,17 @@ import y from "y";
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>y</strong></span><span style="color: Tomato;"> is read-only</span>
   
-    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noImportAssign.js:2:2
-    <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span> [<span style="color: Tomato;">y</span>] = 1;
-    <span style="color: rgb(38, 148, 255);">│</span>  <span style="color: Tomato;">^</span>
+    <strong>1 │ </strong>import y from &quot;y&quot;;
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>[y] = 1;
+   <strong>   │ </strong> <strong><span style="color: Tomato;">^</span></strong>
+    <strong>3 │ </strong>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">The variable is imported here</span>
   
-    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noImportAssign.js:1:8
-    <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> import <span style="color: Tomato;">y</span> from &quot;y&quot;;
-    <span style="color: rgb(38, 148, 255);">│</span>        <span style="color: Tomato;">^</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>import y from &quot;y&quot;;
+   <strong>   │ </strong>       <strong><span style="color: Tomato;">^</span></strong>
+    <strong>2 │ </strong>[y] = 1;
+    <strong>3 │ </strong>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
   
@@ -75,14 +75,14 @@ import a from "y";
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">unterminated template literal</span>
   
-    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noImportAssign.js:3:4
-    <span style="color: rgb(38, 148, 255);">│</span>  
-<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">3</span> <span style="color: rgb(38, 148, 255);">│</span>   ```<span style="color: Tomato;">j</span><span style="color: Tomato;">s</span><span style="color: Tomato;">,</span><span style="color: Tomato;">e</span><span style="color: Tomato;">x</span><span style="color: Tomato;">p</span><span style="color: Tomato;">e</span><span style="color: Tomato;">c</span><span style="color: Tomato;">t</span><span style="color: Tomato;">_</span><span style="color: Tomato;">d</span><span style="color: Tomato;">i</span><span style="color: Tomato;">a</span><span style="color: Tomato;">g</span><span style="color: Tomato;">n</span><span style="color: Tomato;">o</span><span style="color: Tomato;">s</span><span style="color: Tomato;">t</span><span style="color: Tomato;">i</span><span style="color: Tomato;">c</span>
-    <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">┌</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">─</span><span style="color: Tomato;">^</span>
-<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">4</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">│</span> <span style="color: Tomato;">i</span><span style="color: Tomato;">m</span><span style="color: Tomato;">p</span><span style="color: Tomato;">o</span><span style="color: Tomato;">r</span><span style="color: Tomato;">t</span><span style="color: Tomato;"> </span><span style="color: Tomato;">a</span><span style="color: Tomato;"> </span><span style="color: Tomato;">f</span><span style="color: Tomato;">r</span><span style="color: Tomato;">o</span><span style="color: Tomato;">m</span><span style="color: Tomato;"> </span><span style="color: Tomato;">&quot;</span><span style="color: Tomato;">y</span><span style="color: Tomato;">&quot;</span><span style="color: Tomato;">;</span>
-<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">5</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">│</span> <span style="color: Tomato;">[</span><span style="color: Tomato;">.</span><span style="color: Tomato;">.</span><span style="color: Tomato;">.</span><span style="color: Tomato;">a</span><span style="color: Tomato;">]</span><span style="color: Tomato;"> </span><span style="color: Tomato;">=</span><span style="color: Tomato;"> </span><span style="color: Tomato;">1</span><span style="color: Tomato;">;</span>
-<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">6</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">│</span> 
-    <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">└</span><span style="color: Tomato;">^</span>
+    <strong>1 │ </strong>import z from &quot;y&quot;;
+    <strong>2 │ </strong>({ z } = 1); /// ```
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>3 │ </strong>```js,expect_diagnostic
+   <strong>   │ </strong>   <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>4 │ </strong>import a from &quot;y&quot;;
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>5 │ </strong>[...a] = 1;
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>6 │ </strong>
+   <strong>   │ </strong>
   
 </code></pre>{% endraw %}
 
@@ -95,17 +95,17 @@ import b from "y";
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>b</strong></span><span style="color: Tomato;"> is read-only</span>
   
-    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noImportAssign.js:2:7
-    <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span> ({ ...<span style="color: Tomato;">b</span> } = 1);
-    <span style="color: rgb(38, 148, 255);">│</span>       <span style="color: Tomato;">^</span>
+    <strong>1 │ </strong>import b from &quot;y&quot;;
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>({ ...b } = 1);
+   <strong>   │ </strong>      <strong><span style="color: Tomato;">^</span></strong>
+    <strong>3 │ </strong>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">The variable is imported here</span>
   
-    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noImportAssign.js:1:8
-    <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> import <span style="color: Tomato;">b</span> from &quot;y&quot;;
-    <span style="color: rgb(38, 148, 255);">│</span>        <span style="color: Tomato;">^</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>import b from &quot;y&quot;;
+   <strong>   │ </strong>       <strong><span style="color: Tomato;">^</span></strong>
+    <strong>2 │ </strong>({ ...b } = 1);
+    <strong>3 │ </strong>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
   
@@ -120,17 +120,17 @@ for (c in y) {};
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>c</strong></span><span style="color: Tomato;"> is read-only</span>
   
-    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noImportAssign.js:2:6
-    <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span> for (<span style="color: Tomato;">c</span> in y) {};
-    <span style="color: rgb(38, 148, 255);">│</span>      <span style="color: Tomato;">^</span>
+    <strong>1 │ </strong>import c from &quot;y&quot;;
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>for (c in y) {};
+   <strong>   │ </strong>     <strong><span style="color: Tomato;">^</span></strong>
+    <strong>3 │ </strong>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">The variable is imported here</span>
   
-    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noImportAssign.js:1:8
-    <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> import <span style="color: Tomato;">c</span> from &quot;y&quot;;
-    <span style="color: rgb(38, 148, 255);">│</span>        <span style="color: Tomato;">^</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>import c from &quot;y&quot;;
+   <strong>   │ </strong>       <strong><span style="color: Tomato;">^</span></strong>
+    <strong>2 │ </strong>for (c in y) {};
+    <strong>3 │ </strong>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
   
@@ -145,17 +145,17 @@ d += 1;
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>d</strong></span><span style="color: Tomato;"> is read-only</span>
   
-    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noImportAssign.js:2:1
-    <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">d</span> += 1;
-    <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">^</span>
+    <strong>1 │ </strong>import d from &quot;y&quot;;
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>d += 1;
+   <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong>
+    <strong>3 │ </strong>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">The variable is imported here</span>
   
-    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noImportAssign.js:1:8
-    <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> import <span style="color: Tomato;">d</span> from &quot;y&quot;;
-    <span style="color: rgb(38, 148, 255);">│</span>        <span style="color: Tomato;">^</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>import d from &quot;y&quot;;
+   <strong>   │ </strong>       <strong><span style="color: Tomato;">^</span></strong>
+    <strong>2 │ </strong>d += 1;
+    <strong>3 │ </strong>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
   
@@ -170,17 +170,17 @@ e = 1;
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>e</strong></span><span style="color: Tomato;"> is read-only</span>
   
-    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noImportAssign.js:2:1
-    <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">2</span> <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">e</span> = 1;
-    <span style="color: rgb(38, 148, 255);">│</span> <span style="color: Tomato;">^</span>
+    <strong>1 │ </strong>import * as e from &quot;y&quot;;
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>e = 1;
+   <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong>
+    <strong>3 │ </strong>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">The variable is imported here</span>
   
-    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noImportAssign.js:1:13
-    <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> import * as <span style="color: Tomato;">e</span> from &quot;y&quot;;
-    <span style="color: rgb(38, 148, 255);">│</span>             <span style="color: Tomato;">^</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>import * as e from &quot;y&quot;;
+   <strong>   │ </strong>            <strong><span style="color: Tomato;">^</span></strong>
+    <strong>2 │ </strong>e = 1;
+    <strong>3 │ </strong>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
   

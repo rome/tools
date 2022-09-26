@@ -165,10 +165,10 @@ nullishAndLogicalOr.ts:1:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━�
 
   ! Change to an optional chain.
   
-    ┌─ nullishAndLogicalOr.ts:1:1
-    │
-  1 │ (foo || {}).bar;
-    │ ^^^^^^^^^^^^^^^
+  > 1 │ (foo || {}).bar;
+      │ ^^^^^^^^^^^^^^^
+    2 │ (foo || ({})).bar;
+    3 │ (await foo || {}).bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -187,10 +187,11 @@ nullishAndLogicalOr.ts:2:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━�
 
   ! Change to an optional chain.
   
-    ┌─ nullishAndLogicalOr.ts:2:1
-    │
-  2 │ (foo || ({})).bar;
-    │ ^^^^^^^^^^^^^^^^^
+    1 │ (foo || {}).bar;
+  > 2 │ (foo || ({})).bar;
+      │ ^^^^^^^^^^^^^^^^^
+    3 │ (await foo || {}).bar;
+    4 │ (foo1?.foo2 || {}).foo3;
   
   i Suggested fix: Change to an optional chain.
   
@@ -210,10 +211,12 @@ nullishAndLogicalOr.ts:3:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━�
 
   ! Change to an optional chain.
   
-    ┌─ nullishAndLogicalOr.ts:3:1
-    │
-  3 │ (await foo || {}).bar;
-    │ ^^^^^^^^^^^^^^^^^^^^^
+    1 │ (foo || {}).bar;
+    2 │ (foo || ({})).bar;
+  > 3 │ (await foo || {}).bar;
+      │ ^^^^^^^^^^^^^^^^^^^^^
+    4 │ (foo1?.foo2 || {}).foo3;
+    5 │ ((() => foo())() || {}).bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -234,10 +237,12 @@ nullishAndLogicalOr.ts:4:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━�
 
   ! Change to an optional chain.
   
-    ┌─ nullishAndLogicalOr.ts:4:1
-    │
-  4 │ (foo1?.foo2 || {}).foo3;
-    │ ^^^^^^^^^^^^^^^^^^^^^^^
+    2 │ (foo || ({})).bar;
+    3 │ (await foo || {}).bar;
+  > 4 │ (foo1?.foo2 || {}).foo3;
+      │ ^^^^^^^^^^^^^^^^^^^^^^^
+    5 │ ((() => foo())() || {}).bar;
+    6 │ const foo = (bar || {}).baz;
   
   i Suggested fix: Change to an optional chain.
   
@@ -259,10 +264,12 @@ nullishAndLogicalOr.ts:5:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━�
 
   ! Change to an optional chain.
   
-    ┌─ nullishAndLogicalOr.ts:5:1
-    │
-  5 │ ((() => foo())() || {}).bar;
-    │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ (await foo || {}).bar;
+    4 │ (foo1?.foo2 || {}).foo3;
+  > 5 │ ((() => foo())() || {}).bar;
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    6 │ const foo = (bar || {}).baz;
+    7 │ (foo.bar || {})[baz];
   
   i Suggested fix: Change to an optional chain.
   
@@ -284,10 +291,12 @@ nullishAndLogicalOr.ts:6:13 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-    ┌─ nullishAndLogicalOr.ts:6:13
-    │
-  6 │ const foo = (bar || {}).baz;
-    │             ^^^^^^^^^^^^^^^
+    4 │ (foo1?.foo2 || {}).foo3;
+    5 │ ((() => foo())() || {}).bar;
+  > 6 │ const foo = (bar || {}).baz;
+      │             ^^^^^^^^^^^^^^^
+    7 │ (foo.bar || {})[baz];
+    8 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -309,10 +318,12 @@ nullishAndLogicalOr.ts:7:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━�
 
   ! Change to an optional chain.
   
-    ┌─ nullishAndLogicalOr.ts:7:1
-    │
-  7 │ (foo.bar || {})[baz];
-    │ ^^^^^^^^^^^^^^^^^^^^
+    5 │ ((() => foo())() || {}).bar;
+    6 │ const foo = (bar || {}).baz;
+  > 7 │ (foo.bar || {})[baz];
+      │ ^^^^^^^^^^^^^^^^^^^^
+    8 │ 
+    9 │ ((foo1 || {}).foo2 || {}).foo3;
   
   i Suggested fix: Change to an optional chain.
   
@@ -334,10 +345,12 @@ nullishAndLogicalOr.ts:9:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━�
 
   ! Change to an optional chain.
   
-    ┌─ nullishAndLogicalOr.ts:9:1
-    │
-  9 │ ((foo1 || {}).foo2 || {}).foo3;
-    │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     7 │ (foo.bar || {})[baz];
+     8 │ 
+   > 9 │ ((foo1 || {}).foo2 || {}).foo3;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    10 │ (foo || undefined || {}).bar;
+    11 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -359,10 +372,11 @@ nullishAndLogicalOr.ts:10:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:10:1
-     │
-  10 │ (foo || undefined || {}).bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     9 │ ((foo1 || {}).foo2 || {}).foo3;
+  > 10 │ (foo || undefined || {}).bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    11 │ 
+    12 │ (foo() || bar || {}).baz;
   
   i Suggested fix: Change to an optional chain.
   
@@ -384,10 +398,12 @@ nullishAndLogicalOr.ts:12:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:12:1
-     │
-  12 │ (foo() || bar || {}).baz;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^
+    10 │ (foo || undefined || {}).bar;
+    11 │ 
+  > 12 │ (foo() || bar || {}).baz;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^
+    13 │ ((foo1 ? foo2 : foo3) || {}).foo4;
+    14 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -409,10 +425,11 @@ nullishAndLogicalOr.ts:13:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:13:1
-     │
-  13 │ ((foo1 ? foo2 : foo3) || {}).foo4;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    12 │ (foo() || bar || {}).baz;
+  > 13 │ ((foo1 ? foo2 : foo3) || {}).foo4;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    14 │ 
+    15 │ if (foo) { (foo || {}).bar; }
   
   i Suggested fix: Change to an optional chain.
   
@@ -434,10 +451,12 @@ nullishAndLogicalOr.ts:15:12 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:15:12
-     │
-  15 │ if (foo) { (foo || {}).bar; }
-     │            ^^^^^^^^^^^^^^^
+    13 │ ((foo1 ? foo2 : foo3) || {}).foo4;
+    14 │ 
+  > 15 │ if (foo) { (foo || {}).bar; }
+       │            ^^^^^^^^^^^^^^^
+    16 │ if ((foo || {}).bar) { foo.bar; }
+    17 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -459,10 +478,11 @@ nullishAndLogicalOr.ts:16:5 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:16:5
-     │
-  16 │ if ((foo || {}).bar) { foo.bar; }
-     │     ^^^^^^^^^^^^^^^
+    15 │ if (foo) { (foo || {}).bar; }
+  > 16 │ if ((foo || {}).bar) { foo.bar; }
+       │     ^^^^^^^^^^^^^^^
+    17 │ 
+    18 │ (undefined && foo || {}).bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -484,10 +504,12 @@ nullishAndLogicalOr.ts:18:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:18:1
-     │
-  18 │ (undefined && foo || {}).bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    16 │ if ((foo || {}).bar) { foo.bar; }
+    17 │ 
+  > 18 │ (undefined && foo || {}).bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    19 │ (foo ?? {}).bar;
+    20 │ (foo ?? ({})).bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -509,10 +531,11 @@ nullishAndLogicalOr.ts:19:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:19:1
-     │
-  19 │ (foo ?? {}).bar;
-     │ ^^^^^^^^^^^^^^^
+    18 │ (undefined && foo || {}).bar;
+  > 19 │ (foo ?? {}).bar;
+       │ ^^^^^^^^^^^^^^^
+    20 │ (foo ?? ({})).bar;
+    21 │ (await foo ?? {}).bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -534,10 +557,12 @@ nullishAndLogicalOr.ts:20:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:20:1
-     │
-  20 │ (foo ?? ({})).bar;
-     │ ^^^^^^^^^^^^^^^^^
+    18 │ (undefined && foo || {}).bar;
+    19 │ (foo ?? {}).bar;
+  > 20 │ (foo ?? ({})).bar;
+       │ ^^^^^^^^^^^^^^^^^
+    21 │ (await foo ?? {}).bar;
+    22 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -559,10 +584,12 @@ nullishAndLogicalOr.ts:21:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:21:1
-     │
-  21 │ (await foo ?? {}).bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^
+    19 │ (foo ?? {}).bar;
+    20 │ (foo ?? ({})).bar;
+  > 21 │ (await foo ?? {}).bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^
+    22 │ 
+    23 │ (foo1?.foo2 ?? {}).foo3;
   
   i Suggested fix: Change to an optional chain.
   
@@ -584,10 +611,12 @@ nullishAndLogicalOr.ts:23:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:23:1
-     │
-  23 │ (foo1?.foo2 ?? {}).foo3;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^
+    21 │ (await foo ?? {}).bar;
+    22 │ 
+  > 23 │ (foo1?.foo2 ?? {}).foo3;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^
+    24 │ ((() => foo())() ?? {}).bar;
+    25 │ const foo = (bar ?? {}).baz;
   
   i Suggested fix: Change to an optional chain.
   
@@ -609,10 +638,11 @@ nullishAndLogicalOr.ts:24:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:24:1
-     │
-  24 │ ((() => foo())() ?? {}).bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    23 │ (foo1?.foo2 ?? {}).foo3;
+  > 24 │ ((() => foo())() ?? {}).bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    25 │ const foo = (bar ?? {}).baz;
+    26 │ (foo.bar ?? {})[baz];
   
   i Suggested fix: Change to an optional chain.
   
@@ -634,10 +664,12 @@ nullishAndLogicalOr.ts:25:13 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:25:13
-     │
-  25 │ const foo = (bar ?? {}).baz;
-     │             ^^^^^^^^^^^^^^^
+    23 │ (foo1?.foo2 ?? {}).foo3;
+    24 │ ((() => foo())() ?? {}).bar;
+  > 25 │ const foo = (bar ?? {}).baz;
+       │             ^^^^^^^^^^^^^^^
+    26 │ (foo.bar ?? {})[baz];
+    27 │ ((foo1 ?? {}).foo2 ?? {}).foo3;
   
   i Suggested fix: Change to an optional chain.
   
@@ -659,10 +691,12 @@ nullishAndLogicalOr.ts:26:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:26:1
-     │
-  26 │ (foo.bar ?? {})[baz];
-     │ ^^^^^^^^^^^^^^^^^^^^
+    24 │ ((() => foo())() ?? {}).bar;
+    25 │ const foo = (bar ?? {}).baz;
+  > 26 │ (foo.bar ?? {})[baz];
+       │ ^^^^^^^^^^^^^^^^^^^^
+    27 │ ((foo1 ?? {}).foo2 ?? {}).foo3;
+    28 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -684,10 +718,12 @@ nullishAndLogicalOr.ts:27:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:27:1
-     │
-  27 │ ((foo1 ?? {}).foo2 ?? {}).foo3;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    25 │ const foo = (bar ?? {}).baz;
+    26 │ (foo.bar ?? {})[baz];
+  > 27 │ ((foo1 ?? {}).foo2 ?? {}).foo3;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    28 │ 
+    29 │ (foo ?? undefined ?? {}).bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -709,10 +745,12 @@ nullishAndLogicalOr.ts:29:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:29:1
-     │
-  29 │ (foo ?? undefined ?? {}).bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    27 │ ((foo1 ?? {}).foo2 ?? {}).foo3;
+    28 │ 
+  > 29 │ (foo ?? undefined ?? {}).bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    30 │ (foo() ?? bar ?? {}).baz;
+    31 │ ((foo1 ? foo2 : foo3) ?? {}).foo4;
   
   i Suggested fix: Change to an optional chain.
   
@@ -734,10 +772,11 @@ nullishAndLogicalOr.ts:30:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:30:1
-     │
-  30 │ (foo() ?? bar ?? {}).baz;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^
+    29 │ (foo ?? undefined ?? {}).bar;
+  > 30 │ (foo() ?? bar ?? {}).baz;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^
+    31 │ ((foo1 ? foo2 : foo3) ?? {}).foo4;
+    32 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -759,10 +798,12 @@ nullishAndLogicalOr.ts:31:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:31:1
-     │
-  31 │ ((foo1 ? foo2 : foo3) ?? {}).foo4;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    29 │ (foo ?? undefined ?? {}).bar;
+    30 │ (foo() ?? bar ?? {}).baz;
+  > 31 │ ((foo1 ? foo2 : foo3) ?? {}).foo4;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    32 │ 
+    33 │ if (foo) { (foo ?? {}).bar; }
   
   i Suggested fix: Change to an optional chain.
   
@@ -784,10 +825,12 @@ nullishAndLogicalOr.ts:33:12 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:33:12
-     │
-  33 │ if (foo) { (foo ?? {}).bar; }
-     │            ^^^^^^^^^^^^^^^
+    31 │ ((foo1 ? foo2 : foo3) ?? {}).foo4;
+    32 │ 
+  > 33 │ if (foo) { (foo ?? {}).bar; }
+       │            ^^^^^^^^^^^^^^^
+    34 │ if ((foo ?? {}).bar) { foo.bar; }
+    35 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -809,10 +852,11 @@ nullishAndLogicalOr.ts:34:5 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:34:5
-     │
-  34 │ if ((foo ?? {}).bar) { foo.bar; }
-     │     ^^^^^^^^^^^^^^^
+    33 │ if (foo) { (foo ?? {}).bar; }
+  > 34 │ if ((foo ?? {}).bar) { foo.bar; }
+       │     ^^^^^^^^^^^^^^^
+    35 │ 
+    36 │ (undefined && foo ?? {}).bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -834,10 +878,12 @@ nullishAndLogicalOr.ts:36:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:36:1
-     │
-  36 │ (undefined && foo ?? {}).bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    34 │ if ((foo ?? {}).bar) { foo.bar; }
+    35 │ 
+  > 36 │ (undefined && foo ?? {}).bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    37 │ (a > b || {}).bar;
+    38 │ (((typeof x) as string) || {}).bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -859,10 +905,11 @@ nullishAndLogicalOr.ts:37:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:37:1
-     │
-  37 │ (a > b || {}).bar;
-     │ ^^^^^^^^^^^^^^^^^
+    36 │ (undefined && foo ?? {}).bar;
+  > 37 │ (a > b || {}).bar;
+       │ ^^^^^^^^^^^^^^^^^
+    38 │ (((typeof x) as string) || {}).bar;
+    39 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -884,10 +931,12 @@ nullishAndLogicalOr.ts:38:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:38:1
-     │
-  38 │ (((typeof x) as string) || {}).bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    36 │ (undefined && foo ?? {}).bar;
+    37 │ (a > b || {}).bar;
+  > 38 │ (((typeof x) as string) || {}).bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    39 │ 
+    40 │ (void foo() || {}).bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -909,10 +958,12 @@ nullishAndLogicalOr.ts:40:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:40:1
-     │
-  40 │ (void foo() || {}).bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^^
+    38 │ (((typeof x) as string) || {}).bar;
+    39 │ 
+  > 40 │ (void foo() || {}).bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^
+    41 │ ((a ? b : c) || {}).bar;
+    42 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -934,10 +985,11 @@ nullishAndLogicalOr.ts:41:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:41:1
-     │
-  41 │ ((a ? b : c) || {}).bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^
+    40 │ (void foo() || {}).bar;
+  > 41 │ ((a ? b : c) || {}).bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^
+    42 │ 
+    43 │ ((a instanceof Error) || {}).bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -959,10 +1011,12 @@ nullishAndLogicalOr.ts:43:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:43:1
-     │
-  43 │ ((a instanceof Error) || {}).bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    41 │ ((a ? b : c) || {}).bar;
+    42 │ 
+  > 43 │ ((a instanceof Error) || {}).bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    44 │ ((a << b) || {}).bar;
+    45 │ ((foo ** 2) || {}).bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -984,10 +1038,11 @@ nullishAndLogicalOr.ts:44:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:44:1
-     │
-  44 │ ((a << b) || {}).bar;
-     │ ^^^^^^^^^^^^^^^^^^^^
+    43 │ ((a instanceof Error) || {}).bar;
+  > 44 │ ((a << b) || {}).bar;
+       │ ^^^^^^^^^^^^^^^^^^^^
+    45 │ ((foo ** 2) || {}).bar;
+    46 │ (foo ** 2 || {}).bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1009,10 +1064,12 @@ nullishAndLogicalOr.ts:45:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:45:1
-     │
-  45 │ ((foo ** 2) || {}).bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^^
+    43 │ ((a instanceof Error) || {}).bar;
+    44 │ ((a << b) || {}).bar;
+  > 45 │ ((foo ** 2) || {}).bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^
+    46 │ (foo ** 2 || {}).bar;
+    47 │ (foo++ || {}).bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1034,10 +1091,12 @@ nullishAndLogicalOr.ts:46:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:46:1
-     │
-  46 │ (foo ** 2 || {}).bar;
-     │ ^^^^^^^^^^^^^^^^^^^^
+    44 │ ((a << b) || {}).bar;
+    45 │ ((foo ** 2) || {}).bar;
+  > 46 │ (foo ** 2 || {}).bar;
+       │ ^^^^^^^^^^^^^^^^^^^^
+    47 │ (foo++ || {}).bar;
+    48 │ (+foo || {}).bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1059,10 +1118,12 @@ nullishAndLogicalOr.ts:47:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:47:1
-     │
-  47 │ (foo++ || {}).bar;
-     │ ^^^^^^^^^^^^^^^^^
+    45 │ ((foo ** 2) || {}).bar;
+    46 │ (foo ** 2 || {}).bar;
+  > 47 │ (foo++ || {}).bar;
+       │ ^^^^^^^^^^^^^^^^^
+    48 │ (+foo || {}).bar;
+    49 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -1084,10 +1145,12 @@ nullishAndLogicalOr.ts:48:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:48:1
-     │
-  48 │ (+foo || {}).bar;
-     │ ^^^^^^^^^^^^^^^^
+    46 │ (foo ** 2 || {}).bar;
+    47 │ (foo++ || {}).bar;
+  > 48 │ (+foo || {}).bar;
+       │ ^^^^^^^^^^^^^^^^
+    49 │ 
+    50 │ // private name
   
   i Suggested fix: Change to an optional chain.
   
@@ -1109,10 +1172,11 @@ nullishAndLogicalOr.ts:51:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:51:1
-     │
-  51 │ (foo || {}).#bar;
-     │ ^^^^^^^^^^^^^^^^
+    50 │ // private name
+  > 51 │ (foo || {}).#bar;
+       │ ^^^^^^^^^^^^^^^^
+    52 │ (foo || ({})).#bar;
+    53 │ (await foo || {}).#bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1134,10 +1198,12 @@ nullishAndLogicalOr.ts:52:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:52:1
-     │
-  52 │ (foo || ({})).#bar;
-     │ ^^^^^^^^^^^^^^^^^^
+    50 │ // private name
+    51 │ (foo || {}).#bar;
+  > 52 │ (foo || ({})).#bar;
+       │ ^^^^^^^^^^^^^^^^^^
+    53 │ (await foo || {}).#bar;
+    54 │ (foo1?.foo2 || {}).#foo3;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1159,10 +1225,12 @@ nullishAndLogicalOr.ts:53:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:53:1
-     │
-  53 │ (await foo || {}).#bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^^
+    51 │ (foo || {}).#bar;
+    52 │ (foo || ({})).#bar;
+  > 53 │ (await foo || {}).#bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^
+    54 │ (foo1?.foo2 || {}).#foo3;
+    55 │ ((() => foo())() || {}).#bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1184,10 +1252,12 @@ nullishAndLogicalOr.ts:54:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:54:1
-     │
-  54 │ (foo1?.foo2 || {}).#foo3;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^
+    52 │ (foo || ({})).#bar;
+    53 │ (await foo || {}).#bar;
+  > 54 │ (foo1?.foo2 || {}).#foo3;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^
+    55 │ ((() => foo())() || {}).#bar;
+    56 │ const foo = (bar || {}).#baz;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1209,10 +1279,12 @@ nullishAndLogicalOr.ts:55:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:55:1
-     │
-  55 │ ((() => foo())() || {}).#bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    53 │ (await foo || {}).#bar;
+    54 │ (foo1?.foo2 || {}).#foo3;
+  > 55 │ ((() => foo())() || {}).#bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    56 │ const foo = (bar || {}).#baz;
+    57 │ (foo.bar || {})[baz];
   
   i Suggested fix: Change to an optional chain.
   
@@ -1234,10 +1306,12 @@ nullishAndLogicalOr.ts:56:13 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:56:13
-     │
-  56 │ const foo = (bar || {}).#baz;
-     │             ^^^^^^^^^^^^^^^^
+    54 │ (foo1?.foo2 || {}).#foo3;
+    55 │ ((() => foo())() || {}).#bar;
+  > 56 │ const foo = (bar || {}).#baz;
+       │             ^^^^^^^^^^^^^^^^
+    57 │ (foo.bar || {})[baz];
+    58 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -1259,10 +1333,12 @@ nullishAndLogicalOr.ts:57:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:57:1
-     │
-  57 │ (foo.bar || {})[baz];
-     │ ^^^^^^^^^^^^^^^^^^^^
+    55 │ ((() => foo())() || {}).#bar;
+    56 │ const foo = (bar || {}).#baz;
+  > 57 │ (foo.bar || {})[baz];
+       │ ^^^^^^^^^^^^^^^^^^^^
+    58 │ 
+    59 │ ((foo1 || {}).#foo2 || {}).#foo3;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1284,10 +1360,12 @@ nullishAndLogicalOr.ts:59:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:59:1
-     │
-  59 │ ((foo1 || {}).#foo2 || {}).#foo3;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    57 │ (foo.bar || {})[baz];
+    58 │ 
+  > 59 │ ((foo1 || {}).#foo2 || {}).#foo3;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    60 │ (foo || undefined || {}).#bar;
+    61 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -1309,10 +1387,11 @@ nullishAndLogicalOr.ts:60:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:60:1
-     │
-  60 │ (foo || undefined || {}).#bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    59 │ ((foo1 || {}).#foo2 || {}).#foo3;
+  > 60 │ (foo || undefined || {}).#bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    61 │ 
+    62 │ (foo() || bar || {}).#baz;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1334,10 +1413,12 @@ nullishAndLogicalOr.ts:62:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:62:1
-     │
-  62 │ (foo() || bar || {}).#baz;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^
+    60 │ (foo || undefined || {}).#bar;
+    61 │ 
+  > 62 │ (foo() || bar || {}).#baz;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^
+    63 │ ((foo1 ? foo2 : foo3) || {}).#foo4;
+    64 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -1359,10 +1440,11 @@ nullishAndLogicalOr.ts:63:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:63:1
-     │
-  63 │ ((foo1 ? foo2 : foo3) || {}).#foo4;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    62 │ (foo() || bar || {}).#baz;
+  > 63 │ ((foo1 ? foo2 : foo3) || {}).#foo4;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    64 │ 
+    65 │ if (foo) { (foo || {}).#bar; }
   
   i Suggested fix: Change to an optional chain.
   
@@ -1384,10 +1466,12 @@ nullishAndLogicalOr.ts:65:12 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:65:12
-     │
-  65 │ if (foo) { (foo || {}).#bar; }
-     │            ^^^^^^^^^^^^^^^^
+    63 │ ((foo1 ? foo2 : foo3) || {}).#foo4;
+    64 │ 
+  > 65 │ if (foo) { (foo || {}).#bar; }
+       │            ^^^^^^^^^^^^^^^^
+    66 │ if ((foo || {}).#bar) { foo.bar; }
+    67 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -1409,10 +1493,11 @@ nullishAndLogicalOr.ts:66:5 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:66:5
-     │
-  66 │ if ((foo || {}).#bar) { foo.bar; }
-     │     ^^^^^^^^^^^^^^^^
+    65 │ if (foo) { (foo || {}).#bar; }
+  > 66 │ if ((foo || {}).#bar) { foo.bar; }
+       │     ^^^^^^^^^^^^^^^^
+    67 │ 
+    68 │ (undefined && foo || {}).#bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1434,10 +1519,12 @@ nullishAndLogicalOr.ts:68:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:68:1
-     │
-  68 │ (undefined && foo || {}).#bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    66 │ if ((foo || {}).#bar) { foo.bar; }
+    67 │ 
+  > 68 │ (undefined && foo || {}).#bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    69 │ (foo ?? {}).#bar;
+    70 │ (foo ?? ({})).#bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1459,10 +1546,11 @@ nullishAndLogicalOr.ts:69:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:69:1
-     │
-  69 │ (foo ?? {}).#bar;
-     │ ^^^^^^^^^^^^^^^^
+    68 │ (undefined && foo || {}).#bar;
+  > 69 │ (foo ?? {}).#bar;
+       │ ^^^^^^^^^^^^^^^^
+    70 │ (foo ?? ({})).#bar;
+    71 │ (await foo ?? {}).#bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1484,10 +1572,12 @@ nullishAndLogicalOr.ts:70:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:70:1
-     │
-  70 │ (foo ?? ({})).#bar;
-     │ ^^^^^^^^^^^^^^^^^^
+    68 │ (undefined && foo || {}).#bar;
+    69 │ (foo ?? {}).#bar;
+  > 70 │ (foo ?? ({})).#bar;
+       │ ^^^^^^^^^^^^^^^^^^
+    71 │ (await foo ?? {}).#bar;
+    72 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -1509,10 +1599,12 @@ nullishAndLogicalOr.ts:71:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:71:1
-     │
-  71 │ (await foo ?? {}).#bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^^
+    69 │ (foo ?? {}).#bar;
+    70 │ (foo ?? ({})).#bar;
+  > 71 │ (await foo ?? {}).#bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^
+    72 │ 
+    73 │ (foo1?.foo2 ?? {}).#foo3;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1534,10 +1626,12 @@ nullishAndLogicalOr.ts:73:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:73:1
-     │
-  73 │ (foo1?.foo2 ?? {}).#foo3;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^
+    71 │ (await foo ?? {}).#bar;
+    72 │ 
+  > 73 │ (foo1?.foo2 ?? {}).#foo3;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^
+    74 │ ((() => foo())() ?? {}).#bar;
+    75 │ const foo = (bar ?? {}).#baz;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1559,10 +1653,11 @@ nullishAndLogicalOr.ts:74:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:74:1
-     │
-  74 │ ((() => foo())() ?? {}).#bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    73 │ (foo1?.foo2 ?? {}).#foo3;
+  > 74 │ ((() => foo())() ?? {}).#bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    75 │ const foo = (bar ?? {}).#baz;
+    76 │ (foo.bar ?? {})[baz];
   
   i Suggested fix: Change to an optional chain.
   
@@ -1584,10 +1679,12 @@ nullishAndLogicalOr.ts:75:13 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:75:13
-     │
-  75 │ const foo = (bar ?? {}).#baz;
-     │             ^^^^^^^^^^^^^^^^
+    73 │ (foo1?.foo2 ?? {}).#foo3;
+    74 │ ((() => foo())() ?? {}).#bar;
+  > 75 │ const foo = (bar ?? {}).#baz;
+       │             ^^^^^^^^^^^^^^^^
+    76 │ (foo.bar ?? {})[baz];
+    77 │ ((foo1 ?? {}).#foo2 ?? {}).#foo3;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1609,10 +1706,12 @@ nullishAndLogicalOr.ts:76:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:76:1
-     │
-  76 │ (foo.bar ?? {})[baz];
-     │ ^^^^^^^^^^^^^^^^^^^^
+    74 │ ((() => foo())() ?? {}).#bar;
+    75 │ const foo = (bar ?? {}).#baz;
+  > 76 │ (foo.bar ?? {})[baz];
+       │ ^^^^^^^^^^^^^^^^^^^^
+    77 │ ((foo1 ?? {}).#foo2 ?? {}).#foo3;
+    78 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -1634,10 +1733,12 @@ nullishAndLogicalOr.ts:77:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:77:1
-     │
-  77 │ ((foo1 ?? {}).#foo2 ?? {}).#foo3;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    75 │ const foo = (bar ?? {}).#baz;
+    76 │ (foo.bar ?? {})[baz];
+  > 77 │ ((foo1 ?? {}).#foo2 ?? {}).#foo3;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    78 │ 
+    79 │ (foo ?? undefined ?? {}).#bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1659,10 +1760,12 @@ nullishAndLogicalOr.ts:79:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:79:1
-     │
-  79 │ (foo ?? undefined ?? {}).#bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    77 │ ((foo1 ?? {}).#foo2 ?? {}).#foo3;
+    78 │ 
+  > 79 │ (foo ?? undefined ?? {}).#bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    80 │ (foo() ?? bar ?? {}).#baz;
+    81 │ ((foo1 ? foo2 : foo3) ?? {}).#foo4;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1684,10 +1787,11 @@ nullishAndLogicalOr.ts:80:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:80:1
-     │
-  80 │ (foo() ?? bar ?? {}).#baz;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^
+    79 │ (foo ?? undefined ?? {}).#bar;
+  > 80 │ (foo() ?? bar ?? {}).#baz;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^
+    81 │ ((foo1 ? foo2 : foo3) ?? {}).#foo4;
+    82 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -1709,10 +1813,12 @@ nullishAndLogicalOr.ts:81:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:81:1
-     │
-  81 │ ((foo1 ? foo2 : foo3) ?? {}).#foo4;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    79 │ (foo ?? undefined ?? {}).#bar;
+    80 │ (foo() ?? bar ?? {}).#baz;
+  > 81 │ ((foo1 ? foo2 : foo3) ?? {}).#foo4;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    82 │ 
+    83 │ if (foo) { (foo ?? {}).#bar; }
   
   i Suggested fix: Change to an optional chain.
   
@@ -1734,10 +1840,12 @@ nullishAndLogicalOr.ts:83:12 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:83:12
-     │
-  83 │ if (foo) { (foo ?? {}).#bar; }
-     │            ^^^^^^^^^^^^^^^^
+    81 │ ((foo1 ? foo2 : foo3) ?? {}).#foo4;
+    82 │ 
+  > 83 │ if (foo) { (foo ?? {}).#bar; }
+       │            ^^^^^^^^^^^^^^^^
+    84 │ if ((foo ?? {}).#bar) { foo.bar; }
+    85 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -1759,10 +1867,11 @@ nullishAndLogicalOr.ts:84:5 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:84:5
-     │
-  84 │ if ((foo ?? {}).#bar) { foo.bar; }
-     │     ^^^^^^^^^^^^^^^^
+    83 │ if (foo) { (foo ?? {}).#bar; }
+  > 84 │ if ((foo ?? {}).#bar) { foo.bar; }
+       │     ^^^^^^^^^^^^^^^^
+    85 │ 
+    86 │ (undefined && foo ?? {}).#bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1784,10 +1893,12 @@ nullishAndLogicalOr.ts:86:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:86:1
-     │
-  86 │ (undefined && foo ?? {}).#bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    84 │ if ((foo ?? {}).#bar) { foo.bar; }
+    85 │ 
+  > 86 │ (undefined && foo ?? {}).#bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    87 │ (a > b || {}).#bar;
+    88 │ (((typeof x) as string) || {}).#bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1809,10 +1920,11 @@ nullishAndLogicalOr.ts:87:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:87:1
-     │
-  87 │ (a > b || {}).#bar;
-     │ ^^^^^^^^^^^^^^^^^^
+    86 │ (undefined && foo ?? {}).#bar;
+  > 87 │ (a > b || {}).#bar;
+       │ ^^^^^^^^^^^^^^^^^^
+    88 │ (((typeof x) as string) || {}).#bar;
+    89 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -1834,10 +1946,12 @@ nullishAndLogicalOr.ts:88:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:88:1
-     │
-  88 │ (((typeof x) as string) || {}).#bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    86 │ (undefined && foo ?? {}).#bar;
+    87 │ (a > b || {}).#bar;
+  > 88 │ (((typeof x) as string) || {}).#bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    89 │ 
+    90 │ (void foo() || {}).#bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1859,10 +1973,12 @@ nullishAndLogicalOr.ts:90:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:90:1
-     │
-  90 │ (void foo() || {}).#bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^
+    88 │ (((typeof x) as string) || {}).#bar;
+    89 │ 
+  > 90 │ (void foo() || {}).#bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^
+    91 │ ((a ? b : c) || {}).#bar;
+    92 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -1884,10 +2000,11 @@ nullishAndLogicalOr.ts:91:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:91:1
-     │
-  91 │ ((a ? b : c) || {}).#bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^
+    90 │ (void foo() || {}).#bar;
+  > 91 │ ((a ? b : c) || {}).#bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^
+    92 │ 
+    93 │ ((a instanceof Error) || {}).#bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1909,10 +2026,12 @@ nullishAndLogicalOr.ts:93:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:93:1
-     │
-  93 │ ((a instanceof Error) || {}).#bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    91 │ ((a ? b : c) || {}).#bar;
+    92 │ 
+  > 93 │ ((a instanceof Error) || {}).#bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    94 │ ((a << b) || {}).#bar;
+    95 │ ((foo ** 2) || {}).#bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1934,10 +2053,11 @@ nullishAndLogicalOr.ts:94:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:94:1
-     │
-  94 │ ((a << b) || {}).#bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^
+    93 │ ((a instanceof Error) || {}).#bar;
+  > 94 │ ((a << b) || {}).#bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^
+    95 │ ((foo ** 2) || {}).#bar;
+    96 │ (foo ** 2 || {}).#bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1959,10 +2079,12 @@ nullishAndLogicalOr.ts:95:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:95:1
-     │
-  95 │ ((foo ** 2) || {}).#bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^
+    93 │ ((a instanceof Error) || {}).#bar;
+    94 │ ((a << b) || {}).#bar;
+  > 95 │ ((foo ** 2) || {}).#bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^
+    96 │ (foo ** 2 || {}).#bar;
+    97 │ (foo++ || {}).#bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -1984,10 +2106,12 @@ nullishAndLogicalOr.ts:96:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:96:1
-     │
-  96 │ (foo ** 2 || {}).#bar;
-     │ ^^^^^^^^^^^^^^^^^^^^^
+    94 │ ((a << b) || {}).#bar;
+    95 │ ((foo ** 2) || {}).#bar;
+  > 96 │ (foo ** 2 || {}).#bar;
+       │ ^^^^^^^^^^^^^^^^^^^^^
+    97 │ (foo++ || {}).#bar;
+    98 │ (+foo || {}).#bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -2009,10 +2133,12 @@ nullishAndLogicalOr.ts:97:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:97:1
-     │
-  97 │ (foo++ || {}).#bar;
-     │ ^^^^^^^^^^^^^^^^^^
+    95 │ ((foo ** 2) || {}).#bar;
+    96 │ (foo ** 2 || {}).#bar;
+  > 97 │ (foo++ || {}).#bar;
+       │ ^^^^^^^^^^^^^^^^^^
+    98 │ (+foo || {}).#bar;
+    99 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -2034,10 +2160,11 @@ nullishAndLogicalOr.ts:98:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━
 
   ! Change to an optional chain.
   
-     ┌─ nullishAndLogicalOr.ts:98:1
-     │
-  98 │ (+foo || {}).#bar;
-     │ ^^^^^^^^^^^^^^^^^
+    96 │ (foo ** 2 || {}).#bar;
+    97 │ (foo++ || {}).#bar;
+  > 98 │ (+foo || {}).#bar;
+       │ ^^^^^^^^^^^^^^^^^
+    99 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -2059,10 +2186,11 @@ nullishAndLogicalOr.ts:102:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:102:1
-      │
-  102 │ (this || {}).bar;
-      │ ^^^^^^^^^^^^^^^^
+    101 │ //this expression
+  > 102 │ (this || {}).bar;
+        │ ^^^^^^^^^^^^^^^^
+    103 │ (this || ({})).bar;
+    104 │ (await this || {}).bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -2084,10 +2212,12 @@ nullishAndLogicalOr.ts:103:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:103:1
-      │
-  103 │ (this || ({})).bar;
-      │ ^^^^^^^^^^^^^^^^^^
+    101 │ //this expression
+    102 │ (this || {}).bar;
+  > 103 │ (this || ({})).bar;
+        │ ^^^^^^^^^^^^^^^^^^
+    104 │ (await this || {}).bar;
+    105 │ const foo = (this || {}).baz;
   
   i Suggested fix: Change to an optional chain.
   
@@ -2109,10 +2239,12 @@ nullishAndLogicalOr.ts:104:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:104:1
-      │
-  104 │ (await this || {}).bar;
-      │ ^^^^^^^^^^^^^^^^^^^^^^
+    102 │ (this || {}).bar;
+    103 │ (this || ({})).bar;
+  > 104 │ (await this || {}).bar;
+        │ ^^^^^^^^^^^^^^^^^^^^^^
+    105 │ const foo = (this || {}).baz;
+    106 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -2134,10 +2266,12 @@ nullishAndLogicalOr.ts:105:13 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:105:13
-      │
-  105 │ const foo = (this || {}).baz;
-      │             ^^^^^^^^^^^^^^^^
+    103 │ (this || ({})).bar;
+    104 │ (await this || {}).bar;
+  > 105 │ const foo = (this || {}).baz;
+        │             ^^^^^^^^^^^^^^^^
+    106 │ 
+    107 │ ((this || {}).foo2 || {}).foo3;
   
   i Suggested fix: Change to an optional chain.
   
@@ -2159,10 +2293,12 @@ nullishAndLogicalOr.ts:107:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:107:1
-      │
-  107 │ ((this || {}).foo2 || {}).foo3;
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    105 │ const foo = (this || {}).baz;
+    106 │ 
+  > 107 │ ((this || {}).foo2 || {}).foo3;
+        │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    108 │ 
+    109 │ if (foo) { (this || {}).bar; }
   
   i Suggested fix: Change to an optional chain.
   
@@ -2184,10 +2320,12 @@ nullishAndLogicalOr.ts:109:12 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:109:12
-      │
-  109 │ if (foo) { (this || {}).bar; }
-      │            ^^^^^^^^^^^^^^^^
+    107 │ ((this || {}).foo2 || {}).foo3;
+    108 │ 
+  > 109 │ if (foo) { (this || {}).bar; }
+        │            ^^^^^^^^^^^^^^^^
+    110 │ if ((this || {}).bar) { foo.bar; }
+    111 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -2209,10 +2347,11 @@ nullishAndLogicalOr.ts:110:5 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:110:5
-      │
-  110 │ if ((this || {}).bar) { foo.bar; }
-      │     ^^^^^^^^^^^^^^^^
+    109 │ if (foo) { (this || {}).bar; }
+  > 110 │ if ((this || {}).bar) { foo.bar; }
+        │     ^^^^^^^^^^^^^^^^
+    111 │ 
+    112 │ (undefined && this || {}).bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -2234,10 +2373,12 @@ nullishAndLogicalOr.ts:112:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:112:1
-      │
-  112 │ (undefined && this || {}).bar;
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    110 │ if ((this || {}).bar) { foo.bar; }
+    111 │ 
+  > 112 │ (undefined && this || {}).bar;
+        │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    113 │ (this ?? {}).bar;
+    114 │ (this ?? ({})).bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -2259,10 +2400,11 @@ nullishAndLogicalOr.ts:113:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:113:1
-      │
-  113 │ (this ?? {}).bar;
-      │ ^^^^^^^^^^^^^^^^
+    112 │ (undefined && this || {}).bar;
+  > 113 │ (this ?? {}).bar;
+        │ ^^^^^^^^^^^^^^^^
+    114 │ (this ?? ({})).bar;
+    115 │ (await this ?? {}).bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -2284,10 +2426,12 @@ nullishAndLogicalOr.ts:114:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:114:1
-      │
-  114 │ (this ?? ({})).bar;
-      │ ^^^^^^^^^^^^^^^^^^
+    112 │ (undefined && this || {}).bar;
+    113 │ (this ?? {}).bar;
+  > 114 │ (this ?? ({})).bar;
+        │ ^^^^^^^^^^^^^^^^^^
+    115 │ (await this ?? {}).bar;
+    116 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -2309,10 +2453,12 @@ nullishAndLogicalOr.ts:115:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:115:1
-      │
-  115 │ (await this ?? {}).bar;
-      │ ^^^^^^^^^^^^^^^^^^^^^^
+    113 │ (this ?? {}).bar;
+    114 │ (this ?? ({})).bar;
+  > 115 │ (await this ?? {}).bar;
+        │ ^^^^^^^^^^^^^^^^^^^^^^
+    116 │ 
+    117 │ const foo = (this ?? {}).baz;
   
   i Suggested fix: Change to an optional chain.
   
@@ -2334,10 +2480,12 @@ nullishAndLogicalOr.ts:117:13 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:117:13
-      │
-  117 │ const foo = (this ?? {}).baz;
-      │             ^^^^^^^^^^^^^^^^
+    115 │ (await this ?? {}).bar;
+    116 │ 
+  > 117 │ const foo = (this ?? {}).baz;
+        │             ^^^^^^^^^^^^^^^^
+    118 │ ((this ?? {}).foo2 ?? {}).foo3;
+    119 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -2359,10 +2507,11 @@ nullishAndLogicalOr.ts:118:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:118:1
-      │
-  118 │ ((this ?? {}).foo2 ?? {}).foo3;
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    117 │ const foo = (this ?? {}).baz;
+  > 118 │ ((this ?? {}).foo2 ?? {}).foo3;
+        │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    119 │ 
+    120 │ if (foo) { (this ?? {}).bar; }
   
   i Suggested fix: Change to an optional chain.
   
@@ -2384,10 +2533,12 @@ nullishAndLogicalOr.ts:120:12 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:120:12
-      │
-  120 │ if (foo) { (this ?? {}).bar; }
-      │            ^^^^^^^^^^^^^^^^
+    118 │ ((this ?? {}).foo2 ?? {}).foo3;
+    119 │ 
+  > 120 │ if (foo) { (this ?? {}).bar; }
+        │            ^^^^^^^^^^^^^^^^
+    121 │ if ((this ?? {}).bar) { foo.bar; }
+    122 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -2409,10 +2560,11 @@ nullishAndLogicalOr.ts:121:5 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:121:5
-      │
-  121 │ if ((this ?? {}).bar) { foo.bar; }
-      │     ^^^^^^^^^^^^^^^^
+    120 │ if (foo) { (this ?? {}).bar; }
+  > 121 │ if ((this ?? {}).bar) { foo.bar; }
+        │     ^^^^^^^^^^^^^^^^
+    122 │ 
+    123 │ (undefined && this ?? {}).bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -2434,10 +2586,12 @@ nullishAndLogicalOr.ts:123:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:123:1
-      │
-  123 │ (undefined && this ?? {}).bar;
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    121 │ if ((this ?? {}).bar) { foo.bar; }
+    122 │ 
+  > 123 │ (undefined && this ?? {}).bar;
+        │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    124 │ (((typeof this) as string) || {}).bar;
+    125 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -2459,10 +2613,11 @@ nullishAndLogicalOr.ts:124:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:124:1
-      │
-  124 │ (((typeof this) as string) || {}).bar;
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    123 │ (undefined && this ?? {}).bar;
+  > 124 │ (((typeof this) as string) || {}).bar;
+        │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    125 │ 
+    126 │ // this expression with private name
   
   i Suggested fix: Change to an optional chain.
   
@@ -2484,10 +2639,11 @@ nullishAndLogicalOr.ts:127:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:127:1
-      │
-  127 │ (this || {}).#bar;
-      │ ^^^^^^^^^^^^^^^^^
+    126 │ // this expression with private name
+  > 127 │ (this || {}).#bar;
+        │ ^^^^^^^^^^^^^^^^^
+    128 │ (this || ({})).#bar;
+    129 │ (await this || {}).#bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -2509,10 +2665,12 @@ nullishAndLogicalOr.ts:128:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:128:1
-      │
-  128 │ (this || ({})).#bar;
-      │ ^^^^^^^^^^^^^^^^^^^
+    126 │ // this expression with private name
+    127 │ (this || {}).#bar;
+  > 128 │ (this || ({})).#bar;
+        │ ^^^^^^^^^^^^^^^^^^^
+    129 │ (await this || {}).#bar;
+    130 │ const foo = (this || {}).#baz;
   
   i Suggested fix: Change to an optional chain.
   
@@ -2534,10 +2692,12 @@ nullishAndLogicalOr.ts:129:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:129:1
-      │
-  129 │ (await this || {}).#bar;
-      │ ^^^^^^^^^^^^^^^^^^^^^^^
+    127 │ (this || {}).#bar;
+    128 │ (this || ({})).#bar;
+  > 129 │ (await this || {}).#bar;
+        │ ^^^^^^^^^^^^^^^^^^^^^^^
+    130 │ const foo = (this || {}).#baz;
+    131 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -2559,10 +2719,12 @@ nullishAndLogicalOr.ts:130:13 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:130:13
-      │
-  130 │ const foo = (this || {}).#baz;
-      │             ^^^^^^^^^^^^^^^^^
+    128 │ (this || ({})).#bar;
+    129 │ (await this || {}).#bar;
+  > 130 │ const foo = (this || {}).#baz;
+        │             ^^^^^^^^^^^^^^^^^
+    131 │ 
+    132 │ ((this || {}).#foo2 || {}).#foo3;
   
   i Suggested fix: Change to an optional chain.
   
@@ -2584,10 +2746,12 @@ nullishAndLogicalOr.ts:132:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:132:1
-      │
-  132 │ ((this || {}).#foo2 || {}).#foo3;
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    130 │ const foo = (this || {}).#baz;
+    131 │ 
+  > 132 │ ((this || {}).#foo2 || {}).#foo3;
+        │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    133 │ 
+    134 │ if (foo) { (this || {}).#bar; }
   
   i Suggested fix: Change to an optional chain.
   
@@ -2609,10 +2773,12 @@ nullishAndLogicalOr.ts:134:12 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:134:12
-      │
-  134 │ if (foo) { (this || {}).#bar; }
-      │            ^^^^^^^^^^^^^^^^^
+    132 │ ((this || {}).#foo2 || {}).#foo3;
+    133 │ 
+  > 134 │ if (foo) { (this || {}).#bar; }
+        │            ^^^^^^^^^^^^^^^^^
+    135 │ if ((this || {}).#bar) { foo.bar; }
+    136 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -2634,10 +2800,11 @@ nullishAndLogicalOr.ts:135:5 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:135:5
-      │
-  135 │ if ((this || {}).#bar) { foo.bar; }
-      │     ^^^^^^^^^^^^^^^^^
+    134 │ if (foo) { (this || {}).#bar; }
+  > 135 │ if ((this || {}).#bar) { foo.bar; }
+        │     ^^^^^^^^^^^^^^^^^
+    136 │ 
+    137 │ (undefined && this || {}).#bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -2659,10 +2826,12 @@ nullishAndLogicalOr.ts:137:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:137:1
-      │
-  137 │ (undefined && this || {}).#bar;
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    135 │ if ((this || {}).#bar) { foo.bar; }
+    136 │ 
+  > 137 │ (undefined && this || {}).#bar;
+        │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    138 │ (this ?? {}).#bar;
+    139 │ (this ?? ({})).#bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -2684,10 +2853,11 @@ nullishAndLogicalOr.ts:138:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:138:1
-      │
-  138 │ (this ?? {}).#bar;
-      │ ^^^^^^^^^^^^^^^^^
+    137 │ (undefined && this || {}).#bar;
+  > 138 │ (this ?? {}).#bar;
+        │ ^^^^^^^^^^^^^^^^^
+    139 │ (this ?? ({})).#bar;
+    140 │ (await this ?? {}).#bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -2709,10 +2879,12 @@ nullishAndLogicalOr.ts:139:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:139:1
-      │
-  139 │ (this ?? ({})).#bar;
-      │ ^^^^^^^^^^^^^^^^^^^
+    137 │ (undefined && this || {}).#bar;
+    138 │ (this ?? {}).#bar;
+  > 139 │ (this ?? ({})).#bar;
+        │ ^^^^^^^^^^^^^^^^^^^
+    140 │ (await this ?? {}).#bar;
+    141 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -2734,10 +2906,12 @@ nullishAndLogicalOr.ts:140:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:140:1
-      │
-  140 │ (await this ?? {}).#bar;
-      │ ^^^^^^^^^^^^^^^^^^^^^^^
+    138 │ (this ?? {}).#bar;
+    139 │ (this ?? ({})).#bar;
+  > 140 │ (await this ?? {}).#bar;
+        │ ^^^^^^^^^^^^^^^^^^^^^^^
+    141 │ 
+    142 │ const foo = (this ?? {}).#baz;
   
   i Suggested fix: Change to an optional chain.
   
@@ -2759,10 +2933,12 @@ nullishAndLogicalOr.ts:142:13 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:142:13
-      │
-  142 │ const foo = (this ?? {}).#baz;
-      │             ^^^^^^^^^^^^^^^^^
+    140 │ (await this ?? {}).#bar;
+    141 │ 
+  > 142 │ const foo = (this ?? {}).#baz;
+        │             ^^^^^^^^^^^^^^^^^
+    143 │ ((this ?? {}).#foo2 ?? {}).#foo3;
+    144 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -2784,10 +2960,11 @@ nullishAndLogicalOr.ts:143:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:143:1
-      │
-  143 │ ((this ?? {}).#foo2 ?? {}).#foo3;
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    142 │ const foo = (this ?? {}).#baz;
+  > 143 │ ((this ?? {}).#foo2 ?? {}).#foo3;
+        │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    144 │ 
+    145 │ if (foo) { (this ?? {}).#bar; }
   
   i Suggested fix: Change to an optional chain.
   
@@ -2809,10 +2986,12 @@ nullishAndLogicalOr.ts:145:12 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:145:12
-      │
-  145 │ if (foo) { (this ?? {}).#bar; }
-      │            ^^^^^^^^^^^^^^^^^
+    143 │ ((this ?? {}).#foo2 ?? {}).#foo3;
+    144 │ 
+  > 145 │ if (foo) { (this ?? {}).#bar; }
+        │            ^^^^^^^^^^^^^^^^^
+    146 │ if ((this ?? {}).#bar) { foo.bar; }
+    147 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -2834,10 +3013,11 @@ nullishAndLogicalOr.ts:146:5 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:146:5
-      │
-  146 │ if ((this ?? {}).#bar) { foo.bar; }
-      │     ^^^^^^^^^^^^^^^^^
+    145 │ if (foo) { (this ?? {}).#bar; }
+  > 146 │ if ((this ?? {}).#bar) { foo.bar; }
+        │     ^^^^^^^^^^^^^^^^^
+    147 │ 
+    148 │ (undefined && this ?? {}).#bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -2859,10 +3039,12 @@ nullishAndLogicalOr.ts:148:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:148:1
-      │
-  148 │ (undefined && this ?? {}).#bar;
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    146 │ if ((this ?? {}).#bar) { foo.bar; }
+    147 │ 
+  > 148 │ (undefined && this ?? {}).#bar;
+        │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    149 │ (((typeof this) as string) || {}).#bar;
+    150 │ // (new foo || {}).bar;  // tracked here https://github.com/rome/tools/issues/3257
   
   i Suggested fix: Change to an optional chain.
   
@@ -2884,10 +3066,11 @@ nullishAndLogicalOr.ts:149:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:149:1
-      │
-  149 │ (((typeof this) as string) || {}).#bar;
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    148 │ (undefined && this ?? {}).#bar;
+  > 149 │ (((typeof this) as string) || {}).#bar;
+        │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    150 │ // (new foo || {}).bar;  // tracked here https://github.com/rome/tools/issues/3257
+    151 │ (foo() || {}).bar;
   
   i Suggested fix: Change to an optional chain.
   
@@ -2909,10 +3092,12 @@ nullishAndLogicalOr.ts:151:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:151:1
-      │
-  151 │ (foo() || {}).bar;
-      │ ^^^^^^^^^^^^^^^^^
+    149 │ (((typeof this) as string) || {}).#bar;
+    150 │ // (new foo || {}).bar;  // tracked here https://github.com/rome/tools/issues/3257
+  > 151 │ (foo() || {}).bar;
+        │ ^^^^^^^^^^^^^^^^^
+    152 │ ((foo || {}).bar() || {}).baz;
+    153 │ 
   
   i Suggested fix: Change to an optional chain.
   
@@ -2932,10 +3117,11 @@ nullishAndLogicalOr.ts:152:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
 
   ! Change to an optional chain.
   
-      ┌─ nullishAndLogicalOr.ts:152:1
-      │
-  152 │ ((foo || {}).bar() || {}).baz;
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    150 │ // (new foo || {}).bar;  // tracked here https://github.com/rome/tools/issues/3257
+    151 │ (foo() || {}).bar;
+  > 152 │ ((foo || {}).bar() || {}).baz;
+        │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    153 │ 
   
   i Suggested fix: Change to an optional chain.
   

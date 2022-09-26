@@ -99,10 +99,10 @@ break_stmt.js:1:18 parse ━━━━━━━━━━━━━━━━━━�
 
   × A `break` statement can only be used within an enclosing iteration or switch statement.
   
-    ┌─ break_stmt.js:1:18
-    │
-  1 │ function foo() { break; }
-    │                  ^^^^^
+  > 1 │ function foo() { break; }
+      │                  ^^^^^
+    2 │ while (true) {
+    3 │   break foo;
   
 --
 break_stmt.js:3:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -111,10 +111,12 @@ break_stmt.js:3:9 parse ━━━━━━━━━━━━━━━━━━�
   
   × This label is used, but it is never defined
   
-    ┌─ break_stmt.js:3:9
-    │
-  3 │   break foo;
-    │         ^^^
+    1 │ function foo() { break; }
+    2 │ while (true) {
+  > 3 │   break foo;
+      │         ^^^
+    4 │ }
+    5 │ 
   
 --
 function foo() { break; }

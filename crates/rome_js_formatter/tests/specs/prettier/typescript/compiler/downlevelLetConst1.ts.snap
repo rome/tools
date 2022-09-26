@@ -35,10 +35,8 @@ downlevelLetConst1.ts:1:6 parse ━━━━━━━━━━━━━━━━
   
   × Expected an identifier, an array pattern, or an object pattern here
   
-    ┌─ downlevelLetConst1.ts:1:6
-    │
-  1 │ const
-    │      ^
+  > 1 │ const
+      │      
   
 
 ```

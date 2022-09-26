@@ -64,10 +64,11 @@ methods.ts:6:10 parse ━━━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ methods.ts:6:10
-    │
-  6 │   export [Symbol.iterator](): Iterator<T>;
-    │          ^
+    5 │ interface Iterable<T> {
+  > 6 │   export [Symbol.iterator](): Iterator<T>;
+      │          ^
+    7 │ }
+    8 │ 
   
 
 ```

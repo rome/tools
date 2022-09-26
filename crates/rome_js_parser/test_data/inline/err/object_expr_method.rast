@@ -73,10 +73,9 @@ object_expr_method.js:1:14 parse ━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ object_expr_method.js:1:14
-    │
-  1 │ let b = { foo) }
-    │              ^
+  > 1 │ let b = { foo) }
+      │              ^
+    2 │ 
   
 --
 let b = { foo) }

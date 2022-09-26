@@ -129,30 +129,35 @@ js_class_property_with_ts_annotation.js:2:3 parse ━━━━━━━━━━
   
   × remove this type annotation
   
-    ┌─ js_class_property_with_ts_annotation.js:2:3
-    │
-  2 │  a: string;
-    │   ^^^^^^^^
+    1 │ class A {
+  > 2 │  a: string;
+      │   ^^^^^^^^
+    3 │  b?: string;
+    4 │  c!: string
   
 --
 js_class_property_with_ts_annotation.js:3:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `?` modifiers can only be used in TypeScript files
   
-    ┌─ js_class_property_with_ts_annotation.js:3:3
-    │
-  3 │  b?: string;
-    │   ^
+    1 │ class A {
+    2 │  a: string;
+  > 3 │  b?: string;
+      │   ^
+    4 │  c!: string
+    5 │ }
   
 --
 js_class_property_with_ts_annotation.js:4:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `!` modifiers can only be used in TypeScript files
   
-    ┌─ js_class_property_with_ts_annotation.js:4:3
-    │
-  4 │  c!: string
-    │   ^
+    2 │  a: string;
+    3 │  b?: string;
+  > 4 │  c!: string
+      │   ^
+    5 │ }
+    6 │ 
   
 --
 class A {

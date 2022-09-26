@@ -36,10 +36,9 @@ function-declaration-in-while.js:1:15 parse ━━━━━━━━━━━━
   
   × wrap the function in a block statement
   
-    ┌─ function-declaration-in-while.js:1:15
-    │
-  1 │ while (false) function foo(){}
-    │               ^^^^^^^^^^^^^^^^
+  > 1 │ while (false) function foo(){}
+      │               ^^^^^^^^^^^^^^^^
+    2 │ 
   
 
 ```

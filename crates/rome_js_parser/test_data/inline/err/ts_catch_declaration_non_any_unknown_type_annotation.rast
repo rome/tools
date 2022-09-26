@@ -71,10 +71,9 @@ ts_catch_declaration_non_any_unknown_type_annotation.ts:1:22 parse ━━━━�
 
   × Catch clause variable type annotation must be 'any' or 'unknown' if specified.
   
-    ┌─ ts_catch_declaration_non_any_unknown_type_annotation.ts:1:22
-    │
-  1 │ try {} catch (error: Error) {}
-    │                      ^^^^^
+  > 1 │ try {} catch (error: Error) {}
+      │                      ^^^^^
+    2 │ 
   
 --
 try {} catch (error: Error) {}

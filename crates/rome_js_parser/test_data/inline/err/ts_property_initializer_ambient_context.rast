@@ -121,20 +121,20 @@ ts_property_initializer_ambient_context.ts:1:24 parse ━━━━━━━━�
 
   × Initializers are not allowed in ambient contexts.
   
-    ┌─ ts_property_initializer_ambient_context.ts:1:24
-    │
-  1 │ declare class A { prop = "test" }
-    │                        ^^^^^^^^
+  > 1 │ declare class A { prop = "test" }
+      │                        ^^^^^^^^
+    2 │ class B { declare prop = "test" }
+    3 │ 
   
 --
 ts_property_initializer_ambient_context.ts:2:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Initializers are not allowed in ambient contexts.
   
-    ┌─ ts_property_initializer_ambient_context.ts:2:24
-    │
-  2 │ class B { declare prop = "test" }
-    │                        ^^^^^^^^
+    1 │ declare class A { prop = "test" }
+  > 2 │ class B { declare prop = "test" }
+      │                        ^^^^^^^^
+    3 │ 
   
 --
 declare class A { prop = "test" }

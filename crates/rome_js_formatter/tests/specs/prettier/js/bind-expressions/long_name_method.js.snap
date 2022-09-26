@@ -58,10 +58,12 @@ long_name_method.js:3:54 parse ━━━━━━━━━━━━━━━━�
   
   × Expected an expression, or an assignment here
   
-    ┌─ long_name_method.js:3:54
-    │
-  3 │     this.testLongNameMethodAndSomethingElseLallala = ::this.testLongNameMethodAndSomethingElseLallala;
-    │                                                      ^
+    1 │ class X {
+    2 │   constructor() {
+  > 3 │     this.testLongNameMethodAndSomethingElseLallala = ::this.testLongNameMethodAndSomethingElseLallala;
+      │                                                      ^
+    4 │   }
+    5 │   
   
 
 ```

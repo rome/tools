@@ -29,10 +29,12 @@ noEmptyPattern.js:9:5 lint/correctness/noEmptyPattern ━━━━━━━━�
 
   ! Unexpected empty object pattern.
   
-    ┌─ noEmptyPattern.js:9:5
-    │
-  9 │ var {} = foo;
-    │     ^^
+     7 │ var [a] = foo;
+     8 │ // invalid
+   > 9 │ var {} = foo;
+       │     ^^
+    10 │ var [] = foo;
+    11 │ var {a: {}} = foo;
   
 
 ```
@@ -42,10 +44,12 @@ noEmptyPattern.js:10:5 lint/correctness/noEmptyPattern ━━━━━━━━�
 
   ! Unexpected empty array pattern.
   
-     ┌─ noEmptyPattern.js:10:5
-     │
-  10 │ var [] = foo;
-     │     ^^
+     8 │ // invalid
+     9 │ var {} = foo;
+  > 10 │ var [] = foo;
+       │     ^^
+    11 │ var {a: {}} = foo;
+    12 │ var {a, b: {}} = foo;
   
 
 ```
@@ -55,10 +59,12 @@ noEmptyPattern.js:11:9 lint/correctness/noEmptyPattern ━━━━━━━━�
 
   ! Unexpected empty object pattern.
   
-     ┌─ noEmptyPattern.js:11:9
-     │
-  11 │ var {a: {}} = foo;
-     │         ^^
+     9 │ var {} = foo;
+    10 │ var [] = foo;
+  > 11 │ var {a: {}} = foo;
+       │         ^^
+    12 │ var {a, b: {}} = foo;
+    13 │ var {a: []} = foo;
   
 
 ```
@@ -68,10 +74,12 @@ noEmptyPattern.js:12:12 lint/correctness/noEmptyPattern ━━━━━━━━
 
   ! Unexpected empty object pattern.
   
-     ┌─ noEmptyPattern.js:12:12
-     │
-  12 │ var {a, b: {}} = foo;
-     │            ^^
+    10 │ var [] = foo;
+    11 │ var {a: {}} = foo;
+  > 12 │ var {a, b: {}} = foo;
+       │            ^^
+    13 │ var {a: []} = foo;
+    14 │ function foo({}) {};
   
 
 ```
@@ -81,10 +89,12 @@ noEmptyPattern.js:13:9 lint/correctness/noEmptyPattern ━━━━━━━━�
 
   ! Unexpected empty array pattern.
   
-     ┌─ noEmptyPattern.js:13:9
-     │
-  13 │ var {a: []} = foo;
-     │         ^^
+    11 │ var {a: {}} = foo;
+    12 │ var {a, b: {}} = foo;
+  > 13 │ var {a: []} = foo;
+       │         ^^
+    14 │ function foo({}) {};
+    15 │ function foo([]) {};
   
 
 ```
@@ -94,10 +104,12 @@ noEmptyPattern.js:14:14 lint/correctness/noEmptyPattern ━━━━━━━━
 
   ! Unexpected empty object pattern.
   
-     ┌─ noEmptyPattern.js:14:14
-     │
-  14 │ function foo({}) {};
-     │              ^^
+    12 │ var {a, b: {}} = foo;
+    13 │ var {a: []} = foo;
+  > 14 │ function foo({}) {};
+       │              ^^
+    15 │ function foo([]) {};
+    16 │ function foo({a: {}}) {};
   
 
 ```
@@ -107,10 +119,12 @@ noEmptyPattern.js:15:14 lint/correctness/noEmptyPattern ━━━━━━━━
 
   ! Unexpected empty array pattern.
   
-     ┌─ noEmptyPattern.js:15:14
-     │
-  15 │ function foo([]) {};
-     │              ^^
+    13 │ var {a: []} = foo;
+    14 │ function foo({}) {};
+  > 15 │ function foo([]) {};
+       │              ^^
+    16 │ function foo({a: {}}) {};
+    17 │ function foo({a: []}) {};
   
 
 ```
@@ -120,10 +134,11 @@ noEmptyPattern.js:16:18 lint/correctness/noEmptyPattern ━━━━━━━━
 
   ! Unexpected empty object pattern.
   
-     ┌─ noEmptyPattern.js:16:18
-     │
-  16 │ function foo({a: {}}) {};
-     │                  ^^
+    14 │ function foo({}) {};
+    15 │ function foo([]) {};
+  > 16 │ function foo({a: {}}) {};
+       │                  ^^
+    17 │ function foo({a: []}) {};
   
 
 ```
@@ -133,10 +148,10 @@ noEmptyPattern.js:17:18 lint/correctness/noEmptyPattern ━━━━━━━━
 
   ! Unexpected empty array pattern.
   
-     ┌─ noEmptyPattern.js:17:18
-     │
-  17 │ function foo({a: []}) {};
-     │                  ^^
+    15 │ function foo([]) {};
+    16 │ function foo({a: {}}) {};
+  > 17 │ function foo({a: []}) {};
+       │                  ^^
   
 
 ```

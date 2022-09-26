@@ -74,20 +74,20 @@ class_decl_no_id.ts:1:1 parse ━━━━━━━━━━━━━━━━�
 
   × class declarations must have a name
   
-    ┌─ class_decl_no_id.ts:1:1
-    │
-  1 │ class {}
-    │ ^^^^^^
+  > 1 │ class {}
+      │ ^^^^^^
+    2 │ class implements B {}
+    3 │ 
   
 --
 class_decl_no_id.ts:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × class declarations must have a name
   
-    ┌─ class_decl_no_id.ts:2:1
-    │
-  2 │ class implements B {}
-    │ ^^^^^^
+    1 │ class {}
+  > 2 │ class implements B {}
+      │ ^^^^^^
+    3 │ 
   
 --
 class {}

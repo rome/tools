@@ -69,17 +69,15 @@ semicolons_err.js:1:15 parse ━━━━━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ semicolons_err.js:1:15
-    │
-  1 │ let foo = bar throw foo
-    │               ^^^^^
+  > 1 │ let foo = bar throw foo
+      │               ^^^^^
+    2 │ 
   
   i ...Which is required to end this statement
   
-    ┌─ semicolons_err.js:1:1
-    │
-  1 │ let foo = bar throw foo
-    │ ^^^^^^^^^^^^^^
+  > 1 │ let foo = bar throw foo
+      │ ^^^^^^^^^^^^^^
+    2 │ 
   
 --
 let foo = bar throw foo

@@ -24,17 +24,20 @@ JsReturnStatement.js:3:5 lint/nursery/noUnreachable ━━━━━━━━━�
   
   ! ... before it can reach this code
   
-    ┌─ JsReturnStatement.js:3:5
-    │
-  3 │     afterReturn();
-    │     ^^^^^^^^^^^^^^
+    1 │ function JsReturnStatement1() {
+    2 │     return;
+  > 3 │     afterReturn();
+      │     ^^^^^^^^^^^^^^
+    4 │ }
+    5 │ 
   
   i This statement will return from the function ...
   
-    ┌─ JsReturnStatement.js:2:5
-    │
-  2 │     return;
-    │     ^^^^^^^
+    1 │ function JsReturnStatement1() {
+  > 2 │     return;
+      │     ^^^^^^^
+    3 │     afterReturn();
+    4 │ }
   
 
 ```
@@ -46,17 +49,20 @@ JsReturnStatement.js:8:5 lint/nursery/noUnreachable ━━━━━━━━━�
   
   ! ... before it can reach this code
   
-    ┌─ JsReturnStatement.js:8:5
-    │
-  8 │     return; // afterReturn
-    │     ^^^^^^^
+     6 │ function JsReturnStatement2() {
+     7 │     return;
+   > 8 │     return; // afterReturn
+       │     ^^^^^^^
+     9 │ }
+    10 │ 
   
   i This statement will return from the function ...
   
-    ┌─ JsReturnStatement.js:7:5
-    │
-  7 │     return;
-    │     ^^^^^^^
+    6 │ function JsReturnStatement2() {
+  > 7 │     return;
+      │     ^^^^^^^
+    8 │     return; // afterReturn
+    9 │ }
   
 
 ```

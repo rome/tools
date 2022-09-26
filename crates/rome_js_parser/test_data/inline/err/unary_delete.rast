@@ -190,50 +190,56 @@ unary_delete.js:1:8 parse ━━━━━━━━━━━━━━━━━━
 
   × the target for a delete operator cannot be a single identifier
   
-    ┌─ unary_delete.js:1:8
-    │
-  1 │ delete ident;
-    │        ^^^^^
+  > 1 │ delete ident;
+      │        ^^^^^
+    2 │ delete obj.#member;
+    3 │ delete func().#member;
   
 --
 unary_delete.js:2:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × the target for a delete operator cannot be a private member
   
-    ┌─ unary_delete.js:2:8
-    │
-  2 │ delete obj.#member;
-    │        ^^^^^^^^^^^
+    1 │ delete ident;
+  > 2 │ delete obj.#member;
+      │        ^^^^^^^^^^^
+    3 │ delete func().#member;
+    4 │ delete obj?.#member;
   
 --
 unary_delete.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × the target for a delete operator cannot be a private member
   
-    ┌─ unary_delete.js:3:8
-    │
-  3 │ delete func().#member;
-    │        ^^^^^^^^^^^^^^
+    1 │ delete ident;
+    2 │ delete obj.#member;
+  > 3 │ delete func().#member;
+      │        ^^^^^^^^^^^^^^
+    4 │ delete obj?.#member;
+    5 │ delete obj?.inner.#member;
   
 --
 unary_delete.js:4:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × the target for a delete operator cannot be a private member
   
-    ┌─ unary_delete.js:4:8
-    │
-  4 │ delete obj?.#member;
-    │        ^^^^^^^^^^^^
+    2 │ delete obj.#member;
+    3 │ delete func().#member;
+  > 4 │ delete obj?.#member;
+      │        ^^^^^^^^^^^^
+    5 │ delete obj?.inner.#member;
+    6 │ 
   
 --
 unary_delete.js:5:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × the target for a delete operator cannot be a private member
   
-    ┌─ unary_delete.js:5:8
-    │
-  5 │ delete obj?.inner.#member;
-    │        ^^^^^^^^^^^^^^^^^^
+    3 │ delete func().#member;
+    4 │ delete obj?.#member;
+  > 5 │ delete obj?.inner.#member;
+      │        ^^^^^^^^^^^^^^^^^^
+    6 │ 
   
 --
 delete ident;

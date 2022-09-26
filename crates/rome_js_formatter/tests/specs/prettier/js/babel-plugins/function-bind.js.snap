@@ -93,10 +93,12 @@ function-bind.js:3:5 parse ━━━━━━━━━━━━━━━━━�
   
   × Expected a statement here
   
-    ┌─ function-bind.js:3:5
-    │
-  3 │ obj::func
-    │     ^
+    1 │ // https://babeljs.io/docs/en/babel-plugin-proposal-function-bind
+    2 │ 
+  > 3 │ obj::func
+      │     ^
+    4 │ // is equivalent to:
+    5 │ func.bind(obj)
   
 
 ```

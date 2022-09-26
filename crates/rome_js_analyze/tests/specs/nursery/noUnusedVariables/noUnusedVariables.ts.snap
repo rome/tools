@@ -63,10 +63,11 @@ noUnusedVariables.ts:4:14 lint/nursery/noUnusedVariables ━━━━━━━�
 
   ! This parameter is unused.
   
-    ┌─ noUnusedVariables.ts:4:14
-    │
-  4 │     constructor(a: number) {}
-    │                 ^
+    3 │ class D {
+  > 4 │ 	constructor(a: number) {}
+      │ 	            ^
+    5 │ 	f(a: number) {}
+    6 │ 	set a(a: number) {}
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
@@ -78,10 +79,12 @@ noUnusedVariables.ts:5:4 lint/nursery/noUnusedVariables ━━━━━━━━
 
   ! This parameter is unused.
   
-    ┌─ noUnusedVariables.ts:5:4
-    │
-  5 │     f(a: number) {}
-    │       ^
+    3 │ class D {
+    4 │ 	constructor(a: number) {}
+  > 5 │ 	f(a: number) {}
+      │ 	  ^
+    6 │ 	set a(a: number) {}
+    7 │ }
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
@@ -93,10 +96,12 @@ noUnusedVariables.ts:6:8 lint/nursery/noUnusedVariables ━━━━━━━━
 
   ! This parameter is unused.
   
-    ┌─ noUnusedVariables.ts:6:8
-    │
-  6 │     set a(a: number) {}
-    │           ^
+    4 │ 	constructor(a: number) {}
+    5 │ 	f(a: number) {}
+  > 6 │ 	set a(a: number) {}
+      │ 	      ^
+    7 │ }
+    8 │ console.log(new D());
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
@@ -108,10 +113,12 @@ noUnusedVariables.ts:12:10 lint/nursery/noUnusedVariables ━━━━━━━�
 
   ! This function is unused.
   
-     ┌─ noUnusedVariables.ts:12:10
-     │
-  12 │ function unused_overloaded(s?: string) {
-     │          ^^^^^^^^^^^^^^^^^
+    10 │ function unused_overloaded(): number;
+    11 │ function unused_overloaded(s: string): string;
+  > 12 │ function unused_overloaded(s?: string) {
+       │          ^^^^^^^^^^^^^^^^^
+    13 │   return s;
+    14 │ }
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   

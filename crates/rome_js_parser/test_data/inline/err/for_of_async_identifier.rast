@@ -81,10 +81,10 @@ for_of_async_identifier.js:2:6 parse ━━━━━━━━━━━━━━�
 
   × The left-hand side of a `for...of` statement may not be `async`
   
-    ┌─ for_of_async_identifier.js:2:6
-    │
-  2 │ for (async of [1]) ;
-    │      ^^^^^
+    1 │ let async;
+  > 2 │ for (async of [1]) ;
+      │      ^^^^^
+    3 │ 
   
 --
 let async;

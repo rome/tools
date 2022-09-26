@@ -55,10 +55,9 @@ sequence_expr.js:1:7 parse ━━━━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ sequence_expr.js:1:7
-    │
-  1 │ 1, 2, , 4
-    │       ^
+  > 1 │ 1, 2, , 4
+      │       ^
+    2 │ 
   
 --
 1, 2, , 4

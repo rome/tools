@@ -90,10 +90,11 @@ ts_index_signature_class_member_cannot_be_abstract.ts:2:5 parse ━━━━━�
 
   × 'abstract' modifier cannot appear on an index signature.
   
-    ┌─ ts_index_signature_class_member_cannot_be_abstract.ts:2:5
-    │
-  2 │     abstract [a: number]: string;
-    │     ^^^^^^^^
+    1 │ abstract class A {
+  > 2 │     abstract [a: number]: string;
+      │     ^^^^^^^^
+    3 │ }
+    4 │ 
   
 --
 abstract class A {

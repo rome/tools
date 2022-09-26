@@ -23,24 +23,27 @@ noShoutyConstants.js:1:7 lint/style/noShoutyConstants  FIXABLE  ━━━━━�
 
   ! Redundant constant declaration.
   
-    ┌─ noShoutyConstants.js:1:7
-    │
-  1 │ const FOO = "FOO";
-    │       ^^^^^^^^^^^
+  > 1 │ const FOO = "FOO";
+      │       ^^^^^^^^^^^
+    2 │ console.log(FOO, FOO2);
+    3 │ 
   
   i Used here.
   
-    ┌─ noShoutyConstants.js:2:13
-    │
-  2 │ console.log(FOO, FOO2);
-    │             ^^^
+    1 │ const FOO = "FOO";
+  > 2 │ console.log(FOO, FOO2);
+      │             ^^^
+    3 │ 
+    4 │ const FOO2 = "FOO2", a = "FOO3", FOO4 = "FOO4";
   
   i Used here.
   
-    ┌─ noShoutyConstants.js:6:13
-    │
-  6 │ console.log(FOO, FOO4);
-    │             ^^^
+    4 │ const FOO2 = "FOO2", a = "FOO3", FOO4 = "FOO4";
+    5 │ 
+  > 6 │ console.log(FOO, FOO4);
+      │             ^^^
+    7 │ 
+    8 │ let foo = "foo";
   
   i You should avoid declaring constants with a string that's the same
         value as the variable name. It introduces a level of unnecessary
@@ -70,17 +73,20 @@ noShoutyConstants.js:4:7 lint/style/noShoutyConstants  FIXABLE  ━━━━━�
 
   ! Redundant constant declaration.
   
-    ┌─ noShoutyConstants.js:4:7
-    │
-  4 │ const FOO2 = "FOO2", a = "FOO3", FOO4 = "FOO4";
-    │       ^^^^^^^^^^^^^
+    2 │ console.log(FOO, FOO2);
+    3 │ 
+  > 4 │ const FOO2 = "FOO2", a = "FOO3", FOO4 = "FOO4";
+      │       ^^^^^^^^^^^^^
+    5 │ 
+    6 │ console.log(FOO, FOO4);
   
   i Used here.
   
-    ┌─ noShoutyConstants.js:2:18
-    │
-  2 │ console.log(FOO, FOO2);
-    │                  ^^^^
+    1 │ const FOO = "FOO";
+  > 2 │ console.log(FOO, FOO2);
+      │                  ^^^^
+    3 │ 
+    4 │ const FOO2 = "FOO2", a = "FOO3", FOO4 = "FOO4";
   
   i You should avoid declaring constants with a string that's the same
         value as the variable name. It introduces a level of unnecessary
@@ -107,17 +113,21 @@ noShoutyConstants.js:4:34 lint/style/noShoutyConstants  FIXABLE  ━━━━━
 
   ! Redundant constant declaration.
   
-    ┌─ noShoutyConstants.js:4:34
-    │
-  4 │ const FOO2 = "FOO2", a = "FOO3", FOO4 = "FOO4";
-    │                                  ^^^^^^^^^^^^^
+    2 │ console.log(FOO, FOO2);
+    3 │ 
+  > 4 │ const FOO2 = "FOO2", a = "FOO3", FOO4 = "FOO4";
+      │                                  ^^^^^^^^^^^^^
+    5 │ 
+    6 │ console.log(FOO, FOO4);
   
   i Used here.
   
-    ┌─ noShoutyConstants.js:6:18
-    │
-  6 │ console.log(FOO, FOO4);
-    │                  ^^^^
+    4 │ const FOO2 = "FOO2", a = "FOO3", FOO4 = "FOO4";
+    5 │ 
+  > 6 │ console.log(FOO, FOO4);
+      │                  ^^^^
+    7 │ 
+    8 │ let foo = "foo";
   
   i You should avoid declaring constants with a string that's the same
         value as the variable name. It introduces a level of unnecessary

@@ -71,10 +71,11 @@ method_getter_err.js:2:2 parse ━━━━━━━━━━━━━━━━�
 
   × expected a semicolon to end the class property, but found none
   
-    ┌─ method_getter_err.js:2:2
-    │
-  2 │  get {}
-    │  ^^^
+    1 │ class foo {
+  > 2 │  get {}
+      │  ^^^
+    3 │ }
+    4 │ 
   
 --
 method_getter_err.js:2:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -83,10 +84,11 @@ method_getter_err.js:2:6 parse ━━━━━━━━━━━━━━━━�
   
   × Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
   
-    ┌─ method_getter_err.js:2:6
-    │
-  2 │  get {}
-    │      ^
+    1 │ class foo {
+  > 2 │  get {}
+      │      ^
+    3 │ }
+    4 │ 
   
 --
 method_getter_err.js:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -95,10 +97,11 @@ method_getter_err.js:3:1 parse ━━━━━━━━━━━━━━━━�
   
   × Expected a statement here
   
-    ┌─ method_getter_err.js:3:1
-    │
-  3 │ }
-    │ ^
+    1 │ class foo {
+    2 │  get {}
+  > 3 │ }
+      │ ^
+    4 │ 
   
 --
 class foo {

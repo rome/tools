@@ -95,17 +95,19 @@ ts_index_signature_class_member_static_readonly_precedence.ts:2:14 parse ━━�
   
   × move this modifier
   
-    ┌─ ts_index_signature_class_member_static_readonly_precedence.ts:2:14
-    │
-  2 │     readonly static [a: number]: string;
-    │              ^^^^^^
+    1 │ class A {
+  > 2 │     readonly static [a: number]: string;
+      │              ^^^^^^
+    3 │ }
+    4 │ 
   
   i before this modifier
   
-    ┌─ ts_index_signature_class_member_static_readonly_precedence.ts:2:5
-    │
-  2 │     readonly static [a: number]: string;
-    │     ^^^^^^^^
+    1 │ class A {
+  > 2 │     readonly static [a: number]: string;
+      │     ^^^^^^^^
+    3 │ }
+    4 │ 
   
 --
 class A {
