@@ -35,7 +35,7 @@ pub enum SemanticEvent {
     Read {
         range: TextRange,
         declared_at: TextRange,
-        scope_id: usize
+        scope_id: usize,
     },
 
     /// Tracks where a symbol is read, but only if its declaration
@@ -44,7 +44,7 @@ pub enum SemanticEvent {
     HoistedRead {
         range: TextRange,
         declared_at: TextRange,
-        scope_id: usize
+        scope_id: usize,
     },
 
     /// Tracks where a symbol is written, but only if its declaration
@@ -54,7 +54,7 @@ pub enum SemanticEvent {
     Write {
         range: TextRange,
         declared_at: TextRange,
-        scope_id: usize
+        scope_id: usize,
     },
 
     /// Tracks where a symbol is written, but only if its declaration
@@ -64,7 +64,7 @@ pub enum SemanticEvent {
     HoistedWrite {
         range: TextRange,
         declared_at: TextRange,
-        scope_id: usize
+        scope_id: usize,
     },
 
     /// Tracks references that do no have any matching binding
@@ -457,7 +457,7 @@ impl SemanticEventExtractor {
                 self.stash.push_back(SemanticEvent::Read {
                     range,
                     declared_at: id.syntax().text_range(),
-                    scope_id: self.scopes.last().unwrap().scope_id
+                    scope_id: self.scopes.last().unwrap().scope_id,
                 });
             }
         }
@@ -551,22 +551,22 @@ impl SemanticEventExtractor {
                             (true, Reference::Read { range, .. }) => SemanticEvent::Read {
                                 range: *range,
                                 declared_at: *declaration_at,
-                                scope_id: scope.scope_id
+                                scope_id: scope.scope_id,
                             },
                             (false, Reference::Read { range, .. }) => SemanticEvent::HoistedRead {
                                 range: *range,
                                 declared_at: *declaration_at,
-                                scope_id: scope.scope_id
+                                scope_id: scope.scope_id,
                             },
                             (true, Reference::Write { range }) => SemanticEvent::Write {
                                 range: *range,
                                 declared_at: *declaration_at,
-                                scope_id: scope.scope_id
+                                scope_id: scope.scope_id,
                             },
                             (false, Reference::Write { range }) => SemanticEvent::HoistedWrite {
                                 range: *range,
                                 declared_at: *declaration_at,
-                                scope_id: scope.scope_id
+                                scope_id: scope.scope_id,
                             },
                         };
                         self.stash.push_back(e);
