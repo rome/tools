@@ -7,26 +7,25 @@ use crate::{TagKind, TextSize};
 #[cfg(target_pointer_width = "64")]
 use rome_rowan::static_assert;
 use rome_rowan::SyntaxTokenText;
-use std::borrow::Cow;
 use std::hash::{Hash, Hasher};
 use std::ops::Deref;
 use std::rc::Rc;
 
 /// Language agnostic IR for formatting source code.
 ///
-/// Use the helper functions like [crate::space], [crate::soft_line_break] etc. defined in this file to create elements.
+/// Use the helper functions like [crate::builders::space], [crate::builders::soft_line_break] etc. defined in this file to create elements.
 #[derive(Clone, Eq, PartialEq)]
 pub enum FormatElement {
-    /// A space token, see [crate::space] for documentation.
+    /// A space token, see [crate::builders::space] for documentation.
     Space,
 
-    /// A new line, see [crate::soft_line_break], [crate::hard_line_break], and [crate::soft_line_break_or_space] for documentation.
+    /// A new line, see [crate::builders::soft_line_break], [crate::builders::hard_line_break], and [crate::builders::soft_line_break_or_space] for documentation.
     Line(LineMode),
 
     /// Forces the parent group to print in expanded mode.
     ExpandParent,
 
-    /// A text that should be printed as is, see [crate::text] for documentation and examples.
+    /// A text that should be printed as is, see [crate::builders::text] for documentation and examples.
     Text(Text),
 
     /// Prevents that line suffixes move past this boundary. Forces the printer to print any pending
@@ -66,19 +65,25 @@ impl std::fmt::Debug for FormatElement {
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
 pub enum LineMode {
-    /// See [crate::soft_line_break_or_space] for documentation.
+    /// See [crate::builders::soft_line_break_or_space] for documentation.
     SoftOrSpace,
-    /// See [crate::soft_line_break] for documentation.
+    /// See [crate::builders::soft_line_break] for documentation.
     Soft,
-    /// See [crate::hard_line_break] for documentation.
+    /// See [crate::builders::hard_line_break] for documentation.
     Hard,
-    /// See [crate::empty_line] for documentation.
+    /// See [crate::builders::literal_line] for documentation.
+    Literal,
+    /// See [crate::builders::empty_line] for documentation.
     Empty,
 }
 
 impl LineMode {
     pub const fn is_hard(&self) -> bool {
         matches!(self, LineMode::Hard)
+    }
+
+    pub const fn is_literal(&self) -> bool {
+        matches!(self, LineMode::Literal)
     }
 }
 
@@ -140,7 +145,7 @@ impl Deref for Interned {
     }
 }
 
-/// See [crate::text] for documentation
+/// See [crate::builders::text] for documentation
 #[derive(Eq, Clone)]
 pub enum Text {
     /// Token constructed by the formatter from a static string
@@ -202,38 +207,6 @@ impl PartialEq for Text {
     }
 }
 
-const LINE_SEPARATOR: char = '\u{2028}';
-const PARAGRAPH_SEPARATOR: char = '\u{2029}';
-pub const LINE_TERMINATORS: [char; 3] = ['\r', LINE_SEPARATOR, PARAGRAPH_SEPARATOR];
-
-/// Replace the line terminators matching the provided list with "\n"
-/// since its the only line break type supported by the printer
-pub fn normalize_newlines<const N: usize>(text: &str, terminators: [char; N]) -> Cow<str> {
-    let mut result = String::new();
-    let mut last_end = 0;
-
-    for (start, part) in text.match_indices(terminators) {
-        result.push_str(&text[last_end..start]);
-        result.push('\n');
-
-        last_end = start + part.len();
-        // If the current character is \r and the
-        // next is \n, skip over the entire sequence
-        if part == "\r" && text[last_end..].starts_with('\n') {
-            last_end += 1;
-        }
-    }
-
-    // If the result is empty no line terminators were matched,
-    // return the entire input text without allocating a new String
-    if result.is_empty() {
-        Cow::Borrowed(text)
-    } else {
-        result.push_str(&text[last_end..text.len()]);
-        Cow::Owned(result)
-    }
-}
-
 impl Deref for Text {
     type Target = str;
     fn deref(&self) -> &Self::Target {
@@ -274,13 +247,19 @@ impl FormatElements for FormatElement {
     fn will_break(&self) -> bool {
         match self {
             FormatElement::ExpandParent => true,
-            FormatElement::Line(line_mode) => matches!(line_mode, LineMode::Hard | LineMode::Empty),
-            FormatElement::Text(text) => text.contains('\n'),
+            FormatElement::Tag(Tag::StartGroup(group)) => !group.mode().is_flat(),
+            FormatElement::Line(line_mode) => matches!(
+                line_mode,
+                LineMode::Hard | LineMode::Empty | LineMode::Literal
+            ),
             FormatElement::Interned(interned) => interned.will_break(),
+            // Traverse into the most flat version because the content is guaranteed to expand when even
+            // the most flat version contains some content that forces a break.
+            FormatElement::BestFitting(best_fitting) => best_fitting.most_flat().will_break(),
             FormatElement::LineSuffixBoundary
             | FormatElement::Space
             | FormatElement::Tag(_)
-            | FormatElement::BestFitting(_) => false,
+            | FormatElement::Text(_) => false,
         }
     }
 
@@ -371,7 +350,7 @@ impl std::fmt::Debug for BestFitting {
 pub trait FormatElements {
     /// Returns true if this [FormatElement] is guaranteed to break across multiple lines by the printer.
     /// This is the case if this format element recursively contains a:
-    /// * [crate::empty_line] or [crate::hard_line_break]
+    /// * [crate::builders::empty_line] or [crate::builders::hard_line_break]
     /// * A token containing '\n'
     ///
     /// Use this with caution, this is only a heuristic and the printer may print the element over multiple
@@ -389,21 +368,6 @@ pub trait FormatElements {
     /// Returns the end tag if:
     /// * the last element is an end tag of `kind`
     fn end_tag(&self, kind: TagKind) -> Option<&Tag>;
-}
-
-#[cfg(test)]
-mod tests {
-
-    use crate::format_element::{normalize_newlines, LINE_TERMINATORS};
-
-    #[test]
-    fn test_normalize_newlines() {
-        assert_eq!(normalize_newlines("a\nb", LINE_TERMINATORS), "a\nb");
-        assert_eq!(normalize_newlines("a\rb", LINE_TERMINATORS), "a\nb");
-        assert_eq!(normalize_newlines("a\r\nb", LINE_TERMINATORS), "a\nb");
-        assert_eq!(normalize_newlines("a\u{2028}b", LINE_TERMINATORS), "a\nb");
-        assert_eq!(normalize_newlines("a\u{2029}b", LINE_TERMINATORS), "a\nb");
-    }
 }
 
 #[cfg(target_pointer_width = "64")]

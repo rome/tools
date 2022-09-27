@@ -1,8 +1,12 @@
 use crate::format_element::tag::VerbatimKind;
 use crate::prelude::*;
 use crate::trivia::{FormatLeadingComments, FormatTrailingComments};
-use crate::{write, CstFormatContext};
-use rome_rowan::{Direction, Language, SyntaxElement, SyntaxNode, TextRange};
+use crate::{write, CstFormatContext, TextLen, TextSize};
+use rome_rowan::{
+    Direction, Language, SyntaxElement, SyntaxNode, SyntaxToken, SyntaxTokenText, TextRange,
+};
+use std::iter::FusedIterator;
+use std::str::CharIndices;
 
 /// "Formats" a node according to its original formatting in the source text. Being able to format
 /// a node "as is" is useful if a node contains syntax errors. Formatting a node with syntax errors
@@ -108,8 +112,9 @@ where
             },
         );
 
-        dynamic_text(
-            &normalize_newlines(&original_source, LINE_TERMINATORS),
+        normalize_newlines(
+            &original_source,
+            LINE_TERMINATORS,
             self.node.text_trimmed_range().start(),
         )
         .fmt(f)?;
@@ -165,5 +170,211 @@ pub fn format_suppressed_node<L: Language>(node: &SyntaxNode<L>) -> FormatVerbat
         node,
         kind: VerbatimKind::Suppressed,
         format_comments: true,
+    }
+}
+
+/// Replace the line terminators matching the provided list with "literalline".
+pub const fn normalize_newlines<const N: usize>(
+    text: &str,
+    terminators: [char; N],
+    source_position: TextSize,
+) -> NormalizeNewLines<N> {
+    NormalizeNewLines {
+        text,
+        terminators,
+        source_position,
+    }
+}
+
+const LINE_SEPARATOR: char = '\u{2028}';
+const PARAGRAPH_SEPARATOR: char = '\u{2029}';
+pub const LINE_TERMINATORS: [char; 4] = ['\n', '\r', LINE_SEPARATOR, PARAGRAPH_SEPARATOR];
+
+pub struct NormalizeNewLines<'a, const N: usize> {
+    text: &'a str,
+    source_position: TextSize,
+    terminators: [char; N],
+}
+
+impl<const N: usize, Context> Format<Context> for NormalizeNewLines<'_, N> {
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+        for part in NewlineParts::new(self.text, self.terminators) {
+            match part {
+                NewlineOrText::Newline => {
+                    write!(f, [literal_line()])?;
+                }
+                NewlineOrText::Text((start, text)) => {
+                    write!(f, [dynamic_text(text, self.source_position + start)])?;
+                }
+            }
+        }
+
+        Ok(())
+    }
+}
+
+/// Replace the line terminators matching the provided list with "literalline".
+pub fn normalize_token_text_new_lines<const N: usize, L: Language>(
+    token: &SyntaxToken<L>,
+    range: TextRange,
+    terminators: [char; N],
+) -> NormalizeTokenTextNewLines<N> {
+    let relative_range = range - token.text_range().start();
+    let text = token.token_text().slice(relative_range);
+
+    NormalizeTokenTextNewLines {
+        text,
+        terminators,
+        source_position: range.start(),
+    }
+}
+
+pub struct NormalizeTokenTextNewLines<const N: usize> {
+    pub text: SyntaxTokenText,
+    pub terminators: [char; N],
+    pub source_position: TextSize,
+}
+
+impl<const N: usize, Context> Format<Context> for NormalizeTokenTextNewLines<N> {
+    fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
+        for part in NewlineParts::new(&self.text, self.terminators) {
+            match part {
+                NewlineOrText::Newline => {
+                    write!(f, [literal_line()])?;
+                }
+                NewlineOrText::Text((start, text)) => {
+                    f.write_element(FormatElement::Text(Text::SyntaxTokenTextSlice {
+                        source_position: self.source_position + start,
+                        slice: self.text.clone().slice(TextRange::at(
+                            start + self.text.range().start(),
+                            text.text_len(),
+                        )),
+                    }))?;
+                }
+            }
+        }
+
+        Ok(())
+    }
+}
+
+struct NewlineParts<'a, const N: usize> {
+    text: &'a str,
+    chars: std::iter::Peekable<CharIndices<'a>>,
+    terminators: [char; N],
+}
+
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+enum NewlineOrText<'a> {
+    Newline,
+    Text((TextSize, &'a str)),
+}
+
+impl<'a, const N: usize> NewlineParts<'a, N> {
+    fn new(text: &'a str, terminators: [char; N]) -> Self {
+        Self {
+            chars: text.char_indices().peekable(),
+            text,
+            terminators,
+        }
+    }
+}
+
+impl<'a, const N: usize> Iterator for NewlineParts<'a, N> {
+    type Item = NewlineOrText<'a>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let (start, char) = self.chars.next()?;
+
+        if self.terminators.contains(&char) {
+            // If the current character is \r and the
+            // next is \n, skip over the entire sequence
+            if char == '\r' && matches!(self.chars.peek(), Some((_, '\n'))) {
+                self.chars.next();
+            }
+
+            Some(NewlineOrText::Newline)
+        } else {
+            let start_position = TextSize::from(start as u32);
+            loop {
+                match self.chars.peek() {
+                    Some((index, next)) => {
+                        if self.terminators.contains(next) {
+                            break Some(NewlineOrText::Text((
+                                start_position,
+                                &self.text[start..*index],
+                            )));
+                        }
+
+                        self.chars.next();
+                    }
+                    None => break Some(NewlineOrText::Text((start_position, &self.text[start..]))),
+                }
+            }
+        }
+    }
+}
+
+impl<const N: usize> FusedIterator for NewlineParts<'_, N> {}
+
+#[cfg(test)]
+mod tests {
+
+    use super::{NewlineOrText, NewlineParts, LINE_TERMINATORS};
+    use crate::TextSize;
+
+    #[test]
+    fn test_normalize_newlines() {
+        assert_eq!(
+            NewlineParts::new("a\nb", LINE_TERMINATORS).collect::<Vec<_>>(),
+            vec![
+                NewlineOrText::Text((TextSize::from(0), "a")),
+                NewlineOrText::Newline,
+                NewlineOrText::Text((TextSize::from(2), "b"))
+            ]
+        );
+        assert_eq!(
+            NewlineParts::new("a\n\n\nb", LINE_TERMINATORS).collect::<Vec<_>>(),
+            vec![
+                NewlineOrText::Text((TextSize::from(0), "a")),
+                NewlineOrText::Newline,
+                NewlineOrText::Newline,
+                NewlineOrText::Newline,
+                NewlineOrText::Text((TextSize::from(4), "b"))
+            ]
+        );
+
+        assert_eq!(
+            NewlineParts::new("a\rb", LINE_TERMINATORS).collect::<Vec<_>>(),
+            vec![
+                NewlineOrText::Text((TextSize::from(0), "a")),
+                NewlineOrText::Newline,
+                NewlineOrText::Text((TextSize::from(2), "b"))
+            ]
+        );
+        assert_eq!(
+            NewlineParts::new("a\r\nb", LINE_TERMINATORS).collect::<Vec<_>>(),
+            vec![
+                NewlineOrText::Text((TextSize::from(0), "a")),
+                NewlineOrText::Newline,
+                NewlineOrText::Text((TextSize::from(3), "b"))
+            ]
+        );
+        assert_eq!(
+            NewlineParts::new("a\u{2028}b", LINE_TERMINATORS).collect::<Vec<_>>(),
+            vec![
+                NewlineOrText::Text((TextSize::from(0), "a")),
+                NewlineOrText::Newline,
+                NewlineOrText::Text((TextSize::from(4), "b"))
+            ]
+        );
+        assert_eq!(
+            NewlineParts::new("a\u{2029}b", LINE_TERMINATORS).collect::<Vec<_>>(),
+            vec![
+                NewlineOrText::Text((TextSize::from(0), "a")),
+                NewlineOrText::Newline,
+                NewlineOrText::Text((TextSize::from(4), "b"))
+            ]
+        );
     }
 }

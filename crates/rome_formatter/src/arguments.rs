@@ -150,7 +150,7 @@ mod tests {
                 FormatElement::Text(Text::Static { text: "a" }),
                 FormatElement::Space,
                 // Group
-                FormatElement::Tag(Tag::StartGroup(None)),
+                FormatElement::Tag(Tag::StartGroup(tag::Group::new())),
                 FormatElement::Text(Text::Static { text: "(" }),
                 FormatElement::Text(Text::Static { text: ")" }),
                 FormatElement::Tag(Tag::EndGroup)

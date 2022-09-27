@@ -105,15 +105,20 @@ impl CleanedStringLiteralText<'_> {
 
 impl Format<JsFormatContext> for CleanedStringLiteralText<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        format_replaced(
-            self.token,
-            &syntax_token_cow_slice(
-                self.text.clone(),
+        let format_text = format_with(|f| match &self.text {
+            Cow::Borrowed(_) => normalize_token_text_new_lines(
                 self.token,
-                self.token.text_trimmed_range().start(),
-            ),
-        )
-        .fmt(f)
+                self.token.text_trimmed_range(),
+                ['\n', '\r'],
+            )
+            .fmt(f),
+            Cow::Owned(text) => {
+                normalize_newlines(text, ['\n', '\r'], self.token.text_trimmed_range().start())
+                    .fmt(f)
+            }
+        });
+
+        format_replaced(self.token, &format_text).fmt(f)
     }
 }
 
@@ -399,11 +404,6 @@ impl<'token> LiteralStringNormaliser<'token> {
     /// as opposed to the previous example, we have a signal that says that we should keep the current
     /// character. Then we do so. The third iteration comes along and we find `'`. We still have the
     /// [CharSignal::Keep]. We do so and then we set the signal to [CharSignal::Idle]
-    ///
-    /// # Newlines
-    ///
-    /// By default the formatter uses `\n` as a newline. The function replaces
-    /// `\r\n` with `\n`,
     fn normalize_string(&self, string_information: &StringInformation) -> Cow<'token, str> {
         let raw_content = self.raw_content();
 
@@ -483,20 +483,14 @@ impl<'token> LiteralStringNormaliser<'token> {
                         reduced_string.push(current_char);
                     }
                 }
-                '\n' | '\t' => {
+                '\t' => {
                     if let AlreadyPrinted(the_char) = signal {
-                        if matches!(the_char, '\n' | '\t') {
+                        if matches!(the_char, '\t') {
                             signal = CharSignal::None
                         }
                     } else {
                         reduced_string.push(current_char);
                     }
-                }
-                // If the current character is \r and the
-                // next is \n, skip over the entire sequence
-                '\r' if next_character.map_or(false, |(_, c)| *c == '\n') => {
-                    reduced_string.push('\n');
-                    signal = AlreadyPrinted('\n');
                 }
                 _ => {
                     // If we encounter a preferred quote and it's not escaped, we have to replace it with

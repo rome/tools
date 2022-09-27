@@ -8,7 +8,10 @@ pub use crate::trivia::{
     format_replaced, format_trailing_comments, format_trimmed_token,
 };
 
-pub use crate::verbatim::{format_suppressed_node, format_unknown_node, format_verbatim_node};
+pub use crate::verbatim::{
+    format_suppressed_node, format_unknown_node, format_verbatim_node, normalize_newlines,
+    normalize_token_text_new_lines, LINE_TERMINATORS,
+};
 
 pub use crate::format_element::document::Document;
 pub use crate::format_element::tag::{LabelId, Tag, TagKind};
