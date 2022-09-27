@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/template-literals/styled-jsx-with-expressions.js
 ---
 
 # Input
@@ -96,7 +98,7 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
    }
    @font-face {
      ${expr}
-@@ -30,13 +30,12 @@
+@@ -30,13 +30,13 @@
  
  <style jsx>{`
    div {
@@ -109,7 +111,8 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
    div {
 -    animation: 3s ease-in 1s ${(foo) => foo.getIterations()} reverse both paused
 -      slidein;
-+  animation: 3s ease-in 1s ${(foo) => foo.getIterations()} reverse both paused slidein;
++  animation: 3s ease-in 1s ${(foo) =>
++    foo.getIterations()} reverse both paused slidein;
    }
  `}</style>;
 ```
@@ -155,14 +158,11 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
 
 <style jsx>{`
   div {
-  animation: 3s ease-in 1s ${(foo) => foo.getIterations()} reverse both paused slidein;
+  animation: 3s ease-in 1s ${(foo) =>
+    foo.getIterations()} reverse both paused slidein;
   }
 `}</style>;
 ```
 
 
-# Lines exceeding max width of 80 characters
-```
-   39:   animation: 3s ease-in 1s ${(foo) => foo.getIterations()} reverse both paused slidein;
-```
 

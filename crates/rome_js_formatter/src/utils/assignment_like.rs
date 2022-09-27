@@ -992,7 +992,7 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
 /// [Prettier applies]: https://github.com/prettier/prettier/blob/a043ac0d733c4d53f980aa73807a63fc914f23bd/src/language-js/print/assignment.js#L329
 fn is_poorly_breakable_member_or_call_chain(
     expression: &JsAnyExpression,
-    f: &mut Formatter<JsFormatContext>,
+    f: &Formatter<JsFormatContext>,
 ) -> SyntaxResult<bool> {
     let threshold = f.options().line_width().value() / 4;
 
@@ -1041,7 +1041,11 @@ fn is_poorly_breakable_member_or_call_chain(
     }
 
     for call_expression in call_expressions {
-        if is_member_call_chain(&call_expression, f)? {
+        if is_member_call_chain(
+            call_expression.clone(),
+            f.comments(),
+            f.options().tab_width(),
+        )? {
             return Ok(false);
         }
 

@@ -426,13 +426,13 @@ let loooooooooooooooooooooooooong2 =
 		/\wwwwwwwwwwwwwwwwww+/gi,
 	).ewqeqewqweqweqweqweqweqweqw;
 let loooooooooooooooooooooooooong3 =
-	objdddddddddectobjdddddddddect(
-		/\wwwwwwwwwwwwwwwwww+/gi,
-	)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+	objdddddddddectobjdddddddddect(/\wwwwwwwwwwwwwwwwww+/gi)[
+		dsadsadsadsadsadsadsa
+	]().ewqoewqoeiowqieopwqie;
 let loooooooooooooooooooooooooong3 =
-	objdddddddddectobjdddddddddect(
-		/\wwwwwwwwwwwwwwwwww+/gi,
-	)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+	objdddddddddectobjdddddddddect(/\wwwwwwwwwwwwwwwwww+/gi)[
+		dsadsadsadsadsadsadsa
+	]().ewqoewqoeiowqieopwqie;
 
 //JsTemplate argument
 var loooooooooooooooooooooooooong1 =
@@ -444,13 +444,13 @@ let loooooooooooooooooooooooooong2 =
 		`111111111111111111`,
 	).ewqeqewqweqweqweqweqweqweqw;
 let loooooooooooooooooooooooooong3 =
-	objdddddddddectobjddsadsaddddddddect(
-		`111111111111111111`,
-	)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+	objdddddddddectobjddsadsaddddddddect(`111111111111111111`)[
+		dsadsadsadsadsadsadsa
+	]().ewqoewqoeiowqieopwqie;
 let loooooooooooooooooooooooooong3 =
-	objdddddddddectobjdddsadaddddddddect(
-		`111111111111111111`,
-	)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+	objdddddddddectobjdddsadaddddddddect(`111111111111111111`)[
+		dsadsadsadsadsadsadsa
+	]().ewqoewqoeiowqieopwqie;
 
 // rest JsAnyLiteralExpression
 var loooooooooooooooooooooooooong1 =
@@ -630,18 +630,14 @@ let loooooooooooooooooooooooooong3 = objdddddddddectobjddsadsaddddddddect(
 
 // has new line
 var loooooooooooooooooooooooooong1 =
-	fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(
-		`123123
- dsa`,
-	);
-let loooooooooooooooooooooooooong2 = objdddddddddectobjdddsadsadddddddect(
-	`123123
-dsa`,
-).ewqeqewqweqweqweqweqweqweqw;
-let loooooooooooooooooooooooooong3 = objdddddddddectobjddsadsaddddddddect(
-	`123123
- dsa`,
-)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+	fnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfnfn(`123123
+ dsa`);
+let loooooooooooooooooooooooooong2 =
+	objdddddddddectobjdddsadsadddddddect(`123123
+dsa`).ewqeqewqweqweqweqweqweqweqw;
+let loooooooooooooooooooooooooong3 =
+	objdddddddddectobjddsadsaddddddddect(`123123
+ dsa`)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
 
 //JsThisExpression
 var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
@@ -702,20 +698,14 @@ let looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 
 // has new line
 var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
-	this(
-		`123123
- dsa`,
-	);
+	this(`123123
+ dsa`);
 let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
-	this(
-		`123123
-dsa`,
-	).ewqeqewqweqweqweqweqweqweqw;
+	this(`123123
+dsa`).ewqeqewqweqweqweqweqweqweqw;
 let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
-	this(
-		`123123
- dsa`,
-	)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
+	this(`123123
+ dsa`)[dsadsadsadsadsadsadsa]().ewqoewqoeiowqieopwqie;
 
 //lone short argument JsUnaryExpression argument with comment
 var loooooooooooooooooooooooooong1 =
@@ -775,30 +765,30 @@ const a
   251: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
   253: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
   255: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
-  367: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
-  369: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
-  371: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
-  375: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
-  377: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
-  379: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
-  381: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
-  385: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
-  387: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
-  389: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
-  391: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
-  395: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
-  397: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
-  399: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
-  402: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
-  407: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
-  409: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
-  411: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
-  416: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
-  418: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
-  420: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
-  424: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
-  429: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
-  434: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
-  450: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
-  452: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+  363: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+  365: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+  367: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+  371: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+  373: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+  375: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+  377: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
+  381: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+  383: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+  385: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+  387: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
+  391: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+  393: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+  395: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+  398: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong4 =
+  403: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+  405: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+  407: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+  412: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+  414: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+  416: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+  420: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+  423: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+  426: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+  440: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
+  442: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
 
