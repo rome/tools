@@ -27,7 +27,7 @@ rome_rowan = { path = "../rome_rowan" }
 rome_console = { path = "../rome_console", features = ["serde_markup"] }
 rome_diagnostics_macros = { path = "../rome_diagnostics_macros" }
 rome_diagnostics_categories = { path = "../rome_diagnostics_categories", features = ["serde"] }
-rome_text_edit = { path = "../rome_text_edit", features = ["serde"] }
+rome_text_edit = { path = "../rome_text_edit" }
 rome_text_size = { path = "../rome_text_size" }
 unicode-width = "0.1.9"
 serde = { version = "1.0.133", features = ["derive"] }
@@ -37,7 +37,7 @@ bitflags = "1.3.2"
 backtrace = "0.3.66"
 
 [features]
-schema = ["schemars", "rome_diagnostics_categories/schemars"]
+schema = ["schemars", "rome_text_edit/schemars", "rome_diagnostics_categories/schemars"]
 
 [dev-dependencies]
 trybuild = "1.0"

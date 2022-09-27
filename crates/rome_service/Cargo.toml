@@ -24,10 +24,10 @@ rome_js_factory = { path = "../rome_js_factory", optional = true }
 rome_js_formatter = { path = "../rome_js_formatter", features = ["serde"] }
 rome_js_semantic = { path = "../rome_js_semantic" }
 rome_rowan = { path = "../rome_rowan", features = ["serde"] }
-rome_text_edit = { path = "../rome_text_edit", features = ["serde"] }
+rome_text_edit = { path = "../rome_text_edit" }
 indexmap = { version = "1.9.1", features = ["serde"] }
 schemars = { version = "0.8.10", features = ["indexmap1"], optional = true }
 tracing = { version = "0.1.31", default-features = false, features = ["std"] }
 
 [features]
-schemars = ["dep:schemars", "rome_formatter/serde", "rome_js_factory"]
+schemars = ["dep:schemars", "rome_formatter/serde", "rome_js_factory", "rome_text_edit/schemars"]

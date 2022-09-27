@@ -1,4 +1,4 @@
-use rome_text_edit::Indel;
+use rome_text_edit::TextEdit;
 use rome_text_size::TextRange;
 
 use crate::{AstNode, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxSlot, SyntaxToken};
@@ -261,36 +261,30 @@ where
     /// Returns the range of the document modified by this mutation along with
     /// a list of individual text edits to be performed on the source code, or
     /// [None] if the mutation is empty
-    pub fn as_text_edits(&self) -> Option<(TextRange, Vec<Indel>)> {
-        let iter = self.changes.iter().filter_map(|change| {
+    pub fn as_text_edits(&self) -> Option<(TextRange, TextEdit)> {
+        let mut range = None;
+
+        for change in &self.changes {
             let parent = change.parent.as_ref().unwrap_or(&self.root);
             let delete = match parent.slots().nth(change.new_node_slot) {
                 Some(SyntaxSlot::Node(node)) => node.text_range(),
                 Some(SyntaxSlot::Token(token)) => token.text_range(),
-                _ => return None,
+                _ => continue,
             };
 
-            let insert = match &change.new_node {
-                Some(elem) => elem.to_string(),
-                None => String::new(),
+            range = match range {
+                None => Some(delete),
+                Some(range) => Some(range.cover(delete)),
             };
+        }
 
-            Some(Indel { delete, insert })
-        });
+        let text_range = range?;
 
-        let mut range = None;
-        let mut indels: Vec<_> = iter
-            .inspect(|indel| {
-                range = match range {
-                    None => Some(indel.delete),
-                    Some(range) => Some(range.cover(indel.delete)),
-                };
-            })
-            .collect();
+        let old = self.root.to_string();
+        let new = self.clone().commit().to_string();
+        let text_edit = TextEdit::from_unicode_words(&old, &new);
 
-        indels.sort_unstable_by(|a, b| a.delete.ordering(b.delete));
-
-        Some((range?, indels))
+        Some((text_range, text_edit))
     }
 
     /// The core of the batch mutation algorithm can be summarized as:

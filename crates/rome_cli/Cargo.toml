@@ -18,6 +18,7 @@ rome_service = { path = "../rome_service" }
 rome_flags = { path = "../rome_flags" }
 rome_fs = { path = "../rome_fs" }
 rome_console = { path = "../rome_console" }
+rome_text_edit = { path = "../rome_text_edit" }
 rome_lsp = { path = "../rome_lsp" }
 pico-args = { version ="0.5.0", features=["eq-separator"] }
 tracing = { version = "0.1.31", default-features = false, features = ["std"] }

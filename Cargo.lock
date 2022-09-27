@@ -1510,6 +1510,7 @@ dependencies = [
  "rome_fs",
  "rome_lsp",
  "rome_service",
+ "rome_text_edit",
  "serde",
  "serde_json",
  "thiserror",
@@ -1531,7 +1532,6 @@ dependencies = [
  "rome_text_size",
  "schemars",
  "serde",
- "similar",
  "termcolor",
  "trybuild",
  "unicode-width",
@@ -1655,6 +1655,7 @@ dependencies = [
  "rome_text_edit",
  "rustc-hash",
  "serde",
+ "similar",
  "tests_macros",
 ]
 
@@ -1769,6 +1770,7 @@ dependencies = [
  "rome_js_formatter",
  "rome_rowan",
  "rome_service",
+ "rome_text_edit",
  "serde",
  "serde_json",
  "tokio",
@@ -1836,6 +1838,7 @@ dependencies = [
  "rome_text_size",
  "schemars",
  "serde",
+ "similar",
 ]
 
 [[package]]

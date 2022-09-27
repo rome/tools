@@ -17,7 +17,7 @@ use crate::v2::{
 
 // SAFETY: These constants `NonZeroUsize` are being initialized with non-zero values
 const ONE: NonZeroUsize = unsafe { NonZeroUsize::new_unchecked(1) };
-const CODE_FRAME_CONTEXT_LINES: NonZeroUsize = unsafe { NonZeroUsize::new_unchecked(2) };
+pub(super) const CODE_FRAME_CONTEXT_LINES: NonZeroUsize = unsafe { NonZeroUsize::new_unchecked(2) };
 
 const MAX_CODE_FRAME_LINES: usize = 8;
 const HALF_MAX_CODE_FRAME_LINES: usize = MAX_CODE_FRAME_LINES / 2;
@@ -247,7 +247,7 @@ pub(super) fn print_frame(fmt: &mut fmt::Formatter<'_>, location: Location<'_>) 
 }
 
 /// Calculate the length of the string representation of `value`
-fn calculate_print_width(mut value: OneIndexed) -> NonZeroUsize {
+pub(super) fn calculate_print_width(mut value: OneIndexed) -> NonZeroUsize {
     // SAFETY: Constant is being initialized with a non-zero value
     const TEN: OneIndexed = unsafe { OneIndexed::new_unchecked(10) };
 
@@ -268,7 +268,7 @@ const TAB_WIDTH: usize = 2;
 
 /// Compute the unicode display width of a string, with the width of tab
 /// characters set to [TAB_WIDTH] and the width of control characters set to 0
-fn text_width(text: &str) -> usize {
+pub(super) fn text_width(text: &str) -> usize {
     text.chars()
         .map(|char| match char {
             '\t' => TAB_WIDTH,
@@ -277,24 +277,24 @@ fn text_width(text: &str) -> usize {
         .sum()
 }
 
-struct PrintInvisiblesOptions {
+pub(super) struct PrintInvisiblesOptions {
     /// Do not print tab characters at the start of the string
-    ignore_leading_tabs: bool,
+    pub(super) ignore_leading_tabs: bool,
     /// If this is set to true, space characters will only be substituted when
     /// at least two of them are found in a row
-    ignore_lone_spaces: bool,
+    pub(super) ignore_lone_spaces: bool,
     /// Do not print `'\r'` characters if they're followed by `'\n'`
-    ignore_trailing_carriage_return: bool,
+    pub(super) ignore_trailing_carriage_return: bool,
     // Set to `true` to show invisible characters at the start of the string
-    at_line_start: bool,
+    pub(super) at_line_start: bool,
     // Set to `true` to show invisible characters at the end of the string
-    at_line_end: bool,
+    pub(super) at_line_end: bool,
 }
 
 /// Print `input` to `fmt` with invisible characters replaced with an
 /// appropriate visual representation. Return `true` if any non-whitespace
 /// character was printed
-fn print_invisibles(
+pub(super) fn print_invisibles(
     fmt: &mut fmt::Formatter<'_>,
     input: &str,
     options: PrintInvisiblesOptions,

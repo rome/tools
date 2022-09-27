@@ -1,12 +1,11 @@
 use std::{io, iter};
 
-use rome_console::{
-    diff::{Diff, DiffMode},
-    fmt, markup, Markup, MarkupBuf, MarkupElement, MarkupNode,
-};
+use rome_console::{fmt, markup, Markup, MarkupBuf, MarkupElement, MarkupNode};
+use rome_text_edit::TextEdit;
 use unicode_width::UnicodeWidthStr;
 
 mod backtrace;
+mod diff;
 mod frame;
 
 use crate::v2::display::frame::SourceFile;
@@ -363,10 +362,8 @@ impl Visit for PrintAdvices<'_, '_> {
         frame::print_frame(self.0, location)
     }
 
-    fn record_diff(&mut self, left: &str, right: &str) -> io::Result<()> {
-        self.0.write_markup(markup! {
-            {Diff { mode: DiffMode::Unified, left, right }}"\n"
-        })
+    fn record_diff(&mut self, diff: &TextEdit) -> io::Result<()> {
+        diff::print_diff(self.0, diff)
     }
 
     fn record_backtrace(
@@ -446,7 +443,7 @@ impl Visit for CountAdvices {
         Ok(())
     }
 
-    fn record_diff(&mut self, _: &str, _: &str) -> io::Result<()> {
+    fn record_diff(&mut self, _: &TextEdit) -> io::Result<()> {
         self.0 += 1;
         Ok(())
     }
@@ -547,6 +544,7 @@ mod tests {
     use rome_console::{fmt, markup};
     use rome_diagnostics::v2::{DiagnosticTags, Severity};
     use rome_diagnostics_categories::{category, Category};
+    use rome_text_edit::TextEdit;
     use rome_text_size::{TextRange, TextSize};
     use serde_json::{from_value, json};
 
@@ -682,7 +680,9 @@ mod tests {
 
     impl Advices for DiffAdvice {
         fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
-            visitor.record_diff("context before context", "context after context")
+            let diff =
+                TextEdit::from_unicode_words("context before context", "context after context");
+            visitor.record_diff(&diff)
         }
     }
 
@@ -842,9 +842,8 @@ mod tests {
             "\n"
             <Emphasis><Error>"  ✖"</Error></Emphasis>" "<Error>"diagnostic message"</Error>"\n"
             "  \n"
-            "      | "<Info>"@@ -1 +1 @@"</Info>"\n"
-            "  0   | "<Error>"- context before context"</Error>"\n"
-            "    0 | "<Success>"+ context after context"</Success>"\n"
+            <Error>"  -"</Error>" "<Error>"context"</Error><Error><Dim>"·"</Dim></Error><Error><Emphasis>"before"</Emphasis></Error><Error><Dim>"·"</Dim></Error><Error>"context"</Error>"\n"
+            <Success>"  +"</Success>" "<Success>"context"</Success><Success><Dim>"·"</Dim></Success><Success><Emphasis>"after"</Emphasis></Success><Success><Dim>"·"</Dim></Success><Success>"context"</Success>"\n"
             "  \n"
         }.to_owned();
 

@@ -1,7 +1,8 @@
 use std::io;
 
 use rome_console::{fmt, markup, MarkupBuf};
-use rome_text_edit::TextRange;
+use rome_text_edit::TextEdit;
+use rome_text_size::TextRange;
 use serde::{
     de::{self, SeqAccess},
     Deserialize, Deserializer, Serialize, Serializer,
@@ -194,8 +195,8 @@ impl Visit for Advices {
         Ok(())
     }
 
-    fn record_diff(&mut self, prev: &str, next: &str) -> io::Result<()> {
-        self.advices.push(Advice::Diff(prev.into(), next.into()));
+    fn record_diff(&mut self, diff: &TextEdit) -> io::Result<()> {
+        self.advices.push(Advice::Diff(diff.clone()));
         Ok(())
     }
 
@@ -251,7 +252,7 @@ enum Advice {
     Log(LogCategory, MarkupBuf),
     List(Vec<MarkupBuf>),
     Frame(Location),
-    Diff(String, String),
+    Diff(TextEdit),
     Backtrace(MarkupBuf, Backtrace),
     Command(String),
     Group(MarkupBuf, Advices),
@@ -274,7 +275,7 @@ impl super::Advices for Advice {
                     line_starts: None,
                 }),
             }),
-            Advice::Diff(prev, next) => visitor.record_diff(prev, next),
+            Advice::Diff(diff) => visitor.record_diff(diff),
             Advice::Backtrace(title, backtrace) => visitor.record_backtrace(title, backtrace),
             Advice::Command(command) => visitor.record_command(command),
             Advice::Group(title, advice) => visitor.record_group(title, advice),

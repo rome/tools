@@ -8,7 +8,7 @@ use crate::{
 use rome_console::MarkupBuf;
 use rome_diagnostics::{
     file::{FileId, FileSpan},
-    Applicability, CodeSuggestion, SuggestionChange, SuggestionStyle,
+    Applicability, CodeSuggestion,
 };
 use rome_rowan::{BatchMutation, Language};
 use std::marker::PhantomData;
@@ -69,17 +69,16 @@ where
     L: Language,
 {
     fn from(action: AnalyzerAction<L>) -> Self {
-        let (range, indels) = action.mutation.as_text_edits().unwrap_or_default();
+        let (range, suggestion) = action.mutation.as_text_edits().unwrap_or_default();
 
         CodeSuggestion {
-            substitution: SuggestionChange::Indels(indels),
             span: FileSpan {
                 file: action.file_id,
                 range,
             },
             applicability: action.applicability,
             msg: action.message,
-            style: SuggestionStyle::Full,
+            suggestion,
             labels: Vec::new(),
         }
     }

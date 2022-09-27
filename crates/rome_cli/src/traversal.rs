@@ -18,6 +18,7 @@ use rome_service::{
     },
     RomeError, Workspace,
 };
+use rome_text_edit::TextEdit;
 use std::{
     collections::HashMap,
     ffi::OsString,
@@ -239,7 +240,8 @@ impl Advices for FormatDiffAdvice<'_> {
         if max_len >= 1_000_000 {
             visitor.record_log(LogCategory::Info, &"[Diff not printed for file over 1Mb]")
         } else {
-            visitor.record_diff(self.old, self.new)
+            let diff = TextEdit::from_unicode_words(self.old, self.new);
+            visitor.record_diff(&diff)
         }
     }
 }

@@ -25,3 +25,4 @@ rome_text_edit = { path = "../rome_text_edit" }
 rome_js_parser = { path = "../rome_js_parser", features = ["tests"] }
 insta = { version = "1.18.2", features = ["glob"] }
 countme = { version = "3.0.0", features = ["enable"] }
+similar = "2.1.0"
