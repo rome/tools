@@ -27,14 +27,12 @@ const paragraph3 = css`
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,7 +1,8 @@
+@@ -1,7 +1,6 @@
  const paragraph1 = css`
    font-size: 12px;
 -  transform: ${vert ? "translateY" : "translateX"}
 -    (${translation + handleOffset}px);
-+  transform: ${vert ? "translateY" : "translateX"}(${
-+  translation + handleOffset
-+}px);
++  transform: ${vert ? "translateY" : "translateX"}(${translation + handleOffset}px);
  `;
  
  const paragraph2 = css`
@@ -45,9 +43,7 @@ const paragraph3 = css`
 ```js
 const paragraph1 = css`
   font-size: 12px;
-  transform: ${vert ? "translateY" : "translateX"}(${
-  translation + handleOffset
-}px);
+  transform: ${vert ? "translateY" : "translateX"}(${translation + handleOffset}px);
 `;
 
 const paragraph2 = css`
@@ -60,4 +56,8 @@ const paragraph3 = css`
 ```
 
 
+# Lines exceeding max width of 80 characters
+```
+    3:   transform: ${vert ? "translateY" : "translateX"}(${translation + handleOffset}px);
+```
 

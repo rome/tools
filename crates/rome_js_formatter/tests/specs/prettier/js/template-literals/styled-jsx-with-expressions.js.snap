@@ -98,7 +98,7 @@ info:
    }
    @font-face {
      ${expr}
-@@ -30,13 +30,13 @@
+@@ -30,13 +30,12 @@
  
  <style jsx>{`
    div {
@@ -111,8 +111,7 @@ info:
    div {
 -    animation: 3s ease-in 1s ${(foo) => foo.getIterations()} reverse both paused
 -      slidein;
-+  animation: 3s ease-in 1s ${(foo) =>
-+    foo.getIterations()} reverse both paused slidein;
++  animation: 3s ease-in 1s ${(foo) => foo.getIterations()} reverse both paused slidein;
    }
  `}</style>;
 ```
@@ -158,11 +157,14 @@ info:
 
 <style jsx>{`
   div {
-  animation: 3s ease-in 1s ${(foo) =>
-    foo.getIterations()} reverse both paused slidein;
+  animation: 3s ease-in 1s ${(foo) => foo.getIterations()} reverse both paused slidein;
   }
 `}</style>;
 ```
 
 
+# Lines exceeding max width of 80 characters
+```
+   39:   animation: 3s ease-in 1s ${(foo) => foo.getIterations()} reverse both paused slidein;
+```
 
