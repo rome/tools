@@ -102,6 +102,7 @@ impl Rule for UseFragmentSyntax {
 
         Some(
             RuleDiagnostic::new(
+                rule_category!(),
                 node.syntax().text_trimmed_range(),
                 markup! {
                     "Use shorthand syntax for Fragment elements instead of standard syntax."

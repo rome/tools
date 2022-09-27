@@ -108,7 +108,7 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
         let file_type = match path.metadata() {
             Ok(meta) => meta.file_type(),
             Err(err) => {
-                ctx.push_diagnostic(file_id, category!("IO"), err.to_string());
+                ctx.push_diagnostic(file_id, category!("internalError/fs"), err.to_string());
                 return;
             }
         };
@@ -127,7 +127,11 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
             return;
         }
 
-        ctx.push_diagnostic(file_id, category!("IO"), "unhandled file type".into());
+        ctx.push_diagnostic(
+            file_id,
+            category!("internalError/fs"),
+            "unhandled file type".into(),
+        );
     }
 }
 
@@ -153,7 +157,7 @@ fn handle_dir<'scope>(
     let iter = match fs::read_dir(path) {
         Ok(iter) => iter,
         Err(err) => {
-            ctx.push_diagnostic(file_id, category!("IO"), err.to_string());
+            ctx.push_diagnostic(file_id, category!("internalError/fs"), err.to_string());
             return;
         }
     };
@@ -162,7 +166,7 @@ fn handle_dir<'scope>(
         let entry = match entry {
             Ok(entry) => entry,
             Err(err) => {
-                ctx.push_diagnostic(file_id, category!("IO"), err.to_string());
+                ctx.push_diagnostic(file_id, category!("internalError/fs"), err.to_string());
                 continue;
             }
         };
@@ -173,7 +177,7 @@ fn handle_dir<'scope>(
         let file_type = match entry.file_type() {
             Ok(file_type) => file_type,
             Err(err) => {
-                ctx.push_diagnostic(file_id, category!("IO"), err.to_string());
+                ctx.push_diagnostic(file_id, category!("internalError/fs"), err.to_string());
                 continue;
             }
         };
@@ -201,6 +205,10 @@ fn handle_dir<'scope>(
             continue;
         }
 
-        ctx.push_diagnostic(file_id, category!("IO"), "unhandled file type".into());
+        ctx.push_diagnostic(
+            file_id,
+            category!("internalError/fs"),
+            "unhandled file type".into(),
+        );
     }
 }

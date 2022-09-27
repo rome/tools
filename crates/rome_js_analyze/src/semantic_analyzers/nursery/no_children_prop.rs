@@ -92,6 +92,7 @@ impl Rule for NoChildrenProp {
 
         Some(
             RuleDiagnostic::new(
+                rule_category!(),
                 range,
                 markup! {
                     "Avoid passing "<Emphasis>"children"</Emphasis>" using a prop"

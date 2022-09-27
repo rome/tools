@@ -138,6 +138,37 @@ pub trait RuleMeta {
 ///         deprecated: "Use the rule `noAnotherVar`"
 ///     }
 /// }
+/// ```
+///
+/// ## Category Macro
+///
+/// Declaring a rule using `declare_rule!` will cause a new `rule_category!`
+/// macro to be declared in the surrounding module. This macro can be used to
+/// refer to the corresponding diagnostic category for this lint rule, if it
+/// has one. Using this macro instead of getting the category for a diagnostic
+/// by dynamically parsing its string name has the advantage of statically
+/// injecting the category at compile time and checking that it is correctly
+/// registered to the `rome_diagnostics` library
+///
+/// ```ignore
+/// declare_rule! {
+///     /// Documentation
+///     pub(crate) ExampleRule {
+///         version: "0.7.0",
+///         name: "ruleName"
+///     }
+/// }
+///
+/// impl Rule for ExampleRule {
+///     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
+///         Some(RuleDiagnostic::new(
+///             rule_category!(),
+///             ctx.query().text_trimmed_range(),
+///             "message",
+///         ))
+///     }
+/// }
+/// ```
 ///
 #[macro_export]
 macro_rules! declare_rule {

@@ -699,7 +699,7 @@ fn error_assertion_not_attached_to_a_declaration(
     let files = SimpleFile::new(test_name.to_string(), code.into());
     let d = Diagnostic::error(
         FileId::zero(),
-        category!("SemanticTests"),
+        category!("semanticTests"),
         "This assertion must be attached to a SemanticEvent::DeclarationFound.",
     )
     .primary(assertion_range, "");
@@ -719,7 +719,7 @@ fn error_declaration_pointing_to_unknown_scope(
     let files = SimpleFile::new(test_name.to_string(), code.into());
     let d = Diagnostic::error(
         FileId::zero(),
-        category!("SemanticTests"),
+        category!("semanticTests"),
         "Declaration assertions is pointing to the wrong scope",
     )
     .primary(assertion_range, "");
@@ -741,7 +741,7 @@ fn error_assertion_name_clash(
     let files = SimpleFile::new(test_name.to_string(), code.into());
     let d = Diagnostic::error(
         FileId::zero(),
-        category!("SemanticTests"),
+        category!("semanticTests"),
         "Assertion label conflict.",
     )
     .primary(
@@ -766,7 +766,7 @@ fn error_scope_end_assertion_points_to_non_existing_scope_start_assertion(
     let files = SimpleFile::new(file_name.to_string(), code.into());
     let d = Diagnostic::error(
         FileId::zero(),
-        category!("SemanticTests"),
+        category!("semanticTests"),
         "Scope start assertion not found.",
     )
     .primary(
@@ -790,7 +790,7 @@ fn error_scope_end_assertion_points_to_the_wrong_scope_start(
     let files = SimpleFile::new(file_name.to_string(), code.into());
     let d = Diagnostic::error(
         FileId::zero(),
-        category!("SemanticTests"),
+        category!("semanticTests"),
         "Wrong scope start",
     )
     .primary(

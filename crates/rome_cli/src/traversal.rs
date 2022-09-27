@@ -203,7 +203,7 @@ struct ProcessMessagesOptions<'ctx> {
 
 #[derive(Debug, v2::Diagnostic)]
 #[diagnostic(
-    category = "ci/formatMismatch",
+    category = "format",
     message = "File content differs from formatting output"
 )]
 struct CIDiffDiagnostic<'a> {
@@ -216,7 +216,7 @@ struct CIDiffDiagnostic<'a> {
 #[derive(Debug, v2::Diagnostic)]
 #[diagnostic(
     severity = Information,
-    category = "format/diff",
+    category = "format",
     message = "Formatter would have printed the following content:"
 )]
 struct FormatDiffDiagnostic<'a> {
@@ -534,7 +534,11 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
         match result {
             Ok(result) => result.reason.is_none(),
             Err(err) => {
-                self.push_diagnostic(rome_path.file_id(), category!("IO"), err.to_string());
+                self.push_diagnostic(
+                    rome_path.file_id(),
+                    category!("files/missingHandler"),
+                    err.to_string(),
+                );
                 false
             }
         }
@@ -608,10 +612,10 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         let rome_path = RomePath::new(path, file_id);
         let supported_format = ctx
             .can_format(&rome_path)
-            .with_file_id_and_code(file_id, category!("IO"))?;
+            .with_file_id_and_code(file_id, category!("files/missingHandler"))?;
         let supported_lint = ctx
             .can_lint(&rome_path)
-            .with_file_id_and_code(file_id, category!("IO"))?;
+            .with_file_id_and_code(file_id, category!("files/missingHandler"))?;
         let supported_file = match ctx.execution.traversal_mode() {
             TraversalMode::Check { .. } => supported_lint.reason.as_ref(),
             TraversalMode::CI { .. } => supported_lint
@@ -626,7 +630,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
                 UnsupportedReason::FileNotSupported => Err(Message::from(TraversalError {
                     severity: Severity::Error,
                     file_id,
-                    code: category!("IO"),
+                    code: category!("files/missingHandler"),
                     message: String::from("unhandled file type"),
                 })),
                 UnsupportedReason::FeatureNotEnabled | UnsupportedReason::Ignored => {
@@ -652,12 +656,12 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
                 language_hint: Language::default(),
             },
         )
-        .with_file_id_and_code(file_id, category!("IO"))?;
+        .with_file_id_and_code(file_id, category!("internalError/fs"))?;
 
         if let Some(fix_mode) = ctx.execution.as_fix_file_mode() {
             let fixed = file_guard
                 .fix_file(*fix_mode)
-                .with_file_id_and_code(file_id, category!("Lint"))?;
+                .with_file_id_and_code(file_id, category!("lint"))?;
 
             ctx.push_message(Message::SkippedFixes {
                 skipped_suggested_fixes: fixed.skipped_suggested_fixes,
@@ -682,7 +686,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
 
         let result = file_guard
             .pull_diagnostics(categories)
-            .with_file_id_and_code(file_id, category!("Lint"))?;
+            .with_file_id_and_code(file_id, category!("lint"))?;
 
         let has_errors = result
             .diagnostics
@@ -696,7 +700,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
                     Message::from(TraversalError {
                         severity: Severity::Warning,
                         file_id,
-                        code: category!("IO"),
+                        code: category!("parse"),
                         message: String::from("Skipped file with syntax errors"),
                     })
                 } else {
@@ -751,7 +755,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
 
             let printed = file_guard
                 .format_file()
-                .with_file_id_and_code(file_id, category!("Format"))?;
+                .with_file_id_and_code(file_id, category!("format"))?;
 
             let output = printed.into_code();
             if output != input {
@@ -856,6 +860,6 @@ trait ResultIoExt: ResultExt {
 
 impl<T> ResultIoExt for io::Result<T> {
     fn with_file_id(self, file_id: FileId) -> Result<Self::Result, TraversalError> {
-        self.with_file_id_and_code(file_id, category!("IO"))
+        self.with_file_id_and_code(file_id, category!("internalError/fs"))
     }
 }
