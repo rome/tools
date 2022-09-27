@@ -1,6 +1,5 @@
 use crate::react::{jsx_member_name_is_react_fragment, jsx_reference_identifier_is_fragment};
 use crate::semantic_services::Semantic;
-use crate::utils::batch::JsBatchMutation;
 use crate::JsRuleAction;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
@@ -78,11 +77,11 @@ impl NoUselessFragmentsQuery {
         match self {
             NoUselessFragmentsQuery::JsxFragment(fragment) => {
                 let old_node = JsxAnyChild::JsxFragment(fragment.clone());
-                mutation.remove_jsx_child_element(old_node);
+                mutation.remove_node(old_node);
             }
             NoUselessFragmentsQuery::JsxElement(element) => {
                 let old_node = JsxAnyChild::JsxElement(element.clone());
-                mutation.remove_jsx_child_element(old_node);
+                mutation.remove_node(old_node);
             }
         }
     }

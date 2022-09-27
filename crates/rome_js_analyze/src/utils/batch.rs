@@ -2,7 +2,6 @@ use rome_js_syntax::{
     JsAnyConstructorParameter, JsAnyFormalParameter, JsAnyParameter, JsConstructorParameterList,
     JsFormalParameter, JsLanguage, JsParameterList, JsSyntaxKind, JsSyntaxNode,
     JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList, JsVariableStatement,
-    JsxAnyChild, JsxChildList,
 };
 use rome_rowan::{AstNode, AstSeparatedList, BatchMutation};
 
@@ -15,9 +14,6 @@ pub trait JsBatchMutation {
     /// Removes the parameter, and:
     /// 1 - removes commas around the parameter to keep the list valid.
     fn remove_js_formal_parameter(&mut self, parameter: &JsFormalParameter) -> bool;
-
-    /// Removes a JSX child from a list
-    fn remove_jsx_child_element(&mut self, node_to_remove: JsxAnyChild) -> bool;
 }
 
 fn remove_js_formal_parameter_from_js_parameter_list(
@@ -169,22 +165,6 @@ impl JsBatchMutation for BatchMutation<JsLanguage> {
                     )
                 }
                 _ => None,
-            })
-            .unwrap_or(false)
-    }
-
-    fn remove_jsx_child_element(&mut self, node_to_remove: JsxAnyChild) -> bool {
-        node_to_remove
-            .parent::<JsxChildList>()
-            .and_then(|list| {
-                for element in list {
-                    if element == node_to_remove {
-                        self.remove_node(node_to_remove.clone());
-                        return Some(true);
-                    }
-                }
-
-                None
             })
             .unwrap_or(false)
     }
