@@ -112,12 +112,10 @@ mod tests {
     #[test]
     fn quick_test() {
         const SOURCE: &str = r#"
-import AwesomeReact, { Fragment as AwesomeFragment } from "react";
-
-<>
-    <AwesomeFragment>foo</AwesomeFragment>
-    <AwesomeReact.Fragment>foo</AwesomeReact.Fragment>
-</>
+if (true) {
+  console.log("true");
+} else
+  console.log("false"); // comment
 
         "#;
 
@@ -131,13 +129,16 @@ import AwesomeReact, { Fragment as AwesomeFragment } from "react";
             |signal| {
                 if let Some(diag) = signal.diagnostic() {
                     let diag = diag.into_diagnostic(Severity::Warning);
-                    dbg!(&diag);
                     let primary = diag.primary.as_ref().unwrap();
 
                     error_ranges.push(primary.span.range);
                 }
 
-                dbg!(signal.action());
+                if let Some(action) = signal.action() {
+                    let new_code = action.mutation.commit();
+
+                    eprintln!("{new_code}");
+                }
 
                 ControlFlow::<Never>::Continue(())
             },
