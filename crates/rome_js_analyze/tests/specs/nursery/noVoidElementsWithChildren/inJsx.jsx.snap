@@ -1,0 +1,97 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: inJsx.jsx
+---
+# Input
+```js
+<>
+    <br>invalid child</br>
+    <img alt="some text">invalid child</img>
+    <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }}></img>
+    <img alt="some text" children={"some child"}></img>
+    <img alt="some text" children={"some child"} />
+    <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }} >invalid child</img>
+</>
+
+```
+
+# Diagnostics
+```
+inJsx.jsx:2:5 lint/nursery/noVoidElementsWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! br is a void element tag and must not have children.
+  
+    ┌─ inJsx.jsx:2:5
+    │
+  2 │     <br>invalid child</br>
+    │     ^^^^^^^^^^^^^^^^^^^^^^
+  
+
+```
+
+```
+inJsx.jsx:3:5 lint/nursery/noVoidElementsWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! img is a void element tag and must not have children.
+  
+    ┌─ inJsx.jsx:3:5
+    │
+  3 │     <img alt="some text">invalid child</img>
+    │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+
+```
+
+```
+inJsx.jsx:4:5 lint/nursery/noVoidElementsWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! img is a void element tag and must not have the dangerouslySetInnerHTML prop.
+  
+    ┌─ inJsx.jsx:4:5
+    │
+  4 │     <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }}></img>
+    │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+
+```
+
+```
+inJsx.jsx:5:5 lint/nursery/noVoidElementsWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! img is a void element tag and must not have children.
+  
+    ┌─ inJsx.jsx:5:5
+    │
+  5 │     <img alt="some text" children={"some child"}></img>
+    │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+
+```
+
+```
+inJsx.jsx:6:5 lint/nursery/noVoidElementsWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! img is a void element tag and must not have children.
+  
+    ┌─ inJsx.jsx:6:5
+    │
+  6 │     <img alt="some text" children={"some child"} />
+    │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+
+```
+
+```
+inJsx.jsx:7:5 lint/nursery/noVoidElementsWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! img is a void element tag and must not have children, or the dangerouslySetInnerHTML prop.
+  
+    ┌─ inJsx.jsx:7:5
+    │
+  7 │     <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }} >invalid child</img>
+    │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+
+```
+
+

@@ -33,7 +33,7 @@ withChildren.jsx:2:5 lint/nursery/noUselessFragments  FIXABLE  ━━━━━�
     1 | +     foo
   2 2 |       <React.Fragment>foo</React.Fragment>
   3 3 |       <Fragment>foo</Fragment>
-  4 4 |   </>
+  4 4 |       {/*  valid   */}
   
 
 ```
@@ -50,13 +50,14 @@ withChildren.jsx:3:5 lint/nursery/noUselessFragments  FIXABLE  ━━━━━�
   
   i Suggested fix: Remove the Fragment
   
-      | @@ -1,5 +1,5 @@
+      | @@ -1,6 +1,6 @@
   0 0 |   <>
   1 1 |       <>foo</>
   2   | -     <React.Fragment>foo</React.Fragment>
     2 | +     foo
   3 3 |       <Fragment>foo</Fragment>
-  4 4 |   </>
+  4 4 |       {/*  valid   */}
+  5 5 |       <React.StrictMode><App /></React.StrictMode>
   
 
 ```
@@ -73,13 +74,15 @@ withChildren.jsx:4:5 lint/nursery/noUselessFragments  FIXABLE  ━━━━━�
   
   i Suggested fix: Remove the Fragment
   
-      | @@ -1,5 +1,5 @@
+      | @@ -1,7 +1,7 @@
   0 0 |   <>
   1 1 |       <>foo</>
   2 2 |       <React.Fragment>foo</React.Fragment>
   3   | -     <Fragment>foo</Fragment>
     3 | +     foo
-  4 4 |   </>
+  4 4 |       {/*  valid   */}
+  5 5 |       <React.StrictMode><App /></React.StrictMode>
+  6 6 |   </>
   
 
 ```

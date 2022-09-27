@@ -2,8 +2,8 @@
 
 use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
-    JsAnyCallArgument, JsAnyExpression, JsArrayExpression, JsCallExpression, JsIdentifierBinding,
-    JsImport, JsObjectExpression, JsPropertyObjectMember, JsxMemberName, JsxReferenceIdentifier,
+    JsAnyCallArgument, JsAnyExpression, JsCallExpression, JsIdentifierBinding, JsImport,
+    JsObjectExpression, JsPropertyObjectMember, JsxMemberName, JsxReferenceIdentifier,
 };
 use rome_rowan::{AstNode, AstSeparatedList};
 
@@ -16,8 +16,7 @@ pub(crate) struct ReactCreateElementCall {
     /// Optional props
     pub(crate) props: Option<JsObjectExpression>,
     /// Optional children
-    #[allow(dead_code)]
-    pub(crate) children: Option<JsArrayExpression>,
+    pub(crate) children: Option<JsAnyExpression>,
 }
 
 impl ReactCreateElementCall {
@@ -124,15 +123,10 @@ pub(crate) fn is_react_create_element(
                             .as_js_object_expression()
                             .cloned()
                     });
-            let third_argument =
-                iter.next()
-                    .and_then(|argument| argument.ok())
-                    .and_then(|argument| {
-                        argument
-                            .as_js_any_expression()?
-                            .as_js_array_expression()
-                            .cloned()
-                    });
+            let third_argument = iter
+                .next()
+                .and_then(|argument| argument.ok())
+                .and_then(|argument| argument.as_js_any_expression().cloned());
 
             Some(ReactCreateElementCall {
                 element_type: first_argument,

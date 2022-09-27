@@ -120,6 +120,7 @@ self.addEventListener("message", async (e) => {
 							useButtonType: "error",
 							useOptionalChain: "error",
 							noUselessFragments: "error",
+							noVoidElementsWithChildren: "error",
 						},
 					},
 				};

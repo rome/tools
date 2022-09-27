@@ -80,19 +80,7 @@ impl Rule for UseButtonType {
                             missing_prop: true,
                         });
                     } else {
-                        let type_attribute = attributes.into_iter().find_map(|attribute| {
-                            let attribute = attribute.as_jsx_attribute()?;
-                            let jsx_name = attribute.name().ok()?;
-                            let jsx_name = jsx_name.as_jsx_name()?;
-                            let name = jsx_name.value_token().ok()?;
-                            let name = name.text_trimmed();
-
-                            if name == "type" {
-                                Some(attribute.clone())
-                            } else {
-                                None
-                            }
-                        });
+                        let type_attribute = opening_element.find_attribute_by_name("type").ok()?;
 
                         if let Some(attribute) = type_attribute {
                             let initializer = attribute.initializer()?.value().ok()?;
