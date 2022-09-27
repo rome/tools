@@ -159,6 +159,7 @@ export interface Nursery {
 	noDangerouslySetInnerHtml?: RuleConfiguration;
 	noNewSymbol?: RuleConfiguration;
 	noRenderReturnValue?: RuleConfiguration;
+	noUndeclaredVariables?: RuleConfiguration;
 	noUnreachable?: RuleConfiguration;
 	noUnusedVariables?: RuleConfiguration;
 	noUselessFragments?: RuleConfiguration;
@@ -300,6 +301,7 @@ export type Category =
 	| "lint/nursery/useButtonType"
 	| "lint/nursery/useCamelCase"
 	| "lint/nursery/useOptionalChain"
+	| "lint/nursery/noUndeclaredVariables"
 	| "lint/nursery/noVoidElementsWithChildren"
 	| "lint/nursery/noChildrenProp"
 	| "lint/nursery/useFragmentSyntax"

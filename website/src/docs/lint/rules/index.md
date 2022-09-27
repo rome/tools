@@ -281,6 +281,13 @@ Disallow <code>new</code> operators with the <code>Symbol</code> object
 Prevent the usage of the return value of <code>React.render</code>.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noUndeclaredVariables">
+	<a href="/docs/lint/rules/noUndeclaredVariables">noUndeclaredVariables (since v0.10.0)</a>
+	<a class="header-anchor" href="#noUndeclaredVariables"></a>
+</h3>
+Prevents the usage of variables that haven't been declared inside the document
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noUnreachable">
 	<a href="/docs/lint/rules/noUnreachable">noUnreachable (since v0.7.0)</a>
 	<a class="header-anchor" href="#noUnreachable"></a>

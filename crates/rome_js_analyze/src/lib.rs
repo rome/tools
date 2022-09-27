@@ -14,6 +14,7 @@ use std::{borrow::Cow, error::Error};
 mod analyzers;
 mod assists;
 mod control_flow;
+pub mod globals;
 mod react;
 mod registry;
 mod semantic_analyzers;
@@ -111,16 +112,7 @@ mod tests {
     #[ignore]
     #[test]
     fn quick_test() {
-        const SOURCE: &str = r#"
-<>
-    <br>invalid child</br>
-    <img alt="some text">invalid child</img>
-    <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }}></img>
-    <img alt="some text" children={"some child"}></img>
-    <img alt="some text" children={"some child"} />
-    <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }} >invalid child</img>
-</>
-
+        const SOURCE: &str = r#"document;
         "#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
