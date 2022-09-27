@@ -6,10 +6,10 @@ use rome_analyze::{declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnos
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make::{
-    jsx_child_list, jsx_closing_fragment, jsx_fragment, jsx_opening_fragment, token,
+    jsx_child_list, jsx_closing_fragment, jsx_fragment, jsx_opening_fragment,
 };
-use rome_js_syntax::{JsxAnyElementName, JsxElement, T};
-use rome_rowan::{AstNode, BatchMutationExt};
+use rome_js_syntax::{JsxAnyElementName, JsxElement};
+use rome_rowan::{AstNode, AstNodeList, BatchMutationExt};
 
 declare_rule! {
     /// This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`.
@@ -56,12 +56,7 @@ impl Rule for UseFragmentSyntax {
             JsxAnyElementName::JsxName(_) | JsxAnyElementName::JsxNamespaceName(_) => false,
         };
 
-        if maybe_invalid
-            && opening_element
-                .find_attribute_by_name("key")
-                .ok()?
-                .is_none()
-        {
+        if maybe_invalid && opening_element.attributes().is_empty() {
             return Some(());
         }
 
@@ -72,10 +67,19 @@ impl Rule for UseFragmentSyntax {
         let node = ctx.query();
         let mut mutation = ctx.root().begin();
         let list = jsx_child_list(node.children());
+        let opening_element = node.opening_element().ok()?;
+        let closing_element = node.closing_element().ok()?;
         let fragment = jsx_fragment(
-            jsx_opening_fragment(token(T![<]), token(T![>])),
+            jsx_opening_fragment(
+                opening_element.l_angle_token().ok()?,
+                opening_element.r_angle_token().ok()?,
+            ),
             list,
-            jsx_closing_fragment(token(T![<]), token(T![/]), token(T![>])),
+            jsx_closing_fragment(
+                closing_element.l_angle_token().ok()?,
+                closing_element.slash_token().ok()?,
+                closing_element.r_angle_token().ok()?,
+            ),
         );
 
         mutation.replace_element(

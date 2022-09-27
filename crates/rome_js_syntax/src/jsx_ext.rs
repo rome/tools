@@ -141,17 +141,11 @@ pub fn find_attribute_by_name(
     name_to_lookup: &str,
 ) -> SyntaxResult<Option<JsxAttribute>> {
     let attribute = attributes.iter().find_map(|attribute| {
-        if let Some(attribute) = JsxAttribute::cast_ref(attribute.syntax()) {
-            let name = attribute.name().ok()?;
-            if let Some(name) = JsxName::cast_ref(name.syntax()) {
-                if name.value_token().ok()?.text_trimmed() == name_to_lookup {
-                    Some(attribute)
-                } else {
-                    None
-                }
-            } else {
-                None
-            }
+        let attribute = JsxAttribute::cast_ref(attribute.syntax())?;
+        let name = attribute.name().ok()?;
+        let name = JsxName::cast_ref(name.syntax())?;
+        if name.value_token().ok()?.text_trimmed() == name_to_lookup {
+            Some(attribute)
         } else {
             None
         }
