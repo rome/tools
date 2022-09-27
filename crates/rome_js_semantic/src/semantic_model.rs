@@ -1,11 +1,11 @@
 use rome_js_syntax::{
     JsAnyRoot, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier,
-    JsSyntaxNode, JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding,
+    JsSyntaxNode, JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding, JsFunctionDeclaration, JsSyntaxKind, JsArrowFunctionExpression,
 };
 use rome_rowan::{AstNode, SyntaxTokenText};
 use rust_lapper::{Interval, Lapper};
 use std::{
-    collections::{BTreeSet, HashMap, HashSet},
+    collections::{BTreeSet, HashMap, HashSet, VecDeque},
     iter::FusedIterator,
     sync::Arc,
 };
@@ -68,6 +68,38 @@ impl<T: HasDeclarationAstNode> IsExportedCanBeQueried for T {
     }
 }
 
+
+/// Marker trait that groups all "AstNode" that have closure
+pub trait HasClosureAstNode: AstNode<Language = JsLanguage> {
+    #[inline(always)]
+    fn node(&self) -> &Self {
+        self
+    }
+}
+
+impl HasClosureAstNode for JsFunctionDeclaration {}
+impl HasClosureAstNode for JsArrowFunctionExpression {}
+
+#[derive(Clone, Debug)]
+struct ScopeReference {
+    range: TextRange,
+    ty: ReferenceType
+}
+
+impl std::hash::Hash for ScopeReference {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        self.range.hash(state);
+    }
+}
+
+impl PartialEq for ScopeReference {
+    fn eq(&self, other: &Self) -> bool {
+        self.range == other.range
+    }
+}
+
+impl Eq for ScopeReference {}
+
 #[derive(Debug)]
 struct SemanticModelScopeData {
     range: TextRange,
@@ -75,6 +107,8 @@ struct SemanticModelScopeData {
     children: Vec<usize>,
     bindings: Vec<TextRange>,
     bindings_by_name: HashMap<SyntaxTokenText, usize>,
+    read_references: Vec<ScopeReference>,
+    write_references: Vec<ScopeReference>
 }
 
 /// Contains all the data of the [SemanticModel] and only lives behind an [Arc].
@@ -103,9 +137,18 @@ struct SemanticModelData {
 
 impl SemanticModelData {
     fn scope(&self, range: &TextRange) -> usize {
+        let start = range.start().into();
+        let end = range.end().into();
         let scopes = self
             .scope_by_range
-            .find(range.start().into(), range.end().into());
+            .find(start, end)
+            .filter_map(|x| {
+                if start < x.start || end > x.stop {
+                    None
+                } else {
+                    Some(x)
+                }
+            });
 
         // We always want the most tight scope
         match scopes.map(|x| x.val).max() {
@@ -165,6 +208,28 @@ impl PartialEq for SemanticModelData {
 
 impl Eq for SemanticModelData {}
 
+pub struct ScopeDescendantsIter {
+    data: Arc<SemanticModelData>,
+    q: VecDeque<usize>
+}
+
+impl Iterator for ScopeDescendantsIter {
+    type Item = Scope;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if let Some(id) = self.q.pop_front() {
+            let scope = &self.data.scopes[id];
+            self.q.extend(scope.children.iter());
+            Some(Scope {
+                data: self.data.clone(),
+                id
+            })
+        } else {
+            None
+        }
+    }
+}
+
 /// Provides all information regarding a specific scope.
 /// Allows navigation to parent and children scope and binding information.
 #[derive(Clone, Debug)]
@@ -187,6 +252,17 @@ impl Scope {
     pub fn ancestors(&self) -> impl Iterator<Item = Scope> {
         std::iter::successors(Some(self.clone()), |scope| scope.parent())
     }
+
+    pub fn descendants(&self) -> impl Iterator<Item = Scope> {
+        let mut q = VecDeque::new();
+        q.push_back(self.id);
+
+        ScopeDescendantsIter {
+            data: self.data.clone(),
+            q 
+        }
+    }
+  
 
     /// Returns this scope parent.
     pub fn parent(&self) -> Option<Scope> {
@@ -603,6 +679,111 @@ impl SemanticModel {
     {
         node.is_exported(self)
     }
+
+    pub fn closure(&self, node: impl HasClosureAstNode) -> Closure {
+        let node = node.node();
+        let closure_range = node.syntax().text_range();
+        let scope_id = self.data.scope(&closure_range);
+
+        Closure {
+            data: self.data.clone(),
+            scope_id,
+            closure_range
+        }
+    }
+}
+
+pub struct Closure {
+    data: Arc<SemanticModelData>,
+    scope_id: usize,
+    closure_range: TextRange
+}
+
+impl Closure {
+    fn capture_scopes(&self) -> Vec<usize> {
+        let scope = &self.data.scopes[self.scope_id];
+        let mut q = VecDeque::from_iter(scope.children.iter().cloned());
+        let mut r = vec![self.scope_id];
+
+        while let Some(id) = q.pop_front() {
+            let scope = &self.data.scopes[id];
+            let node = &self.data.node_by_range[&scope.range];
+            match node.kind() {
+                JsSyntaxKind::JS_FUNCTION_DECLARATION 
+                | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION=> {}
+                _ => {
+                    r.push(id);
+                    q.extend(scope.children.iter());
+                }
+            }            
+        }
+
+        r
+    }  
+
+    fn captures(&self) -> HashSet<ScopeReference> {
+        let mut captures = HashSet::new();
+
+        for id in self.capture_scopes() {
+            for reference in self.data.scopes[id].read_references.iter() {
+                let declaration = self.data.declared_at_by_range[&reference.range];
+                if self.closure_range.intersect(declaration).is_none() {
+                    captures.insert(reference.clone());
+                }
+            }            
+        }
+
+        captures
+    }
+
+    pub fn all_captures(&self) -> impl Iterator<Item = Reference> {
+        self.captures().drain().map(|x| {
+            Reference {
+                data: self.data.clone(),
+                node: self.data.node_by_range[&x.range].clone(),
+                range: x.range.clone(),
+                ty: x.ty,
+            }
+        }).collect::<Vec<_>>()
+          .into_iter()
+    }
+
+    fn children_scopes(&self) -> Vec<usize> {
+        let scope = &self.data.scopes[self.scope_id];
+        let mut q = VecDeque::from_iter(scope.children.iter().cloned());
+        let mut r = vec![];
+
+        while let Some(id) = q.pop_front() {
+            let scope = &self.data.scopes[id];
+            let node = &self.data.node_by_range[&scope.range];
+            match node.kind() {
+                JsSyntaxKind::JS_FUNCTION_DECLARATION 
+                | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION=> {
+                    r.push(id);
+                }
+                _ => {
+                    q.extend(scope.children.iter());
+                }
+            }            
+        }
+
+        r
+    }  
+
+    pub fn children(&self) -> Vec<Closure> {
+        let mut closures = vec![];
+
+        for scope_id in self.children_scopes() {
+            let scope = &self.data.scopes[scope_id];
+            closures.push(Closure {
+                data: self.data.clone(),
+                scope_id,
+                closure_range: scope.range,
+            })
+        }
+
+        closures
+    }
 }
 
 // Extensions
@@ -728,6 +909,8 @@ impl SemanticModelBuilder {
                     children: vec![],
                     bindings: vec![],
                     bindings_by_name: HashMap::new(),
+                    read_references: vec![],
+                    write_references: vec![]
                 });
 
                 if let Some(parent_scope_id) = parent_scope_id {
@@ -744,7 +927,7 @@ impl SemanticModelBuilder {
                         val: scope_id,
                     });
             }
-            ScopeEnded { .. } => {}
+            ScopeEnded { .. } => { }
             DeclarationFound {
                 name,
                 range,
@@ -772,6 +955,7 @@ impl SemanticModelBuilder {
             Read {
                 range,
                 declared_at: declaration_at,
+                scope_id
             } => {
                 self.declarations_by_range.insert(range, declaration_at);
                 self.declaration_all_references
@@ -782,10 +966,17 @@ impl SemanticModelBuilder {
                     .entry(declaration_at)
                     .or_default()
                     .push((ReferenceType::Read { hoisted: false }, range));
+
+                let scope = &mut self.scopes[scope_id];
+                scope.read_references.push(ScopeReference {
+                    range,
+                    ty: ReferenceType::Read { hoisted: false }
+                });
             }
             HoistedRead {
                 range,
                 declared_at: declaration_at,
+                scope_id
             } => {
                 self.declarations_by_range.insert(range, declaration_at);
                 self.declaration_all_references
@@ -796,10 +987,17 @@ impl SemanticModelBuilder {
                     .entry(declaration_at)
                     .or_default()
                     .push((ReferenceType::Read { hoisted: true }, range));
+
+                let scope = &mut self.scopes[scope_id];
+                scope.read_references.push(ScopeReference {
+                    range,
+                    ty: ReferenceType::Read { hoisted: true }
+                });
             }
             Write {
                 range,
                 declared_at: declaration_at,
+                scope_id
             } => {
                 self.declarations_by_range.insert(range, declaration_at);
                 self.declaration_all_references
@@ -810,10 +1008,17 @@ impl SemanticModelBuilder {
                     .entry(declaration_at)
                     .or_default()
                     .push((ReferenceType::Write { hoisted: false }, range));
+
+                let scope = &mut self.scopes[scope_id];
+                scope.write_references.push(ScopeReference {
+                    range,
+                    ty: ReferenceType::Write { hoisted: false }
+                });
             }
             HoistedWrite {
                 range,
                 declared_at: declaration_at,
+                scope_id
             } => {
                 self.declarations_by_range.insert(range, declaration_at);
                 self.declaration_all_references
@@ -824,6 +1029,12 @@ impl SemanticModelBuilder {
                     .entry(declaration_at)
                     .or_default()
                     .push((ReferenceType::Write { hoisted: true }, range));
+
+                let scope = &mut self.scopes[scope_id];
+                scope.write_references.push(ScopeReference {
+                    range,
+                    ty: ReferenceType::Write { hoisted: true }
+                });
             }
             UnresolvedReference { .. } => {}
             Exported { range } => {
@@ -884,7 +1095,7 @@ pub fn semantic_model(root: &JsAnyRoot) -> SemanticModel {
 mod test {
     use super::*;
     use rome_diagnostics::file::FileId;
-    use rome_js_syntax::{JsReferenceIdentifier, JsSyntaxKind, SourceType, TsIdentifierBinding};
+    use rome_js_syntax::{JsReferenceIdentifier, JsSyntaxKind, SourceType, TsIdentifierBinding, JsFunctionDeclaration, JsArrowFunctionExpression};
     use rome_rowan::SyntaxNodeCast;
 
     #[test]
@@ -1164,5 +1375,96 @@ mod test {
         assert_is_exported(true, "A", "enum A {}; module.exports = A");
         assert_is_exported(true, "A", "enum A {}; exports = A");
         assert_is_exported(true, "A", "enum A {}; exports.A = A");
+    }
+
+    fn assert_closure(code: &str, name: &str, captures: &[&str]) {
+        let r = rome_js_parser::parse(code, FileId::zero(), SourceType::tsx());
+        let model = semantic_model(&r.tree());
+
+        let closure = if name != "ARROWFUNCTION" {
+            let node = r.syntax()
+                .descendants()
+                .filter(|x| x.text_trimmed() == name)
+                .last()
+                .unwrap();
+            let f = node.parent().unwrap().cast::<JsFunctionDeclaration>().unwrap();
+            model.closure(f)
+        } else {
+            let f = r.syntax()
+                .descendants()
+                .filter(|x| x.kind() == JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION)
+                .last()
+                .unwrap().cast::<JsArrowFunctionExpression>().unwrap();
+            model.closure(f)
+        };
+
+        let expected_captures: BTreeSet<String> = captures.iter()
+            .map(|x| x.to_string())
+            .collect();
+
+        let all_captures: BTreeSet<String> = closure.all_captures()
+            .map(|x| x.node().text_trimmed().to_string())
+            .collect();
+        
+        let intersection = expected_captures.intersection(&all_captures);
+        let intersection_count = intersection.count();
+
+        assert_eq!(intersection_count, expected_captures.len());
+        assert_eq!(intersection_count, all_captures.len());
+    }
+
+    fn get_closure_children(code: &str, name: &str) -> Vec<Closure> {
+        let r = rome_js_parser::parse(code, FileId::zero(), SourceType::tsx());
+        let model = semantic_model(&r.tree());
+
+        let closure = if name != "ARROWFUNCTION" {
+            let node = r.syntax()
+                .descendants()
+                .filter(|x| x.text_trimmed() == name)
+                .last()
+                .unwrap();
+            let f = node.parent().unwrap().cast::<JsFunctionDeclaration>().unwrap();
+            model.closure(f)
+        } else {
+            let f = r.syntax()
+                .descendants()
+                .filter(|x| x.kind() == JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION)
+                .last()
+                .unwrap().cast::<JsArrowFunctionExpression>().unwrap();
+            model.closure(f)
+        };
+
+        closure.children()
+    }
+
+    #[test]
+    pub fn ok_semantic_model_closure() {
+        assert_closure("function f() {}", "f", &[]);
+
+        let two_captures = "let a, b; function f(c) {console.log(a, b, c)}"; 
+        assert_closure(two_captures, "f", &["a", "b"]);
+        assert_eq!(get_closure_children(two_captures, "f").len(), 0);
+
+        let inner_function = "let a, b;
+        function f(c) {
+            console.log(a);
+            function g() {
+                console.log(b, c);
+            }
+        }";
+        assert_closure(inner_function, "f", &["a"]);
+        assert_closure(inner_function, "g", &["b", "c"]);
+        assert_eq!(get_closure_children(inner_function, "f").len(), 1);
+        assert_eq!(get_closure_children(inner_function, "g").len(), 0);
+
+        let arrow_function = "let a, b;
+        function f(c) {
+            console.log(a);
+            c.map(x => x + b + c);
+        }";
+        assert_closure(arrow_function, "f", &["a"]);
+        assert_closure(arrow_function, "ARROWFUNCTION", &["b", "c"]);
+        assert_eq!(get_closure_children(arrow_function, "f").len(), 1);
+        assert_eq!(get_closure_children(arrow_function, "ARROWFUNCTION").len(), 0);
     }
 }
