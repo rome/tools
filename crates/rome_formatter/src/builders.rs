@@ -100,38 +100,6 @@ pub const fn hard_line_break() -> Line {
     Line::new(LineMode::Hard)
 }
 
-/// A plain line break that does not add any indent.
-/// Useful for line breaks in a spacing sensitive context.
-///
-/// # Examples
-///
-/// ```
-/// use rome_formatter::{format, format_args};
-/// use rome_formatter::prelude::*;
-///
-/// # fn main() -> FormatResult<()> {
-/// let block = format!(SimpleFormatContext::default(), [
-///     text("a ="),
-///     block_indent(&format_args![
-///         text("`abcd"),
-///         literal_line(),
-///         text("...no indent at the beginning`")
-///     ]),
-///     text(";"),
-/// ])?;
-///
-/// assert_eq!(
-///     "a =\n\t`abcd\n...no indent at the beginning`\n;",
-///     block.print()?.as_code()
-/// );
-/// # Ok(())
-/// # }
-/// ```
-#[inline]
-pub const fn literal_line() -> Line {
-    Line::new(LineMode::Literal)
-}
-
 /// A forced empty line. An empty line inserts enough line breaks in the output for
 /// the previous and next element to be separated by an empty line.
 ///

@@ -2,6 +2,7 @@ pub mod document;
 pub mod tag;
 
 use crate::format_element::tag::{LabelId, Tag};
+use std::borrow::Cow;
 
 use crate::{TagKind, TextSize};
 #[cfg(target_pointer_width = "64")]
@@ -71,8 +72,6 @@ pub enum LineMode {
     Soft,
     /// See [crate::builders::hard_line_break] for documentation.
     Hard,
-    /// See [crate::builders::literal_line] for documentation.
-    Literal,
     /// See [crate::builders::empty_line] for documentation.
     Empty,
 }
@@ -80,10 +79,6 @@ pub enum LineMode {
 impl LineMode {
     pub const fn is_hard(&self) -> bool {
         matches!(self, LineMode::Hard)
-    }
-
-    pub const fn is_literal(&self) -> bool {
-        matches!(self, LineMode::Literal)
     }
 }
 
@@ -207,6 +202,38 @@ impl PartialEq for Text {
     }
 }
 
+const LINE_SEPARATOR: char = '\u{2028}';
+const PARAGRAPH_SEPARATOR: char = '\u{2029}';
+pub const LINE_TERMINATORS: [char; 3] = ['\r', LINE_SEPARATOR, PARAGRAPH_SEPARATOR];
+
+/// Replace the line terminators matching the provided list with "\n"
+/// since its the only line break type supported by the printer
+pub fn normalize_newlines<const N: usize>(text: &str, terminators: [char; N]) -> Cow<str> {
+    let mut result = String::new();
+    let mut last_end = 0;
+
+    for (start, part) in text.match_indices(terminators) {
+        result.push_str(&text[last_end..start]);
+        result.push('\n');
+
+        last_end = start + part.len();
+        // If the current character is \r and the
+        // next is \n, skip over the entire sequence
+        if part == "\r" && text[last_end..].starts_with('\n') {
+            last_end += 1;
+        }
+    }
+
+    // If the result is empty no line terminators were matched,
+    // return the entire input text without allocating a new String
+    if result.is_empty() {
+        Cow::Borrowed(text)
+    } else {
+        result.push_str(&text[last_end..text.len()]);
+        Cow::Owned(result)
+    }
+}
+
 impl Deref for Text {
     type Target = str;
     fn deref(&self) -> &Self::Target {
@@ -248,18 +275,15 @@ impl FormatElements for FormatElement {
         match self {
             FormatElement::ExpandParent => true,
             FormatElement::Tag(Tag::StartGroup(group)) => !group.mode().is_flat(),
-            FormatElement::Line(line_mode) => matches!(
-                line_mode,
-                LineMode::Hard | LineMode::Empty | LineMode::Literal
-            ),
+            FormatElement::Line(line_mode) => matches!(line_mode, LineMode::Hard | LineMode::Empty),
+            FormatElement::Text(text) => text.contains('\n'),
             FormatElement::Interned(interned) => interned.will_break(),
             // Traverse into the most flat version because the content is guaranteed to expand when even
             // the most flat version contains some content that forces a break.
             FormatElement::BestFitting(best_fitting) => best_fitting.most_flat().will_break(),
-            FormatElement::LineSuffixBoundary
-            | FormatElement::Space
-            | FormatElement::Tag(_)
-            | FormatElement::Text(_) => false,
+            FormatElement::LineSuffixBoundary | FormatElement::Space | FormatElement::Tag(_) => {
+                false
+            }
         }
     }
 

@@ -162,30 +162,19 @@ impl<'a> Printer<'a> {
                 } else if self.state.line_suffixes.has_pending() {
                     self.flush_line_suffixes(queue, stack, Some(element));
                 } else {
-                    if line_mode.is_literal() {
+                    // Only print a newline if the current line isn't already empty
+                    if self.state.line_width > 0 {
                         self.print_str("\n");
-                        self.state.pending_indent = Indention::default();
-                    } else {
-                        // Only print a newline if the current line isn't already empty
-                        if self.state.line_width > 0 {
-                            self.print_str("\n");
-                        }
-
-                        // Print a second line break if this is an empty line
-                        if line_mode == &LineMode::Empty && !self.state.has_empty_line {
-                            self.print_str("\n");
-                            self.state.has_empty_line = true;
-                        }
-
-                        self.state.pending_indent = args.indention();
                     }
+
+                    // Print a second line break if this is an empty line
+                    if line_mode == &LineMode::Empty && !self.state.has_empty_line {
+                        self.print_str("\n");
+                        self.state.has_empty_line = true;
+                    }
+
                     self.state.pending_space = false;
-
-                    if args.mode().is_flat() {
-                        // Fit's only tests if groups up to the first line break fit.
-                        // The next group must re-measure if it still fits.
-                        self.state.measured_group_fits = false;
-                    }
+                    self.state.pending_indent = args.indention();
                 }
             }
 
@@ -596,9 +585,14 @@ impl<'a> Printer<'a> {
             self.state
                 .buffer
                 .push_str(self.options.line_ending.as_str());
+
             self.state.generated_line += 1;
             self.state.generated_column = 0;
             self.state.line_width = 0;
+
+            // Fit's only tests if groups up to the first line break fit.
+            // The next group must re-measure if it still fits.
+            self.state.measured_group_fits = false;
         } else {
             self.state.buffer.push(char);
             self.state.generated_column += 1;
@@ -868,7 +862,7 @@ fn fits_element_on_line<'a, 'rest>(
                         state.pending_space = true;
                     }
                     LineMode::Soft => {}
-                    LineMode::Hard | LineMode::Empty | LineMode::Literal => {
+                    LineMode::Hard | LineMode::Empty => {
                         return Ok(if state.must_be_flat {
                             Fits::No
                         } else {
@@ -898,8 +892,11 @@ fn fits_element_on_line<'a, 'rest>(
                 let char_width = match c {
                     '\t' => options.tab_width,
                     '\n' => {
-                        state.line_width = 0;
-                        0
+                        return Ok(if state.must_be_flat {
+                            Fits::No
+                        } else {
+                            Fits::Yes
+                        });
                     }
                     _ => 1,
                 };
@@ -1203,14 +1200,10 @@ a"#,
     }
 
     #[test]
-    fn it_breaks_a_group_if_it_contains_a_literal_line() {
+    fn it_breaks_a_group_if_a_string_contains_a_newline() {
         let result = format(&FormatArrayElements {
             items: vec![
-                &format_args![
-                    text("`This is a string spanning"),
-                    &literal_line(),
-                    &text("two lines`")
-                ],
+                &text("`This is a string spanning\ntwo lines`"),
                 &text("\"b\""),
             ],
         });

@@ -38,9 +38,13 @@ impl Format<JsFormatContext> for AnyTemplateChunkElement {
             f,
             [format_replaced(
                 &chunk,
-                // Per https://tc39.es/ecma262/multipage/ecmascript-language-lexical-grammar.html#sec-static-semantics-trv:
-                // In template literals, the '\r' and '\r\n' line terminators are normalized to '\n'
-                &normalize_token_text_new_lines(&chunk, chunk.text_trimmed_range(), ['\n', '\r'])
+                &syntax_token_cow_slice(
+                    // Per https://tc39.es/ecma262/multipage/ecmascript-language-lexical-grammar.html#sec-static-semantics-trv:
+                    // In template literals, the '\r' and '\r\n' line terminators are normalized to '\n'
+                    normalize_newlines(chunk.text_trimmed(), ['\r']),
+                    &chunk,
+                    chunk.text_trimmed_range().start(),
+                )
             )]
         )
     }

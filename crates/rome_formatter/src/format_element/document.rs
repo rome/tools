@@ -79,10 +79,9 @@ impl Document {
                         enclosing.pop();
                         continue;
                     }
+                    FormatElement::Text(text) => text.contains('\n'),
                     FormatElement::ExpandParent
-                    | FormatElement::Line(LineMode::Hard | LineMode::Empty | LineMode::Literal) => {
-                        true
-                    }
+                    | FormatElement::Line(LineMode::Hard | LineMode::Empty) => true,
                     _ => false,
                 };
 
@@ -228,9 +227,6 @@ impl Format<IrFormatContext> for &[FormatElement] {
                     }
                     LineMode::Empty => {
                         write!(f, [text("empty_line")])?;
-                    }
-                    LineMode::Literal => {
-                        write!(f, [text("literal_line")])?;
                     }
                 },
                 FormatElement::ExpandParent => {

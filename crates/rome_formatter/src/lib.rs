@@ -50,9 +50,9 @@ pub use arguments::{Argument, Arguments};
 pub use buffer::{Buffer, BufferExtensions, BufferSnapshot, Inspect, PreambleBuffer, VecBuffer};
 pub use builders::BestFitting;
 
+use crate::builders::syntax_token_cow_slice;
 use crate::comments::{CommentStyle, Comments, SourceComment};
-use crate::verbatim::{normalize_token_text_new_lines, LINE_TERMINATORS};
-pub use format_element::{FormatElement, Text};
+pub use format_element::{normalize_newlines, FormatElement, Text, LINE_TERMINATORS};
 pub use group_id::GroupId;
 use rome_rowan::{
     Language, SyntaxElement, SyntaxError, SyntaxNode, SyntaxResult, SyntaxToken, SyntaxTriviaPiece,
@@ -1400,10 +1400,10 @@ impl<L: Language, Context> Format<Context> for SyntaxTriviaPiece<L> {
 
         write!(
             f,
-            [normalize_token_text_new_lines(
+            [syntax_token_cow_slice(
+                normalize_newlines(trimmed, LINE_TERMINATORS),
                 &self.token(),
-                TextRange::at(trimmed_start, trimmed.text_len()),
-                LINE_TERMINATORS
+                trimmed_start
             )]
         )
     }
