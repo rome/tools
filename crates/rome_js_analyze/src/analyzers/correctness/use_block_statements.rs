@@ -216,10 +216,18 @@ impl Rule for UseBlockStatements {
 
                     r_curly_token.with_leading_trivia(leading_trivia)
                 } else {
-                    let has_trailing_comments = stmt.syntax().has_trailing_comments();
-                    // if the node we have to enclose has some leading comments, then we add a new line
+                    let has_trailing_single_line_comments = stmt
+                        .syntax()
+                        .last_trailing_trivia()
+                        .map(|trivia| {
+                            trivia
+                                .pieces()
+                                .any(|trivia| trivia.kind() == TriviaPieceKind::SingleLineComment)
+                        })
+                        .unwrap_or(false);
+                    // if the node we have to enclose has some trailing comments, then we add a new line
                     // to the leading trivia of the right curly brace
-                    if !has_trailing_comments {
+                    if !has_trailing_single_line_comments {
                         r_curly_token
                             .with_leading_trivia(iter::once((TriviaPieceKind::Whitespace, " ")))
                     } else {
