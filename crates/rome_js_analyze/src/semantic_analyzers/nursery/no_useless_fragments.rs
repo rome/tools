@@ -5,11 +5,9 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_factory::make;
-use rome_js_factory::make::{jsx_expression_child, jsx_ident, jsx_text};
 use rome_js_syntax::{
     JsLanguage, JsSyntaxKind, JsxAnyChild, JsxAnyElementName, JsxChildList, JsxElement,
-    JsxFragment, JsxMemberName, JsxReferenceIdentifier, JsxTagExpression,
+    JsxFragment, JsxTagExpression,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeList, BatchMutation, BatchMutationExt};
 
