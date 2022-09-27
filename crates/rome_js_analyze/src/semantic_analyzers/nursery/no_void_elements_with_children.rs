@@ -67,7 +67,7 @@ impl NoVoidElementsWithChildrenState {
             (true, true) => {
                 (markup! {
                     <Emphasis>{self.element_name}</Emphasis>" is a void element tag and must not have the "<Emphasis>"children"</Emphasis>
-                    " or the"<Emphasis>"dangerouslySetInnerHTML"</Emphasis>" prop."
+                    " or the "<Emphasis>"dangerouslySetInnerHTML"</Emphasis>" prop."
                 }).to_owned()
             }
             (true, false) => {

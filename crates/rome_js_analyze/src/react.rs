@@ -2,8 +2,8 @@
 
 use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
-    JsAnyCallArgument, JsAnyExpression, JsArrayExpression, JsCallExpression, JsIdentifierBinding,
-    JsImport, JsObjectExpression, JsPropertyObjectMember, JsxMemberName, JsxReferenceIdentifier,
+    JsAnyCallArgument, JsAnyExpression, JsCallExpression, JsIdentifierBinding, JsImport,
+    JsObjectExpression, JsPropertyObjectMember, JsxMemberName, JsxReferenceIdentifier,
 };
 use rome_rowan::{AstNode, AstSeparatedList};
 
