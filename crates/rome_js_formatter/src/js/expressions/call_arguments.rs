@@ -424,6 +424,8 @@ fn could_group_expression_argument(
     Ok(result)
 }
 
+/// Tests if this is a call to commonjs [`require`](https://nodejs.org/api/modules.html#requireid)
+/// or amd's [`define`](https://github.com/amdjs/amdjs-api/wiki/AMD#define-function-) function.
 fn is_commonjs_or_amd_call(
     arguments: &JsCallArguments,
     call: Option<&JsCallExpression>,
@@ -485,6 +487,7 @@ fn is_commonjs_or_amd_call(
     })
 }
 
+/// Returns `true` if `arguments` contains a single [multiline template literal argument that starts on its own ](is_multiline_template_starting_on_same_line).
 fn is_multiline_template_only_args(arguments: &JsCallArguments) -> bool {
     let args = arguments.args();
 

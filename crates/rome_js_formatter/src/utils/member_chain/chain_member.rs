@@ -12,16 +12,16 @@ use std::fmt::Debug;
 #[derive(Copy, Clone, Debug)]
 pub(crate) enum CallExpressionPosition {
     /// At the start of a call chain.
-    /// `of` in
-    /// `of().test`
+    /// `of` in `of().test`
     Start,
 
     /// Somewhere in the middle.
-    /// `a.b().c()`
+    ///
+    /// `b` in `a.b().c()`
     Middle,
 
     /// At the end of a call chain (root)
-    /// `a.b.c()`
+    /// `c` in `a.b.c()`
     End,
 }
 
