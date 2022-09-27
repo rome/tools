@@ -241,29 +241,36 @@ impl Session {
                             error!("Cannot set workspace settings: {}", err);
                         })
                         .ok()?;
-                    let mut configuration = self.configuration.write().unwrap();
-
-                    // This operation is intended, we want to consume the configuration because once it's read
-                    // from the LSP, it's not needed anymore
-                    if let Some(configuration) = configuration.take() {
-                        trace!(
-                            "The LSP will now use the following configuration: \n {:?}",
-                            &configuration
-                        );
-
-                        let result = self
-                            .workspace
-                            .update_settings(UpdateSettingsParams { configuration });
-
-                        if let Err(error) = result {
-                            error!("{:?}", &error)
-                        }
-                    }
+                    self.update_workspace_settings();
 
                     Some(())
                 });
         } else {
             trace!("Cannot read configuration from the client");
+        }
+    }
+
+    /// If updates the [Workspace] settings with the new configuration that was
+    /// read from file.
+    #[tracing::instrument(level = "debug", skip(self))]
+    pub(crate) fn update_workspace_settings(&self) {
+        let mut configuration = self.configuration.write().unwrap();
+
+        // This operation is intended, we want to consume the configuration because once it's read
+        // from the LSP, it's not needed anymore
+        if let Some(configuration) = configuration.take() {
+            trace!(
+                "The LSP will now use the following configuration: \n {:?}",
+                &configuration
+            );
+
+            let result = self
+                .workspace
+                .update_settings(UpdateSettingsParams { configuration });
+
+            if let Err(error) = result {
+                error!("{:?}", &error)
+            }
         }
     }
 

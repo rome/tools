@@ -15,13 +15,14 @@ import {
 	ServerOptions,
 	StreamInfo,
 } from "vscode-languageclient/node";
-import { join, isAbsolute } from "path";
+import { isAbsolute, join } from "path";
 import { existsSync } from "fs";
 import { setContextValue } from "./utils";
 import { Session } from "./session";
 import { syntaxTree } from "./commands/syntaxTree";
 import { Commands } from "./commands";
 import { StatusBar } from "./statusBar";
+import { configChangeRequest } from "./lsp_requests";
 
 let client: LanguageClient;
 
@@ -107,6 +108,17 @@ export async function activate(context: ExtensionContext) {
 	);
 
 	handleActiveTextEditorChanged(window.activeTextEditor);
+
+	// we tell the client to add a watcher to the configuration file
+	const configuration_path = join(
+		workspace.workspaceFolders[0].uri.path,
+		"rome.json",
+	);
+	const watcher = workspace.createFileSystemWatcher(configuration_path);
+
+	watcher.onDidChange(() => {
+		session.client.sendRequest(configChangeRequest, {});
+	});
 
 	client.start();
 }

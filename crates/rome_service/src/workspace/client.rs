@@ -121,6 +121,10 @@ where
         self.request("rome/get_syntax_tree", params)
     }
 
+    fn configuration_updated(&self) -> Result<(), RomeError> {
+        self.request("rome/config_change", ())
+    }
+
     fn get_control_flow_graph(
         &self,
         params: GetControlFlowGraphParams,

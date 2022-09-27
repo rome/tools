@@ -356,6 +356,13 @@ pub trait Workspace: Send + Sync + RefUnwindSafe {
         params: GetSyntaxTreeParams,
     ) -> Result<GetSyntaxTreeResult, RomeError>;
 
+    /// Triggered when the configuration file has been updated.
+    ///
+    /// This function is usually used by clients like the LSP server
+    fn configuration_updated(&self) -> Result<(), RomeError> {
+        Ok(())
+    }
+
     // Return a textual, debug representation of the control flow graph at a given position in the document
     fn get_control_flow_graph(
         &self,

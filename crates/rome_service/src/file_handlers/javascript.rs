@@ -34,6 +34,7 @@ use rome_diagnostics::{v2, v2::Diagnostic};
 use rome_js_analyze::utils::rename::{RenameError, RenameSymbolExtensions};
 use std::borrow::Cow;
 use std::fmt::Debug;
+use tracing::debug;
 
 #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
@@ -425,12 +426,15 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
     }
 }
 
+#[tracing::instrument(level = "debug", skip(parse))]
 fn format(
     rome_path: &RomePath,
     parse: AnyParse,
     settings: SettingsHandle,
 ) -> Result<Printed, RomeError> {
     let options = settings.format_options::<JsLanguage>(rome_path);
+
+    debug!("Format with the following options: \n{}", options);
 
     let tree = parse.syntax();
     let formatted = format_node(options, &tree)?;

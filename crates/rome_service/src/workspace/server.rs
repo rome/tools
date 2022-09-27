@@ -261,6 +261,7 @@ impl Workspace for WorkspaceServer {
     /// ## Panics
     /// This function may panic if the internal settings mutex has been poisoned
     /// by another thread having previously panicked while holding the lock
+    #[tracing::instrument(level = "debug", skip(self))]
     fn update_settings(&self, params: UpdateSettingsParams) -> Result<(), RomeError> {
         let mut settings = self.settings.write().unwrap();
         settings.merge_with_configuration(params.configuration)?;

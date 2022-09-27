@@ -12,3 +12,14 @@ export const syntaxTreeRequest = new RequestType<
 	string,
 	void
 >("rome_lsp/syntaxTree");
+
+// Empty parameters
+export interface ConfigChangeParams {}
+/**
+ * Request to send to the server when the configuration file changed
+ */
+export const configChangeRequest = new RequestType<
+	ConfigChangeParams,
+	string,
+	void
+>("rome_lsp/configurationUpdated");
