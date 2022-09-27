@@ -6,7 +6,12 @@
 				"noUnreachable": "error",
 				"noUnusedVariables": "error",
 				"useCamelCase": "off",
-				"noDangerouslySetInnerHtml": "error"
+				"noDangerouslySetInnerHtml": "error",
+				"noRenderReturnValue": "error",
+				"useButtonType": "error",
+				"useOptionalChain": "error",
+				"noUselessFragments": "error",
+				"noNewSymbol": "error"
 			}
 		}
 	}

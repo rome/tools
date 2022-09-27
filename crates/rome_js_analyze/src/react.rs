@@ -1,9 +1,9 @@
-//! A series of utilities to work with the React library
+//! A series of AST utilities to work with the React library
 
 use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
     JsAnyCallArgument, JsAnyExpression, JsArrayExpression, JsCallExpression, JsIdentifierBinding,
-    JsImport, JsObjectExpression, JsxMemberName, JsxReferenceIdentifier,
+    JsImport, JsObjectExpression, JsPropertyObjectMember, JsxMemberName, JsxReferenceIdentifier,
 };
 use rome_rowan::{AstNode, AstSeparatedList};
 
@@ -18,6 +18,27 @@ pub(crate) struct ReactCreateElementCall {
     /// Optional children
     #[allow(dead_code)]
     pub(crate) children: Option<JsArrayExpression>,
+}
+
+impl ReactCreateElementCall {
+    /// It scans the current props and returns the property that matches the passed name
+    pub(crate) fn find_prop_by_name(&self, prop_name: &str) -> Option<JsPropertyObjectMember> {
+        self.props.as_ref().and_then(|props| {
+            let members = props.members();
+            members.into_iter().find_map(|member| {
+                let member = member.ok()?;
+                let property = member.as_js_property_object_member()?;
+                let property_name = property.name().ok()?;
+
+                let property_name = property_name.as_js_literal_member_name()?;
+                if property_name.name().ok()? == prop_name {
+                    Some(property.clone())
+                } else {
+                    None
+                }
+            })
+        })
+    }
 }
 
 /// Checks if the current node is a possible `createElement` call.
@@ -148,7 +169,8 @@ pub(crate) fn jsx_member_name_is_react_fragment(
             .find_map(|ancestor| JsImport::cast_ref(&ancestor))
         {
             let source_is_react = js_import.source_is("react").ok()?;
-            maybe_react_fragment = source_is_react;
+            maybe_react_fragment =
+                source_is_react && member.value_token().ok()?.text_trimmed() == "Fragment";
         } else {
             // `React.Fragment` is a binding but it doesn't come from the "react" package
             maybe_react_fragment = false;

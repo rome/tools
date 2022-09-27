@@ -1,0 +1,67 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noChildrenPropInvalid.jsx
+---
+# Input
+```js
+<>
+    <Component children={'foo'}></Component>
+</>
+
+createElement('div', {
+    children: 'foo'
+})
+
+React.createElement('div', {
+    children: 'foo'
+})
+
+```
+
+# Diagnostics
+```
+noChildrenPropInvalid.jsx:2:16 lint/nursery/noChildrenProp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid passing children using a prop
+  
+    ┌─ noChildrenPropInvalid.jsx:2:16
+    │
+  2 │     <Component children={'foo'}></Component>
+    │                ^^^^^^^^
+  
+  i The canonical way to pass children in React is to use JSX elements
+  
+
+```
+
+```
+noChildrenPropInvalid.jsx:6:5 lint/nursery/noChildrenProp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid passing children using a prop
+  
+    ┌─ noChildrenPropInvalid.jsx:6:5
+    │
+  6 │     children: 'foo'
+    │     ^^^^^^^^
+  
+  i The canonical way to pass children in React is to use additional arguments to React.createElement
+  
+
+```
+
+```
+noChildrenPropInvalid.jsx:10:5 lint/nursery/noChildrenProp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid passing children using a prop
+  
+     ┌─ noChildrenPropInvalid.jsx:10:5
+     │
+  10 │     children: 'foo'
+     │     ^^^^^^^^
+  
+  i The canonical way to pass children in React is to use additional arguments to React.createElement
+  
+
+```
+
+

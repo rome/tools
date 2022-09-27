@@ -1,4 +1,4 @@
-use crate::react::{is_react_create_element, ReactCreateElementCall};
+use crate::react::is_react_create_element;
 use crate::semantic_services::Semantic;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::codespan::Severity;
@@ -114,39 +114,20 @@ impl Rule for UseButtonType {
                 let model = ctx.model();
                 if let Some(react_create_element) = is_react_create_element(call_expression, model)
                 {
-                    let ReactCreateElementCall {
-                        element_type,
-                        props,
-                        ..
-                    } = react_create_element;
-
                     // first argument needs to be a string
-                    let first_argument = element_type
+                    let first_argument = react_create_element
+                        .element_type
                         .as_js_any_expression()?
                         .as_js_any_literal_expression()?
                         .as_js_string_literal_expression()?;
 
                     // case sensitive is important, <button> is different from <Button>
                     if first_argument.inner_string_text().ok()? == "button" {
-                        return if let Some(props) = props {
-                            let members = props.members();
-
-                            let type_member = members.into_iter().find_map(|member| {
-                                let member = member.ok()?;
-                                let property = member.as_js_property_object_member()?;
-                                let property_name = property.name().ok()?;
-                                let property_value = property.value().ok()?;
-
-                                let property_name = property_name.as_js_literal_member_name()?;
-                                if property_name.name().ok()? == "type" {
-                                    Some(property_value)
-                                } else {
-                                    None
-                                }
-                            });
-
-                            if let Some(type_member) = type_member {
-                                let value = type_member
+                        return if let Some(props) = react_create_element.props.as_ref() {
+                            let type_member = react_create_element.find_prop_by_name("type");
+                            if let Some(member) = type_member {
+                                let property_value = member.value().ok()?;
+                                let value = property_value
                                     .as_js_any_literal_expression()?
                                     .as_js_string_literal_expression()?;
 
@@ -163,7 +144,7 @@ impl Rule for UseButtonType {
                             // if we are here, it means that we haven't found the property "type" and
                             // we have to return a diagnostic
                             Some(UseButtonTypeState {
-                                node: UseButtonTypeNode::from(props),
+                                node: UseButtonTypeNode::from(props.clone()),
                                 missing_prop: false,
                             })
                         } else {

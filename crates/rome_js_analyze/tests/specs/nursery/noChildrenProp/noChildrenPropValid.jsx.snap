@@ -1,0 +1,19 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noChildrenPropValid.jsx
+---
+# Input
+```js
+<>
+    <Component><AnotherComponent /></Component>
+    <React.StrictMode>
+        <Component />
+    </React.StrictMode>
+</>
+
+createElement('div', {}, 'foo')
+
+
+```
+
+
