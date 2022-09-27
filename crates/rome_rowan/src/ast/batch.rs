@@ -12,6 +12,7 @@ pub trait BatchMutationExt<L>: AstNode<Language = L>
 where
     L: Language,
 {
+    /// It starts a [BatchMutation]
     #[must_use = "This method consumes the node and return the BatchMutation api that returns the new SynytaxNode on commit"]
     fn begin(self) -> BatchMutation<L>;
 }

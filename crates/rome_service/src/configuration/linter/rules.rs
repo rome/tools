@@ -393,11 +393,12 @@ struct NurserySchema {
     no_useless_fragments: Option<RuleConfiguration>,
     use_button_type: Option<RuleConfiguration>,
     use_camel_case: Option<RuleConfiguration>,
+    use_fragment_syntax: Option<RuleConfiguration>,
     use_optional_chain: Option<RuleConfiguration>,
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 9] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 10] = [
         "noDangerouslySetInnerHtml",
         "noNewSymbol",
         "noRenderReturnValue",
@@ -406,6 +407,7 @@ impl Nursery {
         "noUselessFragments",
         "useButtonType",
         "useCamelCase",
+        "useFragmentSyntax",
         "useOptionalChain",
     ];
     const RECOMMENDED_RULES: [&'static str; 0] = [];

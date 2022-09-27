@@ -309,6 +309,13 @@ Enforces the usage of the attribute <code>type</code> for the element <code>butt
 Enforce camel case naming convention.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useFragmentSyntax">
+	<a href="/docs/lint/rules/useFragmentSyntax">useFragmentSyntax (since v0.10.0)</a>
+	<a class="header-anchor" href="#useFragmentSyntax"></a>
+</h3>
+This rule enforces the use of <code>&lt;&gt;...&lt;/&gt;</code> over <code>&lt;Fragment&gt;...&lt;/Fragment&gt;</code>.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useOptionalChain">
 	<a href="/docs/lint/rules/useOptionalChain">useOptionalChain (since v0.10.0)</a>
 	<a class="header-anchor" href="#useOptionalChain"></a>
