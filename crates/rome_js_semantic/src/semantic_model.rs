@@ -208,6 +208,7 @@ impl PartialEq for SemanticModelData {
 
 impl Eq for SemanticModelData {}
 
+/// Iterate all descendas scopes of the specified scope in breadth-first order.
 pub struct ScopeDescendantsIter {
     data: Arc<SemanticModelData>,
     q: VecDeque<usize>
@@ -253,6 +254,8 @@ impl Scope {
         std::iter::successors(Some(self.clone()), |scope| scope.parent())
     }
 
+    /// Returns all descendts of this scope in breadth-first order. Starting with the current
+    /// [Scope].
     pub fn descendants(&self) -> impl Iterator<Item = Scope> {
         let mut q = VecDeque::new();
         q.push_back(self.id);
@@ -680,7 +683,8 @@ impl SemanticModel {
         node.is_exported(self)
     }
 
-    pub fn closure(&self, node: impl HasClosureAstNode) -> Closure {
+    /// Returns the [Closure] associated with the node.
+    pub fn closure(&self, node: &impl HasClosureAstNode) -> Closure {
         let node = node.node();
         let closure_range = node.syntax().text_range();
         let scope_id = self.data.scope(&closure_range);
@@ -693,6 +697,8 @@ impl SemanticModel {
     }
 }
 
+
+/// Provides all information regarding a specific closure.
 pub struct Closure {
     data: Arc<SemanticModelData>,
     scope_id: usize,
@@ -736,6 +742,7 @@ impl Closure {
         captures
     }
 
+    // Return all [Reference] this closure captures
     pub fn all_captures(&self) -> impl Iterator<Item = Reference> {
         self.captures().drain().map(|x| {
             Reference {
@@ -770,6 +777,7 @@ impl Closure {
         r
     }  
 
+    /// Return all immediate children closures of this closure
     pub fn children(&self) -> Vec<Closure> {
         let mut closures = vec![];
 
@@ -850,6 +858,18 @@ pub trait AllReferencesExtensions {
 }
 
 impl<T: IsDeclarationAstNode> AllReferencesExtensions for T {}
+
+pub trait ClosureExtensions {
+    fn closure(&self, model: & SemanticModel) -> Closure
+    where
+        Self: HasClosureAstNode,
+    {
+        model.closure(self)
+    }
+}
+
+
+impl<T: HasClosureAstNode> ClosureExtensions for T {}
 
 /// Builds the [SemanticModel] consuming [SemanticEvent] and [SyntaxNode].
 /// For a good example on how to use it see [semantic_model].
@@ -1388,14 +1408,14 @@ mod test {
                 .last()
                 .unwrap();
             let f = node.parent().unwrap().cast::<JsFunctionDeclaration>().unwrap();
-            model.closure(f)
+            model.closure(&f)
         } else {
             let f = r.syntax()
                 .descendants()
                 .filter(|x| x.kind() == JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION)
                 .last()
                 .unwrap().cast::<JsArrowFunctionExpression>().unwrap();
-            model.closure(f)
+            model.closure(&f)
         };
 
         let expected_captures: BTreeSet<String> = captures.iter()
@@ -1424,14 +1444,14 @@ mod test {
                 .last()
                 .unwrap();
             let f = node.parent().unwrap().cast::<JsFunctionDeclaration>().unwrap();
-            model.closure(f)
+            model.closure(&f)
         } else {
             let f = r.syntax()
                 .descendants()
                 .filter(|x| x.kind() == JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION)
                 .last()
                 .unwrap().cast::<JsArrowFunctionExpression>().unwrap();
-            model.closure(f)
+            model.closure(&f)
         };
 
         closure.children()
