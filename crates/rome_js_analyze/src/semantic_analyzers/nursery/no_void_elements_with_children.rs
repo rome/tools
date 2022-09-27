@@ -31,10 +31,28 @@ declare_node_union! {
     pub(crate) NoVoidElementsWithChildrenQuery = JsxElement | JsCallExpression | JsxSelfClosingElement
 }
 
-const VOID_DOM_ELEMENTS: [&str; 16] = [
-    "area", "base", "br", "col", "embed", "hr", "img", "input", "keygen", "link", "menuitem",
-    "meta", "param", "source", "track", "wbr",
-];
+/// Returns true if the name of the element belong to a self-closing element
+fn is_void_dom_element(element_name: &str) -> bool {
+    matches!(
+        element_name,
+        "area"
+            | "base"
+            | "br"
+            | "col"
+            | "embed"
+            | "hr"
+            | "img"
+            | "input"
+            | "keygen"
+            | "link"
+            | "menuitem"
+            | "meta"
+            | "param"
+            | "source"
+            | "track"
+            | "wbr"
+    )
+}
 
 pub(crate) struct NoVoidElementsWithChildrenState {
     /// The name of the element that triggered the rule
@@ -66,8 +84,8 @@ impl NoVoidElementsWithChildrenState {
         match (self.children_cause, self.dangerous_prop_case) {
             (true, true) => {
                 (markup! {
-                    <Emphasis>{self.element_name}</Emphasis>" is a void element tag and must not have the "<Emphasis>"children"</Emphasis>
-                    " or the "<Emphasis>"dangerouslySetInnerHTML"</Emphasis>" prop."
+                    <Emphasis>{self.element_name}</Emphasis>" is a void element tag and must not have "<Emphasis>"children"</Emphasis>
+                    ", or the "<Emphasis>"dangerouslySetInnerHTML"</Emphasis>" prop."
                 }).to_owned()
             }
             (true, false) => {
@@ -102,7 +120,7 @@ impl Rule for NoVoidElementsWithChildren {
                 let name = opening_element.name().ok()?;
                 let name = name.as_jsx_name()?.value_token().ok()?;
                 let name = name.text_trimmed();
-                if VOID_DOM_ELEMENTS.contains(&name) {
+                if is_void_dom_element(name) {
                     let has_dangerous_prop = opening_element
                         .find_attribute_by_name("dangerouslySetInnerHTML")
                         .ok()?
@@ -125,7 +143,7 @@ impl Rule for NoVoidElementsWithChildren {
                 let name = element.name().ok()?;
                 let name = name.as_jsx_name()?.value_token().ok()?;
                 let name = name.text_trimmed();
-                if VOID_DOM_ELEMENTS.contains(&name) {
+                if is_void_dom_element(name) {
                     let has_dangerous_prop = element
                         .find_attribute_by_name("dangerouslySetInnerHTML")
                         .ok()?
@@ -152,7 +170,7 @@ impl Rule for NoVoidElementsWithChildren {
 
                     let element_name = element_type.inner_string_text().ok()?;
                     let element_name = element_name.text();
-                    if VOID_DOM_ELEMENTS.contains(&element_name) {
+                    if is_void_dom_element(element_name) {
                         let has_children = react_create_element.children.is_some();
                         let has_dangerous_prop = react_create_element
                             .find_prop_by_name("dangerouslySetInnerHTML")

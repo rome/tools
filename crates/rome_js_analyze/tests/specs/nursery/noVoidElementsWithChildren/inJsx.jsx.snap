@@ -84,7 +84,7 @@ inJsx.jsx:6:5 lint/nursery/noVoidElementsWithChildren ━━━━━━━━�
 ```
 inJsx.jsx:7:5 lint/nursery/noVoidElementsWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! img is a void element tag and must not have the children or the dangerouslySetInnerHTML prop.
+  ! img is a void element tag and must not have children, or the dangerouslySetInnerHTML prop.
   
     ┌─ inJsx.jsx:7:5
     │
