@@ -61,19 +61,15 @@ declare_node_union! {
 }
 
 impl NoUselessFragmentsQuery {
-    fn replace_node_from_list(
-        &self,
-        mutation: &mut BatchMutation<JsLanguage>,
-        new_node: JsxAnyChild,
-    ) {
+    fn replace_node(&self, mutation: &mut BatchMutation<JsLanguage>, new_node: JsxAnyChild) {
         match self {
             NoUselessFragmentsQuery::JsxFragment(fragment) => {
                 let old_node = JsxAnyChild::JsxFragment(fragment.clone());
-                mutation.replace_jsx_child_element(old_node, new_node);
+                mutation.replace_node(old_node, new_node);
             }
             NoUselessFragmentsQuery::JsxElement(element) => {
                 let old_node = JsxAnyChild::JsxElement(element.clone());
-                mutation.replace_jsx_child_element(old_node, new_node);
+                mutation.replace_node(old_node, new_node);
             }
         }
     }
@@ -204,7 +200,7 @@ impl Rule for NoUselessFragments {
             };
 
             if let Some(new_child) = new_child {
-                node.replace_node_from_list(&mut mutation, new_child);
+                node.replace_node(&mut mutation, new_child);
             } else {
                 node.remove_node_from_list(&mut mutation);
             }
