@@ -107,7 +107,6 @@ mod groups;
 mod simple_argument;
 
 use crate::context::TabWidth;
-use crate::parentheses::is_callee;
 use crate::prelude::*;
 use crate::utils::is_long_curried_call;
 use crate::utils::member_chain::chain_member::{CallExpressionPosition, ChainMember};
