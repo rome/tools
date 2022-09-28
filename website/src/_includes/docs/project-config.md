@@ -4,7 +4,7 @@ The configuration file is considered **optional**, Rome has good defaults. Use t
 file to change those defaults.
 
 The configuration file must be placed at the root of your project, usually at the same directory level of your
-`package.json`. The name of the file must be `rome.json`.
+`package.correctnesson`. The name of the file must be `rome.correctnesson`.
 
 All properties are **optional**, you can even have an empty config!
 
@@ -30,6 +30,19 @@ We aim to offer everything out of the box and only introduce configuration if [a
 
 Enables Rome's linter
 
+#### `linter.ignore`
+
+An array of Unix shell style patterns.
+
+```json
+{
+  "linter": {
+    "ignore": ["scripts/*.js"]
+  }
+}
+```
+
+
 > Default: `true`
 
 #### `linter.rules.recommended`
@@ -39,13 +52,13 @@ Enables the [recommended rules](/docs/lint/rules) for all the groups.
 > Default: `true`
 
 
-#### `linter.rules.js` 
+#### `linter.rules.correctness` 
 
-A list of rules for `JavaScript` category.  
+A list of rules for `Correctness` category.  
 
-#### `linter.rules.js.recommended` 
+#### `linter.rules.correctness.recommended` 
 
-Enables the [recommended rules](/docs/lint/rules) for the category `JavaScript`.
+Enables the [recommended rules](/docs/lint/rules) for the category `Correctness`.
 
 Example:
 
@@ -54,7 +67,7 @@ Example:
   "linter": {
     "enabled": true,
     "rules": {
-      "js": {
+      "correctness": {
         "noDebugger": "off"
       }
     }
@@ -64,13 +77,13 @@ Example:
 ```
 
 
-#### `linter.rules.ts`
+#### `linter.rules.style`
 
-A list of rules for `TypeScript` category.
+A list of rules for `Style` category.
 
-#### `linter.rules.ts.recommended`
+#### `linter.rules.style.recommended`
 
-Enables the [recommended rules](/docs/lint/rules) for the category `TypeScript`.
+Enables the [recommended rules](/docs/lint/rules) for the category `Style`.
 
 
 Example:
@@ -80,8 +93,8 @@ Example:
   "linter": {
     "enabled": true,
     "rules": {
-      "ts": {
-        "useShorthandArrayType": "off"
+      "style": {
+        "noNegationElse": "off"
       }
     }
   }
@@ -90,38 +103,13 @@ Example:
 ```
 
 
-#### `linter.rules.jsx`
+#### `linter.rules.nursery`
 
-A list of rules for `JSX` category.
+A list of rules for `Nursery` category.
 
-#### `linter.rules.jsx.recommended`
+#### `linter.rules.nursery.recommended`
 
-Enables the [recommended rules](/docs/lint/rules) for the category `JSX`.
-
-Example:
-
-```json
-{
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "jsx": {
-        "noCommentText": "off"
-      }
-    }
-  }
-}
-
-```
-
-
-#### `linter.rules.regex`
-
-A list of rules for `Regex` category.
-
-#### `linter.rules.regex.recommended`
-
-Enables the [recommended rules](/docs/lint/rules) for the category `Regex`.
+Enables the [recommended rules](/docs/lint/rules) for the category `Nursery`.
 
 Example:
 
@@ -130,8 +118,8 @@ Example:
   "linter": {
     "enabled": true,
     "rules": {
-      "regex": {
-        "noMultipleSpacesInRegularExpressionLiterals": "off"
+      "nursery": {
+        "noCommentText": "on"
       }
     }
   }
@@ -144,6 +132,19 @@ Example:
 Enables Rome's formatter
 
 > Default: `true`
+ 
+
+#### `formatter.ignore`
+
+An array of Unix shell style patterns.
+
+```json
+{
+  "formatter": {
+    "ignore": ["scripts/*.js"]
+  }
+}
+```
 
 
 #### `formatter.indentStyle`
