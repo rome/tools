@@ -50,7 +50,7 @@ The new groups are heavily inspired from [`clippy`](https://github.com/rust-lang
 
 ### Parser
 
-- Fixed an issue where the parser was emitting a diagnostic on a certain TypeScript syntax [#3115](https://github.com/rome/tools/issues/3115)
+- Fixed an issue where the parser was _not_ emitting a diagnostic on a certain TypeScript syntax [#3115](https://github.com/rome/tools/issues/3115)
 
 ### VSCode
 
