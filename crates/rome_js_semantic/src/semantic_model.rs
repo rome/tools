@@ -3,9 +3,8 @@ mod closure;
 use crate::{SemanticEvent, SemanticEventExtractor};
 pub use closure::*;
 use rome_js_syntax::{
-    JsAnyRoot, JsIdentifierAssignment,
-    JsIdentifierBinding, JsLanguage, JsReferenceIdentifier, JsSyntaxKind, JsSyntaxNode,
-    JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding,
+    JsAnyRoot, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier,
+    JsSyntaxKind, JsSyntaxNode, JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding,
 };
 use rome_rowan::{AstNode, SyntaxTokenText};
 use rust_lapper::{Interval, Lapper};
