@@ -1,8 +1,10 @@
 use std::sync::Arc;
 
-use rome_js_syntax::{JsLanguage, JsFunctionDeclaration, JsArrowFunctionExpression, JsFunctionExpression};
-use rome_rowan::AstNode;
 use super::*;
+use rome_js_syntax::{
+    JsArrowFunctionExpression, JsFunctionDeclaration, JsFunctionExpression, JsLanguage,
+};
+use rome_rowan::AstNode;
 
 /// Marker trait that groups all "AstNode" that have closure
 pub trait HasClosureAstNode: AstNode<Language = JsLanguage> {
@@ -24,7 +26,10 @@ pub struct Closure {
 }
 
 impl Closure {
-    pub(super) fn from_node(data: Arc<SemanticModelData>, node: &impl HasClosureAstNode) -> Closure {
+    pub(super) fn from_node(
+        data: Arc<SemanticModelData>,
+        node: &impl HasClosureAstNode,
+    ) -> Closure {
         let node = node.node();
         let closure_range = node.syntax().text_range();
         let scope_id = data.scope(&closure_range);
@@ -36,19 +41,21 @@ impl Closure {
         }
     }
 
-    pub(super) fn from_scope(data: Arc<SemanticModelData>, scope_id: usize, range: &TextRange) -> Option<Closure> {
-        let node = &data.node_by_range[range];
+    pub(super) fn from_scope(
+        data: Arc<SemanticModelData>,
+        scope_id: usize,
+        closure_range: &TextRange,
+    ) -> Option<Closure> {
+        let node = &data.node_by_range[closure_range];
         match node.kind() {
             JsSyntaxKind::JS_FUNCTION_DECLARATION
             | JsSyntaxKind::JS_FUNCTION_EXPRESSION
-            | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION => {
-                Some(Closure {
-                    data,
-                    scope_id,
-                    closure_range: range.clone(),
-                })
-            }
-            _ => None
+            | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION => Some(Closure {
+                data,
+                scope_id,
+                closure_range: *closure_range,
+            }),
+            _ => None,
         }
     }
 
@@ -112,7 +119,7 @@ impl Closure {
     // the current closure
     fn children_scopes(&self) -> Vec<usize> {
         let scope = &self.data.scopes[self.scope_id];
-        
+
         let mut scopes = VecDeque::from_iter(scope.children.iter().cloned());
         let mut result = vec![];
 

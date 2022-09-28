@@ -1,7 +1,9 @@
 mod closure;
 
+use crate::{SemanticEvent, SemanticEventExtractor};
+pub use closure::*;
 use rome_js_syntax::{
-    JsAnyRoot, JsArrowFunctionExpression, JsFunctionDeclaration, JsIdentifierAssignment,
+    JsAnyRoot, JsIdentifierAssignment,
     JsIdentifierBinding, JsLanguage, JsReferenceIdentifier, JsSyntaxKind, JsSyntaxNode,
     JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding,
 };
@@ -12,8 +14,6 @@ use std::{
     iter::FusedIterator,
     sync::Arc,
 };
-use crate::{SemanticEvent, SemanticEventExtractor};
-pub use closure::*;
 
 /// Marker trait that groups all "AstNode" that are declarations
 pub trait IsDeclarationAstNode: AstNode<Language = JsLanguage> {
@@ -70,7 +70,6 @@ impl<T: HasDeclarationAstNode> IsExportedCanBeQueried for T {
         Some(model.data.is_exported(range))
     }
 }
-
 
 #[derive(Clone, Debug)]
 struct ScopeReference {
@@ -679,7 +678,6 @@ impl SemanticModel {
         Closure::from_node(self.data.clone(), node)
     }
 }
-
 
 // Extensions
 
