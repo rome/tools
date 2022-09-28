@@ -59,7 +59,7 @@ new F(1).x;
 
 # Errors
 ```
-readonlyInConstructorParameters.ts:7:26 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+readonlyInConstructorParameters.ts:7:26 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'public' must precede 'readonly'
   

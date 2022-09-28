@@ -4,8 +4,7 @@ exports[`Rome Deamon formatter > should not format and have diagnostics > syntax
 [
   {
     "children": [],
-    "code": "SyntaxError",
-    "code_link": null,
+    "code": "parse",
     "file_id": 0,
     "footers": [],
     "primary": {

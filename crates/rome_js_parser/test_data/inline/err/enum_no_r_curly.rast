@@ -55,7 +55,7 @@ JsModule {
       0: SEMICOLON@16..17 ";" [] []
   3: EOF@17..18 "" [Newline("\n")] []
 --
-enum_no_r_curly.ts:1:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+enum_no_r_curly.ts:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `enum` statements must have a name
   
@@ -65,7 +65,7 @@ enum_no_r_curly.ts:1:1 SyntaxError ━━━━━━━━━━━━━━━
     │ ^^^^^
   
 --
-enum_no_r_curly.ts:1:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+enum_no_r_curly.ts:1:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier, a string literal, or a computed name but instead found ';'
   
@@ -77,7 +77,7 @@ enum_no_r_curly.ts:1:7 SyntaxError ━━━━━━━━━━━━━━━
     │       ^
   
 --
-enum_no_r_curly.ts:2:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+enum_no_r_curly.ts:2:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier, a string literal, or a computed name but instead found ';'
   

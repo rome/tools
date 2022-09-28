@@ -409,7 +409,7 @@ JsModule {
       8: R_CURLY@409..411 "}" [Newline("\n")] []
   3: EOF@411..412 "" [Newline("\n")] []
 --
-ts_class_modifier_precedence.ts:4:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_modifier_precedence.ts:4:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'private' must precede 'readonly'
   
@@ -428,7 +428,7 @@ ts_class_modifier_precedence.ts:4:14 SyntaxError ━━━━━━━━━━�
     │     ^^^^^^^^
   
 --
-ts_class_modifier_precedence.ts:5:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_modifier_precedence.ts:5:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'protected' must precede 'override'
   
@@ -447,7 +447,7 @@ ts_class_modifier_precedence.ts:5:14 SyntaxError ━━━━━━━━━━�
     │     ^^^^^^^^
   
 --
-ts_class_modifier_precedence.ts:6:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_modifier_precedence.ts:6:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'private' must precede 'static'
   
@@ -466,7 +466,7 @@ ts_class_modifier_precedence.ts:6:12 SyntaxError ━━━━━━━━━━�
     │     ^^^^^^
   
 --
-ts_class_modifier_precedence.ts:7:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_modifier_precedence.ts:7:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'protected' must precede 'abstract'
   
@@ -485,7 +485,7 @@ ts_class_modifier_precedence.ts:7:14 SyntaxError ━━━━━━━━━━�
     │     ^^^^^^^^
   
 --
-ts_class_modifier_precedence.ts:9:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_modifier_precedence.ts:9:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'static' must precede 'readonly'
   
@@ -504,7 +504,7 @@ ts_class_modifier_precedence.ts:9:14 SyntaxError ━━━━━━━━━━�
     │     ^^^^^^^^
   
 --
-ts_class_modifier_precedence.ts:10:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_modifier_precedence.ts:10:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'static' must precede 'override'
   
@@ -523,7 +523,7 @@ ts_class_modifier_precedence.ts:10:14 SyntaxError ━━━━━━━━━━
      │     ^^^^^^^^
   
 --
-ts_class_modifier_precedence.ts:12:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_modifier_precedence.ts:12:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'abstract' must precede 'override'
   
@@ -542,7 +542,7 @@ ts_class_modifier_precedence.ts:12:14 SyntaxError ━━━━━━━━━━
      │     ^^^^^^^^
   
 --
-ts_class_modifier_precedence.ts:14:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_class_modifier_precedence.ts:14:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'override' must precede 'readonly'
   

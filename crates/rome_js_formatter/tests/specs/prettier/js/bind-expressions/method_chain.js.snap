@@ -80,7 +80,7 @@ function test(observable) {
 
 # Errors
 ```
-method_chain.js:10:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+method_chain.js:10:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found '::filter(data => data.someTest)
             ::throttle(() =>

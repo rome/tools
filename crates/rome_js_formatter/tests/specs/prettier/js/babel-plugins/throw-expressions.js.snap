@@ -49,7 +49,7 @@ function test(param = throw new Error('required!')
 
 # Errors
 ```
-throw-expressions.js:3:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+throw-expressions.js:3:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression, or an assignment but instead found 'throw'
   
@@ -60,7 +60,7 @@ throw-expressions.js:3:23 SyntaxError ━━━━━━━━━━━━━━
   3 │ function test(param = throw new Error('required!')) {
     │                       ^^^^^
   
-throw-expressions.js:3:33 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+throw-expressions.js:3:33 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `Error`
   
@@ -71,7 +71,7 @@ throw-expressions.js:3:33 SyntaxError ━━━━━━━━━━━━━━
   3 │ function test(param = throw new Error('required!')) {
     │                                 ^^^^^
   
-throw-expressions.js:3:38 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+throw-expressions.js:3:38 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `(`
   
@@ -82,7 +82,7 @@ throw-expressions.js:3:38 SyntaxError ━━━━━━━━━━━━━━
   3 │ function test(param = throw new Error('required!')) {
     │                                      ^
   
-throw-expressions.js:3:51 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+throw-expressions.js:3:51 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a function body but instead found ')'
   
@@ -93,7 +93,7 @@ throw-expressions.js:3:51 SyntaxError ━━━━━━━━━━━━━━
   3 │ function test(param = throw new Error('required!')) {
     │                                                   ^
   
-throw-expressions.js:4:34 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+throw-expressions.js:4:34 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression but instead found 'throw'
   

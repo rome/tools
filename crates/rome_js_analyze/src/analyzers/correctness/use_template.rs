@@ -104,6 +104,7 @@ impl Rule for UseTemplate {
         let node = ctx.query();
 
         Some(RuleDiagnostic::new(
+            rule_category!(),
             node.range(),
             markup! {
                 ""<Emphasis>"Template"</Emphasis>" literals are preferred over "<Emphasis>"string concatenation."</Emphasis>""

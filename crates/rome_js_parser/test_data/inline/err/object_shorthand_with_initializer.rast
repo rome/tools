@@ -77,7 +77,7 @@ JsModule {
       1: (empty)
   3: EOF@22..23 "" [Newline("\n")] []
 --
-object_shorthand_with_initializer.js:1:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+object_shorthand_with_initializer.js:1:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Did you mean to use a `:`? An `=` can only follow a property name when the containing object literal is part of a destructuring pattern.
   

@@ -301,7 +301,7 @@ JsModule {
       1: (empty)
   3: EOF@64..65 "" [Newline("\n")] []
 --
-paren_or_arrow_expr_invalid_params.js:1:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+paren_or_arrow_expr_invalid_params.js:1:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
@@ -320,7 +320,7 @@ paren_or_arrow_expr_invalid_params.js:1:9 SyntaxError ━━━━━━━━�
     │ ^^^^^^^^^^
   
 --
-paren_or_arrow_expr_invalid_params.js:2:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+paren_or_arrow_expr_invalid_params.js:2:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a parameter but instead found ','
   
@@ -332,7 +332,7 @@ paren_or_arrow_expr_invalid_params.js:2:5 SyntaxError ━━━━━━━━�
     │     ^
   
 --
-paren_or_arrow_expr_invalid_params.js:3:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+paren_or_arrow_expr_invalid_params.js:3:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a function body, or an expression but instead found ';'
   
@@ -344,7 +344,7 @@ paren_or_arrow_expr_invalid_params.js:3:10 SyntaxError ━━━━━━━━�
     │          ^
   
 --
-paren_or_arrow_expr_invalid_params.js:4:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+paren_or_arrow_expr_invalid_params.js:4:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   
@@ -356,7 +356,7 @@ paren_or_arrow_expr_invalid_params.js:4:3 SyntaxError ━━━━━━━━�
     │   ^^^^^^^^
   
 --
-paren_or_arrow_expr_invalid_params.js:4:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+paren_or_arrow_expr_invalid_params.js:4:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `;`
   
@@ -368,7 +368,7 @@ paren_or_arrow_expr_invalid_params.js:4:11 SyntaxError ━━━━━━━━�
     │           ^
   
 --
-paren_or_arrow_expr_invalid_params.js:6:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+paren_or_arrow_expr_invalid_params.js:6:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Line terminator not permitted before arrow.
   

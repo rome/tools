@@ -60,7 +60,7 @@ result; //=> "Hello, hello!"
 
 # Errors
 ```
-pipeline-operator-minimal.js:8:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline-operator-minimal.js:8:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -71,7 +71,7 @@ pipeline-operator-minimal.js:8:4 SyntaxError ━━━━━━━━━━━�
   8 │   |> doubleSay
     │    ^
   
-pipeline-operator-minimal.js:9:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline-operator-minimal.js:9:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   
@@ -82,7 +82,7 @@ pipeline-operator-minimal.js:9:4 SyntaxError ━━━━━━━━━━━�
   9 │   |> capitalize
     │    ^
   
-pipeline-operator-minimal.js:10:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+pipeline-operator-minimal.js:10:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
   

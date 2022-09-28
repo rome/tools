@@ -249,7 +249,7 @@ JsModule {
       8: R_CURLY@195..197 "}" [Newline("\n")] []
   3: EOF@197..198 "" [Newline("\n")] []
 --
-typescript_abstract_class_member_should_not_have_body.ts:2:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+typescript_abstract_class_member_should_not_have_body.ts:2:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'abstract' cannot appear on a constructor declaration.
   
@@ -259,7 +259,7 @@ typescript_abstract_class_member_should_not_have_body.ts:2:5 SyntaxError ━━�
     │     ^^^^^^^^
   
 --
-typescript_abstract_class_member_should_not_have_body.ts:3:30 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━
+typescript_abstract_class_member_should_not_have_body.ts:3:30 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × abstract members should not have a body
   
@@ -269,7 +269,7 @@ typescript_abstract_class_member_should_not_have_body.ts:3:30 SyntaxError ━━
     │                              ^^^
   
 --
-typescript_abstract_class_member_should_not_have_body.ts:4:28 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━
+typescript_abstract_class_member_should_not_have_body.ts:4:28 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × abstract members should not have a body
   
@@ -279,7 +279,7 @@ typescript_abstract_class_member_should_not_have_body.ts:4:28 SyntaxError ━━
     │                            ^^^
   
 --
-typescript_abstract_class_member_should_not_have_body.ts:5:32 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━
+typescript_abstract_class_member_should_not_have_body.ts:5:32 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × abstract members should not have a body
   
@@ -289,7 +289,7 @@ typescript_abstract_class_member_should_not_have_body.ts:5:32 SyntaxError ━━
     │                                ^^^
   
 --
-typescript_abstract_class_member_should_not_have_body.ts:6:30 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━
+typescript_abstract_class_member_should_not_have_body.ts:6:30 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × abstract members should not have a body
   
@@ -299,7 +299,7 @@ typescript_abstract_class_member_should_not_have_body.ts:6:30 SyntaxError ━━
     │                              ^^^
   
 --
-typescript_abstract_class_member_should_not_have_body.ts:6:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+typescript_abstract_class_member_should_not_have_body.ts:6:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'abstract' modifier cannot be used with a private identifier'.
   

@@ -45,7 +45,7 @@ JsModule {
         4: (empty)
   3: EOF@15..16 "" [Newline("\n")] []
 --
-export_as_identifier_err.js:1:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export_as_identifier_err.js:1:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier but instead found ''
   

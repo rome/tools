@@ -43,7 +43,7 @@ declare function bar() {
 
 # Errors
 ```
-declare_function_with_body.ts:2:24 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+declare_function_with_body.ts:2:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A 'declare' function cannot have a function body
   
@@ -54,7 +54,7 @@ declare_function_with_body.ts:2:24 SyntaxError ━━━━━━━━━━━
   2 │ declare function foo() {}
     │                        ^^
   
-declare_function_with_body.ts:3:24 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+declare_function_with_body.ts:3:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A 'declare' function cannot have a function body
   

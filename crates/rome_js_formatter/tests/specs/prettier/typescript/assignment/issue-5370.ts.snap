@@ -37,7 +37,7 @@ const durabilityMetricsSelectable: Immutable.OrderedSet<
 
 # Errors
 ```
-issue-5370.ts:3:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+issue-5370.ts:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a type parameter but instead found '>'
   

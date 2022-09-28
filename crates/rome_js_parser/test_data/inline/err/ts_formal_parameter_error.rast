@@ -234,7 +234,7 @@ JsModule {
         3: R_CURLY@109..110 "}" [] []
   3: EOF@110..111 "" [Newline("\n")] []
 --
-ts_formal_parameter_error.ts:1:23 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_formal_parameter_error.ts:1:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Parameter cannot have question mark and initializer
   
@@ -244,7 +244,7 @@ ts_formal_parameter_error.ts:1:23 SyntaxError ━━━━━━━━━━━�
     │                       ^^^^^^^^
   
 --
-ts_formal_parameter_error.ts:2:30 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_formal_parameter_error.ts:2:30 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × rest elements may not have default initializers
   
@@ -254,7 +254,7 @@ ts_formal_parameter_error.ts:2:30 SyntaxError ━━━━━━━━━━━�
     │                              ^^^^^^^^
   
 --
-ts_formal_parameter_error.ts:3:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_formal_parameter_error.ts:3:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × rest elements may not have trailing commas
   

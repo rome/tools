@@ -145,7 +145,7 @@ JsModule {
           3: R_CURLY@77..78 "}" [] []
   3: EOF@78..79 "" [Newline("\n")] []
 --
-function_in_single_statement_context_strict.js:1:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function_in_single_statement_context_strict.js:1:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × In strict mode code, functions can only be declared at top level or inside a block
   
@@ -157,7 +157,7 @@ function_in_single_statement_context_strict.js:1:11 SyntaxError ━━━━━�
     │           ^^^^^^^^^^^^^^^
   
 --
-function_in_single_statement_context_strict.js:2:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function_in_single_statement_context_strict.js:2:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × In strict mode code, functions can only be declared at top level or inside a block
   
@@ -169,7 +169,7 @@ function_in_single_statement_context_strict.js:2:9 SyntaxError ━━━━━�
     │         ^^^^^^^^^^^^^^^
   
 --
-function_in_single_statement_context_strict.js:3:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function_in_single_statement_context_strict.js:3:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × In strict mode code, functions can only be declared at top level or inside a block
   

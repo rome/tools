@@ -46,7 +46,7 @@ JsModule {
       1: (empty)
   3: EOF@19..20 "" [Newline("\n")] []
 --
-arrow_escaped_async.js:1:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+arrow_escaped_async.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'async' keyword cannot contain escape character.
   

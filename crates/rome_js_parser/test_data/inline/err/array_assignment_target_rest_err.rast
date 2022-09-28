@@ -159,7 +159,7 @@ JsModule {
       1: SEMICOLON@78..79 ";" [] []
   3: EOF@79..80 "" [Newline("\n")] []
 --
-array_assignment_target_rest_err.js:1:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+array_assignment_target_rest_err.js:1:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier, or an assignment target but instead found ''
   
@@ -171,7 +171,7 @@ array_assignment_target_rest_err.js:1:7 SyntaxError ━━━━━━━━━�
     │       ^
   
 --
-array_assignment_target_rest_err.js:2:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+array_assignment_target_rest_err.js:2:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × rest element cannot have a default
   
@@ -190,7 +190,7 @@ array_assignment_target_rest_err.js:2:9 SyntaxError ━━━━━━━━━�
     │    ^^^^
   
 --
-array_assignment_target_rest_err.js:3:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+array_assignment_target_rest_err.js:3:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × rest element must be the last element
   

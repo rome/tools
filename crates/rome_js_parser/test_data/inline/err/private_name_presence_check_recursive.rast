@@ -194,7 +194,7 @@ JsModule {
       8: R_CURLY@94..96 "}" [Newline("\n")] []
   3: EOF@96..97 "" [Newline("\n")] []
 --
-private_name_presence_check_recursive.js:4:13 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+private_name_presence_check_recursive.js:4:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Private names are only allowed on the left side of a 'in' expression
   
@@ -204,7 +204,7 @@ private_name_presence_check_recursive.js:4:13 SyntaxError ━━━━━━━�
     │             ^^^^^
   
 --
-private_name_presence_check_recursive.js:5:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+private_name_presence_check_recursive.js:5:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Private names are only allowed on the left side of a 'in' expression
   
@@ -214,7 +214,7 @@ private_name_presence_check_recursive.js:5:8 SyntaxError ━━━━━━━�
     │        ^^^^^
   
 --
-private_name_presence_check_recursive.js:6:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+private_name_presence_check_recursive.js:6:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Private names are only allowed on the left side of a 'in' expression
   
@@ -224,7 +224,7 @@ private_name_presence_check_recursive.js:6:4 SyntaxError ━━━━━━━�
     │    ^^^^^
   
 --
-private_name_presence_check_recursive.js:7:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+private_name_presence_check_recursive.js:7:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Private names are only allowed on the left side of a 'in' expression
   

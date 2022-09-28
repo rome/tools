@@ -30,7 +30,7 @@ JsModule {
       5: (empty)
   3: EOF@8..9 "" [Newline("\n")] []
 --
-typescript_enum_incomplete.ts:2:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+typescript_enum_incomplete.ts:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `}` but instead the file ends
   

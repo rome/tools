@@ -82,6 +82,7 @@ impl Rule for NoCatchAssign {
     fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let (assignment, catch_binding_syntax) = state;
         let diagnostic = RuleDiagnostic::new(
+            rule_category!(),
             assignment.text_trimmed_range(),
             markup! {
                 " Do not "<Emphasis>"reassign catch parameters."</Emphasis>""

@@ -57,7 +57,7 @@ JsModule {
       8: R_CURLY@27..29 "}" [Newline("\n")] []
   3: EOF@29..30 "" [Newline("\n")] []
 --
-getter_class_no_body.js:3:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+getter_class_no_body.js:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a class method body but instead found '}'
   

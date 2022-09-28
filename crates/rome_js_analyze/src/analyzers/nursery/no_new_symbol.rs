@@ -65,6 +65,7 @@ impl Rule for NoNewSymbol {
         let node = ctx.query();
 
         Some(RuleDiagnostic::new(
+            rule_category!(),
             node.syntax().text_trimmed_range(),
             markup! {
                 <Emphasis>"Symbol"</Emphasis>" cannot be called as a constructor."

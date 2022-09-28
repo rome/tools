@@ -65,7 +65,7 @@ JsModule {
         8: R_CURLY@34..35 "}" [] []
   3: EOF@35..36 "" [Newline("\n")] []
 --
-ts_ambient_async_method.ts:1:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_ambient_async_method.ts:1:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'async' modifier cannot be used in an ambient context.
   

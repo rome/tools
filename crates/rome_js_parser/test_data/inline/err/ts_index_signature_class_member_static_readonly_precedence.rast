@@ -89,7 +89,7 @@ JsModule {
       8: R_CURLY@50..52 "}" [Newline("\n")] []
   3: EOF@52..53 "" [Newline("\n")] []
 --
-ts_index_signature_class_member_static_readonly_precedence.ts:2:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━
+ts_index_signature_class_member_static_readonly_precedence.ts:2:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'static' must precede 'readonly'
   

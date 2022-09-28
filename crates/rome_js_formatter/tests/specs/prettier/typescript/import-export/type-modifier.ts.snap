@@ -61,7 +61,7 @@ import type foo, { bar } from 'bar';
 
 # Errors
 ```
-type-modifier.ts:15:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+type-modifier.ts:15:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A type-only import can specify a default import or named bindings, but not both.
   

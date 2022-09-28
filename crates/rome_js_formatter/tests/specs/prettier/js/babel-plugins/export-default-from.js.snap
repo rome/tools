@@ -43,7 +43,7 @@ from;
 
 # Errors
 ```
-export-default-from.js:4:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export-default-from.js:4:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `*` but instead found `v`
   
@@ -54,7 +54,7 @@ export-default-from.js:4:8 SyntaxError ━━━━━━━━━━━━━�
   4 │ export v from 'mod';
     │        ^
   
-export-default-from.js:4:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export-default-from.js:4:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
@@ -72,7 +72,7 @@ export-default-from.js:4:10 SyntaxError ━━━━━━━━━━━━━�
   4 │ export v from 'mod';
     │        ^^^^^^
   
-export-default-from.js:4:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export-default-from.js:4:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   

@@ -186,7 +186,7 @@ JsModule {
       1: (empty)
   3: EOF@52..53 "" [Newline("\n")] []
 --
-object_shorthand_property_err.js:1:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+object_shorthand_property_err.js:1:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `b`
   
@@ -198,7 +198,7 @@ object_shorthand_property_err.js:1:9 SyntaxError ━━━━━━━━━━�
     │         ^
   
 --
-object_shorthand_property_err.js:2:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+object_shorthand_property_err.js:2:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier but instead found '='
   
@@ -210,7 +210,7 @@ object_shorthand_property_err.js:2:7 SyntaxError ━━━━━━━━━━�
     │       ^
   
 --
-object_shorthand_property_err.js:3:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+object_shorthand_property_err.js:3:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier, a member name, or a rest pattern but instead found ','
   

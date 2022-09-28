@@ -92,7 +92,7 @@ JsScript {
       1: SEMICOLON@47..48 ";" [] []
   3: EOF@48..49 "" [Newline("\n")] []
 --
-no_top_level_await_in_scripts.js:3:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+no_top_level_await_in_scripts.js:3:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   

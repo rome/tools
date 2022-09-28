@@ -45,12 +45,6 @@ pub enum Applicability {
     /// The suggestion may be what the user intended, but it is uncertain.
     /// The suggestion should result in valid JavaScript/TypeScript code if it is applied.
     MaybeIncorrect,
-    /// The suggestion contains placeholders like `(...)` or `{ /* fields */ }`.
-    /// The suggestion cannot be applied automatically because it will not result in valid JavaScript/TypeScript code.
-    /// The user will need to fill in the placeholders.
-    HasPlaceholders,
-    /// The applicability of the suggestion is unknown.
-    Unspecified,
 }
 
 pub const MAXIMUM_DISPLAYABLE_DIAGNOSTICS: u16 = 200;

@@ -55,20 +55,17 @@ define_dategories! {
     "lint/style/useShorthandArrayType": "https://rome.tools/docs/lint/rules/useShorthandArrayType",
     ;
     // General categories
-    "args/fileNotFound",
-    "ci/formatMismatch",
     "files/missingHandler",
-    "flags/invalid",
-    "format/diff",
+    "format",
     "internalError/io",
+    "internalError/fs",
     "internalError/panic",
-    "io/skippedFile",
-    "io/unhandledFile",
+    "lint",
+    "parse",
     "suppressions/unknownGroup",
     "suppressions/unknownRule",
-    // Legacy codes
-    "SyntaxError",
-    "IO",
-    "Lint",
-    "Format",
+    // Used in tests and examples
+    "args/fileNotFound",
+    "flags/invalid",
+    "semanticTests",
 }

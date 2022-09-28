@@ -65,7 +65,7 @@ abstract class A {
 
 # Errors
 ```
-classAbstractProperties.ts:5:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+classAbstractProperties.ts:5:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'private' cannot be used with 'abstract' modifier.
   
@@ -81,7 +81,7 @@ classAbstractProperties.ts:5:5 SyntaxError ━━━━━━━━━━━━�
   5 │     private abstract w : number;
     │             ^^^^^^^^
   
-classAbstractProperties.ts:12:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+classAbstractProperties.ts:12:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'private' cannot be used with 'abstract' modifier.
   

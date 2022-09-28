@@ -275,7 +275,7 @@ JsModule {
       1: SEMICOLON@116..117 ";" [] []
   3: EOF@117..118 "" [Newline("\n")] []
 --
-rest_property_assignment_target_err.js:1:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+rest_property_assignment_target_err.js:1:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier, or an assignment target but instead found '}'
   
@@ -287,7 +287,7 @@ rest_property_assignment_target_err.js:1:8 SyntaxError ━━━━━━━━�
     │        ^
   
 --
-rest_property_assignment_target_err.js:2:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+rest_property_assignment_target_err.js:2:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × rest element cannot have a default
   
@@ -306,7 +306,7 @@ rest_property_assignment_target_err.js:2:9 SyntaxError ━━━━━━━━�
     │    ^^^^
   
 --
-rest_property_assignment_target_err.js:3:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+rest_property_assignment_target_err.js:3:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × object and array assignment targets are not allowed in rest patterns
   
@@ -316,7 +316,7 @@ rest_property_assignment_target_err.js:3:7 SyntaxError ━━━━━━━━�
     │       ^^^
   
 --
-rest_property_assignment_target_err.js:4:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+rest_property_assignment_target_err.js:4:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × rest element must be the last element
   
@@ -328,7 +328,7 @@ rest_property_assignment_target_err.js:4:4 SyntaxError ━━━━━━━━�
     │    ^^^^^^^
   
 --
-rest_property_assignment_target_err.js:5:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+rest_property_assignment_target_err.js:5:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × rest element may not have a trailing comma
   

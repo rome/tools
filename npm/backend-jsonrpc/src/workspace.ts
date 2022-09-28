@@ -243,8 +243,7 @@ export interface PullDiagnosticsResult {
  */
 export interface Diagnostic {
 	children: SubDiagnostic[];
-	code?: string;
-	code_link?: string;
+	code?: Category;
 	file_id: FileId;
 	footers: Footer[];
 	primary?: SubDiagnostic;
@@ -262,6 +261,63 @@ export interface SubDiagnostic {
 	severity: Severity;
 	span: FileSpan;
 }
+export type Category =
+	| "lint/correctness/noArguments"
+	| "lint/correctness/noAsyncPromiseExecutor"
+	| "lint/correctness/noCatchAssign"
+	| "lint/correctness/noCommentText"
+	| "lint/correctness/noCompareNegZero"
+	| "lint/correctness/noDebugger"
+	| "lint/correctness/noDelete"
+	| "lint/correctness/noDoubleEquals"
+	| "lint/correctness/noDupeArgs"
+	| "lint/correctness/noEmptyPattern"
+	| "lint/correctness/noExtraBooleanCast"
+	| "lint/correctness/noFunctionAssign"
+	| "lint/correctness/noImplicitBoolean"
+	| "lint/correctness/noImportAssign"
+	| "lint/correctness/noLabelVar"
+	| "lint/correctness/noMultipleSpacesInRegularExpressionLiterals"
+	| "lint/correctness/noShadowRestrictedNames"
+	| "lint/correctness/noSparseArray"
+	| "lint/correctness/noUnnecessaryContinue"
+	| "lint/correctness/noUnsafeNegation"
+	| "lint/correctness/noUnusedTemplateLiteral"
+	| "lint/correctness/useBlockStatements"
+	| "lint/correctness/useSimplifiedLogicExpression"
+	| "lint/correctness/useSingleCaseStatement"
+	| "lint/correctness/useSingleVarDeclarator"
+	| "lint/correctness/useTemplate"
+	| "lint/correctness/useValidTypeof"
+	| "lint/correctness/useWhile"
+	| "lint/nursery/noDangerouslySetInnerHtml"
+	| "lint/nursery/noNewSymbol"
+	| "lint/nursery/noRenderReturnValue"
+	| "lint/nursery/noUnreachable"
+	| "lint/nursery/noUnusedVariables"
+	| "lint/nursery/noUselessFragments"
+	| "lint/nursery/useButtonType"
+	| "lint/nursery/useCamelCase"
+	| "lint/nursery/useOptionalChain"
+	| "lint/nursery/noVoidElementsWithChildren"
+	| "lint/nursery/noChildrenProp"
+	| "lint/nursery/useFragmentSyntax"
+	| "lint/style/noNegationElse"
+	| "lint/style/noShoutyConstants"
+	| "lint/style/useSelfClosingElements"
+	| "lint/style/useShorthandArrayType"
+	| "files/missingHandler"
+	| "format"
+	| "internalError/io"
+	| "internalError/fs"
+	| "internalError/panic"
+	| "lint"
+	| "parse"
+	| "suppressions/unknownGroup"
+	| "suppressions/unknownRule"
+	| "args/fileNotFound"
+	| "flags/invalid"
+	| "semanticTests";
 /**
  * A note or help that is displayed under the diagnostic.
  */
@@ -301,13 +357,9 @@ export interface FileSpan {
 /**
  * Indicates how a tool should manage this suggestion.
  */
-export type Applicability =
-	| "Always"
-	| "MaybeIncorrect"
-	| "HasPlaceholders"
-	| "Unspecified";
+export type Applicability = "Always" | "MaybeIncorrect";
 export type TextRange = [TextSize, TextSize];
-export type SuggestionStyle = "DontShow" | "HideCode" | "Inline" | "Full";
+export type SuggestionStyle = "Inline" | "Full";
 export type SuggestionChange = { Indels: Indel[] } | { String: string };
 export interface MarkupNodeBuf {
 	content: string;

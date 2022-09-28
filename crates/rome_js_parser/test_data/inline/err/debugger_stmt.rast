@@ -101,7 +101,7 @@ JsModule {
         3: R_CURLY@62..64 "}" [Newline("\n")] []
   3: EOF@64..65 "" [Newline("\n")] []
 --
-debugger_stmt.js:2:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+debugger_stmt.js:2:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   

@@ -77,7 +77,7 @@ JsModule {
         0: SEMICOLON@30..31 ";" [] []
   3: EOF@31..32 "" [Newline("\n")] []
 --
-for_of_async_identifier.js:2:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+for_of_async_identifier.js:2:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × The left-hand side of a `for...of` statement may not be `async`
   

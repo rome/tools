@@ -50,7 +50,7 @@ JsModule {
       2: R_CURLY@25..27 "}" [Newline("\n")] []
   3: EOF@27..28 "" [Newline("\n")] []
 --
-import_decl_not_top_level.js:2:2 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+import_decl_not_top_level.js:2:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of an import declaration not at the top level
   

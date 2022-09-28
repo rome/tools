@@ -293,7 +293,7 @@ JsModule {
       1: (empty)
   3: EOF@100..101 "" [Newline("\n")] []
 --
-array_assignment_target_err.js:1:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+array_assignment_target_err.js:1:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `a`
   
@@ -305,7 +305,7 @@ array_assignment_target_err.js:1:4 SyntaxError ━━━━━━━━━━━
     │    ^
   
 --
-array_assignment_target_err.js:1:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+array_assignment_target_err.js:1:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `++b`
   
@@ -317,7 +317,7 @@ array_assignment_target_err.js:1:7 SyntaxError ━━━━━━━━━━━
     │       ^^^
   
 --
-array_assignment_target_err.js:2:15 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+array_assignment_target_err.js:2:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × rest element may not have a trailing comma
   
@@ -336,7 +336,7 @@ array_assignment_target_err.js:2:15 SyntaxError ━━━━━━━━━━�
     │        ^^^^^^^
   
 --
-array_assignment_target_err.js:3:6 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+array_assignment_target_err.js:3:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression, or an assignment but instead found ','
   
@@ -348,7 +348,7 @@ array_assignment_target_err.js:3:6 SyntaxError ━━━━━━━━━━━
     │      ^
   
 --
-array_assignment_target_err.js:3:8 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+array_assignment_target_err.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier, or an assignment target but instead found '='
   
@@ -360,7 +360,7 @@ array_assignment_target_err.js:3:8 SyntaxError ━━━━━━━━━━━
     │        ^
   
 --
-array_assignment_target_err.js:4:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+array_assignment_target_err.js:4:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `b`
   
@@ -372,7 +372,7 @@ array_assignment_target_err.js:4:5 SyntaxError ━━━━━━━━━━━
     │     ^
   
 --
-array_assignment_target_err.js:5:3 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+array_assignment_target_err.js:5:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `:`
   

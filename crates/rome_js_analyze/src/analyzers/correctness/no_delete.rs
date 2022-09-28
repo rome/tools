@@ -66,7 +66,7 @@ impl Rule for NoDelete {
         let node = ctx.query();
 
         Some(
-            RuleDiagnostic::new(node.range(), markup! {
+            RuleDiagnostic::new(rule_category!(),node.range(), markup! {
                 "This is an unexpected use of the "<Emphasis>"delete"</Emphasis>" operator."
             })
             .summary("This is an unexpected use of the `delete` operator.\nReplace this expression with an `undefined` assignment")

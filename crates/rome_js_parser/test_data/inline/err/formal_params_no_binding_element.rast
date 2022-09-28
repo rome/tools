@@ -58,7 +58,7 @@ JsModule {
         3: R_CURLY@20..21 "}" [] []
   3: EOF@21..22 "" [Newline("\n")] []
 --
-formal_params_no_binding_element.js:1:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+formal_params_no_binding_element.js:1:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a parameter but instead found 'true'
   

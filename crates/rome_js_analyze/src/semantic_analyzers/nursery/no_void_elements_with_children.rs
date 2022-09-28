@@ -206,6 +206,10 @@ impl Rule for NoVoidElementsWithChildren {
                 element.syntax().text_trimmed_range()
             }
         };
-        Some(RuleDiagnostic::new(range, state.message()))
+        Some(RuleDiagnostic::new(
+            rule_category!(),
+            range,
+            state.message(),
+        ))
     }
 }

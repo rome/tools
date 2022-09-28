@@ -58,7 +58,7 @@ JsModule {
       8: R_CURLY@20..21 "}" [] []
   3: EOF@21..22 "" [Newline("\n")] []
 --
-class_property_initializer.js:1:19 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+class_property_initializer.js:1:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression, or an assignment but instead found ';'
   

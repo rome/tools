@@ -5,6 +5,7 @@
 //! [website]: https://rome.tools
 
 use rome_cli::{open_transport, setup_panic_handler, Arguments, CliSession, Termination};
+use rome_diagnostics::v2::set_bottom_frame;
 use rome_service::workspace;
 use tokio::runtime::Runtime;
 
@@ -18,6 +19,7 @@ static GLOBAL: tikv_jemallocator::Jemalloc = tikv_jemallocator::Jemalloc;
 
 fn main() -> Result<(), Termination> {
     setup_panic_handler();
+    set_bottom_frame(main as usize);
 
     let mut args = Arguments::from_env();
 

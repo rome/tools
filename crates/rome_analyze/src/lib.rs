@@ -1,9 +1,9 @@
 #![deny(rustdoc::broken_intra_doc_links)]
 
 use rome_console::codespan::Severity;
+use rome_diagnostics::v2::{category, Category};
 use std::cmp::Ordering;
 use std::collections::{BTreeMap, BinaryHeap};
-use std::fmt::Display;
 use std::ops;
 
 mod categories;
@@ -16,6 +16,9 @@ mod services;
 mod signals;
 mod syntax;
 mod visitor;
+
+// Re-exported for use in the `declare_group` macro
+pub use rome_diagnostics::v2::category_concat;
 
 pub use crate::categories::{ActionCategory, RuleCategories, RuleCategory};
 pub use crate::matcher::{InspectMatcher, MatchQueryParams, QueryMatcher, RuleKey, SignalEntry};
@@ -399,14 +402,14 @@ where
                             let diag = match group_rule {
                             Some((group, rule)) => Diagnostic::warning(
                                 file_id,
-                                "suppressions/unknownRule",
+                                category!("suppressions/unknownRule"),
                                 markup! {
                                     "Unknown lint rule "{group}"/"{rule}" in suppression comment"
                                 },
                             ).primary(range, ""),
                             None => Diagnostic::warning(
                                 file_id,
-                                "suppressions/unknownGroup",
+                                category!("suppressions/unknownGroup"),
                                 markup! {
                                     "Unknown lint rule group "{rule}" in suppression comment"
                                 },
@@ -585,8 +588,6 @@ pub enum AnalyzerDiagnostic {
     /// It holds various info related to diagnostics emitted by the rules
     Rule {
         file_id: FileId,
-        code: String,
-        code_link: String,
         rule_diagnostic: RuleDiagnostic,
     },
     /// We have raw information to create a basic [Diagnostic]
@@ -594,23 +595,18 @@ pub enum AnalyzerDiagnostic {
 }
 
 impl AnalyzerDiagnostic {
-    pub fn code(&self) -> Option<&String> {
+    pub fn code(&self) -> Option<&'static Category> {
         match self {
-            AnalyzerDiagnostic::Rule { code, .. } => Some(code),
-            AnalyzerDiagnostic::Raw(diag) => diag.code.as_ref(),
+            AnalyzerDiagnostic::Rule {
+                rule_diagnostic, ..
+            } => Some(rule_diagnostic.category),
+            AnalyzerDiagnostic::Raw(diag) => diag.code,
         }
     }
 
-    pub fn from_rule_diagnostic(
-        file_id: FileId,
-        code: impl Display,
-        code_link: String,
-        rule_diagnostic: RuleDiagnostic,
-    ) -> Self {
+    pub fn from_rule_diagnostic(file_id: FileId, rule_diagnostic: RuleDiagnostic) -> Self {
         Self::Rule {
             file_id,
-            code: format!("lint/{code}"),
-            code_link,
             rule_diagnostic,
         }
     }
@@ -622,15 +618,12 @@ impl AnalyzerDiagnostic {
     pub fn into_diagnostic(self, severity: Severity) -> Diagnostic {
         match self {
             AnalyzerDiagnostic::Rule {
-                code,
-                code_link,
                 rule_diagnostic,
                 file_id,
             } => Diagnostic {
                 file_id,
                 severity,
-                code: Some(code),
-                code_link: Some(code_link),
+                code: Some(rule_diagnostic.category),
                 title: rule_diagnostic.title,
                 summary: rule_diagnostic.summary,
                 tag: rule_diagnostic.tag,

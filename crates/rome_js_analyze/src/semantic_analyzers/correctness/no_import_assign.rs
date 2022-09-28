@@ -107,6 +107,7 @@ impl Rule for NoImportAssign {
 
         Some(
             RuleDiagnostic::new(
+                rule_category!(),
                 invalid_assign.syntax().text_trimmed_range(),
                 markup! {
                     "The imported variable "<Emphasis>{name.to_string()}</Emphasis>" is read-only"

@@ -172,7 +172,7 @@ JsModule {
       1: (empty)
   3: EOF@69..70 "" [Newline("\n")] []
 --
-jsx_children_expressions_not_accepted.jsx:2:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_children_expressions_not_accepted.jsx:2:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × This expression is not valid as a JSX expression.
   
@@ -182,7 +182,7 @@ jsx_children_expressions_not_accepted.jsx:2:4 SyntaxError ━━━━━━━�
     │    ^^^^^^^^^^^
   
 --
-jsx_children_expressions_not_accepted.jsx:3:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_children_expressions_not_accepted.jsx:3:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × This expression is not valid as a JSX expression.
   
@@ -192,7 +192,7 @@ jsx_children_expressions_not_accepted.jsx:3:4 SyntaxError ━━━━━━━�
     │    ^^^^^^^^^
   
 --
-jsx_children_expressions_not_accepted.jsx:4:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_children_expressions_not_accepted.jsx:4:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `super` is only valid inside of a class constructor of a subclass.
   
@@ -202,7 +202,7 @@ jsx_children_expressions_not_accepted.jsx:4:4 SyntaxError ━━━━━━━�
     │    ^^^^^
   
 --
-jsx_children_expressions_not_accepted.jsx:5:4 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_children_expressions_not_accepted.jsx:5:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × This expression is not valid as a JSX expression.
   

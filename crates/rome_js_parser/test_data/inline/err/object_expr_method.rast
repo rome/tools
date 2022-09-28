@@ -67,7 +67,7 @@ JsModule {
       1: (empty)
   3: EOF@16..17 "" [Newline("\n")] []
 --
-object_expr_method.js:1:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+object_expr_method.js:1:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `)`
   

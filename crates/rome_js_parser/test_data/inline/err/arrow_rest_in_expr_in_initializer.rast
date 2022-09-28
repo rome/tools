@@ -106,7 +106,7 @@ JsModule {
         2: R_CURLY@34..35 "}" [] []
   3: EOF@35..36 "" [Newline("\n")] []
 --
-arrow_rest_in_expr_in_initializer.js:1:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+arrow_rest_in_expr_in_initializer.js:1:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × rest elements may not have default initializers
   

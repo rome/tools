@@ -89,7 +89,7 @@ JsModule {
       1: (empty)
   3: EOF@28..29 "" [Newline("\n")] []
 --
-ts_arrow_function_this_parameter.ts:1:10 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_arrow_function_this_parameter.ts:1:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × An arrow function cannot have a 'this' parameter.
   

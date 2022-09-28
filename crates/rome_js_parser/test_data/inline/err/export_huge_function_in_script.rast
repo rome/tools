@@ -70,7 +70,7 @@ JsScript {
           3: R_CURLY@1440..1441 "}" [] []
   3: EOF@1441..1442 "" [Newline("\n")] []
 --
-export_huge_function_in_script.js:2:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+export_huge_function_in_script.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of an export declaration outside of a module
   

@@ -30,10 +30,6 @@ pub enum SuggestionChange {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub enum SuggestionStyle {
-    /// Do not show the suggestion at all
-    DontShow,
-    /// Show as inline but do not show the code
-    HideCode,
     /// Show as inline, e.g. `help: do this: `code``
     Inline,
     /// Show as a separate block, e.g.

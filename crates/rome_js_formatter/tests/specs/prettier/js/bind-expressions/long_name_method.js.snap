@@ -52,7 +52,7 @@ class X {
 
 # Errors
 ```
-long_name_method.js:3:54 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+long_name_method.js:3:54 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression, or an assignment but instead found ':'
   

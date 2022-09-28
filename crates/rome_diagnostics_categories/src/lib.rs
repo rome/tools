@@ -1,4 +1,7 @@
-use std::str::FromStr;
+use std::{
+    hash::{Hash, Hasher},
+    str::FromStr,
+};
 
 /// Metadata for a diagnostic category
 ///
@@ -23,6 +26,44 @@ impl Category {
     /// with this category
     pub fn link(&self) -> Option<&'static str> {
         self.link
+    }
+}
+
+impl Eq for Category {}
+
+impl PartialEq for Category {
+    fn eq(&self, other: &Self) -> bool {
+        self.name == other.name
+    }
+}
+
+impl Hash for Category {
+    fn hash<H: Hasher>(&self, state: &mut H) {
+        self.name.hash(state);
+    }
+}
+
+#[cfg(feature = "serde")]
+impl serde::Serialize for &'static Category {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        self.name().serialize(serializer)
+    }
+}
+
+#[cfg(feature = "serde")]
+impl<'de> serde::Deserialize<'de> for &'static Category {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        <&str>::deserialize(deserializer).and_then(|code| {
+            code.parse().map_err(|()| {
+                serde::de::Error::custom(format_args!("failed to deserialize category from {code}"))
+            })
+        })
     }
 }
 

@@ -82,7 +82,7 @@ impl Rule for NoDoubleEquals {
         let suggestion = if op.kind() == EQ2 { "===" } else { "!==" };
 
         Some(
-            RuleDiagnostic::new(op.text_trimmed_range(), markup! {
+            RuleDiagnostic::new(rule_category!(),op.text_trimmed_range(), markup! {
                 "Use "<Emphasis>{suggestion}</Emphasis>" instead of "<Emphasis>{text_trimmed}</Emphasis>
             })
             .primary( markup! {

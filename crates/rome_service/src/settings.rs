@@ -1,6 +1,7 @@
 use crate::{Configuration, MatchOptions, Matcher, RomeError, Rules};
 use indexmap::IndexSet;
 use rome_console::codespan::Severity;
+use rome_diagnostics::v2::Category;
 use rome_formatter::{IndentStyle, LineWidth};
 use rome_fs::RomePath;
 use rome_js_syntax::JsLanguage;
@@ -62,7 +63,7 @@ impl WorkspaceSettings {
     /// The code of the has the following pattern: `{group}/{rule_name}`.
     ///
     /// It returns [None] if the `code` doesn't match any rule.
-    pub fn get_severity_from_rule_code(&self, code: &str) -> Option<Severity> {
+    pub fn get_severity_from_rule_code(&self, code: &Category) -> Option<Severity> {
         let rules = self.linter.rules.as_ref();
         if let Some(rules) = rules {
             rules.get_severity_from_code(code)

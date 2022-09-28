@@ -45,7 +45,7 @@ class C {
 
 # Errors
 ```
-valid-multiple-bindings.js:4:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+valid-multiple-bindings.js:4:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier, a member name, or a rest pattern but instead found '#x: x1'
   
@@ -56,7 +56,7 @@ valid-multiple-bindings.js:4:12 SyntaxError ━━━━━━━━━━━━
   4 │     const {#x: x1, #x: x2 = x1 } = this;
     │            ^^^^^^
   
-valid-multiple-bindings.js:4:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+valid-multiple-bindings.js:4:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier, a member name, or a rest pattern but instead found '#x: x2'
   
@@ -67,7 +67,7 @@ valid-multiple-bindings.js:4:20 SyntaxError ━━━━━━━━━━━━
   4 │     const {#x: x1, #x: x2 = x1 } = this;
     │                    ^^^^^^
   
-valid-multiple-bindings.js:4:27 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+valid-multiple-bindings.js:4:27 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `=`
   

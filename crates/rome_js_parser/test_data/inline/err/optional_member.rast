@@ -58,7 +58,7 @@ JsModule {
       8: R_CURLY@16..17 "}" [] []
   3: EOF@17..18 "" [Newline("\n")] []
 --
-optional_member.js:1:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+optional_member.js:1:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `?` modifiers can only be used in TypeScript files
   

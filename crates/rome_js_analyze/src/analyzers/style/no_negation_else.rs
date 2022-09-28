@@ -80,6 +80,7 @@ impl Rule for NoNegationElse {
         let node = ctx.query();
 
         Some(RuleDiagnostic::new(
+            rule_category!(),
             node.range(),
             markup! {
                 "Invert blocks when performing a negation test."

@@ -76,7 +76,7 @@ JsModule {
       8: R_CURLY@34..36 "}" [Newline("\n")] []
   3: EOF@36..37 "" [Newline("\n")] []
 --
-index_signature_class_member_in_js.js:2:5 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+index_signature_class_member_in_js.js:2:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Index signatures are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   

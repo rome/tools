@@ -83,7 +83,7 @@ JsModule {
       1: SEMICOLON@39..40 ";" [] []
   3: EOF@40..41 "" [Newline("\n")] []
 --
-jsx_self_closing_element_missing_r_angle.jsx:1:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+jsx_self_closing_element_missing_r_angle.jsx:1:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `>` but instead found `some`
   

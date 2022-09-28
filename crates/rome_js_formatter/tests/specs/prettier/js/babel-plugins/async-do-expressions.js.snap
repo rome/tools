@@ -34,7 +34,7 @@ do { await requestAPI().json() };
 
 # Errors
 ```
-async-do-expressions.js:1:7 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+async-do-expressions.js:1:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
@@ -52,7 +52,7 @@ async-do-expressions.js:1:7 SyntaxError ━━━━━━━━━━━━━�
   1 │ async do { await requestAPI().json() };
     │ ^^^^^^^^
   
-async-do-expressions.js:1:39 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+async-do-expressions.js:1:39 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `while` but instead found `;`
   

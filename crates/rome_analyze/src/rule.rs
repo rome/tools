@@ -4,6 +4,7 @@ use crate::registry::{RuleLanguage, RuleSuppressions};
 use crate::{AnalysisFilter, AnalyzerDiagnostic, Phase, Phases, Queryable, RuleRegistry};
 use rome_console::fmt::Display;
 use rome_console::{markup, MarkupBuf};
+use rome_diagnostics::v2::Category;
 use rome_diagnostics::{file::FileId, Applicability, Severity};
 use rome_diagnostics::{DiagnosticTag, Footer, Span};
 use rome_rowan::{BatchMutation, Language, TextRange};
@@ -137,12 +138,43 @@ pub trait RuleMeta {
 ///         deprecated: "Use the rule `noAnotherVar`"
 ///     }
 /// }
+/// ```
+///
+/// ## Category Macro
+///
+/// Declaring a rule using `declare_rule!` will cause a new `rule_category!`
+/// macro to be declared in the surrounding module. This macro can be used to
+/// refer to the corresponding diagnostic category for this lint rule, if it
+/// has one. Using this macro instead of getting the category for a diagnostic
+/// by dynamically parsing its string name has the advantage of statically
+/// injecting the category at compile time and checking that it is correctly
+/// registered to the `rome_diagnostics` library
+///
+/// ```ignore
+/// declare_rule! {
+///     /// Documentation
+///     pub(crate) ExampleRule {
+///         version: "0.7.0",
+///         name: "ruleName"
+///     }
+/// }
+///
+/// impl Rule for ExampleRule {
+///     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
+///         Some(RuleDiagnostic::new(
+///             rule_category!(),
+///             ctx.query().text_trimmed_range(),
+///             "message",
+///         ))
+///     }
+/// }
+/// ```
 ///
 #[macro_export]
 macro_rules! declare_rule {
     ( $( #[doc = $doc:literal] )+ $vis:vis $id:ident {
         version: $version:literal,
-        name: $name:literal,
+        name: $name:tt,
         $( $key:ident: $value:expr, )*
     } ) => {
         $( #[doc = $doc] )*
@@ -151,6 +183,16 @@ macro_rules! declare_rule {
         impl $crate::RuleMeta for $id {
             const METADATA: $crate::RuleMetadata =
                 $crate::RuleMetadata::new($version, $name, concat!( $( $doc, "\n", )* )) $( .$key($value) )*;
+        }
+
+        // Declare a new `rule_category!` macro in the module context that
+        // expands to the category of this rule
+        // This is implemented by calling the `group_category!` macro from the
+        // parent module (that should be declared by a call to `declare_group!`)
+        // and providing it with the name of this rule as a string literal token
+        #[allow(unused_macros)]
+        macro_rules! rule_category {
+            () => { super::group_category!( $name ) };
         }
     };
 }
@@ -170,18 +212,33 @@ pub trait RuleGroup {
 /// and implement the [RuleGroup] trait for it
 #[macro_export]
 macro_rules! declare_group {
-    ( $vis:vis $id:ident { name: $name:literal, rules: [ $( $rule:ty, )* ] } ) => {
+    ( $vis:vis $id:ident { name: $name:tt, rules: [ $( $( $rule:ident )::* , )* ] } ) => {
         $vis enum $id {}
 
         impl $crate::RuleGroup for $id {
-            type Language = <( $( $rule, )* ) as $crate::GroupLanguage>::Language;
+            type Language = <( $( $( $rule )::* , )* ) as $crate::GroupLanguage>::Language;
 
             const NAME: &'static str = $name;
 
             fn push_rules(registry: &mut $crate::RuleRegistry<Self::Language>, filter: &$crate::AnalysisFilter) {
-                $( if filter.match_rule::<Self, $rule>() { registry.push::<Self, $rule>(); } )*
+                $( if filter.match_rule::<Self, $( $rule )::*>() { registry.push::<Self, $( $rule )::*>(); } )*
             }
         }
+
+        // Declare a `group_category!` macro in the context of this module (and
+        // all its children). This macro takes the name of a rule as a string
+        // literal token and expands to the category of the lint rule with this
+        // name within this group.
+        // This is implemented by calling the `category_concat!` macro with the
+        // "lint" prefix, the name of this group, and the rule name argument
+        #[allow(unused_macros)]
+        macro_rules! group_category {
+            ( $rule_name:tt ) => { $crate::category_concat!( "lint", $name, $rule_name ) };
+        }
+
+        // Re-export the macro for child modules, so `declare_rule!` can access
+        // the category of its parent group by using the `super` module
+        pub(self) use group_category;
     };
 }
 
@@ -318,6 +375,7 @@ pub trait Rule: RuleMeta {
 
 /// Diagnostic object returned by a single analysis rule
 pub struct RuleDiagnostic {
+    pub(crate) category: &'static Category,
     pub(crate) span: TextRange,
     pub(crate) title: MarkupBuf,
     pub(crate) summary: Option<String>,
@@ -332,8 +390,9 @@ pub struct RuleDiagnostic {
 impl RuleDiagnostic {
     /// Creates a new [`RuleDiagnostic`] with a severity and title that will be
     /// used in a builder-like way to modify labels.
-    pub fn new(span: impl Span, title: impl Display) -> Self {
+    pub fn new(category: &'static Category, span: impl Span, title: impl Display) -> Self {
         Self {
+            category,
             span: span.as_range(),
             title: markup!({ title }).to_owned(),
             summary: None,
@@ -430,13 +489,8 @@ impl RuleDiagnostic {
     /// Convert this [`RuleDiagnostic`] into an instance of [`AnalyzerDiagnostic`] by
     /// injecting the name of the rule that emitted it and the ID of the file
     /// the rule was being run on
-    pub(crate) fn into_analyzer_diagnostic(
-        self,
-        file_id: FileId,
-        code: String,
-        code_link: String,
-    ) -> AnalyzerDiagnostic {
-        AnalyzerDiagnostic::from_rule_diagnostic(file_id, code, code_link, self)
+    pub(crate) fn into_analyzer_diagnostic(self, file_id: FileId) -> AnalyzerDiagnostic {
+        AnalyzerDiagnostic::from_rule_diagnostic(file_id, self)
     }
 }
 

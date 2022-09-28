@@ -121,7 +121,7 @@ JsModule {
         3: R_CURLY@54..55 "}" [] []
   3: EOF@55..56 "" [Newline("\n")] []
 --
-ts_function_overload_generator.ts:1:9 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ts_function_overload_generator.ts:1:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × An overload signature cannot be declared as a generator.
   

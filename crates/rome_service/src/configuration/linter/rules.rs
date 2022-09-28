@@ -4,6 +4,7 @@ use crate::{ConfigurationError, RomeError, RuleConfiguration};
 use indexmap::{IndexMap, IndexSet};
 use rome_analyze::RuleFilter;
 use rome_console::codespan::Severity;
+use rome_diagnostics::v2::Category;
 #[cfg(feature = "schemars")]
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
@@ -49,12 +50,12 @@ impl Rules {
             _ => None,
         }
     }
-    #[doc = r" Given a code coming from [Diagnostic](rome_diagnostics::Diagnostic), this function returns"]
+    #[doc = r" Given a category coming from [Diagnostic](rome_diagnostics::Diagnostic), this function returns"]
     #[doc = r" the [Severity](rome_diagnostics::Severity) associated to the rule, if the configuration changed it."]
     #[doc = r""]
     #[doc = r" If not, the function returns [None]."]
-    pub fn get_severity_from_code(&self, code: &str) -> Option<Severity> {
-        let mut split_code = code.split('/');
+    pub fn get_severity_from_code(&self, category: &Category) -> Option<Severity> {
+        let mut split_code = category.name().split('/');
         let _lint = split_code.next();
         debug_assert_eq!(_lint, Some("lint"));
         let group = split_code.next();

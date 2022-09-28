@@ -74,6 +74,7 @@ impl Rule for NoEmptyPattern {
         };
 
         Some(RuleDiagnostic::new(
+            rule_category!(),
             node.range(),
             markup! {
                 "Unexpected empty "{node_type}" pattern."

@@ -77,7 +77,7 @@ JsModule {
       8: R_CURLY@26..27 "}" [] []
   3: EOF@27..28 "" [Newline("\n")] []
 --
-class_declare_method.js:1:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+class_declare_method.js:1:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'declare' modifier can only be used in TypeScript files
   

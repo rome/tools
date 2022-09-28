@@ -136,7 +136,7 @@ JsScript {
       8: R_CURLY@73..74 "}" [] []
   3: EOF@74..75 "" [Newline("\n")] []
 --
-js_constructor_parameter_reserved_names.js:2:33 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+js_constructor_parameter_reserved_names.js:2:33 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of reserved keyword `private` as an identifier in strict mode
   
@@ -146,7 +146,7 @@ js_constructor_parameter_reserved_names.js:2:33 SyntaxError ━━━━━━�
     │                                 ^^^^^^^
   
 --
-js_constructor_parameter_reserved_names.js:2:42 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+js_constructor_parameter_reserved_names.js:2:42 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of reserved keyword `protected` as an identifier in strict mode
   
@@ -156,7 +156,7 @@ js_constructor_parameter_reserved_names.js:2:42 SyntaxError ━━━━━━�
     │                                          ^^^^^^^^^
   
 --
-js_constructor_parameter_reserved_names.js:2:53 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+js_constructor_parameter_reserved_names.js:2:53 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of reserved keyword `public` as an identifier in strict mode
   

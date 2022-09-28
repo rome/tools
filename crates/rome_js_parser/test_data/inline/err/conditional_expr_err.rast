@@ -137,7 +137,7 @@ JsModule {
       1: (empty)
   3: EOF@51..52 "" [Newline("\n")] []
 --
-conditional_expr_err.js:1:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+conditional_expr_err.js:1:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `:` but instead found `baz`
   
@@ -149,7 +149,7 @@ conditional_expr_err.js:1:11 SyntaxError ━━━━━━━━━━━━━
     │           ^^^
   
 --
-conditional_expr_err.js:2:11 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+conditional_expr_err.js:2:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `:` but instead found `baz`
   
@@ -161,7 +161,7 @@ conditional_expr_err.js:2:11 SyntaxError ━━━━━━━━━━━━━
     │           ^^^
   
 --
-conditional_expr_err.js:4:1 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+conditional_expr_err.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression, or an assignment but instead found ''
   

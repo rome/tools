@@ -288,7 +288,7 @@ JsScript {
         2: R_CURLY@137..138 "}" [] []
   3: EOF@138..139 "" [Newline("\n")] []
 --
-for_in_and_of_initializer_loose_mode.js:2:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+for_in_and_of_initializer_loose_mode.js:2:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `for..in` statement declarators cannot have an initializer expression
   
@@ -298,7 +298,7 @@ for_in_and_of_initializer_loose_mode.js:2:12 SyntaxError ━━━━━━━�
     │            ^^^
   
 --
-for_in_and_of_initializer_loose_mode.js:3:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+for_in_and_of_initializer_loose_mode.js:3:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `for..in` statement declarators cannot have an initializer expression
   
@@ -308,7 +308,7 @@ for_in_and_of_initializer_loose_mode.js:3:14 SyntaxError ━━━━━━━�
     │              ^^^
   
 --
-for_in_and_of_initializer_loose_mode.js:4:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+for_in_and_of_initializer_loose_mode.js:4:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `for..of` statement declarators cannot have an initializer expression
   
@@ -318,7 +318,7 @@ for_in_and_of_initializer_loose_mode.js:4:12 SyntaxError ━━━━━━━�
     │            ^^^
   
 --
-for_in_and_of_initializer_loose_mode.js:5:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+for_in_and_of_initializer_loose_mode.js:5:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `for..of` statement declarators cannot have an initializer expression
   
@@ -328,7 +328,7 @@ for_in_and_of_initializer_loose_mode.js:5:12 SyntaxError ━━━━━━━�
     │            ^^^
   
 --
-for_in_and_of_initializer_loose_mode.js:6:14 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+for_in_and_of_initializer_loose_mode.js:6:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `for..of` statement declarators cannot have an initializer expression
   

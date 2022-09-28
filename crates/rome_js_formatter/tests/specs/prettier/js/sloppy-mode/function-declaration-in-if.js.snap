@@ -30,7 +30,7 @@ if (false) function foo(){}
 
 # Errors
 ```
-function-declaration-in-if.js:1:12 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+function-declaration-in-if.js:1:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × In strict mode code, functions can only be declared at top level or inside a block
   

@@ -16,6 +16,8 @@ pub fn main() -> io::Result<()> {
     let mut metadata = Vec::with_capacity(CATEGORIES.len());
     let mut macro_arms = Vec::with_capacity(CATEGORIES.len());
     let mut parse_arms = Vec::with_capacity(CATEGORIES.len());
+    let mut enum_variants = Vec::with_capacity(CATEGORIES.len());
+    let mut concat_macro_arms = Vec::with_capacity(CATEGORIES.len());
 
     for (name, link) in CATEGORIES {
         let meta_name = name.replace('/', "_").to_uppercase();
@@ -41,6 +43,13 @@ pub fn main() -> io::Result<()> {
         parse_arms.push(quote! {
             #name => Ok(&crate::registry::#meta_ident),
         });
+
+        enum_variants.push(*name);
+
+        let parts = name.split('/');
+        concat_macro_arms.push(quote! {
+            ( #( #parts ),* ) => { &$crate::registry::#meta_ident };
+        });
     }
 
     let tokens = quote! {
@@ -52,6 +61,21 @@ pub fn main() -> io::Result<()> {
                     #( #parse_arms )*
                     _ => Err(()),
                 }
+            }
+        }
+
+        #[cfg(feature = "schemars")]
+        impl schemars::JsonSchema for &'static Category {
+            fn schema_name() -> String {
+                String::from("Category")
+            }
+
+            fn json_schema(_gen: &mut schemars::gen::SchemaGenerator) -> schemars::schema::Schema {
+                schemars::schema::Schema::Object(schemars::schema::SchemaObject {
+                    instance_type: Some(schemars::schema::InstanceType::String.into()),
+                    enum_values: Some(vec![#( #enum_variants.into() ),*]),
+                    ..Default::default()
+                })
             }
         }
 
@@ -69,6 +93,31 @@ pub fn main() -> io::Result<()> {
         #[macro_export]
         macro_rules! category {
             #( #macro_arms )*
+
+            ( $name:literal ) => {
+                compile_error!(concat!("Unregistered diagnostic category \"", $name, "\", please add it to \"crates/rome_diagnostics_categories/src/categories.rs\""))
+            };
+            ( $( $parts:tt )* ) => {
+                compile_error!(concat!("Invalid diagnostic category `", stringify!($( $parts )*), "`, expected a single string literal"))
+            };
+        }
+
+        /// The `category_concat!` macro is a variant of `category!` using a
+        /// slightly different syntax, for use in the `declare_group` and
+        /// `declare_rule` macros in the analyzer
+        #[macro_export]
+        macro_rules! category_concat {
+            #( #concat_macro_arms )*
+
+            ( @compile_error $( $parts:tt )* ) => {
+                compile_error!(concat!("Unregistered diagnostic category \"", $( $parts, )* "\", please add it to \"crates/rome_diagnostics_categories/src/categories.rs\""))
+            };
+            ( $( $parts:tt ),* ) => {
+                $crate::category_concat!( @compile_error $( $parts )"/"* )
+            };
+            ( $( $parts:tt )* ) => {
+                compile_error!(concat!("Invalid diagnostic category `", stringify!($( $parts )*), "`, expected a comma-separated list of string literals"))
+            };
         }
 
         pub mod registry {

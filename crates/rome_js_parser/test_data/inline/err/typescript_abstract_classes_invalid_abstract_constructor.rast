@@ -73,7 +73,7 @@ JsModule {
       0: SEMICOLON@43..44 ";" [] []
   3: EOF@44..45 "" [Newline("\n")] []
 --
-typescript_abstract_classes_invalid_abstract_constructor.ts:1:20 SyntaxError ━━━━━━━━━━━━━━━━━━━━━━━
+typescript_abstract_classes_invalid_abstract_constructor.ts:1:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'abstract' cannot appear on a constructor declaration.
   
