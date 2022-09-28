@@ -1,3 +1,5 @@
+mod closure;
+
 use rome_js_syntax::{
     JsAnyRoot, JsArrowFunctionExpression, JsFunctionDeclaration, JsIdentifierAssignment,
     JsIdentifierBinding, JsLanguage, JsReferenceIdentifier, JsSyntaxKind, JsSyntaxNode,
@@ -10,8 +12,8 @@ use std::{
     iter::FusedIterator,
     sync::Arc,
 };
-
 use crate::{SemanticEvent, SemanticEventExtractor};
+pub use closure::*;
 
 /// Marker trait that groups all "AstNode" that are declarations
 pub trait IsDeclarationAstNode: AstNode<Language = JsLanguage> {
@@ -69,16 +71,6 @@ impl<T: HasDeclarationAstNode> IsExportedCanBeQueried for T {
     }
 }
 
-/// Marker trait that groups all "AstNode" that have closure
-pub trait HasClosureAstNode: AstNode<Language = JsLanguage> {
-    #[inline(always)]
-    fn node(&self) -> &Self {
-        self
-    }
-}
-
-impl HasClosureAstNode for JsFunctionDeclaration {}
-impl HasClosureAstNode for JsArrowFunctionExpression {}
 
 #[derive(Clone, Debug)]
 struct ScopeReference {
@@ -139,8 +131,10 @@ impl SemanticModelData {
     fn scope(&self, range: &TextRange) -> usize {
         let start = range.start().into();
         let end = range.end().into();
-        let scopes = self.scope_by_range.find(start, end)
-            .filter(|x| start < x.start || end > x.stop);
+        let scopes = self
+            .scope_by_range
+            .find(start, end)
+            .filter(|x| !(start < x.start || end > x.stop));
 
         // We always want the most tight scope
         match scopes.map(|x| x.val).max() {
@@ -314,6 +308,12 @@ impl Scope {
 
     pub fn syntax(&self) -> &JsSyntaxNode {
         &self.data.node_by_range[self.range()]
+    }
+
+    /// Return the [Closure] associated with this scope if
+    /// this scope comes from a function or arrow function.
+    pub fn closure(&self) -> Option<Closure> {
+        Closure::from_scope(self.data.clone(), self.id, self.range())
     }
 }
 
@@ -676,114 +676,10 @@ impl SemanticModel {
 
     /// Returns the [Closure] associated with the node.
     pub fn closure(&self, node: &impl HasClosureAstNode) -> Closure {
-        let node = node.node();
-        let closure_range = node.syntax().text_range();
-        let scope_id = self.data.scope(&closure_range);
-
-        Closure {
-            data: self.data.clone(),
-            scope_id,
-            closure_range,
-        }
+        Closure::from_node(self.data.clone(), node)
     }
 }
 
-/// Provides all information regarding a specific closure.
-pub struct Closure {
-    data: Arc<SemanticModelData>,
-    scope_id: usize,
-    closure_range: TextRange,
-}
-
-impl Closure {
-    fn capture_scopes(&self) -> Vec<usize> {
-        let scope = &self.data.scopes[self.scope_id];
-        let mut q = VecDeque::from_iter(scope.children.iter().cloned());
-        let mut r = vec![self.scope_id];
-
-        while let Some(id) = q.pop_front() {
-            let scope = &self.data.scopes[id];
-            let node = &self.data.node_by_range[&scope.range];
-            match node.kind() {
-                JsSyntaxKind::JS_FUNCTION_DECLARATION
-                | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION => {}
-                _ => {
-                    r.push(id);
-                    q.extend(scope.children.iter());
-                }
-            }
-        }
-
-        r
-    }
-
-    fn captures(&self) -> HashSet<ScopeReference> {
-        let mut captures = HashSet::new();
-
-        for id in self.capture_scopes() {
-            for reference in self.data.scopes[id].read_references.iter() {
-                let declaration = self.data.declared_at_by_range[&reference.range];
-                if self.closure_range.intersect(declaration).is_none() {
-                    captures.insert(reference.clone());
-                }
-            }
-        }
-
-        captures
-    }
-
-    // Return all [Reference] this closure captures
-    pub fn all_captures(&self) -> impl Iterator<Item = Reference> {
-        self.captures()
-            .drain()
-            .map(|x| Reference {
-                data: self.data.clone(),
-                node: self.data.node_by_range[&x.range].clone(),
-                range: x.range,
-                ty: x.ty,
-            })
-            .collect::<Vec<_>>()
-            .into_iter()
-    }
-
-    fn children_scopes(&self) -> Vec<usize> {
-        let scope = &self.data.scopes[self.scope_id];
-        let mut q = VecDeque::from_iter(scope.children.iter().cloned());
-        let mut r = vec![];
-
-        while let Some(id) = q.pop_front() {
-            let scope = &self.data.scopes[id];
-            let node = &self.data.node_by_range[&scope.range];
-            match node.kind() {
-                JsSyntaxKind::JS_FUNCTION_DECLARATION
-                | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION => {
-                    r.push(id);
-                }
-                _ => {
-                    q.extend(scope.children.iter());
-                }
-            }
-        }
-
-        r
-    }
-
-    /// Return all immediate children closures of this closure
-    pub fn children(&self) -> Vec<Closure> {
-        let mut closures = vec![];
-
-        for scope_id in self.children_scopes() {
-            let scope = &self.data.scopes[scope_id];
-            closures.push(Closure {
-                data: self.data.clone(),
-                scope_id,
-                closure_range: scope.range,
-            })
-        }
-
-        closures
-    }
-}
 
 // Extensions
 
