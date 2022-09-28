@@ -5,9 +5,13 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
+use rome_js_factory::make::{
+    js_block_statement, js_expression_statement, js_identifier_expression, js_reference_identifier,
+    js_statement_list, jsx_tag_expression,
+};
 use rome_js_syntax::{
-    JsLanguage, JsSyntaxKind, JsxAnyChild, JsxAnyElementName, JsxChildList, JsxElement,
-    JsxFragment, JsxTagExpression,
+    JsAnyStatement, JsLanguage, JsSyntaxKind, JsxAnyChild, JsxAnyElementName, JsxAnyTag,
+    JsxChildList, JsxElement, JsxFragment, JsxTagExpression,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeList, BatchMutation, BatchMutationExt};
 
@@ -81,6 +85,13 @@ impl NoUselessFragmentsQuery {
                 let old_node = JsxAnyChild::JsxElement(element.clone());
                 mutation.remove_node(old_node);
             }
+        }
+    }
+
+    fn children(&self) -> JsxChildList {
+        match self {
+            NoUselessFragmentsQuery::JsxFragment(element) => element.children(),
+            NoUselessFragmentsQuery::JsxElement(element) => element.children(),
         }
     }
 }
@@ -200,6 +211,55 @@ impl Rule for NoUselessFragments {
                 node.replace_node(&mut mutation, new_child);
             } else {
                 node.remove_node_from_list(&mut mutation);
+            }
+        } else if let Some(parent) = node.parent::<JsxTagExpression>() {
+            let parent = parent.syntax().parent()?;
+            let child = node.children().first();
+            if let Some(child) = child {
+                let new_node = match child {
+                    JsxAnyChild::JsxElement(node) => {
+                        jsx_tag_expression(JsxAnyTag::JsxElement(node))
+                            .syntax()
+                            .clone()
+                    }
+                    JsxAnyChild::JsxFragment(node) => {
+                        jsx_tag_expression(JsxAnyTag::JsxFragment(node))
+                            .syntax()
+                            .clone()
+                    }
+                    JsxAnyChild::JsxSelfClosingElement(node) => {
+                        jsx_tag_expression(JsxAnyTag::JsxSelfClosingElement(node))
+                            .syntax()
+                            .clone()
+                    }
+                    JsxAnyChild::JsxText(text) => {
+                        js_identifier_expression(js_reference_identifier(text.value_token().ok()?))
+                            .syntax()
+                            .clone()
+                    }
+                    JsxAnyChild::JsxExpressionChild(child) => {
+                        let mut statement_list = Vec::new();
+
+                        if let Some(expression) = child.expression() {
+                            statement_list.push(JsAnyStatement::JsExpressionStatement(
+                                js_expression_statement(expression).build(),
+                            ));
+                        }
+                        let block_statement = js_block_statement(
+                            child.l_curly_token().ok()?,
+                            js_statement_list(statement_list),
+                            child.r_curly_token().ok()?,
+                        );
+
+                        block_statement.syntax().clone()
+                    }
+
+                    // can't apply a code action because it will create invalid syntax
+                    JsxAnyChild::JsxSpreadChild(_) => return None,
+                };
+                mutation.replace_element(parent.into(), new_node.into());
+            } else {
+                mutation.remove_element(parent.into());
             }
         }
 
