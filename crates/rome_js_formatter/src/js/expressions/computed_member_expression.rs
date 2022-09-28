@@ -34,17 +34,32 @@ impl Format<JsFormatContext> for JsAnyComputedMemberLike {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         write!(f, [self.object().format()])?;
 
-        match self.member()? {
+        FormatComputedMemberLookup(self).fmt(f)
+    }
+}
+
+/// Formats the lookup portion (everything except the object) of a computed member like.
+pub(crate) struct FormatComputedMemberLookup<'a>(&'a JsAnyComputedMemberLike);
+
+impl<'a> FormatComputedMemberLookup<'a> {
+    pub(crate) fn new(member_like: &'a JsAnyComputedMemberLike) -> Self {
+        Self(member_like)
+    }
+}
+
+impl Format<JsFormatContext> for FormatComputedMemberLookup<'_> {
+    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        match self.0.member()? {
             JsAnyExpression::JsAnyLiteralExpression(
                 JsAnyLiteralExpression::JsNumberLiteralExpression(literal),
             ) => {
                 write!(
                     f,
                     [
-                        self.optional_chain_token().format(),
-                        self.l_brack_token().format(),
+                        self.0.optional_chain_token().format(),
+                        self.0.l_brack_token().format(),
                         literal.format(),
-                        self.r_brack_token().format()
+                        self.0.r_brack_token().format()
                     ]
                 )
             }
@@ -52,12 +67,11 @@ impl Format<JsFormatContext> for JsAnyComputedMemberLike {
                 write![
                     f,
                     [group(&format_args![
-                        self.optional_chain_token().format(),
-                        self.l_brack_token().format(),
-                        soft_line_break(),
+                        self.0.optional_chain_token().format(),
+                        self.0.l_brack_token().format(),
                         soft_block_indent(&member.format()),
-                        self.r_brack_token().format()
-                    ]),]
+                        self.0.r_brack_token().format()
+                    ])]
                 ]
             }
         }

@@ -59,15 +59,15 @@ function isJsonRpcNotification(
 
 type JsonRpcResponse =
 	| {
-		jsonrpc: "2.0";
-		id: number;
-		result: any;
-	}
+			jsonrpc: "2.0";
+			id: number;
+			result: any;
+	  }
 	| {
-		jsonrpc: "2.0";
-		id: number;
-		error: any;
-	};
+			jsonrpc: "2.0";
+			id: number;
+			error: any;
+	  };
 
 function isJsonRpcResponse(
 	message: JsonRpcMessage,
@@ -118,7 +118,7 @@ export class Transport {
 
 	/**
 	 * Send a request to the remote server
-	 * 
+	 *
 	 * @param method Name of the remote method to call
 	 * @param params Parameters object the remote method should be called with
 	 * @return Promise resolving with the value returned by the remote method, or rejecting with an RPC error if the remote call failed
@@ -138,7 +138,7 @@ export class Transport {
 
 	/**
 	 * Send a notification message to the remote server
-	 * 
+	 *
 	 * @param method Name of the remote method to call
 	 * @param params Parameters object the remote method should be called with
 	 */

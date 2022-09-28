@@ -92,16 +92,14 @@ class SyntaxTreeProvider
 		};
 
 		// send request to the server and store its content in the cache if successful
-		return this.session.client.sendRequest(
-			syntaxTreeRequest,
-			params,
-			token,
-		).then((result) => {
-			const document = new SyntaxTreeDocument(uri, result);
-			this.documents.set(documentUri, document);
+		return this.session.client
+			.sendRequest(syntaxTreeRequest, params, token)
+			.then((result) => {
+				const document = new SyntaxTreeDocument(uri, result);
+				this.documents.set(documentUri, document);
 
-			return document.value;
-		});
+				return document.value;
+			});
 	}
 
 	dispose(): any {

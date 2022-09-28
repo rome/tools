@@ -18,7 +18,11 @@ function getSocket(command: string): Promise<string> {
 			if (code === 0) {
 				resolve(pipeName.trimEnd());
 			} else {
-				reject(new Error(`Command '${command} __print_socket' exited with code ${code}`));
+				reject(
+					new Error(
+						`Command '${command} __print_socket' exited with code ${code}`,
+					),
+				);
 			}
 		});
 	});

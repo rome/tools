@@ -12,9 +12,9 @@ describe("Workspace API", () => {
 			"../../../..",
 			`target/release/rome${extension}`,
 		);
-		
+
 		const workspace = await createWorkspaceWithBinary(command);
-		
+
 		await workspace.openFile({
 			path: {
 				path: "test.js",
@@ -23,7 +23,7 @@ describe("Workspace API", () => {
 			content: "statement()",
 			version: 0,
 		});
-		
+
 		const printed = await workspace.formatFile({
 			path: {
 				path: "test.js",
@@ -32,14 +32,14 @@ describe("Workspace API", () => {
 		});
 
 		expect(printed.code).toBe("statement();\n");
-		
+
 		await workspace.closeFile({
 			path: {
 				path: "test.js",
 				id: 0,
 			},
 		});
-		
+
 		workspace.destroy();
 	});
 });

@@ -60,10 +60,11 @@ module.exports = function (eleventyConfig) {
 		permalinkAttrs: (slug) => ({ "aria-label": slug }),
 		slugify: (title) => {
 			return encodeURIComponent(
-				String(title).trim().toLowerCase().replace(
-					/[^a-zA-Z\s0-9]/g,
-					"",
-				).replace(/\s+/g, "-"),
+				String(title)
+					.trim()
+					.toLowerCase()
+					.replace(/[^a-zA-Z\s0-9]/g, "")
+					.replace(/\s+/g, "-"),
 			);
 		},
 	});
@@ -171,9 +172,11 @@ module.exports = function (eleventyConfig) {
 
 	eleventyConfig.addFilter("blogSummary", (val) => {
 		const lines = val.split("<!-- DESCRIPTION_END -->")[0].split("\n");
-		return lines.filter((line) => {
-			return line.startsWith("<p>");
-		}).join("\n");
+		return lines
+			.filter((line) => {
+				return line.startsWith("<p>");
+			})
+			.join("\n");
 	});
 
 	eleventyConfig.addFilter("dateFormat", function (value) {
