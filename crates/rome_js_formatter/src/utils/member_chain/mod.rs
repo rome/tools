@@ -109,6 +109,7 @@ mod simple_argument;
 use crate::context::TabWidth;
 use crate::parentheses::is_callee;
 use crate::prelude::*;
+use crate::utils::is_long_curried_call;
 use crate::utils::member_chain::chain_member::{CallExpressionPosition, ChainMember};
 use crate::utils::member_chain::groups::{
     MemberChainGroup, MemberChainGroupsBuilder, TailChainGroups,
@@ -594,26 +595,6 @@ pub fn is_member_call_chain(
     let chain = MemberChain::from_call_expression(expression, comments, tab_width)?;
 
     Ok(chain.tail.is_member_call_chain(comments))
-}
-
-/// Tests if expression is a long curried call
-///
-/// ```javascript
-/// `connect(a, b, c)(d)`
-/// ```
-fn is_long_curried_call(expression: &JsCallExpression) -> bool {
-    if let Some(parent_call) = expression.parent::<JsCallExpression>() {
-        match (expression.arguments(), parent_call.arguments()) {
-            (Ok(arguments), Ok(parent_arguments)) => {
-                is_callee(expression.syntax(), parent_call.syntax())
-                    && arguments.args().len() > parent_arguments.args().len()
-                    && !parent_arguments.args().is_empty()
-            }
-            _ => false,
-        }
-    } else {
-        false
-    }
 }
 
 fn has_short_name(identifier: &JsIdentifierExpression, tab_width: TabWidth) -> bool {

@@ -14,6 +14,7 @@ mod object_pattern_like;
 mod quickcheck_utils;
 mod typescript;
 
+use crate::parentheses::is_callee;
 pub(crate) use crate::parentheses::resolve_left_most_expression;
 use crate::prelude::*;
 pub(crate) use assignment_like::{
@@ -26,7 +27,9 @@ pub(crate) use conditional::{ConditionalJsxChain, JsAnyConditional};
 pub(crate) use object_like::JsObjectLike;
 pub(crate) use object_pattern_like::JsObjectPatternLike;
 use rome_formatter::{format_args, write, Buffer};
-use rome_js_syntax::{JsAnyExpression, JsAnyStatement, JsInitializerClause, JsLanguage, Modifiers};
+use rome_js_syntax::{
+    JsAnyExpression, JsAnyStatement, JsCallExpression, JsInitializerClause, JsLanguage, Modifiers,
+};
 use rome_js_syntax::{JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList};
 pub(crate) use string_utils::*;
@@ -34,6 +37,26 @@ pub(crate) use typescript::{
     is_object_like_type, should_hug_type, union_or_intersection_type_needs_parentheses,
     TsIntersectionOrUnionTypeList,
 };
+
+/// Tests if expression is a long curried call
+///
+/// ```javascript
+/// `connect(a, b, c)(d)`
+/// ```
+pub(crate) fn is_long_curried_call(expression: &JsCallExpression) -> bool {
+    if let Some(parent_call) = expression.parent::<JsCallExpression>() {
+        match (expression.arguments(), parent_call.arguments()) {
+            (Ok(arguments), Ok(parent_arguments)) => {
+                is_callee(expression.syntax(), parent_call.syntax())
+                    && arguments.args().len() > parent_arguments.args().len()
+                    && !parent_arguments.args().is_empty()
+            }
+            _ => false,
+        }
+    } else {
+        false
+    }
+}
 
 /// Utility function to format the separators of the nodes that belong to the unions
 /// of [rome_js_syntax::TsAnyTypeMember].

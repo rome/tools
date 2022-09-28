@@ -1,6 +1,6 @@
 use crate::js::expressions::arrow_function_expression::is_multiline_template_starting_on_same_line;
 use crate::prelude::*;
-use crate::utils::{is_call_like_expression, write_arguments_multi_line};
+use crate::utils::{is_call_like_expression, is_long_curried_call, write_arguments_multi_line};
 use rome_formatter::{format_args, write, CstFormatContext};
 use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyCallArgument, JsAnyExpression, JsAnyFunctionBody,
@@ -39,12 +39,15 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
             .format_separated(",")
             .with_trailing_separator(TrailingSeparator::Omit);
 
+        let call_expression = node.parent::<JsCallExpression>();
+
         let (is_commonjs_or_amd_call, is_test_call) =
-            node.parent::<JsCallExpression>()
+            call_expression
+                .as_ref()
                 .map_or((Ok(false), Ok(false)), |call| {
                     (
-                        is_commonjs_or_amd_call(node, &call),
-                        is_test_call_expression(&call),
+                        is_commonjs_or_amd_call(node, call),
+                        is_test_call_expression(call),
                     )
                 });
 
@@ -63,6 +66,32 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
             );
         }
 
+        let mut has_empty_line = false;
+        let mut empty_line_after_first_arg = false;
+
+        // Ignore leading line breaks of first argument
+        for (index, arg) in args.iter().skip(1).enumerate() {
+            let previous_line_empty = arg.map_or(false, |arg| get_lines_before(arg.syntax()) > 1);
+
+            if index == 0 {
+                empty_line_after_first_arg = previous_line_empty;
+            }
+
+            has_empty_line = has_empty_line || previous_line_empty;
+        }
+
+        // FIXME
+        // if has_empty_line {
+        //     return write!(
+        //         f,
+        //         [FormatAllArgsBrokenOut {
+        //             l_paren: &l_paren_token.format(),
+        //             args: separated,
+        //             r_paren: &r_paren_token.format()
+        //         }]
+        //     );
+        // }
+
         // we now extracts the formatted version of trivias and tokens of the delimiters
         // tokens on the left
         let l_paren = l_paren_token.format();
@@ -73,6 +102,7 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
         let comments = f.context().comments();
         let should_group_first_argument = should_group_first_argument(&args, comments)?;
         let should_group_last_argument = should_group_last_argument(&args, comments)?;
+        let mut separated: Vec<_> = separated.map(|e| e.memoized()).collect();
 
         // if the first or last groups needs grouping, then we prepare some special formatting
         if should_group_first_argument || should_group_last_argument {
@@ -80,7 +110,6 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
             // We now need to allocate a new vector with cached nodes, this is needed because
             // we can't attempt to print the same node twice without incur in "printed token twice" errors.
             // We also disallow the trailing separator, we are interested in doing it manually.
-            let mut separated: Vec<_> = separated.map(|e| e.memoized()).collect();
 
             let mut any_argument_breaks = false;
             let mut first_last_breaks = false;
@@ -115,21 +144,11 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
             let r_paren = r_paren.memoized();
 
             // This is the version of where all the arguments are broken out
-            let all_arguments_expanded = format_with(|f| {
-                // this formatting structure replicates what we have inside the `format_delimited`
-                // function, but here we use a different way to print the trailing separator
-                write!(
-                    f,
-                    [group(&format_args![
-                        l_paren,
-                        soft_block_indent(&format_with(|f| {
-                            write_arguments_multi_line(separated.iter(), f)
-                        })),
-                        r_paren
-                    ])
-                    .should_expand(true)]
-                )
-            });
+            let all_arguments_expanded = FormatAllArgsBrokenOut {
+                l_paren: &l_paren,
+                args: separated.iter(),
+                r_paren: &r_paren,
+            };
 
             if first_last_breaks {
                 return write!(f, [all_arguments_expanded]);
@@ -169,17 +188,33 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                     all_arguments_expanded
                 ]]
             )
+        } else if call_expression.as_ref().map_or(false, is_long_curried_call) {
+            write!(
+                f,
+                [
+                    l_paren,
+                    soft_block_indent(&format_once(|f| {
+                        write_arguments_multi_line(separated.iter(), f)
+                    })),
+                    r_paren,
+                ]
+            )
         } else {
+            // TODO: should_expand here doesn't seem to change anything
+            let any_arg_expands = separated
+                .iter_mut()
+                .any(|arg| arg.inspect(f).map_or(false, |element| element.will_break()));
+
             write!(
                 f,
                 [group(&format_args![
                     l_paren,
                     soft_block_indent(&format_once(|f| {
-                        let separated = separated.nodes_grouped();
-                        write_arguments_multi_line(separated, f)
+                        write_arguments_multi_line(separated.iter(), f)
                     })),
                     r_paren,
-                ])]
+                ])
+                .should_expand(any_arg_expands)]
             )
         }
     }
@@ -187,6 +222,32 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
     fn fmt_dangling_comments(&self, _: &JsCallArguments, _: &mut JsFormatter) -> FormatResult<()> {
         // Formatted inside of `fmt_fields`
         Ok(())
+    }
+}
+
+struct FormatAllArgsBrokenOut<'a, I> {
+    l_paren: &'a dyn Format<JsFormatContext>,
+    args: I,
+    r_paren: &'a dyn Format<JsFormatContext>,
+}
+
+impl<'a, I, F> Format<JsFormatContext> for FormatAllArgsBrokenOut<'a, I>
+where
+    I: Iterator<Item = F> + Clone,
+    F: Format<JsFormatContext>,
+{
+    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        write!(
+            f,
+            [group(&format_args![
+                self.l_paren,
+                soft_block_indent(&format_with(|f| {
+                    write_arguments_multi_line(self.args.clone(), f)
+                })),
+                self.r_paren,
+            ])
+            .should_expand(true)]
+        )
     }
 }
 
