@@ -233,10 +233,10 @@ function foo(
    /* Hello World */
    longlonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglong3,
  );
--
+ 
 -shortArgNames(
 -  short,
- 
+-
 -  short2,
 -  short3,
 -);
@@ -252,21 +252,14 @@ function foo(
    /* Another comment */
  
    // Long Long Long Long Long Comment
-@@ -38,28 +30,21 @@
-   // More comments
+@@ -42,24 +34,20 @@
+   () => {
+     return true;
+   },
+-
+   isTrue ? doSomething() : 12,
  );
  
--differentArgTypes(
--  () => {
--    return true;
--  },
-+differentArgTypes(() => {
-+  return true;
-+}, isTrue ? doSomething() : 12);
- 
--  isTrue ? doSomething() : 12,
--);
--
  moreArgTypes(
    [1, 2, 3],
 -
@@ -284,7 +277,7 @@ function foo(
      oneThing + anotherThing,
  
      // Comment
-@@ -67,37 +52,24 @@
+@@ -67,37 +55,24 @@
  );
  
  evenMoreArgTypes(
@@ -326,7 +319,7 @@ function foo(
    /* function here */
    function doSomething() {
      return true;
-@@ -106,33 +78,22 @@
+@@ -106,33 +81,22 @@
  
  doSomething.apply(
    null,
@@ -338,11 +331,7 @@ function foo(
  
 -doAnotherThing(
 -  "node",
-+doAnotherThing("node", {
-+  solution_type,
-+  time_frame,
-+});
- 
+-
 -  {
 -    solution_type,
 -    time_frame,
@@ -351,7 +340,11 @@ function foo(
 -
 -stuff.doThing(
 -  someStuff,
--
++doAnotherThing("node", {
++  solution_type,
++  time_frame,
++});
+ 
 -  -1,
 -  {
 -    accept: (node) => doSomething(node),
@@ -367,21 +360,14 @@ function foo(
    // This is important
    true,
    {
-@@ -140,19 +101,13 @@
+@@ -144,15 +108,12 @@
+   () => {
+     thing();
    },
+-
+   { yes: true, no: 5 },
  );
  
--func(
--  () => {
--    thing();
--  },
-+func(() => {
-+  thing();
-+}, { yes: true, no: 5 });
- 
--  { yes: true, no: 5 },
--);
--
  doSomething(
    { tomorrow: maybe, today: never[always] },
 -
@@ -427,9 +413,12 @@ comments(
   // More comments
 );
 
-differentArgTypes(() => {
-  return true;
-}, isTrue ? doSomething() : 12);
+differentArgTypes(
+  () => {
+    return true;
+  },
+  isTrue ? doSomething() : 12,
+);
 
 moreArgTypes(
   [1, 2, 3],
@@ -498,9 +487,12 @@ doThing(
   },
 );
 
-func(() => {
-  thing();
-}, { yes: true, no: 5 });
+func(
+  () => {
+    thing();
+  },
+  { yes: true, no: 5 },
+);
 
 doSomething(
   { tomorrow: maybe, today: never[always] },

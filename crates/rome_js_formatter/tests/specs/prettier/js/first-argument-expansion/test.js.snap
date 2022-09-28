@@ -128,77 +128,7 @@ func((args) => {
 ```diff
 --- Prettier
 +++ Rome
-@@ -34,12 +34,9 @@
-   thing();
- }, /regex.*?/);
- 
--func(
--  () => {
--    thing();
--  },
--  1 ? 2 : 3,
--);
-+func(() => {
-+  thing();
-+}, 1 ? 2 : 3);
- 
- func(
-   function () {
-@@ -48,35 +45,26 @@
-   1 ? 2 : 3,
- );
- 
--func(
--  () => {
--    thing();
--  },
--  something() ? someOtherThing() : somethingElse(true, 0),
--);
-+func(() => {
-+  thing();
-+}, something() ? someOtherThing() : somethingElse(true, 0));
- 
--func(
--  () => {
--    thing();
--  },
--  something(longArgumentName, anotherLongArgumentName)
--    ? someOtherThing()
--    : somethingElse(true, 0),
--);
-+func(() => {
-+  thing();
-+}, something(longArgumentName, anotherLongArgumentName)
-+  ? someOtherThing()
-+  : somethingElse(true, 0));
- 
--func(
--  () => {
--    thing();
--  },
--  something(
--    longArgumentName,
--    anotherLongArgumentName,
--    anotherLongArgumentName,
--    anotherLongArgumentName,
--  )
--    ? someOtherThing()
--    : somethingElse(true, 0),
--);
-+func(() => {
-+  thing();
-+}, something(
-+  longArgumentName,
-+  anotherLongArgumentName,
-+  anotherLongArgumentName,
-+  anotherLongArgumentName,
-+)
-+  ? someOtherThing()
-+  : somethingElse(true, 0));
- 
- compose(
-   (a) => {
-@@ -93,12 +81,13 @@
+@@ -93,12 +93,13 @@
    return thing.push(item);
  }, []);
  
@@ -218,22 +148,6 @@ func((args) => {
  
  // Don't do the rest of these
  
-@@ -110,12 +99,9 @@
-   false,
- );
- 
--func(
--  () => {
--    thing();
--  },
--  { yes: true, cats: 5 },
--);
-+func(() => {
-+  thing();
-+}, { yes: true, cats: 5 });
- 
- compose(
-   (a) => {
 ```
 
 # Output
@@ -275,9 +189,12 @@ func(() => {
   thing();
 }, /regex.*?/);
 
-func(() => {
-  thing();
-}, 1 ? 2 : 3);
+func(
+  () => {
+    thing();
+  },
+  1 ? 2 : 3,
+);
 
 func(
   function () {
@@ -286,26 +203,35 @@ func(
   1 ? 2 : 3,
 );
 
-func(() => {
-  thing();
-}, something() ? someOtherThing() : somethingElse(true, 0));
+func(
+  () => {
+    thing();
+  },
+  something() ? someOtherThing() : somethingElse(true, 0),
+);
 
-func(() => {
-  thing();
-}, something(longArgumentName, anotherLongArgumentName)
-  ? someOtherThing()
-  : somethingElse(true, 0));
+func(
+  () => {
+    thing();
+  },
+  something(longArgumentName, anotherLongArgumentName)
+    ? someOtherThing()
+    : somethingElse(true, 0),
+);
 
-func(() => {
-  thing();
-}, something(
-  longArgumentName,
-  anotherLongArgumentName,
-  anotherLongArgumentName,
-  anotherLongArgumentName,
-)
-  ? someOtherThing()
-  : somethingElse(true, 0));
+func(
+  () => {
+    thing();
+  },
+  something(
+    longArgumentName,
+    anotherLongArgumentName,
+    anotherLongArgumentName,
+    anotherLongArgumentName,
+  )
+    ? someOtherThing()
+    : somethingElse(true, 0),
+);
 
 compose(
   (a) => {
@@ -340,9 +266,12 @@ func(
   false,
 );
 
-func(() => {
-  thing();
-}, { yes: true, cats: 5 });
+func(
+  () => {
+    thing();
+  },
+  { yes: true, cats: 5 },
+);
 
 compose(
   (a) => {

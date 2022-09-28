@@ -3,10 +3,10 @@ use crate::prelude::*;
 use crate::utils::{is_call_like_expression, write_arguments_multi_line};
 use rome_formatter::{format_args, write, CstFormatContext};
 use rome_js_syntax::{
-    JsAnyCallArgument, JsAnyExpression, JsAnyFunctionBody, JsAnyLiteralExpression, JsAnyName,
-    JsAnyStatement, JsArrayExpression, JsArrowFunctionExpression, JsCallArgumentList,
-    JsCallArguments, JsCallArgumentsFields, JsCallExpression, JsExpressionStatement,
-    TsReferenceType,
+    JsAnyArrowFunctionParameters, JsAnyCallArgument, JsAnyExpression, JsAnyFunctionBody,
+    JsAnyLiteralExpression, JsAnyName, JsAnyStatement, JsArrayExpression,
+    JsArrowFunctionExpression, JsCallArgumentList, JsCallArguments, JsCallArgumentsFields,
+    JsCallExpression, JsExpressionStatement, TsReferenceType,
 };
 use rome_rowan::{AstSeparatedList, SyntaxResult, SyntaxTokenText};
 
@@ -23,8 +23,8 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
 
         let l_paren_token = l_paren_token?;
         let r_paren_token = r_paren_token?;
-        let arguments_len = args.len();
-        if arguments_len == 0 {
+
+        if args.is_empty() {
             return write!(
                 f,
                 [
@@ -35,68 +35,33 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
             );
         }
 
-        let call_expression = node.parent::<JsCallExpression>();
+        let separated = args
+            .format_separated(",")
+            .with_trailing_separator(TrailingSeparator::Omit);
 
-        if is_commonjs_or_amd_call(node, call_expression.as_ref())?
+        let (is_commonjs_or_amd_call, is_test_call) =
+            node.parent::<JsCallExpression>()
+                .map_or((Ok(false), Ok(false)), |call| {
+                    (
+                        is_commonjs_or_amd_call(node, &call),
+                        is_test_call_expression(&call),
+                    )
+                });
+
+        if is_commonjs_or_amd_call?
             || is_multiline_template_only_args(node)
+            || is_react_hook_with_deps_array(node, f.comments())
+            || is_test_call?
         {
             return write!(
                 f,
                 [
                     l_paren_token.format(),
-                    format_with(|f| {
-                        f.join_with(space())
-                            .entries(
-                                args.format_separated(",")
-                                    .with_trailing_separator(TrailingSeparator::Omit),
-                            )
-                            .finish()
-                    }),
+                    format_once(|f| { f.join_with(space()).entries(separated).finish() }),
                     r_paren_token.format()
                 ]
             );
         }
-
-        let mut iter = args.iter();
-        let first_argument = iter.next();
-        let second_argument = iter.next();
-        let third_argument = iter.next();
-
-        if let (Some(first_argument), Some(second_argument)) = (first_argument, second_argument) {
-            let first_argument = first_argument?;
-            let second_argument = second_argument?;
-
-            let is_framework_test_call =
-                if let Some(call_expression) = node.parent::<JsCallExpression>() {
-                    let callee = call_expression.callee()?;
-
-                    is_framework_test_call(IsTestFrameworkCallPayload {
-                        first_argument: &first_argument,
-                        second_argument: &second_argument,
-                        third_argument: &third_argument,
-                        arguments_len,
-                        callee: &callee,
-                    })?
-                } else {
-                    false
-                };
-
-            let is_react_hook_with_deps_array = is_react_hook_with_deps_array(
-                &first_argument,
-                &second_argument,
-                f.context().comments(),
-            )?;
-
-            if is_framework_test_call || is_react_hook_with_deps_array {
-                write!(f, [l_paren_token.format(),])?;
-                let separated = args
-                    .format_separated(",")
-                    .with_trailing_separator(TrailingSeparator::Omit);
-
-                f.join_with(space()).entries(separated).finish()?;
-                return write!(f, [r_paren_token.format()]);
-            }
-        };
 
         // we now extracts the formatted version of trivias and tokens of the delimiters
         // tokens on the left
@@ -115,11 +80,7 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
             // We now need to allocate a new vector with cached nodes, this is needed because
             // we can't attempt to print the same node twice without incur in "printed token twice" errors.
             // We also disallow the trailing separator, we are interested in doing it manually.
-            let mut separated: Vec<_> = args
-                .format_separated(",")
-                .with_trailing_separator(TrailingSeparator::Omit)
-                .map(|e| e.memoized())
-                .collect();
+            let mut separated: Vec<_> = separated.map(|e| e.memoized()).collect();
 
             let mut any_argument_breaks = false;
             let mut first_last_breaks = false;
@@ -213,11 +174,8 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                 f,
                 [group(&format_args![
                     l_paren,
-                    soft_block_indent(&format_with(|f| {
-                        let separated = args
-                            .format_separated(",")
-                            .with_trailing_separator(TrailingSeparator::Omit)
-                            .nodes_grouped();
+                    soft_block_indent(&format_once(|f| {
+                        let separated = separated.nodes_grouped();
                         write_arguments_multi_line(separated, f)
                     })),
                     r_paren,
@@ -428,13 +386,8 @@ fn could_group_expression_argument(
 /// or amd's [`define`](https://github.com/amdjs/amdjs-api/wiki/AMD#define-function-) function.
 fn is_commonjs_or_amd_call(
     arguments: &JsCallArguments,
-    call: Option<&JsCallExpression>,
+    call: &JsCallExpression,
 ) -> SyntaxResult<bool> {
-    let call = match call {
-        Some(call) => call,
-        None => return Ok(false),
-    };
-
     let callee = call.callee()?;
 
     Ok(match callee {
@@ -506,73 +459,30 @@ fn is_multiline_template_only_args(arguments: &JsCallArguments) -> bool {
 /// ```js
 /// useMemo(() => {}, [])
 /// ```
-fn is_react_hook_with_deps_array(
-    first_argument: &JsAnyCallArgument,
-    second_argument: &JsAnyCallArgument,
-    comments: &JsComments,
-) -> SyntaxResult<bool> {
-    if comments.has_comments(first_argument.syntax())
-        || comments.has_comments(second_argument.syntax())
-    {
-        return Ok(false);
-    }
+fn is_react_hook_with_deps_array(arguments: &JsCallArguments, comments: &JsComments) -> bool {
+    use JsAnyExpression::*;
+    let mut args = arguments.args().iter();
 
-    let first_expression = match first_argument {
-        JsAnyCallArgument::JsAnyExpression(expression) => Some(expression),
-        _ => None,
-    };
+    match (args.next(), args.next()) {
+        (
+            Some(Ok(JsAnyCallArgument::JsAnyExpression(JsArrowFunctionExpression(callback)))),
+            Some(Ok(JsAnyCallArgument::JsAnyExpression(JsArrayExpression(deps)))),
+        ) if arguments.args().len() == 2 => {
+            if comments.has_comments(callback.syntax()) || comments.has_comments(deps.syntax()) {
+                return false;
+            }
 
-    let first_node_matches = if let Some(JsAnyExpression::JsArrowFunctionExpression(
-        arrow_function,
-    )) = first_expression
-    {
-        let no_parameters = arrow_function.parameters()?.is_empty();
-        let body = arrow_function.body()?;
-        let is_block = matches!(body, JsAnyFunctionBody::JsFunctionBody(_));
+            if !callback
+                .parameters()
+                .map_or(false, |parameters| parameters.is_empty())
+            {
+                return false;
+            }
 
-        no_parameters && is_block
-    } else {
-        false
-    };
-
-    let second_node_matches = matches!(second_argument, JsAnyCallArgument::JsAnyExpression(_));
-    if first_node_matches && second_node_matches {
-        Ok(true)
-    } else {
-        Ok(false)
-    }
-}
-
-struct IsTestFrameworkCallPayload<'a> {
-    first_argument: &'a JsAnyCallArgument,
-    second_argument: &'a JsAnyCallArgument,
-    third_argument: &'a Option<SyntaxResult<JsAnyCallArgument>>,
-    arguments_len: usize,
-    callee: &'a JsAnyExpression,
-}
-
-pub(crate) fn is_test_call_expression(expression: &JsCallExpression) -> SyntaxResult<bool> {
-    let arguments = expression.arguments()?.args();
-    let mut arguments_iter = arguments.iter();
-
-    let result = match (
-        arguments_iter.next(),
-        arguments_iter.next(),
-        arguments_iter.next(),
-    ) {
-        (Some(first_argument), Some(second_argument), third_argument) => {
-            is_framework_test_call(IsTestFrameworkCallPayload {
-                first_argument: &first_argument?,
-                second_argument: &second_argument?,
-                third_argument: &third_argument,
-                arguments_len: arguments.len(),
-                callee: &expression.callee()?,
-            })?
+            matches!(callback.body(), Ok(JsAnyFunctionBody::JsFunctionBody(_)))
         }
-        (_, _, _) => false,
-    };
-
-    Ok(result)
+        _ => false,
+    }
 }
 
 /// This is a specialised function that checks if the current [call expression]
@@ -596,69 +506,130 @@ pub(crate) fn is_test_call_expression(expression: &JsCallExpression) -> SyntaxRe
 /// [arguments]: crate::rome_js_syntax::JsCallArgumentList
 /// [arrow function expression]: crate::rome_js_syntax::JsArrowFunctionExpression
 /// [function expression]: crate::rome_js_syntax::JsCallArgumentList
-fn is_framework_test_call(payload: IsTestFrameworkCallPayload) -> SyntaxResult<bool> {
-    let IsTestFrameworkCallPayload {
-        first_argument,
-        second_argument,
-        third_argument,
-        arguments_len,
-        callee,
-    } = payload;
-    let first_argument_expression = first_argument.as_js_any_expression();
-    let second_argument_expression = second_argument.as_js_any_expression();
-    let third_argument_expression =
-        third_argument
-            .as_ref()
-            .and_then(|third_argument| match third_argument {
-                Ok(argument) => argument.as_js_any_expression(),
-                _ => None,
-            });
+pub(crate) fn is_test_call_expression(call_expression: &JsCallExpression) -> SyntaxResult<bool> {
+    use JsAnyExpression::*;
 
-    let first_argument_is_literal_like = matches!(
-        first_argument_expression,
-        Some(
-            JsAnyExpression::JsAnyLiteralExpression(
-                JsAnyLiteralExpression::JsStringLiteralExpression(_)
-            ) | JsAnyExpression::JsTemplate(_)
-        )
-    );
+    let callee = call_expression.callee()?;
+    let arguments = call_expression.arguments()?;
 
-    if first_argument_is_literal_like && contains_a_test_pattern(callee)? {
-        if arguments_len == 2 {
-            Ok(matches!(
-                second_argument_expression,
-                Some(
-                    JsAnyExpression::JsArrowFunctionExpression(_)
-                        | JsAnyExpression::JsFunctionExpression(_)
-                )
-            ))
-        } else {
-            // if the third argument is not a numeric literal, we bail
-            // example: `it("name", () => { ... }, 2500)`
+    let mut args = arguments.args().iter();
+
+    match (args.next(), args.next(), args.next()) {
+        (Some(Ok(argument)), None, None) if arguments.args().len() == 1 => {
+            if is_angular_test_wrapper(&call_expression.clone().into())
+                && call_expression
+                    .parent::<JsCallArgumentList>()
+                    .and_then(|arguments_list| arguments_list.parent::<JsCallArguments>())
+                    .and_then(|arguments| arguments.parent::<self::JsCallExpression>())
+                    .map_or(Ok(false), |parent| is_test_call_expression(&parent))?
+            {
+                return Ok(matches!(
+                    argument,
+                    JsAnyCallArgument::JsAnyExpression(
+                        JsArrowFunctionExpression(_) | JsFunctionExpression(_)
+                    )
+                ));
+            }
+
+            if is_unit_test_set_up_callee(&callee) {
+                return Ok(argument
+                    .as_js_any_expression()
+                    .map_or(false, is_angular_test_wrapper));
+            }
+
+            Ok(false)
+        }
+
+        // it("description", ..)
+        (
+            Some(Ok(JsAnyCallArgument::JsAnyExpression(
+                JsTemplate(_)
+                | JsAnyLiteralExpression(self::JsAnyLiteralExpression::JsStringLiteralExpression(_)),
+            ))),
+            Some(Ok(second)),
+            third,
+        ) if arguments.args().len() <= 3 && contains_a_test_pattern(callee.clone())? => {
+            // it('name', callback, duration)
             if !matches!(
-                third_argument_expression,
-                Some(JsAnyExpression::JsAnyLiteralExpression(
-                    JsAnyLiteralExpression::JsNumberLiteralExpression(_)
-                ))
+                third,
+                None | Some(Ok(JsAnyCallArgument::JsAnyExpression(
+                    JsAnyLiteralExpression(
+                        self::JsAnyLiteralExpression::JsNumberLiteralExpression(_)
+                    )
+                )))
             ) {
                 return Ok(false);
             }
 
-            let result = match second_argument_expression {
-                Some(JsAnyExpression::JsFunctionExpression(node)) => {
-                    node.parameters()?.items().len() <= 1
-                }
-                Some(JsAnyExpression::JsArrowFunctionExpression(node)) => {
-                    let body = node.body()?;
-                    let has_enough_parameters = node.parameters()?.len() <= 1;
-                    matches!(body, JsAnyFunctionBody::JsFunctionBody(_)) && has_enough_parameters
-                }
-                _ => false,
+            if second
+                .as_js_any_expression()
+                .map_or(false, |second| is_angular_test_wrapper(second))
+            {
+                return Ok(true);
+            }
+
+            let (parameters, has_block_body) = match second {
+                JsAnyCallArgument::JsAnyExpression(JsFunctionExpression(function)) => (
+                    function
+                        .parameters()
+                        .map(JsAnyArrowFunctionParameters::from),
+                    true,
+                ),
+                JsAnyCallArgument::JsAnyExpression(JsArrowFunctionExpression(arrow)) => (
+                    arrow.parameters(),
+                    arrow.body().map_or(false, |body| {
+                        matches!(body, JsAnyFunctionBody::JsFunctionBody(_))
+                    }),
+                ),
+                _ => return Ok(false),
             };
-            Ok(result)
+
+            Ok(arguments.args().len() == 2 || (parameters?.len() <= 1 && has_block_body))
         }
-    } else {
-        Ok(false)
+        _ => Ok(false),
+    }
+}
+
+/// Note: `inject` is used in AngularJS 1.x, `async` and `fakeAsync` in
+/// Angular 2+, although `async` is deprecated and replaced by `waitForAsync`
+/// since Angular 12.
+///
+/// example: https://docs.angularjs.org/guide/unit-testing#using-beforeall-
+///
+/// @param {CallExpression} node
+/// @returns {boolean}
+///
+fn is_angular_test_wrapper(expression: &JsAnyExpression) -> bool {
+    use JsAnyExpression::*;
+    match expression {
+        JsCallExpression(call_expression) => match call_expression.callee() {
+            Ok(JsIdentifierExpression(identifier)) => identifier
+                .name()
+                .and_then(|name| name.value_token())
+                .map_or(false, |name| {
+                    matches!(
+                        name.text_trimmed(),
+                        "async" | "inject" | "fakeAsync" | "waitForAsync"
+                    )
+                }),
+            _ => false,
+        },
+        _ => false,
+    }
+}
+
+fn is_unit_test_set_up_callee(callee: &JsAnyExpression) -> bool {
+    match callee {
+        JsAnyExpression::JsIdentifierExpression(identifier) => identifier
+            .name()
+            .and_then(|name| name.value_token())
+            .map_or(false, |name| {
+                matches!(
+                    name.text_trimmed(),
+                    "beforeEach" | "beforeAll" | "afterEach" | "afterAll"
+                )
+            }),
+        _ => false,
     }
 }
 
@@ -690,14 +661,24 @@ fn is_framework_test_call(payload: IsTestFrameworkCallPayload) -> SyntaxResult<b
 /// Based on this [article]
 ///
 /// [article]: https://craftinginterpreters.com/scanning-on-demand.html#tries-and-state-machines
-fn contains_a_test_pattern(callee: &JsAnyExpression) -> SyntaxResult<bool> {
-    let members: Vec<_> = matches_test_call(callee)?;
+fn contains_a_test_pattern(callee: JsAnyExpression) -> SyntaxResult<bool> {
+    let mut members = CalleeNamesIterator::new(callee);
 
-    let first = members.get(0).map(|t| t.text());
-    let second = members.get(1).map(|t| t.text());
-    let third = members.get(2).map(|t| t.text());
-    let fourth = members.get(3).map(|t| t.text());
-    let fifth = members.get(4).map(|t| t.text());
+    let texts: [Option<SyntaxTokenText>; 5] = [
+        members.next(),
+        members.next(),
+        members.next(),
+        members.next(),
+        members.next(),
+    ];
+
+    let mut rev = texts.iter().rev().flatten();
+
+    let first = rev.next().map(|t| t.text());
+    let second = rev.next().map(|t| t.text());
+    let third = rev.next().map(|t| t.text());
+    let fourth = rev.next().map(|t| t.text());
+    let fifth = rev.next().map(|t| t.text());
 
     Ok(match first {
         Some("it" | "describe") => match second {
@@ -725,54 +706,51 @@ fn contains_a_test_pattern(callee: &JsAnyExpression) -> SyntaxResult<bool> {
     })
 }
 
-/// This is particular used to identify if a [JsCallExpression] has the shape
-/// of a call argument coming from a test framework.
+/// Iterator that returns the callee names in "top down order"
 ///
-/// An example are call arguments coming from Mocha, Jest, etc.
+/// # Examples
 ///
-/// ```js
-/// describe("My component", () => {
-///     it("should render", () => {
-///
-///     });
-/// })
-///
-/// test.only("", testSomething);
+/// ```javascript
+/// it.only() -> [`only`, `it`]
 /// ```
-///
-/// This function should accept the `callee` of [JsCallExpression] and the
-/// string pattern to test against. For example "test", "test.only"
-fn matches_test_call(callee: &JsAnyExpression) -> SyntaxResult<Vec<SyntaxTokenText>> {
-    // this the max depth plus one, because we want to catch cases where we have test.only.WRONG
-    const MAX_DEPTH: u8 = 5;
-    let mut test_call = Vec::with_capacity(MAX_DEPTH as usize);
-    let mut current_node = callee.clone();
-    let mut i = 0;
+struct CalleeNamesIterator {
+    next: Option<JsAnyExpression>,
+}
 
-    while i < MAX_DEPTH {
-        i += 1;
-        current_node = match current_node {
-            JsAnyExpression::JsIdentifierExpression(identifier) => {
-                let value_token = identifier.name()?.value_token()?;
-                let value = value_token.token_text_trimmed();
-                test_call.push(value);
-                break;
-            }
-            JsAnyExpression::JsStaticMemberExpression(member_expression) => {
-                match member_expression.member()? {
-                    JsAnyName::JsName(name) => {
-                        let value = name.value_token()?;
-                        test_call.push(value.token_text_trimmed());
-                        member_expression.object()?
-                    }
-                    _ => break,
-                }
-            }
-            _ => break,
-        };
+impl CalleeNamesIterator {
+    fn new(callee: JsAnyExpression) -> Self {
+        Self {
+            next: Some(callee.into()),
+        }
     }
-    test_call.reverse();
-    Ok(test_call)
+}
+
+impl Iterator for CalleeNamesIterator {
+    type Item = SyntaxTokenText;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        use JsAnyExpression::*;
+
+        let current = self.next.take()?;
+
+        match current {
+            JsIdentifierExpression(identifier) => identifier
+                .name()
+                .and_then(|reference| reference.value_token())
+                .ok()
+                .map(|value| value.token_text_trimmed()),
+            JsStaticMemberExpression(member_expression) => match member_expression.member() {
+                Ok(JsAnyName::JsName(name)) => {
+                    self.next = member_expression.object().ok();
+                    name.value_token()
+                        .ok()
+                        .map(|name| name.token_text_trimmed())
+                }
+                _ => None,
+            },
+            _ => None,
+        }
+    }
 }
 
 #[cfg(test)]
@@ -810,13 +788,13 @@ mod test {
     fn matches_simple_call() {
         let call_expression = extract_call_expression("test();");
         assert_eq!(
-            contains_a_test_pattern(&call_expression.callee().unwrap()),
+            contains_a_test_pattern(call_expression.callee().unwrap()),
             Ok(true)
         );
 
         let call_expression = extract_call_expression("it();");
         assert_eq!(
-            contains_a_test_pattern(&call_expression.callee().unwrap()),
+            contains_a_test_pattern(call_expression.callee().unwrap()),
             Ok(true)
         );
     }
@@ -825,7 +803,7 @@ mod test {
     fn matches_static_member_expression() {
         let call_expression = extract_call_expression("test.only();");
         assert_eq!(
-            contains_a_test_pattern(&call_expression.callee().unwrap()),
+            contains_a_test_pattern(call_expression.callee().unwrap()),
             Ok(true)
         );
     }
@@ -834,7 +812,7 @@ mod test {
     fn matches_static_member_expression_deep() {
         let call_expression = extract_call_expression("test.describe.parallel.only();");
         assert_eq!(
-            contains_a_test_pattern(&call_expression.callee().unwrap()),
+            contains_a_test_pattern(call_expression.callee().unwrap()),
             Ok(true)
         );
     }
@@ -843,7 +821,7 @@ mod test {
     fn doesnt_static_member_expression_deep() {
         let call_expression = extract_call_expression("test.describe.parallel.only.AHAHA();");
         assert_eq!(
-            contains_a_test_pattern(&call_expression.callee().unwrap()),
+            contains_a_test_pattern(call_expression.callee().unwrap()),
             Ok(false)
         );
     }
