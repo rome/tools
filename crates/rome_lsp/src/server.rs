@@ -152,7 +152,7 @@ impl LSPServer {
     }
 
     async fn change_config_request(&self, _params: ConfigurationUpdatedParams) -> LspResult<()> {
-        info!("Calling change config request");
+        info!("Calling configuration change request");
         self.session.update_configuration().await;
         self.session.update_workspace_settings();
         Ok(())

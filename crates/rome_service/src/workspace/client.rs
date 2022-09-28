@@ -122,7 +122,7 @@ where
     }
 
     fn configuration_updated(&self) -> Result<(), RomeError> {
-        self.request("rome/config_change", ())
+        self.request("rome/configuration_change", ())
     }
 
     fn get_control_flow_graph(
