@@ -27,15 +27,8 @@ fromImportRenameInvalid.jsx:4:5 lint/nursery/noUselessFragments  FIXABLE  ━━
   
   i Suggested fix: Remove the Fragment
   
-      | @@ -1,6 +1,6 @@
-  0 0 |   import AwesomeReact, { Fragment as AwesomeFragment } from "react";
-  1 1 |   
-  2 2 |   <>
-  3   | -     <AwesomeFragment></AwesomeFragment>
-    3 | + 
-  4 4 |       <AwesomeReact.Fragment>foo</AwesomeReact.Fragment>
-  5 5 |   </>
-  
+    4 │ ····<AwesomeFragment></AwesomeFragment>
+      │     -----------------------------------
 
 ```
 
@@ -53,14 +46,8 @@ fromImportRenameInvalid.jsx:5:5 lint/nursery/noUselessFragments  FIXABLE  ━━
   
   i Suggested fix: Remove the Fragment
   
-      | @@ -2,5 +2,5 @@
-  1 1 |   
-  2 2 |   <>
-  3 3 |       <AwesomeFragment></AwesomeFragment>
-  4   | -     <AwesomeReact.Fragment>foo</AwesomeReact.Fragment>
-    4 | +     foo
-  5 5 |   </>
-  
+    5 │ ····<AwesomeReact.Fragment>foo</AwesomeReact.Fragment>
+      │     -----------------------   ------------------------
 
 ```
 

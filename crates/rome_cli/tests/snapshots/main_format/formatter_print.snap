@@ -15,9 +15,9 @@ format.js format ━━━━━━━━━━━━━━━━━━━━━
 
   i Formatter would have printed the following content:
   
-      | @@ -1 +1 @@
-  0   | -   statement(  )
-    0 | + statement();
+    1   │ - ··statement(··)··
+      1 │ + statement();
+      2 │ + 
   
 
 ```

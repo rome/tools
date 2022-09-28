@@ -51,19 +51,16 @@ noShoutyConstants.js:1:7 lint/style/noShoutyConstants  FIXABLE  ━━━━━�
   
   i Suggested fix: Use the constant value directly
   
-      | @@ -1,9 +2,8 @@
-  0   | - const FOO = "FOO";
-  1   | - console.log(FOO, FOO2);
-  2 0 |   
-    1 | + console.log("FOO", FOO2);
-    2 | + 
-  3 3 |   const FOO2 = "FOO2", a = "FOO3", FOO4 = "FOO4";
-  4 4 |   
-  5   | - console.log(FOO, FOO4);
-    5 | + console.log("FOO", FOO4);
-  6 6 |   
-  7 7 |   let foo = "foo";
-  8 8 |   
+     1    │ - const·FOO·=·"FOO";
+     2    │ - console.log(FOO,·FOO2);
+        2 │ + console.log("FOO",·FOO2);
+     3  3 │   
+     4  4 │   const·FOO2·=·"FOO2",·a·=·"FOO3",·FOO4·=·"FOO4";
+     5  5 │   
+     6    │ - console.log(FOO,·FOO4);
+        6 │ + console.log("FOO",·FOO4);
+     7  7 │   
+     8  8 │   let·foo·=·"foo";
   
 
 ```
@@ -94,16 +91,14 @@ noShoutyConstants.js:4:7 lint/style/noShoutyConstants  FIXABLE  ━━━━━�
   
   i Suggested fix: Use the constant value directly
   
-      | @@ -1,7 +1,7 @@
-  0 0 |   const FOO = "FOO";
-  1   | - console.log(FOO, FOO2);
-    1 | + console.log(FOO, "FOO2");
-  2 2 |   
-  3   | - const FOO2 = "FOO2", a = "FOO3", FOO4 = "FOO4";
-    3 | + const a = "FOO3", FOO4 = "FOO4";
-  4 4 |   
-  5 5 |   console.log(FOO, FOO4);
-  6 6 |   
+     1  1 │   const·FOO·=·"FOO";
+     2    │ - console.log(FOO,·FOO2);
+        2 │ + console.log(FOO,·"FOO2");
+     3  3 │   
+     4    │ - const·FOO2·=·"FOO2",·a·=·"FOO3",·FOO4·=·"FOO4";
+        4 │ + const·a·=·"FOO3",·FOO4·=·"FOO4";
+     5  5 │   
+     6  6 │   console.log(FOO,·FOO4);
   
 
 ```
@@ -135,18 +130,15 @@ noShoutyConstants.js:4:34 lint/style/noShoutyConstants  FIXABLE  ━━━━━
   
   i Suggested fix: Use the constant value directly
   
-      | @@ -1,9 +1,9 @@
-  0 0 |   const FOO = "FOO";
-  1 1 |   console.log(FOO, FOO2);
-  2 2 |   
-  3   | - const FOO2 = "FOO2", a = "FOO3", FOO4 = "FOO4";
-    3 | + const FOO2 = "FOO2", a = "FOO3";
-  4 4 |   
-  5   | - console.log(FOO, FOO4);
-    5 | + console.log(FOO, "FOO4");
-  6 6 |   
-  7 7 |   let foo = "foo";
-  8 8 |   
+     2  2 │   console.log(FOO,·FOO2);
+     3  3 │   
+     4    │ - const·FOO2·=·"FOO2",·a·=·"FOO3",·FOO4·=·"FOO4";
+        4 │ + const·FOO2·=·"FOO2",·a·=·"FOO3";
+     5  5 │   
+     6    │ - console.log(FOO,·FOO4);
+        6 │ + console.log(FOO,·"FOO4");
+     7  7 │   
+     8  8 │   let·foo·=·"foo";
   
 
 ```

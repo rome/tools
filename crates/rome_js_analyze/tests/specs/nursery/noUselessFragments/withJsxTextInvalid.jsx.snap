@@ -18,9 +18,8 @@ withJsxTextInvalid.jsx:1:1 lint/nursery/noUselessFragments  FIXABLE  ━━━�
   
   i Suggested fix: Remove the Fragment
   
-      | @@ -1 +1 @@
-  0   | - <>foo</>
-    0 | + "foo"
+  - <>foo</>
+  + "foo"
   
 
 ```

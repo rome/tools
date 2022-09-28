@@ -39,16 +39,8 @@ useSimplifiedLogicExpression.js:10:11 lint/correctness/useSimplifiedLogicExpress
   
   i Suggested fix: Discard redundant terms from the logical expression.
   
-        | @@ -7,7 +7,7 @@
-   6  6 |   const r6 = !!boolExpr1 || !!boolExpr2;
-   7  7 |   // invalid
-   8  8 |   const boolExp = true;
-   9    | - const r = true && boolExp;
-      9 | + const r = boolExp;
-  10 10 |   const boolExp2 = true;
-  11 11 |   const r2 = boolExp || true;
-  12 12 |   const nonNullExp = 123;
-  
+    10 │ const·r·=·true·&&·boolExp;
+       │           --------        
 
 ```
 
@@ -66,16 +58,8 @@ useSimplifiedLogicExpression.js:12:12 lint/correctness/useSimplifiedLogicExpress
   
   i Suggested fix: Discard redundant terms from the logical expression.
   
-        | @@ -9,7 +9,7 @@
-   8  8 |   const boolExp = true;
-   9  9 |   const r = true && boolExp;
-  10 10 |   const boolExp2 = true;
-  11    | - const r2 = boolExp || true;
-     11 | + const r2 = true;
-  12 12 |   const nonNullExp = 123;
-  13 13 |   const r3 = null ?? nonNullExp;
-  14 14 |   const boolExpr1 = true;
-  
+    12 │ const·r2·=·boolExp·||·true;
+       │            -----------     
 
 ```
 
@@ -93,16 +77,8 @@ useSimplifiedLogicExpression.js:14:12 lint/correctness/useSimplifiedLogicExpress
   
   i Suggested fix: Discard redundant terms from the logical expression.
   
-        | @@ -11,7 +11,7 @@
-  10 10 |   const boolExp2 = true;
-  11 11 |   const r2 = boolExp || true;
-  12 12 |   const nonNullExp = 123;
-  13    | - const r3 = null ?? nonNullExp;
-     13 | + const r3 = nonNullExp;
-  14 14 |   const boolExpr1 = true;
-  15 15 |   const boolExpr2 = false;
-  16 16 |   const r4 = !boolExpr1 || !boolExpr2;
-  
+    14 │ const·r3·=·null·??·nonNullExp;
+       │            --------           
 
 ```
 
@@ -119,12 +95,11 @@ useSimplifiedLogicExpression.js:17:12 lint/correctness/useSimplifiedLogicExpress
   
   i Suggested fix: Reduce the complexity of the logical expression.
   
-        | @@ -14,4 +14,4 @@
-  13 13 |   const r3 = null ?? nonNullExp;
-  14 14 |   const boolExpr1 = true;
-  15 15 |   const boolExpr2 = false;
-  16    | - const r4 = !boolExpr1 || !boolExpr2;
-     16 | + const r4 = !(boolExpr1 && boolExpr2);
+    15 15 │   const·boolExpr1·=·true;
+    16 16 │   const·boolExpr2·=·false;
+    17    │ - const·r4·=·!boolExpr1·||·!boolExpr2;
+       17 │ + const·r4·=·!(boolExpr1·&&·boolExpr2);
+    18 18 │   
   
 
 ```

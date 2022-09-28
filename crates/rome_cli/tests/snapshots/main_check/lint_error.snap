@@ -28,9 +28,9 @@ check.js:1:1 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
-      | @@ -1 +1 @@
-  0   | - for(;true;);
-    0 | + for(;true;) {}
+    1   │ - for(;true;);
+      1 │ + for(;true;)·{}
+    2 2 │   
   
 
 ```
@@ -46,9 +46,9 @@ check.js:1:1 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━�
   
   i Suggested fix: Use a while loop
   
-      | @@ -1 +1 @@
-  0   | - for(;true;);
-    0 | + while (true);
+    1   │ - for(;true;);
+      1 │ + while·(true);
+    2 2 │   
   
 
 ```

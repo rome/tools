@@ -27,15 +27,8 @@ fromImportInvalid.jsx:4:5 lint/nursery/noUselessFragments  FIXABLE  ━━━━
   
   i Suggested fix: Remove the Fragment
   
-      | @@ -1,6 +1,6 @@
-  0 0 |   import React, { Fragment } from "react";
-  1 1 |   
-  2 2 |   <>
-  3   | -     <Fragment></Fragment>
-    3 | + 
-  4 4 |       <React.Fragment></React.Fragment>
-  5 5 |   </>
-  
+    4 │ ····<Fragment></Fragment>
+      │     ---------------------
 
 ```
 
@@ -53,14 +46,8 @@ fromImportInvalid.jsx:5:5 lint/nursery/noUselessFragments  FIXABLE  ━━━━
   
   i Suggested fix: Remove the Fragment
   
-      | @@ -2,5 +2,5 @@
-  1 1 |   
-  2 2 |   <>
-  3 3 |       <Fragment></Fragment>
-  4   | -     <React.Fragment></React.Fragment>
-    4 | + 
-  5 5 |   </>
-  
+    5 │ ····<React.Fragment></React.Fragment>
+      │     ---------------------------------
 
 ```
 

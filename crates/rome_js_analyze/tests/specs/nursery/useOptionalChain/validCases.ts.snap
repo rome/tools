@@ -61,12 +61,11 @@ validCases.ts:40:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━━━
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -37,4 +37,4 @@
-  36 36 |   
-  37 37 |   ((foo || {})()).bar;
-  38 38 |   
-  39    | - (new foo || {}).bar
-     39 | + (new foo)?.bar
+    38 38 │   ((foo·||·{})()).bar;
+    39 39 │   
+    40    │ - (new·foo·||·{}).bar
+       40 │ + (new·foo)?.bar
+    41 41 │   
   
 
 ```

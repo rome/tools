@@ -34,15 +34,8 @@ noImplicitBoolean.jsx:11:8 lint/correctness/noImplicitBoolean  FIXABLE  ━━�
   
   i Safe fix: Add explicit `true` literal for this attribute
   
-        | @@ -8,6 +8,6 @@
-   7  7 |   // <div className={asdf asdf} />;
-   8  8 |   
-   9  9 |   //invalid
-  10    | - <input disabled />;
-     10 | + <input disabled={true} />;
-  11 11 |   <input accept/** some comment */ />;
-  12 12 |   <input /** some comment */ accept />;
-  
+    11 │ <input·disabled={true}·/>;
+       │                +++++++    
 
 ```
 
@@ -60,14 +53,8 @@ noImplicitBoolean.jsx:12:8 lint/correctness/noImplicitBoolean  FIXABLE  ━━�
   
   i Safe fix: Add explicit `true` literal for this attribute
   
-        | @@ -9,5 +9,5 @@
-   8  8 |   
-   9  9 |   //invalid
-  10 10 |   <input disabled />;
-  11    | - <input accept/** some comment */ />;
-     11 | + <input accept={true}/** some comment */ />;
-  12 12 |   <input /** some comment */ accept />;
-  
+    12 │ <input·accept={true}/**·some·comment·*/·/>;
+       │              +++++++                       
 
 ```
 
@@ -84,13 +71,8 @@ noImplicitBoolean.jsx:13:28 lint/correctness/noImplicitBoolean  FIXABLE  ━━�
   
   i Safe fix: Add explicit `true` literal for this attribute
   
-        | @@ -10,4 +10,4 @@
-   9  9 |   //invalid
-  10 10 |   <input disabled />;
-  11 11 |   <input accept/** some comment */ />;
-  12    | - <input /** some comment */ accept />;
-     12 | + <input /** some comment */ accept={true} />;
-  
+    13 │ <input·/**·some·comment·*/·accept={true}·/>;
+       │                                  +++++++    
 
 ```
 

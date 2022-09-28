@@ -32,16 +32,8 @@ noNewSymbol.js:8:11 lint/nursery/noNewSymbol  FIXABLE  ━━━━━━━━�
   
   i Suggested fix: Remove new.
   
-      | @@ -5,7 +5,7 @@
-  4 4 |       new Symbol();
-  5 5 |   }
-  6 6 |   // invalid
-  7   | - var foo = new Symbol('foo');
-    7 | + var foo = Symbol('foo');
-  8 8 |   var foo2 = new Symbol();
-  9 9 |   var lorem = new Symbol() // comment
-  10 10 |   var s = /* prefix_cmt */ new /* suffix_cmt */ Symbol() // comment
-  
+    8 │ var·foo·=·new·Symbol('foo');
+      │           ----              
 
 ```
 
@@ -59,15 +51,8 @@ noNewSymbol.js:9:12 lint/nursery/noNewSymbol  FIXABLE  ━━━━━━━━�
   
   i Suggested fix: Remove new.
   
-      | @@ -6,6 +6,6 @@
-  5 5 |   }
-  6 6 |   // invalid
-  7 7 |   var foo = new Symbol('foo');
-  8   | - var foo2 = new Symbol();
-    8 | + var foo2 = Symbol();
-  9 9 |   var lorem = new Symbol() // comment
-  10 10 |   var s = /* prefix_cmt */ new /* suffix_cmt */ Symbol() // comment
-  
+    9 │ var·foo2·=·new·Symbol();
+      │            ----         
 
 ```
 
@@ -84,14 +69,8 @@ noNewSymbol.js:10:13 lint/nursery/noNewSymbol  FIXABLE  ━━━━━━━━
   
   i Suggested fix: Remove new.
   
-        | @@ -7,5 +7,5 @@
-   6  6 |   // invalid
-   7  7 |   var foo = new Symbol('foo');
-   8  8 |   var foo2 = new Symbol();
-   9    | - var lorem = new Symbol() // comment
-      9 | + var lorem = Symbol() // comment
-  10 10 |   var s = /* prefix_cmt */ new /* suffix_cmt */ Symbol() // comment
-  
+    10 │ var·lorem·=·new·Symbol()·//·comment
+       │             ----                   
 
 ```
 
@@ -107,12 +86,10 @@ noNewSymbol.js:11:26 lint/nursery/noNewSymbol  FIXABLE  ━━━━━━━━
   
   i Suggested fix: Remove new.
   
-        | @@ -8,4 +8,4 @@
-   7  7 |   var foo = new Symbol('foo');
-   8  8 |   var foo2 = new Symbol();
-   9  9 |   var lorem = new Symbol() // comment
-  10    | - var s = /* prefix_cmt */ new /* suffix_cmt */ Symbol() // comment
-     10 | + var s = /* prefix_cmt */  /* suffix_cmt */ Symbol() // comment
+     9  9 │   var·foo2·=·new·Symbol();
+    10 10 │   var·lorem·=·new·Symbol()·//·comment
+    11    │ - var·s·=·/*·prefix_cmt·*/·new·/*·suffix_cmt·*/·Symbol()·//·comment
+       11 │ + var·s·=·/*·prefix_cmt·*/··/*·suffix_cmt·*/·Symbol()·//·comment
   
 
 ```

@@ -95,14 +95,8 @@ noUnnecessaryContinue.js:3:2 lint/correctness/noUnnecessaryContinue  FIXABLE  �
   
   i Suggested fix: Delete the unnecessary continue statement
   
-      | @@ -1,6 +1,5 @@
-  0 0 |   // invalid
-  1 1 |   loop: for (let i = 0; i < 5; i++) {
-  2   | - 	continue loop;
-  3 2 |   }
-  4 3 |   while (i--) {
-  5 4 |   	continue;
-  
+    3 │ → continue·loop;
+      │ ----------------
 
 ```
 
@@ -120,15 +114,8 @@ noUnnecessaryContinue.js:6:2 lint/correctness/noUnnecessaryContinue  FIXABLE  �
   
   i Suggested fix: Delete the unnecessary continue statement
   
-      | @@ -3,7 +3,6 @@
-  2 2 |   	continue loop;
-  3 3 |   }
-  4 4 |   while (i--) {
-  5   | - 	continue;
-  6 5 |   }
-  7 6 |   while (1) {
-  8 7 |   	continue;
-  
+    6 │ → continue;
+      │ -----------
 
 ```
 
@@ -146,15 +133,8 @@ noUnnecessaryContinue.js:9:2 lint/correctness/noUnnecessaryContinue  FIXABLE  �
   
   i Suggested fix: Delete the unnecessary continue statement
   
-      | @@ -6,7 +6,6 @@
-  5 5 |   	continue;
-  6 6 |   }
-  7 7 |   while (1) {
-  8   | - 	continue;
-  9 8 |   }
-  10 9 |   for (let i = 0; i < 10; i++) {
-  11 10 |   	if (i > 5) {
-  
+    9 │ → continue;
+      │ -----------
 
 ```
 
@@ -172,14 +152,13 @@ noUnnecessaryContinue.js:14:3 lint/correctness/noUnnecessaryContinue  FIXABLE  �
   
   i Suggested fix: Delete the unnecessary continue statement
   
-        | @@ -11,7 +11,6 @@
-  10 10 |   for (let i = 0; i < 10; i++) {
-  11 11 |   	if (i > 5) {
-  12 12 |   		console.log("foo");
-  13    | - 		continue;
-  14 13 |   	} else if (i >= 5 && i < 8) {
-  15 14 |   		console.log("test");
-  16 15 |   	} else {
+    12 12 │   → if·(i·>·5)·{
+    13 13 │   → → console.log("foo");
+    14    │ - → → continue;
+    15    │ - → }·else·if·(i·>=·5·&&·i·<·8)·{
+       14 │ + → }·else·if·(i·>=·5·&&·i·<·8)·{
+    16 15 │   → → console.log("test");
+    17 16 │   → }·else·{
   
 
 ```
@@ -198,15 +177,8 @@ noUnnecessaryContinue.js:22:2 lint/correctness/noUnnecessaryContinue  FIXABLE  �
   
   i Suggested fix: Delete the unnecessary continue statement
   
-        | @@ -19,7 +19,6 @@
-  18 18 |   	}
-  19 19 |   }
-  20 20 |   for (let i = 0; i < 9; i++) {
-  21    | - 	continue;
-  22 21 |   }
-  23 22 |   
-  24 23 |   test: for (let i = 0; i < 9; i++) continue test;
-  
+    22 │ → continue;
+       │ -----------
 
 ```
 
@@ -224,16 +196,8 @@ noUnnecessaryContinue.js:25:35 lint/correctness/noUnnecessaryContinue  FIXABLE  
   
   i Suggested fix: Delete the unnecessary continue statement
   
-        | @@ -22,7 +22,7 @@
-  21 21 |   	continue;
-  22 22 |   }
-  23 23 |   
-  24    | - test: for (let i = 0; i < 9; i++) continue test;
-     24 | + test: for (let i = 0; i < 9; i++) ;
-  25 25 |   
-  26 26 |   test2: do {
-  27 27 |   	continue test2;
-  
+    25 │ test:·for·(let·i·=·0;·i·<·9;·i++)·continue·test;
+       │                                   ------------- 
 
 ```
 
@@ -250,15 +214,8 @@ noUnnecessaryContinue.js:28:2 lint/correctness/noUnnecessaryContinue  FIXABLE  �
   
   i Suggested fix: Delete the unnecessary continue statement
   
-        | @@ -25,7 +25,6 @@
-  24 24 |   test: for (let i = 0; i < 9; i++) continue test;
-  25 25 |   
-  26 26 |   test2: do {
-  27    | - 	continue test2;
-  28 27 |   } while (true);
-  29 28 |   // valid
-  30 29 |   test3: do {
-  
+    28 │ → continue·test2;
+       │ -----------------
 
 ```
 

@@ -31,15 +31,13 @@ issue_2999.js:1:1 lint/style/noNegationElse  FIXABLE  ━━━━━━━━�
   
   i Suggested fix: Exchange alternate and consequent of the node
   
-      | @@ -1,6 +1,6 @@
-  0   | - if (!true) {
-    0 | + if (true) something(); else {
-  1 1 |   	consequent;
-  2   | - } else something();
-    2 | + }
-  3 3 |   //valid https://github.com/rome/tools/issues/2999
-  4 4 |   if (!/^NCT/.test(input)) {
-  5 5 |   	messages.push("NCT Number must start with NCT");
+    1   │ - if·(!true)·{
+      1 │ + if·(true)·something();·else·{
+    2 2 │   → consequent;
+    3   │ - }·else·something();
+      3 │ + }
+    4 4 │   //valid·https://github.com/rome/tools/issues/2999·
+    5 5 │   if·(!/^NCT/.test(input))·{
   
 
 ```

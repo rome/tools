@@ -24,11 +24,11 @@ useWhile.js:3:1 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━�
   
   i Suggested fix: Use a while loop
   
-      | @@ -1,3 +1,3 @@
-  0 0 |   for (let i = 0; i < 16; ++i) {}
-  1 1 |   
-  2   | - for (; true; ) {}
-    2 | + while (true) {}
+    1 1 │   for·(let·i·=·0;·i·<·16;·++i)·{}
+    2 2 │   
+    3   │ - for·(;·true;·)·{}
+      3 │ + while·(true)·{}
+    4 4 │   
   
 
 ```

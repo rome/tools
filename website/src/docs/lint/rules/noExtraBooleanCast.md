@@ -31,11 +31,8 @@ if (!Boolean(foo)) {
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove redundant `Boolean` call</span>
   
-      | <span style="color: rgb(38, 148, 255);">@@ -1,2 +1,2 @@</span>
-  0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">if (!Boolean(foo)) {</span>
-    0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">if (!foo) {</span>
-  1 1 |   }
-  
+<strong>  </strong><strong>  1 │ </strong>if<span style="opacity: 0.8;">·</span>(!<span style="color: Tomato;">B</span><span style="color: Tomato;">o</span><span style="color: Tomato;">o</span><span style="color: Tomato;">l</span><span style="color: Tomato;">e</span><span style="color: Tomato;">a</span><span style="color: Tomato;">n</span><span style="color: Tomato;">(</span>foo<span style="color: Tomato;">)</span>)<span style="opacity: 0.8;">·</span>{
+<strong>  </strong><strong>    │ </strong>     <span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span>   <span style="color: Tomato;">-</span>   
 </code></pre>{% endraw %}
 
 ```jsx
@@ -54,10 +51,8 @@ while (!!foo) {}
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove redundant double-negation</span>
   
-      | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
-  0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">while (!!foo) {}</span>
-    0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">while (foo) {}</span>
-  
+<strong>  </strong><strong>  1 │ </strong>while<span style="opacity: 0.8;">·</span>(<span style="color: Tomato;">!</span><span style="color: Tomato;">!</span>foo)<span style="opacity: 0.8;">·</span>{}
+<strong>  </strong><strong>    │ </strong>       <span style="color: Tomato;">-</span><span style="color: Tomato;">-</span>       
 </code></pre>{% endraw %}
 
 ```jsx
@@ -81,13 +76,8 @@ do {
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove redundant `Boolean` call</span>
   
-      | <span style="color: rgb(38, 148, 255);">@@ -1,4 +1,4 @@</span>
-  0 0 |   let x = 1;
-  1 1 |   do {
-  2 2 |   1 + 1;
-  3   | <span style="color: Tomato;">- </span><span style="color: Tomato;">} while (Boolean(x));</span>
-    3 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">} while (x);</span>
-  
+<strong>  </strong><strong>  4 │ </strong>}<span style="opacity: 0.8;">·</span>while<span style="opacity: 0.8;">·</span>(<span style="color: Tomato;">B</span><span style="color: Tomato;">o</span><span style="color: Tomato;">o</span><span style="color: Tomato;">l</span><span style="color: Tomato;">e</span><span style="color: Tomato;">a</span><span style="color: Tomato;">n</span><span style="color: Tomato;">(</span>x<span style="color: Tomato;">)</span>);
+<strong>  </strong><strong>    │ </strong>         <span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span> <span style="color: Tomato;">-</span>  
 </code></pre>{% endraw %}
 
 ```jsx
@@ -106,10 +96,8 @@ for (; !!foo; ) {}
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove redundant double-negation</span>
   
-      | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
-  0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">for (; !!foo; ) {}</span>
-    0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">for (; foo; ) {}</span>
-  
+<strong>  </strong><strong>  1 │ </strong>for<span style="opacity: 0.8;">·</span>(;<span style="opacity: 0.8;">·</span><span style="color: Tomato;">!</span><span style="color: Tomato;">!</span>foo;<span style="opacity: 0.8;">·</span>)<span style="opacity: 0.8;">·</span>{}
+<strong>  </strong><strong>    │ </strong>       <span style="color: Tomato;">-</span><span style="color: Tomato;">-</span>         
 </code></pre>{% endraw %}
 
 ```jsx
@@ -128,10 +116,8 @@ new Boolean(!!x);
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove redundant double-negation</span>
   
-      | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
-  0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">new Boolean(!!x);</span>
-    0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">new Boolean(x);</span>
-  
+<strong>  </strong><strong>  1 │ </strong>new<span style="opacity: 0.8;">·</span>Boolean(<span style="color: Tomato;">!</span><span style="color: Tomato;">!</span>x);
+<strong>  </strong><strong>    │ </strong>            <span style="color: Tomato;">-</span><span style="color: Tomato;">-</span>   
 </code></pre>{% endraw %}
 
 ### Valid
