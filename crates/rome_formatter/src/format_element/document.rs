@@ -28,7 +28,7 @@ impl Document {
     /// [`BestFitting`] elements act as expand boundaries, meaning that the fact that a
     /// [`BestFitting`]'s content expands is not propagated past the [`BestFitting`] element.
     ///
-    /// [`BestFitting`](FormatElement::BestFitting)
+    /// [`BestFitting`]: FormatElement::BestFitting
     pub(crate) fn propagate_expand(&mut self) {
         #[derive(Debug)]
         enum Enclosing<'a> {
