@@ -1494,11 +1494,22 @@ impl<Context> FormatState<Context> {
 
     #[cfg(not(debug_assertions))]
     #[inline]
-    pub fn remove_tracked_token<L: Language>(&self, _: SyntaxToken<L>) {}
+    pub fn set_token_tracking_enabled(&mut self, _: bool) {}
 
     #[cfg(debug_assertions)]
-    pub fn remove_tracked_token<L: Language>(&mut self, token: &SyntaxToken<L>) {
-        self.printed_tokens.remove_tracked_token(token);
+    pub fn set_token_tracking_enabled(&mut self, enabled: bool) {
+        self.printed_tokens.set_enabled(enabled)
+    }
+
+    #[cfg(not(debug_assertions))]
+    #[inline]
+    pub fn is_token_tracking_enabled(&self) -> bool {
+        false
+    }
+
+    #[cfg(debug_assertions)]
+    pub fn is_token_tracking_enabled(&self) -> bool {
+        self.printed_tokens.is_enabled()
     }
 
     /// Asserts in debug builds that all tokens have been printed.
@@ -1522,7 +1533,7 @@ where
     pub fn snapshot(&self) -> FormatStateSnapshot {
         FormatStateSnapshot {
             #[cfg(debug_assertions)]
-            printed_tokens: self.printed_tokens.clone(),
+            printed_tokens: self.printed_tokens.snapshot(),
         }
     }
 
@@ -1534,7 +1545,7 @@ where
 
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
-                self.printed_tokens = printed_tokens;
+                self.printed_tokens.restore(printed_tokens);
             }
         }
     }
@@ -1542,5 +1553,5 @@ where
 
 pub struct FormatStateSnapshot {
     #[cfg(debug_assertions)]
-    printed_tokens: PrintedTokens,
+    printed_tokens: printed_tokens::PrintedTokensSnapshot,
 }

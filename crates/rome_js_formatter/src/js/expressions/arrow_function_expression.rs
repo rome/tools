@@ -1,7 +1,10 @@
 use crate::prelude::*;
-use rome_formatter::{format_args, write, CstFormatContext, FormatRuleWithOptions};
+use rome_formatter::{
+    format_args, write, CstFormatContext, FormatRuleWithOptions, RemoveSoftLinesBuffer,
+};
 use std::iter::once;
 
+use crate::js::expressions::call_arguments::ExpandCallArgumentLayout;
 use crate::parentheses::{
     is_binary_like_left_or_right, is_callee, is_conditional_test,
     update_or_lower_expression_needs_parentheses, NeedsParentheses,
@@ -18,14 +21,20 @@ use rome_rowan::SyntaxResult;
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsArrowFunctionExpression {
-    assignment_layout: Option<AssignmentLikeLayout>,
+    options: FormatJsArrowFunctionExpressionOptions,
+}
+
+#[derive(Debug, Copy, Clone, Default)]
+pub struct FormatJsArrowFunctionExpressionOptions {
+    pub assignment_layout: Option<AssignmentLikeLayout>,
+    pub call_arg_layout: Option<ExpandCallArgumentLayout>,
 }
 
 impl FormatRuleWithOptions<JsArrowFunctionExpression> for FormatJsArrowFunctionExpression {
-    type Options = Option<AssignmentLikeLayout>;
+    type Options = FormatJsArrowFunctionExpressionOptions;
 
     fn with_options(mut self, options: Self::Options) -> Self {
-        self.assignment_layout = options;
+        self.options = options;
         self
     }
 }
@@ -36,11 +45,8 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
         node: &JsArrowFunctionExpression,
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
-        let layout = ArrowFunctionLayout::for_arrow(
-            node.clone(),
-            f.context().comments(),
-            self.assignment_layout,
-        )?;
+        let layout =
+            ArrowFunctionLayout::for_arrow(node.clone(), f.context().comments(), self.options)?;
 
         match layout {
             ArrowFunctionLayout::Chain(chain) => {
@@ -56,7 +62,7 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                     write!(
                         f,
                         [
-                            format_signature(&arrow),
+                            format_signature(&arrow, self.options.call_arg_layout.is_some()),
                             space(),
                             arrow.fat_arrow_token().format()
                         ]
@@ -136,23 +142,34 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                 {
                     write![f, [format_signature, space(), body.format()]]
                 } else {
+                    let is_last_call_arg = matches!(
+                        self.options.call_arg_layout,
+                        Some(ExpandCallArgumentLayout::ExpandLastArg)
+                    );
+
                     write!(
                         f,
                         [
                             format_signature,
-                            group(&soft_line_indent_or_space(&format_with(|f| {
-                                if should_add_parens {
-                                    write!(f, [if_group_fits_on_line(&text("("))])?;
-                                }
+                            group(&format_args![
+                                soft_line_indent_or_space(&format_with(|f| {
+                                    if should_add_parens {
+                                        write!(f, [if_group_fits_on_line(&text("("))])?;
+                                    }
 
-                                write!(f, [body.format()])?;
+                                    write!(f, [body.format()])?;
 
-                                if should_add_parens {
-                                    write!(f, [if_group_fits_on_line(&text(")"))])?;
-                                }
+                                    if should_add_parens {
+                                        write!(f, [if_group_fits_on_line(&text(")"))])?;
+                                    }
 
-                                Ok(())
-                            })))
+                                    Ok(())
+                                })),
+                                is_last_call_arg.then_some(format_args![
+                                    if_group_breaks(&text(",")),
+                                    soft_line_break()
+                                ])
+                            ])
                         ]
                     )
                 }
@@ -175,8 +192,11 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
 }
 
 /// writes the arrow function type parameters, parameters, and return type annotation
-fn format_signature(arrow: &JsArrowFunctionExpression) -> impl Format<JsFormatContext> + '_ {
-    format_with(|f| {
+fn format_signature(
+    arrow: &JsArrowFunctionExpression,
+    first_last_call_arg: bool,
+) -> impl Format<JsFormatContext> + '_ {
+    format_with(move |f| {
         if let Some(async_token) = arrow.async_token() {
             write!(f, [async_token.format(), space()])?;
         }
@@ -201,10 +221,33 @@ fn format_signature(arrow: &JsArrowFunctionExpression) -> impl Format<JsFormatCo
                 }
             };
 
-            write!(f, [arrow.return_type_annotation().format()])
+            Ok(())
         });
 
-        write!(f, [group(&format_parameters)])?;
+        if first_last_call_arg {
+            let mut buffer = RemoveSoftLinesBuffer::new(f);
+            let mut recording = buffer.start_recording();
+
+            write!(
+                recording,
+                [group(&format_args![
+                    group(&format_parameters),
+                    group(&arrow.return_type_annotation().format())
+                ])]
+            )?;
+
+            if recording.stop().will_break() {
+                return Err(FormatError::PoorLayout);
+            }
+        } else {
+            write!(
+                f,
+                [group(&format_args![
+                    format_parameters,
+                    arrow.return_type_annotation().format()
+                ])]
+            )?;
+        }
 
         if f.comments().has_dangling_comments(arrow.syntax()) {
             write!(f, [space(), format_dangling_comments(arrow.syntax())])?;
@@ -293,8 +336,7 @@ struct ArrowChain {
     /// The last arrow function in the chain
     tail: JsArrowFunctionExpression,
 
-    /// The layout of the assignment this arrow function is the right hand side of or `None`
-    assignment_layout: Option<AssignmentLikeLayout>,
+    options: FormatJsArrowFunctionExpressionOptions,
 
     /// Whether the group wrapping the signatures should be expanded or not.
     expand_signatures: bool,
@@ -315,14 +357,13 @@ impl Format<JsFormatContext> for ArrowChain {
             head,
             tail,
             expand_signatures,
-            assignment_layout,
             ..
         } = self;
 
         let head_parent = head.syntax().parent();
         let tail_body = tail.body()?;
 
-        let is_assignment_rhs = assignment_layout.is_some();
+        let is_assignment_rhs = self.options.assignment_layout.is_some();
 
         let is_callee = head_parent
             .as_ref()
@@ -339,7 +380,7 @@ impl Format<JsFormatContext> for ArrowChain {
 
         let break_before_chain = (is_callee && body_on_separate_line)
             || matches!(
-                assignment_layout,
+                self.options.assignment_layout,
                 Some(AssignmentLikeLayout::ChainTailArrowFunction)
             );
 
@@ -354,7 +395,7 @@ impl Format<JsFormatContext> for ArrowChain {
                         f,
                         [
                             format_leading_comments(arrow.syntax()),
-                            format_signature(arrow)
+                            format_signature(arrow, self.options.call_arg_layout.is_some())
                         ]
                     )?;
 
@@ -450,7 +491,7 @@ impl ArrowFunctionLayout {
     fn for_arrow(
         arrow: JsArrowFunctionExpression,
         comments: &JsComments,
-        assignment_layout: Option<AssignmentLikeLayout>,
+        options: FormatJsArrowFunctionExpressionOptions,
     ) -> SyntaxResult<ArrowFunctionLayout> {
         let mut head = None;
         let mut middle = Vec::new();
@@ -461,7 +502,11 @@ impl ArrowFunctionLayout {
             match current.body()? {
                 JsAnyFunctionBody::JsAnyExpression(JsAnyExpression::JsArrowFunctionExpression(
                     next,
-                )) if !comments.is_suppressed(next.syntax()) => {
+                )) if matches!(
+                    options.call_arg_layout,
+                    None | Some(ExpandCallArgumentLayout::ExpandLastArg)
+                ) && !comments.is_suppressed(next.syntax()) =>
+                {
                     should_break = should_break || should_break_chain(&current)?;
 
                     if head.is_none() {
@@ -480,7 +525,7 @@ impl ArrowFunctionLayout {
                             middle,
                             tail: current,
                             expand_signatures: should_break,
-                            assignment_layout,
+                            options,
                         }),
                     }
                 }

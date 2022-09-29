@@ -164,18 +164,7 @@ var l = base
 ```diff
 --- Prettier
 +++ Rome
-@@ -121,9 +121,7 @@
-             .getJSON(`https://api.github.com/search/users?q=${q}`)
-             .map((res) => res.items)
-             .map(receiveUsers),
--        ),
--      ),
--  );
-+        )));
- 
- window.FooClient.setVars({
-   locale: getFooLocale({ page }),
-@@ -138,10 +136,18 @@
+@@ -138,10 +138,18 @@
  const a1 = x.a(true).b(null).c(123);
  const a2 = x.d("").e(``).f(g);
  const a3 = x.d("").e(`${123}`).f(g);
@@ -196,7 +185,7 @@ var l = base
    }
  }
  
-@@ -161,7 +167,4 @@
+@@ -161,7 +169,4 @@
    .b()
    .c(a(a(b(c(d().p).p).p).p));
  
@@ -333,7 +322,9 @@ action$
             .getJSON(`https://api.github.com/search/users?q=${q}`)
             .map((res) => res.items)
             .map(receiveUsers),
-        )));
+        ),
+      ),
+  );
 
 window.FooClient.setVars({
   locale: getFooLocale({ page }),

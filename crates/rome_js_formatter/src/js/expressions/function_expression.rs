@@ -5,7 +5,7 @@ use crate::js::expressions::call_arguments::ExpandCallArgumentLayout;
 use crate::parentheses::{
     is_callee, is_first_in_statement, is_tag, FirstInStatementMode, NeedsParentheses,
 };
-use rome_formatter::{write, FormatRuleWithOptions};
+use rome_formatter::FormatRuleWithOptions;
 use rome_js_syntax::{JsFunctionExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
