@@ -1355,7 +1355,7 @@ mod test {
             model.closure(&f)
         };
 
-        closure.children()
+        closure.children().collect()
     }
 
     #[test]

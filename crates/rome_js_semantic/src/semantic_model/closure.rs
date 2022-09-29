@@ -68,6 +68,41 @@ impl Iterator for AllCapturesIter {
 
 }
 
+
+pub struct ChildrenIter {
+    data: Arc<SemanticModelData>,
+    closure_range: TextRange,
+    scopes: Vec<usize>,
+}
+
+impl Iterator for ChildrenIter {
+    type Item = Closure;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        while let Some(scope_id) = self.scopes.pop() {
+            let scope = &self.data.scopes[scope_id];
+            let node = &self.data.node_by_range[&scope.range];
+            match node.kind() {
+                JsSyntaxKind::JS_FUNCTION_DECLARATION
+                | JsSyntaxKind::JS_FUNCTION_EXPRESSION
+                | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION => {
+                    return Some(Closure {
+                        data: self.data.clone(),
+                        scope_id,
+                        closure_range: self.closure_range,
+                    });
+                }
+                _ => {
+                    self.scopes.extend(scope.children.iter());
+                }
+            }
+        }
+
+        None
+    }
+
+}
+
 /// Provides all information regarding a specific closure.
 pub struct Closure {
     data: Arc<SemanticModelData>,
@@ -128,45 +163,17 @@ impl Closure {
         }
     }
 
-    // Returns all scopes which are immediate children closures of
-    // the current closure
-    fn children_scopes(&self) -> Vec<usize> {
+    /// Return all immediate children closures of this closure
+    pub fn children(&self) -> impl Iterator<Item = Closure> {
         let scope = &self.data.scopes[self.scope_id];
 
-        let mut scopes = VecDeque::from_iter(scope.children.iter().cloned());
-        let mut result = vec![];
+        let mut scopes = Vec::with_capacity(128);
+        scopes.extend(scope.children.iter().cloned());
 
-        while let Some(id) = scopes.pop_front() {
-            let scope = &self.data.scopes[id];
-            let node = &self.data.node_by_range[&scope.range];
-            match node.kind() {
-                JsSyntaxKind::JS_FUNCTION_DECLARATION
-                | JsSyntaxKind::JS_FUNCTION_EXPRESSION
-                | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION => {
-                    result.push(id);
-                }
-                _ => {
-                    scopes.extend(scope.children.iter());
-                }
-            }
+        ChildrenIter {
+            data: self.data.clone(),
+            closure_range: self.closure_range,
+            scopes,
         }
-
-        result
-    }
-
-    /// Return all immediate children closures of this closure
-    pub fn children(&self) -> Vec<Closure> {
-        let mut closures = vec![];
-
-        for scope_id in self.children_scopes() {
-            let scope = &self.data.scopes[scope_id];
-            closures.push(Closure {
-                data: self.data.clone(),
-                scope_id,
-                closure_range: scope.range,
-            })
-        }
-
-        closures
     }
 }
