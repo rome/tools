@@ -47,7 +47,10 @@ use crate::format_element::document::Document;
 use crate::printed_tokens::PrintedTokens;
 use crate::printer::{Printer, PrinterOptions};
 pub use arguments::{Argument, Arguments};
-pub use buffer::{Buffer, BufferExtensions, BufferSnapshot, Inspect, PreambleBuffer, VecBuffer};
+pub use buffer::{
+    Buffer, BufferExtensions, BufferSnapshot, Inspect, PreambleBuffer, RemoveSoftLinesBuffer,
+    VecBuffer,
+};
 pub use builders::BestFitting;
 
 use crate::builders::syntax_token_cow_slice;
@@ -565,6 +568,13 @@ pub enum FormatError {
 
     /// In case printing the document failed because it has an invalid structure.
     InvalidDocument(InvalidDocumentError),
+
+    /// Formatting failed because formatting some content encountered a situation where a layout
+    /// choice by an enclosing object resulted in a poor layout for the child object.
+    ///
+    /// It's up to the enclosing object to pick another layout. This error should not be raised
+    /// if there's no outer object that handles the poor layout error to avoid that formatting of the whole document fails.
+    PoorLayout,
 }
 
 impl std::fmt::Display for FormatError {
@@ -576,6 +586,9 @@ impl std::fmt::Display for FormatError {
                 "formatting range {input:?} is larger than syntax tree {tree:?}"
             ),
             FormatError::InvalidDocument(error) => std::write!(fmt, "Invalid document: {error}\n\n This is an internal Rome error. Please report if necessary."),
+            FormatError::PoorLayout => {
+                std::write!(fmt, "Poor layout: This is an internal Rome error. Please report if necessary.")
+            }
         }
     }
 }
@@ -1477,6 +1490,15 @@ impl<Context> FormatState<Context> {
                 self.printed_tokens.track_token(token);
             }
         }
+    }
+
+    #[cfg(not(debug_assertions))]
+    #[inline]
+    pub fn remove_tracked_token<L: Language>(&self, _: SyntaxToken<L>) {}
+
+    #[cfg(debug_assertions)]
+    pub fn remove_tracked_token<L: Language>(&mut self, token: &SyntaxToken<L>) {
+        self.printed_tokens.remove_tracked_token(token);
     }
 
     /// Asserts in debug builds that all tokens have been printed.

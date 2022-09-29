@@ -24,6 +24,11 @@ impl PrintedTokens {
         }
     }
 
+    /// Removes a token if it has been tracked before. No-op otherwise.
+    pub(crate) fn remove_tracked_token<L: Language>(&mut self, token: &SyntaxToken<L>) {
+        self.offsets.remove(&token.text_trimmed_range().start());
+    }
+
     /// Asserts that all tokens of the passed in node have been tracked
     ///
     /// ## Panics

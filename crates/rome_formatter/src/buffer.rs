@@ -1,5 +1,8 @@
 use super::{write, Arguments, FormatElement};
+use crate::format_element::Interned;
+use crate::prelude::LineMode;
 use crate::{Format, FormatResult, FormatState};
+use rustc_hash::FxHashMap;
 use std::any::{Any, TypeId};
 use std::fmt::Debug;
 use std::ops::{Deref, DerefMut};
@@ -404,6 +407,123 @@ where
 
     fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
         (self.inspector)(&element);
+        self.inner.write_element(element)
+    }
+
+    fn elements(&self) -> &[FormatElement] {
+        self.inner.elements()
+    }
+
+    fn state(&self) -> &FormatState<Self::Context> {
+        self.inner.state()
+    }
+
+    fn state_mut(&mut self) -> &mut FormatState<Self::Context> {
+        self.inner.state_mut()
+    }
+
+    fn snapshot(&self) -> BufferSnapshot {
+        self.inner.snapshot()
+    }
+
+    fn restore_snapshot(&mut self, snapshot: BufferSnapshot) {
+        self.inner.restore_snapshot(snapshot)
+    }
+}
+
+pub struct RemoveSoftLinesBuffer<'a, Context> {
+    inner: &'a mut dyn Buffer<Context = Context>,
+    /// Cache of written interned elements to the "cleaned" interned elements.
+    interned_cache: FxHashMap<Interned, Interned>,
+}
+
+impl<'a, Context> RemoveSoftLinesBuffer<'a, Context> {
+    pub fn new(inner: &'a mut dyn Buffer<Context = Context>) -> Self {
+        Self {
+            inner,
+            interned_cache: FxHashMap::default(),
+        }
+    }
+
+    fn clean_interned(&mut self, interned: &Interned) -> Interned {
+        clean_interned(interned, &mut self.interned_cache)
+    }
+}
+
+// Extracted to function to avoid monomorphization
+fn clean_interned(
+    interned: &Interned,
+    interned_cache: &mut FxHashMap<Interned, Interned>,
+) -> Interned {
+    match interned_cache.get(&interned) {
+        Some(cleaned) => cleaned.clone(),
+        None => {
+            let result = interned
+                .iter()
+                .enumerate()
+                .find_map(|(index, element)| match element {
+                    FormatElement::Line(LineMode::Soft | LineMode::SoftOrSpace) => {
+                        let mut cleaned = Vec::new();
+                        cleaned.extend_from_slice(&interned[..index]);
+                        Some((cleaned, &interned[index..]))
+                    }
+                    FormatElement::Interned(inner) => {
+                        let cleaned_inner = clean_interned(inner, interned_cache);
+
+                        if &cleaned_inner != inner {
+                            let mut cleaned = Vec::with_capacity(interned.len());
+                            cleaned.extend_from_slice(&interned[..index]);
+                            cleaned.push(FormatElement::Interned(cleaned_inner));
+                            Some((cleaned, &interned[index + 1..]))
+                        } else {
+                            None
+                        }
+                    }
+
+                    _ => None,
+                });
+
+            let result = match result {
+                Some((mut cleaned, rest)) => {
+                    for element in rest {
+                        let element = match element {
+                            FormatElement::Line(LineMode::Soft) => continue,
+                            FormatElement::Line(LineMode::SoftOrSpace) => FormatElement::Space,
+                            FormatElement::Interned(interned) => {
+                                FormatElement::Interned(clean_interned(interned, interned_cache))
+                            }
+                            element => element.clone(),
+                        };
+                        cleaned.push(element)
+                    }
+
+                    Interned::new(cleaned)
+                }
+                None => {
+                    // No softline, return interned as is
+                    interned.clone()
+                }
+            };
+
+            interned_cache.insert(interned.clone(), result.clone());
+            result
+        }
+    }
+}
+
+impl<Context> Buffer for RemoveSoftLinesBuffer<'_, Context> {
+    type Context = Context;
+
+    fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
+        let element = match element {
+            FormatElement::Line(LineMode::Soft) => return Ok(()),
+            FormatElement::Line(LineMode::SoftOrSpace) => FormatElement::Space,
+            FormatElement::Interned(interned) => {
+                FormatElement::Interned(self.clean_interned(&interned))
+            }
+            element => element,
+        };
+
         self.inner.write_element(element)
     }
 

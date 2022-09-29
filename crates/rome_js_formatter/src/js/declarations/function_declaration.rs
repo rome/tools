@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-use rome_formatter::write;
+use rome_formatter::{write, RemoveSoftLinesBuffer};
 use rome_js_syntax::{
     JsAnyBinding, JsFunctionBody, JsFunctionDeclaration, JsFunctionExportDefaultDeclaration,
     JsFunctionExpression, JsParameters, JsSyntaxToken, TsAnyReturnType,
@@ -113,10 +113,8 @@ impl FormatFunction {
             FormatFunction::TsDeclareFunctionDeclaration(_) => None,
         })
     }
-}
 
-impl Format<JsFormatContext> for FormatFunction {
-    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
+    pub(crate) fn fmt_with_expand(&self, f: &mut JsFormatter, expand: bool) -> FormatResult<()> {
         if let Some(async_token) = self.async_token() {
             write!(f, [async_token.format(), space()])?;
         }
@@ -139,37 +137,66 @@ impl Format<JsFormatContext> for FormatFunction {
         let parameters = self.parameters()?;
         let return_type_annotation = self.return_type_annotation();
 
-        write!(f, [type_parameters.format()])?;
+        if expand {
+            write!(
+                f,
+                [
+                    group(&format_with(|f| {
+                        let mut buffer = RemoveSoftLinesBuffer::new(f);
 
-        write!(
-            f,
-            [group(&format_with(|f| {
-                let mut format_return_type_annotation = return_type_annotation.format().memoized();
-                let group_parameters = should_group_function_parameters(
-                    type_parameters.as_ref(),
-                    parameters.items().len(),
-                    return_type_annotation
-                        .as_ref()
-                        .map(|annotation| annotation.ty()),
-                    &mut format_return_type_annotation,
-                    f,
-                )?;
+                        let mut recording = buffer.start_recording();
+                        write!(recording, [type_parameters.format(), parameters.format()])?;
+                        let recorded = recording.stop();
 
-                if group_parameters {
-                    write!(f, [group(&parameters.format())])?;
-                } else {
-                    write!(f, [parameters.format()])?;
-                }
+                        if recorded.will_break() {
+                            return Err(FormatError::PoorLayout);
+                        } else {
+                            Ok(())
+                        }
+                    })),
+                    return_type_annotation.format()
+                ]
+            )?
+        } else {
+            write!(f, [type_parameters.format()])?;
 
-                write![f, [format_return_type_annotation]]
-            }))]
-        )?;
+            write!(
+                f,
+                [group(&format_with(|f| {
+                    let mut format_return_type_annotation =
+                        return_type_annotation.format().memoized();
+                    let group_parameters = should_group_function_parameters(
+                        type_parameters.as_ref(),
+                        parameters.items().len(),
+                        return_type_annotation
+                            .as_ref()
+                            .map(|annotation| annotation.ty()),
+                        &mut format_return_type_annotation,
+                        f,
+                    )?;
+
+                    if group_parameters {
+                        write!(f, [group(&parameters.format())])?;
+                    } else {
+                        write!(f, [parameters.format()])?;
+                    }
+
+                    write![f, [format_return_type_annotation]]
+                }))]
+            )?;
+        }
 
         if let Some(body) = self.body()? {
             write!(f, [space(), body.format()])?;
         }
 
         Ok(())
+    }
+}
+
+impl Format<JsFormatContext> for FormatFunction {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        self.fmt_with_expand(f, false)
     }
 }
 

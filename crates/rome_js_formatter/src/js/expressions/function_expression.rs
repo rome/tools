@@ -24,7 +24,12 @@ impl FormatRuleWithOptions<JsFunctionExpression> for FormatJsFunctionExpression 
 
 impl FormatNodeRule<JsFunctionExpression> for FormatJsFunctionExpression {
     fn fmt_fields(&self, node: &JsFunctionExpression, f: &mut JsFormatter) -> FormatResult<()> {
-        write![f, [FormatFunction::from(node.clone())]]
+        let format_function = FormatFunction::from(node.clone());
+
+        match self.call_argument_layout {
+            None => format_function.fmt(f),
+            Some(_) => format_function.fmt_with_expand(f, true),
+        }
     }
 
     fn needs_parentheses(&self, item: &JsFunctionExpression) -> bool {
