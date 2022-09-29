@@ -25,12 +25,13 @@ impl FormatNodeRule<TsUnionType> for FormatTsUnionType {
         // } | null | void
         // ```
         // should be inlined and not be printed in the multi-line variant
-        if should_hug_type(&node.clone().into()) {
+        let should_hug = should_hug_type(&node.clone().into());
+        if should_hug {
             return write!(
                 f,
                 [
                     FormatTypeMemberSeparator::new(leading_separator_token.as_ref()),
-                    types.format()
+                    types.format().with_options(should_hug)
                 ]
             );
         }
