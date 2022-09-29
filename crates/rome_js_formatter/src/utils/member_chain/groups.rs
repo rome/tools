@@ -1,114 +1,103 @@
-use crate::context::TabWidth;
 use crate::parentheses::NeedsParentheses;
 use crate::prelude::*;
 use crate::utils::member_chain::chain_member::ChainMember;
 use rome_formatter::write;
-use rome_js_syntax::JsCallExpression;
-use rome_rowan::SyntaxResult;
-use std::mem;
+use std::cell::RefCell;
 
+#[derive(Default)]
 pub(super) struct MemberChainGroupsBuilder {
     /// keeps track of the groups created
     groups: Vec<MemberChainGroup>,
     /// keeps track of the current group that is being created/updated
-    current_group: MemberChainGroup,
-
-    /// If the current group is inside an expression statement.
-    ///
-    /// This information is important when evaluating the break of the groups.
-    in_expression_statement: bool,
-
-    tab_width: TabWidth,
+    current_group: Option<MemberChainGroup>,
 }
 
 impl MemberChainGroupsBuilder {
-    pub fn new(in_expression_statement: bool, tab_width: TabWidth) -> Self {
-        Self {
-            in_expression_statement,
-            groups: Vec::new(),
-            current_group: MemberChainGroup::default(),
-            tab_width,
-        }
-    }
-
     /// starts a new group
-    pub fn start_group(&mut self, flatten_item: ChainMember) {
-        debug_assert!(self.current_group.members.is_empty());
-        self.current_group.members.push(flatten_item);
+    pub fn start_group(&mut self, member: ChainMember) {
+        debug_assert!(self.current_group.is_none());
+        let mut group = MemberChainGroup::default();
+        group.members.push(member);
+        self.current_group = Some(group);
     }
 
     /// continues of starts a new group
-    pub fn start_or_continue_group(&mut self, flatten_item: ChainMember) {
-        if self.current_group.members.is_empty() {
-            self.start_group(flatten_item);
-        } else {
-            self.continue_group(flatten_item);
+    pub fn start_or_continue_group(&mut self, member: ChainMember) {
+        match &mut self.current_group {
+            None => self.start_group(member),
+            Some(group) => group.members.push(member),
         }
     }
 
-    /// adds the passed element to the current group
-    pub fn continue_group(&mut self, flatten_item: ChainMember) {
-        debug_assert!(!self.current_group.members.is_empty());
-        self.current_group.members.push(flatten_item);
+    /// adds the passed element to the current group.
+    ///
+    /// # Panics
+    ///
+    /// If there's no started group.
+    pub fn continue_group(&mut self, member: ChainMember) {
+        match &mut self.current_group {
+            None => {
+                panic!("It is necessary to start a group first using `start_group`.");
+            }
+            Some(group) => {
+                group.members.push(member);
+            }
+        }
     }
 
-    /// clears the current group, and adds a new group to the groups
+    /// clears the current group, and adds it to the groups collection
     pub fn close_group(&mut self) {
-        if !self.current_group.members.is_empty() {
-            let mut elements = MemberChainGroup::default();
-            std::mem::swap(&mut elements, &mut self.current_group);
-            self.groups.push(elements);
+        if let Some(group) = self.current_group.take() {
+            self.groups.push(group);
         }
     }
 
-    pub(super) fn finish(self) -> MemberChainGroups {
-        debug_assert!(self.current_group.members().is_empty());
+    pub(super) fn finish(self) -> TailChainGroups {
+        let mut groups = self.groups;
 
-        MemberChainGroups {
-            groups: self.groups,
-            tab_width: self.tab_width,
-            in_expression_statement: self.in_expression_statement,
-            cutoff: 1,
+        if let Some(group) = self.current_group {
+            groups.push(group);
         }
+
+        TailChainGroups { groups }
     }
 }
 
+/// Groups following on the head group.
+///
+/// May be empty if all members are part of the head group
 #[derive(Clone, Debug)]
-/// Handles creation of groups while scanning the flatten items
-pub(super) struct MemberChainGroups {
-    /// keeps track of the groups created
+pub(super) struct TailChainGroups {
     groups: Vec<MemberChainGroup>,
-
-    /// If the current group is inside an expression statement.
-    ///
-    /// This information is important when evaluating the break of the groups.
-    in_expression_statement: bool,
-
-    tab_width: TabWidth,
-
-    /// This is a threshold of when we should start breaking the groups
-    ///
-    /// By default, it's 1, meaning that we start breaking after the first group.
-    cutoff: u8,
 }
 
-impl MemberChainGroups {
+impl TailChainGroups {
+    /// Returns `true` if there are no tail groups.
     pub(crate) fn is_empty(&self) -> bool {
         self.groups.is_empty()
     }
 
-    /// This function checks if the current grouping should be merged with the first group.
-    pub fn should_merge(
-        &self,
-        head_group: &MemberChainGroup,
-        comments: &JsComments,
-    ) -> SyntaxResult<bool> {
-        Ok(!self.groups.len() >= 1
-            && self.should_not_wrap(head_group)?
-            && !self.groups[0]
-                .members
-                .first()
-                .map_or(false, |item| comments.has_comments(item.syntax())))
+    /// Returns the number of tail groups.
+    pub(crate) fn len(&self) -> usize {
+        self.groups.len()
+    }
+
+    /// Returns the first group
+    pub(crate) fn first(&self) -> Option<&MemberChainGroup> {
+        self.groups.first()
+    }
+
+    /// Returns the last group
+    pub(crate) fn last(&self) -> Option<&MemberChainGroup> {
+        self.groups.last()
+    }
+
+    /// Removes the first group and returns it
+    pub(super) fn pop_first(&mut self) -> Option<MemberChainGroup> {
+        match self.groups.len() {
+            0 => None,
+            _ => Some(self.groups.remove(0)),
+        }
     }
 
     /// Checks if the groups contain comments.
@@ -120,8 +109,8 @@ impl MemberChainGroups {
                 || comments.has_leading_comments(item.syntax())
         });
 
-        let cutoff_has_leading_comments = if self.groups.len() >= self.cutoff as usize {
-            let group = self.groups.get(self.cutoff as usize);
+        let cutoff_has_leading_comments = if !self.groups.is_empty() {
+            let group = self.groups.get(1);
             if let Some(group) = group {
                 let first_item = group.members.first();
                 first_item.map_or(false, |first_item| {
@@ -137,99 +126,50 @@ impl MemberChainGroups {
         has_comments || cutoff_has_leading_comments
     }
 
-    /// Filters the stack of [FlattenItem] and return only the ones that
-    /// contain [JsCallExpression]. The function returns the actual nodes.
-    pub fn get_call_expressions(&self) -> impl Iterator<Item = &JsCallExpression> {
-        self.groups
-            .iter()
-            .flat_map(|group| group.members.iter())
-            .filter_map(|item| {
-                if let ChainMember::CallExpression { expression, .. } = item {
-                    Some(expression)
-                } else {
-                    None
-                }
-            })
-    }
-
-    /// This is an heuristic needed to check when the first element of the group
-    /// Should be part of the "head" or the "tail".
-    fn should_not_wrap(&self, first_group: &MemberChainGroup) -> SyntaxResult<bool> {
-        let tab_with = self.tab_width;
-        let has_computed_property = if self.groups.len() > 1 {
-            // SAFETY: guarded by the previous check
-            let group = &self.groups[0];
-            group
-                .members
-                .first()
-                .map_or(false, |item| item.is_computed_expression())
-        } else {
-            false
-        };
-
-        if first_group.members().len() == 1 {
-            // SAFETY: access is guarded by the previous check
-            let first_node = first_group.members().first().unwrap();
-
-            return Ok(first_node.is_this_expression()
-                || (first_node.is_identifier_expression()
-                    && (first_node.is_factory(true)?
-                // If an identifier has a name that is shorter than the tab with, then we join it with the "head"
-                || (self.in_expression_statement
-                && first_node.has_short_name(tab_with)?)
-                || has_computed_property)));
-        }
-
-        let last_node_is_factory = self
-            .groups
-            .iter()
-            .flat_map(|group| group.members.iter())
-            .last()
-            .map_or(false, |item| item.is_factory(false).unwrap_or(false));
-
-        Ok(last_node_is_factory || has_computed_property)
-    }
-
-    /// Here we check if the first group can be merged to the head. If so, then
-    /// we move out the first group out of the groups
-    pub(crate) fn should_merge_with_first_group(
-        &mut self,
-        head_group: &MemberChainGroup,
-        comments: &JsComments,
-    ) -> Option<Vec<MemberChainGroup>> {
-        if self.should_merge(head_group, comments).unwrap_or(false) {
-            let mut new_groups = self.groups.split_off(1);
-            // self.groups is now the head (one element), while `new_groups` is a new vector without the
-            // first element.
-            // As we need to achieve the opposite, we now swap them.
-            mem::swap(&mut self.groups, &mut new_groups);
-            Some(new_groups)
-        } else {
-            None
-        }
-    }
-
     /// Here we check if the length of the groups exceeds the cutoff or there are comments
     /// This function is the inverse of the prettier function
     /// [Prettier applies]: https://github.com/prettier/prettier/blob/a043ac0d733c4d53f980aa73807a63fc914f23bd/src/language-js/print/member-chain.js#L342
     pub(crate) fn is_member_call_chain(&self, comments: &JsComments) -> bool {
-        self.groups.len() > self.cutoff as usize || self.has_comments(comments)
+        self.groups.len() > 1 || self.has_comments(comments)
     }
 
-    pub(super) fn iter(&self) -> impl Iterator<Item = &MemberChainGroup> {
+    /// Returns an iterator over the groups.
+    pub(super) fn iter(&self) -> impl Iterator<Item = &MemberChainGroup> + DoubleEndedIterator {
         self.groups.iter()
+    }
+
+    /// Test if any group except the last group [break](FormatElements::will_break).
+    pub(super) fn any_except_last_will_break(&self, f: &mut JsFormatter) -> FormatResult<bool> {
+        for group in &self.groups[..self.groups.len().saturating_sub(1)] {
+            if group.will_break(f)? {
+                return Ok(true);
+            }
+        }
+
+        Ok(false)
+    }
+
+    /// Returns an iterator over all members
+    pub(super) fn members(&self) -> impl Iterator<Item = &ChainMember> + DoubleEndedIterator {
+        self.groups.iter().flat_map(|group| group.members().iter())
     }
 }
 
-impl Format<JsFormatContext> for MemberChainGroups {
+impl Format<JsFormatContext> for TailChainGroups {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         f.join().entries(self.groups.iter()).finish()
     }
 }
 
-#[derive(Debug, Clone, Default)]
+#[derive(Clone, Default)]
 pub(super) struct MemberChainGroup {
     members: Vec<ChainMember>,
+
+    /// Stores the formatted result of this group.
+    ///
+    /// Manual implementation of `Memoized` to only memorizing the formatted result
+    /// if [MemberChainGroup::will_break] is called but not otherwise.
+    formatted: RefCell<Option<FormatElement>>,
 }
 
 impl MemberChainGroup {
@@ -237,12 +177,35 @@ impl MemberChainGroup {
         self.members
     }
 
-    fn members(&self) -> &[ChainMember] {
+    /// Returns the chain members of the group.
+    pub(super) fn members(&self) -> &[ChainMember] {
         &self.members
     }
 
-    pub(super) fn expand_group(&mut self, group: impl IntoIterator<Item = ChainMember>) {
-        self.members.extend(group)
+    /// Extends the members of this group with the passed in members
+    pub(super) fn extend_members(&mut self, members: impl IntoIterator<Item = ChainMember>) {
+        self.members.extend(members)
+    }
+
+    /// Tests if the formatted result of this group results in a [break](FormatElements::will_break).
+    pub(super) fn will_break(&self, f: &mut JsFormatter) -> FormatResult<bool> {
+        let mut cell = self.formatted.borrow_mut();
+        let result = match cell.as_ref() {
+            Some(formatted) => formatted.will_break(),
+            None => {
+                let interned = f.intern(&FormatMemberChainGroup { group: self })?;
+
+                if let Some(interned) = interned {
+                    let breaks = interned.will_break();
+                    *cell = Some(interned);
+                    breaks
+                } else {
+                    false
+                }
+            }
+        };
+
+        Ok(result)
     }
 
     pub(super) fn has_comments(&self, comments: &JsComments) -> bool {
@@ -261,13 +224,40 @@ impl MemberChainGroup {
 
 impl From<Vec<ChainMember>> for MemberChainGroup {
     fn from(entries: Vec<ChainMember>) -> Self {
-        Self { members: entries }
+        Self {
+            members: entries,
+            formatted: RefCell::new(None),
+        }
+    }
+}
+
+impl std::fmt::Debug for MemberChainGroup {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_tuple("MemberChainGroup")
+            .field(&self.members)
+            .finish()
     }
 }
 
 impl Format<JsFormatContext> for MemberChainGroup {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        let last = self.members.last();
+        if let Some(formatted) = self.formatted.borrow().as_ref() {
+            return f.write_element(formatted.clone());
+        }
+
+        FormatMemberChainGroup { group: self }.fmt(f)
+    }
+}
+
+pub struct FormatMemberChainGroup<'a> {
+    group: &'a MemberChainGroup,
+}
+
+impl Format<JsFormatContext> for FormatMemberChainGroup<'_> {
+    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        let group = self.group;
+
+        let last = group.members.last();
 
         let needs_parens = last.map_or(false, |last| match last {
             ChainMember::StaticMember { expression, .. } => expression.needs_parentheses(),
@@ -275,7 +265,7 @@ impl Format<JsFormatContext> for MemberChainGroup {
             _ => false,
         });
 
-        let format_entries = format_with(|f| f.join().entries(self.members.iter()).finish());
+        let format_entries = format_with(|f| f.join().entries(group.members.iter()).finish());
 
         if needs_parens {
             write!(f, [text("("), format_entries, text(")")])

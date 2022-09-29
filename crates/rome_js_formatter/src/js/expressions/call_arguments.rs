@@ -1,10 +1,12 @@
+use crate::js::expressions::arrow_function_expression::is_multiline_template_starting_on_same_line;
 use crate::prelude::*;
 use crate::utils::{is_call_like_expression, write_arguments_multi_line};
 use rome_formatter::{format_args, write, CstFormatContext};
 use rome_js_syntax::{
     JsAnyCallArgument, JsAnyExpression, JsAnyFunctionBody, JsAnyLiteralExpression, JsAnyName,
     JsAnyStatement, JsArrayExpression, JsArrowFunctionExpression, JsCallArgumentList,
-    JsCallArguments, JsCallArgumentsFields, JsCallExpression, TsReferenceType,
+    JsCallArguments, JsCallArgumentsFields, JsCallExpression, JsExpressionStatement,
+    TsReferenceType,
 };
 use rome_rowan::{AstSeparatedList, SyntaxResult, SyntaxTokenText};
 
@@ -28,6 +30,28 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                 [
                     l_paren_token.format(),
                     format_dangling_comments(node.syntax()).with_soft_block_indent(),
+                    r_paren_token.format()
+                ]
+            );
+        }
+
+        let call_expression = node.parent::<JsCallExpression>();
+
+        if is_commonjs_or_amd_call(node, call_expression.as_ref())?
+            || is_multiline_template_only_args(node)
+        {
+            return write!(
+                f,
+                [
+                    l_paren_token.format(),
+                    format_with(|f| {
+                        f.join_with(space())
+                            .entries(
+                                args.format_separated(",")
+                                    .with_trailing_separator(TrailingSeparator::Omit),
+                            )
+                            .finish()
+                    }),
                     r_paren_token.format()
                 ]
             );
@@ -97,19 +121,29 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                 .map(|e| e.memoized())
                 .collect();
 
-            let an_argument_breaks =
-                separated
-                    .iter_mut()
-                    .enumerate()
-                    .any(|(index, element)| match element.inspect(f) {
-                        Ok(element) => {
-                            let in_relevant_range = should_group_first_argument && index > 0
-                                || (should_group_last_argument && index < args.len() - 1);
+            let mut any_argument_breaks = false;
+            let mut first_last_breaks = false;
 
-                            in_relevant_range && element.will_break()
-                        }
-                        Err(_) => false,
-                    });
+            for (index, argument) in separated.iter_mut().enumerate() {
+                let breaks = argument.inspect(f)?.will_break();
+
+                any_argument_breaks = any_argument_breaks || breaks;
+
+                if (should_group_first_argument && index > 0)
+                    || (should_group_last_argument && index < args.len() - 1)
+                {
+                    first_last_breaks = first_last_breaks || breaks;
+                    if breaks {
+                        break;
+                    }
+                }
+            }
+
+            let format_flat_arguments = format_with(|f| {
+                f.join_with(soft_line_break_or_space())
+                    .entries(separated.iter())
+                    .finish()
+            });
 
             // We now cache them the delimiters tokens. This is needed because `[rome_formatter::best_fitting]` will try to
             // print each version first
@@ -125,27 +159,18 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                 // function, but here we use a different way to print the trailing separator
                 write!(
                     f,
-                    [
-                        &l_paren,
-                        &group(&format_with(|f| {
-                            write!(
-                                f,
-                                [
-                                    &soft_block_indent(&format_args![
-                                        format_with(|f| {
-                                            write_arguments_multi_line(separated.iter(), f)
-                                        }),
-                                        soft_line_break()
-                                    ]),
-                                    &r_paren
-                                ]
-                            )
+                    [group(&format_args![
+                        l_paren,
+                        soft_block_indent(&format_with(|f| {
+                            write_arguments_multi_line(separated.iter(), f)
                         })),
-                    ]
+                        r_paren
+                    ])
+                    .should_expand(true)]
                 )
             });
 
-            if an_argument_breaks {
+            if first_last_breaks {
                 return write!(f, [all_arguments_expanded]);
             }
 
@@ -160,39 +185,26 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                     let mut iter = separated.iter();
                     // SAFETY: check on the existence of at least one argument are done before
                     let first = iter.next().unwrap();
-                    f.join_with(&space())
-                        .entry(&format_with(|f| {
-                            write!(f, [&format_args![first, expand_parent()]])
-                        }))
-                        .entries(iter)
-                        .finish()?;
+                    f.join_with(&space()).entry(&first).entries(iter).finish()?;
                 } else {
                     // special formatting of the last element
                     let mut iter = separated.iter();
                     // SAFETY: check on the existence of at least one argument are done before
                     let last = iter.next_back().unwrap();
-
-                    f.join_with(&space())
-                        .entries(iter)
-                        .entry(&format_with(|f| {
-                            write!(f, [&format_args![last, expand_parent()]])
-                        }))
-                        .finish()?;
+                    f.join_with(&space()).entries(iter).entry(&last).finish()?;
                 }
                 write!(f, [r_paren])
             });
 
+            if any_argument_breaks {
+                write!(f, [expand_parent()])?;
+            }
+
             write!(
                 f,
                 [best_fitting![
-                    format_args![
-                        l_paren,
-                        group(&format_with(|f| {
-                            write_arguments_multi_line(separated.iter(), f)
-                        })),
-                        r_paren,
-                    ],
-                    edge_arguments_do_not_break,
+                    format_args![l_paren, format_flat_arguments, r_paren],
+                    group(&edge_arguments_do_not_break).should_expand(true),
                     all_arguments_expanded
                 ]]
             )
@@ -209,7 +221,7 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                         write_arguments_multi_line(separated, f)
                     })),
                     r_paren,
-                ]),]
+                ])]
             )
         }
     }
@@ -410,6 +422,83 @@ fn could_group_expression_argument(
     };
 
     Ok(result)
+}
+
+/// Tests if this is a call to commonjs [`require`](https://nodejs.org/api/modules.html#requireid)
+/// or amd's [`define`](https://github.com/amdjs/amdjs-api/wiki/AMD#define-function-) function.
+fn is_commonjs_or_amd_call(
+    arguments: &JsCallArguments,
+    call: Option<&JsCallExpression>,
+) -> SyntaxResult<bool> {
+    let call = match call {
+        Some(call) => call,
+        None => return Ok(false),
+    };
+
+    let callee = call.callee()?;
+
+    Ok(match callee {
+        JsAnyExpression::JsIdentifierExpression(identifier) => {
+            let reference = identifier.name()?;
+
+            if reference.has_name("require") {
+                true
+            } else if reference.has_name("define") {
+                let in_statement = call.parent::<JsExpressionStatement>().is_some();
+
+                if in_statement {
+                    let args = arguments.args();
+                    match args.len() {
+                        1 => true,
+                        2 => matches!(
+                            args.first(),
+                            Some(Ok(JsAnyCallArgument::JsAnyExpression(
+                                JsAnyExpression::JsArrayExpression(_)
+                            )))
+                        ),
+                        3 => {
+                            let mut iter = args.iter();
+                            let first = iter.next();
+                            let second = iter.next();
+                            matches!(
+                                (first, second),
+                                (
+                                    Some(Ok(JsAnyCallArgument::JsAnyExpression(
+                                        JsAnyExpression::JsAnyLiteralExpression(
+                                            JsAnyLiteralExpression::JsStringLiteralExpression(_)
+                                        )
+                                    ))),
+                                    Some(Ok(JsAnyCallArgument::JsAnyExpression(
+                                        JsAnyExpression::JsArrayExpression(_)
+                                    )))
+                                )
+                            )
+                        }
+                        _ => false,
+                    }
+                } else {
+                    false
+                }
+            } else {
+                false
+            }
+        }
+        _ => false,
+    })
+}
+
+/// Returns `true` if `arguments` contains a single [multiline template literal argument that starts on its own ](is_multiline_template_starting_on_same_line).
+fn is_multiline_template_only_args(arguments: &JsCallArguments) -> bool {
+    let args = arguments.args();
+
+    match args.first() {
+        Some(Ok(JsAnyCallArgument::JsAnyExpression(JsAnyExpression::JsTemplate(template))))
+            if args.len() == 1 =>
+        {
+            is_multiline_template_starting_on_same_line(&template)
+        }
+        _ => false,
+    }
 }
 
 /// This function is used to check if the code is a hook-like code:

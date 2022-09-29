@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::{get_lines_before, write};
+use rome_formatter::write;
 use rome_js_syntax::JsDirectiveList;
 use rome_rowan::{AstNode, AstNodeList};
 

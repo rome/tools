@@ -4,7 +4,7 @@ use crate::utils::jsx::{
     JsxRawSpace, JsxSpace,
 };
 use crate::JsFormatter;
-use rome_formatter::format_element::tag::Tag;
+use rome_formatter::format_element::tag::{GroupMode, Tag};
 use rome_formatter::{format_args, write, CstFormatContext, FormatRuleWithOptions, VecBuffer};
 use rome_js_syntax::{JsxAnyChild, JsxChildList};
 use std::cell::RefCell;
@@ -539,7 +539,13 @@ impl Format<JsFormatContext> for FormatMultilineChildren {
                         elements,
                         FormatElement::Tag(Tag::EndFill),
                     ])?,
-                    MultilineLayout::NoFill => f.write_element(elements)?,
+                    MultilineLayout::NoFill => f.write_elements([
+                        FormatElement::Tag(Tag::StartGroup(
+                            tag::Group::new().with_mode(GroupMode::Expand),
+                        )),
+                        elements,
+                        FormatElement::Tag(Tag::EndGroup),
+                    ])?,
                 };
             }
 

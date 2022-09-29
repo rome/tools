@@ -60,10 +60,12 @@ impl Format<JsFormatContext> for JsObjectLike {
                 f,
                 [format_dangling_comments(self.syntax()).with_block_indent(),]
             )?;
-        } else if self.members_have_leading_newline() {
-            write!(f, [block_indent(&members)])?;
         } else {
-            write!(f, [group(&soft_space_or_block_indent(&members))])?;
+            let should_expand = self.members_have_leading_newline();
+            write!(
+                f,
+                [group(&soft_space_or_block_indent(&members)).should_expand(should_expand)]
+            )?;
         }
 
         write!(f, [self.r_curly_token().format()])

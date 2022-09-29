@@ -3,7 +3,7 @@ use crate::prelude::*;
 use crate::prelude::{format_args, write};
 
 use crate::utils::JsAnyBinaryLikeExpression;
-use rome_formatter::{group, CstFormatContext, FormatResult};
+use rome_formatter::{CstFormatContext, FormatResult};
 use rome_js_syntax::{JsAnyExpression, JsxExpressionChild, JsxExpressionChildFields};
 
 #[derive(Debug, Clone, Default)]

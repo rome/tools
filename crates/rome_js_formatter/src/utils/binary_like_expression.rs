@@ -367,8 +367,11 @@ impl Format<JsFormatContext> for BinaryLeftOrRightSide {
                     )?;
                 }
 
-                if !should_break && should_group {
-                    write!(f, [group(&operator_and_right_expression)])?;
+                if should_group {
+                    write!(
+                        f,
+                        [group(&operator_and_right_expression).should_expand(should_break)]
+                    )?;
                 } else {
                     write!(f, [operator_and_right_expression])?;
                 }

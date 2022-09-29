@@ -3,6 +3,7 @@ use crate::{GroupId, TextSize};
 #[cfg(debug_assertions)]
 use std::any::type_name;
 use std::any::TypeId;
+use std::cell::Cell;
 use std::num::NonZeroU8;
 
 /// A Tag marking the start and end of some content to which some special formatting should be applied.
@@ -11,7 +12,7 @@ use std::num::NonZeroU8;
 /// will be applied to all elements in between the start/end tags.
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum Tag {
-    /// Indents the content one level deeper, see [crate::indent] for documentation and examples.
+    /// Indents the content one level deeper, see [crate::builders::indent] for documentation and examples.
     StartIndent,
     EndIndent,
 
@@ -31,12 +32,12 @@ pub enum Tag {
     /// * on a single line: Omitting `LineMode::Soft` line breaks and printing spaces for `LineMode::SoftOrSpace`
     /// * on multiple lines: Printing all line breaks
     ///
-    /// See [crate::group] for documentation and examples.
-    StartGroup(Option<GroupId>),
+    /// See [crate::builders::group] for documentation and examples.
+    StartGroup(Group),
     EndGroup,
 
     /// Allows to specify content that gets printed depending on whatever the enclosing group
-    /// is printed on a single line or multiple lines. See [crate::if_group_breaks] for examples.
+    /// is printed on a single line or multiple lines. See [crate::builders::if_group_breaks] for examples.
     StartConditionalContent(Condition),
     EndConditionalContent,
 
@@ -66,7 +67,7 @@ pub enum Tag {
     /// Special semantic element marking the content with a label.
     /// This does not directly influence how the content will be printed.
     ///
-    /// See [crate::labelled] for documentation.
+    /// See [crate::builders::labelled] for documentation.
     StartLabelled(LabelId),
     EndLabelled,
 }
@@ -79,7 +80,7 @@ impl Tag {
             Tag::StartIndent
                 | Tag::StartAlign(_)
                 | Tag::StartDedent(_)
-                | Tag::StartGroup(_)
+                | Tag::StartGroup { .. }
                 | Tag::StartConditionalContent(_)
                 | Tag::StartIndentIfGroupBreaks(_)
                 | Tag::StartFill
@@ -131,6 +132,64 @@ pub enum TagKind {
     LineSuffix,
     Verbatim,
     Labelled,
+}
+
+#[derive(Debug, Copy, Default, Clone, Eq, PartialEq)]
+pub enum GroupMode {
+    /// Print group in flat mode.
+    #[default]
+    Flat,
+
+    /// The group should be printed in expanded mode
+    Expand,
+
+    /// Expand mode has been propagated from an enclosing group to this group.
+    Propagated,
+}
+
+impl GroupMode {
+    pub const fn is_flat(&self) -> bool {
+        matches!(self, GroupMode::Flat)
+    }
+}
+
+#[derive(Debug, Clone, Eq, PartialEq, Default)]
+pub struct Group {
+    id: Option<GroupId>,
+    mode: Cell<GroupMode>,
+}
+
+impl Group {
+    pub fn new() -> Self {
+        Self {
+            id: None,
+            mode: Cell::new(GroupMode::Flat),
+        }
+    }
+
+    pub fn with_id(mut self, id: Option<GroupId>) -> Self {
+        self.id = id;
+        self
+    }
+
+    pub fn with_mode(mut self, mode: GroupMode) -> Self {
+        self.mode = Cell::new(mode);
+        self
+    }
+
+    pub fn mode(&self) -> GroupMode {
+        self.mode.get()
+    }
+
+    pub fn propagate_expand(&self) {
+        if self.mode.get() == GroupMode::Flat {
+            self.mode.set(GroupMode::Propagated)
+        }
+    }
+
+    pub fn id(&self) -> Option<GroupId> {
+        self.id
+    }
 }
 
 #[derive(Debug, Copy, Clone, Eq, PartialEq)]

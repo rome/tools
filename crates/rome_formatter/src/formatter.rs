@@ -115,7 +115,7 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// line break or empty line depending on the input file.
     ///
     /// This functions inspects the input source and separates consecutive elements with either
-    /// a [crate::soft_line_break_or_space] or [crate::empty_line] depending on how many line breaks were
+    /// a [crate::builders::soft_line_break_or_space] or [crate::builders::empty_line] depending on how many line breaks were
     /// separating the elements in the original file.
     pub fn join_nodes_with_soft_line<'a>(
         &'a mut self,
@@ -127,7 +127,7 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// line breaks depending on the input file.
     ///
     /// This functions inspects the input source and separates consecutive elements with either
-    /// a [crate::hard_line_break] or [crate::empty_line] depending on how many line breaks were separating the
+    /// a [crate::builders::hard_line_break] or [crate::builders::empty_line] depending on how many line breaks were separating the
     /// elements in the original file.
     pub fn join_nodes_with_hardline<'a>(&'a mut self) -> JoinNodesBuilder<'a, 'buf, Line, Context> {
         JoinNodesBuilder::new(hard_line_break(), self)

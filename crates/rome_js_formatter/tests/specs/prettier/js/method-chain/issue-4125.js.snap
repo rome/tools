@@ -164,63 +164,7 @@ var l = base
 ```diff
 --- Prettier
 +++ Rome
-@@ -44,7 +44,8 @@
- 
- // examples from https://github.com/prettier/prettier/issues/1565
- 
--d3.select("body")
-+d3
-+  .select("body")
-   .selectAll("p")
-   .data([1, 2, 3])
-   .enter()
-@@ -67,7 +68,10 @@
- 
- db.branch(
-   db.table("users").filter({ email }).count(),
--  db.table("users").filter({ email: "a@b.com" }).count(),
-+  db
-+    .table("users")
-+    .filter({ email: "a@b.com" })
-+    .count(),
-   db.table("users").insert({ email }),
-   db.table("users").filter({ email }),
- );
-@@ -90,39 +94,39 @@
-     authorizationToken: data.token,
-   }).initVerify("foo_container");
- 
--  fejax
--    .ajax({
--      url: "/verification/",
--      dataType: "json",
--    })
--    .then(
--      (data) => {
--        this.setState({ isLoading: false });
--        this.initWidget(data);
--      },
--      (data) => {
--        this.logImpression("foo_fetch_error", data);
--        Flash.error(I18n.t("offline_identity.foo_issue"));
--      },
--    );
-+  fejax.ajax({
-+    url: "/verification/",
-+    dataType: "json",
-+  }).then(
-+    (data) => {
-+      this.setState({ isLoading: false });
-+      this.initWidget(data);
-+    },
-+    (data) => {
-+      this.logImpression("foo_fetch_error", data);
-+      Flash.error(I18n.t("offline_identity.foo_issue"));
-+    },
-+  );
- }
- 
- action$
+@@ -111,18 +111,20 @@
    .ofType(ActionTypes.SEARCHED_USERS)
    .map((action) => action.payload.query)
    .filter((q) => !!q)
@@ -252,7 +196,7 @@ var l = base
    );
  
  window.FooClient.setVars({
-@@ -138,21 +142,32 @@
+@@ -138,10 +140,18 @@
  const a1 = x.a(true).b(null).c(123);
  const a2 = x.d("").e(``).f(g);
  const a3 = x.d("").e(`${123}`).f(g);
@@ -273,24 +217,7 @@ var l = base
    }
  }
  
- // should break when call expressions get complex
--x.a()
-+x
-+  .a()
-   .b([c, [d, [e]]])
-   .f();
--x.a()
-+x
-+  .a()
-   .b(c(d(e())))
-   .f();
--x.a()
-+x
-+  .a()
-   .b(`${c(d())}`)
-   .f();
- 
-@@ -161,7 +176,4 @@
+@@ -161,7 +171,4 @@
    .b()
    .c(a(a(b(c(d().p).p).p).p));
  
@@ -350,8 +277,7 @@ function palindrome(a, b) {
 
 // examples from https://github.com/prettier/prettier/issues/1565
 
-d3
-  .select("body")
+d3.select("body")
   .selectAll("p")
   .data([1, 2, 3])
   .enter()
@@ -374,10 +300,7 @@ something()
 
 db.branch(
   db.table("users").filter({ email }).count(),
-  db
-    .table("users")
-    .filter({ email: "a@b.com" })
-    .count(),
+  db.table("users").filter({ email: "a@b.com" }).count(),
   db.table("users").insert({ email }),
   db.table("users").filter({ email }),
 );
@@ -400,19 +323,21 @@ function HelloWorld() {
     authorizationToken: data.token,
   }).initVerify("foo_container");
 
-  fejax.ajax({
-    url: "/verification/",
-    dataType: "json",
-  }).then(
-    (data) => {
-      this.setState({ isLoading: false });
-      this.initWidget(data);
-    },
-    (data) => {
-      this.logImpression("foo_fetch_error", data);
-      Flash.error(I18n.t("offline_identity.foo_issue"));
-    },
-  );
+  fejax
+    .ajax({
+      url: "/verification/",
+      dataType: "json",
+    })
+    .then(
+      (data) => {
+        this.setState({ isLoading: false });
+        this.initWidget(data);
+      },
+      (data) => {
+        this.logImpression("foo_fetch_error", data);
+        Flash.error(I18n.t("offline_identity.foo_issue"));
+      },
+    );
 }
 
 action$
@@ -464,16 +389,13 @@ class X {
 }
 
 // should break when call expressions get complex
-x
-  .a()
+x.a()
   .b([c, [d, [e]]])
   .f();
-x
-  .a()
+x.a()
   .b(c(d(e())))
   .f();
-x
-  .a()
+x.a()
   .b(`${c(d())}`)
   .f();
 

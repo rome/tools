@@ -238,6 +238,72 @@ macro_rules! format {
 /// # }
 /// ```
 ///
+/// ### Enclosing group with `should_expand: true`
+///
+/// ```
+/// use rome_formatter::{Formatted, LineWidth, format, format_args, SimpleFormatOptions};
+/// use rome_formatter::prelude::*;
+///
+/// # fn main() -> FormatResult<()> {
+/// let formatted = format!(
+///     SimpleFormatContext::default(),
+///     [
+///         best_fitting!(
+///             // Prints the method call on the line but breaks the array.
+///             format_args!(
+///                 text("expect(a).toMatch("),
+///                 group(&format_args![
+///                     text("["),
+///                     soft_block_indent(&format_args![
+///                         text("1,"),
+///                         soft_line_break_or_space(),
+///                         text("2,"),
+///                         soft_line_break_or_space(),
+///                         text("3"),
+///                     ]),
+///                     text("]")
+///                 ]).should_expand(true),
+///                 text(")")
+///             ),
+///
+///             // Breaks after `(`
+///            format_args!(
+///                 text("expect(a).toMatch("),
+///                 group(&soft_block_indent(
+///                     &group(&format_args![
+///                         text("["),
+///                         soft_block_indent(&format_args![
+///                             text("1,"),
+///                             soft_line_break_or_space(),
+///                             text("2,"),
+///                             soft_line_break_or_space(),
+///                             text("3"),
+///                         ]),
+///                         text("]")
+///                     ]).should_expand(true),
+///                 )).should_expand(true),
+///                 text(")")
+///             ),
+///         )
+///     ]
+/// )?;
+///
+/// let document = formatted.into_document();
+///
+/// assert_eq!(
+///     "expect(a).toMatch([\n\t1,\n\t2,\n\t3\n])",
+///     Formatted::new(document.clone(), SimpleFormatContext::default())
+///         .print()?
+///         .as_code()
+/// );
+///
+/// # Ok(())
+/// # }
+/// ```
+///
+/// The first variant fits because all its content up to the first line break fit on the line without exceeding
+/// the configured print width.
+///
 /// ## Complexity
 /// Be mindful of using this IR element as it has a considerable performance penalty:
 /// * There are multiple representation for the same content. This results in increased memory usage
@@ -246,19 +312,20 @@ macro_rules! format {
 ///   complexity if used in nested structures.
 ///
 /// ## Behavior
-/// This IR is similar to Prettier's `conditionalGroup`. It provides similar functionality but
-/// differs in that Prettier automatically wraps each variant in a `Group`. Rome doesn't do so.
-/// You can wrap the variant content in a group if you want to use soft line breaks.
-/// Unlike in Prettier, the printer will try to fit **only the first variant** in [`Flat`] mode,
-/// then it will try to fit the rest of the variants in [`Expanded`] mode.
+/// This IR is similar to Prettier's `conditionalGroup`. The printer measures each variant, except the [`MostExpanded`], in [`Flat`] mode
+/// to find the first variant that fits and prints this variant in [`Flat`] mode. If no variant fits, then
+/// the printer falls back to printing the [`MostExpanded`] variant in `[`Expanded`] mode.
 ///
-/// A variant that is measured in [`Expanded`] mode will be considered to fit if it can be printed without
-/// overflowing the current line with all of its inner groups expanded. Those inner groups could still end
-/// up being printed in flat mode if they fit on the line while printing. But there is currently no way
-/// to enforce that a specific group inside a variant must be flat when measuring if that variant fits.
+/// The definition of *fits* differs to groups in that the printer only tests if it is possible to print
+/// the content up to the first non-soft line break without exceeding the configured print width.
+/// This definition differs from groups as that non-soft line breaks make group expand.
+///
+/// [crate::BestFitting] acts as a "break" boundary, meaning that it is considered to fit
+///
 ///
 /// [`Flat`]: crate::format_element::PrintMode::Flat
 /// [`Expanded`]: crate::format_element::PrintMode::Expanded
+/// [`MostExpanded`]: crate::format_element::BestFitting::most_expanded
 #[macro_export]
 macro_rules! best_fitting {
     ($least_expanded:expr, $($tail:expr),+ $(,)?) => {{
@@ -328,14 +395,14 @@ mod tests {
             [
                 text("aVeryLongIdentifier"),
                 soft_line_break_or_space(),
-                best_fitting!(
-                    format_args!(text(
-                        "Something that will not fit on a 30 character print width."
-                    ),),
-                    format_args![
+                best_fitting![
+                    format_args![text(
+                        "Something that will not fit on a line with 30 character print width."
+                    )],
+                    format_args![group(&format_args![
                         text("Start"),
                         soft_line_break(),
-                        &group(&soft_block_indent(&format_args![
+                        group(&soft_block_indent(&format_args![
                             text("1,"),
                             soft_line_break_or_space(),
                             text("2,"),
@@ -343,7 +410,7 @@ mod tests {
                             text("3"),
                         ])),
                         soft_line_break_or_space(),
-                        &soft_block_indent(&format_args![
+                        soft_block_indent(&format_args![
                             text("1,"),
                             soft_line_break_or_space(),
                             text("2,"),
@@ -358,9 +425,10 @@ mod tests {
                         ]),
                         soft_line_break_or_space(),
                         text("End")
-                    ],
+                    ])
+                    .should_expand(true)],
                     format_args!(text("Most"), hard_line_break(), text("Expanded"))
-                )
+                ]
             ]
         )
         .unwrap();

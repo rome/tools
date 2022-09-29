@@ -6,9 +6,9 @@ function makeMessage(body) {
 	const content = JSON.stringify(body);
 	return Buffer.from(
 		`Content-Length: ${content.length}\r\n` +
-		`Content-Type: application/vscode-jsonrpc;charset=utf-8\r\n` +
-		`\r\n` +
-		content
+			`Content-Type: application/vscode-jsonrpc;charset=utf-8\r\n` +
+			`\r\n` +
+			content,
 	);
 }
 
@@ -17,7 +17,7 @@ describe("Transport Layer", () => {
 		let onData = null;
 		const socket = {
 			on(event, fn) {
-				expect(event).toBe('data');
+				expect(event).toBe("data");
 				onData = fn;
 			},
 			write: vi.fn(),
@@ -26,20 +26,24 @@ describe("Transport Layer", () => {
 
 		const transport = new Transport(socket);
 
-		const result = transport.request('method', "params");
+		const result = transport.request("method", "params");
 
-		expect(socket.write).toHaveBeenCalledWith(makeMessage({
-			jsonrpc: "2.0",
-			id: 0,
-			method: "method",
-			params: "params",
-		}));
+		expect(socket.write).toHaveBeenCalledWith(
+			makeMessage({
+				jsonrpc: "2.0",
+				id: 0,
+				method: "method",
+				params: "params",
+			}),
+		);
 
-		onData(makeMessage({
-			jsonrpc: "2.0",
-			id: 0,
-			result: "result",
-		}));
+		onData(
+			makeMessage({
+				jsonrpc: "2.0",
+				id: 0,
+				result: "result",
+			}),
+		);
 
 		const response = await result;
 		expect(response).toMatchObject({});
@@ -52,7 +56,7 @@ describe("Transport Layer", () => {
 		let onData = null;
 		const socket = {
 			on(event, fn) {
-				expect(event).toBe('data');
+				expect(event).toBe("data");
 				onData = fn;
 			},
 			write: vi.fn(),
@@ -61,7 +65,9 @@ describe("Transport Layer", () => {
 
 		const transport = new Transport(socket);
 
-		expect(() => onData(Buffer.from(`\r\n`))).toThrowError('incoming message from the remote workspace is missing the Content-Length header');
+		expect(() => onData(Buffer.from(`\r\n`))).toThrowError(
+			"incoming message from the remote workspace is missing the Content-Length header",
+		);
 
 		transport.destroy();
 		expect(socket.destroy).toHaveBeenCalledOnce();
@@ -71,7 +77,7 @@ describe("Transport Layer", () => {
 		let onData = null;
 		const socket = {
 			on(event, fn) {
-				expect(event).toBe('data');
+				expect(event).toBe("data");
 				onData = fn;
 			},
 			write: vi.fn(),
@@ -80,7 +86,9 @@ describe("Transport Layer", () => {
 
 		const transport = new Transport(socket);
 
-		expect(() => onData(Buffer.from(`Content-Length\r\n`))).toThrowError('could not find colon token in "Content-Length\r\n"');
+		expect(() => onData(Buffer.from(`Content-Length\r\n`))).toThrowError(
+			'could not find colon token in "Content-Length\r\n"',
+		);
 
 		transport.destroy();
 		expect(socket.destroy).toHaveBeenCalledOnce();
@@ -90,7 +98,7 @@ describe("Transport Layer", () => {
 		let onData = null;
 		const socket = {
 			on(event, fn) {
-				expect(event).toBe('data');
+				expect(event).toBe("data");
 				onData = fn;
 			},
 			write: vi.fn(),
@@ -99,7 +107,11 @@ describe("Transport Layer", () => {
 
 		const transport = new Transport(socket);
 
-		expect(() => onData(Buffer.from(`Content-Type: text/plain\r\n`))).toThrowError('invalid value for Content-Type expected "application/vscode-jsonrpc", got "text/plain"');
+		expect(
+			() => onData(Buffer.from(`Content-Type: text/plain\r\n`)),
+		).toThrowError(
+			'invalid value for Content-Type expected "application/vscode-jsonrpc", got "text/plain"',
+		);
 
 		transport.destroy();
 		expect(socket.destroy).toHaveBeenCalledOnce();
@@ -109,7 +121,7 @@ describe("Transport Layer", () => {
 		let onData = null;
 		const socket = {
 			on(event, fn) {
-				expect(event).toBe('data');
+				expect(event).toBe("data");
 				onData = fn;
 			},
 			write: vi.fn(),
@@ -118,7 +130,11 @@ describe("Transport Layer", () => {
 
 		const transport = new Transport(socket);
 
-		expect(() => onData(makeMessage({ jsonrpc: "2.0", id: 0, result: "result" }))).toThrowError('could not find any pending request matching RPC response ID 0');
+		expect(
+			() => onData(makeMessage({ jsonrpc: "2.0", id: 0, result: "result" })),
+		).toThrowError(
+			"could not find any pending request matching RPC response ID 0",
+		);
 
 		transport.destroy();
 		expect(socket.destroy).toHaveBeenCalledOnce();
@@ -128,7 +144,7 @@ describe("Transport Layer", () => {
 		let onData = null;
 		const socket = {
 			on(event, fn) {
-				expect(event).toBe('data');
+				expect(event).toBe("data");
 				onData = fn;
 			},
 			write: vi.fn(),
@@ -137,7 +153,9 @@ describe("Transport Layer", () => {
 
 		const transport = new Transport(socket);
 
-		expect(() => onData(makeMessage({}))).toThrowError('failed to deserialize incoming message from remote workspace, "{}" is not a valid JSON-RPC message body');
+		expect(() => onData(makeMessage({}))).toThrowError(
+			'failed to deserialize incoming message from remote workspace, "{}" is not a valid JSON-RPC message body',
+		);
 
 		transport.destroy();
 		expect(socket.destroy).toHaveBeenCalledOnce();

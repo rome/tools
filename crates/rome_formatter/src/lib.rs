@@ -40,7 +40,7 @@ mod verbatim;
 
 use crate::formatter::Formatter;
 use crate::group_id::UniqueGroupIdBuilder;
-use crate::prelude::{syntax_token_cow_slice, TagKind};
+use crate::prelude::TagKind;
 
 use crate::format_element::document::Document;
 #[cfg(debug_assertions)]
@@ -48,18 +48,15 @@ use crate::printed_tokens::PrintedTokens;
 use crate::printer::{Printer, PrinterOptions};
 pub use arguments::{Argument, Arguments};
 pub use buffer::{Buffer, BufferExtensions, BufferSnapshot, Inspect, PreambleBuffer, VecBuffer};
-pub use builders::{
-    block_indent, empty_line, get_lines_before, group, hard_line_break, if_group_breaks,
-    if_group_fits_on_line, indent, labelled, line_suffix, soft_block_indent, soft_line_break,
-    soft_line_break_or_space, soft_line_indent_or_space, space, text, BestFitting,
-};
+pub use builders::BestFitting;
 
+use crate::builders::syntax_token_cow_slice;
 use crate::comments::{CommentStyle, Comments, SourceComment};
 pub use format_element::{normalize_newlines, FormatElement, Text, LINE_TERMINATORS};
 pub use group_id::GroupId;
 use rome_rowan::{
     Language, SyntaxElement, SyntaxError, SyntaxNode, SyntaxResult, SyntaxToken, SyntaxTriviaPiece,
-    TextRange, TextSize, TokenAtOffset,
+    TextLen, TextRange, TextSize, TokenAtOffset,
 };
 pub use source_map::{TransformSourceMap, TransformSourceMapBuilder};
 use std::error::Error;
@@ -960,10 +957,10 @@ where
 
     buffer.write_fmt(arguments)?;
 
-    Ok(Formatted::new(
-        Document::from(buffer.into_vec()),
-        state.into_context(),
-    ))
+    let mut document = Document::from(buffer.into_vec());
+    document.propagate_expand();
+
+    Ok(Formatted::new(document, state.into_context()))
 }
 
 /// Entry point for formatting a [SyntaxNode] for a specific language.
@@ -1032,17 +1029,18 @@ pub fn format_node<L: FormatLanguage>(
 
         write!(buffer, [format_node])?;
 
-        let document = Document::from(buffer.into_vec());
+        let mut document = Document::from(buffer.into_vec());
+        document.propagate_expand();
 
         state.assert_formatted_all_tokens(&root);
-        {
-            let comments = state.context().comments();
 
-            comments.assert_checked_all_suppressions(&root);
-            comments.assert_formatted_all_comments();
-        }
+        let context = state.into_context();
+        let comments = context.comments();
 
-        Ok(Formatted::new(document, state.into_context()))
+        comments.assert_checked_all_suppressions(&root);
+        comments.assert_formatted_all_comments();
+
+        Ok(Formatted::new(document, context))
     })
 }
 
@@ -1395,12 +1393,17 @@ impl<L: Language, Context> Format<Context> for SyntaxTriviaPiece<L> {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         let range = self.text_range();
 
+        // Trim start/end and update the range
+        let trimmed = self.text().trim_start();
+        let trimmed_start = range.start() + (range.len() - trimmed.text_len());
+        let trimmed = trimmed.trim_end();
+
         write!(
             f,
             [syntax_token_cow_slice(
-                normalize_newlines(self.text().trim(), LINE_TERMINATORS),
+                normalize_newlines(trimmed, LINE_TERMINATORS),
                 &self.token(),
-                range.start()
+                trimmed_start
             )]
         )
     }

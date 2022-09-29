@@ -1,5 +1,6 @@
 use super::tag::Tag;
 use crate::format_element::tag::DedentMode;
+use crate::prelude::tag::GroupMode;
 use crate::prelude::*;
 use crate::printer::LineEnding;
 use crate::{format, write};
@@ -8,6 +9,7 @@ use crate::{
     IndentStyle, LineWidth, PrinterOptions, TransformSourceMap,
 };
 use rome_rowan::TextSize;
+use rustc_hash::FxHashMap;
 use std::collections::HashMap;
 use std::ops::Deref;
 
@@ -15,6 +17,87 @@ use std::ops::Deref;
 #[derive(Debug, Clone, Eq, PartialEq, Default)]
 pub struct Document {
     elements: Vec<FormatElement>,
+}
+
+impl Document {
+    /// Sets [`expand`](tag::Group::expand) to [`GroupMode::Propagated`] if the group contains any of:
+    /// * a group with [`expand`](tag::Group::expand) set to [GroupMode::Propagated] or [GroupMode::Expand].
+    /// * a non-soft [line break](FormatElement::Line) with mode [LineMode::Hard], [LineMode::Empty], or [LineMode::Literal].
+    /// * a [FormatElement::ExpandParent]
+    ///
+    /// [`BestFitting`] elements act as expand boundaries, meaning that the fact that a
+    /// [`BestFitting`]'s content expands is not propagated past the [`BestFitting`] element.
+    ///
+    /// [`BestFitting`]: FormatElement::BestFitting
+    pub(crate) fn propagate_expand(&mut self) {
+        #[derive(Debug)]
+        enum Enclosing<'a> {
+            Group(&'a tag::Group),
+            BestFitting,
+        }
+
+        fn expand_parent(enclosing: &[Enclosing]) {
+            if let Some(Enclosing::Group(group)) = enclosing.last() {
+                group.propagate_expand();
+            }
+        }
+
+        fn propagate_expands<'a>(
+            elements: &'a [FormatElement],
+            enclosing: &mut Vec<Enclosing<'a>>,
+            checked_interned: &mut FxHashMap<&'a Interned, bool>,
+        ) -> bool {
+            let mut expands = false;
+            for element in elements {
+                let element_expands = match element {
+                    FormatElement::Tag(Tag::StartGroup(group)) => {
+                        enclosing.push(Enclosing::Group(group));
+                        false
+                    }
+                    FormatElement::Tag(Tag::EndGroup) => match enclosing.pop() {
+                        Some(Enclosing::Group(group)) => !group.mode().is_flat(),
+                        _ => false,
+                    },
+                    FormatElement::Interned(interned) => match checked_interned.get(interned) {
+                        Some(interned_expands) => *interned_expands,
+                        None => {
+                            let interned_expands =
+                                propagate_expands(interned, enclosing, checked_interned);
+                            checked_interned.insert(interned, interned_expands);
+                            interned_expands
+                        }
+                    },
+                    FormatElement::BestFitting(best_fitting) => {
+                        enclosing.push(Enclosing::BestFitting);
+
+                        for variant in best_fitting.variants() {
+                            propagate_expands(variant, enclosing, checked_interned);
+                        }
+
+                        // Best fitting acts as a boundary
+                        expands = false;
+                        enclosing.pop();
+                        continue;
+                    }
+                    FormatElement::Text(text) => text.contains('\n'),
+                    FormatElement::ExpandParent
+                    | FormatElement::Line(LineMode::Hard | LineMode::Empty) => true,
+                    _ => false,
+                };
+
+                if element_expands {
+                    expands = true;
+                    expand_parent(enclosing)
+                }
+            }
+
+            expands
+        }
+
+        let mut enclosing: Vec<Enclosing> = Vec::new();
+        let mut interned: FxHashMap<&Interned, bool> = FxHashMap::default();
+        propagate_expands(self, &mut enclosing, &mut interned);
+    }
 }
 
 impl From<Vec<FormatElement>> for Document {
@@ -292,10 +375,10 @@ impl Format<IrFormatContext> for &[FormatElement] {
                             write!(f, [text("verbatim(")])?;
                         }
 
-                        StartGroup(id) => {
+                        StartGroup(group) => {
                             write!(f, [text("group(")])?;
 
-                            if let Some(group_id) = id {
+                            if let Some(group_id) = group.id() {
                                 write!(
                                     f,
                                     [
@@ -307,6 +390,16 @@ impl Format<IrFormatContext> for &[FormatElement] {
                                         space(),
                                     ]
                                 )?;
+                            }
+
+                            match group.mode() {
+                                GroupMode::Flat => {}
+                                GroupMode::Expand => {
+                                    write!(f, [text("expand: true,"), space()])?;
+                                }
+                                GroupMode::Propagated => {
+                                    write!(f, [text("expand: propagated,"), space()])?;
+                                }
                             }
                         }
 
@@ -351,12 +444,12 @@ impl Format<IrFormatContext> for &[FormatElement] {
                             write!(
                                 f,
                                 [
-                                    text("label(\""),
+                                    text("label("),
                                     dynamic_text(
                                         &std::format!("\"{label_id:?}\""),
                                         TextSize::default()
                                     ),
-                                    text("\","),
+                                    text(","),
                                     space(),
                                 ]
                             )?;
@@ -420,7 +513,7 @@ impl Format<IrFormatContext> for ContentArrayStart {
         write!(f, [text("[")])?;
 
         f.write_elements([
-            FormatElement::Tag(StartGroup(None)),
+            FormatElement::Tag(StartGroup(tag::Group::new())),
             FormatElement::Tag(StartIndent),
             FormatElement::Line(LineMode::Soft),
         ])
@@ -585,7 +678,7 @@ mod tests {
 
         let document = Document::from(vec![
             FormatElement::Text(Text::Static { text: "[" }),
-            FormatElement::Tag(StartGroup(None)),
+            FormatElement::Tag(StartGroup(tag::Group::new())),
             FormatElement::Tag(StartIndent),
             FormatElement::Line(LineMode::Soft),
             FormatElement::Text(Text::Static { text: "a" }),

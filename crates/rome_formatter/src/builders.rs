@@ -1,5 +1,5 @@
 use crate::format_element::tag::{Condition, Tag};
-use crate::prelude::tag::{DedentMode, LabelId};
+use crate::prelude::tag::{DedentMode, GroupMode, LabelId};
 use crate::prelude::*;
 use crate::{format_element, write, Argument, Arguments, GroupId, TextRange, TextSize};
 use crate::{Buffer, VecBuffer};
@@ -1332,14 +1332,12 @@ impl<Context> Group<'_, Context> {
         self
     }
 
-    /// Setting the value to `true` forces the group and its enclosing group to expand regardless if it otherwise would fit on the
-    /// line or contains any hard line breaks.
+    /// Changes the [PrintMode] of the group from [`Flat`](PrintMode::Flat) to [`Expanded`](PrintMode::Expanded).
+    /// The result is that any soft-line break gets printed as a regular line break.
     ///
-    /// The formatter writes a [FormatElement::ExpandParent], forcing any enclosing group to expand, if `should_expand` is `true`.
-    /// It also omits the [`start`](Tag::StartGroup) and [`end`](Tag::EndGroup) tags because the group would be forced to expand anyway.
-    /// The [`start`](Tag::StartGroup) and [`end`](Tag::EndGroup) tags are only written if the `group_id` specified with [Group::with_group_id] isn't [None]
-    /// because other IR elements may reference the group with that group id and the printer may panic
-    /// if no group with the given id is present in the document.
+    /// This is useful for content rendered inside of a [FormatElement::BestFitting] that prints each variant
+    /// in [PrintMode::Flat] to change some content to be printed in [`Expanded`](PrintMode::Expanded) regardless.
+    /// See the documentation of the [`best_fitting`] macro for an example.
     pub fn should_expand(mut self, should_expand: bool) -> Self {
         self.should_expand = should_expand;
         self
@@ -1348,28 +1346,18 @@ impl<Context> Group<'_, Context> {
 
 impl<Context> Format<Context> for Group<'_, Context> {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        if self.group_id.is_none() && self.should_expand {
-            write!(f, [expand_parent()])?;
-            return f.write_fmt(Arguments::from(&self.content));
-        }
+        let mode = match self.should_expand {
+            true => GroupMode::Expand,
+            false => GroupMode::Flat,
+        };
 
-        let write_group = !self.should_expand || self.group_id.is_some();
-
-        if write_group {
-            f.write_element(FormatElement::Tag(Tag::StartGroup(self.group_id)))?;
-        }
-
-        if self.should_expand {
-            write!(f, [expand_parent()])?;
-        }
+        f.write_element(FormatElement::Tag(StartGroup(
+            tag::Group::new().with_id(self.group_id).with_mode(mode),
+        )))?;
 
         Arguments::from(&self.content).fmt(f)?;
 
-        if write_group {
-            f.write_element(FormatElement::Tag(Tag::EndGroup))?;
-        }
-
-        Ok(())
+        f.write_element(FormatElement::Tag(EndGroup))
     }
 }
 
@@ -1438,7 +1426,7 @@ impl<Context> Format<Context> for ExpandParent {
 ///
 /// The element has no special meaning if used outside of a `Group`. In that case, the content is always emitted.
 ///
-/// If you're looking for a way to only print something if the `Group` fits on a single line see [crate::if_group_fits_on_line].
+/// If you're looking for a way to only print something if the `Group` fits on a single line see [self::if_group_fits_on_line].
 ///
 /// # Examples
 ///
@@ -2119,19 +2107,24 @@ where
 /// Get the number of line breaks between two consecutive SyntaxNodes in the tree
 pub fn get_lines_before<L: Language>(next_node: &SyntaxNode<L>) -> usize {
     // Count the newlines in the leading trivia of the next node
-    if let Some(leading_trivia) = next_node.first_leading_trivia() {
-        leading_trivia
-            .pieces()
-            .take_while(|piece| {
-                // Stop at the first comment or skipped piece, the comment printer
-                // will handle newlines between the comment and the node
-                !(piece.is_comments() || piece.is_skipped())
-            })
-            .filter(|piece| piece.is_newline())
-            .count()
+    if let Some(token) = next_node.first_token() {
+        get_lines_before_token(&token)
     } else {
         0
     }
+}
+
+pub fn get_lines_before_token<L: Language>(token: &SyntaxToken<L>) -> usize {
+    token
+        .leading_trivia()
+        .pieces()
+        .take_while(|piece| {
+            // Stop at the first comment or skipped piece, the comment printer
+            // will handle newlines between the comment and the node
+            !(piece.is_comments() || piece.is_skipped())
+        })
+        .filter(|piece| piece.is_newline())
+        .count()
 }
 
 /// Builder to fill as many elements as possible on a single line.

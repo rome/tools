@@ -30,25 +30,19 @@ impl FormatNodeRule<JsArrayExpression> for FormatJsArrayExpression {
                     r_brack_token.format(),
                 ]
             )
-        } else if should_break(&elements)? {
-            write!(
-                f,
-                [
-                    l_brack_token.format(),
-                    block_indent(&elements.format()),
-                    r_brack_token.format()
-                ]
-            )
         } else {
             let group_id = f.group_id("array");
 
+            let should_expand = should_break(&elements)?;
             let elements = elements.format().with_options(Some(group_id));
 
             write!(
                 f,
                 [
                     l_brack_token.format(),
-                    group(&soft_block_indent(&elements)).with_group_id(Some(group_id)),
+                    group(&soft_block_indent(&elements))
+                        .with_group_id(Some(group_id))
+                        .should_expand(should_expand),
                     r_brack_token.format()
                 ]
             )

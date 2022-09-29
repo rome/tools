@@ -2,6 +2,7 @@ use crate::prelude::*;
 
 use crate::js::expressions::computed_member_expression::JsAnyComputedMemberLike;
 use crate::parentheses::NeedsParentheses;
+use crate::utils::member_chain::MemberChainLabel;
 use rome_formatter::{format_args, write};
 use rome_js_syntax::{
     JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAnyName, JsAssignmentExpression,
@@ -38,13 +39,34 @@ declare_node_union! {
 
 impl Format<JsFormatContext> for JsAnyStaticMemberLike {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        write!(f, [self.object().format()])?;
+        let is_member_chain = {
+            let mut recording = f.start_recording();
+            write!(recording, [self.object().format()])?;
 
-        let layout = self.layout()?;
+            recording
+                .stop()
+                .has_label(LabelId::of::<MemberChainLabel>())
+        };
+
+        let layout = self.layout(is_member_chain)?;
 
         match layout {
             StaticMemberLikeLayout::NoBreak => {
-                write!(f, [self.operator_token().format(), self.member().format()])
+                let format_no_break = format_with(|f| {
+                    write!(f, [self.operator_token().format(), self.member().format()])
+                });
+
+                if is_member_chain {
+                    write!(
+                        f,
+                        [labelled(
+                            LabelId::of::<MemberChainLabel>(),
+                            &format_no_break
+                        )]
+                    )
+                } else {
+                    write!(f, [format_no_break])
+                }
             }
             StaticMemberLikeLayout::BreakAfterObject => {
                 write!(
@@ -84,7 +106,7 @@ impl JsAnyStaticMemberLike {
         }
     }
 
-    fn layout(&self) -> SyntaxResult<StaticMemberLikeLayout> {
+    fn layout(&self, is_member_chain: bool) -> SyntaxResult<StaticMemberLikeLayout> {
         let parent = self.syntax().parent();
         let object = self.object()?;
 
@@ -108,7 +130,7 @@ impl JsAnyStaticMemberLike {
                         _ => false,
                     };
 
-                    if no_break {
+                    if no_break || is_member_chain {
                         return Ok(StaticMemberLikeLayout::NoBreak);
                     }
                 }

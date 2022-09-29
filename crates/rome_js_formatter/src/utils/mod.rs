@@ -6,7 +6,7 @@ pub mod string_utils;
 
 pub(crate) mod format_class;
 pub mod jsx;
-mod member_chain;
+pub(crate) mod member_chain;
 mod object;
 mod object_like;
 mod object_pattern_like;
@@ -23,7 +23,6 @@ pub(crate) use binary_like_expression::{
     needs_binary_like_parentheses, JsAnyBinaryLikeExpression, JsAnyBinaryLikeLeftExpression,
 };
 pub(crate) use conditional::{ConditionalJsxChain, JsAnyConditional};
-pub(crate) use member_chain::get_member_chain;
 pub(crate) use object_like::JsObjectLike;
 pub(crate) use object_pattern_like::JsObjectPatternLike;
 use rome_formatter::{format_args, write, Buffer};

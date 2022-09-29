@@ -1,8 +1,8 @@
 use crate::prelude::*;
 
 use crate::parentheses::{is_callee, is_member_object, is_spread, is_tag, NeedsParentheses};
-use rome_formatter::write;
-use rome_js_syntax::JsSyntaxNode;
+use rome_formatter::{format_args, write};
+use rome_js_syntax::{JsAnyExpression, JsSyntaxNode};
 use rome_js_syntax::{JsSyntaxKind, TsTypeAssertionExpression, TsTypeAssertionExpressionFields};
 
 #[derive(Debug, Clone, Default)]
@@ -21,15 +21,46 @@ impl FormatNodeRule<TsTypeAssertionExpression> for FormatTsTypeAssertionExpressi
             expression,
         } = node.as_fields();
 
-        write![
-            f,
-            [
-                l_angle_token.format(),
-                group(&soft_block_indent(&ty.format())),
-                r_angle_token.format(),
-                expression.format()
-            ]
-        ]
+        let expression = expression?;
+
+        let break_after_cast = !matches!(
+            expression,
+            JsAnyExpression::JsArrayExpression(_) | JsAnyExpression::JsObjectExpression(_)
+        );
+
+        let format_cast = format_with(|f| {
+            write!(
+                f,
+                [
+                    l_angle_token.format(),
+                    group(&soft_block_indent(&ty.format())),
+                    r_angle_token.format(),
+                ]
+            )
+        });
+
+        if break_after_cast {
+            let format_cast = format_cast.memoized();
+            let format_expression = expression.format().memoized();
+
+            write!(
+                f,
+                [best_fitting![
+                    format_args![format_cast, format_expression],
+                    format_args![
+                        format_cast,
+                        group(&format_args![
+                            text("("),
+                            block_indent(&format_expression),
+                            text(")")
+                        ])
+                    ],
+                    format_args![format_cast, format_expression]
+                ]]
+            )
+        } else {
+            write![f, [format_cast, expression.format()]]
+        }
     }
 
     fn needs_parentheses(&self, item: &TsTypeAssertionExpression) -> bool {

@@ -168,7 +168,7 @@ impl Format<JsFormatContext> for JsxSpace {
         write![
             formatter,
             [
-                if_group_breaks(&format_args![JsxRawSpace, hard_line_break()]),
+                if_group_breaks(&format_args![JsxRawSpace, soft_line_break()]),
                 if_group_fits_on_line(&space())
             ]
         ]

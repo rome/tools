@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/typeparams/class-method.ts
 ---
 
 # Input
@@ -110,21 +112,7 @@ const appIDs = createSelector(
 ```diff
 --- Prettier
 +++ Rome
-@@ -54,15 +54,19 @@
- export class Thing8 implements OtherThing {
-   do: (type: Type) => Provider<Prop> = memoize(
-     (type: ObjectType) =>
--      <Provider<Opts>>(
--        type.doSomething(withArgs, soIt, does, not, fit).extraCall()
--      ),
-+      <Provider<Opts>>type.doSomething(
-+        withArgs,
-+        soIt,
-+        does,
-+        not,
-+        fit,
-+      ).extraCall(),
-   );
+@@ -61,8 +61,8 @@
  }
  
  export class Thing9 implements OtherThing {
@@ -133,23 +121,6 @@ const appIDs = createSelector(
 +  do: (type: Type) => Provider<Prop> = memoize(
 +    (type: ObjectType) => type.doSomething(),
    );
- }
- 
-@@ -143,9 +147,13 @@
- 
- export class Thing19 implements OtherThing {
-   do: (type: Type) => Provider<Prop> = memoize(function (type: ObjectType) {
--    return <Provider<Opts>>(
--      type.doSomething(withArgs, soIt, does, not, fit).extraCall()
--    );
-+    return <Provider<Opts>>type.doSomething(
-+      withArgs,
-+      soIt,
-+      does,
-+      not,
-+      fit,
-+    ).extraCall();
-   });
  }
  
 ```
@@ -213,13 +184,9 @@ export class Thing7 implements OtherThing {
 export class Thing8 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(
     (type: ObjectType) =>
-      <Provider<Opts>>type.doSomething(
-        withArgs,
-        soIt,
-        does,
-        not,
-        fit,
-      ).extraCall(),
+      <Provider<Opts>>(
+        type.doSomething(withArgs, soIt, does, not, fit).extraCall()
+      ),
   );
 }
 
@@ -306,13 +273,9 @@ export class Thing18 implements OtherThing {
 
 export class Thing19 implements OtherThing {
   do: (type: Type) => Provider<Prop> = memoize(function (type: ObjectType) {
-    return <Provider<Opts>>type.doSomething(
-      withArgs,
-      soIt,
-      does,
-      not,
-      fit,
-    ).extraCall();
+    return <Provider<Opts>>(
+      type.doSomething(withArgs, soIt, does, not, fit).extraCall()
+    );
   });
 }
 

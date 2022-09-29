@@ -544,7 +544,7 @@ fn template_literal_contains_new_line(template: &JsTemplate) -> bool {
 /// ```
 ///
 /// Returns `false` because the template isn't on the same line as the '+' token.
-fn is_multiline_template_starting_on_same_line(template: &JsTemplate) -> bool {
+pub(crate) fn is_multiline_template_starting_on_same_line(template: &JsTemplate) -> bool {
     let contains_new_line = template_literal_contains_new_line(template);
 
     let starts_on_same_line = template.syntax().first_token().map_or(false, |token| {

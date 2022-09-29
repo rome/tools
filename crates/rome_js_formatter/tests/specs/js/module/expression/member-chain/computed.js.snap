@@ -19,7 +19,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 -----
 nock(/test/)
-	.matchHeader("Accept", "application/json")[httpMethodNock(method)]("/foo")
+	.matchHeader("Accept", "application/json")
+	[httpMethodNock(method)]("/foo")
 	.reply(200, {
 		foo: "bar",
 	});

@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/method-chain/first_long.js
 ---
 
 # Input
@@ -79,34 +81,6 @@ function f() {
    );
  }
  
-@@ -19,15 +20,16 @@
-   return this._getWorker(workerOptions)({
-     filePath,
-     hasteImplModulePath: this._options.hasteImplModulePath,
--  }).then((metadata) => {
--    // `1` for truthy values instead of `true` to save cache space.
--    fileMetadata[H.VISITED] = 1;
--    const metadataId = metadata.id;
--    const metadataModule = metadata.module;
--    if (metadataId && metadataModule) {
--      fileMetadata[H.ID] = metadataId;
--      setModule(metadataId, metadataModule);
--    }
--    fileMetadata[H.DEPENDENCIES] = metadata.dependencies || [];
--  });
-+  })
-+    .then((metadata) => {
-+      // `1` for truthy values instead of `true` to save cache space.
-+      fileMetadata[H.VISITED] = 1;
-+      const metadataId = metadata.id;
-+      const metadataModule = metadata.module;
-+      if (metadataId && metadataModule) {
-+        fileMetadata[H.ID] = metadataId;
-+        setModule(metadataId, metadataModule);
-+      }
-+      fileMetadata[H.DEPENDENCIES] = metadata.dependencies || [];
-+    });
- }
 ```
 
 # Output
@@ -134,18 +108,17 @@ function f() {
   return this._getWorker(workerOptions)({
     filePath,
     hasteImplModulePath: this._options.hasteImplModulePath,
-  })
-    .then((metadata) => {
-      // `1` for truthy values instead of `true` to save cache space.
-      fileMetadata[H.VISITED] = 1;
-      const metadataId = metadata.id;
-      const metadataModule = metadata.module;
-      if (metadataId && metadataModule) {
-        fileMetadata[H.ID] = metadataId;
-        setModule(metadataId, metadataModule);
-      }
-      fileMetadata[H.DEPENDENCIES] = metadata.dependencies || [];
-    });
+  }).then((metadata) => {
+    // `1` for truthy values instead of `true` to save cache space.
+    fileMetadata[H.VISITED] = 1;
+    const metadataId = metadata.id;
+    const metadataModule = metadata.module;
+    if (metadataId && metadataModule) {
+      fileMetadata[H.ID] = metadataId;
+      setModule(metadataId, metadataModule);
+    }
+    fileMetadata[H.DEPENDENCIES] = metadata.dependencies || [];
+  });
 }
 ```
 
