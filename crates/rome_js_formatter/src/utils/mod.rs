@@ -5,6 +5,7 @@ mod conditional;
 pub mod string_utils;
 
 pub(crate) mod format_class;
+pub(crate) mod function_body;
 pub mod jsx;
 pub(crate) mod member_chain;
 mod object;
@@ -43,19 +44,20 @@ pub(crate) use typescript::{
 /// ```javascript
 /// `connect(a, b, c)(d)`
 /// ```
-pub(crate) fn is_long_curried_call(expression: &JsCallExpression) -> bool {
-    if let Some(parent_call) = expression.parent::<JsCallExpression>() {
-        match (expression.arguments(), parent_call.arguments()) {
-            (Ok(arguments), Ok(parent_arguments)) => {
-                is_callee(expression.syntax(), parent_call.syntax())
+pub(crate) fn is_long_curried_call(expression: Option<&JsCallExpression>) -> bool {
+    if let Some(expression) = expression {
+        if let Some(parent_call) = expression.parent::<JsCallExpression>() {
+            if let (Ok(arguments), Ok(parent_arguments)) =
+                (expression.arguments(), parent_call.arguments())
+            {
+                return is_callee(expression.syntax(), parent_call.syntax())
                     && arguments.args().len() > parent_arguments.args().len()
-                    && !parent_arguments.args().is_empty()
+                    && !parent_arguments.args().is_empty();
             }
-            _ => false,
         }
-    } else {
-        false
     }
+
+    false
 }
 
 /// Utility function to format the separators of the nodes that belong to the unions

@@ -1,5 +1,6 @@
 use crate::prelude::*;
 
+use crate::utils::function_body::FormatMaybeCachedFunctionBody;
 use rome_formatter::{write, RemoveSoftLinesBuffer};
 use rome_js_syntax::{
     JsAnyBinding, JsFunctionBody, JsFunctionDeclaration, JsFunctionExportDefaultDeclaration,
@@ -26,6 +27,10 @@ declare_node_union! {
 }
 
 impl FormatFunction {
+    const fn is_function_expression(&self) -> bool {
+        matches!(self, FormatFunction::JsFunctionExpression(_))
+    }
+
     fn async_token(&self) -> Option<JsSyntaxToken> {
         match self {
             FormatFunction::JsFunctionDeclaration(declaration) => declaration.async_token(),
@@ -139,7 +144,7 @@ impl FormatFunction {
 
         write!(f, [type_parameters.format()])?;
 
-        let format_parameters = format_with(|f| {
+        let format_parameters = format_with(|f: &mut JsFormatter| {
             if expand {
                 let mut buffer = RemoveSoftLinesBuffer::new(f);
 
@@ -149,12 +154,12 @@ impl FormatFunction {
 
                 if recorded.will_break() {
                     return Err(FormatError::PoorLayout);
-                } else {
-                    Ok(())
                 }
             } else {
-                parameters.format().fmt(f)
+                parameters.format().fmt(f)?;
             }
+
+            Ok(())
         });
 
         write!(
@@ -182,7 +187,19 @@ impl FormatFunction {
         )?;
 
         if let Some(body) = self.body()? {
-            write!(f, [space(), body.format()])?;
+            write!(f, [space()])?;
+
+            if self.is_function_expression() {
+                write!(
+                    f,
+                    [FormatMaybeCachedFunctionBody {
+                        body: &body.clone().into(),
+                        lookup_cache: expand
+                    }]
+                )?;
+            } else {
+                write!(f, [body.format()])?;
+            }
         }
 
         Ok(())

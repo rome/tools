@@ -1,20 +1,28 @@
 use crate::comments::{FormatJsLeadingComment, JsCommentStyle, JsComments};
 use rome_formatter::printer::PrinterOptions;
 use rome_formatter::{
-    CstFormatContext, FormatContext, FormatOptions, IndentStyle, LineWidth, TransformSourceMap,
+    CstFormatContext, FormatContext, FormatElement, FormatOptions, IndentStyle, LineWidth,
+    TransformSourceMap,
 };
-use rome_js_syntax::{JsLanguage, SourceType};
+use rome_js_syntax::{JsAnyFunctionBody, JsLanguage, SourceType};
+use rome_rowan::syntax::SyntaxElementKey;
+use rome_rowan::AstNode;
+use rustc_hash::FxHashMap;
 use std::fmt;
 use std::fmt::Debug;
 use std::rc::Rc;
 use std::str::FromStr;
 
-#[derive(Debug, Clone)]
+#[derive(Clone)]
 pub struct JsFormatContext {
     options: JsFormatOptions,
 
     /// The comments of the nodes and tokens in the program.
     comments: Rc<JsComments>,
+
+    cache_function_bodies: bool,
+
+    cached_function_bodies: FxHashMap<SyntaxElementKey, FormatElement>,
 
     source_map: Option<TransformSourceMap>,
 }
@@ -24,8 +32,37 @@ impl JsFormatContext {
         Self {
             options,
             comments: Rc::new(comments),
+            cache_function_bodies: false,
+            cached_function_bodies: FxHashMap::default(),
             source_map: None,
         }
+    }
+
+    pub fn set_cache_function_bodies(&mut self, enabled: bool) {
+        self.cache_function_bodies = enabled;
+    }
+
+    pub fn is_cache_function_bodies_enabled(&self) -> bool {
+        self.cache_function_bodies
+    }
+
+    pub fn get_cached_function_body(&self, body: &JsAnyFunctionBody) -> Option<FormatElement> {
+        self.cached_function_bodies
+            .get(&body.syntax().key())
+            .cloned()
+    }
+
+    pub fn insert_cached_function_body(
+        &mut self,
+        body: &JsAnyFunctionBody,
+        formatted: FormatElement,
+    ) {
+        self.cached_function_bodies
+            .insert(body.syntax().key(), formatted);
+    }
+
+    pub fn clear_cached_function_bodies(&mut self) {
+        self.cached_function_bodies.clear();
     }
 
     pub fn with_source_map(mut self, source_map: Option<TransformSourceMap>) -> Self {

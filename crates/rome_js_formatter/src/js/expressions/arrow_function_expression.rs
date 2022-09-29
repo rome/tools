@@ -4,11 +4,12 @@ use rome_formatter::{
 };
 use std::iter::once;
 
-use crate::js::expressions::call_arguments::ExpandCallArgumentLayout;
+use crate::js::expressions::call_arguments::CallArgumentLayout;
 use crate::parentheses::{
     is_binary_like_left_or_right, is_callee, is_conditional_test,
     update_or_lower_expression_needs_parentheses, NeedsParentheses,
 };
+use crate::utils::function_body::FormatMaybeCachedFunctionBody;
 use crate::utils::{
     resolve_left_most_expression, AssignmentLikeLayout, JsAnyBinaryLikeLeftExpression,
 };
@@ -27,7 +28,7 @@ pub struct FormatJsArrowFunctionExpression {
 #[derive(Debug, Copy, Clone, Default)]
 pub struct FormatJsArrowFunctionExpressionOptions {
     pub assignment_layout: Option<AssignmentLikeLayout>,
-    pub call_arg_layout: Option<ExpandCallArgumentLayout>,
+    pub call_arg_layout: Option<CallArgumentLayout>,
 }
 
 impl FormatRuleWithOptions<JsArrowFunctionExpression> for FormatJsArrowFunctionExpression {
@@ -138,13 +139,18 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                     _ => false,
                 };
 
+                let format_body = FormatMaybeCachedFunctionBody {
+                    body: &body,
+                    lookup_cache: self.options.call_arg_layout.is_some(),
+                };
+
                 if body_has_soft_line_break && !should_add_parens && !body_has_leading_line_comment
                 {
-                    write![f, [format_signature, space(), body.format()]]
+                    write![f, [format_signature, space(), format_body]]
                 } else {
                     let is_last_call_arg = matches!(
                         self.options.call_arg_layout,
-                        Some(ExpandCallArgumentLayout::ExpandLastArg)
+                        Some(CallArgumentLayout::GroupedLastArgument)
                     );
 
                     write!(
@@ -157,7 +163,7 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                                         write!(f, [if_group_fits_on_line(&text("("))])?;
                                     }
 
-                                    write!(f, [body.format()])?;
+                                    write!(f, [format_body])?;
 
                                     if should_add_parens {
                                         write!(f, [if_group_fits_on_line(&text(")"))])?;
@@ -201,7 +207,7 @@ fn format_signature(
             write!(f, [async_token.format(), space()])?;
         }
 
-        let format_parameters = format_with(|f| {
+        let format_parameters = format_with(|f: &mut JsFormatter| {
             write!(f, [arrow.type_parameters().format()])?;
 
             match arrow.parameters()? {
@@ -423,6 +429,11 @@ impl Format<JsFormatContext> for ArrowChain {
         });
 
         let format_tail_body_inner = format_with(|f| {
+            let format_tail_body = FormatMaybeCachedFunctionBody {
+                body: &tail_body,
+                lookup_cache: self.options.call_arg_layout.is_some(),
+            };
+
             // Ensure that the parens of sequence expressions end up on their own line if the
             // body breaks
             if matches!(
@@ -433,12 +444,12 @@ impl Format<JsFormatContext> for ArrowChain {
                     f,
                     [group(&format_args![
                         text("("),
-                        soft_block_indent(&tail_body.format()),
+                        soft_block_indent(&format_tail_body),
                         text(")")
                     ])]
                 )
             } else {
-                write!(f, [tail_body.format()])
+                write!(f, [format_tail_body])
             }
         });
 
@@ -504,7 +515,7 @@ impl ArrowFunctionLayout {
                     next,
                 )) if matches!(
                     options.call_arg_layout,
-                    None | Some(ExpandCallArgumentLayout::ExpandLastArg)
+                    None | Some(CallArgumentLayout::GroupedLastArgument)
                 ) && !comments.is_suppressed(next.syntax()) =>
                 {
                     should_break = should_break || should_break_chain(&current)?;

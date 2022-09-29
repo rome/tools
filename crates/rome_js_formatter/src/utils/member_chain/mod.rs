@@ -361,7 +361,7 @@ impl Format<JsFormatContext> for MemberChain {
         });
 
         if self.tail.len() <= 1 && !has_comments {
-            return if is_long_curried_call(&self.root) {
+            return if is_long_curried_call(Some(&self.root)) {
                 write!(f, [format_one_line])
             } else {
                 write!(f, [group(&format_one_line)])

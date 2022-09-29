@@ -1,7 +1,7 @@
 use crate::prelude::*;
 
 use crate::js::declarations::function_declaration::FormatFunction;
-use crate::js::expressions::call_arguments::ExpandCallArgumentLayout;
+use crate::js::expressions::call_arguments::CallArgumentLayout;
 use crate::parentheses::{
     is_callee, is_first_in_statement, is_tag, FirstInStatementMode, NeedsParentheses,
 };
@@ -10,11 +10,11 @@ use rome_js_syntax::{JsFunctionExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsFunctionExpression {
-    call_argument_layout: Option<ExpandCallArgumentLayout>,
+    call_argument_layout: Option<CallArgumentLayout>,
 }
 
 impl FormatRuleWithOptions<JsFunctionExpression> for FormatJsFunctionExpression {
-    type Options = Option<ExpandCallArgumentLayout>;
+    type Options = Option<CallArgumentLayout>;
 
     fn with_options(mut self, options: Self::Options) -> Self {
         self.call_argument_layout = options;

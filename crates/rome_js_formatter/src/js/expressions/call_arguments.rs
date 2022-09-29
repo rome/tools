@@ -6,11 +6,10 @@ use crate::prelude::*;
 use crate::utils::{is_long_curried_call, write_arguments_multi_line};
 use rome_formatter::{format_args, format_element, write, CstFormatContext, VecBuffer};
 use rome_js_syntax::{
-    JsAnyArrowFunctionParameters, JsAnyBinding, JsAnyBindingPattern, JsAnyCallArgument,
-    JsAnyExpression, JsAnyFormalParameter, JsAnyFunctionBody, JsAnyLiteralExpression, JsAnyName,
-    JsAnyParameter, JsAnyStatement, JsArrowFunctionExpression, JsCallArgumentList, JsCallArguments,
-    JsCallArgumentsFields, JsCallExpression, JsExpressionStatement, JsFunctionExpression,
-    JsLanguage, JsParameters, TsAnyReturnType, TsType,
+    JsAnyArrowFunctionParameters, JsAnyCallArgument, JsAnyExpression, JsAnyFunctionBody,
+    JsAnyLiteralExpression, JsAnyName, JsAnyStatement, JsArrowFunctionExpression,
+    JsCallArgumentList, JsCallArguments, JsCallArgumentsFields, JsCallExpression,
+    JsExpressionStatement, JsFunctionExpression, JsLanguage, TsAnyReturnType, TsType,
 };
 use rome_rowan::{AstSeparatedElement, AstSeparatedList, SyntaxResult, SyntaxTokenText};
 
@@ -85,7 +84,7 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                     .map_or(0, |node| get_lines_before(node.syntax()));
                 has_empty_line = has_empty_line || leading_lines > 1;
 
-                FormatArgumentElement::Unformatted {
+                FormatCallArgument::Default {
                     element,
                     is_last: index == last_index,
                     leading_lines,
@@ -98,7 +97,7 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                 f,
                 [FormatAllArgsBrokenOut {
                     l_paren: &l_paren_token.format(),
-                    args: arguments.iter(),
+                    args: &arguments,
                     r_paren: &r_paren_token.format(),
                     expand: true,
                 }]
@@ -112,20 +111,41 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
 
         // if the first or last groups needs grouping, then we prepare some special formatting
         if should_group_first_argument || should_group_last_argument {
-            // We finished the "simple cases", we now need to use `best_fitting`.
-            // We now need to allocate a new vector with cached nodes, this is needed because
-            // we can't attempt to print the same node twice without incur in "printed token twice" errors.
-            // We also disallow the trailing separator, we are interested in doing it manually.
-            let (grouped_arg, other_args) = if should_group_first_argument {
-                let (first, tail) = arguments.split_at_mut(1);
-                (&mut first[0], tail)
-            } else {
-                let end_index = arguments.len().saturating_sub(1);
-                let (head, last) = arguments.split_at_mut(end_index);
-                (&mut last[0], head)
-            };
+            let was_caching_enabled = f.context().is_cache_function_bodies_enabled();
 
-            let non_grouped_breaks = other_args.iter_mut().any(|arg| arg.will_break(f));
+            let grouped_breaks = {
+                let (grouped_arg, other_args) = if should_group_first_argument {
+                    let (first, tail) = arguments.split_at_mut(1);
+                    (&mut first[0], tail)
+                } else {
+                    let end_index = arguments.len().saturating_sub(1);
+                    let (head, last) = arguments.split_at_mut(end_index);
+                    (&mut last[0], head)
+                };
+
+                let non_grouped_breaks = other_args.iter_mut().any(|arg| arg.will_break(f));
+
+                // if any of the not grouped elements break, then fall back to the variant where
+                // all arguments are printed in expanded mode.
+                if non_grouped_breaks {
+                    return write!(
+                        f,
+                        [FormatAllArgsBrokenOut {
+                            l_paren: &l_paren_token.format(),
+                            args: &arguments,
+                            r_paren: &r_paren_token.format(),
+                            expand: true
+                        }]
+                    );
+                }
+
+                f.context_mut().set_cache_function_bodies(true);
+                let grouped_breaks = grouped_arg.will_break(f);
+                f.context_mut()
+                    .set_cache_function_bodies(was_caching_enabled);
+
+                grouped_breaks
+            };
 
             // We now cache them the delimiters tokens. This is needed because `[rome_formatter::best_fitting]` will try to
             // print each version first
@@ -135,46 +155,7 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
             // tokens on the right
             let r_paren = r_paren_token.format().memoized();
 
-            if non_grouped_breaks {
-                return write!(
-                    f,
-                    [FormatAllArgsBrokenOut {
-                        l_paren: &l_paren,
-                        args: arguments.iter(),
-                        r_paren: &r_paren,
-                        expand: true
-                    }]
-                );
-            }
-
-            let grouped_breaks = grouped_arg.will_break(f);
-
-            drop(grouped_arg);
-            drop(other_args);
-
-            let last_index = arguments.len() - 1;
-            let grouped = arguments
-                .iter()
-                .enumerate()
-                .map(|(index, element)| {
-                    FormatGroupedElement {
-                        element,
-                        single_argument_list: last_index == 0,
-                        layout: if should_group_first_argument && index == 0 {
-                            Some(ExpandCallArgumentLayout::ExpandFirstArg)
-                        } else if should_group_last_argument && index == last_index {
-                            Some(ExpandCallArgumentLayout::ExpandLastArg)
-                        } else {
-                            None
-                        },
-                    }
-                    .memoized()
-                })
-                .collect::<Vec<_>>();
-
-            // TODO Possible to re-use most expanded variant for AllArgsBrokenOut rathern than having to allocate a new vec
-            // for groued
-            // Most expanded variant
+            // First write the most expanded variant because it needs `arguments`.
             let most_expanded = {
                 let mut buffer = VecBuffer::new(f.state_mut());
                 buffer.write_element(FormatElement::Tag(Tag::StartEntry))?;
@@ -183,17 +164,43 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                     buffer,
                     [FormatAllArgsBrokenOut {
                         l_paren: &l_paren,
-                        args: arguments.iter(),
+                        args: &arguments,
                         r_paren: &r_paren,
                         expand: true
                     }]
                 )?;
                 buffer.write_element(FormatElement::Tag(Tag::EndEntry))?;
 
-                buffer.into_vec().into_boxed_slice()
+                buffer.into_vec()
             };
 
-            // Write the most flat variant
+            // Now reformat the first or last argument in case they are either a function or
+            // an arrow function expression because they apply a custom formatting in case they are the first/last argument.
+            // This algorithm has quadratic complexity because the formatter now formats the
+            // first/last function or arrow expression nodes twice, once with "normal" and once with "special" formatting.
+            // This can be highly expensive in cases where the function like node has a large body because it happens
+            // that the whole body gets reformatted too.
+            let last_index = arguments.len() - 1;
+            let grouped = arguments
+                .into_iter()
+                .enumerate()
+                .map(|(index, argument)| {
+                    FormatGroupedArgument {
+                        argument,
+                        single_argument_list: last_index == 0,
+                        layout: if should_group_first_argument && index == 0 {
+                            Some(CallArgumentLayout::GroupedFirstArgument)
+                        } else if should_group_last_argument && index == last_index {
+                            Some(CallArgumentLayout::GroupedLastArgument)
+                        } else {
+                            None
+                        },
+                    }
+                    .memoized()
+                })
+                .collect::<Vec<_>>();
+
+            // Write the most flat variant with the first or last argument grouped.
             let most_flat = {
                 let snapshot = f.state_snapshot();
                 let mut buffer = VecBuffer::new(f.state_mut());
@@ -212,19 +219,17 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                     ]
                 );
 
+                // If it happens that the formatting of the
                 if matches!(result, Err(FormatError::PoorLayout)) {
                     drop(buffer);
                     f.restore_state_snapshot(snapshot);
 
-                    return write!(
-                        f,
-                        [FormatAllArgsBrokenOut {
-                            l_paren: &l_paren,
-                            args: arguments.iter(),
-                            r_paren: &r_paren,
-                            expand: true
-                        }]
-                    );
+                    let mut most_expanded_iter = most_expanded.into_iter();
+                    // Skip over the Start/EndEntry items.
+                    most_expanded_iter.next();
+                    most_expanded_iter.next_back();
+
+                    return f.write_elements(most_expanded_iter);
                 }
 
                 buffer.write_element(FormatElement::Tag(Tag::EndEntry))?;
@@ -232,7 +237,14 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                 buffer.into_vec().into_boxed_slice()
             };
 
-            // Write second variant
+            // All arguments have been formatted by now, safe to clear the cache.
+            // Clearing the cache is important to avoid that it isn't growing too large, which requires
+            // expensive re-hashing and re-allocating of the map.
+            if !was_caching_enabled {
+                f.context_mut().clear_cached_function_bodies();
+            }
+
+            // Write the second variant that forces the group of the first/last argument to expand.
             let middle_variant = {
                 let mut buffer = VecBuffer::new(f.state_mut());
 
@@ -279,11 +291,11 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                     format_element::BestFitting::from_vec_unchecked(vec![
                         most_flat,
                         middle_variant,
-                        most_expanded,
+                        most_expanded.into_boxed_slice(),
                     ]),
                 ))
             }
-        } else if call_expression.as_ref().map_or(false, is_long_curried_call) {
+        } else if is_long_curried_call(call_expression.as_ref()) {
             write!(
                 f,
                 [
@@ -299,7 +311,7 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                 f,
                 [FormatAllArgsBrokenOut {
                     l_paren: &l_paren_token.format(),
-                    args: arguments.iter(),
+                    args: &arguments,
                     r_paren: &r_paren_token.format(),
                     expand: false
                 }]
@@ -313,24 +325,39 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
     }
 }
 
-enum FormatArgumentElement {
-    Unformatted {
+/// Helper for formatting a call argument
+enum FormatCallArgument {
+    /// Argument that has not been inspected if its formatted content breaks.
+    Default {
         element: AstSeparatedElement<JsLanguage, JsAnyCallArgument>,
+
+        /// Whether this is the last element.
         is_last: bool,
+
+        /// The number of lines before this node
         leading_lines: usize,
     },
-    // TODO use memoized?
-    Memoized {
+
+    /// The argument has been formatted because a caller inspected if it [Self::will_break].
+    ///
+    /// Allows to re-use the formatted output rather than having to call into the formatting again.
+    Inspected {
+        /// The formatted element
         content: FormatResult<Option<FormatElement>>,
+
+        /// The separated element
         element: AstSeparatedElement<JsLanguage, JsAnyCallArgument>,
+
+        /// The lines before this element
         leading_lines: usize,
     },
 }
 
-impl FormatArgumentElement {
+impl FormatCallArgument {
+    /// Returns `true` if this argument contains any content that forces a group to [`break`](FormatElements::will_break).
     fn will_break(&mut self, f: &mut JsFormatter) -> bool {
         let breaks = match &self {
-            FormatArgumentElement::Unformatted {
+            FormatCallArgument::Default {
                 element,
                 leading_lines,
                 ..
@@ -342,46 +369,49 @@ impl FormatArgumentElement {
                     _ => false,
                 };
 
-                *self = FormatArgumentElement::Memoized {
+                *self = FormatCallArgument::Inspected {
                     content: interned,
                     element: element.clone(),
                     leading_lines: *leading_lines,
                 };
                 breaks
             }
-            FormatArgumentElement::Memoized {
+            FormatCallArgument::Inspected {
                 content: Ok(Some(result)),
                 ..
             } => result.will_break(),
-            FormatArgumentElement::Memoized { .. } => false,
+            FormatCallArgument::Inspected { .. } => false,
         };
 
         breaks
     }
 
+    /// Returns the number of leading lines before the argument's node
     fn leading_lines(&self) -> usize {
         match self {
-            FormatArgumentElement::Unformatted { leading_lines, .. } => *leading_lines,
-            FormatArgumentElement::Memoized { leading_lines, .. } => *leading_lines,
+            FormatCallArgument::Default { leading_lines, .. } => *leading_lines,
+            FormatCallArgument::Inspected { leading_lines, .. } => *leading_lines,
         }
     }
 
+    /// Returns the [`separated element`](AstSeparatedElement) of this argument.
     fn element(&self) -> &AstSeparatedElement<JsLanguage, JsAnyCallArgument> {
         match self {
-            FormatArgumentElement::Unformatted { element, .. } => element,
-            FormatArgumentElement::Memoized { element, .. } => element,
+            FormatCallArgument::Default { element, .. } => element,
+            FormatCallArgument::Inspected { element, .. } => element,
         }
     }
 }
 
-impl Format<JsFormatContext> for FormatArgumentElement {
+impl Format<JsFormatContext> for FormatCallArgument {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         match self {
-            FormatArgumentElement::Memoized { content, .. } => match content.clone()? {
+            // Re-use the cached formatted output if there is any.
+            FormatCallArgument::Inspected { content, .. } => match content.clone()? {
                 Some(element) => f.write_element(element),
                 None => Ok(()),
             },
-            FormatArgumentElement::Unformatted {
+            FormatCallArgument::Default {
                 element, is_last, ..
             } => {
                 let node = element.node()?;
@@ -404,199 +434,182 @@ impl Format<JsFormatContext> for FormatArgumentElement {
     }
 }
 
-struct FormatFirstGroupedElement<'a> {
-    element: &'a FormatArgumentElement,
+/// Helper for formatting the first grouped argument (see [should_group_first_argument]).
+struct FormatGroupedFirstArgument<'a> {
+    argument: &'a FormatCallArgument,
+
+    /// Whether this is the only argument in the argument list.
     is_only: bool,
 }
 
-impl Format<JsFormatContext> for FormatFirstGroupedElement<'_> {
+impl Format<JsFormatContext> for FormatGroupedFirstArgument<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         use JsAnyExpression::*;
 
-        let element = self.element.element();
+        let element = self.argument.element();
 
         match element.node()? {
-            JsAnyCallArgument::JsAnyExpression(JsArrowFunctionExpression(arrow))
-                if !is_simple_arrow_function_expression(arrow) =>
-            {
-                let was_enabled = f.state().is_token_tracking_enabled();
+            // Call the arrow function formatting but explicitly passes the call argument layout down
+            // so that the arrow function formatting removes any soft line breaks between parameters and the return type.
+            JsAnyCallArgument::JsAnyExpression(JsArrowFunctionExpression(arrow)) => {
+                with_token_tracking_disabled(f, |f| {
+                    write!(
+                        f,
+                        [arrow
+                            .format()
+                            .with_options(FormatJsArrowFunctionExpressionOptions {
+                                assignment_layout: None,
+                                call_arg_layout: Some(CallArgumentLayout::GroupedFirstArgument)
+                            })]
+                    )?;
 
-                f.state_mut().set_token_tracking_enabled(false);
-
-                write!(
-                    f,
-                    [arrow
-                        .format()
-                        .with_options(FormatJsArrowFunctionExpressionOptions {
-                            assignment_layout: None,
-                            call_arg_layout: Some(ExpandCallArgumentLayout::ExpandFirstArg)
-                        })]
-                )?;
-
-                match element.trailing_separator()? {
-                    None => {
-                        if !self.is_only {
-                            return Err(FormatError::SyntaxError);
+                    match element.trailing_separator()? {
+                        None => {
+                            if !self.is_only {
+                                return Err(FormatError::SyntaxError);
+                            }
+                        }
+                        // The separator is added inside of the arrow function formatting
+                        Some(separator) => {
+                            if self.is_only {
+                                write!(f, [format_removed(separator)])?;
+                            } else {
+                                write!(f, [separator.format()])?;
+                            }
                         }
                     }
-                    Some(separator) => {
-                        if self.is_only {
-                            write!(f, [format_removed(separator)])?;
-                        } else {
-                            write!(f, [separator.format()])?;
-                        }
-                    }
-                }
 
-                f.state_mut().set_token_tracking_enabled(was_enabled);
-
-                Ok(())
+                    Ok(())
+                })
             }
-            _ => self.element.fmt(f),
+
+            // For all other nodes, use the normal formatting (which already has been cached)
+            _ => self.argument.fmt(f),
         }
     }
 }
 
-struct FormatLastGroupElement<'a> {
-    element: &'a FormatArgumentElement,
+/// Helper for formatting the last grouped argument (see [should_group_last_argument]).
+struct FormatGroupedLastArgument<'a> {
+    argument: &'a FormatCallArgument,
     /// Is this the only argument in the arguments list
     is_only: bool,
 }
 
-impl Format<JsFormatContext> for FormatLastGroupElement<'_> {
+impl Format<JsFormatContext> for FormatGroupedLastArgument<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         use JsAnyExpression::*;
-        let element = self.element.element();
+        let element = self.argument.element();
 
+        // For function and arrow expressions, re-format the node and pass the argument that it is the
+        // last grouped argument. This changes the formatting of parameters, type parameters, and return types
+        // to remove any soft line breaks.
         match element.node()? {
             JsAnyCallArgument::JsAnyExpression(JsFunctionExpression(function))
-                if !self.is_only && !is_simple_function_expression(function) =>
+                if !self.is_only && !has_no_parameters(function) =>
             {
-                let was_enabled = f.state().is_token_tracking_enabled();
-
-                f.state_mut().set_token_tracking_enabled(false);
-
-                write!(
-                    f,
-                    [function
-                        .format()
-                        .with_options(Some(ExpandCallArgumentLayout::ExpandLastArg))]
-                )?;
-
-                f.state_mut().set_token_tracking_enabled(was_enabled);
-
-                Ok(())
+                with_token_tracking_disabled(f, |f| {
+                    write!(
+                        f,
+                        [function
+                            .format()
+                            .with_options(Some(CallArgumentLayout::GroupedLastArgument))]
+                    )
+                })
             }
-            JsAnyCallArgument::JsAnyExpression(JsArrowFunctionExpression(arrow))
-                if !is_simple_arrow_function_expression(arrow) =>
-            {
-                let was_enabled = f.state().is_token_tracking_enabled();
 
-                f.state_mut().set_token_tracking_enabled(false);
+            JsAnyCallArgument::JsAnyExpression(JsArrowFunctionExpression(arrow)) => {
+                with_token_tracking_disabled(f, |f| {
+                    write!(
+                        f,
+                        [arrow
+                            .format()
+                            .with_options(FormatJsArrowFunctionExpressionOptions {
+                                assignment_layout: None,
+                                call_arg_layout: Some(CallArgumentLayout::GroupedLastArgument)
+                            })]
+                    )?;
 
-                write!(
-                    f,
-                    [arrow
-                        .format()
-                        .with_options(FormatJsArrowFunctionExpressionOptions {
-                            assignment_layout: None,
-                            call_arg_layout: Some(ExpandCallArgumentLayout::ExpandLastArg)
-                        })]
-                )?;
+                    if let Some(separator) = element.trailing_separator()? {
+                        write!(f, [format_removed(&separator)])?;
+                    }
 
-                if let Some(separator) = element.trailing_separator()? {
-                    write!(f, [format_removed(&separator)])?;
-                }
-
-                f.state_mut().set_token_tracking_enabled(was_enabled);
-
-                Ok(())
+                    Ok(())
+                })
             }
-            _ => self.element.fmt(f),
+            _ => self.argument.fmt(f),
         }
     }
 }
 
-fn is_simple_function_expression(expression: &JsFunctionExpression) -> bool {
+/// Disable the token tracking because it is necessary to format function/arrow expressions slighlty different.
+fn with_token_tracking_disabled<F: FnOnce(&mut JsFormatter) -> R, R>(
+    f: &mut JsFormatter,
+    callback: F,
+) -> R {
+    let was_enabled = f.state().is_token_tracking_enabled();
+    f.state_mut().set_token_tracking_enabled(false);
+
+    let result = callback(f);
+
+    f.state_mut().set_token_tracking_enabled(was_enabled);
+
+    result
+}
+
+/// Tests if `expression` has an empty parameters list.
+fn has_no_parameters(expression: &JsFunctionExpression) -> bool {
     match expression.parameters() {
-        // Use default formatting for expressions without parameters, will return an Err anyway
+        // Use default formatting for expressions without parameters, will return `Err` anyway
         Err(_) => true,
         Ok(parameters) => parameters.items().is_empty(),
     }
 }
 
-fn is_simple_arrow_function_expression(expression: &JsArrowFunctionExpression) -> bool {
-    expression.parameters().map_or(false, |parameters| parameters.is_empty()) && expression.return_type_annotation().is_none() &&
-        // expand last args disables arrow chain formatting so it's necessary to call the formatting again.
-        !matches!(expression.body(), Ok(JsAnyFunctionBody::JsAnyExpression(JsArrowFunctionExpression_)))
-}
+/// Helper for formatting a grouped call argument (see [should_group_first_argument] and [should_group_last_argument]).
+struct FormatGroupedArgument {
+    argument: FormatCallArgument,
 
-fn is_simple_parameters(parameters: &JsParameters) -> bool {
-    let items = parameters.items();
-
-    match items.first() {
-        None => true,
-        Some(Ok(JsAnyParameter::JsAnyFormalParameter(
-            JsAnyFormalParameter::JsFormalParameter(formal),
-        ))) if items.len() == 1 => {
-            matches!(
-                formal.binding(),
-                Ok(JsAnyBindingPattern::JsAnyBinding(
-                    JsAnyBinding::JsIdentifierBinding(_)
-                ))
-            ) && formal.type_annotation().is_none()
-                && formal.initializer().is_none()
-        }
-        _ => false,
-    }
-}
-
-struct FormatGroupedElement<'a> {
-    element: &'a FormatArgumentElement,
+    /// Whether this argument is the only argument in the argument list.
     single_argument_list: bool,
-    layout: Option<ExpandCallArgumentLayout>,
+
+    /// The layout to use for this argument.
+    layout: Option<CallArgumentLayout>,
 }
 
-impl Format<JsFormatContext> for FormatGroupedElement<'_> {
+impl Format<JsFormatContext> for FormatGroupedArgument {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         match self.layout {
-            Some(ExpandCallArgumentLayout::ExpandFirstArg) => FormatFirstGroupedElement {
-                element: &self.element,
+            Some(CallArgumentLayout::GroupedFirstArgument) => FormatGroupedFirstArgument {
+                argument: &self.argument,
                 is_only: self.single_argument_list,
             }
             .fmt(f),
-            Some(ExpandCallArgumentLayout::ExpandLastArg) => FormatLastGroupElement {
-                element: &self.element,
+            Some(CallArgumentLayout::GroupedLastArgument) => FormatGroupedLastArgument {
+                argument: &self.argument,
                 is_only: self.single_argument_list,
             }
             .fmt(f),
-            None => self.element.fmt(f),
+            None => self.argument.fmt(f),
         }
     }
 }
 
-trait FormatArgumentEntry: Format<JsFormatContext> {
-    fn leading_lines(&self) -> usize;
-}
-
-struct FormatAllArgsBrokenOut<'a, I> {
+struct FormatAllArgsBrokenOut<'a> {
     l_paren: &'a dyn Format<JsFormatContext>,
-    args: I,
+    args: &'a [FormatCallArgument],
     r_paren: &'a dyn Format<JsFormatContext>,
     expand: bool,
 }
 
-impl<'a, I> Format<JsFormatContext> for FormatAllArgsBrokenOut<'a, I>
-where
-    I: Iterator<Item = &'a FormatArgumentElement> + Clone,
-{
+impl<'a> Format<JsFormatContext> for FormatAllArgsBrokenOut<'a> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         write!(
             f,
             [group(&format_args![
                 self.l_paren,
                 soft_block_indent(&format_with(|f| {
-                    for (index, entry) in self.args.clone().enumerate() {
+                    for (index, entry) in self.args.iter().enumerate() {
                         if index > 0 {
                             match entry.leading_lines() {
                                 0 | 1 => write!(f, [soft_line_break_or_space()])?,
@@ -617,9 +630,9 @@ where
 }
 
 #[derive(Copy, Clone, Debug)]
-pub enum ExpandCallArgumentLayout {
-    ExpandLastArg,
-    ExpandFirstArg,
+pub enum CallArgumentLayout {
+    GroupedLastArgument,
+    GroupedFirstArgument,
 }
 
 /// Checks if the the first argument requires grouping
@@ -659,7 +672,7 @@ fn should_group_first_argument(
     }
 }
 
-/// Checks if the last group requires grouping
+/// Checks if the last argument should be grouped.
 fn should_group_last_argument(
     list: &JsCallArgumentList,
     comments: &JsComments,
@@ -716,7 +729,7 @@ fn should_group_last_argument(
     }
 }
 
-/// Checks if the current argument could be grouped
+/// Checks if `argument` benefits from grouping in call arguments.
 fn can_group_expression_argument(
     argument: &JsAnyExpression,
     is_arrow_recursion: bool,
