@@ -32,10 +32,10 @@ foo
   
       | <span style="color: rgb(38, 148, 255);">@@ -1,3 +1,3 @@</span>
   0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">&lt;&gt;</span>
-    0 | <span style="color: MediumSeaGreen;">+ </span>
+    0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">&quot;</span>
   1 1 |   foo
   2   | <span style="color: Tomato;">- </span><span style="color: Tomato;">&lt;/&gt;</span>
-    2 | <span style="color: MediumSeaGreen;">+ </span>
+    2 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">&quot;</span>
   
 </code></pre>{% endraw %}
 
@@ -60,10 +60,10 @@ foo
   
       | <span style="color: rgb(38, 148, 255);">@@ -1,3 +1,3 @@</span>
   0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">&lt;React.Fragment&gt;</span>
-    0 | <span style="color: MediumSeaGreen;">+ </span>
+    0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">&quot;</span>
   1 1 |   foo
   2   | <span style="color: Tomato;">- </span><span style="color: Tomato;">&lt;/React.Fragment&gt;</span>
-    2 | <span style="color: MediumSeaGreen;">+ </span>
+    2 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">&quot;</span>
   
 </code></pre>{% endraw %}
 
