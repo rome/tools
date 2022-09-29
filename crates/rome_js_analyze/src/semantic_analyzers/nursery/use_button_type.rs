@@ -1,4 +1,4 @@
-use crate::react::is_react_create_element;
+use crate::react::{as_react_create_element, ReactApiCall};
 use crate::semantic_services::Semantic;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::codespan::Severity;
@@ -100,7 +100,7 @@ impl Rule for UseButtonType {
             }
             UseButtonTypeQuery::JsCallExpression(call_expression) => {
                 let model = ctx.model();
-                if let Some(react_create_element) = is_react_create_element(call_expression, model)
+                if let Some(react_create_element) = as_react_create_element(call_expression, model)
                 {
                     // first argument needs to be a string
                     let first_argument = react_create_element

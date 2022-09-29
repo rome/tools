@@ -1,4 +1,4 @@
-use crate::react::{is_react_create_element, ReactCreateElementCall};
+use crate::react::{as_react_create_element, ReactCreateElementCall};
 use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleCategory, RuleDiagnostic};
@@ -65,7 +65,7 @@ impl Rule for NoDangerouslySetInnerHtml {
                 }
             }
             JsAnyCreateElement::JsCallExpression(call_expression) => {
-                if let Some(react_create_element) = is_react_create_element(call_expression, model)
+                if let Some(react_create_element) = as_react_create_element(call_expression, model)
                 {
                     let ReactCreateElementCall { props, .. } = react_create_element;
                     // if we are inside a create element call, we inspect the second argument, which

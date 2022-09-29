@@ -155,6 +155,7 @@ export interface Correctness {
  * A list of rules that belong to this group
  */
 export interface Nursery {
+	noArrayIndexKey?: RuleConfiguration;
 	noDangerouslySetInnerHtml?: RuleConfiguration;
 	noNewSymbol?: RuleConfiguration;
 	noRenderReturnValue?: RuleConfiguration;
@@ -302,6 +303,7 @@ export type Category =
 	| "lint/nursery/noVoidElementsWithChildren"
 	| "lint/nursery/noChildrenProp"
 	| "lint/nursery/useFragmentSyntax"
+	| "lint/nursery/noArrayIndexKey"
 	| "lint/style/noNegationElse"
 	| "lint/style/noShoutyConstants"
 	| "lint/style/useSelfClosingElements"
