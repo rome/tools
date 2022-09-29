@@ -33,30 +33,29 @@ use crate::ts::types::undefined_type::FormatTsUndefinedType;
 use crate::ts::types::union_type::FormatTsUnionType;
 use crate::ts::types::unknown_type::FormatTsUnknownType;
 use crate::ts::types::void_type::FormatTsVoidType;
-use crate::utils::should_hug_type;
 use crate::JsCommentStyle;
-use rome_formatter::{comments::CommentStyle, write};
+use rome_formatter::{comments::CommentStyle, write, FormatRuleWithOptions};
 use rome_js_syntax::{JsLanguage, TsType, TsUnionType, TsUnionTypeVariantList};
 use rome_rowan::{AstSeparatedElement, AstSeparatedList};
 
 #[derive(Debug, Clone, Default)]
-pub struct FormatTsUnionTypeVariantList;
+pub struct FormatTsUnionTypeVariantList {
+    should_hug: bool,
+}
+
+impl FormatRuleWithOptions<TsUnionTypeVariantList> for FormatTsUnionTypeVariantList {
+    type Options = bool;
+
+    fn with_options(mut self, options: Self::Options) -> Self {
+        self.should_hug = options;
+        self
+    }
+}
 
 impl FormatRule<TsUnionTypeVariantList> for FormatTsUnionTypeVariantList {
     type Context = JsFormatContext;
 
     fn fmt(&self, node: &TsUnionTypeVariantList, f: &mut JsFormatter) -> FormatResult<()> {
-        // ```ts
-        // {
-        //   a: string
-        // } | null | void
-        // ```
-        // should be inlined and not be printed in the multi-line variant
-        let should_hug = node
-            .parent::<TsType>()
-            .as_ref()
-            .map_or(false, should_hug_type);
-
         let last_index = node.len().saturating_sub(1);
 
         f.join_with(space())
@@ -67,7 +66,7 @@ impl FormatRule<TsUnionTypeVariantList> for FormatTsUnionTypeVariantList {
                         last: index == last_index,
                         list: node,
                         element: item,
-                        should_hug,
+                        should_hug: self.should_hug,
                     }),
             )
             .finish()
