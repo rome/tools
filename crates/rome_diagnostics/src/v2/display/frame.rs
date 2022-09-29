@@ -7,8 +7,8 @@ use std::{
 };
 
 use rome_console::{fmt, markup};
-use rome_text_edit::TextRange;
-use rome_text_size::TextSize;
+use rome_text_size::{TextRange, TextSize};
+use unicode_width::UnicodeWidthChar;
 
 use crate::v2::{
     location::{BorrowedSourceCode, LineIndex},
@@ -175,19 +175,29 @@ pub(super) fn print_frame(fmt: &mut fmt::Formatter<'_>, location: Location<'_>) 
 
             let marker = if is_first_line && is_last_line {
                 // Only line in the selection
-                let start_index = start_location.column_number.to_zero_indexed();
-                let end_index = end_location.column_number.to_zero_indexed();
-                Some(start_index..end_index)
+                let start_index =
+                    TextSize::try_from(start_location.column_number.to_zero_indexed())
+                        .expect("integer overflow");
+                let end_index = TextSize::try_from(end_location.column_number.to_zero_indexed())
+                    .expect("integer overflow");
+                Some(TextRange::new(start_index, end_index))
             } else if is_first_line {
                 // First line in selection
-                let start_index = start_location.column_number.to_zero_indexed();
-                let end_index = line_text.len();
-                Some(start_index..end_index)
+                let start_index =
+                    TextSize::try_from(start_location.column_number.to_zero_indexed())
+                        .expect("integer overflow");
+                let end_index = TextSize::of(line_text);
+                Some(TextRange::new(start_index, end_index))
             } else if is_last_line {
                 // Last line in selection
-                let start_index = line_text.len().saturating_sub(line_text.trim_start().len());
-                let end_index = end_location.column_number.to_zero_indexed();
-                Some(start_index..end_index)
+                let start_index = TextSize::of(line_text)
+                    .checked_sub(TextSize::of(line_text.trim_start()))
+                    // SAFETY: The length of `line_text.trim_start()` should
+                    // never be larger than `line_text` itself
+                    .expect("integer overflow");
+                let end_index = TextSize::try_from(end_location.column_number.to_zero_indexed())
+                    .expect("integer overflow");
+                Some(TextRange::new(start_index, end_index))
             } else {
                 None
             };
@@ -201,11 +211,28 @@ pub(super) fn print_frame(fmt: &mut fmt::Formatter<'_>, location: Location<'_>) 
                     <Emphasis>"   \u{2502} "</Emphasis>
                 })?;
 
-                for _ in 0..marker.start {
-                    fmt.write_str(" ")?;
+                // Align the start of the marker with the line above by a
+                // number of space characters equal to the unicode print width
+                // of the leading part of the line (before the start of the
+                // marker), with a special exception for tab characters that
+                // still get printed as tabs to respect the user-defined tab
+                // display width
+                let leading_range = TextRange::new(TextSize::from(0), marker.start());
+                for c in line_text[leading_range].chars() {
+                    match c {
+                        '\t' => fmt.write_str("\t")?,
+                        _ => {
+                            if let Some(width) = c.width() {
+                                for _ in 0..width {
+                                    fmt.write_str(" ")?;
+                                }
+                            }
+                        }
+                    }
                 }
 
-                for _ in marker.start..marker.end {
+                let marker_width = text_width(&line_text[marker]);
+                for _ in 0..marker_width {
                     fmt.write_markup(markup! {
                         <Emphasis><Error>'^'</Error></Emphasis>
                     })?;
@@ -232,6 +259,22 @@ fn calculate_print_width(mut value: OneIndexed) -> NonZeroUsize {
     }
 
     width
+}
+
+/// We need to set a value here since we have no way of knowing what the user's
+/// preferred tab display width is, so this is set to `2` to match how tab
+/// characters are printed by [print_invisibles]
+const TAB_WIDTH: usize = 2;
+
+/// Compute the unicode display width of a string, with the width of tab
+/// characters set to [TAB_WIDTH] and the width of control characters set to 0
+fn text_width(text: &str) -> usize {
+    text.chars()
+        .map(|char| match char {
+            '\t' => TAB_WIDTH,
+            _ => char.width().unwrap_or(0),
+        })
+        .sum()
 }
 
 struct PrintInvisiblesOptions {
