@@ -15,7 +15,7 @@ use crate::v2::{
     LineIndexBuf, Location,
 };
 
-// SAFETY: These constant `NonZeroUsize` are being initialized with non-zero values
+// SAFETY: These constants `NonZeroUsize` are being initialized with non-zero values
 const ONE: NonZeroUsize = unsafe { NonZeroUsize::new_unchecked(1) };
 const CODE_FRAME_CONTEXT_LINES: NonZeroUsize = unsafe { NonZeroUsize::new_unchecked(2) };
 
