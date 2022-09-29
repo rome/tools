@@ -26,7 +26,7 @@ You can now ignore folders and files using the Unix shell style patterns:
 ### Formatter
 
 - Completely revamped how the formatter handles comments and their placement inside the code [#3277](https://github.com/rome/tools/pull/3227)
-- Better formatting for TypeScript intersection and unions [#3162](https://github.com/rome/tools/issues/3162)
+- Improved formatting of intersection and unions types [#3162](https://github.com/rome/tools/issues/3162)
 - Refactored the internal representation of the formatter IR, improving performance between 3-20% [#3160](https://github.com/rome/tools/pull/3160)
 
 
