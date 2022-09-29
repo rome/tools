@@ -33,7 +33,7 @@ You can now ignore folders and files using the Unix shell style patterns:
 
 ### Linter 
 
-- **BREAKING CHANGE**: we completely changed how our groups are named. Some of the previous groups
+- **BREAKING CHANGE**: This release changes the naming of the lint rule groups with the goal to make them language agnostic and avoid confusion among users and contributors.
 were named after a language, and this caused confusion among users and contributors. Please
 check our [website](https://rome.tools/docs/lint/rules/) to know better about the new groups.
 The new groups are heavily inspired from [`clippy`](https://github.com/rust-lang/rust-clippy#clippy)
