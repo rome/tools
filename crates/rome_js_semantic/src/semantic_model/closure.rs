@@ -22,7 +22,7 @@ pub struct AllCapturesIter {
     data: Arc<SemanticModelData>,
     closure_range: TextRange,
     scopes: Vec<usize>,
-    references: Vec<ScopeReference>
+    references: Vec<ScopeReference>,
 }
 
 impl Iterator for AllCapturesIter {
@@ -36,7 +36,7 @@ impl Iterator for AllCapturesIter {
                     return Some(Reference {
                         data: self.data.clone(),
                         node: self.data.node_by_range[&reference.range].clone(),
-                        range: reference.range.clone(),
+                        range: reference.range,
                         ty: reference.ty,
                     });
                 }
@@ -54,20 +54,20 @@ impl Iterator for AllCapturesIter {
                     }
                     _ => {
                         self.references.clear();
-                        self.references.extend(scope.read_references.iter().cloned());
-                        self.references.extend(scope.write_references.iter().cloned());
+                        self.references
+                            .extend(scope.read_references.iter().cloned());
+                        self.references
+                            .extend(scope.write_references.iter().cloned());
                         self.scopes.extend(scope.children.iter());
                         continue 'references;
                     }
                 }
             }
-               
+
             return None;
         }
     }
-
 }
-
 
 pub struct ChildrenIter {
     data: Arc<SemanticModelData>,
@@ -100,7 +100,6 @@ impl Iterator for ChildrenIter {
 
         None
     }
-
 }
 
 /// Provides all information regarding a specific closure.
@@ -151,13 +150,13 @@ impl Closure {
         let mut scopes = Vec::with_capacity(128);
         scopes.extend(scope.children.iter().cloned());
 
-        let mut references =  Vec::with_capacity(128);
+        let mut references = Vec::with_capacity(128);
         references.extend(scope.read_references.iter().cloned());
         references.extend(scope.write_references.iter().cloned());
 
         AllCapturesIter {
             data: self.data.clone(),
-            closure_range: self.closure_range.clone(),
+            closure_range: self.closure_range,
             scopes,
             references,
         }
