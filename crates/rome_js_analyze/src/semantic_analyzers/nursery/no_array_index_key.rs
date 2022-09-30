@@ -82,7 +82,7 @@ impl NoArrayIndexKeyQuery {
         matches!(self, NoArrayIndexKeyQuery::JsCallExpression(_))
     }
 
-    fn find_attribute_with_key_name(&self, model: &SemanticModel) -> Option<KeyPropWithArrayIndex> {
+    fn find_key_attribute(&self, model: &SemanticModel) -> Option<KeyPropWithArrayIndex> {
         match self {
             NoArrayIndexKeyQuery::JsxOpeningElement(element) => element
                 .find_attribute_by_name("key")
@@ -128,7 +128,7 @@ impl Rule for NoArrayIndexKey {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
         let model = ctx.model();
-        let attribute_key = node.find_attribute_with_key_name(model)?;
+        let attribute_key = node.find_key_attribute(model)?;
         let reference = attribute_key.as_js_reference_identifier()?;
 
         let value = reference.value_token().ok()?;

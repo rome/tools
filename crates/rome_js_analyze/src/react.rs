@@ -242,9 +242,7 @@ pub(crate) fn is_react_call_api(
     api_name: &str,
 ) -> Option<bool> {
     // we bail straight away if the API doesn't exists in React
-    if !VALID_REACT_API.contains(&api_name) {
-        return None;
-    }
+    debug_assert!(VALID_REACT_API.contains(&api_name));
     Some(match expression {
         JsAnyExpression::JsStaticMemberExpression(node) => {
             let object = node.object().ok()?;

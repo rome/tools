@@ -44,7 +44,7 @@ something.forEach((Element, index) => {
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">The order of the items may change, and this also affects performances and component state.</span>
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Check the</span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">React documentation</a></span><span style="color: rgb(38, 148, 255);">. </span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Check the </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">React documentation</a></span><span style="color: rgb(38, 148, 255);">. </span>
   
 </code></pre>{% endraw %}
 
@@ -72,7 +72,7 @@ React.Children.map(this.props.children, (child, index) => (
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">The order of the items may change, and this also affects performances and component state.</span>
   
-<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Check the</span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">React documentation</a></span><span style="color: rgb(38, 148, 255);">. </span>
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Check the </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">React documentation</a></span><span style="color: rgb(38, 148, 255);">. </span>
   
 </code></pre>{% endraw %}
 
