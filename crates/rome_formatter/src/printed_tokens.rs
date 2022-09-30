@@ -36,12 +36,12 @@ impl PrintedTokens {
     }
 
     /// Enables or disables the assertion tracking
-    pub(crate) fn set_enabled(&mut self, enabled: bool) {
-        self.disabled = !enabled;
+    pub(crate) fn set_disabled(&mut self, disabled: bool) {
+        self.disabled = disabled;
     }
 
-    pub(crate) fn is_enabled(&self) -> bool {
-        !self.disabled
+    pub(crate) fn is_disabled(&self) -> bool {
+        self.disabled
     }
 
     pub(crate) fn snapshot(&self) -> PrintedTokensSnapshot {

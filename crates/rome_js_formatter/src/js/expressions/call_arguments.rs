@@ -649,12 +649,12 @@ fn with_token_tracking_disabled<F: FnOnce(&mut JsFormatter) -> R, R>(
     f: &mut JsFormatter,
     callback: F,
 ) -> R {
-    let was_enabled = f.state().is_token_tracking_enabled();
-    f.state_mut().set_token_tracking_enabled(false);
+    let was_disabled = f.state().is_token_tracking_disabled();
+    f.state_mut().set_token_tracking_disabled(true);
 
     let result = callback(f);
 
-    f.state_mut().set_token_tracking_enabled(was_enabled);
+    f.state_mut().set_token_tracking_disabled(was_disabled);
 
     result
 }

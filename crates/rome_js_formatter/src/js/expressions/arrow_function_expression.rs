@@ -198,10 +198,20 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
     }
 }
 
-/// writes the arrow function type parameters, parameters, and return type annotation
+/// Writes the arrow function type parameters, parameters, and return type annotation.
+///
+/// Formats the parameters and return type annotation without any soft line breaks if `is_first_or_last_call_argument` is `true`
+/// so that the parameters and return type are kept on the same line.
+///
+/// # Errors
+///
+/// Returns [`FormatError::PoorLayout`] if `is_first_or_last_call_argument` is `true` but the parameters
+/// or return type annotation contain any content that forces a [*group to break](FormatElements::will_break).
+///
+/// This error gets captured by [FormatJsCallArguments].
 fn format_signature(
     arrow: &JsArrowFunctionExpression,
-    first_last_call_arg: bool,
+    is_first_or_last_call_argument: bool,
 ) -> impl Format<JsFormatContext> + '_ {
     format_with(move |f| {
         if let Some(async_token) = arrow.async_token() {
@@ -231,7 +241,7 @@ fn format_signature(
             Ok(())
         });
 
-        if first_last_call_arg {
+        if is_first_or_last_call_argument {
             let mut buffer = RemoveSoftLinesBuffer::new(f);
             let mut recording = buffer.start_recording();
 

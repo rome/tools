@@ -570,10 +570,11 @@ pub enum FormatError {
     InvalidDocument(InvalidDocumentError),
 
     /// Formatting failed because some content encountered a situation where a layout
-    /// choice by an enclosing object resulted in a poor layout for the child object.
+    /// choice by an enclosing [`Format`] resulted in a poor layout for a child [`Format`].
     ///
-    /// It's up to the enclosing object to pick another layout. This error should not be raised
-    /// if there's no outer object that handles the poor layout error to avoid that formatting of the whole document fails.
+    /// It's up to an enclosing [`Format`] to handle the error and pick another layout.
+    /// This error should not be raised if there's no outer [`Format`] handling the poor layout error,
+    /// avoiding that formatting of the whole document fails.
     PoorLayout,
 }
 
@@ -1500,8 +1501,8 @@ impl<Context> FormatState<Context> {
     ///
     /// It can be useful to disable the token tracking when it is necessary to re-format a node with different parameters.
     #[cfg(debug_assertions)]
-    pub fn set_token_tracking_enabled(&mut self, enabled: bool) {
-        self.printed_tokens.set_enabled(enabled)
+    pub fn set_token_tracking_disabled(&mut self, enabled: bool) {
+        self.printed_tokens.set_disabled(enabled)
     }
 
     #[cfg(not(debug_assertions))]
@@ -1510,10 +1511,10 @@ impl<Context> FormatState<Context> {
         false
     }
 
-    /// Returns `true` if token tracking is currently enabled.
+    /// Returns `true` if token tracking is currently disabled.
     #[cfg(debug_assertions)]
-    pub fn is_token_tracking_enabled(&self) -> bool {
-        self.printed_tokens.is_enabled()
+    pub fn is_token_tracking_disabled(&self) -> bool {
+        self.printed_tokens.is_disabled()
     }
 
     /// Asserts in debug builds that all tokens have been printed.

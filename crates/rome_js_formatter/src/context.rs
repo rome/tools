@@ -36,7 +36,7 @@ pub struct JsFormatContext {
     ///  ) => {});
     ///  ```
     ///
-    /// This should be are enough for us not to care about it.
+    /// This should be rare enough for us not to care about it.
     cached_function_body: Option<(JsAnyFunctionBody, FormatElement)>,
 
     source_map: Option<TransformSourceMap>,

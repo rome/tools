@@ -122,6 +122,14 @@ impl FormatFunction {
         })
     }
 
+    /// Formats the function with the specified `options`.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`FormatError::PoorLayout`] if [`call_argument_layout`](FormatFunctionOptions::call_argument_layout] is `Some`
+    /// and the function parameters contain some content that [*force a group to break*](FormatElements::will_break).
+    ///
+    /// This error is handled by [FormatJsCallArguments].
     pub(crate) fn fmt_with_options(
         &self,
         f: &mut JsFormatter,
