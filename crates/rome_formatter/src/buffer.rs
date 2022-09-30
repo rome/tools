@@ -481,8 +481,8 @@ pub struct RemoveSoftLinesBuffer<'a, Context> {
 
     /// Cache of "original" interned elements to the "cleaned" interned elements.
     ///
-    /// It's fine to not snapshot the cache. The worst that can happen is that it holds on to now unused
-    /// interned elements. But there's little harm in that and all gets cleaned up when dropping the buffer.
+    /// It's fine to not snapshot the cache. The worst that can happen is that it holds on interned elements
+    /// that are now unused. But there's little harm in that and the cache is cleaned when dropping the buffer.
     interned_cache: FxHashMap<Interned, Interned>,
 }
 
