@@ -25,12 +25,78 @@ pub(crate) struct ReactCreateElementCall {
     pub(crate) children: Option<JsAnyExpression>,
 }
 
+impl ReactCreateElementCall {
+    /// Checks if the current node is a possible `createElement` call.
+    ///
+    /// There are two cases:
+    ///
+    /// First case
+    /// ```js
+    /// React.createElement()
+    /// ```
+    /// We check if the node is a static member expression with the specific members. Also, if `React`
+    /// has been imported in the current scope, we make sure that the binding `React` has been imported
+    /// from the `"react"` module.
+    ///
+    /// Second case
+    ///
+    /// ```js
+    /// createElement()
+    /// ```
+    ///
+    /// The logic of this second case is very similar to the previous one, simply the node that we have
+    /// to inspect is different.
+    pub(crate) fn from_call_expression(
+        call_expression: &JsCallExpression,
+        model: &SemanticModel,
+    ) -> Option<Self> {
+        let callee = call_expression.callee().ok()?;
+        let is_react_create_element = is_react_call_api(&callee, model, "createElement")?;
+
+        if is_react_create_element {
+            let arguments = call_expression.arguments().ok()?.args();
+            // React.createElement() should not be processed
+            if !arguments.is_empty() {
+                let mut iter = arguments.iter();
+                let first_argument = if let Some(first_argument) = iter.next() {
+                    first_argument.ok()?
+                } else {
+                    return None;
+                };
+                let second_argument =
+                    iter.next()
+                        .and_then(|argument| argument.ok())
+                        .and_then(|argument| {
+                            argument
+                                .as_js_any_expression()?
+                                .as_js_object_expression()
+                                .cloned()
+                        });
+                let third_argument = iter
+                    .next()
+                    .and_then(|argument| argument.ok())
+                    .and_then(|argument| argument.as_js_any_expression().cloned());
+
+                Some(ReactCreateElementCall {
+                    element_type: first_argument,
+                    props: second_argument,
+                    children: third_argument,
+                })
+            } else {
+                None
+            }
+        } else {
+            None
+        }
+    }
+}
+
 impl ReactApiCall for ReactCreateElementCall {
     /// It scans the current props and returns the property that matches the passed name
     fn find_prop_by_name(&self, prop_name: &str) -> Option<JsPropertyObjectMember> {
         self.props.as_ref().and_then(|props| {
             let members = props.members();
-            members.into_iter().find_map(|member| {
+            members.iter().find_map(|member| {
                 let member = member.ok()?;
                 let property = member.as_js_property_object_member()?;
                 let property_name = property.name().ok()?;
@@ -43,70 +109,6 @@ impl ReactApiCall for ReactCreateElementCall {
                 }
             })
         })
-    }
-}
-
-/// Checks if the current node is a possible `createElement` call.
-///
-/// There are two cases:
-///
-/// First case
-/// ```js
-/// React.createElement()
-/// ```
-/// We check if the node is a static member expression with the specific members. Also, if `React`
-/// has been imported in the current scope, we make sure that the binding `React` has been imported
-/// from the `"react"` module.
-///
-/// Second case
-///
-/// ```js
-/// createElement()
-/// ```
-///
-/// The logic of this second case is very similar to the previous one, simply the node that we have
-/// to inspect is different.
-pub(crate) fn as_react_create_element(
-    call_expression: &JsCallExpression,
-    model: &SemanticModel,
-) -> Option<ReactCreateElementCall>
-where
-    ReactCloneElementCall: ReactApiCall,
-{
-    let callee = call_expression.callee().ok()?;
-    let is_react_create_element = is_react_call_api(&callee, model, "createElement")?;
-
-    if is_react_create_element {
-        let arguments = call_expression.arguments().ok()?.args();
-        // React.createElement() should not be processed
-        if !arguments.is_empty() {
-            let mut iter = arguments.into_iter();
-            // SAFETY: protected by the `is_empty` check
-            let first_argument = iter.next().unwrap().ok()?;
-            let second_argument =
-                iter.next()
-                    .and_then(|argument| argument.ok())
-                    .and_then(|argument| {
-                        argument
-                            .as_js_any_expression()?
-                            .as_js_object_expression()
-                            .cloned()
-                    });
-            let third_argument = iter
-                .next()
-                .and_then(|argument| argument.ok())
-                .and_then(|argument| argument.as_js_any_expression().cloned());
-
-            Some(ReactCreateElementCall {
-                element_type: first_argument,
-                props: second_argument,
-                children: third_argument,
-            })
-        } else {
-            None
-        }
-    } else {
-        None
     }
 }
 
@@ -124,11 +126,77 @@ pub(crate) struct ReactCloneElementCall {
     pub(crate) children: Option<JsAnyExpression>,
 }
 
+impl ReactCloneElementCall {
+    /// Checks if the current node is a possible `cloneElement` call.
+    ///
+    /// There are two cases:
+    ///
+    /// First case
+    /// ```js
+    /// React.cloneElement()
+    /// ```
+    /// We check if the node is a static member expression with the specific members. Also, if `React`
+    /// has been imported in the current scope, we make sure that the binding `React` has been imported
+    /// from the `"react"` module.
+    ///
+    /// Second case
+    ///
+    /// ```js
+    /// cloneElement()
+    /// ```
+    ///
+    /// The logic of this second case is very similar to the previous one, simply the node that we have
+    /// to inspect is different.
+    pub(crate) fn from_call_expression(
+        call_expression: &JsCallExpression,
+        model: &SemanticModel,
+    ) -> Option<Self> {
+        let callee = call_expression.callee().ok()?;
+        let is_react_clone_element = is_react_call_api(&callee, model, "cloneElement")?;
+
+        if is_react_clone_element {
+            let arguments = call_expression.arguments().ok()?.args();
+            // React.cloneElement() should not be processed
+            if !arguments.is_empty() {
+                let mut iter = arguments.iter();
+                let first_argument = if let Some(first_argument) = iter.next() {
+                    first_argument.ok()?
+                } else {
+                    return None;
+                };
+                let second_argument =
+                    iter.next()
+                        .and_then(|argument| argument.ok())
+                        .and_then(|argument| {
+                            argument
+                                .as_js_any_expression()?
+                                .as_js_object_expression()
+                                .cloned()
+                        });
+                let third_argument = iter
+                    .next()
+                    .and_then(|argument| argument.ok())
+                    .and_then(|argument| argument.as_js_any_expression().cloned());
+
+                Some(ReactCloneElementCall {
+                    element_type: first_argument,
+                    new_props: second_argument,
+                    children: third_argument,
+                })
+            } else {
+                None
+            }
+        } else {
+            None
+        }
+    }
+}
+
 impl ReactApiCall for ReactCloneElementCall {
     fn find_prop_by_name(&self, prop_name: &str) -> Option<JsPropertyObjectMember> {
         self.new_props.as_ref().and_then(|props| {
             let members = props.members();
-            members.into_iter().find_map(|member| {
+            members.iter().find_map(|member| {
                 let member = member.ok()?;
                 let property = member.as_js_property_object_member()?;
                 let property_name = property.name().ok()?;
@@ -141,70 +209,6 @@ impl ReactApiCall for ReactCloneElementCall {
                 }
             })
         })
-    }
-}
-
-/// Checks if the current node is a possible `cloneElement` call.
-///
-/// There are two cases:
-///
-/// First case
-/// ```js
-/// React.cloneElement()
-/// ```
-/// We check if the node is a static member expression with the specific members. Also, if `React`
-/// has been imported in the current scope, we make sure that the binding `React` has been imported
-/// from the `"react"` module.
-///
-/// Second case
-///
-/// ```js
-/// cloneElement()
-/// ```
-///
-/// The logic of this second case is very similar to the previous one, simply the node that we have
-/// to inspect is different.
-pub(crate) fn as_react_clone_element(
-    call_expression: &JsCallExpression,
-    model: &SemanticModel,
-) -> Option<ReactCloneElementCall>
-where
-    ReactCloneElementCall: ReactApiCall,
-{
-    let callee = call_expression.callee().ok()?;
-    let is_react_clone_element = is_react_call_api(&callee, model, "cloneElement")?;
-
-    if is_react_clone_element {
-        let arguments = call_expression.arguments().ok()?.args();
-        // React.cloneElement() should not be processed
-        if !arguments.is_empty() {
-            let mut iter = arguments.into_iter();
-            // SAFETY: protected by the `is_empty` check
-            let first_argument = iter.next().unwrap().ok()?;
-            let second_argument =
-                iter.next()
-                    .and_then(|argument| argument.ok())
-                    .and_then(|argument| {
-                        argument
-                            .as_js_any_expression()?
-                            .as_js_object_expression()
-                            .cloned()
-                    });
-            let third_argument = iter
-                .next()
-                .and_then(|argument| argument.ok())
-                .and_then(|argument| argument.as_js_any_expression().cloned());
-
-            Some(ReactCloneElementCall {
-                element_type: first_argument,
-                new_props: second_argument,
-                children: third_argument,
-            })
-        } else {
-            None
-        }
-    } else {
-        None
     }
 }
 

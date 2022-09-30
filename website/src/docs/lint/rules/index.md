@@ -257,7 +257,7 @@ to promote these rules into a more appropriate category.
 	<a href="/docs/lint/rules/noArrayIndexKey">noArrayIndexKey (since v0.10.0)</a>
 	<a class="header-anchor" href="#noArrayIndexKey"></a>
 </h3>
-Prevent the usage of Array index in keys
+Discourage the usage of Array index in keys.
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noDangerouslySetInnerHtml">

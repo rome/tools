@@ -1,4 +1,4 @@
-use crate::react::{as_react_clone_element, is_react_call_api, ReactApiCall};
+use crate::react::{is_react_call_api, ReactApiCall, ReactCloneElementCall};
 use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleCategory, RuleDiagnostic};
@@ -13,7 +13,15 @@ use rome_js_syntax::{
 use rome_rowan::{declare_node_union, AstNode, AstSeparatedList};
 
 declare_rule! {
-    /// Prevent the usage of Array index in keys
+    /// Discourage the usage of Array index in keys.
+    ///
+    /// > We don’t recommend using indexes for keys if the order of items may change.
+    /// This can negatively impact performance and may cause issues with component state.
+    /// Check out Robin Pokorny’s article for an
+    /// [in-depth explanation on the negative impacts of using an index as a key](https://robinpokorny.com/blog/index-as-a-key-is-an-anti-pattern/).
+    /// If you choose not to assign an explicit key to list items then React will default to using indexes as keys.
+    ///
+    /// Source [React documentation](https://reactjs.org/docs/lists-and-keys.html#keys)
     ///
     /// ## Examples
     ///
@@ -42,14 +50,14 @@ declare_node_union! {
 }
 
 declare_node_union! {
-    pub(crate) InvalidProp = JsxAttribute | JsPropertyObjectMember
+    pub(crate) KeyPropWithArrayIndex = JsxAttribute | JsPropertyObjectMember
 }
 
-impl InvalidProp {
+impl KeyPropWithArrayIndex {
     /// Extracts the reference from the possible invalid prop
     fn as_js_reference_identifier(&self) -> Option<JsReferenceIdentifier> {
         match self {
-            InvalidProp::JsxAttribute(attribute) => attribute
+            KeyPropWithArrayIndex::JsxAttribute(attribute) => attribute
                 .initializer()?
                 .value()
                 .ok()?
@@ -59,7 +67,7 @@ impl InvalidProp {
                 .as_js_identifier_expression()?
                 .name()
                 .ok(),
-            InvalidProp::JsPropertyObjectMember(object_member) => object_member
+            KeyPropWithArrayIndex::JsPropertyObjectMember(object_member) => object_member
                 .value()
                 .ok()?
                 .as_js_identifier_expression()?
@@ -74,21 +82,22 @@ impl NoArrayIndexKeyQuery {
         matches!(self, NoArrayIndexKeyQuery::JsCallExpression(_))
     }
 
-    fn find_attribute_with_key_name(&self, model: &SemanticModel) -> Option<InvalidProp> {
+    fn find_attribute_with_key_name(&self, model: &SemanticModel) -> Option<KeyPropWithArrayIndex> {
         match self {
             NoArrayIndexKeyQuery::JsxOpeningElement(element) => element
                 .find_attribute_by_name("key")
                 .ok()?
-                .map(InvalidProp::from),
+                .map(KeyPropWithArrayIndex::from),
             NoArrayIndexKeyQuery::JsxSelfClosingElement(element) => element
                 .find_attribute_by_name("key")
                 .ok()?
-                .map(InvalidProp::from),
+                .map(KeyPropWithArrayIndex::from),
             NoArrayIndexKeyQuery::JsCallExpression(expression) => {
-                let create_clone_element = as_react_clone_element(expression, model)?;
+                let create_clone_element =
+                    ReactCloneElementCall::from_call_expression(expression, model)?;
                 create_clone_element
                     .find_prop_by_name("key")
-                    .map(InvalidProp::from)
+                    .map(KeyPropWithArrayIndex::from)
             }
         }
     }
@@ -130,7 +139,7 @@ impl Rule for NoArrayIndexKey {
 
         if is_inside_array_method {
             if node.is_call_expression() {
-                // 1. We scan the parent and look a potential `React.Children` method call
+                // 1. We scan the parent and look for a potential `React.Children` method call
                 // 2. If found, then we retrieve the incorrect `index`
                 // 3. If we fail to find a `React.Children` method call, then we try to find and `Array.` method call
                 let binding_origin = find_react_children_function_argument(&function_parent, model)
@@ -155,23 +164,28 @@ impl Rule for NoArrayIndexKey {
         }
     }
 
-    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
-        let _node = ctx.query();
+    fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let NoArrayIndexKeyState {
             binding_origin: incorrect_key,
             incorrect_prop,
         } = state;
-        Some(
-            RuleDiagnostic::new(
-                rule_category!(),
-                incorrect_prop.syntax().text_trimmed_range(),
-                markup! {"Avoid using array index as key property in an element."},
-            )
-            .secondary(
-                incorrect_key.syntax().text_trimmed_range(),
-                markup! {"This is where the key comes from."},
-            ),
+        let diagnostic = RuleDiagnostic::new(
+            rule_category!(),
+            incorrect_prop.syntax().text_trimmed_range(),
+            markup! {"Avoid using the index of an array as key property in an element."},
         )
+        .secondary(
+            incorrect_key.syntax().text_trimmed_range(),
+            markup! {"This is the source of the key value."},
+        ).footer_note(
+            markup! {"The order of the items may change, and this also affects performances and component state."}
+        ).footer_note(
+            markup! {
+                "Check the"<Hyperlink href="https://reactjs.org/docs/lists-and-keys.html#keys">"React documentation"</Hyperlink>". "
+            }
+        );
+
+        Some(diagnostic)
     }
 }
 
