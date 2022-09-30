@@ -1279,5 +1279,4 @@ mod test {
         assert_is_exported(true, "A", "enum A {}; exports = A");
         assert_is_exported(true, "A", "enum A {}; exports.A = A");
     }
-
 }

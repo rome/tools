@@ -2,7 +2,9 @@ use std::sync::Arc;
 
 use super::*;
 use rome_js_syntax::{
-    JsArrowFunctionExpression, JsFunctionDeclaration, JsFunctionExpression, JsLanguage, JsConstructorClassMember, JsMethodClassMember, JsGetterClassMember, JsSetterClassMember,
+    JsArrowFunctionExpression, JsConstructorClassMember, JsFunctionDeclaration,
+    JsFunctionExpression, JsGetterClassMember, JsLanguage, JsMethodClassMember,
+    JsSetterClassMember,
 };
 use rome_rowan::{AstNode, SyntaxNode, SyntaxNodeCast};
 
@@ -73,14 +75,35 @@ pub enum AnyHasClosureNode {
 impl AnyHasClosureNode {
     pub fn from_node(node: &SyntaxNode<JsLanguage>) -> Option<AnyHasClosureNode> {
         match node.kind() {
-            JsSyntaxKind::JS_FUNCTION_DECLARATION => node.clone().cast::<JsFunctionDeclaration>().map(AnyHasClosureNode::JsFunctionDeclaration),
-            JsSyntaxKind::JS_FUNCTION_EXPRESSION => node.clone().cast::<JsFunctionExpression>().map(AnyHasClosureNode::JsFunctionExpression),
-            JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION => node.clone().cast::<JsArrowFunctionExpression>().map(AnyHasClosureNode::JsArrowFunctionExpression),
-            JsSyntaxKind::JS_CONSTRUCTOR_CLASS_MEMBER => node.clone().cast::<JsConstructorClassMember>().map(AnyHasClosureNode::JsConstructorClassMember),
-            JsSyntaxKind::JS_METHOD_CLASS_MEMBER => node.clone().cast::<JsMethodClassMember>().map(AnyHasClosureNode::JsMethodClassMember),
-            JsSyntaxKind::JS_GETTER_CLASS_MEMBER => node.clone().cast::<JsGetterClassMember>().map(AnyHasClosureNode::JsGetterClassMember),
-            JsSyntaxKind::JS_SETTER_CLASS_MEMBER => node.clone().cast::<JsSetterClassMember>().map(AnyHasClosureNode::JsSetterClassMember),
-            _ => None
+            JsSyntaxKind::JS_FUNCTION_DECLARATION => node
+                .clone()
+                .cast::<JsFunctionDeclaration>()
+                .map(AnyHasClosureNode::JsFunctionDeclaration),
+            JsSyntaxKind::JS_FUNCTION_EXPRESSION => node
+                .clone()
+                .cast::<JsFunctionExpression>()
+                .map(AnyHasClosureNode::JsFunctionExpression),
+            JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION => node
+                .clone()
+                .cast::<JsArrowFunctionExpression>()
+                .map(AnyHasClosureNode::JsArrowFunctionExpression),
+            JsSyntaxKind::JS_CONSTRUCTOR_CLASS_MEMBER => node
+                .clone()
+                .cast::<JsConstructorClassMember>()
+                .map(AnyHasClosureNode::JsConstructorClassMember),
+            JsSyntaxKind::JS_METHOD_CLASS_MEMBER => node
+                .clone()
+                .cast::<JsMethodClassMember>()
+                .map(AnyHasClosureNode::JsMethodClassMember),
+            JsSyntaxKind::JS_GETTER_CLASS_MEMBER => node
+                .clone()
+                .cast::<JsGetterClassMember>()
+                .map(AnyHasClosureNode::JsGetterClassMember),
+            JsSyntaxKind::JS_SETTER_CLASS_MEMBER => node
+                .clone()
+                .cast::<JsSetterClassMember>()
+                .map(AnyHasClosureNode::JsSetterClassMember),
+            _ => None,
         }
     }
 }
@@ -258,7 +281,6 @@ impl Closure {
     }
 }
 
-
 #[cfg(test)]
 mod test {
     use super::*;
@@ -281,7 +303,7 @@ mod test {
                 .parent()
                 .and_then(|node| AnyHasClosureNode::from_node(&node))
                 .unwrap();
-            model.closure(&node)            
+            model.closure(&node)
         } else {
             let node = r
                 .syntax()
@@ -323,7 +345,7 @@ mod test {
                 .parent()
                 .and_then(|node| AnyHasClosureNode::from_node(&node))
                 .unwrap();
-            model.closure(&node) 
+            model.closure(&node)
         } else {
             let node = r
                 .syntax()
