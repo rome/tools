@@ -861,9 +861,13 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-var newArray = test(/** @type {array} */ (numberOrString).map(x => x));
+new Test()
+  .test()
+  .test([, 0])
+  .test();
+
 "#;
-        let syntax = SourceType::ts();
+        let syntax = SourceType::jsx();
         let tree = parse(src, FileId::zero(), syntax);
         let options = JsFormatOptions::new(syntax);
 
