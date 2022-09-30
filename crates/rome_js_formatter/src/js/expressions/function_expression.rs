@@ -1,35 +1,31 @@
 use crate::prelude::*;
 
-use crate::js::declarations::function_declaration::FormatFunction;
-use crate::js::expressions::call_arguments::GroupedCallArgumentLayout;
+use crate::js::declarations::function_declaration::{FormatFunction, FormatFunctionOptions};
 use crate::parentheses::{
     is_callee, is_first_in_statement, is_tag, FirstInStatementMode, NeedsParentheses,
 };
+
 use rome_formatter::FormatRuleWithOptions;
 use rome_js_syntax::{JsFunctionExpression, JsSyntaxNode};
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Copy, Clone, Default)]
 pub struct FormatJsFunctionExpression {
-    call_argument_layout: Option<GroupedCallArgumentLayout>,
+    options: FormatFunctionOptions,
 }
 
 impl FormatRuleWithOptions<JsFunctionExpression> for FormatJsFunctionExpression {
-    type Options = Option<GroupedCallArgumentLayout>;
+    type Options = FormatFunctionOptions;
 
     fn with_options(mut self, options: Self::Options) -> Self {
-        self.call_argument_layout = options;
+        self.options = options;
         self
     }
 }
 
 impl FormatNodeRule<JsFunctionExpression> for FormatJsFunctionExpression {
     fn fmt_fields(&self, node: &JsFunctionExpression, f: &mut JsFormatter) -> FormatResult<()> {
-        let format_function = FormatFunction::from(node.clone());
-
-        match self.call_argument_layout {
-            None => format_function.fmt(f),
-            Some(_) => format_function.fmt_with_expand(f, true),
-        }
+        FormatFunction::from(node.clone()).fmt_with_options(f, &self.options)?;
+        Ok(())
     }
 
     fn needs_parentheses(&self, item: &JsFunctionExpression) -> bool {

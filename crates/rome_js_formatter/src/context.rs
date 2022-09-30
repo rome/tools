@@ -5,24 +5,39 @@ use rome_formatter::{
     TransformSourceMap,
 };
 use rome_js_syntax::{JsAnyFunctionBody, JsLanguage, SourceType};
-use rome_rowan::syntax::SyntaxElementKey;
-use rome_rowan::AstNode;
-use rustc_hash::FxHashMap;
 use std::fmt;
 use std::fmt::Debug;
 use std::rc::Rc;
 use std::str::FromStr;
 
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 pub struct JsFormatContext {
     options: JsFormatOptions,
 
     /// The comments of the nodes and tokens in the program.
     comments: Rc<JsComments>,
 
-    cache_function_bodies: bool,
-
-    cached_function_bodies: FxHashMap<SyntaxElementKey, FormatElement>,
+    /// Stores the formatted content of one function body.
+    ///
+    /// Used during formatting of call arguments where function expressions and arrow function expressions
+    /// are formatted a second time if they are the first or last call argument.
+    ///
+    /// Caching the body in the call arguments formatting is important because it minimises the cases
+    /// where the algorithm is quadratic in case the function or arrow expression contains another
+    /// call expression with a function or call expression as first or last argument.
+    ///
+    /// It's sufficient to only store a single cached body to cover the vast majority of cases
+    /// (there's no exception in any of our tests nor benchmark tests). The only not covered case is when
+    /// a parameter has an initializer that contains a call expression:
+    ///
+    /// ```javascript
+    ///  test((
+    ///    problematic = test(() => body)
+    ///  ) => {});
+    ///  ```
+    ///
+    /// This should be are enough for us not to care about it.
+    cached_function_body: Option<(JsAnyFunctionBody, FormatElement)>,
 
     source_map: Option<TransformSourceMap>,
 }
@@ -32,37 +47,39 @@ impl JsFormatContext {
         Self {
             options,
             comments: Rc::new(comments),
-            cache_function_bodies: false,
-            cached_function_bodies: FxHashMap::default(),
+            cached_function_body: None,
             source_map: None,
         }
     }
 
-    pub fn set_cache_function_bodies(&mut self, enabled: bool) {
-        self.cache_function_bodies = enabled;
+    /// Returns the formatted content for the passed function body if it is cached or `None` if the currently
+    /// cached content belongs to another function body or the cache is empty.
+    ///
+    /// See [JsFormatContext::cached_function_body] for more in depth documentation.
+    pub(crate) fn get_cached_function_body(
+        &self,
+        body: &JsAnyFunctionBody,
+    ) -> Option<FormatElement> {
+        self.cached_function_body
+            .as_ref()
+            .and_then(|(expected_body, formatted)| {
+                if expected_body == body {
+                    Some(formatted.clone())
+                } else {
+                    None
+                }
+            })
     }
 
-    pub fn is_cache_function_bodies_enabled(&self) -> bool {
-        self.cache_function_bodies
-    }
-
-    pub fn get_cached_function_body(&self, body: &JsAnyFunctionBody) -> Option<FormatElement> {
-        self.cached_function_bodies
-            .get(&body.syntax().key())
-            .cloned()
-    }
-
-    pub fn insert_cached_function_body(
+    /// Sets the currently cached formatted function body.
+    ///
+    /// See [JsFormatContext::cached_function_body] for more in depth documentation.
+    pub(crate) fn set_cached_function_body(
         &mut self,
         body: &JsAnyFunctionBody,
         formatted: FormatElement,
     ) {
-        self.cached_function_bodies
-            .insert(body.syntax().key(), formatted);
-    }
-
-    pub fn clear_cached_function_bodies(&mut self) {
-        self.cached_function_bodies.clear();
+        self.cached_function_body = Some((body.clone(), formatted))
     }
 
     pub fn with_source_map(mut self, source_map: Option<TransformSourceMap>) -> Self {

@@ -9,7 +9,7 @@ use crate::parentheses::{
     is_binary_like_left_or_right, is_callee, is_conditional_test,
     update_or_lower_expression_needs_parentheses, NeedsParentheses,
 };
-use crate::utils::function_body::FormatMaybeCachedFunctionBody;
+use crate::utils::function_body::{FormatMaybeCachedFunctionBody, FunctionBodyCacheMode};
 use crate::utils::{
     resolve_left_most_expression, AssignmentLikeLayout, JsAnyBinaryLikeLeftExpression,
 };
@@ -20,15 +20,16 @@ use rome_js_syntax::{
 };
 use rome_rowan::SyntaxResult;
 
-#[derive(Debug, Clone, Default)]
+#[derive(Debug, Copy, Clone, Default)]
 pub struct FormatJsArrowFunctionExpression {
     options: FormatJsArrowFunctionExpressionOptions,
 }
 
-#[derive(Debug, Copy, Clone, Default)]
+#[derive(Debug, Clone, Copy, Default)]
 pub struct FormatJsArrowFunctionExpressionOptions {
     pub assignment_layout: Option<AssignmentLikeLayout>,
     pub call_arg_layout: Option<GroupedCallArgumentLayout>,
+    pub body_cache_mode: FunctionBodyCacheMode,
 }
 
 impl FormatRuleWithOptions<JsArrowFunctionExpression> for FormatJsArrowFunctionExpression {
@@ -47,7 +48,7 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
         f: &mut JsFormatter,
     ) -> FormatResult<()> {
         let layout =
-            ArrowFunctionLayout::for_arrow(node.clone(), f.context().comments(), self.options)?;
+            ArrowFunctionLayout::for_arrow(node.clone(), f.context().comments(), &self.options)?;
 
         match layout {
             ArrowFunctionLayout::Chain(chain) => {
@@ -141,7 +142,7 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
 
                 let format_body = FormatMaybeCachedFunctionBody {
                     body: &body,
-                    lookup_cache: self.options.call_arg_layout.is_some(),
+                    mode: self.options.body_cache_mode,
                 };
 
                 if body_has_soft_line_break && !should_add_parens && !body_has_leading_line_comment
@@ -431,7 +432,7 @@ impl Format<JsFormatContext> for ArrowChain {
         let format_tail_body_inner = format_with(|f| {
             let format_tail_body = FormatMaybeCachedFunctionBody {
                 body: &tail_body,
-                lookup_cache: self.options.call_arg_layout.is_some(),
+                mode: self.options.body_cache_mode,
             };
 
             // Ensure that the parens of sequence expressions end up on their own line if the
@@ -502,7 +503,7 @@ impl ArrowFunctionLayout {
     fn for_arrow(
         arrow: JsArrowFunctionExpression,
         comments: &JsComments,
-        options: FormatJsArrowFunctionExpressionOptions,
+        options: &FormatJsArrowFunctionExpressionOptions,
     ) -> SyntaxResult<ArrowFunctionLayout> {
         let mut head = None;
         let mut middle = Vec::new();
@@ -536,7 +537,7 @@ impl ArrowFunctionLayout {
                             middle,
                             tail: current,
                             expand_signatures: should_break,
-                            options,
+                            options: options.clone(),
                         }),
                     }
                 }

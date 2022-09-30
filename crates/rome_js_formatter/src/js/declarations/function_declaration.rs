@@ -1,6 +1,7 @@
 use crate::prelude::*;
 
-use crate::utils::function_body::FormatMaybeCachedFunctionBody;
+use crate::js::expressions::call_arguments::GroupedCallArgumentLayout;
+use crate::utils::function_body::{FormatMaybeCachedFunctionBody, FunctionBodyCacheMode};
 use rome_formatter::{write, RemoveSoftLinesBuffer};
 use rome_js_syntax::{
     JsAnyBinding, JsFunctionBody, JsFunctionDeclaration, JsFunctionExportDefaultDeclaration,
@@ -26,11 +27,13 @@ declare_node_union! {
         TsDeclareFunctionDeclaration
 }
 
-impl FormatFunction {
-    const fn is_function_expression(&self) -> bool {
-        matches!(self, FormatFunction::JsFunctionExpression(_))
-    }
+#[derive(Copy, Clone, Debug, Default)]
+pub struct FormatFunctionOptions {
+    pub call_argument_layout: Option<GroupedCallArgumentLayout>,
+    pub body_cache_mode: FunctionBodyCacheMode,
+}
 
+impl FormatFunction {
     fn async_token(&self) -> Option<JsSyntaxToken> {
         match self {
             FormatFunction::JsFunctionDeclaration(declaration) => declaration.async_token(),
@@ -119,7 +122,11 @@ impl FormatFunction {
         })
     }
 
-    pub(crate) fn fmt_with_expand(&self, f: &mut JsFormatter, expand: bool) -> FormatResult<()> {
+    pub(crate) fn fmt_with_options(
+        &self,
+        f: &mut JsFormatter,
+        options: &FormatFunctionOptions,
+    ) -> FormatResult<()> {
         if let Some(async_token) = self.async_token() {
             write!(f, [async_token.format(), space()])?;
         }
@@ -145,7 +152,7 @@ impl FormatFunction {
         write!(f, [type_parameters.format()])?;
 
         let format_parameters = format_with(|f: &mut JsFormatter| {
-            if expand {
+            if options.call_argument_layout.is_some() {
                 let mut buffer = RemoveSoftLinesBuffer::new(f);
 
                 let mut recording = buffer.start_recording();
@@ -187,19 +194,16 @@ impl FormatFunction {
         )?;
 
         if let Some(body) = self.body()? {
-            write!(f, [space()])?;
-
-            if self.is_function_expression() {
-                write!(
-                    f,
-                    [FormatMaybeCachedFunctionBody {
+            write!(
+                f,
+                [
+                    space(),
+                    FormatMaybeCachedFunctionBody {
                         body: &body.clone().into(),
-                        lookup_cache: expand
-                    }]
-                )?;
-            } else {
-                write!(f, [body.format()])?;
-            }
+                        mode: options.body_cache_mode
+                    }
+                ]
+            )?;
         }
 
         Ok(())
@@ -208,7 +212,8 @@ impl FormatFunction {
 
 impl Format<JsFormatContext> for FormatFunction {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        self.fmt_with_expand(f, false)
+        self.fmt_with_options(f, &FormatFunctionOptions::default())?;
+        Ok(())
     }
 }
 

@@ -1194,7 +1194,7 @@ impl Format<JsFormatContext> for WithAssignmentLayout<'_> {
                 .format()
                 .with_options(FormatJsArrowFunctionExpressionOptions {
                     assignment_layout: self.layout,
-                    call_arg_layout: None,
+                    ..FormatJsArrowFunctionExpressionOptions::default()
                 })
                 .fmt(f),
             expression => expression.format().fmt(f),

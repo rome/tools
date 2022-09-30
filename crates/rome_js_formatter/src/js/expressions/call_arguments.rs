@@ -1,8 +1,10 @@
+use crate::js::declarations::function_declaration::FormatFunctionOptions;
 use crate::js::expressions::arrow_function_expression::{
     is_multiline_template_starting_on_same_line, FormatJsArrowFunctionExpressionOptions,
 };
 use crate::js::lists::array_element_list::can_concisely_print_array_list;
 use crate::prelude::*;
+use crate::utils::function_body::FunctionBodyCacheMode;
 use crate::utils::{is_long_curried_call, write_arguments_multi_line};
 use rome_formatter::{format_args, format_element, write, VecBuffer};
 use rome_js_syntax::{
@@ -23,9 +25,6 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
             args,
             r_paren_token,
         } = node.as_fields();
-
-        let l_paren_token = l_paren_token?;
-        let r_paren_token = r_paren_token?;
 
         if args.is_empty() {
             return write!(
@@ -197,6 +196,90 @@ impl FormatCallArgument {
         breaks
     }
 
+    fn cache_function_body(&mut self, f: &mut JsFormatter) {
+        match &self {
+            FormatCallArgument::Default {
+                element,
+                leading_lines,
+                ..
+            } => {
+                let interned = f.intern(&format_once(|f| {
+                    self.fmt_with_cache_mode(FunctionBodyCacheMode::Cache, f)?;
+                    Ok(())
+                }));
+
+                *self = FormatCallArgument::Inspected {
+                    content: interned,
+                    element: element.clone(),
+                    leading_lines: *leading_lines,
+                };
+            }
+            FormatCallArgument::Inspected { .. } => {
+                panic!("`cache` must be called before inspecting or formatting the element.");
+            }
+        }
+    }
+
+    fn fmt_with_cache_mode(
+        &self,
+        cache_mode: FunctionBodyCacheMode,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        match self {
+            // Re-use the cached formatted output if there is any.
+            FormatCallArgument::Inspected { content, .. } => match content.clone()? {
+                Some(element) => {
+                    f.write_element(element)?;
+                    Ok(())
+                }
+                None => Ok(()),
+            },
+            FormatCallArgument::Default {
+                element, is_last, ..
+            } => {
+                match element.node()? {
+                    JsAnyCallArgument::JsAnyExpression(JsAnyExpression::JsFunctionExpression(
+                        function,
+                    )) => {
+                        write!(
+                            f,
+                            [function.format().with_options(FormatFunctionOptions {
+                                body_cache_mode: cache_mode,
+                                ..FormatFunctionOptions::default()
+                            })]
+                        )?;
+                    }
+                    JsAnyCallArgument::JsAnyExpression(
+                        JsAnyExpression::JsArrowFunctionExpression(arrow),
+                    ) => {
+                        write!(
+                            f,
+                            [arrow
+                                .format()
+                                .with_options(FormatJsArrowFunctionExpressionOptions {
+                                    body_cache_mode: cache_mode,
+                                    ..FormatJsArrowFunctionExpressionOptions::default()
+                                })]
+                        )?;
+                    }
+                    node => write!(f, [node.format()])?,
+                }
+
+                if let Some(separator) = element.trailing_separator()? {
+                    if *is_last {
+                        write!(f, [format_removed(separator)])
+                    } else {
+                        write!(f, [separator.format()])
+                    }
+                } else if !is_last {
+                    Err(FormatError::SyntaxError)
+                } else {
+                    Ok(())
+                }
+            }
+        }
+    }
+
     /// Returns the number of leading lines before the argument's node
     fn leading_lines(&self) -> usize {
         match self {
@@ -216,35 +299,12 @@ impl FormatCallArgument {
 
 impl Format<JsFormatContext> for FormatCallArgument {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        match self {
-            // Re-use the cached formatted output if there is any.
-            FormatCallArgument::Inspected { content, .. } => match content.clone()? {
-                Some(element) => f.write_element(element),
-                None => Ok(()),
-            },
-            FormatCallArgument::Default {
-                element, is_last, ..
-            } => {
-                let node = element.node()?;
-
-                write!(f, [node.format()])?;
-
-                if let Some(separator) = element.trailing_separator()? {
-                    if *is_last {
-                        write!(f, [format_removed(separator)])
-                    } else {
-                        write!(f, [separator.format()])
-                    }
-                } else if !is_last {
-                    Err(FormatError::SyntaxError)
-                } else {
-                    Ok(())
-                }
-            }
-        }
+        self.fmt_with_cache_mode(FunctionBodyCacheMode::default(), f)?;
+        Ok(())
     }
 }
 
+/// Writes the function arguments and groups the first or last argument depending on `group_layout`.
 fn write_grouped_arguments(
     call_arguments: &JsCallArguments,
     mut arguments: Vec<FormatCallArgument>,
@@ -253,7 +313,6 @@ fn write_grouped_arguments(
 ) -> FormatResult<()> {
     let l_paren_token = call_arguments.l_paren_token();
     let r_paren_token = call_arguments.r_paren_token();
-    let was_caching_enabled = f.context().is_cache_function_bodies_enabled();
 
     let grouped_breaks = {
         let (grouped_arg, other_args) = match group_layout {
@@ -284,12 +343,21 @@ fn write_grouped_arguments(
             );
         }
 
-        f.context_mut().set_cache_function_bodies(true);
-        let grouped_breaks = grouped_arg.will_break(f);
-        f.context_mut()
-            .set_cache_function_bodies(was_caching_enabled);
+        match grouped_arg.element().node()? {
+            JsAnyCallArgument::JsAnyExpression(JsAnyExpression::JsArrowFunctionExpression(_)) => {
+                grouped_arg.cache_function_body(f);
+            }
+            JsAnyCallArgument::JsAnyExpression(JsAnyExpression::JsFunctionExpression(function))
+                if !other_args.is_empty() && !has_no_parameters(function) =>
+            {
+                grouped_arg.cache_function_body(f);
+            }
+            _ => {
+                // Node doesn't have a function body or its a function that doesn't get re-formatted.
+            }
+        }
 
-        grouped_breaks
+        grouped_arg.will_break(f)
     };
 
     // We now cache them the delimiters tokens. This is needed because `[rome_formatter::best_fitting]` will try to
@@ -330,18 +398,20 @@ fn write_grouped_arguments(
         .into_iter()
         .enumerate()
         .map(|(index, argument)| {
+            let layout = match group_layout {
+                GroupedCallArgumentLayout::GroupedFirstArgument if index == 0 => {
+                    Some(GroupedCallArgumentLayout::GroupedFirstArgument)
+                }
+                GroupedCallArgumentLayout::GroupedLastArgument if index == last_index => {
+                    Some(GroupedCallArgumentLayout::GroupedLastArgument)
+                }
+                _ => None,
+            };
+
             FormatGroupedArgument {
                 argument,
                 single_argument_list: last_index == 0,
-                layout: match group_layout {
-                    GroupedCallArgumentLayout::GroupedFirstArgument if index == 0 => {
-                        Some(GroupedCallArgumentLayout::GroupedFirstArgument)
-                    }
-                    GroupedCallArgumentLayout::GroupedLastArgument if index == last_index => {
-                        Some(GroupedCallArgumentLayout::GroupedLastArgument)
-                    }
-                    _ => None,
-                },
+                layout,
             }
             .memoized()
         })
@@ -366,7 +436,12 @@ fn write_grouped_arguments(
             ]
         );
 
-        // If it happens that the formatting of the
+        // Turns out, using the grouped layout isn't a good fit because some parameters of the
+        // grouped function or arrow expression break. In that case, fall back to the all args expanded
+        // formatting.
+        // This back tracking is required because testing if the grouped argument breaks would also return `true`
+        // if any content of the function body breaks. But, as far as this is concerned, it's only interested if
+        // any content in the signature breaks.
         if matches!(result, Err(FormatError::PoorLayout)) {
             drop(buffer);
             f.restore_state_snapshot(snapshot);
@@ -384,13 +459,6 @@ fn write_grouped_arguments(
         buffer.into_vec().into_boxed_slice()
     };
 
-    // All arguments have been formatted by now, safe to clear the cache.
-    // Clearing the cache is important to avoid that it isn't growing too large, which requires
-    // expensive re-hashing and re-allocating of the map.
-    if !was_caching_enabled {
-        f.context_mut().clear_cached_function_bodies();
-    }
-
     // Write the second variant that forces the group of the first/last argument to expand.
     let middle_variant = {
         let mut buffer = VecBuffer::new(f.state_mut());
@@ -406,7 +474,6 @@ fn write_grouped_arguments(
 
                     match group_layout {
                         GroupedCallArgumentLayout::GroupedFirstArgument => {
-                            // special formatting of the first element
                             joiner.entry(&group(&grouped[0]).should_expand(true));
                             joiner.entries(&grouped[1..]).finish()
                         }
@@ -432,7 +499,11 @@ fn write_grouped_arguments(
         write!(f, [expand_parent()])?;
     }
 
-    // SAFETY: Safe because variants is guaranteed to contain exactly 3 entries (two are required)
+    // SAFETY: Safe because variants is guaranteed to contain exactly 3 entries:
+    // * most flat
+    // * middle
+    // * most expanded
+    // ... and best fitting only requires the most flat/and expanded.
     unsafe {
         f.write_element(FormatElement::BestFitting(
             format_element::BestFitting::from_vec_unchecked(vec![
@@ -468,10 +539,11 @@ impl Format<JsFormatContext> for FormatGroupedFirstArgument<'_> {
                         [arrow
                             .format()
                             .with_options(FormatJsArrowFunctionExpressionOptions {
-                                assignment_layout: None,
+                                body_cache_mode: FunctionBodyCacheMode::Cached,
                                 call_arg_layout: Some(
                                     GroupedCallArgumentLayout::GroupedFirstArgument
-                                )
+                                ),
+                                ..FormatJsArrowFunctionExpressionOptions::default()
                             })]
                     )?;
 
@@ -523,9 +595,12 @@ impl Format<JsFormatContext> for FormatGroupedLastArgument<'_> {
                 with_token_tracking_disabled(f, |f| {
                     write!(
                         f,
-                        [function
-                            .format()
-                            .with_options(Some(GroupedCallArgumentLayout::GroupedLastArgument))]
+                        [function.format().with_options(FormatFunctionOptions {
+                            body_cache_mode: FunctionBodyCacheMode::Cached,
+                            call_argument_layout: Some(
+                                GroupedCallArgumentLayout::GroupedLastArgument
+                            ),
+                        })]
                     )
                 })
             }
@@ -537,10 +612,11 @@ impl Format<JsFormatContext> for FormatGroupedLastArgument<'_> {
                         [arrow
                             .format()
                             .with_options(FormatJsArrowFunctionExpressionOptions {
-                                assignment_layout: None,
+                                body_cache_mode: FunctionBodyCacheMode::Cached,
                                 call_arg_layout: Some(
                                     GroupedCallArgumentLayout::GroupedLastArgument
-                                )
+                                ),
+                                ..FormatJsArrowFunctionExpressionOptions::default()
                             })]
                     )?;
 
@@ -556,7 +632,7 @@ impl Format<JsFormatContext> for FormatGroupedLastArgument<'_> {
     }
 }
 
-/// Disable the token tracking because it is necessary to format function/arrow expressions slighlty different.
+/// Disable the token tracking because it is necessary to format function/arrow expressions slightly different.
 fn with_token_tracking_disabled<F: FnOnce(&mut JsFormatter) -> R, R>(
     f: &mut JsFormatter,
     callback: F,
@@ -645,7 +721,10 @@ impl<'a> Format<JsFormatContext> for FormatAllArgsBrokenOut<'a> {
 
 #[derive(Copy, Clone, Debug)]
 pub enum GroupedCallArgumentLayout {
+    /// Group the first call argument.
     GroupedFirstArgument,
+
+    /// Group the last call argument.
     GroupedLastArgument,
 }
 
@@ -1123,6 +1202,8 @@ fn is_angular_test_wrapper(expression: &JsAnyExpression) -> bool {
     }
 }
 
+/// Tests if the callee is a `beforeEach`, `beforeAll`, `afterEach` or `afterAll` identifier
+/// that is commonly used in test frameworks.
 fn is_unit_test_set_up_callee(callee: &JsAnyExpression) -> bool {
     match callee {
         JsAnyExpression::JsIdentifierExpression(identifier) => identifier
@@ -1211,7 +1292,7 @@ fn contains_a_test_pattern(callee: JsAnyExpression) -> SyntaxResult<bool> {
     })
 }
 
-/// Iterator that returns the callee names in "top down order"
+/// Iterator that returns the callee names in "top down order".
 ///
 /// # Examples
 ///

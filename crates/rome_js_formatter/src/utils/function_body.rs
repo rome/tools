@@ -1,42 +1,60 @@
 use crate::prelude::*;
-use rome_js_syntax::{JsAnyFunctionBody, JsSyntaxKind};
+use rome_formatter::write;
+use rome_js_syntax::JsAnyFunctionBody;
 
+#[derive(Copy, Clone, Debug, Default)]
+pub enum FunctionBodyCacheMode {
+    /// Format the body without caching it or retrieving it from the cache.
+    #[default]
+    NoCache,
+
+    /// The body has been cached before, try to retrieve the body from the cache.
+    Cached,
+
+    /// Cache the body during the next [formatting](Format::fmt).
+    Cache,
+}
+
+/// Formats a [function body](JsAnyFunctionBody) with additional caching depending on [`mode`](Self::mode).
 pub(crate) struct FormatMaybeCachedFunctionBody<'a> {
+    /// The body to format.
     pub body: &'a JsAnyFunctionBody,
-    pub lookup_cache: bool,
+
+    /// If the body should be cached or if the formatter should try to retrieve it from the cache.
+    pub mode: FunctionBodyCacheMode,
 }
 
 impl Format<JsFormatContext> for FormatMaybeCachedFunctionBody<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        if self.lookup_cache {
-            let cached = f.context().get_cached_function_body(self.body);
-            debug_assert!(
-                cached.is_some(),
-                "Expected cache to be initialized for the cases where cache lookup is enabled."
-            );
-
-            if let Some(cached) = f.context().get_cached_function_body(self.body) {
-                return f.write_element(cached);
+        match self.mode {
+            FunctionBodyCacheMode::NoCache => {
+                write!(f, [self.body.format()])
             }
-        }
-
-        let in_call_arguments = self.body.syntax().grand_parent().map_or(false, |node| {
-            node.kind() == JsSyntaxKind::JS_CALL_ARGUMENT_LIST
-        });
-
-        if f.context().is_cache_function_bodies_enabled() && in_call_arguments {
-            match f.context().get_cached_function_body(self.body) {
-                Some(cached) => return f.write_element(cached),
-                None => {
-                    if let Some(interned) = f.intern(&self.body.format())? {
-                        f.context_mut()
-                            .insert_cached_function_body(self.body, interned.clone());
-                        return f.write_element(interned);
+            FunctionBodyCacheMode::Cached => {
+                match f.context().get_cached_function_body(self.body) {
+                    Some(cached) => f.write_element(cached.clone()),
+                    None => {
+                        // This can happen in the unlikely event where a function has a parameter with
+                        // an initializer that contains a call expression with a first or last function/arrow
+                        // ```javascript
+                        // test((
+                        //   problematic = test(() => body)
+                        // ) => {});
+                        // ```
+                        // This case should be rare as it requires very specific syntax (and is rather messy to write)
+                        // which is why it's fine to just fallback to formatting the body again in this case.
+                        write!(f, [self.body.format()])
                     }
                 }
             }
+            FunctionBodyCacheMode::Cache => match f.intern(&self.body.format())? {
+                Some(interned) => {
+                    f.context_mut()
+                        .set_cached_function_body(self.body, interned.clone());
+                    f.write_element(interned.clone())
+                }
+                None => Ok(()),
+            },
         }
-
-        self.body.format().fmt(f)
     }
 }
