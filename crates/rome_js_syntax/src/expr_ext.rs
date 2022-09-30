@@ -567,7 +567,7 @@ impl JsAnyExpression {
 
             JsAnyExpression::JsNewExpression(expression) => {
                 if expression.arguments().is_none() {
-                    OperatorPrecedence::New
+                    OperatorPrecedence::NewWithoutArguments
                 } else {
                     OperatorPrecedence::LeftHandSide
                 }

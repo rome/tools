@@ -294,7 +294,7 @@ pub enum OperatorPrecedence {
     Unary = 16,
     Update = 17,
     // `new` without arguments list
-    New = 18,
+    NewWithoutArguments = 18,
     LeftHandSide = 19,
     Member = 20,
     Primary = 21,
