@@ -382,7 +382,6 @@ impl<'a> Printer<'a> {
                 // variant.
 
                 // Try to fit only the first variant on a single line
-
                 if !matches!(variant.first(), Some(&FormatElement::Tag(Tag::StartEntry))) {
                     return invalid_start_tag(TagKind::Entry, variant.first());
                 }
@@ -438,6 +437,8 @@ impl<'a> Printer<'a> {
         let mut current_fits =
             self.fits_fill_entry(SingleEntryPredicate::default(), queue, stack)?;
 
+        self.state.measured_group_fits = current_fits;
+
         self.print_entry(
             queue,
             stack,
@@ -457,6 +458,8 @@ impl<'a> Printer<'a> {
             } else {
                 false
             };
+
+            self.state.measured_group_fits = all_fits;
 
             let separator_mode = if all_fits {
                 PrintMode::Flat
@@ -479,6 +482,8 @@ impl<'a> Printer<'a> {
                 // Test if item fits now
                 let next_fits =
                     self.fits_fill_entry(SingleEntryPredicate::default(), queue, stack)?;
+
+                self.state.measured_group_fits = next_fits;
 
                 self.print_entry(
                     queue,
@@ -981,7 +986,7 @@ fn fits_element_on_line<'a, 'rest>(
                 Some(group_id) => state
                     .group_modes
                     .get_print_mode(group_id)
-                    .unwrap_or_else(|| args.mode()),
+                    .unwrap_or_else(|| PrintMode::Flat),
             };
 
             if group_mode != condition.mode {
