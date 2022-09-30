@@ -4,7 +4,7 @@ use rome_formatter::{
 };
 use std::iter::once;
 
-use crate::js::expressions::call_arguments::CallArgumentLayout;
+use crate::js::expressions::call_arguments::GroupedCallArgumentLayout;
 use crate::parentheses::{
     is_binary_like_left_or_right, is_callee, is_conditional_test,
     update_or_lower_expression_needs_parentheses, NeedsParentheses,
@@ -28,7 +28,7 @@ pub struct FormatJsArrowFunctionExpression {
 #[derive(Debug, Copy, Clone, Default)]
 pub struct FormatJsArrowFunctionExpressionOptions {
     pub assignment_layout: Option<AssignmentLikeLayout>,
-    pub call_arg_layout: Option<CallArgumentLayout>,
+    pub call_arg_layout: Option<GroupedCallArgumentLayout>,
 }
 
 impl FormatRuleWithOptions<JsArrowFunctionExpression> for FormatJsArrowFunctionExpression {
@@ -150,7 +150,7 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                 } else {
                     let is_last_call_arg = matches!(
                         self.options.call_arg_layout,
-                        Some(CallArgumentLayout::GroupedLastArgument)
+                        Some(GroupedCallArgumentLayout::GroupedLastArgument)
                     );
 
                     write!(
@@ -515,7 +515,7 @@ impl ArrowFunctionLayout {
                     next,
                 )) if matches!(
                     options.call_arg_layout,
-                    None | Some(CallArgumentLayout::GroupedLastArgument)
+                    None | Some(GroupedCallArgumentLayout::GroupedLastArgument)
                 ) && !comments.is_suppressed(next.syntax()) =>
                 {
                     should_break = should_break || should_break_chain(&current)?;

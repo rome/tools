@@ -4,12 +4,12 @@ use crate::js::expressions::arrow_function_expression::{
 use crate::js::lists::array_element_list::can_concisely_print_array_list;
 use crate::prelude::*;
 use crate::utils::{is_long_curried_call, write_arguments_multi_line};
-use rome_formatter::{format_args, format_element, write, CstFormatContext, VecBuffer};
+use rome_formatter::{format_args, format_element, write, VecBuffer};
 use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyCallArgument, JsAnyExpression, JsAnyFunctionBody,
-    JsAnyLiteralExpression, JsAnyName, JsAnyStatement, JsArrowFunctionExpression,
-    JsCallArgumentList, JsCallArguments, JsCallArgumentsFields, JsCallExpression,
-    JsExpressionStatement, JsFunctionExpression, JsLanguage, TsAnyReturnType, TsType,
+    JsAnyLiteralExpression, JsAnyName, JsAnyStatement, JsCallArgumentList, JsCallArguments,
+    JsCallArgumentsFields, JsCallExpression, JsExpressionStatement, JsFunctionExpression,
+    JsLanguage, TsAnyReturnType, TsType,
 };
 use rome_rowan::{AstSeparatedElement, AstSeparatedList, SyntaxResult, SyntaxTokenText};
 
@@ -75,7 +75,7 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
         let last_index = args.len().saturating_sub(1);
         let mut has_empty_line = false;
 
-        let mut arguments: Vec<_> = args
+        let arguments: Vec<_> = args
             .elements()
             .enumerate()
             .map(|(index, element)| {
@@ -104,197 +104,8 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
             );
         }
 
-        let comments = f.context().comments();
-        let should_group_first_argument = should_group_first_argument(&args, comments)?;
-        let should_group_last_argument =
-            !should_group_first_argument && should_group_last_argument(&args, comments)?;
-
-        // if the first or last groups needs grouping, then we prepare some special formatting
-        if should_group_first_argument || should_group_last_argument {
-            let was_caching_enabled = f.context().is_cache_function_bodies_enabled();
-
-            let grouped_breaks = {
-                let (grouped_arg, other_args) = if should_group_first_argument {
-                    let (first, tail) = arguments.split_at_mut(1);
-                    (&mut first[0], tail)
-                } else {
-                    let end_index = arguments.len().saturating_sub(1);
-                    let (head, last) = arguments.split_at_mut(end_index);
-                    (&mut last[0], head)
-                };
-
-                let non_grouped_breaks = other_args.iter_mut().any(|arg| arg.will_break(f));
-
-                // if any of the not grouped elements break, then fall back to the variant where
-                // all arguments are printed in expanded mode.
-                if non_grouped_breaks {
-                    return write!(
-                        f,
-                        [FormatAllArgsBrokenOut {
-                            l_paren: &l_paren_token.format(),
-                            args: &arguments,
-                            r_paren: &r_paren_token.format(),
-                            expand: true
-                        }]
-                    );
-                }
-
-                f.context_mut().set_cache_function_bodies(true);
-                let grouped_breaks = grouped_arg.will_break(f);
-                f.context_mut()
-                    .set_cache_function_bodies(was_caching_enabled);
-
-                grouped_breaks
-            };
-
-            // We now cache them the delimiters tokens. This is needed because `[rome_formatter::best_fitting]` will try to
-            // print each version first
-            // tokens on the left
-            let l_paren = l_paren_token.format().memoized();
-
-            // tokens on the right
-            let r_paren = r_paren_token.format().memoized();
-
-            // First write the most expanded variant because it needs `arguments`.
-            let most_expanded = {
-                let mut buffer = VecBuffer::new(f.state_mut());
-                buffer.write_element(FormatElement::Tag(Tag::StartEntry))?;
-
-                write!(
-                    buffer,
-                    [FormatAllArgsBrokenOut {
-                        l_paren: &l_paren,
-                        args: &arguments,
-                        r_paren: &r_paren,
-                        expand: true
-                    }]
-                )?;
-                buffer.write_element(FormatElement::Tag(Tag::EndEntry))?;
-
-                buffer.into_vec()
-            };
-
-            // Now reformat the first or last argument in case they are either a function or
-            // an arrow function expression because they apply a custom formatting in case they are the first/last argument.
-            // This algorithm has quadratic complexity because the formatter now formats the
-            // first/last function or arrow expression nodes twice, once with "normal" and once with "special" formatting.
-            // This can be highly expensive in cases where the function like node has a large body because it happens
-            // that the whole body gets reformatted too.
-            let last_index = arguments.len() - 1;
-            let grouped = arguments
-                .into_iter()
-                .enumerate()
-                .map(|(index, argument)| {
-                    FormatGroupedArgument {
-                        argument,
-                        single_argument_list: last_index == 0,
-                        layout: if should_group_first_argument && index == 0 {
-                            Some(CallArgumentLayout::GroupedFirstArgument)
-                        } else if should_group_last_argument && index == last_index {
-                            Some(CallArgumentLayout::GroupedLastArgument)
-                        } else {
-                            None
-                        },
-                    }
-                    .memoized()
-                })
-                .collect::<Vec<_>>();
-
-            // Write the most flat variant with the first or last argument grouped.
-            let most_flat = {
-                let snapshot = f.state_snapshot();
-                let mut buffer = VecBuffer::new(f.state_mut());
-                buffer.write_element(FormatElement::Tag(Tag::StartEntry))?;
-
-                let result = write!(
-                    buffer,
-                    [
-                        l_paren,
-                        format_with(|f| {
-                            f.join_with(soft_line_break_or_space())
-                                .entries(grouped.iter())
-                                .finish()
-                        }),
-                        r_paren
-                    ]
-                );
-
-                // If it happens that the formatting of the
-                if matches!(result, Err(FormatError::PoorLayout)) {
-                    drop(buffer);
-                    f.restore_state_snapshot(snapshot);
-
-                    let mut most_expanded_iter = most_expanded.into_iter();
-                    // Skip over the Start/EndEntry items.
-                    most_expanded_iter.next();
-                    most_expanded_iter.next_back();
-
-                    return f.write_elements(most_expanded_iter);
-                }
-
-                buffer.write_element(FormatElement::Tag(Tag::EndEntry))?;
-
-                buffer.into_vec().into_boxed_slice()
-            };
-
-            // All arguments have been formatted by now, safe to clear the cache.
-            // Clearing the cache is important to avoid that it isn't growing too large, which requires
-            // expensive re-hashing and re-allocating of the map.
-            if !was_caching_enabled {
-                f.context_mut().clear_cached_function_bodies();
-            }
-
-            // Write the second variant that forces the group of the first/last argument to expand.
-            let middle_variant = {
-                let mut buffer = VecBuffer::new(f.state_mut());
-
-                buffer.write_element(FormatElement::Tag(Tag::StartEntry))?;
-
-                write!(
-                    buffer,
-                    [
-                        l_paren,
-                        format_with(|f| {
-                            // `should_group_first_argument` and `should_group_last_argument` are mutually exclusive
-                            // which means that if one is `false`, then the other is `true`.
-                            // This means that in this branch we format the case where `should_group_first_argument`,
-                            // in the else branch we format the case where `should_group_last_argument` is `true`.
-                            let mut joiner = f.join_with(soft_line_break_or_space());
-                            if should_group_first_argument {
-                                // special formatting of the first element
-                                joiner.entry(&group(&grouped[0]).should_expand(true));
-                                joiner.entries(&grouped[1..]).finish()
-                            } else {
-                                let last_index = grouped.len() - 1;
-                                joiner.entries(&grouped[..last_index]);
-                                joiner
-                                    .entry(&group(&grouped[last_index]).should_expand(true))
-                                    .finish()
-                            }
-                        }),
-                        r_paren
-                    ]
-                )?;
-
-                buffer.write_element(FormatElement::Tag(Tag::EndEntry))?;
-
-                buffer.into_vec().into_boxed_slice()
-            };
-
-            if grouped_breaks {
-                write!(f, [expand_parent()])?;
-            }
-
-            // SAFETY: Safe because variants is guaranteed to contain exactly 3 entries (two are required)
-            unsafe {
-                f.write_element(FormatElement::BestFitting(
-                    format_element::BestFitting::from_vec_unchecked(vec![
-                        most_flat,
-                        middle_variant,
-                        most_expanded.into_boxed_slice(),
-                    ]),
-                ))
-            }
+        if let Some(group_layout) = arguments_grouped_layout(&args, f.comments()) {
+            write_grouped_arguments(node, arguments, group_layout, f)
         } else if is_long_curried_call(call_expression.as_ref()) {
             write!(
                 f,
@@ -434,6 +245,205 @@ impl Format<JsFormatContext> for FormatCallArgument {
     }
 }
 
+fn write_grouped_arguments(
+    call_arguments: &JsCallArguments,
+    mut arguments: Vec<FormatCallArgument>,
+    group_layout: GroupedCallArgumentLayout,
+    f: &mut JsFormatter,
+) -> FormatResult<()> {
+    let l_paren_token = call_arguments.l_paren_token();
+    let r_paren_token = call_arguments.r_paren_token();
+    let was_caching_enabled = f.context().is_cache_function_bodies_enabled();
+
+    let grouped_breaks = {
+        let (grouped_arg, other_args) = match group_layout {
+            GroupedCallArgumentLayout::GroupedFirstArgument => {
+                let (first, tail) = arguments.split_at_mut(1);
+                (&mut first[0], tail)
+            }
+            GroupedCallArgumentLayout::GroupedLastArgument => {
+                let end_index = arguments.len().saturating_sub(1);
+                let (head, last) = arguments.split_at_mut(end_index);
+                (&mut last[0], head)
+            }
+        };
+
+        let non_grouped_breaks = other_args.iter_mut().any(|arg| arg.will_break(f));
+
+        // if any of the not grouped elements break, then fall back to the variant where
+        // all arguments are printed in expanded mode.
+        if non_grouped_breaks {
+            return write!(
+                f,
+                [FormatAllArgsBrokenOut {
+                    l_paren: &l_paren_token.format(),
+                    args: &arguments,
+                    r_paren: &r_paren_token.format(),
+                    expand: true
+                }]
+            );
+        }
+
+        f.context_mut().set_cache_function_bodies(true);
+        let grouped_breaks = grouped_arg.will_break(f);
+        f.context_mut()
+            .set_cache_function_bodies(was_caching_enabled);
+
+        grouped_breaks
+    };
+
+    // We now cache them the delimiters tokens. This is needed because `[rome_formatter::best_fitting]` will try to
+    // print each version first
+    // tokens on the left
+    let l_paren = l_paren_token.format().memoized();
+
+    // tokens on the right
+    let r_paren = r_paren_token.format().memoized();
+
+    // First write the most expanded variant because it needs `arguments`.
+    let most_expanded = {
+        let mut buffer = VecBuffer::new(f.state_mut());
+        buffer.write_element(FormatElement::Tag(Tag::StartEntry))?;
+
+        write!(
+            buffer,
+            [FormatAllArgsBrokenOut {
+                l_paren: &l_paren,
+                args: &arguments,
+                r_paren: &r_paren,
+                expand: true
+            }]
+        )?;
+        buffer.write_element(FormatElement::Tag(Tag::EndEntry))?;
+
+        buffer.into_vec()
+    };
+
+    // Now reformat the first or last argument in case they are either a function or
+    // an arrow function expression because they apply a custom formatting in case they are the first/last argument.
+    // This algorithm has quadratic complexity because the formatter now formats the
+    // first/last function or arrow expression nodes twice, once with "normal" and once with "special" formatting.
+    // This can be highly expensive in cases where the function like node has a large body because it happens
+    // that the whole body gets reformatted too.
+    let last_index = arguments.len() - 1;
+    let grouped = arguments
+        .into_iter()
+        .enumerate()
+        .map(|(index, argument)| {
+            FormatGroupedArgument {
+                argument,
+                single_argument_list: last_index == 0,
+                layout: match group_layout {
+                    GroupedCallArgumentLayout::GroupedFirstArgument if index == 0 => {
+                        Some(GroupedCallArgumentLayout::GroupedFirstArgument)
+                    }
+                    GroupedCallArgumentLayout::GroupedLastArgument if index == last_index => {
+                        Some(GroupedCallArgumentLayout::GroupedLastArgument)
+                    }
+                    _ => None,
+                },
+            }
+            .memoized()
+        })
+        .collect::<Vec<_>>();
+
+    // Write the most flat variant with the first or last argument grouped.
+    let most_flat = {
+        let snapshot = f.state_snapshot();
+        let mut buffer = VecBuffer::new(f.state_mut());
+        buffer.write_element(FormatElement::Tag(Tag::StartEntry))?;
+
+        let result = write!(
+            buffer,
+            [
+                l_paren,
+                format_with(|f| {
+                    f.join_with(soft_line_break_or_space())
+                        .entries(grouped.iter())
+                        .finish()
+                }),
+                r_paren
+            ]
+        );
+
+        // If it happens that the formatting of the
+        if matches!(result, Err(FormatError::PoorLayout)) {
+            drop(buffer);
+            f.restore_state_snapshot(snapshot);
+
+            let mut most_expanded_iter = most_expanded.into_iter();
+            // Skip over the Start/EndEntry items.
+            most_expanded_iter.next();
+            most_expanded_iter.next_back();
+
+            return f.write_elements(most_expanded_iter);
+        }
+
+        buffer.write_element(FormatElement::Tag(Tag::EndEntry))?;
+
+        buffer.into_vec().into_boxed_slice()
+    };
+
+    // All arguments have been formatted by now, safe to clear the cache.
+    // Clearing the cache is important to avoid that it isn't growing too large, which requires
+    // expensive re-hashing and re-allocating of the map.
+    if !was_caching_enabled {
+        f.context_mut().clear_cached_function_bodies();
+    }
+
+    // Write the second variant that forces the group of the first/last argument to expand.
+    let middle_variant = {
+        let mut buffer = VecBuffer::new(f.state_mut());
+
+        buffer.write_element(FormatElement::Tag(Tag::StartEntry))?;
+
+        write!(
+            buffer,
+            [
+                l_paren,
+                format_with(|f| {
+                    let mut joiner = f.join_with(soft_line_break_or_space());
+
+                    match group_layout {
+                        GroupedCallArgumentLayout::GroupedFirstArgument => {
+                            // special formatting of the first element
+                            joiner.entry(&group(&grouped[0]).should_expand(true));
+                            joiner.entries(&grouped[1..]).finish()
+                        }
+                        GroupedCallArgumentLayout::GroupedLastArgument => {
+                            let last_index = grouped.len() - 1;
+                            joiner.entries(&grouped[..last_index]);
+                            joiner
+                                .entry(&group(&grouped[last_index]).should_expand(true))
+                                .finish()
+                        }
+                    }
+                }),
+                r_paren
+            ]
+        )?;
+
+        buffer.write_element(FormatElement::Tag(Tag::EndEntry))?;
+
+        buffer.into_vec().into_boxed_slice()
+    };
+
+    if grouped_breaks {
+        write!(f, [expand_parent()])?;
+    }
+
+    // SAFETY: Safe because variants is guaranteed to contain exactly 3 entries (two are required)
+    unsafe {
+        f.write_element(FormatElement::BestFitting(
+            format_element::BestFitting::from_vec_unchecked(vec![
+                most_flat,
+                middle_variant,
+                most_expanded.into_boxed_slice(),
+            ]),
+        ))
+    }
+}
+
 /// Helper for formatting the first grouped argument (see [should_group_first_argument]).
 struct FormatGroupedFirstArgument<'a> {
     argument: &'a FormatCallArgument,
@@ -459,7 +469,9 @@ impl Format<JsFormatContext> for FormatGroupedFirstArgument<'_> {
                             .format()
                             .with_options(FormatJsArrowFunctionExpressionOptions {
                                 assignment_layout: None,
-                                call_arg_layout: Some(CallArgumentLayout::GroupedFirstArgument)
+                                call_arg_layout: Some(
+                                    GroupedCallArgumentLayout::GroupedFirstArgument
+                                )
                             })]
                     )?;
 
@@ -513,7 +525,7 @@ impl Format<JsFormatContext> for FormatGroupedLastArgument<'_> {
                         f,
                         [function
                             .format()
-                            .with_options(Some(CallArgumentLayout::GroupedLastArgument))]
+                            .with_options(Some(GroupedCallArgumentLayout::GroupedLastArgument))]
                     )
                 })
             }
@@ -526,7 +538,9 @@ impl Format<JsFormatContext> for FormatGroupedLastArgument<'_> {
                             .format()
                             .with_options(FormatJsArrowFunctionExpressionOptions {
                                 assignment_layout: None,
-                                call_arg_layout: Some(CallArgumentLayout::GroupedLastArgument)
+                                call_arg_layout: Some(
+                                    GroupedCallArgumentLayout::GroupedLastArgument
+                                )
                             })]
                     )?;
 
@@ -574,18 +588,18 @@ struct FormatGroupedArgument {
     single_argument_list: bool,
 
     /// The layout to use for this argument.
-    layout: Option<CallArgumentLayout>,
+    layout: Option<GroupedCallArgumentLayout>,
 }
 
 impl Format<JsFormatContext> for FormatGroupedArgument {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         match self.layout {
-            Some(CallArgumentLayout::GroupedFirstArgument) => FormatGroupedFirstArgument {
+            Some(GroupedCallArgumentLayout::GroupedFirstArgument) => FormatGroupedFirstArgument {
                 argument: &self.argument,
                 is_only: self.single_argument_list,
             }
             .fmt(f),
-            Some(CallArgumentLayout::GroupedLastArgument) => FormatGroupedLastArgument {
+            Some(GroupedCallArgumentLayout::GroupedLastArgument) => FormatGroupedLastArgument {
                 argument: &self.argument,
                 is_only: self.single_argument_list,
             }
@@ -630,9 +644,22 @@ impl<'a> Format<JsFormatContext> for FormatAllArgsBrokenOut<'a> {
 }
 
 #[derive(Copy, Clone, Debug)]
-pub enum CallArgumentLayout {
-    GroupedLastArgument,
+pub enum GroupedCallArgumentLayout {
     GroupedFirstArgument,
+    GroupedLastArgument,
+}
+
+fn arguments_grouped_layout(
+    args: &JsCallArgumentList,
+    comments: &JsComments,
+) -> Option<GroupedCallArgumentLayout> {
+    if should_group_first_argument(args, comments).unwrap_or(false) {
+        Some(GroupedCallArgumentLayout::GroupedFirstArgument)
+    } else if should_group_last_argument(&args, comments).unwrap_or(false) {
+        Some(GroupedCallArgumentLayout::GroupedLastArgument)
+    } else {
+        None
+    }
 }
 
 /// Checks if the the first argument requires grouping
