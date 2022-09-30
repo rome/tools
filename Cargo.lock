@@ -1685,7 +1685,6 @@ dependencies = [
  "rome_js_syntax",
  "rome_rowan",
  "rome_service",
- "rustc-hash",
  "schemars",
  "serde",
  "serde_json",
