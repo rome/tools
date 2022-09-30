@@ -1,0 +1,30 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: withJsxElementInvalid.jsx
+---
+# Input
+```js
+<><Component /></>
+```
+
+# Diagnostics
+```
+withJsxElementInvalid.jsx:1:1 lint/nursery/noUselessFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using unnecessary Fragment.
+  
+    ┌─ withJsxElementInvalid.jsx:1:1
+    │
+  1 │ <><Component /></>
+    │ ^^^^^^^^^^^^^^^^^^
+  
+  i Suggested fix: Remove the Fragment
+  
+      | @@ -1 +1 @@
+  0   | - <><Component /></>
+    0 | + <Component />
+  
+
+```
+
+

@@ -1,0 +1,30 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: withJsxTextInvalid.jsx
+---
+# Input
+```js
+<>foo</>
+```
+
+# Diagnostics
+```
+withJsxTextInvalid.jsx:1:1 lint/nursery/noUselessFragments  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid using unnecessary Fragment.
+  
+    ┌─ withJsxTextInvalid.jsx:1:1
+    │
+  1 │ <>foo</>
+    │ ^^^^^^^^
+  
+  i Suggested fix: Remove the Fragment
+  
+      | @@ -1 +1 @@
+  0   | - <>foo</>
+    0 | + "foo"
+  
+
+```
+
+

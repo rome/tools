@@ -5,8 +5,11 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
+use rome_js_factory::make::{
+    ident, js_expression_statement, js_string_literal_expression, jsx_tag_expression,
+};
 use rome_js_syntax::{
-    JsLanguage, JsSyntaxKind, JsxAnyChild, JsxAnyElementName, JsxChildList, JsxElement,
+    JsLanguage, JsSyntaxKind, JsxAnyChild, JsxAnyElementName, JsxAnyTag, JsxChildList, JsxElement,
     JsxFragment, JsxTagExpression,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeList, BatchMutation, BatchMutationExt};
@@ -81,6 +84,13 @@ impl NoUselessFragmentsQuery {
                 let old_node = JsxAnyChild::JsxElement(element.clone());
                 mutation.remove_node(old_node);
             }
+        }
+    }
+
+    fn children(&self) -> JsxChildList {
+        match self {
+            NoUselessFragmentsQuery::JsxFragment(element) => element.children(),
+            NoUselessFragmentsQuery::JsxElement(element) => element.children(),
         }
     }
 }
@@ -201,10 +211,57 @@ impl Rule for NoUselessFragments {
             } else {
                 node.remove_node_from_list(&mut mutation);
             }
+        } else if let Some(parent) = node.parent::<JsxTagExpression>() {
+            let parent = parent.syntax().parent()?;
+            let child = node.children().first();
+            if let Some(child) = child {
+                let new_node = match child {
+                    JsxAnyChild::JsxElement(node) => Some(
+                        jsx_tag_expression(JsxAnyTag::JsxElement(node))
+                            .syntax()
+                            .clone(),
+                    ),
+                    JsxAnyChild::JsxFragment(node) => Some(
+                        jsx_tag_expression(JsxAnyTag::JsxFragment(node))
+                            .syntax()
+                            .clone(),
+                    ),
+                    JsxAnyChild::JsxSelfClosingElement(node) => Some(
+                        jsx_tag_expression(JsxAnyTag::JsxSelfClosingElement(node))
+                            .syntax()
+                            .clone(),
+                    ),
+                    JsxAnyChild::JsxText(text) => {
+                        let new_value = format!("\"{}\"", text.value_token().ok()?);
+                        Some(
+                            js_string_literal_expression(ident(&new_value))
+                                .syntax()
+                                .clone(),
+                        )
+                    }
+                    JsxAnyChild::JsxExpressionChild(child) => {
+                        child.expression().map(|expression| {
+                            js_expression_statement(expression).build().syntax().clone()
+                        })
+                    }
+
+                    // can't apply a code action because it will create invalid syntax
+                    // for example `<>{...foo}</>` would become `{...foo}` which would produce
+                    // a syntax error
+                    JsxAnyChild::JsxSpreadChild(_) => return None,
+                };
+                if let Some(new_node) = new_node {
+                    mutation.replace_element(parent.into(), new_node.into());
+                } else {
+                    mutation.remove_element(parent.into());
+                }
+            } else {
+                mutation.remove_element(parent.into());
+            }
         }
 
         Some(JsRuleAction {
-            category: ActionCategory::Refactor,
+            category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
             message: markup! { "Remove the Fragment" }.to_owned(),
             mutation,
