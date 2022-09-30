@@ -27,8 +27,10 @@ You can now ignore folders and files using the Unix shell style patterns:
 
 - Completely revamped how the formatter handles comments and their placement inside the code [#3277](https://github.com/rome/tools/pull/3227)
 - Improved formatting of intersection and unions types [#3162](https://github.com/rome/tools/issues/3162)
+- Improved formatting of member chains [#3283](https://github.com/rome/tools/pull/3283)
+- Improved formatting of call arguments [#3290](https://github.com/rome/tools/pull/3290)
 
-### Linter 
+### Linter
 
 - **BREAKING CHANGE**: This release changes the naming of the lint rule groups with the goal to make them language agnostic and avoid confusion among users and contributors.
 were named after a language, and this caused confusion among users and contributors. Please
@@ -37,14 +39,23 @@ The new groups are heavily inspired from [`clippy`](https://github.com/rust-lang
 - Added a new group called `nursery`, this group incubates new rules that are being developed.
 - Added a new group called `style`, this group incubates rules that orbits around styling.
 - Added a new group called `correctness`, this group incubates rules that orbits catching possible bugs.
-- Added a new rule, called [`useButtonType`](https://rome.tools/docs/lint/rules/useButtonType/)
-- Added a new rule, called [`noRenderReturnValue`](https://rome.tools/docs/lint/rules/noRenderReturnValue/)
-- Added a new rule, called [`noDangerouslySetInnerHtml`](https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtml/)
-- Added a new rule, called [`useOptionalChain`](https://rome.tools/docs/lint/rules/useOptionalChain/)
-- Added a new rule, called [`useFragmentSyntax`](https://rome.tools/docs/lint/rules/useFragmentSyntax/)
-- Added a new rule, called [`useFragmentSyntax`](https://rome.tools/docs/lint/rules/useFragmentSyntax/)
 - Fixed a code action for `useBlockStatements` [#3199](https://github.com/rome/tools/issues/3199)
 - Improved the rule `useCamelCase` [#3190](https://github.com/rome/tools/pull/3190) [#3210](https://github.com/rome/tools/pull/3210)
+- Fixed invalid code action for `useOptionalChain` [#3257](https://github.com/rome/tools/issues/3257)
+
+#### New rules
+
+- [`useButtonType`](https://rome.tools/docs/lint/rules/useButtonType/)
+- [`noRenderReturnValue`](https://rome.tools/docs/lint/rules/noRenderReturnValue/)
+- [`noDangerouslySetInnerHtml`](https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtml/)
+- [`useOptionalChain`](https://rome.tools/docs/lint/rules/useOptionalChain/)
+- [`useFragmentSyntax`](https://rome.tools/docs/lint/rules/useFragmentSyntax/)
+- [`noUselessFragments`](https://rome.tools/docs/lint/rules/noUselessFragments/)
+- [`noChildrenProp`](https://rome.tools/docs/lint/rules/noChildrenProp/)
+- [`noArrayIndexKey`](https://rome.tools/docs/lint/rules/noArrayIndexKey/)
+- [`noVoidElementsWithChildren`](https://rome.tools/docs/lint/rules/noVoidElementsWithChildren/)
+- [`noUndeclaredVariables`](https://rome.tools/docs/lint/rules/noUndeclaredVariables/)
+
 
 ### Parser
 
