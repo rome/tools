@@ -294,9 +294,8 @@ impl Rule for NoVoidElementsWithChildren {
         Some(RuleDiagnostic::new(
             rule_category!(),
             range,
-            state.message(),
+            state.diagnostic_message(),
         ))
-        Some(RuleDiagnostic::new(range, state.diagnostic_message()))
     }
 
     fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
