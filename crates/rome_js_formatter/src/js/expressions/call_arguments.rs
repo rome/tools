@@ -309,7 +309,7 @@ impl Format<JsFormatContext> for FormatCallArgument {
     }
 }
 
-/// Writes the function arguments and groups the first or last argument depending on `group_layout`.
+/// Writes the function arguments, and groups the first or last argument depending on `group_layout`.
 fn write_grouped_arguments(
     call_arguments: &JsCallArguments,
     mut arguments: Vec<FormatCallArgument>,
