@@ -587,7 +587,7 @@ impl std::fmt::Display for FormatError {
             ),
             FormatError::InvalidDocument(error) => std::write!(fmt, "Invalid document: {error}\n\n This is an internal Rome error. Please report if necessary."),
             FormatError::PoorLayout => {
-                std::write!(fmt, "Poor layout: This is an internal Rome error. Please report if necessary.")
+                std::write!(fmt, "Poor layout: The formatter wasn't able to pick a good layout for your document. This is an internal Rome error. Please report if necessary.")
             }
         }
     }
@@ -1496,6 +1496,9 @@ impl<Context> FormatState<Context> {
     #[inline]
     pub fn set_token_tracking_enabled(&mut self, _: bool) {}
 
+    /// Disables or enables token tracking for a portion of the code.
+    ///
+    /// It can be useful to disable the token tracking when it is necessary to re-format a node with different parameters.
     #[cfg(debug_assertions)]
     pub fn set_token_tracking_enabled(&mut self, enabled: bool) {
         self.printed_tokens.set_enabled(enabled)
@@ -1507,6 +1510,7 @@ impl<Context> FormatState<Context> {
         false
     }
 
+    /// Returns `true` if token tracking is currently enabled.
     #[cfg(debug_assertions)]
     pub fn is_token_tracking_enabled(&self) -> bool {
         self.printed_tokens.is_enabled()

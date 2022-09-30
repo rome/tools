@@ -58,7 +58,7 @@ impl FormatNodeRule<JsCallArguments> for FormatJsCallArguments {
                 f,
                 [
                     l_paren_token.format(),
-                    format_once(|f| {
+                    format_with(|f| {
                         f.join_with(space())
                             .entries(
                                 args.format_separated(",")
@@ -194,6 +194,13 @@ impl FormatCallArgument {
         }
     }
 
+    /// Formats the node of this argument and caches the function body.
+    ///
+    /// See [JsFormatContext::cached_function_body]
+    ///
+    /// # Panics
+    ///
+    /// If [`cache_function_body`](Self::cache_function_body) or [`will_break`](Self::will_break) has been called on this argument before.
     fn cache_function_body(&mut self, f: &mut JsFormatter) {
         match &self {
             FormatCallArgument::Default {
@@ -385,12 +392,13 @@ fn write_grouped_arguments(
         buffer.into_vec()
     };
 
-    // Now reformat the first or last argument in case they are either a function or
-    // an arrow function expression because they apply a custom formatting in case they are the first/last argument.
-    // This algorithm has quadratic complexity because the formatter now formats the
-    // first/last function or arrow expression nodes twice, once with "normal" and once with "special" formatting.
-    // This can be highly expensive in cases where the function like node has a large body because it happens
-    // that the whole body gets reformatted too.
+    // Now reformat the first or last argument if they happen to be a function or arrow function expression.
+    // Function and arrow function expression apply a custom formatting that removes soft line breaks from the parameters,
+    // type parameters, and return type annotation.
+    //
+    // This implementation caches the function body of the "normal" formatted function or arrow function expression
+    // to avoid quadratic complexity if the functions' body contains another call expression with an arrow or function expression
+    // as first or last argument.
     let last_index = arguments.len() - 1;
     let grouped = arguments
         .into_iter()
@@ -599,7 +607,13 @@ impl Format<JsFormatContext> for FormatGroupedLastArgument<'_> {
                                 GroupedCallArgumentLayout::GroupedLastArgument
                             ),
                         })]
-                    )
+                    )?;
+
+                    if let Some(separator) = element.trailing_separator()? {
+                        write!(f, [format_removed(separator)])?;
+                    }
+
+                    Ok(())
                 })
             }
 
