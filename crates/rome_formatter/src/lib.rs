@@ -569,7 +569,7 @@ pub enum FormatError {
     /// In case printing the document failed because it has an invalid structure.
     InvalidDocument(InvalidDocumentError),
 
-    /// Formatting failed because formatting some content encountered a situation where a layout
+    /// Formatting failed because some content encountered a situation where a layout
     /// choice by an enclosing object resulted in a poor layout for the child object.
     ///
     /// It's up to the enclosing object to pick another layout. This error should not be raised
