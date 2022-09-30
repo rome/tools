@@ -27,7 +27,7 @@ pub struct JsFormatContext {
     /// call expression with a function or call expression as first or last argument.
     ///
     /// It's sufficient to only store a single cached body to cover the vast majority of cases
-    /// (there's no exception in any of our tests nor benchmark tests). The only not covered case is when
+    /// (there's no exception in any of our tests nor benchmark tests). The only case not covered is when
     /// a parameter has an initializer that contains a call expression:
     ///
     /// ```javascript
