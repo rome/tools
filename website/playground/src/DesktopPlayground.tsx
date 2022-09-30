@@ -49,14 +49,13 @@ export default function DesktopPlayground({
 
 	const onUpdate = useCallback((viewUpdate: ViewUpdate) => {
 		const cursorPosition = viewUpdate.state.selection.ranges[0]?.from ?? 0;
-		setPlaygroundState(
-			(state) =>
-				state.cursorPosition !== cursorPosition
-					? {
-							...state,
-							cursorPosition,
-					  }
-					: state,
+		setPlaygroundState((state) =>
+			state.cursorPosition !== cursorPosition
+				? {
+						...state,
+						cursorPosition,
+				  }
+				: state,
 		);
 	}, []);
 

@@ -456,9 +456,11 @@ class Manager {
 		window.addEventListener("resize", this.refresh.bind(this), {
 			passive: true,
 		});
-		window.addEventListener("resize", this.calculateHeadingsPositions.bind(
-			this,
-		), { passive: true });
+		window.addEventListener(
+			"resize",
+			this.calculateHeadingsPositions.bind(this),
+			{ passive: true },
+		);
 
 		document.addEventListener(
 			"click",
