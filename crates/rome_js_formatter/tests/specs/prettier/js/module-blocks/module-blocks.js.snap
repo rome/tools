@@ -215,17 +215,17 @@ module-blocks.js:1:8 parse ━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ module-blocks.js:1:8
-    │
-  1 │ module { await 3 };
-    │        ^
+  > 1 │ module { await 3 };
+      │        ^
+    2 │ 
+    3 │ class B {
   
   i ...Which is required to end this statement
   
-    ┌─ module-blocks.js:1:1
-    │
-  1 │ module { await 3 };
-    │ ^^^^^^^^
+  > 1 │ module { await 3 };
+      │ ^^^^^^^^
+    2 │ 
+    3 │ class B {
   
 module-blocks.js:5:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -233,17 +233,21 @@ module-blocks.js:5:12 parse ━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ module-blocks.js:5:12
-    │
-  5 │     module {
-    │            ^
+    3 │ class B {
+    4 │   #p() {
+  > 5 │     module {
+      │            ^
+    6 │       class C { [this.#p]; }
+    7 │     };
   
   i ...Which is required to end this statement
   
-    ┌─ module-blocks.js:5:5
-    │
-  5 │     module {
-    │     ^^^^^^^^
+    3 │ class B {
+    4 │   #p() {
+  > 5 │     module {
+      │     ^^^^^^^^
+    6 │       class C { [this.#p]; }
+    7 │     };
   
 module-blocks.js:11:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -251,17 +255,21 @@ module-blocks.js:11:18 parse ━━━━━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-     ┌─ module-blocks.js:11:18
-     │
-  11 │ const m = module {
-     │                  ^
+     9 │ }
+    10 │ 
+  > 11 │ const m = module {
+       │                  ^
+    12 │   export const foo = "foo";
+    13 │   export { foo };
   
   i ...Which is required to end this statement
   
-     ┌─ module-blocks.js:11:1
-     │
-  11 │ const m = module {
-     │ ^^^^^^^^^^^^^^^^^
+     9 │ }
+    10 │ 
+  > 11 │ const m = module {
+       │ ^^^^^^^^^^^^^^^^^
+    12 │   export const foo = "foo";
+    13 │   export { foo };
   
 module-blocks.js:12:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -269,10 +277,11 @@ module-blocks.js:12:3 parse ━━━━━━━━━━━━━━━━━�
   
   × move this declaration to the top level
   
-     ┌─ module-blocks.js:12:3
-     │
-  12 │   export const foo = "foo";
-     │   ^^^^^^^^^^^^^^^^^^^^^^^^^
+    11 │ const m = module {
+  > 12 │   export const foo = "foo";
+       │   ^^^^^^^^^^^^^^^^^^^^^^^^^
+    13 │   export { foo };
+    14 │ };
   
 module-blocks.js:13:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -280,10 +289,12 @@ module-blocks.js:13:3 parse ━━━━━━━━━━━━━━━━━�
   
   × move this declaration to the top level
   
-     ┌─ module-blocks.js:13:3
-     │
-  13 │   export { foo };
-     │   ^^^^^^^^^^^^^^^
+    11 │ const m = module {
+    12 │   export const foo = "foo";
+  > 13 │   export { foo };
+       │   ^^^^^^^^^^^^^^^
+    14 │ };
+    15 │ 
   
 module-blocks.js:16:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -291,17 +302,21 @@ module-blocks.js:16:8 parse ━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-     ┌─ module-blocks.js:16:8
-     │
-  16 │ module {
-     │        ^
+    14 │ };
+    15 │ 
+  > 16 │ module {
+       │        ^
+    17 │   export { foo }
+    18 │ };
   
   i ...Which is required to end this statement
   
-     ┌─ module-blocks.js:16:1
-     │
-  16 │ module {
-     │ ^^^^^^^^
+    14 │ };
+    15 │ 
+  > 16 │ module {
+       │ ^^^^^^^^
+    17 │   export { foo }
+    18 │ };
   
 module-blocks.js:17:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -309,10 +324,11 @@ module-blocks.js:17:3 parse ━━━━━━━━━━━━━━━━━�
   
   × move this declaration to the top level
   
-     ┌─ module-blocks.js:17:3
-     │
-  17 │   export { foo }
-     │   ^^^^^^^^^^^^^^
+    16 │ module {
+  > 17 │   export { foo }
+       │   ^^^^^^^^^^^^^^
+    18 │ };
+    19 │ 
   
 module-blocks.js:20:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -320,17 +336,21 @@ module-blocks.js:20:24 parse ━━━━━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-     ┌─ module-blocks.js:20:24
-     │
-  20 │ const m = module       {};
-     │                        ^
+    18 │ };
+    19 │ 
+  > 20 │ const m = module       {};
+       │                        ^
+    21 │ 
+    22 │ const worker = new Worker(module {
   
   i ...Which is required to end this statement
   
-     ┌─ module-blocks.js:20:1
-     │
-  20 │ const m = module       {};
-     │ ^^^^^^^^^^^^^^^^^^^^^^^
+    18 │ };
+    19 │ 
+  > 20 │ const m = module       {};
+       │ ^^^^^^^^^^^^^^^^^^^^^^^
+    21 │ 
+    22 │ const worker = new Worker(module {
   
 module-blocks.js:22:34 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -338,10 +358,12 @@ module-blocks.js:22:34 parse ━━━━━━━━━━━━━━━━━
   
   × unexpected
   
-     ┌─ module-blocks.js:22:34
-     │
-  22 │ const worker = new Worker(module {
-     │                                  ^
+    20 │ const m = module       {};
+    21 │ 
+  > 22 │ const worker = new Worker(module {
+       │                                  ^
+    23 │   export const foo = "foo";
+    24 │ });
   
 module-blocks.js:23:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -349,10 +371,11 @@ module-blocks.js:23:10 parse ━━━━━━━━━━━━━━━━━
   
   × unexpected
   
-     ┌─ module-blocks.js:23:10
-     │
-  23 │   export const foo = "foo";
-     │          ^^^^^
+    22 │ const worker = new Worker(module {
+  > 23 │   export const foo = "foo";
+       │          ^^^^^
+    24 │ });
+    25 │ 
   
 module-blocks.js:23:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -360,10 +383,11 @@ module-blocks.js:23:16 parse ━━━━━━━━━━━━━━━━━
   
   × unexpected
   
-     ┌─ module-blocks.js:23:16
-     │
-  23 │   export const foo = "foo";
-     │                ^^^
+    22 │ const worker = new Worker(module {
+  > 23 │   export const foo = "foo";
+       │                ^^^
+    24 │ });
+    25 │ 
   
 module-blocks.js:23:27 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -371,10 +395,11 @@ module-blocks.js:23:27 parse ━━━━━━━━━━━━━━━━━
   
   × unexpected
   
-     ┌─ module-blocks.js:23:27
-     │
-  23 │   export const foo = "foo";
-     │                           ^
+    22 │ const worker = new Worker(module {
+  > 23 │   export const foo = "foo";
+       │                           ^
+    24 │ });
+    25 │ 
   
 module-blocks.js:24:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -382,10 +407,12 @@ module-blocks.js:24:1 parse ━━━━━━━━━━━━━━━━━�
   
   × Expected a statement here
   
-     ┌─ module-blocks.js:24:1
-     │
-  24 │ });
-     │ ^^
+    22 │ const worker = new Worker(module {
+    23 │   export const foo = "foo";
+  > 24 │ });
+       │ ^^
+    25 │ 
+    26 │ let m = module {
   
 module-blocks.js:26:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -393,17 +420,21 @@ module-blocks.js:26:16 parse ━━━━━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-     ┌─ module-blocks.js:26:16
-     │
-  26 │ let m = module {
-     │                ^
+    24 │ });
+    25 │ 
+  > 26 │ let m = module {
+       │                ^
+    27 │   module {
+    28 │     export let foo = "foo";
   
   i ...Which is required to end this statement
   
-     ┌─ module-blocks.js:26:1
-     │
-  26 │ let m = module {
-     │ ^^^^^^^^^^^^^^^
+    24 │ });
+    25 │ 
+  > 26 │ let m = module {
+       │ ^^^^^^^^^^^^^^^
+    27 │   module {
+    28 │     export let foo = "foo";
   
 module-blocks.js:27:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -411,17 +442,19 @@ module-blocks.js:27:10 parse ━━━━━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-     ┌─ module-blocks.js:27:10
-     │
-  27 │   module {
-     │          ^
+    26 │ let m = module {
+  > 27 │   module {
+       │          ^
+    28 │     export let foo = "foo";
+    29 │   };
   
   i ...Which is required to end this statement
   
-     ┌─ module-blocks.js:27:3
-     │
-  27 │   module {
-     │   ^^^^^^^^
+    26 │ let m = module {
+  > 27 │   module {
+       │   ^^^^^^^^
+    28 │     export let foo = "foo";
+    29 │   };
   
 module-blocks.js:28:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -429,10 +462,12 @@ module-blocks.js:28:5 parse ━━━━━━━━━━━━━━━━━�
   
   × move this declaration to the top level
   
-     ┌─ module-blocks.js:28:5
-     │
-  28 │     export let foo = "foo";
-     │     ^^^^^^^^^^^^^^^^^^^^^^^
+    26 │ let m = module {
+    27 │   module {
+  > 28 │     export let foo = "foo";
+       │     ^^^^^^^^^^^^^^^^^^^^^^^
+    29 │   };
+    30 │ };
   
 module-blocks.js:32:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -440,17 +475,21 @@ module-blocks.js:32:18 parse ━━━━━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-     ┌─ module-blocks.js:32:18
-     │
-  32 │ const m = module { export const foo = "foo" };
-     │                  ^
+    30 │ };
+    31 │ 
+  > 32 │ const m = module { export const foo = "foo" };
+       │                  ^
+    33 │ 
+    34 │ let moduleBlock = module { export let y = 1; };
   
   i ...Which is required to end this statement
   
-     ┌─ module-blocks.js:32:1
-     │
-  32 │ const m = module { export const foo = "foo" };
-     │ ^^^^^^^^^^^^^^^^^
+    30 │ };
+    31 │ 
+  > 32 │ const m = module { export const foo = "foo" };
+       │ ^^^^^^^^^^^^^^^^^
+    33 │ 
+    34 │ let moduleBlock = module { export let y = 1; };
   
 module-blocks.js:32:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -458,10 +497,12 @@ module-blocks.js:32:20 parse ━━━━━━━━━━━━━━━━━
   
   × move this declaration to the top level
   
-     ┌─ module-blocks.js:32:20
-     │
-  32 │ const m = module { export const foo = "foo" };
-     │                    ^^^^^^^^^^^^^^^^^^^^^^^^
+    30 │ };
+    31 │ 
+  > 32 │ const m = module { export const foo = "foo" };
+       │                    ^^^^^^^^^^^^^^^^^^^^^^^^
+    33 │ 
+    34 │ let moduleBlock = module { export let y = 1; };
   
 module-blocks.js:34:26 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -469,17 +510,21 @@ module-blocks.js:34:26 parse ━━━━━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-     ┌─ module-blocks.js:34:26
-     │
-  34 │ let moduleBlock = module { export let y = 1; };
-     │                          ^
+    32 │ const m = module { export const foo = "foo" };
+    33 │ 
+  > 34 │ let moduleBlock = module { export let y = 1; };
+       │                          ^
+    35 │ 
+    36 │ foo(module { export let foo = "foo"; });
   
   i ...Which is required to end this statement
   
-     ┌─ module-blocks.js:34:1
-     │
-  34 │ let moduleBlock = module { export let y = 1; };
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^
+    32 │ const m = module { export const foo = "foo" };
+    33 │ 
+  > 34 │ let moduleBlock = module { export let y = 1; };
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^
+    35 │ 
+    36 │ foo(module { export let foo = "foo"; });
   
 module-blocks.js:34:28 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -487,10 +532,12 @@ module-blocks.js:34:28 parse ━━━━━━━━━━━━━━━━━
   
   × move this declaration to the top level
   
-     ┌─ module-blocks.js:34:28
-     │
-  34 │ let moduleBlock = module { export let y = 1; };
-     │                            ^^^^^^^^^^^^^^^^^
+    32 │ const m = module { export const foo = "foo" };
+    33 │ 
+  > 34 │ let moduleBlock = module { export let y = 1; };
+       │                            ^^^^^^^^^^^^^^^^^
+    35 │ 
+    36 │ foo(module { export let foo = "foo"; });
   
 module-blocks.js:36:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -498,10 +545,12 @@ module-blocks.js:36:12 parse ━━━━━━━━━━━━━━━━━
   
   × unexpected
   
-     ┌─ module-blocks.js:36:12
-     │
-  36 │ foo(module { export let foo = "foo"; });
-     │            ^
+    34 │ let moduleBlock = module { export let y = 1; };
+    35 │ 
+  > 36 │ foo(module { export let foo = "foo"; });
+       │            ^
+    37 │ 
+    38 │ let m = module { /* foo */ };
   
 module-blocks.js:36:21 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -509,10 +558,12 @@ module-blocks.js:36:21 parse ━━━━━━━━━━━━━━━━━
   
   × unexpected
   
-     ┌─ module-blocks.js:36:21
-     │
-  36 │ foo(module { export let foo = "foo"; });
-     │                     ^^^
+    34 │ let moduleBlock = module { export let y = 1; };
+    35 │ 
+  > 36 │ foo(module { export let foo = "foo"; });
+       │                     ^^^
+    37 │ 
+    38 │ let m = module { /* foo */ };
   
 module-blocks.js:36:25 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -520,19 +571,23 @@ module-blocks.js:36:25 parse ━━━━━━━━━━━━━━━━━
   
   × unexpected
   
-     ┌─ module-blocks.js:36:25
-     │
-  36 │ foo(module { export let foo = "foo"; });
-     │                         ^^^
+    34 │ let moduleBlock = module { export let y = 1; };
+    35 │ 
+  > 36 │ foo(module { export let foo = "foo"; });
+       │                         ^^^
+    37 │ 
+    38 │ let m = module { /* foo */ };
   
 module-blocks.js:36:29 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Did you mean to use a `:`? An `=` can only follow a property name when the containing object literal is part of a destructuring pattern.
   
-     ┌─ module-blocks.js:36:29
-     │
-  36 │ foo(module { export let foo = "foo"; });
-     │                             ^
+    34 │ let moduleBlock = module { export let y = 1; };
+    35 │ 
+  > 36 │ foo(module { export let foo = "foo"; });
+       │                             ^
+    37 │ 
+    38 │ let m = module { /* foo */ };
   
 module-blocks.js:36:36 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -540,10 +595,12 @@ module-blocks.js:36:36 parse ━━━━━━━━━━━━━━━━━
   
   × unexpected
   
-     ┌─ module-blocks.js:36:36
-     │
-  36 │ foo(module { export let foo = "foo"; });
-     │                                    ^
+    34 │ let moduleBlock = module { export let y = 1; };
+    35 │ 
+  > 36 │ foo(module { export let foo = "foo"; });
+       │                                    ^
+    37 │ 
+    38 │ let m = module { /* foo */ };
   
 module-blocks.js:36:38 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -551,10 +608,12 @@ module-blocks.js:36:38 parse ━━━━━━━━━━━━━━━━━
   
   × Expected a statement here
   
-     ┌─ module-blocks.js:36:38
-     │
-  36 │ foo(module { export let foo = "foo"; });
-     │                                      ^^
+    34 │ let moduleBlock = module { export let y = 1; };
+    35 │ 
+  > 36 │ foo(module { export let foo = "foo"; });
+       │                                      ^^
+    37 │ 
+    38 │ let m = module { /* foo */ };
   
 module-blocks.js:38:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -562,17 +621,19 @@ module-blocks.js:38:16 parse ━━━━━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-     ┌─ module-blocks.js:38:16
-     │
-  38 │ let m = module { /* foo */ };
-     │                ^
+    36 │ foo(module { export let foo = "foo"; });
+    37 │ 
+  > 38 │ let m = module { /* foo */ };
+       │                ^
+    39 │ 
   
   i ...Which is required to end this statement
   
-     ┌─ module-blocks.js:38:1
-     │
-  38 │ let m = module { /* foo */ };
-     │ ^^^^^^^^^^^^^^^
+    36 │ foo(module { export let foo = "foo"; });
+    37 │ 
+  > 38 │ let m = module { /* foo */ };
+       │ ^^^^^^^^^^^^^^^
+    39 │ 
   
 
 ```

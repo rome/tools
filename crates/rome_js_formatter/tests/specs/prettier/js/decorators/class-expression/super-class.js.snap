@@ -61,19 +61,19 @@ super-class.js:1:20 parse ━━━━━━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ super-class.js:1:20
-    │
-  1 │ class Foo extends (@deco class Foo {}){}
-    │                    ^
+  > 1 │ class Foo extends (@deco class Foo {}){}
+      │                    ^
+    2 │ 
+    3 │ class Foo extends (@deco class {}){}
   
 super-class.js:1:32 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a semicolon to end the class property, but found none
   
-    ┌─ super-class.js:1:32
-    │
-  1 │ class Foo extends (@deco class Foo {}){}
-    │                                ^^^
+  > 1 │ class Foo extends (@deco class Foo {}){}
+      │                                ^^^
+    2 │ 
+    3 │ class Foo extends (@deco class {}){}
   
 super-class.js:1:36 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -81,10 +81,10 @@ super-class.js:1:36 parse ━━━━━━━━━━━━━━━━━━
   
   × Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
   
-    ┌─ super-class.js:1:36
-    │
-  1 │ class Foo extends (@deco class Foo {}){}
-    │                                    ^
+  > 1 │ class Foo extends (@deco class Foo {}){}
+      │                                    ^
+    2 │ 
+    3 │ class Foo extends (@deco class {}){}
   
 super-class.js:1:38 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -92,10 +92,10 @@ super-class.js:1:38 parse ━━━━━━━━━━━━━━━━━━
   
   × Expected a statement here
   
-    ┌─ super-class.js:1:38
-    │
-  1 │ class Foo extends (@deco class Foo {}){}
-    │                                      ^
+  > 1 │ class Foo extends (@deco class Foo {}){}
+      │                                      ^
+    2 │ 
+    3 │ class Foo extends (@deco class {}){}
   
 super-class.js:3:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -103,10 +103,11 @@ super-class.js:3:20 parse ━━━━━━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ super-class.js:3:20
-    │
-  3 │ class Foo extends (@deco class {}){}
-    │                    ^
+    1 │ class Foo extends (@deco class Foo {}){}
+    2 │ 
+  > 3 │ class Foo extends (@deco class {}){}
+      │                    ^
+    4 │ 
   
 super-class.js:3:32 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -114,10 +115,11 @@ super-class.js:3:32 parse ━━━━━━━━━━━━━━━━━━
   
   × Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
   
-    ┌─ super-class.js:3:32
-    │
-  3 │ class Foo extends (@deco class {}){}
-    │                                ^
+    1 │ class Foo extends (@deco class Foo {}){}
+    2 │ 
+  > 3 │ class Foo extends (@deco class {}){}
+      │                                ^
+    4 │ 
   
 super-class.js:3:34 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -125,10 +127,11 @@ super-class.js:3:34 parse ━━━━━━━━━━━━━━━━━━
   
   × Expected a statement here
   
-    ┌─ super-class.js:3:34
-    │
-  3 │ class Foo extends (@deco class {}){}
-    │                                  ^
+    1 │ class Foo extends (@deco class Foo {}){}
+    2 │ 
+  > 3 │ class Foo extends (@deco class {}){}
+      │                                  ^
+    4 │ 
   
 
 ```

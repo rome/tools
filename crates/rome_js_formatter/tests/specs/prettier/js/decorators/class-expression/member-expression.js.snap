@@ -54,10 +54,10 @@ member-expression.js:1:2 parse ━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ member-expression.js:1:2
-    │
-  1 │ (@deco class Foo {}).name;
-    │  ^
+  > 1 │ (@deco class Foo {}).name;
+      │  ^
+    2 │ (@deco class {}).name;
+    3 │ 
   
 member-expression.js:1:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -65,10 +65,10 @@ member-expression.js:1:20 parse ━━━━━━━━━━━━━━━━
   
   × Expected a statement here
   
-    ┌─ member-expression.js:1:20
-    │
-  1 │ (@deco class Foo {}).name;
-    │                    ^^^^^^
+  > 1 │ (@deco class Foo {}).name;
+      │                    ^^^^^^
+    2 │ (@deco class {}).name;
+    3 │ 
   
 member-expression.js:2:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -76,19 +76,19 @@ member-expression.js:2:2 parse ━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ member-expression.js:2:2
-    │
-  2 │ (@deco class {}).name;
-    │  ^
+    1 │ (@deco class Foo {}).name;
+  > 2 │ (@deco class {}).name;
+      │  ^
+    3 │ 
   
 member-expression.js:2:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × class declarations must have a name
   
-    ┌─ member-expression.js:2:8
-    │
-  2 │ (@deco class {}).name;
-    │        ^^^^^^
+    1 │ (@deco class Foo {}).name;
+  > 2 │ (@deco class {}).name;
+      │        ^^^^^^
+    3 │ 
   
 member-expression.js:2:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -96,10 +96,10 @@ member-expression.js:2:16 parse ━━━━━━━━━━━━━━━━
   
   × Expected a statement here
   
-    ┌─ member-expression.js:2:16
-    │
-  2 │ (@deco class {}).name;
-    │                ^^^^^^
+    1 │ (@deco class Foo {}).name;
+  > 2 │ (@deco class {}).name;
+      │                ^^^^^^
+    3 │ 
   
 
 ```

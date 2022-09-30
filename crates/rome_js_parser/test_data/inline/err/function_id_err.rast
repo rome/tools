@@ -110,10 +110,11 @@ function_id_err.js:2:12 parse ━━━━━━━━━━━━━━━━�
 
   × Illegal use of `yield` as an identifier in generator function
   
-    ┌─ function_id_err.js:2:12
-    │
-  2 │   function yield(test) {}
-    │            ^^^^^
+    1 │ function* test() {
+  > 2 │   function yield(test) {}
+      │            ^^^^^
+    3 │ }
+    4 │ 
   
 --
 function* test() {

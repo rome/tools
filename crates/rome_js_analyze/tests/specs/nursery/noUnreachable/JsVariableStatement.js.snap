@@ -45,17 +45,20 @@ JsVariableStatement.js:8:20 lint/nursery/noUnreachable ━━━━━━━━�
   
   ! ... before it can reach this code
   
-    ┌─ JsVariableStatement.js:8:20
-    │
-  8 │     var variable = initializer();
-    │                    ^^^^^^^^^^^^^
+     6 │ function JsVariableStatement2() {
+     7 │     return;
+   > 8 │     var variable = initializer();
+       │                    ^^^^^^^^^^^^^
+     9 │ }
+    10 │ 
   
   i This statement will return from the function ...
   
-    ┌─ JsVariableStatement.js:7:5
-    │
-  7 │     return;
-    │     ^^^^^^^
+    6 │ function JsVariableStatement2() {
+  > 7 │     return;
+      │     ^^^^^^^
+    8 │     var variable = initializer();
+    9 │ }
   
 
 ```
@@ -67,17 +70,20 @@ JsVariableStatement.js:18:20 lint/nursery/noUnreachable ━━━━━━━━
   
   ! ... before it can reach this code
   
-     ┌─ JsVariableStatement.js:18:20
-     │
-  18 │     let variable = initializer();
-     │                    ^^^^^^^^^^^^^
+    16 │ function JsVariableStatement4() {
+    17 │     return;
+  > 18 │     let variable = initializer();
+       │                    ^^^^^^^^^^^^^
+    19 │ }
+    20 │ 
   
   i This statement will return from the function ...
   
-     ┌─ JsVariableStatement.js:17:5
-     │
-  17 │     return;
-     │     ^^^^^^^
+    16 │ function JsVariableStatement4() {
+  > 17 │     return;
+       │     ^^^^^^^
+    18 │     let variable = initializer();
+    19 │ }
   
 
 ```
@@ -89,17 +95,20 @@ JsVariableStatement.js:23:22 lint/nursery/noUnreachable ━━━━━━━━
   
   ! ... before it can reach this code
   
-     ┌─ JsVariableStatement.js:23:22
-     │
-  23 │     const variable = initializer();
-     │                      ^^^^^^^^^^^^^
+    21 │ function JsVariableStatement5() {
+    22 │     return;
+  > 23 │     const variable = initializer();
+       │                      ^^^^^^^^^^^^^
+    24 │ }
+    25 │ 
   
   i This statement will return from the function ...
   
-     ┌─ JsVariableStatement.js:22:5
-     │
-  22 │     return;
-     │     ^^^^^^^
+    21 │ function JsVariableStatement5() {
+  > 22 │     return;
+       │     ^^^^^^^
+    23 │     const variable = initializer();
+    24 │ }
   
 
 ```
@@ -111,17 +120,20 @@ JsVariableStatement.js:28:21 lint/nursery/noUnreachable ━━━━━━━━
   
   ! ... before it can reach this code
   
-     ┌─ JsVariableStatement.js:28:21
-     │
-  28 │     var variable1 = initializer(),
-     │                     ^^^^^^^^^^^^^
+    26 │ function JsVariableStatement6() {
+    27 │     return;
+  > 28 │     var variable1 = initializer(),
+       │                     ^^^^^^^^^^^^^
+    29 │         variable2 = initializer();
+    30 │ }
   
   i This statement will return from the function ...
   
-     ┌─ JsVariableStatement.js:27:5
-     │
-  27 │     return;
-     │     ^^^^^^^
+    26 │ function JsVariableStatement6() {
+  > 27 │     return;
+       │     ^^^^^^^
+    28 │     var variable1 = initializer(),
+    29 │         variable2 = initializer();
   
 
 ```
@@ -133,17 +145,20 @@ JsVariableStatement.js:29:21 lint/nursery/noUnreachable ━━━━━━━━
   
   ! ... before it can reach this code
   
-     ┌─ JsVariableStatement.js:29:21
-     │
-  29 │         variable2 = initializer();
-     │                     ^^^^^^^^^^^^^
+    27 │     return;
+    28 │     var variable1 = initializer(),
+  > 29 │         variable2 = initializer();
+       │                     ^^^^^^^^^^^^^
+    30 │ }
+    31 │ 
   
   i This statement will return from the function ...
   
-     ┌─ JsVariableStatement.js:27:5
-     │
-  27 │     return;
-     │     ^^^^^^^
+    26 │ function JsVariableStatement6() {
+  > 27 │     return;
+       │     ^^^^^^^
+    28 │     var variable1 = initializer(),
+    29 │         variable2 = initializer();
   
 
 ```

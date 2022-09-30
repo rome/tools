@@ -51,10 +51,12 @@ parameterProperty.ts:5:19 parse ━━━━━━━━━━━━━━━━
 
   × Illegal use of reserved keyword `public` as an identifier in strict mode
   
-    ┌─ parameterProperty.ts:5:19
-    │
-  5 │   not_constructor(public arg: number = 10) {
-    │                   ^^^^^^
+    3 │     // fails because of comment
+    4 │   }
+  > 5 │   not_constructor(public arg: number = 10) {
+      │                   ^^^^^^
+    6 │   }
+    7 │ }
   
 parameterProperty.ts:5:26 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -62,10 +64,12 @@ parameterProperty.ts:5:26 parse ━━━━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ parameterProperty.ts:5:26
-    │
-  5 │   not_constructor(public arg: number = 10) {
-    │                          ^^^
+    3 │     // fails because of comment
+    4 │   }
+  > 5 │   not_constructor(public arg: number = 10) {
+      │                          ^^^
+    6 │   }
+    7 │ }
   
 
 ```

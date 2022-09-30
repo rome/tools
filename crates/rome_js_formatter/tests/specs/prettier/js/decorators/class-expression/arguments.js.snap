@@ -50,10 +50,10 @@ arguments.js:1:13 parse ━━━━━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ arguments.js:1:13
-    │
-  1 │ console.log(@deco class Foo {})
-    │             ^^^^^^^^^^^^^^^^^^
+  > 1 │ console.log(@deco class Foo {})
+      │             ^^^^^^^^^^^^^^^^^^
+    2 │ console.log(@deco class {})
+    3 │ 
   
 arguments.js:2:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -61,10 +61,10 @@ arguments.js:2:13 parse ━━━━━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ arguments.js:2:13
-    │
-  2 │ console.log(@deco class {})
-    │             ^^^^^^^^^^^^^^
+    1 │ console.log(@deco class Foo {})
+  > 2 │ console.log(@deco class {})
+      │             ^^^^^^^^^^^^^^
+    3 │ 
   
 
 ```

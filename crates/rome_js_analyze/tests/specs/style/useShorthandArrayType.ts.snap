@@ -37,10 +37,12 @@ useShorthandArrayType.ts:6:12 lint/style/useShorthandArrayType  FIXABLE  ━━�
 
   ! Use shorthand T[] syntax instead of Array<T> syntax.
   
-    ┌─ useShorthandArrayType.ts:6:12
-    │
-  6 │ let valid: Array<foo>;
-    │            ^^^^^^^^^^
+    4 │ let valid: Array<foo | bar>;
+    5 │ // invalid
+  > 6 │ let valid: Array<foo>;
+      │            ^^^^^^^^^^
+    7 │ let invalid1: Array<foo, Array<string>>;
+    8 │ let invalid2: Promise<Array<string>>;
   
   i Suggested fix: Use shorthand T[] syntax to replace
   
@@ -62,10 +64,12 @@ useShorthandArrayType.ts:7:15 lint/style/useShorthandArrayType  FIXABLE  ━━�
 
   ! Use shorthand T[] syntax instead of Array<T> syntax.
   
-    ┌─ useShorthandArrayType.ts:7:15
-    │
-  7 │ let invalid1: Array<foo, Array<string>>;
-    │               ^^^^^^^^^^^^^^^^^^^^^^^^^
+    5 │ // invalid
+    6 │ let valid: Array<foo>;
+  > 7 │ let invalid1: Array<foo, Array<string>>;
+      │               ^^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │ let invalid2: Promise<Array<string>>;
+    9 │ let invalid3: Array<Foo<Bar>>;
   
   i Suggested fix: Use shorthand T[] syntax to replace
   
@@ -87,10 +91,12 @@ useShorthandArrayType.ts:7:26 lint/style/useShorthandArrayType  FIXABLE  ━━�
 
   ! Use shorthand T[] syntax instead of Array<T> syntax.
   
-    ┌─ useShorthandArrayType.ts:7:26
-    │
-  7 │ let invalid1: Array<foo, Array<string>>;
-    │                          ^^^^^^^^^^^^^
+    5 │ // invalid
+    6 │ let valid: Array<foo>;
+  > 7 │ let invalid1: Array<foo, Array<string>>;
+      │                          ^^^^^^^^^^^^^
+    8 │ let invalid2: Promise<Array<string>>;
+    9 │ let invalid3: Array<Foo<Bar>>;
   
   i Suggested fix: Use shorthand T[] syntax to replace
   
@@ -112,10 +118,12 @@ useShorthandArrayType.ts:8:23 lint/style/useShorthandArrayType  FIXABLE  ━━�
 
   ! Use shorthand T[] syntax instead of Array<T> syntax.
   
-    ┌─ useShorthandArrayType.ts:8:23
-    │
-  8 │ let invalid2: Promise<Array<string>>;
-    │                       ^^^^^^^^^^^^^
+     6 │ let valid: Array<foo>;
+     7 │ let invalid1: Array<foo, Array<string>>;
+   > 8 │ let invalid2: Promise<Array<string>>;
+       │                       ^^^^^^^^^^^^^
+     9 │ let invalid3: Array<Foo<Bar>>;
+    10 │ let invalid4: Array<[number, number]>;
   
   i Suggested fix: Use shorthand T[] syntax to replace
   
@@ -137,10 +145,12 @@ useShorthandArrayType.ts:9:15 lint/style/useShorthandArrayType  FIXABLE  ━━�
 
   ! Use shorthand T[] syntax instead of Array<T> syntax.
   
-    ┌─ useShorthandArrayType.ts:9:15
-    │
-  9 │ let invalid3: Array<Foo<Bar>>;
-    │               ^^^^^^^^^^^^^^^
+     7 │ let invalid1: Array<foo, Array<string>>;
+     8 │ let invalid2: Promise<Array<string>>;
+   > 9 │ let invalid3: Array<Foo<Bar>>;
+       │               ^^^^^^^^^^^^^^^
+    10 │ let invalid4: Array<[number, number]>;
+    11 │ 
   
   i Suggested fix: Use shorthand T[] syntax to replace
   
@@ -162,10 +172,12 @@ useShorthandArrayType.ts:10:15 lint/style/useShorthandArrayType  FIXABLE  ━━
 
   ! Use shorthand T[] syntax instead of Array<T> syntax.
   
-     ┌─ useShorthandArrayType.ts:10:15
-     │
-  10 │ let invalid4: Array<[number, number]>;
-     │               ^^^^^^^^^^^^^^^^^^^^^^^
+     8 │ let invalid2: Promise<Array<string>>;
+     9 │ let invalid3: Array<Foo<Bar>>;
+  > 10 │ let invalid4: Array<[number, number]>;
+       │               ^^^^^^^^^^^^^^^^^^^^^^^
+    11 │ 
+    12 │ // valid
   
   i Suggested fix: Use shorthand T[] syntax to replace
   
@@ -187,10 +199,11 @@ useShorthandArrayType.ts:20:13 lint/style/useShorthandArrayType  FIXABLE  ━━
 
   ! Use shorthand T[] syntax instead of Array<T> syntax.
   
-     ┌─ useShorthandArrayType.ts:20:13
-     │
-  20 │ let valid8: Array<(string & number)>;
-     │             ^^^^^^^^^^^^^^^^^^^^^^^^
+    19 │ //parenthesized type
+  > 20 │ let valid8: Array<(string & number)>;
+       │             ^^^^^^^^^^^^^^^^^^^^^^^^
+    21 │ // infer type
+    22 │ type valid9<T> = T extends Array<infer R> ? R : any;
   
   i Suggested fix: Use shorthand T[] syntax to replace
   

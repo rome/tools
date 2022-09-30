@@ -84,10 +84,9 @@ ts_new_operator.ts:1:19 parse ━━━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ ts_new_operator.ts:1:19
-    │
-  1 │ new A<test><test>();
-    │                   ^
+  > 1 │ new A<test><test>();
+      │                   ^
+    2 │ 
   
 --
 new A<test><test>();

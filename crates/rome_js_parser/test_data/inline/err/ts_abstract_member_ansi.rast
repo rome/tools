@@ -191,50 +191,45 @@ ts_abstract_member_ansi.ts:1:43 parse ━━━━━━━━━━━━━━
   
   × Expected a class method body here
   
-    ┌─ ts_abstract_member_ansi.ts:1:43
-    │
-  1 │ abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }
-    │                                           ^^^^^^^^
+  > 1 │ abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }
+      │                                           ^^^^^^^^
+    2 │ 
   
 --
 ts_abstract_member_ansi.ts:1:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'abstract' cannot appear on a constructor declaration.
   
-    ┌─ ts_abstract_member_ansi.ts:1:20
-    │
-  1 │ abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }
-    │                    ^^^^^^^^
+  > 1 │ abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }
+      │                    ^^^^^^^^
+    2 │ 
   
 --
 ts_abstract_member_ansi.ts:1:43 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a semicolon to end the method declaration, but found none
   
-    ┌─ ts_abstract_member_ansi.ts:1:43
-    │
-  1 │ abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }
-    │                                           ^^^^^^^^^^^^^^^^^
+  > 1 │ abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }
+      │                                           ^^^^^^^^^^^^^^^^^
+    2 │ 
   
 --
 ts_abstract_member_ansi.ts:1:61 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a semicolon to end the method declaration, but found none
   
-    ┌─ ts_abstract_member_ansi.ts:1:61
-    │
-  1 │ abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }
-    │                                                             ^^^^^^^^^^^^^^^^^^^^^
+  > 1 │ abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }
+      │                                                             ^^^^^^^^^^^^^^^^^^^^^
+    2 │ 
   
 --
 ts_abstract_member_ansi.ts:1:83 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a semicolon to end the method declaration, but found none
   
-    ┌─ ts_abstract_member_ansi.ts:1:83
-    │
-  1 │ abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }
-    │                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 1 │ abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }
+      │                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    2 │ 
   
 --
 abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }

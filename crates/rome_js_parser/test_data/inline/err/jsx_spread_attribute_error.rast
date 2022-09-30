@@ -263,10 +263,11 @@ jsx_spread_attribute_error.jsx:2:8 parse ━━━━━━━━━━━━━
 
   × Comma operator isn't a valid value for a JSX spread argument.
   
-    ┌─ jsx_spread_attribute_error.jsx:2:8
-    │
-  2 │ <a {...obj, other} />;
-    │        ^^^^^^^^^^
+    1 │ let obj = {};
+  > 2 │ <a {...obj, other} />;
+      │        ^^^^^^^^^^
+    3 │ <a ...obj} />;
+    4 │ <a {obj} />;
   
 --
 jsx_spread_attribute_error.jsx:3:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -275,10 +276,12 @@ jsx_spread_attribute_error.jsx:3:4 parse ━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ jsx_spread_attribute_error.jsx:3:4
-    │
-  3 │ <a ...obj} />;
-    │    ^^^
+    1 │ let obj = {};
+    2 │ <a {...obj, other} />;
+  > 3 │ <a ...obj} />;
+      │    ^^^
+    4 │ <a {obj} />;
+    5 │ <div
   
 --
 jsx_spread_attribute_error.jsx:4:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -287,10 +290,12 @@ jsx_spread_attribute_error.jsx:4:5 parse ━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ jsx_spread_attribute_error.jsx:4:5
-    │
-  4 │ <a {obj} />;
-    │     ^^^
+    2 │ <a {...obj, other} />;
+    3 │ <a ...obj} />;
+  > 4 │ <a {obj} />;
+      │     ^^^
+    5 │ <div
+    6 │       {...{} /*
   
 --
 jsx_spread_attribute_error.jsx:8:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -299,10 +304,12 @@ jsx_spread_attribute_error.jsx:8:7 parse ━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ jsx_spread_attribute_error.jsx:8:7
-    │
-  8 │       invalidProp="HelloWorld"
-    │       ^^^^^^^^^^^
+     6 │       {...{} /*
+     7 │       // @ts-ignore */ /* prettier-ignore */
+   > 8 │       invalidProp="HelloWorld"
+       │       ^^^^^^^^^^^
+     9 │     />;
+    10 │ 
   
 --
 let obj = {};

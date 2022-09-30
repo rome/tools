@@ -21,10 +21,9 @@ var f = function(a, b, b) {}
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Duplicate argument name</span>
   
-    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noDupeArgs.js:1:24
-    <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> var f = function(a, b, <span style="color: Tomato;">b</span>) {}
-    <span style="color: rgb(38, 148, 255);">│</span>                        <span style="color: Tomato;">^</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>var f = function(a, b, b) {}
+   <strong>   │ </strong>                       <strong><span style="color: Tomato;">^</span></strong>
+    <strong>2 │ </strong>
   
 </code></pre>{% endraw %}
 
@@ -36,10 +35,9 @@ function b(a, b, b) {}
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Duplicate argument name</span>
   
-    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noDupeArgs.js:1:18
-    <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> function b(a, b, <span style="color: Tomato;">b</span>) {}
-    <span style="color: rgb(38, 148, 255);">│</span>                  <span style="color: Tomato;">^</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>function b(a, b, b) {}
+   <strong>   │ </strong>                 <strong><span style="color: Tomato;">^</span></strong>
+    <strong>2 │ </strong>
   
 </code></pre>{% endraw %}
 

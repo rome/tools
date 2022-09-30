@@ -49,10 +49,12 @@ async-arrow-params.js:3:17 parse ━━━━━━━━━━━━━━━�
   
   × Expected a property, a shorthand property, a getter, a setter, or a method here
   
-    ┌─ async-arrow-params.js:3:17
-    │
-  3 │   #p = async ({ #x: x }) => {}
-    │                 ^^
+    1 │ class C {
+    2 │   #x = 1;
+  > 3 │   #p = async ({ #x: x }) => {}
+      │                 ^^
+    4 │ }
+    5 │ 
   
 async-arrow-params.js:3:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -60,19 +62,23 @@ async-arrow-params.js:3:19 parse ━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ async-arrow-params.js:3:19
-    │
-  3 │   #p = async ({ #x: x }) => {}
-    │                   ^
+    1 │ class C {
+    2 │   #x = 1;
+  > 3 │   #p = async ({ #x: x }) => {}
+      │                   ^
+    4 │ }
+    5 │ 
   
 async-arrow-params.js:3:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a semicolon to end the class property, but found none
   
-    ┌─ async-arrow-params.js:3:3
-    │
-  3 │   #p = async ({ #x: x }) => {}
-    │   ^^^^^^^^^^^^^^^^^^^^^^
+    1 │ class C {
+    2 │   #x = 1;
+  > 3 │   #p = async ({ #x: x }) => {}
+      │   ^^^^^^^^^^^^^^^^^^^^^^
+    4 │ }
+    5 │ 
   
 async-arrow-params.js:3:26 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -80,10 +86,12 @@ async-arrow-params.js:3:26 parse ━━━━━━━━━━━━━━━�
   
   × Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
   
-    ┌─ async-arrow-params.js:3:26
-    │
-  3 │   #p = async ({ #x: x }) => {}
-    │                          ^^
+    1 │ class C {
+    2 │   #x = 1;
+  > 3 │   #p = async ({ #x: x }) => {}
+      │                          ^^
+    4 │ }
+    5 │ 
   
 async-arrow-params.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -91,10 +99,11 @@ async-arrow-params.js:4:1 parse ━━━━━━━━━━━━━━━━
   
   × Expected a statement here
   
-    ┌─ async-arrow-params.js:4:1
-    │
-  4 │ }
-    │ ^
+    2 │   #x = 1;
+    3 │   #p = async ({ #x: x }) => {}
+  > 4 │ }
+      │ ^
+    5 │ 
   
 
 ```

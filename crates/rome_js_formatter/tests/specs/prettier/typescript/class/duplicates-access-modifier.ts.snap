@@ -58,17 +58,19 @@ duplicates-access-modifier.ts:2:10 parse ━━━━━━━━━━━━━
   
   × duplicate modifier
   
-    ┌─ duplicates-access-modifier.ts:2:10
-    │
-  2 │   public public a;
-    │          ^^^^^^
+    1 │ class Foo {
+  > 2 │   public public a;
+      │          ^^^^^^
+    3 │   private public b;
+    4 │   protected private c;
   
   i first modifier
   
-    ┌─ duplicates-access-modifier.ts:2:3
-    │
-  2 │   public public a;
-    │   ^^^^^^
+    1 │ class Foo {
+  > 2 │   public public a;
+      │   ^^^^^^
+    3 │   private public b;
+    4 │   protected private c;
   
 duplicates-access-modifier.ts:3:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -76,17 +78,21 @@ duplicates-access-modifier.ts:3:11 parse ━━━━━━━━━━━━━
   
   × duplicate modifier
   
-    ┌─ duplicates-access-modifier.ts:3:11
-    │
-  3 │   private public b;
-    │           ^^^^^^
+    1 │ class Foo {
+    2 │   public public a;
+  > 3 │   private public b;
+      │           ^^^^^^
+    4 │   protected private c;
+    5 │   public protected d;
   
   i first modifier
   
-    ┌─ duplicates-access-modifier.ts:3:3
-    │
-  3 │   private public b;
-    │   ^^^^^^^
+    1 │ class Foo {
+    2 │   public public a;
+  > 3 │   private public b;
+      │   ^^^^^^^
+    4 │   protected private c;
+    5 │   public protected d;
   
 duplicates-access-modifier.ts:4:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -94,17 +100,21 @@ duplicates-access-modifier.ts:4:13 parse ━━━━━━━━━━━━━
   
   × duplicate modifier
   
-    ┌─ duplicates-access-modifier.ts:4:13
-    │
-  4 │   protected private c;
-    │             ^^^^^^^
+    2 │   public public a;
+    3 │   private public b;
+  > 4 │   protected private c;
+      │             ^^^^^^^
+    5 │   public protected d;
+    6 │   public protected private e;
   
   i first modifier
   
-    ┌─ duplicates-access-modifier.ts:4:3
-    │
-  4 │   protected private c;
-    │   ^^^^^^^^^
+    2 │   public public a;
+    3 │   private public b;
+  > 4 │   protected private c;
+      │   ^^^^^^^^^
+    5 │   public protected d;
+    6 │   public protected private e;
   
 duplicates-access-modifier.ts:5:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -112,17 +122,21 @@ duplicates-access-modifier.ts:5:10 parse ━━━━━━━━━━━━━
   
   × duplicate modifier
   
-    ┌─ duplicates-access-modifier.ts:5:10
-    │
-  5 │   public protected d;
-    │          ^^^^^^^^^
+    3 │   private public b;
+    4 │   protected private c;
+  > 5 │   public protected d;
+      │          ^^^^^^^^^
+    6 │   public protected private e;
+    7 │ }
   
   i first modifier
   
-    ┌─ duplicates-access-modifier.ts:5:3
-    │
-  5 │   public protected d;
-    │   ^^^^^^
+    3 │   private public b;
+    4 │   protected private c;
+  > 5 │   public protected d;
+      │   ^^^^^^
+    6 │   public protected private e;
+    7 │ }
   
 duplicates-access-modifier.ts:6:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -130,17 +144,21 @@ duplicates-access-modifier.ts:6:10 parse ━━━━━━━━━━━━━
   
   × duplicate modifier
   
-    ┌─ duplicates-access-modifier.ts:6:10
-    │
-  6 │   public protected private e;
-    │          ^^^^^^^^^
+    4 │   protected private c;
+    5 │   public protected d;
+  > 6 │   public protected private e;
+      │          ^^^^^^^^^
+    7 │ }
+    8 │ 
   
   i first modifier
   
-    ┌─ duplicates-access-modifier.ts:6:3
-    │
-  6 │   public protected private e;
-    │   ^^^^^^
+    4 │   protected private c;
+    5 │   public protected d;
+  > 6 │   public protected private e;
+      │   ^^^^^^
+    7 │ }
+    8 │ 
   
 duplicates-access-modifier.ts:6:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -148,17 +166,21 @@ duplicates-access-modifier.ts:6:20 parse ━━━━━━━━━━━━━
   
   × duplicate modifier
   
-    ┌─ duplicates-access-modifier.ts:6:20
-    │
-  6 │   public protected private e;
-    │                    ^^^^^^^
+    4 │   protected private c;
+    5 │   public protected d;
+  > 6 │   public protected private e;
+      │                    ^^^^^^^
+    7 │ }
+    8 │ 
   
   i first modifier
   
-    ┌─ duplicates-access-modifier.ts:6:10
-    │
-  6 │   public protected private e;
-    │          ^^^^^^^^^
+    4 │   protected private c;
+    5 │   public protected d;
+  > 6 │   public protected private e;
+      │          ^^^^^^^^^
+    7 │ }
+    8 │ 
   
 
 ```

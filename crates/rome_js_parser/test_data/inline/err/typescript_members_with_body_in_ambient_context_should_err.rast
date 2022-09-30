@@ -414,80 +414,95 @@ typescript_members_with_body_in_ambient_context_should_err.ts:2:19 parse ━━�
 
   × members inside ambient contexts should not have a body
   
-    ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:2:19
-    │
-  2 │     constructor() {}
-    │                   ^^
+    1 │ declare class Test {
+  > 2 │     constructor() {}
+      │                   ^^
+    3 │     name() {}
+    4 │     get test(): string { return ""; }
   
 --
 typescript_members_with_body_in_ambient_context_should_err.ts:3:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × members inside ambient contexts should not have a body
   
-    ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:3:12
-    │
-  3 │     name() {}
-    │            ^^
+    1 │ declare class Test {
+    2 │     constructor() {}
+  > 3 │     name() {}
+      │            ^^
+    4 │     get test(): string { return ""; }
+    5 │     set test(v) {}
   
 --
 typescript_members_with_body_in_ambient_context_should_err.ts:4:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × members inside ambient contexts should not have a body
   
-    ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:4:24
-    │
-  4 │     get test(): string { return ""; }
-    │                        ^^^^^^^^^^^^^^
+    2 │     constructor() {}
+    3 │     name() {}
+  > 4 │     get test(): string { return ""; }
+      │                        ^^^^^^^^^^^^^^
+    5 │     set test(v) {}
+    6 │ }
   
 --
 typescript_members_with_body_in_ambient_context_should_err.ts:5:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × members inside ambient contexts should not have a body
   
-    ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:5:17
-    │
-  5 │     set test(v) {}
-    │                 ^^
+    3 │     name() {}
+    4 │     get test(): string { return ""; }
+  > 5 │     set test(v) {}
+      │                 ^^
+    6 │ }
+    7 │ declare namespace n {
   
 --
 typescript_members_with_body_in_ambient_context_should_err.ts:9:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × members inside ambient contexts should not have a body
   
-    ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:9:24
-    │
-  9 │          constructor() {}
-    │                        ^^
+     7 │ declare namespace n {
+     8 │      class Test {
+   > 9 │          constructor() {}
+       │                        ^^
+    10 │          name() {}
+    11 │          get test(): string { return ""; }
   
 --
 typescript_members_with_body_in_ambient_context_should_err.ts:10:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × members inside ambient contexts should not have a body
   
-     ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:10:17
-     │
-  10 │          name() {}
-     │                 ^^
+     8 │      class Test {
+     9 │          constructor() {}
+  > 10 │          name() {}
+       │                 ^^
+    11 │          get test(): string { return ""; }
+    12 │          set test(v) {}
   
 --
 typescript_members_with_body_in_ambient_context_should_err.ts:11:29 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × members inside ambient contexts should not have a body
   
-     ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:11:29
-     │
-  11 │          get test(): string { return ""; }
-     │                             ^^^^^^^^^^^^^^
+     9 │          constructor() {}
+    10 │          name() {}
+  > 11 │          get test(): string { return ""; }
+       │                             ^^^^^^^^^^^^^^
+    12 │          set test(v) {}
+    13 │      }
   
 --
 typescript_members_with_body_in_ambient_context_should_err.ts:12:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × members inside ambient contexts should not have a body
   
-     ┌─ typescript_members_with_body_in_ambient_context_should_err.ts:12:22
-     │
-  12 │          set test(v) {}
-     │                      ^^
+    10 │          name() {}
+    11 │          get test(): string { return ""; }
+  > 12 │          set test(v) {}
+       │                      ^^
+    13 │      }
+    14 │ }
   
 --
 declare class Test {

@@ -140,10 +140,10 @@ template_literal.js:1:16 parse ━━━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ template_literal.js:1:16
-    │
-  1 │ let a = `foo ${}`
-    │                ^
+  > 1 │ let a = `foo ${}`
+      │                ^
+    2 │ let b = `${a a}`
+    3 │ 
   
 --
 template_literal.js:2:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -152,10 +152,10 @@ template_literal.js:2:14 parse ━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ template_literal.js:2:14
-    │
-  2 │ let b = `${a a}`
-    │              ^
+    1 │ let a = `foo ${}`
+  > 2 │ let b = `${a a}`
+      │              ^
+    3 │ 
   
 --
 let a = `foo ${}`

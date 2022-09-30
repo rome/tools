@@ -32,10 +32,11 @@ useValidTypeof.js:7:16 lint/correctness/useValidTypeof ━━━━━━━━�
   
   ! not a valid type name
   
-    ┌─ useValidTypeof.js:7:16
-    │
-  7 │ typeof foo === "strnig"
-    │                ^^^^^^^^
+    6 │ // Invalid literals
+  > 7 │ typeof foo === "strnig"
+      │                ^^^^^^^^
+    8 │ typeof foo == "undefimed"
+    9 │ typeof bar != "nunber"
   
 
 ```
@@ -47,10 +48,12 @@ useValidTypeof.js:8:15 lint/correctness/useValidTypeof ━━━━━━━━�
   
   ! not a valid type name
   
-    ┌─ useValidTypeof.js:8:15
-    │
-  8 │ typeof foo == "undefimed"
-    │               ^^^^^^^^^^^
+     6 │ // Invalid literals
+     7 │ typeof foo === "strnig"
+   > 8 │ typeof foo == "undefimed"
+       │               ^^^^^^^^^^^
+     9 │ typeof bar != "nunber"
+    10 │ typeof bar !== "fucntion"
   
 
 ```
@@ -62,10 +65,12 @@ useValidTypeof.js:9:15 lint/correctness/useValidTypeof ━━━━━━━━�
   
   ! not a valid type name
   
-    ┌─ useValidTypeof.js:9:15
-    │
-  9 │ typeof bar != "nunber"
-    │               ^^^^^^^^
+     7 │ typeof foo === "strnig"
+     8 │ typeof foo == "undefimed"
+   > 9 │ typeof bar != "nunber"
+       │               ^^^^^^^^
+    10 │ typeof bar !== "fucntion"
+    11 │ 
   
 
 ```
@@ -77,10 +82,12 @@ useValidTypeof.js:10:16 lint/correctness/useValidTypeof ━━━━━━━━
   
   ! not a valid type name
   
-     ┌─ useValidTypeof.js:10:16
-     │
-  10 │ typeof bar !== "fucntion"
-     │                ^^^^^^^^^^
+     8 │ typeof foo == "undefimed"
+     9 │ typeof bar != "nunber"
+  > 10 │ typeof bar !== "fucntion"
+       │                ^^^^^^^^^^
+    11 │ 
+    12 │ // Invalid expressions
   
 
 ```
@@ -92,10 +99,11 @@ useValidTypeof.js:13:16 lint/correctness/useValidTypeof  FIXABLE  ━━━━�
   
   ! not a string literal
   
-     ┌─ useValidTypeof.js:13:16
-     │
-  13 │ typeof foo === undefined
-     │                ^^^^^^^^^
+    12 │ // Invalid expressions
+  > 13 │ typeof foo === undefined
+       │                ^^^^^^^^^
+    14 │ typeof bar == Object
+    15 │ typeof foo === baz
   
   i Suggested fix: Compare the result of `typeof` with a valid type name
   
@@ -119,10 +127,12 @@ useValidTypeof.js:14:15 lint/correctness/useValidTypeof  FIXABLE  ━━━━�
   
   ! not a string literal
   
-     ┌─ useValidTypeof.js:14:15
-     │
-  14 │ typeof bar == Object
-     │               ^^^^^^
+    12 │ // Invalid expressions
+    13 │ typeof foo === undefined
+  > 14 │ typeof bar == Object
+       │               ^^^^^^
+    15 │ typeof foo === baz
+    16 │ typeof foo == 5
   
   i Suggested fix: Compare the result of `typeof` with a valid type name
   
@@ -146,10 +156,12 @@ useValidTypeof.js:15:16 lint/correctness/useValidTypeof ━━━━━━━━
   
   ! not a string literal
   
-     ┌─ useValidTypeof.js:15:16
-     │
-  15 │ typeof foo === baz
-     │                ^^^
+    13 │ typeof foo === undefined
+    14 │ typeof bar == Object
+  > 15 │ typeof foo === baz
+       │                ^^^
+    16 │ typeof foo == 5
+    17 │ typeof foo == -5
   
 
 ```
@@ -161,10 +173,12 @@ useValidTypeof.js:16:15 lint/correctness/useValidTypeof ━━━━━━━━
   
   ! not a string literal
   
-     ┌─ useValidTypeof.js:16:15
-     │
-  16 │ typeof foo == 5
-     │               ^
+    14 │ typeof bar == Object
+    15 │ typeof foo === baz
+  > 16 │ typeof foo == 5
+       │               ^
+    17 │ typeof foo == -5
+    18 │ 
   
 
 ```
@@ -176,10 +190,11 @@ useValidTypeof.js:17:15 lint/correctness/useValidTypeof ━━━━━━━━
   
   ! not a string literal
   
-     ┌─ useValidTypeof.js:17:15
-     │
-  17 │ typeof foo == -5
-     │               ^^
+    15 │ typeof foo === baz
+    16 │ typeof foo == 5
+  > 17 │ typeof foo == -5
+       │               ^^
+    18 │ 
   
 
 ```

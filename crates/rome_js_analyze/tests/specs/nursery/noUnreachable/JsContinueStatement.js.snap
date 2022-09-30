@@ -28,17 +28,21 @@ JsContinueStatement.js:4:9 lint/nursery/noUnreachable ━━━━━━━━�
   
   ! ... before it can reach this code
   
-    ┌─ JsContinueStatement.js:4:9
-    │
-  4 │         continue; // afterContinue
-    │         ^^^^^^^^^
+    2 │     while (true) {
+    3 │         continue;
+  > 4 │         continue; // afterContinue
+      │         ^^^^^^^^^
+    5 │     }
+    6 │ }
   
   i This statement will continue the loop ...
   
-    ┌─ JsContinueStatement.js:3:9
-    │
-  3 │         continue;
-    │         ^^^^^^^^^
+    1 │ function JsContinueStatement1() {
+    2 │     while (true) {
+  > 3 │         continue;
+      │         ^^^^^^^^^
+    4 │         continue; // afterContinue
+    5 │     }
   
 
 ```
@@ -50,17 +54,21 @@ JsContinueStatement.js:11:9 lint/nursery/noUnreachable ━━━━━━━━�
   
   ! ... before it can reach this code
   
-     ┌─ JsContinueStatement.js:11:9
-     │
-  11 │         break; // afterContinue
-     │         ^^^^^^
+     9 │     while (true) {
+    10 │         continue;
+  > 11 │         break; // afterContinue
+       │         ^^^^^^
+    12 │     }
+    13 │ }
   
   i This statement will continue the loop ...
   
-     ┌─ JsContinueStatement.js:10:9
-     │
-  10 │         continue;
-     │         ^^^^^^^^^
+     8 │ function JsContinueStatement2() {
+     9 │     while (true) {
+  > 10 │         continue;
+       │         ^^^^^^^^^
+    11 │         break; // afterContinue
+    12 │     }
   
 
 ```

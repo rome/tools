@@ -26,17 +26,21 @@ try {
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;"> Do not </span><span style="color: Tomato;"><strong>reassign catch parameters.</strong></span>
   
-    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noCatchAssign.js:5:3
-    <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">5</span> <span style="color: rgb(38, 148, 255);">│</span>   <span style="color: Tomato;">e</span> = 10;
-    <span style="color: rgb(38, 148, 255);">│</span>   <span style="color: Tomato;">^</span>
+    <strong>3 │ </strong>} catch (e) {
+    <strong>4 │ </strong>  e;
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>5 │ </strong>  e = 10;
+   <strong>   │ </strong>  <strong><span style="color: Tomato;">^</span></strong>
+    <strong>6 │ </strong>}
+    <strong>7 │ </strong>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">The catch parameter is declared here</span>
   
-    <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> correctness/noCatchAssign.js:3:10
-    <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">3</span> <span style="color: rgb(38, 148, 255);">│</span> } catch (<span style="color: Tomato;">e</span>) {
-    <span style="color: rgb(38, 148, 255);">│</span>          <span style="color: Tomato;">^</span>
+    <strong>1 │ </strong>try {
+    <strong>2 │ </strong>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>3 │ </strong>} catch (e) {
+   <strong>   │ </strong>         <strong><span style="color: Tomato;">^</span></strong>
+    <strong>4 │ </strong>  e;
+    <strong>5 │ </strong>  e = 10;
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Use a local variable instead.</span>
   

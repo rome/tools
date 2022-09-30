@@ -84,10 +84,9 @@ jsx_child_expression_missing_r_curly.jsx:1:14 parse ━━━━━━━━━�
   
   × unexpected
   
-    ┌─ jsx_child_expression_missing_r_curly.jsx:1:14
-    │
-  1 │ <test>{ 4 + 3</test>
-    │              ^
+  > 1 │ <test>{ 4 + 3</test>
+      │              ^
+    2 │ 
   
 --
 <test>{ 4 + 3</test>

@@ -42,10 +42,11 @@ errorOnInitializerInInterfaceProperty.ts:2:17 parse ━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ errorOnInitializerInInterfaceProperty.ts:2:17
-    │
-  2 │     bar: number = 5;
-    │                 ^
+    1 │ interface Foo {
+  > 2 │     bar: number = 5;
+      │                 ^
+    3 │ }
+    4 │ 
   
 errorOnInitializerInInterfaceProperty.ts:2:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -53,10 +54,11 @@ errorOnInitializerInInterfaceProperty.ts:2:20 parse ━━━━━━━━━�
   
   × Expected a property, or a signature here
   
-    ┌─ errorOnInitializerInInterfaceProperty.ts:2:20
-    │
-  2 │     bar: number = 5;
-    │                    ^
+    1 │ interface Foo {
+  > 2 │     bar: number = 5;
+      │                    ^
+    3 │ }
+    4 │ 
   
 errorOnInitializerInInterfaceProperty.ts:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -64,10 +66,11 @@ errorOnInitializerInInterfaceProperty.ts:3:1 parse ━━━━━━━━━�
   
   × Expected a statement here
   
-    ┌─ errorOnInitializerInInterfaceProperty.ts:3:1
-    │
-  3 │ }
-    │ ^
+    1 │ interface Foo {
+    2 │     bar: number = 5;
+  > 3 │ }
+      │ ^
+    4 │ 
   
 
 ```

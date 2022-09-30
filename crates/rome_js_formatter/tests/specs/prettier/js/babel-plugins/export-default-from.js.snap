@@ -49,10 +49,9 @@ export-default-from.js:4:8 parse ━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ export-default-from.js:4:8
-    │
-  4 │ export v from 'mod';
-    │        ^
+  > 4 │ export v from 'mod';
+      │        ^
+    5 │ 
   
 export-default-from.js:4:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -60,17 +59,15 @@ export-default-from.js:4:10 parse ━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ export-default-from.js:4:10
-    │
-  4 │ export v from 'mod';
-    │          ^^^^
+  > 4 │ export v from 'mod';
+      │          ^^^^
+    5 │ 
   
   i ...Which is required to end this statement
   
-    ┌─ export-default-from.js:4:8
-    │
-  4 │ export v from 'mod';
-    │        ^^^^^^
+  > 4 │ export v from 'mod';
+      │        ^^^^^^
+    5 │ 
   
 export-default-from.js:4:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -78,17 +75,15 @@ export-default-from.js:4:15 parse ━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ export-default-from.js:4:15
-    │
-  4 │ export v from 'mod';
-    │               ^^^^^
+  > 4 │ export v from 'mod';
+      │               ^^^^^
+    5 │ 
   
   i ...Which is required to end this statement
   
-    ┌─ export-default-from.js:4:10
-    │
-  4 │ export v from 'mod';
-    │          ^^^^^^^^^^
+  > 4 │ export v from 'mod';
+      │          ^^^^^^^^^^
+    5 │ 
   
 
 ```

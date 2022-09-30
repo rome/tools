@@ -30,10 +30,12 @@ useTemplate.js:6:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━━
 
   ! Template literals are preferred over string concatenation.
   
-    ┌─ useTemplate.js:6:13
-    │
-  6 │ console.log(foo + "baz");
-    │             ^^^^^^^^^^^
+    4 │ // invalid
+    5 │ const foo = "bar";
+  > 6 │ console.log(foo + "baz");
+      │             ^^^^^^^^^^^
+    7 │ console.log(1 * 2 + "foo");
+    8 │ console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
   
   i Suggested fix: Use a TemplateLiteral.
   
@@ -55,10 +57,12 @@ useTemplate.js:7:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━━
 
   ! Template literals are preferred over string concatenation.
   
-    ┌─ useTemplate.js:7:13
-    │
-  7 │ console.log(1 * 2 + "foo");
-    │             ^^^^^^^^^^^^^
+    5 │ const foo = "bar";
+    6 │ console.log(foo + "baz");
+  > 7 │ console.log(1 * 2 + "foo");
+      │             ^^^^^^^^^^^^^
+    8 │ console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+    9 │ console.log((1 + "foo") * 2);
   
   i Suggested fix: Use a TemplateLiteral.
   
@@ -80,10 +84,12 @@ useTemplate.js:8:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━━
 
   ! Template literals are preferred over string concatenation.
   
-    ┌─ useTemplate.js:8:13
-    │
-  8 │ console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
-    │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     6 │ console.log(foo + "baz");
+     7 │ console.log(1 * 2 + "foo");
+   > 8 │ console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+       │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     9 │ console.log((1 + "foo") * 2);
+    10 │ console.log(1 * (2 + "foo") + "bar");
   
   i Suggested fix: Use a TemplateLiteral.
   
@@ -105,10 +111,12 @@ useTemplate.js:9:14 lint/correctness/useTemplate  FIXABLE  ━━━━━━━
 
   ! Template literals are preferred over string concatenation.
   
-    ┌─ useTemplate.js:9:14
-    │
-  9 │ console.log((1 + "foo") * 2);
-    │              ^^^^^^^^^
+     7 │ console.log(1 * 2 + "foo");
+     8 │ console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+   > 9 │ console.log((1 + "foo") * 2);
+       │              ^^^^^^^^^
+    10 │ console.log(1 * (2 + "foo") + "bar");
+    11 │ console.log("foo" + 1);
   
   i Suggested fix: Use a TemplateLiteral.
   
@@ -130,10 +138,12 @@ useTemplate.js:10:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━�
 
   ! Template literals are preferred over string concatenation.
   
-     ┌─ useTemplate.js:10:13
-     │
-  10 │ console.log(1 * (2 + "foo") + "bar");
-     │             ^^^^^^^^^^^^^^^^^^^^^^^
+     8 │ console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+     9 │ console.log((1 + "foo") * 2);
+  > 10 │ console.log(1 * (2 + "foo") + "bar");
+       │             ^^^^^^^^^^^^^^^^^^^^^^^
+    11 │ console.log("foo" + 1);
+    12 │ console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
   
   i Suggested fix: Use a TemplateLiteral.
   
@@ -155,10 +165,12 @@ useTemplate.js:10:18 lint/correctness/useTemplate  FIXABLE  ━━━━━━�
 
   ! Template literals are preferred over string concatenation.
   
-     ┌─ useTemplate.js:10:18
-     │
-  10 │ console.log(1 * (2 + "foo") + "bar");
-     │                  ^^^^^^^^^
+     8 │ console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+     9 │ console.log((1 + "foo") * 2);
+  > 10 │ console.log(1 * (2 + "foo") + "bar");
+       │                  ^^^^^^^^^
+    11 │ console.log("foo" + 1);
+    12 │ console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
   
   i Suggested fix: Use a TemplateLiteral.
   
@@ -180,10 +192,12 @@ useTemplate.js:11:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━�
 
   ! Template literals are preferred over string concatenation.
   
-     ┌─ useTemplate.js:11:13
-     │
-  11 │ console.log("foo" + 1);
-     │             ^^^^^^^^^
+     9 │ console.log((1 + "foo") * 2);
+    10 │ console.log(1 * (2 + "foo") + "bar");
+  > 11 │ console.log("foo" + 1);
+       │             ^^^^^^^^^
+    12 │ console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
+    13 │ console.log("foo" + 1 + 2);
   
   i Suggested fix: Use a TemplateLiteral.
   
@@ -205,10 +219,12 @@ useTemplate.js:12:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━�
 
   ! Template literals are preferred over string concatenation.
   
-     ┌─ useTemplate.js:12:13
-     │
-  12 │ console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
-     │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    10 │ console.log(1 * (2 + "foo") + "bar");
+    11 │ console.log("foo" + 1);
+  > 12 │ console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
+       │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    13 │ console.log("foo" + 1 + 2);
+    14 │ 1 + "2" - 3;
   
   i Suggested fix: Use a TemplateLiteral.
   
@@ -230,10 +246,12 @@ useTemplate.js:13:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━�
 
   ! Template literals are preferred over string concatenation.
   
-     ┌─ useTemplate.js:13:13
-     │
-  13 │ console.log("foo" + 1 + 2);
-     │             ^^^^^^^^^^^^^
+    11 │ console.log("foo" + 1);
+    12 │ console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
+  > 13 │ console.log("foo" + 1 + 2);
+       │             ^^^^^^^^^^^^^
+    14 │ 1 + "2" - 3;
+    15 │ foo() + " bar";
   
   i Suggested fix: Use a TemplateLiteral.
   
@@ -255,10 +273,12 @@ useTemplate.js:14:1 lint/correctness/useTemplate  FIXABLE  ━━━━━━━
 
   ! Template literals are preferred over string concatenation.
   
-     ┌─ useTemplate.js:14:1
-     │
-  14 │ 1 + "2" - 3;
-     │ ^^^^^^^
+    12 │ console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
+    13 │ console.log("foo" + 1 + 2);
+  > 14 │ 1 + "2" - 3;
+       │ ^^^^^^^
+    15 │ foo() + " bar";
+    16 │ 
   
   i Suggested fix: Use a TemplateLiteral.
   
@@ -280,10 +300,12 @@ useTemplate.js:15:1 lint/correctness/useTemplate  FIXABLE  ━━━━━━━
 
   ! Template literals are preferred over string concatenation.
   
-     ┌─ useTemplate.js:15:1
-     │
-  15 │ foo() + " bar";
-     │ ^^^^^^^^^^^^^^
+    13 │ console.log("foo" + 1 + 2);
+    14 │ 1 + "2" - 3;
+  > 15 │ foo() + " bar";
+       │ ^^^^^^^^^^^^^^
+    16 │ 
+    17 │ 1 * /**leading*/"foo"    /**trailing */                   + "bar"
   
   i Suggested fix: Use a TemplateLiteral.
   
@@ -304,10 +326,11 @@ useTemplate.js:17:1 lint/correctness/useTemplate  FIXABLE  ━━━━━━━
 
   ! Template literals are preferred over string concatenation.
   
-     ┌─ useTemplate.js:17:1
-     │
-  17 │ 1 * /**leading*/"foo"    /**trailing */                   + "bar"
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    15 │ foo() + " bar";
+    16 │ 
+  > 17 │ 1 * /**leading*/"foo"    /**trailing */                   + "bar"
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    18 │ 
   
   i Suggested fix: Use a TemplateLiteral.
   

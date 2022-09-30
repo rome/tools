@@ -148,10 +148,10 @@ object_expr_error_prop_name.js:1:11 parse ━━━━━━━━━━━━�
   
   × Expected a property, a shorthand property, a getter, a setter, or a method here
   
-    ┌─ object_expr_error_prop_name.js:1:11
-    │
-  1 │ let a = { /: 6, /: /foo/ }
-    │           ^
+  > 1 │ let a = { /: 6, /: /foo/ }
+      │           ^
+    2 │ let b = {{}}
+    3 │ 
   
 --
 object_expr_error_prop_name.js:1:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -160,10 +160,10 @@ object_expr_error_prop_name.js:1:17 parse ━━━━━━━━━━━━�
   
   × Expected a property, a shorthand property, a getter, a setter, or a method here
   
-    ┌─ object_expr_error_prop_name.js:1:17
-    │
-  1 │ let a = { /: 6, /: /foo/ }
-    │                 ^
+  > 1 │ let a = { /: 6, /: /foo/ }
+      │                 ^
+    2 │ let b = {{}}
+    3 │ 
   
 --
 object_expr_error_prop_name.js:2:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -172,10 +172,10 @@ object_expr_error_prop_name.js:2:10 parse ━━━━━━━━━━━━�
   
   × Expected a property, a shorthand property, a getter, a setter, or a method here
   
-    ┌─ object_expr_error_prop_name.js:2:10
-    │
-  2 │ let b = {{}}
-    │          ^
+    1 │ let a = { /: 6, /: /foo/ }
+  > 2 │ let b = {{}}
+      │          ^
+    3 │ 
   
 --
 object_expr_error_prop_name.js:2:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -184,10 +184,10 @@ object_expr_error_prop_name.js:2:12 parse ━━━━━━━━━━━━�
   
   × Expected a statement here
   
-    ┌─ object_expr_error_prop_name.js:2:12
-    │
-  2 │ let b = {{}}
-    │            ^
+    1 │ let a = { /: 6, /: /foo/ }
+  > 2 │ let b = {{}}
+      │            ^
+    3 │ 
   
 --
 let a = { /: 6, /: /foo/ }

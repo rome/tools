@@ -254,10 +254,11 @@ HighComplexity.js:29:5 lint/nursery/noUnreachable ━━━━━━━━━━
 
   ! This code is unreachable
   
-     ┌─ HighComplexity.js:29:5
-     │
-  29 │     afterReturn();
-     │     ^^^^^^^^^^^^^^
+    28 │     return;
+  > 29 │     afterReturn();
+       │     ^^^^^^^^^^^^^^
+    30 │ }
+    31 │ 
   
 
 ```
@@ -267,10 +268,11 @@ HighComplexity.js:240:5 lint/nursery/noUnreachable ━━━━━━━━━�
 
   ! This code is unreachable
   
-      ┌─ HighComplexity.js:240:5
-      │
-  240 │     afterReturn();
-      │     ^^^^^^^^^^^^^^
+    239 │     return;
+  > 240 │     afterReturn();
+        │     ^^^^^^^^^^^^^^
+    241 │ }
+    242 │ 
   
 
 ```

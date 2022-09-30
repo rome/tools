@@ -68,10 +68,12 @@ noUnusedVariables.js:3:7 lint/nursery/noUnusedVariables ━━━━━━━━
 
   ! This variable is unused.
   
-    ┌─ noUnusedVariables.js:3:7
-    │
-  3 │ const a = 1;
-    │       ^
+    1 │ import React from 'react';
+    2 │ 
+  > 3 │ const a = 1;
+      │       ^
+    4 │ const b = 2,
+    5 │ 	c = 3;
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
@@ -83,10 +85,11 @@ noUnusedVariables.js:4:7 lint/nursery/noUnusedVariables ━━━━━━━━
 
   ! This variable is unused.
   
-    ┌─ noUnusedVariables.js:4:7
-    │
-  4 │ const b = 2,
-    │       ^
+    3 │ const a = 1;
+  > 4 │ const b = 2,
+      │       ^
+    5 │ 	c = 3;
+    6 │ console.log(c);
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
@@ -98,10 +101,12 @@ noUnusedVariables.js:8:10 lint/nursery/noUnusedVariables ━━━━━━━�
 
   ! This function is unused.
   
-    ┌─ noUnusedVariables.js:8:10
-    │
-  8 │ function f1() {}
-    │          ^^
+     6 │ console.log(c);
+     7 │ 
+   > 8 │ function f1() {}
+       │          ^^
+     9 │ 
+    10 │ function f2() {
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
@@ -113,10 +118,12 @@ noUnusedVariables.js:10:10 lint/nursery/noUnusedVariables ━━━━━━━�
 
   ! This function is unused.
   
-     ┌─ noUnusedVariables.js:10:10
-     │
-  10 │ function f2() {
-     │          ^^
+     8 │ function f1() {}
+     9 │ 
+  > 10 │ function f2() {
+       │          ^^
+    11 │ 	f2();
+    12 │ }
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
@@ -128,10 +135,12 @@ noUnusedVariables.js:14:10 lint/nursery/noUnusedVariables ━━━━━━━�
 
   ! This function is unused.
   
-     ┌─ noUnusedVariables.js:14:10
-     │
-  14 │ function f3() {
-     │          ^^
+    12 │ }
+    13 │ 
+  > 14 │ function f3() {
+       │          ^^
+    15 │ 	function g() {
+    16 │ 		f3();
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
@@ -143,10 +152,12 @@ noUnusedVariables.js:21:14 lint/nursery/noUnusedVariables ━━━━━━━�
 
   ! This parameter is unused.
   
-     ┌─ noUnusedVariables.js:21:14
-     │
-  21 │ function f41(a) {}
-     │              ^
+    19 │ }
+    20 │ 
+  > 21 │ function f41(a) {}
+       │              ^
+    22 │ f41();
+    23 │ 
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
@@ -158,10 +169,12 @@ noUnusedVariables.js:24:17 lint/nursery/noUnusedVariables ━━━━━━━�
 
   ! This parameter is unused.
   
-     ┌─ noUnusedVariables.js:24:17
-     │
-  24 │ function f42(a, b) {
-     │                 ^
+    22 │ f41();
+    23 │ 
+  > 24 │ function f42(a, b) {
+       │                 ^
+    25 │ 	console.log(a);
+    26 │ }
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
@@ -173,10 +186,12 @@ noUnusedVariables.js:29:17 lint/nursery/noUnusedVariables ━━━━━━━�
 
   ! This parameter is unused.
   
-     ┌─ noUnusedVariables.js:29:17
-     │
-  29 │ function f43(a, b) {
-     │                 ^
+    27 │ f42();
+    28 │ 
+  > 29 │ function f43(a, b) {
+       │                 ^
+    30 │ 	console.log(a);
+    31 │ }
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
@@ -188,10 +203,12 @@ noUnusedVariables.js:34:7 lint/nursery/noUnusedVariables ━━━━━━━�
 
   ! This variable is unused.
   
-     ┌─ noUnusedVariables.js:34:7
-     │
-  34 │ const f5 = () => {};
-     │       ^^
+    32 │ f43();
+    33 │ 
+  > 34 │ const f5 = () => {};
+       │       ^^
+    35 │ 
+    36 │ const f6 = () => {
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
@@ -203,10 +220,12 @@ noUnusedVariables.js:36:7 lint/nursery/noUnusedVariables ━━━━━━━�
 
   ! This variable is unused.
   
-     ┌─ noUnusedVariables.js:36:7
-     │
-  36 │ const f6 = () => {
-     │       ^^
+    34 │ const f5 = () => {};
+    35 │ 
+  > 36 │ const f6 = () => {
+       │       ^^
+    37 │ 	f6();
+    38 │ };
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
@@ -218,10 +237,11 @@ noUnusedVariables.js:41:10 lint/nursery/noUnusedVariables ━━━━━━━�
 
   ! This variable is unused.
   
-     ┌─ noUnusedVariables.js:41:10
-     │
-  41 │ } catch (e) {}
-     │          ^
+    40 │ try {
+  > 41 │ } catch (e) {}
+       │          ^
+    42 │ 
+    43 │ export function exported_function() {}
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   

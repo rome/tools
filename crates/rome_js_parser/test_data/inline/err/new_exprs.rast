@@ -34,10 +34,9 @@ new_exprs.js:1:4 parse ━━━━━━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-    ┌─ new_exprs.js:1:4
-    │
-  1 │ new;
-    │    ^
+  > 1 │ new;
+      │    ^
+    2 │ 
   
 --
 new;

@@ -21,10 +21,11 @@ noUndeclaredVariables.js:2:1 lint/nursery/noUndeclaredVariables ━━━━━�
 
   ! The foobar variable is undeclared
   
-    ┌─ noUndeclaredVariables.js:2:1
-    │
-  2 │ foobar;
-    │ ^^^^^^
+    1 │ // invalid
+  > 2 │ foobar;
+      │ ^^^^^^
+    3 │ function f() {
+    4 │     lorem;
   
 
 ```
@@ -34,10 +35,12 @@ noUndeclaredVariables.js:4:5 lint/nursery/noUndeclaredVariables ━━━━━�
 
   ! The lorem variable is undeclared
   
-    ┌─ noUndeclaredVariables.js:4:5
-    │
-  4 │     lorem;
-    │     ^^^^^
+    2 │ foobar;
+    3 │ function f() {
+  > 4 │     lorem;
+      │     ^^^^^
+    5 │ }
+    6 │ // valid
   
 
 ```

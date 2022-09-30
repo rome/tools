@@ -121,10 +121,11 @@ decrementAndIncrementOperators.ts:4:1 parse ━━━━━━━━━━━━
   
   × This expression cannot be assigned to
   
-    ┌─ decrementAndIncrementOperators.ts:4:1
-    │
-  4 │ 1 ++;
-    │ ^
+    3 │ // errors
+  > 4 │ 1 ++;
+      │ ^
+    5 │ 
+    6 │ (1)++;
   
 decrementAndIncrementOperators.ts:6:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -132,10 +133,12 @@ decrementAndIncrementOperators.ts:6:2 parse ━━━━━━━━━━━━
   
   × This expression cannot be assigned to
   
-    ┌─ decrementAndIncrementOperators.ts:6:2
-    │
-  6 │ (1)++;
-    │  ^
+    4 │ 1 ++;
+    5 │ 
+  > 6 │ (1)++;
+      │  ^
+    7 │ (1)--;
+    8 │ 
   
 decrementAndIncrementOperators.ts:7:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -143,10 +146,11 @@ decrementAndIncrementOperators.ts:7:2 parse ━━━━━━━━━━━━
   
   × This expression cannot be assigned to
   
-    ┌─ decrementAndIncrementOperators.ts:7:2
-    │
-  7 │ (1)--;
-    │  ^
+    6 │ (1)++;
+  > 7 │ (1)--;
+      │  ^
+    8 │ 
+    9 │ ++(1);
   
 decrementAndIncrementOperators.ts:9:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -154,10 +158,12 @@ decrementAndIncrementOperators.ts:9:4 parse ━━━━━━━━━━━━
   
   × This expression cannot be assigned to
   
-    ┌─ decrementAndIncrementOperators.ts:9:4
-    │
-  9 │ ++(1);
-    │    ^
+     7 │ (1)--;
+     8 │ 
+   > 9 │ ++(1);
+       │    ^
+    10 │ --(1);
+    11 │ 
   
 decrementAndIncrementOperators.ts:10:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -165,10 +171,11 @@ decrementAndIncrementOperators.ts:10:4 parse ━━━━━━━━━━━�
   
   × This expression cannot be assigned to
   
-     ┌─ decrementAndIncrementOperators.ts:10:4
-     │
-  10 │ --(1);
-     │    ^
+     9 │ ++(1);
+  > 10 │ --(1);
+       │    ^
+    11 │ 
+    12 │ (1 + 2)++;
   
 decrementAndIncrementOperators.ts:12:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -176,10 +183,12 @@ decrementAndIncrementOperators.ts:12:2 parse ━━━━━━━━━━━�
   
   × This expression cannot be assigned to
   
-     ┌─ decrementAndIncrementOperators.ts:12:2
-     │
-  12 │ (1 + 2)++;
-     │  ^^^^^
+    10 │ --(1);
+    11 │ 
+  > 12 │ (1 + 2)++;
+       │  ^^^^^
+    13 │ (1 + 2)--;
+    14 │ 
   
 decrementAndIncrementOperators.ts:13:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -187,10 +196,11 @@ decrementAndIncrementOperators.ts:13:2 parse ━━━━━━━━━━━�
   
   × This expression cannot be assigned to
   
-     ┌─ decrementAndIncrementOperators.ts:13:2
-     │
-  13 │ (1 + 2)--;
-     │  ^^^^^
+    12 │ (1 + 2)++;
+  > 13 │ (1 + 2)--;
+       │  ^^^^^
+    14 │ 
+    15 │ ++(1 + 2);
   
 decrementAndIncrementOperators.ts:15:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -198,10 +208,12 @@ decrementAndIncrementOperators.ts:15:4 parse ━━━━━━━━━━━�
   
   × This expression cannot be assigned to
   
-     ┌─ decrementAndIncrementOperators.ts:15:4
-     │
-  15 │ ++(1 + 2);
-     │    ^^^^^
+    13 │ (1 + 2)--;
+    14 │ 
+  > 15 │ ++(1 + 2);
+       │    ^^^^^
+    16 │ --(1 + 2);
+    17 │ 
   
 decrementAndIncrementOperators.ts:16:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -209,10 +221,11 @@ decrementAndIncrementOperators.ts:16:4 parse ━━━━━━━━━━━�
   
   × This expression cannot be assigned to
   
-     ┌─ decrementAndIncrementOperators.ts:16:4
-     │
-  16 │ --(1 + 2);
-     │    ^^^^^
+    15 │ ++(1 + 2);
+  > 16 │ --(1 + 2);
+       │    ^^^^^
+    17 │ 
+    18 │ (x + x)++;
   
 decrementAndIncrementOperators.ts:18:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -220,10 +233,12 @@ decrementAndIncrementOperators.ts:18:2 parse ━━━━━━━━━━━�
   
   × This expression cannot be assigned to
   
-     ┌─ decrementAndIncrementOperators.ts:18:2
-     │
-  18 │ (x + x)++;
-     │  ^^^^^
+    16 │ --(1 + 2);
+    17 │ 
+  > 18 │ (x + x)++;
+       │  ^^^^^
+    19 │ (x + x)--;
+    20 │ 
   
 decrementAndIncrementOperators.ts:19:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -231,10 +246,11 @@ decrementAndIncrementOperators.ts:19:2 parse ━━━━━━━━━━━�
   
   × This expression cannot be assigned to
   
-     ┌─ decrementAndIncrementOperators.ts:19:2
-     │
-  19 │ (x + x)--;
-     │  ^^^^^
+    18 │ (x + x)++;
+  > 19 │ (x + x)--;
+       │  ^^^^^
+    20 │ 
+    21 │ ++(x + x);
   
 decrementAndIncrementOperators.ts:21:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -242,10 +258,12 @@ decrementAndIncrementOperators.ts:21:4 parse ━━━━━━━━━━━�
   
   × This expression cannot be assigned to
   
-     ┌─ decrementAndIncrementOperators.ts:21:4
-     │
-  21 │ ++(x + x);
-     │    ^^^^^
+    19 │ (x + x)--;
+    20 │ 
+  > 21 │ ++(x + x);
+       │    ^^^^^
+    22 │ --(x + x);
+    23 │ 
   
 decrementAndIncrementOperators.ts:22:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -253,10 +271,11 @@ decrementAndIncrementOperators.ts:22:4 parse ━━━━━━━━━━━�
   
   × This expression cannot be assigned to
   
-     ┌─ decrementAndIncrementOperators.ts:22:4
-     │
-  22 │ --(x + x);
-     │    ^^^^^
+    21 │ ++(x + x);
+  > 22 │ --(x + x);
+       │    ^^^^^
+    23 │ 
+    24 │ //OK
   
 
 ```

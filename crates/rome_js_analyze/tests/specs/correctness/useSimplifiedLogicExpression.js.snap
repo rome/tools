@@ -30,10 +30,12 @@ useSimplifiedLogicExpression.js:10:11 lint/correctness/useSimplifiedLogicExpress
 
   ! Logical expression contains unnecessary complexity.
   
-     ┌─ useSimplifiedLogicExpression.js:10:11
-     │
-  10 │ const r = true && boolExp;
-     │           ^^^^^^^^^^^^^^^
+     8 │ // invalid
+     9 │ const boolExp = true;
+  > 10 │ const r = true && boolExp;
+       │           ^^^^^^^^^^^^^^^
+    11 │ const boolExp2 = true;
+    12 │ const r2 = boolExp || true;
   
   i Suggested fix: Discard redundant terms from the logical expression.
   
@@ -55,10 +57,12 @@ useSimplifiedLogicExpression.js:12:12 lint/correctness/useSimplifiedLogicExpress
 
   ! Logical expression contains unnecessary complexity.
   
-     ┌─ useSimplifiedLogicExpression.js:12:12
-     │
-  12 │ const r2 = boolExp || true;
-     │            ^^^^^^^^^^^^^^^
+    10 │ const r = true && boolExp;
+    11 │ const boolExp2 = true;
+  > 12 │ const r2 = boolExp || true;
+       │            ^^^^^^^^^^^^^^^
+    13 │ const nonNullExp = 123;
+    14 │ const r3 = null ?? nonNullExp;
   
   i Suggested fix: Discard redundant terms from the logical expression.
   
@@ -80,10 +84,12 @@ useSimplifiedLogicExpression.js:14:12 lint/correctness/useSimplifiedLogicExpress
 
   ! Logical expression contains unnecessary complexity.
   
-     ┌─ useSimplifiedLogicExpression.js:14:12
-     │
-  14 │ const r3 = null ?? nonNullExp;
-     │            ^^^^^^^^^^^^^^^^^^
+    12 │ const r2 = boolExp || true;
+    13 │ const nonNullExp = 123;
+  > 14 │ const r3 = null ?? nonNullExp;
+       │            ^^^^^^^^^^^^^^^^^^
+    15 │ const boolExpr1 = true;
+    16 │ const boolExpr2 = false;
   
   i Suggested fix: Discard redundant terms from the logical expression.
   
@@ -105,10 +111,11 @@ useSimplifiedLogicExpression.js:17:12 lint/correctness/useSimplifiedLogicExpress
 
   ! Logical expression contains unnecessary complexity.
   
-     ┌─ useSimplifiedLogicExpression.js:17:12
-     │
-  17 │ const r4 = !boolExpr1 || !boolExpr2;
-     │            ^^^^^^^^^^^^^^^^^^^^^^^^
+    15 │ const boolExpr1 = true;
+    16 │ const boolExpr2 = false;
+  > 17 │ const r4 = !boolExpr1 || !boolExpr2;
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^
+    18 │ 
   
   i Suggested fix: Reduce the complexity of the logical expression.
   

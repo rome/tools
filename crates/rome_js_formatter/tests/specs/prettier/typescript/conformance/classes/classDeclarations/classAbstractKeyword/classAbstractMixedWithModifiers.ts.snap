@@ -74,17 +74,21 @@ classAbstractMixedWithModifiers.ts:6:5 parse ━━━━━━━━━━━�
 
   × 'private' cannot be used with 'abstract' modifier.
   
-    ┌─ classAbstractMixedWithModifiers.ts:6:5
-    │
-  6 │     private abstract foo_d();
-    │     ^^^^^^^
+    4 │     public abstract foo_b();
+    5 │     protected abstract foo_c();
+  > 6 │     private abstract foo_d();
+      │     ^^^^^^^
+    7 │     
+    8 │     abstract public foo_bb();
   
   i 'abstract' modifier
   
-    ┌─ classAbstractMixedWithModifiers.ts:6:13
-    │
-  6 │     private abstract foo_d();
-    │             ^^^^^^^^
+    4 │     public abstract foo_b();
+    5 │     protected abstract foo_c();
+  > 6 │     private abstract foo_d();
+      │             ^^^^^^^^
+    7 │     
+    8 │     abstract public foo_bb();
   
 classAbstractMixedWithModifiers.ts:8:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -92,17 +96,21 @@ classAbstractMixedWithModifiers.ts:8:14 parse ━━━━━━━━━━━�
   
   × move this modifier
   
-    ┌─ classAbstractMixedWithModifiers.ts:8:14
-    │
-  8 │     abstract public foo_bb();
-    │              ^^^^^^
+     6 │     private abstract foo_d();
+     7 │     
+   > 8 │     abstract public foo_bb();
+       │              ^^^^^^
+     9 │     abstract protected foo_cc();
+    10 │     abstract private foo_dd();
   
   i before this modifier
   
-    ┌─ classAbstractMixedWithModifiers.ts:8:5
-    │
-  8 │     abstract public foo_bb();
-    │     ^^^^^^^^
+     6 │     private abstract foo_d();
+     7 │     
+   > 8 │     abstract public foo_bb();
+       │     ^^^^^^^^
+     9 │     abstract protected foo_cc();
+    10 │     abstract private foo_dd();
   
 classAbstractMixedWithModifiers.ts:9:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -110,65 +118,77 @@ classAbstractMixedWithModifiers.ts:9:14 parse ━━━━━━━━━━━�
   
   × move this modifier
   
-    ┌─ classAbstractMixedWithModifiers.ts:9:14
-    │
-  9 │     abstract protected foo_cc();
-    │              ^^^^^^^^^
+     8 │     abstract public foo_bb();
+   > 9 │     abstract protected foo_cc();
+       │              ^^^^^^^^^
+    10 │     abstract private foo_dd();
+    11 │     
   
   i before this modifier
   
-    ┌─ classAbstractMixedWithModifiers.ts:9:5
-    │
-  9 │     abstract protected foo_cc();
-    │     ^^^^^^^^
+     8 │     abstract public foo_bb();
+   > 9 │     abstract protected foo_cc();
+       │     ^^^^^^^^
+    10 │     abstract private foo_dd();
+    11 │     
   
 classAbstractMixedWithModifiers.ts:10:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'private' cannot be used with 'abstract' modifier.
   
-     ┌─ classAbstractMixedWithModifiers.ts:10:14
-     │
-  10 │     abstract private foo_dd();
-     │              ^^^^^^^
+     8 │     abstract public foo_bb();
+     9 │     abstract protected foo_cc();
+  > 10 │     abstract private foo_dd();
+       │              ^^^^^^^
+    11 │     
+    12 │     abstract static foo_d();
   
   i 'abstract' modifier
   
-     ┌─ classAbstractMixedWithModifiers.ts:10:5
-     │
-  10 │     abstract private foo_dd();
-     │     ^^^^^^^^
+     8 │     abstract public foo_bb();
+     9 │     abstract protected foo_cc();
+  > 10 │     abstract private foo_dd();
+       │     ^^^^^^^^
+    11 │     
+    12 │     abstract static foo_d();
   
 classAbstractMixedWithModifiers.ts:12:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'abstract' cannot be used with 'static' modifier.
   
-     ┌─ classAbstractMixedWithModifiers.ts:12:5
-     │
-  12 │     abstract static foo_d();
-     │     ^^^^^^^^
+    10 │     abstract private foo_dd();
+    11 │     
+  > 12 │     abstract static foo_d();
+       │     ^^^^^^^^
+    13 │     
+    14 │     static abstract foo_e();
   
   i 'static' modifier
   
-     ┌─ classAbstractMixedWithModifiers.ts:12:14
-     │
-  12 │     abstract static foo_d();
-     │              ^^^^^^
+    10 │     abstract private foo_dd();
+    11 │     
+  > 12 │     abstract static foo_d();
+       │              ^^^^^^
+    13 │     
+    14 │     static abstract foo_e();
   
 classAbstractMixedWithModifiers.ts:14:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'abstract' cannot be used with 'static' modifier.
   
-     ┌─ classAbstractMixedWithModifiers.ts:14:12
-     │
-  14 │     static abstract foo_e();
-     │            ^^^^^^^^
+    12 │     abstract static foo_d();
+    13 │     
+  > 14 │     static abstract foo_e();
+       │            ^^^^^^^^
+    15 │ }
   
   i 'static' modifier
   
-     ┌─ classAbstractMixedWithModifiers.ts:14:5
-     │
-  14 │     static abstract foo_e();
-     │     ^^^^^^
+    12 │     abstract static foo_d();
+    13 │     
+  > 14 │     static abstract foo_e();
+       │     ^^^^^^
+    15 │ }
   
 
 ```

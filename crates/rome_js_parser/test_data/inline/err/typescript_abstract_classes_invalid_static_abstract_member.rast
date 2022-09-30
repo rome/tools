@@ -134,34 +134,34 @@ typescript_abstract_classes_invalid_static_abstract_member.ts:1:20 parse ━━�
 
   × 'abstract' cannot be used with 'static' modifier.
   
-    ┌─ typescript_abstract_classes_invalid_static_abstract_member.ts:1:20
-    │
-  1 │ abstract class A { abstract static fn1(); }
-    │                    ^^^^^^^^
+  > 1 │ abstract class A { abstract static fn1(); }
+      │                    ^^^^^^^^
+    2 │ abstract class B { static abstract fn1(); }
+    3 │ 
   
   i 'static' modifier
   
-    ┌─ typescript_abstract_classes_invalid_static_abstract_member.ts:1:29
-    │
-  1 │ abstract class A { abstract static fn1(); }
-    │                             ^^^^^^
+  > 1 │ abstract class A { abstract static fn1(); }
+      │                             ^^^^^^
+    2 │ abstract class B { static abstract fn1(); }
+    3 │ 
   
 --
 typescript_abstract_classes_invalid_static_abstract_member.ts:2:27 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'abstract' cannot be used with 'static' modifier.
   
-    ┌─ typescript_abstract_classes_invalid_static_abstract_member.ts:2:27
-    │
-  2 │ abstract class B { static abstract fn1(); }
-    │                           ^^^^^^^^
+    1 │ abstract class A { abstract static fn1(); }
+  > 2 │ abstract class B { static abstract fn1(); }
+      │                           ^^^^^^^^
+    3 │ 
   
   i 'static' modifier
   
-    ┌─ typescript_abstract_classes_invalid_static_abstract_member.ts:2:20
-    │
-  2 │ abstract class B { static abstract fn1(); }
-    │                    ^^^^^^
+    1 │ abstract class A { abstract static fn1(); }
+  > 2 │ abstract class B { static abstract fn1(); }
+      │                    ^^^^^^
+    3 │ 
   
 --
 abstract class A { abstract static fn1(); }

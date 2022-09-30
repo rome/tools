@@ -125,10 +125,9 @@ jsx_opening_element_missing_r_angle.jsx:1:9 parse ━━━━━━━━━━
   
   × unexpected
   
-    ┌─ jsx_opening_element_missing_r_angle.jsx:1:9
-    │
-  1 │ <><test <inner> some content</inner></test></>
-    │         ^
+  > 1 │ <><test <inner> some content</inner></test></>
+      │         ^
+    2 │ 
   
 --
 <><test <inner> some content</inner></test></>

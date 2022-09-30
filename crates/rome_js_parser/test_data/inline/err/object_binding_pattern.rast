@@ -333,10 +333,10 @@ object_binding_pattern.js:1:9 parse ━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ object_binding_pattern.js:1:9
-    │
-  1 │ let { 5 } } = { eval: "foo" };
-    │         ^
+  > 1 │ let { 5 } } = { eval: "foo" };
+      │         ^
+    2 │ let { eval } = { eval: "foo" };
+    3 │ let { 5, 6 } = { eval: "foo" };
   
 --
 object_binding_pattern.js:1:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -345,10 +345,10 @@ object_binding_pattern.js:1:5 parse ━━━━━━━━━━━━━━�
   
   × this pattern is declared, but it is not given an initialized value
   
-    ┌─ object_binding_pattern.js:1:5
-    │
-  1 │ let { 5 } } = { eval: "foo" };
-    │     ^^^^^
+  > 1 │ let { 5 } } = { eval: "foo" };
+      │     ^^^^^
+    2 │ let { eval } = { eval: "foo" };
+    3 │ let { 5, 6 } = { eval: "foo" };
   
 --
 object_binding_pattern.js:1:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -357,20 +357,21 @@ object_binding_pattern.js:1:11 parse ━━━━━━━━━━━━━━�
   
   × Expected a statement here
   
-    ┌─ object_binding_pattern.js:1:11
-    │
-  1 │ let { 5 } } = { eval: "foo" };
-    │           ^^^
+  > 1 │ let { 5 } } = { eval: "foo" };
+      │           ^^^
+    2 │ let { eval } = { eval: "foo" };
+    3 │ let { 5, 6 } = { eval: "foo" };
   
 --
 object_binding_pattern.js:2:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `eval` as an identifier in strict mode
   
-    ┌─ object_binding_pattern.js:2:7
-    │
-  2 │ let { eval } = { eval: "foo" };
-    │       ^^^^
+    1 │ let { 5 } } = { eval: "foo" };
+  > 2 │ let { eval } = { eval: "foo" };
+      │       ^^^^
+    3 │ let { 5, 6 } = { eval: "foo" };
+    4 │ let { default , eval: } = {};
   
 --
 object_binding_pattern.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -379,10 +380,12 @@ object_binding_pattern.js:3:8 parse ━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ object_binding_pattern.js:3:8
-    │
-  3 │ let { 5, 6 } = { eval: "foo" };
-    │        ^
+    1 │ let { 5 } } = { eval: "foo" };
+    2 │ let { eval } = { eval: "foo" };
+  > 3 │ let { 5, 6 } = { eval: "foo" };
+      │        ^
+    4 │ let { default , eval: } = {};
+    5 │ 
   
 --
 object_binding_pattern.js:3:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -391,10 +394,12 @@ object_binding_pattern.js:3:12 parse ━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ object_binding_pattern.js:3:12
-    │
-  3 │ let { 5, 6 } = { eval: "foo" };
-    │            ^
+    1 │ let { 5 } } = { eval: "foo" };
+    2 │ let { eval } = { eval: "foo" };
+  > 3 │ let { 5, 6 } = { eval: "foo" };
+      │            ^
+    4 │ let { default , eval: } = {};
+    5 │ 
   
 --
 object_binding_pattern.js:4:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -403,10 +408,11 @@ object_binding_pattern.js:4:15 parse ━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ object_binding_pattern.js:4:15
-    │
-  4 │ let { default , eval: } = {};
-    │               ^
+    2 │ let { eval } = { eval: "foo" };
+    3 │ let { 5, 6 } = { eval: "foo" };
+  > 4 │ let { default , eval: } = {};
+      │               ^
+    5 │ 
   
 --
 object_binding_pattern.js:4:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -415,10 +421,11 @@ object_binding_pattern.js:4:23 parse ━━━━━━━━━━━━━━�
   
   × Expected an identifier, an array pattern, or an object pattern here
   
-    ┌─ object_binding_pattern.js:4:23
-    │
-  4 │ let { default , eval: } = {};
-    │                       ^
+    2 │ let { eval } = { eval: "foo" };
+    3 │ let { 5, 6 } = { eval: "foo" };
+  > 4 │ let { default , eval: } = {};
+      │                       ^
+    5 │ 
   
 --
 let { 5 } } = { eval: "foo" };

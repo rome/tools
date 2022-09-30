@@ -32,10 +32,9 @@ empty_parenthesized_expression.js:1:2 parse ━━━━━━━━━━━━
   
   × Expected an expression here
   
-    ┌─ empty_parenthesized_expression.js:1:2
-    │
-  1 │ ();
-    │  ^
+  > 1 │ ();
+      │  ^
+    2 │ 
   
 --
 ();

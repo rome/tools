@@ -21,12 +21,13 @@ issue_2999.js:1:1 lint/style/noNegationElse  FIXABLE  ━━━━━━━━�
 
   ! Invert blocks when performing a negation test.
   
-    ┌─ issue_2999.js:1:1
-    │  
-  1 │ ┌ if (!true) {
-  2 │ │     consequent;
-  3 │ │ } else something();
-    │ └───────────────────^
+  > 1 │ if (!true) {
+      │ ^^^^^^^^^^^^
+  > 2 │ 	consequent;
+  > 3 │ } else something();
+      │ ^^^^^^^^^^^^^^^^^^^
+    4 │ //valid https://github.com/rome/tools/issues/2999·
+    5 │ if (!/^NCT/.test(input)) {
   
   i Suggested fix: Exchange alternate and consequent of the node
   

@@ -147,10 +147,10 @@ class_invalid_modifiers.js:1:11 parse ━━━━━━━━━━━━━━
 
   × 'public' modifier can only be used in TypeScript files
   
-    ┌─ class_invalid_modifiers.js:1:11
-    │
-  1 │ class A { public foo() {} }
-    │           ^^^^^^
+  > 1 │ class A { public foo() {} }
+      │           ^^^^^^
+    2 │ class B { static static foo() {} }
+    3 │ 
   
 --
 class_invalid_modifiers.js:2:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -159,17 +159,17 @@ class_invalid_modifiers.js:2:18 parse ━━━━━━━━━━━━━━
   
   × duplicate modifier
   
-    ┌─ class_invalid_modifiers.js:2:18
-    │
-  2 │ class B { static static foo() {} }
-    │                  ^^^^^^
+    1 │ class A { public foo() {} }
+  > 2 │ class B { static static foo() {} }
+      │                  ^^^^^^
+    3 │ 
   
   i first seen here
   
-    ┌─ class_invalid_modifiers.js:2:11
-    │
-  2 │ class B { static static foo() {} }
-    │           ^^^^^^
+    1 │ class A { public foo() {} }
+  > 2 │ class B { static static foo() {} }
+      │           ^^^^^^
+    3 │ 
   
 --
 class A { public foo() {} }

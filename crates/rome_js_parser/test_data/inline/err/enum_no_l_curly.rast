@@ -59,10 +59,10 @@ enum_no_l_curly.ts:1:1 parse ━━━━━━━━━━━━━━━━━
 
   × `enum` statements must have a name
   
-    ┌─ enum_no_l_curly.ts:1:1
-    │
-  1 │ enum;
-    │ ^^^^
+  > 1 │ enum;
+      │ ^^^^
+    2 │ enum A;
+    3 │ 
   
 --
 enum_no_l_curly.ts:1:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -71,10 +71,10 @@ enum_no_l_curly.ts:1:5 parse ━━━━━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ enum_no_l_curly.ts:1:5
-    │
-  1 │ enum;
-    │     ^
+  > 1 │ enum;
+      │     ^
+    2 │ enum A;
+    3 │ 
   
 --
 enum_no_l_curly.ts:2:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -83,10 +83,10 @@ enum_no_l_curly.ts:2:7 parse ━━━━━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ enum_no_l_curly.ts:2:7
-    │
-  2 │ enum A;
-    │       ^
+    1 │ enum;
+  > 2 │ enum A;
+      │       ^
+    3 │ 
   
 --
 enum;

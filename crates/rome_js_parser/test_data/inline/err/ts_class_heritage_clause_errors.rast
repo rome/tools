@@ -260,62 +260,75 @@ ts_class_heritage_clause_errors.ts:3:24 parse ━━━━━━━━━━━�
 
   × 'extends' clause must precede 'implements' clause.
   
-    ┌─ ts_class_heritage_clause_errors.ts:3:24
-    │
-  3 │ class B implements Int extends A {}
-    │                        ^^^^^^^^^
+    1 │ class A {}
+    2 │ interface Int {}
+  > 3 │ class B implements Int extends A {}
+      │                        ^^^^^^^^^
+    4 │ class C implements Int implements Int {}
+    5 │ class D implements {}
   
-    ┌─ ts_class_heritage_clause_errors.ts:3:9
-    │
-  3 │ class B implements Int extends A {}
-    │         ^^^^^^^^^^^^^^
+    1 │ class A {}
+    2 │ interface Int {}
+  > 3 │ class B implements Int extends A {}
+      │         ^^^^^^^^^^^^^^
+    4 │ class C implements Int implements Int {}
+    5 │ class D implements {}
   
 --
 ts_class_heritage_clause_errors.ts:4:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'implements' clause already seen.
   
-    ┌─ ts_class_heritage_clause_errors.ts:4:24
-    │
-  4 │ class C implements Int implements Int {}
-    │                        ^^^^^^^^^^^^^^
+    2 │ interface Int {}
+    3 │ class B implements Int extends A {}
+  > 4 │ class C implements Int implements Int {}
+      │                        ^^^^^^^^^^^^^^
+    5 │ class D implements {}
+    6 │ class E extends {}
   
   i first 'implements' clause
   
-    ┌─ ts_class_heritage_clause_errors.ts:4:9
-    │
-  4 │ class C implements Int implements Int {}
-    │         ^^^^^^^^^^^^^^
+    2 │ interface Int {}
+    3 │ class B implements Int extends A {}
+  > 4 │ class C implements Int implements Int {}
+      │         ^^^^^^^^^^^^^^
+    5 │ class D implements {}
+    6 │ class E extends {}
   
 --
 ts_class_heritage_clause_errors.ts:5:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'implements' list cannot be empty.
   
-    ┌─ ts_class_heritage_clause_errors.ts:5:20
-    │
-  5 │ class D implements {}
-    │                    ^
+    3 │ class B implements Int extends A {}
+    4 │ class C implements Int implements Int {}
+  > 5 │ class D implements {}
+      │                    
+    6 │ class E extends {}
+    7 │ class F extends E, {}
   
 --
 ts_class_heritage_clause_errors.ts:6:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'extends' list cannot be empty.
   
-    ┌─ ts_class_heritage_clause_errors.ts:6:16
-    │
-  6 │ class E extends {}
-    │                ^
+    4 │ class C implements Int implements Int {}
+    5 │ class D implements {}
+  > 6 │ class E extends {}
+      │                
+    7 │ class F extends E, {}
+    8 │ 
   
 --
 ts_class_heritage_clause_errors.ts:7:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Trailing comma not allowed.
   
-    ┌─ ts_class_heritage_clause_errors.ts:7:18
-    │
-  7 │ class F extends E, {}
-    │                  ^
+    5 │ class D implements {}
+    6 │ class E extends {}
+  > 7 │ class F extends E, {}
+      │                  ^
+    8 │ 
   
 --
 class A {}

@@ -102,7 +102,7 @@ where
 mod tests {
 
     use rome_analyze::Never;
-    use rome_console::codespan::Severity;
+    use rome_diagnostics::Severity;
     use rome_diagnostics::{file::FileId, v2::category};
     use rome_js_parser::parse;
     use rome_js_syntax::{SourceType, TextRange, TextSize};

@@ -98,17 +98,19 @@ no_top_level_await_in_scripts.js:3:7 parse ━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ no_top_level_await_in_scripts.js:3:7
-    │
-  3 │ await test();
-    │       ^^^^
+    1 │ // SCRIPT
+    2 │ async function test() {}
+  > 3 │ await test();
+      │       ^^^^
+    4 │ 
   
   i ...Which is required to end this statement
   
-    ┌─ no_top_level_await_in_scripts.js:3:1
-    │
-  3 │ await test();
-    │ ^^^^^^^^^^
+    1 │ // SCRIPT
+    2 │ async function test() {}
+  > 3 │ await test();
+      │ ^^^^^^^^^^
+    4 │ 
   
 --
 // SCRIPT

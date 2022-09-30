@@ -92,10 +92,12 @@ let_newline_in_async_function.js:3:3 parse ━━━━━━━━━━━━�
 
   × Illegal use of `await` as an identifier in an async context
   
-    ┌─ let_newline_in_async_function.js:3:3
-    │
-  3 │   await 0;
-    │   ^^^^^
+    1 │ async function f() {
+    2 │   let
+  > 3 │   await 0;
+      │   ^^^^^
+    4 │ }
+    5 │ 
   
 --
 let_newline_in_async_function.js:3:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -104,18 +106,22 @@ let_newline_in_async_function.js:3:9 parse ━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ let_newline_in_async_function.js:3:9
-    │
-  3 │   await 0;
-    │         ^
+    1 │ async function f() {
+    2 │   let
+  > 3 │   await 0;
+      │         ^
+    4 │ }
+    5 │ 
   
   i ...Which is required to end this statement
   
-    ┌─ let_newline_in_async_function.js:2:3
-    │  
-  2 │ ┌   let
-  3 │ │   await 0;
-    │ └────────^
+    1 │ async function f() {
+  > 2 │   let
+      │   ^^^
+  > 3 │   await 0;
+      │   ^^^^^^
+    4 │ }
+    5 │ 
   
 --
 async function f() {

@@ -198,40 +198,48 @@ private_name_presence_check_recursive.js:4:13 parse ━━━━━━━━━�
 
   × Private names are only allowed on the left side of a 'in' expression
   
-    ┌─ private_name_presence_check_recursive.js:4:13
-    │
-  4 │    #prop in #prop in this;
-    │             ^^^^^
+    2 │ 	#prop;
+    3 │ 	test() {
+  > 4 │    #prop in #prop in this;
+      │             ^^^^^
+    5 │    5 + #prop;
+    6 │    #prop
   
 --
 private_name_presence_check_recursive.js:5:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Private names are only allowed on the left side of a 'in' expression
   
-    ┌─ private_name_presence_check_recursive.js:5:8
-    │
-  5 │    5 + #prop;
-    │        ^^^^^
+    3 │ 	test() {
+    4 │    #prop in #prop in this;
+  > 5 │    5 + #prop;
+      │        ^^^^^
+    6 │    #prop
+    7 │    #prop + 5;
   
 --
 private_name_presence_check_recursive.js:6:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Private names are only allowed on the left side of a 'in' expression
   
-    ┌─ private_name_presence_check_recursive.js:6:4
-    │
-  6 │    #prop
-    │    ^^^^^
+    4 │    #prop in #prop in this;
+    5 │    5 + #prop;
+  > 6 │    #prop
+      │    ^^^^^
+    7 │    #prop + 5;
+    8 │  }
   
 --
 private_name_presence_check_recursive.js:7:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Private names are only allowed on the left side of a 'in' expression
   
-    ┌─ private_name_presence_check_recursive.js:7:4
-    │
-  7 │    #prop + 5;
-    │    ^^^^^
+    5 │    5 + #prop;
+    6 │    #prop
+  > 7 │    #prop + 5;
+      │    ^^^^^
+    8 │  }
+    9 │ }
   
 --
 class A {

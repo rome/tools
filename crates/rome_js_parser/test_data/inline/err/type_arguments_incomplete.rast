@@ -51,10 +51,9 @@ type_arguments_incomplete.ts:2:1 parse ━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ type_arguments_incomplete.ts:2:1
-    │
-  2 │ 
-    │ ^
+    1 │ func<T,
+  > 2 │ 
+      │ 
   
 --
 func<T,

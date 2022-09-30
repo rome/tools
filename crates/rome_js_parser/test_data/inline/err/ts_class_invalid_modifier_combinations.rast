@@ -523,17 +523,21 @@ ts_class_invalid_modifier_combinations.ts:3:14 parse ━━━━━━━━━
   
   × duplicate modifier
   
-    ┌─ ts_class_invalid_modifier_combinations.ts:3:14
-    │
-  3 │     override override base1;
-    │              ^^^^^^^^
+    1 │ class Base { base1; base2; }
+    2 │ abstract class Test extends Base {
+  > 3 │     override override base1;
+      │              ^^^^^^^^
+    4 │     declare declare a;
+    5 │     private protected public c;
   
   i first seen here
   
-    ┌─ ts_class_invalid_modifier_combinations.ts:3:5
-    │
-  3 │     override override base1;
-    │     ^^^^^^^^
+    1 │ class Base { base1; base2; }
+    2 │ abstract class Test extends Base {
+  > 3 │     override override base1;
+      │     ^^^^^^^^
+    4 │     declare declare a;
+    5 │     private protected public c;
   
 --
 ts_class_invalid_modifier_combinations.ts:4:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -542,17 +546,21 @@ ts_class_invalid_modifier_combinations.ts:4:13 parse ━━━━━━━━━
   
   × duplicate modifier
   
-    ┌─ ts_class_invalid_modifier_combinations.ts:4:13
-    │
-  4 │     declare declare a;
-    │             ^^^^^^^
+    2 │ abstract class Test extends Base {
+    3 │     override override base1;
+  > 4 │     declare declare a;
+      │             ^^^^^^^
+    5 │     private protected public c;
+    6 │     private private d;
   
   i first seen here
   
-    ┌─ ts_class_invalid_modifier_combinations.ts:4:5
-    │
-  4 │     declare declare a;
-    │     ^^^^^^^
+    2 │ abstract class Test extends Base {
+    3 │     override override base1;
+  > 4 │     declare declare a;
+      │     ^^^^^^^
+    5 │     private protected public c;
+    6 │     private private d;
   
 --
 ts_class_invalid_modifier_combinations.ts:5:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -561,17 +569,21 @@ ts_class_invalid_modifier_combinations.ts:5:13 parse ━━━━━━━━━
   
   × duplicate modifier
   
-    ┌─ ts_class_invalid_modifier_combinations.ts:5:13
-    │
-  5 │     private protected public c;
-    │             ^^^^^^^^^
+    3 │     override override base1;
+    4 │     declare declare a;
+  > 5 │     private protected public c;
+      │             ^^^^^^^^^
+    6 │     private private d;
+    7 │     protected protected e;
   
   i first modifier
   
-    ┌─ ts_class_invalid_modifier_combinations.ts:5:5
-    │
-  5 │     private protected public c;
-    │     ^^^^^^^
+    3 │     override override base1;
+    4 │     declare declare a;
+  > 5 │     private protected public c;
+      │     ^^^^^^^
+    6 │     private private d;
+    7 │     protected protected e;
   
 --
 ts_class_invalid_modifier_combinations.ts:5:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -580,17 +592,21 @@ ts_class_invalid_modifier_combinations.ts:5:23 parse ━━━━━━━━━
   
   × duplicate modifier
   
-    ┌─ ts_class_invalid_modifier_combinations.ts:5:23
-    │
-  5 │     private protected public c;
-    │                       ^^^^^^
+    3 │     override override base1;
+    4 │     declare declare a;
+  > 5 │     private protected public c;
+      │                       ^^^^^^
+    6 │     private private d;
+    7 │     protected protected e;
   
   i first modifier
   
-    ┌─ ts_class_invalid_modifier_combinations.ts:5:5
-    │
-  5 │     private protected public c;
-    │     ^^^^^^^
+    3 │     override override base1;
+    4 │     declare declare a;
+  > 5 │     private protected public c;
+      │     ^^^^^^^
+    6 │     private private d;
+    7 │     protected protected e;
   
 --
 ts_class_invalid_modifier_combinations.ts:6:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -599,17 +615,21 @@ ts_class_invalid_modifier_combinations.ts:6:13 parse ━━━━━━━━━
   
   × duplicate modifier
   
-    ┌─ ts_class_invalid_modifier_combinations.ts:6:13
-    │
-  6 │     private private d;
-    │             ^^^^^^^
+    4 │     declare declare a;
+    5 │     private protected public c;
+  > 6 │     private private d;
+      │             ^^^^^^^
+    7 │     protected protected e;
+    8 │     public public f;
   
   i first modifier
   
-    ┌─ ts_class_invalid_modifier_combinations.ts:6:5
-    │
-  6 │     private private d;
-    │     ^^^^^^^
+    4 │     declare declare a;
+    5 │     private protected public c;
+  > 6 │     private private d;
+      │     ^^^^^^^
+    7 │     protected protected e;
+    8 │     public public f;
   
 --
 ts_class_invalid_modifier_combinations.ts:7:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -618,17 +638,21 @@ ts_class_invalid_modifier_combinations.ts:7:15 parse ━━━━━━━━━
   
   × duplicate modifier
   
-    ┌─ ts_class_invalid_modifier_combinations.ts:7:15
-    │
-  7 │     protected protected e;
-    │               ^^^^^^^^^
+    5 │     private protected public c;
+    6 │     private private d;
+  > 7 │     protected protected e;
+      │               ^^^^^^^^^
+    8 │     public public f;
+    9 │     abstract abstract g;
   
   i first modifier
   
-    ┌─ ts_class_invalid_modifier_combinations.ts:7:5
-    │
-  7 │     protected protected e;
-    │     ^^^^^^^^^
+    5 │     private protected public c;
+    6 │     private private d;
+  > 7 │     protected protected e;
+      │     ^^^^^^^^^
+    8 │     public public f;
+    9 │     abstract abstract g;
   
 --
 ts_class_invalid_modifier_combinations.ts:8:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -637,17 +661,21 @@ ts_class_invalid_modifier_combinations.ts:8:12 parse ━━━━━━━━━
   
   × duplicate modifier
   
-    ┌─ ts_class_invalid_modifier_combinations.ts:8:12
-    │
-  8 │     public public f;
-    │            ^^^^^^
+     6 │     private private d;
+     7 │     protected protected e;
+   > 8 │     public public f;
+       │            ^^^^^^
+     9 │     abstract abstract g;
+    10 │     static static h;
   
   i first modifier
   
-    ┌─ ts_class_invalid_modifier_combinations.ts:8:5
-    │
-  8 │     public public f;
-    │     ^^^^^^
+     6 │     private private d;
+     7 │     protected protected e;
+   > 8 │     public public f;
+       │     ^^^^^^
+     9 │     abstract abstract g;
+    10 │     static static h;
   
 --
 ts_class_invalid_modifier_combinations.ts:9:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -656,17 +684,21 @@ ts_class_invalid_modifier_combinations.ts:9:14 parse ━━━━━━━━━
   
   × duplicate modifier
   
-    ┌─ ts_class_invalid_modifier_combinations.ts:9:14
-    │
-  9 │     abstract abstract g;
-    │              ^^^^^^^^
+     7 │     protected protected e;
+     8 │     public public f;
+   > 9 │     abstract abstract g;
+       │              ^^^^^^^^
+    10 │     static static h;
+    11 │     readonly readonly i;
   
   i first seen here
   
-    ┌─ ts_class_invalid_modifier_combinations.ts:9:5
-    │
-  9 │     abstract abstract g;
-    │     ^^^^^^^^
+     7 │     protected protected e;
+     8 │     public public f;
+   > 9 │     abstract abstract g;
+       │     ^^^^^^^^
+    10 │     static static h;
+    11 │     readonly readonly i;
   
 --
 ts_class_invalid_modifier_combinations.ts:10:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -675,17 +707,21 @@ ts_class_invalid_modifier_combinations.ts:10:12 parse ━━━━━━━━�
   
   × duplicate modifier
   
-     ┌─ ts_class_invalid_modifier_combinations.ts:10:12
-     │
-  10 │     static static h;
-     │            ^^^^^^
+     8 │     public public f;
+     9 │     abstract abstract g;
+  > 10 │     static static h;
+       │            ^^^^^^
+    11 │     readonly readonly i;
+    12 │     override declare base2;
   
   i first seen here
   
-     ┌─ ts_class_invalid_modifier_combinations.ts:10:5
-     │
-  10 │     static static h;
-     │     ^^^^^^
+     8 │     public public f;
+     9 │     abstract abstract g;
+  > 10 │     static static h;
+       │     ^^^^^^
+    11 │     readonly readonly i;
+    12 │     override declare base2;
   
 --
 ts_class_invalid_modifier_combinations.ts:11:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -694,108 +730,132 @@ ts_class_invalid_modifier_combinations.ts:11:14 parse ━━━━━━━━�
   
   × duplicate modifier
   
-     ┌─ ts_class_invalid_modifier_combinations.ts:11:14
-     │
-  11 │     readonly readonly i;
-     │              ^^^^^^^^
+     9 │     abstract abstract g;
+    10 │     static static h;
+  > 11 │     readonly readonly i;
+       │              ^^^^^^^^
+    12 │     override declare base2;
+    13 │     private abstract j;
   
   i first seen here
   
-     ┌─ ts_class_invalid_modifier_combinations.ts:11:5
-     │
-  11 │     readonly readonly i;
-     │     ^^^^^^^^
+     9 │     abstract abstract g;
+    10 │     static static h;
+  > 11 │     readonly readonly i;
+       │     ^^^^^^^^
+    12 │     override declare base2;
+    13 │     private abstract j;
   
 --
 ts_class_invalid_modifier_combinations.ts:12:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'declare' cannot be used with 'override' modifier.
   
-     ┌─ ts_class_invalid_modifier_combinations.ts:12:14
-     │
-  12 │     override declare base2;
-     │              ^^^^^^^
+    10 │     static static h;
+    11 │     readonly readonly i;
+  > 12 │     override declare base2;
+       │              ^^^^^^^
+    13 │     private abstract j;
+    14 │     abstract #j;
   
   i 'override' modifier
   
-     ┌─ ts_class_invalid_modifier_combinations.ts:12:5
-     │
-  12 │     override declare base2;
-     │     ^^^^^^^^
+    10 │     static static h;
+    11 │     readonly readonly i;
+  > 12 │     override declare base2;
+       │     ^^^^^^^^
+    13 │     private abstract j;
+    14 │     abstract #j;
   
 --
 ts_class_invalid_modifier_combinations.ts:13:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'private' cannot be used with 'abstract' modifier.
   
-     ┌─ ts_class_invalid_modifier_combinations.ts:13:5
-     │
-  13 │     private abstract j;
-     │     ^^^^^^^
+    11 │     readonly readonly i;
+    12 │     override declare base2;
+  > 13 │     private abstract j;
+       │     ^^^^^^^
+    14 │     abstract #j;
+    15 │     abstract static k;
   
   i 'abstract' modifier
   
-     ┌─ ts_class_invalid_modifier_combinations.ts:13:13
-     │
-  13 │     private abstract j;
-     │             ^^^^^^^^
+    11 │     readonly readonly i;
+    12 │     override declare base2;
+  > 13 │     private abstract j;
+       │             ^^^^^^^^
+    14 │     abstract #j;
+    15 │     abstract static k;
   
 --
 ts_class_invalid_modifier_combinations.ts:14:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'abstract' modifier cannot be used with a private identifier'.
   
-     ┌─ ts_class_invalid_modifier_combinations.ts:14:5
-     │
-  14 │     abstract #j;
-     │     ^^^^^^^^
+    12 │     override declare base2;
+    13 │     private abstract j;
+  > 14 │     abstract #j;
+       │     ^^^^^^^^
+    15 │     abstract static k;
+    16 │     abstract async l();
   
 --
 ts_class_invalid_modifier_combinations.ts:15:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'abstract' cannot be used with 'static' modifier.
   
-     ┌─ ts_class_invalid_modifier_combinations.ts:15:5
-     │
-  15 │     abstract static k;
-     │     ^^^^^^^^
+    13 │     private abstract j;
+    14 │     abstract #j;
+  > 15 │     abstract static k;
+       │     ^^^^^^^^
+    16 │     abstract async l();
+    17 │     declare async m();
   
   i 'static' modifier
   
-     ┌─ ts_class_invalid_modifier_combinations.ts:15:14
-     │
-  15 │     abstract static k;
-     │              ^^^^^^
+    13 │     private abstract j;
+    14 │     abstract #j;
+  > 15 │     abstract static k;
+       │              ^^^^^^
+    16 │     abstract async l();
+    17 │     declare async m();
   
 --
 ts_class_invalid_modifier_combinations.ts:16:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × async members cannot be abstract
   
-     ┌─ ts_class_invalid_modifier_combinations.ts:16:5
-     │
-  16 │     abstract async l();
-     │     ^^^^^^^^
+    14 │     abstract #j;
+    15 │     abstract static k;
+  > 16 │     abstract async l();
+       │     ^^^^^^^^
+    17 │     declare async m();
+    18 │     declare #l;
   
 --
 ts_class_invalid_modifier_combinations.ts:17:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'declare' modifier is only allowed on properties.
   
-     ┌─ ts_class_invalid_modifier_combinations.ts:17:5
-     │
-  17 │     declare async m();
-     │     ^^^^^^^
+    15 │     abstract static k;
+    16 │     abstract async l();
+  > 17 │     declare async m();
+       │     ^^^^^^^
+    18 │     declare #l;
+    19 │ }
   
 --
 ts_class_invalid_modifier_combinations.ts:18:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'declare' modifier cannot be used with a private identifier'.
   
-     ┌─ ts_class_invalid_modifier_combinations.ts:18:5
-     │
-  18 │     declare #l;
-     │     ^^^^^^^
+    16 │     abstract async l();
+    17 │     declare async m();
+  > 18 │     declare #l;
+       │     ^^^^^^^
+    19 │ }
+    20 │ 
   
 --
 class Base { base1; base2; }

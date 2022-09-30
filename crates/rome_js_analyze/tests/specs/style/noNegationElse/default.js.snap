@@ -26,14 +26,17 @@ default.js:7:1 lint/style/noNegationElse  FIXABLE  ━━━━━━━━━�
 
   ! Invert blocks when performing a negation test.
   
-     ┌─ default.js:7:1
-     │  
-   7 │ ┌ if (!true) {
-   8 │ │     consequent;
-   9 │ │ } else {
-  10 │ │     alternate;
-  11 │ │ }
-     │ └─^
+     5 │ true ? consequent : alternate;
+     6 │ // invalid
+   > 7 │ if (!true) {
+       │ ^^^^^^^^^^^^
+   > 8 │ 	consequent;
+   > 9 │ } else {
+  > 10 │ 	alternate;
+  > 11 │ }
+       │ ^
+    12 │ !condition ? consequent : alternate;
+    13 │ 
   
   i Suggested fix: Exchange alternate and consequent of the node
   
@@ -60,10 +63,12 @@ default.js:12:1 lint/style/noNegationElse  FIXABLE  ━━━━━━━━━�
 
   ! Invert blocks when performing a negation test.
   
-     ┌─ default.js:12:1
-     │
-  12 │ !condition ? consequent : alternate;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    10 │ 	alternate;
+    11 │ }
+  > 12 │ !condition ? consequent : alternate;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    13 │ 
+    14 │ let a = !test ? c : d;
   
   i Suggested fix: Exchange alternate and consequent of the node
   
@@ -84,10 +89,10 @@ default.js:14:9 lint/style/noNegationElse  FIXABLE  ━━━━━━━━━�
 
   ! Invert blocks when performing a negation test.
   
-     ┌─ default.js:14:9
-     │
-  14 │ let a = !test ? c : d;
-     │         ^^^^^^^^^^^^^
+    12 │ !condition ? consequent : alternate;
+    13 │ 
+  > 14 │ let a = !test ? c : d;
+       │         ^^^^^^^^^^^^^
   
   i Suggested fix: Exchange alternate and consequent of the node
   

@@ -21,10 +21,12 @@ noAsyncPromiseExecutor.js:7:13 lint/correctness/noAsyncPromiseExecutor ━━━
 
   ! Promise executor functions should not be `async`.
   
-    ┌─ noAsyncPromiseExecutor.js:7:13
-    │
-  7 │ new Promise(async function foo(resolve, reject) {})
-    │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    5 │ new Foo((( (resolve, reject) => {} )))
+    6 │ // invalid
+  > 7 │ new Promise(async function foo(resolve, reject) {})
+      │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │ new Promise(async (resolve, reject) => {})
+    9 │ new Promise(((((async () => {})))))
   
 
 ```
@@ -34,10 +36,11 @@ noAsyncPromiseExecutor.js:8:13 lint/correctness/noAsyncPromiseExecutor ━━━
 
   ! Promise executor functions should not be `async`.
   
-    ┌─ noAsyncPromiseExecutor.js:8:13
-    │
-  8 │ new Promise(async (resolve, reject) => {})
-    │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    6 │ // invalid
+    7 │ new Promise(async function foo(resolve, reject) {})
+  > 8 │ new Promise(async (resolve, reject) => {})
+      │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    9 │ new Promise(((((async () => {})))))
   
 
 ```
@@ -47,10 +50,10 @@ noAsyncPromiseExecutor.js:9:17 lint/correctness/noAsyncPromiseExecutor ━━━
 
   ! Promise executor functions should not be `async`.
   
-    ┌─ noAsyncPromiseExecutor.js:9:17
-    │
-  9 │ new Promise(((((async () => {})))))
-    │                 ^^^^^^^^^^^^^^
+    7 │ new Promise(async function foo(resolve, reject) {})
+    8 │ new Promise(async (resolve, reject) => {})
+  > 9 │ new Promise(((((async () => {})))))
+      │                 ^^^^^^^^^^^^^^
   
 
 ```

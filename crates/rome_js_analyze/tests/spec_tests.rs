@@ -3,13 +3,13 @@ use std::{
 };
 
 use rome_analyze::{AnalysisFilter, AnalyzerAction, ControlFlow, Never, RuleFilter};
-use rome_console::codespan::Severity;
 use rome_console::{
     diff::{Diff, DiffMode},
     fmt::{Formatter, Termcolor},
     markup, Markup,
 };
 use rome_diagnostics::file::FileId;
+use rome_diagnostics::Severity;
 use rome_diagnostics::{file::SimpleFile, termcolor::NoColor, Diagnostic};
 use rome_js_parser::{
     parse,

@@ -24,10 +24,12 @@ inJsx.jsx:3:5 lint/nursery/useButtonType ━━━━━━━━━━━━━
 
   ! Provide an explicit type prop for the button element.
   
-    ┌─ inJsx.jsx:3:5
-    │
-  3 │     <button>do something</button>
-    │     ^^^^^^^^
+    1 │ // invalid
+    2 │ <>
+  > 3 │     <button>do something</button>
+      │     ^^^^^^^^
+    4 │     <button type="bar">do something</button>
+    5 │ </>
   
   i The default  type of a button is submit, which causes the submission of a form when placed inside a `form` element. This is likely not the behaviour that you want inside a React application.
   
@@ -41,10 +43,12 @@ inJsx.jsx:4:18 lint/nursery/useButtonType ━━━━━━━━━━━━�
 
   ! Provide a valid type prop for the button element.
   
-    ┌─ inJsx.jsx:4:18
-    │
-  4 │     <button type="bar">do something</button>
-    │                  ^^^^^
+    2 │ <>
+    3 │     <button>do something</button>
+  > 4 │     <button type="bar">do something</button>
+      │                  ^^^^^
+    5 │ </>
+    6 │ 
   
   i The default  type of a button is submit, which causes the submission of a form when placed inside a `form` element. This is likely not the behaviour that you want inside a React application.
   

@@ -58,10 +58,12 @@ short_name_method.js:3:24 parse ━━━━━━━━━━━━━━━━
   
   × Expected an expression, or an assignment here
   
-    ┌─ short_name_method.js:3:24
-    │
-  3 │     this.shortMethod = ::this.shortMethod;
-    │                        ^
+    1 │ class X {
+    2 │   constructor() {
+  > 3 │     this.shortMethod = ::this.shortMethod;
+      │                        ^
+    4 │   }
+    5 │   
   
 
 ```

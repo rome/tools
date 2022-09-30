@@ -110,10 +110,9 @@ ts_constructor_type_parameters.ts:1:22 parse ━━━━━━━━━━━�
 
   × constructors cannot have type parameters.
   
-    ┌─ ts_constructor_type_parameters.ts:1:22
-    │
-  1 │ class A { constructor<A>(b) {} }
-    │                      ^^^
+  > 1 │ class A { constructor<A>(b) {} }
+      │                      ^^^
+    2 │ 
   
 --
 class A { constructor<A>(b) {} }

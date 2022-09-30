@@ -69,10 +69,9 @@ typescript_abstract_classes_invalid_abstract_async_member.ts:1:20 parse ━━�
 
   × async members cannot be abstract
   
-    ┌─ typescript_abstract_classes_invalid_abstract_async_member.ts:1:20
-    │
-  1 │ abstract class B { abstract async a(); }
-    │                    ^^^^^^^^
+  > 1 │ abstract class B { abstract async a(); }
+      │                    ^^^^^^^^
+    2 │ 
   
 --
 abstract class B { abstract async a(); }

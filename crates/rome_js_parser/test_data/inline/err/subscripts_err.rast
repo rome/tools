@@ -105,10 +105,10 @@ subscripts_err.js:1:12 parse ━━━━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-    ┌─ subscripts_err.js:1:12
-    │
-  1 │ foo()?.baz[].;
-    │            ^
+  > 1 │ foo()?.baz[].;
+      │            ^
+    2 │ BAR`b
+    3 │ 
   
 --
 subscripts_err.js:1:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -117,22 +117,21 @@ subscripts_err.js:1:14 parse ━━━━━━━━━━━━━━━━━
   
   × Expected an identifier here
   
-    ┌─ subscripts_err.js:1:14
-    │
-  1 │ foo()?.baz[].;
-    │              ^
+  > 1 │ foo()?.baz[].;
+      │              ^
+    2 │ BAR`b
+    3 │ 
   
 --
 subscripts_err.js:2:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × unterminated template literal
   
-    ┌─ subscripts_err.js:2:5
-    │  
-  2 │   BAR`b
-    │ ┌─────^
-  3 │ │ 
-    │ └^
+    1 │ foo()?.baz[].;
+  > 2 │ BAR`b
+      │     ^
+  > 3 │ 
+      │ 
   
 --
 foo()?.baz[].;

@@ -23,10 +23,12 @@ noUnsafeNegation.js:9:1 lint/correctness/noUnsafeNegation  FIXABLE  ━━━━
 
   ! The negation operator is used unsafely on the left side of this binary expression.
   
-    ┌─ noUnsafeNegation.js:9:1
-    │
-  9 │ !1 in [1,2];
-    │ ^^^^^^^^^^^
+     7 │ +1 instanceof [1,2];
+     8 │ // invalid
+   > 9 │ !1 in [1,2];
+       │ ^^^^^^^^^^^
+    10 │ /**test*/!/** test*/1 instanceof [1,2];
+    11 │ 
   
   i Suggested fix: Wrap the expression with a parenthesis
   
@@ -46,10 +48,11 @@ noUnsafeNegation.js:10:10 lint/correctness/noUnsafeNegation  FIXABLE  ━━━�
 
   ! The negation operator is used unsafely on the left side of this binary expression.
   
-     ┌─ noUnsafeNegation.js:10:10
-     │
-  10 │ /**test*/!/** test*/1 instanceof [1,2];
-     │          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     8 │ // invalid
+     9 │ !1 in [1,2];
+  > 10 │ /**test*/!/** test*/1 instanceof [1,2];
+       │          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    11 │ 
   
   i Suggested fix: Wrap the expression with a parenthesis
   

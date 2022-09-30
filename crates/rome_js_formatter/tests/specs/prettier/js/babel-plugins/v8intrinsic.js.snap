@@ -99,10 +99,11 @@ v8intrinsic.js:3:1 parse ━━━━━━━━━━━━━━━━━━�
   
   × Expected a statement here
   
-    ┌─ v8intrinsic.js:3:1
-    │
-  3 │ %DebugPrint(foo);
-    │ ^^^^^^^^^^^^^^^^
+    1 │ // https://github.com/babel/babel/pull/10148
+    2 │ 
+  > 3 │ %DebugPrint(foo);
+      │ ^^^^^^^^^^^^^^^^
+    4 │ 
   
 v8intrinsic.js:19:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -110,10 +111,12 @@ v8intrinsic.js:19:5 parse ━━━━━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-     ┌─ v8intrinsic.js:19:5
-     │
-  19 │ new %DebugPrint(null);
-     │     ^
+    17 │ // %DebugPrint?.(null)
+    18 │ 
+  > 19 │ new %DebugPrint(null);
+       │     ^
+    20 │ 
+    21 │ function *foo() {
   
 v8intrinsic.js:22:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -121,17 +124,19 @@ v8intrinsic.js:22:9 parse ━━━━━━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-     ┌─ v8intrinsic.js:22:9
-     │
-  22 │   yield %StringParseInt("42", 10)
-     │         ^
+    21 │ function *foo() {
+  > 22 │   yield %StringParseInt("42", 10)
+       │         ^
+    23 │ }
+    24 │ 
   
   i ...Which is required to end this statement
   
-     ┌─ v8intrinsic.js:22:3
-     │
-  22 │   yield %StringParseInt("42", 10)
-     │   ^^^^^^^
+    21 │ function *foo() {
+  > 22 │   yield %StringParseInt("42", 10)
+       │   ^^^^^^^
+    23 │ }
+    24 │ 
   
 
 ```

@@ -88,10 +88,9 @@ primary_expr_invalid_recovery.js:1:9 parse ━━━━━━━━━━━━�
 
   × unexpected token `\`
   
-    ┌─ primary_expr_invalid_recovery.js:1:9
-    │
-  1 │ let a = \; foo();
-    │         ^
+  > 1 │ let a = \; foo();
+      │         ^
+    2 │ 
   
 --
 let a = \; foo();

@@ -13,10 +13,8 @@ withJsxExpressionChildInvalid.jsx:1:1 lint/nursery/noUselessFragments  FIXABLE  
 
   ! Avoid using unnecessary Fragment.
   
-    ┌─ withJsxExpressionChildInvalid.jsx:1:1
-    │
-  1 │ <>{foo}</>
-    │ ^^^^^^^^^^
+  > 1 │ <>{foo}</>
+      │ ^^^^^^^^^^
   
   i Suggested fix: Remove the Fragment
   

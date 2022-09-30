@@ -145,17 +145,17 @@ jsx_missing_closing_fragment.jsx:1:1 parse ━━━━━━━━━━━━�
   
   × Opening fragment
   
-    ┌─ jsx_missing_closing_fragment.jsx:1:1
-    │
-  1 │ <>test</test>;
-    │ ^^
+  > 1 │ <>test</test>;
+      │ ^^
+    2 │ <>test<inner> some text</inner>;
+    3 │ 
   
   i Closing tag
   
-    ┌─ jsx_missing_closing_fragment.jsx:1:9
-    │
-  1 │ <>test</test>;
-    │         ^^^^
+  > 1 │ <>test</test>;
+      │         ^^^^
+    2 │ <>test<inner> some text</inner>;
+    3 │ 
   
 --
 jsx_missing_closing_fragment.jsx:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -164,10 +164,10 @@ jsx_missing_closing_fragment.jsx:3:1 parse ━━━━━━━━━━━━�
   
   × the file ends here
   
-    ┌─ jsx_missing_closing_fragment.jsx:3:1
-    │
-  3 │ 
-    │ ^
+    1 │ <>test</test>;
+    2 │ <>test<inner> some text</inner>;
+  > 3 │ 
+      │ 
   
 --
 <>test</test>;

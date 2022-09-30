@@ -481,10 +481,10 @@ import_err.js:1:7 parse ━━━━━━━━━━━━━━━━━━�
   
   × Expected a default import, a namespace import, or a named import here
   
-    ┌─ import_err.js:1:7
-    │
-  1 │ import;
-    │       ^
+  > 1 │ import;
+      │       ^
+    2 │ import *;
+    3 │ import * as c, { a, b } from "c";
   
 --
 import_err.js:2:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -493,10 +493,11 @@ import_err.js:2:9 parse ━━━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ import_err.js:2:9
-    │
-  2 │ import *;
-    │         ^
+    1 │ import;
+  > 2 │ import *;
+      │         ^
+    3 │ import * as c, { a, b } from "c";
+    4 │ import { aa + bb, dd } from "c";
   
 --
 import_err.js:3:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -505,10 +506,12 @@ import_err.js:3:14 parse ━━━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ import_err.js:3:14
-    │
-  3 │ import * as c, { a, b } from "c";
-    │              ^
+    1 │ import;
+    2 │ import *;
+  > 3 │ import * as c, { a, b } from "c";
+      │              ^
+    4 │ import { aa + bb, dd } from "c";
+    5 │ import { ab, ac } from "c";
   
 --
 import_err.js:3:30 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -517,17 +520,21 @@ import_err.js:3:30 parse ━━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ import_err.js:3:30
-    │
-  3 │ import * as c, { a, b } from "c";
-    │                              ^^^
+    1 │ import;
+    2 │ import *;
+  > 3 │ import * as c, { a, b } from "c";
+      │                              ^^^
+    4 │ import { aa + bb, dd } from "c";
+    5 │ import { ab, ac } from "c";
   
   i ...Which is required to end this statement
   
-    ┌─ import_err.js:3:25
-    │
-  3 │ import * as c, { a, b } from "c";
-    │                         ^^^^^^^^
+    1 │ import;
+    2 │ import *;
+  > 3 │ import * as c, { a, b } from "c";
+      │                         ^^^^^^^^
+    4 │ import { aa + bb, dd } from "c";
+    5 │ import { ab, ac } from "c";
   
 --
 import_err.js:4:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -536,10 +543,12 @@ import_err.js:4:13 parse ━━━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ import_err.js:4:13
-    │
-  4 │ import { aa + bb, dd } from "c";
-    │             ^
+    2 │ import *;
+    3 │ import * as c, { a, b } from "c";
+  > 4 │ import { aa + bb, dd } from "c";
+      │             ^
+    5 │ import { ab, ac } from "c";
+    6 │ import { default } from "c";
   
 --
 import_err.js:6:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -548,10 +557,12 @@ import_err.js:6:18 parse ━━━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ import_err.js:6:18
-    │
-  6 │ import { default } from "c";
-    │                  ^
+    4 │ import { aa + bb, dd } from "c";
+    5 │ import { ab, ac } from "c";
+  > 6 │ import { default } from "c";
+      │                  ^
+    7 │ import { "a" } from "c";
+    8 │ import { as x } from "c";
   
 --
 import_err.js:7:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -560,10 +571,12 @@ import_err.js:7:14 parse ━━━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ import_err.js:7:14
-    │
-  7 │ import { "a" } from "c";
-    │              ^
+    5 │ import { ab, ac } from "c";
+    6 │ import { default } from "c";
+  > 7 │ import { "a" } from "c";
+      │              ^
+    8 │ import { as x } from "c";
+    9 │ import 4 from "c";
   
 --
 import_err.js:8:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -572,10 +585,12 @@ import_err.js:8:10 parse ━━━━━━━━━━━━━━━━━━�
   
   × Expected a string literal, or an identifier here
   
-    ┌─ import_err.js:8:10
-    │
-  8 │ import { as x } from "c";
-    │          ^
+     6 │ import { default } from "c";
+     7 │ import { "a" } from "c";
+   > 8 │ import { as x } from "c";
+       │          
+     9 │ import 4 from "c";
+    10 │ import y from 4;
   
 --
 import_err.js:9:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -584,10 +599,12 @@ import_err.js:9:8 parse ━━━━━━━━━━━━━━━━━━�
   
   × Expected a default import, a namespace import, or a named import here
   
-    ┌─ import_err.js:9:8
-    │
-  9 │ import 4 from "c";
-    │        ^
+     7 │ import { "a" } from "c";
+     8 │ import { as x } from "c";
+   > 9 │ import 4 from "c";
+       │        ^
+    10 │ import y from 4;
+    11 │ 
   
 --
 import_err.js:9:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -596,17 +613,21 @@ import_err.js:9:10 parse ━━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ import_err.js:9:10
-    │
-  9 │ import 4 from "c";
-    │          ^^^^
+     7 │ import { "a" } from "c";
+     8 │ import { as x } from "c";
+   > 9 │ import 4 from "c";
+       │          ^^^^
+    10 │ import y from 4;
+    11 │ 
   
   i ...Which is required to end this statement
   
-    ┌─ import_err.js:9:8
-    │
-  9 │ import 4 from "c";
-    │        ^^^^^^
+     7 │ import { "a" } from "c";
+     8 │ import { as x } from "c";
+   > 9 │ import 4 from "c";
+       │        ^^^^^^
+    10 │ import y from 4;
+    11 │ 
   
 --
 import_err.js:9:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -615,17 +636,21 @@ import_err.js:9:15 parse ━━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ import_err.js:9:15
-    │
-  9 │ import 4 from "c";
-    │               ^^^
+     7 │ import { "a" } from "c";
+     8 │ import { as x } from "c";
+   > 9 │ import 4 from "c";
+       │               ^^^
+    10 │ import y from 4;
+    11 │ 
   
   i ...Which is required to end this statement
   
-    ┌─ import_err.js:9:10
-    │
-  9 │ import 4 from "c";
-    │          ^^^^^^^^
+     7 │ import { "a" } from "c";
+     8 │ import { as x } from "c";
+   > 9 │ import 4 from "c";
+       │          ^^^^^^^^
+    10 │ import y from 4;
+    11 │ 
   
 --
 import_err.js:10:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -634,10 +659,11 @@ import_err.js:10:15 parse ━━━━━━━━━━━━━━━━━━
   
   × Expected a string literal here
   
-     ┌─ import_err.js:10:15
-     │
-  10 │ import y from 4;
-     │               ^
+     8 │ import { as x } from "c";
+     9 │ import 4 from "c";
+  > 10 │ import y from 4;
+       │               ^
+    11 │ 
   
 --
 import;

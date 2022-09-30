@@ -22,17 +22,19 @@ noCatchAssign.js:2:24 lint/correctness/noCatchAssign ━━━━━━━━━
 
   !  Do not reassign catch parameters.
   
-    ┌─ noCatchAssign.js:2:24
-    │
-  2 │ try { } catch (e) { e; e = 10; }
-    │                        ^
+    1 │ // invalid
+  > 2 │ try { } catch (e) { e; e = 10; }
+      │                        ^
+    3 │ try {
+    4 │ 
   
   i The catch parameter is declared here
   
-    ┌─ noCatchAssign.js:2:16
-    │
-  2 │ try { } catch (e) { e; e = 10; }
-    │                ^
+    1 │ // invalid
+  > 2 │ try { } catch (e) { e; e = 10; }
+      │                ^
+    3 │ try {
+    4 │ 
   
   i Use a local variable instead.
   
@@ -44,17 +46,20 @@ noCatchAssign.js:6:3 lint/correctness/noCatchAssign ━━━━━━━━━�
 
   !  Do not reassign catch parameters.
   
-    ┌─ noCatchAssign.js:6:3
-    │
-  6 │   error = 100;
-    │   ^^^^^
+    5 │ } catch (error) {
+  > 6 │   error = 100;
+      │   ^^^^^
+    7 │   {
+    8 │     error = 10;
   
   i The catch parameter is declared here
   
-    ┌─ noCatchAssign.js:5:10
-    │
-  5 │ } catch (error) {
-    │          ^^^^^
+    3 │ try {
+    4 │ 
+  > 5 │ } catch (error) {
+      │          ^^^^^
+    6 │   error = 100;
+    7 │   {
   
   i Use a local variable instead.
   
@@ -66,17 +71,21 @@ noCatchAssign.js:8:5 lint/correctness/noCatchAssign ━━━━━━━━━�
 
   !  Do not reassign catch parameters.
   
-    ┌─ noCatchAssign.js:8:5
-    │
-  8 │     error = 10;
-    │     ^^^^^
+     6 │   error = 100;
+     7 │   {
+   > 8 │     error = 10;
+       │     ^^^^^
+     9 │   }
+    10 │ }
   
   i The catch parameter is declared here
   
-    ┌─ noCatchAssign.js:5:10
-    │
-  5 │ } catch (error) {
-    │          ^^^^^
+    3 │ try {
+    4 │ 
+  > 5 │ } catch (error) {
+      │          ^^^^^
+    6 │   error = 100;
+    7 │   {
   
   i Use a local variable instead.
   

@@ -112,10 +112,10 @@ throw_expression.js:1:26 parse ━━━━━━━━━━━━━━━━�
   
   × Expected an expression, or an assignment here
   
-    ┌─ throw_expression.js:1:26
-    │
-  1 │ function save(filename = throw new TypeError("Argument required")) {}
-    │                          ^^^^^
+  > 1 │ function save(filename = throw new TypeError("Argument required")) {}
+      │                          ^^^^^
+    2 │ 
+    3 │ lint(ast, {
   
 throw_expression.js:1:36 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -123,10 +123,10 @@ throw_expression.js:1:36 parse ━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ throw_expression.js:1:36
-    │
-  1 │ function save(filename = throw new TypeError("Argument required")) {}
-    │                                    ^^^^^^^^^
+  > 1 │ function save(filename = throw new TypeError("Argument required")) {}
+      │                                    ^^^^^^^^^
+    2 │ 
+    3 │ lint(ast, {
   
 throw_expression.js:1:45 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -134,10 +134,10 @@ throw_expression.js:1:45 parse ━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ throw_expression.js:1:45
-    │
-  1 │ function save(filename = throw new TypeError("Argument required")) {}
-    │                                             ^
+  > 1 │ function save(filename = throw new TypeError("Argument required")) {}
+      │                                             ^
+    2 │ 
+    3 │ lint(ast, {
   
 throw_expression.js:1:66 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -145,10 +145,10 @@ throw_expression.js:1:66 parse ━━━━━━━━━━━━━━━━�
   
   × Expected a function body here
   
-    ┌─ throw_expression.js:1:66
-    │
-  1 │ function save(filename = throw new TypeError("Argument required")) {}
-    │                                                                  ^
+  > 1 │ function save(filename = throw new TypeError("Argument required")) {}
+      │                                                                  ^
+    2 │ 
+    3 │ lint(ast, {
   
 throw_expression.js:4:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -156,10 +156,11 @@ throw_expression.js:4:15 parse ━━━━━━━━━━━━━━━━�
   
   × Expected a function body, or an expression here
   
-    ┌─ throw_expression.js:4:15
-    │
-  4 │   with: () => throw new Error("avoid using 'with' statements.")
-    │               ^^^^^
+    3 │ lint(ast, {
+  > 4 │   with: () => throw new Error("avoid using 'with' statements.")
+      │               ^^^^^
+    5 │ });
+    6 │ 
   
 throw_expression.js:4:21 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -167,10 +168,11 @@ throw_expression.js:4:21 parse ━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ throw_expression.js:4:21
-    │
-  4 │   with: () => throw new Error("avoid using 'with' statements.")
-    │                     ^^^
+    3 │ lint(ast, {
+  > 4 │   with: () => throw new Error("avoid using 'with' statements.")
+      │                     ^^^
+    5 │ });
+    6 │ 
   
 throw_expression.js:11:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -178,10 +180,12 @@ throw_expression.js:11:19 parse ━━━━━━━━━━━━━━━━
   
   × Expected an expression, or an assignment here
   
-     ┌─ throw_expression.js:11:19
-     │
-  11 │                 : throw new Error("Unsupported encoding");
-     │                   ^^^^^
+     9 │                 : encoding === "utf16le" ? new UTF16Encoder(false)
+    10 │                 : encoding === "utf16be" ? new UTF16Encoder(true)
+  > 11 │                 : throw new Error("Unsupported encoding");
+       │                   ^^^^^
+    12 │ }
+    13 │ 
   
 throw_expression.js:16:39 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -189,10 +193,12 @@ throw_expression.js:16:39 parse ━━━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-     ┌─ throw_expression.js:16:39
-     │
-  16 │   set id(value) { this._id = value || throw new Error("Invalid value"); }
-     │                                       ^^^^^
+    14 │ class Product {
+    15 │   get id() { return this._id; }
+  > 16 │   set id(value) { this._id = value || throw new Error("Invalid value"); }
+       │                                       ^^^^^
+    17 │ }
+    18 │ 
   
 
 ```

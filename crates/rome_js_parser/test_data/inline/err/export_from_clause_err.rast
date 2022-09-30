@@ -122,10 +122,10 @@ export_from_clause_err.js:1:9 parse ━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ export_from_clause_err.js:1:9
-    │
-  1 │ export *;
-    │         ^
+  > 1 │ export *;
+      │         ^
+    2 │ export * from 5;
+    3 │ export as from "test";
   
 --
 export_from_clause_err.js:2:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -134,10 +134,11 @@ export_from_clause_err.js:2:15 parse ━━━━━━━━━━━━━━�
   
   × Expected a string literal here
   
-    ┌─ export_from_clause_err.js:2:15
-    │
-  2 │ export * from 5;
-    │               ^
+    1 │ export *;
+  > 2 │ export * from 5;
+      │               ^
+    3 │ export as from "test";
+    4 │ export from "test";
   
 --
 export_from_clause_err.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -146,10 +147,12 @@ export_from_clause_err.js:3:8 parse ━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ export_from_clause_err.js:3:8
-    │
-  3 │ export as from "test";
-    │        ^^
+    1 │ export *;
+    2 │ export * from 5;
+  > 3 │ export as from "test";
+      │        ^^
+    4 │ export from "test";
+    5 │ 
   
 --
 export_from_clause_err.js:3:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -158,10 +161,12 @@ export_from_clause_err.js:3:16 parse ━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ export_from_clause_err.js:3:16
-    │
-  3 │ export as from "test";
-    │                ^^^^^^
+    1 │ export *;
+    2 │ export * from 5;
+  > 3 │ export as from "test";
+      │                ^^^^^^
+    4 │ export from "test";
+    5 │ 
   
 --
 export_from_clause_err.js:4:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -170,10 +175,11 @@ export_from_clause_err.js:4:8 parse ━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ export_from_clause_err.js:4:8
-    │
-  4 │ export from "test";
-    │        ^^^^
+    2 │ export * from 5;
+    3 │ export as from "test";
+  > 4 │ export from "test";
+      │        ^^^^
+    5 │ 
   
 --
 export *;

@@ -94,19 +94,20 @@ worker.js:1:32 parse ━━━━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ worker.js:1:32
-    │
-  1 │ let worker = new Worker(module {
-    │                                ^
+  > 1 │ let worker = new Worker(module {
+      │                                ^
+    2 │   onmessage = function({data}) {
+    3 │     let mod = import(data);
   
 worker.js:2:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Did you mean to use a `:`? An `=` can only follow a property name when the containing object literal is part of a destructuring pattern.
   
-    ┌─ worker.js:2:13
-    │
-  2 │   onmessage = function({data}) {
-    │             ^
+    1 │ let worker = new Worker(module {
+  > 2 │   onmessage = function({data}) {
+      │             ^
+    3 │     let mod = import(data);
+    4 │     postMessage(mod.fn());
   
 worker.js:8:32 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -114,19 +115,22 @@ worker.js:8:32 parse ━━━━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ worker.js:8:32
-    │
-  8 │ let worker = new Worker(module {
-    │                                ^
+     6 │ }, {type: "module"});
+     7 │ 
+   > 8 │ let worker = new Worker(module {
+       │                                ^
+     9 │   onmessage = function({data}) {
+    10 │     let mod = import(data);
   
 worker.js:9:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Did you mean to use a `:`? An `=` can only follow a property name when the containing object literal is part of a destructuring pattern.
   
-    ┌─ worker.js:9:13
-    │
-  9 │   onmessage = function({data}) {
-    │             ^
+     8 │ let worker = new Worker(module {
+   > 9 │   onmessage = function({data}) {
+       │             ^
+    10 │     let mod = import(data);
+    11 │     postMessage(mod.fn());
   
 worker.js:15:27 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -134,10 +138,11 @@ worker.js:15:27 parse ━━━━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-     ┌─ worker.js:15:27
-     │
-  15 │ worker.postMessage(module { export function fn() { return "hello!" } });
-     │                           ^
+    13 │ }, {type: "module", foo: "bar" });
+    14 │ 
+  > 15 │ worker.postMessage(module { export function fn() { return "hello!" } });
+       │                           ^
+    16 │ 
   
 worker.js:15:36 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -145,10 +150,11 @@ worker.js:15:36 parse ━━━━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-     ┌─ worker.js:15:36
-     │
-  15 │ worker.postMessage(module { export function fn() { return "hello!" } });
-     │                                    ^^^^^^^^
+    13 │ }, {type: "module", foo: "bar" });
+    14 │ 
+  > 15 │ worker.postMessage(module { export function fn() { return "hello!" } });
+       │                                    ^^^^^^^^
+    16 │ 
   
 
 ```

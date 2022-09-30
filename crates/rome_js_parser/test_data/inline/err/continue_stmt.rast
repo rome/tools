@@ -127,10 +127,10 @@ continue_stmt.js:1:18 parse ━━━━━━━━━━━━━━━━━�
 
   × A `continue` statement can only be used within an enclosing `for`, `while` or `do while` statement.
   
-    ┌─ continue_stmt.js:1:18
-    │
-  1 │ function foo() { continue; }
-    │                  ^^^^^^^^
+  > 1 │ function foo() { continue; }
+      │                  ^^^^^^^^
+    2 │ while (true) {
+    3 │   continue foo;
   
 --
 continue_stmt.js:3:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -139,10 +139,12 @@ continue_stmt.js:3:12 parse ━━━━━━━━━━━━━━━━━�
   
   × This label is used, but it is never defined
   
-    ┌─ continue_stmt.js:3:12
-    │
-  3 │   continue foo;
-    │            ^^^
+    1 │ function foo() { continue; }
+    2 │ while (true) {
+  > 3 │   continue foo;
+      │            ^^^
+    4 │ }
+    5 │ foo: {
   
 --
 continue_stmt.js:6:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -151,17 +153,21 @@ continue_stmt.js:6:12 parse ━━━━━━━━━━━━━━━━━�
   
   × This label
   
-    ┌─ continue_stmt.js:6:12
-    │
-  6 │   continue foo;
-    │            ^^^
+    4 │ }
+    5 │ foo: {
+  > 6 │   continue foo;
+      │            ^^^
+    7 │ }
+    8 │ 
   
   i points to non-iteration statement
   
-    ┌─ continue_stmt.js:5:1
-    │
-  5 │ foo: {
-    │ ^^^
+    3 │   continue foo;
+    4 │ }
+  > 5 │ foo: {
+      │ ^^^
+    6 │   continue foo;
+    7 │ }
   
 --
 function foo() { continue; }

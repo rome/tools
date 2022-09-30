@@ -23,10 +23,12 @@ noNewSymbol.js:8:11 lint/nursery/noNewSymbol  FIXABLE  ━━━━━━━━�
 
   ! Symbol cannot be called as a constructor.
   
-    ┌─ noNewSymbol.js:8:11
-    │
-  8 │ var foo = new Symbol('foo');
-    │           ^^^^^^^^^^^^^^^^^
+     6 │ }
+     7 │ // invalid
+   > 8 │ var foo = new Symbol('foo');
+       │           ^^^^^^^^^^^^^^^^^
+     9 │ var foo2 = new Symbol();
+    10 │ var lorem = new Symbol() // comment
   
   i Suggested fix: Remove new.
   
@@ -48,10 +50,12 @@ noNewSymbol.js:9:12 lint/nursery/noNewSymbol  FIXABLE  ━━━━━━━━�
 
   ! Symbol cannot be called as a constructor.
   
-    ┌─ noNewSymbol.js:9:12
-    │
-  9 │ var foo2 = new Symbol();
-    │            ^^^^^^^^^^^^
+     7 │ // invalid
+     8 │ var foo = new Symbol('foo');
+   > 9 │ var foo2 = new Symbol();
+       │            ^^^^^^^^^^^^
+    10 │ var lorem = new Symbol() // comment
+    11 │ var s = /* prefix_cmt */ new /* suffix_cmt */ Symbol() // comment
   
   i Suggested fix: Remove new.
   
@@ -72,10 +76,11 @@ noNewSymbol.js:10:13 lint/nursery/noNewSymbol  FIXABLE  ━━━━━━━━
 
   ! Symbol cannot be called as a constructor.
   
-     ┌─ noNewSymbol.js:10:13
-     │
-  10 │ var lorem = new Symbol() // comment
-     │             ^^^^^^^^^^^^
+     8 │ var foo = new Symbol('foo');
+     9 │ var foo2 = new Symbol();
+  > 10 │ var lorem = new Symbol() // comment
+       │             ^^^^^^^^^^^^
+    11 │ var s = /* prefix_cmt */ new /* suffix_cmt */ Symbol() // comment
   
   i Suggested fix: Remove new.
   
@@ -95,10 +100,10 @@ noNewSymbol.js:11:26 lint/nursery/noNewSymbol  FIXABLE  ━━━━━━━━
 
   ! Symbol cannot be called as a constructor.
   
-     ┌─ noNewSymbol.js:11:26
-     │
-  11 │ var s = /* prefix_cmt */ new /* suffix_cmt */ Symbol() // comment
-     │                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     9 │ var foo2 = new Symbol();
+    10 │ var lorem = new Symbol() // comment
+  > 11 │ var s = /* prefix_cmt */ new /* suffix_cmt */ Symbol() // comment
+       │                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   
   i Suggested fix: Remove new.
   

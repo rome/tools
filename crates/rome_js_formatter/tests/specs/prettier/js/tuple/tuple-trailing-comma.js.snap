@@ -36,19 +36,17 @@ tuple-trailing-comma.js:1:1 parse ━━━━━━━━━━━━━━━�
   
   × Expected a statement here
   
-    ┌─ tuple-trailing-comma.js:1:1
-    │
-  1 │ #[1,]
-    │ ^^^^^
+  > 1 │ #[1,]
+      │ ^^^^^
+    2 │ 
   
 tuple-trailing-comma.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `!` following a `#`, but found none
   
-    ┌─ tuple-trailing-comma.js:1:1
-    │
-  1 │ #[1,]
-    │ ^
+  > 1 │ #[1,]
+      │ ^
+    2 │ 
   
 
 ```

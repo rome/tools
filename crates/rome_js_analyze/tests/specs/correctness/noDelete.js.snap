@@ -25,10 +25,10 @@ noDelete.js:1:1 lint/correctness/noDelete  FIXABLE  ━━━━━━━━━�
 
   ! This is an unexpected use of the delete operator.
   
-    ┌─ noDelete.js:1:1
-    │
-  1 │ delete a.b;
-    │ ^^^^^^^^^^
+  > 1 │ delete a.b;
+      │ ^^^^^^^^^^
+    2 │ delete a?.b;
+    3 │ delete a["b"];
   
   i Suggested fix: Replace with undefined assignment
   
@@ -47,10 +47,12 @@ noDelete.js:3:1 lint/correctness/noDelete  FIXABLE  ━━━━━━━━━�
 
   ! This is an unexpected use of the delete operator.
   
-    ┌─ noDelete.js:3:1
-    │
-  3 │ delete a["b"];
-    │ ^^^^^^^^^^^^^
+    1 │ delete a.b;
+    2 │ delete a?.b;
+  > 3 │ delete a["b"];
+      │ ^^^^^^^^^^^^^
+    4 │ delete a?.["b"];
+    5 │ delete a.b.c;
   
   i Suggested fix: Replace with undefined assignment
   
@@ -71,10 +73,12 @@ noDelete.js:5:1 lint/correctness/noDelete  FIXABLE  ━━━━━━━━━�
 
   ! This is an unexpected use of the delete operator.
   
-    ┌─ noDelete.js:5:1
-    │
-  5 │ delete a.b.c;
-    │ ^^^^^^^^^^^^
+    3 │ delete a["b"];
+    4 │ delete a?.["b"];
+  > 5 │ delete a.b.c;
+      │ ^^^^^^^^^^^^
+    6 │ delete a.b?.c;
+    7 │ delete a.b["c"];
   
   i Suggested fix: Replace with undefined assignment
   
@@ -96,10 +100,12 @@ noDelete.js:7:1 lint/correctness/noDelete  FIXABLE  ━━━━━━━━━�
 
   ! This is an unexpected use of the delete operator.
   
-    ┌─ noDelete.js:7:1
-    │
-  7 │ delete a.b["c"];
-    │ ^^^^^^^^^^^^^^^
+    5 │ delete a.b.c;
+    6 │ delete a.b?.c;
+  > 7 │ delete a.b["c"];
+      │ ^^^^^^^^^^^^^^^
+    8 │ delete a.b?.["c"];
+    9 │ delete a?.b.c;
   
   i Suggested fix: Replace with undefined assignment
   

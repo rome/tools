@@ -55,10 +55,11 @@ block-comments.js:2:2 parse ━━━━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ block-comments.js:2:2
-    │
-  2 │ |> foo1
-    │  ^
+    1 │ bifornCringerMoshedPerplexSawder
+  > 2 │ |> foo1
+      │  ^
+    3 │ |> foo2 /* comment1 */
+    4 │ |> foo3 /* comment2 */
   
 block-comments.js:3:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -66,10 +67,12 @@ block-comments.js:3:2 parse ━━━━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ block-comments.js:3:2
-    │
-  3 │ |> foo2 /* comment1 */
-    │  ^
+    1 │ bifornCringerMoshedPerplexSawder
+    2 │ |> foo1
+  > 3 │ |> foo2 /* comment1 */
+      │  ^
+    4 │ |> foo3 /* comment2 */
+    5 │ |> kochabCooieGameOnOboleUnweave
   
 block-comments.js:4:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -77,10 +80,12 @@ block-comments.js:4:2 parse ━━━━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ block-comments.js:4:2
-    │
-  4 │ |> foo3 /* comment2 */
-    │  ^
+    2 │ |> foo1
+    3 │ |> foo2 /* comment1 */
+  > 4 │ |> foo3 /* comment2 */
+      │  ^
+    5 │ |> kochabCooieGameOnOboleUnweave
+    6 │ |> glimseGlyphsHazardNoopsTieTie;
   
 block-comments.js:5:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -88,10 +93,12 @@ block-comments.js:5:2 parse ━━━━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ block-comments.js:5:2
-    │
-  5 │ |> kochabCooieGameOnOboleUnweave
-    │  ^
+    3 │ |> foo2 /* comment1 */
+    4 │ |> foo3 /* comment2 */
+  > 5 │ |> kochabCooieGameOnOboleUnweave
+      │  ^
+    6 │ |> glimseGlyphsHazardNoopsTieTie;
+    7 │ 
   
 block-comments.js:6:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -99,10 +106,11 @@ block-comments.js:6:2 parse ━━━━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ block-comments.js:6:2
-    │
-  6 │ |> glimseGlyphsHazardNoopsTieTie;
-    │  ^
+    4 │ |> foo3 /* comment2 */
+    5 │ |> kochabCooieGameOnOboleUnweave
+  > 6 │ |> glimseGlyphsHazardNoopsTieTie;
+      │  ^
+    7 │ 
   
 
 ```

@@ -71,17 +71,19 @@ throw_stmt_err.js:2:1 parse ━━━━━━━━━━━━━━━━━�
   
   × A linebreak is not allowed here
   
-    ┌─ throw_stmt_err.js:2:1
-    │
-  2 │ new Error("oh no :(")
-    │ ^^^
+    1 │ throw
+  > 2 │ new Error("oh no :(")
+      │ ^^^
+    3 │ throw;
+    4 │ 
   
   i Help: did you mean to throw this?
   
-    ┌─ throw_stmt_err.js:2:1
-    │
-  2 │ new Error("oh no :(")
-    │ ^^^
+    1 │ throw
+  > 2 │ new Error("oh no :(")
+      │ ^^^
+    3 │ throw;
+    4 │ 
   
 --
 throw_stmt_err.js:3:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -90,10 +92,11 @@ throw_stmt_err.js:3:6 parse ━━━━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ throw_stmt_err.js:3:6
-    │
-  3 │ throw;
-    │      ^
+    1 │ throw
+    2 │ new Error("oh no :(")
+  > 3 │ throw;
+      │      ^
+    4 │ 
   
 --
 throw

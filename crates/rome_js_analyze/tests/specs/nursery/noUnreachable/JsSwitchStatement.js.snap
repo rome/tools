@@ -35,17 +35,21 @@ JsSwitchStatement.js:18:13 lint/nursery/noUnreachable ━━━━━━━━�
   
   ! ... before it can reach this code
   
-     ┌─ JsSwitchStatement.js:18:13
-     │
-  18 │             afterBreak();
-     │             ^^^^^^^^^^^^^
+    16 │         case 0:
+    17 │             break;
+  > 18 │             afterBreak();
+       │             ^^^^^^^^^^^^^
+    19 │     }
+    20 │ }
   
   i This statement will break the flow of the code ...
   
-     ┌─ JsSwitchStatement.js:17:13
-     │
-  17 │             break;
-     │             ^^^^^^
+    15 │     switch (value) {
+    16 │         case 0:
+  > 17 │             break;
+       │             ^^^^^^
+    18 │             afterBreak();
+    19 │     }
   
 
 ```

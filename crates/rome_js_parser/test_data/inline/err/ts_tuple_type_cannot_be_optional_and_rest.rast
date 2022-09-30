@@ -72,10 +72,9 @@ ts_tuple_type_cannot_be_optional_and_rest.ts:1:12 parse ━━━━━━━━
 
   × A tuple member cannot be both optional and rest.
   
-    ┌─ ts_tuple_type_cannot_be_optional_and_rest.ts:1:12
-    │
-  1 │ type A = [ ...name?: string[] ]
-    │            ^^^^^^^^^^^^^^^^^^
+  > 1 │ type A = [ ...name?: string[] ]
+      │            ^^^^^^^^^^^^^^^^^^
+    2 │ 
   
 --
 type A = [ ...name?: string[] ]

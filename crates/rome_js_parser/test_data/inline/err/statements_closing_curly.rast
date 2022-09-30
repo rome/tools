@@ -63,17 +63,19 @@ statements_closing_curly.js:2:7 parse ━━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ statements_closing_curly.js:2:7
-    │
-  2 │ "name": "troublesome-lib",
-    │       ^
+    1 │ {
+  > 2 │ "name": "troublesome-lib",
+      │       ^
+    3 │ "typings": "lib/index.d.ts",
+    4 │ "version": "0.0.1"
   
   i ...Which is required to end this statement
   
-    ┌─ statements_closing_curly.js:2:1
-    │
-  2 │ "name": "troublesome-lib",
-    │ ^^^^^^^
+    1 │ {
+  > 2 │ "name": "troublesome-lib",
+      │ ^^^^^^^
+    3 │ "typings": "lib/index.d.ts",
+    4 │ "version": "0.0.1"
   
 --
 {

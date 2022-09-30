@@ -238,30 +238,32 @@ ts_formal_parameter_error.ts:1:23 parse ━━━━━━━━━━━━━�
 
   × Parameter cannot have question mark and initializer
   
-    ┌─ ts_formal_parameter_error.ts:1:23
-    │
-  1 │ function a(x?: string = "test") {}
-    │                       ^^^^^^^^
+  > 1 │ function a(x?: string = "test") {}
+      │                       ^^^^^^^^
+    2 │ function b(...rest: string[] = "init") {}
+    3 │ function c(...rest, b: string) {}
   
 --
 ts_formal_parameter_error.ts:2:30 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × rest elements may not have default initializers
   
-    ┌─ ts_formal_parameter_error.ts:2:30
-    │
-  2 │ function b(...rest: string[] = "init") {}
-    │                              ^^^^^^^^
+    1 │ function a(x?: string = "test") {}
+  > 2 │ function b(...rest: string[] = "init") {}
+      │                              ^^^^^^^^
+    3 │ function c(...rest, b: string) {}
+    4 │ 
   
 --
 ts_formal_parameter_error.ts:3:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × rest elements may not have trailing commas
   
-    ┌─ ts_formal_parameter_error.ts:3:12
-    │
-  3 │ function c(...rest, b: string) {}
-    │            ^^^^^^^
+    1 │ function a(x?: string = "test") {}
+    2 │ function b(...rest: string[] = "init") {}
+  > 3 │ function c(...rest, b: string) {}
+      │            ^^^^^^^
+    4 │ 
   
 --
 function a(x?: string = "test") {}

@@ -83,10 +83,9 @@ ts_typed_default_import_with_named.ts:1:8 parse ━━━━━━━━━━�
 
   × A type-only import can specify a default import or named bindings, but not both.
   
-    ┌─ ts_typed_default_import_with_named.ts:1:8
-    │
-  1 │ import type A, { B, C } from './a';
-    │        ^^^^^^^^^^^^^^^^
+  > 1 │ import type A, { B, C } from './a';
+      │        ^^^^^^^^^^^^^^^^
+    2 │ 
   
 --
 import type A, { B, C } from './a';

@@ -70,12 +70,12 @@ let_array_with_new_line.js:2:4 parse ━━━━━━━━━━━━━━�
   
   × Wrap this declaration in a block statement
   
-    ┌─ let_array_with_new_line.js:2:4
-    │  
-  2 │   L: let
-    │ ┌────^
-  3 │ │ [a] = 0;
-    │ └────────^
+    1 │ // SCRIPT
+  > 2 │ L: let
+      │    ^^^
+  > 3 │ [a] = 0;
+      │ ^^^^^^^^
+    4 │ 
   
 --
 // SCRIPT

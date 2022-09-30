@@ -88,10 +88,11 @@ binding_identifier_invalid_script.js:2:5 parse ━━━━━━━━━━━
   
   × Rename the let identifier here
   
-    ┌─ binding_identifier_invalid_script.js:2:5
-    │
-  2 │ let let = 5;
-    │     ^^^
+    1 │ // SCRIPT
+  > 2 │ let let = 5;
+      │     ^^^
+    3 │ const let = 5;
+    4 │ 
   
 --
 binding_identifier_invalid_script.js:3:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -100,10 +101,11 @@ binding_identifier_invalid_script.js:3:7 parse ━━━━━━━━━━━
   
   × Rename the let identifier here
   
-    ┌─ binding_identifier_invalid_script.js:3:7
-    │
-  3 │ const let = 5;
-    │       ^^^
+    1 │ // SCRIPT
+    2 │ let let = 5;
+  > 3 │ const let = 5;
+      │       ^^^
+    4 │ 
   
 --
 // SCRIPT

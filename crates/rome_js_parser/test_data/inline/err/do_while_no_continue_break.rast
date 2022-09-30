@@ -136,10 +136,10 @@ do_while_no_continue_break.js:1:8 parse ━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ do_while_no_continue_break.js:1:8
-    │
-  1 │ do { } break (continue)
-    │        ^^^^^
+  > 1 │ do { } break (continue)
+      │        ^^^^^
+    2 │ do { } continue (break)
+    3 │ 
   
 --
 do_while_no_continue_break.js:1:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -148,27 +148,27 @@ do_while_no_continue_break.js:1:14 parse ━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ do_while_no_continue_break.js:1:14
-    │
-  1 │ do { } break (continue)
-    │              ^
+  > 1 │ do { } break (continue)
+      │              ^
+    2 │ do { } continue (break)
+    3 │ 
   
   i ...Which is required to end this statement
   
-    ┌─ do_while_no_continue_break.js:1:8
-    │
-  1 │ do { } break (continue)
-    │        ^^^^^^^
+  > 1 │ do { } break (continue)
+      │        ^^^^^^^
+    2 │ do { } continue (break)
+    3 │ 
   
 --
 do_while_no_continue_break.js:1:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A `break` statement can only be used within an enclosing iteration or switch statement.
   
-    ┌─ do_while_no_continue_break.js:1:8
-    │
-  1 │ do { } break (continue)
-    │        ^^^^^
+  > 1 │ do { } break (continue)
+      │        ^^^^^
+    2 │ do { } continue (break)
+    3 │ 
   
 --
 do_while_no_continue_break.js:1:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -177,10 +177,10 @@ do_while_no_continue_break.js:1:15 parse ━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ do_while_no_continue_break.js:1:15
-    │
-  1 │ do { } break (continue)
-    │               ^^^^^^^^
+  > 1 │ do { } break (continue)
+      │               ^^^^^^^^
+    2 │ do { } continue (break)
+    3 │ 
   
 --
 do_while_no_continue_break.js:1:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -189,27 +189,27 @@ do_while_no_continue_break.js:1:23 parse ━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ do_while_no_continue_break.js:1:23
-    │
-  1 │ do { } break (continue)
-    │                       ^
+  > 1 │ do { } break (continue)
+      │                       ^
+    2 │ do { } continue (break)
+    3 │ 
   
   i ...Which is required to end this statement
   
-    ┌─ do_while_no_continue_break.js:1:15
-    │
-  1 │ do { } break (continue)
-    │               ^^^^^^^^^
+  > 1 │ do { } break (continue)
+      │               ^^^^^^^^^
+    2 │ do { } continue (break)
+    3 │ 
   
 --
 do_while_no_continue_break.js:1:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A `continue` statement can only be used within an enclosing `for`, `while` or `do while` statement.
   
-    ┌─ do_while_no_continue_break.js:1:15
-    │
-  1 │ do { } break (continue)
-    │               ^^^^^^^^
+  > 1 │ do { } break (continue)
+      │               ^^^^^^^^
+    2 │ do { } continue (break)
+    3 │ 
   
 --
 do_while_no_continue_break.js:1:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -218,10 +218,10 @@ do_while_no_continue_break.js:1:23 parse ━━━━━━━━━━━━━
   
   × Expected a statement here
   
-    ┌─ do_while_no_continue_break.js:1:23
-    │
-  1 │ do { } break (continue)
-    │                       ^
+  > 1 │ do { } break (continue)
+      │                       ^
+    2 │ do { } continue (break)
+    3 │ 
   
 --
 do_while_no_continue_break.js:2:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -230,10 +230,10 @@ do_while_no_continue_break.js:2:8 parse ━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ do_while_no_continue_break.js:2:8
-    │
-  2 │ do { } continue (break)
-    │        ^^^^^^^^
+    1 │ do { } break (continue)
+  > 2 │ do { } continue (break)
+      │        ^^^^^^^^
+    3 │ 
   
 --
 do_while_no_continue_break.js:2:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -242,27 +242,27 @@ do_while_no_continue_break.js:2:17 parse ━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ do_while_no_continue_break.js:2:17
-    │
-  2 │ do { } continue (break)
-    │                 ^
+    1 │ do { } break (continue)
+  > 2 │ do { } continue (break)
+      │                 ^
+    3 │ 
   
   i ...Which is required to end this statement
   
-    ┌─ do_while_no_continue_break.js:2:8
-    │
-  2 │ do { } continue (break)
-    │        ^^^^^^^^^^
+    1 │ do { } break (continue)
+  > 2 │ do { } continue (break)
+      │        ^^^^^^^^^^
+    3 │ 
   
 --
 do_while_no_continue_break.js:2:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A `continue` statement can only be used within an enclosing `for`, `while` or `do while` statement.
   
-    ┌─ do_while_no_continue_break.js:2:8
-    │
-  2 │ do { } continue (break)
-    │        ^^^^^^^^
+    1 │ do { } break (continue)
+  > 2 │ do { } continue (break)
+      │        ^^^^^^^^
+    3 │ 
   
 --
 do_while_no_continue_break.js:2:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -271,10 +271,10 @@ do_while_no_continue_break.js:2:18 parse ━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ do_while_no_continue_break.js:2:18
-    │
-  2 │ do { } continue (break)
-    │                  ^^^^^
+    1 │ do { } break (continue)
+  > 2 │ do { } continue (break)
+      │                  ^^^^^
+    3 │ 
   
 --
 do_while_no_continue_break.js:2:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -283,27 +283,27 @@ do_while_no_continue_break.js:2:23 parse ━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ do_while_no_continue_break.js:2:23
-    │
-  2 │ do { } continue (break)
-    │                       ^
+    1 │ do { } break (continue)
+  > 2 │ do { } continue (break)
+      │                       ^
+    3 │ 
   
   i ...Which is required to end this statement
   
-    ┌─ do_while_no_continue_break.js:2:18
-    │
-  2 │ do { } continue (break)
-    │                  ^^^^^^
+    1 │ do { } break (continue)
+  > 2 │ do { } continue (break)
+      │                  ^^^^^^
+    3 │ 
   
 --
 do_while_no_continue_break.js:2:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A `break` statement can only be used within an enclosing iteration or switch statement.
   
-    ┌─ do_while_no_continue_break.js:2:18
-    │
-  2 │ do { } continue (break)
-    │                  ^^^^^
+    1 │ do { } break (continue)
+  > 2 │ do { } continue (break)
+      │                  ^^^^^
+    3 │ 
   
 --
 do_while_no_continue_break.js:2:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -312,10 +312,10 @@ do_while_no_continue_break.js:2:23 parse ━━━━━━━━━━━━━
   
   × Expected a statement here
   
-    ┌─ do_while_no_continue_break.js:2:23
-    │
-  2 │ do { } continue (break)
-    │                       ^
+    1 │ do { } break (continue)
+  > 2 │ do { } continue (break)
+      │                       ^
+    3 │ 
   
 --
 do { } break (continue)

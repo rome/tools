@@ -51,10 +51,9 @@ ts_tuple_type_incomplete.ts:2:1 parse ━━━━━━━━━━━━━━
   
   × Expected a type here
   
-    ┌─ ts_tuple_type_incomplete.ts:2:1
-    │
-  2 │ 
-    │ ^
+    1 │ type A = [string,
+  > 2 │ 
+      │ 
   
 --
 type A = [string,

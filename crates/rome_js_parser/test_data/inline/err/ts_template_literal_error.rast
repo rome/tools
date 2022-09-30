@@ -171,10 +171,12 @@ ts_template_literal_error.ts:3:15 parse ━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ ts_template_literal_error.ts:3:15
-    │
-  3 │ type C = `${A B}bcd`
-    │               ^
+    1 │ type A = "a";
+    2 │ type B = "b"
+  > 3 │ type C = `${A B}bcd`
+      │               ^
+    4 │ type D = `${A B`
+    5 │ 
   
 --
 ts_template_literal_error.ts:4:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -183,10 +185,11 @@ ts_template_literal_error.ts:4:15 parse ━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ ts_template_literal_error.ts:4:15
-    │
-  4 │ type D = `${A B`
-    │               ^
+    2 │ type B = "b"
+    3 │ type C = `${A B}bcd`
+  > 4 │ type D = `${A B`
+      │               ^
+    5 │ 
   
 --
 type A = "a";

@@ -217,30 +217,33 @@ ts_method_signature_generator.ts:1:19 parse ━━━━━━━━━━━━
 
   × A method signature cannot be declared as a generator.
   
-    ┌─ ts_method_signature_generator.ts:1:19
-    │
-  1 │ declare class A { * method(); }
-    │                   ^^^^^^^^^^^
+  > 1 │ declare class A { * method(); }
+      │                   ^^^^^^^^^^^
+    2 │ abstract class B { abstract * method(); }
+    3 │ class C {
   
 --
 ts_method_signature_generator.ts:2:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A method signature cannot be declared as a generator.
   
-    ┌─ ts_method_signature_generator.ts:2:20
-    │
-  2 │ abstract class B { abstract * method(); }
-    │                    ^^^^^^^^^^^^^^^^^^^^
+    1 │ declare class A { * method(); }
+  > 2 │ abstract class B { abstract * method(); }
+      │                    ^^^^^^^^^^^^^^^^^^^^
+    3 │ class C {
+    4 │      * overload();
   
 --
 ts_method_signature_generator.ts:4:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A method signature cannot be declared as a generator.
   
-    ┌─ ts_method_signature_generator.ts:4:6
-    │
-  4 │      * overload();
-    │      ^^^^^^^^^^^^^
+    2 │ abstract class B { abstract * method(); }
+    3 │ class C {
+  > 4 │      * overload();
+      │      ^^^^^^^^^^^^^
+    5 │      * overload() {}
+    6 │ }
   
 --
 declare class A { * method(); }

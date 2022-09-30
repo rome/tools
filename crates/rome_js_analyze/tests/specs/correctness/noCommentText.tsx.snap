@@ -20,10 +20,11 @@ noCommentText.tsx:2:17 lint/correctness/noCommentText  FIXABLE  ━━━━━�
 
   ! Wrap comments inside children within braces.
   
-    ┌─ noCommentText.tsx:2:17
-    │
-  2 │ const a3 = <div>// comment</div>;
-    │                 ^^^^^^^^^^
+    1 │ // invalid
+  > 2 │ const a3 = <div>// comment</div>;
+      │                 ^^^^^^^^^^
+    3 │ const a4 = <div>/* comment */</div>;
+    4 │ const a5 = <div>/** comment */</div>;
   
   i Suggested fix: Wrap the comments with braces
   
@@ -43,10 +44,12 @@ noCommentText.tsx:3:17 lint/correctness/noCommentText  FIXABLE  ━━━━━�
 
   ! Wrap comments inside children within braces.
   
-    ┌─ noCommentText.tsx:3:17
-    │
-  3 │ const a4 = <div>/* comment */</div>;
-    │                 ^^^^^^^^^^^^^
+    1 │ // invalid
+    2 │ const a3 = <div>// comment</div>;
+  > 3 │ const a4 = <div>/* comment */</div>;
+      │                 ^^^^^^^^^^^^^
+    4 │ const a5 = <div>/** comment */</div>;
+    5 │ // valid
   
   i Suggested fix: Wrap the comments with braces
   
@@ -67,10 +70,12 @@ noCommentText.tsx:4:17 lint/correctness/noCommentText  FIXABLE  ━━━━━�
 
   ! Wrap comments inside children within braces.
   
-    ┌─ noCommentText.tsx:4:17
-    │
-  4 │ const a5 = <div>/** comment */</div>;
-    │                 ^^^^^^^^^^^^^^
+    2 │ const a3 = <div>// comment</div>;
+    3 │ const a4 = <div>/* comment */</div>;
+  > 4 │ const a5 = <div>/** comment */</div>;
+      │                 ^^^^^^^^^^^^^^
+    5 │ // valid
+    6 │ const a = <div>{/* comment */}</div>;
   
   i Suggested fix: Wrap the comments with braces
   

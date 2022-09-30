@@ -307,17 +307,17 @@ paren_or_arrow_expr_invalid_params.js:1:9 parse ━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ paren_or_arrow_expr_invalid_params.js:1:9
-    │
-  1 │ (5 + 5) => {}
-    │         ^^
+  > 1 │ (5 + 5) => {}
+      │         ^^
+    2 │ (a, ,b) => {}
+    3 │ (a, b) =>;
   
   i ...Which is required to end this statement
   
-    ┌─ paren_or_arrow_expr_invalid_params.js:1:1
-    │
-  1 │ (5 + 5) => {}
-    │ ^^^^^^^^^^
+  > 1 │ (5 + 5) => {}
+      │ ^^^^^^^^^^
+    2 │ (a, ,b) => {}
+    3 │ (a, b) =>;
   
 --
 paren_or_arrow_expr_invalid_params.js:2:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -326,10 +326,11 @@ paren_or_arrow_expr_invalid_params.js:2:5 parse ━━━━━━━━━━�
   
   × Expected a parameter here
   
-    ┌─ paren_or_arrow_expr_invalid_params.js:2:5
-    │
-  2 │ (a, ,b) => {}
-    │     ^
+    1 │ (5 + 5) => {}
+  > 2 │ (a, ,b) => {}
+      │     ^
+    3 │ (a, b) =>;
+    4 │ (a: string;
   
 --
 paren_or_arrow_expr_invalid_params.js:3:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -338,10 +339,12 @@ paren_or_arrow_expr_invalid_params.js:3:10 parse ━━━━━━━━━━�
   
   × Expected a function body, or an expression here
   
-    ┌─ paren_or_arrow_expr_invalid_params.js:3:10
-    │
-  3 │ (a, b) =>;
-    │          ^
+    1 │ (5 + 5) => {}
+    2 │ (a, ,b) => {}
+  > 3 │ (a, b) =>;
+      │          ^
+    4 │ (a: string;
+    5 │ (a, b)
   
 --
 paren_or_arrow_expr_invalid_params.js:4:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -350,10 +353,12 @@ paren_or_arrow_expr_invalid_params.js:4:3 parse ━━━━━━━━━━�
   
   × TypeScript only syntax
   
-    ┌─ paren_or_arrow_expr_invalid_params.js:4:3
-    │
-  4 │ (a: string;
-    │   ^^^^^^^^
+    2 │ (a, ,b) => {}
+    3 │ (a, b) =>;
+  > 4 │ (a: string;
+      │   ^^^^^^^^
+    5 │ (a, b)
+    6 │  => {}
   
 --
 paren_or_arrow_expr_invalid_params.js:4:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -362,20 +367,23 @@ paren_or_arrow_expr_invalid_params.js:4:11 parse ━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ paren_or_arrow_expr_invalid_params.js:4:11
-    │
-  4 │ (a: string;
-    │           ^
+    2 │ (a, ,b) => {}
+    3 │ (a, b) =>;
+  > 4 │ (a: string;
+      │           ^
+    5 │ (a, b)
+    6 │  => {}
   
 --
 paren_or_arrow_expr_invalid_params.js:6:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Line terminator not permitted before arrow.
   
-    ┌─ paren_or_arrow_expr_invalid_params.js:6:2
-    │
-  6 │  => {}
-    │  ^^
+    4 │ (a: string;
+    5 │ (a, b)
+  > 6 │  => {}
+      │  ^^
+    7 │ 
   
 --
 (5 + 5) => {}

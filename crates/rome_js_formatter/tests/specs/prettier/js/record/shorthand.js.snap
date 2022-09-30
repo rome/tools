@@ -48,19 +48,21 @@ shorthand.js:2:17 parse ━━━━━━━━━━━━━━━━━━�
   
   × Expected an identifier here
   
-    ┌─ shorthand.js:2:17
-    │
-  2 │ const record = #{ url }
-    │                 ^
+    1 │ const url = "https://github.com/tc39/proposal-record-tuple";
+  > 2 │ const record = #{ url }
+      │                 ^
+    3 │ console.log(record.url) // https://github.com/tc39/proposal-record-tuple
+    4 │ 
   
 shorthand.js:2:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Private names are only allowed on the left side of a 'in' expression
   
-    ┌─ shorthand.js:2:16
-    │
-  2 │ const record = #{ url }
-    │                ^
+    1 │ const url = "https://github.com/tc39/proposal-record-tuple";
+  > 2 │ const record = #{ url }
+      │                ^
+    3 │ console.log(record.url) // https://github.com/tc39/proposal-record-tuple
+    4 │ 
   
 shorthand.js:2:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -68,17 +70,19 @@ shorthand.js:2:17 parse ━━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ shorthand.js:2:17
-    │
-  2 │ const record = #{ url }
-    │                 ^
+    1 │ const url = "https://github.com/tc39/proposal-record-tuple";
+  > 2 │ const record = #{ url }
+      │                 ^
+    3 │ console.log(record.url) // https://github.com/tc39/proposal-record-tuple
+    4 │ 
   
   i ...Which is required to end this statement
   
-    ┌─ shorthand.js:2:1
-    │
-  2 │ const record = #{ url }
-    │ ^^^^^^^^^^^^^^^^
+    1 │ const url = "https://github.com/tc39/proposal-record-tuple";
+  > 2 │ const record = #{ url }
+      │ ^^^^^^^^^^^^^^^^
+    3 │ console.log(record.url) // https://github.com/tc39/proposal-record-tuple
+    4 │ 
   
 
 ```

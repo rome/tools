@@ -28,17 +28,21 @@ JsForOfStatement.js:4:9 lint/nursery/noUnreachable ━━━━━━━━━�
   
   ! ... before it can reach this code
   
-    ┌─ JsForOfStatement.js:4:9
-    │
-  4 │         afterBreak();
-    │         ^^^^^^^^^^^^^
+    2 │     for (const key of value) {
+    3 │         break;
+  > 4 │         afterBreak();
+      │         ^^^^^^^^^^^^^
+    5 │     }
+    6 │ }
   
   i This statement will break the flow of the code ...
   
-    ┌─ JsForOfStatement.js:3:9
-    │
-  3 │         break;
-    │         ^^^^^^
+    1 │ function JsForOfStatement1() {
+    2 │     for (const key of value) {
+  > 3 │         break;
+      │         ^^^^^^
+    4 │         afterBreak();
+    5 │     }
   
 
 ```
@@ -50,17 +54,21 @@ JsForOfStatement.js:11:9 lint/nursery/noUnreachable ━━━━━━━━━�
   
   ! ... before it can reach this code
   
-     ┌─ JsForOfStatement.js:11:9
-     │
-  11 │         afterContinue();
-     │         ^^^^^^^^^^^^^^^^
+     9 │     for (const key of value) {
+    10 │         continue;
+  > 11 │         afterContinue();
+       │         ^^^^^^^^^^^^^^^^
+    12 │     }
+    13 │ }
   
   i This statement will continue the loop ...
   
-     ┌─ JsForOfStatement.js:10:9
-     │
-  10 │         continue;
-     │         ^^^^^^^^^
+     8 │ function JsForOfStatement2() {
+     9 │     for (const key of value) {
+  > 10 │         continue;
+       │         ^^^^^^^^^
+    11 │         afterContinue();
+    12 │     }
   
 
 ```

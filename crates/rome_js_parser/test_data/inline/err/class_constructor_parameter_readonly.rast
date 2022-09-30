@@ -99,10 +99,9 @@ class_constructor_parameter_readonly.js:1:23 parse ━━━━━━━━━�
 
   × 'readonly' modifier can only be used in TypeScript files
   
-    ┌─ class_constructor_parameter_readonly.js:1:23
-    │
-  1 │ class B { constructor(readonly b) {} }
-    │                       ^^^^^^^^
+  > 1 │ class B { constructor(readonly b) {} }
+      │                       ^^^^^^^^
+    2 │ 
   
 --
 class B { constructor(readonly b) {} }

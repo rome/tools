@@ -49,10 +49,11 @@ declare_function_with_body.ts:2:24 parse ━━━━━━━━━━━━━
   
   × remove this body
   
-    ┌─ declare_function_with_body.ts:2:24
-    │
-  2 │ declare function foo() {}
-    │                        ^^
+    1 │ // Invalid, but recoverable
+  > 2 │ declare function foo() {}
+      │                        ^^
+    3 │ declare function bar() {
+    4 │   // comment
   
 declare_function_with_body.ts:3:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -60,13 +61,14 @@ declare_function_with_body.ts:3:24 parse ━━━━━━━━━━━━━
   
   × remove this body
   
-    ┌─ declare_function_with_body.ts:3:24
-    │  
-  3 │   declare function bar() {
-    │ ┌────────────────────────^
-  4 │ │   // comment
-  5 │ │ }
-    │ └─^
+    1 │ // Invalid, but recoverable
+    2 │ declare function foo() {}
+  > 3 │ declare function bar() {
+      │                        ^
+  > 4 │   // comment
+  > 5 │ }
+      │ ^
+    6 │ 
   
 
 ```

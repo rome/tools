@@ -51,17 +51,20 @@ noImportAssign.js:4:1 lint/correctness/noImportAssign ━━━━━━━━�
 
   ! The imported variable x is read-only
   
-    ┌─ noImportAssign.js:4:1
-    │
-  4 │ x = 1;
-    │ ^
+    2 │ // invalid
+    3 │ import x from "y";
+  > 4 │ x = 1;
+      │ ^
+    5 │ 
+    6 │ import y from "y";
   
   i The variable is imported here
   
-    ┌─ noImportAssign.js:3:8
-    │
-  3 │ import x from "y";
-    │        ^
+    2 │ // invalid
+  > 3 │ import x from "y";
+      │        ^
+    4 │ x = 1;
+    5 │ 
   
   i Use a local variable instead of reassigning an import.
   
@@ -73,17 +76,20 @@ noImportAssign.js:7:2 lint/correctness/noImportAssign ━━━━━━━━�
 
   ! The imported variable y is read-only
   
-    ┌─ noImportAssign.js:7:2
-    │
-  7 │ [y] = 1;
-    │  ^
+    6 │ import y from "y";
+  > 7 │ [y] = 1;
+      │  ^
+    8 │ 
+    9 │ import z from "y";
   
   i The variable is imported here
   
-    ┌─ noImportAssign.js:6:8
-    │
-  6 │ import y from "y";
-    │        ^
+    4 │ x = 1;
+    5 │ 
+  > 6 │ import y from "y";
+      │        ^
+    7 │ [y] = 1;
+    8 │ 
   
   i Use a local variable instead of reassigning an import.
   
@@ -95,17 +101,20 @@ noImportAssign.js:10:4 lint/correctness/noImportAssign ━━━━━━━━�
 
   ! The imported variable z is read-only
   
-     ┌─ noImportAssign.js:10:4
-     │
-  10 │ ({ z } = 1);
-     │    ^
+     9 │ import z from "y";
+  > 10 │ ({ z } = 1);
+       │    ^
+    11 │ 
+    12 │ import a from "y";
   
   i The variable is imported here
   
-    ┌─ noImportAssign.js:9:8
-    │
-  9 │ import z from "y";
-    │        ^
+     7 │ [y] = 1;
+     8 │ 
+   > 9 │ import z from "y";
+       │        ^
+    10 │ ({ z } = 1);
+    11 │ 
   
   i Use a local variable instead of reassigning an import.
   
@@ -117,17 +126,20 @@ noImportAssign.js:13:5 lint/correctness/noImportAssign ━━━━━━━━�
 
   ! The imported variable a is read-only
   
-     ┌─ noImportAssign.js:13:5
-     │
-  13 │ [...a] = 1;
-     │     ^
+    12 │ import a from "y";
+  > 13 │ [...a] = 1;
+       │     ^
+    14 │ 
+    15 │ import b from "y";
   
   i The variable is imported here
   
-     ┌─ noImportAssign.js:12:8
-     │
-  12 │ import a from "y";
-     │        ^
+    10 │ ({ z } = 1);
+    11 │ 
+  > 12 │ import a from "y";
+       │        ^
+    13 │ [...a] = 1;
+    14 │ 
   
   i Use a local variable instead of reassigning an import.
   
@@ -139,17 +151,20 @@ noImportAssign.js:16:7 lint/correctness/noImportAssign ━━━━━━━━�
 
   ! The imported variable b is read-only
   
-     ┌─ noImportAssign.js:16:7
-     │
-  16 │ ({ ...b } = 1);
-     │       ^
+    15 │ import b from "y";
+  > 16 │ ({ ...b } = 1);
+       │       ^
+    17 │ 
+    18 │ import c from "y";
   
   i The variable is imported here
   
-     ┌─ noImportAssign.js:15:8
-     │
-  15 │ import b from "y";
-     │        ^
+    13 │ [...a] = 1;
+    14 │ 
+  > 15 │ import b from "y";
+       │        ^
+    16 │ ({ ...b } = 1);
+    17 │ 
   
   i Use a local variable instead of reassigning an import.
   
@@ -161,17 +176,20 @@ noImportAssign.js:19:6 lint/correctness/noImportAssign ━━━━━━━━�
 
   ! The imported variable c is read-only
   
-     ┌─ noImportAssign.js:19:6
-     │
-  19 │ for (c in y) {};
-     │      ^
+    18 │ import c from "y";
+  > 19 │ for (c in y) {};
+       │      ^
+    20 │ 
+    21 │ import d from "y";
   
   i The variable is imported here
   
-     ┌─ noImportAssign.js:18:8
-     │
-  18 │ import c from "y";
-     │        ^
+    16 │ ({ ...b } = 1);
+    17 │ 
+  > 18 │ import c from "y";
+       │        ^
+    19 │ for (c in y) {};
+    20 │ 
   
   i Use a local variable instead of reassigning an import.
   
@@ -183,17 +201,20 @@ noImportAssign.js:22:1 lint/correctness/noImportAssign ━━━━━━━━�
 
   ! The imported variable d is read-only
   
-     ┌─ noImportAssign.js:22:1
-     │
-  22 │ d += 1;
-     │ ^
+    21 │ import d from "y";
+  > 22 │ d += 1;
+       │ ^
+    23 │ 
+    24 │ import * as e from "y";
   
   i The variable is imported here
   
-     ┌─ noImportAssign.js:21:8
-     │
-  21 │ import d from "y";
-     │        ^
+    19 │ for (c in y) {};
+    20 │ 
+  > 21 │ import d from "y";
+       │        ^
+    22 │ d += 1;
+    23 │ 
   
   i Use a local variable instead of reassigning an import.
   
@@ -205,17 +226,20 @@ noImportAssign.js:25:1 lint/correctness/noImportAssign ━━━━━━━━�
 
   ! The imported variable e is read-only
   
-     ┌─ noImportAssign.js:25:1
-     │
-  25 │ e = 1;
-     │ ^
+    24 │ import * as e from "y";
+  > 25 │ e = 1;
+       │ ^
+    26 │ 
+    27 │ import { f } from "y";
   
   i The variable is imported here
   
-     ┌─ noImportAssign.js:24:13
-     │
-  24 │ import * as e from "y";
-     │             ^
+    22 │ d += 1;
+    23 │ 
+  > 24 │ import * as e from "y";
+       │             ^
+    25 │ e = 1;
+    26 │ 
   
   i Use a local variable instead of reassigning an import.
   
@@ -227,17 +251,20 @@ noImportAssign.js:28:1 lint/correctness/noImportAssign ━━━━━━━━�
 
   ! The imported variable f is read-only
   
-     ┌─ noImportAssign.js:28:1
-     │
-  28 │ f = 1;
-     │ ^
+    27 │ import { f } from "y";
+  > 28 │ f = 1;
+       │ ^
+    29 │ f = 2;
+    30 │ 
   
   i The variable is imported here
   
-     ┌─ noImportAssign.js:27:10
-     │
-  27 │ import { f } from "y";
-     │          ^
+    25 │ e = 1;
+    26 │ 
+  > 27 │ import { f } from "y";
+       │          ^
+    28 │ f = 1;
+    29 │ f = 2;
   
   i Use a local variable instead of reassigning an import.
   
@@ -249,17 +276,21 @@ noImportAssign.js:29:1 lint/correctness/noImportAssign ━━━━━━━━�
 
   ! The imported variable f is read-only
   
-     ┌─ noImportAssign.js:29:1
-     │
-  29 │ f = 2;
-     │ ^
+    27 │ import { f } from "y";
+    28 │ f = 1;
+  > 29 │ f = 2;
+       │ ^
+    30 │ 
+    31 │ import {xx} from 'y';
   
   i The variable is imported here
   
-     ┌─ noImportAssign.js:27:10
-     │
-  27 │ import { f } from "y";
-     │          ^
+    25 │ e = 1;
+    26 │ 
+  > 27 │ import { f } from "y";
+       │          ^
+    28 │ f = 1;
+    29 │ f = 2;
   
   i Use a local variable instead of reassigning an import.
   
@@ -271,17 +302,20 @@ noImportAssign.js:32:1 lint/correctness/noImportAssign ━━━━━━━━�
 
   ! The imported variable xx is read-only
   
-     ┌─ noImportAssign.js:32:1
-     │
-  32 │ xx=1;
-     │ ^^
+    31 │ import {xx} from 'y';
+  > 32 │ xx=1;
+       │ ^^
+    33 │ 
+    34 │ import xxx, * as yyy from "d"
   
   i The variable is imported here
   
-     ┌─ noImportAssign.js:31:9
-     │
-  31 │ import {xx} from 'y';
-     │         ^^
+    29 │ f = 2;
+    30 │ 
+  > 31 │ import {xx} from 'y';
+       │         ^^
+    32 │ xx=1;
+    33 │ 
   
   i Use a local variable instead of reassigning an import.
   
@@ -293,17 +327,20 @@ noImportAssign.js:35:1 lint/correctness/noImportAssign ━━━━━━━━�
 
   ! The imported variable xxx is read-only
   
-     ┌─ noImportAssign.js:35:1
-     │
-  35 │ xxx = 4;
-     │ ^^^
+    34 │ import xxx, * as yyy from "d"
+  > 35 │ xxx = 4;
+       │ ^^^
+    36 │ yyy = 4;
+    37 │ // valid
   
   i The variable is imported here
   
-     ┌─ noImportAssign.js:34:8
-     │
-  34 │ import xxx, * as yyy from "d"
-     │        ^^^
+    32 │ xx=1;
+    33 │ 
+  > 34 │ import xxx, * as yyy from "d"
+       │        ^^^
+    35 │ xxx = 4;
+    36 │ yyy = 4;
   
   i Use a local variable instead of reassigning an import.
   
@@ -315,17 +352,21 @@ noImportAssign.js:36:1 lint/correctness/noImportAssign ━━━━━━━━�
 
   ! The imported variable yyy is read-only
   
-     ┌─ noImportAssign.js:36:1
-     │
-  36 │ yyy = 4;
-     │ ^^^
+    34 │ import xxx, * as yyy from "d"
+    35 │ xxx = 4;
+  > 36 │ yyy = 4;
+       │ ^^^
+    37 │ // valid
+    38 │ import { g } from "y";
   
   i The variable is imported here
   
-     ┌─ noImportAssign.js:34:18
-     │
-  34 │ import xxx, * as yyy from "d"
-     │                  ^^^
+    32 │ xx=1;
+    33 │ 
+  > 34 │ import xxx, * as yyy from "d"
+       │                  ^^^
+    35 │ xxx = 4;
+    36 │ yyy = 4;
   
   i Use a local variable instead of reassigning an import.
   

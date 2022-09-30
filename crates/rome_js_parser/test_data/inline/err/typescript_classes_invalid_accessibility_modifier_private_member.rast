@@ -112,30 +112,27 @@ typescript_classes_invalid_accessibility_modifier_private_member.ts:1:11 parse �
 
   × An accessibility modifier cannot be used with a private identifier.
   
-    ┌─ typescript_classes_invalid_accessibility_modifier_private_member.ts:1:11
-    │
-  1 │ class A { private #name; protected #other; public #baz; };
-    │           ^^^^^^^
+  > 1 │ class A { private #name; protected #other; public #baz; };
+      │           ^^^^^^^
+    2 │ 
   
 --
 typescript_classes_invalid_accessibility_modifier_private_member.ts:1:26 parse ━━━━━━━━━━━━━━━━━━━━━
 
   × An accessibility modifier cannot be used with a private identifier.
   
-    ┌─ typescript_classes_invalid_accessibility_modifier_private_member.ts:1:26
-    │
-  1 │ class A { private #name; protected #other; public #baz; };
-    │                          ^^^^^^^^^
+  > 1 │ class A { private #name; protected #other; public #baz; };
+      │                          ^^^^^^^^^
+    2 │ 
   
 --
 typescript_classes_invalid_accessibility_modifier_private_member.ts:1:44 parse ━━━━━━━━━━━━━━━━━━━━━
 
   × An accessibility modifier cannot be used with a private identifier.
   
-    ┌─ typescript_classes_invalid_accessibility_modifier_private_member.ts:1:44
-    │
-  1 │ class A { private #name; protected #other; public #baz; };
-    │                                            ^^^^^^
+  > 1 │ class A { private #name; protected #other; public #baz; };
+      │                                            ^^^^^^
+    2 │ 
   
 --
 class A { private #name; protected #other; public #baz; };

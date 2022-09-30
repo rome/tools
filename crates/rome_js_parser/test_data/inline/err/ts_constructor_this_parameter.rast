@@ -79,10 +79,9 @@ ts_constructor_this_parameter.ts:1:23 parse ━━━━━━━━━━━━
 
   × A constructor cannot have a 'this' parameter.
   
-    ┌─ ts_constructor_this_parameter.ts:1:23
-    │
-  1 │ class C { constructor(this) {} }
-    │                       ^^^^
+  > 1 │ class C { constructor(this) {} }
+      │                       ^^^^
+    2 │ 
   
 --
 class C { constructor(this) {} }

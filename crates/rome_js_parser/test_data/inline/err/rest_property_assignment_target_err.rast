@@ -281,10 +281,10 @@ rest_property_assignment_target_err.js:1:8 parse ━━━━━━━━━━�
   
   × Expected an identifier, or an assignment target here
   
-    ┌─ rest_property_assignment_target_err.js:1:8
-    │
-  1 │ ({ ... } = a);
-    │        ^
+  > 1 │ ({ ... } = a);
+      │        ^
+    2 │ ({ ...c = "default" } = a);
+    3 │ ({ ...{a} } = b);
   
 --
 rest_property_assignment_target_err.js:2:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -293,27 +293,31 @@ rest_property_assignment_target_err.js:2:9 parse ━━━━━━━━━━�
   
   × Remove the default value here
   
-    ┌─ rest_property_assignment_target_err.js:2:9
-    │
-  2 │ ({ ...c = "default" } = a);
-    │         ^^^^^^^^^^^^
+    1 │ ({ ... } = a);
+  > 2 │ ({ ...c = "default" } = a);
+      │         ^^^^^^^^^^^^
+    3 │ ({ ...{a} } = b);
+    4 │ ({ ...rest, other_assignment } = a);
   
   i Rest element
   
-    ┌─ rest_property_assignment_target_err.js:2:4
-    │
-  2 │ ({ ...c = "default" } = a);
-    │    ^^^^
+    1 │ ({ ... } = a);
+  > 2 │ ({ ...c = "default" } = a);
+      │    ^^^^
+    3 │ ({ ...{a} } = b);
+    4 │ ({ ...rest, other_assignment } = a);
   
 --
 rest_property_assignment_target_err.js:3:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × object and array assignment targets are not allowed in rest patterns
   
-    ┌─ rest_property_assignment_target_err.js:3:7
-    │
-  3 │ ({ ...{a} } = b);
-    │       ^^^
+    1 │ ({ ... } = a);
+    2 │ ({ ...c = "default" } = a);
+  > 3 │ ({ ...{a} } = b);
+      │       ^^^
+    4 │ ({ ...rest, other_assignment } = a);
+    5 │ ({ ...rest, } = a);
   
 --
 rest_property_assignment_target_err.js:4:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -322,10 +326,12 @@ rest_property_assignment_target_err.js:4:4 parse ━━━━━━━━━━�
   
   × Move the rest element to the end of the pattern, right before the closing '}'
   
-    ┌─ rest_property_assignment_target_err.js:4:4
-    │
-  4 │ ({ ...rest, other_assignment } = a);
-    │    ^^^^^^^
+    2 │ ({ ...c = "default" } = a);
+    3 │ ({ ...{a} } = b);
+  > 4 │ ({ ...rest, other_assignment } = a);
+      │    ^^^^^^^
+    5 │ ({ ...rest, } = a);
+    6 │ 
   
 --
 rest_property_assignment_target_err.js:5:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -334,17 +340,19 @@ rest_property_assignment_target_err.js:5:11 parse ━━━━━━━━━━
   
   × Remove the trailing comma here
   
-    ┌─ rest_property_assignment_target_err.js:5:11
-    │
-  5 │ ({ ...rest, } = a);
-    │           ^
+    3 │ ({ ...{a} } = b);
+    4 │ ({ ...rest, other_assignment } = a);
+  > 5 │ ({ ...rest, } = a);
+      │           ^
+    6 │ 
   
   i Rest element
   
-    ┌─ rest_property_assignment_target_err.js:5:4
-    │
-  5 │ ({ ...rest, } = a);
-    │    ^^^^^^^
+    3 │ ({ ...{a} } = b);
+    4 │ ({ ...rest, other_assignment } = a);
+  > 5 │ ({ ...rest, } = a);
+      │    ^^^^^^^
+    6 │ 
   
 --
 ({ ... } = a);

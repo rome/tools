@@ -77,20 +77,22 @@ private_name_with_space.js:2:3 parse ━━━━━━━━━━━━━━�
   
   × remove the space here
   
-    ┌─ private_name_with_space.js:2:3
-    │
-  2 │     # test;
-    │      ^
+    1 │ class A {
+  > 2 │ 	# test;
+      │ 	 ^
+    3 │ }
+    4 │ 
   
 --
 private_name_with_space.js:2:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a semicolon to end the class property, but found none
   
-    ┌─ private_name_with_space.js:2:2
-    │
-  2 │     # test;
-    │     ^
+    1 │ class A {
+  > 2 │ 	# test;
+      │ 	^
+    3 │ }
+    4 │ 
   
 --
 class A {

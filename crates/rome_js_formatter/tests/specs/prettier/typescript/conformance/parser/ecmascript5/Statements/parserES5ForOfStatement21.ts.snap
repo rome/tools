@@ -40,10 +40,10 @@ parserES5ForOfStatement21.ts:2:15 parse ━━━━━━━━━━━━━�
   
   × Expected an expression, or an assignment here
   
-    ┌─ parserES5ForOfStatement21.ts:2:15
-    │
-  2 │ for (var of of) { }
-    │               ^
+    1 │ //@target: ES5
+  > 2 │ for (var of of) { }
+      │               ^
+    3 │ 
   
 
 ```

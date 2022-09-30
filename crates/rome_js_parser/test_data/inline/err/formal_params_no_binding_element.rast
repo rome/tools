@@ -64,10 +64,9 @@ formal_params_no_binding_element.js:1:14 parse ━━━━━━━━━━━
   
   × Expected a parameter here
   
-    ┌─ formal_params_no_binding_element.js:1:14
-    │
-  1 │ function foo(true) {}
-    │              ^^^^
+  > 1 │ function foo(true) {}
+      │              ^^^^
+    2 │ 
   
 --
 function foo(true) {}

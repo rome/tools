@@ -213,10 +213,10 @@ object_property_binding_err.js:1:12 parse ━━━━━━━━━━━━�
   
   × Expected an identifier, an array pattern, or an object pattern here
   
-    ┌─ object_property_binding_err.js:1:12
-    │
-  1 │ let { foo: , bar } = {}
-    │            ^
+  > 1 │ let { foo: , bar } = {}
+      │            ^
+    2 │ let { : lorem = "test" } = {}
+    3 │ let { , ipsum: bazz } = {}
   
 --
 object_property_binding_err.js:2:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -225,10 +225,11 @@ object_property_binding_err.js:2:7 parse ━━━━━━━━━━━━━
   
   × Expected an identifier, a string literal, a number literal, or a computed property here
   
-    ┌─ object_property_binding_err.js:2:7
-    │
-  2 │ let { : lorem = "test" } = {}
-    │       ^
+    1 │ let { foo: , bar } = {}
+  > 2 │ let { : lorem = "test" } = {}
+      │       ^
+    3 │ let { , ipsum: bazz } = {}
+    4 │ 
   
 --
 object_property_binding_err.js:3:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -237,10 +238,11 @@ object_property_binding_err.js:3:7 parse ━━━━━━━━━━━━━
   
   × Expected an identifier, a member name, or a rest pattern here
   
-    ┌─ object_property_binding_err.js:3:7
-    │
-  3 │ let { , ipsum: bazz } = {}
-    │       ^
+    1 │ let { foo: , bar } = {}
+    2 │ let { : lorem = "test" } = {}
+  > 3 │ let { , ipsum: bazz } = {}
+      │       ^
+    4 │ 
   
 --
 let { foo: , bar } = {}

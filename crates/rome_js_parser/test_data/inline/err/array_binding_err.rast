@@ -273,10 +273,10 @@ array_binding_err.js:1:8 parse ━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ array_binding_err.js:1:8
-    │
-  1 │ let [a b] = [1, 2];
-    │        ^
+  > 1 │ let [a b] = [1, 2];
+      │        ^
+    2 │ let [="default"] = [1, 2];
+    3 │ let ["default"] = [1, 2];
   
 --
 array_binding_err.js:2:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -285,10 +285,11 @@ array_binding_err.js:2:6 parse ━━━━━━━━━━━━━━━━�
   
   × Expected an identifier, an array pattern, or an object pattern here
   
-    ┌─ array_binding_err.js:2:6
-    │
-  2 │ let [="default"] = [1, 2];
-    │      ^
+    1 │ let [a b] = [1, 2];
+  > 2 │ let [="default"] = [1, 2];
+      │      ^
+    3 │ let ["default"] = [1, 2];
+    4 │ let [[c ] = [];
   
 --
 array_binding_err.js:3:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -297,10 +298,12 @@ array_binding_err.js:3:6 parse ━━━━━━━━━━━━━━━━�
   
   × Expected an identifier, an object pattern, an array pattern, or a rest pattern here
   
-    ┌─ array_binding_err.js:3:6
-    │
-  3 │ let ["default"] = [1, 2];
-    │      ^^^^^^^^^
+    1 │ let [a b] = [1, 2];
+    2 │ let [="default"] = [1, 2];
+  > 3 │ let ["default"] = [1, 2];
+      │      ^^^^^^^^^
+    4 │ let [[c ] = [];
+    5 │ 
   
 --
 array_binding_err.js:4:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -309,10 +312,11 @@ array_binding_err.js:4:15 parse ━━━━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ array_binding_err.js:4:15
-    │
-  4 │ let [[c ] = [];
-    │               ^
+    2 │ let [="default"] = [1, 2];
+    3 │ let ["default"] = [1, 2];
+  > 4 │ let [[c ] = [];
+      │               ^
+    5 │ 
   
 --
 array_binding_err.js:4:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -321,10 +325,11 @@ array_binding_err.js:4:5 parse ━━━━━━━━━━━━━━━━�
   
   × this pattern is declared, but it is not given an initialized value
   
-    ┌─ array_binding_err.js:4:5
-    │
-  4 │ let [[c ] = [];
-    │     ^^^^^^^^^^
+    2 │ let [="default"] = [1, 2];
+    3 │ let ["default"] = [1, 2];
+  > 4 │ let [[c ] = [];
+      │     ^^^^^^^^^^
+    5 │ 
   
 --
 let [a b] = [1, 2];

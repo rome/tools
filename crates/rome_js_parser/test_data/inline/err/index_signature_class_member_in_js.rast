@@ -82,10 +82,11 @@ index_signature_class_member_in_js.js:2:5 parse ━━━━━━━━━━�
   
   × TypeScript only syntax
   
-    ┌─ index_signature_class_member_in_js.js:2:5
-    │
-  2 │     [a: number]: string;
-    │     ^^^^^^^^^^^^^^^^^^^^
+    1 │ class A {
+  > 2 │     [a: number]: string;
+      │     ^^^^^^^^^^^^^^^^^^^^
+    3 │ }
+    4 │ 
   
 --
 class A {

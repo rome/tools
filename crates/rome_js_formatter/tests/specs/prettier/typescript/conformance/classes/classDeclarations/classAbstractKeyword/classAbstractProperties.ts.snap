@@ -69,33 +69,39 @@ classAbstractProperties.ts:5:5 parse ━━━━━━━━━━━━━━�
 
   × 'private' cannot be used with 'abstract' modifier.
   
-    ┌─ classAbstractProperties.ts:5:5
-    │
-  5 │     private abstract w : number;
-    │     ^^^^^^^
+    3 │     public abstract y : number;
+    4 │     protected abstract z : number;
+  > 5 │     private abstract w : number;
+      │     ^^^^^^^
+    6 │     
+    7 │     abstract m: () => void;·
   
   i 'abstract' modifier
   
-    ┌─ classAbstractProperties.ts:5:13
-    │
-  5 │     private abstract w : number;
-    │             ^^^^^^^^
+    3 │     public abstract y : number;
+    4 │     protected abstract z : number;
+  > 5 │     private abstract w : number;
+      │             ^^^^^^^^
+    6 │     
+    7 │     abstract m: () => void;·
   
 classAbstractProperties.ts:12:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'private' cannot be used with 'abstract' modifier.
   
-     ┌─ classAbstractProperties.ts:12:5
-     │
-  12 │     private abstract foo_w() : number;
-     │     ^^^^^^^
+    10 │     public abstract foo_y() : number;
+    11 │     protected abstract foo_z() : number;
+  > 12 │     private abstract foo_w() : number;
+       │     ^^^^^^^
+    13 │ }
   
   i 'abstract' modifier
   
-     ┌─ classAbstractProperties.ts:12:13
-     │
-  12 │     private abstract foo_w() : number;
-     │             ^^^^^^^^
+    10 │     public abstract foo_y() : number;
+    11 │     protected abstract foo_z() : number;
+  > 12 │     private abstract foo_w() : number;
+       │             ^^^^^^^^
+    13 │ }
   
 
 ```

@@ -43,11 +43,14 @@ file.js:3:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━�
 
   × This code is unreachable
   
-    ┌─ file.js:3:9
-    │  
-  3 │ ┌         continue;
-  4 │ │         break;
-    │ └──────────────^
+    1 │ function f() {
+    2 │     for (;;) {
+  > 3 │         continue;
+      │         ^^^^^^^^^
+  > 4 │         break;
+      │         ^^^^^^
+    5 │     }
+    6 │ }
   
 
 ```
@@ -57,10 +60,10 @@ file.js:1:10 lint/nursery/noUnusedVariables ━━━━━━━━━━━━
 
   × This function is unused.
   
-    ┌─ file.js:1:10
-    │
-  1 │ function f() {
-    │          ^
+  > 1 │ function f() {
+      │          ^
+    2 │     for (;;) {
+    3 │         continue;
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   

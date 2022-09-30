@@ -69,10 +69,9 @@ ts_ambient_async_method.ts:1:19 parse ━━━━━━━━━━━━━━
 
   × 'async' modifier cannot be used in an ambient context.
   
-    ┌─ ts_ambient_async_method.ts:1:19
-    │
-  1 │ declare class A { async method(); }
-    │                   ^^^^^^^^^^^^^^^
+  > 1 │ declare class A { async method(); }
+      │                   ^^^^^^^^^^^^^^^
+    2 │ 
   
 --
 declare class A { async method(); }

@@ -114,10 +114,9 @@ ts_object_setter_type_parameters.ts:1:9 parse ━━━━━━━━━━━�
 
   × An accessor cannot have type parameters.
   
-    ┌─ ts_object_setter_type_parameters.ts:1:9
-    │
-  1 │ ({ set a<A>(value: A) {} });
-    │         ^^^
+  > 1 │ ({ set a<A>(value: A) {} });
+      │         ^^^
+    2 │ 
   
 --
 ({ set a<A>(value: A) {} });

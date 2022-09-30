@@ -59,10 +59,10 @@ test.js:1:23 parse ━━━━━━━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ test.js:1:23
-    │
-  1 │ const addOne = add(1, ?); // apply from the left
-    │                       ^
+  > 1 │ const addOne = add(1, ?); // apply from the left
+      │                       ^
+    2 │ addOne(2); // 3
+    3 │ 
   
 test.js:4:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -70,10 +70,12 @@ test.js:4:20 parse ━━━━━━━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ test.js:4:20
-    │
-  4 │ const addTen = add(?, 10); // apply from the right
-    │                    ^^^^^
+    2 │ addOne(2); // 3
+    3 │ 
+  > 4 │ const addTen = add(?, 10); // apply from the right
+      │                    ^^^^^
+    5 │ addTen(2); // 12
+    6 │ 
   
 test.js:9:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -81,10 +83,12 @@ test.js:9:4 parse ━━━━━━━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ test.js:9:4
-    │
-  9 │   |> add(7, ?)
-    │    ^
+     7 │ // with pipeline
+     8 │ let newScore = player.score
+   > 9 │   |> add(7, ?)
+       │    ^
+    10 │   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
+    11 │ 
   
 test.js:9:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -92,10 +96,12 @@ test.js:9:13 parse ━━━━━━━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ test.js:9:13
-    │
-  9 │   |> add(7, ?)
-    │             ^
+     7 │ // with pipeline
+     8 │ let newScore = player.score
+   > 9 │   |> add(7, ?)
+       │             ^
+    10 │   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
+    11 │ 
   
 test.js:10:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -103,10 +109,11 @@ test.js:10:4 parse ━━━━━━━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ test.js:10:4
-     │
-  10 │   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
-     │    ^
+     8 │ let newScore = player.score
+     9 │   |> add(7, ?)
+  > 10 │   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
+       │    ^
+    11 │ 
   
 test.js:10:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -114,10 +121,11 @@ test.js:10:20 parse ━━━━━━━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-     ┌─ test.js:10:20
-     │
-  10 │   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
-     │                    ^
+     8 │ let newScore = player.score
+     9 │   |> add(7, ?)
+  > 10 │   |> clamp(0, 100, ?); // shallow stack, the pipe to `clamp` is the same frame as the pipe to `add`.
+       │                    ^
+    11 │ 
   
 
 ```

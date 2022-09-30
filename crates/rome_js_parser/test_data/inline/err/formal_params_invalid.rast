@@ -91,10 +91,9 @@ formal_params_invalid.js:1:10 parse ━━━━━━━━━━━━━━�
 
   × expected a name for the function in a function declaration, but found none
   
-    ┌─ formal_params_invalid.js:1:10
-    │
-  1 │ function (a++, c) {}
-    │          ^
+  > 1 │ function (a++, c) {}
+      │          ^
+    2 │ 
   
 --
 formal_params_invalid.js:1:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -103,10 +102,9 @@ formal_params_invalid.js:1:12 parse ━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ formal_params_invalid.js:1:12
-    │
-  1 │ function (a++, c) {}
-    │            ^^
+  > 1 │ function (a++, c) {}
+      │            ^^
+    2 │ 
   
 --
 function (a++, c) {}

@@ -74,10 +74,11 @@ constructor.ts:2:15 parse ━━━━━━━━━━━━━━━━━━
 
   × 'static' cannot appear on a parameter.
   
-    ┌─ constructor.ts:2:15
-    │
-  2 │   constructor(static a: number) {}
-    │               ^^^^^^
+    1 │ class foo {
+  > 2 │   constructor(static a: number) {}
+      │               ^^^^^^
+    3 │ }
+    4 │ 
   
 constructor.ts:6:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -85,10 +86,11 @@ constructor.ts:6:15 parse ━━━━━━━━━━━━━━━━━━
   
   × Expected a parameter here
   
-    ┌─ constructor.ts:6:15
-    │
-  6 │   constructor(export a: number) {}
-    │               ^^^^^^
+    5 │ class foo {
+  > 6 │   constructor(export a: number) {}
+      │               ^^^^^^
+    7 │ }
+    8 │ 
   
 constructor.ts:6:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -96,19 +98,21 @@ constructor.ts:6:22 parse ━━━━━━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ constructor.ts:6:22
-    │
-  6 │   constructor(export a: number) {}
-    │                      ^
+    5 │ class foo {
+  > 6 │   constructor(export a: number) {}
+      │                      ^
+    7 │ }
+    8 │ 
   
 constructor.ts:10:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × class properties may not be called `constructor`
   
-     ┌─ constructor.ts:10:5
-     │
-  10 │     'constructor': typeof A
-     │     ^^^^^^^^^^^^^^^^^^^^^^^
+     9 │ class A {
+  > 10 │     'constructor': typeof A
+       │     ^^^^^^^^^^^^^^^^^^^^^^^
+    11 │     static Foo() {
+    12 │         return new A()
   
 constructor.ts:17:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -116,19 +120,21 @@ constructor.ts:17:15 parse ━━━━━━━━━━━━━━━━━�
   
   × Expected a type parameter here
   
-     ┌─ constructor.ts:17:15
-     │
-  17 │   constructor<>() {}
-     │               ^
+    16 │ class B {
+  > 17 │   constructor<>() {}
+       │               ^
+    18 │ }
+    19 │ 
   
 constructor.ts:17:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × constructors cannot have type parameters.
   
-     ┌─ constructor.ts:17:14
-     │
-  17 │   constructor<>() {}
-     │              ^^
+    16 │ class B {
+  > 17 │   constructor<>() {}
+       │              ^^
+    18 │ }
+    19 │ 
   
 
 ```

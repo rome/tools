@@ -51,15 +51,19 @@ definite.ts:5:18 parse ━━━━━━━━━━━━━━━━━━━
 
   × Declarations with initializers cannot also have definite assignment assertions.
   
-    ┌─ definite.ts:5:18
-    │
-  5 │ const x!: string = '';
-    │                  ^^^^
+    3 │ }
+    4 │ 
+  > 5 │ const x!: string = '';
+      │                  ^^^^
+    6 │ 
+    7 │ var y!: MyComponent
   
-    ┌─ definite.ts:5:8
-    │
-  5 │ const x!: string = '';
-    │        ^^^^^^^^^
+    3 │ }
+    4 │ 
+  > 5 │ const x!: string = '';
+      │        ^^^^^^^^^
+    6 │ 
+    7 │ var y!: MyComponent
   
 
 ```

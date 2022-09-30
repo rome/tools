@@ -57,10 +57,9 @@ assign_expr_left.js:1:3 parse ━━━━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ assign_expr_left.js:1:3
-    │
-  1 │ ( = foo);
-    │   ^
+  > 1 │ ( = foo);
+      │   ^
+    2 │ 
   
 --
 assign_expr_left.js:1:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -69,17 +68,15 @@ assign_expr_left.js:1:8 parse ━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ assign_expr_left.js:1:8
-    │
-  1 │ ( = foo);
-    │        ^
+  > 1 │ ( = foo);
+      │        ^
+    2 │ 
   
   i ...Which is required to end this statement
   
-    ┌─ assign_expr_left.js:1:1
-    │
-  1 │ ( = foo);
-    │ ^^^^^^^^
+  > 1 │ ( = foo);
+      │ ^^^^^^^^
+    2 │ 
   
 --
 ( = foo);

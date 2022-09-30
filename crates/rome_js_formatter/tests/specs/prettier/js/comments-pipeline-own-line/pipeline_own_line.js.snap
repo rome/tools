@@ -165,10 +165,12 @@ pipeline_own_line.js:4:3 parse ━━━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ pipeline_own_line.js:4:3
-    │
-  4 │     |> x
-    │      ^
+    2 │ 	0
+    3 │ 	// Comment
+  > 4 │ 	|> x
+      │ 	 ^
+    5 │ }
+    6 │ 
   
 pipeline_own_line.js:12:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -176,10 +178,12 @@ pipeline_own_line.js:12:2 parse ━━━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ pipeline_own_line.js:12:2
-     │
-  12 │ |> kochabCooieGameOnOboleUnweave
-     │  ^
+    10 │   averredBathersBoxroomBuggyNurl
+    11 │ ) // comment
+  > 12 │ |> kochabCooieGameOnOboleUnweave
+       │  ^
+    13 │ |> glimseGlyphsHazardNoopsTieTie;
+    14 │ 
   
 pipeline_own_line.js:13:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -187,10 +191,12 @@ pipeline_own_line.js:13:2 parse ━━━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ pipeline_own_line.js:13:2
-     │
-  13 │ |> glimseGlyphsHazardNoopsTieTie;
-     │  ^
+    11 │ ) // comment
+    12 │ |> kochabCooieGameOnOboleUnweave
+  > 13 │ |> glimseGlyphsHazardNoopsTieTie;
+       │  ^
+    14 │ 
+    15 │ bifornCringerMoshedPerplexSawder(
   
 pipeline_own_line.js:19:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -198,10 +204,12 @@ pipeline_own_line.js:19:2 parse ━━━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ pipeline_own_line.js:19:2
-     │
-  19 │ |> foo // comment
-     │  ^
+    17 │   glimseGlyphsHazardNoopsTieTie
+    18 │ )
+  > 19 │ |> foo // comment
+       │  ^
+    20 │ |> kochabCooieGameOnOboleUnweave
+    21 │ |> glimseGlyphsHazardNoopsTieTie;
   
 pipeline_own_line.js:20:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -209,10 +217,12 @@ pipeline_own_line.js:20:2 parse ━━━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ pipeline_own_line.js:20:2
-     │
-  20 │ |> kochabCooieGameOnOboleUnweave
-     │  ^
+    18 │ )
+    19 │ |> foo // comment
+  > 20 │ |> kochabCooieGameOnOboleUnweave
+       │  ^
+    21 │ |> glimseGlyphsHazardNoopsTieTie;
+    22 │ 
   
 pipeline_own_line.js:21:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -220,10 +230,12 @@ pipeline_own_line.js:21:2 parse ━━━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ pipeline_own_line.js:21:2
-     │
-  21 │ |> glimseGlyphsHazardNoopsTieTie;
-     │  ^
+    19 │ |> foo // comment
+    20 │ |> kochabCooieGameOnOboleUnweave
+  > 21 │ |> glimseGlyphsHazardNoopsTieTie;
+       │  ^
+    22 │ 
+    23 │ bifornCringerMoshedPerplexSawder[
   
 pipeline_own_line.js:28:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -231,10 +243,12 @@ pipeline_own_line.js:28:2 parse ━━━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ pipeline_own_line.js:28:2
-     │
-  28 │ |> kochabCooieGameOnOboleUnweave
-     │  ^
+    26 │   averredBathersBoxroomBuggyNurl
+    27 │ ] // comment
+  > 28 │ |> kochabCooieGameOnOboleUnweave
+       │  ^
+    29 │ |> glimseGlyphsHazardNoopsTieTie;
+    30 │ 
   
 pipeline_own_line.js:29:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -242,10 +256,12 @@ pipeline_own_line.js:29:2 parse ━━━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ pipeline_own_line.js:29:2
-     │
-  29 │ |> glimseGlyphsHazardNoopsTieTie;
-     │  ^
+    27 │ ] // comment
+    28 │ |> kochabCooieGameOnOboleUnweave
+  > 29 │ |> glimseGlyphsHazardNoopsTieTie;
+       │  ^
+    30 │ 
+    31 │ bifornCringerMoshedPerplexSawder[
   
 pipeline_own_line.js:36:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -253,10 +269,12 @@ pipeline_own_line.js:36:2 parse ━━━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ pipeline_own_line.js:36:2
-     │
-  36 │ |> foo // comment
-     │  ^
+    34 │   averredBathersBoxroomBuggyNurl
+    35 │ ]
+  > 36 │ |> foo // comment
+       │  ^
+    37 │ |> kochabCooieGameOnOboleUnweave
+    38 │ |> glimseGlyphsHazardNoopsTieTie;
   
 pipeline_own_line.js:37:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -264,10 +282,12 @@ pipeline_own_line.js:37:2 parse ━━━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ pipeline_own_line.js:37:2
-     │
-  37 │ |> kochabCooieGameOnOboleUnweave
-     │  ^
+    35 │ ]
+    36 │ |> foo // comment
+  > 37 │ |> kochabCooieGameOnOboleUnweave
+       │  ^
+    38 │ |> glimseGlyphsHazardNoopsTieTie;
+    39 │ 
   
 pipeline_own_line.js:38:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -275,10 +295,11 @@ pipeline_own_line.js:38:2 parse ━━━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ pipeline_own_line.js:38:2
-     │
-  38 │ |> glimseGlyphsHazardNoopsTieTie;
-     │  ^
+    36 │ |> foo // comment
+    37 │ |> kochabCooieGameOnOboleUnweave
+  > 38 │ |> glimseGlyphsHazardNoopsTieTie;
+       │  ^
+    39 │ 
   
 
 ```

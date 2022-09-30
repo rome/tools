@@ -162,30 +162,32 @@ import_invalid_args.js:1:8 parse ━━━━━━━━━━━━━━━�
 
   × `import()` requires exactly one or two arguments. 
   
-    ┌─ import_invalid_args.js:1:8
-    │
-  1 │ import()
-    │        ^
+  > 1 │ import()
+      │        ^
+    2 │ import(...["foo"])
+    3 │ import("foo", { assert: { type: 'json' } }, "bar")
   
 --
 import_invalid_args.js:2:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `...` is not allowed in `import()`
   
-    ┌─ import_invalid_args.js:2:8
-    │
-  2 │ import(...["foo"])
-    │        ^^^^^^^^^^
+    1 │ import()
+  > 2 │ import(...["foo"])
+      │        ^^^^^^^^^^
+    3 │ import("foo", { assert: { type: 'json' } }, "bar")
+    4 │ 
   
 --
 import_invalid_args.js:3:45 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `import()` requires exactly one or two arguments. 
   
-    ┌─ import_invalid_args.js:3:45
-    │
-  3 │ import("foo", { assert: { type: 'json' } }, "bar")
-    │                                             ^^^^^^
+    1 │ import()
+    2 │ import(...["foo"])
+  > 3 │ import("foo", { assert: { type: 'json' } }, "bar")
+      │                                             ^^^^^^
+    4 │ 
   
 --
 import()

@@ -143,10 +143,10 @@ conditional_expr_err.js:1:11 parse ━━━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ conditional_expr_err.js:1:11
-    │
-  1 │ foo ? bar baz
-    │           ^^^
+  > 1 │ foo ? bar baz
+      │           ^^^
+    2 │ foo ? bar baz ? foo : bar
+    3 │ foo ? bar :
   
 --
 conditional_expr_err.js:2:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -155,10 +155,11 @@ conditional_expr_err.js:2:11 parse ━━━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ conditional_expr_err.js:2:11
-    │
-  2 │ foo ? bar baz ? foo : bar
-    │           ^^^
+    1 │ foo ? bar baz
+  > 2 │ foo ? bar baz ? foo : bar
+      │           ^^^
+    3 │ foo ? bar :
+    4 │ 
   
 --
 conditional_expr_err.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -167,10 +168,10 @@ conditional_expr_err.js:4:1 parse ━━━━━━━━━━━━━━━�
   
   × Expected an expression, or an assignment here
   
-    ┌─ conditional_expr_err.js:4:1
-    │
-  4 │ 
-    │ ^
+    2 │ foo ? bar baz ? foo : bar
+    3 │ foo ? bar :
+  > 4 │ 
+      │ 
   
 --
 foo ? bar baz

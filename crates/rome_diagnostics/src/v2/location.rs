@@ -1,4 +1,4 @@
-use std::ops::Deref;
+use std::{borrow::Borrow, ops::Deref};
 
 use rome_text_edit::{TextRange, TextSize};
 use serde::{Deserialize, Serialize};
@@ -201,8 +201,8 @@ impl From<FileId> for usize {
     }
 }
 
-type OwnedSourceCode = SourceCode<String, Vec<TextSize>>;
-type BorrowedSourceCode<'a> = SourceCode<&'a str, &'a [TextSize]>;
+type OwnedSourceCode = SourceCode<String, LineIndexBuf>;
+pub(crate) type BorrowedSourceCode<'a> = SourceCode<&'a str, &'a LineIndex>;
 
 /// Represents the source code of a file.
 #[derive(Debug, Clone, Copy)]
@@ -229,12 +229,76 @@ impl<T, L> SourceCode<T, L> {
 }
 
 impl BorrowedSourceCode<'_> {
-    /// Converts a `SourceCode<&str, &[TextSize]>` to `SourceCode<String, Vec<TextSize>>`.
+    /// Converts a `SourceCode<&str, &LineIndex>` to `SourceCode<String, LineIndexBuf>`.
     pub(crate) fn to_owned(self) -> OwnedSourceCode {
         SourceCode {
             text: self.text.to_owned(),
             line_starts: self.line_starts.map(ToOwned::to_owned),
         }
+    }
+}
+
+#[derive(Debug)]
+pub struct LineIndex([TextSize]);
+
+impl LineIndex {
+    pub fn new(slice: &'_ [TextSize]) -> &'_ Self {
+        // SAFETY: Transmuting `&[TextSize]` to `&LineIndex` is safe since
+        // `LineIndex` is a `repr(transparent)` struct containing a `[TextSize]`
+        // and thus has the same memory layout
+        unsafe { std::mem::transmute(slice) }
+    }
+}
+
+impl Deref for LineIndex {
+    type Target = [TextSize];
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
+}
+
+impl ToOwned for LineIndex {
+    type Owned = LineIndexBuf;
+
+    fn to_owned(&self) -> Self::Owned {
+        LineIndexBuf(self.0.to_owned())
+    }
+}
+
+#[derive(Debug, Clone)]
+pub struct LineIndexBuf(Vec<TextSize>);
+
+impl LineIndexBuf {
+    pub fn from_source_text(source: &str) -> Self {
+        Self(
+            std::iter::once(0)
+                .chain(source.match_indices(&['\n', '\r']).filter_map(|(i, _)| {
+                    let bytes = source.as_bytes();
+
+                    match bytes[i] {
+                        // Filter out the `\r` in `\r\n` to avoid counting the line break twice
+                        b'\r' if i + 1 < bytes.len() && bytes[i + 1] == b'\n' => None,
+                        _ => Some(i + 1),
+                    }
+                }))
+                .map(|i| TextSize::try_from(i).expect("integer overflow"))
+                .collect(),
+        )
+    }
+}
+
+impl Deref for LineIndexBuf {
+    type Target = LineIndex;
+
+    fn deref(&self) -> &Self::Target {
+        LineIndex::new(self.0.as_slice())
+    }
+}
+
+impl Borrow<LineIndex> for LineIndexBuf {
+    fn borrow(&self) -> &LineIndex {
+        self
     }
 }
 
@@ -400,5 +464,57 @@ impl AsSourceCode for String {
             text: self,
             line_starts: None,
         })
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use rome_text_size::TextSize;
+
+    use super::LineIndexBuf;
+
+    #[test]
+    fn line_starts_with_carriage_return_line_feed() {
+        let input = "a\r\nb\r\nc";
+        let LineIndexBuf(starts) = LineIndexBuf::from_source_text(input);
+
+        assert_eq!(
+            vec![
+                TextSize::from(0u32),
+                TextSize::from(3u32),
+                TextSize::from(6u32)
+            ],
+            starts
+        );
+    }
+
+    #[test]
+    fn line_starts_with_carriage_return() {
+        let input = "a\rb\rc";
+        let LineIndexBuf(starts) = LineIndexBuf::from_source_text(input);
+
+        assert_eq!(
+            vec![
+                TextSize::from(0u32),
+                TextSize::from(2u32),
+                TextSize::from(4u32)
+            ],
+            starts
+        );
+    }
+
+    #[test]
+    fn line_starts_with_line_feed() {
+        let input = "a\nb\nc";
+        let LineIndexBuf(starts) = LineIndexBuf::from_source_text(input);
+
+        assert_eq!(
+            vec![
+                TextSize::from(0u32),
+                TextSize::from(2u32),
+                TextSize::from(4u32)
+            ],
+            starts
+        );
     }
 }

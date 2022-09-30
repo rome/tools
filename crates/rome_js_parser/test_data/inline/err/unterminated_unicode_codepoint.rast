@@ -59,10 +59,9 @@ unterminated_unicode_codepoint.js:1:16 parse ━━━━━━━━━━━�
 
   × expected hex digits for a unicode code point escape, but encountered an invalid character
   
-    ┌─ unterminated_unicode_codepoint.js:1:16
-    │
-  1 │ let s = "\u{200";
-    │                ^
+  > 1 │ let s = "\u{200";
+      │                ^
+    2 │ 
   
 --
 let s = "\u{200";

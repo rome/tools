@@ -28,17 +28,21 @@ SuppressionComments.js:5:5 lint/nursery/noUnreachable ━━━━━━━━�
   
   ! ... before it can reach this code
   
-    ┌─ SuppressionComments.js:5:5
-    │
-  5 │     afterReturn();
-    │     ^^^^^^^^^^^^^^
+    3 │     beforeReturn();
+    4 │     return;
+  > 5 │     afterReturn();
+      │     ^^^^^^^^^^^^^^
+    6 │ }
+    7 │ 
   
   i This statement will return from the function ...
   
-    ┌─ SuppressionComments.js:4:5
-    │
-  4 │     return;
-    │     ^^^^^^^
+    2 │ function SuppressionComments1() {
+    3 │     beforeReturn();
+  > 4 │     return;
+      │     ^^^^^^^
+    5 │     afterReturn();
+    6 │ }
   
 
 ```

@@ -94,10 +94,9 @@ jsx_closing_missing_r_angle.jsx:1:20 parse ━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ jsx_closing_missing_r_angle.jsx:1:20
-    │
-  1 │ <><test>abcd</test more content follows here</>
-    │                    ^^^^
+  > 1 │ <><test>abcd</test more content follows here</>
+      │                    ^^^^
+    2 │ 
   
 --
 <><test>abcd</test more content follows here</>

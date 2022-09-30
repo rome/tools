@@ -42,20 +42,20 @@ return_stmt_err.js:1:1 parse ━━━━━━━━━━━━━━━━━
 
   × Illegal return statement outside of a function
   
-    ┌─ return_stmt_err.js:1:1
-    │
-  1 │ return;
-    │ ^^^^^^^
+  > 1 │ return;
+      │ ^^^^^^^
+    2 │ return foo;
+    3 │ 
   
 --
 return_stmt_err.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal return statement outside of a function
   
-    ┌─ return_stmt_err.js:2:1
-    │
-  2 │ return foo;
-    │ ^^^^^^^^^^^
+    1 │ return;
+  > 2 │ return foo;
+      │ ^^^^^^^^^^^
+    3 │ 
   
 --
 return;

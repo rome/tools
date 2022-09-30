@@ -67,19 +67,19 @@ record-tuple-record.js:1:18 parse ━━━━━━━━━━━━━━━�
   
   × Expected an identifier here
   
-    ┌─ record-tuple-record.js:1:18
-    │
-  1 │ const record1 = #{
-    │                  ^
+  > 1 │ const record1 = #{
+      │                  ^
+    2 │     a: 1,
+    3 │     b: 2,
   
 record-tuple-record.js:1:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Private names are only allowed on the left side of a 'in' expression
   
-    ┌─ record-tuple-record.js:1:17
-    │
-  1 │ const record1 = #{
-    │                 ^
+  > 1 │ const record1 = #{
+      │                 ^
+    2 │     a: 1,
+    3 │     b: 2,
   
 record-tuple-record.js:1:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -87,17 +87,17 @@ record-tuple-record.js:1:18 parse ━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ record-tuple-record.js:1:18
-    │
-  1 │ const record1 = #{
-    │                  ^
+  > 1 │ const record1 = #{
+      │                  ^
+    2 │     a: 1,
+    3 │     b: 2,
   
   i ...Which is required to end this statement
   
-    ┌─ record-tuple-record.js:1:1
-    │
-  1 │ const record1 = #{
-    │ ^^^^^^^^^^^^^^^^^
+  > 1 │ const record1 = #{
+      │ ^^^^^^^^^^^^^^^^^
+    2 │     a: 1,
+    3 │     b: 2,
   
 record-tuple-record.js:3:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -105,19 +105,22 @@ record-tuple-record.js:3:6 parse ━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ record-tuple-record.js:3:6
-    │
-  3 │     b: 2,
-    │      ^
+    1 │ const record1 = #{
+    2 │     a: 1,
+  > 3 │     b: 2,
+      │      ^
+    4 │     c: 3,
+    5 │ };
   
   i ...Which is required to end this statement
   
-    ┌─ record-tuple-record.js:2:8
-    │  
-  2 │       a: 1,
-    │ ┌────────^
-  3 │ │     b: 2,
-    │ └──────^
+    1 │ const record1 = #{
+  > 2 │     a: 1,
+      │        ^^
+  > 3 │     b: 2,
+      │     ^^
+    4 │     c: 3,
+    5 │ };
   
 record-tuple-record.js:7:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -125,19 +128,21 @@ record-tuple-record.js:7:18 parse ━━━━━━━━━━━━━━━�
   
   × Expected an identifier here
   
-    ┌─ record-tuple-record.js:7:18
-    │
-  7 │ const record2 = #{...record1, b: 5};
-    │                  ^
+    5 │ };
+    6 │ 
+  > 7 │ const record2 = #{...record1, b: 5};
+      │                  ^
+    8 │ 
   
 record-tuple-record.js:7:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Private names are only allowed on the left side of a 'in' expression
   
-    ┌─ record-tuple-record.js:7:17
-    │
-  7 │ const record2 = #{...record1, b: 5};
-    │                 ^
+    5 │ };
+    6 │ 
+  > 7 │ const record2 = #{...record1, b: 5};
+      │                 ^
+    8 │ 
   
 record-tuple-record.js:7:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -145,17 +150,19 @@ record-tuple-record.js:7:18 parse ━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ record-tuple-record.js:7:18
-    │
-  7 │ const record2 = #{...record1, b: 5};
-    │                  ^
+    5 │ };
+    6 │ 
+  > 7 │ const record2 = #{...record1, b: 5};
+      │                  ^
+    8 │ 
   
   i ...Which is required to end this statement
   
-    ┌─ record-tuple-record.js:7:1
-    │
-  7 │ const record2 = #{...record1, b: 5};
-    │ ^^^^^^^^^^^^^^^^^
+    5 │ };
+    6 │ 
+  > 7 │ const record2 = #{...record1, b: 5};
+      │ ^^^^^^^^^^^^^^^^^
+    8 │ 
   
 record-tuple-record.js:7:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -163,10 +170,11 @@ record-tuple-record.js:7:19 parse ━━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ record-tuple-record.js:7:19
-    │
-  7 │ const record2 = #{...record1, b: 5};
-    │                   ^^^^^^^^^^^^^^^^
+    5 │ };
+    6 │ 
+  > 7 │ const record2 = #{...record1, b: 5};
+      │                   ^^^^^^^^^^^^^^^^
+    8 │ 
   
 
 ```

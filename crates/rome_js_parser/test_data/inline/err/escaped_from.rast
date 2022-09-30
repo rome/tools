@@ -43,10 +43,9 @@ escaped_from.js:1:11 parse ━━━━━━━━━━━━━━━━━�
 
   × 'from' keyword cannot contain escape character.
   
-    ┌─ escaped_from.js:1:11
-    │
-  1 │ export {} \u0066rom "./escaped-from.js";
-    │           ^^^^^^^^^
+  > 1 │ export {} \u0066rom "./escaped-from.js";
+      │           ^^^^^^^^^
+    2 │ 
   
 --
 export {} \u0066rom "./escaped-from.js";

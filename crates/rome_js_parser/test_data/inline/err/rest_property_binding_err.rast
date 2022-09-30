@@ -403,10 +403,10 @@ rest_property_binding_err.js:1:11 parse ━━━━━━━━━━━━━�
   
   × Expected an identifier here
   
-    ┌─ rest_property_binding_err.js:1:11
-    │
-  1 │ let { ... } = a;
-    │           ^
+  > 1 │ let { ... } = a;
+      │           ^
+    2 │ let { ...c = "default" } = a;
+    3 │ let { ...{a} } = b;
   
 --
 rest_property_binding_err.js:2:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -415,17 +415,19 @@ rest_property_binding_err.js:2:12 parse ━━━━━━━━━━━━━�
   
   × Remove the default value here
   
-    ┌─ rest_property_binding_err.js:2:12
-    │
-  2 │ let { ...c = "default" } = a;
-    │            ^^^^^^^^^^^^
+    1 │ let { ... } = a;
+  > 2 │ let { ...c = "default" } = a;
+      │            ^^^^^^^^^^^^
+    3 │ let { ...{a} } = b;
+    4 │ let { ...rest, other_assignment } = a;
   
   i Rest element
   
-    ┌─ rest_property_binding_err.js:2:7
-    │
-  2 │ let { ...c = "default" } = a;
-    │       ^^^^
+    1 │ let { ... } = a;
+  > 2 │ let { ...c = "default" } = a;
+      │       ^^^^
+    3 │ let { ...{a} } = b;
+    4 │ let { ...rest, other_assignment } = a;
   
 --
 rest_property_binding_err.js:3:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -434,10 +436,12 @@ rest_property_binding_err.js:3:10 parse ━━━━━━━━━━━━━�
   
   × Object rest patterns must bind to an identifier, other patterns are not allowed.
   
-    ┌─ rest_property_binding_err.js:3:10
-    │
-  3 │ let { ...{a} } = b;
-    │          ^^^
+    1 │ let { ... } = a;
+    2 │ let { ...c = "default" } = a;
+  > 3 │ let { ...{a} } = b;
+      │          ^^^
+    4 │ let { ...rest, other_assignment } = a;
+    5 │ let { ...rest2, } = a;
   
 --
 rest_property_binding_err.js:4:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -446,10 +450,12 @@ rest_property_binding_err.js:4:7 parse ━━━━━━━━━━━━━�
   
   × Move the rest element to the end of the pattern, right before the closing '}'
   
-    ┌─ rest_property_binding_err.js:4:7
-    │
-  4 │ let { ...rest, other_assignment } = a;
-    │       ^^^^^^^
+    2 │ let { ...c = "default" } = a;
+    3 │ let { ...{a} } = b;
+  > 4 │ let { ...rest, other_assignment } = a;
+      │       ^^^^^^^
+    5 │ let { ...rest2, } = a;
+    6 │ async function test() {
   
 --
 rest_property_binding_err.js:5:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -458,27 +464,33 @@ rest_property_binding_err.js:5:15 parse ━━━━━━━━━━━━━�
   
   × Remove the trailing comma here
   
-    ┌─ rest_property_binding_err.js:5:15
-    │
-  5 │ let { ...rest2, } = a;
-    │               ^
+    3 │ let { ...{a} } = b;
+    4 │ let { ...rest, other_assignment } = a;
+  > 5 │ let { ...rest2, } = a;
+      │               ^
+    6 │ async function test() {
+    7 │   let { ...await } = a;
   
   i Rest element
   
-    ┌─ rest_property_binding_err.js:5:7
-    │
-  5 │ let { ...rest2, } = a;
-    │       ^^^^^^^^
+    3 │ let { ...{a} } = b;
+    4 │ let { ...rest, other_assignment } = a;
+  > 5 │ let { ...rest2, } = a;
+      │       ^^^^^^^^
+    6 │ async function test() {
+    7 │   let { ...await } = a;
   
 --
 rest_property_binding_err.js:7:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `await` as an identifier in an async context
   
-    ┌─ rest_property_binding_err.js:7:12
-    │
-  7 │   let { ...await } = a;
-    │            ^^^^^
+    5 │ let { ...rest2, } = a;
+    6 │ async function test() {
+  > 7 │   let { ...await } = a;
+      │            ^^^^^
+    8 │ }
+    9 │ 
   
 --
 let { ... } = a;

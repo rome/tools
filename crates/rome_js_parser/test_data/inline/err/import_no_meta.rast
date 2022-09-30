@@ -58,20 +58,20 @@ import_no_meta.js:1:8 parse ━━━━━━━━━━━━━━━━━�
 
   × Expected `meta` following an import keyword, but found `foo`
   
-    ┌─ import_no_meta.js:1:8
-    │
-  1 │ import.foo
-    │        ^^^
+  > 1 │ import.foo
+      │        ^^^
+    2 │ import.metaa
+    3 │ 
   
 --
 import_no_meta.js:2:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected `meta` following an import keyword, but found `metaa`
   
-    ┌─ import_no_meta.js:2:8
-    │
-  2 │ import.metaa
-    │        ^^^^^
+    1 │ import.foo
+  > 2 │ import.metaa
+      │        ^^^^^
+    3 │ 
   
 --
 import.foo

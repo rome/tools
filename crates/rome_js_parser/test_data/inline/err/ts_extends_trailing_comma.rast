@@ -76,10 +76,10 @@ ts_extends_trailing_comma.ts:2:22 parse ━━━━━━━━━━━━━�
 
   × Trailing comma not allowed.
   
-    ┌─ ts_extends_trailing_comma.ts:2:22
-    │
-  2 │ interface B extends A, {}
-    │                      ^
+    1 │ interface A {}
+  > 2 │ interface B extends A, {}
+      │                      ^
+    3 │ 
   
 --
 interface A {}

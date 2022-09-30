@@ -59,10 +59,9 @@ class_declare_member.js:1:11 parse ━━━━━━━━━━━━━━━
 
   × 'declare' modifier can only be used in TypeScript files
   
-    ┌─ class_declare_member.js:1:11
-    │
-  1 │ class B { declare foo }
-    │           ^^^^^^^
+  > 1 │ class B { declare foo }
+      │           ^^^^^^^
+    2 │ 
   
 --
 class B { declare foo }

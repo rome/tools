@@ -44,10 +44,9 @@ default-escaped.js:2:8 parse ━━━━━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ default-escaped.js:2:8
-    │
-  2 │ export n\u{63} from "async";
-    │        ^^^^^^^
+    1 │ // export asyn\u{63} from "async";
+  > 2 │ export n\u{63} from "async";
+      │        ^^^^^^^
   
 default-escaped.js:2:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -55,17 +54,15 @@ default-escaped.js:2:16 parse ━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ default-escaped.js:2:16
-    │
-  2 │ export n\u{63} from "async";
-    │                ^^^^
+    1 │ // export asyn\u{63} from "async";
+  > 2 │ export n\u{63} from "async";
+      │                ^^^^
   
   i ...Which is required to end this statement
   
-    ┌─ default-escaped.js:2:8
-    │
-  2 │ export n\u{63} from "async";
-    │        ^^^^^^^^^^^^
+    1 │ // export asyn\u{63} from "async";
+  > 2 │ export n\u{63} from "async";
+      │        ^^^^^^^^^^^^
   
 default-escaped.js:2:21 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -73,17 +70,15 @@ default-escaped.js:2:21 parse ━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ default-escaped.js:2:21
-    │
-  2 │ export n\u{63} from "async";
-    │                     ^^^^^^^
+    1 │ // export asyn\u{63} from "async";
+  > 2 │ export n\u{63} from "async";
+      │                     ^^^^^^^
   
   i ...Which is required to end this statement
   
-    ┌─ default-escaped.js:2:16
-    │
-  2 │ export n\u{63} from "async";
-    │                ^^^^^^^^^^^^
+    1 │ // export asyn\u{63} from "async";
+  > 2 │ export n\u{63} from "async";
+      │                ^^^^^^^^^^^^
   
 
 ```

@@ -36,10 +36,9 @@ function-declaration-in-if.js:1:12 parse ━━━━━━━━━━━━━
   
   × wrap the function in a block statement
   
-    ┌─ function-declaration-in-if.js:1:12
-    │
-  1 │ if (false) function foo(){}
-    │            ^^^^^^^^^^^^^^^^
+  > 1 │ if (false) function foo(){}
+      │            ^^^^^^^^^^^^^^^^
+    2 │ 
   
 
 ```

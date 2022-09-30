@@ -81,10 +81,11 @@ ts_abstract_property_cannot_have_initiliazers.ts:2:27 parse ━━━━━━�
 
   × Property cannot have an initializer because it is marked abstract.
   
-    ┌─ ts_abstract_property_cannot_have_initiliazers.ts:2:27
-    │
-  2 │     abstract name: string = "";
-    │                           ^^^^
+    1 │ abstract class A {
+  > 2 │     abstract name: string = "";
+      │                           ^^^^
+    3 │ }
+    4 │ 
   
 --
 abstract class A {

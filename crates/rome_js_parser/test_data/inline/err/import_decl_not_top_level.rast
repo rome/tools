@@ -56,10 +56,11 @@ import_decl_not_top_level.js:2:2 parse ━━━━━━━━━━━━━�
   
   × move this declaration to the top level
   
-    ┌─ import_decl_not_top_level.js:2:2
-    │
-  2 │  import foo from "bar";
-    │  ^^^^^^^^^^^^^^^^^^^^^^
+    1 │ {
+  > 2 │  import foo from "bar";
+      │  ^^^^^^^^^^^^^^^^^^^^^^
+    3 │ }
+    4 │ 
   
 --
 {

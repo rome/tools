@@ -19,10 +19,11 @@ fromImportInvalid.jsx:4:5 lint/nursery/noUselessFragments  FIXABLE  ━━━━
 
   ! Avoid using unnecessary Fragment.
   
-    ┌─ fromImportInvalid.jsx:4:5
-    │
-  4 │     <Fragment></Fragment>
-    │     ^^^^^^^^^^^^^^^^^^^^^
+    3 │ <>
+  > 4 │     <Fragment></Fragment>
+      │     ^^^^^^^^^^^^^^^^^^^^^
+    5 │     <React.Fragment></React.Fragment>
+    6 │ </>
   
   i Suggested fix: Remove the Fragment
   
@@ -43,10 +44,12 @@ fromImportInvalid.jsx:5:5 lint/nursery/noUselessFragments  FIXABLE  ━━━━
 
   ! Avoid using unnecessary Fragment.
   
-    ┌─ fromImportInvalid.jsx:5:5
-    │
-  5 │     <React.Fragment></React.Fragment>
-    │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ <>
+    4 │     <Fragment></Fragment>
+  > 5 │     <React.Fragment></React.Fragment>
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    6 │ </>
+    7 │ 
   
   i Suggested fix: Remove the Fragment
   

@@ -55,10 +55,12 @@ throw-expressions.js:3:23 parse ━━━━━━━━━━━━━━━━
   
   × Expected an expression, or an assignment here
   
-    ┌─ throw-expressions.js:3:23
-    │
-  3 │ function test(param = throw new Error('required!')) {
-    │                       ^^^^^
+    1 │ // https://babeljs.io/docs/en/babel-plugin-proposal-throw-expressions
+    2 │ 
+  > 3 │ function test(param = throw new Error('required!')) {
+      │                       ^^^^^
+    4 │   const test = param === true || throw new Error('Falsy!');
+    5 │ }
   
 throw-expressions.js:3:33 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -66,10 +68,12 @@ throw-expressions.js:3:33 parse ━━━━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ throw-expressions.js:3:33
-    │
-  3 │ function test(param = throw new Error('required!')) {
-    │                                 ^^^^^
+    1 │ // https://babeljs.io/docs/en/babel-plugin-proposal-throw-expressions
+    2 │ 
+  > 3 │ function test(param = throw new Error('required!')) {
+      │                                 ^^^^^
+    4 │   const test = param === true || throw new Error('Falsy!');
+    5 │ }
   
 throw-expressions.js:3:38 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -77,10 +81,12 @@ throw-expressions.js:3:38 parse ━━━━━━━━━━━━━━━━
   
   × unexpected
   
-    ┌─ throw-expressions.js:3:38
-    │
-  3 │ function test(param = throw new Error('required!')) {
-    │                                      ^
+    1 │ // https://babeljs.io/docs/en/babel-plugin-proposal-throw-expressions
+    2 │ 
+  > 3 │ function test(param = throw new Error('required!')) {
+      │                                      ^
+    4 │   const test = param === true || throw new Error('Falsy!');
+    5 │ }
   
 throw-expressions.js:3:51 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -88,10 +94,12 @@ throw-expressions.js:3:51 parse ━━━━━━━━━━━━━━━━
   
   × Expected a function body here
   
-    ┌─ throw-expressions.js:3:51
-    │
-  3 │ function test(param = throw new Error('required!')) {
-    │                                                   ^
+    1 │ // https://babeljs.io/docs/en/babel-plugin-proposal-throw-expressions
+    2 │ 
+  > 3 │ function test(param = throw new Error('required!')) {
+      │                                                   ^
+    4 │   const test = param === true || throw new Error('Falsy!');
+    5 │ }
   
 throw-expressions.js:4:34 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -99,10 +107,11 @@ throw-expressions.js:4:34 parse ━━━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-    ┌─ throw-expressions.js:4:34
-    │
-  4 │   const test = param === true || throw new Error('Falsy!');
-    │                                  ^^^^^
+    3 │ function test(param = throw new Error('required!')) {
+  > 4 │   const test = param === true || throw new Error('Falsy!');
+      │                                  ^^^^^
+    5 │ }
+    6 │ 
   
 
 ```

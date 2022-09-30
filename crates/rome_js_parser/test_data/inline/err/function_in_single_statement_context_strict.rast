@@ -151,10 +151,10 @@ function_in_single_statement_context_strict.js:1:11 parse ━━━━━━━�
   
   × wrap the function in a block statement
   
-    ┌─ function_in_single_statement_context_strict.js:1:11
-    │
-  1 │ if (true) function a() {}
-    │           ^^^^^^^^^^^^^^^
+  > 1 │ if (true) function a() {}
+      │           ^^^^^^^^^^^^^^^
+    2 │ label1: function b() {}
+    3 │ while (true) function c() {}
   
 --
 function_in_single_statement_context_strict.js:2:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -163,10 +163,11 @@ function_in_single_statement_context_strict.js:2:9 parse ━━━━━━━�
   
   × wrap the function in a block statement
   
-    ┌─ function_in_single_statement_context_strict.js:2:9
-    │
-  2 │ label1: function b() {}
-    │         ^^^^^^^^^^^^^^^
+    1 │ if (true) function a() {}
+  > 2 │ label1: function b() {}
+      │         ^^^^^^^^^^^^^^^
+    3 │ while (true) function c() {}
+    4 │ 
   
 --
 function_in_single_statement_context_strict.js:3:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -175,10 +176,11 @@ function_in_single_statement_context_strict.js:3:14 parse ━━━━━━━�
   
   × wrap the function in a block statement
   
-    ┌─ function_in_single_statement_context_strict.js:3:14
-    │
-  3 │ while (true) function c() {}
-    │              ^^^^^^^^^^^^^^^
+    1 │ if (true) function a() {}
+    2 │ label1: function b() {}
+  > 3 │ while (true) function c() {}
+      │              ^^^^^^^^^^^^^^^
+    4 │ 
   
 --
 if (true) function a() {}

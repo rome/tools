@@ -226,10 +226,10 @@ hack_pipeline_operator.js:1:4 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ hack_pipeline_operator.js:1:4
-    │
-  1 │ a |> await % |> % * 3;
-    │    ^
+  > 1 │ a |> await % |> % * 3;
+      │    ^
+    2 │ 
+    3 │ foo
   
 hack_pipeline_operator.js:1:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -237,10 +237,10 @@ hack_pipeline_operator.js:1:12 parse ━━━━━━━━━━━━━━�
   
   × Expected an unary expression here
   
-    ┌─ hack_pipeline_operator.js:1:12
-    │
-  1 │ a |> await % |> % * 3;
-    │            ^
+  > 1 │ a |> await % |> % * 3;
+      │            ^
+    2 │ 
+    3 │ foo
   
 hack_pipeline_operator.js:1:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -248,10 +248,10 @@ hack_pipeline_operator.js:1:14 parse ━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ hack_pipeline_operator.js:1:14
-    │
-  1 │ a |> await % |> % * 3;
-    │              ^
+  > 1 │ a |> await % |> % * 3;
+      │              ^
+    2 │ 
+    3 │ foo
   
 hack_pipeline_operator.js:1:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -259,10 +259,10 @@ hack_pipeline_operator.js:1:15 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ hack_pipeline_operator.js:1:15
-    │
-  1 │ a |> await % |> % * 3;
-    │               ^
+  > 1 │ a |> await % |> % * 3;
+      │               ^
+    2 │ 
+    3 │ foo
   
 hack_pipeline_operator.js:1:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -270,10 +270,10 @@ hack_pipeline_operator.js:1:17 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ hack_pipeline_operator.js:1:17
-    │
-  1 │ a |> await % |> % * 3;
-    │                 ^
+  > 1 │ a |> await % |> % * 3;
+      │                 ^
+    2 │ 
+    3 │ foo
   
 hack_pipeline_operator.js:1:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -281,10 +281,10 @@ hack_pipeline_operator.js:1:19 parse ━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ hack_pipeline_operator.js:1:19
-    │
-  1 │ a |> await % |> % * 3;
-    │                   ^
+  > 1 │ a |> await % |> % * 3;
+      │                   ^
+    2 │ 
+    3 │ foo
   
 hack_pipeline_operator.js:4:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -292,10 +292,11 @@ hack_pipeline_operator.js:4:4 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ hack_pipeline_operator.js:4:4
-    │
-  4 │   |> await %
-    │    ^
+    3 │ foo
+  > 4 │   |> await %
+      │    ^
+    5 │   |> % || throw new Error(`foo ${bar1}`)
+    6 │   |> bar2(%, ", ")
   
 hack_pipeline_operator.js:4:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -303,10 +304,11 @@ hack_pipeline_operator.js:4:12 parse ━━━━━━━━━━━━━━�
   
   × Expected an unary expression here
   
-    ┌─ hack_pipeline_operator.js:4:12
-    │
-  4 │   |> await %
-    │            ^
+    3 │ foo
+  > 4 │   |> await %
+      │            ^
+    5 │   |> % || throw new Error(`foo ${bar1}`)
+    6 │   |> bar2(%, ", ")
   
 hack_pipeline_operator.js:5:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -314,10 +316,12 @@ hack_pipeline_operator.js:5:3 parse ━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ hack_pipeline_operator.js:5:3
-    │
-  5 │   |> % || throw new Error(`foo ${bar1}`)
-    │   ^
+    3 │ foo
+    4 │   |> await %
+  > 5 │   |> % || throw new Error(`foo ${bar1}`)
+      │   ^
+    6 │   |> bar2(%, ", ")
+    7 │   |> bar3(%)
   
 hack_pipeline_operator.js:5:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -325,10 +329,12 @@ hack_pipeline_operator.js:5:4 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ hack_pipeline_operator.js:5:4
-    │
-  5 │   |> % || throw new Error(`foo ${bar1}`)
-    │    ^
+    3 │ foo
+    4 │   |> await %
+  > 5 │   |> % || throw new Error(`foo ${bar1}`)
+      │    ^
+    6 │   |> bar2(%, ", ")
+    7 │   |> bar3(%)
   
 hack_pipeline_operator.js:5:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -336,10 +342,12 @@ hack_pipeline_operator.js:5:6 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ hack_pipeline_operator.js:5:6
-    │
-  5 │   |> % || throw new Error(`foo ${bar1}`)
-    │      ^
+    3 │ foo
+    4 │   |> await %
+  > 5 │   |> % || throw new Error(`foo ${bar1}`)
+      │      ^
+    6 │   |> bar2(%, ", ")
+    7 │   |> bar3(%)
   
 hack_pipeline_operator.js:5:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -347,10 +355,12 @@ hack_pipeline_operator.js:5:8 parse ━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ hack_pipeline_operator.js:5:8
-    │
-  5 │   |> % || throw new Error(`foo ${bar1}`)
-    │        ^^
+    3 │ foo
+    4 │   |> await %
+  > 5 │   |> % || throw new Error(`foo ${bar1}`)
+      │        ^^
+    6 │   |> bar2(%, ", ")
+    7 │   |> bar3(%)
   
 hack_pipeline_operator.js:5:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -358,10 +368,12 @@ hack_pipeline_operator.js:5:11 parse ━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ hack_pipeline_operator.js:5:11
-    │
-  5 │   |> % || throw new Error(`foo ${bar1}`)
-    │           ^^^^^
+    3 │ foo
+    4 │   |> await %
+  > 5 │   |> % || throw new Error(`foo ${bar1}`)
+      │           ^^^^^
+    6 │   |> bar2(%, ", ")
+    7 │   |> bar3(%)
   
 hack_pipeline_operator.js:6:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -369,10 +381,12 @@ hack_pipeline_operator.js:6:4 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ hack_pipeline_operator.js:6:4
-    │
-  6 │   |> bar2(%, ", ")
-    │    ^
+    4 │   |> await %
+    5 │   |> % || throw new Error(`foo ${bar1}`)
+  > 6 │   |> bar2(%, ", ")
+      │    ^
+    7 │   |> bar3(%)
+    8 │   |> % + "!"
   
 hack_pipeline_operator.js:6:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -380,10 +394,12 @@ hack_pipeline_operator.js:6:11 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ hack_pipeline_operator.js:6:11
-    │
-  6 │   |> bar2(%, ", ")
-    │           ^
+    4 │   |> await %
+    5 │   |> % || throw new Error(`foo ${bar1}`)
+  > 6 │   |> bar2(%, ", ")
+      │           ^
+    7 │   |> bar3(%)
+    8 │   |> % + "!"
   
 hack_pipeline_operator.js:6:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -391,10 +407,12 @@ hack_pipeline_operator.js:6:12 parse ━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ hack_pipeline_operator.js:6:12
-    │
-  6 │   |> bar2(%, ", ")
-    │            ^
+    4 │   |> await %
+    5 │   |> % || throw new Error(`foo ${bar1}`)
+  > 6 │   |> bar2(%, ", ")
+      │            ^
+    7 │   |> bar3(%)
+    8 │   |> % + "!"
   
 hack_pipeline_operator.js:7:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -402,10 +420,12 @@ hack_pipeline_operator.js:7:4 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ hack_pipeline_operator.js:7:4
-    │
-  7 │   |> bar3(%)
-    │    ^
+    5 │   |> % || throw new Error(`foo ${bar1}`)
+    6 │   |> bar2(%, ", ")
+  > 7 │   |> bar3(%)
+      │    ^
+    8 │   |> % + "!"
+    9 │   |> new Bar.Foo(%)
   
 hack_pipeline_operator.js:7:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -413,10 +433,12 @@ hack_pipeline_operator.js:7:11 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ hack_pipeline_operator.js:7:11
-    │
-  7 │   |> bar3(%)
-    │           ^
+    5 │   |> % || throw new Error(`foo ${bar1}`)
+    6 │   |> bar2(%, ", ")
+  > 7 │   |> bar3(%)
+      │           ^
+    8 │   |> % + "!"
+    9 │   |> new Bar.Foo(%)
   
 hack_pipeline_operator.js:7:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -424,10 +446,12 @@ hack_pipeline_operator.js:7:12 parse ━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ hack_pipeline_operator.js:7:12
-    │
-  7 │   |> bar3(%)
-    │            ^
+    5 │   |> % || throw new Error(`foo ${bar1}`)
+    6 │   |> bar2(%, ", ")
+  > 7 │   |> bar3(%)
+      │            ^
+    8 │   |> % + "!"
+    9 │   |> new Bar.Foo(%)
   
 hack_pipeline_operator.js:8:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -435,10 +459,12 @@ hack_pipeline_operator.js:8:4 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ hack_pipeline_operator.js:8:4
-    │
-  8 │   |> % + "!"
-    │    ^
+     6 │   |> bar2(%, ", ")
+     7 │   |> bar3(%)
+   > 8 │   |> % + "!"
+       │    ^
+     9 │   |> new Bar.Foo(%)
+    10 │   |> await bar.bar(%)
   
 hack_pipeline_operator.js:8:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -446,10 +472,12 @@ hack_pipeline_operator.js:8:6 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ hack_pipeline_operator.js:8:6
-    │
-  8 │   |> % + "!"
-    │      ^
+     6 │   |> bar2(%, ", ")
+     7 │   |> bar3(%)
+   > 8 │   |> % + "!"
+       │      ^
+     9 │   |> new Bar.Foo(%)
+    10 │   |> await bar.bar(%)
   
 hack_pipeline_operator.js:9:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -457,10 +485,12 @@ hack_pipeline_operator.js:9:4 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ hack_pipeline_operator.js:9:4
-    │
-  9 │   |> new Bar.Foo(%)
-    │    ^
+     7 │   |> bar3(%)
+     8 │   |> % + "!"
+   > 9 │   |> new Bar.Foo(%)
+       │    ^
+    10 │   |> await bar.bar(%)
+    11 │   |> console.log(%);
   
 hack_pipeline_operator.js:9:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -468,10 +498,12 @@ hack_pipeline_operator.js:9:18 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ hack_pipeline_operator.js:9:18
-    │
-  9 │   |> new Bar.Foo(%)
-    │                  ^
+     7 │   |> bar3(%)
+     8 │   |> % + "!"
+   > 9 │   |> new Bar.Foo(%)
+       │                  ^
+    10 │   |> await bar.bar(%)
+    11 │   |> console.log(%);
   
 hack_pipeline_operator.js:9:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -479,10 +511,12 @@ hack_pipeline_operator.js:9:19 parse ━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ hack_pipeline_operator.js:9:19
-    │
-  9 │   |> new Bar.Foo(%)
-    │                   ^
+     7 │   |> bar3(%)
+     8 │   |> % + "!"
+   > 9 │   |> new Bar.Foo(%)
+       │                   ^
+    10 │   |> await bar.bar(%)
+    11 │   |> console.log(%);
   
 hack_pipeline_operator.js:10:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -490,10 +524,12 @@ hack_pipeline_operator.js:10:4 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:10:4
-     │
-  10 │   |> await bar.bar(%)
-     │    ^
+     8 │   |> % + "!"
+     9 │   |> new Bar.Foo(%)
+  > 10 │   |> await bar.bar(%)
+       │    ^
+    11 │   |> console.log(%);
+    12 │ 
   
 hack_pipeline_operator.js:10:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -501,10 +537,12 @@ hack_pipeline_operator.js:10:20 parse ━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:10:20
-     │
-  10 │   |> await bar.bar(%)
-     │                    ^
+     8 │   |> % + "!"
+     9 │   |> new Bar.Foo(%)
+  > 10 │   |> await bar.bar(%)
+       │                    ^
+    11 │   |> console.log(%);
+    12 │ 
   
 hack_pipeline_operator.js:10:21 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -512,10 +550,12 @@ hack_pipeline_operator.js:10:21 parse ━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-     ┌─ hack_pipeline_operator.js:10:21
-     │
-  10 │   |> await bar.bar(%)
-     │                     ^
+     8 │   |> % + "!"
+     9 │   |> new Bar.Foo(%)
+  > 10 │   |> await bar.bar(%)
+       │                     ^
+    11 │   |> console.log(%);
+    12 │ 
   
 hack_pipeline_operator.js:11:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -523,10 +563,12 @@ hack_pipeline_operator.js:11:4 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:11:4
-     │
-  11 │   |> console.log(%);
-     │    ^
+     9 │   |> new Bar.Foo(%)
+    10 │   |> await bar.bar(%)
+  > 11 │   |> console.log(%);
+       │    ^
+    12 │ 
+    13 │ const result = "hello"
   
 hack_pipeline_operator.js:11:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -534,10 +576,12 @@ hack_pipeline_operator.js:11:18 parse ━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:11:18
-     │
-  11 │   |> console.log(%);
-     │                  ^
+     9 │   |> new Bar.Foo(%)
+    10 │   |> await bar.bar(%)
+  > 11 │   |> console.log(%);
+       │                  ^
+    12 │ 
+    13 │ const result = "hello"
   
 hack_pipeline_operator.js:11:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -545,10 +589,12 @@ hack_pipeline_operator.js:11:19 parse ━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-     ┌─ hack_pipeline_operator.js:11:19
-     │
-  11 │   |> console.log(%);
-     │                   ^
+     9 │   |> new Bar.Foo(%)
+    10 │   |> await bar.bar(%)
+  > 11 │   |> console.log(%);
+       │                   ^
+    12 │ 
+    13 │ const result = "hello"
   
 hack_pipeline_operator.js:14:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -556,10 +602,11 @@ hack_pipeline_operator.js:14:4 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:14:4
-     │
-  14 │   |> doubleSay(%)
-     │    ^
+    13 │ const result = "hello"
+  > 14 │   |> doubleSay(%)
+       │    ^
+    15 │   |> capitalize(%, "foo")
+    16 │   |> exclaim(%);
   
 hack_pipeline_operator.js:14:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -567,10 +614,11 @@ hack_pipeline_operator.js:14:16 parse ━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:14:16
-     │
-  14 │   |> doubleSay(%)
-     │                ^
+    13 │ const result = "hello"
+  > 14 │   |> doubleSay(%)
+       │                ^
+    15 │   |> capitalize(%, "foo")
+    16 │   |> exclaim(%);
   
 hack_pipeline_operator.js:14:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -578,10 +626,11 @@ hack_pipeline_operator.js:14:17 parse ━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-     ┌─ hack_pipeline_operator.js:14:17
-     │
-  14 │   |> doubleSay(%)
-     │                 ^
+    13 │ const result = "hello"
+  > 14 │   |> doubleSay(%)
+       │                 ^
+    15 │   |> capitalize(%, "foo")
+    16 │   |> exclaim(%);
   
 hack_pipeline_operator.js:15:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -589,10 +638,12 @@ hack_pipeline_operator.js:15:4 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:15:4
-     │
-  15 │   |> capitalize(%, "foo")
-     │    ^
+    13 │ const result = "hello"
+    14 │   |> doubleSay(%)
+  > 15 │   |> capitalize(%, "foo")
+       │    ^
+    16 │   |> exclaim(%);
+    17 │ 
   
 hack_pipeline_operator.js:15:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -600,10 +651,12 @@ hack_pipeline_operator.js:15:17 parse ━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:15:17
-     │
-  15 │   |> capitalize(%, "foo")
-     │                 ^
+    13 │ const result = "hello"
+    14 │   |> doubleSay(%)
+  > 15 │   |> capitalize(%, "foo")
+       │                 ^
+    16 │   |> exclaim(%);
+    17 │ 
   
 hack_pipeline_operator.js:15:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -611,10 +664,12 @@ hack_pipeline_operator.js:15:18 parse ━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-     ┌─ hack_pipeline_operator.js:15:18
-     │
-  15 │   |> capitalize(%, "foo")
-     │                  ^
+    13 │ const result = "hello"
+    14 │   |> doubleSay(%)
+  > 15 │   |> capitalize(%, "foo")
+       │                  ^
+    16 │   |> exclaim(%);
+    17 │ 
   
 hack_pipeline_operator.js:16:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -622,10 +677,12 @@ hack_pipeline_operator.js:16:4 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:16:4
-     │
-  16 │   |> exclaim(%);
-     │    ^
+    14 │   |> doubleSay(%)
+    15 │   |> capitalize(%, "foo")
+  > 16 │   |> exclaim(%);
+       │    ^
+    17 │ 
+    18 │ function createPerson (attrs) {
   
 hack_pipeline_operator.js:16:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -633,10 +690,12 @@ hack_pipeline_operator.js:16:14 parse ━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:16:14
-     │
-  16 │   |> exclaim(%);
-     │              ^
+    14 │   |> doubleSay(%)
+    15 │   |> capitalize(%, "foo")
+  > 16 │   |> exclaim(%);
+       │              ^
+    17 │ 
+    18 │ function createPerson (attrs) {
   
 hack_pipeline_operator.js:16:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -644,10 +703,12 @@ hack_pipeline_operator.js:16:15 parse ━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-     ┌─ hack_pipeline_operator.js:16:15
-     │
-  16 │   |> exclaim(%);
-     │               ^
+    14 │   |> doubleSay(%)
+    15 │   |> capitalize(%, "foo")
+  > 16 │   |> exclaim(%);
+       │               ^
+    17 │ 
+    18 │ function createPerson (attrs) {
   
 hack_pipeline_operator.js:20:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -655,10 +716,12 @@ hack_pipeline_operator.js:20:6 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:20:6
-     │
-  20 │     |> foo(%)
-     │      ^
+    18 │ function createPerson (attrs) {
+    19 │   attrs
+  > 20 │     |> foo(%)
+       │      ^
+    21 │     |> foo(%)
+    22 │     |> Person.insertIntoDatabase(%);
   
 hack_pipeline_operator.js:20:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -666,10 +729,12 @@ hack_pipeline_operator.js:20:12 parse ━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:20:12
-     │
-  20 │     |> foo(%)
-     │            ^
+    18 │ function createPerson (attrs) {
+    19 │   attrs
+  > 20 │     |> foo(%)
+       │            ^
+    21 │     |> foo(%)
+    22 │     |> Person.insertIntoDatabase(%);
   
 hack_pipeline_operator.js:20:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -677,10 +742,12 @@ hack_pipeline_operator.js:20:13 parse ━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-     ┌─ hack_pipeline_operator.js:20:13
-     │
-  20 │     |> foo(%)
-     │             ^
+    18 │ function createPerson (attrs) {
+    19 │   attrs
+  > 20 │     |> foo(%)
+       │             ^
+    21 │     |> foo(%)
+    22 │     |> Person.insertIntoDatabase(%);
   
 hack_pipeline_operator.js:21:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -688,10 +755,12 @@ hack_pipeline_operator.js:21:6 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:21:6
-     │
-  21 │     |> foo(%)
-     │      ^
+    19 │   attrs
+    20 │     |> foo(%)
+  > 21 │     |> foo(%)
+       │      ^
+    22 │     |> Person.insertIntoDatabase(%);
+    23 │ }
   
 hack_pipeline_operator.js:21:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -699,10 +768,12 @@ hack_pipeline_operator.js:21:12 parse ━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:21:12
-     │
-  21 │     |> foo(%)
-     │            ^
+    19 │   attrs
+    20 │     |> foo(%)
+  > 21 │     |> foo(%)
+       │            ^
+    22 │     |> Person.insertIntoDatabase(%);
+    23 │ }
   
 hack_pipeline_operator.js:21:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -710,10 +781,12 @@ hack_pipeline_operator.js:21:13 parse ━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-     ┌─ hack_pipeline_operator.js:21:13
-     │
-  21 │     |> foo(%)
-     │             ^
+    19 │   attrs
+    20 │     |> foo(%)
+  > 21 │     |> foo(%)
+       │             ^
+    22 │     |> Person.insertIntoDatabase(%);
+    23 │ }
   
 hack_pipeline_operator.js:22:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -721,10 +794,12 @@ hack_pipeline_operator.js:22:6 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:22:6
-     │
-  22 │     |> Person.insertIntoDatabase(%);
-     │      ^
+    20 │     |> foo(%)
+    21 │     |> foo(%)
+  > 22 │     |> Person.insertIntoDatabase(%);
+       │      ^
+    23 │ }
+    24 │ 
   
 hack_pipeline_operator.js:22:34 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -732,10 +807,12 @@ hack_pipeline_operator.js:22:34 parse ━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:22:34
-     │
-  22 │     |> Person.insertIntoDatabase(%);
-     │                                  ^
+    20 │     |> foo(%)
+    21 │     |> foo(%)
+  > 22 │     |> Person.insertIntoDatabase(%);
+       │                                  ^
+    23 │ }
+    24 │ 
   
 hack_pipeline_operator.js:22:35 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -743,10 +820,12 @@ hack_pipeline_operator.js:22:35 parse ━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-     ┌─ hack_pipeline_operator.js:22:35
-     │
-  22 │     |> Person.insertIntoDatabase(%);
-     │                                   ^
+    20 │     |> foo(%)
+    21 │     |> foo(%)
+  > 22 │     |> Person.insertIntoDatabase(%);
+       │                                   ^
+    23 │ }
+    24 │ 
   
 hack_pipeline_operator.js:26:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -754,10 +833,11 @@ hack_pipeline_operator.js:26:3 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:26:3
-     │
-  26 │  |> %.map(a => a * 2 )
-     │   ^
+    25 │ const result = [1,2,3]
+  > 26 │  |> %.map(a => a * 2 )
+       │   ^
+    27 │  |> %.filter(a => a > 5)
+    28 │  |> %.reduce((sum, a) => a+sum, 0)
   
 hack_pipeline_operator.js:26:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -765,10 +845,11 @@ hack_pipeline_operator.js:26:5 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:26:5
-     │
-  26 │  |> %.map(a => a * 2 )
-     │     ^
+    25 │ const result = [1,2,3]
+  > 26 │  |> %.map(a => a * 2 )
+       │     ^
+    27 │  |> %.filter(a => a > 5)
+    28 │  |> %.reduce((sum, a) => a+sum, 0)
   
 hack_pipeline_operator.js:26:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -776,10 +857,11 @@ hack_pipeline_operator.js:26:6 parse ━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-     ┌─ hack_pipeline_operator.js:26:6
-     │
-  26 │  |> %.map(a => a * 2 )
-     │      ^
+    25 │ const result = [1,2,3]
+  > 26 │  |> %.map(a => a * 2 )
+       │      ^
+    27 │  |> %.filter(a => a > 5)
+    28 │  |> %.reduce((sum, a) => a+sum, 0)
   
 hack_pipeline_operator.js:33:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -787,10 +869,11 @@ hack_pipeline_operator.js:33:4 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:33:4
-     │
-  33 │   |> map(%, event => event.target.value)
-     │    ^
+    32 │ const searchResults$ = fromEvent(document.querySelector('input'), 'input')
+  > 33 │   |> map(%, event => event.target.value)
+       │    ^
+    34 │   |> filter(%, searchText => searchText.length > 2)
+    35 │   |> debounce(%, 300)
   
 hack_pipeline_operator.js:33:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -798,10 +881,11 @@ hack_pipeline_operator.js:33:10 parse ━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:33:10
-     │
-  33 │   |> map(%, event => event.target.value)
-     │          ^
+    32 │ const searchResults$ = fromEvent(document.querySelector('input'), 'input')
+  > 33 │   |> map(%, event => event.target.value)
+       │          ^
+    34 │   |> filter(%, searchText => searchText.length > 2)
+    35 │   |> debounce(%, 300)
   
 hack_pipeline_operator.js:33:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -809,10 +893,11 @@ hack_pipeline_operator.js:33:11 parse ━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-     ┌─ hack_pipeline_operator.js:33:11
-     │
-  33 │   |> map(%, event => event.target.value)
-     │           ^
+    32 │ const searchResults$ = fromEvent(document.querySelector('input'), 'input')
+  > 33 │   |> map(%, event => event.target.value)
+       │           ^
+    34 │   |> filter(%, searchText => searchText.length > 2)
+    35 │   |> debounce(%, 300)
   
 hack_pipeline_operator.js:34:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -820,10 +905,12 @@ hack_pipeline_operator.js:34:4 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:34:4
-     │
-  34 │   |> filter(%, searchText => searchText.length > 2)
-     │    ^
+    32 │ const searchResults$ = fromEvent(document.querySelector('input'), 'input')
+    33 │   |> map(%, event => event.target.value)
+  > 34 │   |> filter(%, searchText => searchText.length > 2)
+       │    ^
+    35 │   |> debounce(%, 300)
+    36 │   |> distinctUntilChanged(%)
   
 hack_pipeline_operator.js:34:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -831,10 +918,12 @@ hack_pipeline_operator.js:34:13 parse ━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:34:13
-     │
-  34 │   |> filter(%, searchText => searchText.length > 2)
-     │             ^
+    32 │ const searchResults$ = fromEvent(document.querySelector('input'), 'input')
+    33 │   |> map(%, event => event.target.value)
+  > 34 │   |> filter(%, searchText => searchText.length > 2)
+       │             ^
+    35 │   |> debounce(%, 300)
+    36 │   |> distinctUntilChanged(%)
   
 hack_pipeline_operator.js:34:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -842,10 +931,12 @@ hack_pipeline_operator.js:34:14 parse ━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-     ┌─ hack_pipeline_operator.js:34:14
-     │
-  34 │   |> filter(%, searchText => searchText.length > 2)
-     │              ^
+    32 │ const searchResults$ = fromEvent(document.querySelector('input'), 'input')
+    33 │   |> map(%, event => event.target.value)
+  > 34 │   |> filter(%, searchText => searchText.length > 2)
+       │              ^
+    35 │   |> debounce(%, 300)
+    36 │   |> distinctUntilChanged(%)
   
 hack_pipeline_operator.js:35:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -853,10 +944,12 @@ hack_pipeline_operator.js:35:4 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:35:4
-     │
-  35 │   |> debounce(%, 300)
-     │    ^
+    33 │   |> map(%, event => event.target.value)
+    34 │   |> filter(%, searchText => searchText.length > 2)
+  > 35 │   |> debounce(%, 300)
+       │    ^
+    36 │   |> distinctUntilChanged(%)
+    37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
   
 hack_pipeline_operator.js:35:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -864,10 +957,12 @@ hack_pipeline_operator.js:35:15 parse ━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:35:15
-     │
-  35 │   |> debounce(%, 300)
-     │               ^
+    33 │   |> map(%, event => event.target.value)
+    34 │   |> filter(%, searchText => searchText.length > 2)
+  > 35 │   |> debounce(%, 300)
+       │               ^
+    36 │   |> distinctUntilChanged(%)
+    37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
   
 hack_pipeline_operator.js:35:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -875,10 +970,12 @@ hack_pipeline_operator.js:35:16 parse ━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-     ┌─ hack_pipeline_operator.js:35:16
-     │
-  35 │   |> debounce(%, 300)
-     │                ^
+    33 │   |> map(%, event => event.target.value)
+    34 │   |> filter(%, searchText => searchText.length > 2)
+  > 35 │   |> debounce(%, 300)
+       │                ^
+    36 │   |> distinctUntilChanged(%)
+    37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
   
 hack_pipeline_operator.js:36:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -886,10 +983,12 @@ hack_pipeline_operator.js:36:4 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:36:4
-     │
-  36 │   |> distinctUntilChanged(%)
-     │    ^
+    34 │   |> filter(%, searchText => searchText.length > 2)
+    35 │   |> debounce(%, 300)
+  > 36 │   |> distinctUntilChanged(%)
+       │    ^
+    37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
+    38 │   |> share(%);
   
 hack_pipeline_operator.js:36:27 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -897,10 +996,12 @@ hack_pipeline_operator.js:36:27 parse ━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:36:27
-     │
-  36 │   |> distinctUntilChanged(%)
-     │                           ^
+    34 │   |> filter(%, searchText => searchText.length > 2)
+    35 │   |> debounce(%, 300)
+  > 36 │   |> distinctUntilChanged(%)
+       │                           ^
+    37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
+    38 │   |> share(%);
   
 hack_pipeline_operator.js:36:28 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -908,10 +1009,12 @@ hack_pipeline_operator.js:36:28 parse ━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-     ┌─ hack_pipeline_operator.js:36:28
-     │
-  36 │   |> distinctUntilChanged(%)
-     │                            ^
+    34 │   |> filter(%, searchText => searchText.length > 2)
+    35 │   |> debounce(%, 300)
+  > 36 │   |> distinctUntilChanged(%)
+       │                            ^
+    37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
+    38 │   |> share(%);
   
 hack_pipeline_operator.js:37:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -919,10 +1022,12 @@ hack_pipeline_operator.js:37:4 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:37:4
-     │
-  37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
-     │    ^
+    35 │   |> debounce(%, 300)
+    36 │   |> distinctUntilChanged(%)
+  > 37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
+       │    ^
+    38 │   |> share(%);
+    39 │ 
   
 hack_pipeline_operator.js:37:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -930,10 +1035,12 @@ hack_pipeline_operator.js:37:16 parse ━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:37:16
-     │
-  37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
-     │                ^
+    35 │   |> debounce(%, 300)
+    36 │   |> distinctUntilChanged(%)
+  > 37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
+       │                ^
+    38 │   |> share(%);
+    39 │ 
   
 hack_pipeline_operator.js:37:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -941,10 +1048,12 @@ hack_pipeline_operator.js:37:17 parse ━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-     ┌─ hack_pipeline_operator.js:37:17
-     │
-  37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
-     │                 ^
+    35 │   |> debounce(%, 300)
+    36 │   |> distinctUntilChanged(%)
+  > 37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
+       │                 ^
+    38 │   |> share(%);
+    39 │ 
   
 hack_pipeline_operator.js:37:55 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -952,10 +1061,12 @@ hack_pipeline_operator.js:37:55 parse ━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:37:55
-     │
-  37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
-     │                                                       ^
+    35 │   |> debounce(%, 300)
+    36 │   |> distinctUntilChanged(%)
+  > 37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
+       │                                                       ^
+    38 │   |> share(%);
+    39 │ 
   
 hack_pipeline_operator.js:37:63 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -963,10 +1074,12 @@ hack_pipeline_operator.js:37:63 parse ━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:37:63
-     │
-  37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
-     │                                                               ^
+    35 │   |> debounce(%, 300)
+    36 │   |> distinctUntilChanged(%)
+  > 37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
+       │                                                               ^
+    38 │   |> share(%);
+    39 │ 
   
 hack_pipeline_operator.js:37:64 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -974,10 +1087,12 @@ hack_pipeline_operator.js:37:64 parse ━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-     ┌─ hack_pipeline_operator.js:37:64
-     │
-  37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
-     │                                                                ^
+    35 │   |> debounce(%, 300)
+    36 │   |> distinctUntilChanged(%)
+  > 37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
+       │                                                                ^
+    38 │   |> share(%);
+    39 │ 
   
 hack_pipeline_operator.js:38:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -985,10 +1100,12 @@ hack_pipeline_operator.js:38:4 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:38:4
-     │
-  38 │   |> share(%);
-     │    ^
+    36 │   |> distinctUntilChanged(%)
+    37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
+  > 38 │   |> share(%);
+       │    ^
+    39 │ 
+    40 │ v |> %.method() |> f(%);
   
 hack_pipeline_operator.js:38:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -996,10 +1113,12 @@ hack_pipeline_operator.js:38:12 parse ━━━━━━━━━━━━━━
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:38:12
-     │
-  38 │   |> share(%);
-     │            ^
+    36 │   |> distinctUntilChanged(%)
+    37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
+  > 38 │   |> share(%);
+       │            ^
+    39 │ 
+    40 │ v |> %.method() |> f(%);
   
 hack_pipeline_operator.js:38:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -1007,10 +1126,12 @@ hack_pipeline_operator.js:38:13 parse ━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-     ┌─ hack_pipeline_operator.js:38:13
-     │
-  38 │   |> share(%);
-     │             ^
+    36 │   |> distinctUntilChanged(%)
+    37 │   |> switchMap(%, searchText => queryApi(searchText) |> retry(%, 3))
+  > 38 │   |> share(%);
+       │             ^
+    39 │ 
+    40 │ v |> %.method() |> f(%);
   
 hack_pipeline_operator.js:40:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -1018,10 +1139,12 @@ hack_pipeline_operator.js:40:4 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:40:4
-     │
-  40 │ v |> %.method() |> f(%);
-     │    ^
+    38 │   |> share(%);
+    39 │ 
+  > 40 │ v |> %.method() |> f(%);
+       │    ^
+    41 │ 
+    42 │ async function * f () {
   
 hack_pipeline_operator.js:40:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -1029,10 +1152,12 @@ hack_pipeline_operator.js:40:6 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:40:6
-     │
-  40 │ v |> %.method() |> f(%);
-     │      ^
+    38 │   |> share(%);
+    39 │ 
+  > 40 │ v |> %.method() |> f(%);
+       │      ^
+    41 │ 
+    42 │ async function * f () {
   
 hack_pipeline_operator.js:40:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -1040,10 +1165,12 @@ hack_pipeline_operator.js:40:7 parse ━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-     ┌─ hack_pipeline_operator.js:40:7
-     │
-  40 │ v |> %.method() |> f(%);
-     │       ^
+    38 │   |> share(%);
+    39 │ 
+  > 40 │ v |> %.method() |> f(%);
+       │       ^
+    41 │ 
+    42 │ async function * f () {
   
 hack_pipeline_operator.js:44:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -1051,10 +1178,12 @@ hack_pipeline_operator.js:44:6 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ hack_pipeline_operator.js:44:6
-     │
-  44 │     |> (yield %)
-     │      ^
+    42 │ async function * f () {
+    43 │   return x
+  > 44 │     |> (yield %)
+       │      ^
+    45 │     |> (await %)
+    46 │     |> y(%)
   
 hack_pipeline_operator.js:44:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -1062,10 +1191,12 @@ hack_pipeline_operator.js:44:15 parse ━━━━━━━━━━━━━━
   
   × unexpected
   
-     ┌─ hack_pipeline_operator.js:44:15
-     │
-  44 │     |> (yield %)
-     │               ^
+    42 │ async function * f () {
+    43 │   return x
+  > 44 │     |> (yield %)
+       │               ^
+    45 │     |> (await %)
+    46 │     |> y(%)
   
 hack_pipeline_operator.js:44:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -1073,10 +1204,12 @@ hack_pipeline_operator.js:44:16 parse ━━━━━━━━━━━━━━
   
   × Expected an expression here
   
-     ┌─ hack_pipeline_operator.js:44:16
-     │
-  44 │     |> (yield %)
-     │                ^
+    42 │ async function * f () {
+    43 │   return x
+  > 44 │     |> (yield %)
+       │                ^
+    45 │     |> (await %)
+    46 │     |> y(%)
   
 
 ```

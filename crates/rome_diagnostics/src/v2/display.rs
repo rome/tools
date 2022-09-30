@@ -1,7 +1,6 @@
-use std::{borrow::Cow, io, iter};
+use std::{io, iter};
 
 use rome_console::{
-    codespan::SourceFile,
     diff::{Diff, DiffMode},
     fmt, markup, Markup, MarkupBuf, MarkupElement, MarkupNode,
 };
@@ -9,6 +8,8 @@ use unicode_width::UnicodeWidthStr;
 
 mod backtrace;
 mod frame;
+
+use crate::v2::display::frame::SourceFile;
 
 use super::{
     diagnostic::internal::AsDiagnostic, Advices, Diagnostic, DiagnosticTags, Location, LogCategory,
@@ -77,15 +78,10 @@ impl<'fmt, D: Diagnostic + ?Sized> fmt::Display for PrintHeader<'fmt, D> {
                 // Print the line and column position if the location has a span and source code
                 // (the source code is necessary to convert a byte offset into a line + column)
                 if let (Some(span), Some(source_code)) = (location.span, location.source_code) {
-                    let line_starts = source_code.line_starts.map_or_else(
-                        || Cow::Owned(SourceFile::line_starts(source_code.text).collect()),
-                        Cow::Borrowed,
-                    );
-
-                    let file = SourceFile::new(source_code.text, line_starts.as_ref());
+                    let file = SourceFile::new(source_code);
                     if let Ok(location) = file.location(span.start()) {
                         fmt.write_markup(markup! {
-                            ":"{location.line_number}":"{location.column_number}
+                            ":"{location.line_number.get()}":"{location.column_number.get()}
                         })?;
                     }
                 }
@@ -742,14 +738,15 @@ mod tests {
             "\n"
             <Emphasis><Error>"  ✖"</Error></Emphasis>" "<Error>"diagnostic message"</Error>"\n"
             "  \n"
-            "    "<Info>"┌─"</Info>" path:1:1\n"
-            "    "<Info>"│"</Info>"\n"
-            <Info>"  1"</Info>" "<Info>"│"</Info>" "<Error>"source"</Error>" code\n"
-            "    "<Info>"│"</Info>" "<Error>"^^^^^^"</Error>"\n"
+            <Emphasis><Error>"  >"</Error></Emphasis>" "<Emphasis>"1 │ "</Emphasis>"source code\n"
+            "   "<Emphasis>"   │ "</Emphasis><Emphasis><Error>"^^^^^^"</Error></Emphasis>"\n"
             "  \n"
         }.to_owned();
 
-        assert_eq!(diag, expected);
+        assert_eq!(
+            diag, expected,
+            "\nactual:\n{diag:#?}\nexpected:\n{expected:#?}"
+        );
     }
     #[test]
     fn test_log_advices() {
@@ -775,7 +772,10 @@ mod tests {
             "  \n"
         }.to_owned();
 
-        assert_eq!(diag, expected);
+        assert_eq!(
+            diag, expected,
+            "\nactual:\n{diag:#?}\nexpected:\n{expected:#?}"
+        );
     }
 
     #[test]
@@ -797,7 +797,10 @@ mod tests {
             "  \n"
         }.to_owned();
 
-        assert_eq!(diag, expected);
+        assert_eq!(
+            diag, expected,
+            "\nactual:\n{diag:#?}\nexpected:\n{expected:#?}"
+        );
     }
 
     #[test]
@@ -814,14 +817,15 @@ mod tests {
             "\n"
             <Emphasis><Error>"  ✖"</Error></Emphasis>" "<Error>"diagnostic message"</Error>"\n"
             "  \n"
-                           "    "<Info>"┌─"</Info>" other_path:1:9\n"
-                           "    "<Info>"│"</Info>"\n"
-            <Info>"  1"</Info>" "<Info>"│"</Info>" context "<Error>"location"</Error>" context\n"
-                           "    "<Info>"│"</Info>"         "<Error>"^^^^^^^^"</Error>"\n"
+            <Emphasis><Error>"  >"</Error></Emphasis>" "<Emphasis>"1 │ "</Emphasis>"context location context\n"
+            "   "<Emphasis>"   │ "</Emphasis>"        "<Emphasis><Error>"^^^^^^^^"</Error></Emphasis>"\n"
             "  \n"
         }.to_owned();
 
-        assert_eq!(diag, expected);
+        assert_eq!(
+            diag, expected,
+            "\nactual:\n{diag:#?}\nexpected:\n{expected:#?}"
+        );
     }
 
     #[test]
@@ -844,7 +848,10 @@ mod tests {
             "  \n"
         }.to_owned();
 
-        assert_eq!(diag, expected);
+        assert_eq!(
+            diag, expected,
+            "\nactual:\n{diag:#?}\nexpected:\n{expected:#?}"
+        );
     }
 
     #[test]
@@ -867,7 +874,10 @@ mod tests {
             "            at crate/src/module.rs:8:16\n"
         }.to_owned();
 
-        assert_eq!(diag, expected);
+        assert_eq!(
+            diag, expected,
+            "\nactual:\n{diag:#?}\nexpected:\n{expected:#?}"
+        );
     }
 
     #[test]
@@ -888,7 +898,10 @@ mod tests {
             "  \n"
         }.to_owned();
 
-        assert_eq!(diag, expected);
+        assert_eq!(
+            diag, expected,
+            "\nactual:\n{diag:#?}\nexpected:\n{expected:#?}"
+        );
     }
 
     #[test]
@@ -917,6 +930,9 @@ mod tests {
             "    \n"
         }.to_owned();
 
-        assert_eq!(diag, expected);
+        assert_eq!(
+            diag, expected,
+            "\nactual:\n{diag:#?}\nexpected:\n{expected:#?}"
+        );
     }
 }

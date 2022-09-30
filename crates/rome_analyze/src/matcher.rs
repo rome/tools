@@ -155,8 +155,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use rome_console::codespan::Severity;
-    use rome_diagnostics::{file::FileId, v2::category, Diagnostic};
+    use rome_diagnostics::{file::FileId, v2::category, Diagnostic, Severity};
     use rome_rowan::{
         raw_language::{RawLanguage, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
         AstNode, TextRange, TextSize, TriviaPiece, TriviaPieceKind,

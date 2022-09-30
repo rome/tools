@@ -20,17 +20,20 @@ JsForStatement.js:2:29 lint/nursery/noUnreachable ━━━━━━━━━━
   
   ! This code will never be reached ...
   
-    ┌─ JsForStatement.js:2:29
-    │
-  2 │     for (let i = 0; i < 10; ++i) {
-    │                             ^^^
+    1 │ function JsForStatement1() {
+  > 2 │     for (let i = 0; i < 10; ++i) {
+      │                             ^^^
+    3 │         break;
+    4 │     }
   
   i ... because this statement will break the flow of the code beforehand
   
-    ┌─ JsForStatement.js:3:9
-    │
-  3 │         break;
-    │         ^^^^^^
+    1 │ function JsForStatement1() {
+    2 │     for (let i = 0; i < 10; ++i) {
+  > 3 │         break;
+      │         ^^^^^^
+    4 │     }
+    5 │ }
   
 
 ```

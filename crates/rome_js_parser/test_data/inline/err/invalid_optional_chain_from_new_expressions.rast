@@ -386,10 +386,10 @@ invalid_optional_chain_from_new_expressions.ts:1:17 parse ━━━━━━━�
   
   × Did you mean to call 'Test<string>()'?
   
-    ┌─ invalid_optional_chain_from_new_expressions.ts:1:17
-    │
-  1 │ new Test<string>?.test();
-    │                 ^^
+  > 1 │ new Test<string>?.test();
+      │                 ^^
+    2 │ new Test?.test();
+    3 │ new A.b?.c()
   
 --
 invalid_optional_chain_from_new_expressions.ts:2:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -398,10 +398,11 @@ invalid_optional_chain_from_new_expressions.ts:2:9 parse ━━━━━━━�
   
   × Did you mean to call 'Test()'?
   
-    ┌─ invalid_optional_chain_from_new_expressions.ts:2:9
-    │
-  2 │ new Test?.test();
-    │         ^^
+    1 │ new Test<string>?.test();
+  > 2 │ new Test?.test();
+      │         ^^
+    3 │ new A.b?.c()
+    4 │ new (A.b)?.c()
   
 --
 invalid_optional_chain_from_new_expressions.ts:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -410,10 +411,12 @@ invalid_optional_chain_from_new_expressions.ts:3:8 parse ━━━━━━━�
   
   × Did you mean to call 'A.b()'?
   
-    ┌─ invalid_optional_chain_from_new_expressions.ts:3:8
-    │
-  3 │ new A.b?.c()
-    │        ^^
+    1 │ new Test<string>?.test();
+    2 │ new Test?.test();
+  > 3 │ new A.b?.c()
+      │        ^^
+    4 │ new (A.b)?.c()
+    5 │ new (A.b?.()).c()
   
 --
 invalid_optional_chain_from_new_expressions.ts:4:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -422,10 +425,12 @@ invalid_optional_chain_from_new_expressions.ts:4:10 parse ━━━━━━━�
   
   × Did you mean to call '(A.b)()'?
   
-    ┌─ invalid_optional_chain_from_new_expressions.ts:4:10
-    │
-  4 │ new (A.b)?.c()
-    │          ^^
+    2 │ new Test?.test();
+    3 │ new A.b?.c()
+  > 4 │ new (A.b)?.c()
+      │          ^^
+    5 │ new (A.b?.()).c()
+    6 │ new A.b?.()()
   
 --
 invalid_optional_chain_from_new_expressions.ts:6:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -434,10 +439,11 @@ invalid_optional_chain_from_new_expressions.ts:6:8 parse ━━━━━━━�
   
   × Did you mean to call 'A.b()'?
   
-    ┌─ invalid_optional_chain_from_new_expressions.ts:6:8
-    │
-  6 │ new A.b?.()()
-    │        ^^
+    4 │ new (A.b)?.c()
+    5 │ new (A.b?.()).c()
+  > 6 │ new A.b?.()()
+      │        ^^
+    7 │ 
   
 --
 new Test<string>?.test();

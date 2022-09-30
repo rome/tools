@@ -235,10 +235,10 @@ invalid_assignment_target.js:1:1 parse ━━━━━━━━━━━━━�
   
   × This expression cannot be assigned to
   
-    ┌─ invalid_assignment_target.js:1:1
-    │
-  1 │ ++a = b;
-    │ ^^^
+  > 1 │ ++a = b;
+      │ ^^^
+    2 │ (++a) = b;
+    3 │ (a = b;
   
 --
 invalid_assignment_target.js:2:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -247,10 +247,11 @@ invalid_assignment_target.js:2:2 parse ━━━━━━━━━━━━━�
   
   × This expression cannot be assigned to
   
-    ┌─ invalid_assignment_target.js:2:2
-    │
-  2 │ (++a) = b;
-    │  ^^^
+    1 │ ++a = b;
+  > 2 │ (++a) = b;
+      │  ^^^
+    3 │ (a = b;
+    4 │ a?.b = b;
   
 --
 invalid_assignment_target.js:3:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -259,10 +260,12 @@ invalid_assignment_target.js:3:7 parse ━━━━━━━━━━━━━�
   
   × unexpected
   
-    ┌─ invalid_assignment_target.js:3:7
-    │
-  3 │ (a = b;
-    │       ^
+    1 │ ++a = b;
+    2 │ (++a) = b;
+  > 3 │ (a = b;
+      │       ^
+    4 │ a?.b = b;
+    5 │ a?.["b"] = b;
   
 --
 invalid_assignment_target.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -271,10 +274,12 @@ invalid_assignment_target.js:4:1 parse ━━━━━━━━━━━━━�
   
   × This expression cannot be assigned to
   
-    ┌─ invalid_assignment_target.js:4:1
-    │
-  4 │ a?.b = b;
-    │ ^^^^
+    2 │ (++a) = b;
+    3 │ (a = b;
+  > 4 │ a?.b = b;
+      │ ^^^^
+    5 │ a?.["b"] = b;
+    6 │ (a +) = b;
   
 --
 invalid_assignment_target.js:5:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -283,10 +288,12 @@ invalid_assignment_target.js:5:1 parse ━━━━━━━━━━━━━�
   
   × This expression cannot be assigned to
   
-    ┌─ invalid_assignment_target.js:5:1
-    │
-  5 │ a?.["b"] = b;
-    │ ^^^^^^^^
+    3 │ (a = b;
+    4 │ a?.b = b;
+  > 5 │ a?.["b"] = b;
+      │ ^^^^^^^^
+    6 │ (a +) = b;
+    7 │ 
   
 --
 invalid_assignment_target.js:6:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -295,10 +302,11 @@ invalid_assignment_target.js:6:5 parse ━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ invalid_assignment_target.js:6:5
-    │
-  6 │ (a +) = b;
-    │     ^
+    4 │ a?.b = b;
+    5 │ a?.["b"] = b;
+  > 6 │ (a +) = b;
+      │     ^
+    7 │ 
   
 --
 invalid_assignment_target.js:6:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -307,10 +315,11 @@ invalid_assignment_target.js:6:2 parse ━━━━━━━━━━━━━�
   
   × This expression cannot be assigned to
   
-    ┌─ invalid_assignment_target.js:6:2
-    │
-  6 │ (a +) = b;
-    │  ^^^
+    4 │ a?.b = b;
+    5 │ a?.["b"] = b;
+  > 6 │ (a +) = b;
+      │  ^^^
+    7 │ 
   
 --
 ++a = b;

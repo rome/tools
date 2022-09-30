@@ -70,10 +70,11 @@ export_decl_not_top_level.js:2:2 parse ━━━━━━━━━━━━━�
   
   × move this declaration to the top level
   
-    ┌─ export_decl_not_top_level.js:2:2
-    │
-  2 │  export { pain } from "life";
-    │  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    1 │ {
+  > 2 │  export { pain } from "life";
+      │  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ }
+    4 │ 
   
 --
 {

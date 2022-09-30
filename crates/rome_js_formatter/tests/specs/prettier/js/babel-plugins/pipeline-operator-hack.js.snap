@@ -57,10 +57,11 @@ pipeline-operator-hack.js:5:3 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ pipeline-operator-hack.js:5:3
-    │
-  5 │  |> take(prefix.length, %)
-    │   ^
+    4 │ return list
+  > 5 │  |> take(prefix.length, %)
+      │   ^
+    6 │  |> equals(%, prefix);
+    7 │ 
   
 pipeline-operator-hack.js:5:25 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -68,10 +69,11 @@ pipeline-operator-hack.js:5:25 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ pipeline-operator-hack.js:5:25
-    │
-  5 │  |> take(prefix.length, %)
-    │                         ^
+    4 │ return list
+  > 5 │  |> take(prefix.length, %)
+      │                         ^
+    6 │  |> equals(%, prefix);
+    7 │ 
   
 pipeline-operator-hack.js:5:26 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -79,10 +81,11 @@ pipeline-operator-hack.js:5:26 parse ━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ pipeline-operator-hack.js:5:26
-    │
-  5 │  |> take(prefix.length, %)
-    │                          ^
+    4 │ return list
+  > 5 │  |> take(prefix.length, %)
+      │                          ^
+    6 │  |> equals(%, prefix);
+    7 │ 
   
 pipeline-operator-hack.js:6:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -90,10 +93,12 @@ pipeline-operator-hack.js:6:3 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ pipeline-operator-hack.js:6:3
-    │
-  6 │  |> equals(%, prefix);
-    │   ^
+    4 │ return list
+    5 │  |> take(prefix.length, %)
+  > 6 │  |> equals(%, prefix);
+      │   ^
+    7 │ 
+    8 │ // (The % token isn't final; it might instead be @ or ? or #.)
   
 pipeline-operator-hack.js:6:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -101,10 +106,12 @@ pipeline-operator-hack.js:6:12 parse ━━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ pipeline-operator-hack.js:6:12
-    │
-  6 │  |> equals(%, prefix);
-    │            ^
+    4 │ return list
+    5 │  |> take(prefix.length, %)
+  > 6 │  |> equals(%, prefix);
+      │            ^
+    7 │ 
+    8 │ // (The % token isn't final; it might instead be @ or ? or #.)
   
 pipeline-operator-hack.js:6:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -112,21 +119,26 @@ pipeline-operator-hack.js:6:13 parse ━━━━━━━━━━━━━━�
   
   × Expected an expression here
   
-    ┌─ pipeline-operator-hack.js:6:13
-    │
-  6 │  |> equals(%, prefix);
-    │             ^
+    4 │ return list
+    5 │  |> take(prefix.length, %)
+  > 6 │  |> equals(%, prefix);
+      │             ^
+    7 │ 
+    8 │ // (The % token isn't final; it might instead be @ or ? or #.)
   
 pipeline-operator-hack.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal return statement outside of a function
   
-    ┌─ pipeline-operator-hack.js:4:1
-    │  
-  4 │ ┌ return list
-  5 │ │  |> take(prefix.length, %)
-  6 │ │  |> equals(%, prefix);
-    │ └──────────────────────^
+    2 │ // https://github.com/js-choi/proposal-hack-pipes
+    3 │ 
+  > 4 │ return list
+      │ ^^^^^^^^^^^
+  > 5 │  |> take(prefix.length, %)
+  > 6 │  |> equals(%, prefix);
+      │  ^^^^^^^^^^^^^^^^^^^^^
+    7 │ 
+    8 │ // (The % token isn't final; it might instead be @ or ? or #.)
   
 
 ```

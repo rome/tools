@@ -199,30 +199,32 @@ function_expression_id_err.js:1:17 parse ━━━━━━━━━━━━━
 
   × Illegal use of `await` as an identifier in an async context
   
-    ┌─ function_expression_id_err.js:1:17
-    │
-  1 │ (async function await() {});
-    │                 ^^^^^
+  > 1 │ (async function await() {});
+      │                 ^^^^^
+    2 │ (function* yield() {});
+    3 │ function* test() { function yield() {} }
   
 --
 function_expression_id_err.js:2:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `yield` as an identifier in generator function
   
-    ┌─ function_expression_id_err.js:2:12
-    │
-  2 │ (function* yield() {});
-    │            ^^^^^
+    1 │ (async function await() {});
+  > 2 │ (function* yield() {});
+      │            ^^^^^
+    3 │ function* test() { function yield() {} }
+    4 │ 
   
 --
 function_expression_id_err.js:3:29 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of `yield` as an identifier in generator function
   
-    ┌─ function_expression_id_err.js:3:29
-    │
-  3 │ function* test() { function yield() {} }
-    │                             ^^^^^
+    1 │ (async function await() {});
+    2 │ (function* yield() {});
+  > 3 │ function* test() { function yield() {} }
+      │                             ^^^^^
+    4 │ 
   
 --
 (async function await() {});

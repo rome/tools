@@ -48,17 +48,17 @@ module-blocks.js:1:16 parse ━━━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
-    ┌─ module-blocks.js:1:16
-    │
-  1 │ let m = module {
-    │                ^
+  > 1 │ let m = module {
+      │                ^
+    2 │   export let m = 2;
+    3 │   export let n = 3;
   
   i ...Which is required to end this statement
   
-    ┌─ module-blocks.js:1:1
-    │
-  1 │ let m = module {
-    │ ^^^^^^^^^^^^^^^
+  > 1 │ let m = module {
+      │ ^^^^^^^^^^^^^^^
+    2 │   export let m = 2;
+    3 │   export let n = 3;
   
 module-blocks.js:2:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -66,10 +66,11 @@ module-blocks.js:2:3 parse ━━━━━━━━━━━━━━━━━�
   
   × move this declaration to the top level
   
-    ┌─ module-blocks.js:2:3
-    │
-  2 │   export let m = 2;
-    │   ^^^^^^^^^^^^^^^^^
+    1 │ let m = module {
+  > 2 │   export let m = 2;
+      │   ^^^^^^^^^^^^^^^^^
+    3 │   export let n = 3;
+    4 │ };
   
 module-blocks.js:3:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -77,10 +78,12 @@ module-blocks.js:3:3 parse ━━━━━━━━━━━━━━━━━�
   
   × move this declaration to the top level
   
-    ┌─ module-blocks.js:3:3
-    │
-  3 │   export let n = 3;
-    │   ^^^^^^^^^^^^^^^^^
+    1 │ let m = module {
+    2 │   export let m = 2;
+  > 3 │   export let n = 3;
+      │   ^^^^^^^^^^^^^^^^^
+    4 │ };
+    5 │ 
   
 
 ```

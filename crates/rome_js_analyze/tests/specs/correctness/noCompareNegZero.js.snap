@@ -64,10 +64,12 @@ noCompareNegZero.js:32:1 lint/correctness/noCompareNegZero  FIXABLE  ━━━�
 
   ! Do not use the === operator to compare against -0.
   
-     ┌─ noCompareNegZero.js:32:1
-     │
-  32 │ x === -0;
-     │ ^^^^^^^^
+    30 │ x === +0;
+    31 │ // invalid
+  > 32 │ x === -0;
+       │ ^^^^^^^^
+    33 │ x == -0;
+    34 │ -0 == x;
   
   i Safe fix: Replace -0 with 0
   
@@ -89,10 +91,12 @@ noCompareNegZero.js:33:1 lint/correctness/noCompareNegZero  FIXABLE  ━━━�
 
   ! Do not use the == operator to compare against -0.
   
-     ┌─ noCompareNegZero.js:33:1
-     │
-  33 │ x == -0;
-     │ ^^^^^^^
+    31 │ // invalid
+    32 │ x === -0;
+  > 33 │ x == -0;
+       │ ^^^^^^^
+    34 │ -0 == x;
+    35 │ x < -0;
   
   i Safe fix: Replace -0 with 0
   
@@ -114,10 +118,12 @@ noCompareNegZero.js:34:1 lint/correctness/noCompareNegZero  FIXABLE  ━━━�
 
   ! Do not use the == operator to compare against -0.
   
-     ┌─ noCompareNegZero.js:34:1
-     │
-  34 │ -0 == x;
-     │ ^^^^^^^
+    32 │ x === -0;
+    33 │ x == -0;
+  > 34 │ -0 == x;
+       │ ^^^^^^^
+    35 │ x < -0;
+    36 │ -0 < x;
   
   i Safe fix: Replace -0 with 0
   
@@ -139,10 +145,12 @@ noCompareNegZero.js:35:1 lint/correctness/noCompareNegZero  FIXABLE  ━━━�
 
   ! Do not use the < operator to compare against -0.
   
-     ┌─ noCompareNegZero.js:35:1
-     │
-  35 │ x < -0;
-     │ ^^^^^^
+    33 │ x == -0;
+    34 │ -0 == x;
+  > 35 │ x < -0;
+       │ ^^^^^^
+    36 │ -0 < x;
+    37 │ x <= -0;
   
   i Safe fix: Replace -0 with 0
   
@@ -164,10 +172,12 @@ noCompareNegZero.js:36:1 lint/correctness/noCompareNegZero  FIXABLE  ━━━�
 
   ! Do not use the < operator to compare against -0.
   
-     ┌─ noCompareNegZero.js:36:1
-     │
-  36 │ -0 < x;
-     │ ^^^^^^
+    34 │ -0 == x;
+    35 │ x < -0;
+  > 36 │ -0 < x;
+       │ ^^^^^^
+    37 │ x <= -0;
+    38 │ -0 <= x;
   
   i Safe fix: Replace -0 with 0
   
@@ -189,10 +199,12 @@ noCompareNegZero.js:37:1 lint/correctness/noCompareNegZero  FIXABLE  ━━━�
 
   ! Do not use the <= operator to compare against -0.
   
-     ┌─ noCompareNegZero.js:37:1
-     │
-  37 │ x <= -0;
-     │ ^^^^^^^
+    35 │ x < -0;
+    36 │ -0 < x;
+  > 37 │ x <= -0;
+       │ ^^^^^^^
+    38 │ -0 <= x;
+    39 │ x > -0;
   
   i Safe fix: Replace -0 with 0
   
@@ -214,10 +226,12 @@ noCompareNegZero.js:38:1 lint/correctness/noCompareNegZero  FIXABLE  ━━━�
 
   ! Do not use the <= operator to compare against -0.
   
-     ┌─ noCompareNegZero.js:38:1
-     │
-  38 │ -0 <= x;
-     │ ^^^^^^^
+    36 │ -0 < x;
+    37 │ x <= -0;
+  > 38 │ -0 <= x;
+       │ ^^^^^^^
+    39 │ x > -0;
+    40 │ -0 > x;
   
   i Safe fix: Replace -0 with 0
   
@@ -239,10 +253,12 @@ noCompareNegZero.js:39:1 lint/correctness/noCompareNegZero  FIXABLE  ━━━�
 
   ! Do not use the > operator to compare against -0.
   
-     ┌─ noCompareNegZero.js:39:1
-     │
-  39 │ x > -0;
-     │ ^^^^^^
+    37 │ x <= -0;
+    38 │ -0 <= x;
+  > 39 │ x > -0;
+       │ ^^^^^^
+    40 │ -0 > x;
+    41 │ x >= -0;
   
   i Safe fix: Replace -0 with 0
   
@@ -264,10 +280,12 @@ noCompareNegZero.js:40:1 lint/correctness/noCompareNegZero  FIXABLE  ━━━�
 
   ! Do not use the > operator to compare against -0.
   
-     ┌─ noCompareNegZero.js:40:1
-     │
-  40 │ -0 > x;
-     │ ^^^^^^
+    38 │ -0 <= x;
+    39 │ x > -0;
+  > 40 │ -0 > x;
+       │ ^^^^^^
+    41 │ x >= -0;
+    42 │ -0 >= x;
   
   i Safe fix: Replace -0 with 0
   
@@ -289,10 +307,12 @@ noCompareNegZero.js:41:1 lint/correctness/noCompareNegZero  FIXABLE  ━━━�
 
   ! Do not use the >= operator to compare against -0.
   
-     ┌─ noCompareNegZero.js:41:1
-     │
-  41 │ x >= -0;
-     │ ^^^^^^^
+    39 │ x > -0;
+    40 │ -0 > x;
+  > 41 │ x >= -0;
+       │ ^^^^^^^
+    42 │ -0 >= x;
+    43 │ x != -0;
   
   i Safe fix: Replace -0 with 0
   
@@ -314,10 +334,12 @@ noCompareNegZero.js:42:1 lint/correctness/noCompareNegZero  FIXABLE  ━━━�
 
   ! Do not use the >= operator to compare against -0.
   
-     ┌─ noCompareNegZero.js:42:1
-     │
-  42 │ -0 >= x;
-     │ ^^^^^^^
+    40 │ -0 > x;
+    41 │ x >= -0;
+  > 42 │ -0 >= x;
+       │ ^^^^^^^
+    43 │ x != -0;
+    44 │ -0 != x;
   
   i Safe fix: Replace -0 with 0
   
@@ -339,10 +361,12 @@ noCompareNegZero.js:43:1 lint/correctness/noCompareNegZero  FIXABLE  ━━━�
 
   ! Do not use the != operator to compare against -0.
   
-     ┌─ noCompareNegZero.js:43:1
-     │
-  43 │ x != -0;
-     │ ^^^^^^^
+    41 │ x >= -0;
+    42 │ -0 >= x;
+  > 43 │ x != -0;
+       │ ^^^^^^^
+    44 │ -0 != x;
+    45 │ -0 !== x;
   
   i Safe fix: Replace -0 with 0
   
@@ -364,10 +388,12 @@ noCompareNegZero.js:44:1 lint/correctness/noCompareNegZero  FIXABLE  ━━━�
 
   ! Do not use the != operator to compare against -0.
   
-     ┌─ noCompareNegZero.js:44:1
-     │
-  44 │ -0 != x;
-     │ ^^^^^^^
+    42 │ -0 >= x;
+    43 │ x != -0;
+  > 44 │ -0 != x;
+       │ ^^^^^^^
+    45 │ -0 !== x;
+    46 │ -0 === -0;
   
   i Safe fix: Replace -0 with 0
   
@@ -389,10 +415,12 @@ noCompareNegZero.js:45:1 lint/correctness/noCompareNegZero  FIXABLE  ━━━�
 
   ! Do not use the !== operator to compare against -0.
   
-     ┌─ noCompareNegZero.js:45:1
-     │
-  45 │ -0 !== x;
-     │ ^^^^^^^^
+    43 │ x != -0;
+    44 │ -0 != x;
+  > 45 │ -0 !== x;
+       │ ^^^^^^^^
+    46 │ -0 === -0;
+    47 │ -0 /** commnet **/ === 4;
   
   i Safe fix: Replace -0 with 0
   
@@ -414,10 +442,12 @@ noCompareNegZero.js:46:1 lint/correctness/noCompareNegZero  FIXABLE  ━━━�
 
   ! Do not use the === operator to compare against -0.
   
-     ┌─ noCompareNegZero.js:46:1
-     │
-  46 │ -0 === -0;
-     │ ^^^^^^^^^
+    44 │ -0 != x;
+    45 │ -0 !== x;
+  > 46 │ -0 === -0;
+       │ ^^^^^^^^^
+    47 │ -0 /** commnet **/ === 4;
+    48 │ -0
   
   i Safe fix: Replace -0 with 0
   
@@ -439,10 +469,12 @@ noCompareNegZero.js:47:1 lint/correctness/noCompareNegZero  FIXABLE  ━━━�
 
   ! Do not use the === operator to compare against -0.
   
-     ┌─ noCompareNegZero.js:47:1
-     │
-  47 │ -0 /** commnet **/ === 4;
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^
+    45 │ -0 !== x;
+    46 │ -0 === -0;
+  > 47 │ -0 /** commnet **/ === 4;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^
+    48 │ -0
+    49 │ // comment
   
   i Safe fix: Replace -0 with 0
   
@@ -464,12 +496,15 @@ noCompareNegZero.js:48:1 lint/correctness/noCompareNegZero  FIXABLE  ━━━�
 
   ! Do not use the === operator to compare against -0.
   
-     ┌─ noCompareNegZero.js:48:1
-     │  
-  48 │ ┌ -0
-  49 │ │ // comment
-  50 │ │ === 4;
-     │ └─────^
+    46 │ -0 === -0;
+    47 │ -0 /** commnet **/ === 4;
+  > 48 │ -0
+       │ ^^
+  > 49 │ // comment
+  > 50 │ === 4;
+       │ ^^^^^
+    51 │ 4 === // comment
+    52 │ -0
   
   i Safe fix: Replace -0 with 0
   
@@ -491,11 +526,12 @@ noCompareNegZero.js:51:1 lint/correctness/noCompareNegZero  FIXABLE  ━━━�
 
   ! Do not use the === operator to compare against -0.
   
-     ┌─ noCompareNegZero.js:51:1
-     │  
-  51 │ ┌ 4 === // comment
-  52 │ │ -0
-     │ └──^
+    49 │ // comment
+    50 │ === 4;
+  > 51 │ 4 === // comment
+       │ ^^^^^^^^^^^^^^^^
+  > 52 │ -0
+       │ ^^
   
   i Safe fix: Replace -0 with 0
   

@@ -47,10 +47,12 @@ noDupeArgs.js:9:18 lint/correctness/noDupeArgs ━━━━━━━━━━━
 
   ! Duplicate argument name
   
-    ┌─ noDupeArgs.js:9:18
-    │
-  9 │ function b(a, b, b) {}
-    │                  ^
+     7 │ function test(a = function (a) {}) {}
+     8 │ // invalid
+   > 9 │ function b(a, b, b) {}
+       │                  ^
+    10 │ 
+    11 │ function c(a, a, a) {}
   
 
 ```
@@ -60,10 +62,12 @@ noDupeArgs.js:11:15 lint/correctness/noDupeArgs ━━━━━━━━━━�
 
   ! Duplicate argument name
   
-     ┌─ noDupeArgs.js:11:15
-     │
-  11 │ function c(a, a, a) {}
-     │               ^
+     9 │ function b(a, b, b) {}
+    10 │ 
+  > 11 │ function c(a, a, a) {}
+       │               ^
+    12 │ 
+    13 │ const d = (a, b, a) => {};
   
 
 ```
@@ -73,10 +77,12 @@ noDupeArgs.js:13:18 lint/correctness/noDupeArgs ━━━━━━━━━━�
 
   ! Duplicate argument name
   
-     ┌─ noDupeArgs.js:13:18
-     │
-  13 │ const d = (a, b, a) => {};
-     │                  ^
+    11 │ function c(a, a, a) {}
+    12 │ 
+  > 13 │ const d = (a, b, a) => {};
+       │                  ^
+    14 │ 
+    15 │ function e(a, b, a, b) {}
   
 
 ```
@@ -86,10 +92,12 @@ noDupeArgs.js:15:18 lint/correctness/noDupeArgs ━━━━━━━━━━�
 
   ! Duplicate argument name
   
-     ┌─ noDupeArgs.js:15:18
-     │
-  15 │ function e(a, b, a, b) {}
-     │                  ^
+    13 │ const d = (a, b, a) => {};
+    14 │ 
+  > 15 │ function e(a, b, a, b) {}
+       │                  ^
+    16 │ 
+    17 │ var f = function (a, b, b) {};
   
 
 ```
@@ -99,10 +107,12 @@ noDupeArgs.js:17:25 lint/correctness/noDupeArgs ━━━━━━━━━━�
 
   ! Duplicate argument name
   
-     ┌─ noDupeArgs.js:17:25
-     │
-  17 │ var f = function (a, b, b) {};
-     │                         ^
+    15 │ function e(a, b, a, b) {}
+    16 │ 
+  > 17 │ var f = function (a, b, b) {};
+       │                         ^
+    18 │ 
+    19 │ class G {
   
 
 ```
@@ -112,10 +122,11 @@ noDupeArgs.js:20:9 lint/correctness/noDupeArgs ━━━━━━━━━━━
 
   ! Duplicate argument name
   
-     ┌─ noDupeArgs.js:20:9
-     │
-  20 │     ggg(a, a, a) {}
-     │            ^
+    19 │ class G {
+  > 20 │ 	ggg(a, a, a) {}
+       │ 	       ^
+    21 │ }
+    22 │ 
   
 
 ```
@@ -125,10 +136,11 @@ noDupeArgs.js:24:18 lint/correctness/noDupeArgs ━━━━━━━━━━�
 
   ! Duplicate argument name
   
-     ┌─ noDupeArgs.js:24:18
-     │
-  24 │     method(a, b, c, c) {
-     │                     ^
+    23 │ let objectMethods = {
+  > 24 │ 	method(a, b, c, c) {
+       │ 	                ^
+    25 │ 
+    26 │ 	}
   
 
 ```
@@ -138,10 +150,12 @@ noDupeArgs.js:29:25 lint/correctness/noDupeArgs ━━━━━━━━━━�
 
   ! Duplicate argument name
   
-     ┌─ noDupeArgs.js:29:25
-     │
-  29 │ var h = function (a, b, a) {};
-     │                         ^
+    27 │ }
+    28 │ 
+  > 29 │ var h = function (a, b, a) {};
+       │                         ^
+    30 │ 
+    31 │ export default function (a, b, a, a) {}
   
 
 ```
@@ -151,10 +165,12 @@ noDupeArgs.js:31:32 lint/correctness/noDupeArgs ━━━━━━━━━━�
 
   ! Duplicate argument name
   
-     ┌─ noDupeArgs.js:31:32
-     │
-  31 │ export default function (a, b, a, a) {}
-     │                                ^
+    29 │ var h = function (a, b, a) {};
+    30 │ 
+  > 31 │ export default function (a, b, a, a) {}
+       │                                ^
+    32 │ function f({ test: res = 3 }, res) {}
+    33 │ 
   
 
 ```
@@ -164,10 +180,11 @@ noDupeArgs.js:32:31 lint/correctness/noDupeArgs ━━━━━━━━━━�
 
   ! Duplicate argument name
   
-     ┌─ noDupeArgs.js:32:31
-     │
-  32 │ function f({ test: res = 3 }, res) {}
-     │                               ^^^
+    31 │ export default function (a, b, a, a) {}
+  > 32 │ function f({ test: res = 3 }, res) {}
+       │                               ^^^
+    33 │ 
+    34 │ export function f2(a, b, c = (a, b, b) => {}) {}
   
 
 ```
@@ -177,10 +194,11 @@ noDupeArgs.js:34:37 lint/correctness/noDupeArgs ━━━━━━━━━━�
 
   ! Duplicate argument name
   
-     ┌─ noDupeArgs.js:34:37
-     │
-  34 │ export function f2(a, b, c = (a, b, b) => {}) {}
-     │                                     ^
+    32 │ function f({ test: res = 3 }, res) {}
+    33 │ 
+  > 34 │ export function f2(a, b, c = (a, b, b) => {}) {}
+       │                                     ^
+    35 │ 
   
 
 ```

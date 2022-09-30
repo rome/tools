@@ -66,10 +66,11 @@ pipeline-operator-minimal.js:8:4 parse ━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ pipeline-operator-minimal.js:8:4
-    │
-  8 │   |> doubleSay
-    │    ^
+     7 │ let result = "hello"
+   > 8 │   |> doubleSay
+       │    ^
+     9 │   |> capitalize
+    10 │   |> exclaim;
   
 pipeline-operator-minimal.js:9:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -77,10 +78,12 @@ pipeline-operator-minimal.js:9:4 parse ━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-    ┌─ pipeline-operator-minimal.js:9:4
-    │
-  9 │   |> capitalize
-    │    ^
+     7 │ let result = "hello"
+     8 │   |> doubleSay
+   > 9 │   |> capitalize
+       │    ^
+    10 │   |> exclaim;
+    11 │ 
   
 pipeline-operator-minimal.js:10:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -88,10 +91,12 @@ pipeline-operator-minimal.js:10:4 parse ━━━━━━━━━━━━━�
   
   × This operator requires a left hand side value
   
-     ┌─ pipeline-operator-minimal.js:10:4
-     │
-  10 │   |> exclaim;
-     │    ^
+     8 │   |> doubleSay
+     9 │   |> capitalize
+  > 10 │   |> exclaim;
+       │    ^
+    11 │ 
+    12 │ result //=> "Hello, hello!"
   
 
 ```

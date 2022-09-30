@@ -346,60 +346,68 @@ for_in_and_of_initializer_strict_mode.js:1:12 parse ━━━━━━━━━�
 
   × `for..in` statement declarators cannot have an initializer expression
   
-    ┌─ for_in_and_of_initializer_strict_mode.js:1:12
-    │
-  1 │ for (var i = 0 in []) {}
-    │            ^^^
+  > 1 │ for (var i = 0 in []) {}
+      │            ^^^
+    2 │ for (let i = 0 in []) {}
+    3 │ for (const i = 0 in []) {}
   
 --
 for_in_and_of_initializer_strict_mode.js:2:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `for..in` statement declarators cannot have an initializer expression
   
-    ┌─ for_in_and_of_initializer_strict_mode.js:2:12
-    │
-  2 │ for (let i = 0 in []) {}
-    │            ^^^
+    1 │ for (var i = 0 in []) {}
+  > 2 │ for (let i = 0 in []) {}
+      │            ^^^
+    3 │ for (const i = 0 in []) {}
+    4 │ for (var i = 0 of []) {}
   
 --
 for_in_and_of_initializer_strict_mode.js:3:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `for..in` statement declarators cannot have an initializer expression
   
-    ┌─ for_in_and_of_initializer_strict_mode.js:3:14
-    │
-  3 │ for (const i = 0 in []) {}
-    │              ^^^
+    1 │ for (var i = 0 in []) {}
+    2 │ for (let i = 0 in []) {}
+  > 3 │ for (const i = 0 in []) {}
+      │              ^^^
+    4 │ for (var i = 0 of []) {}
+    5 │ for (let i = 0 of []) {}
   
 --
 for_in_and_of_initializer_strict_mode.js:4:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `for..of` statement declarators cannot have an initializer expression
   
-    ┌─ for_in_and_of_initializer_strict_mode.js:4:12
-    │
-  4 │ for (var i = 0 of []) {}
-    │            ^^^
+    2 │ for (let i = 0 in []) {}
+    3 │ for (const i = 0 in []) {}
+  > 4 │ for (var i = 0 of []) {}
+      │            ^^^
+    5 │ for (let i = 0 of []) {}
+    6 │ for (const i = 0 of []) {}
   
 --
 for_in_and_of_initializer_strict_mode.js:5:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `for..of` statement declarators cannot have an initializer expression
   
-    ┌─ for_in_and_of_initializer_strict_mode.js:5:12
-    │
-  5 │ for (let i = 0 of []) {}
-    │            ^^^
+    3 │ for (const i = 0 in []) {}
+    4 │ for (var i = 0 of []) {}
+  > 5 │ for (let i = 0 of []) {}
+      │            ^^^
+    6 │ for (const i = 0 of []) {}
+    7 │ 
   
 --
 for_in_and_of_initializer_strict_mode.js:6:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `for..of` statement declarators cannot have an initializer expression
   
-    ┌─ for_in_and_of_initializer_strict_mode.js:6:14
-    │
-  6 │ for (const i = 0 of []) {}
-    │              ^^^
+    4 │ for (var i = 0 of []) {}
+    5 │ for (let i = 0 of []) {}
+  > 6 │ for (const i = 0 of []) {}
+      │              ^^^
+    7 │ 
   
 --
 for (var i = 0 in []) {}

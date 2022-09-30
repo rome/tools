@@ -31,10 +31,8 @@ file.js:1:1 lint/correctness/noDebugger  FIXABLE  ━━━━━━━━━━
 
   ! This is an unexpected use of the debugger statement.
   
-    ┌─ file.js:1:1
-    │
-  1 │ debugger;
-    │ ^^^^^^^^^
+  > 1 │ debugger;
+      │ ^^^^^^^^^
   
   i Suggested fix: Remove debugger statement
   

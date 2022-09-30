@@ -57,10 +57,9 @@ block_stmt_in_class.js:1:9 parse ━━━━━━━━━━━━━━━�
   
   × Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
   
-    ┌─ block_stmt_in_class.js:1:9
-    │
-  1 │ class S{{}}
-    │         ^
+  > 1 │ class S{{}}
+      │         ^
+    2 │ 
   
 --
 block_stmt_in_class.js:1:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -69,10 +68,9 @@ block_stmt_in_class.js:1:11 parse ━━━━━━━━━━━━━━━�
   
   × Expected a statement here
   
-    ┌─ block_stmt_in_class.js:1:11
-    │
-  1 │ class S{{}}
-    │           ^
+  > 1 │ class S{{}}
+      │           ^
+    2 │ 
   
 --
 class S{{}}

@@ -65,17 +65,19 @@ readonlyInConstructorParameters.ts:7:26 parse ━━━━━━━━━━━�
   
   × move this modifier
   
-    ┌─ readonlyInConstructorParameters.ts:7:26
-    │
-  7 │     constructor(readonly public x: number) {}
-    │                          ^^^^^^
+    6 │ class E {
+  > 7 │     constructor(readonly public x: number) {}
+      │                          ^^^^^^
+    8 │ }
+    9 │ 
   
   i before this modifier
   
-    ┌─ readonlyInConstructorParameters.ts:7:17
-    │
-  7 │     constructor(readonly public x: number) {}
-    │                 ^^^^^^^^
+    6 │ class E {
+  > 7 │     constructor(readonly public x: number) {}
+      │                 ^^^^^^^^
+    8 │ }
+    9 │ 
   
 
 ```

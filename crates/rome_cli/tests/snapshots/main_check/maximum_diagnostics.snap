@@ -30,10 +30,10 @@ check.js:2:1 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━
 
   × Block statements are preferred in this position.
   
-    ┌─ check.js:2:1
-    │
-  2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-    │ ^^^^^^^^^^^^
+  > 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+      │ ^^^^^^^^^^^^
+    3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+    4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
@@ -53,10 +53,10 @@ check.js:2:1 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━�
 
   × Use while loops instead of for loops.
   
-    ┌─ check.js:2:1
-    │
-  2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-    │ ^^^^^^^^^^^
+  > 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+      │ ^^^^^^^^^^^
+    3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+    4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
   i Suggested fix: Use a while loop
   
@@ -76,10 +76,10 @@ check.js:2:13 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
 
   × Block statements are preferred in this position.
   
-    ┌─ check.js:2:13
-    │
-  2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-    │             ^^^^^^^^^^^^
+  > 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+      │             ^^^^^^^^^^^^
+    3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+    4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
@@ -99,10 +99,10 @@ check.js:2:13 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
 
   × Use while loops instead of for loops.
   
-    ┌─ check.js:2:13
-    │
-  2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-    │             ^^^^^^^^^^^
+  > 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+      │             ^^^^^^^^^^^
+    3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+    4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
   i Suggested fix: Use a while loop
   
@@ -122,10 +122,10 @@ check.js:2:25 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
 
   × Block statements are preferred in this position.
   
-    ┌─ check.js:2:25
-    │
-  2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-    │                         ^^^^^^^^^^^^
+  > 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+      │                         ^^^^^^^^^^^^
+    3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+    4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
@@ -145,10 +145,10 @@ check.js:2:25 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
 
   × Use while loops instead of for loops.
   
-    ┌─ check.js:2:25
-    │
-  2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-    │                         ^^^^^^^^^^^
+  > 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+      │                         ^^^^^^^^^^^
+    3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+    4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
   i Suggested fix: Use a while loop
   
@@ -168,10 +168,10 @@ check.js:2:37 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
 
   × Block statements are preferred in this position.
   
-    ┌─ check.js:2:37
-    │
-  2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-    │                                     ^^^^^^^^^^^^
+  > 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+      │                                     ^^^^^^^^^^^^
+    3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+    4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
@@ -191,10 +191,10 @@ check.js:2:37 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
 
   × Use while loops instead of for loops.
   
-    ┌─ check.js:2:37
-    │
-  2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-    │                                     ^^^^^^^^^^^
+  > 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+      │                                     ^^^^^^^^^^^
+    3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+    4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
   i Suggested fix: Use a while loop
   
@@ -214,10 +214,10 @@ check.js:2:49 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
 
   × Block statements are preferred in this position.
   
-    ┌─ check.js:2:49
-    │
-  2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-    │                                                 ^^^^^^^^^^^^
+  > 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+      │                                                 ^^^^^^^^^^^^
+    3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+    4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
@@ -237,10 +237,10 @@ check.js:2:49 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
 
   × Use while loops instead of for loops.
   
-    ┌─ check.js:2:49
-    │
-  2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-    │                                                 ^^^^^^^^^^^
+  > 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+      │                                                 ^^^^^^^^^^^
+    3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+    4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
   i Suggested fix: Use a while loop
   
@@ -260,10 +260,10 @@ check.js:2:61 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
 
   × Block statements are preferred in this position.
   
-    ┌─ check.js:2:61
-    │
-  2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-    │                                                             ^^^^^^^^^^^^
+  > 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+      │                                                             ^^^^^^^^^^^^
+    3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+    4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
@@ -283,10 +283,10 @@ check.js:2:61 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
 
   × Use while loops instead of for loops.
   
-    ┌─ check.js:2:61
-    │
-  2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-    │                                                             ^^^^^^^^^^^
+  > 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+      │                                                             ^^^^^^^^^^^
+    3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+    4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
   i Suggested fix: Use a while loop
   
@@ -306,10 +306,11 @@ check.js:3:1 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━
 
   × Block statements are preferred in this position.
   
-    ┌─ check.js:3:1
-    │
-  3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-    │ ^^^^^^^^^^^^
+    2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  > 3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+      │ ^^^^^^^^^^^^
+    4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+    5 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
@@ -330,10 +331,11 @@ check.js:3:1 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━�
 
   × Use while loops instead of for loops.
   
-    ┌─ check.js:3:1
-    │
-  3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-    │ ^^^^^^^^^^^
+    2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  > 3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+      │ ^^^^^^^^^^^
+    4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+    5 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
   i Suggested fix: Use a while loop
   
@@ -354,10 +356,11 @@ check.js:3:13 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
 
   × Block statements are preferred in this position.
   
-    ┌─ check.js:3:13
-    │
-  3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-    │             ^^^^^^^^^^^^
+    2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  > 3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+      │             ^^^^^^^^^^^^
+    4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+    5 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
@@ -378,10 +381,11 @@ check.js:3:13 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
 
   × Use while loops instead of for loops.
   
-    ┌─ check.js:3:13
-    │
-  3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-    │             ^^^^^^^^^^^
+    2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  > 3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+      │             ^^^^^^^^^^^
+    4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+    5 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
   i Suggested fix: Use a while loop
   
@@ -402,10 +406,11 @@ check.js:3:25 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
 
   × Block statements are preferred in this position.
   
-    ┌─ check.js:3:25
-    │
-  3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-    │                         ^^^^^^^^^^^^
+    2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  > 3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+      │                         ^^^^^^^^^^^^
+    4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+    5 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
@@ -426,10 +431,11 @@ check.js:3:25 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
 
   × Use while loops instead of for loops.
   
-    ┌─ check.js:3:25
-    │
-  3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-    │                         ^^^^^^^^^^^
+    2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  > 3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+      │                         ^^^^^^^^^^^
+    4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+    5 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
   i Suggested fix: Use a while loop
   
@@ -450,10 +456,11 @@ check.js:3:37 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
 
   × Block statements are preferred in this position.
   
-    ┌─ check.js:3:37
-    │
-  3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-    │                                     ^^^^^^^^^^^^
+    2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  > 3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+      │                                     ^^^^^^^^^^^^
+    4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+    5 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
@@ -474,10 +481,11 @@ check.js:3:37 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
 
   × Use while loops instead of for loops.
   
-    ┌─ check.js:3:37
-    │
-  3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-    │                                     ^^^^^^^^^^^
+    2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  > 3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+      │                                     ^^^^^^^^^^^
+    4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+    5 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
   i Suggested fix: Use a while loop
   
