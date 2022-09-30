@@ -1,10 +1,16 @@
-use crate::react::is_react_create_element;
+use crate::react::{is_react_create_element, ReactCreateElementCall};
 use crate::semantic_services::Semantic;
+use crate::JsRuleAction;
 use rome_analyze::context::RuleContext;
-use rome_analyze::{declare_rule, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::{markup, MarkupBuf};
-use rome_js_syntax::{JsCallExpression, JsxElement, JsxSelfClosingElement};
-use rome_rowan::{declare_node_union, AstNode, AstNodeList};
+use rome_diagnostics::Applicability;
+use rome_js_factory::make::{jsx_attribute_list, jsx_self_closing_element};
+use rome_js_syntax::{
+    JsCallExpression, JsPropertyObjectMember, JsxAnyAttribute, JsxAttribute, JsxElement,
+    JsxSelfClosingElement,
+};
+use rome_rowan::{declare_node_union, AstNode, AstNodeList, BatchMutationExt};
 
 declare_rule! {
     /// This rules prevents void elements (AKA self-closing elements) from having children.
@@ -13,12 +19,16 @@ declare_rule! {
     ///
     /// ### Invalid
     ///
-    /// ```js,expect_diagnostic
+    /// ```jsx,expect_diagnostic
     /// <br>invalid child</br>
     /// ```
     ///
-    /// ```js,expect_diagnostic
+    /// ```jsx,expect_diagnostic
     /// <img alt="some text" children={"some child"} />
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// React.createElement('img', {}, 'child')
     /// ```
     pub(crate) NoVoidElementsWithChildren {
         version: "0.10.0",
@@ -54,34 +64,86 @@ fn is_void_dom_element(element_name: &str) -> bool {
     )
 }
 
+pub(crate) enum NoVoidElementsWithChildrenCause {
+    /// The cause affects React using JSX code
+    Jsx {
+        /// If the current element has children props in style
+        ///
+        /// ```jsx
+        /// <img>
+        ///     Some child
+        /// </img>
+        /// ```
+        children_cause: bool,
+        /// If the current element has the prop `dangerouslySetInnerHTML`
+        dangerous_prop_cause: Option<JsxAttribute>,
+        /// If the current element has the prop `children`
+        children_prop: Option<JsxAttribute>,
+    },
+    /// The cause affects React using `React` object APIs
+    ReactCreateElement {
+        /// If the current element has children props in style:
+        ///
+        /// ```js
+        /// React.createElement('img', {}, 'child')
+        /// ```
+        children_cause: bool,
+        /// If the current element has the prop `dangerouslySetInnerHTML`
+        dangerous_prop_cause: Option<JsPropertyObjectMember>,
+        /// If the current element has the prop `children`
+        children_prop: Option<JsPropertyObjectMember>,
+        /// An instance of [ReactCreateElementCall]
+        react_create_element: ReactCreateElementCall,
+    },
+}
+
 pub(crate) struct NoVoidElementsWithChildrenState {
     /// The name of the element that triggered the rule
     element_name: String,
-    /// If the current element has children props
-    children_cause: bool,
-    /// If the current element has the prop `dangerouslySetInnerHTML`
-    dangerous_prop_case: bool,
+    /// It tracks the causes that triggers the rule
+    cause: NoVoidElementsWithChildrenCause,
 }
 
 impl NoVoidElementsWithChildrenState {
-    fn new(element_name: impl Into<String>) -> Self {
+    fn new(element_name: impl Into<String>, cause: NoVoidElementsWithChildrenCause) -> Self {
         Self {
             element_name: element_name.into(),
-            children_cause: false,
-            dangerous_prop_case: false,
+            cause,
         }
     }
 
-    fn with_children_cause(&mut self, cause: bool) {
-        self.children_cause = cause;
+    fn has_children_cause(&self) -> bool {
+        match &self.cause {
+            NoVoidElementsWithChildrenCause::Jsx {
+                children_prop,
+                children_cause,
+                ..
+            } => *children_cause || children_prop.is_some(),
+            NoVoidElementsWithChildrenCause::ReactCreateElement {
+                children_prop,
+                children_cause,
+                ..
+            } => *children_cause || children_prop.is_some(),
+        }
     }
 
-    fn with_dangerous_prop_cause(&mut self, cause: bool) {
-        self.dangerous_prop_case = cause;
+    fn has_dangerous_prop_cause(&self) -> bool {
+        match &self.cause {
+            NoVoidElementsWithChildrenCause::Jsx {
+                dangerous_prop_cause,
+                ..
+            } => dangerous_prop_cause.is_some(),
+            NoVoidElementsWithChildrenCause::ReactCreateElement {
+                dangerous_prop_cause,
+                ..
+            } => dangerous_prop_cause.is_some(),
+        }
     }
 
-    fn message(&self) -> MarkupBuf {
-        match (self.children_cause, self.dangerous_prop_case) {
+    fn diagnostic_message(&self) -> MarkupBuf {
+        let has_children_cause = self.has_children_cause();
+        let has_dangerous_cause = self.has_dangerous_prop_cause();
+        match (has_children_cause, has_dangerous_cause) {
             (true, true) => {
                 (markup! {
                     <Emphasis>{self.element_name}</Emphasis>" is a void element tag and must not have "<Emphasis>"children"</Emphasis>
@@ -96,6 +158,30 @@ impl NoVoidElementsWithChildrenState {
             (false, true) => {
                 (markup! {
                     <Emphasis>{self.element_name}</Emphasis>" is a void element tag and must not have the "<Emphasis>"dangerouslySetInnerHTML"</Emphasis>" prop."
+                }).to_owned()
+            },
+            _ => unreachable!("At least a cause must be set")
+
+        }
+    }
+
+    fn action_message(&self) -> MarkupBuf {
+        let has_children_cause = self.has_children_cause();
+        let has_dangerous_cause = self.has_dangerous_prop_cause();
+        match (has_children_cause, has_dangerous_cause) {
+            (true, true) => {
+                (markup! {
+                    "Remove the "<Emphasis>"children"</Emphasis>" and the "<Emphasis>"dangerouslySetInnerHTML"</Emphasis>" prop."
+                }).to_owned()
+            }
+            (true, false) => {
+                (markup! {
+                   "Remove the "<Emphasis>"children"</Emphasis>"."
+                }).to_owned()
+            }
+            (false, true) => {
+                (markup! {
+                  "Remove the "<Emphasis>"dangerouslySetInnerHTML"</Emphasis>" prop."
                 }).to_owned()
             },
             _ => unreachable!("At least a cause must be set")
@@ -121,21 +207,19 @@ impl Rule for NoVoidElementsWithChildren {
                 let name = name.as_jsx_name()?.value_token().ok()?;
                 let name = name.text_trimmed();
                 if is_void_dom_element(name) {
-                    let has_dangerous_prop = opening_element
+                    let dangerous_prop = opening_element
                         .find_attribute_by_name("dangerouslySetInnerHTML")
-                        .ok()?
-                        .is_some();
+                        .ok()?;
                     let has_children = !element.children().is_empty();
-                    let has_children_prop = opening_element
-                        .find_attribute_by_name("children")
-                        .ok()?
-                        .is_some();
-                    if has_dangerous_prop || has_children || has_children_prop {
-                        let mut state = NoVoidElementsWithChildrenState::new(name);
-                        state.with_dangerous_prop_cause(has_dangerous_prop);
-                        state.with_children_cause(has_children || has_children_prop);
+                    let children_prop = opening_element.find_attribute_by_name("children").ok()?;
+                    if dangerous_prop.is_some() || has_children || children_prop.is_some() {
+                        let cause = NoVoidElementsWithChildrenCause::Jsx {
+                            children_prop,
+                            dangerous_prop_cause: dangerous_prop,
+                            children_cause: has_children,
+                        };
 
-                        return Some(state);
+                        return Some(NoVoidElementsWithChildrenState::new(name, cause));
                     }
                 }
             }
@@ -144,18 +228,18 @@ impl Rule for NoVoidElementsWithChildren {
                 let name = name.as_jsx_name()?.value_token().ok()?;
                 let name = name.text_trimmed();
                 if is_void_dom_element(name) {
-                    let has_dangerous_prop = element
+                    let dangerous_prop = element
                         .find_attribute_by_name("dangerouslySetInnerHTML")
-                        .ok()?
-                        .is_some();
-                    let has_children_prop =
-                        element.find_attribute_by_name("children").ok()?.is_some();
-                    if has_dangerous_prop || has_children_prop {
-                        let mut state = NoVoidElementsWithChildrenState::new(name);
-                        state.with_dangerous_prop_cause(has_dangerous_prop);
-                        state.with_children_cause(has_children_prop);
+                        .ok()?;
+                    let children_prop = element.find_attribute_by_name("children").ok()?;
+                    if dangerous_prop.is_some() || children_prop.is_some() {
+                        let cause = NoVoidElementsWithChildrenCause::Jsx {
+                            children_prop,
+                            dangerous_prop_cause: dangerous_prop,
+                            children_cause: false,
+                        };
 
-                        return Some(state);
+                        return Some(NoVoidElementsWithChildrenState::new(name, cause));
                     }
                 }
             }
@@ -172,18 +256,19 @@ impl Rule for NoVoidElementsWithChildren {
                     let element_name = element_name.text();
                     if is_void_dom_element(element_name) {
                         let has_children = react_create_element.children.is_some();
-                        let has_dangerous_prop = react_create_element
-                            .find_prop_by_name("dangerouslySetInnerHTML")
-                            .is_some();
-                        let has_children_prop =
-                            react_create_element.find_prop_by_name("children").is_some();
+                        let dangerous_prop =
+                            react_create_element.find_prop_by_name("dangerouslySetInnerHTML");
+                        let children_prop = react_create_element.find_prop_by_name("children");
 
-                        if has_dangerous_prop || has_children || has_children_prop {
-                            let mut state = NoVoidElementsWithChildrenState::new(element_name);
-                            state.with_dangerous_prop_cause(has_dangerous_prop);
-                            state.with_children_cause(has_children || has_children_prop);
+                        if dangerous_prop.is_some() || has_children || children_prop.is_some() {
+                            let cause = NoVoidElementsWithChildrenCause::ReactCreateElement {
+                                children_prop,
+                                dangerous_prop_cause: dangerous_prop,
+                                children_cause: has_children,
+                                react_create_element,
+                            };
 
-                            return Some(state);
+                            return Some(NoVoidElementsWithChildrenState::new(element_name, cause));
                         }
                     }
                 }
@@ -209,7 +294,109 @@ impl Rule for NoVoidElementsWithChildren {
         Some(RuleDiagnostic::new(
             rule_category!(),
             range,
-            state.message(),
+            state.diagnostic_message(),
         ))
+    }
+
+    fn action(ctx: &RuleContext<Self>, state: &Self::State) -> Option<JsRuleAction> {
+        let node = ctx.query();
+        let mut mutation = ctx.root().begin();
+
+        match node {
+            NoVoidElementsWithChildrenQuery::JsxElement(element) => {
+                if let NoVoidElementsWithChildrenCause::Jsx {
+                    children_prop,
+                    dangerous_prop_cause,
+                    ..
+                } = &state.cause
+                {
+                    let opening_element = element.opening_element().ok()?;
+                    let closing_element = element.closing_element().ok()?;
+
+                    // here we create a new list of attributes, ignoring the ones that needs to be
+                    // removed
+                    let new_attribute_list: Vec<_> = opening_element
+                        .attributes()
+                        .into_iter()
+                        .filter_map(|attribute| {
+                            if let JsxAnyAttribute::JsxAttribute(attribute) = &attribute {
+                                if let Some(children_prop) = children_prop {
+                                    if children_prop == attribute {
+                                        return None;
+                                    }
+                                }
+
+                                if let Some(dangerous_prop_cause) = dangerous_prop_cause {
+                                    if dangerous_prop_cause == attribute {
+                                        return None;
+                                    }
+                                }
+                            }
+                            Some(attribute)
+                        })
+                        .collect();
+
+                    let new_attribute_list = jsx_attribute_list(new_attribute_list);
+
+                    let new_node = jsx_self_closing_element(
+                        opening_element.l_angle_token().ok()?,
+                        opening_element.name().ok()?,
+                        new_attribute_list,
+                        closing_element.slash_token().ok()?,
+                        opening_element.r_angle_token().ok()?,
+                    )
+                    .build();
+                    mutation.replace_element(
+                        element.clone().into_syntax().into(),
+                        new_node.into_syntax().into(),
+                    );
+                }
+            }
+            NoVoidElementsWithChildrenQuery::JsCallExpression(_) => {
+                if let NoVoidElementsWithChildrenCause::ReactCreateElement {
+                    children_prop,
+                    dangerous_prop_cause,
+                    react_create_element,
+                    children_cause,
+                } = &state.cause
+                {
+                    if *children_cause {
+                        if let Some(children) = react_create_element.children.as_ref() {
+                            mutation.remove_node(children.clone());
+                        }
+                    }
+                    if let Some(children_prop) = children_prop.as_ref() {
+                        mutation.remove_node(children_prop.clone());
+                    }
+                    if let Some(dangerous_prop_case) = dangerous_prop_cause.as_ref() {
+                        mutation.remove_node(dangerous_prop_case.clone());
+                    }
+                }
+            }
+            // self closing elements don't have inner children so we can safely remove the props
+            // that we don't need
+            NoVoidElementsWithChildrenQuery::JsxSelfClosingElement(_) => {
+                if let NoVoidElementsWithChildrenCause::Jsx {
+                    children_prop,
+                    dangerous_prop_cause,
+                    ..
+                } = &state.cause
+                {
+                    if let Some(children_prop) = children_prop.as_ref() {
+                        mutation.remove_node(children_prop.clone());
+                    }
+                    if let Some(dangerous_prop_case) = dangerous_prop_cause.as_ref() {
+                        mutation.remove_node(dangerous_prop_case.clone());
+                    }
+                }
+            }
+        }
+
+        Some(JsRuleAction {
+            mutation,
+            message: state.action_message(),
+            category: ActionCategory::QuickFix,
+            applicability: Applicability::MaybeIncorrect,
+        })
     }
 }

@@ -17,7 +17,7 @@ expression: inJsx.jsx
 
 # Diagnostics
 ```
-inJsx.jsx:2:5 lint/nursery/noVoidElementsWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+inJsx.jsx:2:5 lint/nursery/noVoidElementsWithChildren  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! br is a void element tag and must not have children.
   
@@ -26,11 +26,21 @@ inJsx.jsx:2:5 lint/nursery/noVoidElementsWithChildren ━━━━━━━━�
   2 │     <br>invalid child</br>
     │     ^^^^^^^^^^^^^^^^^^^^^^
   
+  i Suggested fix: Remove the children.
+  
+      | @@ -1,5 +1,5 @@
+  0 0 |   <>
+  1   | -     <br>invalid child</br>
+    1 | +     <br/>
+  2 2 |       <img alt="some text">invalid child</img>
+  3 3 |       <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }}></img>
+  4 4 |       <img alt="some text" children={"some child"}></img>
+  
 
 ```
 
 ```
-inJsx.jsx:3:5 lint/nursery/noVoidElementsWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+inJsx.jsx:3:5 lint/nursery/noVoidElementsWithChildren  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! img is a void element tag and must not have children.
   
@@ -39,11 +49,22 @@ inJsx.jsx:3:5 lint/nursery/noVoidElementsWithChildren ━━━━━━━━�
   3 │     <img alt="some text">invalid child</img>
     │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   
+  i Suggested fix: Remove the children.
+  
+      | @@ -1,6 +1,6 @@
+  0 0 |   <>
+  1 1 |       <br>invalid child</br>
+  2   | -     <img alt="some text">invalid child</img>
+    2 | +     <img alt="some text"/>
+  3 3 |       <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }}></img>
+  4 4 |       <img alt="some text" children={"some child"}></img>
+  5 5 |       <img alt="some text" children={"some child"} />
+  
 
 ```
 
 ```
-inJsx.jsx:4:5 lint/nursery/noVoidElementsWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+inJsx.jsx:4:5 lint/nursery/noVoidElementsWithChildren  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! img is a void element tag and must not have the dangerouslySetInnerHTML prop.
   
@@ -52,11 +73,23 @@ inJsx.jsx:4:5 lint/nursery/noVoidElementsWithChildren ━━━━━━━━�
   4 │     <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }}></img>
     │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   
+  i Suggested fix: Remove the dangerouslySetInnerHTML prop.
+  
+      | @@ -1,7 +1,7 @@
+  0 0 |   <>
+  1 1 |       <br>invalid child</br>
+  2 2 |       <img alt="some text">invalid child</img>
+  3   | -     <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }}></img>
+    3 | +     <img alt="some text" />
+  4 4 |       <img alt="some text" children={"some child"}></img>
+  5 5 |       <img alt="some text" children={"some child"} />
+  6 6 |       <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }} >invalid child</img>
+  
 
 ```
 
 ```
-inJsx.jsx:5:5 lint/nursery/noVoidElementsWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+inJsx.jsx:5:5 lint/nursery/noVoidElementsWithChildren  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! img is a void element tag and must not have children.
   
@@ -65,11 +98,23 @@ inJsx.jsx:5:5 lint/nursery/noVoidElementsWithChildren ━━━━━━━━�
   5 │     <img alt="some text" children={"some child"}></img>
     │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   
+  i Suggested fix: Remove the children.
+  
+      | @@ -2,7 +2,7 @@
+  1 1 |       <br>invalid child</br>
+  2 2 |       <img alt="some text">invalid child</img>
+  3 3 |       <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }}></img>
+  4   | -     <img alt="some text" children={"some child"}></img>
+    4 | +     <img alt="some text" />
+  5 5 |       <img alt="some text" children={"some child"} />
+  6 6 |       <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }} >invalid child</img>
+  7 7 |   </>
+  
 
 ```
 
 ```
-inJsx.jsx:6:5 lint/nursery/noVoidElementsWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+inJsx.jsx:6:5 lint/nursery/noVoidElementsWithChildren  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! img is a void element tag and must not have children.
   
@@ -78,11 +123,22 @@ inJsx.jsx:6:5 lint/nursery/noVoidElementsWithChildren ━━━━━━━━�
   6 │     <img alt="some text" children={"some child"} />
     │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   
+  i Suggested fix: Remove the children.
+  
+      | @@ -3,6 +3,6 @@
+  2 2 |       <img alt="some text">invalid child</img>
+  3 3 |       <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }}></img>
+  4 4 |       <img alt="some text" children={"some child"}></img>
+  5   | -     <img alt="some text" children={"some child"} />
+    5 | +     <img alt="some text" />
+  6 6 |       <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }} >invalid child</img>
+  7 7 |   </>
+  
 
 ```
 
 ```
-inJsx.jsx:7:5 lint/nursery/noVoidElementsWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+inJsx.jsx:7:5 lint/nursery/noVoidElementsWithChildren  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! img is a void element tag and must not have children, or the dangerouslySetInnerHTML prop.
   
@@ -90,6 +146,16 @@ inJsx.jsx:7:5 lint/nursery/noVoidElementsWithChildren ━━━━━━━━�
     │
   7 │     <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }} >invalid child</img>
     │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  
+  i Suggested fix: Remove the children and the dangerouslySetInnerHTML prop.
+  
+      | @@ -4,5 +4,5 @@
+  3 3 |       <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }}></img>
+  4 4 |       <img alt="some text" children={"some child"}></img>
+  5 5 |       <img alt="some text" children={"some child"} />
+  6   | -     <img alt="some text" dangerouslySetInnerHTML={{ __html: "text" }} >invalid child</img>
+    6 | +     <img alt="some text" />
+  7 7 |   </>
   
 
 ```
