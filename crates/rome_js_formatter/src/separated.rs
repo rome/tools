@@ -84,7 +84,6 @@ where
 
 /// Iterator for formatting separated elements. Prints the separator between each element and
 /// inserts a trailing separator if necessary
-#[derive(Clone)]
 pub struct FormatSeparatedIter<I, Language, Node>
 where
     Language: rome_rowan::Language,
