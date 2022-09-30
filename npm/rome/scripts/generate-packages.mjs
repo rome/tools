@@ -68,16 +68,17 @@ function writeManifest(packagePath) {
 		fs.readFileSync(manifestPath).toString("utf-8"),
 	);
 
-	const nativePackages = PLATFORMS.flatMap(
-		(platform) =>
-			ARCHITECTURES.map(
-				(arch) => [`@rometools/cli-${platform}-${arch}`, rootManifest.version],
-			),
+	const nativePackages = PLATFORMS.flatMap((platform) =>
+		ARCHITECTURES.map((arch) => [
+			`@rometools/cli-${platform}-${arch}`,
+			rootManifest.version,
+		]),
 	);
 
-	const wasmPackages = WASM_TARGETS.map(
-		(target) => [`@rometools/wasm-${target}`, rootManifest.version],
-	);
+	const wasmPackages = WASM_TARGETS.map((target) => [
+		`@rometools/wasm-${target}`,
+		rootManifest.version,
+	]);
 
 	manifestData["version"] = rootManifest.version;
 	manifestData["optionalDependencies"] = Object.fromEntries(

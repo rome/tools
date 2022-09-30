@@ -1,18 +1,31 @@
 use crate::prelude::*;
 
-use crate::js::declarations::function_declaration::FormatFunction;
+use crate::js::declarations::function_declaration::{FormatFunction, FormatFunctionOptions};
 use crate::parentheses::{
     is_callee, is_first_in_statement, is_tag, FirstInStatementMode, NeedsParentheses,
 };
-use rome_formatter::write;
+
+use rome_formatter::FormatRuleWithOptions;
 use rome_js_syntax::{JsFunctionExpression, JsSyntaxNode};
 
-#[derive(Debug, Clone, Default)]
-pub struct FormatJsFunctionExpression;
+#[derive(Debug, Copy, Clone, Default)]
+pub struct FormatJsFunctionExpression {
+    options: FormatFunctionOptions,
+}
+
+impl FormatRuleWithOptions<JsFunctionExpression> for FormatJsFunctionExpression {
+    type Options = FormatFunctionOptions;
+
+    fn with_options(mut self, options: Self::Options) -> Self {
+        self.options = options;
+        self
+    }
+}
 
 impl FormatNodeRule<JsFunctionExpression> for FormatJsFunctionExpression {
     fn fmt_fields(&self, node: &JsFunctionExpression, f: &mut JsFormatter) -> FormatResult<()> {
-        write![f, [FormatFunction::from(node.clone())]]
+        FormatFunction::from(node.clone()).fmt_with_options(f, &self.options)?;
+        Ok(())
     }
 
     fn needs_parentheses(&self, item: &JsFunctionExpression) -> bool {

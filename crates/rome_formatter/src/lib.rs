@@ -47,7 +47,10 @@ use crate::format_element::document::Document;
 use crate::printed_tokens::PrintedTokens;
 use crate::printer::{Printer, PrinterOptions};
 pub use arguments::{Argument, Arguments};
-pub use buffer::{Buffer, BufferExtensions, BufferSnapshot, Inspect, PreambleBuffer, VecBuffer};
+pub use buffer::{
+    Buffer, BufferExtensions, BufferSnapshot, Inspect, PreambleBuffer, RemoveSoftLinesBuffer,
+    VecBuffer,
+};
 pub use builders::BestFitting;
 
 use crate::builders::syntax_token_cow_slice;
@@ -565,6 +568,14 @@ pub enum FormatError {
 
     /// In case printing the document failed because it has an invalid structure.
     InvalidDocument(InvalidDocumentError),
+
+    /// Formatting failed because some content encountered a situation where a layout
+    /// choice by an enclosing [`Format`] resulted in a poor layout for a child [`Format`].
+    ///
+    /// It's up to an enclosing [`Format`] to handle the error and pick another layout.
+    /// This error should not be raised if there's no outer [`Format`] handling the poor layout error,
+    /// avoiding that formatting of the whole document fails.
+    PoorLayout,
 }
 
 impl std::fmt::Display for FormatError {
@@ -576,6 +587,9 @@ impl std::fmt::Display for FormatError {
                 "formatting range {input:?} is larger than syntax tree {tree:?}"
             ),
             FormatError::InvalidDocument(error) => std::write!(fmt, "Invalid document: {error}\n\n This is an internal Rome error. Please report if necessary."),
+            FormatError::PoorLayout => {
+                std::write!(fmt, "Poor layout: The formatter wasn't able to pick a good layout for your document. This is an internal Rome error. Please report if necessary.")
+            }
         }
     }
 }
@@ -1479,6 +1493,30 @@ impl<Context> FormatState<Context> {
         }
     }
 
+    #[cfg(not(debug_assertions))]
+    #[inline]
+    pub fn set_token_tracking_disabled(&mut self, _: bool) {}
+
+    /// Disables or enables token tracking for a portion of the code.
+    ///
+    /// It can be useful to disable the token tracking when it is necessary to re-format a node with different parameters.
+    #[cfg(debug_assertions)]
+    pub fn set_token_tracking_disabled(&mut self, enabled: bool) {
+        self.printed_tokens.set_disabled(enabled)
+    }
+
+    #[cfg(not(debug_assertions))]
+    #[inline]
+    pub fn is_token_tracking_disabled(&self) -> bool {
+        false
+    }
+
+    /// Returns `true` if token tracking is currently disabled.
+    #[cfg(debug_assertions)]
+    pub fn is_token_tracking_disabled(&self) -> bool {
+        self.printed_tokens.is_disabled()
+    }
+
     /// Asserts in debug builds that all tokens have been printed.
     #[inline]
     pub fn assert_formatted_all_tokens<L: Language>(
@@ -1500,7 +1538,7 @@ where
     pub fn snapshot(&self) -> FormatStateSnapshot {
         FormatStateSnapshot {
             #[cfg(debug_assertions)]
-            printed_tokens: self.printed_tokens.clone(),
+            printed_tokens: self.printed_tokens.snapshot(),
         }
     }
 
@@ -1512,7 +1550,7 @@ where
 
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
-                self.printed_tokens = printed_tokens;
+                self.printed_tokens.restore(printed_tokens);
             }
         }
     }
@@ -1520,5 +1558,5 @@ where
 
 pub struct FormatStateSnapshot {
     #[cfg(debug_assertions)]
-    printed_tokens: PrintedTokens,
+    printed_tokens: printed_tokens::PrintedTokensSnapshot,
 }

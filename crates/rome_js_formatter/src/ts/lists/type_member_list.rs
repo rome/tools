@@ -14,21 +14,28 @@ impl FormatRule<TsTypeMemberList> for FormatTsTypeMemberList {
         let items = node.iter();
         let last_index = items.len().saturating_sub(1);
 
-        f.join_with(&soft_line_break_or_space())
-            .entries(items.enumerate().map(|(index, member)| TsTypeMemberItem {
-                last: index == last_index,
-                member,
-            }))
-            .finish()
+        let mut joiner = f.join_nodes_with_soft_line();
+
+        for (index, member) in items.enumerate() {
+            joiner.entry(
+                member.syntax(),
+                &TsTypeMemberItem {
+                    last: index == last_index,
+                    member: &member,
+                },
+            )
+        }
+
+        joiner.finish()
     }
 }
 
-struct TsTypeMemberItem {
+struct TsTypeMemberItem<'a> {
     last: bool,
-    member: TsAnyTypeMember,
+    member: &'a TsAnyTypeMember,
 }
 
-impl Format<JsFormatContext> for TsTypeMemberItem {
+impl Format<JsFormatContext> for TsTypeMemberItem<'_> {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let mut is_verbatim = false;
 

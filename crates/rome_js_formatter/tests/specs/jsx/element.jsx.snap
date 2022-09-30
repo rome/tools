@@ -331,12 +331,10 @@ function Tabs() {
 					language={language}
 					placeholder="Enter some code here"
 					onChange={(evn) => {
-						setPlaygroundState(
-							(state) => ({
-								...state,
-								code: evn.target.value,
-							}),
-						);
+						setPlaygroundState((state) => ({
+							...state,
+							code: evn.target.value,
+						}));
 					}}
 					style={{
 						fontSize: 12,
@@ -458,15 +456,13 @@ let component = (
 
 let bar = (
 	<div>
-		{foo(
-			() => (
-				<div>
-					{" "}
-					the quick brown fox jumps over the lazy dog and then jumps over the
-					lazy cat and then over the lazy fish.{" "}
-				</div>
-			),
-		)}
+		{foo(() => (
+			<div>
+				{" "}
+				the quick brown fox jumps over the lazy dog and then jumps over the lazy
+				cat and then over the lazy fish.{" "}
+			</div>
+		))}
 	</div>
 );
 
@@ -505,9 +501,9 @@ const breadcrumbItems = [
     2: <div tooltip="A very long tooltip text that would otherwise make the attribute break onto the same line but it is not because of the single string layout"></div>;
     7: 		tooltip="A very long tooltip text that would otherwise make the attribute break
    14: 	<ASuperLongComponentNameThatWouldBreakButDoesntSinceTheComponent></ASuperLongComponentNameThatWouldBreakButDoesntSinceTheComponent>
-  126: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-  147: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-  160: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-  185: 				<pre className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs">
-  234: 		Uncle Boonmee Who Can Recall His Past Lives dir. Apichatpong Weerasethakul{" "}
+  124: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+  145: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+  158: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+  183: 				<pre className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs">
+  232: 		Uncle Boonmee Who Can Recall His Past Lives dir. Apichatpong Weerasethakul{" "}
 

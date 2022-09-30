@@ -127,8 +127,7 @@ impl SimpleArgument {
             let JsStaticMemberExpressionFields { member, object, .. } =
                 static_expression.as_fields();
 
-            Ok(SimpleArgument::from(member?).is_simple_impl(depth)
-                && SimpleArgument::from(object?).is_simple_impl(depth))
+            Ok(member.is_ok() && SimpleArgument::from(object?).is_simple_impl(depth))
         } else {
             Ok(false)
         }

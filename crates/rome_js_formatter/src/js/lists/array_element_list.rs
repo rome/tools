@@ -24,7 +24,7 @@ impl FormatRule<JsArrayElementList> for FormatJsArrayElementList {
     type Context = JsFormatContext;
 
     fn fmt(&self, node: &JsArrayElementList, f: &mut JsFormatter) -> FormatResult<()> {
-        let layout = if can_print_fill(node, f.context().comments()) {
+        let layout = if can_concisely_print_array_list(node, f.context().comments()) {
             ArrayLayout::Fill
         } else {
             ArrayLayout::OnePerLine
@@ -89,7 +89,10 @@ enum ArrayLayout {
 /// The underlying logic only allows lists of literal expressions
 /// with 10 or less characters, potentially wrapped in a "short"
 /// unary expression (+, -, ~ or !)
-fn can_print_fill(list: &JsArrayElementList, comments: &JsComments) -> bool {
+pub(crate) fn can_concisely_print_array_list(
+    list: &JsArrayElementList,
+    comments: &JsComments,
+) -> bool {
     use rome_js_syntax::JsAnyArrayElement::*;
     use rome_js_syntax::JsAnyExpression::*;
     use rome_js_syntax::JsUnaryOperator::*;

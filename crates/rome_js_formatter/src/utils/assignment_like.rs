@@ -1,4 +1,5 @@
 use crate::js::auxiliary::initializer_clause::FormatJsInitializerClauseOptions;
+use crate::js::expressions::arrow_function_expression::FormatJsArrowFunctionExpressionOptions;
 use crate::prelude::*;
 use crate::utils::member_chain::is_member_call_chain;
 use crate::utils::object::write_member_name;
@@ -438,7 +439,7 @@ impl JsAnyAssignmentLike {
                     let width = write_member_name(&name.into(), f)?;
                     let text_width_for_break =
                         (u8::from(f.options().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
-                    width < text_width_for_break
+                    width < text_width_for_break && property_annotation.is_none()
                 };
 
                 write!(f, [property_annotation.format()])?;
@@ -917,7 +918,7 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                     self.write_operator(f)?;
                 }
 
-                match &layout {
+                match layout {
                     AssignmentLikeLayout::OnlyLeft => Ok(()),
                     AssignmentLikeLayout::Fluid => {
                         let group_id = f.group_id("assignment_like");
@@ -1189,9 +1190,13 @@ pub(crate) fn with_assignment_layout(
 impl Format<JsFormatContext> for WithAssignmentLayout<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         match self.expression {
-            JsAnyExpression::JsArrowFunctionExpression(arrow) => {
-                arrow.format().with_options(self.layout).fmt(f)
-            }
+            JsAnyExpression::JsArrowFunctionExpression(arrow) => arrow
+                .format()
+                .with_options(FormatJsArrowFunctionExpressionOptions {
+                    assignment_layout: self.layout,
+                    ..FormatJsArrowFunctionExpressionOptions::default()
+                })
+                .fmt(f),
             expression => expression.format().fmt(f),
         }
     }

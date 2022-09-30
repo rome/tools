@@ -1,5 +1,4 @@
 use crate::prelude::*;
-use crate::utils::node_has_leading_newline;
 use rome_js_syntax::TsEnumMemberList;
 
 #[derive(Debug, Clone, Default)]
@@ -9,14 +8,12 @@ impl FormatRule<TsEnumMemberList> for FormatTsEnumMemberList {
     type Context = JsFormatContext;
 
     fn fmt(&self, node: &TsEnumMemberList, f: &mut JsFormatter) -> FormatResult<()> {
-        let has_newline = node_has_leading_newline(node.syntax());
+        let mut joiner = f.join_nodes_with_soft_line();
 
-        f.join_with(&if has_newline {
-            hard_line_break()
-        } else {
-            soft_line_break_or_space()
-        })
-        .entries(node.format_separated(",").nodes_grouped())
-        .finish()
+        for variant in node.format_separated(",").nodes_grouped() {
+            joiner.entry(variant.node()?.syntax(), &variant)
+        }
+
+        joiner.finish()
     }
 }

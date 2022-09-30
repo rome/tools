@@ -164,60 +164,7 @@ var l = base
 ```diff
 --- Prettier
 +++ Rome
-@@ -111,18 +111,20 @@
-   .ofType(ActionTypes.SEARCHED_USERS)
-   .map((action) => action.payload.query)
-   .filter((q) => !!q)
--  .switchMap((q) =>
--    Observable.timer(800) // debounce
--      .takeUntil(action$.ofType(ActionTypes.CLEARED_SEARCH_RESULTS))
--      .mergeMap(() =>
--        Observable.merge(
--          Observable.of(replace(`?q=${q}`)),
--          ajax
--            .getJSON(`https://api.github.com/search/users?q=${q}`)
--            .map((res) => res.items)
--            .map(receiveUsers),
-+  .switchMap(
-+    (q) =>
-+      Observable.timer(800) // debounce
-+        .takeUntil(action$.ofType(ActionTypes.CLEARED_SEARCH_RESULTS))
-+        .mergeMap(
-+          () =>
-+            Observable.merge(
-+              Observable.of(replace(`?q=${q}`)),
-+              ajax
-+                .getJSON(`https://api.github.com/search/users?q=${q}`)
-+                .map((res) => res.items)
-+                .map(receiveUsers),
-+            ),
-         ),
--      ),
-   );
- 
- window.FooClient.setVars({
-@@ -138,10 +140,18 @@
- const a1 = x.a(true).b(null).c(123);
- const a2 = x.d("").e(``).f(g);
- const a3 = x.d("").e(`${123}`).f(g);
--const a4 = x.h(i.j).k(l()).m([n, o]);
-+const a4 = x
-+  .h(i.j)
-+  .k(l())
-+  .m([n, o]);
- class X {
-   y() {
--    const j = x.a(this).b(super.cde()).f(/g/).h(new i()).j();
-+    const j = x
-+      .a(this)
-+      .b(super.cde())
-+      .f(/g/)
-+      .h(new i())
-+      .j();
-   }
- }
- 
-@@ -161,7 +171,4 @@
+@@ -161,7 +161,4 @@
    .b()
    .c(a(a(b(c(d().p).p).p).p));
  
@@ -344,20 +291,18 @@ action$
   .ofType(ActionTypes.SEARCHED_USERS)
   .map((action) => action.payload.query)
   .filter((q) => !!q)
-  .switchMap(
-    (q) =>
-      Observable.timer(800) // debounce
-        .takeUntil(action$.ofType(ActionTypes.CLEARED_SEARCH_RESULTS))
-        .mergeMap(
-          () =>
-            Observable.merge(
-              Observable.of(replace(`?q=${q}`)),
-              ajax
-                .getJSON(`https://api.github.com/search/users?q=${q}`)
-                .map((res) => res.items)
-                .map(receiveUsers),
-            ),
+  .switchMap((q) =>
+    Observable.timer(800) // debounce
+      .takeUntil(action$.ofType(ActionTypes.CLEARED_SEARCH_RESULTS))
+      .mergeMap(() =>
+        Observable.merge(
+          Observable.of(replace(`?q=${q}`)),
+          ajax
+            .getJSON(`https://api.github.com/search/users?q=${q}`)
+            .map((res) => res.items)
+            .map(receiveUsers),
         ),
+      ),
   );
 
 window.FooClient.setVars({
@@ -373,18 +318,10 @@ it("gets triggered by mouseenter", () => {
 const a1 = x.a(true).b(null).c(123);
 const a2 = x.d("").e(``).f(g);
 const a3 = x.d("").e(`${123}`).f(g);
-const a4 = x
-  .h(i.j)
-  .k(l())
-  .m([n, o]);
+const a4 = x.h(i.j).k(l()).m([n, o]);
 class X {
   y() {
-    const j = x
-      .a(this)
-      .b(super.cde())
-      .f(/g/)
-      .h(new i())
-      .j();
+    const j = x.a(this).b(super.cde()).f(/g/).h(new i()).j();
   }
 }
 

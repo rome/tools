@@ -107,8 +107,8 @@ describe("Transport Layer", () => {
 
 		const transport = new Transport(socket);
 
-		expect(
-			() => onData(Buffer.from(`Content-Type: text/plain\r\n`)),
+		expect(() =>
+			onData(Buffer.from(`Content-Type: text/plain\r\n`)),
 		).toThrowError(
 			'invalid value for Content-Type expected "application/vscode-jsonrpc", got "text/plain"',
 		);
@@ -130,8 +130,8 @@ describe("Transport Layer", () => {
 
 		const transport = new Transport(socket);
 
-		expect(
-			() => onData(makeMessage({ jsonrpc: "2.0", id: 0, result: "result" })),
+		expect(() =>
+			onData(makeMessage({ jsonrpc: "2.0", id: 0, result: "result" })),
 		).toThrowError(
 			"could not find any pending request matching RPC response ID 0",
 		);

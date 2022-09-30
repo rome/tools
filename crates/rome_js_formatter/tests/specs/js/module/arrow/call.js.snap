@@ -57,8 +57,8 @@ Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
 -----
-const testResults = results.testResults.map(
-	(testResult) => formatResult(testResult, formatter, reporter),
+const testResults = results.testResults.map((testResult) =>
+	formatResult(testResult, formatter, reporter),
 );
 
 it("mocks regexp instances", () => {
@@ -73,19 +73,17 @@ expect(() => asyncRequest({ url: "/test-endpoint" }));
 expect(() => asyncRequest({ url: "/test-endpoint-but-with-a-long-url" }));
 // .toThrowError(/Required parameter/);
 
-expect(
-	() =>
-		asyncRequest({ url: "/test-endpoint-but-with-a-suuuuuuuuper-long-url" }),
+expect(() =>
+	asyncRequest({ url: "/test-endpoint-but-with-a-suuuuuuuuper-long-url" }),
 );
 // .toThrowError(/Required parameter/);
 
-expect(
-	() => asyncRequest({ type: "foo", url: "/test-endpoint" }),
+expect(() =>
+	asyncRequest({ type: "foo", url: "/test-endpoint" }),
 ).not.toThrowError();
 
-expect(
-	() =>
-		asyncRequest({ type: "foo", url: "/test-endpoint-but-with-a-long-url" }),
+expect(() =>
+	asyncRequest({ type: "foo", url: "/test-endpoint-but-with-a-long-url" }),
 ).not.toThrowError();
 
 const a = Observable.fromPromise(axiosInstance.post("/carts/mine")).map(
@@ -107,10 +105,9 @@ const composition = (ViewComponent, ContainerComponent) =>
 		static propTypes = {};
 	};
 
-romise.then(
-	(result) =>
-		result.veryLongVariable.veryLongPropertyName > someOtherVariable
-			? "ok"
-			: "fail",
+romise.then((result) =>
+	result.veryLongVariable.veryLongPropertyName > someOtherVariable
+		? "ok"
+		: "fail",
 );
 

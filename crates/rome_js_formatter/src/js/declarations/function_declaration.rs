@@ -1,6 +1,8 @@
 use crate::prelude::*;
 
-use rome_formatter::write;
+use crate::js::expressions::call_arguments::GroupedCallArgumentLayout;
+use crate::utils::function_body::{FormatMaybeCachedFunctionBody, FunctionBodyCacheMode};
+use rome_formatter::{write, RemoveSoftLinesBuffer};
 use rome_js_syntax::{
     JsAnyBinding, JsFunctionBody, JsFunctionDeclaration, JsFunctionExportDefaultDeclaration,
     JsFunctionExpression, JsParameters, JsSyntaxToken, TsAnyReturnType,
@@ -23,6 +25,12 @@ declare_node_union! {
         JsFunctionExpression |
         JsFunctionExportDefaultDeclaration |
         TsDeclareFunctionDeclaration
+}
+
+#[derive(Copy, Clone, Debug, Default)]
+pub struct FormatFunctionOptions {
+    pub call_argument_layout: Option<GroupedCallArgumentLayout>,
+    pub body_cache_mode: FunctionBodyCacheMode,
 }
 
 impl FormatFunction {
@@ -113,10 +121,20 @@ impl FormatFunction {
             FormatFunction::TsDeclareFunctionDeclaration(_) => None,
         })
     }
-}
 
-impl Format<JsFormatContext> for FormatFunction {
-    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
+    /// Formats the function with the specified `options`.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`FormatError::PoorLayout`] if [`call_argument_layout`](FormatFunctionOptions::call_argument_layout] is `Some`
+    /// and the function parameters contain some content that [*force a group to break*](FormatElements::will_break).
+    ///
+    /// This error is handled by [FormatJsCallArguments].
+    pub(crate) fn fmt_with_options(
+        &self,
+        f: &mut JsFormatter,
+        options: &FormatFunctionOptions,
+    ) -> FormatResult<()> {
         if let Some(async_token) = self.async_token() {
             write!(f, [async_token.format(), space()])?;
         }
@@ -141,6 +159,24 @@ impl Format<JsFormatContext> for FormatFunction {
 
         write!(f, [type_parameters.format()])?;
 
+        let format_parameters = format_with(|f: &mut JsFormatter| {
+            if options.call_argument_layout.is_some() {
+                let mut buffer = RemoveSoftLinesBuffer::new(f);
+
+                let mut recording = buffer.start_recording();
+                write!(recording, [parameters.format()])?;
+                let recorded = recording.stop();
+
+                if recorded.will_break() {
+                    return Err(FormatError::PoorLayout);
+                }
+            } else {
+                parameters.format().fmt(f)?;
+            }
+
+            Ok(())
+        });
+
         write!(
             f,
             [group(&format_with(|f| {
@@ -156,19 +192,35 @@ impl Format<JsFormatContext> for FormatFunction {
                 )?;
 
                 if group_parameters {
-                    write!(f, [group(&parameters.format())])?;
+                    write!(f, [group(&format_parameters)])?;
                 } else {
-                    write!(f, [parameters.format()])?;
+                    write!(f, [format_parameters])?;
                 }
 
-                write![f, [format_return_type_annotation]]
+                write!(f, [format_return_type_annotation])
             }))]
         )?;
 
         if let Some(body) = self.body()? {
-            write!(f, [space(), body.format()])?;
+            write!(
+                f,
+                [
+                    space(),
+                    FormatMaybeCachedFunctionBody {
+                        body: &body.into(),
+                        mode: options.body_cache_mode
+                    }
+                ]
+            )?;
         }
 
+        Ok(())
+    }
+}
+
+impl Format<JsFormatContext> for FormatFunction {
+    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
+        self.fmt_with_options(f, &FormatFunctionOptions::default())?;
         Ok(())
     }
 }

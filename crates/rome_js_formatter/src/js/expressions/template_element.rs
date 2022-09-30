@@ -1,9 +1,7 @@
 use crate::prelude::*;
-use rome_formatter::format_element::document::Document;
 use rome_formatter::prelude::tag::Tag;
-use rome_formatter::printer::{PrintWidth, Printer};
 use rome_formatter::{
-    format_args, write, CstFormatContext, FormatOptions, FormatRuleWithOptions, VecBuffer,
+    format_args, write, CstFormatContext, FormatRuleWithOptions, RemoveSoftLinesBuffer,
 };
 
 use crate::context::TabWidth;
@@ -78,32 +76,8 @@ impl Format<JsFormatContext> for FormatTemplateElement {
 
         let format_inner = format_with(|f: &mut JsFormatter| match self.options.layout {
             TemplateElementLayout::SingleLine => {
-                // The goal is to print the expression on a single line, even if it exceeds the configured print width.
-                //
-                // Ideally, it would be possible to use a custom buffer that drops all soft line breaks
-                // (or converts them to spaces). However, this isn't straightforward with our
-                // nested IR (but would be with a flat ir).
-                //
-                // That's why we write the expression into a temporary buffer and print it
-                // with a printer that uses a print width so large, that the expression never exceeds
-                // the print width.
-                let mut buffer = VecBuffer::new(f.state_mut());
-                write!(buffer, [format_expression])?;
-                let root = Document::from(buffer.into_vec());
-
-                let print_options = f
-                    .options()
-                    .as_print_options()
-                    .with_print_width(PrintWidth::infinite());
-                let printed = Printer::new(print_options).print(&root)?;
-
-                write!(
-                    f,
-                    [dynamic_text(
-                        printed.as_code(),
-                        self.element.inner_syntax()?.text_trimmed_range().start()
-                    )]
-                )
+                let mut buffer = RemoveSoftLinesBuffer::new(f);
+                write!(buffer, [format_expression])
             }
             TemplateElementLayout::Fit => {
                 use JsAnyExpression::*;

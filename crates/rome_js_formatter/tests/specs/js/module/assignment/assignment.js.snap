@@ -344,12 +344,12 @@ dsakdljaskldjaslk = [
 		created: "09/01/2017 17:25",
 	},
 ];
-render = withGraphQLQuery("node(1234567890){image{uri}}", function (
-	container,
-	data,
-) {
-	return "image";
-});
+render = withGraphQLQuery(
+	"node(1234567890){image{uri}}",
+	function (container, data) {
+		return "image";
+	},
+);
 
 loadNext = (stateIsOK && hasNext) || {
 	skipNext: true,

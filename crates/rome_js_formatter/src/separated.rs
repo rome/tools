@@ -4,6 +4,7 @@ use rome_formatter::{write, GroupId};
 use rome_js_syntax::JsLanguage;
 use rome_rowan::{
     AstNode, AstSeparatedElement, AstSeparatedList, AstSeparatedListElementsIterator, Language,
+    SyntaxResult,
 };
 use std::iter::FusedIterator;
 
@@ -15,6 +16,13 @@ pub struct FormatSeparatedElement<L: Language, N> {
     /// The separator to write if the element has no separator yet.
     separator: &'static str,
     options: FormatSeparatedOptions,
+}
+
+impl<L: Language, N: AstNode<Language = L>> FormatSeparatedElement<L, N> {
+    /// Returns the node belonging to the element.
+    pub fn node(&self) -> SyntaxResult<&N> {
+        self.element.node()
+    }
 }
 
 impl<N> Format<JsFormatContext> for FormatSeparatedElement<JsLanguage, N>
