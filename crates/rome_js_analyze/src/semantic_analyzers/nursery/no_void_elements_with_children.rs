@@ -1,4 +1,4 @@
-use crate::react::{is_react_create_element, ReactCreateElementCall};
+use crate::react::{ReactApiCall, ReactCreateElementCall};
 use crate::semantic_services::Semantic;
 use crate::JsRuleAction;
 use rome_analyze::context::RuleContext;
@@ -244,32 +244,31 @@ impl Rule for NoVoidElementsWithChildren {
                 }
             }
             NoVoidElementsWithChildrenQuery::JsCallExpression(call_expression) => {
-                if let Some(react_create_element) = is_react_create_element(call_expression, model)
-                {
-                    let element_type = react_create_element
-                        .element_type
-                        .as_js_any_expression()?
-                        .as_js_any_literal_expression()?
-                        .as_js_string_literal_expression()?;
+                let react_create_element =
+                    ReactCreateElementCall::from_call_expression(call_expression, model)?;
+                let element_type = react_create_element
+                    .element_type
+                    .as_js_any_expression()?
+                    .as_js_any_literal_expression()?
+                    .as_js_string_literal_expression()?;
 
-                    let element_name = element_type.inner_string_text().ok()?;
-                    let element_name = element_name.text();
-                    if is_void_dom_element(element_name) {
-                        let has_children = react_create_element.children.is_some();
-                        let dangerous_prop =
-                            react_create_element.find_prop_by_name("dangerouslySetInnerHTML");
-                        let children_prop = react_create_element.find_prop_by_name("children");
+                let element_name = element_type.inner_string_text().ok()?;
+                let element_name = element_name.text();
+                if is_void_dom_element(element_name) {
+                    let has_children = react_create_element.children.is_some();
+                    let dangerous_prop =
+                        react_create_element.find_prop_by_name("dangerouslySetInnerHTML");
+                    let children_prop = react_create_element.find_prop_by_name("children");
 
-                        if dangerous_prop.is_some() || has_children || children_prop.is_some() {
-                            let cause = NoVoidElementsWithChildrenCause::ReactCreateElement {
-                                children_prop,
-                                dangerous_prop_cause: dangerous_prop,
-                                children_cause: has_children,
-                                react_create_element,
-                            };
+                    if dangerous_prop.is_some() || has_children || children_prop.is_some() {
+                        let cause = NoVoidElementsWithChildrenCause::ReactCreateElement {
+                            children_prop,
+                            dangerous_prop_cause: dangerous_prop,
+                            children_cause: has_children,
+                            react_create_element,
+                        };
 
-                            return Some(NoVoidElementsWithChildrenState::new(element_name, cause));
-                        }
+                        return Some(NoVoidElementsWithChildrenState::new(element_name, cause));
                     }
                 }
             }

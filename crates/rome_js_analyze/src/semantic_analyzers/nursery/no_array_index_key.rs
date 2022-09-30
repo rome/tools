@@ -181,7 +181,7 @@ impl Rule for NoArrayIndexKey {
             markup! {"The order of the items may change, and this also affects performances and component state."}
         ).footer_note(
             markup! {
-                "Check the"<Hyperlink href="https://reactjs.org/docs/lists-and-keys.html#keys">"React documentation"</Hyperlink>". "
+                "Check the "<Hyperlink href="https://reactjs.org/docs/lists-and-keys.html#keys">"React documentation"</Hyperlink>". "
             }
         );
 
