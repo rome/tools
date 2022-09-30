@@ -22,8 +22,8 @@ pub struct JsFormatContext {
     /// Used during formatting of call arguments where function expressions and arrow function expressions
     /// are formatted a second time if they are the first or last call argument.
     ///
-    /// Caching the body in the call arguments formatting is important because it minimises the cases
-    /// where the algorithm is quadratic in case the function or arrow expression contains another
+    /// Caching the body in the call arguments formatting is important. It minimises the cases
+    /// where the algorithm is quadratic, in case the function or arrow expression contains another
     /// call expression with a function or call expression as first or last argument.
     ///
     /// It's sufficient to only store a single cached body to cover the vast majority of cases
