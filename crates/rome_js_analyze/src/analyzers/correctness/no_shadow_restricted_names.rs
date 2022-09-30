@@ -1,3 +1,4 @@
+use crate::globals::runtime::BUILTIN;
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::JsIdentifierBinding;
@@ -36,74 +37,6 @@ declare_rule! {
     }
 }
 
-const RESTRICTED_NAMES: [&str; 65] = [
-    "Array",
-    "ArrayBuffer",
-    "Atomics",
-    "BigInt",
-    "BigInt64Array",
-    "BigUint64Array",
-    "Boolean",
-    "constructor",
-    "DataView",
-    "Date",
-    "decodeURI",
-    "decodeURIComponent",
-    "encodeURI",
-    "encodeURIComponent",
-    "Error",
-    "escape",
-    "eval",
-    "EvalError",
-    "FinalizationRegistry",
-    "Float32Array",
-    "Float64Array",
-    "Function",
-    "globalThis",
-    "hasOwnProperty",
-    "Infinity",
-    "Int16Array",
-    "Int32Array",
-    "Int8Array",
-    "isFinite",
-    "isNaN",
-    "isPrototypeOf",
-    "JSON",
-    "Map",
-    "Math",
-    "NaN",
-    "Number",
-    "Object",
-    "parseFloat",
-    "parseInt",
-    "Promise",
-    "propertyIsEnumerable",
-    "Proxy",
-    "RangeError",
-    "ReferenceError",
-    "Reflect",
-    "RegExp",
-    "Set",
-    "SharedArrayBuffer",
-    "String",
-    "Symbol",
-    "SyntaxError",
-    "toLocaleString",
-    "toString",
-    "TypeError",
-    "Uint16Array",
-    "Uint32Array",
-    "Uint8Array",
-    "Uint8ClampedArray",
-    "undefined",
-    "unescape",
-    "URIError",
-    "valueOf",
-    "WeakMap",
-    "WeakRef",
-    "WeakSet",
-];
-
 pub struct State {
     shadowed_name: String,
 }
@@ -120,7 +53,7 @@ impl Rule for NoShadowRestrictedNames {
         let name = binding.name_token().ok()?;
         let name = name.text_trimmed();
 
-        if RESTRICTED_NAMES.contains(&name) {
+        if BUILTIN.contains(&name) {
             Some(State {
                 shadowed_name: name.to_string(),
             })
