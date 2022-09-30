@@ -431,13 +431,63 @@ where
     }
 }
 
+/// A Buffer that removes any soft line breaks.
+///
+/// * Removes [`lines`](FormatElement::Line) with the mode [`Soft`](LineMode::Soft).
+/// * Replaces [`lines`](FormatElement::Line) with the mode [`Soft`](LineMode::SoftOrSpace) with a [`Space`](FormatElement::Space)
+///
+/// # Examples
+///
+/// ```
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::{format, write};
+///
+/// # fn main() -> FormatResult<()> {
+/// use rome_formatter::{RemoveSoftLinesBuffer, SimpleFormatContext, VecBuffer};
+/// use rome_formatter::prelude::format_with;
+/// let formatted = format!(
+///     SimpleFormatContext::default(),
+///     [format_with(|f| {
+///         let mut buffer = RemoveSoftLinesBuffer::new(f);
+///
+///         write!(
+///             buffer,
+///             [
+///                 text("The next soft line or space gets replaced by a space"),
+///                 soft_line_break_or_space(),
+///                 text("and the line here"),
+///                 soft_line_break(),
+///                 text("is removed entirely.")
+///             ]
+///         )
+///     })]
+/// )?;
+///
+/// assert_eq!(
+///     formatted.document().as_ref(),
+///     &[
+///         FormatElement::Text(Text::Static { text: "The next soft line or space gets replaced by a space" }),
+///         FormatElement::Space,
+///         FormatElement::Text(Text::Static { text: "and the line here" }),
+///         FormatElement::Text(Text::Static { text: "is removed entirely." })
+///     ]
+/// );
+///
+/// # Ok(())
+/// # }
+/// ```
 pub struct RemoveSoftLinesBuffer<'a, Context> {
     inner: &'a mut dyn Buffer<Context = Context>,
-    /// Cache of written interned elements to the "cleaned" interned elements.
+
+    /// Cache of "original" interned elements to the "cleaned" interned elements.
+    ///
+    /// It's fine to not snapshot the cache. The worst that can happen is that it holds on to now unused
+    /// interned elements. But there's little harm in that and all gets cleaned up when dropping the buffer.
     interned_cache: FxHashMap<Interned, Interned>,
 }
 
 impl<'a, Context> RemoveSoftLinesBuffer<'a, Context> {
+    /// Creates a new buffer that removes the soft line breaks before writing them into `buffer`.
     pub fn new(inner: &'a mut dyn Buffer<Context = Context>) -> Self {
         Self {
             inner,
@@ -445,6 +495,7 @@ impl<'a, Context> RemoveSoftLinesBuffer<'a, Context> {
         }
     }
 
+    /// Removes the soft line breaks from an interned element.
     fn clean_interned(&mut self, interned: &Interned) -> Interned {
         clean_interned(interned, &mut self.interned_cache)
     }
@@ -455,9 +506,10 @@ fn clean_interned(
     interned: &Interned,
     interned_cache: &mut FxHashMap<Interned, Interned>,
 ) -> Interned {
-    match interned_cache.get(&interned) {
+    match interned_cache.get(interned) {
         Some(cleaned) => cleaned.clone(),
         None => {
+            // Find the first soft line break element or interned element that must be changed
             let result = interned
                 .iter()
                 .enumerate()
@@ -484,6 +536,7 @@ fn clean_interned(
                 });
 
             let result = match result {
+                // Copy the whole interned buffer so that becomes possible to change the necessary elements.
                 Some((mut cleaned, rest)) => {
                     for element in rest {
                         let element = match element {
@@ -499,10 +552,8 @@ fn clean_interned(
 
                     Interned::new(cleaned)
                 }
-                None => {
-                    // No softline, return interned as is
-                    interned.clone()
-                }
+                // No change necessary, return existing interned element
+                None => interned.clone(),
             };
 
             interned_cache.insert(interned.clone(), result.clone());
