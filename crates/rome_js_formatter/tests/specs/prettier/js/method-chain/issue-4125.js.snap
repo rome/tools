@@ -164,28 +164,7 @@ var l = base
 ```diff
 --- Prettier
 +++ Rome
-@@ -138,10 +138,18 @@
- const a1 = x.a(true).b(null).c(123);
- const a2 = x.d("").e(``).f(g);
- const a3 = x.d("").e(`${123}`).f(g);
--const a4 = x.h(i.j).k(l()).m([n, o]);
-+const a4 = x
-+  .h(i.j)
-+  .k(l())
-+  .m([n, o]);
- class X {
-   y() {
--    const j = x.a(this).b(super.cde()).f(/g/).h(new i()).j();
-+    const j = x
-+      .a(this)
-+      .b(super.cde())
-+      .f(/g/)
-+      .h(new i())
-+      .j();
-   }
- }
- 
-@@ -161,7 +169,4 @@
+@@ -161,7 +161,4 @@
    .b()
    .c(a(a(b(c(d().p).p).p).p));
  
@@ -339,18 +318,10 @@ it("gets triggered by mouseenter", () => {
 const a1 = x.a(true).b(null).c(123);
 const a2 = x.d("").e(``).f(g);
 const a3 = x.d("").e(`${123}`).f(g);
-const a4 = x
-  .h(i.j)
-  .k(l())
-  .m([n, o]);
+const a4 = x.h(i.j).k(l()).m([n, o]);
 class X {
   y() {
-    const j = x
-      .a(this)
-      .b(super.cde())
-      .f(/g/)
-      .h(new i())
-      .j();
+    const j = x.a(this).b(super.cde()).f(/g/).h(new i()).j();
   }
 }
 
