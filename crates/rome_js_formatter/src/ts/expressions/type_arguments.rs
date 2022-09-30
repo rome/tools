@@ -28,16 +28,6 @@ impl FormatNodeRule<TsTypeArguments> for FormatTsTypeArguments {
         //                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
         //                      |_________________________|
         //                      that's where we start from
-
-        //   const isArrowFunctionVariable = path.match(
-        //     (node) =>
-        //       !(node[paramsKey].length === 1 && isObjectType(node[paramsKey][0])),
-        //     undefined,
-        //     (node, name) => name === "typeAnnotation",
-        //     (node) => node.type === "Identifier",
-        //     isArrowFunctionVariableDeclarator
-        //   );
-
         let is_arrow_function_variables = {
             match ts_type_argument_list.first() {
                 // first argument is not mapped type or object type

@@ -13,6 +13,7 @@ mod object_like;
 mod object_pattern_like;
 #[cfg(test)]
 mod quickcheck_utils;
+pub(crate) mod test_call;
 mod typescript;
 
 use crate::parentheses::is_callee;

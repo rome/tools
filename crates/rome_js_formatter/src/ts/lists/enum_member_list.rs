@@ -1,5 +1,4 @@
 use crate::prelude::*;
-use crate::utils::node_has_leading_newline;
 use rome_js_syntax::TsEnumMemberList;
 
 #[derive(Debug, Clone, Default)]

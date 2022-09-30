@@ -5,7 +5,7 @@ use crate::js::lists::parameter_list::{
     AnyParameter, FormatJsAnyParameterList, JsAnyParameterList,
 };
 
-use crate::js::expressions::call_arguments::is_test_call_expression;
+use crate::utils::test_call::is_test_call_expression;
 use rome_js_syntax::{
     JsAnyConstructorParameter, JsAnyFormalParameter, JsCallExpression, JsConstructorParameters,
     JsParameters, JsSyntaxKind, JsSyntaxToken, TsType,
