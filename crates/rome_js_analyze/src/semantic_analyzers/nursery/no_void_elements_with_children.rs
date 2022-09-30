@@ -65,6 +65,7 @@ fn is_void_dom_element(element_name: &str) -> bool {
 }
 
 pub(crate) enum NoVoidElementsWithChildrenCause {
+    /// The cause affects React using JSX code
     Jsx {
         /// If the current element has children props in style
         ///
@@ -79,6 +80,7 @@ pub(crate) enum NoVoidElementsWithChildrenCause {
         /// If the current element has the prop `children`
         children_prop: Option<JsxAttribute>,
     },
+    /// The cause affects React using `React` object APIs
     ReactCreateElement {
         /// If the current element has children props in style:
         ///
