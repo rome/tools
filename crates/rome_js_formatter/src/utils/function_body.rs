@@ -32,7 +32,7 @@ impl Format<JsFormatContext> for FormatMaybeCachedFunctionBody<'_> {
             }
             FunctionBodyCacheMode::Cached => {
                 match f.context().get_cached_function_body(self.body) {
-                    Some(cached) => f.write_element(cached.clone()),
+                    Some(cached) => f.write_element(cached),
                     None => {
                         // This can happen in the unlikely event where a function has a parameter with
                         // an initializer that contains a call expression with a first or last function/arrow
@@ -51,7 +51,7 @@ impl Format<JsFormatContext> for FormatMaybeCachedFunctionBody<'_> {
                 Some(interned) => {
                     f.context_mut()
                         .set_cached_function_body(self.body, interned.clone());
-                    f.write_element(interned.clone())
+                    f.write_element(interned)
                 }
                 None => Ok(()),
             },

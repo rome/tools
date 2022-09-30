@@ -537,7 +537,7 @@ impl ArrowFunctionLayout {
                             middle,
                             tail: current,
                             expand_signatures: should_break,
-                            options: options.clone(),
+                            options: *options,
                         }),
                     }
                 }

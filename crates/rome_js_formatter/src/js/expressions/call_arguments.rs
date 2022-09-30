@@ -166,7 +166,7 @@ enum FormatCallArgument {
 impl FormatCallArgument {
     /// Returns `true` if this argument contains any content that forces a group to [`break`](FormatElements::will_break).
     fn will_break(&mut self, f: &mut JsFormatter) -> bool {
-        let breaks = match &self {
+        match &self {
             FormatCallArgument::Default {
                 element,
                 leading_lines,
@@ -191,9 +191,7 @@ impl FormatCallArgument {
                 ..
             } => result.will_break(),
             FormatCallArgument::Inspected { .. } => false,
-        };
-
-        breaks
+        }
     }
 
     fn cache_function_body(&mut self, f: &mut JsFormatter) {
@@ -621,7 +619,7 @@ impl Format<JsFormatContext> for FormatGroupedLastArgument<'_> {
                     )?;
 
                     if let Some(separator) = element.trailing_separator()? {
-                        write!(f, [format_removed(&separator)])?;
+                        write!(f, [format_removed(separator)])?;
                     }
 
                     Ok(())
@@ -734,7 +732,7 @@ fn arguments_grouped_layout(
 ) -> Option<GroupedCallArgumentLayout> {
     if should_group_first_argument(args, comments).unwrap_or(false) {
         Some(GroupedCallArgumentLayout::GroupedFirstArgument)
-    } else if should_group_last_argument(&args, comments).unwrap_or(false) {
+    } else if should_group_last_argument(args, comments).unwrap_or(false) {
         Some(GroupedCallArgumentLayout::GroupedLastArgument)
     } else {
         None
@@ -1132,7 +1130,7 @@ pub(crate) fn is_test_call_expression(call_expression: &JsCallExpression) -> Syn
             ))),
             Some(Ok(second)),
             third,
-        ) if arguments.args().len() <= 3 && contains_a_test_pattern(callee.clone())? => {
+        ) if arguments.args().len() <= 3 && contains_a_test_pattern(&callee)? => {
             // it('name', callback, duration)
             if !matches!(
                 third,
@@ -1147,7 +1145,7 @@ pub(crate) fn is_test_call_expression(call_expression: &JsCallExpression) -> Syn
 
             if second
                 .as_js_any_expression()
-                .map_or(false, |second| is_angular_test_wrapper(second))
+                .map_or(false, is_angular_test_wrapper)
             {
                 return Ok(true);
             }
@@ -1247,8 +1245,8 @@ fn is_unit_test_set_up_callee(callee: &JsAnyExpression) -> bool {
 /// Based on this [article]
 ///
 /// [article]: https://craftinginterpreters.com/scanning-on-demand.html#tries-and-state-machines
-fn contains_a_test_pattern(callee: JsAnyExpression) -> SyntaxResult<bool> {
-    let mut members = CalleeNamesIterator::new(callee);
+fn contains_a_test_pattern(callee: &JsAnyExpression) -> SyntaxResult<bool> {
+    let mut members = CalleeNamesIterator::new(callee.clone());
 
     let texts: [Option<SyntaxTokenText>; 5] = [
         members.next(),
@@ -1305,9 +1303,7 @@ struct CalleeNamesIterator {
 
 impl CalleeNamesIterator {
     fn new(callee: JsAnyExpression) -> Self {
-        Self {
-            next: Some(callee.into()),
-        }
+        Self { next: Some(callee) }
     }
 }
 
@@ -1374,13 +1370,13 @@ mod test {
     fn matches_simple_call() {
         let call_expression = extract_call_expression("test();");
         assert_eq!(
-            contains_a_test_pattern(call_expression.callee().unwrap()),
+            contains_a_test_pattern(&call_expression.callee().unwrap()),
             Ok(true)
         );
 
         let call_expression = extract_call_expression("it();");
         assert_eq!(
-            contains_a_test_pattern(call_expression.callee().unwrap()),
+            contains_a_test_pattern(&call_expression.callee().unwrap()),
             Ok(true)
         );
     }
@@ -1389,7 +1385,7 @@ mod test {
     fn matches_static_member_expression() {
         let call_expression = extract_call_expression("test.only();");
         assert_eq!(
-            contains_a_test_pattern(call_expression.callee().unwrap()),
+            contains_a_test_pattern(&call_expression.callee().unwrap()),
             Ok(true)
         );
     }
@@ -1398,7 +1394,7 @@ mod test {
     fn matches_static_member_expression_deep() {
         let call_expression = extract_call_expression("test.describe.parallel.only();");
         assert_eq!(
-            contains_a_test_pattern(call_expression.callee().unwrap()),
+            contains_a_test_pattern(&call_expression.callee().unwrap()),
             Ok(true)
         );
     }
@@ -1407,7 +1403,7 @@ mod test {
     fn doesnt_static_member_expression_deep() {
         let call_expression = extract_call_expression("test.describe.parallel.only.AHAHA();");
         assert_eq!(
-            contains_a_test_pattern(call_expression.callee().unwrap()),
+            contains_a_test_pattern(&call_expression.callee().unwrap()),
             Ok(false)
         );
     }

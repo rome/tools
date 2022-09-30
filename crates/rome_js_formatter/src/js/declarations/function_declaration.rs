@@ -199,7 +199,7 @@ impl FormatFunction {
                 [
                     space(),
                     FormatMaybeCachedFunctionBody {
-                        body: &body.clone().into(),
+                        body: &body.into(),
                         mode: options.body_cache_mode
                     }
                 ]
