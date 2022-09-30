@@ -986,7 +986,7 @@ fn fits_element_on_line<'a, 'rest>(
                 Some(group_id) => state
                     .group_modes
                     .get_print_mode(group_id)
-                    .unwrap_or_else(|| PrintMode::Flat),
+                    .unwrap_or_else(|| args.mode()),
             };
 
             if group_mode != condition.mode {
