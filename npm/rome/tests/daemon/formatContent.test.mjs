@@ -34,7 +34,7 @@ describe("Rome Deamon formatter", async () => {
 
 		expect(result.content).toEqual(content);
 		expect(result.diagnostics).toHaveLength(1);
-		expect(result.diagnostics[0].title[0].content).toContain(
+		expect(result.diagnostics[0].description).toContain(
 			"expected a name for the function in a function declaration, but found none",
 		);
 		expect(result.diagnostics).toMatchSnapshot("syntax error");

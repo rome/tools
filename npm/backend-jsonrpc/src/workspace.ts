@@ -241,27 +241,24 @@ export interface PullDiagnosticsResult {
 	diagnostics: Diagnostic[];
 }
 /**
- * A diagnostic message that can give information like errors or warnings.
+ * Serializable representation for a [Diagnostic](super::Diagnostic).
  */
 export interface Diagnostic {
-	children: SubDiagnostic[];
-	code?: Category;
-	file_id: FileId;
-	footers: Footer[];
-	primary?: SubDiagnostic;
+	advices: Advices;
+	category?: Category;
+	description: string;
+	location?: Location;
+	message: MarkupBuf;
 	severity: Severity;
-	suggestions: CodeSuggestion[];
-	summary?: string;
-	tag?: DiagnosticTag;
-	title: MarkupBuf;
+	source?: Diagnostic;
+	tags: DiagnosticTags;
+	verbose_advices: Advices;
 }
 /**
- * Everything that can be added to a diagnostic, like a suggestion that will be displayed under the actual error.
+ * Implementation of [Visitor] collecting serializable [Advice] into a vector.
  */
-export interface SubDiagnostic {
-	msg: MarkupBuf;
-	severity: Severity;
-	span: FileSpan;
+export interface Advices {
+	advices: Advice[];
 }
 export type Category =
 	| "lint/correctness/noArguments"
@@ -322,57 +319,66 @@ export type Category =
 	| "args/fileNotFound"
 	| "flags/invalid"
 	| "semanticTests";
-/**
- * A note or help that is displayed under the diagnostic.
- */
-export interface Footer {
-	msg: MarkupBuf;
-	severity: Severity;
+export interface Location {
+	path: Resource_for_String;
+	source_code?: string;
+	span?: TextRange;
 }
-/**
-	* A severity level for diagnostic messages.
-
-These are ordered in the following way: 
-	 */
-export type Severity = "Help" | "Note" | "Warning" | "Error" | "Bug";
-/**
- * A Suggestion that is provided by rslint, and can be reported to the user, and can be automatically applied if it has the right [`Applicability`].
- */
-export interface CodeSuggestion {
-	applicability: Applicability;
-	labels: TextRange[];
-	msg: MarkupBuf;
-	/**
-	 * If the `FileId` is `None`, it's in the same file as his parent.
-	 */
-	span: FileSpan;
-	suggestion: TextEdit;
-}
-export type DiagnosticTag = "Unnecessary" | "Deprecated" | "Both";
 export type MarkupBuf = MarkupNodeBuf[];
 /**
- * A range that is indexed in a specific file.
+ * The severity to associate to a diagnostic.
  */
-export interface FileSpan {
-	file: FileId;
-	range: TextRange;
-}
+export type Severity = "Fatal" | "Error" | "Warning" | "Information" | "Hint";
+export type DiagnosticTags = DiagnosticTag[];
 /**
- * Indicates how a tool should manage this suggestion.
+	* Serializable representation of a [Diagnostic](super::Diagnostic) advice
+
+See the [Visitor] trait for additional documentation on all the supported advice types. 
+	 */
+export type Advice =
+	| { Log: [LogCategory, MarkupBuf] }
+	| { List: MarkupBuf[] }
+	| { Frame: Location }
+	| { Diff: TextEdit }
+	| { Backtrace: [MarkupBuf, Backtrace] }
+	| { Command: string }
+	| { Group: [MarkupBuf, Advices] };
+/**
+ * Represents the resource a diagnostic is associated with.
  */
-export type Applicability = "Always" | "MaybeIncorrect";
+export type Resource_for_String =
+	| "Argv"
+	| "Memory"
+	| { File: FilePath_for_String };
 export type TextRange = [TextSize, TextSize];
-export interface TextEdit {
-	dictionary: string;
-	ops: CompressedOp[];
-}
 export interface MarkupNodeBuf {
 	content: string;
 	elements: MarkupElement[];
 }
-export type CompressedOp =
-	| { DiffOp: DiffOp }
-	| { EqualLines: { line_count: number } };
+/**
+ * Internal enum used to automatically generate bit offsets for [DiagnosticTags] and help with the implementation of `serde` and `schemars` for tags.
+ */
+export type DiagnosticTag =
+	| "Fixable"
+	| "Internal"
+	| "UnnecessaryCode"
+	| "DeprecatedCode";
+/**
+ * The category for a log advice, defines how the message should be presented to the user.
+ */
+export type LogCategory = "None" | "Info" | "Warn" | "Error";
+export interface TextEdit {
+	dictionary: string;
+	ops: CompressedOp[];
+}
+export type Backtrace = BacktraceFrame[];
+/**
+ * Represents the path of a file on the filesystem.
+ */
+export type FilePath_for_String =
+	| { Path: string }
+	| { FileId: FileId }
+	| { PathAndId: { file_id: FileId; path: string } };
 /**
  * Enumeration of all the supported markup elements
  */
@@ -387,10 +393,29 @@ export type MarkupElement =
 	| "Info"
 	| "Inverse"
 	| { Hyperlink: { href: string } };
+export type CompressedOp =
+	| { DiffOp: DiffOp }
+	| { EqualLines: { line_count: number } };
+/**
+ * Serializable representation of a backtrace frame.
+ */
+export interface BacktraceFrame {
+	ip: number;
+	symbols: BacktraceSymbol[];
+}
 export type DiffOp =
 	| { Equal: { range: TextRange } }
 	| { Insert: { range: TextRange } }
 	| { Delete: { range: TextRange } };
+/**
+ * Serializable representation of a backtrace frame symbol.
+ */
+export interface BacktraceSymbol {
+	colno?: number;
+	filename?: string;
+	lineno?: number;
+	name?: string;
+}
 export interface PullActionsParams {
 	path: RomePath;
 	range: TextRange;
@@ -404,6 +429,30 @@ export interface CodeAction {
 	suggestion: CodeSuggestion;
 }
 export type ActionCategory = "QuickFix" | "Refactor";
+/**
+ * A Suggestion that is provided by rslint, and can be reported to the user, and can be automatically applied if it has the right [`Applicability`].
+ */
+export interface CodeSuggestion {
+	applicability: Applicability;
+	labels: TextRange[];
+	msg: MarkupBuf;
+	/**
+	 * If the `FileId` is `None`, it's in the same file as his parent.
+	 */
+	span: FileSpan;
+	suggestion: TextEdit;
+}
+/**
+ * Indicates how a tool should manage this suggestion.
+ */
+export type Applicability = "Always" | "MaybeIncorrect";
+/**
+ * A range that is indexed in a specific file.
+ */
+export interface FileSpan {
+	file: FileId;
+	range: TextRange;
+}
 export interface FormatFileParams {
 	path: RomePath;
 }
