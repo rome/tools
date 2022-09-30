@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "typescript\\keywords\\keywords.ts"
+  test_file: typescript/keywords/keywords.ts
 ---
 
 # Input
@@ -53,7 +53,7 @@ module YYY4 {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,29 +1,37 @@
+@@ -1,29 +1,40 @@
  // All of these should be an error
  
  module Y3 {
@@ -86,11 +86,11 @@ module YYY4 {
  
  module Y4 {
 -  public enum Color {
--    Blue,
--    Red,
--  }
 +  public
-+  enum Color { Blue, Red }
++  enum Color {
+     Blue,
+     Red,
+   }
  }
  
  module YY3 {
@@ -100,16 +100,16 @@ module YYY4 {
      class A {
        s: string;
      }
-@@ -31,14 +39,13 @@
+@@ -31,14 +42,16 @@
  }
  
  module YY4 {
 -  private enum Color {
--    Blue,
--    Red,
--  }
 +  private
-+  enum Color { Blue, Red }
++  enum Color {
+     Blue,
+     Red,
+   }
  }
  
  module YYY3 {
@@ -119,17 +119,16 @@ module YYY4 {
      class A {
        s: string;
      }
-@@ -46,8 +53,6 @@
+@@ -46,7 +59,8 @@
  }
  
  module YYY4 {
 -  static enum Color {
--    Blue,
--    Red,
--  }
 +  static
-+  enum Color { Blue, Red }
- }
++  enum Color {
+     Blue,
+     Red,
+   }
 ```
 
 # Output
@@ -163,7 +162,10 @@ module Y3 {
 
 module Y4 {
   public
-  enum Color { Blue, Red }
+  enum Color {
+    Blue,
+    Red,
+  }
 }
 
 module YY3 {
@@ -177,7 +179,10 @@ module YY3 {
 
 module YY4 {
   private
-  enum Color { Blue, Red }
+  enum Color {
+    Blue,
+    Red,
+  }
 }
 
 module YYY3 {
@@ -191,7 +196,10 @@ module YYY3 {
 
 module YYY4 {
   static
-  enum Color { Blue, Red }
+  enum Color {
+    Blue,
+    Red,
+  }
 }
 ```
 
