@@ -4,7 +4,7 @@ The configuration file is considered **optional**, Rome has good defaults. Use t
 file to change those defaults.
 
 The configuration file must be placed at the root of your project, usually at the same directory level of your
-`package.correctnesson`. The name of the file must be `rome.correctnesson`.
+`package.json`. The name of the file must be `rome.json`.
 
 All properties are **optional**, you can even have an empty config!
 
