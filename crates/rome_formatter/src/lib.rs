@@ -1495,7 +1495,7 @@ impl<Context> FormatState<Context> {
 
     #[cfg(not(debug_assertions))]
     #[inline]
-    pub fn set_token_tracking_enabled(&mut self, _: bool) {}
+    pub fn set_token_tracking_disabled(&mut self, _: bool) {}
 
     /// Disables or enables token tracking for a portion of the code.
     ///
@@ -1507,7 +1507,7 @@ impl<Context> FormatState<Context> {
 
     #[cfg(not(debug_assertions))]
     #[inline]
-    pub fn is_token_tracking_enabled(&self) -> bool {
+    pub fn is_token_tracking_disabled(&self) -> bool {
         false
     }
 
