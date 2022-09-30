@@ -253,6 +253,13 @@ Rules that are being written. Rules under this category are meant to be consider
 Rules can be downgraded to this category in case some path release is needed. After an arbitrary amount of time, the team can decide
 to promote these rules into a more appropriate category.
 <div class="rule">
+<h3 data-toc-exclude id="noArrayIndexKey">
+	<a href="/docs/lint/rules/noArrayIndexKey">noArrayIndexKey (since v0.10.0)</a>
+	<a class="header-anchor" href="#noArrayIndexKey"></a>
+</h3>
+Discourage the usage of Array index in keys.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noDangerouslySetInnerHtml">
 	<a href="/docs/lint/rules/noDangerouslySetInnerHtml">noDangerouslySetInnerHtml (since v0.10.0)</a>
 	<a class="header-anchor" href="#noDangerouslySetInnerHtml"></a>

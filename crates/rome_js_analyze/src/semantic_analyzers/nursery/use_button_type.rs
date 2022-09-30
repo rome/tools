@@ -1,4 +1,4 @@
-use crate::react::is_react_create_element;
+use crate::react::{ReactApiCall, ReactCreateElementCall};
 use crate::semantic_services::Semantic;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
 use rome_console::codespan::Severity;
@@ -100,48 +100,46 @@ impl Rule for UseButtonType {
             }
             UseButtonTypeQuery::JsCallExpression(call_expression) => {
                 let model = ctx.model();
-                if let Some(react_create_element) = is_react_create_element(call_expression, model)
-                {
-                    // first argument needs to be a string
-                    let first_argument = react_create_element
-                        .element_type
-                        .as_js_any_expression()?
-                        .as_js_any_literal_expression()?
-                        .as_js_string_literal_expression()?;
+                let react_create_element =
+                    ReactCreateElementCall::from_call_expression(call_expression, model)?;
 
-                    // case sensitive is important, <button> is different from <Button>
-                    if first_argument.inner_string_text().ok()? == "button" {
-                        return if let Some(props) = react_create_element.props.as_ref() {
-                            let type_member = react_create_element.find_prop_by_name("type");
-                            if let Some(member) = type_member {
-                                let property_value = member.value().ok()?;
-                                let value = property_value
-                                    .as_js_any_literal_expression()?
-                                    .as_js_string_literal_expression()?;
+                // first argument needs to be a string
+                let first_argument = react_create_element
+                    .element_type
+                    .as_js_any_expression()?
+                    .as_js_any_literal_expression()?
+                    .as_js_string_literal_expression()?;
 
-                                if !ALLOWED_BUTTON_TYPES
-                                    .contains(&&*value.inner_string_text().ok()?)
-                                {
-                                    return Some(UseButtonTypeState {
-                                        node: UseButtonTypeNode::from(value.clone()),
-                                        missing_prop: false,
-                                    });
-                                }
+                // case sensitive is important, <button> is different from <Button>
+                if first_argument.inner_string_text().ok()? == "button" {
+                    return if let Some(props) = react_create_element.props.as_ref() {
+                        let type_member = react_create_element.find_prop_by_name("type");
+                        if let Some(member) = type_member {
+                            let property_value = member.value().ok()?;
+                            let value = property_value
+                                .as_js_any_literal_expression()?
+                                .as_js_string_literal_expression()?;
+
+                            if !ALLOWED_BUTTON_TYPES.contains(&&*value.inner_string_text().ok()?) {
+                                return Some(UseButtonTypeState {
+                                    node: UseButtonTypeNode::from(value.clone()),
+                                    missing_prop: false,
+                                });
                             }
+                        }
 
-                            // if we are here, it means that we haven't found the property "type" and
-                            // we have to return a diagnostic
-                            Some(UseButtonTypeState {
-                                node: UseButtonTypeNode::from(props.clone()),
-                                missing_prop: false,
-                            })
-                        } else {
-                            Some(UseButtonTypeState {
-                                node: UseButtonTypeNode::from(first_argument.clone()),
-                                missing_prop: true,
-                            })
-                        };
-                    }
+                        // if we are here, it means that we haven't found the property "type" and
+                        // we have to return a diagnostic
+                        Some(UseButtonTypeState {
+                            node: UseButtonTypeNode::from(props.clone()),
+                            missing_prop: false,
+                        })
+                    } else {
+                        Some(UseButtonTypeState {
+                            node: UseButtonTypeNode::from(first_argument.clone()),
+                            missing_prop: true,
+                        })
+                    };
                 }
 
                 None

@@ -1,4 +1,4 @@
-use crate::react::is_react_create_element;
+use crate::react::{ReactApiCall, ReactCreateElementCall};
 use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleCategory, RuleDiagnostic};
@@ -59,7 +59,8 @@ impl Rule for NoChildrenProp {
             }
             NoChildrenPropQuery::JsCallExpression(call_expression) => {
                 let model = ctx.model();
-                if let Some(react_create_element) = is_react_create_element(call_expression, model)
+                if let Some(react_create_element) =
+                    ReactCreateElementCall::from_call_expression(call_expression, model)
                 {
                     let children_prop = react_create_element.find_prop_by_name("children");
 
