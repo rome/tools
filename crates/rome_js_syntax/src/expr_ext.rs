@@ -562,10 +562,16 @@ impl JsAnyExpression {
             JsAnyExpression::JsPostUpdateExpression(_)
             | JsAnyExpression::JsPreUpdateExpression(_) => OperatorPrecedence::Update,
             JsAnyExpression::JsCallExpression(_)
-            | JsAnyExpression::JsNewExpression(_)
             | JsAnyExpression::JsImportCallExpression(_)
             | JsAnyExpression::JsSuperExpression(_) => OperatorPrecedence::LeftHandSide,
 
+            JsAnyExpression::JsNewExpression(expression) => {
+                if expression.arguments().is_none() {
+                    OperatorPrecedence::NewWithoutArguments
+                } else {
+                    OperatorPrecedence::LeftHandSide
+                }
+            }
             JsAnyExpression::JsComputedMemberExpression(_)
             | JsAnyExpression::JsStaticMemberExpression(_)
             | JsAnyExpression::ImportMeta(_)
