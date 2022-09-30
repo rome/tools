@@ -746,7 +746,7 @@ impl<T: IsDeclarationAstNode> AllReferencesExtensions for T {}
 pub trait ClosureExtensions {
     fn closure(&self, model: &SemanticModel) -> Closure
     where
-        Self: HasClosureAstNode,
+        Self: HasClosureAstNode + Sized,
     {
         model.closure(self)
     }
@@ -998,10 +998,7 @@ pub fn semantic_model(root: &JsAnyRoot) -> SemanticModel {
 mod test {
     use super::*;
     use rome_diagnostics::file::FileId;
-    use rome_js_syntax::{
-        JsArrowFunctionExpression, JsFunctionDeclaration, JsReferenceIdentifier, JsSyntaxKind,
-        SourceType, TsIdentifierBinding,
-    };
+    use rome_js_syntax::{JsReferenceIdentifier, JsSyntaxKind, SourceType, TsIdentifierBinding};
     use rome_rowan::SyntaxNodeCast;
 
     #[test]
@@ -1283,112 +1280,4 @@ mod test {
         assert_is_exported(true, "A", "enum A {}; exports.A = A");
     }
 
-    fn assert_closure(code: &str, name: &str, captures: &[&str]) {
-        let r = rome_js_parser::parse(code, FileId::zero(), SourceType::tsx());
-        let model = semantic_model(&r.tree());
-
-        let closure = if name != "ARROWFUNCTION" {
-            let node = r
-                .syntax()
-                .descendants()
-                .filter(|x| x.text_trimmed() == name)
-                .last()
-                .unwrap();
-            let f = node
-                .parent()
-                .unwrap()
-                .cast::<JsFunctionDeclaration>()
-                .unwrap();
-            model.closure(&f)
-        } else {
-            let f = r
-                .syntax()
-                .descendants()
-                .filter(|x| x.kind() == JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION)
-                .last()
-                .unwrap()
-                .cast::<JsArrowFunctionExpression>()
-                .unwrap();
-            model.closure(&f)
-        };
-
-        let expected_captures: BTreeSet<String> = captures.iter().map(|x| x.to_string()).collect();
-
-        let all_captures: BTreeSet<String> = closure
-            .all_captures()
-            .map(|x| x.node().text_trimmed().to_string())
-            .collect();
-
-        let intersection = expected_captures.intersection(&all_captures);
-        let intersection_count = intersection.count();
-
-        assert_eq!(intersection_count, expected_captures.len());
-        assert_eq!(intersection_count, all_captures.len());
-    }
-
-    fn get_closure_children(code: &str, name: &str) -> Vec<Closure> {
-        let r = rome_js_parser::parse(code, FileId::zero(), SourceType::tsx());
-        let model = semantic_model(&r.tree());
-
-        let closure = if name != "ARROWFUNCTION" {
-            let node = r
-                .syntax()
-                .descendants()
-                .filter(|x| x.text_trimmed() == name)
-                .last()
-                .unwrap();
-            let f = node
-                .parent()
-                .unwrap()
-                .cast::<JsFunctionDeclaration>()
-                .unwrap();
-            model.closure(&f)
-        } else {
-            let f = r
-                .syntax()
-                .descendants()
-                .filter(|x| x.kind() == JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION)
-                .last()
-                .unwrap()
-                .cast::<JsArrowFunctionExpression>()
-                .unwrap();
-            model.closure(&f)
-        };
-
-        closure.children().collect()
-    }
-
-    #[test]
-    pub fn ok_semantic_model_closure() {
-        assert_closure("function f() {}", "f", &[]);
-
-        let two_captures = "let a, b; function f(c) {console.log(a, b, c)}";
-        assert_closure(two_captures, "f", &["a", "b"]);
-        assert_eq!(get_closure_children(two_captures, "f").len(), 0);
-
-        let inner_function = "let a, b;
-        function f(c) {
-            console.log(a);
-            function g() {
-                console.log(b, c);
-            }
-        }";
-        assert_closure(inner_function, "f", &["a"]);
-        assert_closure(inner_function, "g", &["b", "c"]);
-        assert_eq!(get_closure_children(inner_function, "f").len(), 1);
-        assert_eq!(get_closure_children(inner_function, "g").len(), 0);
-
-        let arrow_function = "let a, b;
-        function f(c) {
-            console.log(a);
-            c.map(x => x + b + c);
-        }";
-        assert_closure(arrow_function, "f", &["a"]);
-        assert_closure(arrow_function, "ARROWFUNCTION", &["b", "c"]);
-        assert_eq!(get_closure_children(arrow_function, "f").len(), 1);
-        assert_eq!(
-            get_closure_children(arrow_function, "ARROWFUNCTION").len(),
-            0
-        );
-    }
 }
