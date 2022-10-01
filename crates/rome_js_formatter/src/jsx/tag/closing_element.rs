@@ -1,6 +1,6 @@
 use crate::prelude::*;
 
-use rome_formatter::{format_args, write};
+use rome_formatter::write;
 use rome_js_syntax::{JsxClosingElement, JsxClosingElementFields};
 
 #[derive(Debug, Clone, Default)]
@@ -21,13 +21,13 @@ impl FormatNodeRule<JsxClosingElement> for FormatJsxClosingElement {
 
         write![
             formatter,
-            [group(&format_args![
+            [
                 l_angle_token.format(),
                 slash_token.format(),
                 name.format(),
                 line_suffix_boundary(),
                 r_angle_token.format(),
-            ])]
+            ]
         ]
     }
 }

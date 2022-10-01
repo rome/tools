@@ -66,7 +66,7 @@ impl Format<JsFormatContext> for JsxAnyOpeningElement {
                         line_suffix_boundary(),
                         space(),
                         attributes.format(),
-                        line_suffix_boundary(),
+                        (!attributes.is_empty()).then_some(line_suffix_boundary()),
                         attribute_spacing,
                         format_close
                     ]
@@ -82,7 +82,7 @@ impl Format<JsFormatContext> for JsxAnyOpeningElement {
                             type_arguments.format(),
                             line_suffix_boundary(),
                             soft_line_indent_or_space(&attributes.format()),
-                            line_suffix_boundary(),
+                            (!attributes.is_empty()).then_some(line_suffix_boundary()),
                         ]
                     )?;
 
