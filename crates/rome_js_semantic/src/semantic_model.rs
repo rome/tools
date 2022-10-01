@@ -73,7 +73,6 @@ impl<T: HasDeclarationAstNode> IsExportedCanBeQueried for T {
 #[derive(Clone, Debug)]
 struct ScopeReference {
     range: TextRange,
-    ty: ReferenceType,
 }
 
 impl std::hash::Hash for ScopeReference {
@@ -871,10 +870,7 @@ impl SemanticModelBuilder {
                     .push((ReferenceType::Read { hoisted: false }, range));
 
                 let scope = &mut self.scopes[scope_id];
-                scope.read_references.push(ScopeReference {
-                    range,
-                    ty: ReferenceType::Read { hoisted: false },
-                });
+                scope.read_references.push(ScopeReference { range });
             }
             HoistedRead {
                 range,
@@ -892,10 +888,7 @@ impl SemanticModelBuilder {
                     .push((ReferenceType::Read { hoisted: true }, range));
 
                 let scope = &mut self.scopes[scope_id];
-                scope.read_references.push(ScopeReference {
-                    range,
-                    ty: ReferenceType::Read { hoisted: true },
-                });
+                scope.read_references.push(ScopeReference { range });
             }
             Write {
                 range,
@@ -913,10 +906,7 @@ impl SemanticModelBuilder {
                     .push((ReferenceType::Write { hoisted: false }, range));
 
                 let scope = &mut self.scopes[scope_id];
-                scope.write_references.push(ScopeReference {
-                    range,
-                    ty: ReferenceType::Write { hoisted: false },
-                });
+                scope.write_references.push(ScopeReference { range });
             }
             HoistedWrite {
                 range,
@@ -934,10 +924,7 @@ impl SemanticModelBuilder {
                     .push((ReferenceType::Write { hoisted: true }, range));
 
                 let scope = &mut self.scopes[scope_id];
-                scope.write_references.push(ScopeReference {
-                    range,
-                    ty: ReferenceType::Write { hoisted: true },
-                });
+                scope.write_references.push(ScopeReference { range });
             }
             UnresolvedReference { .. } => {}
             Exported { range } => {

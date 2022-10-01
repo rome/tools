@@ -70,6 +70,29 @@ SyntaxTextRangeHasClosureAstNode! {
     JS_SETTER_OBJECT_MEMBER => JsSetterObjectMember,
 }
 
+pub enum CaptureType {
+    ByReference,
+    Type,
+}
+
+/// Provides all information regarding a specific closure capture.
+pub struct Capture {
+    ty: CaptureType,
+    node: JsSyntaxNode,
+}
+
+impl Capture {
+    /// Returns if the capture is by reference or just the type of the variable.
+    pub fn ty(&self) -> &CaptureType {
+        &self.ty
+    }
+
+    /// Returns the node of the capture
+    pub fn node(&self) -> &SyntaxNode<JsLanguage> {
+        &self.node
+    }
+}
+
 pub struct AllCapturesIter {
     data: Arc<SemanticModelData>,
     closure_range: TextRange,
@@ -78,18 +101,16 @@ pub struct AllCapturesIter {
 }
 
 impl Iterator for AllCapturesIter {
-    type Item = Reference;
+    type Item = Capture;
 
     fn next(&mut self) -> Option<Self::Item> {
         'references: loop {
             while let Some(reference) = self.references.pop() {
                 let declaration = self.data.declared_at_by_range[&reference.range];
                 if self.closure_range.intersect(declaration).is_none() {
-                    return Some(Reference {
-                        data: self.data.clone(),
+                    return Some(Capture {
                         node: self.data.node_by_range[&reference.range].clone(),
-                        range: reference.range,
-                        ty: reference.ty,
+                        ty: CaptureType::ByReference,
                     });
                 }
             }
@@ -195,7 +216,7 @@ impl Closure {
     }
 
     /// Return all [Reference] this closure captures
-    pub fn all_captures(&self) -> impl Iterator<Item = Reference> {
+    pub fn all_captures(&self) -> impl Iterator<Item = Capture> {
         let scope = &self.data.scopes[self.scope_id];
 
         let mut scopes = Vec::with_capacity(128);
