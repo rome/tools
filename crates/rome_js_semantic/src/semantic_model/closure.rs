@@ -4,7 +4,7 @@ use super::*;
 use rome_js_syntax::{
     JsArrowFunctionExpression, JsConstructorClassMember, JsFunctionDeclaration,
     JsFunctionExpression, JsGetterClassMember, JsLanguage, JsMethodClassMember,
-    JsSetterClassMember,
+    JsSetterClassMember, JsMethodObjectMember, JsGetterObjectMember, JsSetterObjectMember
 };
 use rome_rowan::{AstNode, SyntaxNode, SyntaxNodeCast};
 
@@ -13,114 +13,61 @@ pub trait HasClosureAstNode {
     fn node_text_range(&self) -> TextRange;
 }
 
-impl HasClosureAstNode for JsFunctionDeclaration {
-    #[inline(always)]
-    fn node_text_range(&self) -> TextRange {
-        self.syntax().text_range()
-    }
-}
+macro_rules! SyntaxTextRangeHasClosureAstNode {
+    ($($kind:tt => $node:tt,)*) => {
+        $(
+            impl HasClosureAstNode for $node {
+                #[inline(always)]
+                fn node_text_range(&self) -> TextRange {
+                    self.syntax().text_range()
+                }
+            }
+        )*
 
-impl HasClosureAstNode for JsFunctionExpression {
-    #[inline(always)]
-    fn node_text_range(&self) -> TextRange {
-        self.syntax().text_range()
-    }
-}
-
-impl HasClosureAstNode for JsArrowFunctionExpression {
-    #[inline(always)]
-    fn node_text_range(&self) -> TextRange {
-        self.syntax().text_range()
-    }
-}
-
-impl HasClosureAstNode for JsConstructorClassMember {
-    #[inline(always)]
-    fn node_text_range(&self) -> TextRange {
-        self.syntax().text_range()
-    }
-}
-
-impl HasClosureAstNode for JsMethodClassMember {
-    #[inline(always)]
-    fn node_text_range(&self) -> TextRange {
-        self.syntax().text_range()
-    }
-}
-
-impl HasClosureAstNode for JsGetterClassMember {
-    #[inline(always)]
-    fn node_text_range(&self) -> TextRange {
-        self.syntax().text_range()
-    }
-}
-
-impl HasClosureAstNode for JsSetterClassMember {
-    #[inline(always)]
-    fn node_text_range(&self) -> TextRange {
-        self.syntax().text_range()
-    }
-}
-
-pub enum AnyHasClosureNode {
-    JsFunctionDeclaration(JsFunctionDeclaration),
-    JsFunctionExpression(JsFunctionExpression),
-    JsArrowFunctionExpression(JsArrowFunctionExpression),
-    JsConstructorClassMember(JsConstructorClassMember),
-    JsMethodClassMember(JsMethodClassMember),
-    JsGetterClassMember(JsGetterClassMember),
-    JsSetterClassMember(JsSetterClassMember),
-}
-
-impl AnyHasClosureNode {
-    pub fn from_node(node: &SyntaxNode<JsLanguage>) -> Option<AnyHasClosureNode> {
-        match node.kind() {
-            JsSyntaxKind::JS_FUNCTION_DECLARATION => node
-                .clone()
-                .cast::<JsFunctionDeclaration>()
-                .map(AnyHasClosureNode::JsFunctionDeclaration),
-            JsSyntaxKind::JS_FUNCTION_EXPRESSION => node
-                .clone()
-                .cast::<JsFunctionExpression>()
-                .map(AnyHasClosureNode::JsFunctionExpression),
-            JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION => node
-                .clone()
-                .cast::<JsArrowFunctionExpression>()
-                .map(AnyHasClosureNode::JsArrowFunctionExpression),
-            JsSyntaxKind::JS_CONSTRUCTOR_CLASS_MEMBER => node
-                .clone()
-                .cast::<JsConstructorClassMember>()
-                .map(AnyHasClosureNode::JsConstructorClassMember),
-            JsSyntaxKind::JS_METHOD_CLASS_MEMBER => node
-                .clone()
-                .cast::<JsMethodClassMember>()
-                .map(AnyHasClosureNode::JsMethodClassMember),
-            JsSyntaxKind::JS_GETTER_CLASS_MEMBER => node
-                .clone()
-                .cast::<JsGetterClassMember>()
-                .map(AnyHasClosureNode::JsGetterClassMember),
-            JsSyntaxKind::JS_SETTER_CLASS_MEMBER => node
-                .clone()
-                .cast::<JsSetterClassMember>()
-                .map(AnyHasClosureNode::JsSetterClassMember),
-            _ => None,
+        pub enum AnyHasClosureNode {
+            $(
+                $node($node),
+            )*
         }
-    }
+
+        impl AnyHasClosureNode {
+            pub fn from_node(node: &SyntaxNode<JsLanguage>) -> Option<AnyHasClosureNode> {
+                match node.kind() {
+                    $(
+                    JsSyntaxKind::$kind => node
+                        .clone()
+                        .cast::<$node>()
+                        .map(AnyHasClosureNode::$node),
+                    )*
+                    _ => None,
+                }
+            }
+        }
+        
+        impl HasClosureAstNode for AnyHasClosureNode {
+            #[inline(always)]
+            fn node_text_range(&self) -> TextRange {
+                match self {
+                    $(
+                        AnyHasClosureNode::$node(node) => node.syntax().text_range(),
+                    )*
+                }
+            }
+        }
+    };
 }
 
-impl HasClosureAstNode for AnyHasClosureNode {
-    #[inline(always)]
-    fn node_text_range(&self) -> TextRange {
-        match self {
-            AnyHasClosureNode::JsFunctionDeclaration(node) => node.syntax().text_range(),
-            AnyHasClosureNode::JsFunctionExpression(node) => node.syntax().text_range(),
-            AnyHasClosureNode::JsArrowFunctionExpression(node) => node.syntax().text_range(),
-            AnyHasClosureNode::JsConstructorClassMember(node) => node.syntax().text_range(),
-            AnyHasClosureNode::JsMethodClassMember(node) => node.syntax().text_range(),
-            AnyHasClosureNode::JsGetterClassMember(node) => node.syntax().text_range(),
-            AnyHasClosureNode::JsSetterClassMember(node) => node.syntax().text_range(),
-        }
-    }
+SyntaxTextRangeHasClosureAstNode! {
+    JS_FUNCTION_DECLARATION => JsFunctionDeclaration,
+    JS_FUNCTION_EXPRESSION => JsFunctionExpression,
+    JS_ARROW_FUNCTION_EXPRESSION => JsArrowFunctionExpression,
+    JS_CONSTRUCTOR_CLASS_MEMBER => JsConstructorClassMember,
+    JS_METHOD_CLASS_MEMBER => JsMethodClassMember,
+    JS_GETTER_CLASS_MEMBER => JsGetterClassMember,
+    JS_SETTER_CLASS_MEMBER => JsSetterClassMember,
+    JS_METHOD_OBJECT_MEMBER => JsMethodObjectMember,
+    JS_GETTER_OBJECT_MEMBER => JsGetterObjectMember,
+    JS_SETTER_OBJECT_MEMBER => JsSetterObjectMember,
 }
 
 pub struct AllCapturesIter {
@@ -412,5 +359,16 @@ mod test {
         assert_closure(class_callables, "f", &["a"]);
         assert_closure(class_callables, "getValue", &["a"]);
         assert_closure(class_callables, "setValue", &["a"]);
+
+        let object_callables = "let a;
+        let a = {
+            f() { console.log(a); }
+
+            get getValue() { console.log(a); }
+            set setValue(v) { console.log(a); }
+        }";
+        assert_closure(object_callables, "f", &["a"]);
+        assert_closure(object_callables, "getValue", &["a"]);
+        assert_closure(object_callables, "setValue", &["a"]);
     }
 }
