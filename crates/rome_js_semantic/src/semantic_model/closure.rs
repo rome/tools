@@ -3,8 +3,8 @@ use std::sync::Arc;
 use super::*;
 use rome_js_syntax::{
     JsArrowFunctionExpression, JsConstructorClassMember, JsFunctionDeclaration,
-    JsFunctionExpression, JsGetterClassMember, JsLanguage, JsMethodClassMember,
-    JsSetterClassMember, JsMethodObjectMember, JsGetterObjectMember, JsSetterObjectMember
+    JsFunctionExpression, JsGetterClassMember, JsGetterObjectMember, JsLanguage,
+    JsMethodClassMember, JsMethodObjectMember, JsSetterClassMember, JsSetterObjectMember,
 };
 use rome_rowan::{AstNode, SyntaxNode, SyntaxNodeCast};
 
@@ -43,7 +43,7 @@ macro_rules! SyntaxTextRangeHasClosureAstNode {
                 }
             }
         }
-        
+
         impl HasClosureAstNode for AnyHasClosureNode {
             #[inline(always)]
             fn node_text_range(&self) -> TextRange {
