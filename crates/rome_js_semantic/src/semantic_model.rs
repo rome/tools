@@ -70,33 +70,27 @@ impl<T: HasDeclarationAstNode> IsExportedCanBeQueried for T {
     }
 }
 
-#[derive(Clone, Debug)]
+/// Represents a refererence inside a scope.
+#[derive(Clone, Debug, Hash, PartialEq, Eq)]
 struct ScopeReference {
     range: TextRange,
 }
 
-impl std::hash::Hash for ScopeReference {
-    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
-        self.range.hash(state);
-    }
-}
-
-impl PartialEq for ScopeReference {
-    fn eq(&self, other: &Self) -> bool {
-        self.range == other.range
-    }
-}
-
-impl Eq for ScopeReference {}
-
 #[derive(Debug)]
 struct SemanticModelScopeData {
+    // The scope range
     range: TextRange,
+    // The parent scope of this scope
     parent: Option<usize>,
+    // All children scope of this scope
     children: Vec<usize>,
+    // All bindings of this scope
     bindings: Vec<TextRange>,
+    // Map pointing to the [bindings] vec  of each bindings by its name
     bindings_by_name: HashMap<SyntaxTokenText, usize>,
+    // All read references of a scope
     read_references: Vec<ScopeReference>,
+    // All write references of a scope
     write_references: Vec<ScopeReference>,
 }
 
@@ -107,10 +101,12 @@ struct SemanticModelScopeData {
 #[derive(Debug)]
 struct SemanticModelData {
     root: JsAnyRoot,
+    // All scopes of this model
     scopes: Vec<SemanticModelScopeData>,
     scope_by_range: rust_lapper::Lapper<usize, usize>,
     // Maps the start of a node range to a scope id
     scope_hoisted_to_by_range: HashMap<TextSize, usize>,
+    // Map to each by its range
     node_by_range: HashMap<TextRange, JsSyntaxNode>,
     // Maps any range in the code to its declaration
     declared_at_by_range: HashMap<TextRange, TextRange>,

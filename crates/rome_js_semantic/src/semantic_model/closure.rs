@@ -215,7 +215,19 @@ impl Closure {
         }
     }
 
-    /// Return all [Reference] this closure captures
+    /// Return all [Reference] this closure captures, not taking into
+    /// consideration any capture of children closures
+    /// 
+    /// ```rust,ignore
+    /// let inner_function = "let a, b;
+    /// function f(c) {
+    ///     console.log(a);
+    ///     function g() {
+    ///         console.log(b, c);
+    ///     }
+    /// }";
+    /// assert!(model.closure(function_f).all_captures(), &["a"]);
+    /// ```
     pub fn all_captures(&self) -> impl Iterator<Item = Capture> {
         let scope = &self.data.scopes[self.scope_id];
 
@@ -234,7 +246,18 @@ impl Closure {
         }
     }
 
-    /// Return all immediate children closures of this closure
+    /// Return all immediate children closures of this closure.
+    /// 
+    /// ```rust,ignore
+    /// let inner_function = "let a, b;
+    /// function f(c) {
+    ///     console.log(a);
+    ///     function g() {
+    ///         console.log(b, c);
+    ///     }
+    /// }";
+    /// assert!(model.closure(function_f).children(), &["g"]);
+    /// ```
     pub fn children(&self) -> impl Iterator<Item = Closure> {
         let scope = &self.data.scopes[self.scope_id];
 
