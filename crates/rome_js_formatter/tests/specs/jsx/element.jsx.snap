@@ -280,6 +280,7 @@ Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
 // Single string attribute
 <div tooltip="A very long tooltip text that would otherwise make the attribute break onto the same line but it is not because of the single string layout"></div>;

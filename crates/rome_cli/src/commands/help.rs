@@ -46,6 +46,7 @@ const FORMAT_OPTIONS: Markup = markup! {
     "<Dim>"--line-width <number>"</Dim>"                    Change how many characters the formatter is allowed to print in a single line (default: 80)
     "<Dim>"--quote-style <single|double>"</Dim>"            Changes the quotation character for strings (default: \")
     "<Dim>"--quote-properties <as-needed|preserve>"</Dim>"  Changes when properties in object should be quoted (default: as-needed)
+    "<Dim>"--trailing-comma <all|es5>"</Dim>"               Changes trailing commas in multi-line comma-separated syntactic structures (default: all)
     "<Dim>"--stdin-file-path <string>"</Dim>"               A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path file.js
     "
 };

@@ -1,3 +1,4 @@
+use crate::context::trailing_comma::FormatTrailingComma;
 use crate::prelude::*;
 use rome_js_syntax::TsTypeParameterList;
 use rome_rowan::AstSeparatedList;
@@ -18,7 +19,7 @@ impl FormatRule<TsTypeParameterList> for FormatTsTypeParameterList {
         let trailing_separator = if node.len() == 1 && node.trailing_separator().is_some() {
             TrailingSeparator::Mandatory
         } else {
-            TrailingSeparator::default()
+            FormatTrailingComma::All.trailing_separator(f.options())
         };
 
         f.join_with(&soft_line_break_or_space())

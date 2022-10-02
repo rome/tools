@@ -17,6 +17,7 @@ Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
 client.execute(
 	Post.selectAll().where(Post.id.eq(42)).where(Post.published.eq(true)),

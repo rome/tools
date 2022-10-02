@@ -1,0 +1,89 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+expression: object_trailing_comma.ts
+---
+# Input
+
+// object method
+const obj = {
+	one<
+		longlonglonglonglonglonglongT1,
+		longlonglonglonglonglonglongT2,
+		longlonglonglonglonglonglongT3
+		>(
+		adsadasdasdasdasdasdasdasdasdasdas1,
+		dsadsadasdasdasdasdasdasdasd2,
+		dsadsadasdasdasdasdasdasdasd
+	) {},
+	two<
+		longlonglonglonglonglonglongT1,
+		longlonglonglonglonglonglongT2,
+		longlonglonglonglonglonglongT3
+		>(
+		adsadasdasdasdasdasdasdasdasdasdas1,
+		dsadsadasdasdasdasdasdasdasd2,
+		dsadsadasdasdasdasdasdasdasd
+	) {},
+};
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+-----
+// object method
+const obj = {
+	one<
+		longlonglonglonglonglonglongT1,
+		longlonglonglonglonglonglongT2,
+		longlonglonglonglonglonglongT3,
+	>(
+		adsadasdasdasdasdasdasdasdasdasdas1,
+		dsadsadasdasdasdasdasdasdasd2,
+		dsadsadasdasdasdasdasdasdasd,
+	) {},
+	two<
+		longlonglonglonglonglonglongT1,
+		longlonglonglonglonglonglongT2,
+		longlonglonglonglonglonglongT3,
+	>(
+		adsadasdasdasdasdasdasdasdasdasdas1,
+		dsadsadasdasdasdasdasdasdasd2,
+		dsadsadasdasdasdasdasdasdasd,
+	) {},
+};
+## Output 2
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: ES5
+-----
+// object method
+const obj = {
+	one<
+		longlonglonglonglonglonglongT1,
+		longlonglonglonglonglonglongT2,
+		longlonglonglonglonglonglongT3
+	>(
+		adsadasdasdasdasdasdasdasdasdasdas1,
+		dsadsadasdasdasdasdasdasdasd2,
+		dsadsadasdasdasdasdasdasdasd
+	) {},
+	two<
+		longlonglonglonglonglonglongT1,
+		longlonglonglonglonglonglongT2,
+		longlonglonglonglonglonglongT3
+	>(
+		adsadasdasdasdasdasdasdasdasdasdas1,
+		dsadsadasdasdasdasdasdasdasd2,
+		dsadsadasdasdasdasdasdasdasd
+	) {},
+};
+

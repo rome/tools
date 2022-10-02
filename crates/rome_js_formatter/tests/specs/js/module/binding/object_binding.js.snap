@@ -16,6 +16,7 @@ Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
 let { a } = b;
 let { d, b: c } = d;

@@ -2,6 +2,7 @@ use rome_diagnostics::file::FileId;
 use rome_formatter::{FormatOptions, LineWidth};
 use rome_formatter::{IndentStyle, Printed};
 use rome_fs::RomePath;
+use rome_js_formatter::context::trailing_comma::TrailingComma;
 use rome_js_formatter::context::{JsFormatOptions, QuoteProperties, QuoteStyle};
 use rome_js_formatter::format_node;
 use rome_js_parser::parse;
@@ -65,6 +66,21 @@ impl From<SerializableQuoteProperties> for QuoteProperties {
     }
 }
 
+#[derive(Debug, Eq, PartialEq, Clone, Copy, Deserialize, Serialize)]
+pub enum SerializableTrailingComma {
+    All,
+    ES5,
+}
+
+impl From<SerializableTrailingComma> for TrailingComma {
+    fn from(test: SerializableTrailingComma) -> Self {
+        match test {
+            SerializableTrailingComma::All => TrailingComma::All,
+            SerializableTrailingComma::ES5 => TrailingComma::ES5,
+        }
+    }
+}
+
 #[derive(Debug, Deserialize, Serialize, Clone, Copy)]
 pub struct SerializableFormatOptions {
     /// The indent style.
@@ -73,11 +89,14 @@ pub struct SerializableFormatOptions {
     /// What's the max width of a line. Defaults to 80.
     pub line_width: Option<u16>,
 
-    // The style for quotes. Defaults to double.
+    /// The style for quotes. Defaults to double.
     pub quote_style: Option<SerializableQuoteStyle>,
 
     /// When properties in objects are quoted. Defaults to as-needed.
     pub quote_properties: Option<SerializableQuoteProperties>,
+
+    /// Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
+    pub trailing_comma: Option<SerializableTrailingComma>,
 }
 
 impl From<SerializableFormatOptions> for JsFormatOptions {
@@ -99,6 +118,10 @@ impl From<SerializableFormatOptions> for JsFormatOptions {
             .with_quote_properties(
                 test.quote_properties
                     .map_or_else(|| QuoteProperties::AsNeeded, |value| value.into()),
+            )
+            .with_trailing_comma(
+                test.trailing_comma
+                    .map_or_else(|| TrailingComma::All, |value| value.into()),
             )
     }
 }

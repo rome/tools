@@ -1,3 +1,4 @@
+use crate::context::trailing_comma::FormatTrailingComma;
 use crate::prelude::*;
 use rome_js_syntax::{JsAnyObjectAssignmentPatternMember, JsObjectAssignmentPatternPropertyList};
 
@@ -26,7 +27,7 @@ impl FormatRule<JsObjectAssignmentPatternPropertyList>
         let trailing_separator = if has_trailing_rest {
             TrailingSeparator::Disallowed
         } else {
-            TrailingSeparator::Allowed
+            FormatTrailingComma::ES5.trailing_separator(f.options())
         };
 
         let entries = node

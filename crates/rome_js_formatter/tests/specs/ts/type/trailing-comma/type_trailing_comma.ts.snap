@@ -1,0 +1,59 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+expression: type_trailing_comma.ts
+---
+# Input
+
+type A = [
+	adsadasdasdasdasdasdasdasdasdasdas,
+	dsadsadasdasdasdasdasdasdasd,
+	dsadsadasdasdasdasdasdasdasd,
+];
+
+interface C<    	adsadasdasdasdasdasdasdasdasdasdas,
+	dsadsadasdasdasdasdasdasdasd,
+	dsadsadasdasdasdasdasdasdasd,> {
+
+}
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: All
+-----
+type A = [
+	adsadasdasdasdasdasdasdasdasdasdas,
+	dsadsadasdasdasdasdasdasdasd,
+	dsadsadasdasdasdasdasdasdasd,
+];
+
+interface C<
+	adsadasdasdasdasdasdasdasdasdasdas,
+	dsadsadasdasdasdasdasdasdasd,
+	dsadsadasdasdasdasdasdasdasd,
+> {}
+## Output 2
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: ES5
+-----
+type A = [
+	adsadasdasdasdasdasdasdasdasdasdas,
+	dsadsadasdasdasdasdasdasdasd,
+	dsadsadasdasdasdasdasdasdasd
+];
+
+interface C<
+	adsadasdasdasdasdasdasdasdasdasdas,
+	dsadsadasdasdasdasdasdasdasd,
+	dsadsadasdasdasdasdasdasdasd
+> {}
+

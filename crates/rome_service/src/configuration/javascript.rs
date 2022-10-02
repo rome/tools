@@ -1,5 +1,5 @@
 use indexmap::IndexSet;
-use rome_js_formatter::context::{QuoteProperties, QuoteStyle};
+use rome_js_formatter::context::{trailing_comma::TrailingComma, QuoteProperties, QuoteStyle};
 use serde::{Deserialize, Serialize};
 
 #[derive(Default, Debug, Deserialize, Serialize, Eq, PartialEq)]
@@ -39,6 +39,9 @@ pub struct JavascriptFormatter {
     /// When properties in objects are quoted. Defaults to asNeeded.
     #[serde(with = "PlainQuoteProperties")]
     pub quote_properties: QuoteProperties,
+    /// Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
+    #[serde(with = "PlainTrailingComma")]
+    pub trailing_comma: TrailingComma,
 }
 
 #[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Default)]
@@ -57,4 +60,13 @@ pub enum PlainQuoteProperties {
     #[default]
     AsNeeded,
     Preserve,
+}
+
+#[derive(Deserialize, Default, Serialize, Debug, Eq, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[serde(rename_all = "lowercase", remote = "TrailingComma")]
+pub enum PlainTrailingComma {
+    #[default]
+    All,
+    ES5,
 }

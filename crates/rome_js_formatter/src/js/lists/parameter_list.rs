@@ -1,6 +1,7 @@
 use crate::js::bindings::parameters::ParameterLayout;
 use crate::prelude::*;
 
+use crate::context::trailing_comma::FormatTrailingComma;
 use rome_js_syntax::{
     JsAnyConstructorParameter, JsAnyParameter, JsConstructorParameterList, JsLanguage,
     JsParameterList,
@@ -56,7 +57,7 @@ impl Format<JsFormatContext> for FormatJsAnyParameterList<'_> {
                 let trailing_separator = if has_trailing_rest {
                     TrailingSeparator::Disallowed
                 } else {
-                    TrailingSeparator::Allowed
+                    FormatTrailingComma::All.trailing_separator(f.options())
                 };
 
                 let mut join = f.join_nodes_with_soft_line();

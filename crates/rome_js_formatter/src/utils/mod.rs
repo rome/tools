@@ -16,6 +16,7 @@ mod quickcheck_utils;
 pub(crate) mod test_call;
 mod typescript;
 
+use crate::context::trailing_comma::FormatTrailingComma;
 use crate::parentheses::is_callee;
 pub(crate) use crate::parentheses::resolve_left_most_expression;
 use crate::prelude::*;
@@ -270,7 +271,7 @@ where
         let last = iterator.peek().is_none();
 
         if last {
-            join_with.entry(&format_args![&element, &if_group_breaks(&text(","))]);
+            join_with.entry(&format_args![&element, FormatTrailingComma::All]);
         } else {
             join_with.entry(&element);
         }

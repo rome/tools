@@ -132,6 +132,14 @@ pub(crate) fn apply_format_settings_from_cli(
             source,
         })?;
 
+    let trailing_comma = session
+        .args
+        .opt_value_from_str("--trailing-comma")
+        .map_err(|source| Termination::ParseError {
+            argument: "--trailing-comma",
+            source,
+        })?;
+
     let javascript = configuration
         .javascript
         .get_or_insert_with(JavascriptConfiguration::default);
@@ -145,6 +153,10 @@ pub(crate) fn apply_format_settings_from_cli(
 
     if let Some(quote_style) = quote_style {
         javascript_formatter.quote_style = quote_style;
+    }
+
+    if let Some(trailing_comma) = trailing_comma {
+        javascript_formatter.trailing_comma = trailing_comma;
     }
 
     Ok(configuration)
