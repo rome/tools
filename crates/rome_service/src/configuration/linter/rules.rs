@@ -388,6 +388,7 @@ pub struct Nursery {
 struct NurserySchema {
     no_array_index_key: Option<RuleConfiguration>,
     no_dangerously_set_inner_html: Option<RuleConfiguration>,
+    no_dangerously_set_inner_html_with_children: Option<RuleConfiguration>,
     no_new_symbol: Option<RuleConfiguration>,
     no_render_return_value: Option<RuleConfiguration>,
     no_undeclared_variables: Option<RuleConfiguration>,
@@ -402,9 +403,10 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 13] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 14] = [
         "noArrayIndexKey",
         "noDangerouslySetInnerHtml",
+        "noDangerouslySetInnerHtmlWithChildren",
         "noNewSymbol",
         "noRenderReturnValue",
         "noUndeclaredVariables",
