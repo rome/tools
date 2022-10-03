@@ -12,7 +12,11 @@ will be implemented inside the `rome_js_analyzer` crate.
 
 Rules are divided by capabilities:
 - `analyzers/` folder contains rules that don't require any particular capabilities;
-- `semantic_analyzer/` folder contains rules that require the use of the semantic model
+- `semantic_analyzer/` folder contains rules that require the use of the semantic model;
+- `assists/` folder contains rules that contribute to refactor code, with not associated diagnostics;
+these are rules that are usually meant for editors/IDEs;
+
+Most of the rules will go under `semantic_analyzer/` or  `analyzers/` folders.
 
 Inside the folders, we will have folders for each group that Rome supports.
 
@@ -34,7 +38,7 @@ Let's say we want to create a new rule called `useAwesomeTricks`, which uses the
 1. create a new file under `semantic_analyzers/nursery` called `use_awesome_tricks`;
 2. run the cargo alias `cargo codegen analyzer`, this command will update the file called `nursery.rs`
 inside the `semantic_analyzers` folder
-3. from there, use the [`declare_rule`](#declare_rule) macro to create a new struct
+3. from there, use the [`declare_rule`](#declare_rule) macro to create a new type
    ```rust
    use rome_analyze::declare_rule;
     
@@ -70,10 +74,10 @@ inside the `semantic_analyzers` folder
 5. the const `CATEGORY` must be `RuleCategory::Lint` otherwise it won't work
 6. the `Query` needs to have the `Semantic` type, because we want to have access to the semantic model.
 `Query` tells the engine on which AST node we want to trigger the rule. 
-7. The `State` is optional, and it's an arbitrary data structure you can use to implement across
-phases.
-8. The `run` function must be implemented, and it's the logic that says "when" a diagnostic 
-needs to be emitted
+7. The `State` type doesn't have to be used, so it can be considered optional, but it has
+be defined as `type State = ()`
+8. The `run` function must be implemented. This function is called every time the analyzer
+finds a match for the query specified by the rule, and may return zero or more "signals".
 9. Implement the optional `diagnostic` function, to tell the user where's the error and why:
    ```rust,ignore
    impl Rule for UseAwesomeTricks {
@@ -81,7 +85,9 @@ needs to be emitted
         fn diagnostic(_ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {}
    }
    ```
-   While implementing the diagnostic, please keep [Rome's technical principals](https://rome.tools/#technical) in mind
+   While implementing the diagnostic, please keep [Rome's technical principals](https://rome.tools/#technical) in mind.
+   This function is called of every signal emitted by the `run` function, and it may return
+   zero or one diagnostic. 
 10. Implement the optional `action` function, if we are able to provide automatic code fix to the rule:
     ```rust,ignore
     impl Rule for UseAwesomeTricks {
@@ -89,6 +95,10 @@ needs to be emitted
         fn action(_ctx: &RuleContext<Self>, _state: &Self::State) -> Option<JsRuleAction> {}
     }
     ```
+    This function is called of every signal emitted by the `run` function, and it may return
+    zero or one code action.
+    When returning a code action, you will need to pass `category` and `applicability` fields.
+    `category` must be `ActionCategory::QuickFix`, while `applicability` must be `Applicability:MaybeIncorrect`
 
 That's it! Now, let's test the rule
 

@@ -49,9 +49,27 @@ pub trait RuleMeta {
     const METADATA: RuleMetadata;
 }
 
+/// This macro is used to declare an analyzer rule type, and implement the
+//  [RuleMeta] trait for it
+///  # Example
+///
+/// The macro itself expect the following syntax:
+///
+/// ```rust
+///use rome_analyze::declare_rule;
+///
+/// declare_rule! {
+///     /// Documentation
+///     pub(crate) ExampleRule {
+///         version: "0.7.0",
+///         name: "ruleName",
+///         recommended: false,
+///     }
+/// }
+/// ```
+///
 /// Check [crate](module documentation) for a better
 /// understanding of how the macro works
-///
 #[macro_export]
 macro_rules! declare_rule {
     ( $( #[doc = $doc:literal] )+ $vis:vis $id:ident {
