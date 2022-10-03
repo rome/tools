@@ -202,3 +202,10 @@ assert_semantics! {
     ok_class_reference,
         "class A/*#A*/ {} new A/*READ A*/();",
 }
+
+// Typescript types
+
+assert_semantics! {
+    ok_typescript_function_type,
+        "function f (a/*#A1*/, b: (a/*#A2*/) => any) { return b(a/*READ A1*/); };",
+}
