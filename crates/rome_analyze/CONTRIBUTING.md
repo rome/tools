@@ -36,7 +36,9 @@ Let's say we want to create a new rule called `useAwesomeTricks`, which uses the
 inside the `semantic_analyzers` folder
 3. from there, use the [`declare_rule`](#declare_rule) macro to create a new struct
    ```rust
-    declare_rule! {
+   use rome_analyze::declare_rule;
+    
+   declare_rule! {
      /// Promotes the use of awesome tricks
      /// 
      /// ## Examples
@@ -51,9 +53,10 @@ inside the `semantic_analyzers` folder
     }
    ```
 4. Then you need to use the `Rule` trait to implement the rule on this new created struct
-   ```rust
+   ```rust,ignore
    use rome_analyze::{Rule, RuleCategory};
    use rome_js_syntax::JsAnyExpression;
+   use rome_analyze::context::RuleContext;
    
    impl Rule for UseAwesomeTricks {
         const CATEGORY: RuleCategory = RuleCategory::Lint;
@@ -72,7 +75,7 @@ phases.
 8. The `run` function must be implemented, and it's the logic that says "when" a diagnostic 
 needs to be emitted
 9. Implement the optional `diagnostic` function, to tell the user where's the error and why:
-   ```rust
+   ```rust,ignore
    impl Rule for UseAwesomeTricks {
         // .. code
         fn diagnostic(_ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {}
@@ -80,7 +83,7 @@ needs to be emitted
    ```
    While implementing the diagnostic, please keep [Rome's technical principals](https://rome.tools/#technical) in mind
 10. Implement the optional `action` function, if we are able to provide automatic code fix to the rule:
-    ```rust
+    ```rust,ignore
     impl Rule for UseAwesomeTricks {
         // .. code
         fn action(_ctx: &RuleContext<Self>, _state: &Self::State) -> Option<JsRuleAction> {}
@@ -124,7 +127,7 @@ for more information about it;
 
 1. Forbid a concept
 
-   ```
+   ```block
    no<Concept>
    ```
 
@@ -132,7 +135,7 @@ for more information about it;
 
 1. Mandate a concept
 
-   ```
+   ```block
    use<Concept>
    ```
 
@@ -148,6 +151,8 @@ for more information about it;
 
  The macro itself expect the following syntax:
  ```rust
+use rome_analyze::declare_rule;
+
  declare_rule! {
      /// Documentation
      pub(crate) ExampleRule {
@@ -171,7 +176,8 @@ for more information about it;
  the language of the test must be explicitly specified, for instance:
 
  ```rust
- declare_rule! {
+use rome_analyze::declare_rule;
+declare_rule! {
      /// Disallow the use of `var`
      ///
      /// ### Valid
@@ -184,13 +190,14 @@ for more information about it;
          name: "noVar",
          recommended: false,
      }
- }
+}
  ```
 
  Additionally, it's possible to declare that a test should emit a diagnostic
  by adding `expect_diagnostic` to the language metadata:
 
  ```rust
+use rome_analyze::declare_rule;
  declare_rule! {
      ///  Disallow the use of `var`
      /// 
@@ -201,7 +208,7 @@ for more information about it;
      ///  ```
      pub(crate) NoVar {
          version: "0.7.0",
-         name: "noVar"
+         name: "noVar",
          recommended: false,
      }
  }
@@ -216,9 +223,11 @@ for more information about it;
  There are occasions when a rule must be deprecated, to avoid breaking changes. The reason
  of deprecations can be multiples.
 
- In order to to do, the macro allows to add additional field to add the reason for deprecation
+ In order to do, the macro allows to add additional field to add the reason for deprecation
 
  ```rust
+use rome_analyze::declare_rule;
+
  declare_rule! {
       /// Disallow the use of `var`
       /// 
@@ -230,7 +239,7 @@ for more information about it;
      pub(crate) NoVar {
          version: "0.7.0",
          name: "noVar",
-         deprecated: "Use the rule `noAnotherVar`"
+         deprecated: "Use the rule `noAnotherVar`",
          recommended: false,
      }
  }
@@ -246,7 +255,7 @@ for more information about it;
  injecting the category at compile time and checking that it is correctly
  registered to the `rome_diagnostics` library
 
- ```rust
+ ```rust,ignore
  declare_rule! {
      /// Documentation
      pub(crate) ExampleRule {

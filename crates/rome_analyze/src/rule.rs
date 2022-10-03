@@ -49,7 +49,7 @@ pub trait RuleMeta {
     const METADATA: RuleMetadata;
 }
 
-/// Check [crate::rome_analyze](module documentation) for a better
+/// Check [crate](module documentation) for a better
 /// understanding of how the macro works
 ///
 #[macro_export]
