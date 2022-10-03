@@ -5569,7 +5569,6 @@ pub fn ts_property_signature_class_member(
         modifiers,
         name,
         property_annotation: None,
-        value: None,
         semicolon_token: None,
     }
 }
@@ -5577,7 +5576,6 @@ pub struct TsPropertySignatureClassMemberBuilder {
     modifiers: TsPropertySignatureModifierList,
     name: JsAnyClassMemberName,
     property_annotation: Option<TsAnyPropertySignatureAnnotation>,
-    value: Option<JsInitializerClause>,
     semicolon_token: Option<SyntaxToken>,
 }
 impl TsPropertySignatureClassMemberBuilder {
@@ -5586,10 +5584,6 @@ impl TsPropertySignatureClassMemberBuilder {
         property_annotation: TsAnyPropertySignatureAnnotation,
     ) -> Self {
         self.property_annotation = Some(property_annotation);
-        self
-    }
-    pub fn with_value(mut self, value: JsInitializerClause) -> Self {
-        self.value = Some(value);
         self
     }
     pub fn with_semicolon_token(mut self, semicolon_token: SyntaxToken) -> Self {
@@ -5603,8 +5597,6 @@ impl TsPropertySignatureClassMemberBuilder {
                 Some(SyntaxElement::Node(self.modifiers.into_syntax())),
                 Some(SyntaxElement::Node(self.name.into_syntax())),
                 self.property_annotation
-                    .map(|token| SyntaxElement::Node(token.into_syntax())),
-                self.value
                     .map(|token| SyntaxElement::Node(token.into_syntax())),
                 self.semicolon_token
                     .map(|token| SyntaxElement::Token(token)),
