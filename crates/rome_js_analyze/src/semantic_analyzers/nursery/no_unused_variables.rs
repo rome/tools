@@ -5,9 +5,9 @@ use rome_js_semantic::{AllReferencesExtensions, SemanticScopeExtensions};
 use rome_js_syntax::{
     JsClassExpression, JsConstructorParameterList, JsConstructorParameters, JsFunctionDeclaration,
     JsFunctionExpression, JsIdentifierBinding, JsParameterList, JsParameters, JsSyntaxKind,
-    JsVariableDeclarator,
+    JsVariableDeclarator, TsPropertyParameter,
 };
-use rome_rowan::AstNode;
+use rome_rowan::{AstNode, SyntaxNodeCast};
 
 declare_rule! {
     /// Disallow unused variables.
@@ -110,6 +110,7 @@ fn is_typescript_unused_ok(binding: &JsIdentifierBinding) -> Option<()> {
             let parameter = binding.syntax().parent()?;
             let parent = parameter.parent()?;
             match parent.kind() {
+                // example: abstract f(a: number);
                 JsSyntaxKind::JS_PARAMETER_LIST => {
                     let parameters = JsParameterList::cast(parent)?.parent::<JsParameters>()?;
                     match parameters.syntax().parent()?.kind() {
@@ -121,6 +122,7 @@ fn is_typescript_unused_ok(binding: &JsIdentifierBinding) -> Option<()> {
                         _ => None,
                     }
                 }
+                // example: constructor(a: number);
                 JsSyntaxKind::JS_CONSTRUCTOR_PARAMETER_LIST => {
                     let parameters = JsConstructorParameterList::cast(parent)?
                         .parent::<JsConstructorParameters>()?;
@@ -130,12 +132,33 @@ fn is_typescript_unused_ok(binding: &JsIdentifierBinding) -> Option<()> {
                         _ => None,
                     }
                 }
+                // example: abstract set a(a: number);
+                // We don't need get because getter do not have parameters
                 JsSyntaxKind::TS_SETTER_SIGNATURE_TYPE_MEMBER
                 | JsSyntaxKind::TS_SETTER_SIGNATURE_CLASS_MEMBER => Some(()),
+                // example: constructor(a, private b, public c) {}
+                JsSyntaxKind::TS_PROPERTY_PARAMETER => {
+                    if let Some(parent) = parent.cast::<TsPropertyParameter>() {
+                        for modifier in parent.modifiers().into_iter() {
+                            if let Some(modifier) = modifier.as_ts_accessibility_modifier() {
+                                match modifier.modifier_token().ok()?.kind() {
+                                    JsSyntaxKind::PRIVATE_KW | JsSyntaxKind::PUBLIC_KW => {
+                                        return Some(())
+                                    }
+                                    _ => {}
+                                }
+                            }
+                        }
+                    }
+
+                    return None;
+                }
                 _ => None,
             }
         }
+        // example: [key: string]: string;
         JsSyntaxKind::TS_INDEX_SIGNATURE_PARAMETER => Some(()),
+        // example: declare function notUsedParameters(a);
         JsSyntaxKind::TS_DECLARE_FUNCTION_DECLARATION => Some(()),
         _ => None,
     }

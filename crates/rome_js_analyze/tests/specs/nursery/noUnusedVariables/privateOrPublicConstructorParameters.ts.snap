@@ -1,0 +1,31 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: privateOrPublicConstructorParameters.ts
+---
+# Input
+```js
+class A {
+    constructor(a, private b, public c) {
+
+    }
+}
+console.log(new A(1, 2, 3));
+```
+
+# Diagnostics
+```
+privateOrPublicConstructorParameters.ts:2:17 lint/nursery/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This parameter is unused.
+  
+    ┌─ privateOrPublicConstructorParameters.ts:2:17
+    │
+  2 │     constructor(a, private b, public c) {
+    │                 ^
+  
+  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
+
+```
+
+
