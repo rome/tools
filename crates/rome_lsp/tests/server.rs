@@ -216,6 +216,9 @@ impl Server {
     }
 }
 
+/// Number of notifications buffered by the server-to-client channel before it starts blocking the current task
+const CHANNEL_BUFFER_SIZE: usize = 8;
+
 #[derive(Debug, PartialEq, Eq)]
 enum ServerNotification {
     PublishDiagnostics(PublishDiagnosticsParams),
@@ -276,7 +279,7 @@ async fn basic_lifecycle() -> Result<()> {
     let (stream, sink) = client.split();
     let mut server = Server::new(service);
 
-    let (sender, _) = channel(8);
+    let (sender, _) = channel(CHANNEL_BUFFER_SIZE);
     let reader = tokio::spawn(client_handler(stream, sink, sender));
 
     server.initialize().await?;
@@ -295,7 +298,7 @@ async fn document_lifecycle() -> Result<()> {
     let (stream, sink) = client.split();
     let mut server = Server::new(service);
 
-    let (sender, _) = channel(8);
+    let (sender, _) = channel(CHANNEL_BUFFER_SIZE);
     let reader = tokio::spawn(client_handler(stream, sink, sender));
 
     server.initialize().await?;
@@ -317,7 +320,7 @@ async fn document_no_extension() -> Result<()> {
     let (stream, sink) = client.split();
     let mut server = Server::new(service);
 
-    let (sender, _) = channel(8);
+    let (sender, _) = channel(CHANNEL_BUFFER_SIZE);
     let reader = tokio::spawn(client_handler(stream, sink, sender));
 
     server.initialize().await?;
@@ -388,7 +391,7 @@ async fn pull_diagnostics() -> Result<()> {
     let (stream, sink) = client.split();
     let mut server = Server::new(service);
 
-    let (sender, mut receiver) = channel(8);
+    let (sender, mut receiver) = channel(CHANNEL_BUFFER_SIZE);
     let reader = tokio::spawn(client_handler(stream, sink, sender));
 
     server.initialize().await?;
@@ -467,7 +470,7 @@ async fn pull_quick_fixes() -> Result<()> {
     let (stream, sink) = client.split();
     let mut server = Server::new(service);
 
-    let (sender, _) = channel(8);
+    let (sender, _) = channel(CHANNEL_BUFFER_SIZE);
     let reader = tokio::spawn(client_handler(stream, sink, sender));
 
     server.initialize().await?;
@@ -533,7 +536,7 @@ async fn pull_refactors() -> Result<()> {
     let (stream, sink) = client.split();
     let mut server = Server::new(service);
 
-    let (sender, _) = channel(8);
+    let (sender, _) = channel(CHANNEL_BUFFER_SIZE);
     let reader = tokio::spawn(client_handler(stream, sink, sender));
 
     server.initialize().await?;
@@ -601,7 +604,7 @@ async fn format_with_syntax_errors() -> Result<()> {
     let (stream, sink) = client.split();
     let mut server = Server::new(service);
 
-    let (sender, _) = channel(8);
+    let (sender, _) = channel(CHANNEL_BUFFER_SIZE);
     let reader = tokio::spawn(client_handler(stream, sink, sender));
 
     server.initialize().await?;
@@ -650,7 +653,7 @@ async fn server_shutdown() -> Result<()> {
     let (stream, sink) = client.split();
     let mut server = Server::new(service);
 
-    let (sender, _) = channel(8);
+    let (sender, _) = channel(CHANNEL_BUFFER_SIZE);
     let reader = tokio::spawn(client_handler(stream, sink, sender));
 
     server.initialize().await?;
