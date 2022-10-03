@@ -85,12 +85,13 @@ type JsonRpcResult = Result<Box<RawValue>, TransportError>;
 /// used concurrently
 ///
 /// This concurrent handling of I/O is implemented useing two "background tasks":
-/// - the [write_task] pulls outgoing messages from the "write channel" and
+/// - the `write_task` pulls outgoing messages from the "write channel" and
 /// writes them to the "write half" of the socket
-/// - the [read_task] reads incoming messages from the "read half" of the
+/// - the `read_task` reads incoming messages from the "read half" of the
+/// - the `read_task` reads incoming messages from the "read half" of the
 /// socket, then looks up a request with an ID corresponding to the received
 /// message in the "pending requests" map. If a pending request is found, it's
-/// fullfilled with the content of the message that was just received
+/// fulfilled with the content of the message that was just received
 ///
 /// In addition to these, a new "foreground task" is created for each request.
 /// Each foreground task creates a oneshot channel and stores it in the pending

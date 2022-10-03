@@ -50,126 +50,26 @@ pub trait RuleMeta {
 }
 
 /// This macro is used to declare an analyzer rule type, and implement the
-/// [RuleMeta] trait for it
-///
-/// # Example
+//  [RuleMeta] trait for it
+///  # Example
 ///
 /// The macro itself expect the following syntax:
-/// ```ignore
+///
+/// ```rust
+///use rome_analyze::declare_rule;
+///
 /// declare_rule! {
 ///     /// Documentation
 ///     pub(crate) ExampleRule {
 ///         version: "0.7.0",
-///         name: "ruleName"
+///         name: "ruleName",
+///         recommended: false,
 ///     }
 /// }
 /// ```
 ///
-/// # Documentation
-///
-/// The doc-comment for the rule is mandatory and is used to generate the
-/// documentation page for the rule on the website.
-///
-/// Importantly, the tool used to generate those pages also runs tests on the
-/// code blocks included in the documentation written in languages supported by
-/// the Rome toolchain (JavaScript, JSX, TypeScript, ...) similar to how
-/// `rustdoc` generates tests from code blocks written in Rust. Because code
-/// blocks in Rust doc-comments are assumed to be written in Rust by default
-/// the language of the test must be explicitly specified, for instance:
-///
-/// ```ignore
-/// declare_rule! {
-///     /// Disallow the use of `var`
-///     ///
-///     /// ### Valid
-///     ///
-///     /// ```js
-///     /// let a, b;
-///     /// ```
-///     pub(crate) NoVar {
-///         version: "0.7.0",
-///         name: "noVar"
-///     }
-/// }
-/// ```
-///
-/// Additionally, it's possible to declare that a test should emit a diagnostic
-/// by adding `expect_diagnostic` to the language metadata:
-///
-/// ```ignore
-/// declare_rule! {
-///     /// Disallow the use of `var`
-///     ///
-///     /// ### Invalid
-///     ///
-///     /// ```js,expect_diagnostic
-///     /// var a, b;
-///     /// ```
-///     pub(crate) NoVar {
-///         version: "0.7.0",
-///         name: "noVar"
-///     }
-/// }
-/// ```
-///
-/// This will cause the documentation generator to ensure the rule does emit
-/// exactly one diagnostic for this code, and to include a snapshot for the
-/// diagnostic in the resulting documentation page
-///
-/// ## Deprecation
-///
-/// There are occasions when a rule must be deprecated, to avoid breaking changes. The reason
-/// of deprecations can be multiples.
-///
-/// In order to to do, the macro allows to add additional field to add the reason for deprecation
-///
-/// ```ignore
-/// declare_rule! {
-///     /// Disallow the use of `var`
-///     ///
-///     /// ### Invalid
-///     ///
-///     /// ```js,expect_diagnostic
-///     /// var a, b;
-///     /// ```
-///     pub(crate) NoVar {
-///         version: "0.7.0",
-///         name: "noVar",
-///         deprecated: "Use the rule `noAnotherVar`"
-///     }
-/// }
-/// ```
-///
-/// ## Category Macro
-///
-/// Declaring a rule using `declare_rule!` will cause a new `rule_category!`
-/// macro to be declared in the surrounding module. This macro can be used to
-/// refer to the corresponding diagnostic category for this lint rule, if it
-/// has one. Using this macro instead of getting the category for a diagnostic
-/// by dynamically parsing its string name has the advantage of statically
-/// injecting the category at compile time and checking that it is correctly
-/// registered to the `rome_diagnostics` library
-///
-/// ```ignore
-/// declare_rule! {
-///     /// Documentation
-///     pub(crate) ExampleRule {
-///         version: "0.7.0",
-///         name: "ruleName"
-///     }
-/// }
-///
-/// impl Rule for ExampleRule {
-///     fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
-///         Some(RuleDiagnostic::new(
-///             rule_category!(),
-///             ctx.query().text_trimmed_range(),
-///             "message",
-///         ))
-///     }
-/// }
-/// ```
-///
+/// Check [crate](module documentation) for a better
+/// understanding of how the macro works
 #[macro_export]
 macro_rules! declare_rule {
     ( $( #[doc = $doc:literal] )+ $vis:vis $id:ident {

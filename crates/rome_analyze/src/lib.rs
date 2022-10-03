@@ -1,4 +1,5 @@
 #![deny(rustdoc::broken_intra_doc_links)]
+#![doc = include_str!("../CONTRIBUTING.md")]
 
 use std::cmp::Ordering;
 use std::collections::{BTreeMap, BinaryHeap};
