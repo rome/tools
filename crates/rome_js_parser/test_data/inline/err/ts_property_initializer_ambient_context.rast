@@ -15,19 +15,19 @@ JsModule {
                 implements_clause: missing (optional),
                 l_curly_token: L_CURLY@16..18 "{" [] [Whitespace(" ")],
                 members: JsClassMemberList [
-                    TsPropertySignatureClassMember {
-                        modifiers: TsPropertySignatureModifierList [],
-                        name: JsLiteralMemberName {
-                            value: IDENT@18..23 "prop" [] [Whitespace(" ")],
-                        },
-                        property_annotation: missing (optional),
-                        value: JsInitializerClause {
-                            eq_token: EQ@23..25 "=" [] [Whitespace(" ")],
-                            expression: JsStringLiteralExpression {
-                                value_token: JS_STRING_LITERAL@25..32 "\"test\"" [] [Whitespace(" ")],
+                    JsUnknownMember {
+                        items: [
+                            TsPropertySignatureModifierList [],
+                            JsLiteralMemberName {
+                                value: IDENT@18..23 "prop" [] [Whitespace(" ")],
                             },
-                        },
-                        semicolon_token: missing (optional),
+                            JsInitializerClause {
+                                eq_token: EQ@23..25 "=" [] [Whitespace(" ")],
+                                expression: JsStringLiteralExpression {
+                                    value_token: JS_STRING_LITERAL@25..32 "\"test\"" [] [Whitespace(" ")],
+                                },
+                            },
+                        ],
                     },
                 ],
                 r_curly_token: R_CURLY@32..33 "}" [] [],
@@ -44,23 +44,23 @@ JsModule {
             implements_clause: missing (optional),
             l_curly_token: L_CURLY@42..44 "{" [] [Whitespace(" ")],
             members: JsClassMemberList [
-                TsPropertySignatureClassMember {
-                    modifiers: TsPropertySignatureModifierList [
-                        TsDeclareModifier {
-                            modifier_token: DECLARE_KW@44..52 "declare" [] [Whitespace(" ")],
+                JsUnknownMember {
+                    items: [
+                        TsPropertySignatureModifierList [
+                            TsDeclareModifier {
+                                modifier_token: DECLARE_KW@44..52 "declare" [] [Whitespace(" ")],
+                            },
+                        ],
+                        JsLiteralMemberName {
+                            value: IDENT@52..57 "prop" [] [Whitespace(" ")],
+                        },
+                        JsInitializerClause {
+                            eq_token: EQ@57..59 "=" [] [Whitespace(" ")],
+                            expression: JsStringLiteralExpression {
+                                value_token: JS_STRING_LITERAL@59..66 "\"test\"" [] [Whitespace(" ")],
+                            },
                         },
                     ],
-                    name: JsLiteralMemberName {
-                        value: IDENT@52..57 "prop" [] [Whitespace(" ")],
-                    },
-                    property_annotation: missing (optional),
-                    value: JsInitializerClause {
-                        eq_token: EQ@57..59 "=" [] [Whitespace(" ")],
-                        expression: JsStringLiteralExpression {
-                            value_token: JS_STRING_LITERAL@59..66 "\"test\"" [] [Whitespace(" ")],
-                        },
-                    },
-                    semicolon_token: missing (optional),
                 },
             ],
             r_curly_token: R_CURLY@66..67 "}" [] [],
@@ -85,16 +85,14 @@ JsModule {
         5: (empty)
         6: L_CURLY@16..18 "{" [] [Whitespace(" ")]
         7: JS_CLASS_MEMBER_LIST@18..32
-          0: TS_PROPERTY_SIGNATURE_CLASS_MEMBER@18..32
+          0: JS_UNKNOWN_MEMBER@18..32
             0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@18..18
             1: JS_LITERAL_MEMBER_NAME@18..23
               0: IDENT@18..23 "prop" [] [Whitespace(" ")]
-            2: (empty)
-            3: JS_INITIALIZER_CLAUSE@23..32
+            2: JS_INITIALIZER_CLAUSE@23..32
               0: EQ@23..25 "=" [] [Whitespace(" ")]
               1: JS_STRING_LITERAL_EXPRESSION@25..32
                 0: JS_STRING_LITERAL@25..32 "\"test\"" [] [Whitespace(" ")]
-            4: (empty)
         8: R_CURLY@32..33 "}" [] []
     1: JS_CLASS_DECLARATION@33..67
       0: (empty)
@@ -106,18 +104,16 @@ JsModule {
       5: (empty)
       6: L_CURLY@42..44 "{" [] [Whitespace(" ")]
       7: JS_CLASS_MEMBER_LIST@44..66
-        0: TS_PROPERTY_SIGNATURE_CLASS_MEMBER@44..66
+        0: JS_UNKNOWN_MEMBER@44..66
           0: TS_PROPERTY_SIGNATURE_MODIFIER_LIST@44..52
             0: TS_DECLARE_MODIFIER@44..52
               0: DECLARE_KW@44..52 "declare" [] [Whitespace(" ")]
           1: JS_LITERAL_MEMBER_NAME@52..57
             0: IDENT@52..57 "prop" [] [Whitespace(" ")]
-          2: (empty)
-          3: JS_INITIALIZER_CLAUSE@57..66
+          2: JS_INITIALIZER_CLAUSE@57..66
             0: EQ@57..59 "=" [] [Whitespace(" ")]
             1: JS_STRING_LITERAL_EXPRESSION@59..66
               0: JS_STRING_LITERAL@59..66 "\"test\"" [] [Whitespace(" ")]
-          4: (empty)
       8: R_CURLY@66..67 "}" [] []
   3: EOF@67..68 "" [Newline("\n")] []
 --

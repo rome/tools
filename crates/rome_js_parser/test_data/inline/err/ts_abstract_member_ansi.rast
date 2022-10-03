@@ -99,7 +99,6 @@ JsModule {
                         value: IDENT@118..123 "prop" [] [Whitespace(" ")],
                     },
                     property_annotation: missing (optional),
-                    value: missing (optional),
                     semicolon_token: missing (optional),
                 },
             ],
@@ -183,7 +182,6 @@ JsModule {
             0: IDENT@118..123 "prop" [] [Whitespace(" ")]
           2: (empty)
           3: (empty)
-          4: (empty)
       8: R_CURLY@123..124 "}" [] []
   3: EOF@124..125 "" [Newline("\n")] []
 --

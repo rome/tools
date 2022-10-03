@@ -1,5 +1,4 @@
 use crate::js::auxiliary::initializer_clause::FormatJsInitializerClauseOptions;
-use crate::js::expressions::arrow_function_expression::FormatJsArrowFunctionExpressionOptions;
 use crate::prelude::*;
 use crate::utils::member_chain::is_member_call_chain;
 use crate::utils::object::write_member_name;
@@ -325,9 +324,8 @@ impl JsAnyAssignmentLike {
                 // SAFETY: Calling `unwrap` here is safe because we check `has_only_left_hand_side` variant at the beginning of the `layout` function
                 n.value().unwrap().into()
             }
-            JsAnyAssignmentLike::TsPropertySignatureClassMember(property_signature) => {
-                // SAFETY: Calling `unwrap` here is safe because we check `has_only_left_hand_side` variant at the beginning of the `layout` function
-                Ok(property_signature.value().unwrap().into())
+            JsAnyAssignmentLike::TsPropertySignatureClassMember(_) => {
+                unreachable!("TsPropertySignatureClassMember doesn't have any right side. If you're here, `has_only_left_hand_side` hasn't been called")
             }
         };
 
@@ -440,7 +438,7 @@ impl JsAnyAssignmentLike {
                     let width = write_member_name(&name.into(), f)?;
                     let text_width_for_break =
                         (u8::from(f.options().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
-                    width < text_width_for_break && property_annotation.is_none()
+                    width < text_width_for_break
                 };
 
                 write!(f, [property_annotation.format()])?;
@@ -455,7 +453,6 @@ impl JsAnyAssignmentLike {
                     name,
                     property_annotation,
                     semicolon_token: _,
-                    value: _,
                 } = property_signature_class_member.as_fields();
 
                 write!(f, [modifiers.format(), space(),])?;
@@ -503,13 +500,7 @@ impl JsAnyAssignmentLike {
                 Ok(())
             }
             // this variant doesn't have any operator
-            JsAnyAssignmentLike::TsPropertySignatureClassMember(property_signature) => {
-                if let Some(initializer) = property_signature.value() {
-                    let eq_token = initializer.eq_token()?;
-                    write!(f, [space(), eq_token.format()])?
-                }
-                Ok(())
-            }
+            JsAnyAssignmentLike::TsPropertySignatureClassMember(_) => Ok(()),
         }
     }
 
@@ -566,22 +557,13 @@ impl JsAnyAssignmentLike {
                 Ok(())
             }
             // this variant doesn't have any right part
-            JsAnyAssignmentLike::TsPropertySignatureClassMember(property_signature) => {
-                if let Some(initializer) = property_signature.value() {
-                    let expression = initializer.expression()?;
-                    write!(f, [space(), expression.format()])?;
-                }
-                Ok(())
-            }
+            JsAnyAssignmentLike::TsPropertySignatureClassMember(_) => Ok(()),
         }
     }
 
     fn write_suppressed_initializer(&self, f: &mut JsFormatter) -> FormatResult<()> {
         let initializer = match self {
             JsAnyAssignmentLike::JsPropertyClassMember(class_member) => class_member.value(),
-            JsAnyAssignmentLike::TsPropertySignatureClassMember(property_signature) => {
-                property_signature.value()
-            }
             JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => {
                 variable_declarator.initializer()
             }
@@ -589,7 +571,8 @@ impl JsAnyAssignmentLike {
             JsAnyAssignmentLike::JsPropertyObjectMember(_)
             | JsAnyAssignmentLike::JsAssignmentExpression(_)
             | JsAnyAssignmentLike::JsObjectAssignmentPatternProperty(_)
-            | JsAnyAssignmentLike::TsTypeAliasDeclaration(_) => {
+            | JsAnyAssignmentLike::TsTypeAliasDeclaration(_)
+            | JsAnyAssignmentLike::TsPropertySignatureClassMember(_) => {
                 unreachable!("These variants have no initializer")
             }
         };
@@ -699,9 +682,6 @@ impl JsAnyAssignmentLike {
             declarator.initializer().is_none()
         } else if let JsAnyAssignmentLike::JsPropertyClassMember(class_member) = self {
             class_member.value().is_none()
-        } else if let JsAnyAssignmentLike::TsPropertySignatureClassMember(property_signature) = self
-        {
-            property_signature.value().is_none()
         } else {
             matches!(self, JsAnyAssignmentLike::TsPropertySignatureClassMember(_))
         }
@@ -937,7 +917,7 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                     self.write_operator(f)?;
                 }
 
-                match layout {
+                match &layout {
                     AssignmentLikeLayout::OnlyLeft => Ok(()),
                     AssignmentLikeLayout::Fluid => {
                         let group_id = f.group_id("assignment_like");
@@ -1012,7 +992,7 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
 /// [Prettier applies]: https://github.com/prettier/prettier/blob/a043ac0d733c4d53f980aa73807a63fc914f23bd/src/language-js/print/assignment.js#L329
 fn is_poorly_breakable_member_or_call_chain(
     expression: &JsAnyExpression,
-    f: &Formatter<JsFormatContext>,
+    f: &mut Formatter<JsFormatContext>,
 ) -> SyntaxResult<bool> {
     let threshold = f.options().line_width().value() / 4;
 
@@ -1061,11 +1041,7 @@ fn is_poorly_breakable_member_or_call_chain(
     }
 
     for call_expression in call_expressions {
-        if is_member_call_chain(
-            call_expression.clone(),
-            f.comments(),
-            f.options().tab_width(),
-        )? {
+        if is_member_call_chain(&call_expression, f)? {
             return Ok(false);
         }
 
@@ -1209,13 +1185,9 @@ pub(crate) fn with_assignment_layout(
 impl Format<JsFormatContext> for WithAssignmentLayout<'_> {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
         match self.expression {
-            JsAnyExpression::JsArrowFunctionExpression(arrow) => arrow
-                .format()
-                .with_options(FormatJsArrowFunctionExpressionOptions {
-                    assignment_layout: self.layout,
-                    ..FormatJsArrowFunctionExpressionOptions::default()
-                })
-                .fmt(f),
+            JsAnyExpression::JsArrowFunctionExpression(arrow) => {
+                arrow.format().with_options(self.layout).fmt(f)
+            }
             expression => expression.format().fmt(f),
         }
     }
