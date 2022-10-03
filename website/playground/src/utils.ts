@@ -146,14 +146,16 @@ export function formatWithPrettier(
 		// @ts-ignore
 		let debug = prettier.__debug;
 		const document = debug.printToDoc(code, prettierOptions);
-		const formattedCode = debug.printDocToString(
-			document,
-			prettierOptions,
-		).formatted;
+
+		// formatDoc must be before printDocToString because printDocToString mutates the document and breaks the ir
 		const ir = debug.formatDoc(document, {
 			parser: "babel",
 			plugins: [parserBabel],
 		});
+		const formattedCode = debug.printDocToString(
+			document,
+			prettierOptions,
+		).formatted;
 		return { code: formattedCode, ir };
 	} catch (err: any) {
 		console.error(err);
