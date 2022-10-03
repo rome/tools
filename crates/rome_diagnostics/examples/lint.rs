@@ -6,6 +6,7 @@ use rome_diagnostics::v2::{
     Visit,
 };
 use rome_rowan::{TextRange, TextSize};
+use rome_text_edit::TextEdit;
 
 #[derive(Debug, Diagnostic)]
 #[diagnostic(
@@ -31,7 +32,7 @@ struct LintAdvices {
     path: String,
     declaration_span: TextRange,
     source_code: String,
-    fixed_code: String,
+    code_action: TextEdit,
 }
 
 impl Advices for LintAdvices {
@@ -52,7 +53,7 @@ impl Advices for LintAdvices {
         })?;
 
         visitor.record_log(LogCategory::Info, &"Safe Fix")?;
-        visitor.record_diff(&self.source_code, &self.fixed_code)
+        visitor.record_diff(&self.code_action)
     }
 }
 
@@ -82,7 +83,7 @@ console.log(FOO);";
             path: String::from("style/noShoutyConstants.js"),
             declaration_span: TextRange::at(TextSize::from(6), TextSize::from(3)),
             source_code: String::from(SOURCE),
-            fixed_code: String::from(FIXED),
+            code_action: TextEdit::from_unicode_words(SOURCE, FIXED),
         },
         verbose_advices: LintVerboseAdvices {
             path: String::from("style/noShoutyConstants.js"),

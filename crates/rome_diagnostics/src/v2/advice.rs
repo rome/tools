@@ -1,6 +1,7 @@
 use std::io;
 
 use rome_console::fmt::{self, Display};
+use rome_text_edit::TextEdit;
 use serde::{Deserialize, Serialize};
 
 use super::{
@@ -39,8 +40,8 @@ pub trait Visit {
     }
 
     /// Prints the diff between the `prev` and `next` strings.
-    fn record_diff(&mut self, prev: &str, next: &str) -> io::Result<()> {
-        let _ = (prev, next);
+    fn record_diff(&mut self, diff: &TextEdit) -> io::Result<()> {
+        let _ = diff;
         Ok(())
     }
 
@@ -130,18 +131,16 @@ where
 /// Utility type implementing [Advices] that emits a diff advice with the
 /// provided prev and next text.
 #[derive(Debug)]
-pub struct DiffAdvice<A, B> {
-    pub prev: A,
-    pub next: B,
+pub struct DiffAdvice<D> {
+    pub diff: D,
 }
 
-impl<A, B> Advices for DiffAdvice<A, B>
+impl<D> Advices for DiffAdvice<D>
 where
-    A: AsRef<str>,
-    B: AsRef<str>,
+    D: AsRef<TextEdit>,
 {
     fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
-        visitor.record_diff(self.prev.as_ref(), self.next.as_ref())
+        visitor.record_diff(self.diff.as_ref())
     }
 }
 

@@ -26,14 +26,8 @@ fromImportNamespaceInvalid.jsx:4:5 lint/nursery/noUselessFragments  FIXABLE  ━
   
   i Suggested fix: Remove the Fragment
   
-      | @@ -1,5 +1,5 @@
-  0 0 |   import * as AwesomeReact from "react";
-  1 1 |   
-  2 2 |   <>
-  3   | -     <AwesomeReact.Fragment>foo</AwesomeReact.Fragment>
-    3 | +     foo
-  4 4 |   </>
-  
+    4 │ ····<AwesomeReact.Fragment>foo</AwesomeReact.Fragment>
+      │     -----------------------   ------------------------
 
 ```
 

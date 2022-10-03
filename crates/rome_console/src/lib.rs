@@ -5,7 +5,6 @@ use std::panic::RefUnwindSafe;
 use termcolor::{ColorChoice, StandardStream};
 use write::Termcolor;
 
-pub mod diff;
 pub mod fmt;
 mod markup;
 mod write;

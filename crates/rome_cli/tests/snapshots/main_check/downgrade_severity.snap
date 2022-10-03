@@ -36,9 +36,8 @@ file.js:1:1 lint/correctness/noDebugger  FIXABLE  ━━━━━━━━━━
   
   i Suggested fix: Remove debugger statement
   
-      | @@ -1 +0,0 @@
-  0   | - debugger;
-  
+    1 │ debugger;
+      │ ---------
 
 ```
 

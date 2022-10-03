@@ -25,12 +25,11 @@ complexLogicalAndCases.ts:2:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
   
   i Suggested fix: Change to an optional chain.
   
-      | @@ -1,4 +1,4 @@
-  0 0 |   // currently do not handle complex computed properties
-  1   | - foo && foo[bar as string] && foo[bar as string].baz;
-    1 | + foo?.[bar as string] && foo[bar as string].baz;
-  2 2 |   foo && foo[1 + 2] && foo[1 + 2].baz;
-  3 3 |   foo && foo[typeof bar] && foo[typeof bar].baz;
+    1 1 │   //·currently·do·not·handle·complex·computed·properties
+    2   │ - foo·&&·foo[bar·as·string]·&&·foo[bar·as·string].baz;
+      2 │ + foo?.[bar·as·string]·&&·foo[bar·as·string].baz;
+    3 3 │   foo·&&·foo[1·+·2]·&&·foo[1·+·2].baz;
+    4 4 │   foo·&&·foo[typeof·bar]·&&·foo[typeof·bar].baz;
   
 
 ```
@@ -49,12 +48,12 @@ complexLogicalAndCases.ts:3:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
   
   i Suggested fix: Change to an optional chain.
   
-      | @@ -1,4 +1,4 @@
-  0 0 |   // currently do not handle complex computed properties
-  1 1 |   foo && foo[bar as string] && foo[bar as string].baz;
-  2   | - foo && foo[1 + 2] && foo[1 + 2].baz;
-    2 | + foo?.[1 + 2] && foo[1 + 2].baz;
-  3 3 |   foo && foo[typeof bar] && foo[typeof bar].baz;
+    1 1 │   //·currently·do·not·handle·complex·computed·properties
+    2 2 │   foo·&&·foo[bar·as·string]·&&·foo[bar·as·string].baz;
+    3   │ - foo·&&·foo[1·+·2]·&&·foo[1·+·2].baz;
+      3 │ + foo?.[1·+·2]·&&·foo[1·+·2].baz;
+    4 4 │   foo·&&·foo[typeof·bar]·&&·foo[typeof·bar].baz;
+    5 5 │   
   
 
 ```
@@ -72,12 +71,11 @@ complexLogicalAndCases.ts:4:1 lint/nursery/useOptionalChain  FIXABLE  ━━━�
   
   i Suggested fix: Change to an optional chain.
   
-      | @@ -1,4 +1,4 @@
-  0 0 |   // currently do not handle complex computed properties
-  1 1 |   foo && foo[bar as string] && foo[bar as string].baz;
-  2 2 |   foo && foo[1 + 2] && foo[1 + 2].baz;
-  3   | - foo && foo[typeof bar] && foo[typeof bar].baz;
-    3 | + foo?.[typeof bar] && foo[typeof bar].baz;
+    2 2 │   foo·&&·foo[bar·as·string]·&&·foo[bar·as·string].baz;
+    3 3 │   foo·&&·foo[1·+·2]·&&·foo[1·+·2].baz;
+    4   │ - foo·&&·foo[typeof·bar]·&&·foo[typeof·bar].baz;
+      4 │ + foo?.[typeof·bar]·&&·foo[typeof·bar].baz;
+    5 5 │   
   
 
 ```

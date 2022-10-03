@@ -40,20 +40,17 @@ default.js:7:1 lint/style/noNegationElse  FIXABLE  ━━━━━━━━━�
   
   i Suggested fix: Exchange alternate and consequent of the node
   
-      | @@ -4,10 +4,10 @@
-  3 3 |   }
-  4 4 |   true ? consequent : alternate;
-  5 5 |   // invalid
-  6   | - if (!true) {
-    6 | + if (true) {
-    7 | + 	alternate;
-    8 | + } else {
-  7 9 |   	consequent;
-  8   | - } else {
-  9   | - 	alternate;
-  10 10 |   }
-  11 11 |   !condition ? consequent : alternate;
-  12 12 |   
+     5  5 │   true·?·consequent·:·alternate;
+     6  6 │   //·invalid
+     7    │ - if·(!true)·{
+     8    │ - → consequent;
+        7 │ + if·(true)·{
+        8 │ + → alternate;
+     9  9 │   }·else·{
+    10    │ - → alternate;
+       10 │ + → consequent;
+    11 11 │   }
+    12 12 │   !condition·?·consequent·:·alternate;
   
 
 ```
@@ -72,14 +69,12 @@ default.js:12:1 lint/style/noNegationElse  FIXABLE  ━━━━━━━━━�
   
   i Suggested fix: Exchange alternate and consequent of the node
   
-        | @@ -9,6 +9,6 @@
-   8  8 |   } else {
-   9  9 |   	alternate;
-  10 10 |   }
-  11    | - !condition ? consequent : alternate;
-     11 | + condition ? alternate : consequent;
-  12 12 |   
-  13 13 |   let a = !test ? c : d;
+    10 10 │   → alternate;
+    11 11 │   }
+    12    │ - !condition·?·consequent·:·alternate;
+       12 │ + condition·?·alternate·:·consequent;
+    13 13 │   
+    14 14 │   let·a·=·!test·?·c·:·d;
   
 
 ```
@@ -96,12 +91,10 @@ default.js:14:9 lint/style/noNegationElse  FIXABLE  ━━━━━━━━━�
   
   i Suggested fix: Exchange alternate and consequent of the node
   
-        | @@ -11,4 +11,4 @@
-  10 10 |   }
-  11 11 |   !condition ? consequent : alternate;
-  12 12 |   
-  13    | - let a = !test ? c : d;
-     13 | + let a = test ? d : c;
+    12 12 │   !condition·?·consequent·:·alternate;
+    13 13 │   
+    14    │ - let·a·=·!test·?·c·:·d;
+       14 │ + let·a·=·test·?·d·:·c;
   
 
 ```

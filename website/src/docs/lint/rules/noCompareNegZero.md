@@ -27,10 +27,8 @@ Disallow comparing against `-0`
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Safe fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Replace -0 with 0</span>
   
-      | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
-  0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">(1 &gt;= -0)</span>
-    0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">(1 &gt;= 0)</span>
-  
+<strong>  </strong><strong>  1 │ </strong>(1<span style="opacity: 0.8;">·</span>&gt;=<span style="opacity: 0.8;">·</span><span style="color: Tomato;">-</span>0)
+<strong>  </strong><strong>    │ </strong>      <span style="color: Tomato;">-</span>  
 </code></pre>{% endraw %}
 
 ### Valid

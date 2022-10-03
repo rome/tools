@@ -27,10 +27,8 @@ Disallow using unsafe negation.
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Wrap the expression with a parenthesis</span>
   
-      | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
-  0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">!1 in [1,2];</span>
-    0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">!(1 in [1,2]);</span>
-  
+<strong>  </strong><strong>  1 │ </strong>!<span style="color: MediumSeaGreen;">(</span>1<span style="opacity: 0.8;">·</span>in<span style="opacity: 0.8;">·</span>[1,2]<span style="color: MediumSeaGreen;">)</span>;
+<strong>  </strong><strong>    │ </strong> <span style="color: MediumSeaGreen;">+</span>          <span style="color: MediumSeaGreen;">+</span> 
 </code></pre>{% endraw %}
 
 ```jsx
@@ -47,10 +45,8 @@ Disallow using unsafe negation.
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Wrap the expression with a parenthesis</span>
   
-      | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
-  0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">/**test*/!/** test*/1 instanceof [1,2];</span>
-    0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">/**test*/!/** test*/(1 instanceof [1,2]);</span>
-  
+<strong>  </strong><strong>  1 │ </strong>/**test*/!/**<span style="opacity: 0.8;">·</span>test*/<span style="color: MediumSeaGreen;">(</span>1<span style="opacity: 0.8;">·</span>instanceof<span style="opacity: 0.8;">·</span>[1,2]<span style="color: MediumSeaGreen;">)</span>;
+<strong>  </strong><strong>    │ </strong>                    <span style="color: MediumSeaGreen;">+</span>                  <span style="color: MediumSeaGreen;">+</span> 
 </code></pre>{% endraw %}
 
 ### Valid

@@ -18,10 +18,8 @@ withJsxElementInvalid.jsx:1:1 lint/nursery/noUselessFragments  FIXABLE  ━━�
   
   i Suggested fix: Remove the Fragment
   
-      | @@ -1 +1 @@
-  0   | - <><Component /></>
-    0 | + <Component />
-  
+    1 │ <><Component·/></>
+      │  --          ---  
 
 ```
 

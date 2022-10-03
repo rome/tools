@@ -29,13 +29,8 @@ noDoubleEquals.js:1:18 lint/correctness/noDoubleEquals  FIXABLE  ━━━━━
   
   i Suggested fix: Use ===
   
-      | @@ -1,4 +1,4 @@
-  0   | - const isZero = a == 0;
-    0 | + const isZero = a === 0;
-  1 1 |   const isNonZero = a != 0;
-  2 2 |   
-  3 3 |   const isNull = a == null;
-  
+    1 │ const·isZero·=·a·===·0;
+      │                    +   
 
 ```
 
@@ -56,14 +51,8 @@ noDoubleEquals.js:2:21 lint/correctness/noDoubleEquals  FIXABLE  ━━━━━
   
   i Suggested fix: Use !==
   
-      | @@ -1,5 +1,5 @@
-  0 0 |   const isZero = a == 0;
-  1   | - const isNonZero = a != 0;
-    1 | + const isNonZero = a !== 0;
-  2 2 |   
-  3 3 |   const isNull = a == null;
-  4 4 |   const isNonNull = a != null;
-  
+    2 │ const·isNonZero·=·a·!==·0;
+      │                       +   
 
 ```
 

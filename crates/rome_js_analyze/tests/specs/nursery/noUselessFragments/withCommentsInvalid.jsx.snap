@@ -26,14 +26,8 @@ withCommentsInvalid.jsx:2:5 lint/nursery/noUselessFragments  FIXABLE  ━━━�
   
   i Suggested fix: Remove the Fragment
   
-      | @@ -1,5 +1,5 @@
-  0 0 |   <>
-  1   | -     </* test */>empty</>
-    1 | +     empty
-  2 2 |       <>empty</* comment */ />
-  3 3 |       <>empty</ /* comment */>
-  4 4 |   </>
-  
+    2 │ ····</*·test·*/>empty</>
+      │     ------------     ---
 
 ```
 
@@ -51,14 +45,8 @@ withCommentsInvalid.jsx:3:5 lint/nursery/noUselessFragments  FIXABLE  ━━━�
   
   i Suggested fix: Remove the Fragment
   
-      | @@ -1,5 +1,5 @@
-  0 0 |   <>
-  1 1 |       </* test */>empty</>
-  2   | -     <>empty</* comment */ />
-    2 | +     empty
-  3 3 |       <>empty</ /* comment */>
-  4 4 |   </>
-  
+    3 │ ····<>empty</*·comment·*/·/>
+      │     --     -----------------
 
 ```
 
@@ -76,14 +64,8 @@ withCommentsInvalid.jsx:4:5 lint/nursery/noUselessFragments  FIXABLE  ━━━�
   
   i Suggested fix: Remove the Fragment
   
-      | @@ -1,5 +1,5 @@
-  0 0 |   <>
-  1 1 |       </* test */>empty</>
-  2 2 |       <>empty</* comment */ />
-  3   | -     <>empty</ /* comment */>
-    3 | +     empty
-  4 4 |   </>
-  
+    4 │ ····<>empty</·/*·comment·*/>
+      │     --     -----------------
 
 ```
 

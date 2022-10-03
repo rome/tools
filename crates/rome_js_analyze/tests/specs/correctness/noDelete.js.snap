@@ -32,12 +32,10 @@ noDelete.js:1:1 lint/correctness/noDelete  FIXABLE  ━━━━━━━━━�
   
   i Suggested fix: Replace with undefined assignment
   
-      | @@ -1,4 +1,4 @@
-  0   | - delete a.b;
-    0 | + a.b = undefined;
-  1 1 |   delete a?.b;
-  2 2 |   delete a["b"];
-  3 3 |   delete a?.["b"];
+     1    │ - delete·a.b;
+        1 │ + a.b·=·undefined;
+     2  2 │   delete·a?.b;
+     3  3 │   delete·a["b"];
   
 
 ```
@@ -56,14 +54,12 @@ noDelete.js:3:1 lint/correctness/noDelete  FIXABLE  ━━━━━━━━━�
   
   i Suggested fix: Replace with undefined assignment
   
-      | @@ -1,6 +1,6 @@
-  0 0 |   delete a.b;
-  1 1 |   delete a?.b;
-  2   | - delete a["b"];
-    2 | + a["b"] = undefined;
-  3 3 |   delete a?.["b"];
-  4 4 |   delete a.b.c;
-  5 5 |   delete a.b?.c;
+     1  1 │   delete·a.b;
+     2  2 │   delete·a?.b;
+     3    │ - delete·a["b"];
+        3 │ + a["b"]·=·undefined;
+     4  4 │   delete·a?.["b"];
+     5  5 │   delete·a.b.c;
   
 
 ```
@@ -82,15 +78,12 @@ noDelete.js:5:1 lint/correctness/noDelete  FIXABLE  ━━━━━━━━━�
   
   i Suggested fix: Replace with undefined assignment
   
-      | @@ -2,7 +2,7 @@
-  1 1 |   delete a?.b;
-  2 2 |   delete a["b"];
-  3 3 |   delete a?.["b"];
-  4   | - delete a.b.c;
-    4 | + a.b.c = undefined;
-  5 5 |   delete a.b?.c;
-  6 6 |   delete a.b["c"];
-  7 7 |   delete a.b?.["c"];
+     3  3 │   delete·a["b"];
+     4  4 │   delete·a?.["b"];
+     5    │ - delete·a.b.c;
+        5 │ + a.b.c·=·undefined;
+     6  6 │   delete·a.b?.c;
+     7  7 │   delete·a.b["c"];
   
 
 ```
@@ -109,15 +102,12 @@ noDelete.js:7:1 lint/correctness/noDelete  FIXABLE  ━━━━━━━━━�
   
   i Suggested fix: Replace with undefined assignment
   
-      | @@ -4,7 +4,7 @@
-  3 3 |   delete a?.["b"];
-  4 4 |   delete a.b.c;
-  5 5 |   delete a.b?.c;
-  6   | - delete a.b["c"];
-    6 | + a.b["c"] = undefined;
-  7 7 |   delete a.b?.["c"];
-  8 8 |   delete a?.b.c;
-  9 9 |   delete a?.b?.c;
+     5  5 │   delete·a.b.c;
+     6  6 │   delete·a.b?.c;
+     7    │ - delete·a.b["c"];
+        7 │ + a.b["c"]·=·undefined;
+     8  8 │   delete·a.b?.["c"];
+     9  9 │   delete·a?.b.c;
   
 
 ```

@@ -58,7 +58,7 @@ use rome_diagnostics::{CodeSuggestion, Diagnostic};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_js_syntax::{TextRange, TextSize};
-use rome_text_edit::Indel;
+use rome_text_edit::TextEdit;
 use std::{borrow::Cow, panic::RefUnwindSafe, sync::Arc};
 
 pub use self::client::{TransportRequest, WorkspaceClient, WorkspaceTransport};
@@ -277,7 +277,7 @@ pub struct RenameResult {
     /// Range of source code modified by this rename operation
     pub range: TextRange,
     /// List of text edit operations to apply on the source code
-    pub indels: Vec<Indel>,
+    pub indels: TextEdit,
 }
 
 pub trait Workspace: Send + Sync + RefUnwindSafe {

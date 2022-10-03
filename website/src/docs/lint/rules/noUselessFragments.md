@@ -30,12 +30,12 @@ foo
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove the Fragment</span>
   
-      | <span style="color: rgb(38, 148, 255);">@@ -1,3 +1,3 @@</span>
-  0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">&lt;&gt;</span>
-    0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">&quot;</span>
-  1 1 |   foo
-  2   | <span style="color: Tomato;">- </span><span style="color: Tomato;">&lt;/&gt;</span>
-    2 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">&quot;</span>
+    <strong>1</strong>  <strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;</strong></span><span style="color: Tomato;"><strong>&gt;</strong></span>
+      <strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>&quot;</strong></span>
+    <strong>2</strong> <strong>2</strong><strong> │ </strong>  foo
+    <strong>3</strong>  <strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;</strong></span><span style="color: Tomato;"><strong>/</strong></span><span style="color: Tomato;"><strong>&gt;</strong></span>
+      <strong>3</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>&quot;</strong></span>
+    <strong>4</strong> <strong>4</strong><strong> │ </strong>  
   
 </code></pre>{% endraw %}
 
@@ -58,12 +58,12 @@ foo
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove the Fragment</span>
   
-      | <span style="color: rgb(38, 148, 255);">@@ -1,3 +1,3 @@</span>
-  0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">&lt;React.Fragment&gt;</span>
-    0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">&quot;</span>
-  1 1 |   foo
-  2   | <span style="color: Tomato;">- </span><span style="color: Tomato;">&lt;/React.Fragment&gt;</span>
-    2 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">&quot;</span>
+    <strong>1</strong>  <strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;</strong></span><span style="color: Tomato;"><strong>R</strong></span><span style="color: Tomato;"><strong>e</strong></span><span style="color: Tomato;"><strong>a</strong></span><span style="color: Tomato;"><strong>c</strong></span><span style="color: Tomato;"><strong>t</strong></span><span style="color: Tomato;"><strong>.</strong></span><span style="color: Tomato;"><strong>F</strong></span><span style="color: Tomato;"><strong>r</strong></span><span style="color: Tomato;"><strong>a</strong></span><span style="color: Tomato;"><strong>g</strong></span><span style="color: Tomato;"><strong>m</strong></span><span style="color: Tomato;"><strong>e</strong></span><span style="color: Tomato;"><strong>n</strong></span><span style="color: Tomato;"><strong>t</strong></span><span style="color: Tomato;"><strong>&gt;</strong></span>
+      <strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>&quot;</strong></span>
+    <strong>2</strong> <strong>2</strong><strong> │ </strong>  foo
+    <strong>3</strong>  <strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>&lt;</strong></span><span style="color: Tomato;"><strong>/</strong></span><span style="color: Tomato;"><strong>R</strong></span><span style="color: Tomato;"><strong>e</strong></span><span style="color: Tomato;"><strong>a</strong></span><span style="color: Tomato;"><strong>c</strong></span><span style="color: Tomato;"><strong>t</strong></span><span style="color: Tomato;"><strong>.</strong></span><span style="color: Tomato;"><strong>F</strong></span><span style="color: Tomato;"><strong>r</strong></span><span style="color: Tomato;"><strong>a</strong></span><span style="color: Tomato;"><strong>g</strong></span><span style="color: Tomato;"><strong>m</strong></span><span style="color: Tomato;"><strong>e</strong></span><span style="color: Tomato;"><strong>n</strong></span><span style="color: Tomato;"><strong>t</strong></span><span style="color: Tomato;"><strong>&gt;</strong></span>
+      <strong>3</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>&quot;</strong></span>
+    <strong>4</strong> <strong>4</strong><strong> │ </strong>  
   
 </code></pre>{% endraw %}
 
@@ -86,13 +86,8 @@ foo
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove the Fragment</span>
   
-      | <span style="color: rgb(38, 148, 255);">@@ -1,4 +1,4 @@</span>
-  0 0 |   &lt;&gt;
-  1   | <span style="color: Tomato;">- </span><span style="color: Tomato;">    &lt;&gt;foo&lt;/&gt;</span>
-    1 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">    foo</span>
-  2 2 |       &lt;SomeComponent /&gt;
-  3 3 |   &lt;/&gt;
-  
+<strong>  </strong><strong>  2 │ </strong><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span><span style="color: Tomato;">&lt;</span><span style="color: Tomato;">&gt;</span>foo<span style="color: Tomato;">&lt;</span><span style="color: Tomato;">/</span><span style="color: Tomato;">&gt;</span>
+<strong>  </strong><strong>    │ </strong>    <span style="color: Tomato;">-</span><span style="color: Tomato;">-</span>   <span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span>
 </code></pre>{% endraw %}
 
 ```jsx
@@ -109,9 +104,7 @@ foo
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove the Fragment</span>
   
-      | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
-  0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">&lt;&gt;&lt;/&gt;</span>
-    0 | <span style="color: MediumSeaGreen;">+ </span>
-  
+<strong>  </strong><strong>  1 │ </strong><span style="color: Tomato;">&lt;</span><span style="color: Tomato;">&gt;</span><span style="color: Tomato;">&lt;</span><span style="color: Tomato;">/</span><span style="color: Tomato;">&gt;</span>
+<strong>  </strong><strong>    │ </strong><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span>
 </code></pre>{% endraw %}
 

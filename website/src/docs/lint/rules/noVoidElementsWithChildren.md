@@ -25,10 +25,8 @@ This rules prevents void elements (AKA self-closing elements) from having childr
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove the </span><span style="color: rgb(38, 148, 255);"><strong>children</strong></span><span style="color: rgb(38, 148, 255);">.</span>
   
-      | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
-  0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">&lt;br&gt;invalid child&lt;/br&gt;</span>
-    0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">&lt;br/&gt;</span>
-  
+<strong>  </strong><strong>  1 │ </strong>&lt;br<span style="color: Tomato;">&gt;</span><span style="color: Tomato;">i</span><span style="color: Tomato;">n</span><span style="color: Tomato;">v</span><span style="color: Tomato;">a</span><span style="color: Tomato;">l</span><span style="color: Tomato;">i</span><span style="color: Tomato;">d</span><span style="opacity: 0.8;"><span style="color: Tomato;">·</span></span><span style="color: Tomato;">c</span><span style="color: Tomato;">h</span><span style="color: Tomato;">i</span><span style="color: Tomato;">l</span><span style="color: Tomato;">d</span><span style="color: Tomato;">&lt;</span>/<span style="color: Tomato;">b</span><span style="color: Tomato;">r</span>&gt;
+<strong>  </strong><strong>    │ </strong>   <span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span> <span style="color: Tomato;">-</span><span style="color: Tomato;">-</span> 
 </code></pre>{% endraw %}
 
 ```jsx
@@ -45,10 +43,8 @@ This rules prevents void elements (AKA self-closing elements) from having childr
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove the </span><span style="color: rgb(38, 148, 255);"><strong>children</strong></span><span style="color: rgb(38, 148, 255);">.</span>
   
-      | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
-  0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">&lt;img alt=&quot;some text&quot; children={&quot;some child&quot;} /&gt;</span>
-    0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">&lt;img alt=&quot;some text&quot; /&gt;</span>
-  
+<strong>  </strong><strong>  1 │ </strong>&lt;img<span style="opacity: 0.8;">·</span>alt=&quot;some<span style="opacity: 0.8;">·</span>text&quot;<span style="opacity: 0.8;">·</span><span style="color: Tomato;">c</span><span style="color: Tomato;">h</span><span style="color: Tomato;">i</span><span style="color: Tomato;">l</span><span style="color: Tomato;">d</span><span style="color: Tomato;">r</span><span style="color: Tomato;">e</span><span style="color: Tomato;">n</span><span style="color: Tomato;">=</span><span style="color: Tomato;">{</span><span style="color: Tomato;">&quot;</span><span style="color: Tomato;">s</span><span style="color: Tomato;">o</span><span style="color: Tomato;">m</span><span style="color: Tomato;">e</span><span style="opacity: 0.8;"><span style="color: Tomato;">·</span></span><span style="color: Tomato;">c</span><span style="color: Tomato;">h</span><span style="color: Tomato;">i</span><span style="color: Tomato;">l</span><span style="color: Tomato;">d</span><span style="color: Tomato;">&quot;</span><span style="color: Tomato;">}</span><span style="opacity: 0.8;"><span style="color: Tomato;">·</span></span>/&gt;
+<strong>  </strong><strong>    │ </strong>                     <span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span>  
 </code></pre>{% endraw %}
 
 ```jsx
@@ -65,9 +61,7 @@ React.createElement('img', {}, 'child')
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Remove the </span><span style="color: rgb(38, 148, 255);"><strong>children</strong></span><span style="color: rgb(38, 148, 255);">.</span>
   
-      | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
-  0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">React.createElement('img', {}, 'child')</span>
-    0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">React.createElement('img', {}, )</span>
-  
+<strong>  </strong><strong>  1 │ </strong>React.createElement('img',<span style="opacity: 0.8;">·</span>{},<span style="opacity: 0.8;">·</span><span style="color: Tomato;">'</span><span style="color: Tomato;">c</span><span style="color: Tomato;">h</span><span style="color: Tomato;">i</span><span style="color: Tomato;">l</span><span style="color: Tomato;">d</span><span style="color: Tomato;">'</span>)
+<strong>  </strong><strong>    │ </strong>                               <span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span> 
 </code></pre>{% endraw %}
 

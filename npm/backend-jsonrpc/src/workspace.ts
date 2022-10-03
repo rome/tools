@@ -342,12 +342,11 @@ export interface CodeSuggestion {
 	applicability: Applicability;
 	labels: TextRange[];
 	msg: MarkupBuf;
-	span: FileSpan;
-	style: SuggestionStyle;
 	/**
 	 * If the `FileId` is `None`, it's in the same file as his parent.
 	 */
-	substitution: SuggestionChange;
+	span: FileSpan;
+	suggestion: TextEdit;
 }
 export type DiagnosticTag = "Unnecessary" | "Deprecated" | "Both";
 export type MarkupBuf = MarkupNodeBuf[];
@@ -363,24 +362,17 @@ export interface FileSpan {
  */
 export type Applicability = "Always" | "MaybeIncorrect";
 export type TextRange = [TextSize, TextSize];
-export type SuggestionStyle = "Inline" | "Full";
-export type SuggestionChange = { Indels: Indel[] } | { String: string };
+export interface TextEdit {
+	dictionary: string;
+	ops: CompressedOp[];
+}
 export interface MarkupNodeBuf {
 	content: string;
 	elements: MarkupElement[];
 }
-/**
-	* `InsertDelete` -- a single "atomic" change to text
-
-Must not overlap with other `InDel`s 
-	 */
-export interface Indel {
-	/**
-	 * Refers to offsets in the original text
-	 */
-	delete: TextRange;
-	insert: string;
-}
+export type CompressedOp =
+	| { DiffOp: DiffOp }
+	| { EqualLines: { line_count: number } };
 /**
  * Enumeration of all the supported markup elements
  */
@@ -395,6 +387,10 @@ export type MarkupElement =
 	| "Info"
 	| "Inverse"
 	| { Hyperlink: { href: string } };
+export type DiffOp =
+	| { Equal: { range: TextRange } }
+	| { Insert: { range: TextRange } }
+	| { Delete: { range: TextRange } };
 export interface PullActionsParams {
 	path: RomePath;
 	range: TextRange;
@@ -479,7 +475,7 @@ export interface RenameResult {
 	/**
 	 * List of text edit operations to apply on the source code
 	 */
-	indels: Indel[];
+	indels: TextEdit;
 	/**
 	 * Range of source code modified by this rename operation
 	 */

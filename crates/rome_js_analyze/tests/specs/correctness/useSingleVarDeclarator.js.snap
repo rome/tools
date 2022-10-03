@@ -30,13 +30,11 @@ useSingleVarDeclarator.js:1:1 lint/correctness/useSingleVarDeclarator  FIXABLE  
   
   i Suggested fix: Break out into multiple declarations
   
-      | @@ -1,4 +1,5 @@
-  0   | - var x, y
-    0 | + var x
-    1 | + var y
-  1 2 |   
-  2 3 |   function test() {
-  3 4 |   	// Comment
+     1    │ - var·x,·y
+        1 │ + var·x
+        2 │ + var·y
+     2  3 │   
+     3  4 │   function·test()·{
   
 
 ```
@@ -55,16 +53,13 @@ useSingleVarDeclarator.js:5:2 lint/correctness/useSingleVarDeclarator  FIXABLE  
   
   i Suggested fix: Break out into multiple declarations
   
-      | @@ -2,7 +2,8 @@
-  1 1 |   
-  2 2 |   function test() {
-  3 3 |   	// Comment
-  4   | - 	let foo, bar;
-    4 | + 	let foo;
-    5 | + 	let bar;
-  5 6 |   }
-  6 7 |   
-  7 8 |   var x = 1,
+     3  3 │   function·test()·{
+     4  4 │   → //·Comment
+     5    │ - → let·foo,·bar;
+        5 │ + → let·foo;
+        6 │ + → let·bar;
+     6  7 │   }
+     7  8 │   
   
 
 ```
@@ -85,16 +80,15 @@ useSingleVarDeclarator.js:8:1 lint/correctness/useSingleVarDeclarator  FIXABLE  
   
   i Suggested fix: Break out into multiple declarations
   
-      | @@ -5,6 +5,6 @@
-  4 4 |   	let foo, bar;
-  5 5 |   }
-  6 6 |   
-  7   | - var x = 1,
-  8   | - 	// comment
-  9   | -     y = 2
-    7 | + var x = 1
-    8 | + // comment
-    9 | + var y = 2
+     6  6 │   }
+     7  7 │   
+     8    │ - var·x·=·1,
+     9    │ - → //·comment
+    10    │ - ····y·=·2
+        8 │ + var·x·=·1
+        9 │ + //·comment
+       10 │ + var·y·=·2
+    11 11 │   
   
 
 ```

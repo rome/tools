@@ -1,6 +1,6 @@
 use std::{borrow::Borrow, ops::Deref};
 
-use rome_text_edit::{TextRange, TextSize};
+use rome_text_size::{TextRange, TextSize};
 use serde::{Deserialize, Serialize};
 
 /// Represents the location of a diagnostic in a resource.

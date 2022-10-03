@@ -28,6 +28,20 @@ pub enum MarkupElement<'fmt> {
     Hyperlink { href: Cow<'fmt, str> },
 }
 
+impl fmt::Display for MarkupElement<'_> {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
+        if let Self::Hyperlink { href } = self {
+            if fmt.alternate() {
+                write!(fmt, "Hyperlink href={:?}", href.as_ref())
+            } else {
+                fmt.write_str("Hyperlink")
+            }
+        } else {
+            write!(fmt, "{self:?}")
+        }
+    }
+}
+
 impl<'fmt> MarkupElement<'fmt> {
     /// Mutate a [ColorSpec] object in place to apply this element's associated
     /// style to it
@@ -113,15 +127,30 @@ pub struct MarkupNodeBuf {
 impl Debug for MarkupNodeBuf {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         for element in &self.elements {
-            write!(fmt, "<{element:?}>")?;
+            write!(fmt, "<{element:#}>")?;
         }
-        write!(fmt, "{:?}", self.content)?;
+
+        if fmt.alternate() {
+            let mut content = self.content.as_str();
+            while let Some(index) = content.find('\n') {
+                let (before, after) = content.split_at(index + 1);
+                if !before.is_empty() {
+                    writeln!(fmt, "{before:?}")?;
+                }
+                content = after;
+            }
+
+            if !content.is_empty() {
+                write!(fmt, "{content:?}")?;
+            }
+        } else {
+            write!(fmt, "{:?}", self.content)?;
+        }
+
         for element in self.elements.iter().rev() {
-            write!(fmt, "</{element:?}>")?;
+            write!(fmt, "</{element}>")?;
         }
-        if fmt.alternate() && self.content.contains('\n') {
-            writeln!(fmt)?;
-        }
+
         Ok(())
     }
 }

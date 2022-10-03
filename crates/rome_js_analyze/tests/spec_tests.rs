@@ -2,9 +2,10 @@ use std::{
     ffi::OsStr, fmt::Write, fs::read_to_string, os::raw::c_int, path::Path, slice, sync::Once,
 };
 
+use similar::TextDiff;
+
 use rome_analyze::{AnalysisFilter, AnalyzerAction, ControlFlow, Never, RuleFilter};
 use rome_console::{
-    diff::{Diff, DiffMode},
     fmt::{Formatter, Termcolor},
     markup, Markup,
 };
@@ -16,7 +17,6 @@ use rome_js_parser::{
     test_utils::{assert_errors_are_absent, has_unknown_nodes_or_empty_slots},
 };
 use rome_js_syntax::{JsLanguage, SourceType};
-use rome_text_edit::apply_indels;
 
 tests_macros::gen_tests! {"tests/specs/**/*.{cjs,js,jsx,tsx,ts}", crate::run_test, "module"}
 
@@ -84,7 +84,7 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     if !code_fixes.is_empty() {
         writeln!(snapshot, "# Actions").unwrap();
         for action in code_fixes {
-            writeln!(snapshot, "```").unwrap();
+            writeln!(snapshot, "```diff").unwrap();
             writeln!(snapshot, "{}", action).unwrap();
             writeln!(snapshot, "```").unwrap();
             writeln!(snapshot).unwrap();
@@ -145,10 +145,9 @@ fn check_code_action(
     source_type: SourceType,
     action: &AnalyzerAction<JsLanguage>,
 ) {
-    let mut output = source.to_string();
-    let (_, indels) = action.mutation.as_text_edits().unwrap_or_default();
+    let (_, text_edit) = action.mutation.as_text_edits().unwrap_or_default();
 
-    apply_indels(&indels, &mut output);
+    let output = text_edit.new_string(source);
 
     let new_tree = action.mutation.clone().commit();
 
@@ -171,14 +170,16 @@ fn check_code_action(
 }
 
 fn code_fix_to_string(source: &str, action: AnalyzerAction<JsLanguage>) -> String {
-    let mut output = source.to_string();
-    let (_, indels) = action.mutation.as_text_edits().unwrap_or_default();
+    let (_, text_edit) = action.mutation.as_text_edits().unwrap_or_default();
 
-    apply_indels(&indels, &mut output);
+    let output = text_edit.new_string(source);
 
-    markup_to_string(markup! {
-        {Diff { mode: DiffMode::Unified, left: source, right: &output }}
-    })
+    let diff = TextDiff::from_lines(source, &output);
+
+    let mut diff = diff.unified_diff();
+    diff.context_radius(3);
+
+    diff.to_string()
 }
 
 // Check that all red / green nodes have correctly been released on exit

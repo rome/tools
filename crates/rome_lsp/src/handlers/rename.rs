@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use crate::{session::Session, utils};
 use anyhow::{Context, Result};
-use tower_lsp::lsp_types::{RenameParams, TextEdit, WorkspaceEdit};
+use tower_lsp::lsp_types::{RenameParams, WorkspaceEdit};
 use tracing::trace;
 
 #[tracing::instrument(level = "trace", skip(session), err)]
@@ -30,17 +30,7 @@ pub(crate) fn rename(session: &Session, params: RenameParams) -> Result<Option<W
         })?;
 
     let mut changes = HashMap::new();
-    changes.insert(
-        url,
-        result
-            .indels
-            .into_iter()
-            .map(|indel| TextEdit {
-                range: utils::range(&doc.line_index, indel.delete),
-                new_text: indel.insert,
-            })
-            .collect(),
-    );
+    changes.insert(url, utils::text_edit(&doc.line_index, result.indels));
 
     let workspace_edit = WorkspaceEdit {
         changes: Some(changes),

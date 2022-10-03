@@ -107,16 +107,8 @@ useValidTypeof.js:13:16 lint/correctness/useValidTypeof  FIXABLE  ━━━━�
   
   i Suggested fix: Compare the result of `typeof` with a valid type name
   
-        | @@ -10,7 +10,7 @@
-   9  9 |   typeof bar !== "fucntion"
-  10 10 |   
-  11 11 |   // Invalid expressions
-  12    | - typeof foo === undefined
-     12 | + typeof foo === "undefined"
-  13 13 |   typeof bar == Object
-  14 14 |   typeof foo === baz
-  15 15 |   typeof foo == 5
-  
+    13 │ typeof·foo·===·"undefined"
+       │                +         +
 
 ```
 
@@ -136,15 +128,12 @@ useValidTypeof.js:14:15 lint/correctness/useValidTypeof  FIXABLE  ━━━━�
   
   i Suggested fix: Compare the result of `typeof` with a valid type name
   
-        | @@ -11,7 +11,7 @@
-  10 10 |   
-  11 11 |   // Invalid expressions
-  12 12 |   typeof foo === undefined
-  13    | - typeof bar == Object
-     13 | + typeof bar == "object"
-  14 14 |   typeof foo === baz
-  15 15 |   typeof foo == 5
-  16 16 |   typeof foo == -5
+    12 12 │   //·Invalid·expressions
+    13 13 │   typeof·foo·===·undefined
+    14    │ - typeof·bar·==·Object
+       14 │ + typeof·bar·==·"object"
+    15 15 │   typeof·foo·===·baz
+    16 16 │   typeof·foo·==·5
   
 
 ```

@@ -7,15 +7,13 @@ use crate::v2::{
     self, advice, Category, DiagnosticTags, FilePath, Location, PrintDiagnostic, Resource,
 };
 use crate::{file::Files, Diagnostic};
-use crate::{Applicability, Severity, SubDiagnostic, SuggestionChange, SuggestionStyle};
+use crate::{Applicability, Severity, SubDiagnostic};
 use rome_console::{
     fmt::{Display, Formatter, Termcolor},
     markup,
 };
-use rome_text_edit::apply_indels;
 use std::fmt::Debug;
 use std::io;
-use std::ops::Range;
 use termcolor::{ColorChoice, NoColor, StandardStream, WriteColor};
 
 /// The emitter is responsible for emitting
@@ -190,60 +188,14 @@ impl v2::Diagnostic for DiagnosticPrinter<'_> {
                 Applicability::MaybeIncorrect => "Suggested fix",
             };
 
-            match suggestion.style {
-                SuggestionStyle::Full => {
-                    let old = self
-                        .files
-                        .source(suggestion.span.file)
-                        .expect("Non existant file id")
-                        .text;
+            visitor.record_log(
+                LogCategory::Info,
+                &markup! {
+                    {applicability}": "{suggestion.msg}
+                },
+            )?;
 
-                    let new = match &suggestion.substitution {
-                        SuggestionChange::Indels(indels) => {
-                            let mut new = old.to_string();
-                            apply_indels(indels, &mut new);
-                            new
-                        }
-                        SuggestionChange::String(replace_with) => {
-                            let mut new = old.to_string();
-                            let range = Range::<usize>::from(suggestion.span.range);
-                            new.replace_range(range, replace_with);
-                            new
-                        }
-                    };
-
-                    visitor.record_log(
-                        LogCategory::Info,
-                        &markup! {
-                            {applicability}": "{suggestion.msg}
-                        },
-                    )?;
-
-                    visitor.record_diff(old, &new)?;
-                }
-                SuggestionStyle::Inline => {
-                    let replacement = match &suggestion.substitution {
-                        SuggestionChange::Indels(indels) => {
-                            let mut new = self
-                                .files
-                                .source(suggestion.span.file)
-                                .expect("Non existant file id")
-                                .text
-                                .to_string();
-                            apply_indels(indels, &mut new);
-                            new
-                        }
-                        SuggestionChange::String(string) => string.clone(),
-                    };
-
-                    visitor.record_log(
-                        LogCategory::Info,
-                        &markup! {
-                            {applicability}": "{suggestion.msg}"\n`"{replacement}"`"
-                        },
-                    )?;
-                }
-            }
+            visitor.record_diff(&suggestion.suggestion)?;
         }
 
         Ok(())
@@ -292,7 +244,8 @@ impl v2::Diagnostic for DiagnosticPrinter<'_> {
 #[cfg(test)]
 mod tests {
     use rome_console::{markup, BufferConsole, ConsoleExt};
-    use rome_text_edit::{TextRange, TextSize};
+    use rome_text_edit::TextEdit;
+    use rome_text_size::{TextRange, TextSize};
 
     use crate::{
         file::SimpleFile,
@@ -326,17 +279,19 @@ labore et dolore magna aliqua";
             "  \n"
             <Emphasis><Info>"  ℹ"</Info></Emphasis>" "<Info>"Safe fix: suggestion"</Info>"\n"
             "  \n"
-            "      | "<Info>"@@ -1,4 +1,5 @@"</Info>"\n"
-            "  0 0 |   Lorem ipsum dolor sit amet,\n"
-            "  1   | "<Error>"- consectetur adipiscing elit,"</Error>"\n"
-            "    1 | "<Success>"+ consectetur completely different"</Success>"\n"
-            "    2 | "<Success>"+ text,"</Success>"\n"
-            "  2 3 |   sed do eiusmod tempor incididunt ut\n"
-            "  3 4 |   labore et dolore magna aliqua\n"
+            "    "<Emphasis>"1"</Emphasis>" "<Emphasis>"1 │ "</Emphasis>"  Lorem"<Dim>"·"</Dim>"ipsum"<Dim>"·"</Dim>"dolor"<Dim>"·"</Dim>"sit"<Dim>"·"</Dim>"amet,\n"
+            "    "<Emphasis>"2"</Emphasis>"  "<Emphasis>" │ "</Emphasis><Error>"-"</Error>" "<Error>"consectetur"</Error><Error><Dim>"·"</Dim></Error><Error><Emphasis>"adipiscing"</Emphasis></Error><Error><Dim>"·"</Dim></Error><Error><Emphasis>"elit"</Emphasis></Error><Error>","</Error>"\n"
+            "      "<Emphasis>"2 │ "</Emphasis><Success>"+"</Success>" "<Success>"consectetur"</Success><Success><Dim>"·"</Dim></Success><Success><Emphasis>"completely"</Emphasis></Success><Success><Dim>"·"</Dim></Success><Success><Emphasis>"different"</Emphasis></Success>"\n"
+            "      "<Emphasis>"3 │ "</Emphasis><Success>"+"</Success>" "<Success><Emphasis>"text"</Emphasis></Success><Success>","</Success>"\n"
+            "    "<Emphasis>"3"</Emphasis>" "<Emphasis>"4 │ "</Emphasis>"  sed"<Dim>"·"</Dim>"do"<Dim>"·"</Dim>"eiusmod"<Dim>"·"</Dim>"tempor"<Dim>"·"</Dim>"incididunt"<Dim>"·"</Dim>"ut\n"
+            "    "<Emphasis>"4"</Emphasis>" "<Emphasis>"5 │ "</Emphasis>"  labore"<Dim>"·"</Dim>"et"<Dim>"·"</Dim>"dolore"<Dim>"·"</Dim>"magna"<Dim>"·"</Dim>"aliqua\n"
             "  \n"
         }.to_owned();
 
         let files = SimpleFile::new(String::from("file_name"), SOURCE.into());
+
+        let mut fixed_code = SOURCE.to_string();
+        fixed_code.replace_range(40..55, "completely different\ntext");
 
         let diag = Diagnostic::error(
             FileId::zero(),
@@ -351,7 +306,7 @@ labore et dolore magna aliqua";
         .suggestion_full(
             TextRange::new(TextSize::from(40u32), TextSize::from(55u32)),
             "suggestion",
-            "completely different\ntext",
+            TextEdit::from_unicode_words(SOURCE, &fixed_code),
             Applicability::Always,
         )
         .footer_note("footer note")

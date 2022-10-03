@@ -57,19 +57,16 @@ useFragmentSyntax.jsx:5:5 lint/nursery/useFragmentSyntax  FIXABLE  ━━━━�
   
   i Suggested fix: Replace <Fragment> with the fragment syntax
   
-      | @@ -2,10 +2,10 @@
-  1 1 |   
-  2 2 |   <div>
-  3 3 |       {/* invalid */}
-  4   | -     <Fragment>
-    4 | +     <>
-  5 5 |           <p>Lorem</p>
-  6 6 |           <strong>Ipsum</strong>
-  7   | -     </Fragment>
-    7 | +     </>
-  8 8 |   
-  9 9 |       <React.Fragment>
-  10 10 |           <acronym>Lorem</acronym>
+     3  3 │   <div>
+     4  4 │   ····{/*·invalid·*/}
+     5    │ - ····<Fragment>
+        5 │ + ····<>
+     6  6 │   ········<p>Lorem</p>
+     7  7 │   ········<strong>Ipsum</strong>
+     8    │ - ····</Fragment>
+        8 │ + ····</>
+     9  9 │   
+    10 10 │   ····<React.Fragment>
   
 
 ```
@@ -94,19 +91,16 @@ useFragmentSyntax.jsx:10:5 lint/nursery/useFragmentSyntax  FIXABLE  ━━━━
   
   i Suggested fix: Replace <Fragment> with the fragment syntax
   
-        | @@ -7,10 +7,10 @@
-   6  6 |           <strong>Ipsum</strong>
-   7  7 |       </Fragment>
-   8  8 |   
-   9    | -     <React.Fragment>
-      9 | +     <>
-  10 10 |           <acronym>Lorem</acronym>
-  11 11 |           <aside>Ipsum</aside>
-  12    | -     </React.Fragment>
-     12 | +     </>
-  13 13 |   
-  14 14 |       </*comment*/Fragment>
-  15 15 |           <p>Lorem</p>
+     8  8 │   ····</Fragment>
+     9  9 │   
+    10    │ - ····<React.Fragment>
+       10 │ + ····<>
+    11 11 │   ········<acronym>Lorem</acronym>
+    12 12 │   ········<aside>Ipsum</aside>
+    13    │ - ····</React.Fragment>
+       13 │ + ····</>
+    14 14 │   
+    15 15 │   ····</*comment*/Fragment>
   
 
 ```
@@ -131,19 +125,16 @@ useFragmentSyntax.jsx:15:5 lint/nursery/useFragmentSyntax  FIXABLE  ━━━━
   
   i Suggested fix: Replace <Fragment> with the fragment syntax
   
-        | @@ -12,10 +12,10 @@
-  11 11 |           <aside>Ipsum</aside>
-  12 12 |       </React.Fragment>
-  13 13 |   
-  14    | -     </*comment*/Fragment>
-     14 | +     </*comment*/>
-  15 15 |           <p>Lorem</p>
-  16 16 |           <strong>Ipsum</strong>
-  17    | -     </ /*comment*/Fragment>
-     17 | +     </ /*comment*/>
-  18 18 |   
-  19 19 |       {/* valid */}
-  20 20 |       <Fragment key="1">
+    13 13 │   ····</React.Fragment>
+    14 14 │   
+    15    │ - ····</*comment*/Fragment>
+       15 │ + ····</*comment*/>
+    16 16 │   ········<p>Lorem</p>
+    17 17 │   ········<strong>Ipsum</strong>
+    18    │ - ····</·/*comment*/Fragment>
+       18 │ + ····</·/*comment*/>
+    19 19 │   
+    20 20 │   ····{/*·valid·*/}
   
 
 ```

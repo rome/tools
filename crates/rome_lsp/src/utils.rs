@@ -10,9 +10,10 @@ use rome_console::fmt::{self, Formatter};
 use rome_console::MarkupBuf;
 use rome_diagnostics::termcolor::NoColor;
 use rome_diagnostics::Severity;
-use rome_diagnostics::{Applicability, Diagnostic, SuggestionChange};
+use rome_diagnostics::{Applicability, Diagnostic};
 use rome_rowan::{TextRange, TextSize};
 use rome_service::workspace::CodeAction;
+use rome_text_edit::{CompressedOp, DiffOp, TextEdit};
 use tower_lsp::jsonrpc::Error as LspError;
 use tower_lsp::lsp_types::{self as lsp};
 use tracing::error;
@@ -43,6 +44,66 @@ pub(crate) fn text_range(line_index: &LineIndex, range: lsp::Range) -> Result<Te
     let start = offset(line_index, range.start)?;
     let end = offset(line_index, range.end)?;
     Ok(TextRange::new(start, end))
+}
+
+pub(crate) fn text_edit(line_index: &LineIndex, diff: TextEdit) -> Vec<lsp::TextEdit> {
+    let mut result: Vec<lsp::TextEdit> = Vec::new();
+    let mut old_offset = TextSize::from(0);
+    let mut new_offset = TextSize::from(0);
+
+    for op in diff.iter() {
+        match op {
+            CompressedOp::DiffOp(DiffOp::Equal { range }) => {
+                old_offset += range.len();
+                new_offset += range.len();
+            }
+            CompressedOp::DiffOp(DiffOp::Insert { range }) => {
+                let start = position(line_index, new_offset);
+                new_offset += range.len();
+
+                // Merge with a previous delete operation if possible
+                let last_edit = result.last_mut().filter(|text_edit| {
+                    text_edit.range.start == start && text_edit.new_text.is_empty()
+                });
+
+                if let Some(last_edit) = last_edit {
+                    last_edit.new_text = diff.get_text(*range).to_string();
+                } else {
+                    result.push(lsp::TextEdit {
+                        range: lsp::Range::new(start, start),
+                        new_text: diff.get_text(*range).to_string(),
+                    });
+                }
+            }
+            CompressedOp::DiffOp(DiffOp::Delete { range }) => {
+                let start = position(line_index, old_offset);
+                old_offset += range.len();
+                let end = position(line_index, old_offset);
+
+                result.push(lsp::TextEdit {
+                    range: lsp::Range::new(start, end),
+                    new_text: String::new(),
+                });
+            }
+
+            CompressedOp::EqualLines { line_count } => {
+                let mut line_col = line_index.line_col(old_offset);
+                line_col.line += line_count.get() + 1;
+                line_col.col = 0;
+
+                // SAFETY: This should only happen if `line_index` wasn't built
+                // from the same string as the old revision of `diff`
+                let offset = line_index
+                    .offset(line_col)
+                    .expect("diff length is overflowing the line count in the original file");
+
+                new_offset += offset - old_offset;
+                old_offset = offset;
+            }
+        }
+    }
+
+    result
 }
 
 pub(crate) fn code_fix_to_lsp(
@@ -80,21 +141,7 @@ pub(crate) fn code_fix_to_lsp(
     let suggestion = action.suggestion;
 
     let mut changes = HashMap::new();
-    let edits = match suggestion.substitution {
-        SuggestionChange::String(new_text) => {
-            vec![lsp::TextEdit {
-                range: range(line_index, suggestion.span.range),
-                new_text,
-            }]
-        }
-        SuggestionChange::Indels(indels) => indels
-            .into_iter()
-            .map(|indel| lsp::TextEdit {
-                range: range(line_index, indel.delete),
-                new_text: indel.insert,
-            })
-            .collect(),
-    };
+    let edits = text_edit(line_index, suggestion.suggestion);
 
     changes.insert(url.clone(), edits);
 
@@ -223,4 +270,68 @@ pub(crate) fn panic_to_lsp_error(err: Box<dyn Any + Send>) -> LspError {
     }
 
     error
+}
+
+#[cfg(test)]
+mod tests {
+    use rome_text_edit::TextEdit;
+    use tower_lsp::lsp_types as lsp;
+
+    use crate::line_index::LineIndex;
+
+    #[test]
+    fn test_diff() {
+        const OLD: &str = "line 1 old
+line 2
+line 3
+line 4
+line 5
+line 6
+line 7 old";
+
+        const NEW: &str = "line 1 new
+line 2
+line 3
+line 4
+line 5
+line 6
+line 7 new";
+
+        let line_index = LineIndex::new(OLD);
+        let diff = TextEdit::from_unicode_words(OLD, NEW);
+
+        let text_edit = super::text_edit(&line_index, diff);
+
+        assert_eq!(
+            text_edit.as_slice(),
+            &[
+                lsp::TextEdit {
+                    range: lsp::Range {
+                        start: lsp::Position {
+                            line: 0,
+                            character: 7,
+                        },
+                        end: lsp::Position {
+                            line: 0,
+                            character: 10,
+                        },
+                    },
+                    new_text: String::from("new"),
+                },
+                lsp::TextEdit {
+                    range: lsp::Range {
+                        start: lsp::Position {
+                            line: 6,
+                            character: 7
+                        },
+                        end: lsp::Position {
+                            line: 6,
+                            character: 10
+                        }
+                    },
+                    new_text: String::from("new"),
+                },
+            ]
+        );
+    }
 }

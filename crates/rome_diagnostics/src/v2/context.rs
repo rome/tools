@@ -154,6 +154,7 @@ mod internal {
     use std::{fmt::Debug, io};
 
     use rome_console::{fmt, markup};
+    use rome_text_edit::TextEdit;
 
     use crate::v2::{
         diagnostic::internal::AsDiagnostic, Advices, Backtrace, Category, Diagnostic,
@@ -489,8 +490,8 @@ mod internal {
             })
         }
 
-        fn record_diff(&mut self, prev: &str, next: &str) -> io::Result<()> {
-            self.visitor.record_diff(prev, next)
+        fn record_diff(&mut self, diff: &TextEdit) -> io::Result<()> {
+            self.visitor.record_diff(diff)
         }
 
         fn record_backtrace(

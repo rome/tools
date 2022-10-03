@@ -31,16 +31,8 @@ createElement.js:3:1 lint/nursery/noVoidElementsWithChildren  FIXABLE  ━━━
   
   i Suggested fix: Remove the children.
   
-      | @@ -2,7 +2,7 @@
-  1 1 |   
-  2 2 |   React.createElement('img', {
-  3 3 |       someProp: "bar"
-  4   | - }, 'child')
-    4 | + }, )
-  5 5 |   
-  6 6 |   React.createElement('img', {
-  7 7 |       dangerouslySetInnerHTML: "text"
-  
+    5 │ },·'child')
+      │    ------- 
 
 ```
 
@@ -59,13 +51,8 @@ createElement.js:7:1 lint/nursery/noVoidElementsWithChildren  FIXABLE  ━━━
   
   i Suggested fix: Remove the dangerouslySetInnerHTML prop.
   
-      | @@ -5,5 +5,4 @@
-  4 4 |   }, 'child')
-  5 5 |   
-  6 6 |   React.createElement('img', {
-  7   | -     dangerouslySetInnerHTML: "text"
-  8 7 |   })
-  
+    8 │ ····dangerouslySetInnerHTML:·"text"
+      │ -----------------------------------
 
 ```
 
