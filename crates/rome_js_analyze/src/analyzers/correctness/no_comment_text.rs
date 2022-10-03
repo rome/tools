@@ -1,6 +1,4 @@
-use rome_analyze::{
-    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
-};
+use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -42,8 +40,6 @@ declare_rule! {
 }
 
 impl Rule for NoCommentText {
-    const CATEGORY: RuleCategory = RuleCategory::Lint;
-
     type Query = Ast<JsxText>;
     type State = ();
     type Signals = Option<Self::State>;

@@ -1,5 +1,5 @@
 use crate::{semantic_services::Semantic, JsRuleAction};
-use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::JsReferenceIdentifier;
 use rome_rowan::AstNode;
@@ -33,8 +33,6 @@ declare_rule! {
 }
 
 impl Rule for NoArguments {
-    const CATEGORY: RuleCategory = RuleCategory::Lint;
-
     type Query = Semantic<JsReferenceIdentifier>;
     type State = ();
     type Signals = Option<Self::State>;

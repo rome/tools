@@ -21,16 +21,25 @@ pub struct RuleMetadata {
     pub docs: &'static str,
     /// Whether a rule is recommended or not
     pub recommended: bool,
+    /// The category this rule belong to, this is used for broadly filtering
+    /// rules when running the analyzer
+    pub category: RuleCategory,
 }
 
 impl RuleMetadata {
-    pub const fn new(version: &'static str, name: &'static str, docs: &'static str) -> Self {
+    pub const fn new(
+        version: &'static str,
+        name: &'static str,
+        docs: &'static str,
+        category: RuleCategory,
+    ) -> Self {
         Self {
             deprecated: None,
             version,
             name,
             docs,
             recommended: false,
+            category,
         }
     }
 
@@ -82,7 +91,7 @@ macro_rules! declare_rule {
 
         impl $crate::RuleMeta for $id {
             const METADATA: $crate::RuleMetadata =
-                $crate::RuleMetadata::new($version, $name, concat!( $( $doc, "\n", )* )) $( .$key($value) )*;
+                $crate::RuleMetadata::new($version, $name, concat!( $( $doc, "\n", )* ), super::CATEGORY) $( .$key($value) )*;
         }
 
         // Declare a new `rule_category!` macro in the module context that
@@ -124,6 +133,8 @@ macro_rules! declare_group {
                 $( if filter.match_rule::<Self, $( $rule )::*>() { registry.push::<Self, $( $rule )::*>(); } )*
             }
         }
+
+        pub(self) use super::CATEGORY;
 
         // Declare a `group_category!` macro in the context of this module (and
         // all its children). This macro takes the name of a rule as a string
@@ -176,10 +187,6 @@ impl_group_language!(
 /// and a callback function to be executed on all nodes matching the query to possibly
 /// raise an analysis event
 pub trait Rule: RuleMeta {
-    /// The category this rule belong to, this is used for broadly filtering
-    /// rules when running the analyzer
-    const CATEGORY: RuleCategory;
-
     /// The type of AstNode this rule is interested in
     type Query: Queryable;
     /// A generic type that will be kept in memory between a call to `run` and

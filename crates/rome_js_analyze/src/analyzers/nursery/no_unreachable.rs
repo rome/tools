@@ -1,7 +1,7 @@
 use std::{cmp::Ordering, collections::VecDeque, num::NonZeroU32, vec::IntoIter};
 
 use roaring::bitmap::RoaringBitmap;
-use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_control_flow::{builder::BlockId, ExceptionHandler, Instruction, InstructionKind};
 use rome_js_syntax::{JsLanguage, JsReturnStatement, JsSyntaxElement, JsSyntaxKind, TextRange};
@@ -48,8 +48,6 @@ declare_rule! {
 }
 
 impl Rule for NoUnreachable {
-    const CATEGORY: RuleCategory = RuleCategory::Lint;
-
     type Query = ControlFlowGraph;
     type State = UnreachableRange;
     type Signals = UnreachableRanges;

@@ -1,7 +1,7 @@
 use crate::react::{is_react_call_api, ReactApiCall, ReactCloneElementCall};
 use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
-use rome_analyze::{declare_rule, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
@@ -120,7 +120,6 @@ pub(crate) struct NoArrayIndexKeyState {
 }
 
 impl Rule for NoArrayIndexKey {
-    const CATEGORY: RuleCategory = RuleCategory::Lint;
     type Query = Semantic<NoArrayIndexKeyQuery>;
     type State = NoArrayIndexKeyState;
     type Signals = Option<Self::State>;

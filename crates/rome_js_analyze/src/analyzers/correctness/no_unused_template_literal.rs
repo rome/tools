@@ -1,6 +1,6 @@
 use crate::JsRuleAction;
 use rome_analyze::context::RuleContext;
-use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -44,8 +44,6 @@ declare_rule! {
 }
 
 impl Rule for NoUnusedTemplateLiteral {
-    const CATEGORY: RuleCategory = RuleCategory::Lint;
-
     type Query = Ast<JsTemplate>;
     type State = ();
     type Signals = Option<Self::State>;

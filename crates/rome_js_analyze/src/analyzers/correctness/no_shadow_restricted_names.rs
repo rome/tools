@@ -1,5 +1,5 @@
 use crate::globals::runtime::BUILTIN;
-use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::JsIdentifierBinding;
 use rome_rowan::AstNode;
@@ -42,8 +42,6 @@ pub struct State {
 }
 
 impl Rule for NoShadowRestrictedNames {
-    const CATEGORY: RuleCategory = RuleCategory::Lint;
-
     type Query = Ast<JsIdentifierBinding>;
     type State = State;
     type Signals = Option<Self::State>;

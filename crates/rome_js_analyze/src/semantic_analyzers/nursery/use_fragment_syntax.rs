@@ -2,7 +2,7 @@ use crate::react::{jsx_member_name_is_react_fragment, jsx_reference_identifier_i
 use crate::semantic_services::Semantic;
 use crate::JsRuleAction;
 use rome_analyze::context::RuleContext;
-use rome_analyze::{declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{declare_rule, ActionCategory, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make::{
@@ -35,7 +35,6 @@ declare_rule! {
 }
 
 impl Rule for UseFragmentSyntax {
-    const CATEGORY: RuleCategory = RuleCategory::Lint;
     type Query = Semantic<JsxElement>;
     type State = ();
     type Signals = Option<Self::State>;

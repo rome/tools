@@ -1,7 +1,7 @@
 use crate::react::ReactCreateElementCall;
 use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
-use rome_analyze::{declare_rule, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Severity;
 use rome_js_syntax::{JsCallExpression, JsLiteralMemberName, JsxAnyAttributeName, JsxAttribute};
@@ -43,8 +43,6 @@ pub(crate) enum NoDangerState {
 }
 
 impl Rule for NoDangerouslySetInnerHtml {
-    const CATEGORY: RuleCategory = RuleCategory::Lint;
-
     type Query = Semantic<JsAnyCreateElement>;
     type State = NoDangerState;
     type Signals = Option<Self::State>;

@@ -1,6 +1,4 @@
-use rome_analyze::{
-    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
-};
+use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -85,8 +83,6 @@ pub(crate) enum UseOptionalChainState {
 }
 
 impl Rule for UseOptionalChain {
-    const CATEGORY: RuleCategory = RuleCategory::Lint;
-
     type Query = Ast<JsLogicalExpression>;
     type State = UseOptionalChainState;
     type Signals = Option<Self::State>;

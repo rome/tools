@@ -1,9 +1,7 @@
 use std::iter;
 
 use rome_analyze::context::RuleContext;
-use rome_analyze::{
-    declare_rule, ActionCategory, Ast, Rule, RuleAction, RuleCategory, RuleDiagnostic,
-};
+use rome_analyze::{declare_rule, ActionCategory, Ast, Rule, RuleAction, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -78,8 +76,6 @@ declare_node_union! {
 }
 
 impl Rule for UseBlockStatements {
-    const CATEGORY: RuleCategory = RuleCategory::Lint;
-
     type Query = Ast<JsAnyBlockStatement>;
     type State = UseBlockStatementsOperationType;
     type Signals = Option<Self::State>;

@@ -1,4 +1,4 @@
-use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
     JsAnyArrayBindingPatternElement, JsAnyBinding, JsAnyBindingPattern, JsAnyFormalParameter,
@@ -41,8 +41,6 @@ declare_rule! {
 }
 
 impl Rule for NoDupeArgs {
-    const CATEGORY: RuleCategory = RuleCategory::Lint;
-
     type Query = Ast<JsAnyFunctionAndMethod>;
     type State = JsIdentifierBinding;
     type Signals = Option<Self::State>;

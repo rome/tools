@@ -558,7 +558,7 @@ impl<'analysis> AnalysisFilter<'analysis> {
         G: RuleGroup,
         R: Rule,
     {
-        self.categories.contains(R::CATEGORY.into())
+        self.categories.contains(R::METADATA.category.into())
             && self.enabled_rules.map_or(true, |enabled_rules| {
                 enabled_rules
                     .iter()

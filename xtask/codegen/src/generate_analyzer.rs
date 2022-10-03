@@ -61,9 +61,19 @@ fn generate_category(
         );
     }
 
+    let category_id = match name {
+        "syntax" => format_ident!("Syntax"),
+        "analyzers" | "semantic_analyzers" => format_ident!("Lint"),
+        "assists" => format_ident!("Action"),
+        _ => panic!("unimplemented analyzer category {name:?}"),
+    };
+
     let groups = groups.into_iter().map(|(_, tokens)| tokens);
     let tokens = xtask::reformat(quote! {
         #( #groups )*
+
+        /// The ID of this rule category, used in child modules as `super::CATEGORY`
+        pub(self) const CATEGORY: rome_analyze::RuleCategory = rome_analyze::RuleCategory::#category_id;
     })?;
 
     fs2::write(

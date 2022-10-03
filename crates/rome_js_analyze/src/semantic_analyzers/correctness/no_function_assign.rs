@@ -1,5 +1,5 @@
 use crate::semantic_services::Semantic;
-use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::{AllReferencesExtensions, Reference};
 use rome_js_syntax::{JsFunctionDeclaration, JsIdentifierBinding};
@@ -106,8 +106,6 @@ pub struct State {
 }
 
 impl Rule for NoFunctionAssign {
-    const CATEGORY: RuleCategory = RuleCategory::Lint;
-
     type Query = Semantic<JsFunctionDeclaration>;
     type State = State;
     type Signals = Option<Self::State>;

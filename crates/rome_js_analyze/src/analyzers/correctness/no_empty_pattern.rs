@@ -1,4 +1,4 @@
-use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{JsArrayBindingPattern, JsObjectBindingPattern};
 use rome_rowan::{declare_node_union, AstNode, AstSeparatedList};
@@ -40,8 +40,6 @@ declare_rule! {
 }
 
 impl Rule for NoEmptyPattern {
-    const CATEGORY: RuleCategory = RuleCategory::Lint;
-
     type Query = Ast<JsAnyBindPatternLike>;
     type State = ();
     type Signals = Option<Self::State>;
