@@ -87,7 +87,7 @@ impl JsAnyCreateElement {
             JsAnyCreateElement::JsxSelfClosingElement(_) => None,
             JsAnyCreateElement::JsCallExpression(expression) => {
                 let react_create_element =
-                    ReactCreateElementCall::from_call_expression(&expression, model)?;
+                    ReactCreateElementCall::from_call_expression(expression, model)?;
 
                 react_create_element
                     .children
@@ -111,7 +111,7 @@ impl JsAnyCreateElement {
                 .map(DangerouseProp::from),
             JsAnyCreateElement::JsCallExpression(call_expression) => {
                 let react_create_element =
-                    ReactCreateElementCall::from_call_expression(&call_expression, model)?;
+                    ReactCreateElementCall::from_call_expression(call_expression, model)?;
 
                 react_create_element
                     .find_prop_by_name("dangerouslySetInnerHTML")
@@ -136,7 +136,7 @@ impl JsAnyCreateElement {
                 .map(DangerouseProp::from),
             JsAnyCreateElement::JsCallExpression(call_expression) => {
                 let react_create_element =
-                    ReactCreateElementCall::from_call_expression(&call_expression, model)?;
+                    ReactCreateElementCall::from_call_expression(call_expression, model)?;
 
                 react_create_element
                     .find_prop_by_name("children")
