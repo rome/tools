@@ -21,7 +21,7 @@ pub fn generate_analyzer() -> Result<()> {
 
 fn generate_category(
     name: &'static str,
-    entries: &mut BTreeMap<String, TokenStream>,
+    entries: &mut BTreeMap<&'static str, TokenStream>,
 ) -> Result<()> {
     let path = project_root().join("crates/rome_js_analyze/src").join(name);
 
@@ -41,39 +41,53 @@ fn generate_category(
 
         generate_group(name, file_name)?;
 
-        let category_name = format_ident!("{}", name);
         let module_name = format_ident!("{}", file_name);
         let group_name = format_ident!("{}", to_camel_case(file_name)?);
 
-        entries.insert(
-            file_name.to_string(),
-            quote! {
-                registry.push_group::<crate::#category_name::#group_name>(filter);
-            },
-        );
-
         groups.insert(
             file_name.to_string(),
-            quote! {
-                mod #module_name;
-                pub(super) use self::#module_name::#group_name;
-            },
+            (
+                quote! {
+                    mod #module_name;
+                },
+                quote! {
+                    self::#module_name::#group_name
+                },
+            ),
         );
     }
 
-    let category_id = match name {
+    let key = name;
+    let module_name = format_ident!("{name}");
+
+    let category_name = to_camel_case(name).unwrap();
+    let category_name = format_ident!("{category_name}");
+
+    let kind = match name {
         "syntax" => format_ident!("Syntax"),
         "analyzers" | "semantic_analyzers" => format_ident!("Lint"),
         "assists" => format_ident!("Action"),
         _ => panic!("unimplemented analyzer category {name:?}"),
     };
 
-    let groups = groups.into_iter().map(|(_, tokens)| tokens);
-    let tokens = xtask::reformat(quote! {
-        #( #groups )*
+    entries.insert(
+        key,
+        quote! {
+            registry.push_category::<crate::#module_name::#category_name>(filter);
+        },
+    );
 
-        /// The ID of this rule category, used in child modules as `super::CATEGORY`
-        pub(self) const CATEGORY: rome_analyze::RuleCategory = rome_analyze::RuleCategory::#category_id;
+    let (modules, paths): (Vec<_>, Vec<_>) = groups.into_iter().map(|(_, tokens)| tokens).unzip();
+    let tokens = xtask::reformat(quote! {
+        #( #modules )*
+        ::rome_analyze::declare_category! {
+            pub(crate) #category_name {
+                kind: #kind,
+                groups: [
+                    #( #paths, )*
+                ]
+            }
+        }
     })?;
 
     fs2::write(
@@ -172,9 +186,9 @@ fn to_camel_case(input: &str) -> Result<String> {
 }
 
 fn update_registry_builder(
-    analyzers: BTreeMap<String, TokenStream>,
-    semantic_analyzers: BTreeMap<String, TokenStream>,
-    assists: BTreeMap<String, TokenStream>,
+    analyzers: BTreeMap<&'static str, TokenStream>,
+    semantic_analyzers: BTreeMap<&'static str, TokenStream>,
+    assists: BTreeMap<&'static str, TokenStream>,
 ) -> Result<()> {
     let path = project_root().join("crates/rome_js_analyze/src/registry.rs");
 

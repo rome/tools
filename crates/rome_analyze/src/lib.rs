@@ -26,7 +26,8 @@ pub use crate::registry::{
     LanguageRoot, Phase, Phases, RegistryRuleMetadata, RuleRegistry, RuleSuppressions,
 };
 pub use crate::rule::{
-    GroupLanguage, Rule, RuleAction, RuleDiagnostic, RuleGroup, RuleMeta, RuleMetadata,
+    CategoryLanguage, GroupCategory, GroupLanguage, Rule, RuleAction, RuleDiagnostic, RuleGroup,
+    RuleMeta, RuleMetadata,
 };
 pub use crate::services::{CannotCreateServicesError, FromServices, ServiceBag};
 use crate::signals::DiagnosticSignal;
@@ -524,15 +525,24 @@ pub enum RuleFilter<'a> {
 }
 
 impl RuleFilter<'_> {
+    /// Return `true` if the group `G` matches this filter
+    fn match_group<G: RuleGroup>(self) -> bool {
+        match self {
+            RuleFilter::Group(group) => group == G::NAME,
+            RuleFilter::Rule(group, _) => group == G::NAME,
+        }
+    }
+
     /// Return `true` if the rule `R` matches this filter
-    pub fn match_rule<G, R>(self) -> bool
+    fn match_rule<R>(self) -> bool
     where
-        G: RuleGroup,
         R: Rule,
     {
         match self {
-            RuleFilter::Group(group) => group == G::NAME,
-            RuleFilter::Rule(group, rule) => group == G::NAME && rule == R::METADATA.name,
+            RuleFilter::Group(group) => group == <R::Group as RuleGroup>::NAME,
+            RuleFilter::Rule(group, rule) => {
+                group == <R::Group as RuleGroup>::NAME && rule == R::METADATA.name
+            }
         }
     }
 }
@@ -552,22 +562,35 @@ pub struct AnalysisFilter<'a> {
 }
 
 impl<'analysis> AnalysisFilter<'analysis> {
-    /// Return `true` if the rule `R` matches this filter
-    pub fn match_rule<G, R>(&self) -> bool
-    where
-        G: RuleGroup,
-        R: Rule,
-    {
-        self.categories.contains(R::METADATA.category.into())
+    /// Return `true` if the category `C` matches this filter
+    fn match_category<C: GroupCategory>(&self) -> bool {
+        self.categories.contains(C::CATEGORY.into())
+    }
+
+    /// Return `true` if the group `G` matches this filter
+    fn match_group<G: RuleGroup>(&self) -> bool {
+        self.match_category::<G::Category>()
             && self.enabled_rules.map_or(true, |enabled_rules| {
-                enabled_rules
-                    .iter()
-                    .any(|filter| filter.match_rule::<G, R>())
+                enabled_rules.iter().any(|filter| filter.match_group::<G>())
             })
             && self.disabled_rules.map_or(true, |disabled_rules| {
                 !disabled_rules
                     .iter()
-                    .any(|filter| filter.match_rule::<G, R>())
+                    .any(|filter| filter.match_group::<G>())
+            })
+    }
+
+    /// Return `true` if the rule `R` matches this filter
+    fn match_rule<R>(&self) -> bool
+    where
+        R: Rule,
+    {
+        self.match_group::<R::Group>()
+            && self.enabled_rules.map_or(true, |enabled_rules| {
+                enabled_rules.iter().any(|filter| filter.match_rule::<R>())
+            })
+            && self.disabled_rules.map_or(true, |disabled_rules| {
+                !disabled_rules.iter().any(|filter| filter.match_rule::<R>())
             })
     }
 

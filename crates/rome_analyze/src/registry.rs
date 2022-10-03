@@ -8,7 +8,8 @@ use crate::{
     matcher::{GroupKey, MatchQueryParams},
     query::{QueryKey, QueryMatch, Queryable},
     signals::RuleSignal,
-    AnalysisFilter, QueryMatcher, Rule, RuleGroup, RuleKey, RuleMetadata, SignalEntry,
+    AnalysisFilter, GroupCategory, QueryMatcher, Rule, RuleGroup, RuleKey, RuleMetadata,
+    SignalEntry,
 };
 
 /// Defines all the phases that the [RuleRegistry] supports.
@@ -60,22 +61,33 @@ struct PhaseRules<L: Language> {
 }
 
 impl<L: Language + Default> RuleRegistry<L> {
+    pub fn push_category<C: GroupCategory<Language = L>>(&mut self, filter: &AnalysisFilter) {
+        if filter.match_category::<C>() {
+            C::push_groups(self, filter);
+        }
+    }
+
     pub fn push_group<G: RuleGroup<Language = L>>(&mut self, filter: &AnalysisFilter) {
-        G::push_rules(self, filter);
+        if filter.match_group::<G>() {
+            G::push_rules(self, filter);
+        }
     }
 
     /// Add the rule `R` to the list of rules stores in this registry instance
-    pub fn push<G, R>(&mut self)
+    pub fn push_rule<R>(&mut self, filter: &AnalysisFilter)
     where
-        G: RuleGroup<Language = L> + 'static,
         R: Rule + 'static,
         R::Query: Queryable<Language = L>,
         <R::Query as Queryable>::Output: Clone,
     {
+        if !filter.match_rule::<R>() {
+            return;
+        }
+
         let phase = R::phase() as usize;
         let phase = &mut self.phase_rules[phase];
 
-        let rule = RegistryRule::new::<G, R>(phase.rule_states.len());
+        let rule = RegistryRule::new::<R>(phase.rule_states.len());
 
         match <R::Query as Queryable>::KEY {
             QueryKey::Syntax(key) => {
@@ -107,7 +119,7 @@ impl<L: Language + Default> RuleRegistry<L> {
 
         self.metadata.insert(
             MetadataKey {
-                inner: (G::NAME, R::METADATA.name),
+                inner: (<R::Group as RuleGroup>::NAME, R::METADATA.name),
             },
             R::METADATA,
         );
@@ -240,19 +252,17 @@ impl<L: Language> RuleSuppressions<L> {
 type RuleExecutor<L> = fn(&mut MatchQueryParams<L>, &mut RuleState<L>);
 
 impl<L: Language + Default> RegistryRule<L> {
-    fn new<G, R>(state_index: usize) -> Self
+    fn new<R>(state_index: usize) -> Self
     where
-        G: RuleGroup<Language = L> + 'static,
         R: Rule + 'static,
         R::Query: Queryable<Language = L> + 'static,
         <R::Query as Queryable>::Output: Clone,
     {
         /// Generic implementation of RuleExecutor for any rule type R
-        fn run<G, R>(
+        fn run<R>(
             params: &mut MatchQueryParams<RuleLanguage<R>>,
             state: &mut RuleState<RuleLanguage<R>>,
         ) where
-            G: RuleGroup + 'static,
             R: Rule + 'static,
             R::Query: 'static,
             <R::Query as Queryable>::Output: Clone,
@@ -277,7 +287,7 @@ impl<L: Language + Default> RegistryRule<L> {
 
                 R::suppressed_nodes(&ctx, &result, &mut state.suppressions);
 
-                let signal = Box::new(RuleSignal::<G, R>::new(
+                let signal = Box::new(RuleSignal::<R>::new(
                     params.file_id,
                     params.root,
                     query_result.clone(),
@@ -287,14 +297,14 @@ impl<L: Language + Default> RegistryRule<L> {
 
                 params.signal_queue.push(SignalEntry {
                     signal,
-                    rule: RuleKey::rule::<G, R>(),
+                    rule: RuleKey::rule::<R>(),
                     text_range,
                 });
             }
         }
 
         Self {
-            run: run::<G, R>,
+            run: run::<R>,
             state_index,
         }
     }
