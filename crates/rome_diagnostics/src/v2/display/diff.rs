@@ -14,6 +14,7 @@ use super::frame::{
 const MAX_PATCH_LINES: usize = 150;
 
 pub(super) fn print_diff(fmt: &mut fmt::Formatter<'_>, diff: &TextEdit) -> io::Result<()> {
+    // Before printing, we need to preprocess the list of DiffOps it's made of to classify them by line
     let mut modified_lines = BTreeSet::new();
     let mut inserted_lines = BTreeMap::new();
     let mut before_line_to_after = BTreeMap::new();
@@ -21,26 +22,95 @@ pub(super) fn print_diff(fmt: &mut fmt::Formatter<'_>, diff: &TextEdit) -> io::R
     let mut before_line = OneIndexed::MIN;
     let mut after_line = OneIndexed::MIN;
 
-    for (i, op) in diff.iter().enumerate() {
+    process_diff_ops(
+        diff,
+        &mut modified_lines,
+        &mut inserted_lines,
+        &mut before_line_to_after,
+        &mut after_line,
+        &mut before_line,
+    );
+
+    let before_line_count = before_line;
+    let after_line_count = after_line;
+
+    // If only a single line was modified, print a "short diff"
+    let mut iter = modified_lines.iter();
+    let modified_line = iter.next().and_then(|key| {
+        if iter.next().is_some() {
+            return None;
+        }
+
+        Some((key, inserted_lines.get(key)?))
+    });
+
+    if let Some((key, entry)) = modified_line {
+        return print_short_diff(fmt, key, entry);
+    }
+
+    // Otherwise if multiple lines were modified we need to perform more preprocessing,
+    // to merge identical line numbers and calculate how many context lines need to be rendered
+    let mut diffs_by_line = Vec::new();
+    let mut shown_line_indexes = BTreeSet::new();
+
+    process_diff_lines(
+        &mut modified_lines,
+        &mut inserted_lines,
+        &mut before_line_to_after,
+        &mut diffs_by_line,
+        &mut shown_line_indexes,
+        before_line_count,
+        after_line_count,
+    );
+
+    // Finally when have a flat list of lines we can now print
+    print_full_diff(
+        fmt,
+        &diffs_by_line,
+        &shown_line_indexes,
+        before_line_count,
+        after_line_count,
+    )
+}
+
+/// This function scans the list of DiffOps that make up the `diff` and derives
+/// the following data structures:
+/// - `modified_lines` is the set of [LineKey] that contain at least one insert
+/// or delete operation
+/// - `inserted_lines` maps a [LineKey] to the list of diff operations that
+/// happen on the corresponding line
+/// - `before_line_to_after` maps line numbers in the old revision of the text
+/// to line numbers in the new revision
+/// - `after_line` counts the number of lines in the new revision of the document
+/// - `before_line` counts the number of lines in the old revision of the document
+fn process_diff_ops<'diff>(
+    diff: &'diff TextEdit,
+    modified_lines: &mut BTreeSet<LineKey>,
+    inserted_lines: &mut BTreeMap<LineKey, GroupDiffsLine<'diff>>,
+    before_line_to_after: &mut BTreeMap<OneIndexed, OneIndexed>,
+    after_line: &mut OneIndexed,
+    before_line: &mut OneIndexed,
+) {
+    for (op_index, op) in diff.iter().enumerate() {
         let op = match op {
             CompressedOp::DiffOp(op) => op,
             CompressedOp::EqualLines { line_count } => {
-                let is_first_op = i == 0;
-                for i in 0..=line_count.get() {
+                let is_first_op = op_index == 0;
+                for line_index in 0..=line_count.get() {
                     // Don't increment the first line if we are the first tuple marking the beginning of the file
-                    if !(is_first_op && i == 0) {
-                        after_line = after_line.saturating_add(1);
-                        before_line = before_line.saturating_add(1);
+                    if !(is_first_op && line_index == 0) {
+                        *after_line = after_line.saturating_add(1);
+                        *before_line = before_line.saturating_add(1);
                     }
 
-                    before_line_to_after.insert(before_line, after_line);
+                    before_line_to_after.insert(*before_line, *after_line);
 
                     push_to_line(
-                        &mut modified_lines,
-                        &mut inserted_lines,
-                        &mut before_line_to_after,
-                        before_line,
-                        after_line,
+                        modified_lines,
+                        inserted_lines,
+                        before_line_to_after,
+                        *before_line,
+                        *after_line,
                         ChangeTag::Equal,
                         "",
                     );
@@ -56,11 +126,11 @@ pub(super) fn print_diff(fmt: &mut fmt::Formatter<'_>, diff: &TextEdit) -> io::R
         // Doesn't contain a newline
         if !text.contains('\n') {
             push_to_line(
-                &mut modified_lines,
-                &mut inserted_lines,
-                &mut before_line_to_after,
-                before_line,
-                after_line,
+                modified_lines,
+                inserted_lines,
+                before_line_to_after,
+                *before_line,
+                *after_line,
                 tag,
                 text,
             );
@@ -77,11 +147,11 @@ pub(super) fn print_diff(fmt: &mut fmt::Formatter<'_>, diff: &TextEdit) -> io::R
         if let Some(current_line) = current_line {
             if !current_line.is_empty() {
                 push_to_line(
-                    &mut modified_lines,
-                    &mut inserted_lines,
-                    &mut before_line_to_after,
-                    before_line,
-                    after_line,
+                    modified_lines,
+                    inserted_lines,
+                    before_line_to_after,
+                    *before_line,
+                    *after_line,
                     tag,
                     current_line,
                 );
@@ -92,114 +162,124 @@ pub(super) fn print_diff(fmt: &mut fmt::Formatter<'_>, diff: &TextEdit) -> io::R
         for new_line in parts {
             match tag {
                 ChangeTag::Equal => {
-                    after_line = after_line.saturating_add(1);
-                    before_line = before_line.saturating_add(1);
+                    *after_line = after_line.saturating_add(1);
+                    *before_line = before_line.saturating_add(1);
                 }
 
                 ChangeTag::Delete => {
-                    before_line = before_line.saturating_add(1);
+                    *before_line = before_line.saturating_add(1);
                 }
                 ChangeTag::Insert => {
-                    after_line = after_line.saturating_add(1);
+                    *after_line = after_line.saturating_add(1);
                 }
             }
 
-            before_line_to_after.insert(before_line, after_line);
+            before_line_to_after.insert(*before_line, *after_line);
 
             push_to_line(
-                &mut modified_lines,
-                &mut inserted_lines,
-                &mut before_line_to_after,
-                before_line,
-                after_line,
+                modified_lines,
+                inserted_lines,
+                before_line_to_after,
+                *before_line,
+                *after_line,
                 tag,
                 new_line,
             );
         }
     }
+}
 
-    let before_line_count = before_line;
-    let after_line_count = after_line;
+#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
+struct LineKey {
+    before_line: Option<OneIndexed>,
+    after_line: Option<OneIndexed>,
+}
 
-    // Print a "short diff" if only a single line was modified
-    let mut iter = modified_lines.iter();
-    let modified_line = iter.next().and_then(|key| {
-        if iter.next().is_some() {
-            return None;
+impl LineKey {
+    const fn before(before_line: OneIndexed) -> Self {
+        Self {
+            before_line: Some(before_line),
+            after_line: None,
         }
-
-        Some((key, inserted_lines.get(key)?))
-    });
-
-    if let Some((key, entry)) = modified_line {
-        let index = match (key.before_line, key.after_line) {
-            (None, Some(index)) | (Some(index), None) => index,
-            (None, None) | (Some(_), Some(_)) => unreachable!("the key of a modified line should have exactly one index in one of the two revisions"),
-        };
-
-        fmt.write_markup(markup! {
-            <Emphasis>
-                {format_args!("  {} \u{2502} ", index.get())}
-            </Emphasis>
-        })?;
-
-        let mut at_line_start = true;
-        let last_index = entry.diffs.len().saturating_sub(1);
-
-        for (i, (tag, text)) in entry.diffs.iter().enumerate() {
-            let options = PrintInvisiblesOptions {
-                ignore_leading_tabs: false,
-                ignore_lone_spaces: false,
-                ignore_trailing_carriage_return: *tag != ChangeTag::Equal,
-                at_line_start,
-                at_line_end: i == last_index,
-            };
-
-            let element = match tag {
-                ChangeTag::Equal => None,
-                ChangeTag::Delete => Some(MarkupElement::Error),
-                ChangeTag::Insert => Some(MarkupElement::Success),
-            };
-
-            let has_non_whitespace = if let Some(element) = element {
-                let mut slot = None;
-                let mut fmt = ElementWrapper::wrap(fmt, &mut slot, element);
-                print_invisibles(&mut fmt, text, options)?
-            } else {
-                print_invisibles(fmt, text, options)?
-            };
-
-            if has_non_whitespace {
-                at_line_start = false;
-            }
-        }
-
-        fmt.write_str("\n")?;
-
-        let no_length = calculate_print_width(index);
-        fmt.write_markup(markup! {
-            <Emphasis>
-                {format_args!("  {: >1$} \u{2502} ", "", no_length.get())}
-            </Emphasis>
-        })?;
-
-        for (tag, text) in &entry.diffs {
-            let marker = match tag {
-                ChangeTag::Equal => markup! { " " },
-                ChangeTag::Delete => markup! { <Error>"-"</Error> },
-                ChangeTag::Insert => markup! { <Success>"+"</Success> },
-            };
-
-            for _ in 0..text_width(text) {
-                fmt.write_markup(marker)?;
-            }
-        }
-
-        fmt.write_str("\n")?;
-
-        return Ok(());
     }
 
+    const fn after(after_line: OneIndexed) -> Self {
+        Self {
+            before_line: None,
+            after_line: Some(after_line),
+        }
+    }
+}
+
+#[derive(Debug, Clone)]
+struct GroupDiffsLine<'a> {
+    before_line: Option<OneIndexed>,
+    after_line: Option<OneIndexed>,
+    diffs: Vec<(ChangeTag, &'a str)>,
+}
+
+impl<'a> GroupDiffsLine<'a> {
+    fn insert(
+        inserted_lines: &mut BTreeMap<LineKey, Self>,
+        key: LineKey,
+        tag: ChangeTag,
+        text: &'a str,
+    ) {
+        inserted_lines
+            .entry(key)
+            .and_modify(|line| {
+                line.diffs.push((tag, text));
+            })
+            .or_insert_with_key(|key| GroupDiffsLine {
+                before_line: key.before_line,
+                after_line: key.after_line,
+                diffs: vec![(tag, text)],
+            });
+    }
+}
+
+fn push_to_line<'a>(
+    modified_lines: &mut BTreeSet<LineKey>,
+    inserted_lines: &mut BTreeMap<LineKey, GroupDiffsLine<'a>>,
+    before_line_to_after: &mut BTreeMap<OneIndexed, OneIndexed>,
+    before_line: OneIndexed,
+    after_line: OneIndexed,
+    tag: ChangeTag,
+    text: &'a str,
+) {
+    match tag {
+        ChangeTag::Insert => {
+            GroupDiffsLine::insert(inserted_lines, LineKey::after(after_line), tag, text);
+            if !text.is_empty() {
+                modified_lines.insert(LineKey::after(after_line));
+            }
+        }
+        ChangeTag::Delete => {
+            GroupDiffsLine::insert(inserted_lines, LineKey::before(before_line), tag, text);
+            if !text.is_empty() {
+                modified_lines.insert(LineKey::before(before_line));
+            }
+        }
+        ChangeTag::Equal => {
+            if before_line == OneIndexed::MIN && after_line == OneIndexed::MIN {
+                before_line_to_after.insert(before_line, after_line);
+            }
+
+            GroupDiffsLine::insert(inserted_lines, LineKey::after(after_line), tag, text);
+            GroupDiffsLine::insert(inserted_lines, LineKey::before(before_line), tag, text);
+        }
+    }
+}
+
+fn process_diff_lines<'lines, 'diff>(
+    modified_lines: &mut BTreeSet<LineKey>,
+    inserted_lines: &'lines mut BTreeMap<LineKey, GroupDiffsLine<'diff>>,
+    before_line_to_after: &mut BTreeMap<OneIndexed, OneIndexed>,
+    diffs_by_line: &mut Vec<&'lines GroupDiffsLine<'diff>>,
+    shown_line_indexes: &mut BTreeSet<usize>,
+    before_line_count: OneIndexed,
+    after_line_count: OneIndexed,
+) {
     // Merge identical lines
     for before_line in IntoIter::new(OneIndexed::MIN..=before_line_count) {
         let after_line = match before_line_to_after.get(&before_line) {
@@ -256,15 +336,13 @@ pub(super) fn print_diff(fmt: &mut fmt::Formatter<'_>, diff: &TextEdit) -> io::R
 
     // Calculate the parts of the diff we should show
     let mut last_printed_after = 0;
-    let mut diffs_by_line = Vec::new();
-    let mut shown_line_indexes = BTreeSet::new();
 
     for line in diffs_by_line_with_before_and_shared {
         if let Some(after_line) = line.after_line {
             catch_up_after(
-                &inserted_lines,
-                &mut diffs_by_line,
-                &mut shown_line_indexes,
+                inserted_lines,
+                diffs_by_line,
+                shown_line_indexes,
                 last_printed_after,
                 after_line,
             );
@@ -272,17 +350,130 @@ pub(super) fn print_diff(fmt: &mut fmt::Formatter<'_>, diff: &TextEdit) -> io::R
             last_printed_after = after_line.get();
         }
 
-        push_displayed_line(&mut diffs_by_line, &mut shown_line_indexes, line);
+        push_displayed_line(diffs_by_line, shown_line_indexes, line);
     }
 
     catch_up_after(
-        &inserted_lines,
-        &mut diffs_by_line,
-        &mut shown_line_indexes,
+        inserted_lines,
+        diffs_by_line,
+        shown_line_indexes,
         last_printed_after,
         after_line_count,
     );
+}
 
+fn push_displayed_line<'input, 'group>(
+    diffs_by_line: &mut Vec<&'group GroupDiffsLine<'input>>,
+    shown_line_indexes: &mut BTreeSet<usize>,
+    line: &'group GroupDiffsLine<'input>,
+) {
+    let i = diffs_by_line.len();
+    diffs_by_line.push(line);
+
+    if line.before_line.is_none() || line.after_line.is_none() {
+        let first = i.saturating_sub(CODE_FRAME_CONTEXT_LINES.get());
+        let last = i + CODE_FRAME_CONTEXT_LINES.get();
+        shown_line_indexes.extend(first..=last);
+    }
+}
+
+fn catch_up_after<'input, 'lines>(
+    inserted_lines: &'lines BTreeMap<LineKey, GroupDiffsLine<'input>>,
+    diffs_by_line: &mut Vec<&'lines GroupDiffsLine<'input>>,
+    shown_line_indexes: &mut BTreeSet<usize>,
+    last_printed_after: usize,
+    after_line: OneIndexed,
+) {
+    let iter = IntoIter::new(OneIndexed::from_zero_indexed(last_printed_after)..=after_line);
+
+    for i in iter {
+        let key = LineKey::after(i);
+        if let Some(line) = inserted_lines.get(&key) {
+            push_displayed_line(diffs_by_line, shown_line_indexes, line);
+        }
+    }
+}
+
+fn print_short_diff(
+    fmt: &mut fmt::Formatter<'_>,
+    key: &LineKey,
+    entry: &GroupDiffsLine<'_>,
+) -> io::Result<()> {
+    let index = match (key.before_line, key.after_line) {
+        (None, Some(index)) | (Some(index), None) => index,
+        (None, None) | (Some(_), Some(_)) => unreachable!(
+            "the key of a modified line should have exactly one index in one of the two revisions"
+        ),
+    };
+
+    fmt.write_markup(markup! {
+        <Emphasis>
+            {format_args!("  {} \u{2502} ", index.get())}
+        </Emphasis>
+    })?;
+
+    let mut at_line_start = true;
+    let last_index = entry.diffs.len().saturating_sub(1);
+
+    for (i, (tag, text)) in entry.diffs.iter().enumerate() {
+        let options = PrintInvisiblesOptions {
+            ignore_leading_tabs: false,
+            ignore_lone_spaces: false,
+            ignore_trailing_carriage_return: *tag != ChangeTag::Equal,
+            at_line_start,
+            at_line_end: i == last_index,
+        };
+
+        let element = match tag {
+            ChangeTag::Equal => None,
+            ChangeTag::Delete => Some(MarkupElement::Error),
+            ChangeTag::Insert => Some(MarkupElement::Success),
+        };
+
+        let has_non_whitespace = if let Some(element) = element {
+            let mut slot = None;
+            let mut fmt = ElementWrapper::wrap(fmt, &mut slot, element);
+            print_invisibles(&mut fmt, text, options)?
+        } else {
+            print_invisibles(fmt, text, options)?
+        };
+
+        if has_non_whitespace {
+            at_line_start = false;
+        }
+    }
+
+    fmt.write_str("\n")?;
+
+    let no_length = calculate_print_width(index);
+    fmt.write_markup(markup! {
+        <Emphasis>
+            {format_args!("  {: >1$} \u{2502} ", "", no_length.get())}
+        </Emphasis>
+    })?;
+
+    for (tag, text) in &entry.diffs {
+        let marker = match tag {
+            ChangeTag::Equal => markup! { " " },
+            ChangeTag::Delete => markup! { <Error>"-"</Error> },
+            ChangeTag::Insert => markup! { <Success>"+"</Success> },
+        };
+
+        for _ in 0..text_width(text) {
+            fmt.write_markup(marker)?;
+        }
+    }
+
+    fmt.write_str("\n")
+}
+
+fn print_full_diff(
+    fmt: &mut fmt::Formatter<'_>,
+    diffs_by_line: &[&'_ GroupDiffsLine<'_>],
+    shown_line_indexes: &BTreeSet<usize>,
+    before_line_count: OneIndexed,
+    after_line_count: OneIndexed,
+) -> io::Result<()> {
     // Calculate width of line no column
     let before_no_length = calculate_print_width(before_line_count);
     let after_no_length = calculate_print_width(after_line_count);
@@ -457,120 +648,6 @@ impl<W: fmt::Write + ?Sized> fmt::Write for ElementWrapper<'_, W> {
     ) -> io::Result<()> {
         let elements = fmt::MarkupElements::Node(elements, slice::from_ref(&self.1));
         self.0.write_fmt(&elements, content)
-    }
-}
-
-#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, PartialOrd, Ord)]
-struct LineKey {
-    before_line: Option<OneIndexed>,
-    after_line: Option<OneIndexed>,
-}
-
-impl LineKey {
-    const fn before(before_line: OneIndexed) -> Self {
-        Self {
-            before_line: Some(before_line),
-            after_line: None,
-        }
-    }
-
-    const fn after(after_line: OneIndexed) -> Self {
-        Self {
-            before_line: None,
-            after_line: Some(after_line),
-        }
-    }
-}
-
-#[derive(Debug, Clone)]
-struct GroupDiffsLine<'a> {
-    before_line: Option<OneIndexed>,
-    after_line: Option<OneIndexed>,
-    diffs: Vec<(ChangeTag, &'a str)>,
-}
-
-impl<'a> GroupDiffsLine<'a> {
-    fn insert(
-        inserted_lines: &mut BTreeMap<LineKey, Self>,
-        key: LineKey,
-        tag: ChangeTag,
-        text: &'a str,
-    ) {
-        inserted_lines
-            .entry(key)
-            .and_modify(|line| {
-                line.diffs.push((tag, text));
-            })
-            .or_insert_with_key(|key| GroupDiffsLine {
-                before_line: key.before_line,
-                after_line: key.after_line,
-                diffs: vec![(tag, text)],
-            });
-    }
-}
-
-fn push_to_line<'a>(
-    modified_lines: &mut BTreeSet<LineKey>,
-    inserted_lines: &mut BTreeMap<LineKey, GroupDiffsLine<'a>>,
-    before_line_to_after: &mut BTreeMap<OneIndexed, OneIndexed>,
-    before_line: OneIndexed,
-    after_line: OneIndexed,
-    tag: ChangeTag,
-    text: &'a str,
-) {
-    match tag {
-        ChangeTag::Insert => {
-            GroupDiffsLine::insert(inserted_lines, LineKey::after(after_line), tag, text);
-            if !text.is_empty() {
-                modified_lines.insert(LineKey::after(after_line));
-            }
-        }
-        ChangeTag::Delete => {
-            GroupDiffsLine::insert(inserted_lines, LineKey::before(before_line), tag, text);
-            if !text.is_empty() {
-                modified_lines.insert(LineKey::before(before_line));
-            }
-        }
-        ChangeTag::Equal => {
-            if before_line == OneIndexed::MIN && after_line == OneIndexed::MIN {
-                before_line_to_after.insert(before_line, after_line);
-            }
-
-            GroupDiffsLine::insert(inserted_lines, LineKey::after(after_line), tag, text);
-            GroupDiffsLine::insert(inserted_lines, LineKey::before(before_line), tag, text);
-        }
-    }
-}
-
-fn push_displayed_line<'input, 'group>(
-    diffs_by_line: &mut Vec<&'group GroupDiffsLine<'input>>,
-    shown_line_indexes: &mut BTreeSet<usize>,
-    line: &'group GroupDiffsLine<'input>,
-) {
-    let i = diffs_by_line.len();
-    diffs_by_line.push(line);
-
-    if line.before_line.is_none() || line.after_line.is_none() {
-        let first = i.saturating_sub(CODE_FRAME_CONTEXT_LINES.get());
-        let last = i + CODE_FRAME_CONTEXT_LINES.get();
-        shown_line_indexes.extend(first..=last);
-    }
-}
-
-fn catch_up_after<'input, 'lines>(
-    inserted_lines: &'lines BTreeMap<LineKey, GroupDiffsLine<'input>>,
-    diffs_by_line: &mut Vec<&'lines GroupDiffsLine<'input>>,
-    shown_line_indexes: &mut BTreeSet<usize>,
-    last_printed_after: usize,
-    after_line: OneIndexed,
-) {
-    let iter = IntoIter::new(OneIndexed::from_zero_indexed(last_printed_after)..=after_line);
-
-    for i in iter {
-        let key = LineKey::after(i);
-        if let Some(line) = inserted_lines.get(&key) {
-            push_displayed_line(diffs_by_line, shown_line_indexes, line);
-        }
     }
 }
 
