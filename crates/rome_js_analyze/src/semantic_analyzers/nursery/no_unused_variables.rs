@@ -151,7 +151,7 @@ fn is_typescript_unused_ok(binding: &JsIdentifierBinding) -> Option<()> {
                         }
                     }
 
-                    return None;
+                    None
                 }
                 _ => None,
             }
