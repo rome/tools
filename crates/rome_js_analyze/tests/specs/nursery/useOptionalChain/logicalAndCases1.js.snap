@@ -72,22 +72,20 @@ logicalAndCases1.js:4:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━�
 
   ! Change to an optional chain.
   
-    ┌─ logicalAndCases1.js:4:1
-    │
-  4 │ foo && foo.bar
-    │ ^^^^^^^^^^^^^^
+    3 │ // chained members
+  > 4 │ foo && foo.bar
+      │ ^^^^^^^^^^^^^^
+    5 │ foo.bar && foo.bar.baz
+    6 │ foo && foo()
   
   i Suggested fix: Change to an optional chain.
   
-      | @@ -1,7 +1,7 @@
-  0 0 |   // base cases
-  1 1 |   
-  2 2 |   // chained members
-  3   | - foo && foo.bar
-    3 | + foo?.bar
-  4 4 |   foo.bar && foo.bar.baz
-  5 5 |   foo && foo()
-  6 6 |   foo.bar && foo.bar()
+     2  2 │   
+     3  3 │   //·chained·members
+     4    │ - foo·&&·foo.bar
+        4 │ + foo?.bar
+     5  5 │   foo.bar·&&·foo.bar.baz
+     6  6 │   foo·&&·foo()
   
 
 ```
@@ -97,22 +95,21 @@ logicalAndCases1.js:5:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━�
 
   ! Change to an optional chain.
   
-    ┌─ logicalAndCases1.js:5:1
-    │
-  5 │ foo.bar && foo.bar.baz
-    │ ^^^^^^^^^^^^^^^^^^^^^^
+    3 │ // chained members
+    4 │ foo && foo.bar
+  > 5 │ foo.bar && foo.bar.baz
+      │ ^^^^^^^^^^^^^^^^^^^^^^
+    6 │ foo && foo()
+    7 │ foo.bar && foo.bar()
   
   i Suggested fix: Change to an optional chain.
   
-      | @@ -2,7 +2,7 @@
-  1 1 |   
-  2 2 |   // chained members
-  3 3 |   foo && foo.bar
-  4   | - foo.bar && foo.bar.baz
-    4 | + foo.bar?.baz
-  5 5 |   foo && foo()
-  6 6 |   foo.bar && foo.bar()
-  7 7 |   foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz
+     3  3 │   //·chained·members
+     4  4 │   foo·&&·foo.bar
+     5    │ - foo.bar·&&·foo.bar.baz
+        5 │ + foo.bar?.baz
+     6  6 │   foo·&&·foo()
+     7  7 │   foo.bar·&&·foo.bar()
   
 
 ```
@@ -122,22 +119,21 @@ logicalAndCases1.js:6:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━�
 
   ! Change to an optional chain.
   
-    ┌─ logicalAndCases1.js:6:1
-    │
-  6 │ foo && foo()
-    │ ^^^^^^^^^^^^
+    4 │ foo && foo.bar
+    5 │ foo.bar && foo.bar.baz
+  > 6 │ foo && foo()
+      │ ^^^^^^^^^^^^
+    7 │ foo.bar && foo.bar()
+    8 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz
   
   i Suggested fix: Change to an optional chain.
   
-      | @@ -3,7 +3,7 @@
-  2 2 |   // chained members
-  3 3 |   foo && foo.bar
-  4 4 |   foo.bar && foo.bar.baz
-  5   | - foo && foo()
-    5 | + foo?.()
-  6 6 |   foo.bar && foo.bar()
-  7 7 |   foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz
-  8 8 |   foo.bar && foo.bar.baz && foo.bar.baz.buzz
+     4  4 │   foo·&&·foo.bar
+     5  5 │   foo.bar·&&·foo.bar.baz
+     6    │ - foo·&&·foo()
+        6 │ + foo?.()
+     7  7 │   foo.bar·&&·foo.bar()
+     8  8 │   foo·&&·foo.bar·&&·foo.bar.baz·&&·foo.bar.baz.buzz
   
 
 ```
@@ -147,22 +143,21 @@ logicalAndCases1.js:7:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━�
 
   ! Change to an optional chain.
   
-    ┌─ logicalAndCases1.js:7:1
-    │
-  7 │ foo.bar && foo.bar()
-    │ ^^^^^^^^^^^^^^^^^^^^
+    5 │ foo.bar && foo.bar.baz
+    6 │ foo && foo()
+  > 7 │ foo.bar && foo.bar()
+      │ ^^^^^^^^^^^^^^^^^^^^
+    8 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz
+    9 │ foo.bar && foo.bar.baz && foo.bar.baz.buzz
   
   i Suggested fix: Change to an optional chain.
   
-      | @@ -4,7 +4,7 @@
-  3 3 |   foo && foo.bar
-  4 4 |   foo.bar && foo.bar.baz
-  5 5 |   foo && foo()
-  6   | - foo.bar && foo.bar()
-    6 | + foo.bar?.()
-  7 7 |   foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz
-  8 8 |   foo.bar && foo.bar.baz && foo.bar.baz.buzz
-  9 9 |   
+     5  5 │   foo.bar·&&·foo.bar.baz
+     6  6 │   foo·&&·foo()
+     7    │ - foo.bar·&&·foo.bar()
+        7 │ + foo.bar?.()
+     8  8 │   foo·&&·foo.bar·&&·foo.bar.baz·&&·foo.bar.baz.buzz
+     9  9 │   foo.bar·&&·foo.bar.baz·&&·foo.bar.baz.buzz
   
 
 ```
@@ -172,22 +167,21 @@ logicalAndCases1.js:8:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━�
 
   ! Change to an optional chain.
   
-    ┌─ logicalAndCases1.js:8:1
-    │
-  8 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz
-    │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     6 │ foo && foo()
+     7 │ foo.bar && foo.bar()
+   > 8 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     9 │ foo.bar && foo.bar.baz && foo.bar.baz.buzz
+    10 │ 
   
   i Suggested fix: Change to an optional chain.
   
-      | @@ -5,7 +5,7 @@
-  4 4 |   foo.bar && foo.bar.baz
-  5 5 |   foo && foo()
-  6 6 |   foo.bar && foo.bar()
-  7   | - foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz
-    7 | + foo?.bar?.baz?.buzz
-  8 8 |   foo.bar && foo.bar.baz && foo.bar.baz.buzz
-  9 9 |   
-  10 10 |   // case with a jump (i.e. a non-nullish prop)
+     6  6 │   foo·&&·foo()
+     7  7 │   foo.bar·&&·foo.bar()
+     8    │ - foo·&&·foo.bar·&&·foo.bar.baz·&&·foo.bar.baz.buzz
+        8 │ + foo?.bar?.baz?.buzz
+     9  9 │   foo.bar·&&·foo.bar.baz·&&·foo.bar.baz.buzz
+    10 10 │   
   
 
 ```
@@ -197,22 +191,21 @@ logicalAndCases1.js:9:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━�
 
   ! Change to an optional chain.
   
-    ┌─ logicalAndCases1.js:9:1
-    │
-  9 │ foo.bar && foo.bar.baz && foo.bar.baz.buzz
-    │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     7 │ foo.bar && foo.bar()
+     8 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz
+   > 9 │ foo.bar && foo.bar.baz && foo.bar.baz.buzz
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    10 │ 
+    11 │ // case with a jump (i.e. a non-nullish prop)
   
   i Suggested fix: Change to an optional chain.
   
-      | @@ -6,7 +6,7 @@
-  5 5 |   foo && foo()
-  6 6 |   foo.bar && foo.bar()
-  7 7 |   foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz
-  8   | - foo.bar && foo.bar.baz && foo.bar.baz.buzz
-    8 | + foo.bar?.baz?.buzz
-  9 9 |   
-  10 10 |   // case with a jump (i.e. a non-nullish prop)
-  11 11 |   foo && foo.bar && foo.bar.baz.buzz
+     7  7 │   foo.bar·&&·foo.bar()
+     8  8 │   foo·&&·foo.bar·&&·foo.bar.baz·&&·foo.bar.baz.buzz
+     9    │ - foo.bar·&&·foo.bar.baz·&&·foo.bar.baz.buzz
+        9 │ + foo.bar?.baz?.buzz
+    10 10 │   
+    11 11 │   //·case·with·a·jump·(i.e.·a·non-nullish·prop)
   
 
 ```
@@ -222,22 +215,20 @@ logicalAndCases1.js:12:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:12:1
-     │
-  12 │ foo && foo.bar && foo.bar.baz.buzz
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    11 │ // case with a jump (i.e. a non-nullish prop)
+  > 12 │ foo && foo.bar && foo.bar.baz.buzz
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    13 │ foo.bar && foo.bar.baz.buzz
+    14 │ 
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -9,7 +9,7 @@
-   8  8 |   foo.bar && foo.bar.baz && foo.bar.baz.buzz
-   9  9 |   
-  10 10 |   // case with a jump (i.e. a non-nullish prop)
-  11    | - foo && foo.bar && foo.bar.baz.buzz
-     11 | + foo?.bar?.baz.buzz
-  12 12 |   foo.bar && foo.bar.baz.buzz
-  13 13 |   
-  14 14 |   // case where for some reason there is a doubled up expression
+    10 10 │   
+    11 11 │   //·case·with·a·jump·(i.e.·a·non-nullish·prop)
+    12    │ - foo·&&·foo.bar·&&·foo.bar.baz.buzz
+       12 │ + foo?.bar?.baz.buzz
+    13 13 │   foo.bar·&&·foo.bar.baz.buzz
+    14 14 │   
   
 
 ```
@@ -247,22 +238,21 @@ logicalAndCases1.js:13:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:13:1
-     │
-  13 │ foo.bar && foo.bar.baz.buzz
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    11 │ // case with a jump (i.e. a non-nullish prop)
+    12 │ foo && foo.bar && foo.bar.baz.buzz
+  > 13 │ foo.bar && foo.bar.baz.buzz
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    14 │ 
+    15 │ // case where for some reason there is a doubled up expression
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -10,7 +10,7 @@
-   9  9 |   
-  10 10 |   // case with a jump (i.e. a non-nullish prop)
-  11 11 |   foo && foo.bar && foo.bar.baz.buzz
-  12    | - foo.bar && foo.bar.baz.buzz
-     12 | + foo.bar?.baz.buzz
-  13 13 |   
-  14 14 |   // case where for some reason there is a doubled up expression
-  15 15 |   foo && foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz
+    11 11 │   //·case·with·a·jump·(i.e.·a·non-nullish·prop)
+    12 12 │   foo·&&·foo.bar·&&·foo.bar.baz.buzz
+    13    │ - foo.bar·&&·foo.bar.baz.buzz
+       13 │ + foo.bar?.baz.buzz
+    14 14 │   
+    15 15 │   //·case·where·for·some·reason·there·is·a·doubled·up·expression
   
 
 ```
@@ -272,22 +262,20 @@ logicalAndCases1.js:16:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:16:1
-     │
-  16 │ foo && foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    15 │ // case where for some reason there is a doubled up expression
+  > 16 │ foo && foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    17 │ foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz
+    18 │ 
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -13,7 +13,7 @@
-  12 12 |   foo.bar && foo.bar.baz.buzz
-  13 13 |   
-  14 14 |   // case where for some reason there is a doubled up expression
-  15    | - foo && foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz
-     15 | + foo?.bar?.baz?.buzz
-  16 16 |   foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz
-  17 17 |   
-  18 18 |   // chained members with element access
+    14 14 │   
+    15 15 │   //·case·where·for·some·reason·there·is·a·doubled·up·expression
+    16    │ - foo·&&·foo.bar·&&·foo.bar.baz·&&·foo.bar.baz·&&·foo.bar.baz.buzz
+       16 │ + foo?.bar?.baz?.buzz
+    17 17 │   foo.bar·&&·foo.bar.baz·&&·foo.bar.baz·&&·foo.bar.baz.buzz
+    18 18 │   
   
 
 ```
@@ -297,22 +285,21 @@ logicalAndCases1.js:17:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:17:1
-     │
-  17 │ foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    15 │ // case where for some reason there is a doubled up expression
+    16 │ foo && foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz
+  > 17 │ foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    18 │ 
+    19 │ // chained members with element access
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -14,7 +14,7 @@
-  13 13 |   
-  14 14 |   // case where for some reason there is a doubled up expression
-  15 15 |   foo && foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz
-  16    | - foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz
-     16 | + foo.bar?.baz?.buzz
-  17 17 |   
-  18 18 |   // chained members with element access
-  19 19 |   foo && foo[bar] && foo[bar].baz && foo[bar].baz.buzz
+    15 15 │   //·case·where·for·some·reason·there·is·a·doubled·up·expression
+    16 16 │   foo·&&·foo.bar·&&·foo.bar.baz·&&·foo.bar.baz·&&·foo.bar.baz.buzz
+    17    │ - foo.bar·&&·foo.bar.baz·&&·foo.bar.baz·&&·foo.bar.baz.buzz
+       17 │ + foo.bar?.baz?.buzz
+    18 18 │   
+    19 19 │   //·chained·members·with·element·access
   
 
 ```
@@ -322,22 +309,20 @@ logicalAndCases1.js:20:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:20:1
-     │
-  20 │ foo && foo[bar] && foo[bar].baz && foo[bar].baz.buzz
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    19 │ // chained members with element access
+  > 20 │ foo && foo[bar] && foo[bar].baz && foo[bar].baz.buzz
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    21 │ 
+    22 │ // case with a jump (i.e. a non-nullish prop)
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -17,7 +17,7 @@
-  16 16 |   foo.bar && foo.bar.baz && foo.bar.baz && foo.bar.baz.buzz
-  17 17 |   
-  18 18 |   // chained members with element access
-  19    | - foo && foo[bar] && foo[bar].baz && foo[bar].baz.buzz
-     19 | + foo?.[bar]?.baz?.buzz
-  20 20 |   
-  21 21 |   // case with a jump (i.e. a non-nullish prop)
-  22 22 |   foo && foo[bar].baz && foo[bar].baz.buzz
+    18 18 │   
+    19 19 │   //·chained·members·with·element·access
+    20    │ - foo·&&·foo[bar]·&&·foo[bar].baz·&&·foo[bar].baz.buzz
+       20 │ + foo?.[bar]?.baz?.buzz
+    21 21 │   
+    22 22 │   //·case·with·a·jump·(i.e.·a·non-nullish·prop)
   
 
 ```
@@ -347,22 +332,20 @@ logicalAndCases1.js:23:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:23:1
-     │
-  23 │ foo && foo[bar].baz && foo[bar].baz.buzz
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    22 │ // case with a jump (i.e. a non-nullish prop)
+  > 23 │ foo && foo[bar].baz && foo[bar].baz.buzz
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    24 │ 
+    25 │ // chained calls
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -20,7 +20,7 @@
-  19 19 |   foo && foo[bar] && foo[bar].baz && foo[bar].baz.buzz
-  20 20 |   
-  21 21 |   // case with a jump (i.e. a non-nullish prop)
-  22    | - foo && foo[bar].baz && foo[bar].baz.buzz
-     22 | + foo?.[bar].baz?.buzz
-  23 23 |   
-  24 24 |   // chained calls
-  25 25 |   foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz()
+    21 21 │   
+    22 22 │   //·case·with·a·jump·(i.e.·a·non-nullish·prop)
+    23    │ - foo·&&·foo[bar].baz·&&·foo[bar].baz.buzz
+       23 │ + foo?.[bar].baz?.buzz
+    24 24 │   
+    25 25 │   //·chained·calls
   
 
 ```
@@ -372,22 +355,20 @@ logicalAndCases1.js:26:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:26:1
-     │
-  26 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz()
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    25 │ // chained calls
+  > 26 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz()
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    27 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz()
+    28 │ foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz()
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -23,7 +23,7 @@
-  22 22 |   foo && foo[bar].baz && foo[bar].baz.buzz
-  23 23 |   
-  24 24 |   // chained calls
-  25    | - foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz()
-     25 | + foo?.bar?.baz?.buzz()
-  26 26 |   foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz()
-  27 27 |   foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz()
-  28 28 |   
+    24 24 │   
+    25 25 │   //·chained·calls
+    26    │ - foo·&&·foo.bar·&&·foo.bar.baz·&&·foo.bar.baz.buzz()
+       26 │ + foo?.bar?.baz?.buzz()
+    27 27 │   foo·&&·foo.bar·&&·foo.bar.baz·&&·foo.bar.baz.buzz·&&·foo.bar.baz.buzz()
+    28 28 │   foo.bar·&&·foo.bar.baz·&&·foo.bar.baz.buzz·&&·foo.bar.baz.buzz()
   
 
 ```
@@ -397,22 +378,21 @@ logicalAndCases1.js:27:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:27:1
-     │
-  27 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz()
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    25 │ // chained calls
+    26 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz()
+  > 27 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz()
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    28 │ foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz()
+    29 │ 
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -24,7 +24,7 @@
-  23 23 |   
-  24 24 |   // chained calls
-  25 25 |   foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz()
-  26    | - foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz()
-     26 | + foo?.bar?.baz?.buzz?.()
-  27 27 |   foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz()
-  28 28 |   
-  29 29 |   // case with a jump (i.e. a non-nullish prop)
+    25 25 │   //·chained·calls
+    26 26 │   foo·&&·foo.bar·&&·foo.bar.baz·&&·foo.bar.baz.buzz()
+    27    │ - foo·&&·foo.bar·&&·foo.bar.baz·&&·foo.bar.baz.buzz·&&·foo.bar.baz.buzz()
+       27 │ + foo?.bar?.baz?.buzz?.()
+    28 28 │   foo.bar·&&·foo.bar.baz·&&·foo.bar.baz.buzz·&&·foo.bar.baz.buzz()
+    29 29 │   
   
 
 ```
@@ -422,22 +402,21 @@ logicalAndCases1.js:28:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:28:1
-     │
-  28 │ foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz()
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    26 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz()
+    27 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz()
+  > 28 │ foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz()
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    29 │ 
+    30 │ // case with a jump (i.e. a non-nullish prop)
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -25,7 +25,7 @@
-  24 24 |   // chained calls
-  25 25 |   foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz()
-  26 26 |   foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz()
-  27    | - foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz()
-     27 | + foo.bar?.baz?.buzz?.()
-  28 28 |   
-  29 29 |   // case with a jump (i.e. a non-nullish prop)
-  30 30 |   foo && foo.bar && foo.bar.baz.buzz()
+    26 26 │   foo·&&·foo.bar·&&·foo.bar.baz·&&·foo.bar.baz.buzz()
+    27 27 │   foo·&&·foo.bar·&&·foo.bar.baz·&&·foo.bar.baz.buzz·&&·foo.bar.baz.buzz()
+    28    │ - foo.bar·&&·foo.bar.baz·&&·foo.bar.baz.buzz·&&·foo.bar.baz.buzz()
+       28 │ + foo.bar?.baz?.buzz?.()
+    29 29 │   
+    30 30 │   //·case·with·a·jump·(i.e.·a·non-nullish·prop)
   
 
 ```
@@ -447,22 +426,20 @@ logicalAndCases1.js:31:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:31:1
-     │
-  31 │ foo && foo.bar && foo.bar.baz.buzz()
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    30 │ // case with a jump (i.e. a non-nullish prop)
+  > 31 │ foo && foo.bar && foo.bar.baz.buzz()
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    32 │ foo.bar && foo.bar.baz.buzz()
+    33 │ 
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -28,7 +28,7 @@
-  27 27 |   foo.bar && foo.bar.baz && foo.bar.baz.buzz && foo.bar.baz.buzz()
-  28 28 |   
-  29 29 |   // case with a jump (i.e. a non-nullish prop)
-  30    | - foo && foo.bar && foo.bar.baz.buzz()
-     30 | + foo?.bar?.baz.buzz()
-  31 31 |   foo.bar && foo.bar.baz.buzz()
-  32 32 |   
-  33 33 |   // case with a jump (i.e. a non-nullish prop)
+    29 29 │   
+    30 30 │   //·case·with·a·jump·(i.e.·a·non-nullish·prop)
+    31    │ - foo·&&·foo.bar·&&·foo.bar.baz.buzz()
+       31 │ + foo?.bar?.baz.buzz()
+    32 32 │   foo.bar·&&·foo.bar.baz.buzz()
+    33 33 │   
   
 
 ```
@@ -472,22 +449,21 @@ logicalAndCases1.js:32:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:32:1
-     │
-  32 │ foo.bar && foo.bar.baz.buzz()
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    30 │ // case with a jump (i.e. a non-nullish prop)
+    31 │ foo && foo.bar && foo.bar.baz.buzz()
+  > 32 │ foo.bar && foo.bar.baz.buzz()
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    33 │ 
+    34 │ // case with a jump (i.e. a non-nullish prop)
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -29,7 +29,7 @@
-  28 28 |   
-  29 29 |   // case with a jump (i.e. a non-nullish prop)
-  30 30 |   foo && foo.bar && foo.bar.baz.buzz()
-  31    | - foo.bar && foo.bar.baz.buzz()
-     31 | + foo.bar?.baz.buzz()
-  32 32 |   
-  33 33 |   // case with a jump (i.e. a non-nullish prop)
-  34 34 |   foo && foo.bar && foo.bar.baz.buzz && foo.bar.baz.buzz()
+    30 30 │   //·case·with·a·jump·(i.e.·a·non-nullish·prop)
+    31 31 │   foo·&&·foo.bar·&&·foo.bar.baz.buzz()
+    32    │ - foo.bar·&&·foo.bar.baz.buzz()
+       32 │ + foo.bar?.baz.buzz()
+    33 33 │   
+    34 34 │   //·case·with·a·jump·(i.e.·a·non-nullish·prop)
   
 
 ```
@@ -497,22 +473,20 @@ logicalAndCases1.js:35:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:35:1
-     │
-  35 │ foo && foo.bar && foo.bar.baz.buzz && foo.bar.baz.buzz()
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    34 │ // case with a jump (i.e. a non-nullish prop)
+  > 35 │ foo && foo.bar && foo.bar.baz.buzz && foo.bar.baz.buzz()
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    36 │ 
+    37 │ // case with a call expr inside the chain for some inefficient reason
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -32,7 +32,7 @@
-  31 31 |   foo.bar && foo.bar.baz.buzz()
-  32 32 |   
-  33 33 |   // case with a jump (i.e. a non-nullish prop)
-  34    | - foo && foo.bar && foo.bar.baz.buzz && foo.bar.baz.buzz()
-     34 | + foo?.bar?.baz.buzz?.()
-  35 35 |   
-  36 36 |   // case with a call expr inside the chain for some inefficient reason
-  37 37 |   foo && foo.bar() && foo.bar().baz && foo.bar().baz.buzz && foo.bar().baz.buzz()
+    33 33 │   
+    34 34 │   //·case·with·a·jump·(i.e.·a·non-nullish·prop)
+    35    │ - foo·&&·foo.bar·&&·foo.bar.baz.buzz·&&·foo.bar.baz.buzz()
+       35 │ + foo?.bar?.baz.buzz?.()
+    36 36 │   
+    37 37 │   //·case·with·a·call·expr·inside·the·chain·for·some·inefficient·reason
   
 
 ```
@@ -522,22 +496,20 @@ logicalAndCases1.js:38:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:38:1
-     │
-  38 │ foo && foo.bar() && foo.bar().baz && foo.bar().baz.buzz && foo.bar().baz.buzz()
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    37 │ // case with a call expr inside the chain for some inefficient reason
+  > 38 │ foo && foo.bar() && foo.bar().baz && foo.bar().baz.buzz && foo.bar().baz.buzz()
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    39 │ 
+    40 │ // chained calls with element access
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -35,7 +35,7 @@
-  34 34 |   foo && foo.bar && foo.bar.baz.buzz && foo.bar.baz.buzz()
-  35 35 |   
-  36 36 |   // case with a call expr inside the chain for some inefficient reason
-  37    | - foo && foo.bar() && foo.bar().baz && foo.bar().baz.buzz && foo.bar().baz.buzz()
-     37 | + foo?.bar()?.baz?.buzz?.()
-  38 38 |   
-  39 39 |   // chained calls with element access
-  40 40 |   foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz]()
+    36 36 │   
+    37 37 │   //·case·with·a·call·expr·inside·the·chain·for·some·inefficient·reason
+    38    │ - foo·&&·foo.bar()·&&·foo.bar().baz·&&·foo.bar().baz.buzz·&&·foo.bar().baz.buzz()
+       38 │ + foo?.bar()?.baz?.buzz?.()
+    39 39 │   
+    40 40 │   //·chained·calls·with·element·access
   
 
 ```
@@ -547,22 +519,20 @@ logicalAndCases1.js:41:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:41:1
-     │
-  41 │ foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz]()
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    40 │ // chained calls with element access
+  > 41 │ foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz]()
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    42 │ foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz] && foo.bar.baz[buzz]()
+    43 │ 
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -38,7 +38,7 @@
-  37 37 |   foo && foo.bar() && foo.bar().baz && foo.bar().baz.buzz && foo.bar().baz.buzz()
-  38 38 |   
-  39 39 |   // chained calls with element access
-  40    | - foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz]()
-     40 | + foo?.bar?.baz?.[buzz]()
-  41 41 |   foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz] && foo.bar.baz[buzz]()
-  42 42 |   
-  43 43 |   // (partially) pre-optional chained
+    39 39 │   
+    40 40 │   //·chained·calls·with·element·access
+    41    │ - foo·&&·foo.bar·&&·foo.bar.baz·&&·foo.bar.baz[buzz]()
+       41 │ + foo?.bar?.baz?.[buzz]()
+    42 42 │   foo·&&·foo.bar·&&·foo.bar.baz·&&·foo.bar.baz[buzz]·&&·foo.bar.baz[buzz]()
+    43 43 │   
   
 
 ```
@@ -572,22 +542,21 @@ logicalAndCases1.js:42:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:42:1
-     │
-  42 │ foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz] && foo.bar.baz[buzz]()
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    40 │ // chained calls with element access
+    41 │ foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz]()
+  > 42 │ foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz] && foo.bar.baz[buzz]()
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    43 │ 
+    44 │ // (partially) pre-optional chained
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -39,7 +39,7 @@
-  38 38 |   
-  39 39 |   // chained calls with element access
-  40 40 |   foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz]()
-  41    | - foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz] && foo.bar.baz[buzz]()
-     41 | + foo?.bar?.baz?.[buzz]?.()
-  42 42 |   
-  43 43 |   // (partially) pre-optional chained
-  44 44 |   foo && foo?.bar && foo?.bar.baz && foo?.bar.baz[buzz] && foo?.bar.baz[buzz]()
+    40 40 │   //·chained·calls·with·element·access
+    41 41 │   foo·&&·foo.bar·&&·foo.bar.baz·&&·foo.bar.baz[buzz]()
+    42    │ - foo·&&·foo.bar·&&·foo.bar.baz·&&·foo.bar.baz[buzz]·&&·foo.bar.baz[buzz]()
+       42 │ + foo?.bar?.baz?.[buzz]?.()
+    43 43 │   
+    44 44 │   //·(partially)·pre-optional·chained
   
 
 ```
@@ -597,22 +566,20 @@ logicalAndCases1.js:45:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:45:1
-     │
-  45 │ foo && foo?.bar && foo?.bar.baz && foo?.bar.baz[buzz] && foo?.bar.baz[buzz]()
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    44 │ // (partially) pre-optional chained
+  > 45 │ foo && foo?.bar && foo?.bar.baz && foo?.bar.baz[buzz] && foo?.bar.baz[buzz]()
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    46 │ foo && foo?.bar.baz && foo?.bar.baz[buzz]
+    47 │ foo && foo?.() && foo?.().bar
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -42,7 +42,7 @@
-  41 41 |   foo && foo.bar && foo.bar.baz && foo.bar.baz[buzz] && foo.bar.baz[buzz]()
-  42 42 |   
-  43 43 |   // (partially) pre-optional chained
-  44    | - foo && foo?.bar && foo?.bar.baz && foo?.bar.baz[buzz] && foo?.bar.baz[buzz]()
-     44 | + foo?.bar?.baz?.[buzz]?.()
-  45 45 |   foo && foo?.bar.baz && foo?.bar.baz[buzz]
-  46 46 |   foo && foo?.() && foo?.().bar
-  47 47 |   foo.bar && foo.bar?.() && foo.bar?.().baz
+    43 43 │   
+    44 44 │   //·(partially)·pre-optional·chained
+    45    │ - foo·&&·foo?.bar·&&·foo?.bar.baz·&&·foo?.bar.baz[buzz]·&&·foo?.bar.baz[buzz]()
+       45 │ + foo?.bar?.baz?.[buzz]?.()
+    46 46 │   foo·&&·foo?.bar.baz·&&·foo?.bar.baz[buzz]
+    47 47 │   foo·&&·foo?.()·&&·foo?.().bar
   
 
 ```
@@ -622,23 +589,17 @@ logicalAndCases1.js:46:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:46:1
-     │
-  46 │ foo && foo?.bar.baz && foo?.bar.baz[buzz]
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    44 │ // (partially) pre-optional chained
+    45 │ foo && foo?.bar && foo?.bar.baz && foo?.bar.baz[buzz] && foo?.bar.baz[buzz]()
+  > 46 │ foo && foo?.bar.baz && foo?.bar.baz[buzz]
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    47 │ foo && foo?.() && foo?.().bar
+    48 │ foo.bar && foo.bar?.() && foo.bar?.().baz
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -43,7 +43,7 @@
-  42 42 |   
-  43 43 |   // (partially) pre-optional chained
-  44 44 |   foo && foo?.bar && foo?.bar.baz && foo?.bar.baz[buzz] && foo?.bar.baz[buzz]()
-  45    | - foo && foo?.bar.baz && foo?.bar.baz[buzz]
-     45 | + foo?.bar.baz?.[buzz]
-  46 46 |   foo && foo?.() && foo?.().bar
-  47 47 |   foo.bar && foo.bar?.() && foo.bar?.().baz
-  48 48 |   
-  
+    46 │ foo·&&·foo?.bar.baz·&&·foo?.bar.baz[buzz]
+       │    -------         -------  -------      
 
 ```
 
@@ -647,23 +608,17 @@ logicalAndCases1.js:47:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:47:1
-     │
-  47 │ foo && foo?.() && foo?.().bar
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    45 │ foo && foo?.bar && foo?.bar.baz && foo?.bar.baz[buzz] && foo?.bar.baz[buzz]()
+    46 │ foo && foo?.bar.baz && foo?.bar.baz[buzz]
+  > 47 │ foo && foo?.() && foo?.().bar
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    48 │ foo.bar && foo.bar?.() && foo.bar?.().baz
+    49 │ 
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -44,7 +44,7 @@
-  43 43 |   // (partially) pre-optional chained
-  44 44 |   foo && foo?.bar && foo?.bar.baz && foo?.bar.baz[buzz] && foo?.bar.baz[buzz]()
-  45 45 |   foo && foo?.bar.baz && foo?.bar.baz[buzz]
-  46    | - foo && foo?.() && foo?.().bar
-     46 | + foo?.()?.bar
-  47 47 |   foo.bar && foo.bar?.() && foo.bar?.().baz
-  48 48 |   
-  49 49 |   
-  
+    47 │ foo·&&·foo?.()·&&·foo?.().bar
+       │    -------    ------- ---    
 
 ```
 
@@ -672,23 +627,16 @@ logicalAndCases1.js:48:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:48:1
-     │
-  48 │ foo.bar && foo.bar?.() && foo.bar?.().baz
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    46 │ foo && foo?.bar.baz && foo?.bar.baz[buzz]
+    47 │ foo && foo?.() && foo?.().bar
+  > 48 │ foo.bar && foo.bar?.() && foo.bar?.().baz
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    49 │ 
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -45,7 +45,7 @@
-  44 44 |   foo && foo?.bar && foo?.bar.baz && foo?.bar.baz[buzz] && foo?.bar.baz[buzz]()
-  45 45 |   foo && foo?.bar.baz && foo?.bar.baz[buzz]
-  46 46 |   foo && foo?.() && foo?.().bar
-  47    | - foo.bar && foo.bar?.() && foo.bar?.().baz
-     47 | + foo.bar?.()?.baz
-  48 48 |   
-  49 49 |   
-  50 50 |   // it should ignore parts of the expression that aren't part of the expression chain
-  
+    48 │ foo.bar·&&·foo.bar?.()·&&·foo.bar?.().baz
+       │        -----------    ----------- ---    
 
 ```
 
@@ -697,22 +645,20 @@ logicalAndCases1.js:54:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:54:1
-     │
-  54 │ foo && foo.bar && bing
-     │ ^^^^^^^^^^^^^^
+    53 │ // chained members
+  > 54 │ foo && foo.bar && bing
+       │ ^^^^^^^^^^^^^^
+    55 │ foo.bar && foo.bar.baz && bing
+    56 │ foo && foo() && bing
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -51,7 +51,7 @@
-  50 50 |   // it should ignore parts of the expression that aren't part of the expression chain
-  51 51 |   
-  52 52 |   // chained members
-  53    | - foo && foo.bar && bing
-     53 | + foo?.bar && bing
-  54 54 |   foo.bar && foo.bar.baz && bing
-  55 55 |   foo && foo() && bing
-  56 56 |   foo.bar && foo.bar() && bing
+    52 52 │   
+    53 53 │   //·chained·members
+    54    │ - foo·&&·foo.bar·&&·bing
+       54 │ + foo?.bar·&&·bing
+    55 55 │   foo.bar·&&·foo.bar.baz·&&·bing
+    56 56 │   foo·&&·foo()·&&·bing
   
 
 ```
@@ -722,22 +668,21 @@ logicalAndCases1.js:55:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:55:1
-     │
-  55 │ foo.bar && foo.bar.baz && bing
-     │ ^^^^^^^^^^^^^^^^^^^^^^
+    53 │ // chained members
+    54 │ foo && foo.bar && bing
+  > 55 │ foo.bar && foo.bar.baz && bing
+       │ ^^^^^^^^^^^^^^^^^^^^^^
+    56 │ foo && foo() && bing
+    57 │ foo.bar && foo.bar() && bing
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -52,7 +52,7 @@
-  51 51 |   
-  52 52 |   // chained members
-  53 53 |   foo && foo.bar && bing
-  54    | - foo.bar && foo.bar.baz && bing
-     54 | + foo.bar?.baz && bing
-  55 55 |   foo && foo() && bing
-  56 56 |   foo.bar && foo.bar() && bing
-  57 57 |   foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing
+    53 53 │   //·chained·members
+    54 54 │   foo·&&·foo.bar·&&·bing
+    55    │ - foo.bar·&&·foo.bar.baz·&&·bing
+       55 │ + foo.bar?.baz·&&·bing
+    56 56 │   foo·&&·foo()·&&·bing
+    57 57 │   foo.bar·&&·foo.bar()·&&·bing
   
 
 ```
@@ -747,22 +692,21 @@ logicalAndCases1.js:56:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:56:1
-     │
-  56 │ foo && foo() && bing
-     │ ^^^^^^^^^^^^
+    54 │ foo && foo.bar && bing
+    55 │ foo.bar && foo.bar.baz && bing
+  > 56 │ foo && foo() && bing
+       │ ^^^^^^^^^^^^
+    57 │ foo.bar && foo.bar() && bing
+    58 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -53,7 +53,7 @@
-  52 52 |   // chained members
-  53 53 |   foo && foo.bar && bing
-  54 54 |   foo.bar && foo.bar.baz && bing
-  55    | - foo && foo() && bing
-     55 | + foo?.() && bing
-  56 56 |   foo.bar && foo.bar() && bing
-  57 57 |   foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing
-  58 58 |   foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing
+    54 54 │   foo·&&·foo.bar·&&·bing
+    55 55 │   foo.bar·&&·foo.bar.baz·&&·bing
+    56    │ - foo·&&·foo()·&&·bing
+       56 │ + foo?.()·&&·bing
+    57 57 │   foo.bar·&&·foo.bar()·&&·bing
+    58 58 │   foo·&&·foo.bar·&&·foo.bar.baz·&&·foo.bar.baz.buzz·&&·bing
   
 
 ```
@@ -772,21 +716,21 @@ logicalAndCases1.js:57:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:57:1
-     │
-  57 │ foo.bar && foo.bar() && bing
-     │ ^^^^^^^^^^^^^^^^^^^^
+    55 │ foo.bar && foo.bar.baz && bing
+    56 │ foo && foo() && bing
+  > 57 │ foo.bar && foo.bar() && bing
+       │ ^^^^^^^^^^^^^^^^^^^^
+    58 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing
+    59 │ foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -54,6 +54,6 @@
-  53 53 |   foo && foo.bar && bing
-  54 54 |   foo.bar && foo.bar.baz && bing
-  55 55 |   foo && foo() && bing
-  56    | - foo.bar && foo.bar() && bing
-     56 | + foo.bar?.() && bing
-  57 57 |   foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing
-  58 58 |   foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing
+    55 55 │   foo.bar·&&·foo.bar.baz·&&·bing
+    56 56 │   foo·&&·foo()·&&·bing
+    57    │ - foo.bar·&&·foo.bar()·&&·bing
+       57 │ + foo.bar?.()·&&·bing
+    58 58 │   foo·&&·foo.bar·&&·foo.bar.baz·&&·foo.bar.baz.buzz·&&·bing
+    59 59 │   foo.bar·&&·foo.bar.baz·&&·foo.bar.baz.buzz·&&·bing
   
 
 ```
@@ -796,20 +740,21 @@ logicalAndCases1.js:58:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:58:1
-     │
-  58 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    56 │ foo && foo() && bing
+    57 │ foo.bar && foo.bar() && bing
+  > 58 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    59 │ foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing
+    60 │ 
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -55,5 +55,5 @@
-  54 54 |   foo.bar && foo.bar.baz && bing
-  55 55 |   foo && foo() && bing
-  56 56 |   foo.bar && foo.bar() && bing
-  57    | - foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing
-     57 | + foo?.bar?.baz?.buzz && bing
-  58 58 |   foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing
+    56 56 │   foo·&&·foo()·&&·bing
+    57 57 │   foo.bar·&&·foo.bar()·&&·bing
+    58    │ - foo·&&·foo.bar·&&·foo.bar.baz·&&·foo.bar.baz.buzz·&&·bing
+       58 │ + foo?.bar?.baz?.buzz·&&·bing
+    59 59 │   foo.bar·&&·foo.bar.baz·&&·foo.bar.baz.buzz·&&·bing
+    60 60 │   
   
 
 ```
@@ -819,19 +764,19 @@ logicalAndCases1.js:59:1 lint/nursery/useOptionalChain  FIXABLE  ━━━━━
 
   ! Change to an optional chain.
   
-     ┌─ logicalAndCases1.js:59:1
-     │
-  59 │ foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing
-     │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    57 │ foo.bar && foo.bar() && bing
+    58 │ foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing
+  > 59 │ foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    60 │ 
   
   i Suggested fix: Change to an optional chain.
   
-        | @@ -56,4 +56,4 @@
-  55 55 |   foo && foo() && bing
-  56 56 |   foo.bar && foo.bar() && bing
-  57 57 |   foo && foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing
-  58    | - foo.bar && foo.bar.baz && foo.bar.baz.buzz && bing
-     58 | + foo.bar?.baz?.buzz && bing
+    57 57 │   foo.bar·&&·foo.bar()·&&·bing
+    58 58 │   foo·&&·foo.bar·&&·foo.bar.baz·&&·foo.bar.baz.buzz·&&·bing
+    59    │ - foo.bar·&&·foo.bar.baz·&&·foo.bar.baz.buzz·&&·bing
+       59 │ + foo.bar?.baz?.buzz·&&·bing
+    60 60 │   
   
 
 ```
