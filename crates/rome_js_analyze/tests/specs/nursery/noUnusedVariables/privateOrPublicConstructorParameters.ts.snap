@@ -19,10 +19,11 @@ privateOrPublicConstructorParameters.ts:2:17 lint/nursery/noUnusedVariables ━�
 
   ! This parameter is unused.
   
-    ┌─ privateOrPublicConstructorParameters.ts:2:17
-    │
-  2 │     constructor(a, private b, public c) {
-    │                 ^
+    1 │ class A {
+  > 2 │     constructor(a, private b, public c) {
+      │                 ^
+    3 │     }
+    4 │ }
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
