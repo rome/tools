@@ -937,8 +937,7 @@ fn fits_element_on_line<'a, 'rest>(
                 return invalid_start_tag(TagKind::Entry, slice.first());
             }
 
-            stack.push(TagKind::Entry, args.with_print_mode(args.mode()));
-            queue.extend_back(&slice[1..]);
+            queue.extend_back(slice);
         }
 
         FormatElement::Interned(content) => queue.extend_back(content),
