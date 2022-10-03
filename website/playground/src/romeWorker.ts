@@ -121,6 +121,7 @@ self.addEventListener("message", async (e) => {
 							useOptionalChain: "error",
 							noUselessFragments: "error",
 							noVoidElementsWithChildren: "error",
+							noDangerouslySetInnerHtmlWithChildren: "error",
 						},
 					},
 				};

@@ -42,7 +42,7 @@ declare_rule! {
 }
 
 declare_node_union! {
-    pub(crate) DangerouseProp = JsxAttribute | JsPropertyObjectMember
+    pub(crate) DangerousProp = JsxAttribute | JsPropertyObjectMember
 }
 /// The kind of children
 enum ChildrenKind {
@@ -50,7 +50,7 @@ enum ChildrenKind {
     /// ```jsx
     /// <Component children="child" />
     /// ```
-    Prop(DangerouseProp),
+    Prop(DangerousProp),
     /// As direct descendent, e.g.
     /// ```jsx
     /// <ComponentA><ComponentB /> </ComponentA>
@@ -69,7 +69,7 @@ impl ChildrenKind {
 
 pub(crate) struct RuleState {
     /// The `dangerouslySetInnerHTML` prop
-    dangerous_prop: DangerouseProp,
+    dangerous_prop: DangerousProp,
 
     /// The kind of `children` found
     children_kind: ChildrenKind,
@@ -101,7 +101,7 @@ impl JsAnyCreateElement {
             }
         }
     }
-    fn find_dangerous_prop(&self, model: &SemanticModel) -> Option<DangerouseProp> {
+    fn find_dangerous_prop(&self, model: &SemanticModel) -> Option<DangerousProp> {
         match self {
             JsAnyCreateElement::JsxElement(element) => {
                 let opening_element = element.opening_element().ok()?;
@@ -109,24 +109,24 @@ impl JsAnyCreateElement {
                 opening_element
                     .find_attribute_by_name("dangerouslySetInnerHTML")
                     .ok()?
-                    .map(DangerouseProp::from)
+                    .map(DangerousProp::from)
             }
             JsAnyCreateElement::JsxSelfClosingElement(element) => element
                 .find_attribute_by_name("dangerouslySetInnerHTML")
                 .ok()?
-                .map(DangerouseProp::from),
+                .map(DangerousProp::from),
             JsAnyCreateElement::JsCallExpression(call_expression) => {
                 let react_create_element =
                     ReactCreateElementCall::from_call_expression(call_expression, model)?;
 
                 react_create_element
                     .find_prop_by_name("dangerouslySetInnerHTML")
-                    .map(DangerouseProp::from)
+                    .map(DangerousProp::from)
             }
         }
     }
 
-    fn find_children_prop(&self, model: &SemanticModel) -> Option<DangerouseProp> {
+    fn find_children_prop(&self, model: &SemanticModel) -> Option<DangerousProp> {
         match self {
             JsAnyCreateElement::JsxElement(element) => {
                 let opening_element = element.opening_element().ok()?;
@@ -134,19 +134,19 @@ impl JsAnyCreateElement {
                 opening_element
                     .find_attribute_by_name("children")
                     .ok()?
-                    .map(DangerouseProp::from)
+                    .map(DangerousProp::from)
             }
             JsAnyCreateElement::JsxSelfClosingElement(element) => element
                 .find_attribute_by_name("children")
                 .ok()?
-                .map(DangerouseProp::from),
+                .map(DangerousProp::from),
             JsAnyCreateElement::JsCallExpression(call_expression) => {
                 let react_create_element =
                     ReactCreateElementCall::from_call_expression(call_expression, model)?;
 
                 react_create_element
                     .find_prop_by_name("children")
-                    .map(DangerouseProp::from)
+                    .map(DangerousProp::from)
             }
         }
     }
