@@ -18,11 +18,17 @@ declare_rule! {
     /// ### Invalid
     ///
     /// ```jsx,expect_diagnostic
-    /// <Component dangerouslySetInnerHTML={{ _html: "child2" }}>"child1"</Component>
+    /// function createMarkup() {
+    ///     return { __html: 'child' }
+    /// }
+    /// <Component dangerouslySetInnerHTML={createMarkup()}>"child1"</Component>
     /// ```
     ///
     /// ```jsx,expect_diagnostic
-    /// <Component dangerouslySetInnerHTML={{ _html: "child2" }} children="child1" />
+    /// function createMarkup() {
+    ///     return { __html: 'child' }
+    /// }
+    /// <Component dangerouslySetInnerHTML={createMarkup()} children="child1" />
     /// ```
     ///
     /// ```js,expect_diagnostic
