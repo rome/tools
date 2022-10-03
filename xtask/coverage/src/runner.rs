@@ -119,7 +119,7 @@ impl TestCaseFiles {
                 name,
                 code,
                 source_type,
-                id: 0,
+                id: FileId::zero(),
             }],
         }
     }
@@ -133,7 +133,7 @@ impl TestCaseFiles {
             name,
             code,
             source_type,
-            id: self.files.len(),
+            id: FileId::from(self.files.len()),
         })
     }
 

@@ -1,0 +1,28 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+expression: content
+---
+## `rome.json`
+
+```json
+{
+  "formatter": {
+    "enabled": false
+  }
+}
+
+```
+
+## `file.js`
+
+```js
+
+function f() {
+return { something }
+}
+
+```
+
+# Emitted Messages
+
+

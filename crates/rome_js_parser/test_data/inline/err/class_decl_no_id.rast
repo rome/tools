@@ -70,19 +70,25 @@ JsModule {
       8: R_CURLY@29..30 "}" [] []
   3: EOF@30..31 "" [Newline("\n")] []
 --
-error[SyntaxError]: class declarations must have a name
-  ┌─ class_decl_no_id.ts:1:1
-  │
-1 │ class {}
-  │ ^^^^^^
+class_decl_no_id.ts:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × class declarations must have a name
+  
+  > 1 │ class {}
+      │ ^^^^^^
+    2 │ class implements B {}
+    3 │ 
+  
 --
-error[SyntaxError]: class declarations must have a name
-  ┌─ class_decl_no_id.ts:2:1
-  │
-2 │ class implements B {}
-  │ ^^^^^^
+class_decl_no_id.ts:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × class declarations must have a name
+  
+    1 │ class {}
+  > 2 │ class implements B {}
+      │ ^^^^^^
+    3 │ 
+  
 --
 class {}
 class implements B {}

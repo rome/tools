@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\decorator-comments\\comments.js"
 ---
 
 # Input
@@ -41,12 +43,19 @@ class Something {
 
 # Errors
 ```
-error[SyntaxError]: return types can only be used in TypeScript files
-  ┌─ comments.js:4:20
-  │
-4 │     static property: Array<string>;
-  │                    ^^^^^^^^^^^^^^^ remove this type annotation
+comments.js:4:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × return types can only be used in TypeScript files
+  
+  × remove this type annotation
+  
+    2 │     @Annotateme()
+    3 │     // comment
+  > 4 │     static property: Array<string>;
+      │                    ^^^^^^^^^^^^^^^
+    5 │ }
+    6 │ 
+  
 
 ```
 

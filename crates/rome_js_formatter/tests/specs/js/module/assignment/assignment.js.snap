@@ -154,7 +154,7 @@ a =
 a =
     {
 // rome-ignore format: test
-        a: { t: c = b }, loreum, ipsurm
+        a: { t: c = b       }, loreum, ipsurm
     } = {}
 
 
@@ -165,6 +165,7 @@ a =
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 a = b;
 a += b;
@@ -184,7 +185,7 @@ a ??= b;
 a **= b;
 a.b = c.#d;
 a[b] = c[d];
-(a) = b;
+a = b;
 [a, b = "b", ...c] = d;
 [
 	fooooooooooooooooooooooooooooooooooooooooooooooooo,
@@ -192,15 +193,13 @@ a[b] = c[d];
 	bazzzzzzzzzzzzzzzzzzzzzzzzzz,
 ] = d;
 ({ a, b = c, d: e, f: g = h, ...j } = x);
-(
-	{
-		aaaaaaaaaa,
-		bbbbbbbbbb = cccccccccc,
-		dddddddddd: eeeeeeeeee,
-		ffffffffff: gggggggggg = hhhhhhhhhh,
-		...jjjjjjjjjj
-	} = x
-);
+({
+	aaaaaaaaaa,
+	bbbbbbbbbb = cccccccccc,
+	dddddddddd: eeeeeeeeee,
+	ffffffffff: gggggggggg = hhhhhhhhhh,
+	...jjjjjjjjjj
+} = x);
 
 (s || (s = Object.create(null)))[i] = !0;
 (s || (s = Object.create(null))).test = !0;
@@ -241,22 +240,32 @@ logical_expression_1 =
 logical_expression_2 =
 	longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337;
 binary_expression_1 =
-	13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132;
+	13321321312312321311332132131231232131232132132132232132132132 +
+	1332132131231232131232132132132;
 binary_expression_2 =
-	1332132131231232131232132132132 + 13321321312312321312321321321321332132131231232131232132132132;
+	1332132131231232131232132132132 +
+	13321321312312321312321321321321332132131231232131232132132132;
 instanceof_expression =
 	"321321312312ddddddddddddddddddddddd312312312312" instanceof Object;
 in_expression =
 	{ long_key: "123123213123213123edwqdqwdasdasdsaewqewqewqdas" } in "long_key";
-sequence_expression = (
-	33333333333333331, "dsadsadasdsadas", 3, "dsadsadasdsadasdsadsadasdsadas", 5
-);
+sequence_expression =
+	(33333333333333331,
+	"dsadsadasdsadas",
+	3,
+	"dsadsadasdsadasdsadsadasdsadas",
+	5);
 conditional_expression_1 =
 	this.state.longLongLongLongLongLongLongLongLongTooLongProp === true ? {} : {};
 conditional_expression_2 =
-	longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {};
+	longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337
+		? {}
+		: {};
 conditional_expression_3 =
-	13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {};
+	13321321312312321311332132131231232131232132132132232132132132 +
+	1332132131231232131232132132132
+		? {}
+		: {};
 conditional_expression_4 =
 	"321321312312ddddddddddddddddddddddd312312312312" instanceof Object ? {} : {};
 conditional_expression_5 =
@@ -264,17 +273,22 @@ conditional_expression_5 =
 a =
 	this.state.longLongLongLongLongLongLongLongLongTooLongProp === true ? {} : {};
 b =
-	longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {};
+	longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337
+		? {}
+		: {};
 c =
-	13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {};
+	13321321312312321311332132131231232131232132132132232132132132 +
+	1332132131231232131232132132132
+		? {}
+		: {};
 d =
 	"321321312312ddddddddddddddddddddddd312312312312" instanceof Object ? {} : {};
 g =
 	{ long_key: "123123213123213123edwqdqwdasdasdsaewqewqewqdas" } in "long_key";
 blablah =
 	"aldkfkladfskladklsfkladklfkaldfadfkdaf" +
-		"adlfasdklfkldsklfakldsfkladsfkadsfladsfa" +
-		"dflkadfkladsfklkadlfkladlfkadklfjadlfdfdaf";
+	"adlfasdklfkldsklfakldsfkladsfkadsfladsfa" +
+	"dflkadfkladsfklkadlfkladlfkadklfjadlfdfdaf";
 fn =
 	// something
 	fn();
@@ -330,12 +344,12 @@ dsakdljaskldjaslk = [
 		created: "09/01/2017 17:25",
 	},
 ];
-render = withGraphQLQuery("node(1234567890){image{uri}}", function (
-	container,
-	data,
-) {
-	return "image";
-});
+render = withGraphQLQuery(
+	"node(1234567890){image{uri}}",
+	function (container, data) {
+		return "image";
+	},
+);
 
 loadNext = (stateIsOK && hasNext) || {
 	skipNext: true,
@@ -355,7 +369,8 @@ loreum = ipsum = arrayOfNumb = a = "test";
 lorem =
 	fff =
 	ee =
-		() => (fff) => () => (fefef) => () => fff;
+		() => (fff) => () => (fefef) => () =>
+			fff;
 
 // complex destructuring, break left hand
 a = {
@@ -366,13 +381,13 @@ a = {
 
 a =
 	// rome-ignore format: test
-{
+	{
     a: { t: c = b }, loreum, ipsurm
 } = {};
 
 a = {
 	// rome-ignore format: test
-        a: { t: c = b },
+	a: { t: c = b       },
 	loreum,
 	ipsurm,
 } = {};
@@ -380,22 +395,16 @@ a = {
 
 ## Lines exceeding width of 80 characters
 
-   41: this_is_a_very_long_key_and_the_assignment_should_be_put_on_the_next_line_this_is_a_very_long_key_and_the_assignment_should_be_put_on_the_next_line_1 = require();
-   42: class_member_with_looooooooooooooooongggggggg_nameeeeeeeeee = class MyLooooonnnngggClassNamee {
-   47: this_is_a_very_long_key_and_the_assignment_should_be_put_on_the_next_line_this_is_a_very_long_key_and_the_assignment_should_be_put_on_the_next_line_boolean_true = true;
-   48: this_is_a_very_long_key_and_the_assignment_should_be_put_on_the_next_line_this_is_a_very_long_key_and_the_assignment_should_be_put_on_the_next_line_boolean_false = false;
-   49: number = 1232132132131231232132112321321321312312321321123213213213123123213211232132132131231232132112321321321312312321321;
-   50: number_with_dot = 12321321321312312321321123213213213123123213211232132132131231232132112321321321312312321321.12321321321312312321321;
-   58: 	"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
-   60: 	"http://example.com/12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
+   39: this_is_a_very_long_key_and_the_assignment_should_be_put_on_the_next_line_this_is_a_very_long_key_and_the_assignment_should_be_put_on_the_next_line_1 = require();
+   40: class_member_with_looooooooooooooooongggggggg_nameeeeeeeeee = class MyLooooonnnngggClassNamee {
+   45: this_is_a_very_long_key_and_the_assignment_should_be_put_on_the_next_line_this_is_a_very_long_key_and_the_assignment_should_be_put_on_the_next_line_boolean_true = true;
+   46: this_is_a_very_long_key_and_the_assignment_should_be_put_on_the_next_line_this_is_a_very_long_key_and_the_assignment_should_be_put_on_the_next_line_boolean_false = false;
+   47: number = 1232132132131231232132112321321321312312321321123213213213123123213211232132132131231232132112321321321312312321321;
+   48: number_with_dot = 12321321321312312321321123213213213123123213211232132132131231232132112321321321312312321321.12321321321312312321321;
+   56: 	"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
+   58: 	"http://example.com/12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
+   60: 	"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
    62: 	"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
    64: 	"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
    66: 	"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
-   68: 	"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
-   76: 	13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132;
-   78: 	1332132131231232131232132132132 + 13321321312312321312321321321321332132131231232131232132132132;
-   89: 	longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {};
-   91: 	13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {};
-   99: 	longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {};
-  101: 	13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {};
 

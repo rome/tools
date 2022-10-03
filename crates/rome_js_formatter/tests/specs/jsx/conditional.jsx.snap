@@ -1,0 +1,118 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+expression: conditional.jsx
+---
+# Input
+(bifornCringerMoshedPerplexSawder ? (
+	askTrovenaBeenaDependsRowans
+) : (
+	glimseGlyphsHazardNoopsTieTie
+)) ? null : (
+	<Element2>
+		<Sub />
+		<Sub />
+		<Sub />
+	</Element2>
+);
+
+
+(bifornCringerMoshedPerplexSawder ? (
+	askTrovenaBeenaDependsRowans
+) : (
+	glimseGlyphsHazardNoopsTieTie
+)) ? undefined : (
+	<Element2>
+		<Sub />
+		<Sub />
+		<Sub />
+	</Element2>
+);
+
+(bifornCringerMoshedPerplexSawder ? (
+	askTrovenaBeenaDependsRowans
+) : (
+	glimseGlyphsHazardNoopsTieTie
+)) ? x : (
+	<Element2>
+		<Sub />
+		<Sub />
+		<Sub />
+	</Element2>
+);
+
+
+(bifornCringerMoshedPerplexSawder ? (
+	askTrovenaBeenaDependsRowans
+) : (
+	glimseGlyphsHazardNoopsTieTie
+)) ? a ? b : (
+	<Element2>
+		<Sub />
+		<Sub />
+		<Sub />
+	</Element2>
+) : null;
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+-----
+(
+	bifornCringerMoshedPerplexSawder
+		? askTrovenaBeenaDependsRowans
+		: glimseGlyphsHazardNoopsTieTie
+) ? null : (
+	<Element2>
+		<Sub />
+		<Sub />
+		<Sub />
+	</Element2>
+);
+
+(
+	bifornCringerMoshedPerplexSawder
+		? askTrovenaBeenaDependsRowans
+		: glimseGlyphsHazardNoopsTieTie
+) ? undefined : (
+	<Element2>
+		<Sub />
+		<Sub />
+		<Sub />
+	</Element2>
+);
+
+(
+	bifornCringerMoshedPerplexSawder
+		? askTrovenaBeenaDependsRowans
+		: glimseGlyphsHazardNoopsTieTie
+) ? (
+	x
+) : (
+	<Element2>
+		<Sub />
+		<Sub />
+		<Sub />
+	</Element2>
+);
+
+(
+	bifornCringerMoshedPerplexSawder
+		? askTrovenaBeenaDependsRowans
+		: glimseGlyphsHazardNoopsTieTie
+) ? (
+	a ? (
+		b
+	) : (
+		<Element2>
+			<Sub />
+			<Sub />
+			<Sub />
+		</Element2>
+	)
+) : null;
+

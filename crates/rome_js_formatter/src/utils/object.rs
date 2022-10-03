@@ -39,9 +39,16 @@ pub(crate) fn write_member_name(
 
             if value.kind() == JS_STRING_LITERAL {
                 let format = FormatLiteralStringToken::new(&value, StringLiteralParentKind::Member);
-                let cleaned = format.clean_text(f.context());
+                let cleaned = format.clean_text(f.options());
 
-                write!(f, [cleaned])?;
+                write!(
+                    f,
+                    [
+                        format_leading_comments(name.syntax()),
+                        cleaned,
+                        format_trailing_comments(name.syntax())
+                    ]
+                )?;
 
                 Ok(cleaned.width())
             } else {

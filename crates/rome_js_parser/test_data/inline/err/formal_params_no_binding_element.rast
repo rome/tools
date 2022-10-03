@@ -58,11 +58,15 @@ JsModule {
         3: R_CURLY@20..21 "}" [] []
   3: EOF@21..22 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected a parameter but instead found 'true'
-  ┌─ formal_params_no_binding_element.js:1:14
-  │
-1 │ function foo(true) {}
-  │              ^^^^ Expected a parameter here
+formal_params_no_binding_element.js:1:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a parameter but instead found 'true'
+  
+  × Expected a parameter here
+  
+  > 1 │ function foo(true) {}
+      │              ^^^^
+    2 │ 
+  
 --
 function foo(true) {}

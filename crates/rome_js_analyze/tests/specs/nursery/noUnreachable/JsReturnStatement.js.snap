@@ -1,0 +1,70 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: JsReturnStatement.js
+---
+# Input
+```js
+function JsReturnStatement1() {
+    return;
+    afterReturn();
+}
+
+function JsReturnStatement2() {
+    return;
+    return; // afterReturn
+}
+
+```
+
+# Diagnostics
+```
+JsReturnStatement.js:3:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+    1 │ function JsReturnStatement1() {
+    2 │     return;
+  > 3 │     afterReturn();
+      │     ^^^^^^^^^^^^^^
+    4 │ }
+    5 │ 
+  
+  i This statement will return from the function ...
+  
+    1 │ function JsReturnStatement1() {
+  > 2 │     return;
+      │     ^^^^^^^
+    3 │     afterReturn();
+    4 │ }
+  
+
+```
+
+```
+JsReturnStatement.js:8:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+     6 │ function JsReturnStatement2() {
+     7 │     return;
+   > 8 │     return; // afterReturn
+       │     ^^^^^^^
+     9 │ }
+    10 │ 
+  
+  i This statement will return from the function ...
+  
+    6 │ function JsReturnStatement2() {
+  > 7 │     return;
+      │     ^^^^^^^
+    8 │     return; // afterReturn
+    9 │ }
+  
+
+```
+
+

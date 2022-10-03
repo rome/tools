@@ -240,59 +240,92 @@ JsModule {
       1: (empty)
   3: EOF@105..106 "" [Newline("\n")] []
 --
-error[SyntaxError]: Illegal use of `eval` as an identifier in strict mode
-  ┌─ assign_eval_or_arguments.js:1:1
-  │
-1 │ eval = 0
-  │ ^^^^
+assign_eval_or_arguments.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of `eval` as an identifier in strict mode
+  
+  > 1 │ eval = 0
+      │ ^^^^
+    2 │ eval ??= 2
+    3 │ eval *= 4
+  
 --
-error[SyntaxError]: Illegal use of `eval` as an identifier in strict mode
-  ┌─ assign_eval_or_arguments.js:2:1
-  │
-2 │ eval ??= 2
-  │ ^^^^
+assign_eval_or_arguments.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of `eval` as an identifier in strict mode
+  
+    1 │ eval = 0
+  > 2 │ eval ??= 2
+      │ ^^^^
+    3 │ eval *= 4
+    4 │ arguments = "foo"
+  
 --
-error[SyntaxError]: Illegal use of `eval` as an identifier in strict mode
-  ┌─ assign_eval_or_arguments.js:3:1
-  │
-3 │ eval *= 4
-  │ ^^^^
+assign_eval_or_arguments.js:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of `eval` as an identifier in strict mode
+  
+    1 │ eval = 0
+    2 │ eval ??= 2
+  > 3 │ eval *= 4
+      │ ^^^^
+    4 │ arguments = "foo"
+    5 │ arguments ||= "baz"
+  
 --
-error[SyntaxError]: Illegal use of `arguments` as an identifier in strict mode
-  ┌─ assign_eval_or_arguments.js:4:1
-  │
-4 │ arguments = "foo"
-  │ ^^^^^^^^^
+assign_eval_or_arguments.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of `arguments` as an identifier in strict mode
+  
+    2 │ eval ??= 2
+    3 │ eval *= 4
+  > 4 │ arguments = "foo"
+      │ ^^^^^^^^^
+    5 │ arguments ||= "baz"
+    6 │ ({ eval } = o)
+  
 --
-error[SyntaxError]: Illegal use of `arguments` as an identifier in strict mode
-  ┌─ assign_eval_or_arguments.js:5:1
-  │
-5 │ arguments ||= "baz"
-  │ ^^^^^^^^^
+assign_eval_or_arguments.js:5:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of `arguments` as an identifier in strict mode
+  
+    3 │ eval *= 4
+    4 │ arguments = "foo"
+  > 5 │ arguments ||= "baz"
+      │ ^^^^^^^^^
+    6 │ ({ eval } = o)
+    7 │ ({ foo: { eval }}) = o
+  
 --
-error[SyntaxError]: Illegal use of `eval` as an identifier in strict mode
-  ┌─ assign_eval_or_arguments.js:6:4
-  │
-6 │ ({ eval } = o)
-  │    ^^^^
+assign_eval_or_arguments.js:6:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of `eval` as an identifier in strict mode
+  
+    4 │ arguments = "foo"
+    5 │ arguments ||= "baz"
+  > 6 │ ({ eval } = o)
+      │    ^^^^
+    7 │ ({ foo: { eval }}) = o
+    8 │ 
+  
 --
-error[SyntaxError]: Invalid assignment to `"baz"
-({ eval } = o)
-({ foo: { eval }})`
-  ┌─ assign_eval_or_arguments.js:5:15
-  │  
-5 │   arguments ||= "baz"
-  │ ┌───────────────^
-6 │ │ ({ eval } = o)
-7 │ │ ({ foo: { eval }}) = o
-  │ └──────────────────^ This expression cannot be assigned to
+assign_eval_or_arguments.js:5:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Invalid assignment to `"baz"
+    ({ eval } = o)
+    ({ foo: { eval }})`
+  
+  × This expression cannot be assigned to
+  
+    3 │ eval *= 4
+    4 │ arguments = "foo"
+  > 5 │ arguments ||= "baz"
+      │               ^^^^^
+  > 6 │ ({ eval } = o)
+  > 7 │ ({ foo: { eval }}) = o
+      │ ^^^^^^^^^^^^^^^^^^
+    8 │ 
+  
 --
 eval = 0
 eval ??= 2

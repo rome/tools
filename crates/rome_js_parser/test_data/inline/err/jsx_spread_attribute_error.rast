@@ -259,33 +259,58 @@ JsModule {
       1: SEMICOLON@168..169 ";" [] []
   3: EOF@169..170 "" [Newline("\n")] []
 --
-error[SyntaxError]: Comma operator isn't a valid value for a JSX spread argument.
-  ┌─ jsx_spread_attribute_error.jsx:2:8
-  │
-2 │ <a {...obj, other} />;
-  │        ^^^^^^^^^^
+jsx_spread_attribute_error.jsx:2:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Comma operator isn't a valid value for a JSX spread argument.
+  
+    1 │ let obj = {};
+  > 2 │ <a {...obj, other} />;
+      │        ^^^^^^^^^^
+    3 │ <a ...obj} />;
+    4 │ <a {obj} />;
+  
 --
-error[SyntaxError]: expected `{` but instead found `...`
-  ┌─ jsx_spread_attribute_error.jsx:3:4
-  │
-3 │ <a ...obj} />;
-  │    ^^^ unexpected
+jsx_spread_attribute_error.jsx:3:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `{` but instead found `...`
+  
+  × unexpected
+  
+    1 │ let obj = {};
+    2 │ <a {...obj, other} />;
+  > 3 │ <a ...obj} />;
+      │    ^^^
+    4 │ <a {obj} />;
+    5 │ <div
+  
 --
-error[SyntaxError]: expected `...` but instead found `obj`
-  ┌─ jsx_spread_attribute_error.jsx:4:5
-  │
-4 │ <a {obj} />;
-  │     ^^^ unexpected
+jsx_spread_attribute_error.jsx:4:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `...` but instead found `obj`
+  
+  × unexpected
+  
+    2 │ <a {...obj, other} />;
+    3 │ <a ...obj} />;
+  > 4 │ <a {obj} />;
+      │     ^^^
+    5 │ <div
+    6 │       {...{} /*
+  
 --
-error[SyntaxError]: expected `}` but instead found `invalidProp`
-  ┌─ jsx_spread_attribute_error.jsx:8:7
-  │
-8 │       invalidProp="HelloWorld"
-  │       ^^^^^^^^^^^ unexpected
+jsx_spread_attribute_error.jsx:8:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `}` but instead found `invalidProp`
+  
+  × unexpected
+  
+     6 │       {...{} /*
+     7 │       // @ts-ignore */ /* prettier-ignore */
+   > 8 │       invalidProp="HelloWorld"
+       │       ^^^^^^^^^^^
+     9 │     />;
+    10 │ 
+  
 --
 let obj = {};
 <a {...obj, other} />;

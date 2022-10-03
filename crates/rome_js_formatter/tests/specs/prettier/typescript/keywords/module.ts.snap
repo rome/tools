@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "typescript\\keywords\\module.ts"
 ---
 
 # Input
@@ -85,102 +87,210 @@ module Y3 {
 
 # Errors
 ```
-error[SyntaxError]: Illegal use of reserved keyword `public` as an identifier in strict mode
-  ┌─ module.ts:2:3
-  │
-2 │   public module Module {
-  │   ^^^^^^
+module.ts:2:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ module.ts:2:10
-  │
-2 │   public module Module {
-  │   -------^^^^^^
-  │   │      │
-  │   │      An explicit or implicit semicolon is expected here...
-  │   ...Which is required to end this statement
+  × Illegal use of reserved keyword `public` as an identifier in strict mode
+  
+    1 │ module Y3 {
+  > 2 │   public module Module {
+      │   ^^^^^^
+    3 │       class A { s: string }
+    4 │   }
+  
+module.ts:2:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a class, a function, or a variable declaration but instead found 'private'
-  ┌─ module.ts:7:10
-  │
-7 │   export private public protected static readonly abstract async enum X { }
-  │          ^^^^^^^ Expected a class, a function, or a variable declaration here
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    1 │ module Y3 {
+  > 2 │   public module Module {
+      │          ^^^^^^
+    3 │       class A { s: string }
+    4 │   }
+  
+  i ...Which is required to end this statement
+  
+    1 │ module Y3 {
+  > 2 │   public module Module {
+      │   ^^^^^^^^^^^^^
+    3 │       class A { s: string }
+    4 │   }
+  
+module.ts:7:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ module.ts:7:18
-  │
-7 │   export private public protected static readonly abstract async enum X { }
-  │          --------^^^^^^
-  │          │       │
-  │          │       An explicit or implicit semicolon is expected here...
-  │          ...Which is required to end this statement
+  × expected a class, a function, or a variable declaration but instead found 'private'
+  
+  × Expected a class, a function, or a variable declaration here
+  
+    6 │   // Apparently this parses :P
+  > 7 │   export private public protected static readonly abstract async enum X { }
+      │          ^^^^^^^
+    8 │ 
+    9 │   interface x {
+  
+module.ts:7:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ module.ts:7:25
-  │
-7 │   export private public protected static readonly abstract async enum X { }
-  │                  -------^^^^^^^^^
-  │                  │      │
-  │                  │      An explicit or implicit semicolon is expected here...
-  │                  ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    6 │   // Apparently this parses :P
+  > 7 │   export private public protected static readonly abstract async enum X { }
+      │                  ^^^^^^
+    8 │ 
+    9 │   interface x {
+  
+  i ...Which is required to end this statement
+  
+    6 │   // Apparently this parses :P
+  > 7 │   export private public protected static readonly abstract async enum X { }
+      │          ^^^^^^^^^^^^^^
+    8 │ 
+    9 │   interface x {
+  
+module.ts:7:25 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ module.ts:7:35
-  │
-7 │   export private public protected static readonly abstract async enum X { }
-  │                         ----------^^^^^^
-  │                         │         │
-  │                         │         An explicit or implicit semicolon is expected here...
-  │                         ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    6 │   // Apparently this parses :P
+  > 7 │   export private public protected static readonly abstract async enum X { }
+      │                         ^^^^^^^^^
+    8 │ 
+    9 │   interface x {
+  
+  i ...Which is required to end this statement
+  
+    6 │   // Apparently this parses :P
+  > 7 │   export private public protected static readonly abstract async enum X { }
+      │                  ^^^^^^^^^^^^^^^^
+    8 │ 
+    9 │   interface x {
+  
+module.ts:7:35 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ module.ts:7:42
-  │
-7 │   export private public protected static readonly abstract async enum X { }
-  │                                   -------^^^^^^^^
-  │                                   │      │
-  │                                   │      An explicit or implicit semicolon is expected here...
-  │                                   ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    6 │   // Apparently this parses :P
+  > 7 │   export private public protected static readonly abstract async enum X { }
+      │                                   ^^^^^^
+    8 │ 
+    9 │   interface x {
+  
+  i ...Which is required to end this statement
+  
+    6 │   // Apparently this parses :P
+  > 7 │   export private public protected static readonly abstract async enum X { }
+      │                         ^^^^^^^^^^^^^^^^
+    8 │ 
+    9 │   interface x {
+  
+module.ts:7:42 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ module.ts:7:51
-  │
-7 │   export private public protected static readonly abstract async enum X { }
-  │                                          ---------^^^^^^^^
-  │                                          │        │
-  │                                          │        An explicit or implicit semicolon is expected here...
-  │                                          ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    6 │   // Apparently this parses :P
+  > 7 │   export private public protected static readonly abstract async enum X { }
+      │                                          ^^^^^^^^
+    8 │ 
+    9 │   interface x {
+  
+  i ...Which is required to end this statement
+  
+    6 │   // Apparently this parses :P
+  > 7 │   export private public protected static readonly abstract async enum X { }
+      │                                   ^^^^^^^^^^^^^^^
+    8 │ 
+    9 │   interface x {
+  
+module.ts:7:51 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ module.ts:7:60
-  │
-7 │   export private public protected static readonly abstract async enum X { }
-  │                                                   ---------^^^^^
-  │                                                   │        │
-  │                                                   │        An explicit or implicit semicolon is expected here...
-  │                                                   ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    6 │   // Apparently this parses :P
+  > 7 │   export private public protected static readonly abstract async enum X { }
+      │                                                   ^^^^^^^^
+    8 │ 
+    9 │   interface x {
+  
+  i ...Which is required to end this statement
+  
+    6 │   // Apparently this parses :P
+  > 7 │   export private public protected static readonly abstract async enum X { }
+      │                                          ^^^^^^^^^^^^^^^^^
+    8 │ 
+    9 │   interface x {
+  
+module.ts:7:60 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ module.ts:7:66
-  │
-7 │   export private public protected static readonly abstract async enum X { }
-  │                                                            ------^^^^
-  │                                                            │     │
-  │                                                            │     An explicit or implicit semicolon is expected here...
-  │                                                            ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    6 │   // Apparently this parses :P
+  > 7 │   export private public protected static readonly abstract async enum X { }
+      │                                                            ^^^^^
+    8 │ 
+    9 │   interface x {
+  
+  i ...Which is required to end this statement
+  
+    6 │   // Apparently this parses :P
+  > 7 │   export private public protected static readonly abstract async enum X { }
+      │                                                   ^^^^^^^^^^^^^^
+    8 │ 
+    9 │   interface x {
+  
+module.ts:7:66 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: ';' expected'
-   ┌─ module.ts:10:14
-   │
-10 │       export private static readonly [x: any]: any;
-   │              ^^^^^^^ An explicit or implicit semicolon is expected here...
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    6 │   // Apparently this parses :P
+  > 7 │   export private public protected static readonly abstract async enum X { }
+      │                                                                  ^^^^
+    8 │ 
+    9 │   interface x {
+  
+  i ...Which is required to end this statement
+  
+    6 │   // Apparently this parses :P
+  > 7 │   export private public protected static readonly abstract async enum X { }
+      │                                                            ^^^^^^^^^^
+    8 │ 
+    9 │   interface x {
+  
+module.ts:10:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: index signature members cannot be static
-   ┌─ module.ts:10:22
-   │
-10 │       export private static readonly [x: any]: any;
-   │                      ^^^^^^
+  × ';' expected'
+  
+  × An explicit or implicit semicolon is expected here...
+  
+     9 │   interface x {
+  > 10 │       export private static readonly [x: any]: any;
+       │              ^^^^^^^
+    11 │   }
+    12 │ }
+  
+module.ts:10:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × index signature members cannot be static
+  
+     9 │   interface x {
+  > 10 │       export private static readonly [x: any]: any;
+       │                      ^^^^^^
+    11 │   }
+    12 │ }
+  
 
 ```
 

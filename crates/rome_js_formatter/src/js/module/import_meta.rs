@@ -1,8 +1,9 @@
 use crate::prelude::*;
 
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
-use rome_js_syntax::ImportMeta;
 use rome_js_syntax::ImportMetaFields;
+use rome_js_syntax::{ImportMeta, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatImportMeta;
@@ -26,5 +27,19 @@ impl FormatNodeRule<ImportMeta> for FormatImportMeta {
                 meta_token.format(),
             ]
         ]
+    }
+
+    fn needs_parentheses(&self, item: &ImportMeta) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl NeedsParentheses for ImportMeta {
+    fn needs_parentheses(&self) -> bool {
+        false
+    }
+
+    fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
+        false
     }
 }

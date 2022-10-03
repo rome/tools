@@ -1,0 +1,95 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noCatchAssign.js
+---
+# Input
+```js
+// invalid
+try { } catch (e) { e; e = 10; }
+try {
+
+} catch (error) {
+  error = 100;
+  {
+    error = 10;
+  }
+}
+```
+
+# Diagnostics
+```
+noCatchAssign.js:2:24 lint/correctness/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  !  Do not reassign catch parameters.
+  
+    1 │ // invalid
+  > 2 │ try { } catch (e) { e; e = 10; }
+      │                        ^
+    3 │ try {
+    4 │ 
+  
+  i The catch parameter is declared here
+  
+    1 │ // invalid
+  > 2 │ try { } catch (e) { e; e = 10; }
+      │                ^
+    3 │ try {
+    4 │ 
+  
+  i Use a local variable instead.
+  
+
+```
+
+```
+noCatchAssign.js:6:3 lint/correctness/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  !  Do not reassign catch parameters.
+  
+    5 │ } catch (error) {
+  > 6 │   error = 100;
+      │   ^^^^^
+    7 │   {
+    8 │     error = 10;
+  
+  i The catch parameter is declared here
+  
+    3 │ try {
+    4 │ 
+  > 5 │ } catch (error) {
+      │          ^^^^^
+    6 │   error = 100;
+    7 │   {
+  
+  i Use a local variable instead.
+  
+
+```
+
+```
+noCatchAssign.js:8:5 lint/correctness/noCatchAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  !  Do not reassign catch parameters.
+  
+     6 │   error = 100;
+     7 │   {
+   > 8 │     error = 10;
+       │     ^^^^^
+     9 │   }
+    10 │ }
+  
+  i The catch parameter is declared here
+  
+    3 │ try {
+    4 │ 
+  > 5 │ } catch (error) {
+      │          ^^^^^
+    6 │   error = 100;
+    7 │   {
+  
+  i Use a local variable instead.
+  
+
+```
+
+

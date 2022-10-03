@@ -1,7 +1,8 @@
 use crate::{cursor, Language, SyntaxToken};
+use rome_text_size::{TextRange, TextSize};
 use std::fmt;
+use std::fmt::Formatter;
 use std::marker::PhantomData;
-use text_size::{TextRange, TextSize};
 
 #[derive(Clone, Copy, Eq, PartialEq, Hash, Debug)]
 pub enum TriviaPieceKind {
@@ -223,6 +224,10 @@ pub struct SyntaxTriviaPiece<L: Language> {
 }
 
 impl<L: Language> SyntaxTriviaPiece<L> {
+    pub(crate) fn into_raw_piece(self) -> TriviaPiece {
+        self.trivia
+    }
+
     /// Returns the internal kind of this trivia piece
     pub fn kind(&self) -> TriviaPieceKind {
         self.trivia.kind()
@@ -626,11 +631,19 @@ impl<L: Language> SyntaxTrivia<L> {
     pub fn text_range(&self) -> TextRange {
         self.raw.text_range()
     }
+
+    pub fn is_empty(&self) -> bool {
+        self.raw.len() == 0
+    }
+
+    pub fn has_skipped(&self) -> bool {
+        self.pieces().any(|piece| piece.is_skipped())
+    }
 }
 
 fn print_debug_str<S: AsRef<str>>(text: S, f: &mut fmt::Formatter<'_>) -> fmt::Result {
     let text = text.as_ref();
-    return if text.len() < 25 {
+    if text.len() < 25 {
         write!(f, "{:?}", text)
     } else {
         for idx in 21..25 {
@@ -640,5 +653,22 @@ fn print_debug_str<S: AsRef<str>>(text: S, f: &mut fmt::Formatter<'_>) -> fmt::R
             }
         }
         write!(f, "")
-    };
+    }
+}
+
+impl<L: Language> std::fmt::Debug for SyntaxTrivia<L> {
+    fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
+        write!(f, "[")?;
+        let mut first_piece = true;
+
+        for piece in self.pieces() {
+            if !first_piece {
+                write!(f, ", ")?;
+            }
+            first_piece = false;
+            write!(f, "{:?}", piece)?;
+        }
+
+        write!(f, "]")
+    }
 }

@@ -1,3 +1,4 @@
+use rome_diagnostics::file::FileId;
 use rome_js_semantic::SemanticEvent;
 use rome_js_syntax::SourceType;
 
@@ -71,7 +72,7 @@ impl TestCase for SymbolsMicrosoftTestCase {
 
         let t = TestCaseFiles::single(self.name.clone(), code.clone(), SourceType::tsx());
 
-        let r = rome_js_parser::parse(&code, 0, SourceType::tsx());
+        let r = rome_js_parser::parse(&code, FileId::zero(), SourceType::tsx());
         let mut actual: Vec<_> = rome_js_semantic::semantic_events(r.syntax())
             .into_iter()
             .filter(|x| {
@@ -79,7 +80,11 @@ impl TestCase for SymbolsMicrosoftTestCase {
                 // We do the same below because TS classifies some string literals as symbols and we also
                 // filter them below.
                 match x {
-                    SemanticEvent::DeclarationFound { .. } | SemanticEvent::Read { .. } => {
+                    SemanticEvent::DeclarationFound { .. }
+                    | SemanticEvent::Read { .. }
+                    | SemanticEvent::HoistedRead { .. }
+                    | SemanticEvent::Write { .. }
+                    | SemanticEvent::HoistedWrite { .. } => {
                         let name = x.str(&code);
                         !name.contains('\"') && !name.contains('\'')
                     }
@@ -134,7 +139,7 @@ impl TestCase for SymbolsMicrosoftTestCase {
             }
         } else {
             for (expected, actual) in expected.symbols.iter().zip(actual) {
-                let are_names_eq = expected.name == actual.str(&code);
+                let are_names_eq = expected.name == actual.str(&code).trim();
                 if !are_names_eq {
                     return TestRunOutcome::IncorrectlyErrored {
                         files: t,

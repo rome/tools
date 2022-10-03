@@ -316,9 +316,9 @@ JsAnyExpression =
 	| TsTypeAssertionExpression
 	| TsAsExpression
 	| TsNonNullAssertionExpression
+	| TsInstantiationExpression
 	// JSX
 	| JsxTagExpression
-
 
 JsTemplate =
 	tag: JsAnyExpression?
@@ -1849,6 +1849,7 @@ TsAnyTypePredicateParameterName =
 TsTypeofType =
 	'typeof'
 	expression_name: TsAnyName
+	type_arguments: TsTypeArguments?
 
 TsConstructorType =
 	'abstract'?
@@ -2109,6 +2110,11 @@ TsTypeAssertionExpression =
 	type: TsType
 	'>'
 	expression: JsAnyExpression
+
+// This `SyntaxKind` is related to `ExpressionWithTypeArguments` in Typescript
+TsInstantiationExpression =
+	expression: JsAnyExpression
+	arguments: TsTypeArguments
 
 TsAsExpression =
 	expression: JsAnyExpression

@@ -1,19 +1,18 @@
 use crate::green::GreenElement;
-use crate::syntax::element::SyntaxElement;
+use crate::syntax::element::{SyntaxElement, SyntaxElementKey};
 use crate::syntax::SyntaxTrivia;
 use crate::{
     cursor, Direction, GreenNode, Language, NodeOrToken, SyntaxKind, SyntaxList, SyntaxNodeText,
     SyntaxToken, TokenAtOffset, WalkEvent,
 };
+use rome_text_size::{TextRange, TextSize};
 #[cfg(feature = "serde")]
 use serde::Serialize;
 use std::any::TypeId;
 use std::fmt::{Debug, Formatter};
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
-use std::ptr::NonNull;
 use std::{fmt, ops};
-use text_size::{TextRange, TextSize};
 
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct SyntaxNode<L: Language> {
@@ -51,8 +50,9 @@ impl<L: Language> SyntaxNode<L> {
         self.raw.green().to_owned()
     }
 
-    pub fn key(&self) -> (NonNull<()>, TextSize) {
-        self.raw.key()
+    pub fn key(&self) -> SyntaxElementKey {
+        let (node_data, offset) = self.raw.key();
+        SyntaxElementKey::new(node_data, offset)
     }
 
     /// Returns the element stored in the slot with the given index. Returns [None] if the slot is empty.
@@ -143,8 +143,8 @@ impl<L: Language> SyntaxNode<L> {
     ///     );
     /// });
     /// let range = node.text_range();
-    /// assert_eq!(0u32, range.start().into());
-    /// assert_eq!(14u32, range.end().into());
+    /// assert_eq!(0u32, u32::from(range.start()));
+    /// assert_eq!(14u32, u32::from(range.end()));
     /// ```
     pub fn text_range(&self) -> TextRange {
         self.raw.text_range()
@@ -173,8 +173,8 @@ impl<L: Language> SyntaxNode<L> {
     ///     );
     /// });
     /// let range = node.text_trimmed_range();
-    /// assert_eq!(3u32, range.start().into());
-    /// assert_eq!(11u32, range.end().into());
+    /// assert_eq!(3u32, u32::from(range.start()));
+    /// assert_eq!(11u32, u32::from(range.end()));
     /// ```
     pub fn text_trimmed_range(&self) -> TextRange {
         self.raw.text_trimmed_range()
@@ -255,7 +255,7 @@ impl<L: Language> SyntaxNode<L> {
 
     /// Returns the index of this node inside of its parent
     #[inline]
-    pub(crate) fn index(&self) -> usize {
+    pub fn index(&self) -> usize {
         self.raw.index()
     }
 

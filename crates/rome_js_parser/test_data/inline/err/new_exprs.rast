@@ -28,11 +28,15 @@ JsModule {
       1: SEMICOLON@3..4 ";" [] []
   3: EOF@4..5 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected an expression but instead found ';'
-  ┌─ new_exprs.js:1:4
-  │
-1 │ new;
-  │    ^ Expected an expression here
+new_exprs.js:1:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an expression but instead found ';'
+  
+  × Expected an expression here
+  
+  > 1 │ new;
+      │    ^
+    2 │ 
+  
 --
 new;

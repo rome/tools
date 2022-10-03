@@ -1,13 +1,13 @@
 use crate::syntax::SyntaxTrivia;
 use crate::{cursor, Language, NodeOrToken, SyntaxNode, SyntaxToken};
+use rome_text_size::{TextRange, TextSize};
 use std::iter;
 use std::ptr::NonNull;
-use text_size::{TextRange, TextSize};
 
 pub type SyntaxElement<L> = NodeOrToken<SyntaxNode<L>, SyntaxToken<L>>;
 
 impl<L: Language> SyntaxElement<L> {
-    pub fn key(&self) -> (NonNull<()>, TextSize) {
+    pub fn key(&self) -> SyntaxElementKey {
         match self {
             NodeOrToken::Node(it) => it.key(),
             NodeOrToken::Token(it) => it.key(),
@@ -121,5 +121,17 @@ impl<L: Language> From<SyntaxToken<L>> for SyntaxElement<L> {
 impl<L: Language> From<SyntaxNode<L>> for SyntaxElement<L> {
     fn from(node: SyntaxNode<L>) -> SyntaxElement<L> {
         NodeOrToken::Node(node)
+    }
+}
+
+#[derive(Copy, Clone, Eq, PartialEq, Hash)]
+pub struct SyntaxElementKey {
+    node_data: NonNull<()>,
+    offset: TextSize,
+}
+
+impl SyntaxElementKey {
+    pub(crate) fn new(node_data: NonNull<()>, offset: TextSize) -> Self {
+        Self { node_data, offset }
     }
 }

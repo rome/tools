@@ -39,15 +39,12 @@ const TestComponent = ({ children, ...props }) => (
 ```diff
 --- Prettier
 +++ Rome
-@@ -2,18 +2,20 @@
-   // Create styles as if you're calling css and the class will be applied to the component
+@@ -3,17 +3,17 @@
    return (
      <div
--      css={`
+       css={`
 -        color: blue;
 -        font-size: 17 px;
-+      css={
-+        `
 +    color: blue;
 +    font-size: 17 px;
  
@@ -65,12 +62,11 @@ const TestComponent = ({ children, ...props }) => (
 +    & .some-class {
 +      font-size: 20px;
 +    }
-+  `
-+      }
++  `}
      >
        This will be blue until hovered.
        <div className="some-class">This font size will be 20px</div>
-@@ -22,12 +24,5 @@
+@@ -22,12 +22,5 @@
  }
  
  const TestComponent = ({ children, ...props }) => (
@@ -93,8 +89,7 @@ function SomeComponent(props) {
   // Create styles as if you're calling css and the class will be applied to the component
   return (
     <div
-      css={
-        `
+      css={`
     color: blue;
     font-size: 17 px;
 
@@ -105,8 +100,7 @@ function SomeComponent(props) {
     & .some-class {
       font-size: 20px;
     }
-  `
-      }
+  `}
     >
       This will be blue until hovered.
       <div className="some-class">This font size will be 20px</div>

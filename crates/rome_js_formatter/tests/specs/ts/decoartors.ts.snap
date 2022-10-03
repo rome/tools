@@ -57,6 +57,7 @@ class Test2 {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 @sealed
 class Test {
@@ -92,7 +93,23 @@ class Test2 {
 
 	@test /* trailing multiline comment
 	 for decorator */ @anotherDecorator()
+
 	// leading comment
 	prop: string;
 }
+
+
+## Unimplemented nodes/tokens
+
+"@sealed" => 0..7
+"\t@readonl" => 21..30
+"\t\t@par" => 62..68
+"\t\t@readon" => 77..86
+"\t\t@aVeryLongDecoratorNameLetsSeeWhatHappensWith" => 104..151
+"@param" => 175..181
+"@param" => 219..225
+"@sealed" => 239..246
+"@sealed" => 272..279
+"@test" => 338..343
+"\t@test /* trailing multiline comment\n\t for decorator */ @anotherDecorator(" => 449..523
 

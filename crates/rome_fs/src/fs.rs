@@ -5,7 +5,8 @@ use std::{
     sync::Arc,
 };
 
-use crate::{interner::FileId, PathInterner, RomePath};
+use crate::{PathInterner, RomePath};
+use rome_diagnostics::{file::FileId, v2::Category};
 
 mod memory;
 mod os;
@@ -100,6 +101,10 @@ pub trait FileSystemExt: FileSystem {
     fn create(&self, path: &Path) -> io::Result<Box<dyn File>> {
         self.open_with_options(path, OpenOptions::default().write(true).create_new(true))
     }
+    /// Opens a file with read options
+    fn read(&self, path: &Path) -> io::Result<Box<dyn File>> {
+        self.open_with_options(path, OpenOptions::default().read(true).create_new(true))
+    }
 }
 
 type BoxedTraversal<'fs, 'scope> = Box<dyn FnOnce(&dyn TraversalScope<'scope>) + Send + 'fs>;
@@ -122,7 +127,7 @@ pub trait TraversalContext: Sync {
 
     /// Called by the traversal process to emit an error diagnostic associated
     /// with a particular file ID when an IO error happens
-    fn push_diagnostic(&self, file_id: FileId, code: &'static str, message: String);
+    fn push_diagnostic(&self, file_id: FileId, code: &'static Category, message: String);
 
     /// Checks if the traversal context can handle a particular path, used as
     /// an optimization to bail out of scheduling a file handler if it wouldn't

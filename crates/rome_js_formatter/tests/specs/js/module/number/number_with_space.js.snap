@@ -17,10 +17,10 @@ expression: number_with_space.js
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 (123).toString;
-(123)
-	/****/.toString;
+/****/ (123).toString;
 (123) /**/.toString;
 (123).toString;
 

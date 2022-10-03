@@ -4,6 +4,7 @@ specifiers:
   '@codemirror/lang-javascript': ^6.0.1
   '@codemirror/state': 6.1.0
   '@codemirror/view': 6.1.0
+  '@rometools/wasm-web': ../../npm/wasm-web
   '@tailwindcss/forms': ^0.4.0
   '@types/node': ^18.0.6
   '@types/prettier': ^2.6.3
@@ -13,15 +14,15 @@ specifiers:
   '@uiw/react-codemirror': ^4.11.4
   '@vitejs/plugin-react': ^1.0.7
   autoprefixer: ^10.4.2
-  codemirror-lang-rome-ast: 0.0.4
+  codemirror-lang-rome-ast: 0.0.6
+  lang-rome-formatter-ir: 0.0.2
   postcss: ^8.4.6
   prettier: ^2.7.0
   react: ^17.0.2
   react-dom: ^17.0.2
   react-tabs: ^3.2.3
-  rome: ^0.7.0-next
   tailwindcss: ^3.0.19
-  typescript: ^4.4.4
+  typescript: ^4.8.2
   vite: 2.9.5
   vite-plugin-svgr: ^2.2.0
 
@@ -29,8 +30,10 @@ dependencies:
   '@codemirror/lang-javascript': 6.0.1
   '@codemirror/state': 6.1.0
   '@codemirror/view': 6.1.0
-  '@uiw/react-codemirror': 4.11.4_j45qn7k5iyiiecf3ysrf6hvqzq
-  codemirror-lang-rome-ast: 0.0.4
+  '@rometools/wasm-web': link:../../npm/wasm-web
+  '@uiw/react-codemirror': 4.11.4_j4ghec26bhhfaf2eptsehnzgue
+  codemirror-lang-rome-ast: 0.0.6
+  lang-rome-formatter-ir: 0.0.2
   prettier: 2.7.0
   react: 17.0.2
   react-dom: 17.0.2_react@17.0.2
@@ -46,9 +49,8 @@ devDependencies:
   '@vitejs/plugin-react': 1.1.4
   autoprefixer: 10.4.2_postcss@8.4.6
   postcss: 8.4.6
-  rome: 0.7.0-next
   tailwindcss: 3.0.19_qm7bagfnbv4vjkuayu3hle4sne
-  typescript: 4.5.5
+  typescript: 4.8.2
   vite: 2.9.5
   vite-plugin-svgr: 2.2.0_vite@2.9.5
 
@@ -331,8 +333,11 @@ packages:
       to-fast-properties: 2.0.0
     dev: true
 
-  /@codemirror/autocomplete/6.0.4:
+  /@codemirror/autocomplete/6.0.4_xtizu6iuiatnw5cgync2c544ka:
     resolution: {integrity: sha512-uP7UodCRykPNwSAN+wYa/AS9gJI/V47echCAXUYgCgBXy3l19nwO7W/d29COtG/dfAsjBOhMDeh3Ms8Y5VZbrA==}
+    peerDependencies:
+      '@codemirror/state': ^6.0.0
+      '@codemirror/view': ^6.0.0
     dependencies:
       '@codemirror/language': 6.2.0
       '@codemirror/state': 6.1.0
@@ -352,7 +357,7 @@ packages:
   /@codemirror/lang-javascript/6.0.1:
     resolution: {integrity: sha512-kjGbBEosl+ozDU5ruDV48w4v3H6KECTFiDjqMLT0KhVwESPfv3wOvnDrTT0uaMOg3YRGnBWsyiIoKHl/tNWWDg==}
     dependencies:
-      '@codemirror/autocomplete': 6.0.4
+      '@codemirror/autocomplete': 6.0.4_xtizu6iuiatnw5cgync2c544ka
       '@codemirror/language': 6.2.0
       '@codemirror/lint': 6.0.0
       '@codemirror/state': 6.1.0
@@ -484,54 +489,6 @@ packages:
       estree-walker: 2.0.2
       picomatch: 2.3.1
     dev: true
-
-  /@rometools/cli-darwin-arm64/0.7.0-next:
-    resolution: {integrity: sha512-GMHYG5zQTGerQYue30m/E+WgpoPCxjLT7unCF1BH0jgFSk/fgkduMY9QP9EetNuBYxP/03XFZgXIZLmyw+Shgw==}
-    cpu: [arm64]
-    os: [darwin]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@rometools/cli-darwin-x64/0.7.0-next:
-    resolution: {integrity: sha512-MyM/ncZKs3mIJ0vsSNyGNKGR31VroK2W7mHqPRVyuVkrmaJnDko8ymzH/JSrBdD7hj8KU3Ubpjn8YNuaMZvSYQ==}
-    cpu: [x64]
-    os: [darwin]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@rometools/cli-linux-arm64/0.7.0-next:
-    resolution: {integrity: sha512-X3gCoT3GDioVkHsOfthMEoa1BR8lx1eXi7Sn0SeoHpw04UF+4WIn9Rjb62Fx/lIvRIdtxVj74pz14dxVQ/8HkQ==}
-    cpu: [arm64]
-    os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@rometools/cli-linux-x64/0.7.0-next:
-    resolution: {integrity: sha512-3kpV+cs2MgqUk8gjM1nPXmAoXErDGLEaK/q60c5FkNZQfuKxp6lN5sGF8cxJLbxggOaWXGfiIRoS9BBp9YIbEw==}
-    cpu: [x64]
-    os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@rometools/cli-win32-arm64/0.7.0-next:
-    resolution: {integrity: sha512-mOSg9CAeYgjK6W8e13epaOFeHPITvhAIj7wib8N8KtW8Mi8LgSdNCg3Pr1zRcN2F4ndDNfGZYiDf9A0Xl2N/Zw==}
-    cpu: [arm64]
-    os: [win32]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@rometools/cli-win32-x64/0.7.0-next:
-    resolution: {integrity: sha512-JrsHY4IXd3SSF3TXwP15PloVXGR5A1or7yV9gFyrmmRVsyFpJYkAh4oU4IuAoqltPi9G4c3oEEQhN8yzYoUwKw==}
-    cpu: [x64]
-    os: [win32]
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@svgr/babel-plugin-add-jsx-attribute/6.0.0_@babel+core@7.17.0:
     resolution: {integrity: sha512-MdPdhdWLtQsjd29Wa4pABdhWbaRMACdM1h31BY+c6FghTZqNGT7pEYdBoaGeKtdTOBC/XNFQaKVj+r/Ei2ryWA==}
@@ -705,10 +662,13 @@ packages:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
     dev: true
 
-  /@uiw/codemirror-extensions-basic-setup/4.11.4:
+  /@uiw/codemirror-extensions-basic-setup/4.11.4_xtizu6iuiatnw5cgync2c544ka:
     resolution: {integrity: sha512-pc9pQtCQFmAH5nV9UmX37VB0+yzSFQ2kbSvLHBFST9siYnacaR6HxmkBBBbYYXwVK/n9pGZ6A8ZefAUNTFfo/A==}
+    peerDependencies:
+      '@codemirror/state': '>=6.0.0'
+      '@codemirror/view': '>=6.0.0'
     dependencies:
-      '@codemirror/autocomplete': 6.0.4
+      '@codemirror/autocomplete': 6.0.4_xtizu6iuiatnw5cgync2c544ka
       '@codemirror/commands': 6.0.1
       '@codemirror/language': 6.2.0
       '@codemirror/lint': 6.0.0
@@ -717,7 +677,7 @@ packages:
       '@codemirror/view': 6.1.0
     dev: false
 
-  /@uiw/react-codemirror/4.11.4_j45qn7k5iyiiecf3ysrf6hvqzq:
+  /@uiw/react-codemirror/4.11.4_j4ghec26bhhfaf2eptsehnzgue:
     resolution: {integrity: sha512-p7DNBI6kj+DUzTe7MjBJwZ3qo0nSOav7T0MEGRpRNZA9ZO3RnzhPMie6swDA8e3dz1s59l9UdFB1fgyam1vFhQ==}
     peerDependencies:
       '@codemirror/view': '>=6.0.0'
@@ -727,10 +687,12 @@ packages:
       '@babel/runtime': 7.18.9
       '@codemirror/theme-one-dark': 6.0.0
       '@codemirror/view': 6.1.0
-      '@uiw/codemirror-extensions-basic-setup': 4.11.4
+      '@uiw/codemirror-extensions-basic-setup': 4.11.4_xtizu6iuiatnw5cgync2c544ka
       codemirror: 6.0.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
+    transitivePeerDependencies:
+      - '@codemirror/state'
     dev: false
 
   /@vitejs/plugin-react/1.1.4:
@@ -890,10 +852,10 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
-  /codemirror-lang-rome-ast/0.0.4:
-    resolution: {integrity: sha512-fX6ahzHRhN2dNU6YcMDelT74qL4S3w+mu9PqE8xQA0UvBR/auGJsMFuKM6AJTK9ktZQ2y3cwZAa3hOevSZy01g==}
+  /codemirror-lang-rome-ast/0.0.6:
+    resolution: {integrity: sha512-2E4E4rNcj6XxLsVjCZJeOsdEXpfdgiejuLrbq6O4muXzf0KSv5X0ScQrs3LK5LmGwoQUC0AowYbfdj3lsaLWkQ==}
     dependencies:
-      '@codemirror/autocomplete': 6.0.4
+      '@codemirror/autocomplete': 6.0.4_xtizu6iuiatnw5cgync2c544ka
       '@codemirror/language': 6.2.0
       '@codemirror/state': 6.1.0
       '@codemirror/view': 6.1.0
@@ -905,7 +867,7 @@ packages:
   /codemirror/6.0.1:
     resolution: {integrity: sha512-J8j+nZ+CdWmIeFIGXEFbFPtpiYacFMDR8GlHK3IyHQJMCaVRfGx9NT+Hxivv1ckLWPvNdZqndbr/7lVhrf/Svg==}
     dependencies:
-      '@codemirror/autocomplete': 6.0.4
+      '@codemirror/autocomplete': 6.0.4_xtizu6iuiatnw5cgync2c544ka
       '@codemirror/commands': 6.0.1
       '@codemirror/language': 6.2.0
       '@codemirror/lint': 6.0.0
@@ -1387,6 +1349,18 @@ packages:
       minimist: 1.2.6
     dev: true
 
+  /lang-rome-formatter-ir/0.0.2:
+    resolution: {integrity: sha512-Zx7uZ6SA1vmMWkM7UbDZlex8MGOCQNBkxN9sAjeGgGHx69DNuR8E4GPfHFHI2P7oFLvXMrmAMPUY2jbEH9wtOA==}
+    dependencies:
+      '@codemirror/autocomplete': 6.0.4_xtizu6iuiatnw5cgync2c544ka
+      '@codemirror/language': 6.2.0
+      '@codemirror/state': 6.1.0
+      '@codemirror/view': 6.1.0
+      '@lezer/common': 1.0.0
+      '@lezer/highlight': 1.0.0
+      '@lezer/lr': 1.2.0
+    dev: false
+
   /lilconfig/2.0.4:
     resolution: {integrity: sha512-bfTIN7lEsiooCocSISTWXkiWJkRqtL9wYtYy+8EK3Y41qh3mpwPU0ycTOgjdY9ErwXCc8QyrQp82bdL0Xkm9yA==}
     engines: {node: '>=10'}
@@ -1671,20 +1645,6 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /rome/0.7.0-next:
-    resolution: {integrity: sha512-bbzyM95xMGzFCn+74tXyFJ39RGifEbGYFz0bB+SRtPSx0DZfpkHjcmqX9UiuMtWAkdQnWFG2rsrivQnDqqxTPA==}
-    engines: {node: '>=14.18.0'}
-    hasBin: true
-    requiresBuild: true
-    optionalDependencies:
-      '@rometools/cli-darwin-arm64': 0.7.0-next
-      '@rometools/cli-darwin-x64': 0.7.0-next
-      '@rometools/cli-linux-arm64': 0.7.0-next
-      '@rometools/cli-linux-x64': 0.7.0-next
-      '@rometools/cli-win32-arm64': 0.7.0-next
-      '@rometools/cli-win32-x64': 0.7.0-next
-    dev: true
-
   /run-parallel/1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
     dependencies:
@@ -1790,8 +1750,8 @@ packages:
       is-number: 7.0.0
     dev: true
 
-  /typescript/4.5.5:
-    resolution: {integrity: sha512-TCTIul70LyWe6IJWT8QSYeA54WQe8EjQFU4wY52Fasj5UKx88LNYKCgBEHcOMOrFF1rKGbD8v/xcNWVUq9SymA==}
+  /typescript/4.8.2:
+    resolution: {integrity: sha512-C0I1UsrrDHo2fYI5oaCGbSejwX4ch+9Y5jTQELvovfmFkK3HHSZJB8MSJcWLmCUBzQBchCrZ9rMRV6GuNrvGtw==}
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true

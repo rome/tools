@@ -67,8 +67,11 @@ if (true) {
 if (true) that(); else;
 
 if (true) {}
-// rome-ignore format: Test suppression comments
-else     if (true &&  false) {}
+else     if (
+	// rome-ignore format: Test suppression comments
+
+true &&  false
+) {}
 
 =============================
 # Outputs
@@ -77,6 +80,7 @@ else     if (true &&  false) {}
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 if (a);
 if (a);
@@ -127,7 +131,6 @@ if (true) {
 
 if (true) {
 	// trailing
-
 } else {
 	// trailing
 }
@@ -136,7 +139,10 @@ if (true) that();
 else;
 
 if (true) {
+} else if (
+	// rome-ignore format: Test suppression comments
+
+	true &&  false
+) {
 }
-// rome-ignore format: Test suppression comments
-else     if (true &&  false) {}
 

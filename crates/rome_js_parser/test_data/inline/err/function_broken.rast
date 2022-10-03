@@ -93,18 +93,26 @@ JsModule {
       2: (empty)
   3: EOF@25..26 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected a function body but instead found ')'
-  ┌─ function_broken.js:1:15
-  │
-1 │ function foo())})}{{{  {}
-  │               ^ Expected a function body here
+function_broken.js:1:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a function body but instead found ')'
+  
+  × Expected a function body here
+  
+  > 1 │ function foo())})}{{{  {}
+      │               ^
+    2 │ 
+  
 --
-error[SyntaxError]: expected `}` but instead the file ends
-  ┌─ function_broken.js:2:1
-  │
-2 │ 
-  │ ^ the file ends here
+function_broken.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `}` but instead the file ends
+  
+  × the file ends here
+  
+    1 │ function foo())})}{{{  {}
+  > 2 │ 
+      │ 
+  
 --
 function foo())})}{{{  {}

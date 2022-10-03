@@ -5,26 +5,28 @@ import SourceTypeSelect from "./SourceTypeSelect";
 import { PlaygroundSettings, PlaygroundState } from "./types";
 import { Dispatch, SetStateAction } from "react";
 import { createSetter } from "./utils";
+import QuotePropertiesSelect from "./QuotePropertiesSelect";
+import NurseryRules from "./NurseryRules";
 
 interface Props {
 	settings: PlaygroundSettings;
 	setPlaygroundState: Dispatch<SetStateAction<PlaygroundState>>;
 }
 
-export function SettingsMenu(
-	{
-		setPlaygroundState,
-		settings: {
-			lineWidth,
-			indentWidth,
-			indentStyle,
-			quoteStyle,
-			sourceType,
-			isTypeScript,
-			isJsx,
-		},
-	}: Props,
-) {
+export function SettingsMenu({
+	setPlaygroundState,
+	settings: {
+		lineWidth,
+		indentWidth,
+		indentStyle,
+		quoteStyle,
+		quoteProperties,
+		sourceType,
+		isTypeScript,
+		isJsx,
+		enabledNurseryRules,
+	},
+}: Props) {
 	return (
 		<div>
 			<div className="flex flex-col sm:flex-row">
@@ -44,6 +46,13 @@ export function SettingsMenu(
 					quoteStyle={quoteStyle}
 					setQuoteStyle={createSetter(setPlaygroundState, "quoteStyle")}
 				/>
+				<QuotePropertiesSelect
+					quoteProperties={quoteProperties}
+					setQuoteProperties={createSetter(
+						setPlaygroundState,
+						"quoteProperties",
+					)}
+				/>
 				<SourceTypeSelect
 					isTypeScript={isTypeScript}
 					setIsTypeScript={createSetter(setPlaygroundState, "isTypeScript")}
@@ -51,6 +60,15 @@ export function SettingsMenu(
 					setIsJsx={createSetter(setPlaygroundState, "isJsx")}
 					sourceType={sourceType}
 					setSourceType={createSetter(setPlaygroundState, "sourceType")}
+				/>
+			</div>
+			<div className="flex flex-col sm:flex-row">
+				<NurseryRules
+					setEnabledNurseryRules={createSetter(
+						setPlaygroundState,
+						"enabledNurseryRules",
+					)}
+					enabledNurseryRules={enabledNurseryRules}
 				/>
 			</div>
 		</div>

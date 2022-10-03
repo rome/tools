@@ -293,56 +293,105 @@ JsModule {
       1: (empty)
   3: EOF@100..101 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `,` but instead found `a`
-  ┌─ array_assignment_target_err.js:1:4
-  │
-1 │ [a a, ++b, ] = test;
-  │    ^ unexpected
+array_assignment_target_err.js:1:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `a`
+  
+  × unexpected
+  
+  > 1 │ [a a, ++b, ] = test;
+      │    ^
+    2 │ [a, c, ...rest,] = test;
+    3 │ [a = , = "test"] = test;
+  
 --
-error[SyntaxError]: Invalid assignment to `++b`
-  ┌─ array_assignment_target_err.js:1:7
-  │
-1 │ [a a, ++b, ] = test;
-  │       ^^^ This expression cannot be assigned to
+array_assignment_target_err.js:1:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Invalid assignment to `++b`
+  
+  × This expression cannot be assigned to
+  
+  > 1 │ [a a, ++b, ] = test;
+      │       ^^^
+    2 │ [a, c, ...rest,] = test;
+    3 │ [a = , = "test"] = test;
+  
 --
-error[SyntaxError]: rest element may not have a trailing comma
-  ┌─ array_assignment_target_err.js:2:15
-  │
-2 │ [a, c, ...rest,] = test;
-  │        -------^ Remove the trailing comma here
-  │        │       
-  │        Rest element
+array_assignment_target_err.js:2:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × rest element may not have a trailing comma
+  
+  × Remove the trailing comma here
+  
+    1 │ [a a, ++b, ] = test;
+  > 2 │ [a, c, ...rest,] = test;
+      │               ^
+    3 │ [a = , = "test"] = test;
+    4 │ [[a b] [c]]= test;
+  
+  i Rest element
+  
+    1 │ [a a, ++b, ] = test;
+  > 2 │ [a, c, ...rest,] = test;
+      │        ^^^^^^^
+    3 │ [a = , = "test"] = test;
+    4 │ [[a b] [c]]= test;
+  
 --
-error[SyntaxError]: expected an expression, or an assignment but instead found ','
-  ┌─ array_assignment_target_err.js:3:6
-  │
-3 │ [a = , = "test"] = test;
-  │      ^ Expected an expression, or an assignment here
+array_assignment_target_err.js:3:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an expression, or an assignment but instead found ','
+  
+  × Expected an expression, or an assignment here
+  
+    1 │ [a a, ++b, ] = test;
+    2 │ [a, c, ...rest,] = test;
+  > 3 │ [a = , = "test"] = test;
+      │      ^
+    4 │ [[a b] [c]]= test;
+    5 │ [a: b] = c
+  
 --
-error[SyntaxError]: expected an identifier, or an assignment target but instead found '='
-  ┌─ array_assignment_target_err.js:3:8
-  │
-3 │ [a = , = "test"] = test;
-  │        ^ Expected an identifier, or an assignment target here
+array_assignment_target_err.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier, or an assignment target but instead found '='
+  
+  × Expected an identifier, or an assignment target here
+  
+    1 │ [a a, ++b, ] = test;
+    2 │ [a, c, ...rest,] = test;
+  > 3 │ [a = , = "test"] = test;
+      │        ^
+    4 │ [[a b] [c]]= test;
+    5 │ [a: b] = c
+  
 --
-error[SyntaxError]: expected `,` but instead found `b`
-  ┌─ array_assignment_target_err.js:4:5
-  │
-4 │ [[a b] [c]]= test;
-  │     ^ unexpected
+array_assignment_target_err.js:4:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `b`
+  
+  × unexpected
+  
+    2 │ [a, c, ...rest,] = test;
+    3 │ [a = , = "test"] = test;
+  > 4 │ [[a b] [c]]= test;
+      │     ^
+    5 │ [a: b] = c
+    6 │ 
+  
 --
-error[SyntaxError]: expected `,` but instead found `:`
-  ┌─ array_assignment_target_err.js:5:3
-  │
-5 │ [a: b] = c
-  │   ^ unexpected
+array_assignment_target_err.js:5:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `:`
+  
+  × unexpected
+  
+    3 │ [a = , = "test"] = test;
+    4 │ [[a b] [c]]= test;
+  > 5 │ [a: b] = c
+      │   ^
+    6 │ 
+  
 --
 [a a, ++b, ] = test;
 [a, c, ...rest,] = test;

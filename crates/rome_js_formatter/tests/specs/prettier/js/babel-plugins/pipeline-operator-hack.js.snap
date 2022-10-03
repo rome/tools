@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\babel-plugins\\pipeline-operator-hack.js"
 ---
 
 # Input
@@ -21,15 +23,15 @@ return list
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,6 +1,7 @@
+@@ -1,6 +1,8 @@
  // https://babeljs.io/docs/en/babel-plugin-proposal-pipeline-operator
  // https://github.com/js-choi/proposal-hack-pipes
  
 -return list |> take(prefix.length, %) |> equals(%, prefix);
--
 +return list
 + |> take(prefix.length, %)
 + |> equals(%, prefix);
+ 
  // (The % token isn't final; it might instead be @ or ? or #.)
 ```
 
@@ -42,56 +44,102 @@ return list
 return list
  |> take(prefix.length, %)
  |> equals(%, prefix);
+
 // (The % token isn't final; it might instead be @ or ? or #.)
 ```
 
 
 # Errors
 ```
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-  ┌─ pipeline-operator-hack.js:5:3
-  │
-5 │  |> take(prefix.length, %)
-  │   ^ This operator requires a left hand side value
+pipeline-operator-hack.js:5:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `%` operator.
-  ┌─ pipeline-operator-hack.js:5:25
-  │
-5 │  |> take(prefix.length, %)
-  │                         ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+    4 │ return list
+  > 5 │  |> take(prefix.length, %)
+      │   ^
+    6 │  |> equals(%, prefix);
+    7 │ 
+  
+pipeline-operator-hack.js:5:25 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an expression but instead found ')'
-  ┌─ pipeline-operator-hack.js:5:26
-  │
-5 │  |> take(prefix.length, %)
-  │                          ^ Expected an expression here
+  × Expected an expression for the left hand side of the `%` operator.
+  
+  × This operator requires a left hand side value
+  
+    4 │ return list
+  > 5 │  |> take(prefix.length, %)
+      │                         ^
+    6 │  |> equals(%, prefix);
+    7 │ 
+  
+pipeline-operator-hack.js:5:26 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `>` operator.
-  ┌─ pipeline-operator-hack.js:6:3
-  │
-6 │  |> equals(%, prefix);
-  │   ^ This operator requires a left hand side value
+  × expected an expression but instead found ')'
+  
+  × Expected an expression here
+  
+    4 │ return list
+  > 5 │  |> take(prefix.length, %)
+      │                          ^
+    6 │  |> equals(%, prefix);
+    7 │ 
+  
+pipeline-operator-hack.js:6:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `%` operator.
-  ┌─ pipeline-operator-hack.js:6:12
-  │
-6 │  |> equals(%, prefix);
-  │            ^ This operator requires a left hand side value
+  × Expected an expression for the left hand side of the `>` operator.
+  
+  × This operator requires a left hand side value
+  
+    4 │ return list
+    5 │  |> take(prefix.length, %)
+  > 6 │  |> equals(%, prefix);
+      │   ^
+    7 │ 
+    8 │ // (The % token isn't final; it might instead be @ or ? or #.)
+  
+pipeline-operator-hack.js:6:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an expression but instead found ','
-  ┌─ pipeline-operator-hack.js:6:13
-  │
-6 │  |> equals(%, prefix);
-  │             ^ Expected an expression here
+  × Expected an expression for the left hand side of the `%` operator.
+  
+  × This operator requires a left hand side value
+  
+    4 │ return list
+    5 │  |> take(prefix.length, %)
+  > 6 │  |> equals(%, prefix);
+      │            ^
+    7 │ 
+    8 │ // (The % token isn't final; it might instead be @ or ? or #.)
+  
+pipeline-operator-hack.js:6:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Illegal return statement outside of a function
-  ┌─ pipeline-operator-hack.js:4:1
-  │  
-4 │ ┌ return list
-5 │ │  |> take(prefix.length, %)
-6 │ │  |> equals(%, prefix);
-  │ └──────────────────────^
+  × expected an expression but instead found ','
+  
+  × Expected an expression here
+  
+    4 │ return list
+    5 │  |> take(prefix.length, %)
+  > 6 │  |> equals(%, prefix);
+      │             ^
+    7 │ 
+    8 │ // (The % token isn't final; it might instead be @ or ? or #.)
+  
+pipeline-operator-hack.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal return statement outside of a function
+  
+    2 │ // https://github.com/js-choi/proposal-hack-pipes
+    3 │ 
+  > 4 │ return list
+      │ ^^^^^^^^^^^
+  > 5 │  |> take(prefix.length, %)
+  > 6 │  |> equals(%, prefix);
+      │  ^^^^^^^^^^^^^^^^^^^^^
+    7 │ 
+    8 │ // (The % token isn't final; it might instead be @ or ? or #.)
+  
 
 ```
 

@@ -15,8 +15,11 @@ mod signals;
 mod syntax;
 mod visitor;
 
+// Re-exported for use in the `declare_group` macro
+pub use rome_diagnostics::v2::category_concat;
+
 pub use crate::categories::{ActionCategory, RuleCategories, RuleCategory};
-pub use crate::matcher::{QueryMatcher, RuleKey, SignalEntry};
+pub use crate::matcher::{InspectMatcher, MatchQueryParams, QueryMatcher, RuleKey, SignalEntry};
 pub use crate::query::{Ast, QueryKey, QueryMatch, Queryable};
 pub use crate::registry::{
     LanguageRoot, Phase, Phases, RegistryRuleMetadata, RuleRegistry, RuleSuppressions,
@@ -30,8 +33,12 @@ pub use crate::signals::{AnalyzerAction, AnalyzerSignal};
 pub use crate::syntax::SyntaxVisitor;
 pub use crate::visitor::{NodeVisitor, Visitor, VisitorContext, VisitorFinishContext};
 use rome_console::markup;
-use rome_diagnostics::file::FileId;
-use rome_diagnostics::Diagnostic;
+use rome_diagnostics::file::{FileId, FileSpan};
+use rome_diagnostics::{
+    v2::{category, Category},
+    Severity,
+};
+use rome_diagnostics::{Diagnostic, SubDiagnostic};
 use rome_rowan::{
     AstNode, Direction, Language, SyntaxElement, SyntaxToken, TextRange, TextSize, TriviaPieceKind,
     WalkEvent,
@@ -392,26 +399,27 @@ where
                     suppressions.push(key);
                 } else {
                     // Emit a warning for the unknown rule
-                    let signal = DiagnosticSignal::new(move || {
-                        let diag = match group_rule {
+                    let signal =
+                        DiagnosticSignal::new(move || {
+                            let diag = match group_rule {
                             Some((group, rule)) => Diagnostic::warning(
                                 file_id,
-                                "Linter",
+                                category!("suppressions/unknownRule"),
                                 markup! {
                                     "Unknown lint rule "{group}"/"{rule}" in suppression comment"
                                 },
-                            ),
+                            ).primary(range, ""),
                             None => Diagnostic::warning(
                                 file_id,
-                                "Linter",
+                                category!("suppressions/unknownGroup"),
                                 markup! {
                                     "Unknown lint rule group "{rule}" in suppression comment"
                                 },
-                            ),
+                            ).primary(range, ""),
                         };
 
-                        diag.primary(range, "")
-                    });
+                            AnalyzerDiagnostic::from_diagnostic(diag)
+                        });
 
                     (self.emit_signal)(&signal)?;
                 }
@@ -501,8 +509,8 @@ where
 ///
 /// - `// rome-ignore format` -> `vec![]`
 /// - `// rome-ignore lint` -> `vec![None]`
-/// - `// rome-ignore lint(js/useWhile)` -> `vec![Some("js/useWhile")]`
-/// - `// rome-ignore lint(js/useWhile) lint(js/noDeadCode)` -> `vec![Some("js/useWhile"), Some("js/noDeadCode")]`
+/// - `// rome-ignore lint(correctness/useWhile)` -> `vec![Some("correctness/useWhile")]`
+/// - `// rome-ignore lint(correctness/useWhile) lint(nursery/noUnreachable)` -> `vec![Some("correctness/useWhile"), Some("nursery/noUnreachable")]`
 type SuppressionParser = fn(&str) -> Vec<Option<&str>>;
 
 type SignalHandler<'a, L, Break> = &'a mut dyn FnMut(&dyn AnalyzerSignal<L>) -> ControlFlow<Break>;
@@ -567,6 +575,84 @@ impl<'analysis> AnalysisFilter<'analysis> {
         Self {
             enabled_rules,
             ..AnalysisFilter::default()
+        }
+    }
+}
+
+/// Small wrapper for diagnostics during the analysis phase.
+///
+/// During these phases, analyzers can create various type diagnostics and some of them
+/// don't have all the info to actually create a real [Diagnostic].
+///
+/// This wrapper serves as glue, which eventually is able to spit out full fledged diagnostics.
+///
+pub enum AnalyzerDiagnostic {
+    /// It holds various info related to diagnostics emitted by the rules
+    Rule {
+        file_id: FileId,
+        rule_diagnostic: RuleDiagnostic,
+    },
+    /// We have raw information to create a basic [Diagnostic]
+    Raw(Diagnostic),
+}
+
+impl AnalyzerDiagnostic {
+    pub fn code(&self) -> Option<&'static Category> {
+        match self {
+            AnalyzerDiagnostic::Rule {
+                rule_diagnostic, ..
+            } => Some(rule_diagnostic.category),
+            AnalyzerDiagnostic::Raw(diag) => diag.code,
+        }
+    }
+
+    pub fn from_rule_diagnostic(file_id: FileId, rule_diagnostic: RuleDiagnostic) -> Self {
+        Self::Rule {
+            file_id,
+            rule_diagnostic,
+        }
+    }
+
+    pub fn from_diagnostic(diagnostic: Diagnostic) -> Self {
+        Self::Raw(diagnostic)
+    }
+
+    pub fn into_diagnostic(self, severity: Severity) -> Diagnostic {
+        match self {
+            AnalyzerDiagnostic::Rule {
+                rule_diagnostic,
+                file_id,
+            } => Diagnostic {
+                file_id,
+                severity,
+                code: Some(rule_diagnostic.category),
+                title: rule_diagnostic.title,
+                summary: rule_diagnostic.summary,
+                tag: rule_diagnostic.tag,
+                primary: Some(SubDiagnostic {
+                    severity,
+                    msg: rule_diagnostic.primary.unwrap_or_default(),
+                    span: FileSpan {
+                        file: file_id,
+                        range: rule_diagnostic.span,
+                    },
+                }),
+                children: rule_diagnostic
+                    .secondaries
+                    .into_iter()
+                    .map(|(severity, msg, range)| SubDiagnostic {
+                        severity,
+                        msg,
+                        span: FileSpan {
+                            file: file_id,
+                            range,
+                        },
+                    })
+                    .collect(),
+                suggestions: Vec::new(),
+                footers: rule_diagnostic.footers,
+            },
+            AnalyzerDiagnostic::Raw(diagnostic) => diagnostic,
         }
     }
 }

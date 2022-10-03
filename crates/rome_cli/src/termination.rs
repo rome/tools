@@ -57,6 +57,16 @@ pub enum Termination {
     /// Wrapper for an underlying `rome_service` error
     #[error(transparent)]
     WorkspaceError(#[from] RomeError),
+
+    /// Wrapper for an underlying `std::io` error
+    #[error(transparent)]
+    IoError(#[from] std::io::Error),
+
+    #[error(
+        "no running instance of the Rome daemon server was found. Run '{} start' to start a server",
+        command_name()
+    )]
+    ServerNotRunning,
 }
 
 fn command_name() -> String {

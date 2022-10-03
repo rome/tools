@@ -48,4 +48,23 @@
 //  https://github.com/rome/tools/issues/2944
 <div className={asdf asdf} />;
 <div className={asdf
-	/* comment */ asdf } />
+	/* comment */ asdf } />;
+
+// Wrapping JSX in attribute
+const a = <Popconfirm
+		title={
+			(
+				<span className="popconfirm-test">
+		Are you sure delete this task? let
+	</span>
+			)
+		}
+		okText="Yes"
+		cancelText="No"
+		mouseEnterDelay={0}
+		mouseLeaveDelay={0}
+		onVisibleChange={onVisibleChange}
+	>
+		<span>Delete</span>
+	</Popconfirm>
+;

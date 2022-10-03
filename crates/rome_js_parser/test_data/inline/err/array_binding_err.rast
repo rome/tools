@@ -267,40 +267,70 @@ JsModule {
       1: SEMICOLON@87..88 ";" [] []
   3: EOF@88..89 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `,` but instead found `b`
-  ┌─ array_binding_err.js:1:8
-  │
-1 │ let [a b] = [1, 2];
-  │        ^ unexpected
+array_binding_err.js:1:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `b`
+  
+  × unexpected
+  
+  > 1 │ let [a b] = [1, 2];
+      │        ^
+    2 │ let [="default"] = [1, 2];
+    3 │ let ["default"] = [1, 2];
+  
 --
-error[SyntaxError]: expected an identifier, an array pattern, or an object pattern but instead found '='
-  ┌─ array_binding_err.js:2:6
-  │
-2 │ let [="default"] = [1, 2];
-  │      ^ Expected an identifier, an array pattern, or an object pattern here
+array_binding_err.js:2:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier, an array pattern, or an object pattern but instead found '='
+  
+  × Expected an identifier, an array pattern, or an object pattern here
+  
+    1 │ let [a b] = [1, 2];
+  > 2 │ let [="default"] = [1, 2];
+      │      ^
+    3 │ let ["default"] = [1, 2];
+    4 │ let [[c ] = [];
+  
 --
-error[SyntaxError]: expected an identifier, an object pattern, an array pattern, or a rest pattern but instead found '"default"'
-  ┌─ array_binding_err.js:3:6
-  │
-3 │ let ["default"] = [1, 2];
-  │      ^^^^^^^^^ Expected an identifier, an object pattern, an array pattern, or a rest pattern here
+array_binding_err.js:3:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier, an object pattern, an array pattern, or a rest pattern but instead found '"default"'
+  
+  × Expected an identifier, an object pattern, an array pattern, or a rest pattern here
+  
+    1 │ let [a b] = [1, 2];
+    2 │ let [="default"] = [1, 2];
+  > 3 │ let ["default"] = [1, 2];
+      │      ^^^^^^^^^
+    4 │ let [[c ] = [];
+    5 │ 
+  
 --
-error[SyntaxError]: expected `,` but instead found `;`
-  ┌─ array_binding_err.js:4:15
-  │
-4 │ let [[c ] = [];
-  │               ^ unexpected
+array_binding_err.js:4:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `;`
+  
+  × unexpected
+  
+    2 │ let [="default"] = [1, 2];
+    3 │ let ["default"] = [1, 2];
+  > 4 │ let [[c ] = [];
+      │               ^
+    5 │ 
+  
 --
-error[SyntaxError]: Object and Array patterns require initializers
-  ┌─ array_binding_err.js:4:5
-  │
-4 │ let [[c ] = [];
-  │     ^^^^^^^^^^ this pattern is declared, but it is not given an initialized value
+array_binding_err.js:4:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Object and Array patterns require initializers
+  
+  × this pattern is declared, but it is not given an initialized value
+  
+    2 │ let [="default"] = [1, 2];
+    3 │ let ["default"] = [1, 2];
+  > 4 │ let [[c ] = [];
+      │     ^^^^^^^^^^
+    5 │ 
+  
 --
 let [a b] = [1, 2];
 let [="default"] = [1, 2];

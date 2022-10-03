@@ -2,6 +2,9 @@
 	"cases": [
 		{
 			"quote_style": "Single"
+		},
+		{
+			"quote_properties": "Preserve"
 		}
 	]
 }

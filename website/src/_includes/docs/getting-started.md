@@ -62,7 +62,7 @@ steps:
 You can download and install the binary directly using `curl`:
 
 ```shell
-curl -L https://github.com/rome/tools/releases/download/latest/rome-<OS>-<ARCH> -o rome
+curl -L https://github.com/rome/tools/releases/latest/download/rome-<OS>-<ARCH> -o rome
 chmod +x rome
 ```
 
@@ -82,8 +82,8 @@ Please make sure to choose the correct architecture from the [releases page](htt
 
 ## Post-Installation
 
-- check the [formatter section](/formatter#use-the-formatter-with-the-cli) for options and commands;
-- check the options available in the [VS Code extension](/formatter#use-the-formatter-with-the-vscode-extension)
+- check the [formatter section](/#formatter) for options and commands;
+- check the options available in the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=rome.rome)
 
 [`win32-arm64`]: https://github.com/rome/tools/releases/latest/download/rome-win32-arm64.exe
 [`darwin-arm64`]: https://github.com/rome/tools/releases/latest/download/rome-darwin-arm64

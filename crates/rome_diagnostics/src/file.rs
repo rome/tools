@@ -1,6 +1,9 @@
-use rome_console::codespan::SourceFile;
 use rome_rowan::{Language, SyntaxElement, SyntaxNode, SyntaxToken, TextRange, TextSize};
+use serde::{Deserialize, Serialize};
 use std::{collections::HashMap, fmt::Debug, ops::Range};
+
+pub use crate::v2::FileId;
+use crate::v2::{LineIndex, LineIndexBuf, SourceCode};
 
 /// A value which can be used as the range inside of a diagnostic.
 ///
@@ -39,23 +42,19 @@ pub trait Span {
     }
 
     fn sub_start(&self, amount: TextSize) -> TextRange {
-        let range = self.as_range();
-        TextRange::new(range.start() - amount, range.end())
+        self.as_range().sub_start(amount)
     }
 
     fn add_start(&self, amount: TextSize) -> TextRange {
-        let range = self.as_range();
-        TextRange::new(range.start() + amount, range.end())
+        self.as_range().add_start(amount)
     }
 
     fn sub_end(&self, amount: TextSize) -> TextRange {
-        let range = self.as_range();
-        TextRange::new(range.start(), range.end() - amount)
+        self.as_range().sub_end(amount)
     }
 
     fn add_end(&self, amount: TextSize) -> TextRange {
-        let range = self.as_range();
-        TextRange::new(range.start(), range.end() + amount)
+        self.as_range().add_end(amount)
     }
 }
 
@@ -111,12 +110,9 @@ impl Span for TextRange {
     }
 }
 
-/// An id that points into a file database.
-pub type FileId = usize;
-
 /// A range that is indexed in a specific file.
-#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct FileSpan {
     pub file: FileId,
     pub range: TextRange,
@@ -136,7 +132,7 @@ pub trait Files {
     fn name(&self, id: FileId) -> Option<&str>;
 
     /// Returns the source of the file identified by the id.
-    fn source(&self, id: FileId) -> Option<SourceFile<'_>>;
+    fn source(&self, id: FileId) -> Option<SourceCode<&'_ str, &'_ LineIndex>>;
 }
 
 /// A file database that contains only one file.
@@ -144,14 +140,14 @@ pub trait Files {
 pub struct SimpleFile {
     name: String,
     source: String,
-    line_starts: Vec<TextSize>,
+    line_starts: LineIndexBuf,
 }
 
 impl SimpleFile {
     /// Create a new file with the name and source.
     pub fn new(name: String, source: String) -> Self {
         Self {
-            line_starts: SourceFile::line_starts(&source).collect(),
+            line_starts: LineIndexBuf::from_source_text(&source),
             name,
             source,
         }
@@ -168,8 +164,11 @@ impl Files for SimpleFile {
         Some(&self.name)
     }
 
-    fn source(&self, _id: FileId) -> Option<SourceFile<'_>> {
-        Some(SourceFile::new(&self.source, &self.line_starts))
+    fn source(&self, _id: FileId) -> Option<SourceCode<&'_ str, &'_ LineIndex>> {
+        Some(SourceCode {
+            text: &self.source,
+            line_starts: Some(&self.line_starts),
+        })
     }
 }
 
@@ -187,7 +186,7 @@ impl SimpleFiles {
 
     /// Adds a file to this database and returns the id for the new file.
     pub fn add(&mut self, name: String, source: String) -> FileId {
-        let id = self.id;
+        let id = FileId::from(self.id);
         self.id += 1;
         self.files.insert(id, SimpleFile::new(name, source));
         id
@@ -203,7 +202,7 @@ impl Files for SimpleFiles {
         self.files.get(&id)?.name(id)
     }
 
-    fn source(&self, id: FileId) -> Option<SourceFile<'_>> {
+    fn source(&self, id: FileId) -> Option<SourceCode<&'_ str, &'_ LineIndex>> {
         self.files.get(&id)?.source(id)
     }
 }

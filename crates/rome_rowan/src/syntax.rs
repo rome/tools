@@ -11,7 +11,7 @@ pub use trivia::{
     TriviaPieceKind,
 };
 
-pub use element::SyntaxElement;
+pub use element::{SyntaxElement, SyntaxElementKey};
 pub(crate) use node::SyntaxSlots;
 pub use node::{
     Preorder, PreorderWithTokens, SendNode, SyntaxElementChildren, SyntaxNode, SyntaxNodeChildren,
@@ -113,7 +113,7 @@ impl<L: Language> IntoIterator for SyntaxList<L> {
 
 #[cfg(test)]
 mod tests {
-    use text_size::TextRange;
+    use rome_text_size::TextRange;
 
     use crate::raw_language::{RawLanguageKind, RawSyntaxTreeBuilder};
     use crate::syntax::TriviaPiece;

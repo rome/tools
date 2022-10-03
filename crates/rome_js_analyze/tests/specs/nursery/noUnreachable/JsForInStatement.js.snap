@@ -1,0 +1,76 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: JsForInStatement.js
+---
+# Input
+```js
+function JsForInStatement1() {
+    for (const key in value) {
+        break;
+        afterBreak();
+    }
+}
+
+function JsForInStatement2() {
+    for (const key in value) {
+        continue;
+        afterContinue();
+    }
+}
+
+```
+
+# Diagnostics
+```
+JsForInStatement.js:4:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+    2 │     for (const key in value) {
+    3 │         break;
+  > 4 │         afterBreak();
+      │         ^^^^^^^^^^^^^
+    5 │     }
+    6 │ }
+  
+  i This statement will break the flow of the code ...
+  
+    1 │ function JsForInStatement1() {
+    2 │     for (const key in value) {
+  > 3 │         break;
+      │         ^^^^^^
+    4 │         afterBreak();
+    5 │     }
+  
+
+```
+
+```
+JsForInStatement.js:11:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+     9 │     for (const key in value) {
+    10 │         continue;
+  > 11 │         afterContinue();
+       │         ^^^^^^^^^^^^^^^^
+    12 │     }
+    13 │ }
+  
+  i This statement will continue the loop ...
+  
+     8 │ function JsForInStatement2() {
+     9 │     for (const key in value) {
+  > 10 │         continue;
+       │         ^^^^^^^^^
+    11 │         afterContinue();
+    12 │     }
+  
+
+```
+
+

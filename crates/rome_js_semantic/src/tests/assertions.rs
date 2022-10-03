@@ -1,6 +1,6 @@
 use crate::{semantic_events, SemanticEvent};
 use rome_console::{markup, ConsoleExt, EnvConsole};
-use rome_diagnostics::{file::SimpleFile, Diagnostic};
+use rome_diagnostics::{file::FileId, file::SimpleFile, v2::category, Diagnostic};
 use rome_js_syntax::{JsAnyRoot, JsSyntaxToken, SourceType, TextRange, TextSize, WalkEvent};
 use rome_rowan::{AstNode, NodeOrToken};
 use std::collections::{BTreeMap, HashMap};
@@ -101,7 +101,7 @@ use std::collections::{BTreeMap, HashMap};
 /// if(true) ;/*NOEVENT*/;
 /// ```
 pub fn assert(code: &str, test_name: &str) {
-    let r = rome_js_parser::parse(code, 0, SourceType::js_module());
+    let r = rome_js_parser::parse(code, FileId::zero(), SourceType::tsx());
 
     if r.has_errors() {
         let files = SimpleFile::new(test_name.to_string(), code.into());
@@ -127,6 +127,7 @@ pub fn assert(code: &str, test_name: &str) {
             SemanticEvent::Write { range, .. } => range.start(),
             SemanticEvent::HoistedWrite { range, .. } => range.start(),
             SemanticEvent::UnresolvedReference { range } => range.start(),
+            SemanticEvent::Exported { range } => range.start(),
         };
 
         let v = events_by_pos.entry(pos).or_default();
@@ -215,7 +216,7 @@ impl SemanticAssertion {
                 .to_string();
 
             Some(SemanticAssertion::Declaration(DeclarationAssertion {
-                range: token.text_range(),
+                range: token.parent().unwrap().text_range(),
                 declaration_name: name,
             }))
         } else if assertion_text.starts_with("/*READ ") {
@@ -227,7 +228,7 @@ impl SemanticAssertion {
                 .to_string();
 
             Some(SemanticAssertion::Read(ReadAssertion {
-                range: token.text_range(),
+                range: token.parent().unwrap().text_range(),
                 declaration_asertion_name: symbol_name,
             }))
         } else if assertion_text.starts_with("/*WRITE ") {
@@ -239,7 +240,7 @@ impl SemanticAssertion {
                 .to_string();
 
             Some(SemanticAssertion::Write(WriteAssertion {
-                range: token.text_range(),
+                range: token.parent().unwrap().text_range(),
                 declaration_asertion_name: symbol_name,
             }))
         } else if assertion_text.contains("/*START") {
@@ -250,7 +251,7 @@ impl SemanticAssertion {
                 .trim()
                 .to_string();
             Some(SemanticAssertion::ScopeStart(ScopeStartAssertion {
-                range: token.text_range(),
+                range: token.parent().unwrap().text_range(),
                 scope_name,
             }))
         } else if assertion_text.contains("/*END") {
@@ -261,7 +262,7 @@ impl SemanticAssertion {
                 .trim()
                 .to_string();
             Some(SemanticAssertion::ScopeEnd(ScopeEndAssertion {
-                range: token.text_range(),
+                range: token.parent().unwrap().text_range(),
                 scope_name,
             }))
         } else if assertion_text.starts_with("/*@") {
@@ -272,20 +273,20 @@ impl SemanticAssertion {
                 .trim()
                 .to_string();
             Some(SemanticAssertion::AtScope(AtScopeAssertion {
-                range: token.text_range(),
+                range: token.parent().unwrap().text_range(),
                 scope_name,
             }))
         } else if assertion_text.contains("/*NOEVENT") {
             Some(SemanticAssertion::NoEvent(NoEventAssertion {
-                range: token.text_range(),
+                range: token.parent().unwrap().text_range(),
             }))
         } else if assertion_text.contains("/*UNIQUE") {
             Some(SemanticAssertion::Unique(UniqueAssertion {
-                range: token.text_range(),
+                range: token.parent().unwrap().text_range(),
             }))
         } else if assertion_text.contains("/*?") {
             Some(SemanticAssertion::Unmatched(UnmatchedAssertion {
-                range: token.text_range(),
+                range: token.parent().unwrap().text_range(),
             }))
         } else {
             None
@@ -462,7 +463,7 @@ impl SemanticAssertions {
 
                 if let Some(declaration_at_range) = declaration_at_range {
                     unused_match = Some(format!(
-                        "{} == {}",
+                        "{} != {}",
                         &code[declaration_at_range], &code[decl.range]
                     ));
                     code[declaration_at_range] == code[decl.range]
@@ -641,47 +642,31 @@ impl SemanticAssertions {
         // Check every no event assertion
 
         for assertion in self.no_events.iter() {
-            match events_by_pos.get(&assertion.range.start()) {
-                Some(_) => panic!("unexpected event at this position"),
-                None => {
-                    // Ok
-                }
+            if events_by_pos.get(&assertion.range.start()).is_some() {
+                panic!("unexpected event at this position")
             }
 
-            match events_by_pos.get(&assertion.range.end()) {
-                Some(_) => panic!("unexpected event at this position"),
-                None => {
-                    // Ok
-                }
+            if events_by_pos.get(&assertion.range.end()).is_some() {
+                panic!("unexpected event at this position")
             }
         }
 
         // Check every unique assertion
 
         for unique in self.uniques.iter() {
-            match events_by_pos.get(&unique.range.start()) {
-                Some(v) => {
-                    if v.len() > 1 {
-                        panic!("unexpected more than one event");
-                    } else if v.is_empty() {
-                        panic!("unexpected no events");
-                    }
-                }
-                None => {
-                    // Ok
+            if let Some(v) = events_by_pos.get(&unique.range.start()) {
+                if v.len() > 1 {
+                    panic!("unexpected more than one event");
+                } else if v.is_empty() {
+                    panic!("unexpected no events");
                 }
             }
 
-            match events_by_pos.get(&unique.range.end()) {
-                Some(v) => {
-                    if v.len() > 1 {
-                        panic!("unexpected more than one event");
-                    } else if v.is_empty() {
-                        panic!("unexpected no events");
-                    }
-                }
-                None => {
-                    // Ok
+            if let Some(v) = events_by_pos.get(&unique.range.end()) {
+                if v.len() > 1 {
+                    panic!("unexpected more than one event");
+                } else if v.is_empty() {
+                    panic!("unexpected no events");
                 }
             }
         }
@@ -713,8 +698,8 @@ fn error_assertion_not_attached_to_a_declaration(
 ) {
     let files = SimpleFile::new(test_name.to_string(), code.into());
     let d = Diagnostic::error(
-        0,
-        "",
+        FileId::zero(),
+        category!("semanticTests"),
         "This assertion must be attached to a SemanticEvent::DeclarationFound.",
     )
     .primary(assertion_range, "");
@@ -733,8 +718,8 @@ fn error_declaration_pointing_to_unknown_scope(
 ) {
     let files = SimpleFile::new(test_name.to_string(), code.into());
     let d = Diagnostic::error(
-        0,
-        "",
+        FileId::zero(),
+        category!("semanticTests"),
         "Declaration assertions is pointing to the wrong scope",
     )
     .primary(assertion_range, "");
@@ -754,12 +739,16 @@ fn error_assertion_name_clash(
     // If there is already an assertion with the same name. Suggest a rename
 
     let files = SimpleFile::new(test_name.to_string(), code.into());
-    let d = Diagnostic::error(0, "", "Assertion label conflict.")
-        .primary(
-            token.text_range(),
-            "There is already a assertion with the same name. Consider renaming this one.",
-        )
-        .secondary(old_range, "Previous assertion");
+    let d = Diagnostic::error(
+        FileId::zero(),
+        category!("semanticTests"),
+        "Assertion label conflict.",
+    )
+    .primary(
+        token.text_range(),
+        "There is already a assertion with the same name. Consider renaming this one.",
+    )
+    .secondary(old_range, "Previous assertion");
 
     let mut console = EnvConsole::new(false);
     console.log(markup! {
@@ -775,7 +764,12 @@ fn error_scope_end_assertion_points_to_non_existing_scope_start_assertion(
     file_name: &str,
 ) {
     let files = SimpleFile::new(file_name.to_string(), code.into());
-    let d = Diagnostic::error(0, "", "Scope start assertion not found.").primary(
+    let d = Diagnostic::error(
+        FileId::zero(),
+        category!("semanticTests"),
+        "Scope start assertion not found.",
+    )
+    .primary(
         range,
         "This scope end assertion points to a non-existing scope start assertion.",
     );
@@ -794,12 +788,16 @@ fn error_scope_end_assertion_points_to_the_wrong_scope_start(
     file_name: &str,
 ) {
     let files = SimpleFile::new(file_name.to_string(), code.into());
-    let d = Diagnostic::error(0, "", "Wrong scope start")
-        .primary(
-            range,
-            "This scope end assertion points to the wrong scope start.",
-        )
-        .secondary(same_name_range, "This assertion has the same label");
+    let d = Diagnostic::error(
+        FileId::zero(),
+        category!("semanticTests"),
+        "Wrong scope start",
+    )
+    .primary(
+        range,
+        "This scope end assertion points to the wrong scope start.",
+    )
+    .secondary(same_name_range, "This assertion has the same label");
 
     let mut console = EnvConsole::new(false);
     console.log(markup! {

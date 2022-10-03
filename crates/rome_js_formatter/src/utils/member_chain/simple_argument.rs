@@ -38,8 +38,6 @@ use rome_rowan::{AstSeparatedList, SyntaxResult};
 pub(crate) enum SimpleArgument {
     Expression(JsAnyExpression),
     Name(JsAnyName),
-    Member(JsAnyObjectMember),
-    ArrayElement(JsAnyArrayElement),
     Spread,
 }
 
@@ -51,7 +49,11 @@ impl SimpleArgument {
         }
     }
 
-    pub fn is_simple(&self, depth: u8) -> bool {
+    pub fn is_simple(&self) -> bool {
+        self.is_simple_impl(0)
+    }
+
+    fn is_simple_impl(&self, depth: u8) -> bool {
         if depth >= 2 {
             return false;
         }
@@ -81,12 +83,12 @@ impl SimpleArgument {
                 let arguments = match any_expression {
                     JsAnyExpression::JsNewExpression(expr) => {
                         let callee = expr.callee()?;
-                        is_simple_callee = SimpleArgument::from(callee).is_simple(depth);
+                        is_simple_callee = SimpleArgument::from(callee).is_simple_impl(depth);
                         expr.arguments()
                     }
                     JsAnyExpression::JsCallExpression(expr) => {
                         let callee = expr.callee()?;
-                        is_simple_callee = SimpleArgument::from(callee).is_simple(depth);
+                        is_simple_callee = SimpleArgument::from(callee).is_simple_impl(depth);
                         expr.arguments().ok()
                     }
                     JsAnyExpression::JsImportCallExpression(expr) => {
@@ -99,7 +101,7 @@ impl SimpleArgument {
                 let simple_arguments = if let Some(arguments) = arguments {
                     arguments.args().iter().all(|argument| {
                         argument.map_or(true, |argument| {
-                            SimpleArgument::from(argument).is_simple(depth + 1)
+                            SimpleArgument::from(argument).is_simple_impl(depth + 1)
                         })
                     })
                 } else {
@@ -125,8 +127,7 @@ impl SimpleArgument {
             let JsStaticMemberExpressionFields { member, object, .. } =
                 static_expression.as_fields();
 
-            Ok(SimpleArgument::from(member?).is_simple(depth)
-                && SimpleArgument::from(object?).is_simple(depth))
+            Ok(member.is_ok() && SimpleArgument::from(object?).is_simple_impl(depth))
         } else {
             Ok(false)
         }
@@ -137,7 +138,7 @@ impl SimpleArgument {
             assertion,
         )) = self
         {
-            Ok(SimpleArgument::from(assertion.expression()?).is_simple(depth))
+            Ok(SimpleArgument::from(assertion.expression()?).is_simple_impl(depth))
         } else {
             Ok(false)
         }
@@ -151,7 +152,7 @@ impl SimpleArgument {
                 unary_expression.operator()?,
                 JsUnaryOperator::LogicalNot | JsUnaryOperator::Minus
             ) {
-                Ok(SimpleArgument::from(unary_expression.argument()?).is_simple(depth))
+                Ok(SimpleArgument::from(unary_expression.argument()?).is_simple_impl(depth))
             } else {
                 Ok(false)
             }
@@ -168,7 +169,12 @@ impl SimpleArgument {
                 .elements()
                 .iter()
                 .filter_map(|element| element.ok())
-                .all(|element| SimpleArgument::from(element).is_simple(depth + 1))
+                .all(|element| match element {
+                    JsAnyArrayElement::JsAnyExpression(expression) => {
+                        SimpleArgument::from(expression).is_simple_impl(depth + 1)
+                    }
+                    _ => false,
+                })
         } else {
             false
         }
@@ -182,20 +188,20 @@ impl SimpleArgument {
         }
     }
 
-    fn is_simple_literal(&self) -> bool {
-        match self {
-            SimpleArgument::Expression(expression) => {
-                matches!(
-                    expression,
-                    JsAnyExpression::JsAnyLiteralExpression(_)
-                        | JsAnyExpression::JsThisExpression(_)
-                        | JsAnyExpression::JsIdentifierExpression(_)
-                        | JsAnyExpression::JsSuperExpression(_)
-                )
-            }
-            SimpleArgument::Name(JsAnyName::JsPrivateName(_)) => true,
-            _ => false,
+    const fn is_simple_literal(&self) -> bool {
+        if let SimpleArgument::Name(JsAnyName::JsPrivateName(_)) = self {
+            return true;
         }
+
+        matches!(
+            self,
+            SimpleArgument::Expression(
+                JsAnyExpression::JsAnyLiteralExpression(_)
+                    | JsAnyExpression::JsThisExpression(_)
+                    | JsAnyExpression::JsIdentifierExpression(_)
+                    | JsAnyExpression::JsSuperExpression(_),
+            )
+        )
     }
 
     fn is_simple_object_expression(&self, depth: u8) -> bool {
@@ -207,22 +213,24 @@ impl SimpleArgument {
                 .iter()
                 .filter_map(|member| member.ok())
                 .all(|member| {
-                    let is_shorthand_property = matches!(
-                        member,
-                        JsAnyObjectMember::JsShorthandPropertyObjectMember(_)
-                    );
-                    let is_computed_property =
-                        if let JsAnyObjectMember::JsPropertyObjectMember(property) = &member {
-                            matches!(
+                    use JsAnyObjectMember::*;
+
+                    match member {
+                        JsShorthandPropertyObjectMember(_) => true,
+                        JsPropertyObjectMember(property) => {
+                            let is_computed = matches!(
                                 property.name(),
                                 Ok(JsAnyObjectMemberName::JsComputedMemberName(_))
-                            )
-                        } else {
-                            false
-                        };
-                    let is_simple = SimpleArgument::from(member).is_simple(depth + 1);
+                            );
 
-                    !is_computed_property && (is_shorthand_property || is_simple)
+                            let is_simple = property.value().map_or(false, |value| {
+                                SimpleArgument::from(value).is_simple_impl(depth + 1)
+                            });
+
+                            !is_computed && is_simple
+                        }
+                        _ => false,
+                    }
                 })
         } else {
             false
@@ -239,18 +247,6 @@ impl From<JsAnyExpression> for SimpleArgument {
 impl From<JsAnyName> for SimpleArgument {
     fn from(name: JsAnyName) -> Self {
         Self::Name(name)
-    }
-}
-
-impl From<JsAnyObjectMember> for SimpleArgument {
-    fn from(member: JsAnyObjectMember) -> Self {
-        Self::Member(member)
-    }
-}
-
-impl From<JsAnyArrayElement> for SimpleArgument {
-    fn from(element: JsAnyArrayElement) -> Self {
-        Self::ArrayElement(element)
     }
 }
 
@@ -284,7 +280,7 @@ pub fn is_simple_template_literal(template: &JsTemplate, depth: u8) -> SyntaxRes
             }
             JsAnyTemplateElement::JsTemplateElement(element) => {
                 let expression = element.expression()?;
-                if !(SimpleArgument::from(expression).is_simple(depth)) {
+                if !(SimpleArgument::from(expression).is_simple_impl(depth)) {
                     return Ok(false);
                 }
             }

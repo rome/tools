@@ -90,12 +90,18 @@ JsModule {
       1: (empty)
   3: EOF@41..42 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected a parameter but instead found ')'
-  ┌─ object_expr_setter.js:2:10
-  │
-2 │  set foo() {
-  │          ^ Expected a parameter here
+object_expr_setter.js:2:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a parameter but instead found ')'
+  
+  × Expected a parameter here
+  
+    1 │ let b = {
+  > 2 │  set foo() {
+      │          ^
+    3 │     return 5;
+    4 │  }
+  
 --
 let b = {
  set foo() {

@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/enum/computed-members.ts
 ---
 
 # Input
@@ -26,35 +28,41 @@ enum C {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,13 +1,7 @@
--enum A {
--  [i++],
--}
-+enum A { [i++] }
+@@ -1,13 +1,13 @@
+ enum A {
+-  i++,
++  [i++],
+ }
  
  const bar = "bar";
--enum B {
--  [bar] = 2,
--}
-+enum B { [bar] = 2 }
+ enum B {
+-  bar = 2,
++  [bar] = 2,
+ }
  
  const foo = () => "foo";
--enum C {
--  [foo()] = 2,
--}
-+enum C { [foo()] = 2 }
+ enum C {
+-  foo() = 2,
++  [foo()] = 2,
+ }
 ```
 
 # Output
 
 ```js
-enum A { [i++] }
+enum A {
+  [i++],
+}
 
 const bar = "bar";
-enum B { [bar] = 2 }
+enum B {
+  [bar] = 2,
+}
 
 const foo = () => "foo";
-enum C { [foo()] = 2 }
+enum C {
+  [foo()] = 2,
+}
 ```
 
 

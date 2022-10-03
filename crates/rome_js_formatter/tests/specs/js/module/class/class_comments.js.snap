@@ -17,12 +17,14 @@ class A extends B { // leading comment
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 class A extends B {
 	// leading comment
 	constructor() {
 		super();
 	}
+
 	// trailing comment
 }
 

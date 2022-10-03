@@ -8,7 +8,7 @@ use std::{
 };
 
 use hdrhistogram::Histogram;
-use parking_lot::{Mutex, RwLock};
+use std::sync::{Mutex, RwLock};
 use tracing::{span, subscriber::Interest, Level, Metadata, Subscriber};
 use tracing_subscriber::{
     layer::Context,
@@ -170,6 +170,7 @@ where
 
         METRICS
             .write()
+            .unwrap()
             .insert(CallsiteKey(metadata), Mutex::new(entry));
 
         Interest::always()
@@ -238,12 +239,12 @@ where
 
             // Acquire a read lock on the metrics storage, access the metrics entry
             // associated with this call site and acquire a write lock on it
-            let metrics = METRICS.read();
+            let metrics = METRICS.read().unwrap();
             let entry = metrics
                 .get(&CallsiteKey(span.metadata()))
                 .expect("callsite not found, it should have been registered in register_callsite");
 
-            let mut entry = entry.lock();
+            let mut entry = entry.lock().unwrap();
             timing.record(now, &mut entry);
         }
     }
@@ -257,10 +258,10 @@ pub fn init_metrics() {
 
 /// Flush and print the recorded metrics to the console
 pub fn print_metrics() {
-    let mut histograms: Vec<_> = METRICS
-        .write()
+    let mut write_guard = METRICS.write().unwrap();
+    let mut histograms: Vec<_> = write_guard
         .drain()
-        .flat_map(|(key, entry)| entry.into_inner().into_histograms(key.0.name()))
+        .flat_map(|(key, entry)| entry.into_inner().unwrap().into_histograms(key.0.name()))
         .collect();
 
     histograms.sort_unstable_by(|(a, _), (b, _)| a.cmp(b));
@@ -395,13 +396,13 @@ mod tests {
         };
 
         let entry = {
-            let mut metrics = METRICS.write();
+            let mut metrics = METRICS.write().unwrap();
             metrics.remove(&CallsiteKey(key))
         };
 
         let entry = entry.expect("callsite does not exist in metrics storage");
 
-        let entry = entry.into_inner();
+        let entry = entry.into_inner().unwrap();
         let histograms = entry.into_histograms(key.name());
 
         for (_, histogram) in histograms {

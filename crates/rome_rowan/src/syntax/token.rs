@@ -1,14 +1,14 @@
 use crate::green::{GreenToken, GreenTrivia};
+use crate::syntax::element::SyntaxElementKey;
 use crate::syntax::SyntaxTrivia;
 use crate::syntax_token_text::SyntaxTokenText;
 use crate::{
-    cursor, Direction, Language, NodeOrToken, SyntaxElement, SyntaxKind, SyntaxNode, TriviaPiece,
-    TriviaPieceKind,
+    cursor, Direction, Language, NodeOrToken, SyntaxElement, SyntaxKind, SyntaxNode,
+    SyntaxTriviaPiece, TriviaPiece, TriviaPieceKind,
 };
+use rome_text_size::{TextLen, TextRange, TextSize};
 use std::fmt;
 use std::marker::PhantomData;
-use std::ptr::NonNull;
-use text_size::{TextRange, TextSize};
 
 #[derive(Clone, PartialEq, Eq, Hash)]
 pub struct SyntaxToken<L: Language> {
@@ -50,8 +50,9 @@ impl<L: Language> SyntaxToken<L> {
         self.raw.green().to_owned()
     }
 
-    pub fn key(&self) -> (NonNull<()>, TextSize) {
-        self.raw.key()
+    pub fn key(&self) -> SyntaxElementKey {
+        let (node_data, offset) = self.raw.key();
+        SyntaxElementKey::new(node_data, offset)
     }
 
     pub fn kind(&self) -> L::Kind {
@@ -66,7 +67,7 @@ impl<L: Language> SyntaxToken<L> {
         self.raw.text_trimmed_range()
     }
 
-    pub fn index(&self) -> usize {
+    pub(crate) fn index(&self) -> usize {
         self.raw.index()
     }
 
@@ -189,28 +190,58 @@ impl<L: Language> SyntaxToken<L> {
 
     /// Return a new version of this token with its leading trivia replaced with `trivia`
     #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
-    pub fn with_leading_trivia<'a, I>(self, trivia: I) -> Self
+    pub fn with_leading_trivia<'a, I>(&self, trivia: I) -> Self
     where
-        I: Iterator<Item = (TriviaPieceKind, &'a str)> + Clone + ExactSizeIterator,
+        I: IntoIterator<Item = (TriviaPieceKind, &'a str)>,
+        I::IntoIter: ExactSizeIterator,
     {
-        let mut text = String::new();
-        for (_, piece) in trivia.clone() {
-            text.push_str(piece);
-        }
+        let mut token_text = String::new();
+        let trivia = trivia.into_iter().map(|(kind, text)| {
+            token_text.push_str(text);
+            TriviaPiece::new(kind, TextSize::of(text))
+        });
 
-        text.push_str(self.text_trimmed());
+        let leading = GreenTrivia::new(trivia);
 
-        for piece in self.trailing_trivia().pieces() {
-            text.push_str(piece.text());
-        }
+        // Copy over token text and trailing trivia
+        let leading_len = self.raw.green().leading_trivia().text_len();
+        token_text.push_str(&self.text()[usize::from(leading_len)..]);
 
         Self {
             raw: cursor::SyntaxToken::new_detached(GreenToken::with_trivia(
                 self.kind().to_raw(),
-                &text,
-                GreenTrivia::new(
-                    trivia.map(|(kind, text)| TriviaPiece::new(kind, TextSize::of(text))),
-                ),
+                &token_text,
+                leading,
+                self.green_token().trailing_trivia().clone(),
+            )),
+            _p: PhantomData,
+        }
+    }
+
+    /// Return a new version of this token with its leading trivia replaced with `trivia`
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn with_leading_trivia_pieces<I>(&self, trivia: I) -> Self
+    where
+        I: IntoIterator<Item = SyntaxTriviaPiece<L>>,
+        I::IntoIter: ExactSizeIterator,
+    {
+        let mut token_text = String::new();
+        let trivia = trivia.into_iter().map(|piece| {
+            token_text.push_str(piece.text());
+            piece.into_raw_piece()
+        });
+
+        let leading = GreenTrivia::new(trivia);
+
+        // Copy over token text and trailing trivia
+        let leading_len = self.raw.green().leading_trivia().text_len();
+        token_text.push_str(&self.text()[usize::from(leading_len)..]);
+
+        Self {
+            raw: cursor::SyntaxToken::new_detached(GreenToken::with_trivia(
+                self.kind().to_raw(),
+                &token_text,
+                leading,
                 self.green_token().trailing_trivia().clone(),
             )),
             _p: PhantomData,
@@ -219,35 +250,69 @@ impl<L: Language> SyntaxToken<L> {
 
     /// Return a new version of this token with its trailing trivia replaced with `trivia`
     #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
-    pub fn with_trailing_trivia<'a, I>(self, trivia: I) -> Self
+    pub fn with_trailing_trivia<'a, I>(&self, trivia: I) -> Self
     where
-        I: Iterator<Item = (TriviaPieceKind, &'a str)> + Clone + ExactSizeIterator,
+        I: IntoIterator<Item = (TriviaPieceKind, &'a str)>,
+        I::IntoIter: ExactSizeIterator,
     {
-        let mut text = String::new();
-        for piece in self.leading_trivia().pieces() {
-            text.push_str(piece.text());
-        }
+        let mut token_text = String::new();
 
-        text.push_str(self.text_trimmed());
+        // copy over leading trivia and token text
+        let trailing_len = self.green_token().trailing_trivia().text_len();
+        token_text.push_str(&self.text()[..usize::from(self.text().text_len() - trailing_len)]);
 
-        for (_, piece) in trivia.clone() {
-            text.push_str(piece);
-        }
+        let trivia = trivia.into_iter().map(|(kind, text)| {
+            token_text.push_str(text);
+            TriviaPiece::new(kind, TextSize::of(text))
+        });
+
+        let trailing = GreenTrivia::new(trivia);
 
         Self {
             raw: cursor::SyntaxToken::new_detached(GreenToken::with_trivia(
                 self.kind().to_raw(),
-                &text,
+                &token_text,
                 self.green_token().leading_trivia().clone(),
-                GreenTrivia::new(
-                    trivia.map(|(kind, text)| TriviaPiece::new(kind, TextSize::of(text))),
-                ),
+                trailing,
             )),
             _p: PhantomData,
         }
     }
 
-    /// Returns the token leading trivia.
+    /// Return a new version of this token with its trailing trivia replaced with `trivia`
+    #[must_use = "syntax elements are immutable, the result of update methods must be propagated to have any effect"]
+    pub fn with_trailing_trivia_pieces<I>(&self, trivia: I) -> Self
+    where
+        I: IntoIterator<Item = SyntaxTriviaPiece<L>>,
+        I::IntoIter: ExactSizeIterator,
+    {
+        let mut token_text = String::new();
+
+        // copy over leading trivia and token text
+        let trailing_len = self.green_token().trailing_trivia().text_len();
+        token_text.push_str(&self.text()[..usize::from(self.text().text_len() - trailing_len)]);
+
+        let trivia = trivia.into_iter().map(|piece| {
+            token_text.push_str(piece.text());
+            piece.into_raw_piece()
+        });
+
+        let trailing = GreenTrivia::new(trivia);
+
+        Self {
+            raw: cursor::SyntaxToken::new_detached(GreenToken::with_trivia(
+                self.kind().to_raw(),
+                &token_text,
+                self.green_token().leading_trivia().clone(),
+                trailing,
+            )),
+            _p: PhantomData,
+        }
+    }
+
+    /// Returns the token's leading trivia.
+    ///
+    /// Looking backward in the text, a token owns all of its preceding trivia up to and including the first newline character.
     ///
     /// ```
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
@@ -269,7 +334,9 @@ impl<L: Language> SyntaxToken<L> {
         SyntaxTrivia::new(self.raw.leading_trivia())
     }
 
-    /// Returns the token trailing trivia.
+    /// Returns the token's trailing trivia.
+    ///
+    /// A token owns all of its following trivia up to, but not including, the next newline character.
     ///
     /// ```
     /// use rome_rowan::raw_language::{RawLanguage, RawLanguageKind, RawSyntaxTreeBuilder};
@@ -323,26 +390,9 @@ impl<L: Language> fmt::Debug for SyntaxToken<L> {
             self.text_trimmed()
         )?;
 
-        write!(f, "[")?;
-        let mut first_piece = true;
-        for piece in self.leading_trivia().pieces() {
-            if !first_piece {
-                write!(f, ", ")?;
-            }
-            first_piece = false;
-            write!(f, "{:?}", piece)?;
-        }
-        write!(f, "] [")?;
-
-        let mut first_piece = true;
-        for piece in self.trailing_trivia().pieces() {
-            if !first_piece {
-                write!(f, ", ")?;
-            }
-            first_piece = false;
-            write!(f, "{:?}", piece)?;
-        }
-        write!(f, "]")
+        self.leading_trivia().fmt(f)?;
+        write!(f, " ")?;
+        self.trailing_trivia().fmt(f)
     }
 }
 

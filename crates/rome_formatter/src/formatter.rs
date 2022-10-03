@@ -2,7 +2,8 @@ use crate::buffer::BufferSnapshot;
 use crate::builders::{FillBuilder, JoinBuilder, JoinNodesBuilder, Line};
 use crate::prelude::*;
 use crate::{
-    Arguments, Buffer, FormatContext, FormatState, FormatStateSnapshot, GroupId, VecBuffer,
+    Arguments, Buffer, Comments, CstFormatContext, FormatContext, FormatState, FormatStateSnapshot,
+    GroupId, VecBuffer,
 };
 
 /// Handles the formatting of a CST and stores the context how the CST should be formatted (user preferences).
@@ -16,6 +17,14 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// Creates a new context that uses the given formatter context
     pub fn new(buffer: &'buf mut (dyn Buffer<Context = Context> + 'buf)) -> Self {
         Self { buffer }
+    }
+
+    /// Returns the format options
+    pub fn options(&self) -> &Context::Options
+    where
+        Context: FormatContext,
+    {
+        self.context().options()
     }
 
     /// Returns the Context specifying how to format the current CST
@@ -43,6 +52,7 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// use rome_formatter::format;
     /// use rome_formatter::prelude::*;
     ///
+    /// # fn main() -> FormatResult<()> {
     /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
     ///     f.join()
     ///         .entry(&text("a"))
@@ -51,12 +61,14 @@ impl<'buf, Context> Formatter<'buf, Context> {
     ///         .entry(&space())
     ///         .entry(&text("b"))
     ///         .finish()
-    /// })]).unwrap();
+    /// })])?;
     ///
     /// assert_eq!(
     ///     "a + b",
-    ///     formatted.print().as_code()
-    /// )
+    ///     formatted.print()?.as_code()
+    /// );
+    /// # Ok(())
+    /// # }
     /// ```
     pub fn join<'a>(&'a mut self) -> JoinBuilder<'a, 'buf, (), Context> {
         JoinBuilder::new(self)
@@ -72,6 +84,7 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// use rome_formatter::{format, format_args};
     /// use rome_formatter::prelude::*;
     ///
+    /// # fn main() -> FormatResult<()> {
     /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
     ///     f.join_with(&format_args!(text(","), space()))
     ///         .entry(&text("1"))
@@ -79,12 +92,14 @@ impl<'buf, Context> Formatter<'buf, Context> {
     ///         .entry(&text("3"))
     ///         .entry(&text("4"))
     ///         .finish()
-    /// })]).unwrap();
+    /// })])?;
     ///
     /// assert_eq!(
     ///     "1, 2, 3, 4",
-    ///     formatted.print().as_code()
+    ///     formatted.print()?.as_code()
     /// );
+    /// # Ok(())
+    /// # }
     /// ```
     pub fn join_with<'a, Joiner>(
         &'a mut self,
@@ -100,7 +115,7 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// line break or empty line depending on the input file.
     ///
     /// This functions inspects the input source and separates consecutive elements with either
-    /// a [crate::soft_line_break_or_space] or [crate::empty_line] depending on how many line breaks were
+    /// a [crate::builders::soft_line_break_or_space] or [crate::builders::empty_line] depending on how many line breaks were
     /// separating the elements in the original file.
     pub fn join_nodes_with_soft_line<'a>(
         &'a mut self,
@@ -112,7 +127,7 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// line breaks depending on the input file.
     ///
     /// This functions inspects the input source and separates consecutive elements with either
-    /// a [crate::hard_line_break] or [crate::empty_line] depending on how many line breaks were separating the
+    /// a [crate::builders::hard_line_break] or [crate::builders::empty_line] depending on how many line breaks were separating the
     /// elements in the original file.
     pub fn join_nodes_with_hardline<'a>(&'a mut self) -> JoinNodesBuilder<'a, 'buf, Line, Context> {
         JoinNodesBuilder::new(hard_line_break(), self)
@@ -128,25 +143,29 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// use rome_formatter::prelude::*;
     /// use rome_formatter::{format, format_args};
     ///
+    /// # fn main() -> FormatResult<()> {
     /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
-    ///     f.fill(soft_line_break_or_space())
-    ///         .entry(&text("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"))
-    ///         .entry(&text("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"))
-    ///         .entry(&text("cccccccccccccccccccccccccccccc"))
-    ///         .entry(&text("dddddddddddddddddddddddddddddd"))
+    ///     f.fill()
+    ///         .entry(&soft_line_break_or_space(), &text("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"))
+    ///         .entry(&soft_line_break_or_space(), &text("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"))
+    ///         .entry(&soft_line_break_or_space(), &text("cccccccccccccccccccccccccccccc"))
+    ///         .entry(&soft_line_break_or_space(), &text("dddddddddddddddddddddddddddddd"))
     ///         .finish()
-    /// })]).unwrap();
+    /// })])?;
     ///
     /// assert_eq!(
     ///     "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\ncccccccccccccccccccccccccccccc dddddddddddddddddddddddddddddd",
-    ///     formatted.print().as_code()
-    /// )
+    ///     formatted.print()?.as_code()
+    /// );
+    /// # Ok(())
+    /// # }
     /// ```
     ///
     /// ```rust
     /// use rome_formatter::prelude::*;
     /// use rome_formatter::{format, format_args};
     ///
+    /// # fn main() -> FormatResult<()> {
     /// let entries = vec![
     ///     text("<b>Important: </b>"),
     ///     text("Please do not commit memory bugs such as segfaults, buffer overflows, etc. otherwise you "),
@@ -155,28 +174,37 @@ impl<'buf, Context> Formatter<'buf, Context> {
     /// ];
     ///
     /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
-    ///     f.fill(soft_line_break()).entries(entries.iter()).finish()
-    /// })]).unwrap();
+    ///     f.fill().entries(&soft_line_break(), entries.iter()).finish()
+    /// })])?;
     ///
     /// assert_eq!(
     ///     &std::format!("<b>Important: </b>\nPlease do not commit memory bugs such as segfaults, buffer overflows, etc. otherwise you \n<em>will</em> be reprimanded"),
-    ///     formatted.print().as_code()
-    /// )
+    ///     formatted.print()?.as_code()
+    /// );
+    /// # Ok(())
+    /// # }
     /// ```
-    pub fn fill<'a, Separator>(&'a mut self, separator: Separator) -> FillBuilder<'a, 'buf, Context>
-    where
-        Separator: Format<Context>,
-    {
-        FillBuilder::new(self, separator)
+    pub fn fill<'a>(&'a mut self) -> FillBuilder<'a, 'buf, Context> {
+        FillBuilder::new(self)
     }
 
     /// Formats `content` into an interned element without writing it to the formatter's buffer.
-    pub fn intern(&mut self, content: &dyn Format<Context>) -> FormatResult<Interned> {
+    pub fn intern(&mut self, content: &dyn Format<Context>) -> FormatResult<Option<FormatElement>> {
         let mut buffer = VecBuffer::new(self.state_mut());
-
         crate::write!(&mut buffer, [content])?;
+        let elements = buffer.into_vec();
 
-        Ok(buffer.into_element().intern())
+        Ok(self.intern_vec(elements))
+    }
+
+    pub fn intern_vec(&mut self, mut elements: Vec<FormatElement>) -> Option<FormatElement> {
+        match elements.len() {
+            0 => None,
+            // Doesn't get cheaper than calling clone, use the element directly
+            // SAFETY: Safe because of the `len == 1` check in the match arm.
+            1 => Some(elements.pop().unwrap()),
+            _ => Some(FormatElement::Interned(Interned::new(elements))),
+        }
     }
 }
 
@@ -201,13 +229,29 @@ where
     }
 }
 
+impl<Context> Formatter<'_, Context>
+where
+    Context: CstFormatContext,
+{
+    /// Returns the comments from the context.
+    pub fn comments(&self) -> &Comments<Context::Language> {
+        self.context().comments()
+    }
+}
+
 impl<Context> Buffer for Formatter<'_, Context> {
     type Context = Context;
 
+    #[inline(always)]
     fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
         self.buffer.write_element(element)
     }
 
+    fn elements(&self) -> &[FormatElement] {
+        self.buffer.elements()
+    }
+
+    #[inline(always)]
     fn write_fmt(&mut self, arguments: Arguments<Self::Context>) -> FormatResult<()> {
         for argument in arguments.items() {
             argument.format(self)?;

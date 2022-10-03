@@ -1,0 +1,206 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noDupeArgs.js
+---
+# Input
+```js
+// valid
+function a(a, b, c) {}
+var j = function (j, b, c) {};
+function k({ k, b }, { c, d }) {}
+function l([, l]) {}
+function foo([[a, b], [c, d]]) {}
+function test(a = function (a) {}) {}
+// invalid
+function b(a, b, b) {}
+
+function c(a, a, a) {}
+
+const d = (a, b, a) => {};
+
+function e(a, b, a, b) {}
+
+var f = function (a, b, b) {};
+
+class G {
+	ggg(a, a, a) {}
+}
+
+let objectMethods = {
+	method(a, b, c, c) {
+
+	}
+}
+
+var h = function (a, b, a) {};
+
+export default function (a, b, a, a) {}
+function f({ test: res = 3 }, res) {}
+
+export function f2(a, b, c = (a, b, b) => {}) {}
+
+```
+
+# Diagnostics
+```
+noDupeArgs.js:9:18 lint/correctness/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate argument name
+  
+     7 │ function test(a = function (a) {}) {}
+     8 │ // invalid
+   > 9 │ function b(a, b, b) {}
+       │                  ^
+    10 │ 
+    11 │ function c(a, a, a) {}
+  
+
+```
+
+```
+noDupeArgs.js:11:15 lint/correctness/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate argument name
+  
+     9 │ function b(a, b, b) {}
+    10 │ 
+  > 11 │ function c(a, a, a) {}
+       │               ^
+    12 │ 
+    13 │ const d = (a, b, a) => {};
+  
+
+```
+
+```
+noDupeArgs.js:13:18 lint/correctness/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate argument name
+  
+    11 │ function c(a, a, a) {}
+    12 │ 
+  > 13 │ const d = (a, b, a) => {};
+       │                  ^
+    14 │ 
+    15 │ function e(a, b, a, b) {}
+  
+
+```
+
+```
+noDupeArgs.js:15:18 lint/correctness/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate argument name
+  
+    13 │ const d = (a, b, a) => {};
+    14 │ 
+  > 15 │ function e(a, b, a, b) {}
+       │                  ^
+    16 │ 
+    17 │ var f = function (a, b, b) {};
+  
+
+```
+
+```
+noDupeArgs.js:17:25 lint/correctness/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate argument name
+  
+    15 │ function e(a, b, a, b) {}
+    16 │ 
+  > 17 │ var f = function (a, b, b) {};
+       │                         ^
+    18 │ 
+    19 │ class G {
+  
+
+```
+
+```
+noDupeArgs.js:20:9 lint/correctness/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate argument name
+  
+    19 │ class G {
+  > 20 │ 	ggg(a, a, a) {}
+       │ 	       ^
+    21 │ }
+    22 │ 
+  
+
+```
+
+```
+noDupeArgs.js:24:18 lint/correctness/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate argument name
+  
+    23 │ let objectMethods = {
+  > 24 │ 	method(a, b, c, c) {
+       │ 	                ^
+    25 │ 
+    26 │ 	}
+  
+
+```
+
+```
+noDupeArgs.js:29:25 lint/correctness/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate argument name
+  
+    27 │ }
+    28 │ 
+  > 29 │ var h = function (a, b, a) {};
+       │                         ^
+    30 │ 
+    31 │ export default function (a, b, a, a) {}
+  
+
+```
+
+```
+noDupeArgs.js:31:32 lint/correctness/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate argument name
+  
+    29 │ var h = function (a, b, a) {};
+    30 │ 
+  > 31 │ export default function (a, b, a, a) {}
+       │                                ^
+    32 │ function f({ test: res = 3 }, res) {}
+    33 │ 
+  
+
+```
+
+```
+noDupeArgs.js:32:31 lint/correctness/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate argument name
+  
+    31 │ export default function (a, b, a, a) {}
+  > 32 │ function f({ test: res = 3 }, res) {}
+       │                               ^^^
+    33 │ 
+    34 │ export function f2(a, b, c = (a, b, b) => {}) {}
+  
+
+```
+
+```
+noDupeArgs.js:34:37 lint/correctness/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Duplicate argument name
+  
+    32 │ function f({ test: res = 3 }, res) {}
+    33 │ 
+  > 34 │ export function f2(a, b, c = (a, b, b) => {}) {}
+       │                                     ^
+    35 │ 
+  
+
+```
+
+

@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\sloppy-mode\\function-declaration-in-if.js"
 ---
 
 # Input
@@ -28,12 +30,16 @@ if (false) function foo(){}
 
 # Errors
 ```
-error[SyntaxError]: In strict mode code, functions can only be declared at top level or inside a block
-  ┌─ function-declaration-in-if.js:1:12
-  │
-1 │ if (false) function foo(){}
-  │            ^^^^^^^^^^^^^^^^ wrap the function in a block statement
+function-declaration-in-if.js:1:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × In strict mode code, functions can only be declared at top level or inside a block
+  
+  × wrap the function in a block statement
+  
+  > 1 │ if (false) function foo(){}
+      │            ^^^^^^^^^^^^^^^^
+    2 │ 
+  
 
 ```
 

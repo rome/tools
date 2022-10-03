@@ -198,26 +198,40 @@ JsModule {
       4: R_CURLY@148..150 "}" [Newline("\n")] []
   3: EOF@150..151 "" [Newline("\n")] []
 --
-error[SyntaxError]: index signature members cannot be public
-  ┌─ ts_index_signature_interface_member_cannot_have_visibility_modifiers.ts:2:5
-  │
-2 │     public  [a: number]: string;
-  │     ^^^^^^
+ts_index_signature_interface_member_cannot_have_visibility_modifiers.ts:2:5 parse ━━━━━━━━━━━━━━━━━━
 
+  × index signature members cannot be public
+  
+    1 │ interface A {
+  > 2 │     public  [a: number]: string;
+      │     ^^^^^^
+    3 │ }
+    4 │ interface B {
+  
 --
-error[SyntaxError]: index signature members cannot be private
-  ┌─ ts_index_signature_interface_member_cannot_have_visibility_modifiers.ts:5:5
-  │
-5 │     private  [a: number]: string;
-  │     ^^^^^^^
+ts_index_signature_interface_member_cannot_have_visibility_modifiers.ts:5:5 parse ━━━━━━━━━━━━━━━━━━
 
+  × index signature members cannot be private
+  
+    3 │ }
+    4 │ interface B {
+  > 5 │     private  [a: number]: string;
+      │     ^^^^^^^
+    6 │ }
+    7 │ interface C {
+  
 --
-error[SyntaxError]: index signature members cannot be protected
-  ┌─ ts_index_signature_interface_member_cannot_have_visibility_modifiers.ts:8:5
-  │
-8 │     protected  [a: number]: string;
-  │     ^^^^^^^^^
+ts_index_signature_interface_member_cannot_have_visibility_modifiers.ts:8:5 parse ━━━━━━━━━━━━━━━━━━
 
+  × index signature members cannot be protected
+  
+     6 │ }
+     7 │ interface C {
+   > 8 │     protected  [a: number]: string;
+       │     ^^^^^^^^^
+     9 │ }
+    10 │ 
+  
 --
 interface A {
     public  [a: number]: string;

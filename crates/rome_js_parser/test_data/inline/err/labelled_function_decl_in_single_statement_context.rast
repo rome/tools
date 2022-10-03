@@ -74,11 +74,15 @@ JsModule {
       5: (empty)
   3: EOF@41..42 "" [Newline("\n")] []
 --
-error[SyntaxError]: In strict mode code, functions can only be declared at top level or inside a block
-  ┌─ labelled_function_decl_in_single_statement_context.js:1:27
-  │
-1 │ if (true) label1: label2: function a() {}
-  │                           ^^^^^^^^^^^^^^^ wrap the function in a block statement
+labelled_function_decl_in_single_statement_context.js:1:27 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × In strict mode code, functions can only be declared at top level or inside a block
+  
+  × wrap the function in a block statement
+  
+  > 1 │ if (true) label1: label2: function a() {}
+      │                           ^^^^^^^^^^^^^^^
+    2 │ 
+  
 --
 if (true) label1: label2: function a() {}

@@ -121,19 +121,25 @@ JsModule {
       8: R_CURLY@66..67 "}" [] []
   3: EOF@67..68 "" [Newline("\n")] []
 --
-error[SyntaxError]: Initializers are not allowed in ambient contexts.
-  ┌─ ts_property_initializer_ambient_context.ts:1:24
-  │
-1 │ declare class A { prop = "test" }
-  │                        ^^^^^^^^
+ts_property_initializer_ambient_context.ts:1:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Initializers are not allowed in ambient contexts.
+  
+  > 1 │ declare class A { prop = "test" }
+      │                        ^^^^^^^^
+    2 │ class B { declare prop = "test" }
+    3 │ 
+  
 --
-error[SyntaxError]: Initializers are not allowed in ambient contexts.
-  ┌─ ts_property_initializer_ambient_context.ts:2:24
-  │
-2 │ class B { declare prop = "test" }
-  │                        ^^^^^^^^
+ts_property_initializer_ambient_context.ts:2:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Initializers are not allowed in ambient contexts.
+  
+    1 │ declare class A { prop = "test" }
+  > 2 │ class B { declare prop = "test" }
+      │                        ^^^^^^^^
+    3 │ 
+  
 --
 declare class A { prop = "test" }
 class B { declare prop = "test" }

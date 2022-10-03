@@ -165,19 +165,32 @@ JsModule {
         2: BACKTICK@63..64 "`" [] []
   3: EOF@64..65 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `}` but instead found `B`
-  ┌─ ts_template_literal_error.ts:3:15
-  │
-3 │ type C = `${A B}bcd`
-  │               ^ unexpected
+ts_template_literal_error.ts:3:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `}` but instead found `B`
+  
+  × unexpected
+  
+    1 │ type A = "a";
+    2 │ type B = "b"
+  > 3 │ type C = `${A B}bcd`
+      │               ^
+    4 │ type D = `${A B`
+    5 │ 
+  
 --
-error[SyntaxError]: expected `}` but instead found `B`
-  ┌─ ts_template_literal_error.ts:4:15
-  │
-4 │ type D = `${A B`
-  │               ^ unexpected
+ts_template_literal_error.ts:4:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `}` but instead found `B`
+  
+  × unexpected
+  
+    2 │ type B = "b"
+    3 │ type C = `${A B}bcd`
+  > 4 │ type D = `${A B`
+      │               ^
+    5 │ 
+  
 --
 type A = "a";
 type B = "b"

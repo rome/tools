@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: typescript/decorators/decorators.ts
 ---
 
 # Input
@@ -90,7 +92,15 @@ class Class6 {
 ```diff
 --- Prettier
 +++ Rome
-@@ -6,7 +6,7 @@
+@@ -1,12 +1,14 @@
+ export class TestTextFileService {
+-  constructor(@ILifecycleService lifecycleService) {}
++  constructor(
++    @ILifecycleService lifecycleService,
++  ) {}
+ }
+ 
+ @commonEditorContribution
  export class TabCompletionController {}
  
  @Component({
@@ -99,26 +109,31 @@ class Class6 {
  })
  class AngularComponent {
    @Input() myInput: string;
-@@ -44,6 +44,7 @@
- class Class4 {
-   method(
-     param1,
-+
-     @Decorator
-     { prop1, prop2 }: Type,
-   ) {}
-@@ -54,8 +55,14 @@
+@@ -50,12 +52,24 @@
+ }
+ 
+ class Class5 {
+-  method(@Decorator { prop1 }: Type) {}
++  method(
++    @Decorator { prop1 }: Type,
++  ) {}
  }
  
  class Class6 {
 -  method(@Decorator({}) { prop1 }: Type) {}
-   method(@Decorator({}) { prop1 }: Type) {}
+-  method(@Decorator({}) { prop1 }: Type) {}
 -  method(@Decorator([]) { prop1 }: Type) {}
+-  method(@Decorator([]) { prop1 }: Type) {}
++  method(
++    @Decorator({}) { prop1 }: Type,
++  ) {}
 +  method(
 +    @Decorator(
 +      {}) { prop1 }: Type,
 +  ) {}
-   method(@Decorator([]) { prop1 }: Type) {}
++  method(
++    @Decorator([]) { prop1 }: Type,
++  ) {}
 +  method(
 +    @Decorator(
 +      []) { prop1 }: Type,
@@ -130,7 +145,9 @@ class Class6 {
 
 ```js
 export class TestTextFileService {
-  constructor(@ILifecycleService lifecycleService) {}
+  constructor(
+    @ILifecycleService lifecycleService,
+  ) {}
 }
 
 @commonEditorContribution
@@ -175,23 +192,28 @@ class Class3 {
 class Class4 {
   method(
     param1,
-
     @Decorator
     { prop1, prop2 }: Type,
   ) {}
 }
 
 class Class5 {
-  method(@Decorator { prop1 }: Type) {}
+  method(
+    @Decorator { prop1 }: Type,
+  ) {}
 }
 
 class Class6 {
-  method(@Decorator({}) { prop1 }: Type) {}
+  method(
+    @Decorator({}) { prop1 }: Type,
+  ) {}
   method(
     @Decorator(
       {}) { prop1 }: Type,
   ) {}
-  method(@Decorator([]) { prop1 }: Type) {}
+  method(
+    @Decorator([]) { prop1 }: Type,
+  ) {}
   method(
     @Decorator(
       []) { prop1 }: Type,

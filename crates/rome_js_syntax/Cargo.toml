@@ -10,9 +10,10 @@ repository = "https://github.com/rome/tools"
 [dependencies]
 rome_rowan = { path = "../rome_rowan" }
 serde = { version = "1.0.136", features = ["derive"], optional = true }
+schemars = { version = "0.8.10", optional = true }
 
 [dev-dependencies]
 rome_js_factory = { path = "../rome_js_factory" }
 
 [features]
-serde = ["dep:serde", "rome_rowan/serde"]
+serde = ["dep:serde", "schemars", "rome_rowan/serde"]

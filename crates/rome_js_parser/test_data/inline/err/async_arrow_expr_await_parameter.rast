@@ -167,26 +167,37 @@ JsModule {
       1: SEMICOLON@58..59 ";" [] []
   3: EOF@59..60 "" [Newline("\n")] []
 --
-error[SyntaxError]: Illegal use of `await` as an identifier in an async context
-  ┌─ async_arrow_expr_await_parameter.js:1:15
-  │
-1 │ let a = async await => {}
-  │               ^^^^^
+async_arrow_expr_await_parameter.js:1:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of `await` as an identifier in an async context
+  
+  > 1 │ let a = async await => {}
+      │               ^^^^^
+    2 │ async() => { (a = await) => {} };
+    3 │ 
+  
 --
-error[SyntaxError]: expected an unary expression but instead found ')'
-  ┌─ async_arrow_expr_await_parameter.js:2:24
-  │
-2 │ async() => { (a = await) => {} };
-  │                        ^ Expected an unary expression here
+async_arrow_expr_await_parameter.js:2:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an unary expression but instead found ')'
+  
+  × Expected an unary expression here
+  
+    1 │ let a = async await => {}
+  > 2 │ async() => { (a = await) => {} };
+      │                        ^
+    3 │ 
+  
 --
-error[SyntaxError]: `await` is only allowed within async functions and at the top levels of modules.
-  ┌─ async_arrow_expr_await_parameter.js:2:19
-  │
-2 │ async() => { (a = await) => {} };
-  │                   ^^^^^
+async_arrow_expr_await_parameter.js:2:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × `await` is only allowed within async functions and at the top levels of modules.
+  
+    1 │ let a = async await => {}
+  > 2 │ async() => { (a = await) => {} };
+      │                   ^^^^^
+    3 │ 
+  
 --
 let a = async await => {}
 async() => { (a = await) => {} };

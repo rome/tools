@@ -1,0 +1,29 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+---
+
+# Input
+
+```js
+export default (class {}[1] = 1);
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1 +1 @@
+-export default (class {}[1] = 1);
++export default ((class {})[1] = 1);
+```
+
+# Output
+
+```js
+export default ((class {})[1] = 1);
+```
+
+
+

@@ -182,33 +182,52 @@ JsModule {
       8: R_CURLY@120..122 "}" [Newline("\n")] []
   3: EOF@122..123 "" [Newline("\n")] []
 --
-error[SyntaxError]: Only abstract classes can have abstract members
-  ┌─ ts_concrete_class_with_abstract_members.ts:2:4
-  │
-2 │    abstract my_age: number;
-  │    ^^^^^^^^
+ts_concrete_class_with_abstract_members.ts:2:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Only abstract classes can have abstract members
+  
+    1 │ class A {
+  > 2 │    abstract my_age: number;
+      │    ^^^^^^^^
+    3 │    abstract name(): string;
+    4 │    abstract get age(): number;
+  
 --
-error[SyntaxError]: Only abstract classes can have abstract members
-  ┌─ ts_concrete_class_with_abstract_members.ts:3:4
-  │
-3 │    abstract name(): string;
-  │    ^^^^^^^^
+ts_concrete_class_with_abstract_members.ts:3:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Only abstract classes can have abstract members
+  
+    1 │ class A {
+    2 │    abstract my_age: number;
+  > 3 │    abstract name(): string;
+      │    ^^^^^^^^
+    4 │    abstract get age(): number;
+    5 │    abstract set age(v);
+  
 --
-error[SyntaxError]: Only abstract classes can have abstract members
-  ┌─ ts_concrete_class_with_abstract_members.ts:4:4
-  │
-4 │    abstract get age(): number;
-  │    ^^^^^^^^
+ts_concrete_class_with_abstract_members.ts:4:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Only abstract classes can have abstract members
+  
+    2 │    abstract my_age: number;
+    3 │    abstract name(): string;
+  > 4 │    abstract get age(): number;
+      │    ^^^^^^^^
+    5 │    abstract set age(v);
+    6 │ }
+  
 --
-error[SyntaxError]: Only abstract classes can have abstract members
-  ┌─ ts_concrete_class_with_abstract_members.ts:5:4
-  │
-5 │    abstract set age(v);
-  │    ^^^^^^^^
+ts_concrete_class_with_abstract_members.ts:5:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Only abstract classes can have abstract members
+  
+    3 │    abstract name(): string;
+    4 │    abstract get age(): number;
+  > 5 │    abstract set age(v);
+      │    ^^^^^^^^
+    6 │ }
+    7 │ 
+  
 --
 class A {
    abstract my_age: number;

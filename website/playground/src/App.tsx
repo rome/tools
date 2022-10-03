@@ -20,18 +20,19 @@ function App() {
 		errors: "",
 		formatted_code: "",
 		formatter_ir: "",
+		control_flow_graph: "",
 	});
 	const [prettierOutput, setPrettierOutput] = useState({ code: "", ir: "" });
 
 	useEffect(() => {
-		romeWorkerRef.current = new Worker(new URL(
-			"./romeWorker",
-			import.meta.url,
-		), { type: "module" });
-		prettierWorkerRef.current = new Worker(new URL(
-			"./prettierWorker",
-			import.meta.url,
-		), { type: "module" });
+		romeWorkerRef.current = new Worker(
+			new URL("./romeWorker", import.meta.url),
+			{ type: "module" },
+		);
+		prettierWorkerRef.current = new Worker(
+			new URL("./prettierWorker", import.meta.url),
+			{ type: "module" },
+		);
 
 		romeWorkerRef.current.addEventListener("message", (event) => {
 			switch (event.data.type) {

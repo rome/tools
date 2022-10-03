@@ -1,313 +1,84 @@
-use crate::prelude::{dynamic_text, format_with};
-use crate::printer::LineEnding;
-use crate::{
-    format, format_args, group, soft_block_indent, soft_line_break_or_space,
-    soft_line_indent_or_space, space, text, write, Buffer, Format, FormatContext, FormatResult,
-    Formatter, GroupId, IndentStyle, LineWidth, PrinterOptions, TextSize,
-};
-use indexmap::IndexSet;
+pub mod document;
+pub mod tag;
+
+use crate::format_element::tag::{LabelId, Tag};
+use std::borrow::Cow;
+
+use crate::{TagKind, TextSize};
 #[cfg(target_pointer_width = "64")]
 use rome_rowan::static_assert;
 use rome_rowan::SyntaxTokenText;
-#[cfg(debug_assertions)]
-use std::any::type_name;
-use std::any::TypeId;
-use std::borrow::Cow;
 use std::hash::{Hash, Hasher};
-use std::num::NonZeroU8;
 use std::ops::Deref;
 use std::rc::Rc;
 
-type Content = Box<[FormatElement]>;
-
 /// Language agnostic IR for formatting source code.
 ///
-/// Use the helper functions like [crate::space], [crate::soft_line_break] etc. defined in this file to create elements.
+/// Use the helper functions like [crate::builders::space], [crate::builders::soft_line_break] etc. defined in this file to create elements.
 #[derive(Clone, Eq, PartialEq)]
 pub enum FormatElement {
-    /// A space token, see [crate::space] for documentation.
+    /// A space token, see [crate::builders::space] for documentation.
     Space,
 
-    /// A new line, see [crate::soft_line_break], [crate::hard_line_break], and [crate::soft_line_break_or_space] for documentation.
+    /// A new line, see [crate::builders::soft_line_break], [crate::builders::hard_line_break], and [crate::builders::soft_line_break_or_space] for documentation.
     Line(LineMode),
-
-    /// Indents the content one level deeper, see [crate::indent] for documentation and examples.
-    Indent(Content),
-
-    /// Variant of [FormatElement::Indent] that indents content by a number of spaces. For example, `Align(2)`
-    /// indents any content following a line break by an additional two spaces.
-    ///
-    /// Nesting (Aligns)[FormatElement::Align] has the effect that all except the most inner align are handled as (Indent)[FormatElement::Indent].
-    Align(Align),
-
-    /// Creates a logical group where its content is either consistently printed:
-    /// * on a single line: Omitting `LineMode::Soft` line breaks and printing spaces for `LineMode::SoftOrSpace`
-    /// * on multiple lines: Printing all line breaks
-    ///
-    /// See [crate::group] for documentation and examples.
-    Group(Group),
 
     /// Forces the parent group to print in expanded mode.
     ExpandParent,
 
-    /// Allows to specify content that gets printed depending on whatever the enclosing group
-    /// is printed on a single line or multiple lines. See [crate::if_group_breaks] for examples.
-    ConditionalGroupContent(ConditionalGroupContent),
-
-    /// Concatenates multiple elements together. See [crate::Formatter::join_with] for examples.
-    List(List),
-
-    /// Concatenates multiple elements together with a given separator printed in either
-    /// flat or expanded mode to fill the print width. See [crate::Formatter::fill].
-    Fill(Fill),
-
-    /// A text that should be printed as is, see [crate::text] for documentation and examples.
+    /// A text that should be printed as is, see [crate::builders::text] for documentation and examples.
     Text(Text),
-
-    /// Delay the printing of its content until the next line break
-    LineSuffix(Content),
 
     /// Prevents that line suffixes move past this boundary. Forces the printer to print any pending
     /// line suffixes, potentially by inserting a hard line break.
     LineSuffixBoundary,
 
-    /// Special semantic element letting the printer and formatter know this is
-    /// a comment content, and it should only have a limited influence on the
-    /// formatting (for instance line breaks contained within will not cause
-    /// the parent group to break if this element is at the start of it).
-    Comment(Box<[FormatElement]>),
-
-    /// A token that tracks tokens/nodes that are printed as verbatim.
-    Verbatim(Verbatim),
+    /// An interned format element. Useful when the same content must be emitted multiple times to avoid
+    /// deep cloning the IR when using the `best_fitting!` macro or `if_group_fits_on_line` and `if_group_breaks`.
+    Interned(Interned),
 
     /// A list of different variants representing the same content. The printer picks the best fitting content.
     /// Line breaks inside of a best fitting don't propagate to parent groups.
     BestFitting(BestFitting),
 
-    /// An interned format element. Useful when the same content must be emitted multiple times to avoid
-    /// deep cloning the IR when using the `best_fitting!` macro or `if_group_fits_on_line` and `if_group_breaks`.
-    Interned(Interned),
-
-    /// Special semantic element marking the content with a label.
-    /// This does not directly influence how the content will be printed.
-    ///
-    /// See [crate::labelled] for documentation.
-    Label(Label),
-}
-
-#[derive(Clone, Copy, Eq, PartialEq, Debug)]
-pub enum VerbatimKind {
-    Unknown,
-    Suppressed,
-    Verbatim {
-        /// the length of the formatted node
-        length: TextSize,
-    },
-}
-
-/// Information of the node/token formatted verbatim
-#[derive(Clone, Eq, PartialEq)]
-pub struct Verbatim {
-    /// The reason this range is using verbatim formatting
-    pub kind: VerbatimKind,
-    /// The [FormatElement] version of the node/token
-    pub content: Box<[FormatElement]>,
-}
-
-impl Verbatim {
-    pub fn new_verbatim(content: Box<[FormatElement]>, length: TextSize) -> Self {
-        Self {
-            content,
-            kind: VerbatimKind::Verbatim { length },
-        }
-    }
-
-    pub fn new_unknown(content: Box<[FormatElement]>) -> Self {
-        Self {
-            content,
-            kind: VerbatimKind::Unknown,
-        }
-    }
-
-    pub fn new_suppressed(content: Box<[FormatElement]>) -> Self {
-        Self {
-            content,
-            kind: VerbatimKind::Suppressed,
-        }
-    }
-
-    pub fn is_unknown(&self) -> bool {
-        matches!(self.kind, VerbatimKind::Unknown)
-    }
-}
-
-impl std::fmt::Display for FormatElement {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let formatted = format!(IrFormatContext::default(), [self])
-            .expect("Formatting not to throw any FormatErrors");
-
-        f.write_str(formatted.print().as_code())
-    }
+    /// A [Tag] that marks the start/end of some content to which some special formatting is applied.
+    Tag(Tag),
 }
 
 impl std::fmt::Debug for FormatElement {
     fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::fmt::Result {
-        use std::write;
         match self {
             FormatElement::Space => write!(fmt, "Space"),
-            FormatElement::Line(content) => fmt.debug_tuple("Line").field(content).finish(),
-            FormatElement::Indent(content) => fmt.debug_tuple("Indent").field(content).finish(),
-            FormatElement::Align(Align { count, content }) => fmt
-                .debug_struct("Align")
-                .field("count", count)
-                .field("content", content)
-                .finish(),
-            FormatElement::Group(content) => {
-                write!(fmt, "Group")?;
-                content.fmt(fmt)
-            }
-            FormatElement::ConditionalGroupContent(content) => content.fmt(fmt),
-            FormatElement::List(content) => {
-                write!(fmt, "List ")?;
-                content.fmt(fmt)
-            }
-            FormatElement::Fill(fill) => fill.fmt(fmt),
-            FormatElement::Text(content) => content.fmt(fmt),
-            FormatElement::LineSuffix(content) => {
-                fmt.debug_tuple("LineSuffix").field(content).finish()
-            }
-            FormatElement::LineSuffixBoundary => write!(fmt, "LineSuffixBoundary"),
-            FormatElement::Comment(content) => fmt.debug_tuple("Comment").field(content).finish(),
-            FormatElement::Verbatim(verbatim) => fmt
-                .debug_tuple("Verbatim")
-                .field(&verbatim.content)
-                .finish(),
-            FormatElement::BestFitting(best_fitting) => {
-                write!(fmt, "BestFitting")?;
-                best_fitting.fmt(fmt)
-            }
+            FormatElement::Line(mode) => fmt.debug_tuple("Line").field(mode).finish(),
             FormatElement::ExpandParent => write!(fmt, "ExpandParent"),
-            FormatElement::Interned(inner) => inner.fmt(fmt),
-            FormatElement::Label(label) => {
-                write!(fmt, "Label")?;
-                label.fmt(fmt)
+            FormatElement::Text(text) => text.fmt(fmt),
+            FormatElement::LineSuffixBoundary => write!(fmt, "LineSuffixBoundary"),
+            FormatElement::BestFitting(best_fitting) => {
+                fmt.debug_tuple("BestFitting").field(&best_fitting).finish()
             }
+            FormatElement::Interned(interned) => {
+                fmt.debug_list().entries(interned.deref()).finish()
+            }
+            FormatElement::Tag(tag) => fmt.debug_tuple("Tag").field(tag).finish(),
         }
     }
 }
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
 pub enum LineMode {
-    /// See [crate::soft_line_break_or_space] for documentation.
+    /// See [crate::builders::soft_line_break_or_space] for documentation.
     SoftOrSpace,
-    /// See [crate::soft_line_break] for documentation.
+    /// See [crate::builders::soft_line_break] for documentation.
     Soft,
-    /// See [crate::hard_line_break] for documentation.
+    /// See [crate::builders::hard_line_break] for documentation.
     Hard,
-    /// See [crate::empty_line] for documentation.
+    /// See [crate::builders::empty_line] for documentation.
     Empty,
 }
 
-/// A token used to gather a list of elements; see [crate::Formatter::join_with].
-#[derive(Clone, Default, Eq, PartialEq)]
-pub struct List {
-    content: Vec<FormatElement>,
-}
-
-impl std::fmt::Debug for List {
-    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::fmt::Result {
-        fmt.debug_list().entries(&self.content).finish()
-    }
-}
-
-impl List {
-    pub(crate) fn new(content: Vec<FormatElement>) -> Self {
-        Self { content }
-    }
-
-    pub fn into_vec(self) -> Vec<FormatElement> {
-        self.content
-    }
-}
-
-impl Deref for List {
-    type Target = [FormatElement];
-
-    fn deref(&self) -> &Self::Target {
-        &self.content
-    }
-}
-
-/// Fill is a list of [FormatElement]s along with a separator.
-///
-/// The printer prints this list delimited by a separator, wrapping the list when it
-/// reaches the specified `line_width`.
-#[derive(Clone, Debug, PartialEq, Eq)]
-pub struct Fill {
-    pub(super) content: Content,
-    pub(super) separator: Box<FormatElement>,
-}
-
-impl Fill {
-    pub fn content(&self) -> &[FormatElement] {
-        &self.content
-    }
-
-    pub fn separator(&self) -> &FormatElement {
-        &self.separator
-    }
-}
-
-#[derive(Clone, Debug, Eq, PartialEq)]
-pub struct Align {
-    pub(super) content: Content,
-    pub(super) count: NonZeroU8,
-}
-
-impl Align {
-    pub fn count(&self) -> NonZeroU8 {
-        self.count
-    }
-
-    pub fn content(&self) -> &[FormatElement] {
-        &self.content
-    }
-}
-
-/// Group is a special token that controls how the child tokens are printed.
-///
-/// The printer first tries to print all tokens in the group onto a single line (ignoring soft line wraps)
-/// but breaks the array cross multiple lines if it would exceed the specified `line_width`, if a child token is a hard line break or if a string contains a line break.
-#[derive(Clone, PartialEq, Eq)]
-pub struct Group {
-    pub(crate) content: Box<[FormatElement]>,
-    pub(crate) id: Option<GroupId>,
-}
-
-impl std::fmt::Debug for Group {
-    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::fmt::Result {
-        if let Some(id) = &self.id {
-            fmt.debug_struct("")
-                .field("content", &self.content)
-                .field("id", id)
-                .finish()
-        } else {
-            fmt.debug_tuple("").field(&self.content).finish()
-        }
-    }
-}
-
-impl Group {
-    pub fn new(content: Vec<FormatElement>) -> Self {
-        Self {
-            content: content.into_boxed_slice(),
-            id: None,
-        }
-    }
-
-    pub fn with_id(mut self, id: Option<GroupId>) -> Self {
-        self.id = id;
-        self
+impl LineMode {
+    pub const fn is_hard(&self) -> bool {
+        matches!(self, LineMode::Hard)
     }
 }
 
@@ -329,70 +100,12 @@ impl PrintMode {
     }
 }
 
-/// Provides the printer with different representations for the same element so that the printer
-/// can pick the best fitting variant.
-///
-/// Best fitting is defined as the variant that takes the most horizontal space but fits on the line.
-#[derive(Clone, Eq, PartialEq)]
-pub struct BestFitting {
-    /// The different variants for this element.
-    /// The first element is the one that takes up the most space horizontally (the most flat),
-    /// The last element takes up the least space horizontally (but most horizontal space).
-    variants: Box<[FormatElement]>,
-}
-
-impl BestFitting {
-    /// Creates a new best fitting IR with the given variants. The method itself isn't unsafe
-    /// but it is to discourage people from using it because the printer will panic if
-    /// the slice doesn't contain at least the least and most expanded variants.
-    ///
-    /// You're looking for a way to create a `BestFitting` object, use the `best_fitting![least_expanded, most_expanded]` macro.
-    ///
-    /// ## Safety
-    /// The slice must contain at least two variants.
-    #[doc(hidden)]
-    pub(crate) unsafe fn from_vec_unchecked(variants: Vec<FormatElement>) -> Self {
-        debug_assert!(
-            variants.len() >= 2,
-            "Requires at least the least expanded and most expanded variants"
-        );
-
-        Self {
-            variants: variants.into_boxed_slice(),
-        }
-    }
-
-    /// Returns the most expanded variant
-    pub fn most_expanded(&self) -> &FormatElement {
-        self.variants.last().expect(
-            "Most contain at least two elements, as guaranteed by the best fitting builder.",
-        )
-    }
-
-    pub fn variants(&self) -> &[FormatElement] {
-        &self.variants
-    }
-
-    /// Returns the least expanded variant
-    pub fn most_flat(&self) -> &FormatElement {
-        self.variants.first().expect(
-            "Most contain at least two elements, as guaranteed by the best fitting builder.",
-        )
-    }
-}
-
-impl std::fmt::Debug for BestFitting {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.debug_list().entries(&*self.variants).finish()
-    }
-}
-
 #[derive(Clone)]
-pub struct Interned(Rc<FormatElement>);
+pub struct Interned(Rc<[FormatElement]>);
 
 impl Interned {
-    pub(crate) fn try_unwrap(this: Interned) -> Result<FormatElement, Interned> {
-        Rc::try_unwrap(this.0).map_err(Interned)
+    pub(super) fn new(content: Vec<FormatElement>) -> Self {
+        Self(content.into())
     }
 }
 
@@ -409,7 +122,7 @@ impl Hash for Interned {
     where
         H: Hasher,
     {
-        hasher.write_usize(Rc::as_ptr(&self.0) as usize);
+        Rc::as_ptr(&self.0).hash(hasher);
     }
 }
 
@@ -420,102 +133,14 @@ impl std::fmt::Debug for Interned {
 }
 
 impl Deref for Interned {
-    type Target = FormatElement;
+    type Target = [FormatElement];
 
     fn deref(&self) -> &Self::Target {
         self.0.deref()
     }
 }
 
-#[derive(Eq, PartialEq, Copy, Clone)]
-pub struct LabelId {
-    id: TypeId,
-    #[cfg(debug_assertions)]
-    label: &'static str,
-}
-
-#[cfg(debug_assertions)]
-impl std::fmt::Debug for LabelId {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        f.write_str(self.label)
-    }
-}
-
-#[cfg(not(debug_assertions))]
-impl std::fmt::Debug for LabelId {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        std::write!(f, "#{:?}", self.id)
-    }
-}
-
-impl LabelId {
-    pub fn of<T: ?Sized + 'static>() -> Self {
-        Self {
-            id: TypeId::of::<T>(),
-            #[cfg(debug_assertions)]
-            label: type_name::<T>(),
-        }
-    }
-}
-
-#[derive(Clone, PartialEq, Eq)]
-pub struct Label {
-    pub(crate) content: Box<[FormatElement]>,
-    label_id: LabelId,
-}
-
-impl Label {
-    pub fn new(label_id: LabelId, content: Vec<FormatElement>) -> Self {
-        Self {
-            content: content.into_boxed_slice(),
-            label_id,
-        }
-    }
-
-    pub fn label_id(&self) -> LabelId {
-        self.label_id
-    }
-}
-
-impl std::fmt::Debug for Label {
-    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::fmt::Result {
-        fmt.debug_struct("")
-            .field("label_id", &self.label_id)
-            .field("content", &self.content)
-            .finish()
-    }
-}
-
-#[derive(Debug, Clone, Eq, PartialEq)]
-pub struct ConditionalGroupContent {
-    pub(crate) content: Content,
-
-    /// In what mode the content should be printed.
-    /// * Flat -> Omitted if the enclosing group is a multiline group, printed for groups fitting on a single line
-    /// * Multiline -> Omitted if the enclosing group fits on a single line, printed if the group breaks over multiple lines.
-    pub(crate) mode: PrintMode,
-
-    /// The id of the group for which it should check if it breaks or not. The group must appear in the document
-    /// before the conditional group (but doesn't have to be in the ancestor chain).
-    pub(crate) group_id: Option<GroupId>,
-}
-
-impl ConditionalGroupContent {
-    pub fn new(content: Box<[FormatElement]>, mode: PrintMode) -> Self {
-        Self {
-            content,
-            mode,
-            group_id: None,
-        }
-    }
-
-    pub fn with_group_id(mut self, id: Option<GroupId>) -> Self {
-        self.group_id = id;
-        self
-    }
-}
-
-/// See [crate::text] for documentation
+/// See [crate::builders::text] for documentation
 #[derive(Eq, Clone)]
 pub enum Text {
     /// Token constructed by the formatter from a static string
@@ -540,8 +165,6 @@ pub enum Text {
 
 impl std::fmt::Debug for Text {
     fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::fmt::Result {
-        use std::write;
-
         // This does not use debug_tuple so the tokens are
         // written on a single line even when pretty-printing
         match self {
@@ -625,80 +248,61 @@ impl Deref for Text {
 }
 
 impl FormatElement {
-    /// Returns true if the element contains no content.
-    pub fn is_empty(&self) -> bool {
+    /// Returns `true` if self is a [FormatElement::Tag]
+    pub const fn is_tag(&self) -> bool {
+        matches!(self, FormatElement::Tag(_))
+    }
+
+    /// Returns `true` if self is a [FormatElement::Tag] and [Tag::is_start] is `true`.
+    pub const fn is_start_tag(&self) -> bool {
         match self {
-            FormatElement::List(list) => list.is_empty(),
+            FormatElement::Tag(tag) => tag.is_start(),
             _ => false,
         }
     }
 
-    /// Returns true if this [FormatElement] is guaranteed to break across multiple lines by the printer.
-    /// This is the case if this format element recursively contains a:
-    /// * [crate::empty_line] or [crate::hard_line_break]
-    /// * A token containing '\n'
-    ///
-    /// Use this with caution, this is only a heuristic and the printer may print the element over multiple
-    /// lines if this element is part of a group and the group doesn't fit on a single line.
-    pub fn will_break(&self) -> bool {
+    /// Returns `true` if self is a [FormatElement::Tag] and [Tag::is_end] is `true`.
+    pub const fn is_end_tag(&self) -> bool {
         match self {
-            FormatElement::Space => false,
-            FormatElement::Line(line_mode) => matches!(line_mode, LineMode::Hard | LineMode::Empty),
-            FormatElement::Group(Group { content, .. })
-            | FormatElement::ConditionalGroupContent(ConditionalGroupContent { content, .. })
-            | FormatElement::Comment(content)
-            | FormatElement::Fill(Fill { content, .. })
-            | FormatElement::Verbatim(Verbatim { content, .. })
-            | FormatElement::Label(Label { content, .. })
-            | FormatElement::Indent(content)
-            | FormatElement::Align(Align { content, .. }) => {
-                content.iter().any(FormatElement::will_break)
-            }
-            FormatElement::List(list) => list.content.iter().any(FormatElement::will_break),
-            FormatElement::Text(token) => token.contains('\n'),
-            FormatElement::LineSuffix(_) => false,
-            FormatElement::BestFitting(_) => false,
-            FormatElement::LineSuffixBoundary => false,
+            FormatElement::Tag(tag) => tag.is_end(),
+            _ => false,
+        }
+    }
+}
+
+impl FormatElements for FormatElement {
+    fn will_break(&self) -> bool {
+        match self {
             FormatElement::ExpandParent => true,
-            FormatElement::Interned(inner) => inner.0.will_break(),
+            FormatElement::Tag(Tag::StartGroup(group)) => !group.mode().is_flat(),
+            FormatElement::Line(line_mode) => matches!(line_mode, LineMode::Hard | LineMode::Empty),
+            FormatElement::Text(text) => text.contains('\n'),
+            FormatElement::Interned(interned) => interned.will_break(),
+            // Traverse into the most flat version because the content is guaranteed to expand when even
+            // the most flat version contains some content that forces a break.
+            FormatElement::BestFitting(best_fitting) => best_fitting.most_flat().will_break(),
+            FormatElement::LineSuffixBoundary | FormatElement::Space | FormatElement::Tag(_) => {
+                false
+            }
         }
     }
 
-    /// Returns true if the element has the given label.
-    pub fn has_label(&self, label_id: LabelId) -> bool {
+    fn has_label(&self, label_id: LabelId) -> bool {
         match self {
-            FormatElement::Label(label) => label.label_id == label_id,
+            FormatElement::Tag(Tag::StartLabelled(actual)) => *actual == label_id,
             FormatElement::Interned(interned) => interned.deref().has_label(label_id),
             _ => false,
         }
     }
 
-    /// Utility function to get the "last element" of a [FormatElement], recursing
-    /// into lists and groups to find the last element that's not
-    /// a line break, verbatim or a comment.
-    pub fn last_element(&self) -> Option<&FormatElement> {
-        match self {
-            FormatElement::List(list) => {
-                list.iter().rev().find_map(|element| element.last_element())
-            }
-            FormatElement::Line(_) | FormatElement::Comment(_) => None,
-
-            FormatElement::Group(Group { content, .. }) | FormatElement::Indent(content) => {
-                content.iter().rev().find_map(FormatElement::last_element)
-            }
-            FormatElement::Interned(Interned(inner)) => inner.last_element(),
-
-            _ => Some(self),
-        }
+    fn start_tag(&self, _: TagKind) -> Option<&Tag> {
+        None
     }
 
-    /// Interns a format element.
-    ///
-    /// Returns `self` for an already interned element.
-    pub fn intern(self) -> Interned {
+    fn end_tag(&self, kind: TagKind) -> Option<&Tag> {
         match self {
-            FormatElement::Interned(interned) => interned,
-            element => Interned(Rc::new(element)),
+            FormatElement::Tag(tag) if tag.kind() == kind && tag.is_end() => Some(tag),
+            _ => None,
         }
     }
 }
@@ -709,286 +313,85 @@ impl From<Text> for FormatElement {
     }
 }
 
-impl From<Group> for FormatElement {
-    fn from(group: Group) -> Self {
-        FormatElement::Group(group)
-    }
+/// Provides the printer with different representations for the same element so that the printer
+/// can pick the best fitting variant.
+///
+/// Best fitting is defined as the variant that takes the most horizontal space but fits on the line.
+#[derive(Clone, Eq, PartialEq)]
+pub struct BestFitting {
+    /// The different variants for this element.
+    /// The first element is the one that takes up the most space horizontally (the most flat),
+    /// The last element takes up the least space horizontally (but most horizontal space).
+    variants: Box<[Box<[FormatElement]>]>,
 }
 
-impl From<List> for FormatElement {
-    fn from(token: List) -> Self {
-        FormatElement::List(token)
-    }
-}
+impl BestFitting {
+    /// Creates a new best fitting IR with the given variants. The method itself isn't unsafe
+    /// but it is to discourage people from using it because the printer will panic if
+    /// the slice doesn't contain at least the least and most expanded variants.
+    ///
+    /// You're looking for a way to create a `BestFitting` object, use the `best_fitting![least_expanded, most_expanded]` macro.
+    ///
+    /// ## Safety
+    /// The slice must contain at least two variants.
+    #[doc(hidden)]
+    pub unsafe fn from_vec_unchecked(variants: Vec<Box<[FormatElement]>>) -> Self {
+        debug_assert!(
+            variants.len() >= 2,
+            "Requires at least the least expanded and most expanded variants"
+        );
 
-impl FromIterator<FormatElement> for FormatElement {
-    fn from_iter<T: IntoIterator<Item = FormatElement>>(iter: T) -> Self {
-        let iter = iter.into_iter();
-
-        let mut list = Vec::with_capacity(iter.size_hint().0);
-
-        for element in iter {
-            match element {
-                FormatElement::List(append) => {
-                    list.extend(append.content);
-                }
-                element => list.push(element),
-            }
-        }
-
-        FormatElement::from(List::new(list))
-    }
-}
-
-impl From<ConditionalGroupContent> for FormatElement {
-    fn from(token: ConditionalGroupContent) -> Self {
-        FormatElement::ConditionalGroupContent(token)
-    }
-}
-
-#[derive(Clone, Default, Debug)]
-struct IrFormatContext {
-    /// The interned elements that have been printed to this point
-    printed_interned_elements: IndexSet<Interned>,
-}
-
-impl FormatContext for IrFormatContext {
-    fn indent_style(&self) -> IndentStyle {
-        IndentStyle::Space(2)
-    }
-
-    fn line_width(&self) -> LineWidth {
-        LineWidth(80)
-    }
-
-    fn as_print_options(&self) -> PrinterOptions {
-        PrinterOptions {
-            tab_width: 2,
-            print_width: self.line_width(),
-            line_ending: LineEnding::LineFeed,
-            indent_string: "  ".to_string(),
+        Self {
+            variants: variants.into_boxed_slice(),
         }
     }
-}
 
-impl Format<IrFormatContext> for FormatElement {
-    fn fmt(&self, f: &mut crate::Formatter<IrFormatContext>) -> FormatResult<()> {
-        match self {
-            FormatElement::Space => {
-                write!(f, [text(" ")])
-            }
-            FormatElement::Line(mode) => match mode {
-                LineMode::SoftOrSpace => {
-                    write!(f, [text("soft_line_break_or_space")])
-                }
-                LineMode::Soft => {
-                    write!(f, [text("soft_line_break")])
-                }
-                LineMode::Hard => {
-                    write!(f, [text("hard_line_break")])
-                }
-                LineMode::Empty => {
-                    write!(f, [text("empty_line")])
-                }
-            },
-            FormatElement::ExpandParent => {
-                write!(f, [text("expand_parent")])
-            }
-            text @ FormatElement::Text(_) => f.write_element(text.clone()),
-            FormatElement::LineSuffixBoundary => {
-                write!(f, [text("line_suffix_boundary")])
-            }
-            FormatElement::Indent(content) => {
-                write!(f, [text("indent("), content.as_ref(), text(")")])
-            }
-            FormatElement::Align(Align { content, count }) => {
-                write!(
-                    f,
-                    [
-                        text("align("),
-                        dynamic_text(&count.to_string(), TextSize::default()),
-                        text(","),
-                        space(),
-                        content.as_ref(),
-                        text(")")
-                    ]
-                )
-            }
-            FormatElement::List(list) => {
-                write!(f, [list.as_ref()])
-            }
-            FormatElement::LineSuffix(line_suffix) => {
-                write!(f, [text("line_suffix("), line_suffix.as_ref(), text(")")])
-            }
-            FormatElement::Comment(content) => {
-                write!(f, [text("comment("), content.as_ref(), text(")")])
-            }
-            FormatElement::Verbatim(verbatim) => {
-                write!(f, [text("verbatim("), verbatim.content.as_ref(), text(")")])
-            }
-            FormatElement::Group(group_element) => {
-                write!(f, [text("group(")])?;
-
-                if let Some(id) = group_element.id {
-                    write!(
-                        f,
-                        [group(&soft_block_indent(&format_args![
-                            group_element.content.as_ref(),
-                            text(","),
-                            soft_line_break_or_space(),
-                            text("{"),
-                            group(&format_args![soft_line_indent_or_space(&format_args![
-                                text("id:"),
-                                space(),
-                                dynamic_text(&std::format!("{id:?}"), TextSize::default()),
-                                soft_line_break_or_space()
-                            ])]),
-                            text("}")
-                        ]))]
-                    )?;
-                } else {
-                    write!(f, [group_element.content.as_ref()])?;
-                }
-
-                write!(f, [text(")")])
-            }
-            FormatElement::ConditionalGroupContent(content) => {
-                match content.mode {
-                    PrintMode::Flat => {
-                        write!(f, [text("if_group_fits_on_line")])?;
-                    }
-                    PrintMode::Expanded => {
-                        write!(f, [text("if_group_breaks")])?;
-                    }
-                }
-
-                write!(f, [text("(")])?;
-
-                if let Some(id) = content.group_id {
-                    write!(
-                        f,
-                        [group(&soft_block_indent(&format_args![
-                            content.content.as_ref(),
-                            text(","),
-                            soft_line_break_or_space(),
-                            text("{"),
-                            group(&format_args![soft_line_indent_or_space(&format_args![
-                                text("id:"),
-                                space(),
-                                dynamic_text(&std::format!("{id:?}"), TextSize::default()),
-                                soft_line_break_or_space()
-                            ])]),
-                            text("}")
-                        ]))]
-                    )?;
-                } else {
-                    write!(f, [content.content.as_ref()])?;
-                }
-
-                write!(f, [text(")")])
-            }
-            FormatElement::Label(labelled) => {
-                let label_id = labelled.label_id;
-                write!(
-                    f,
-                    [
-                        text("label(\""),
-                        dynamic_text(&std::format!("{label_id:?}"), TextSize::default()),
-                        text("\","),
-                        space(),
-                        labelled.content.as_ref(),
-                        text(")")
-                    ]
-                )
-            }
-            FormatElement::Fill(fill) => {
-                write!(
-                    f,
-                    [
-                        text("fill("),
-                        fill.separator.as_ref(),
-                        text(","),
-                        space(),
-                        fill.content(),
-                        text(")")
-                    ]
-                )
-            }
-
-            FormatElement::BestFitting(best_fitting) => {
-                write!(
-                    f,
-                    [text("best_fitting("), best_fitting.variants(), text(")")]
-                )
-            }
-            FormatElement::Interned(interned) => {
-                let (index, inserted) = f
-                    .context_mut()
-                    .printed_interned_elements
-                    .insert_full(interned.clone());
-
-                if inserted {
-                    write!(
-                        f,
-                        [
-                            dynamic_text(&std::format!("<interned {index}>"), TextSize::default()),
-                            space(),
-                            &interned.0.as_ref()
-                        ]
-                    )
-                } else {
-                    write!(
-                        f,
-                        [dynamic_text(
-                            &std::format!("<ref interned *{index}>"),
-                            TextSize::default()
-                        )]
-                    )
-                }
-            }
-        }
-    }
-}
-
-impl<'a> Format<IrFormatContext> for &'a [FormatElement] {
-    fn fmt(&self, f: &mut Formatter<IrFormatContext>) -> FormatResult<()> {
-        write!(
-            f,
-            [
-                text("["),
-                group(&soft_block_indent(&format_with(|f| {
-                    let mut joiner = f.join_with(soft_line_break_or_space());
-                    let len = self.len();
-
-                    for (index, element) in self.iter().enumerate() {
-                        joiner.entry(&format_with(|f| {
-                            let print_as_str =
-                                matches!(element, FormatElement::Text(_) | FormatElement::Space);
-
-                            if print_as_str {
-                                write!(f, [text("\"")])?;
-                            }
-
-                            write!(f, [group(&element)])?;
-
-                            if print_as_str {
-                                write!(f, [text("\"")])?;
-                            }
-
-                            if index < len - 1 {
-                                write!(f, [text(",")])?;
-                            }
-
-                            Ok(())
-                        }));
-                    }
-
-                    joiner.finish()
-                }))),
-                text("]")
-            ]
+    /// Returns the most expanded variant
+    pub fn most_expanded(&self) -> &[FormatElement] {
+        self.variants.last().expect(
+            "Most contain at least two elements, as guaranteed by the best fitting builder.",
         )
     }
+
+    pub fn variants(&self) -> &[Box<[FormatElement]>] {
+        &self.variants
+    }
+
+    /// Returns the least expanded variant
+    pub fn most_flat(&self) -> &[FormatElement] {
+        self.variants.first().expect(
+            "Most contain at least two elements, as guaranteed by the best fitting builder.",
+        )
+    }
+}
+
+impl std::fmt::Debug for BestFitting {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_list().entries(&*self.variants).finish()
+    }
+}
+
+pub trait FormatElements {
+    /// Returns true if this [FormatElement] is guaranteed to break across multiple lines by the printer.
+    /// This is the case if this format element recursively contains a:
+    /// * [crate::builders::empty_line] or [crate::builders::hard_line_break]
+    /// * A token containing '\n'
+    ///
+    /// Use this with caution, this is only a heuristic and the printer may print the element over multiple
+    /// lines if this element is part of a group and the group doesn't fit on a single line.
+    fn will_break(&self) -> bool;
+
+    /// Returns true if the element has the given label.
+    fn has_label(&self, label: LabelId) -> bool;
+
+    /// Returns the start tag of `kind` if:
+    /// * the last element is an end tag of `kind`.
+    /// * there's a matching start tag in this document (may not be true if this slice is an interned element and the `start` is in the document storing the interned element).
+    fn start_tag(&self, kind: TagKind) -> Option<&Tag>;
+
+    /// Returns the end tag if:
+    /// * the last element is an end tag of `kind`
+    fn end_tag(&self, kind: TagKind) -> Option<&Tag>;
 }
 
 #[cfg(test)]
@@ -999,8 +402,13 @@ mod tests {
     #[test]
     fn test_normalize_newlines() {
         assert_eq!(normalize_newlines("a\nb", LINE_TERMINATORS), "a\nb");
+        assert_eq!(normalize_newlines("a\n\n\nb", LINE_TERMINATORS), "a\n\n\nb");
         assert_eq!(normalize_newlines("a\rb", LINE_TERMINATORS), "a\nb");
         assert_eq!(normalize_newlines("a\r\nb", LINE_TERMINATORS), "a\nb");
+        assert_eq!(
+            normalize_newlines("a\r\n\r\n\r\nb", LINE_TERMINATORS),
+            "a\n\n\nb"
+        );
         assert_eq!(normalize_newlines("a\u{2028}b", LINE_TERMINATORS), "a\nb");
         assert_eq!(normalize_newlines("a\u{2029}b", LINE_TERMINATORS), "a\nb");
     }
@@ -1010,20 +418,14 @@ mod tests {
 static_assert!(std::mem::size_of::<rome_rowan::TextRange>() == 8usize);
 
 #[cfg(target_pointer_width = "64")]
-static_assert!(std::mem::size_of::<crate::format_element::VerbatimKind>() == 8usize);
-
-#[cfg(target_pointer_width = "64")]
-static_assert!(std::mem::size_of::<crate::format_element::Verbatim>() == 24usize);
+static_assert!(std::mem::size_of::<crate::format_element::tag::VerbatimKind>() == 8usize);
 
 #[cfg(target_pointer_width = "64")]
 static_assert!(std::mem::size_of::<crate::format_element::Text>() == 24usize);
 
 #[cfg(not(debug_assertions))]
 #[cfg(target_pointer_width = "64")]
-static_assert!(std::mem::size_of::<crate::format_element::ConditionalGroupContent>() == 24usize);
-
-#[cfg(target_pointer_width = "64")]
-static_assert!(std::mem::size_of::<crate::format_element::List>() == 24usize);
+static_assert!(std::mem::size_of::<crate::format_element::Tag>() == 16usize);
 
 // Increasing the size of FormatElement has serious consequences on runtime performance and memory footprint.
 // Is there a more efficient way to encode the data to avoid increasing its size? Can the information

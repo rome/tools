@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\throw_expressions\\throw_expression.js"
 ---
 
 # Input
@@ -104,54 +106,100 @@ class Product {
 
 # Errors
 ```
-error[SyntaxError]: expected an expression, or an assignment but instead found 'throw'
-  ┌─ throw_expression.js:1:26
-  │
-1 │ function save(filename = throw new TypeError("Argument required")) {}
-  │                          ^^^^^ Expected an expression, or an assignment here
+throw_expression.js:1:26 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `TypeError`
-  ┌─ throw_expression.js:1:36
-  │
-1 │ function save(filename = throw new TypeError("Argument required")) {}
-  │                                    ^^^^^^^^^ unexpected
+  × expected an expression, or an assignment but instead found 'throw'
+  
+  × Expected an expression, or an assignment here
+  
+  > 1 │ function save(filename = throw new TypeError("Argument required")) {}
+      │                          ^^^^^
+    2 │ 
+    3 │ lint(ast, {
+  
+throw_expression.js:1:36 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `(`
-  ┌─ throw_expression.js:1:45
-  │
-1 │ function save(filename = throw new TypeError("Argument required")) {}
-  │                                             ^ unexpected
+  × expected `,` but instead found `TypeError`
+  
+  × unexpected
+  
+  > 1 │ function save(filename = throw new TypeError("Argument required")) {}
+      │                                    ^^^^^^^^^
+    2 │ 
+    3 │ lint(ast, {
+  
+throw_expression.js:1:45 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a function body but instead found ')'
-  ┌─ throw_expression.js:1:66
-  │
-1 │ function save(filename = throw new TypeError("Argument required")) {}
-  │                                                                  ^ Expected a function body here
+  × expected `,` but instead found `(`
+  
+  × unexpected
+  
+  > 1 │ function save(filename = throw new TypeError("Argument required")) {}
+      │                                             ^
+    2 │ 
+    3 │ lint(ast, {
+  
+throw_expression.js:1:66 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a function body, or an expression but instead found 'throw'
-  ┌─ throw_expression.js:4:15
-  │
-4 │   with: () => throw new Error("avoid using 'with' statements.")
-  │               ^^^^^ Expected a function body, or an expression here
+  × expected a function body but instead found ')'
+  
+  × Expected a function body here
+  
+  > 1 │ function save(filename = throw new TypeError("Argument required")) {}
+      │                                                                  ^
+    2 │ 
+    3 │ lint(ast, {
+  
+throw_expression.js:4:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `:` but instead found `new`
-  ┌─ throw_expression.js:4:21
-  │
-4 │   with: () => throw new Error("avoid using 'with' statements.")
-  │                     ^^^ unexpected
+  × expected a function body, or an expression but instead found 'throw'
+  
+  × Expected a function body, or an expression here
+  
+    3 │ lint(ast, {
+  > 4 │   with: () => throw new Error("avoid using 'with' statements.")
+      │               ^^^^^
+    5 │ });
+    6 │ 
+  
+throw_expression.js:4:21 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an expression, or an assignment but instead found 'throw'
-   ┌─ throw_expression.js:11:19
-   │
-11 │                 : throw new Error("Unsupported encoding");
-   │                   ^^^^^ Expected an expression, or an assignment here
+  × expected `:` but instead found `new`
+  
+  × unexpected
+  
+    3 │ lint(ast, {
+  > 4 │   with: () => throw new Error("avoid using 'with' statements.")
+      │                     ^^^
+    5 │ });
+    6 │ 
+  
+throw_expression.js:11:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an expression but instead found 'throw'
-   ┌─ throw_expression.js:16:39
-   │
-16 │   set id(value) { this._id = value || throw new Error("Invalid value"); }
-   │                                       ^^^^^ Expected an expression here
+  × expected an expression, or an assignment but instead found 'throw'
+  
+  × Expected an expression, or an assignment here
+  
+     9 │                 : encoding === "utf16le" ? new UTF16Encoder(false)
+    10 │                 : encoding === "utf16be" ? new UTF16Encoder(true)
+  > 11 │                 : throw new Error("Unsupported encoding");
+       │                   ^^^^^
+    12 │ }
+    13 │ 
+  
+throw_expression.js:16:39 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an expression but instead found 'throw'
+  
+  × Expected an expression here
+  
+    14 │ class Product {
+    15 │   get id() { return this._id; }
+  > 16 │   set id(value) { this._id = value || throw new Error("Invalid value"); }
+       │                                       ^^^^^
+    17 │ }
+    18 │ 
+  
 
 ```
 

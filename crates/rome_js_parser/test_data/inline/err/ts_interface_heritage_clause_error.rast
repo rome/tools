@@ -187,35 +187,60 @@ JsModule {
       6: R_CURLY@125..126 "}" [] []
   3: EOF@126..127 "" [Newline("\n")] []
 --
-error[SyntaxError]: Interface declaration cannot have 'implements' clause.
-  ┌─ ts_interface_heritage_clause_error.ts:2:13
-  │
-2 │ interface B implements A {}
-  │             ^^^^^^^^^^^^
+ts_interface_heritage_clause_error.ts:2:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Interface declaration cannot have 'implements' clause.
+  
+    1 │ interface A {}
+  > 2 │ interface B implements A {}
+      │             ^^^^^^^^^^^^
+    3 │ interface C extends A extends B {}
+    4 │ interface D extends {}
+  
 --
-error[SyntaxError]: 'extends' clause already seen.
-  ┌─ ts_interface_heritage_clause_error.ts:3:23
-  │
-3 │ interface C extends A extends B {}
-  │             --------- ^^^^^^^^^
-  │             │          
-  │             first 'extends' clause
+ts_interface_heritage_clause_error.ts:3:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'extends' clause already seen.
+  
+    1 │ interface A {}
+    2 │ interface B implements A {}
+  > 3 │ interface C extends A extends B {}
+      │                       ^^^^^^^^^
+    4 │ interface D extends {}
+    5 │ interface E extends A, {}
+  
+  i first 'extends' clause
+  
+    1 │ interface A {}
+    2 │ interface B implements A {}
+  > 3 │ interface C extends A extends B {}
+      │             ^^^^^^^^^
+    4 │ interface D extends {}
+    5 │ interface E extends A, {}
+  
 --
-error[SyntaxError]: 'extends' list cannot be empty.
-  ┌─ ts_interface_heritage_clause_error.ts:4:21
-  │
-4 │ interface D extends {}
-  │                     ^
+ts_interface_heritage_clause_error.ts:4:21 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'extends' list cannot be empty.
+  
+    2 │ interface B implements A {}
+    3 │ interface C extends A extends B {}
+  > 4 │ interface D extends {}
+      │                     
+    5 │ interface E extends A, {}
+    6 │ 
+  
 --
-error[SyntaxError]: Trailing comma not allowed.
-  ┌─ ts_interface_heritage_clause_error.ts:5:22
-  │
-5 │ interface E extends A, {}
-  │                      ^
+ts_interface_heritage_clause_error.ts:5:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Trailing comma not allowed.
+  
+    3 │ interface C extends A extends B {}
+    4 │ interface D extends {}
+  > 5 │ interface E extends A, {}
+      │                      ^
+    6 │ 
+  
 --
 interface A {}
 interface B implements A {}

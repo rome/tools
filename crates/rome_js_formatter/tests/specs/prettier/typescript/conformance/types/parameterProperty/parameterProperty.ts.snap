@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "typescript\\conformance\\types\\parameterProperty\\parameterProperty.ts"
 ---
 
 # Input
@@ -45,18 +47,30 @@ class c3 {
 
 # Errors
 ```
-error[SyntaxError]: Illegal use of reserved keyword `public` as an identifier in strict mode
-  ┌─ parameterProperty.ts:5:19
-  │
-5 │   not_constructor(public arg: number = 10) {
-  │                   ^^^^^^
+parameterProperty.ts:5:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `arg`
-  ┌─ parameterProperty.ts:5:26
-  │
-5 │   not_constructor(public arg: number = 10) {
-  │                          ^^^ unexpected
+  × Illegal use of reserved keyword `public` as an identifier in strict mode
+  
+    3 │     // fails because of comment
+    4 │   }
+  > 5 │   not_constructor(public arg: number = 10) {
+      │                   ^^^^^^
+    6 │   }
+    7 │ }
+  
+parameterProperty.ts:5:26 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `arg`
+  
+  × unexpected
+  
+    3 │     // fails because of comment
+    4 │   }
+  > 5 │   not_constructor(public arg: number = 10) {
+      │                          ^^^
+    6 │   }
+    7 │ }
+  
 
 ```
 

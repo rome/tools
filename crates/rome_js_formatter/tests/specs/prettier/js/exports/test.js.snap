@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\exports\\test.js"
 ---
 
 # Input
@@ -78,45 +80,98 @@ export { undefinedExport };
 
 # Errors
 ```
-error[SyntaxError]: expected a class, a function, or a variable declaration but instead found 'a'
-  ┌─ test.js:3:8
-  │
-3 │ export a,{b} from "./baz";
-  │        ^ Expected a class, a function, or a variable declaration here
+test.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ test.js:3:14
-  │
-3 │ export a,{b} from "./baz";
-  │        ------^^^^
-  │        │     │
-  │        │     An explicit or implicit semicolon is expected here...
-  │        ...Which is required to end this statement
+  × expected a class, a function, or a variable declaration but instead found 'a'
+  
+  × Expected a class, a function, or a variable declaration here
+  
+    1 │ export { value1, value2 as value2_renamed, value3, value4 as value4_renamed, value5 } from "exports";
+    2 │ 
+  > 3 │ export a,{b} from "./baz";
+      │        ^
+    4 │ 
+    5 │ export * as ns from "mod";
+  
+test.js:3:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ test.js:3:19
-  │
-3 │ export a,{b} from "./baz";
-  │              -----^^^^^^^
-  │              │    │
-  │              │    An explicit or implicit semicolon is expected here...
-  │              ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    1 │ export { value1, value2 as value2_renamed, value3, value4 as value4_renamed, value5 } from "exports";
+    2 │ 
+  > 3 │ export a,{b} from "./baz";
+      │              ^^^^
+    4 │ 
+    5 │ export * as ns from "mod";
+  
+  i ...Which is required to end this statement
+  
+    1 │ export { value1, value2 as value2_renamed, value3, value4 as value4_renamed, value5 } from "exports";
+    2 │ 
+  > 3 │ export a,{b} from "./baz";
+      │        ^^^^^^^^^^
+    4 │ 
+    5 │ export * as ns from "mod";
+  
+test.js:3:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `from` but instead found `,`
-  ┌─ test.js:7:16
-  │
-7 │ export * as foo,{bar} from "./baz";
-  │                ^ unexpected
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    1 │ export { value1, value2 as value2_renamed, value3, value4 as value4_renamed, value5 } from "exports";
+    2 │ 
+  > 3 │ export a,{b} from "./baz";
+      │                   ^^^^^^^
+    4 │ 
+    5 │ export * as ns from "mod";
+  
+  i ...Which is required to end this statement
+  
+    1 │ export { value1, value2 as value2_renamed, value3, value4 as value4_renamed, value5 } from "exports";
+    2 │ 
+  > 3 │ export a,{b} from "./baz";
+      │              ^^^^^^^^^^^^
+    4 │ 
+    5 │ export * as ns from "mod";
+  
+test.js:7:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ test.js:7:28
-  │
-7 │ export * as foo,{bar} from "./baz";
-  │                       -----^^^^^^^
-  │                       │    │
-  │                       │    An explicit or implicit semicolon is expected here...
-  │                       ...Which is required to end this statement
+  × expected `from` but instead found `,`
+  
+  × unexpected
+  
+    5 │ export * as ns from "mod";
+    6 │ 
+  > 7 │ export * as foo,{bar} from "./baz";
+      │                ^
+    8 │ 
+    9 │ export { undefinedExport };
+  
+test.js:7:28 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    5 │ export * as ns from "mod";
+    6 │ 
+  > 7 │ export * as foo,{bar} from "./baz";
+      │                            ^^^^^^^
+    8 │ 
+    9 │ export { undefinedExport };
+  
+  i ...Which is required to end this statement
+  
+    5 │ export * as ns from "mod";
+    6 │ 
+  > 7 │ export * as foo,{bar} from "./baz";
+      │                       ^^^^^^^^^^^^
+    8 │ 
+    9 │ export { undefinedExport };
+  
 
 ```
 

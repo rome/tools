@@ -74,22 +74,36 @@ JsModule {
           0: SEMICOLON@71..88 ";" [] [Whitespace(" "), Comments("// missing semi")]
   3: EOF@88..89 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `{` but instead found `;`
-  ┌─ ts_module_err.ts:1:17
-  │
-1 │ declare module a; // missing body
-  │                 ^ unexpected
+ts_module_err.ts:1:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `{` but instead found `;`
+  
+  × unexpected
+  
+  > 1 │ declare module a; // missing body
+      │                 ^
+    2 │ declare module "a" declare module "b"; // missing semi
+    3 │ 
+  
 --
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ ts_module_err.ts:2:20
-  │
-2 │ declare module "a" declare module "b"; // missing semi
-  │ -------------------^^^^^^^
-  │ │                  │
-  │ │                  An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
+ts_module_err.ts:2:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    1 │ declare module a; // missing body
+  > 2 │ declare module "a" declare module "b"; // missing semi
+      │                    ^^^^^^^
+    3 │ 
+  
+  i ...Which is required to end this statement
+  
+    1 │ declare module a; // missing body
+  > 2 │ declare module "a" declare module "b"; // missing semi
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ 
+  
 --
 declare module a; // missing body
 declare module "a" declare module "b"; // missing semi

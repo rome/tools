@@ -1,18 +1,12 @@
 use crate::commands::format::apply_format_settings_from_cli;
-use crate::{
-    traversal::{traverse, TraversalMode},
-    CliSession, Termination,
-};
+use crate::{execute_mode, CliSession, Execution, Termination, TraversalMode};
 use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
 use rome_service::load_config;
-use rome_service::settings::WorkspaceSettings;
 use rome_service::workspace::{FixFileMode, UpdateSettingsParams};
 
 /// Handler for the "check" command of the Rome CLI
 pub(crate) fn check(mut session: CliSession) -> Result<(), Termination> {
-    let configuration = load_config(&session.app.fs)?;
-    let mut workspace_settings = WorkspaceSettings::default();
-
+    let configuration = load_config(&session.app.fs, None)?;
     let max_diagnostics: Option<u16> = session
         .args
         .opt_value_from_str("--max-diagnostics")
@@ -34,18 +28,11 @@ pub(crate) fn check(mut session: CliSession) -> Result<(), Termination> {
         20
     };
 
-    if let Some(configuration) = configuration {
-        workspace_settings.merge_with_configuration(configuration)
-    }
-
-    apply_format_settings_from_cli(&mut session, &mut workspace_settings)?;
-
+    let configuration = apply_format_settings_from_cli(&mut session, configuration)?;
     session
         .app
         .workspace
-        .update_settings(UpdateSettingsParams {
-            settings: workspace_settings,
-        })?;
+        .update_settings(UpdateSettingsParams { configuration })?;
 
     let apply = session.args.contains("--apply");
     let apply_suggested = session.args.contains("--apply-suggested");
@@ -63,11 +50,11 @@ pub(crate) fn check(mut session: CliSession) -> Result<(), Termination> {
         Some(FixFileMode::SafeAndSuggestedFixes)
     };
 
-    traverse(
-        TraversalMode::Check {
+    execute_mode(
+        Execution::new(TraversalMode::Check {
             max_diagnostics,
             fix_file_mode,
-        },
+        }),
         session,
     )
 }

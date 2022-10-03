@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "typescript\\conformance\\classes\\classDeclarations\\classAbstractKeyword\\classAbstractMixedWithModifiers.ts"
 ---
 
 # Input
@@ -68,50 +70,126 @@ abstract class A {
 
 # Errors
 ```
-error[SyntaxError]: 'private' cannot be used with 'abstract' modifier.
-  ┌─ classAbstractMixedWithModifiers.ts:6:5
-  │
-6 │     private abstract foo_d();
-  │     ^^^^^^^ -------- 'abstract' modifier
+classAbstractMixedWithModifiers.ts:6:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: 'public' must precede 'abstract'
-  ┌─ classAbstractMixedWithModifiers.ts:8:14
-  │
-8 │     abstract public foo_bb();
-  │     -------- ^^^^^^ move this modifier
-  │     │         
-  │     before this modifier
+  × 'private' cannot be used with 'abstract' modifier.
+  
+    4 │     public abstract foo_b();
+    5 │     protected abstract foo_c();
+  > 6 │     private abstract foo_d();
+      │     ^^^^^^^
+    7 │     
+    8 │     abstract public foo_bb();
+  
+  i 'abstract' modifier
+  
+    4 │     public abstract foo_b();
+    5 │     protected abstract foo_c();
+  > 6 │     private abstract foo_d();
+      │             ^^^^^^^^
+    7 │     
+    8 │     abstract public foo_bb();
+  
+classAbstractMixedWithModifiers.ts:8:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: 'protected' must precede 'abstract'
-  ┌─ classAbstractMixedWithModifiers.ts:9:14
-  │
-9 │     abstract protected foo_cc();
-  │     -------- ^^^^^^^^^ move this modifier
-  │     │         
-  │     before this modifier
+  × 'public' must precede 'abstract'
+  
+  × move this modifier
+  
+     6 │     private abstract foo_d();
+     7 │     
+   > 8 │     abstract public foo_bb();
+       │              ^^^^^^
+     9 │     abstract protected foo_cc();
+    10 │     abstract private foo_dd();
+  
+  i before this modifier
+  
+     6 │     private abstract foo_d();
+     7 │     
+   > 8 │     abstract public foo_bb();
+       │     ^^^^^^^^
+     9 │     abstract protected foo_cc();
+    10 │     abstract private foo_dd();
+  
+classAbstractMixedWithModifiers.ts:9:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: 'private' cannot be used with 'abstract' modifier.
-   ┌─ classAbstractMixedWithModifiers.ts:10:14
-   │
-10 │     abstract private foo_dd();
-   │     -------- ^^^^^^^
-   │     │         
-   │     'abstract' modifier
+  × 'protected' must precede 'abstract'
+  
+  × move this modifier
+  
+     8 │     abstract public foo_bb();
+   > 9 │     abstract protected foo_cc();
+       │              ^^^^^^^^^
+    10 │     abstract private foo_dd();
+    11 │     
+  
+  i before this modifier
+  
+     8 │     abstract public foo_bb();
+   > 9 │     abstract protected foo_cc();
+       │     ^^^^^^^^
+    10 │     abstract private foo_dd();
+    11 │     
+  
+classAbstractMixedWithModifiers.ts:10:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: 'abstract' cannot be used with 'static' modifier.
-   ┌─ classAbstractMixedWithModifiers.ts:12:5
-   │
-12 │     abstract static foo_d();
-   │     ^^^^^^^^ ------ 'static' modifier
+  × 'private' cannot be used with 'abstract' modifier.
+  
+     8 │     abstract public foo_bb();
+     9 │     abstract protected foo_cc();
+  > 10 │     abstract private foo_dd();
+       │              ^^^^^^^
+    11 │     
+    12 │     abstract static foo_d();
+  
+  i 'abstract' modifier
+  
+     8 │     abstract public foo_bb();
+     9 │     abstract protected foo_cc();
+  > 10 │     abstract private foo_dd();
+       │     ^^^^^^^^
+    11 │     
+    12 │     abstract static foo_d();
+  
+classAbstractMixedWithModifiers.ts:12:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: 'abstract' cannot be used with 'static' modifier.
-   ┌─ classAbstractMixedWithModifiers.ts:14:12
-   │
-14 │     static abstract foo_e();
-   │     ------ ^^^^^^^^
-   │     │       
-   │     'static' modifier
+  × 'abstract' cannot be used with 'static' modifier.
+  
+    10 │     abstract private foo_dd();
+    11 │     
+  > 12 │     abstract static foo_d();
+       │     ^^^^^^^^
+    13 │     
+    14 │     static abstract foo_e();
+  
+  i 'static' modifier
+  
+    10 │     abstract private foo_dd();
+    11 │     
+  > 12 │     abstract static foo_d();
+       │              ^^^^^^
+    13 │     
+    14 │     static abstract foo_e();
+  
+classAbstractMixedWithModifiers.ts:14:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'abstract' cannot be used with 'static' modifier.
+  
+    12 │     abstract static foo_d();
+    13 │     
+  > 14 │     static abstract foo_e();
+       │            ^^^^^^^^
+    15 │ }
+  
+  i 'static' modifier
+  
+    12 │     abstract static foo_d();
+    13 │     
+  > 14 │     static abstract foo_e();
+       │     ^^^^^^
+    15 │ }
+  
 
 ```
 

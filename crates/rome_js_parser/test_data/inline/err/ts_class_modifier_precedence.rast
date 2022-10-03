@@ -409,77 +409,189 @@ JsModule {
       8: R_CURLY@409..411 "}" [Newline("\n")] []
   3: EOF@411..412 "" [Newline("\n")] []
 --
-error[SyntaxError]: 'private' must precede 'readonly'
-  ┌─ ts_class_modifier_precedence.ts:4:14
-  │
-4 │     readonly private a: string;
-  │     -------- ^^^^^^^ move this modifier
-  │     │         
-  │     before this modifier
+ts_class_modifier_precedence.ts:4:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'private' must precede 'readonly'
+  
+  × move this modifier
+  
+    2 │ abstract class Test extends Base {
+    3 │     // Accessibility
+  > 4 │     readonly private a: string;
+      │              ^^^^^^^
+    5 │     override protected base1;
+    6 │     static private b: string;
+  
+  i before this modifier
+  
+    2 │ abstract class Test extends Base {
+    3 │     // Accessibility
+  > 4 │     readonly private a: string;
+      │     ^^^^^^^^
+    5 │     override protected base1;
+    6 │     static private b: string;
+  
 --
-error[SyntaxError]: 'protected' must precede 'override'
-  ┌─ ts_class_modifier_precedence.ts:5:14
-  │
-5 │     override protected base1;
-  │     -------- ^^^^^^^^^ move this modifier
-  │     │         
-  │     before this modifier
+ts_class_modifier_precedence.ts:5:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'protected' must precede 'override'
+  
+  × move this modifier
+  
+    3 │     // Accessibility
+    4 │     readonly private a: string;
+  > 5 │     override protected base1;
+      │              ^^^^^^^^^
+    6 │     static private b: string;
+    7 │     abstract protected d: string;
+  
+  i before this modifier
+  
+    3 │     // Accessibility
+    4 │     readonly private a: string;
+  > 5 │     override protected base1;
+      │     ^^^^^^^^
+    6 │     static private b: string;
+    7 │     abstract protected d: string;
+  
 --
-error[SyntaxError]: 'private' must precede 'static'
-  ┌─ ts_class_modifier_precedence.ts:6:12
-  │
-6 │     static private b: string;
-  │     ------ ^^^^^^^ move this modifier
-  │     │       
-  │     before this modifier
+ts_class_modifier_precedence.ts:6:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'private' must precede 'static'
+  
+  × move this modifier
+  
+    4 │     readonly private a: string;
+    5 │     override protected base1;
+  > 6 │     static private b: string;
+      │            ^^^^^^^
+    7 │     abstract protected d: string;
+    8 │     // Static
+  
+  i before this modifier
+  
+    4 │     readonly private a: string;
+    5 │     override protected base1;
+  > 6 │     static private b: string;
+      │     ^^^^^^
+    7 │     abstract protected d: string;
+    8 │     // Static
+  
 --
-error[SyntaxError]: 'protected' must precede 'abstract'
-  ┌─ ts_class_modifier_precedence.ts:7:14
-  │
-7 │     abstract protected d: string;
-  │     -------- ^^^^^^^^^ move this modifier
-  │     │         
-  │     before this modifier
+ts_class_modifier_precedence.ts:7:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'protected' must precede 'abstract'
+  
+  × move this modifier
+  
+    5 │     override protected base1;
+    6 │     static private b: string;
+  > 7 │     abstract protected d: string;
+      │              ^^^^^^^^^
+    8 │     // Static
+    9 │     readonly static c: string;
+  
+  i before this modifier
+  
+    5 │     override protected base1;
+    6 │     static private b: string;
+  > 7 │     abstract protected d: string;
+      │     ^^^^^^^^
+    8 │     // Static
+    9 │     readonly static c: string;
+  
 --
-error[SyntaxError]: 'static' must precede 'readonly'
-  ┌─ ts_class_modifier_precedence.ts:9:14
-  │
-9 │     readonly static c: string;
-  │     -------- ^^^^^^ move this modifier
-  │     │         
-  │     before this modifier
+ts_class_modifier_precedence.ts:9:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'static' must precede 'readonly'
+  
+  × move this modifier
+  
+     7 │     abstract protected d: string;
+     8 │     // Static
+   > 9 │     readonly static c: string;
+       │              ^^^^^^
+    10 │     override static base2: string;
+    11 │     // abstract
+  
+  i before this modifier
+  
+     7 │     abstract protected d: string;
+     8 │     // Static
+   > 9 │     readonly static c: string;
+       │     ^^^^^^^^
+    10 │     override static base2: string;
+    11 │     // abstract
+  
 --
-error[SyntaxError]: 'static' must precede 'override'
-   ┌─ ts_class_modifier_precedence.ts:10:14
-   │
-10 │     override static base2: string;
-   │     -------- ^^^^^^ move this modifier
-   │     │         
-   │     before this modifier
+ts_class_modifier_precedence.ts:10:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'static' must precede 'override'
+  
+  × move this modifier
+  
+     8 │     // Static
+     9 │     readonly static c: string;
+  > 10 │     override static base2: string;
+       │              ^^^^^^
+    11 │     // abstract
+    12 │     override abstract base3: string;
+  
+  i before this modifier
+  
+     8 │     // Static
+     9 │     readonly static c: string;
+  > 10 │     override static base2: string;
+       │     ^^^^^^^^
+    11 │     // abstract
+    12 │     override abstract base3: string;
+  
 --
-error[SyntaxError]: 'abstract' must precede 'override'
-   ┌─ ts_class_modifier_precedence.ts:12:14
-   │
-12 │     override abstract base3: string;
-   │     -------- ^^^^^^^^ move this modifier
-   │     │         
-   │     before this modifier
+ts_class_modifier_precedence.ts:12:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'abstract' must precede 'override'
+  
+  × move this modifier
+  
+    10 │     override static base2: string;
+    11 │     // abstract
+  > 12 │     override abstract base3: string;
+       │              ^^^^^^^^
+    13 │     // override
+    14 │     readonly override base4: string;
+  
+  i before this modifier
+  
+    10 │     override static base2: string;
+    11 │     // abstract
+  > 12 │     override abstract base3: string;
+       │     ^^^^^^^^
+    13 │     // override
+    14 │     readonly override base4: string;
+  
 --
-error[SyntaxError]: 'override' must precede 'readonly'
-   ┌─ ts_class_modifier_precedence.ts:14:14
-   │
-14 │     readonly override base4: string;
-   │     -------- ^^^^^^^^ move this modifier
-   │     │         
-   │     before this modifier
+ts_class_modifier_precedence.ts:14:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'override' must precede 'readonly'
+  
+  × move this modifier
+  
+    12 │     override abstract base3: string;
+    13 │     // override
+  > 14 │     readonly override base4: string;
+       │              ^^^^^^^^
+    15 │ }
+    16 │ 
+  
+  i before this modifier
+  
+    12 │     override abstract base3: string;
+    13 │     // override
+  > 14 │     readonly override base4: string;
+       │     ^^^^^^^^
+    15 │ }
+    16 │ 
+  
 --
 class Base { base1; base2; base3; base4;}
 abstract class Test extends Base {

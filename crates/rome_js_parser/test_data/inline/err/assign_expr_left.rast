@@ -51,21 +51,32 @@ JsModule {
       0: SEMICOLON@8..9 ";" [] []
   3: EOF@9..10 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `)` but instead found `=`
-  ┌─ assign_expr_left.js:1:3
-  │
-1 │ ( = foo);
-  │   ^ unexpected
+assign_expr_left.js:1:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `)` but instead found `=`
+  
+  × unexpected
+  
+  > 1 │ ( = foo);
+      │   ^
+    2 │ 
+  
 --
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ assign_expr_left.js:1:8
-  │
-1 │ ( = foo);
-  │ -------^
-  │ │      │
-  │ │      An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
+assign_expr_left.js:1:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+  > 1 │ ( = foo);
+      │        ^
+    2 │ 
+  
+  i ...Which is required to end this statement
+  
+  > 1 │ ( = foo);
+      │ ^^^^^^^^
+    2 │ 
+  
 --
 ( = foo);

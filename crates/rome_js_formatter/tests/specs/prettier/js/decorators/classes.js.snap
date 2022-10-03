@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\decorators\\classes.js"
 ---
 
 # Input
@@ -28,7 +30,7 @@ const bar =
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,24 +1,17 @@
+@@ -1,24 +1,16 @@
 -@deco
 -class Foo {}
 +@deco class Foo {}
@@ -59,7 +61,6 @@ const bar =
 -      //
 -    }
 -  );
-+
 +@deco
 +  class {
 +    //
@@ -81,7 +82,6 @@ const foo =
 }
 
 const bar =
-
 @deco
   class {
     //
@@ -91,30 +91,53 @@ const bar =
 
 # Errors
 ```
-error[SyntaxError]: expected an expression, or an assignment but instead found '@'
-  ┌─ classes.js:7:13
-  │
-7 │ const foo = @deco class {
-  │             ^ Expected an expression, or an assignment here
+classes.js:7:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: class declarations must have a name
-  ┌─ classes.js:7:19
-  │
-7 │ const foo = @deco class {
-  │                   ^^^^^^
+  × expected an expression, or an assignment but instead found '@'
+  
+  × Expected an expression, or an assignment here
+  
+    5 │ @deco export default class Baz {}
+    6 │ 
+  > 7 │ const foo = @deco class {
+      │             ^
+    8 │   //
+    9 │ };
+  
+classes.js:7:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an expression, or an assignment but instead found '@'
-   ┌─ classes.js:12:3
-   │
-12 │   @deco
-   │   ^ Expected an expression, or an assignment here
+  × class declarations must have a name
+  
+    5 │ @deco export default class Baz {}
+    6 │ 
+  > 7 │ const foo = @deco class {
+      │                   ^^^^^^
+    8 │   //
+    9 │ };
+  
+classes.js:12:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: class declarations must have a name
-   ┌─ classes.js:13:3
-   │
-13 │   class {
-   │   ^^^^^^
+  × expected an expression, or an assignment but instead found '@'
+  
+  × Expected an expression, or an assignment here
+  
+    11 │ const bar =
+  > 12 │   @deco
+       │   ^
+    13 │   class {
+    14 │     //
+  
+classes.js:13:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × class declarations must have a name
+  
+    11 │ const bar =
+    12 │   @deco
+  > 13 │   class {
+       │   ^^^^^^
+    14 │     //
+    15 │   };
+  
 
 ```
 

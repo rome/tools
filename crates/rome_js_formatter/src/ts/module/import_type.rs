@@ -1,9 +1,10 @@
 use crate::prelude::*;
 use crate::utils::{FormatLiteralStringToken, StringLiteralParentKind};
 
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
-use rome_js_syntax::TsImportType;
 use rome_js_syntax::TsImportTypeFields;
+use rome_js_syntax::{JsSyntaxNode, TsImportType};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsImportType;
@@ -38,5 +39,15 @@ impl FormatNodeRule<TsImportType> for FormatTsImportType {
                 type_arguments.format(),
             ]
         ]
+    }
+
+    fn needs_parentheses(&self, item: &TsImportType) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl NeedsParentheses for TsImportType {
+    fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
+        false
     }
 }

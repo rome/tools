@@ -1,5 +1,17 @@
-use std::{any::type_name, panic::RefUnwindSafe, sync::RwLock};
-
+use super::{
+    ChangeFileParams, CloseFileParams, FeatureName, FixFileResult, FormatFileParams,
+    FormatOnTypeParams, FormatRangeParams, GetControlFlowGraphParams, GetFormatterIRParams,
+    GetSyntaxTreeParams, GetSyntaxTreeResult, OpenFileParams, PullActionsParams, PullActionsResult,
+    PullDiagnosticsParams, PullDiagnosticsResult, RenameResult, SupportsFeatureParams,
+    UpdateSettingsParams,
+};
+use crate::file_handlers::{Capabilities, FixAllParams, Language};
+use crate::workspace::SupportsFeatureResult;
+use crate::{
+    file_handlers::Features,
+    settings::{SettingsHandle, WorkspaceSettings},
+    RomeError, Workspace,
+};
 use dashmap::{mapref::entry::Entry, DashMap};
 use indexmap::IndexSet;
 use rome_analyze::{AnalysisFilter, RuleFilter};
@@ -7,20 +19,7 @@ use rome_diagnostics::{Diagnostic, Severity};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_rowan::{AstNode, Language as RowanLanguage, SendNode, SyntaxNode};
-
-use crate::file_handlers::FixAllParams;
-use crate::{
-    file_handlers::Features,
-    settings::{SettingsHandle, WorkspaceSettings},
-    RomeError, Workspace,
-};
-
-use super::{
-    ChangeFileParams, CloseFileParams, FeatureName, FixFileResult, FormatFileParams,
-    FormatOnTypeParams, FormatRangeParams, GetSyntaxTreeParams, OpenFileParams, PullActionsParams,
-    PullActionsResult, PullDiagnosticsParams, PullDiagnosticsResult, RenameResult,
-    SupportsFeatureParams, UpdateSettingsParams,
-};
+use std::{any::type_name, panic::RefUnwindSafe, sync::RwLock};
 
 pub(super) struct WorkspaceServer {
     /// features available throughout the application
@@ -45,6 +44,7 @@ impl RefUnwindSafe for WorkspaceServer {}
 pub(crate) struct Document {
     pub(crate) content: String,
     pub(crate) version: i32,
+    pub(crate) language_hint: Language,
 }
 
 /// Language-independent cache entry for a parsed file
@@ -112,38 +112,123 @@ impl WorkspaceServer {
         SettingsHandle::new(&self.settings)
     }
 
+    /// Get the supported capabilities for a given file path
+    fn get_capabilities(&self, path: &RomePath) -> Capabilities {
+        let language = self
+            .documents
+            .get(path)
+            .map(|doc| doc.language_hint)
+            .unwrap_or_default();
+
+        self.features.get_capabilities(path, language)
+    }
+
+    /// Return an error factory function for unsupported features at a given path
+    fn build_capability_error<'a>(&'a self, path: &'a RomePath) -> impl FnOnce() -> RomeError + 'a {
+        move || {
+            let language_hint = self
+                .documents
+                .get(path)
+                .map(|doc| doc.language_hint)
+                .unwrap_or_default();
+
+            let language = Features::get_language(path).or(language_hint);
+            RomeError::SourceFileNotSupported(language, path.clone())
+        }
+    }
+
     /// Get the parser result for a given file
     ///
     /// Returns and error if no file exists in the workspace with this path or
     /// if the language associated with the file has no parser capability
-    fn get_parse(&self, rome_path: RomePath) -> Result<AnyParse, RomeError> {
+    fn get_parse(
+        &self,
+        rome_path: RomePath,
+        feature: Option<FeatureName>,
+    ) -> Result<AnyParse, RomeError> {
+        let ignored = if let Some(feature) = feature {
+            self.is_file_ignored(&rome_path, &feature)
+        } else {
+            false
+        };
+
+        if ignored {
+            return Err(RomeError::FileIgnored(rome_path.to_path_buf()));
+        }
+
         match self.syntax.entry(rome_path) {
             Entry::Occupied(entry) => Ok(entry.get().clone()),
             Entry::Vacant(entry) => {
                 let rome_path = entry.key();
                 let document = self.documents.get(rome_path).ok_or(RomeError::NotFound)?;
 
-                let capabilities = self.features.get_capabilities(rome_path);
-                let parser = capabilities
+                let capabilities = self.get_capabilities(rome_path);
+                let parse = capabilities
+                    .parser
                     .parse
-                    .ok_or_else(|| RomeError::SourceFileNotSupported(rome_path.clone()))?;
+                    .ok_or_else(self.build_capability_error(rome_path))?;
 
-                let parsed = parser(rome_path, &document.content);
+                let parsed = parse(rome_path, document.language_hint, &document.content);
 
                 Ok(entry.insert(parsed).clone())
             }
         }
     }
+
+    /// Takes as input the path of the file that workspace is currently processing and
+    /// a list of paths to match against.
+    ///
+    /// If the file path matches, than `true` is returned and it should be considered ignored.
+    fn is_file_ignored(&self, rome_path: &RomePath, feature: &FeatureName) -> bool {
+        let settings = self.settings();
+        match feature {
+            FeatureName::Format => settings
+                .as_ref()
+                .formatter
+                .ignored_files
+                .matches_path(rome_path.as_path()),
+            FeatureName::Lint => settings
+                .as_ref()
+                .linter
+                .ignored_files
+                .matches_path(rome_path.as_path()),
+        }
+    }
 }
 
 impl Workspace for WorkspaceServer {
-    fn supports_feature(&self, params: SupportsFeatureParams) -> bool {
-        let capabilities = self.features.get_capabilities(&params.path);
+    fn supports_feature(
+        &self,
+        params: SupportsFeatureParams,
+    ) -> Result<SupportsFeatureResult, RomeError> {
+        let capabilities = self.get_capabilities(&params.path);
         let settings = self.settings.read().unwrap();
-        match params.feature {
-            FeatureName::Format => capabilities.format.is_some() && settings.format.enabled,
-            FeatureName::Lint => capabilities.lint.is_some() && settings.linter.enabled,
-        }
+        let is_ignored = self.is_file_ignored(&params.path, &params.feature);
+        let result = match params.feature {
+            FeatureName::Format => {
+                if is_ignored {
+                    SupportsFeatureResult::ignored()
+                } else if capabilities.formatter.format.is_none() {
+                    SupportsFeatureResult::file_not_supported()
+                } else if !settings.formatter().enabled {
+                    SupportsFeatureResult::disabled()
+                } else {
+                    SupportsFeatureResult { reason: None }
+                }
+            }
+            FeatureName::Lint => {
+                if is_ignored {
+                    SupportsFeatureResult::ignored()
+                } else if capabilities.analyzer.lint.is_none() {
+                    SupportsFeatureResult::file_not_supported()
+                } else if !settings.linter().enabled {
+                    SupportsFeatureResult::disabled()
+                } else {
+                    SupportsFeatureResult { reason: None }
+                }
+            }
+        };
+        Ok(result)
     }
 
     /// Update the global settings for this workspace
@@ -153,7 +238,7 @@ impl Workspace for WorkspaceServer {
     /// by another thread having previously panicked while holding the lock
     fn update_settings(&self, params: UpdateSettingsParams) -> Result<(), RomeError> {
         let mut settings = self.settings.write().unwrap();
-        *settings = params.settings;
+        settings.merge_with_configuration(params.configuration)?;
         Ok(())
     }
 
@@ -165,21 +250,59 @@ impl Workspace for WorkspaceServer {
             Document {
                 content: params.content,
                 version: params.version,
+                language_hint: params.language_hint,
             },
         );
         Ok(())
     }
 
-    fn get_syntax_tree(&self, params: GetSyntaxTreeParams) -> Result<String, RomeError> {
-        let capabilities = self.features.get_capabilities(&params.path);
-        let printer = capabilities
-            .debug_print
-            .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
+    fn get_syntax_tree(
+        &self,
+        params: GetSyntaxTreeParams,
+    ) -> Result<GetSyntaxTreeResult, RomeError> {
+        let capabilities = self.get_capabilities(&params.path);
+        let debug_syntax_tree = capabilities
+            .debug
+            .debug_syntax_tree
+            .ok_or_else(self.build_capability_error(&params.path))?;
 
-        let parse = self.get_parse(params.path.clone())?;
-        let printed = printer(&params.path, parse);
+        // The feature name here can be any feature, in theory
+        let parse = self.get_parse(params.path.clone(), None)?;
+        let printed = debug_syntax_tree(&params.path, parse);
 
         Ok(printed)
+    }
+
+    fn get_control_flow_graph(
+        &self,
+        params: GetControlFlowGraphParams,
+    ) -> Result<String, RomeError> {
+        let capabilities = self.get_capabilities(&params.path);
+        let debug_control_flow = capabilities
+            .debug
+            .debug_control_flow
+            .ok_or_else(self.build_capability_error(&params.path))?;
+
+        let parse = self.get_parse(params.path.clone(), None)?;
+        let printed = debug_control_flow(&params.path, parse, params.cursor);
+
+        Ok(printed)
+    }
+
+    fn get_formatter_ir(&self, params: GetFormatterIRParams) -> Result<String, RomeError> {
+        let capabilities = self.get_capabilities(&params.path);
+        let debug_formatter_ir = capabilities
+            .debug
+            .debug_formatter_ir
+            .ok_or_else(self.build_capability_error(&params.path))?;
+        let settings = self.settings();
+        let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
+
+        if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
+            return Err(RomeError::FormatWithErrorsDisabled);
+        }
+
+        debug_formatter_ir(&params.path, parse, settings)
     }
 
     /// Change the content of an open file
@@ -212,14 +335,20 @@ impl Workspace for WorkspaceServer {
         &self,
         params: PullDiagnosticsParams,
     ) -> Result<PullDiagnosticsResult, RomeError> {
-        let capabilities = self.features.get_capabilities(&params.path);
-        let linter = capabilities
+        let capabilities = self.get_capabilities(&params.path);
+        let lint = capabilities
+            .analyzer
             .lint
-            .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
+            .ok_or_else(self.build_capability_error(&params.path))?;
 
-        let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings.read().unwrap();
-        let rules = settings.linter.rules.as_ref();
+        let feature = if params.categories.is_syntax() {
+            FeatureName::Format
+        } else {
+            FeatureName::Lint
+        };
+        let parse = self.get_parse(params.path.clone(), Some(feature))?;
+        let rules = settings.linter().rules.as_ref();
         let enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = rules {
             let enabled: IndexSet<RuleFilter> = rules.as_enabled_rules();
             Some(enabled.into_iter().collect())
@@ -233,7 +362,7 @@ impl Workspace for WorkspaceServer {
         };
 
         filter.categories = params.categories;
-        let diagnostics = linter(&params.path, parse, filter);
+        let diagnostics = lint(&params.path, parse, filter, rules);
 
         Ok(PullDiagnosticsResult { diagnostics })
     }
@@ -241,78 +370,79 @@ impl Workspace for WorkspaceServer {
     /// Retrieves the list of code actions available for a given cursor
     /// position within a file
     fn pull_actions(&self, params: PullActionsParams) -> Result<PullActionsResult, RomeError> {
-        let capabilities = self.features.get_capabilities(&params.path);
+        let capabilities = self.get_capabilities(&params.path);
         let code_actions = capabilities
+            .analyzer
             .code_actions
-            .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
-
-        let parse = self.get_parse(params.path.clone())?;
+            .ok_or_else(self.build_capability_error(&params.path))?;
 
         let settings = self.settings.read().unwrap();
-        let rules = settings.linter.rules.as_ref();
+        let parse = self.get_parse(params.path.clone(), Some(FeatureName::Lint))?;
 
+        let rules = settings.linter().rules.as_ref();
         Ok(code_actions(&params.path, parse, params.range, rules))
     }
 
     /// Runs the given file through the formatter using the provided options
     /// and returns the resulting source code
     fn format_file(&self, params: FormatFileParams) -> Result<Printed, RomeError> {
-        let capabilities = self.features.get_capabilities(&params.path);
-        let formatter = capabilities
+        let capabilities = self.get_capabilities(&params.path);
+        let format = capabilities
+            .formatter
             .format
-            .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
-
-        let parse = self.get_parse(params.path.clone())?;
+            .ok_or_else(self.build_capability_error(&params.path))?;
         let settings = self.settings();
+        let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
 
-        if !settings.as_ref().format.format_with_errors && parse.has_errors() {
+        if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
         }
 
-        formatter(&params.path, parse, settings)
+        format(&params.path, parse, settings)
     }
 
     fn format_range(&self, params: FormatRangeParams) -> Result<Printed, RomeError> {
-        let capabilities = self.features.get_capabilities(&params.path);
-        let formatter = capabilities
+        let capabilities = self.get_capabilities(&params.path);
+        let format_range = capabilities
+            .formatter
             .format_range
-            .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
-
-        let parse = self.get_parse(params.path.clone())?;
+            .ok_or_else(self.build_capability_error(&params.path))?;
         let settings = self.settings();
+        let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
 
-        if !settings.as_ref().format.format_with_errors && parse.has_errors() {
+        if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
         }
 
-        formatter(&params.path, parse, settings, params.range)
+        format_range(&params.path, parse, settings, params.range)
     }
 
     fn format_on_type(&self, params: FormatOnTypeParams) -> Result<Printed, RomeError> {
-        let capabilities = self.features.get_capabilities(&params.path);
-        let formatter = capabilities
+        let capabilities = self.get_capabilities(&params.path);
+        let format_on_type = capabilities
+            .formatter
             .format_on_type
-            .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
+            .ok_or_else(self.build_capability_error(&params.path))?;
 
-        let parse = self.get_parse(params.path.clone())?;
         let settings = self.settings();
-
-        if !settings.as_ref().format.format_with_errors && parse.has_errors() {
+        let parse = self.get_parse(params.path.clone(), Some(FeatureName::Format))?;
+        if !settings.as_ref().formatter().format_with_errors && parse.has_errors() {
             return Err(RomeError::FormatWithErrorsDisabled);
         }
 
-        formatter(&params.path, parse, settings, params.offset)
+        format_on_type(&params.path, parse, settings, params.offset)
     }
 
     fn fix_file(&self, params: super::FixFileParams) -> Result<FixFileResult, RomeError> {
-        let capabilities = self.features.get_capabilities(&params.path);
+        let capabilities = self.get_capabilities(&params.path);
         let fix_all = capabilities
+            .analyzer
             .fix_all
-            .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
-
-        let parse = self.get_parse(params.path.clone())?;
+            .ok_or_else(self.build_capability_error(&params.path))?;
         let settings = self.settings.read().unwrap();
-        let rules = settings.linter.rules.as_ref();
+        let parse = self.get_parse(params.path.clone(), Some(FeatureName::Lint))?;
+
+        let rules = settings.linter().rules.as_ref();
         fix_all(FixAllParams {
             rome_path: &params.path,
             parse,
@@ -322,12 +452,13 @@ impl Workspace for WorkspaceServer {
     }
 
     fn rename(&self, params: super::RenameParams) -> Result<RenameResult, RomeError> {
-        let capabilities = self.features.get_capabilities(&params.path);
+        let capabilities = self.get_capabilities(&params.path);
         let rename = capabilities
+            .analyzer
             .rename
-            .ok_or_else(|| RomeError::SourceFileNotSupported(params.path.clone()))?;
+            .ok_or_else(self.build_capability_error(&params.path))?;
 
-        let parse = self.get_parse(params.path.clone())?;
+        let parse = self.get_parse(params.path.clone(), None)?;
         let result = rename(&params.path, parse, params.symbol_at, params.new_name)?;
 
         Ok(result)

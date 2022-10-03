@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\babel-plugins\\module-blocks.js"
 ---
 
 # Input
@@ -40,26 +42,49 @@ let m = module;
 
 # Errors
 ```
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ module-blocks.js:1:16
-  │
-1 │ let m = module {
-  │ ---------------^ An explicit or implicit semicolon is expected here...
-  │ │               
-  │ ...Which is required to end this statement
+module-blocks.js:1:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Illegal use of an export declaration not at the top level
-  ┌─ module-blocks.js:2:3
-  │
-2 │   export let m = 2;
-  │   ^^^^^^^^^^^^^^^^^ move this declaration to the top level
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+  > 1 │ let m = module {
+      │                ^
+    2 │   export let m = 2;
+    3 │   export let n = 3;
+  
+  i ...Which is required to end this statement
+  
+  > 1 │ let m = module {
+      │ ^^^^^^^^^^^^^^^
+    2 │   export let m = 2;
+    3 │   export let n = 3;
+  
+module-blocks.js:2:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Illegal use of an export declaration not at the top level
-  ┌─ module-blocks.js:3:3
-  │
-3 │   export let n = 3;
-  │   ^^^^^^^^^^^^^^^^^ move this declaration to the top level
+  × Illegal use of an export declaration not at the top level
+  
+  × move this declaration to the top level
+  
+    1 │ let m = module {
+  > 2 │   export let m = 2;
+      │   ^^^^^^^^^^^^^^^^^
+    3 │   export let n = 3;
+    4 │ };
+  
+module-blocks.js:3:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of an export declaration not at the top level
+  
+  × move this declaration to the top level
+  
+    1 │ let m = module {
+    2 │   export let m = 2;
+  > 3 │   export let n = 3;
+      │   ^^^^^^^^^^^^^^^^^
+    4 │ };
+    5 │ 
+  
 
 ```
 

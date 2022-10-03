@@ -1,11 +1,10 @@
-use std::io::Write;
+use atty::Stream;
+use std::io;
+use std::io::{Read, Stdin, Write};
 use std::panic::RefUnwindSafe;
-
 use termcolor::{ColorChoice, StandardStream};
 use write::Termcolor;
 
-pub mod codespan;
-pub mod diff;
 pub mod fmt;
 mod markup;
 mod write;
@@ -29,6 +28,9 @@ pub enum LogLevel {
 pub trait Console: Send + Sync + RefUnwindSafe {
     /// Prints a message (formatted using [markup!]) to the console
     fn print(&mut self, level: LogLevel, args: Markup);
+
+    /// It reads from a source, and if this source contains something, it's converted into a [String]
+    fn read(&mut self) -> Option<String>;
 }
 
 /// Extension trait for [Console] providing convenience printing methods
@@ -52,8 +54,12 @@ impl<T: Console + ?Sized> ConsoleExt for T {
 
 /// Implementation of [Console] printing messages to the standard output and standard error
 pub struct EnvConsole {
+    /// Channel to print messages
     out: StandardStream,
+    /// Channel to print errors
     err: StandardStream,
+    /// Channel to read arbitrary input
+    r#in: Stdin,
 }
 
 impl EnvConsole {
@@ -72,7 +78,14 @@ impl EnvConsole {
         Self {
             out: StandardStream::stdout(out_mode),
             err: StandardStream::stderr(err_mode),
+            r#in: io::stdin(),
         }
+    }
+}
+
+impl Default for EnvConsole {
+    fn default() -> Self {
+        Self::new(false)
     }
 }
 
@@ -89,12 +102,32 @@ impl Console for EnvConsole {
 
         writeln!(out).unwrap();
     }
+
+    fn read(&mut self) -> Option<String> {
+        // Here we check if stdin is redirected. If not, we bail.
+        //
+        // Doing this check allows us to pipe stdin to rome, without expecting
+        // user content when we call `read_to_string`
+        if atty::is(Stream::Stdin) {
+            return None;
+        }
+        let mut handle = self.r#in.lock();
+        let mut buffer = String::new();
+        let result = handle.read_to_string(&mut buffer);
+        // Skipping the error for now
+        if result.is_ok() {
+            Some(buffer)
+        } else {
+            None
+        }
+    }
 }
 
 /// Implementation of [Console] storing all printed messages to a memory buffer
 #[derive(Default, Debug)]
 pub struct BufferConsole {
-    pub buffer: Vec<Message>,
+    pub out_buffer: Vec<Message>,
+    pub in_buffer: Vec<String>,
 }
 
 /// Individual message entry printed to a [BufferConsole]
@@ -106,9 +139,18 @@ pub struct Message {
 
 impl Console for BufferConsole {
     fn print(&mut self, level: LogLevel, args: Markup) {
-        self.buffer.push(Message {
+        self.out_buffer.push(Message {
             level,
             content: args.to_owned(),
         });
+    }
+    fn read(&mut self) -> Option<String> {
+        if self.in_buffer.is_empty() {
+            None
+        } else {
+            // for the time being we simple return the first message, as we don't
+            // particular use case for multiple prompts
+            Some(self.in_buffer[0].clone())
+        }
     }
 }

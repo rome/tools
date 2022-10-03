@@ -19,11 +19,15 @@ JsModule {
       1: (empty)
   3: EOF@6..7 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected a class, a function, or a variable declaration but instead found ''
-  ┌─ export_err.js:2:1
-  │
-2 │ 
-  │ ^ Expected a class, a function, or a variable declaration here
+export_err.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a class, a function, or a variable declaration but instead found ''
+  
+  × Expected a class, a function, or a variable declaration here
+  
+    1 │ export
+  > 2 │ 
+      │ 
+  
 --
 export

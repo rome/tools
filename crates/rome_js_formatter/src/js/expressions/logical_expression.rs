@@ -1,7 +1,9 @@
 use crate::prelude::*;
-use crate::utils::{format_binary_like_expression, JsAnyBinaryLikeExpression};
+use crate::utils::{needs_binary_like_parentheses, JsAnyBinaryLikeExpression};
 
-use rome_js_syntax::JsLogicalExpression;
+use crate::parentheses::NeedsParentheses;
+use rome_js_syntax::{JsLogicalExpression, JsSyntaxNode};
+use rome_rowan::AstNode;
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsLogicalExpression;
@@ -12,9 +14,67 @@ impl FormatNodeRule<JsLogicalExpression> for FormatJsLogicalExpression {
         node: &JsLogicalExpression,
         formatter: &mut JsFormatter,
     ) -> FormatResult<()> {
-        format_binary_like_expression(
-            JsAnyBinaryLikeExpression::JsLogicalExpression(node.clone()),
-            formatter,
-        )
+        JsAnyBinaryLikeExpression::JsLogicalExpression(node.clone()).fmt(formatter)
+    }
+
+    fn needs_parentheses(&self, item: &JsLogicalExpression) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl NeedsParentheses for JsLogicalExpression {
+    fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
+        if let Some(parent) = JsLogicalExpression::cast(parent.clone()) {
+            parent.operator() != self.operator()
+        } else {
+            needs_binary_like_parentheses(&JsAnyBinaryLikeExpression::from(self.clone()), parent)
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+
+    use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
+    use rome_js_syntax::{JsLogicalExpression, SourceType};
+
+    #[test]
+    fn needs_parentheses() {
+        assert_needs_parentheses!("class X extends (a && b) {}", JsLogicalExpression);
+
+        assert_needs_parentheses!("(a && b) as number", JsLogicalExpression);
+        assert_needs_parentheses!("<number>(a && b)", JsLogicalExpression);
+        assert_needs_parentheses!("!(a && b)", JsLogicalExpression);
+        assert_needs_parentheses!("await (a && b)", JsLogicalExpression);
+        assert_needs_parentheses!("(a && b)!", JsLogicalExpression);
+
+        assert_needs_parentheses!("(a && b)()", JsLogicalExpression);
+        assert_needs_parentheses!("(a && b)?.()", JsLogicalExpression);
+        assert_needs_parentheses!("new (a && b)()", JsLogicalExpression);
+        assert_needs_parentheses!("(a && b)`template`", JsLogicalExpression);
+        assert_needs_parentheses!("[...(a && b)]", JsLogicalExpression);
+        assert_needs_parentheses!("({...(a && b)})", JsLogicalExpression);
+        assert_needs_parentheses!(
+            "<test {...(a && b)} />",
+            JsLogicalExpression,
+            SourceType::tsx()
+        );
+        assert_needs_parentheses!(
+            "<test>{...(a && b)}</test>",
+            JsLogicalExpression,
+            SourceType::tsx()
+        );
+
+        assert_needs_parentheses!("(a && b).member", JsLogicalExpression);
+        assert_needs_parentheses!("(a && b)[member]", JsLogicalExpression);
+        assert_not_needs_parentheses!("object[a && b]", JsLogicalExpression);
+
+        assert_needs_parentheses!("(a && b) || c", JsLogicalExpression[1]);
+        assert_needs_parentheses!("(a && b) in c", JsLogicalExpression);
+        assert_needs_parentheses!("(a && b) instanceof c", JsLogicalExpression);
+        assert_needs_parentheses!("(a && b) + c", JsLogicalExpression);
+
+        assert_not_needs_parentheses!("a && b && c", JsLogicalExpression[0]);
+        assert_not_needs_parentheses!("a && b && c", JsLogicalExpression[1]);
     }
 }

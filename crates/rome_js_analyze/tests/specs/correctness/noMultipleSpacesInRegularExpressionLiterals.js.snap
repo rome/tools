@@ -1,0 +1,165 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noMultipleSpacesInRegularExpressionLiterals.js
+---
+# Input
+```js
+// valid
+/foo {2}bar/;
+/foo bar baz/;
+/foo bar\tbaz/;
+/foo /;
+// invalid
+/   /;
+/  foo/;
+/foo   /;
+/foo  bar/;
+/foo   bar    baz/;
+/foo [ba]r  b(a|z)/;
+
+```
+
+# Diagnostics
+```
+noMultipleSpacesInRegularExpressionLiterals.js:7:2 lint/correctness/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  
+
+  ! This regular expression contains unclear uses of multiple spaces.
+  
+    5 │ /foo /;
+    6 │ // invalid
+  > 7 │ /   /;
+      │  ^^^
+    8 │ /  foo/;
+    9 │ /foo   /;
+  
+  i Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {3}/
+  
+     5  5 │   /foo·/;
+     6  6 │   //·invalid
+     7    │ - /···/;
+        7 │ + /·{3}/;
+     8  8 │   /··foo/;
+     9  9 │   /foo···/;
+  
+
+```
+
+```
+noMultipleSpacesInRegularExpressionLiterals.js:8:2 lint/correctness/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  
+
+  ! This regular expression contains unclear uses of multiple spaces.
+  
+     6 │ // invalid
+     7 │ /   /;
+   > 8 │ /  foo/;
+       │  ^^
+     9 │ /foo   /;
+    10 │ /foo  bar/;
+  
+  i Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {2}/
+  
+     6  6 │   //·invalid
+     7  7 │   /···/;
+     8    │ - /··foo/;
+        8 │ + /·{2}foo/;
+     9  9 │   /foo···/;
+    10 10 │   /foo··bar/;
+  
+
+```
+
+```
+noMultipleSpacesInRegularExpressionLiterals.js:9:5 lint/correctness/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  
+
+  ! This regular expression contains unclear uses of multiple spaces.
+  
+     7 │ /   /;
+     8 │ /  foo/;
+   > 9 │ /foo   /;
+       │     ^^^
+    10 │ /foo  bar/;
+    11 │ /foo   bar    baz/;
+  
+  i Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {3}/
+  
+     7  7 │   /···/;
+     8  8 │   /··foo/;
+     9    │ - /foo···/;
+        9 │ + /foo·{3}/;
+    10 10 │   /foo··bar/;
+    11 11 │   /foo···bar····baz/;
+  
+
+```
+
+```
+noMultipleSpacesInRegularExpressionLiterals.js:10:5 lint/correctness/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  
+
+  ! This regular expression contains unclear uses of multiple spaces.
+  
+     8 │ /  foo/;
+     9 │ /foo   /;
+  > 10 │ /foo  bar/;
+       │     ^^
+    11 │ /foo   bar    baz/;
+    12 │ /foo [ba]r  b(a|z)/;
+  
+  i Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {2}/
+  
+     8  8 │   /··foo/;
+     9  9 │   /foo···/;
+    10    │ - /foo··bar/;
+       10 │ + /foo·{2}bar/;
+    11 11 │   /foo···bar····baz/;
+    12 12 │   /foo·[ba]r··b(a|z)/;
+  
+
+```
+
+```
+noMultipleSpacesInRegularExpressionLiterals.js:11:5 lint/correctness/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  
+
+  ! This regular expression contains unclear uses of multiple spaces.
+  
+     9 │ /foo   /;
+    10 │ /foo  bar/;
+  > 11 │ /foo   bar    baz/;
+       │     ^^^^^^^^^^
+    12 │ /foo [ba]r  b(a|z)/;
+    13 │ 
+  
+  i Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {7}/
+  
+     9  9 │   /foo···/;
+    10 10 │   /foo··bar/;
+    11    │ - /foo···bar····baz/;
+       11 │ + /foo·{3}bar·{4}baz/;
+    12 12 │   /foo·[ba]r··b(a|z)/;
+    13 13 │   
+  
+
+```
+
+```
+noMultipleSpacesInRegularExpressionLiterals.js:12:11 lint/correctness/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  
+
+  ! This regular expression contains unclear uses of multiple spaces.
+  
+    10 │ /foo  bar/;
+    11 │ /foo   bar    baz/;
+  > 12 │ /foo [ba]r  b(a|z)/;
+       │           ^^
+    13 │ 
+  
+  i Suggested fix: It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {2}/
+  
+    10 10 │   /foo··bar/;
+    11 11 │   /foo···bar····baz/;
+    12    │ - /foo·[ba]r··b(a|z)/;
+       12 │ + /foo·[ba]r·{2}b(a|z)/;
+    13 13 │   
+  
+
+```
+
+

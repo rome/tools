@@ -1,10 +1,10 @@
-#[cfg(feature = "dhat-on")]
+#[cfg(feature = "dhat-heap")]
 use crate::features::print_diff;
 use crate::BenchmarkSummary;
 use rome_formatter::Printed;
-use rome_js_formatter::context::JsFormatContext;
+use rome_js_formatter::context::JsFormatOptions;
 use rome_js_formatter::format_node;
-use rome_js_syntax::JsSyntaxNode;
+use rome_js_syntax::{JsSyntaxNode, SourceType};
 use std::fmt::{Display, Formatter};
 use std::time::Duration;
 
@@ -13,9 +13,13 @@ pub struct FormatterMeasurement {
     id: String,
     formatting: Duration,
 }
-pub fn benchmark_format_lib(id: &str, root: &JsSyntaxNode) -> BenchmarkSummary {
+pub fn benchmark_format_lib(
+    id: &str,
+    root: &JsSyntaxNode,
+    source_type: SourceType,
+) -> BenchmarkSummary {
     let formatter_timer = timing::start();
-    run_format(root);
+    run_format(root, source_type);
     let formatter_duration = formatter_timer.stop();
 
     BenchmarkSummary::Formatter(FormatterMeasurement {
@@ -24,32 +28,31 @@ pub fn benchmark_format_lib(id: &str, root: &JsSyntaxNode) -> BenchmarkSummary {
     })
 }
 
-pub fn run_format(root: &JsSyntaxNode) -> Printed {
-    #[cfg(feature = "dhat-on")]
+pub fn run_format(root: &JsSyntaxNode, source_type: SourceType) -> Printed {
+    #[cfg(feature = "dhat-heap")]
     let stats = {
         println!("Start");
-        dhat::get_stats().unwrap()
+        dhat::HeapStats::get()
     };
 
-    let formatted = format_node(JsFormatContext::default(), root).unwrap();
+    let formatted = format_node(JsFormatOptions::new(source_type), root).unwrap();
 
-    #[cfg(feature = "dhat-on")]
+    #[cfg(feature = "dhat-heap")]
     let stats = {
         println!("Formatted");
-        print_diff(stats, dhat::get_stats().unwrap())
+        print_diff(stats, dhat::HeapStats::get())
     };
 
     let printed = formatted.print();
     drop(formatted);
 
-    #[cfg(feature = "dhat-on")]
+    #[cfg(feature = "dhat-heap")]
     {
         println!("Printed");
-        print_diff(stats, dhat::get_stats().unwrap());
+        print_diff(stats, dhat::HeapStats::get());
     }
 
-    #[allow(clippy::let_and_return)]
-    printed
+    printed.expect("Document to be valid")
 }
 
 impl FormatterMeasurement {

@@ -93,11 +93,13 @@ JsModule {
       1: SEMICOLON@35..36 ";" [] []
   3: EOF@36..37 "" [Newline("\n")] []
 --
-error[SyntaxError]: A 'set' accessor cannot have a return type annotation.
-  ┌─ ts_object_setter_return_type.ts:1:24
-  │
-1 │ ({ set a(value: string): void {} });
-  │                        ^^^^^^
+ts_object_setter_return_type.ts:1:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × A 'set' accessor cannot have a return type annotation.
+  
+  > 1 │ ({ set a(value: string): void {} });
+      │                        ^^^^^^
+    2 │ 
+  
 --
 ({ set a(value: string): void {} });

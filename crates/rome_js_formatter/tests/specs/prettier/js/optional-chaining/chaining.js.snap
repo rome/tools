@@ -96,54 +96,94 @@ new (foo?.())();
 ```diff
 --- Prettier
 +++ Rome
-@@ -19,11 +19,11 @@
- (a?.b).c();
- (a?.b[c]).c();
+@@ -10,14 +10,14 @@
+ a?.b.c(++x).d;
+ a?.b[3].c?.(x).d;
+ a?.b.c;
+-(a?.b).c;
++a?.b.c;
+ a?.b?.c;
+ delete a?.b;
  
--a?.b?.c.d?.e;
-+(a?.b)?.c.d?.e;
+ a?.b[3].c?.(x).d.e?.f[3].g?.(y).h;
+ 
+-(a?.b).c();
+-(a?.b[c]).c();
++a?.b.c();
++a?.b[c].c();
+ 
+ a?.b?.c.d?.e;
  (a ? b : c)?.d;
- 
- (list || list2)?.length;
--(list || list2)?.[list || list2];
-+(list || list2)?.[(list || list2)];
- 
- async function HelloWorld() {
-   var x = (await foo.bar.blah)?.hi;
-@@ -36,17 +36,17 @@
- a[b?.c]?.d();
+@@ -37,18 +37,18 @@
  a?.[b?.c]?.d();
  
--one?.fn();
-+(one?.fn());
- (one?.two).fn();
- (one?.two)();
- (one?.two())();
--one.two?.fn();
-+(one.two?.fn());
- (one.two?.three).fn();
--one.two?.three?.fn();
-+(one.two?.three?.fn());
+ one?.fn();
+-(one?.two).fn();
+-(one?.two)();
+-(one?.two())();
++one?.two.fn();
++one?.two();
++one?.two()();
+ one.two?.fn();
+-(one.two?.three).fn();
++one.two?.three.fn();
+ one.two?.three?.fn();
  
--one?.();
-+(one?.());
- (one?.())();
--one?.()?.();
-+(one?.())?.();
+ one?.();
+-(one?.())();
++one?.()();
+ one?.()?.();
  
- (one?.()).two;
+-(one?.()).two;
++one?.().two;
  
-@@ -62,8 +62,8 @@
- (a?.(x)).x;
+ a?.[b ? c : d];
+ 
+@@ -59,28 +59,28 @@
+ (function () {})?.();
+ (() => f)?.();
+ (() => f)?.x;
+-(a?.(x)).x;
++a?.(x).x;
  (
    aaaaaaaaaaaaaaaaaaaaaaaa &&
--  aaaaaaaaaaaaaaaaaaaaaaaa &&
--  aaaaaaaaaaaaaaaaaaaaaaaa
-+    aaaaaaaaaaaaaaaaaaaaaaaa &&
-+    aaaaaaaaaaaaaaaaaaaaaaaa
+   aaaaaaaaaaaaaaaaaaaaaaaa &&
+   aaaaaaaaaaaaaaaaaaaaaaaa
  )?.();
  
- let f = () => ({}?.());
+-let f = () => ({}?.());
+-let g = () => ({}?.b);
+-a = () => ({}?.() && a);
+-a = () => ({}?.()() && a);
+-a = () => ({}?.().b && a);
+-a = () => ({}?.b && a);
+-a = () => ({}?.b() && a);
+-(a) => ({}?.()?.b && 0);
+-(a) => ({}?.b?.b && 0);
+-(x) => ({}?.()());
+-(x) => ({}?.().b);
+-(x) => ({}?.b());
+-(x) => ({}?.b.b);
+-({}?.a().b());
+-({ a: 1 }?.entries());
++let f = () => ({})?.();
++let g = () => ({})?.b;
++a = () => ({})?.() && a;
++a = () => ({})?.()() && a;
++a = () => ({})?.().b && a;
++a = () => ({})?.b && a;
++a = () => ({})?.b() && a;
++(a) => ({})?.()?.b && 0;
++(a) => ({})?.b?.b && 0;
++(x) => ({})?.()();
++(x) => ({})?.().b;
++(x) => ({})?.b();
++(x) => ({})?.b.b;
++({})?.a().b();
++({ a: 1 })?.entries();
+ 
+ new (foo?.bar)();
+ new (foo?.bar())();
 ```
 
 # Output
@@ -161,20 +201,20 @@ a?.[++x];
 a?.b.c(++x).d;
 a?.b[3].c?.(x).d;
 a?.b.c;
-(a?.b).c;
+a?.b.c;
 a?.b?.c;
 delete a?.b;
 
 a?.b[3].c?.(x).d.e?.f[3].g?.(y).h;
 
-(a?.b).c();
-(a?.b[c]).c();
+a?.b.c();
+a?.b[c].c();
 
-(a?.b)?.c.d?.e;
+a?.b?.c.d?.e;
 (a ? b : c)?.d;
 
 (list || list2)?.length;
-(list || list2)?.[(list || list2)];
+(list || list2)?.[list || list2];
 
 async function HelloWorld() {
   var x = (await foo.bar.blah)?.hi;
@@ -187,19 +227,19 @@ a?.[b?.c].d();
 a[b?.c]?.d();
 a?.[b?.c]?.d();
 
-(one?.fn());
-(one?.two).fn();
-(one?.two)();
-(one?.two())();
-(one.two?.fn());
-(one.two?.three).fn();
-(one.two?.three?.fn());
+one?.fn();
+one?.two.fn();
+one?.two();
+one?.two()();
+one.two?.fn();
+one.two?.three.fn();
+one.two?.three?.fn();
 
-(one?.());
-(one?.())();
-(one?.())?.();
+one?.();
+one?.()();
+one?.()?.();
 
-(one?.()).two;
+one?.().two;
 
 a?.[b ? c : d];
 
@@ -210,28 +250,28 @@ a?.[b ? c : d];
 (function () {})?.();
 (() => f)?.();
 (() => f)?.x;
-(a?.(x)).x;
+a?.(x).x;
 (
   aaaaaaaaaaaaaaaaaaaaaaaa &&
-    aaaaaaaaaaaaaaaaaaaaaaaa &&
-    aaaaaaaaaaaaaaaaaaaaaaaa
+  aaaaaaaaaaaaaaaaaaaaaaaa &&
+  aaaaaaaaaaaaaaaaaaaaaaaa
 )?.();
 
-let f = () => ({}?.());
-let g = () => ({}?.b);
-a = () => ({}?.() && a);
-a = () => ({}?.()() && a);
-a = () => ({}?.().b && a);
-a = () => ({}?.b && a);
-a = () => ({}?.b() && a);
-(a) => ({}?.()?.b && 0);
-(a) => ({}?.b?.b && 0);
-(x) => ({}?.()());
-(x) => ({}?.().b);
-(x) => ({}?.b());
-(x) => ({}?.b.b);
-({}?.a().b());
-({ a: 1 }?.entries());
+let f = () => ({})?.();
+let g = () => ({})?.b;
+a = () => ({})?.() && a;
+a = () => ({})?.()() && a;
+a = () => ({})?.().b && a;
+a = () => ({})?.b && a;
+a = () => ({})?.b() && a;
+(a) => ({})?.()?.b && 0;
+(a) => ({})?.b?.b && 0;
+(x) => ({})?.()();
+(x) => ({})?.().b;
+(x) => ({})?.b();
+(x) => ({})?.b.b;
+({})?.a().b();
+({ a: 1 })?.entries();
 
 new (foo?.bar)();
 new (foo?.bar())();

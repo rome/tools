@@ -5,19 +5,21 @@ use crate::url_interner::UrlInterner;
 use crate::utils;
 use futures::stream::futures_unordered::FuturesUnordered;
 use futures::StreamExt;
-use parking_lot::RwLock;
 use rome_analyze::RuleCategories;
 use rome_diagnostics::file::FileId;
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
 use rome_service::configuration::Configuration;
-use rome_service::workspace;
 use rome_service::workspace::UpdateSettingsParams;
 use rome_service::workspace::{FeatureName, PullDiagnosticsParams, SupportsFeatureParams};
-use rome_service::Workspace;
+use rome_service::{load_config, Workspace};
 use rome_service::{DynRef, RomeError};
 use std::collections::HashMap;
+use std::sync::Arc;
+use std::sync::RwLock;
+use tokio::sync::Notify;
 use tower_lsp::lsp_types;
-use tracing::{error, trace};
+use tower_lsp::lsp_types::Url;
+use tracing::{error, info, trace};
 
 /// Represents the state of an LSP server session.
 pub(crate) struct Session {
@@ -29,7 +31,7 @@ pub(crate) struct Session {
     /// the configuration of the LSP
     pub(crate) config: RwLock<Config>,
 
-    pub(crate) workspace: Box<dyn Workspace>,
+    pub(crate) workspace: Arc<dyn Workspace>,
 
     /// File system to read files inside the workspace
     pub(crate) fs: DynRef<'static, dyn FileSystem>,
@@ -37,26 +39,37 @@ pub(crate) struct Session {
     /// The configuration coming from `rome.json` file
     pub(crate) configuration: RwLock<Option<Configuration>>,
 
+    pub(crate) root_uri: RwLock<Option<Url>>,
+
     documents: RwLock<HashMap<lsp_types::Url, Document>>,
     url_interner: RwLock<UrlInterner>,
+
+    cancellation: Arc<Notify>,
 }
 
 impl Session {
-    pub(crate) fn new(client: tower_lsp::Client) -> Self {
+    pub(crate) fn new(
+        client: tower_lsp::Client,
+        workspace: Arc<dyn Workspace>,
+        cancellation: Arc<Notify>,
+    ) -> Self {
         let client_capabilities = RwLock::new(Default::default());
         let documents = Default::default();
         let url_interner = Default::default();
         let config = RwLock::new(Config::new());
         let configuration = RwLock::new(None);
+        let root_uri = RwLock::new(None);
         Self {
             client,
             client_capabilities,
-            workspace: workspace::server(),
+            workspace,
             documents,
             url_interner,
             config,
             fs: DynRef::Owned(Box::new(OsFileSystem)),
             configuration,
+            root_uri,
+            cancellation,
         }
     }
 
@@ -66,6 +79,7 @@ impl Session {
     pub(crate) fn document(&self, url: &lsp_types::Url) -> Result<Document, RomeError> {
         self.documents
             .read()
+            .unwrap()
             .get(url)
             .cloned()
             .ok_or(RomeError::NotFound)
@@ -75,18 +89,18 @@ impl Session {
     ///
     /// Used by [`handlers::text_document] to synchronize documents with the client.
     pub(crate) fn insert_document(&self, url: lsp_types::Url, document: Document) {
-        self.documents.write().insert(url, document);
+        self.documents.write().unwrap().insert(url, document);
     }
 
     /// Remove the [`Document`] matching the provided [`lsp_types::Url`]
     pub(crate) fn remove_document(&self, url: &lsp_types::Url) {
-        self.documents.write().remove(url);
+        self.documents.write().unwrap().remove(url);
     }
 
     /// Return the unique [FileId] associated with the url for this [Session].
     /// This will assign a new FileId if there isn't one for the provided url.
     pub(crate) fn file_id(&self, url: lsp_types::Url) -> FileId {
-        self.url_interner.write().intern(url)
+        self.url_interner.write().unwrap().intern(url)
     }
 
     pub(crate) fn file_path(&self, url: &lsp_types::Url) -> RomePath {
@@ -101,12 +115,12 @@ impl Session {
     pub(crate) async fn update_diagnostics(&self, url: lsp_types::Url) -> anyhow::Result<()> {
         let rome_path = self.file_path(&url);
         let doc = self.document(&url)?;
-        let lint_enabled = self.workspace.supports_feature(SupportsFeatureParams {
+        let unsupported_lint = self.workspace.supports_feature(SupportsFeatureParams {
             feature: FeatureName::Lint,
             path: rome_path.clone(),
-        });
+        })?;
 
-        let diagnostics = if lint_enabled {
+        let diagnostics = if unsupported_lint.reason.is_none() {
             let result = self.workspace.pull_diagnostics(PullDiagnosticsParams {
                 path: rome_path,
                 categories: RuleCategories::SYNTAX | RuleCategories::LINT,
@@ -134,6 +148,7 @@ impl Session {
         let mut futures: FuturesUnordered<_> = self
             .documents
             .read()
+            .unwrap()
             .keys()
             .map(|url| self.update_diagnostics(url.clone()))
             .collect();
@@ -149,11 +164,35 @@ impl Session {
     pub(crate) fn can_register_did_change_configuration(&self) -> bool {
         self.client_capabilities
             .read()
+            .unwrap()
             .as_ref()
             .and_then(|c| c.workspace.as_ref())
             .and_then(|c| c.did_change_configuration)
             .and_then(|c| c.dynamic_registration)
             == Some(true)
+    }
+
+    /// This function attempts to read the configuration from the root URI
+    pub(crate) async fn update_configuration(&self) {
+        let root_uri = self.root_uri.read().unwrap();
+        let base_path =  root_uri.as_ref().and_then(|root_uri| match root_uri.to_file_path() {
+            Ok(base_path) => Some(base_path),
+            Err(()) => {
+                error!("The Workspace root URI {root_uri:?} could not be parsed as a filesystem path");
+                None
+            }
+        });
+
+        match load_config(&self.fs, base_path) {
+            Ok(Some(configuration)) => {
+                info!("Configuration found, and it is valid!");
+                self.configuration.write().unwrap().replace(configuration);
+            }
+            Err(err) => {
+                error!("Couldn't load the configuration file, reason:\n {}", err);
+            }
+            _ => {}
+        };
     }
 
     /// Requests "workspace/configuration" from client and updates Session config
@@ -170,7 +209,7 @@ impl Session {
                 .into_iter()
                 .next()
                 .and_then(|client_configuration| {
-                    let mut config = self.config.write();
+                    let mut config = self.config.write().unwrap();
 
                     config
                         .set_workspace_settings(client_configuration)
@@ -178,24 +217,34 @@ impl Session {
                             error!("Cannot set workspace settings: {}", err);
                         })
                         .ok()?;
-                    let mut configuration = self.configuration.write();
+                    let mut configuration = self.configuration.write().unwrap();
+
                     // This operation is intended, we want to consume the configuration because once it's read
                     // from the LSP, it's not needed anymore
-                    let settings = config.as_workspace_settings(configuration.take());
+                    if let Some(configuration) = configuration.take() {
+                        trace!(
+                            "The LSP will now use the following configuration: \n {:?}",
+                            &configuration
+                        );
 
-                    trace!(
-                        "The LSP will now use the following configuration: \n {:?}",
-                        &settings
-                    );
+                        let result = self
+                            .workspace
+                            .update_settings(UpdateSettingsParams { configuration });
 
-                    self.workspace
-                        .update_settings(UpdateSettingsParams { settings })
-                        .ok()?;
+                        if let Err(error) = result {
+                            error!("{:?}", &error)
+                        }
+                    }
 
                     Some(())
                 });
         } else {
             trace!("Cannot read configuration from the client");
         }
+    }
+
+    /// Broadcast a shutdown signal to all active connections
+    pub(crate) fn broadcast_shutdown(&self) {
+        self.cancellation.notify_one();
     }
 }

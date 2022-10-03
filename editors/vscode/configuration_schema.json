@@ -1,0 +1,773 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Configuration",
+  "description": "The configuration that is contained inside the file `rome.json`",
+  "type": "object",
+  "properties": {
+    "formatter": {
+      "description": "The configuration of the formatter",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/FormatterConfiguration"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "javascript": {
+      "description": "Specific configuration for the JavaScript language",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/JavascriptConfiguration"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "linter": {
+      "description": "The configuration for the linter",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/LinterConfiguration"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Correctness": {
+      "description": "A list of rules that belong to this group",
+      "type": "object",
+      "properties": {
+        "noArguments": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noAsyncPromiseExecutor": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noCatchAssign": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noCommentText": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noCompareNegZero": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noDebugger": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noDelete": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noDoubleEquals": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noDupeArgs": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noEmptyPattern": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noExtraBooleanCast": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noFunctionAssign": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noImplicitBoolean": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noImportAssign": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noLabelVar": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noMultipleSpacesInRegularExpressionLiterals": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noShadowRestrictedNames": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noSparseArray": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noUnnecessaryContinue": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noUnsafeNegation": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noUnusedTemplateLiteral": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recommended": {
+          "description": "It enables the recommended rules for this group",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "useBlockStatements": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useSimplifiedLogicExpression": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useSingleCaseStatement": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useSingleVarDeclarator": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useTemplate": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useValidTypeof": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useWhile": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "FormatterConfiguration": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "default": true,
+          "type": "boolean"
+        },
+        "formatWithErrors": {
+          "description": "Stores whether formatting should be allowed to proceed if a given file has syntax errors",
+          "default": false,
+          "type": "boolean"
+        },
+        "ignore": {
+          "description": "A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "indentSize": {
+          "description": "The size of the indentation, 2 by default",
+          "default": 2,
+          "type": "integer",
+          "format": "uint8",
+          "minimum": 0.0
+        },
+        "indentStyle": {
+          "description": "The indent style.",
+          "default": "tab",
+          "allOf": [
+            {
+              "$ref": "#/definitions/PlainIndentStyle"
+            }
+          ]
+        },
+        "lineWidth": {
+          "description": "What's the max width of a line. Defaults to 80.",
+          "default": 80,
+          "allOf": [
+            {
+              "$ref": "#/definitions/LineWidth"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "JavascriptConfiguration": {
+      "type": "object",
+      "properties": {
+        "formatter": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/JavascriptFormatter"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "globals": {
+          "description": "A list of global bindings that should be ignored by the analyzers\n\nIf defined here, they should not emit diagnostics.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "JavascriptFormatter": {
+      "type": "object",
+      "properties": {
+        "quoteProperties": {
+          "description": "When properties in objects are quoted. Defaults to asNeeded.",
+          "default": "asNeeded",
+          "allOf": [
+            {
+              "$ref": "#/definitions/QuoteProperties"
+            }
+          ]
+        },
+        "quoteStyle": {
+          "description": "The style for quotes. Defaults to double.",
+          "default": "double",
+          "allOf": [
+            {
+              "$ref": "#/definitions/QuoteStyle"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "LineWidth": {
+      "description": "Validated value for the `line_width` formatter options\n\nThe allowed range of values is 1..=320",
+      "type": "integer",
+      "format": "uint16",
+      "minimum": 0.0
+    },
+    "LinterConfiguration": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "if `false`, it disables the feature and the linter won't be executed. `true` by default",
+          "default": true,
+          "type": "boolean"
+        },
+        "ignore": {
+          "description": "A list of Unix shell style patterns. The formatter will ignore files/folders that will match these patterns.",
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "rules": {
+          "description": "List of rules",
+          "default": {
+            "recommended": true
+          },
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Rules"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Nursery": {
+      "description": "A list of rules that belong to this group",
+      "type": "object",
+      "properties": {
+        "noArrayIndexKey": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noDangerouslySetInnerHtml": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noNewSymbol": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noRenderReturnValue": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noUndeclaredVariables": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noUnreachable": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noUnusedVariables": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noUselessFragments": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noVoidElementsWithChildren": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recommended": {
+          "description": "It enables the recommended rules for this group",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "useButtonType": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useCamelCase": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useFragmentSyntax": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useOptionalChain": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "PlainIndentStyle": {
+      "type": "string",
+      "enum": [
+        "tab",
+        "space"
+      ]
+    },
+    "QuoteProperties": {
+      "type": "string",
+      "enum": [
+        "asNeeded",
+        "preserve"
+      ]
+    },
+    "QuoteStyle": {
+      "type": "string",
+      "enum": [
+        "double",
+        "single"
+      ]
+    },
+    "RuleConfiguration": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/RulePlainConfiguration"
+        },
+        {
+          "$ref": "#/definitions/RuleWithOptions"
+        }
+      ]
+    },
+    "RulePlainConfiguration": {
+      "type": "string",
+      "enum": [
+        "warn",
+        "error",
+        "off"
+      ]
+    },
+    "RuleWithOptions": {
+      "type": "object",
+      "required": [
+        "level",
+        "options"
+      ],
+      "properties": {
+        "level": {
+          "$ref": "#/definitions/RulePlainConfiguration"
+        },
+        "options": true
+      },
+      "additionalProperties": false
+    },
+    "Rules": {
+      "type": "object",
+      "properties": {
+        "correctness": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Correctness"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "nursery": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Nursery"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recommended": {
+          "description": "It enables the lint rules recommended by Rome. `true` by default.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "style": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Style"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Style": {
+      "description": "A list of rules that belong to this group",
+      "type": "object",
+      "properties": {
+        "noNegationElse": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noShoutyConstants": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recommended": {
+          "description": "It enables the recommended rules for this group",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "useSelfClosingElements": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useShorthandArrayType": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

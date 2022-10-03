@@ -115,6 +115,7 @@ type Type01 = 0 extends
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 import * as assert from "assert";
 
@@ -180,7 +181,7 @@ type TupleD = [
 	...name: string[],
 ];
 
-type PA = (string);
+type PA = string;
 
 type FunctionType = <
 	Aaaaaaaaaaaaaaaaaaaaa,

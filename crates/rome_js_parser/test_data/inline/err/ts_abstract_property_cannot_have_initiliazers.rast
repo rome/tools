@@ -75,12 +75,16 @@ JsModule {
       8: R_CURLY@50..52 "}" [Newline("\n")] []
   3: EOF@52..53 "" [Newline("\n")] []
 --
-error[SyntaxError]: Property cannot have an initializer because it is marked abstract.
-  ┌─ ts_abstract_property_cannot_have_initiliazers.ts:2:27
-  │
-2 │     abstract name: string = "";
-  │                           ^^^^
+ts_abstract_property_cannot_have_initiliazers.ts:2:27 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Property cannot have an initializer because it is marked abstract.
+  
+    1 │ abstract class A {
+  > 2 │     abstract name: string = "";
+      │                           ^^^^
+    3 │ }
+    4 │ 
+  
 --
 abstract class A {
     abstract name: string = "";

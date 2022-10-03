@@ -185,26 +185,40 @@ JsModule {
       1: SEMICOLON@79..80 ";" [] []
   3: EOF@80..81 "" [Newline("\n")] []
 --
-error[SyntaxError]: `super` is only valid inside of a class constructor of a subclass.
-  ┌─ super_expression_err.js:3:5
-  │
-3 │     super();
-  │     ^^^^^
+super_expression_err.js:3:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × `super` is only valid inside of a class constructor of a subclass.
+  
+    1 │ class Test extends B {
+    2 │   test() {
+  > 3 │     super();
+      │     ^^^^^
+    4 │     super?.test();
+    5 │   }
+  
 --
-error[SyntaxError]: Super doesn't support optional chaining as super can never be null
-  ┌─ super_expression_err.js:4:5
-  │
-4 │     super?.test();
-  │     ^^^^^
+super_expression_err.js:4:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Super doesn't support optional chaining as super can never be null
+  
+    2 │   test() {
+    3 │     super();
+  > 4 │     super?.test();
+      │     ^^^^^
+    5 │   }
+    6 │ }
+  
 --
-error[SyntaxError]: `super` is only valid inside of a class constructor of a subclass.
-  ┌─ super_expression_err.js:7:1
-  │
-7 │ super();
-  │ ^^^^^
+super_expression_err.js:7:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × `super` is only valid inside of a class constructor of a subclass.
+  
+    5 │   }
+    6 │ }
+  > 7 │ super();
+      │ ^^^^^
+    8 │ 
+  
 --
 class Test extends B {
   test() {

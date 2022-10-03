@@ -1,6 +1,6 @@
 use crate::runner::{TestCaseFiles, TestRunOutcome, TestRunResult, TestSuite, TestSuiteInstance};
 use crate::{Summary, TestResults};
-use ascii_table::{AsciiTable, Column};
+use ascii_table::{Align, AsciiTable};
 use atty::Stream;
 use colored::Colorize;
 use indicatif::ProgressBar;
@@ -56,8 +56,8 @@ impl TestReporter for DefaultReporter {
         let pb = ProgressBar::new(count as u64);
         pb.set_message(format!("{} test files", "Loading".bold().cyan()));
         pb.set_style(
-            indicatif::ProgressStyle::default_bar()
-                .template("{msg} [{bar:40}]")
+            indicatif::ProgressStyle::with_template("{msg} [{bar:40}]")
+                .unwrap()
                 .progress_chars("=> "),
         );
         self.pb = pb;
@@ -76,12 +76,8 @@ impl TestReporter for DefaultReporter {
             self.start.elapsed().as_secs_f32()
         ));
 
-        let pb = ProgressBar::new(suite.len() as u64)
+        self.pb = ProgressBar::new(suite.len() as u64)
             .with_message(format!("{} tests", "Running".bold().cyan()));
-
-        // Redrawing on each test adds a significant overhead, batch some redraws together
-        pb.set_draw_delta(10);
-        self.pb = pb;
 
         self.start = Instant::now();
     }
@@ -213,31 +209,36 @@ impl SummaryReporter {
         let mut table = AsciiTable::default();
         let has_multiple_test_suites = results.len() > 1;
 
-        if has_multiple_test_suites {
-            table.columns.insert(
-                0,
-                Column {
-                    header: "Test suite".into(),
-                    align: ascii_table::Align::Left,
-                    ..Column::default()
-                },
-            );
-        }
-
-        let mut create_number_column = |name: colored::ColoredString| {
-            let column = Column {
-                header: name.to_string(),
-                align: ascii_table::Align::Right,
-                ..Column::default()
-            };
-            table.columns.insert(table.columns.len(), column);
+        let offset = if has_multiple_test_suites {
+            table
+                .column(0)
+                .set_header("Test suite")
+                .set_align(Align::Left);
+            1
+        } else {
+            0
         };
 
-        create_number_column("Tests ran".into());
-        create_number_column("Passed".green());
-        create_number_column("Failed".red());
-        create_number_column("Panics".red());
-        create_number_column("Coverage".cyan());
+        table
+            .column(offset)
+            .set_header("Tests ran".to_string())
+            .set_align(Align::Right);
+        table
+            .column(offset + 1)
+            .set_header("Passed")
+            .set_align(Align::Right);
+        table
+            .column(offset + 2)
+            .set_header("Failed")
+            .set_align(Align::Right);
+        table
+            .column(offset + 3)
+            .set_header("Panics")
+            .set_align(Align::Right);
+        table
+            .column(offset + 4)
+            .set_header("Coverage")
+            .set_align(Align::Right);
 
         let mut results: Vec<_> = results.into_iter().collect();
         results.sort_by(|(l, _), (r, _)| l.cmp(r));

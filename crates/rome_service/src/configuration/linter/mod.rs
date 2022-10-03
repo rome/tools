@@ -3,10 +3,16 @@ mod rules;
 
 pub use crate::configuration::linter::rules::Rules;
 use crate::settings::LinterSettings;
+use crate::{ConfigurationError, MatchOptions, Matcher, RomeError};
+use indexmap::IndexSet;
+use rome_diagnostics::Severity;
 pub use rules::*;
+#[cfg(feature = "schemars")]
+use schemars::{gen::SchemaGenerator, schema::Schema, JsonSchema};
 use serde::{Deserialize, Serialize};
 
 #[derive(Deserialize, Serialize, Debug)]
+#[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", default, deny_unknown_fields)]
 pub struct LinterConfiguration {
     /// if `false`, it disables the feature and the linter won't be executed. `true` by default
@@ -15,6 +21,15 @@ pub struct LinterConfiguration {
     /// List of rules
     #[serde(skip_serializing_if = "Option::is_none")]
     pub rules: Option<Rules>,
+
+    /// A list of Unix shell style patterns. The formatter will ignore files/folders that will
+    /// match these patterns.
+    #[serde(
+        skip_serializing_if = "Option::is_none",
+        deserialize_with = "crate::deserialize_set_of_strings",
+        serialize_with = "crate::serialize_set_of_strings"
+    )]
+    pub ignore: Option<IndexSet<String>>,
 }
 
 impl Default for LinterConfiguration {
@@ -22,20 +37,40 @@ impl Default for LinterConfiguration {
         Self {
             enabled: true,
             rules: Some(Rules::default()),
+            ignore: None,
         }
     }
 }
 
-impl From<LinterConfiguration> for LinterSettings {
-    fn from(conf: LinterConfiguration) -> Self {
-        Self {
+impl TryFrom<LinterConfiguration> for LinterSettings {
+    type Error = RomeError;
+
+    fn try_from(conf: LinterConfiguration) -> Result<Self, Self::Error> {
+        let mut matcher = Matcher::new(MatchOptions {
+            case_sensitive: true,
+            require_literal_leading_dot: false,
+            require_literal_separator: false,
+        });
+        if let Some(ignore) = conf.ignore {
+            for pattern in ignore {
+                matcher.add_pattern(&pattern).map_err(|err| {
+                    RomeError::Configuration(ConfigurationError::InvalidIgnorePattern(
+                        pattern.to_string(),
+                        err.msg.to_string(),
+                    ))
+                })?;
+            }
+        }
+        Ok(Self {
             enabled: conf.enabled,
             rules: conf.rules,
-        }
+            ignored_files: matcher,
+        })
     }
 }
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
+#[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", deny_unknown_fields, untagged)]
 pub enum RuleConfiguration {
     Plain(RulePlainConfiguration),
@@ -68,7 +103,30 @@ impl Default for RuleConfiguration {
     }
 }
 
+impl From<&RuleConfiguration> for Severity {
+    fn from(conf: &RuleConfiguration) -> Self {
+        match conf {
+            RuleConfiguration::Plain(p) => p.into(),
+            RuleConfiguration::WithOptions(conf) => {
+                let level = &conf.level;
+                level.into()
+            }
+        }
+    }
+}
+
+impl From<&RulePlainConfiguration> for Severity {
+    fn from(conf: &RulePlainConfiguration) -> Self {
+        match conf {
+            RulePlainConfiguration::Warn => Severity::Warning,
+            RulePlainConfiguration::Error => Severity::Error,
+            _ => unreachable!("the rule is turned off, it should not step in here"),
+        }
+    }
+}
+
 #[derive(Deserialize, Serialize, Debug, Eq, PartialEq, Clone)]
+#[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase")]
 pub enum RulePlainConfiguration {
     Warn,
@@ -77,9 +135,16 @@ pub enum RulePlainConfiguration {
 }
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
+#[cfg_attr(feature = "schemars", derive(JsonSchema))]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct RuleWithOptions {
     level: RulePlainConfiguration,
     #[serde(skip_serializing_if = "Option::is_none")]
+    #[cfg_attr(feature = "schemars", schemars(schema_with = "schema_any"))]
     options: Option<Box<serde_json::value::RawValue>>,
+}
+
+#[cfg(feature = "schemars")]
+fn schema_any(_gen: &mut SchemaGenerator) -> Schema {
+    Schema::Bool(true)
 }

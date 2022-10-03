@@ -52,12 +52,14 @@ USAGE:
     INPUTS can be one or more filesystem path, each pointing to a single file or an entire directory to be searched recursively for supported files
 
 OPTIONS:
-    --write                       Write the output of the formatter to the files instead of printing the diff to the console
-    --skip-errors                 Skip over files containing syntax errors instead of returning an error
-    --indent-style <tabs|space>   Determine whether the formatter should use tabs or spaces for indentation (default: tabs)
-    --indent-size <number>        If the indentation style is set to spaces, determine how many spaces should be used for indentation (default: 2)
-    --line-width <number>         Determine how many characters the formatter is allowed to print in a single line (default: 80)
-    --quote-style <single|double> Determine whether the formatter should use single or double quotes for strings (default: double)
+    --write                                  Edit the files in place (beware!) instead of printing the diff to the console
+    --skip-errors                            Skip over files containing syntax errors instead of emitting an error diagnostic.
+    --indent-style <tabs|space>              Change the indention character (default: tabs)
+    --indent-size <number>                   If the indentation style is set to spaces, determine how many spaces should be used for indentation (default: 2)
+    --line-width <number>                    Change how many characters the formatter is allowed to print in a single line (default: 80)
+    --quote-style <single|double>            Changes the quotation character for strings (default: ")
+    --quote-properties <as-needed|preserve>  Changes when properties in object should be quoted (default: as-needed)
+    --stdin-file-path <string>                A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path file.js
 ```
 
 ### Suppression
@@ -198,8 +200,6 @@ function a(b, c) {
 }
 ```
 
-Please check our [playground] and its result
-
 #### Migration from other formatters
 
 Rome doesn't support a lot of options like other web formatters, which means that particular styles
@@ -219,5 +219,5 @@ Run the formatter and make sure that **the code that was ignored is still the sa
 
 [VS Code extension]: https://marketplace.visualstudio.com/items?itemName=rome.rome
 [release page]: https://github.com/rome/tools/releases
-[playground]: https://play.rome.tools/?lineWidth=80&indentStyle=tab&indentWidth=2&typescript=true&jsx=false#ZnVuY3Rpb24gLy8gc29tZXRoaW5nCiBhKGIsIGMpICB7CiAgbGV0IGEgPSAiZiI7Cn0KCmZ1bmN0aW9uIGEoYiwgYykgLy8gc29tZXRoaW5nIAp7CiAgICBsZXQgYSA9ICJmIjsKfQ==
+[playground]: https://play.rome.tools
 [command palette]: https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette

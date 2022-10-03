@@ -56,19 +56,25 @@ JsModule {
       1: SEMICOLON@33..34 ";" [] []
   3: EOF@34..35 "" [Newline("\n")] []
 --
-error[SyntaxError]: Illegal use of `eval` as an identifier in strict mode
-  ┌─ eval_arguments_assignment.js:1:1
-  │
-1 │ eval = "test";
-  │ ^^^^
+eval_arguments_assignment.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of `eval` as an identifier in strict mode
+  
+  > 1 │ eval = "test";
+      │ ^^^^
+    2 │ arguments = "test";
+    3 │ 
+  
 --
-error[SyntaxError]: Illegal use of `arguments` as an identifier in strict mode
-  ┌─ eval_arguments_assignment.js:2:1
-  │
-2 │ arguments = "test";
-  │ ^^^^^^^^^
+eval_arguments_assignment.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of `arguments` as an identifier in strict mode
+  
+    1 │ eval = "test";
+  > 2 │ arguments = "test";
+      │ ^^^^^^^^^
+    3 │ 
+  
 --
 eval = "test";
 arguments = "test";

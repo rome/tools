@@ -33,7 +33,7 @@ pub fn parse_suppression_comment(comment: &str) -> impl Iterator<Item = Suppress
                 .unwrap_or(comment);
             true
         }
-        token => panic!("comment with unknown opening token {token:?}"),
+        token => panic!("comment with unknown opening token {token:?}, from {comment}"),
     };
 
     comment.lines().filter_map(move |line| {

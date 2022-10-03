@@ -46,11 +46,15 @@ JsModule {
       5: (empty)
   3: EOF@20..21 "" [Newline("\n")] []
 --
-error[SyntaxError]: Classes can only be declared at top level or inside a block
-  ┌─ class_in_single_statement_context.js:1:11
-  │
-1 │ if (true) class A {}
-  │           ^^^^^^^^^^ wrap the class in a block statement
+class_in_single_statement_context.js:1:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Classes can only be declared at top level or inside a block
+  
+  × wrap the class in a block statement
+  
+  > 1 │ if (true) class A {}
+      │           ^^^^^^^^^^
+    2 │ 
+  
 --
 if (true) class A {}

@@ -4,13 +4,13 @@ use crate::{
     Direction, GreenNode, GreenNodeData, NodeOrToken, RawSyntaxKind, SyntaxNodeText, TokenAtOffset,
     WalkEvent,
 };
+use rome_text_size::{TextRange, TextSize};
 use std::hash::{Hash, Hasher};
 use std::iter::FusedIterator;
 use std::ops;
 use std::ptr::NonNull;
 use std::rc::Rc;
 use std::{fmt, iter};
-use text_size::{TextRange, TextSize};
 
 use super::{GreenElement, NodeKind, WeakGreenElement};
 
@@ -335,8 +335,7 @@ impl SyntaxNode {
 
         let mut children = self.children_with_tokens().filter(|child| {
             let child_range = child.text_range();
-            !child_range.is_empty()
-                && (child_range.start() <= offset && offset <= child_range.end())
+            !child_range.is_empty() && child_range.contains_inclusive(offset)
         });
 
         let left = children.next().unwrap();

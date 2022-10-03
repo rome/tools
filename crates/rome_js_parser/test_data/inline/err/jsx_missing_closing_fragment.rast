@@ -139,21 +139,36 @@ JsModule {
       1: (empty)
   3: EOF@48..48 "" [] []
 --
-error[SyntaxError]: JSX fragment has no corresponding closing tag.
-  ┌─ jsx_missing_closing_fragment.jsx:1:1
-  │
-1 │ <>test</test>;
-  │ ^^      ---- Closing tag
-  │ │        
-  │ Opening fragment
+jsx_missing_closing_fragment.jsx:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × JSX fragment has no corresponding closing tag.
+  
+  × Opening fragment
+  
+  > 1 │ <>test</test>;
+      │ ^^
+    2 │ <>test<inner> some text</inner>;
+    3 │ 
+  
+  i Closing tag
+  
+  > 1 │ <>test</test>;
+      │         ^^^^
+    2 │ <>test<inner> some text</inner>;
+    3 │ 
+  
 --
-error[SyntaxError]: expected `<` but instead the file ends
-  ┌─ jsx_missing_closing_fragment.jsx:3:1
-  │
-3 │ 
-  │ ^ the file ends here
+jsx_missing_closing_fragment.jsx:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `<` but instead the file ends
+  
+  × the file ends here
+  
+    1 │ <>test</test>;
+    2 │ <>test<inner> some text</inner>;
+  > 3 │ 
+      │ 
+  
 --
 <>test</test>;
 <>test<inner> some text</inner>;

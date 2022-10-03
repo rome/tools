@@ -1,3 +1,13 @@
+use pulldown_cmark::{html::write_html, CodeBlockKind, Event, LinkType, Parser, Tag};
+use rome_analyze::{AnalysisFilter, ControlFlow, RuleCategories, RuleFilter};
+use rome_console::{
+    fmt::{Formatter, HTML},
+    markup, Markup,
+};
+use rome_diagnostics::{file::FileId, file::SimpleFile, Diagnostic};
+use rome_js_analyze::{analyze, metadata};
+use rome_js_syntax::{Language, LanguageVariant, ModuleKind, SourceType};
+use rome_service::settings::WorkspaceSettings;
 use std::{
     collections::BTreeMap,
     fmt::Write as _,
@@ -6,18 +16,7 @@ use std::{
     slice,
     str::{self, FromStr},
 };
-
-use pulldown_cmark::{html::write_html, CodeBlockKind, Event, LinkType, Parser, Tag};
-use rome_console::{
-    fmt::{Formatter, HTML},
-    markup,
-};
-use rome_diagnostics::{file::SimpleFile, Diagnostic};
 use xtask::{glue::fs2, *};
-
-use rome_analyze::{AnalysisFilter, ControlFlow, RuleCategories, RuleFilter};
-use rome_js_analyze::{analyze, metadata};
-use rome_js_syntax::{Language, LanguageVariant, ModuleKind, SourceType};
 
 fn main() -> Result<()> {
     let root = project_root().join("website/src/docs/lint/rules");
@@ -72,16 +71,38 @@ fn main() -> Result<()> {
     }
 
     for (group, rules) in groups {
-        let group_name = match group {
-            "js" => "JavaScript",
-            "jsx" => "JSX",
-            "ts" => "TypeScript",
-            "regex" => "RegExp",
+        let (group_name, description) = match group {
+            "correctness" => (
+                "Correctness",
+                markup! {
+                    "This group should includes those rules that are meant to prevent possible bugs and misuse of the language."
+                },
+            ),
+
+            "nursery" => (
+                "Nursery",
+                markup! {
+                    "Rules that are being written. Rules under this category are meant to be considered unstable or buggy.
+
+Rules can be downgraded to this category in case some path release is needed. After an arbitrary amount of time, the team can decide
+to promote these rules into a more appropriate category."
+
+                },
+            ),
+            "style" => (
+                "Style",
+                markup! {
+                    "Rules that focus mostly on making the code more consistent."
+                },
+            ),
             _ => panic!("Unknown group ID {group:?}"),
         };
 
         writeln!(index, "<section>")?;
         writeln!(index, "<h2>{group_name}</h2>")?;
+        writeln!(index)?;
+        markup_to_string(&mut index, description)?;
+        writeln!(index)?;
 
         for (rule, meta) in rules {
             let version = meta.version;
@@ -296,6 +317,7 @@ fn parse_documentation(
 
             Event::End(Tag::List(_)) => {
                 list_order = None;
+                writeln!(content)?;
             }
             Event::Start(Tag::Item) => {
                 if let Some(num) = list_order {
@@ -307,6 +329,38 @@ fn parse_documentation(
 
             Event::End(Tag::Item) => {
                 list_order = list_order.map(|item| item + 1);
+                writeln!(content)?;
+            }
+
+            Event::Start(Tag::Strong) => {
+                write!(content, "**")?;
+            }
+
+            Event::End(Tag::Strong) => {
+                write!(content, "**")?;
+            }
+
+            Event::Start(Tag::Emphasis) => {
+                write!(content, "_")?;
+            }
+
+            Event::End(Tag::Emphasis) => {
+                write!(content, "_")?;
+            }
+
+            Event::Start(Tag::Strikethrough) => {
+                write!(content, "~")?;
+            }
+
+            Event::End(Tag::Strikethrough) => {
+                write!(content, "~")?;
+            }
+
+            Event::Start(Tag::BlockQuote) => {
+                write!(content, ">")?;
+            }
+
+            Event::End(Tag::BlockQuote) => {
                 writeln!(content)?;
             }
 
@@ -401,7 +455,7 @@ fn assert_lint(
         } else {
             bail!(format!(
                 "analysis returned an unexpected diagnostic, code snippet:\n\n{:?}\n\n{}",
-                diag.code.unwrap_or_default(),
+                diag.code.map_or("", |code| code.name()),
                 code
             ));
         }
@@ -414,7 +468,7 @@ fn assert_lint(
         Ok(())
     };
 
-    let parse = rome_js_parser::parse(code, 0, test.source_type);
+    let parse = rome_js_parser::parse(code, FileId::zero(), test.source_type);
 
     if parse.has_errors() {
         for diag in parse.into_diagnostics() {
@@ -423,14 +477,22 @@ fn assert_lint(
     } else {
         let root = parse.tree();
 
+        let settings = WorkspaceSettings::default();
+
         let rule_filter = RuleFilter::Rule(group, rule);
         let filter = AnalysisFilter {
             enabled_rules: Some(slice::from_ref(&rule_filter)),
             ..AnalysisFilter::default()
         };
 
-        let result = analyze(0, &root, filter, |signal| {
-            if let Some(mut diag) = signal.diagnostic() {
+        let result = analyze(FileId::zero(), &root, filter, |signal| {
+            if let Some(diag) = signal.diagnostic() {
+                let category = diag.code().expect("linter diagnostic has no code");
+                let severity = settings.get_severity_from_rule_code(category).expect(
+                    "If you see this error, it means you need to run cargo codegen-configuration",
+                );
+                let mut diag = diag.into_diagnostic(severity);
+
                 if let Some(action) = signal.action() {
                     diag.suggestions.push(action.into());
                 }
@@ -462,4 +524,10 @@ fn assert_lint(
     }
 
     Ok(())
+}
+
+pub fn markup_to_string(buffer: &mut Vec<u8>, markup: Markup) -> io::Result<()> {
+    let mut write = HTML(buffer);
+    let mut fmt = Formatter::new(&mut write);
+    fmt.write_markup(markup)
 }

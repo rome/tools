@@ -1,8 +1,11 @@
+use crate::js::auxiliary::initializer_clause::FormatJsInitializerClauseOptions;
+use crate::js::expressions::arrow_function_expression::FormatJsArrowFunctionExpressionOptions;
 use crate::prelude::*;
 use crate::utils::member_chain::is_member_call_chain;
 use crate::utils::object::write_member_name;
 use crate::utils::JsAnyBinaryLikeExpression;
-use rome_formatter::{format_args, write, CstFormatContext, VecBuffer};
+use rome_formatter::{format_args, write, CstFormatContext, FormatOptions, VecBuffer};
+use rome_js_syntax::JsAnyLiteralExpression;
 use rome_js_syntax::{
     JsAnyAssignmentPattern, JsAnyBindingPattern, JsAnyCallArgument, JsAnyClassMemberName,
     JsAnyExpression, JsAnyFunctionBody, JsAnyObjectAssignmentPatternMember,
@@ -13,7 +16,6 @@ use rome_js_syntax::{
     TsAnyVariableAnnotation, TsIdentifierBinding, TsPropertySignatureClassMember,
     TsPropertySignatureClassMemberFields, TsType, TsTypeAliasDeclaration, TsTypeArguments,
 };
-use rome_js_syntax::{JsAnyLiteralExpression, JsSyntaxNode};
 use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
 use std::iter;
 
@@ -195,8 +197,8 @@ impl Format<JsFormatContext> for RightAssignmentLike {
 /// - Assignment
 /// - Object property member
 /// - Variable declaration
-#[derive(Debug, Eq, PartialEq)]
-pub(crate) enum AssignmentLikeLayout {
+#[derive(Debug, Eq, PartialEq, Copy, Clone)]
+pub enum AssignmentLikeLayout {
     /// This is a special layout usually used for variable declarations.
     /// This layout is hit, usually, when a [variable declarator](JsVariableDeclarator) doesn't have initializer:
     /// ```js
@@ -306,30 +308,30 @@ const MIN_OVERLAP_FOR_BREAK: u8 = 3;
 
 impl JsAnyAssignmentLike {
     fn right(&self) -> SyntaxResult<RightAssignmentLike> {
-        match self {
-            JsAnyAssignmentLike::JsPropertyObjectMember(property) => Ok(property.value()?.into()),
-            JsAnyAssignmentLike::JsAssignmentExpression(assignment) => {
-                Ok(assignment.right()?.into())
-            }
+        let right = match self {
+            JsAnyAssignmentLike::JsPropertyObjectMember(property) => property.value()?.into(),
+            JsAnyAssignmentLike::JsAssignmentExpression(assignment) => assignment.right()?.into(),
             JsAnyAssignmentLike::JsObjectAssignmentPatternProperty(assignment_pattern) => {
-                Ok(assignment_pattern.pattern()?.into())
+                assignment_pattern.pattern()?.into()
             }
             JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => {
                 // SAFETY: Calling `unwrap` here is safe because we check `has_only_left_hand_side` variant at the beginning of the `layout` function
-                Ok(variable_declarator.initializer().unwrap().into())
+                variable_declarator.initializer().unwrap().into()
             }
             JsAnyAssignmentLike::TsTypeAliasDeclaration(type_alias_declaration) => {
-                Ok(type_alias_declaration.ty()?.into())
+                type_alias_declaration.ty()?.into()
             }
             JsAnyAssignmentLike::JsPropertyClassMember(n) => {
                 // SAFETY: Calling `unwrap` here is safe because we check `has_only_left_hand_side` variant at the beginning of the `layout` function
-                Ok(n.value().unwrap().into())
+                n.value().unwrap().into()
             }
             JsAnyAssignmentLike::TsPropertySignatureClassMember(property_signature) => {
                 // SAFETY: Calling `unwrap` here is safe because we check `has_only_left_hand_side` variant at the beginning of the `layout` function
                 Ok(property_signature.value().unwrap().into())
             }
-        }
+        };
+
+        Ok(right)
     }
 
     fn left(&self) -> SyntaxResult<LeftAssignmentLike> {
@@ -379,7 +381,7 @@ impl JsAnyAssignmentLike {
 
                 let width = write_member_name(&name.into(), f)?;
                 let text_width_for_break =
-                    (u8::from(f.context().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
+                    (u8::from(f.options().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
                 Ok(width < text_width_for_break)
             }
             JsAnyAssignmentLike::JsAssignmentExpression(assignment) => {
@@ -399,7 +401,7 @@ impl JsAnyAssignmentLike {
 
                 let width = write_member_name(&member_name.into(), f)?;
                 let text_width_for_break =
-                    (u8::from(f.context().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
+                    (u8::from(f.options().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
                 Ok(width < text_width_for_break)
             }
             JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => {
@@ -437,8 +439,8 @@ impl JsAnyAssignmentLike {
                 } else {
                     let width = write_member_name(&name.into(), f)?;
                     let text_width_for_break =
-                        (u8::from(f.context().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
-                    width < text_width_for_break
+                        (u8::from(f.options().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
+                    width < text_width_for_break && property_annotation.is_none()
                 };
 
                 write!(f, [property_annotation.format()])?;
@@ -462,7 +464,7 @@ impl JsAnyAssignmentLike {
 
                 write!(f, [property_annotation.format()])?;
                 let text_width_for_break =
-                    (u8::from(f.context().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
+                    (u8::from(f.options().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
                 Ok(width < text_width_for_break)
             }
         }
@@ -511,29 +513,41 @@ impl JsAnyAssignmentLike {
         }
     }
 
-    fn write_right(&self, f: &mut JsFormatter) -> FormatResult<()> {
+    fn write_right(&self, f: &mut JsFormatter, layout: AssignmentLikeLayout) -> FormatResult<()> {
         match self {
             JsAnyAssignmentLike::JsPropertyObjectMember(property) => {
                 let value = property.value()?;
-                write!(f, [value.format()])
+                write!(f, [with_assignment_layout(&value, Some(layout))])
             }
             JsAnyAssignmentLike::JsAssignmentExpression(assignment) => {
                 let right = assignment.right()?;
-                write!(f, [space(), right.format()])
+                write!(f, [space(), with_assignment_layout(&right, Some(layout))])
             }
             JsAnyAssignmentLike::JsObjectAssignmentPatternProperty(property) => {
                 let pattern = property.pattern()?;
                 let init = property.init();
                 write!(f, [pattern.format()])?;
                 if let Some(init) = init {
-                    write!(f, [space(), init.format()])?;
+                    write!(
+                        f,
+                        [
+                            space(),
+                            init.format()
+                                .with_options(FormatJsInitializerClauseOptions {
+                                    assignment_layout: Some(layout)
+                                })
+                        ]
+                    )?;
                 }
                 Ok(())
             }
             JsAnyAssignmentLike::JsVariableDeclarator(variable_declarator) => {
                 if let Some(initializer) = variable_declarator.initializer() {
                     let expression = initializer.expression()?;
-                    write!(f, [space(), expression.format()])?;
+                    write!(
+                        f,
+                        [space(), with_assignment_layout(&expression, Some(layout))]
+                    )?;
                 }
                 Ok(())
             }
@@ -544,7 +558,10 @@ impl JsAnyAssignmentLike {
             JsAnyAssignmentLike::JsPropertyClassMember(property_class_member) => {
                 if let Some(initializer) = property_class_member.value() {
                     let expression = initializer.expression()?;
-                    write!(f, [space(), expression.format()])?;
+                    write!(
+                        f,
+                        [space(), with_assignment_layout(&expression, Some(layout))]
+                    )?;
                 }
                 Ok(())
             }
@@ -601,12 +618,11 @@ impl JsAnyAssignmentLike {
                 return Ok(AssignmentLikeLayout::SuppressedInitializer);
             }
         }
+        let right_expression = right.as_expression();
 
-        if let Some(layout) = self.chain_formatting_layout(&right)? {
+        if let Some(layout) = self.chain_formatting_layout(right_expression.as_ref())? {
             return Ok(layout);
         }
-
-        let right_expression = right.as_expression();
 
         if let Some(JsAnyExpression::JsCallExpression(call_expression)) = &right_expression {
             if call_expression.callee()?.syntax().text() == "require" {
@@ -618,7 +634,7 @@ impl JsAnyAssignmentLike {
             return Ok(AssignmentLikeLayout::BreakLeftHandSide);
         }
 
-        if self.should_break_after_operator()? {
+        if self.should_break_after_operator(&right, f.context().comments())? {
             return Ok(AssignmentLikeLayout::BreakAfterOperator);
         }
 
@@ -648,7 +664,7 @@ impl JsAnyAssignmentLike {
             return Ok(AssignmentLikeLayout::BreakAfterOperator);
         }
 
-        let is_poorly_breakable = match right_expression {
+        let is_poorly_breakable = match &right_expression {
             Some(expression) => is_poorly_breakable_member_or_call_chain(expression, f)?,
             None => false,
         };
@@ -658,7 +674,7 @@ impl JsAnyAssignmentLike {
         }
 
         if matches!(
-            self.right()?.as_expression(),
+            right_expression,
             Some(
                 JsAnyExpression::JsClassExpression(_)
                     | JsAnyExpression::JsTemplate(_)
@@ -695,11 +711,11 @@ impl JsAnyAssignmentLike {
     /// and if so, it return the layout type
     fn chain_formatting_layout(
         &self,
-        right: &RightAssignmentLike,
+        right_expression: Option<&JsAnyExpression>,
     ) -> SyntaxResult<Option<AssignmentLikeLayout>> {
         let right_is_tail = !matches!(
-            right,
-            RightAssignmentLike::JsAnyExpression(JsAnyExpression::JsAssignmentExpression(_))
+            right_expression,
+            Some(JsAnyExpression::JsAssignmentExpression(_))
         );
 
         // The chain goes up two levels, by checking up to the great parent if all the conditions
@@ -712,7 +728,7 @@ impl JsAnyAssignmentLike {
                     if matches!(
                         parent.kind(),
                         JsSyntaxKind::JS_ASSIGNMENT_EXPRESSION
-                            | JsSyntaxKind::JS_VARIABLE_DECLARATOR
+                            | JsSyntaxKind::JS_INITIALIZER_CLAUSE
                     ) {
                         let great_parent_kind = parent.parent().map(|n| n.kind());
                         // Finally, we check the great parent.
@@ -739,20 +755,21 @@ impl JsAnyAssignmentLike {
             if !right_is_tail {
                 Some(AssignmentLikeLayout::Chain)
             } else {
-                match right {
-                    RightAssignmentLike::JsAnyExpression(
-                        JsAnyExpression::JsArrowFunctionExpression(arrow),
-                    ) => {
+                match right_expression {
+                    Some(JsAnyExpression::JsArrowFunctionExpression(arrow)) => {
                         let this_body = arrow.body()?;
-                        if matches!(
-                            this_body,
-                            JsAnyFunctionBody::JsAnyExpression(
-                                JsAnyExpression::JsArrowFunctionExpression(_)
-                            )
-                        ) {
-                            Some(AssignmentLikeLayout::ChainTailArrowFunction)
-                        } else {
-                            Some(AssignmentLikeLayout::ChainTail)
+                        match this_body {
+                            JsAnyFunctionBody::JsAnyExpression(expression) => {
+                                if matches!(
+                                    expression,
+                                    JsAnyExpression::JsArrowFunctionExpression(_)
+                                ) {
+                                    Some(AssignmentLikeLayout::ChainTailArrowFunction)
+                                } else {
+                                    Some(AssignmentLikeLayout::ChainTail)
+                                }
+                            }
+                            _ => Some(AssignmentLikeLayout::ChainTail),
                         }
                     }
 
@@ -818,13 +835,22 @@ impl JsAnyAssignmentLike {
     ///
     /// This function is small wrapper around [should_break_after_operator] because it has to work
     /// for nodes that belong to TypeScript too.
-    fn should_break_after_operator(&self) -> SyntaxResult<bool> {
-        let right = self.right()?;
-
-        let result = if let Some(expression) = right.as_expression() {
-            should_break_after_operator(&expression)?
-        } else {
-            has_new_line_before_comment(right.syntax())
+    fn should_break_after_operator(
+        &self,
+        right: &RightAssignmentLike,
+        comments: &JsComments,
+    ) -> SyntaxResult<bool> {
+        let result = match right {
+            RightAssignmentLike::JsAnyExpression(expression) => {
+                should_break_after_operator(expression, comments)?
+            }
+            RightAssignmentLike::JsInitializerClause(initializer) => {
+                should_break_after_operator(&initializer.expression()?, comments)?
+            }
+            RightAssignmentLike::TsType(TsType::TsUnionType(ty)) => {
+                comments.has_leading_comments(ty.syntax())
+            }
+            right => comments.has_leading_own_line_comment(right.syntax()),
         };
 
         Ok(result)
@@ -832,53 +858,43 @@ impl JsAnyAssignmentLike {
 }
 
 /// Checks if the function is entitled to be printed with layout [AssignmentLikeLayout::BreakAfterOperator]
-pub(crate) fn should_break_after_operator(right: &JsAnyExpression) -> SyntaxResult<bool> {
-    if has_new_line_before_comment(right.syntax()) {
-        return Ok(true);
-    }
-
-    // head is a long chain, meaning that right -> right are both assignment expressions
-    if let JsAnyExpression::JsAssignmentExpression(assignment) = right {
-        let right = assignment.right()?;
-        if matches!(right, JsAnyExpression::JsAssignmentExpression(_)) {
-            return Ok(true);
-        }
-    }
-
-    if JsAnyBinaryLikeExpression::cast(right.syntax().clone())
-        .map_or(false, |expression| !expression.should_inline())
+pub(crate) fn should_break_after_operator(
+    right: &JsAnyExpression,
+    comments: &JsComments,
+) -> SyntaxResult<bool> {
+    if comments.has_leading_own_line_comment(right.syntax())
+        && !matches!(right, JsAnyExpression::JsxTagExpression(_))
     {
         return Ok(true);
     }
 
-    if matches!(right, JsAnyExpression::JsSequenceExpression(_)) {
-        return Ok(true);
-    }
-
-    if let JsAnyExpression::JsConditionalExpression(conditional) = &right {
-        if JsAnyBinaryLikeExpression::cast(conditional.test()?.syntax().clone())
-            .map_or(false, |expression| !expression.should_inline())
-        {
-            return Ok(true);
+    let result = match right {
+        // head is a long chain, meaning that right -> right are both assignment expressions
+        JsAnyExpression::JsAssignmentExpression(assignment) => {
+            matches!(
+                assignment.right()?,
+                JsAnyExpression::JsAssignmentExpression(_)
+            )
         }
-    }
+        right if JsAnyBinaryLikeExpression::can_cast(right.syntax().kind()) => {
+            let binary_like = JsAnyBinaryLikeExpression::unwrap_cast(right.syntax().clone());
 
-    Ok(false)
-}
-/// If checks if among leading trivias, we there's a sequence of [Newline, Comment]
-pub(crate) fn has_new_line_before_comment(node: &JsSyntaxNode) -> bool {
-    if let Some(leading_trivia) = node.first_leading_trivia() {
-        let mut seen_newline = false;
-        for piece in leading_trivia.pieces() {
-            if piece.is_comments() && seen_newline {
-                return true;
-            }
-            if piece.is_newline() {
-                seen_newline = true
-            }
+            !binary_like.should_inline_logical_expression()
         }
-    }
-    false
+
+        JsAnyExpression::JsSequenceExpression(_) => true,
+
+        JsAnyExpression::JsConditionalExpression(conditional) => {
+            JsAnyBinaryLikeExpression::cast(conditional.test()?.into_syntax())
+                .map_or(false, |expression| {
+                    !expression.should_inline_logical_expression()
+                })
+        }
+
+        _ => false,
+    };
+
+    Ok(result)
 }
 
 impl Format<JsFormatContext> for JsAnyAssignmentLike {
@@ -897,42 +913,31 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
             // 4. we write the left node inside the main buffer based on the layout
             let mut buffer = VecBuffer::new(f.state_mut());
             let is_left_short = self.write_left(&mut Formatter::new(&mut buffer))?;
-            let formatted_element = buffer.into_element();
+            let formatted_left = buffer.into_vec();
 
             // Compare name only if we are in a position of computing it.
             // If not (for example, left is not an identifier), then let's fallback to false,
             // so we can continue the chain of checks
             let layout = self.layout(is_left_short, f)?;
 
-            let left = format_once(|f| {
+            let left = format_once(|f| f.write_elements(formatted_left));
+            let right = format_with(|f| self.write_right(f, layout));
+
+            let inner_content = format_with(|f| {
                 if matches!(
                     &layout,
                     AssignmentLikeLayout::BreakLeftHandSide | AssignmentLikeLayout::OnlyLeft
                 ) {
-                    write!(
-                        f,
-                        [&format_once(|f| { f.write_element(formatted_element) })]
-                    )
+                    write!(f, [left])?;
                 } else {
-                    write!(
-                        f,
-                        [group(&format_once(|f| {
-                            f.write_element(formatted_element)
-                        }))]
-                    )
+                    write!(f, [group(&left)])?;
                 }
-            });
-
-            let right = format_with(|f| self.write_right(f)).memoized();
-
-            let inner_content = format_with(|f| {
-                write!(f, [left])?;
 
                 if layout != AssignmentLikeLayout::SuppressedInitializer {
                     self.write_operator(f)?;
                 }
 
-                match &layout {
+                match layout {
                     AssignmentLikeLayout::OnlyLeft => Ok(()),
                     AssignmentLikeLayout::Fluid => {
                         let group_id = f.group_id("assignment_like");
@@ -943,8 +948,7 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                                 group(&indent(&soft_line_break_or_space()),)
                                     .with_group_id(Some(group_id)),
                                 line_suffix_boundary(),
-                                if_group_breaks(&indent(&right)).with_group_id(Some(group_id)),
-                                if_group_fits_on_line(&right).with_group_id(Some(group_id)),
+                                indent_if_group_breaks(&right, group_id)
                             ]
                         ]
                     }
@@ -977,16 +981,7 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
                     }
 
                     AssignmentLikeLayout::ChainTailArrowFunction => {
-                        let group_id = f.group_id("arrow_chain");
-
-                        write!(
-                            f,
-                            [
-                                space(),
-                                group(&indent(&format_args![hard_line_break(), right]))
-                                    .with_group_id(Some(group_id)),
-                            ]
-                        )
+                        write!(f, [space(), right])
                     }
                     AssignmentLikeLayout::SuppressedInitializer => {
                         self.write_suppressed_initializer(f)
@@ -1016,10 +1011,10 @@ impl Format<JsFormatContext> for JsAnyAssignmentLike {
 /// or have only one which [is_short_argument], except for member call chains
 /// [Prettier applies]: https://github.com/prettier/prettier/blob/a043ac0d733c4d53f980aa73807a63fc914f23bd/src/language-js/print/assignment.js#L329
 fn is_poorly_breakable_member_or_call_chain(
-    expression: JsAnyExpression,
-    f: &mut Formatter<JsFormatContext>,
+    expression: &JsAnyExpression,
+    f: &Formatter<JsFormatContext>,
 ) -> SyntaxResult<bool> {
-    let threshold = f.context().line_width().value() / 4;
+    let threshold = f.options().line_width().value() / 4;
 
     // Only call and member chains are poorly breakable
     // - `obj.member.prop`
@@ -1033,27 +1028,31 @@ fn is_poorly_breakable_member_or_call_chain(
     // Keeping track of all call expressions in the chain to check them later
     let mut call_expressions = vec![];
 
-    let mut expression = Some(expression);
+    let mut expression = Some(expression.clone());
 
     while let Some(node) = expression.take() {
-        match node {
+        expression = match node {
             JsAnyExpression::JsCallExpression(call_expression) => {
                 is_chain = true;
-                expression = Some(call_expression.callee()?);
+                let callee = call_expression.callee()?;
                 call_expressions.push(call_expression);
+                Some(callee)
             }
             JsAnyExpression::JsStaticMemberExpression(node) => {
                 is_chain = true;
-                expression = Some(node.object()?);
+                Some(node.object()?)
             }
             JsAnyExpression::JsComputedMemberExpression(node) => {
                 is_chain = true;
-                expression = Some(node.object()?);
+                Some(node.object()?)
             }
             JsAnyExpression::JsIdentifierExpression(_) | JsAnyExpression::JsThisExpression(_) => {
                 is_chain_head_simple = true;
+                break;
             }
-            _ => {}
+            _ => {
+                break;
+            }
         }
     }
 
@@ -1062,7 +1061,11 @@ fn is_poorly_breakable_member_or_call_chain(
     }
 
     for call_expression in call_expressions {
-        if is_member_call_chain(&call_expression, f)? {
+        if is_member_call_chain(
+            call_expression.clone(),
+            f.comments(),
+            f.options().tab_width(),
+        )? {
             return Ok(false);
         }
 
@@ -1071,7 +1074,9 @@ fn is_poorly_breakable_member_or_call_chain(
         let is_breakable_call = match args.len() {
             0 => false,
             1 => match args.iter().next() {
-                Some(first_argument) => !is_short_argument(first_argument?, threshold)?,
+                Some(first_argument) => {
+                    !is_short_argument(first_argument?, threshold, f.context().comments())?
+                }
                 None => false,
             },
             _ => true,
@@ -1098,8 +1103,12 @@ fn is_poorly_breakable_member_or_call_chain(
 /// We need it to decide if `JsCallExpression` with the argument is breakable or not
 /// If the argument is short the function call isn't breakable
 /// [Prettier applies]: https://github.com/prettier/prettier/blob/a043ac0d733c4d53f980aa73807a63fc914f23bd/src/language-js/print/assignment.js#L374
-fn is_short_argument(argument: JsAnyCallArgument, threshold: u16) -> SyntaxResult<bool> {
-    if argument.syntax().has_comments_direct() {
+fn is_short_argument(
+    argument: JsAnyCallArgument,
+    threshold: u16,
+    comments: &JsComments,
+) -> SyntaxResult<bool> {
+    if comments.has_comments(argument.syntax()) {
         return Ok(false);
     }
 
@@ -1110,7 +1119,7 @@ fn is_short_argument(argument: JsAnyCallArgument, threshold: u16) -> SyntaxResul
                 identifier.name()?.value_token()?.text_trimmed().len() <= threshold as usize
             }
             JsAnyExpression::JsUnaryExpression(unary_expression) => {
-                let has_comments = unary_expression.argument()?.syntax().has_comments_direct();
+                let has_comments = comments.has_comments(unary_expression.argument()?.syntax());
 
                 unary_expression.is_signed_numeric_literal()? && !has_comments
             }
@@ -1181,4 +1190,33 @@ fn is_complex_type_arguments(type_arguments: TsTypeArguments) -> SyntaxResult<bo
     // https://github.com/prettier/prettier/blob/a043ac0d733c4d53f980aa73807a63fc914f23bd/src/language-js/print/assignment.js#L454
 
     Ok(false)
+}
+
+/// Formats an expression and passes the assignment layout to its formatting function if the expressions
+/// formatting rule takes the layout as an option.
+pub(crate) struct WithAssignmentLayout<'a> {
+    expression: &'a JsAnyExpression,
+    layout: Option<AssignmentLikeLayout>,
+}
+
+pub(crate) fn with_assignment_layout(
+    expression: &JsAnyExpression,
+    layout: Option<AssignmentLikeLayout>,
+) -> WithAssignmentLayout {
+    WithAssignmentLayout { expression, layout }
+}
+
+impl Format<JsFormatContext> for WithAssignmentLayout<'_> {
+    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        match self.expression {
+            JsAnyExpression::JsArrowFunctionExpression(arrow) => arrow
+                .format()
+                .with_options(FormatJsArrowFunctionExpressionOptions {
+                    assignment_layout: self.layout,
+                    ..FormatJsArrowFunctionExpressionOptions::default()
+                })
+                .fmt(f),
+            expression => expression.format().fmt(f),
+        }
+    }
 }

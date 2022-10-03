@@ -114,39 +114,59 @@ JsModule {
       1: (empty)
   3: EOF@17..18 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected a property, an expression, or a method but instead found '='
-  ┌─ js_rewind_at_eof_token.js:1:12
-  │
-1 │ (([zAgRvz=[=(e{V{
-  │            ^ Expected a property, an expression, or a method here
+js_rewind_at_eof_token.js:1:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a property, an expression, or a method but instead found '='
+  
+  × Expected a property, an expression, or a method here
+  
+  > 1 │ (([zAgRvz=[=(e{V{
+      │            ^
+    2 │ 
+  
 --
-error[SyntaxError]: expected `,` but instead found `(`
-  ┌─ js_rewind_at_eof_token.js:1:13
-  │
-1 │ (([zAgRvz=[=(e{V{
-  │             ^ unexpected
+js_rewind_at_eof_token.js:1:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `(`
+  
+  × unexpected
+  
+  > 1 │ (([zAgRvz=[=(e{V{
+      │             ^
+    2 │ 
+  
 --
-error[SyntaxError]: expected `)` but instead found `{`
-  ┌─ js_rewind_at_eof_token.js:1:15
-  │
-1 │ (([zAgRvz=[=(e{V{
-  │               ^ unexpected
+js_rewind_at_eof_token.js:1:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `)` but instead found `{`
+  
+  × unexpected
+  
+  > 1 │ (([zAgRvz=[=(e{V{
+      │               ^
+    2 │ 
+  
 --
-error[SyntaxError]: expected `,` but instead found `{`
-  ┌─ js_rewind_at_eof_token.js:1:17
-  │
-1 │ (([zAgRvz=[=(e{V{
-  │                 ^ unexpected
+js_rewind_at_eof_token.js:1:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `{`
+  
+  × unexpected
+  
+  > 1 │ (([zAgRvz=[=(e{V{
+      │                 ^
+    2 │ 
+  
 --
-error[SyntaxError]: expected `}` but instead the file ends
-  ┌─ js_rewind_at_eof_token.js:2:1
-  │
-2 │ 
-  │ ^ the file ends here
+js_rewind_at_eof_token.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `}` but instead the file ends
+  
+  × the file ends here
+  
+    1 │ (([zAgRvz=[=(e{V{
+  > 2 │ 
+      │ 
+  
 --
 (([zAgRvz=[=(e{V{

@@ -194,33 +194,53 @@ JsModule {
       8: R_CURLY@94..96 "}" [Newline("\n")] []
   3: EOF@96..97 "" [Newline("\n")] []
 --
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ private_name_presence_check_recursive.js:4:13
-  │
-4 │    #prop in #prop in this;
-  │             ^^^^^
+private_name_presence_check_recursive.js:4:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    2 │ 	#prop;
+    3 │ 	test() {
+  > 4 │    #prop in #prop in this;
+      │             ^^^^^
+    5 │    5 + #prop;
+    6 │    #prop
+  
 --
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ private_name_presence_check_recursive.js:5:8
-  │
-5 │    5 + #prop;
-  │        ^^^^^
+private_name_presence_check_recursive.js:5:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    3 │ 	test() {
+    4 │    #prop in #prop in this;
+  > 5 │    5 + #prop;
+      │        ^^^^^
+    6 │    #prop
+    7 │    #prop + 5;
+  
 --
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ private_name_presence_check_recursive.js:6:4
-  │
-6 │    #prop
-  │    ^^^^^
+private_name_presence_check_recursive.js:6:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    4 │    #prop in #prop in this;
+    5 │    5 + #prop;
+  > 6 │    #prop
+      │    ^^^^^
+    7 │    #prop + 5;
+    8 │  }
+  
 --
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ private_name_presence_check_recursive.js:7:4
-  │
-7 │    #prop + 5;
-  │    ^^^^^
+private_name_presence_check_recursive.js:7:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    5 │    5 + #prop;
+    6 │    #prop
+  > 7 │    #prop + 5;
+      │    ^^^^^
+    8 │  }
+    9 │ }
+  
 --
 class A {
 	#prop;

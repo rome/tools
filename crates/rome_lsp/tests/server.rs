@@ -6,9 +6,9 @@ use futures::Sink;
 use futures::SinkExt;
 use futures::Stream;
 use futures::StreamExt;
-use rome_lsp::config::WorkspaceSettings;
-use rome_lsp::server::build_server;
-use rome_lsp::server::LSPServer;
+use rome_lsp::LSPServer;
+use rome_lsp::ServerFactory;
+use rome_lsp::WorkspaceSettings;
 use serde::de::DeserializeOwned;
 use serde::Serialize;
 use serde_json::{from_value, to_value};
@@ -23,6 +23,8 @@ use tower_lsp::jsonrpc;
 use tower_lsp::jsonrpc::Response;
 use tower_lsp::lsp_types::ClientCapabilities;
 use tower_lsp::lsp_types::CodeActionContext;
+use tower_lsp::lsp_types::CodeActionKind;
+use tower_lsp::lsp_types::CodeActionOrCommand;
 use tower_lsp::lsp_types::CodeActionParams;
 use tower_lsp::lsp_types::CodeActionResponse;
 use tower_lsp::lsp_types::DidCloseTextDocumentParams;
@@ -196,6 +198,14 @@ impl Server {
         )
         .await
     }
+
+    /// Basic implementation of the `rome/shutdown` request for tests
+    async fn rome_shutdown(&mut self) -> Result<()> {
+        self.request::<_, ()>("rome/shutdown", "_rome_shutdown", ())
+            .await?
+            .context("rome/shutdown returned None")?;
+        Ok(())
+    }
 }
 
 /// Basic handler for requests and notifications coming from the server for tests
@@ -234,7 +244,8 @@ where
 
 #[tokio::test]
 async fn basic_lifecycle() -> Result<()> {
-    let (service, client) = build_server();
+    let factory = ServerFactory::default();
+    let (service, client) = factory.create().into_inner();
     let (stream, sink) = client.split();
     let mut server = Server::new(service);
 
@@ -251,7 +262,8 @@ async fn basic_lifecycle() -> Result<()> {
 
 #[tokio::test]
 async fn document_lifecycle() -> Result<()> {
-    let (service, client) = build_server();
+    let factory = ServerFactory::default();
+    let (service, client) = factory.create().into_inner();
     let (stream, sink) = client.split();
     let mut server = Server::new(service);
 
@@ -270,8 +282,9 @@ async fn document_lifecycle() -> Result<()> {
 }
 
 #[tokio::test]
-async fn pull_code_actions() -> Result<()> {
-    let (service, client) = build_server();
+async fn document_no_extension() -> Result<()> {
+    let factory = ServerFactory::default();
+    let (service, client) = factory.create().into_inner();
     let (stream, sink) = client.split();
     let mut server = Server::new(service);
 
@@ -280,7 +293,77 @@ async fn pull_code_actions() -> Result<()> {
     server.initialize().await?;
     server.initialized().await?;
 
-    server.open_document("for(;a == b;);").await?;
+    server
+        .notify(
+            "textDocument/didOpen",
+            DidOpenTextDocumentParams {
+                text_document: TextDocumentItem {
+                    uri: Url::parse("test://workspace/document")?,
+                    language_id: String::from("javascript"),
+                    version: 0,
+                    text: String::from("statement()"),
+                },
+            },
+        )
+        .await?;
+
+    let res: Option<Vec<TextEdit>> = server
+        .request(
+            "textDocument/formatting",
+            "formatting",
+            DocumentFormattingParams {
+                text_document: TextDocumentIdentifier {
+                    uri: Url::parse("test://workspace/document")?,
+                },
+                options: FormattingOptions {
+                    tab_size: 4,
+                    insert_spaces: false,
+                    properties: HashMap::default(),
+                    trim_trailing_whitespace: None,
+                    insert_final_newline: None,
+                    trim_final_newlines: None,
+                },
+                work_done_progress_params: WorkDoneProgressParams {
+                    work_done_token: None,
+                },
+            },
+        )
+        .await?
+        .context("formatting returned None")?;
+
+    let edits = res.context("formatting did not return an edit list")?;
+    assert!(!edits.is_empty(), "formatting returned an empty edit list");
+
+    server
+        .notify(
+            "textDocument/didClose",
+            DidCloseTextDocumentParams {
+                text_document: TextDocumentIdentifier {
+                    uri: Url::parse("test://workspace/document")?,
+                },
+            },
+        )
+        .await?;
+
+    server.shutdown().await?;
+    reader.abort();
+
+    Ok(())
+}
+
+#[tokio::test]
+async fn pull_quick_fixes() -> Result<()> {
+    let factory = ServerFactory::default();
+    let (service, client) = factory.create().into_inner();
+    let (stream, sink) = client.split();
+    let mut server = Server::new(service);
+
+    let reader = tokio::spawn(client_handler(stream, sink));
+
+    server.initialize().await?;
+    server.initialized().await?;
+
+    server.open_document("if(a == b) {}").await?;
 
     let res: CodeActionResponse = server
         .request(
@@ -293,16 +376,16 @@ async fn pull_code_actions() -> Result<()> {
                 range: Range {
                     start: Position {
                         line: 0,
-                        character: 8,
+                        character: 6,
                     },
                     end: Position {
                         line: 0,
-                        character: 8,
+                        character: 6,
                     },
                 },
                 context: CodeActionContext {
                     diagnostics: vec![],
-                    only: None,
+                    only: Some(vec![CodeActionKind::QUICKFIX]),
                 },
                 work_done_progress_params: WorkDoneProgressParams {
                     work_done_token: None,
@@ -315,7 +398,82 @@ async fn pull_code_actions() -> Result<()> {
         .await?
         .context("codeAction returned None")?;
 
-    assert!(!res.is_empty());
+    let code_actions: Vec<_> = res
+        .iter()
+        .map(|action| match action {
+            CodeActionOrCommand::Command(_) => panic!("unexpected command"),
+            CodeActionOrCommand::CodeAction(action) => &action.title,
+        })
+        .collect();
+
+    assert_eq!(code_actions.as_slice(), &["Use ==="]);
+
+    server.close_document().await?;
+
+    server.shutdown().await?;
+    reader.abort();
+
+    Ok(())
+}
+
+#[tokio::test]
+async fn pull_refactors() -> Result<()> {
+    let factory = ServerFactory::default();
+    let (service, client) = factory.create().into_inner();
+    let (stream, sink) = client.split();
+    let mut server = Server::new(service);
+
+    let reader = tokio::spawn(client_handler(stream, sink));
+
+    server.initialize().await?;
+    server.initialized().await?;
+
+    server
+        .open_document("let variable = \"value\"; func(variable);")
+        .await?;
+
+    let res: CodeActionResponse = server
+        .request(
+            "textDocument/codeAction",
+            "pull_code_actions",
+            CodeActionParams {
+                text_document: TextDocumentIdentifier {
+                    uri: Url::parse("test://workspace/document.js")?,
+                },
+                range: Range {
+                    start: Position {
+                        line: 0,
+                        character: 7,
+                    },
+                    end: Position {
+                        line: 0,
+                        character: 7,
+                    },
+                },
+                context: CodeActionContext {
+                    diagnostics: vec![],
+                    only: Some(vec![CodeActionKind::REFACTOR]),
+                },
+                work_done_progress_params: WorkDoneProgressParams {
+                    work_done_token: None,
+                },
+                partial_result_params: PartialResultParams {
+                    partial_result_token: None,
+                },
+            },
+        )
+        .await?
+        .context("codeAction returned None")?;
+
+    let code_actions: Vec<_> = res
+        .iter()
+        .map(|action| match action {
+            CodeActionOrCommand::Command(_) => panic!("unexpected command"),
+            CodeActionOrCommand::CodeAction(action) => &action.title,
+        })
+        .collect();
+
+    assert_eq!(code_actions.as_slice(), &["Inline variable"]);
 
     server.close_document().await?;
 
@@ -327,7 +485,8 @@ async fn pull_code_actions() -> Result<()> {
 
 #[tokio::test]
 async fn format_with_syntax_errors() -> Result<()> {
-    let (service, client) = build_server();
+    let factory = ServerFactory::default();
+    let (service, client) = factory.create().into_inner();
     let (stream, sink) = client.split();
     let mut server = Server::new(service);
 
@@ -367,6 +526,30 @@ async fn format_with_syntax_errors() -> Result<()> {
     server.close_document().await?;
 
     server.shutdown().await?;
+    reader.abort();
+
+    Ok(())
+}
+
+#[tokio::test]
+async fn server_shutdown() -> Result<()> {
+    let factory = ServerFactory::default();
+    let (service, client) = factory.create().into_inner();
+    let (stream, sink) = client.split();
+    let mut server = Server::new(service);
+
+    let reader = tokio::spawn(client_handler(stream, sink));
+
+    server.initialize().await?;
+    server.initialized().await?;
+
+    let cancellation = factory.cancellation();
+    let cancellation = cancellation.notified();
+
+    server.rome_shutdown().await?;
+
+    cancellation.await;
+
     reader.abort();
 
     Ok(())

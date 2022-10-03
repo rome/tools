@@ -107,12 +107,17 @@ JsScript {
         3: R_CURLY@68..70 "}" [Newline("\n")] []
   3: EOF@70..71 "" [Newline("\n")] []
 --
-error[SyntaxError]: Illegal use of reserved keyword `yield` as an identifier in strict mode
-  ┌─ class_yield_property_initializer.js:4:12
-  │
-4 │     prop = yield;
-  │            ^^^^^
+class_yield_property_initializer.js:4:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of reserved keyword `yield` as an identifier in strict mode
+  
+    2 │ async function* test() {
+    3 │   class A {
+  > 4 │     prop = yield;
+      │            ^^^^^
+    5 │   }
+    6 │ }
+  
 --
 // SCRIPT
 async function* test() {

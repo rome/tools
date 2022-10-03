@@ -4,14 +4,17 @@ use std::{
     io,
 };
 
+use rome_text_size::TextSize;
 use termcolor::{Color, ColorSpec};
-use text_size::TextSize;
 
 use crate::fmt::{Display, Formatter, MarkupElements, Write};
 
 /// Enumeration of all the supported markup elements
 #[derive(Clone, Debug, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
 pub enum MarkupElement<'fmt> {
     Emphasis,
     Dim,
@@ -21,7 +24,22 @@ pub enum MarkupElement<'fmt> {
     Success,
     Warn,
     Info,
+    Inverse,
     Hyperlink { href: Cow<'fmt, str> },
+}
+
+impl fmt::Display for MarkupElement<'_> {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
+        if let Self::Hyperlink { href } = self {
+            if fmt.alternate() {
+                write!(fmt, "Hyperlink href={:?}", href.as_ref())
+            } else {
+                fmt.write_str("Hyperlink")
+            }
+        } else {
+            write!(fmt, "{self:?}")
+        }
+    }
 }
 
 impl<'fmt> MarkupElement<'fmt> {
@@ -63,7 +81,7 @@ impl<'fmt> MarkupElement<'fmt> {
                 color.set_fg(Some(BLUE));
             }
 
-            MarkupElement::Hyperlink { .. } => {}
+            MarkupElement::Inverse | MarkupElement::Hyperlink { .. } => {}
         }
     }
 
@@ -77,6 +95,7 @@ impl<'fmt> MarkupElement<'fmt> {
             MarkupElement::Success => MarkupElement::Success,
             MarkupElement::Warn => MarkupElement::Warn,
             MarkupElement::Info => MarkupElement::Info,
+            MarkupElement::Inverse => MarkupElement::Inverse,
             MarkupElement::Hyperlink { href } => MarkupElement::Hyperlink {
                 href: Cow::Owned(match href {
                     Cow::Borrowed(href) => href.to_string(),
@@ -96,7 +115,10 @@ pub struct MarkupNode<'fmt> {
 }
 
 #[derive(Clone, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
 pub struct MarkupNodeBuf {
     pub elements: Vec<MarkupElement<'static>>,
     pub content: String,
@@ -105,15 +127,30 @@ pub struct MarkupNodeBuf {
 impl Debug for MarkupNodeBuf {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         for element in &self.elements {
-            write!(fmt, "<{element:?}>")?;
+            write!(fmt, "<{element:#}>")?;
         }
-        write!(fmt, "{:?}", self.content)?;
+
+        if fmt.alternate() {
+            let mut content = self.content.as_str();
+            while let Some(index) = content.find('\n') {
+                let (before, after) = content.split_at(index + 1);
+                if !before.is_empty() {
+                    writeln!(fmt, "{before:?}")?;
+                }
+                content = after;
+            }
+
+            if !content.is_empty() {
+                write!(fmt, "{content:?}")?;
+            }
+        } else {
+            write!(fmt, "{:?}", self.content)?;
+        }
+
         for element in self.elements.iter().rev() {
-            write!(fmt, "</{element:?}>")?;
+            write!(fmt, "</{element}>")?;
         }
-        if fmt.alternate() && self.content.contains('\n') {
-            writeln!(fmt)?;
-        }
+
         Ok(())
     }
 }
@@ -130,14 +167,17 @@ pub struct Markup<'fmt>(pub &'fmt [MarkupNode<'fmt>]);
 impl<'fmt> Markup<'fmt> {
     pub fn to_owned(&self) -> MarkupBuf {
         let mut result = MarkupBuf(Vec::new());
-        // SAFETY: The implementation of Write for MarkupBuf bellow always returns Ok
+        // SAFETY: The implementation of Write for MarkupBuf below always returns Ok
         Formatter::new(&mut result).write_markup(*self).unwrap();
         result
     }
 }
 
 #[derive(Clone, Default, PartialEq, Eq, Hash)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
 pub struct MarkupBuf(pub Vec<MarkupNodeBuf>);
 
 impl MarkupBuf {
@@ -213,7 +253,7 @@ impl Display for MarkupBuf {
 impl Debug for MarkupBuf {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
         for node in &self.0 {
-            write!(fmt, "{node:?}")?;
+            Debug::fmt(node, fmt)?;
         }
         Ok(())
     }

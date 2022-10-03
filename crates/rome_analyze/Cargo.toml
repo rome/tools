@@ -2,7 +2,8 @@
 name = "rome_analyze"
 version = "0.0.0"
 edition = "2021"
-authors = ["Rome Tools Developers and Contributros"]
+authors = ["Rome Tools Developers and Contributors"]
+repository = "https://github.com/rome/tools"
 license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -15,7 +16,11 @@ rome_diagnostics = { path = "../rome_diagnostics" }
 bitflags = "1.3.2"
 rustc-hash = "1.1.0"
 serde = { version = "1.0.136", features = ["derive"], optional = true }
+schemars = { version = "0.8.10", optional = true }
 
 [dev-dependencies]
 rome_js_syntax = { path = "../rome_js_syntax" }
 rome_js_factory = { path = "../rome_js_factory" }
+
+[features]
+serde = ["dep:serde", "schemars"]

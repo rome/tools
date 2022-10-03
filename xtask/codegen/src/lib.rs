@@ -175,6 +175,22 @@ pub fn update(path: &Path, contents: &str, mode: &Mode) -> Result<UpdateResult> 
     Ok(UpdateResult::Updated)
 }
 
+pub fn to_camel_case(s: &str) -> String {
+    let mut buf = String::with_capacity(s.len());
+    let mut prev = false;
+    for c in s.chars() {
+        if c == '_' {
+            prev = true;
+        } else if prev {
+            buf.push(c.to_ascii_uppercase());
+            prev = false;
+        } else {
+            buf.push(c);
+        }
+    }
+    buf
+}
+
 pub fn to_upper_snake_case(s: &str) -> String {
     let mut buf = String::with_capacity(s.len());
     let mut prev = false;

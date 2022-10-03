@@ -112,12 +112,18 @@ JsModule {
         3: R_CURLY@55..57 "}" [Newline("\n")] []
   3: EOF@57..58 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected a JSX attribute value but instead found '>'
-  ┌─ jsx_element_attribute_missing_value.jsx:2:33
-  │
-2 │     return <div string_literal= ></div>;
-  │                                 ^ Expected a JSX attribute value here
+jsx_element_attribute_missing_value.jsx:2:33 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a JSX attribute value but instead found '>'
+  
+  × Expected a JSX attribute value here
+  
+    1 │ function f() {
+  > 2 │     return <div string_literal= ></div>;
+      │                                 ^
+    3 │ }
+    4 │ 
+  
 --
 function f() {
     return <div string_literal= ></div>;

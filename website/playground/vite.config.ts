@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig, searchForWorkspaceRoot } from "vite";
 import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 
@@ -11,5 +11,11 @@ export default defineConfig({
 	},
 	resolve: {
 		dedupe: ["@codemirror/state"],
+	},
+	server: {
+		fs: {
+			// https://vitejs.dev/config/server-options.html#server-fs-allow
+			allow: [searchForWorkspaceRoot(process.cwd()), "../../npm/wasm-web"],
+		},
 	},
 });

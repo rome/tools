@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/for/continue-and-break-comment-1.js
 ---
 
 # Input
@@ -134,60 +136,18 @@ label2: {
 ```diff
 --- Prettier
 +++ Rome
-@@ -47,43 +47,43 @@
- }
- 
- for (;;) {
--  continue; /* comment */
-+  continue /* comment */;
- }
- 
- for (;;) {
--  break; /* comment */
-+  break /* comment */;
- }
- 
- for (const f of []) {
--  continue; /* comment */
-+  continue /* comment */;
- }
- 
- for (const f of []) {
--  break; /* comment */
-+  break /* comment */;
- }
- 
- for (const f in {}) {
--  continue; /* comment */
-+  continue /* comment */;
- }
- 
- for (const f in {}) {
--  break; /* comment */
-+  break /* comment */;
- }
- 
- while (true) {
--  continue; /* comment */
-+  continue /* comment */;
- }
- 
- while (true) {
--  break; /* comment */
-+  break /* comment */;
- }
- 
- do {
--  continue; /* comment */
-+  continue /* comment */;
- } while (true);
- 
- do {
--  break; /* comment */
-+  break /* comment */;
+@@ -87,9 +87,9 @@
  } while (true);
  
  label1: for (;;) {
+-  continue label1 /* comment */;
++  continue label1; /* comment */
+ }
+ 
+ label2: {
+-  break label2 /* comment */;
++  break label2; /* comment */
+ }
 ```
 
 # Output
@@ -242,51 +202,51 @@ label2: {
 }
 
 for (;;) {
-  continue /* comment */;
+  continue; /* comment */
 }
 
 for (;;) {
-  break /* comment */;
+  break; /* comment */
 }
 
 for (const f of []) {
-  continue /* comment */;
+  continue; /* comment */
 }
 
 for (const f of []) {
-  break /* comment */;
+  break; /* comment */
 }
 
 for (const f in {}) {
-  continue /* comment */;
+  continue; /* comment */
 }
 
 for (const f in {}) {
-  break /* comment */;
+  break; /* comment */
 }
 
 while (true) {
-  continue /* comment */;
+  continue; /* comment */
 }
 
 while (true) {
-  break /* comment */;
+  break; /* comment */
 }
 
 do {
-  continue /* comment */;
+  continue; /* comment */
 } while (true);
 
 do {
-  break /* comment */;
+  break; /* comment */
 } while (true);
 
 label1: for (;;) {
-  continue label1 /* comment */;
+  continue label1; /* comment */
 }
 
 label2: {
-  break label2 /* comment */;
+  break label2; /* comment */
 }
 ```
 

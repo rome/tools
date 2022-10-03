@@ -1,8 +1,9 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use rome_js_syntax::JsIdentifierAssignment;
-use rome_js_syntax::JsIdentifierAssignmentFields;
+use crate::parentheses::NeedsParentheses;
+use rome_js_syntax::{JsForOfStatement, JsIdentifierAssignmentFields};
+use rome_js_syntax::{JsIdentifierAssignment, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsIdentifierAssignment;
@@ -12,5 +13,41 @@ impl FormatNodeRule<JsIdentifierAssignment> for FormatJsIdentifierAssignment {
         let JsIdentifierAssignmentFields { name_token } = node.as_fields();
 
         write![f, [name_token.format()]]
+    }
+
+    fn needs_parentheses(&self, item: &JsIdentifierAssignment) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl NeedsParentheses for JsIdentifierAssignment {
+    #[inline]
+    fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
+        let is_async = self
+            .name_token()
+            .map_or(false, |name| name.text_trimmed() == "async");
+
+        if is_async && JsForOfStatement::can_cast(parent.kind()) {
+            let for_of = JsForOfStatement::unwrap_cast(parent.clone());
+
+            for_of.await_token().is_none()
+        } else {
+            false
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+
+    use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
+    use rome_js_syntax::JsIdentifierAssignment;
+
+    #[test]
+    fn needs_parentheses() {
+        assert_needs_parentheses!("for ((async) of []) {}", JsIdentifierAssignment);
+
+        assert_not_needs_parentheses!("for await (async of []) {}", JsIdentifierAssignment);
+        assert_not_needs_parentheses!("for (test of []) {}", JsIdentifierAssignment);
     }
 }

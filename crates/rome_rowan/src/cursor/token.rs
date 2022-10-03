@@ -3,11 +3,11 @@ use crate::green::GreenElementRef;
 use crate::{
     green, Direction, GreenToken, GreenTokenData, RawSyntaxKind, SyntaxTokenText, WalkEvent,
 };
+use rome_text_size::{TextRange, TextSize};
 use std::hash::{Hash, Hasher};
 use std::ptr::NonNull;
 use std::rc::Rc;
 use std::{fmt, iter};
-use text_size::{TextRange, TextSize};
 
 use super::{GreenElement, NodeKind, WeakGreenElement};
 

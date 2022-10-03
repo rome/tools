@@ -1,17 +1,20 @@
-use crate::prelude::*;
-
-use rome_js_syntax::JsUnknownAssignment;
-use rome_rowan::AstNode;
+use crate::parentheses::NeedsParentheses;
+use crate::FormatUnknownNodeRule;
+use rome_js_syntax::{JsSyntaxNode, JsUnknownAssignment};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsUnknownAssignment;
 
-impl FormatNodeRule<JsUnknownAssignment> for FormatJsUnknownAssignment {
-    fn fmt_fields(
-        &self,
-        node: &JsUnknownAssignment,
-        formatter: &mut JsFormatter,
-    ) -> FormatResult<()> {
-        format_unknown_node(node.syntax()).fmt(formatter)
+impl FormatUnknownNodeRule<JsUnknownAssignment> for FormatJsUnknownAssignment {}
+
+impl NeedsParentheses for JsUnknownAssignment {
+    #[inline]
+    fn needs_parentheses(&self) -> bool {
+        false
+    }
+
+    #[inline]
+    fn needs_parentheses_with_parent(&self, _: &JsSyntaxNode) -> bool {
+        false
     }
 }

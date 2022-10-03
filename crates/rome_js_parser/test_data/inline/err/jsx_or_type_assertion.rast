@@ -380,40 +380,75 @@ JsScript {
         3: R_CURLY@281..283 "}" [Newline("\n")] []
   3: EOF@283..284 "" [Newline("\n")] []
 --
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  ┌─ jsx_or_type_assertion.js:3:13
-  │
-3 │     let a = <div>a</div>; // JSX
-  │             ^^^^^^ TypeScript only syntax
+jsx_or_type_assertion.js:3:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  
+  × TypeScript only syntax
+  
+    1 │ // SCRIPT
+    2 │ function f() {
+  > 3 │     let a = <div>a</div>; // JSX
+      │             ^^^^^^
+    4 │     let b = <string>b; // type assertion
+    5 │     let c = <string>b<a>d; // type assertion
+  
 --
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  ┌─ jsx_or_type_assertion.js:4:13
-  │
-4 │     let b = <string>b; // type assertion
-  │             ^^^^^^^^^ TypeScript only syntax
+jsx_or_type_assertion.js:4:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  
+  × TypeScript only syntax
+  
+    2 │ function f() {
+    3 │     let a = <div>a</div>; // JSX
+  > 4 │     let b = <string>b; // type assertion
+      │             ^^^^^^^^^
+    5 │     let c = <string>b<a>d; // type assertion
+    6 │     let d = <div>a</div>/; // ambiguous: JSX or "type assertion a less than regex /div>/". Probably JSX.
+  
 --
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  ┌─ jsx_or_type_assertion.js:5:13
-  │
-5 │     let c = <string>b<a>d; // type assertion
-  │             ^^^^^^^^^ TypeScript only syntax
+jsx_or_type_assertion.js:5:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  
+  × TypeScript only syntax
+  
+    3 │     let a = <div>a</div>; // JSX
+    4 │     let b = <string>b; // type assertion
+  > 5 │     let c = <string>b<a>d; // type assertion
+      │             ^^^^^^^^^
+    6 │     let d = <div>a</div>/; // ambiguous: JSX or "type assertion a less than regex /div>/". Probably JSX.
+    7 │     let d = <string>a</string>/;
+  
 --
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  ┌─ jsx_or_type_assertion.js:6:13
-  │
-6 │     let d = <div>a</div>/; // ambiguous: JSX or "type assertion a less than regex /div>/". Probably JSX.
-  │             ^^^^^^ TypeScript only syntax
+jsx_or_type_assertion.js:6:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  
+  × TypeScript only syntax
+  
+    4 │     let b = <string>b; // type assertion
+    5 │     let c = <string>b<a>d; // type assertion
+  > 6 │     let d = <div>a</div>/; // ambiguous: JSX or "type assertion a less than regex /div>/". Probably JSX.
+      │             ^^^^^^
+    7 │     let d = <string>a</string>/;
+    8 │ }
+  
 --
-error[SyntaxError]: type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  ┌─ jsx_or_type_assertion.js:7:13
-  │
-7 │     let d = <string>a</string>/;
-  │             ^^^^^^^^^ TypeScript only syntax
+jsx_or_type_assertion.js:7:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  
+  × TypeScript only syntax
+  
+    5 │     let c = <string>b<a>d; // type assertion
+    6 │     let d = <div>a</div>/; // ambiguous: JSX or "type assertion a less than regex /div>/". Probably JSX.
+  > 7 │     let d = <string>a</string>/;
+      │             ^^^^^^^^^
+    8 │ }
+    9 │ 
+  
 --
 // SCRIPT
 function f() {

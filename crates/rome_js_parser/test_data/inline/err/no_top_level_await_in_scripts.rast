@@ -92,15 +92,26 @@ JsScript {
       1: SEMICOLON@47..48 ";" [] []
   3: EOF@48..49 "" [Newline("\n")] []
 --
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ no_top_level_await_in_scripts.js:3:7
-  │
-3 │ await test();
-  │ ------^^^^
-  │ │     │
-  │ │     An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
+no_top_level_await_in_scripts.js:3:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    1 │ // SCRIPT
+    2 │ async function test() {}
+  > 3 │ await test();
+      │       ^^^^
+    4 │ 
+  
+  i ...Which is required to end this statement
+  
+    1 │ // SCRIPT
+    2 │ async function test() {}
+  > 3 │ await test();
+      │ ^^^^^^^^^^
+    4 │ 
+  
 --
 // SCRIPT
 async function test() {}

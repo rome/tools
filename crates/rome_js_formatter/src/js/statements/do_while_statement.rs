@@ -44,8 +44,9 @@ impl FormatNodeRule<JsDoWhileStatement> for FormatJsDoWhileStatement {
                 [
                     while_token.format(),
                     space(),
-                    format_delimited(&l_paren_token, &test.format(), &r_paren_token)
-                        .soft_block_indent(),
+                    l_paren_token.format(),
+                    group(&soft_block_indent(&test.format())),
+                    r_paren_token.format()
                 ]
             )
         });

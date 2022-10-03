@@ -41,19 +41,27 @@ JsModule {
       1: SEMICOLON@12..13 ";" [] []
   3: EOF@13..14 "" [Newline("\n")] []
 --
-error[SyntaxError]: Illegal use of reserved keyword `yield` as an identifier in strict mode
-  ┌─ identifier.js:1:1
-  │
-1 │ yield;
-  │ ^^^^^
+identifier.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of reserved keyword `yield` as an identifier in strict mode
+  
+  > 1 │ yield;
+      │ ^^^^^
+    2 │ await;
+    3 │ 
+  
 --
-error[SyntaxError]: expected an unary expression but instead found ';'
-  ┌─ identifier.js:2:6
-  │
-2 │ await;
-  │      ^ Expected an unary expression here
+identifier.js:2:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an unary expression but instead found ';'
+  
+  × Expected an unary expression here
+  
+    1 │ yield;
+  > 2 │ await;
+      │      ^
+    3 │ 
+  
 --
 yield;
 await;

@@ -4,13 +4,13 @@
 //! from any error and produce an ast from any source code. If you don't want to account for
 //! optionals for everything, you can use ...
 
+use rome_text_size::TextRange;
 #[cfg(feature = "serde")]
 use serde::Serialize;
 use std::error::Error;
 use std::fmt::{self, Debug, Display, Formatter};
 use std::iter::FusedIterator;
 use std::marker::PhantomData;
-use text_size::TextRange;
 
 mod batch;
 mod mutation;
@@ -44,7 +44,7 @@ where
     /// and will result in a compile-time error if the value overflows:
     ///
     /// ```compile_fail
-    /// # use rome_rowan::{SyntaxKindSet, RawLanguage, RawSyntaxKind};
+    /// # use rome_rowan::{SyntaxKindSet, RawSyntaxKind, raw_language::RawLanguage};
     /// const EXAMPLE: SyntaxKindSet<RawLanguage> =
     ///     SyntaxKindSet::<RawLanguage>::from_raw(RawSyntaxKind(512));
     /// # println!("{EXAMPLE:?}"); // The constant must be used to be evaluated
@@ -123,6 +123,91 @@ pub trait AstNode: Clone {
     fn cast(syntax: SyntaxNode<Self::Language>) -> Option<Self>
     where
         Self: Sized;
+
+    /// Takes a reference of a syntax node and tries to cast it to this AST node.
+    ///
+    /// Only creates a clone of the syntax node if casting the node is possible.
+    fn cast_ref(syntax: &SyntaxNode<Self::Language>) -> Option<Self>
+    where
+        Self: Sized,
+    {
+        if Self::can_cast(syntax.kind()) {
+            Self::cast(syntax.clone())
+        } else {
+            None
+        }
+    }
+
+    /// Tries to cast the passed syntax node to this AST node.
+    ///
+    /// # Returns
+    /// * [Ok] if the passed node can be cast into this [AstNode]
+    /// * [Err(syntax)](Err) If the node is of another kind.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use rome_rowan::AstNode;
+    /// # use rome_rowan::raw_language::{LiteralExpression, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder};
+    ///
+    /// let mut builder = RawSyntaxTreeBuilder::new();
+    ///
+    /// builder.start_node(RawLanguageKind::ROOT);
+    /// builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
+    /// builder.token(RawLanguageKind::STRING_TOKEN, "'abcd'");
+    /// builder.finish_node();
+    /// builder.finish_node();
+    ///
+    /// let root_syntax = builder.finish();
+    /// let root = RawLanguageRoot::cast(root_syntax.clone()).expect("Root to be a raw language root");
+    ///
+    /// // Returns `OK` because syntax is a `RawLanguageRoot`
+    /// assert_eq!(RawLanguageRoot::try_cast(root.syntax().clone()), Ok(root.clone()));
+    /// // Returns `Err` with the syntax node passed to `try_cast` because `root` isn't a `LiteralExpression`
+    /// assert_eq!(LiteralExpression::try_cast(root.syntax().clone()), Err(root_syntax));
+    /// ```
+    fn try_cast(syntax: SyntaxNode<Self::Language>) -> Result<Self, SyntaxNode<Self::Language>> {
+        if Self::can_cast(syntax.kind()) {
+            Ok(Self::cast(syntax).expect("Expected casted node because 'can_cast' returned true."))
+        } else {
+            Err(syntax)
+        }
+    }
+
+    /// Tries to cast the AST `node` into this node.
+    ///
+    /// # Returns
+    /// * [Ok] if the passed node can be cast into this [AstNode]
+    /// * [Err] if the node is of another kind
+    /// ```
+    /// # use rome_rowan::AstNode;
+    /// # use rome_rowan::raw_language::{LiteralExpression, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder};
+    ///
+    /// let mut builder = RawSyntaxTreeBuilder::new();
+    ///
+    /// builder.start_node(RawLanguageKind::ROOT);
+    /// builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
+    /// builder.token(RawLanguageKind::STRING_TOKEN, "'abcd'");
+    /// builder.finish_node();
+    /// builder.finish_node();
+    ///
+    /// let root_syntax = builder.finish();
+    /// let root = RawLanguageRoot::cast(root_syntax.clone()).expect("Root to be a raw language root");
+    ///
+    /// // Returns `OK` because syntax is a `RawLanguageRoot`
+    /// assert_eq!(RawLanguageRoot::try_cast_node(root.clone()), Ok(root.clone()));
+    ///
+    /// // Returns `Err` with the node passed to `try_cast_node` because `root` isn't a `LiteralExpression`
+    /// assert_eq!(LiteralExpression::try_cast_node(root.clone()), Err(root.clone()));
+    /// ```
+    fn try_cast_node<T: AstNode<Language = Self::Language>>(node: T) -> Result<Self, T> {
+        if Self::can_cast(node.syntax().kind()) {
+            Ok(Self::cast(node.into_syntax())
+                .expect("Expected casted node because 'can_cast' returned true."))
+        } else {
+            Err(node)
+        }
+    }
 
     /// Returns the underlying syntax node.
     fn syntax(&self) -> &SyntaxNode<Self::Language>;

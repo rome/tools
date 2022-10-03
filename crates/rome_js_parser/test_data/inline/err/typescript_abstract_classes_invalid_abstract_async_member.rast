@@ -65,11 +65,13 @@ JsModule {
       8: R_CURLY@39..40 "}" [] []
   3: EOF@40..41 "" [Newline("\n")] []
 --
-error[SyntaxError]: async members cannot be abstract
-  ┌─ typescript_abstract_classes_invalid_abstract_async_member.ts:1:20
-  │
-1 │ abstract class B { abstract async a(); }
-  │                    ^^^^^^^^
+typescript_abstract_classes_invalid_abstract_async_member.ts:1:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × async members cannot be abstract
+  
+  > 1 │ abstract class B { abstract async a(); }
+      │                    ^^^^^^^^
+    2 │ 
+  
 --
 abstract class B { abstract async a(); }

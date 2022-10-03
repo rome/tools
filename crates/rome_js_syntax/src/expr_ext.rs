@@ -2,15 +2,49 @@
 use crate::numbers::parse_js_number;
 use crate::{
     JsAnyExpression, JsAnyLiteralExpression, JsArrayExpression, JsArrayHole,
-    JsAssignmentExpression, JsBinaryExpression, JsLiteralMemberName, JsLogicalExpression,
-    JsNumberLiteralExpression, JsObjectExpression, JsRegexLiteralExpression,
-    JsStringLiteralExpression, JsSyntaxToken, JsTemplate, JsUnaryExpression, T,
+    JsAssignmentExpression, JsBinaryExpression, JsCallExpression, JsComputedMemberExpression,
+    JsIdentifierExpression, JsLiteralMemberName, JsLogicalExpression, JsNumberLiteralExpression,
+    JsObjectExpression, JsReferenceIdentifier, JsRegexLiteralExpression, JsStaticMemberExpression,
+    JsStringLiteralExpression, JsSyntaxKind, JsSyntaxToken, JsTemplate, JsUnaryExpression,
+    OperatorPrecedence, T,
 };
 use crate::{JsPreUpdateExpression, JsSyntaxKind::*};
+use core::iter;
 use rome_rowan::{
-    AstNode, AstSeparatedList, NodeOrToken, SyntaxNodeText, SyntaxResult, TextRange, TextSize,
+    AstNode, AstSeparatedList, NodeOrToken, SyntaxResult, SyntaxTokenText, TextRange, TextSize,
 };
-use std::cmp::Ordering;
+
+impl JsReferenceIdentifier {
+    /// Returns `true` if this identifier refers to the `undefined` symbol.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_factory::make::{js_reference_identifier, ident};
+    ///
+    /// assert!(js_reference_identifier(ident("undefined")).is_undefined());
+    /// assert!(!js_reference_identifier(ident("x")).is_undefined());
+    /// ```
+    pub fn is_undefined(&self) -> bool {
+        self.has_name("undefined")
+    }
+
+    /// Returns `true` if this identifier has the given name.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_factory::make::{js_reference_identifier, ident};
+    ///
+    /// assert!(js_reference_identifier(ident("foo")).has_name("foo"));
+    /// assert!(!js_reference_identifier(ident("bar")).has_name("foo"));
+    /// ```
+    pub fn has_name(&self, name: &str) -> bool {
+        self.value_token()
+            .map(|token| token.text_trimmed() == name)
+            .unwrap_or_default()
+    }
+}
 
 impl JsLiteralMemberName {
     /// Returns the name of the member as a syntax text
@@ -128,68 +162,33 @@ pub enum JsBinaryOperator {
 }
 
 impl JsBinaryOperator {
-    pub fn is_bit_wise_operator(&self) -> bool {
-        matches!(
-            self,
-            JsBinaryOperator::LeftShift
-                | JsBinaryOperator::RightShift
-                | JsBinaryOperator::UnsignedRightShift
-                | JsBinaryOperator::BitwiseAnd
-                | JsBinaryOperator::BitwiseOr
-                | JsBinaryOperator::BitwiseXor
-        )
-    }
-
-    pub fn is_plus_or_minus_operator(&self) -> bool {
-        matches!(self, JsBinaryOperator::Plus | JsBinaryOperator::Minus)
-    }
-
-    pub fn is_times_or_div_operator(&self) -> bool {
-        matches!(
-            self,
-            JsBinaryOperator::Divide | JsBinaryOperator::Times | JsBinaryOperator::Remainder
-        )
-    }
-
-    pub fn is_exponent_operator(&self) -> bool {
-        matches!(self, JsBinaryOperator::Exponent)
-    }
-
-    pub fn is_comparison_operator(&self) -> bool {
-        matches!(
-            self,
+    pub const fn precedence(&self) -> OperatorPrecedence {
+        match self {
             JsBinaryOperator::LessThan
-                | JsBinaryOperator::GreaterThan
-                | JsBinaryOperator::LessThanOrEqual
-                | JsBinaryOperator::GreaterThanOrEqual
-                | JsBinaryOperator::Equality
-                | JsBinaryOperator::StrictEquality
-                | JsBinaryOperator::Inequality
-                | JsBinaryOperator::StrictInequality
-        )
-    }
+            | JsBinaryOperator::GreaterThan
+            | JsBinaryOperator::LessThanOrEqual
+            | JsBinaryOperator::GreaterThanOrEqual => OperatorPrecedence::Relational,
 
-    // The numbers returned by this function are arbitrary, the most important thing
-    // is that, given the current implementation, they should be ordered from bigger (top) to smaller (bottom)
-    pub fn get_precedence(&self) -> u8 {
-        if self.is_bit_wise_operator() {
-            5
-        } else if self.is_times_or_div_operator() {
-            4
-        } else if self.is_plus_or_minus_operator() {
-            3
-        } else if self.is_comparison_operator() {
-            2
-        } else {
-            1
+            JsBinaryOperator::Equality
+            | JsBinaryOperator::StrictEquality
+            | JsBinaryOperator::Inequality
+            | JsBinaryOperator::StrictInequality => OperatorPrecedence::Equality,
+
+            JsBinaryOperator::Plus | JsBinaryOperator::Minus => OperatorPrecedence::Additive,
+
+            JsBinaryOperator::Times | JsBinaryOperator::Divide | JsBinaryOperator::Remainder => {
+                OperatorPrecedence::Multiplicative
+            }
+            JsBinaryOperator::Exponent => OperatorPrecedence::Exponential,
+
+            JsBinaryOperator::LeftShift
+            | JsBinaryOperator::RightShift
+            | JsBinaryOperator::UnsignedRightShift => OperatorPrecedence::Shift,
+
+            JsBinaryOperator::BitwiseAnd => OperatorPrecedence::BitwiseAnd,
+            JsBinaryOperator::BitwiseOr => OperatorPrecedence::BitwiseOr,
+            JsBinaryOperator::BitwiseXor => OperatorPrecedence::BitwiseXor,
         }
-    }
-
-    pub fn compare_precedence(&self, other: &Self) -> Ordering {
-        let self_precedence = self.get_precedence();
-        let other_precedence = other.get_precedence();
-
-        self_precedence.cmp(&other_precedence)
     }
 }
 
@@ -221,12 +220,50 @@ impl JsBinaryExpression {
 
         Ok(kind)
     }
+
     /// Whether this is a comparison operation, such as `>`, `<`, `==`, `!=`, `===`, etc.
     pub fn is_comparison_operator(&self) -> bool {
         matches!(
             self.operator_token().map(|t| t.kind()),
             Ok(T![>] | T![<] | T![>=] | T![<=] | T![==] | T![===] | T![!=] | T![!==])
         )
+    }
+
+    /// Whether this is a comparison operation similar to the optional chain
+    /// ```js
+    /// foo === undefined;
+    /// foo == undefined;
+    /// foo === null;
+    /// foo == null;
+    ///```
+    pub fn is_optional_chain_like(&self) -> SyntaxResult<bool> {
+        if matches!(
+            self.operator(),
+            Ok(JsBinaryOperator::StrictInequality | JsBinaryOperator::Inequality)
+        ) {
+            let right = self.right()?;
+
+            let is_right_null_expression = right
+                .as_js_any_literal_expression()
+                .map_or(false, |expression| {
+                    expression.as_js_null_literal_expression().is_some()
+                });
+
+            if is_right_null_expression {
+                return Ok(true);
+            }
+
+            let is_right_undefined_expression = right
+                .as_js_identifier_expression()
+                .map(|expression| expression.is_undefined())
+                .transpose()?
+                .unwrap_or(false);
+
+            if is_right_undefined_expression {
+                return Ok(true);
+            }
+        }
+        Ok(false)
     }
 }
 
@@ -238,6 +275,16 @@ pub enum JsLogicalOperator {
     LogicalOr,
     /// `&&`
     LogicalAnd,
+}
+
+impl JsLogicalOperator {
+    pub const fn precedence(&self) -> OperatorPrecedence {
+        match self {
+            JsLogicalOperator::NullishCoalescing => OperatorPrecedence::Coalesce,
+            JsLogicalOperator::LogicalOr => OperatorPrecedence::LogicalOr,
+            JsLogicalOperator::LogicalAnd => OperatorPrecedence::LogicalAnd,
+        }
+    }
 }
 
 impl JsLogicalExpression {
@@ -275,6 +322,12 @@ pub enum JsUnaryOperator {
     BitwiseNot,
     /// `!`
     LogicalNot,
+}
+
+impl JsUnaryOperator {
+    pub const fn precedence(&self) -> OperatorPrecedence {
+        OperatorPrecedence::Unary
+    }
 }
 
 impl JsUnaryExpression {
@@ -323,6 +376,12 @@ pub enum JsPreUpdateOperator {
     Increment,
     /// `--`
     Decrement,
+}
+
+impl JsPreUpdateOperator {
+    pub const fn precedence(&self) -> OperatorPrecedence {
+        OperatorPrecedence::Unary
+    }
 }
 
 impl JsPreUpdateExpression {
@@ -391,6 +450,10 @@ impl JsObjectExpression {
     pub fn has_trailing_comma(&self) -> bool {
         self.members().trailing_separator().is_some()
     }
+
+    pub fn is_empty(&self) -> bool {
+        self.members().is_empty()
+    }
 }
 
 impl JsNumberLiteralExpression {
@@ -401,24 +464,32 @@ impl JsNumberLiteralExpression {
 
 impl JsStringLiteralExpression {
     /// Get the inner text of a string not including the quotes
-    pub fn inner_string_text(&self) -> SyntaxNodeText {
-        let start = self.syntax().text_range().start() + TextSize::from(1);
-        let end_char = self
-            .syntax()
-            .text()
-            .char_at(self.syntax().text().len() - TextSize::from(1))
-            .unwrap();
-        let end = if end_char == '"' || end_char == '\'' {
-            self.syntax().text_range().end() - TextSize::from(1)
-        } else {
-            self.syntax().text_range().end()
-        };
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_factory::make::{js_string_literal_expression, ident};
+    ///
+    ///let string = js_string_literal_expression(ident("foo"));
+    /// assert_eq!(string.inner_string_text().unwrap().text(), "foo");
+    /// ```
+    pub fn inner_string_text(&self) -> SyntaxResult<SyntaxTokenText> {
+        let value = self.value_token()?;
+        let mut text = value.token_text();
 
-        let offset = self.syntax().text_range().start();
+        static QUOTES: [char; 2] = ['"', '\''];
 
-        self.syntax()
-            .text()
-            .slice(TextRange::new(start - offset, end - offset))
+        if text.starts_with(QUOTES) {
+            let range = text.range().add_start(TextSize::from(1));
+            text = text.slice(range);
+        }
+
+        if text.ends_with(QUOTES) {
+            let range = text.range().sub_end(TextSize::from(1));
+            text = text.slice(range);
+        }
+
+        Ok(text)
     }
 }
 
@@ -456,4 +527,217 @@ impl JsRegexLiteralExpression {
 
         Ok(String::from(&text_trimmed[1..end_slash_pos]))
     }
+}
+
+impl JsAnyExpression {
+    /// Try to extract non `JsParenthesizedExpression` from `JsAnyExpression`
+    pub fn omit_parentheses(self) -> JsAnyExpression {
+        let first = self
+            .as_js_parenthesized_expression()
+            .and_then(|expression| expression.expression().ok());
+
+        iter::successors(first, |expression| {
+            let parenthesized = expression.as_js_parenthesized_expression()?;
+            parenthesized.expression().ok()
+        })
+        .last()
+        .unwrap_or(self)
+    }
+
+    pub fn precedence(&self) -> SyntaxResult<OperatorPrecedence> {
+        let precedence = match self {
+            JsAnyExpression::JsSequenceExpression(_) => OperatorPrecedence::Comma,
+            JsAnyExpression::JsYieldExpression(_) => OperatorPrecedence::Yield,
+            JsAnyExpression::JsConditionalExpression(_) => OperatorPrecedence::Conditional,
+            JsAnyExpression::JsAssignmentExpression(_) => OperatorPrecedence::Assignment,
+            JsAnyExpression::JsInExpression(_)
+            | JsAnyExpression::JsInstanceofExpression(_)
+            | JsAnyExpression::TsAsExpression(_) => OperatorPrecedence::Relational,
+            JsAnyExpression::JsLogicalExpression(expression) => expression.operator()?.precedence(),
+            JsAnyExpression::JsBinaryExpression(expression) => expression.operator()?.precedence(),
+            JsAnyExpression::TsTypeAssertionExpression(_)
+            | JsAnyExpression::TsNonNullAssertionExpression(_)
+            | JsAnyExpression::JsUnaryExpression(_)
+            | JsAnyExpression::JsAwaitExpression(_) => OperatorPrecedence::Unary,
+            JsAnyExpression::JsPostUpdateExpression(_)
+            | JsAnyExpression::JsPreUpdateExpression(_) => OperatorPrecedence::Update,
+            JsAnyExpression::JsCallExpression(_)
+            | JsAnyExpression::JsImportCallExpression(_)
+            | JsAnyExpression::JsSuperExpression(_) => OperatorPrecedence::LeftHandSide,
+
+            JsAnyExpression::JsNewExpression(expression) => {
+                if expression.arguments().is_none() {
+                    OperatorPrecedence::NewWithoutArguments
+                } else {
+                    OperatorPrecedence::LeftHandSide
+                }
+            }
+            JsAnyExpression::JsComputedMemberExpression(_)
+            | JsAnyExpression::JsStaticMemberExpression(_)
+            | JsAnyExpression::ImportMeta(_)
+            | JsAnyExpression::TsInstantiationExpression(_)
+            | JsAnyExpression::NewTarget(_) => OperatorPrecedence::Member,
+
+            JsAnyExpression::JsThisExpression(_)
+            | JsAnyExpression::JsAnyLiteralExpression(_)
+            | JsAnyExpression::JsArrayExpression(_)
+            | JsAnyExpression::JsArrowFunctionExpression(_)
+            | JsAnyExpression::JsClassExpression(_)
+            | JsAnyExpression::JsFunctionExpression(_)
+            | JsAnyExpression::JsIdentifierExpression(_)
+            | JsAnyExpression::JsObjectExpression(_)
+            | JsAnyExpression::JsxTagExpression(_) => OperatorPrecedence::Primary,
+
+            JsAnyExpression::JsTemplate(template) => {
+                if template.tag().is_some() {
+                    OperatorPrecedence::Member
+                } else {
+                    OperatorPrecedence::Primary
+                }
+            }
+
+            JsAnyExpression::JsUnknownExpression(_) => OperatorPrecedence::lowest(),
+            JsAnyExpression::JsParenthesizedExpression(_) => OperatorPrecedence::highest(),
+        };
+
+        Ok(precedence)
+    }
+}
+
+impl JsIdentifierExpression {
+    pub fn is_undefined(&self) -> SyntaxResult<bool> {
+        Ok(self.name()?.value_token()?.text_trimmed() == "undefined")
+    }
+}
+
+impl JsAnyLiteralExpression {
+    pub fn value_token(&self) -> SyntaxResult<JsSyntaxToken> {
+        match self {
+            JsAnyLiteralExpression::JsBigIntLiteralExpression(expression) => {
+                expression.value_token()
+            }
+            JsAnyLiteralExpression::JsBooleanLiteralExpression(expression) => {
+                expression.value_token()
+            }
+            JsAnyLiteralExpression::JsNullLiteralExpression(expression) => expression.value_token(),
+            JsAnyLiteralExpression::JsNumberLiteralExpression(expression) => {
+                expression.value_token()
+            }
+            JsAnyLiteralExpression::JsRegexLiteralExpression(expression) => {
+                expression.value_token()
+            }
+            JsAnyLiteralExpression::JsStringLiteralExpression(expression) => {
+                expression.value_token()
+            }
+        }
+    }
+}
+
+impl JsStaticMemberExpression {
+    /// Returns `true` if this is an optional member access
+    ///
+    /// ```javascript
+    /// a.b -> false,
+    /// a?.b -> true
+    /// a?.[b][c][d].e -> false
+    /// ```
+    pub fn is_optional(&self) -> bool {
+        self.operator_token()
+            .map_or(false, |token| token.kind() == JsSyntaxKind::QUESTIONDOT)
+    }
+
+    /// Returns true if this member has an optional token or any member expression on the left side.
+    ///
+    /// ```javascript
+    /// a.b -> false
+    /// a?.b-> true
+    /// a?.[b][c][d].e -> true
+    /// ```
+    pub fn is_optional_chain(&self) -> bool {
+        is_optional_chain(self.clone().into())
+    }
+}
+
+impl JsComputedMemberExpression {
+    /// Returns `true` if this is an optional member access
+    ///
+    /// ```javascript
+    /// a[b] -> false,
+    /// a?.[b] -> true
+    /// a?.b.c.d[e] -> false
+    /// ```
+    pub fn is_optional(&self) -> bool {
+        self.optional_chain_token().is_some()
+    }
+
+    /// Returns true if this member has an optional token or any member expression on the left side.
+    ///
+    /// ```javascript
+    /// a[b] -> false
+    /// a?.[b]-> true
+    /// a?.b.c.d[e] -> true
+    /// ```
+    pub fn is_optional_chain(&self) -> bool {
+        is_optional_chain(self.clone().into())
+    }
+}
+
+impl JsCallExpression {
+    /// Returns `true` if this is an optional member access
+    ///
+    /// ```javascript
+    /// a() -> false,
+    /// a?.() -> true
+    /// a?.b() -> false
+    /// ```
+    pub fn is_optional(&self) -> bool {
+        self.optional_chain_token().is_some()
+    }
+
+    /// Returns true if this member has an optional token or any member expression on the left side.
+    ///
+    /// ```javascript
+    /// a() -> false
+    /// a?.()-> true
+    /// a?.b.c.d() -> true
+    /// ```
+    pub fn is_optional_chain(&self) -> bool {
+        is_optional_chain(self.clone().into())
+    }
+}
+
+fn is_optional_chain(start: JsAnyExpression) -> bool {
+    let mut current = Some(start);
+
+    while let Some(node) = current {
+        current = match node {
+            JsAnyExpression::JsParenthesizedExpression(parenthesized) => {
+                parenthesized.expression().ok()
+            }
+
+            JsAnyExpression::JsCallExpression(call) => {
+                if call.is_optional() {
+                    return true;
+                }
+                call.callee().ok()
+            }
+
+            JsAnyExpression::JsStaticMemberExpression(member) => {
+                if member.is_optional() {
+                    return true;
+                }
+                member.object().ok()
+            }
+
+            JsAnyExpression::JsComputedMemberExpression(member) => {
+                if member.is_optional() {
+                    return true;
+                }
+                member.object().ok()
+            }
+            _ => return false,
+        }
+    }
+
+    false
 }

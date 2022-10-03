@@ -1,6 +1,6 @@
 use crate::prelude::*;
-use rome_formatter::{write, Buffer, VecBuffer};
-use rome_js_syntax::{JsSyntaxKind, TsAnyTypeMember, TsTypeMemberList};
+use rome_formatter::{write, Buffer};
+use rome_js_syntax::{TsAnyTypeMember, TsTypeMemberList};
 
 use rome_rowan::AstNodeList;
 
@@ -14,37 +14,40 @@ impl FormatRule<TsTypeMemberList> for FormatTsTypeMemberList {
         let items = node.iter();
         let last_index = items.len().saturating_sub(1);
 
-        f.join_with(&soft_line_break_or_space())
-            .entries(items.enumerate().map(|(index, member)| TsTypeMemberItem {
-                last: index == last_index,
-                member,
-            }))
-            .finish()
+        let mut joiner = f.join_nodes_with_soft_line();
+
+        for (index, member) in items.enumerate() {
+            joiner.entry(
+                member.syntax(),
+                &TsTypeMemberItem {
+                    last: index == last_index,
+                    member: &member,
+                },
+            )
+        }
+
+        joiner.finish()
     }
 }
 
-struct TsTypeMemberItem {
+struct TsTypeMemberItem<'a> {
     last: bool,
-    member: TsAnyTypeMember,
+    member: &'a TsAnyTypeMember,
 }
 
-impl Format<JsFormatContext> for TsTypeMemberItem {
+impl Format<JsFormatContext> for TsTypeMemberItem<'_> {
     fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        let mut buffer = VecBuffer::new(f.state_mut());
-
-        write!(buffer, [self.member.format()])?;
-
-        let formatted_element = buffer.into_element();
-
-        let is_verbatim = matches!(
-            formatted_element.last_element(),
-            Some(FormatElement::Verbatim(_))
-        );
+        let mut is_verbatim = false;
 
         write!(
             f,
             [group(&format_once(|f| {
-                f.write_element(formatted_element)
+                let mut recording = f.start_recording();
+                write!(recording, [self.member.format()])?;
+
+                is_verbatim = recording.stop().end_tag(TagKind::Verbatim).is_some();
+
+                Ok(())
             }))]
         )?;
 
@@ -52,12 +55,9 @@ impl Format<JsFormatContext> for TsTypeMemberItem {
             // Children don't format the separator on purpose, so it's up to the parent - this node,
             // to decide to print their separator
             if self.last {
-                write!(
-                    f,
-                    [if_group_breaks(&format_inserted(JsSyntaxKind::SEMICOLON))]
-                )?;
+                write!(f, [if_group_breaks(&text(";"))])?;
             } else {
-                format_inserted(JsSyntaxKind::SEMICOLON).fmt(f)?;
+                text(";").fmt(f)?;
             }
         }
 

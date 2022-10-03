@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "typescript\\conformance\\classes\\constructorDeclarations\\constructorParameters\\readonlyReadonly.ts"
 ---
 
 # Input
@@ -37,22 +39,46 @@ class C {
 
 # Errors
 ```
-error[SyntaxError]: 'readonly' already seen
-  ┌─ readonlyReadonly.ts:2:14
-  │
-2 │     readonly readonly x: number;
-  │     -------- ^^^^^^^^ duplicate modifier
-  │     │         
-  │     first seen here
+readonlyReadonly.ts:2:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: 'readonly' already seen
-  ┌─ readonlyReadonly.ts:3:26
-  │
-3 │     constructor(readonly readonly y: number) {}
-  │                 -------- ^^^^^^^^ duplicate modifier
-  │                 │         
-  │                 first seen here
+  × 'readonly' already seen
+  
+  × duplicate modifier
+  
+    1 │ class C {
+  > 2 │     readonly readonly x: number;
+      │              ^^^^^^^^
+    3 │     constructor(readonly readonly y: number) {}
+    4 │ }
+  
+  i first seen here
+  
+    1 │ class C {
+  > 2 │     readonly readonly x: number;
+      │     ^^^^^^^^
+    3 │     constructor(readonly readonly y: number) {}
+    4 │ }
+  
+readonlyReadonly.ts:3:26 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'readonly' already seen
+  
+  × duplicate modifier
+  
+    1 │ class C {
+    2 │     readonly readonly x: number;
+  > 3 │     constructor(readonly readonly y: number) {}
+      │                          ^^^^^^^^
+    4 │ }
+  
+  i first seen here
+  
+    1 │ class C {
+    2 │     readonly readonly x: number;
+  > 3 │     constructor(readonly readonly y: number) {}
+      │                 ^^^^^^^^
+    4 │ }
+  
 
 ```
 

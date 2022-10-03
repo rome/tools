@@ -174,7 +174,8 @@ class Manager {
 			if (existing !== undefined) {
 				const recalculated = this.calculateHeading(i, []);
 				if (
-					recalculated.start === existing.start && recalculated.end === existing.end
+					recalculated.start === existing.start &&
+					recalculated.end === existing.end
 				) {
 					return;
 				}
@@ -385,12 +386,12 @@ class Manager {
 	}
 
 	/**
-	* Intercept link clicks, if they are just hashes on the current page then
-	* just scroll
-	*
-	* @param {MouseEvent} event
-	* @param {HTMLElement} target
-	*/
+	 * Intercept link clicks, if they are just hashes on the current page then
+	 * just scroll
+	 *
+	 * @param {MouseEvent} event
+	 * @param {HTMLElement} target
+	 */
 	handleAnchorClick(event, target) {
 		let href = target.getAttribute("href");
 		if (href === undefined) {
@@ -455,9 +456,11 @@ class Manager {
 		window.addEventListener("resize", this.refresh.bind(this), {
 			passive: true,
 		});
-		window.addEventListener("resize", this.calculateHeadingsPositions.bind(
-			this,
-		), { passive: true });
+		window.addEventListener(
+			"resize",
+			this.calculateHeadingsPositions.bind(this),
+			{ passive: true },
+		);
 
 		document.addEventListener(
 			"click",
@@ -703,7 +706,7 @@ for (const scroller of heroScrollers) {
 	}
 
 	function isOverflow(index) {
-		return (index - activeStartIndex) >= initialItems.length;
+		return index - activeStartIndex >= initialItems.length;
 	}
 
 	function setActiveIndex(newActiveIndex, smooth) {

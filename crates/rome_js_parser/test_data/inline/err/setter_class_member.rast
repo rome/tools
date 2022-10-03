@@ -66,12 +66,18 @@ JsModule {
       8: R_CURLY@30..32 "}" [Newline("\n")] []
   3: EOF@32..33 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected a parameter but instead found ')'
-  ┌─ setter_class_member.js:2:11
-  │
-2 │   set foo() {}
-  │           ^ Expected a parameter here
+setter_class_member.js:2:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a parameter but instead found ')'
+  
+  × Expected a parameter here
+  
+    1 │ class Setters {
+  > 2 │   set foo() {}
+      │           ^
+    3 │ }
+    4 │ 
+  
 --
 class Setters {
   set foo() {}

@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "typescript\\assignment\\issue-5370.ts"
 ---
 
 # Input
@@ -35,12 +37,18 @@ const durabilityMetricsSelectable: Immutable.OrderedSet<
 
 # Errors
 ```
-error[SyntaxError]: expected a type parameter but instead found '>'
-  ┌─ issue-5370.ts:3:1
-  │
-3 │ > = myExperienceSelectable.concat(otherDurabilityMetricsSelectable);
-  │ ^ Expected a type parameter here
+issue-5370.ts:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a type parameter but instead found '>'
+  
+  × Expected a type parameter here
+  
+    1 │ const durabilityMetricsSelectable: Immutable.OrderedSet<
+    2 │   SomeReportingMetric,
+  > 3 │ > = myExperienceSelectable.concat(otherDurabilityMetricsSelectable);
+      │ ^
+    4 │ 
+  
 
 ```
 

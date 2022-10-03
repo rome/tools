@@ -1,0 +1,37 @@
+---
+source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/range/function-body.js
+---
+
+# Input
+
+```js
+let fn =a((x ) => {
+  quux (); //
+});
+```
+
+
+# Prettier differences
+
+```diff
+--- Prettier
++++ Rome
+@@ -1,3 +1,3 @@
+-let fn = a((x) => {
++let fn =a((x ) => {
+   quux(); //
+ });
+```
+
+# Output
+
+```js
+let fn =a((x ) => {
+  quux(); //
+});
+```
+
+
+

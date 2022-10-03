@@ -34,6 +34,7 @@ const a = () => ({}?.() && a);
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 (foo++)?.();
 async () => {
@@ -44,10 +45,8 @@ async () => {
 class Foo extends (+Bar) {}
 class Foo extends (Bar ?? Baz) {}
 const foo = class extends (Bar ?? Baz) {};
-(1);
-(
-	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-);
+1;
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;
 
 (b + c)``;
 
@@ -55,15 +54,15 @@ const foo = { ...(a || b) };
 
 async function* f() {
 	await (a || b);
-	yield (a && b);
+	yield a && b;
 }
 
-const a = () => ({}?.() && a);
+const a = () => ({})?.() && a;
 
-(list || list2)?.[(list || list2)];
+(list || list2)?.[list || list2];
 
 
 ## Lines exceeding width of 80 characters
 
-   12: 	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+   11: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;
 

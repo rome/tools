@@ -1,7 +1,8 @@
-use rome_formatter::LineWidth;
+use rome_diagnostics::file::FileId;
+use rome_formatter::{FormatOptions, LineWidth};
 use rome_formatter::{IndentStyle, Printed};
 use rome_fs::RomePath;
-use rome_js_formatter::context::{JsFormatContext, QuoteStyle};
+use rome_js_formatter::context::{JsFormatOptions, QuoteProperties, QuoteStyle};
 use rome_js_formatter::format_node;
 use rome_js_parser::parse;
 use rome_js_syntax::{ModuleKind, SourceType};
@@ -49,8 +50,23 @@ impl From<SerializableQuoteStyle> for QuoteStyle {
     }
 }
 
+#[derive(Debug, Eq, PartialEq, Clone, Copy, Deserialize, Serialize)]
+pub enum SerializableQuoteProperties {
+    AsNeeded,
+    Preserve,
+}
+
+impl From<SerializableQuoteProperties> for QuoteProperties {
+    fn from(test: SerializableQuoteProperties) -> Self {
+        match test {
+            SerializableQuoteProperties::AsNeeded => QuoteProperties::AsNeeded,
+            SerializableQuoteProperties::Preserve => QuoteProperties::Preserve,
+        }
+    }
+}
+
 #[derive(Debug, Deserialize, Serialize, Clone, Copy)]
-pub struct SerializableFormatContext {
+pub struct SerializableFormatOptions {
     /// The indent style.
     pub indent_style: Option<SerializableIndentStyle>,
 
@@ -59,10 +75,13 @@ pub struct SerializableFormatContext {
 
     // The style for quotes. Defaults to double.
     pub quote_style: Option<SerializableQuoteStyle>,
+
+    /// When properties in objects are quoted. Defaults to as-needed.
+    pub quote_properties: Option<SerializableQuoteProperties>,
 }
 
-impl From<SerializableFormatContext> for JsFormatContext {
-    fn from(test: SerializableFormatContext) -> Self {
+impl From<SerializableFormatOptions> for JsFormatOptions {
+    fn from(test: SerializableFormatOptions) -> Self {
         Self::new(SourceType::default())
             .with_indent_style(
                 test.indent_style
@@ -77,22 +96,26 @@ impl From<SerializableFormatContext> for JsFormatContext {
                 test.quote_style
                     .map_or_else(|| QuoteStyle::Double, |value| value.into()),
             )
+            .with_quote_properties(
+                test.quote_properties
+                    .map_or_else(|| QuoteProperties::AsNeeded, |value| value.into()),
+            )
     }
 }
 
 #[derive(Debug, Deserialize, Serialize)]
 struct TestOptions {
-    cases: Vec<SerializableFormatContext>,
+    cases: Vec<SerializableFormatOptions>,
 }
 
 #[derive(Debug, Default)]
 struct SnapshotContent {
     input: String,
-    output: Vec<(String, JsFormatContext)>,
+    output: Vec<(String, JsFormatOptions)>,
 }
 
 impl SnapshotContent {
-    fn add_output(&mut self, formatted: Printed, context: JsFormatContext) {
+    fn add_output(&mut self, formatted: Printed, options: JsFormatOptions) {
         let code = formatted.as_code();
         let mut output: String = code.to_string();
         if !formatted.verbatim_ranges().is_empty() {
@@ -104,7 +127,7 @@ impl SnapshotContent {
             }
         }
 
-        let line_width_limit = context.line_width().value() as usize;
+        let line_width_limit = options.line_width().value() as usize;
         let mut exceeding_lines = code
             .lines()
             .enumerate()
@@ -124,7 +147,7 @@ impl SnapshotContent {
             }
         }
 
-        self.output.push((output, context));
+        self.output.push((output, options));
     }
 
     fn set_input(&mut self, content: impl Into<String>) {
@@ -171,7 +194,7 @@ impl SnapshotContent {
 /// * `json/null` -> input: `tests/specs/json/null.json`, expected output: `tests/specs/json/null.json.snap`
 /// * `null` -> input: `tests/specs/null.json`, expected output: `tests/specs/null.json.snap`
 pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, file_type: &str) {
-    let app = App::from_env(false);
+    let app = App::default();
 
     let file_path = &spec_input_file;
     let spec_input_file = Path::new(spec_input_file);
@@ -182,13 +205,16 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
         spec_input_file.display()
     );
 
-    let mut rome_path = RomePath::new(file_path, 0);
-    let can_format = app.workspace.supports_feature(SupportsFeatureParams {
-        path: rome_path.clone(),
-        feature: FeatureName::Format,
-    });
+    let mut rome_path = RomePath::new(file_path, FileId::zero());
+    let can_format = app
+        .workspace
+        .supports_feature(SupportsFeatureParams {
+            path: rome_path.clone(),
+            feature: FeatureName::Format,
+        })
+        .unwrap();
 
-    if can_format {
+    if can_format.reason.is_none() {
         let mut snapshot_content = SnapshotContent::default();
         let buffer = rome_path.get_buffer_from_file();
         let mut source_type: SourceType = rome_path.as_path().try_into().unwrap();
@@ -199,13 +225,14 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
         let input = fs::read_to_string(file_path).unwrap();
         snapshot_content.set_input(input.as_str());
 
-        let parsed = parse(buffer.as_str(), 0, source_type);
+        let parsed = parse(buffer.as_str(), FileId::zero(), source_type);
         let has_errors = parsed.has_errors();
         let root = parsed.syntax();
 
         // we ignore the error for now
-        let formatted = format_node(JsFormatContext::default(), &root).unwrap();
-        let printed = formatted.print();
+        let options = JsFormatOptions::new(source_type);
+        let formatted = format_node(options.clone(), &root).unwrap();
+        let printed = formatted.print().unwrap();
         let file_name = spec_input_file.file_name().unwrap().to_str().unwrap();
 
         if !has_errors {
@@ -214,28 +241,27 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
                 text: printed.as_code(),
                 source_type,
                 file_name,
-                format_context: JsFormatContext::default(),
+                options: options.clone(),
             });
         }
 
-        snapshot_content.add_output(printed, JsFormatContext::default());
+        snapshot_content.add_output(printed, options);
 
         let test_directory = PathBuf::from(test_directory);
         let options_path = test_directory.join("options.json");
         if options_path.exists() {
             {
-                let mut options_path = RomePath::new(&options_path, 0);
+                let mut options_path = RomePath::new(&options_path, FileId::zero());
                 // SAFETY: we checked its existence already, we assume we have rights to read it
                 let options: TestOptions =
                     serde_json::from_str(options_path.get_buffer_from_file().as_str()).unwrap();
 
                 for test_case in options.cases {
-                    let mut format_context: JsFormatContext = test_case.into();
+                    let format_options: JsFormatOptions = test_case.into();
                     // we don't track the source type inside the serializable structs, so we
                     // inject it here
-                    format_context = format_context.with_source_type(source_type);
-                    let formatted = format_node(format_context.clone(), &root).unwrap();
-                    let printed = formatted.print();
+                    let formatted = format_node(format_options.clone(), &root).unwrap();
+                    let printed = formatted.print().unwrap();
 
                     if !has_errors {
                         check_reformat::check_reformat(check_reformat::CheckReformatParams {
@@ -243,11 +269,11 @@ pub fn run(spec_input_file: &str, _expected_file: &str, test_directory: &str, fi
                             text: printed.as_code(),
                             source_type,
                             file_name,
-                            format_context: format_context.clone(),
+                            options: format_options.clone(),
                         });
                     }
 
-                    snapshot_content.add_output(printed, format_context);
+                    snapshot_content.add_output(printed, format_options);
                 }
             }
         }

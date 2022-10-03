@@ -13,7 +13,6 @@ deepCopyAndAsyncMapLeavesB(
   { valueMapper, overwriteExistingKeys }
 )
 
-// rome-ignore format: shut down regression
 deepCopyAndAsyncMapLeavesC(
   { source: sourceValue, destination: destination[sourceKey] },
   1337,

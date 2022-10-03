@@ -1,7 +1,8 @@
 use crate::prelude::*;
 
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
-use rome_js_syntax::{TsArrayType, TsArrayTypeFields};
+use rome_js_syntax::{JsSyntaxNode, TsArrayType, TsArrayTypeFields};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsArrayType;
@@ -21,5 +22,16 @@ impl FormatNodeRule<TsArrayType> for FormatTsArrayType {
                 r_brack_token.format(),
             ]
         ]
+    }
+
+    fn needs_parentheses(&self, item: &TsArrayType) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl NeedsParentheses for TsArrayType {
+    #[inline]
+    fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
+        false
     }
 }

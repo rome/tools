@@ -1,375 +1,696 @@
-mod flatten_item;
+///! Utility function that applies some heuristic to format chain member expressions and call expressions
+///!
+///! We want to transform code that looks like this:
+///!
+///! ```js
+///! something.execute().then().then().catch()
+///! ```
+///!
+///! To something like this:
+///!
+///! ```js
+///! something
+///!   .execute()
+///!   .then()
+///!   .then()
+///!   .catch()
+///! ```
+///!
+///! In order to achieve that we use the same heuristic that [Prettier applies](https://github.com/prettier/prettier/blob/main/src/language-js/print/member-chain.js).
+///!
+///! The process is the following:
+///!
+///! ### Flattening the AST
+///! We flatten the AST. See, the code above is actually nested, where the first member expression (`something`)
+///! that we see is actually the last one. This is a oversimplified version of the AST:
+///!
+///! ```block
+///! [
+///!     .catch() [
+///!         .then() [
+///!             .then() [
+///!                 .execute() [
+///!                     something
+///!                 ]
+///!             ]
+///!         ]
+///!     ]
+///! ]
+///! ```
+///! So we need to navigate the AST and make sure that `something` is actually
+///! the first one. In a sense, we have to revert the chain of children. We will do that using a recursion.
+///!
+///! While we navigate the AST and we found particular nodes that we want to track, we also
+///! format them. The format of these nodes is different from the standard version.
+///!
+///! Our formatter makes sure that we don't format twice the same nodes. Let's say for example that
+///! we find a `something().execute()`, its AST is like this:
+///!
+///! ```block
+///! JsCallExpression {
+///!     callee: JsStaticMember {
+///!         object: JsCallExpression {
+///!             callee: Reference {
+///!                 execute
+///!             }
+///!         }
+///!     }
+///! }
+///! ```
+///!
+///! When we track the first [rome_js_syntax::JsCallExpression], we hold basically all the children,
+///! that applies for the rest of the nodes. If we decided to format all the children of each node,
+///! we will risk to format the last node, the `Reference`, four times.
+///!
+///! To avoid this, when we encounter particular nodes, we don't format all of its children, but defer
+///! the formatting to the child itself.
+///!
+///! The end result of the flattening, will create an array of something like this:
+///!
+///! ```block
+///! [ Identifier, JsCallExpression, JsStaticMember, JsCallExpression ]
+///! ```
+///!
+///! ### Grouping
+///!
+///! After the flattening, we start the grouping. We want to group nodes in a way that will help us
+///! to apply a deterministic formatting.
+///! - first group will be the identifier
+///! - the rest of the groups will be  will start StaticMemberExpression followed by the rest of the nodes,
+///! right before the end of the next StaticMemberExpression
+///!
+///! The first group is special, because it holds the reference; it has its own heuristic.
+///! Inside the first group we store the first element of the flattened array, then:
+///!
+///! 1. as many as [rome_js_syntax::JsCallExpression] we can find, this cover cases like
+///! `something()()().then()`;
+///! 2. as many as [rome_js_syntax::JsComputedMemberExpression] we can find, this cover cases like
+///! `something()()[1][3].then()`;
+///! 3. as many as consecutive [rome_js_syntax::JsStaticMemberExpression] or [rome_js_syntax::JsComputedMemberExpression], this cover cases like
+///! `this.items[0].then()`
+///!
+///! The rest of the groups are essentially a sequence of `[StaticMemberExpression , CallExpression]`.
+///! In order to achieve that, we simply start looping through the rest of the flatten items that we haven't seen.
+///!
+///! Eventually, we should have something like this:
+///!
+///! ```block
+///! [
+///!     [ReferenceIdentifier, CallExpression], // with possible computed expressions in the middle
+///!     [StaticMemberExpression, StaticMemberExpression, CallExpression],
+///!     [StaticMemberExpression, CallExpression],
+///!     [StaticMemberExpression],
+///! ]
+///! ```
+mod chain_member;
 mod groups;
 mod simple_argument;
 
+use crate::context::TabWidth;
 use crate::prelude::*;
-use crate::utils::member_chain::flatten_item::FlattenItem;
-use crate::utils::member_chain::groups::{Groups, HeadGroup};
-use rome_formatter::{format_args, write, Buffer, Comments, CstFormatContext, PreambleBuffer};
-use rome_js_syntax::{
-    JsCallExpression, JsComputedMemberExpression, JsExpressionStatement, JsLanguage,
-    JsStaticMemberExpression,
+use crate::utils::is_long_curried_call;
+use crate::utils::member_chain::chain_member::{CallExpressionPosition, ChainMember};
+use crate::utils::member_chain::groups::{
+    MemberChainGroup, MemberChainGroupsBuilder, TailChainGroups,
 };
-use rome_js_syntax::{JsSyntaxKind, JsSyntaxNode};
+use crate::utils::member_chain::simple_argument::SimpleArgument;
+use rome_formatter::{write, Buffer};
+use rome_js_syntax::{
+    JsAnyCallArgument, JsAnyExpression, JsAnyLiteralExpression, JsCallExpression,
+    JsIdentifierExpression, JsSyntaxKind, JsSyntaxNode, JsSyntaxToken, JsThisExpression,
+};
 use rome_rowan::{AstNode, SyntaxResult};
+use std::iter::FusedIterator;
 
-/// Utility function that applies some heuristic to format chain member expressions and call expressions
-///
-/// We want to transform code that looks like this:
-///
-/// ```js
-/// something.execute().then().then().catch()
-/// ```
-///
-/// To something like this:
-///
-/// ```js
-/// something
-///   .execute()
-///   .then()
-///   .then()
-///   .catch()
-/// ```
-///
-/// In order to achieve that we use the same heuristic that [Prettier applies].
-///
-/// The process is the following:
-///
-/// ### Flattening the AST
-/// We flatten the AST. See, the code above is actually nested, where the first member expression (`something`)
-/// that we see is actually the last one. This is a oversimplified version of the AST:
-///
-/// ```block
-/// [
-///     .catch() [
-///         .then() [
-///             .then() [
-///                 .execute() [
-///                     something
-///                 ]
-///             ]
-///         ]
-///     ]
-/// ]
-/// ```
-/// So we need to navigate the AST and make sure that `something` is actually
-/// the first one. In a sense, we have to revert the chain of children. We will do that using a recursion.
-///
-/// While we navigate the AST and we found particular nodes that we want to track, we also
-/// format them. The format of these nodes is different from the standard version.
-///
-/// Our formatter makes sure that we don't format twice the same nodes. Let's say for example that
-/// we find a `something().execute()`, its AST is like this:
-///
-/// ```block
-/// JsCallExpression {
-///     callee: JsStaticMember {
-///         object: JsCallExpression {
-///             callee: Reference {
-///                 execute
-///             }
-///         }
-///     }
-/// }
-/// ```
-///
-/// When we track the first [rome_js_syntax::JsCallExpression], we hold basically all the children,
-/// that applies for the rest of the nodes. If we decided to format all the children of each node,
-/// we will risk to format the last node, the `Reference`, four times.
-///
-/// To avoid this, when we encounter particular nodes, we don't format all of its children, but defer
-/// the formatting to the child itself.
-///
-/// The end result of the flattening, will create an array of something like this:
-///
-/// ```block
-/// [ Identifier, JsCallExpression, JsStaticMember, JsCallExpression ]
-/// ```
-///
-/// ### Grouping
-///
-/// After the flattening, we start the grouping. We want to group nodes in a way that will help us
-/// to apply a deterministic formatting.
-/// - first group will be the identifier
-/// - the rest of the groups will be  will start StaticMemberExpression followed by the rest of the nodes,
-/// right before the end of the next StaticMemberExpression
-///
-/// The first group is special, because it holds the reference; it has its own heuristic.
-/// Inside the first group we store the first element of the flattened array, then:
-///
-/// 1. as many as [rome_js_syntax::JsCallExpression] we can find, this cover cases like
-/// `something()()().then()`;
-/// 2. as many as [rome_js_syntax::JsComputedMemberExpression] we can find, this cover cases like
-/// `something()()[1][3].then()`;
-/// 3. as many as consecutive [rome_js_syntax::JsStaticMemberExpression] or [rome_js_syntax::JsComputedExpression], this cover cases like
-/// `this.items[0].then()`
-///
-/// The rest of the groups are essentially a sequence of `[StaticMemberExpression , CallExpression]`.
-/// In order to achieve that, we simply start looping through the rest of the flatten items that we haven't seen.
-///
-/// Eventually, we should have something like this:
-///
-/// ```block
-/// [
-///     [ReferenceIdentifier, CallExpression], // with possible computed expressions in the middle
-///     [StaticMemberExpression, StaticMemberExpression, CallExpression],
-///     [StaticMemberExpression, CallExpression],
-///     [StaticMemberExpression],
-/// ]
-/// ```
-///
-/// [Prettier applies]: https://github.com/prettier/prettier/blob/main/src/language-js/print/member-chain.js
-pub fn format_call_expression(syntax_node: &JsSyntaxNode, f: &mut JsFormatter) -> FormatResult<()> {
-    let (calls_count, head_group, rest_of_groups) = get_call_expression_groups(syntax_node, f)?;
-    write_groups(calls_count, head_group, rest_of_groups, f)
+pub(crate) enum MemberChainLabel {}
+
+#[derive(Debug, Clone)]
+pub(crate) struct MemberChain {
+    root: JsCallExpression,
+    head: MemberChainGroup,
+    tail: TailChainGroups,
 }
 
-fn get_call_expression_groups(
-    syntax_node: &JsSyntaxNode,
-    f: &mut JsFormatter,
-) -> SyntaxResult<(usize, HeadGroup, Groups)> {
-    let mut flattened_items = vec![];
-    let parent_is_expression_statement = syntax_node.parent().map_or(false, |parent| {
-        JsExpressionStatement::can_cast(parent.kind())
-    });
+impl MemberChain {
+    pub(crate) fn from_call_expression(
+        call_expression: JsCallExpression,
+        comments: &JsComments,
+        tab_width: TabWidth,
+    ) -> SyntaxResult<MemberChain> {
+        let parent = call_expression.syntax().parent();
+        let mut chain_members =
+            ChainMembersIterator::new(call_expression.clone().into(), comments).collect::<Vec<_>>();
+        chain_members.reverse();
 
-    flatten_call_expression(&mut flattened_items, syntax_node, &f.context().comments())?;
+        // as explained before, the first group is particular, so we calculate it
+        let (head_group, remaining_members) =
+            split_members_into_head_and_remaining_groups(chain_members);
 
-    // Count the number of CallExpression in the chain,
-    // will be used later to decide on how to format it
-    let calls_count = flattened_items
-        .iter()
-        .filter(|item| item.is_loose_call_expression())
-        .count();
+        // `flattened_items` now contains only the nodes that should have a sequence of
+        // `[ StaticMemberExpression -> AnyNode + JsCallExpression ]`
+        let tail_groups = compute_remaining_groups(remaining_members, comments);
 
-    // as explained before, the first group is particular, so we calculate it
-    let index_to_split_at = compute_first_group_index(&flattened_items);
+        let mut member_chain = MemberChain {
+            head: head_group,
+            tail: tail_groups,
+            root: call_expression,
+        };
 
-    // we have the index where we want to take the first group
-    let remaining_groups = flattened_items.split_off(index_to_split_at);
-    let first_group = flattened_items;
+        // Here we check if the first element of Groups::groups can be moved inside the head.
+        // If so, then we extract it and concatenate it together with the head.
+        member_chain.maybe_merge_with_first_group(comments, tab_width, parent.as_ref());
 
-    let mut head_group = HeadGroup::new(first_group);
-
-    // `flattened_items` now contains only the nodes that should have a sequence of
-    // `[ StaticMemberExpression -> AnyNode + JsCallExpression ]`
-    let mut rest_of_groups = compute_groups(
-        remaining_groups.into_iter(),
-        parent_is_expression_statement,
-        f,
-    );
-
-    // Here we check if the first element of Groups::groups can be moved inside the head.
-    // If so, then we extract it and concatenate it together with the head.
-    if let Some(group_to_merge) = rest_of_groups.should_merge_with_first_group(&head_group) {
-        let group_to_merge = group_to_merge.into_iter().flatten().collect();
-        head_group.expand_group(group_to_merge);
+        Ok(member_chain)
     }
 
-    Ok((calls_count, head_group, rest_of_groups))
-}
+    /// Here we check if the first group can be merged to the head. If so, then
+    /// we move out the first group out of the groups
+    fn maybe_merge_with_first_group(
+        &mut self,
+        comments: &JsComments,
+        tab_width: TabWidth,
+        parent: Option<&JsSyntaxNode>,
+    ) {
+        if self.should_merge_tail_with_head(parent, tab_width, comments) {
+            let group = self.tail.pop_first().unwrap();
+            self.head.extend_members(group.into_members());
+        }
+    }
 
-/// Retrieves the index where we want to calculate the first group.
-/// The first group gathers inside it all those nodes that are not a sequence of something like:
-/// `[ StaticMemberExpression -> AnyNode + JsCallExpression ]`
-fn compute_first_group_index(flatten_items: &[FlattenItem]) -> usize {
-    flatten_items
-        .iter()
-        .enumerate()
-        // the first element will always be part of the first group, so we skip it
-        .skip(1)
-        // we now find the index, all items before this index will belong to the first group
-        .find_map(|(index, item)| {
-            let should_skip = match item {
-                // This where we apply the first two points explained in the description of the main public function.
-                // We want to keep iterating over the items until we have call expressions or computed expressions:
-                // - `something()()()()`
-                // - `something[1][2][4]`
-                // - `something[1]()[3]()`
-                // - `something()[2].something.else[0]`
-                FlattenItem::CallExpression(_) | FlattenItem::ComputedMember(_) => true,
+    /// This function checks if the current grouping should be merged with the first group.
+    fn should_merge_tail_with_head(
+        &self,
+        parent: Option<&JsSyntaxNode>,
+        tab_width: TabWidth,
+        comments: &JsComments,
+    ) -> bool {
+        let first_group = match self.tail.first() {
+            None => {
+                return false;
+            }
+            Some(first_group) => first_group,
+        };
 
-                // SAFETY: The check `flatten_items[index + 1]` will never panic at runtime because
-                // 1. The array will always have at least two items
-                // 2. The last element of the array is always a CallExpression
-                //
-                // Something like `a()` produces these flatten times:
-                // ```
-                // [
-                //      Token("a", 0..1),
-                //      CallExpression: [Empty, Empty, Group(List [Token("(", 5..6), Token(")", 2..7)])],
-                // ]
-                // ```
-                //
-                // Hence, it will never enter the branch of this `match`.
-                //
-                // When we have something like `a.b.c()`, the flatten items produced are:
-                //
-                // ```
-                // [
-                //      Token("a", 0..1),
-                //      StaticMember: [Token(".", 1..2), Token("b", 2..3)],
-                //      StaticMember: [Token(".", 3..4), Token("c", 4..5)],
-                //      CallExpression: [Empty, Empty, Group(List [Token("(", 5..6), Token(")", 6..7)])],
-                // ]
-                // ```
-                //
-                // The loop will match against `StaticMember: [Token(".", 3..4), Token("c", 4..5)],`
-                // and the next one is a call expression... the `matches!` fails and the loop is stopped.
-                //
-                // The last element of the array is always a `CallExpression`, which allows us to avoid the overflow of the array.
-                FlattenItem::StaticMember(_) => {
-                    let next_flatten_item = &flatten_items[index + 1];
-                    matches!(
-                        next_flatten_item,
-                        FlattenItem::StaticMember(_) | FlattenItem::ComputedMember(_)
-                    )
+        let has_comments = first_group
+            .members()
+            .first()
+            .map_or(false, |member| comments.has_comments(member.syntax()));
+
+        if has_comments {
+            return false;
+        }
+
+        let has_computed_property = first_group
+            .members()
+            .first()
+            .map_or(false, |item| item.is_computed_expression());
+
+        if self.head.members().len() == 1 {
+            let only_member = &self.head.members()[0];
+
+            let in_expression_statement = parent.map_or(false, |parent| {
+                parent.kind() == JsSyntaxKind::JS_EXPRESSION_STATEMENT
+            });
+
+            match only_member {
+                ChainMember::Node(node) => {
+                    if JsThisExpression::can_cast(node.kind()) {
+                        true
+                    } else if let Some(identifier) = JsIdentifierExpression::cast_ref(node) {
+                        let is_factory = identifier
+                            .name()
+                            .and_then(|name| name.value_token())
+                            .as_ref()
+                            .map_or(false, is_factory);
+
+                        has_computed_property ||
+                            is_factory ||
+                            // If an identifier has a name that is shorter than the tab with, then we join it with the "head"
+                            (in_expression_statement
+                                && has_short_name(&identifier, tab_width))
+                    } else {
+                        false
+                    }
                 }
                 _ => false,
-            };
-
-            if should_skip {
-                None
-            } else {
-                Some(index)
             }
+        } else if let Some(ChainMember::StaticMember { expression }) = self.head.members().last() {
+            let member = expression.member().ok();
+
+            let is_factory = member
+                .as_ref()
+                .and_then(|member| member.as_js_name())
+                .and_then(|name| name.value_token().ok())
+                .as_ref()
+                .map_or(false, is_factory);
+
+            has_computed_property || is_factory
+        } else {
+            false
+        }
+    }
+
+    /// It tells if the groups should break on multiple lines
+    fn groups_should_break(&self, f: &mut JsFormatter) -> FormatResult<bool> {
+        let comments = f.comments();
+        let node_has_comments =
+            self.head.has_comments(comments) || self.tail.has_comments(comments);
+
+        if node_has_comments {
+            return Ok(true);
+        }
+
+        let mut call_expressions = self
+            .members()
+            .filter_map(|member| match member {
+                ChainMember::CallExpression { expression, .. } => Some(expression),
+                _ => None,
+            })
+            .peekable();
+
+        let mut calls_count = 0u32;
+        let mut any_has_function_like_argument = false;
+        let mut any_complex_args = false;
+
+        while let Some(call) = call_expressions.next() {
+            calls_count += 1;
+
+            if call_expressions.peek().is_some() {
+                any_has_function_like_argument =
+                    any_has_function_like_argument || has_arrow_or_function_expression_arg(call)
+            }
+
+            any_complex_args = any_complex_args || !has_simple_arguments(call);
+        }
+
+        if calls_count > 2 && any_complex_args {
+            return Ok(true);
+        }
+
+        if self.last_call_breaks(f)? && any_has_function_like_argument {
+            return Ok(true);
+        }
+
+        if !self.tail.is_empty() && self.head.will_break(f)? {
+            return Ok(true);
+        }
+
+        if self.tail.any_except_last_will_break(f)? {
+            return Ok(true);
+        }
+
+        Ok(false)
+    }
+
+    /// We retrieve all the call expressions inside the group and we check if
+    /// their arguments are not simple.
+    fn last_call_breaks(&self, f: &mut JsFormatter) -> FormatResult<bool> {
+        let last_group = self.last_group();
+
+        if let Some(ChainMember::CallExpression { .. }) = last_group.members().last() {
+            last_group.will_break(f)
+        } else {
+            Ok(false)
+        }
+    }
+
+    fn last_group(&self) -> &MemberChainGroup {
+        self.tail.last().unwrap_or(&self.head)
+    }
+
+    /// Returns an iterator over all members in the member chain
+    fn members(&self) -> impl Iterator<Item = &ChainMember> + DoubleEndedIterator {
+        self.head.members().iter().chain(self.tail.members())
+    }
+
+    fn has_comments(&self, comments: &JsComments) -> bool {
+        let mut members = self.members();
+
+        if let Some(first) = members.next() {
+            if comments.has_trailing_comments(first.syntax()) {
+                return true;
+            }
+        }
+
+        // Ignore the root member because comments are printed before/after the member chain.
+        members.next_back();
+
+        for member in members {
+            if comments.has_leading_comments(member.syntax())
+                || comments.has_trailing_comments(member.syntax())
+            {
+                return true;
+            }
+        }
+
+        false
+    }
+}
+
+impl Format<JsFormatContext> for MemberChain {
+    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        let has_comments = self.has_comments(f.comments());
+
+        let format_one_line = format_with(|f| {
+            let mut joiner = f.join();
+
+            joiner.entry(&self.head);
+            joiner.entries(self.tail.iter());
+
+            joiner.finish()
+        });
+
+        if self.tail.len() <= 1 && !has_comments {
+            return if is_long_curried_call(Some(&self.root)) {
+                write!(f, [format_one_line])
+            } else {
+                write!(f, [group(&format_one_line)])
+            };
+        }
+
+        let has_empty_line = match self.tail.members().next() {
+            Some(member) => member.needs_empty_line_before(),
+            None => false,
+        };
+
+        let format_tail = format_with(|f| {
+            if !has_empty_line {
+                write!(f, [hard_line_break()])?;
+            }
+
+            f.join_with(hard_line_break())
+                .entries(self.tail.iter())
+                .finish()
+        });
+
+        let format_expanded = format_with(|f| write!(f, [self.head, indent(&group(&format_tail))]));
+
+        let format_content = format_with(|f| {
+            if self.groups_should_break(f)? {
+                write!(f, [group(&format_expanded)])
+            } else {
+                if has_empty_line || self.last_group().will_break(f)? {
+                    write!(f, [expand_parent()])?;
+                }
+
+                write!(f, [best_fitting!(format_one_line, format_expanded)])
+            }
+        });
+
+        write!(
+            f,
+            [labelled(LabelId::of::<MemberChainLabel>(), &format_content)]
+        )
+    }
+}
+
+/// Splits the members into two groups:
+/// * The head group that contains all notes that are not a sequence of: `[ StaticMemberExpression -> AnyNode + JsCallExpression ]`
+/// * The remaining members
+fn split_members_into_head_and_remaining_groups(
+    mut members: Vec<ChainMember>,
+) -> (MemberChainGroup, Vec<ChainMember>) {
+    // This where we apply the first two points explained in the description of the main public function.
+    // We want to keep iterating over the items until we have call expressions
+    // - `something()()()()`
+    // - `something[1][2][4]`
+    // - `something[1]()[3]()`
+    // - `something()[2].something.else[0]`
+    let non_call_or_array_member_access_start = members
+        .iter()
+        .enumerate()
+        // The first member is always part of the first group
+        .skip(1)
+        .find_map(|(index, member)| match member {
+            ChainMember::CallExpression { .. }
+            | ChainMember::TsNonNullAssertionExpression { .. } => None,
+
+            ChainMember::ComputedMember { expression } => {
+                if matches!(
+                    expression.member(),
+                    Ok(JsAnyExpression::JsAnyLiteralExpression(
+                        JsAnyLiteralExpression::JsNumberLiteralExpression(_),
+                    ))
+                ) {
+                    None
+                } else {
+                    Some(index)
+                }
+            }
+
+            _ => Some(index),
         })
-        // If the above returns None this means either all items were skipped
-        // or the list was empty. In either case, this means the first group
-        // covers the entire list of [FlattenItem]
-        .unwrap_or(flatten_items.len())
+        .unwrap_or(members.len());
+
+    let first_group_end_index = if !members
+        .first()
+        .map_or(false, |member| member.is_call_expression())
+    {
+        // Take as many member access chains as possible
+        let rest = &members[non_call_or_array_member_access_start..];
+        let member_end = rest
+            .iter()
+            .enumerate()
+            .find_map(|(index, member)| match member {
+                ChainMember::StaticMember { .. } | ChainMember::ComputedMember { .. } => {
+                    let next_is_member = matches!(
+                        rest.get(index + 1),
+                        Some(ChainMember::ComputedMember { .. } | ChainMember::StaticMember { .. })
+                    );
+
+                    (!next_is_member).then_some(index)
+                }
+                _ => Some(index),
+            })
+            .unwrap_or(rest.len());
+
+        non_call_or_array_member_access_start + member_end
+    } else {
+        non_call_or_array_member_access_start
+    };
+
+    let remaining = members.split_off(first_group_end_index);
+    (MemberChainGroup::from(members), remaining)
 }
 
 /// computes groups coming after the first group
-fn compute_groups(
-    flatten_items: impl Iterator<Item = FlattenItem>,
-    in_expression_statement: bool,
-    f: &JsFormatter,
-) -> Groups {
+fn compute_remaining_groups(members: Vec<ChainMember>, comments: &JsComments) -> TailChainGroups {
     let mut has_seen_call_expression = false;
-    let mut groups = Groups::new(in_expression_statement, f.context().tab_width());
-    for item in flatten_items {
-        let has_trailing_comments = item.as_syntax().has_trailing_comments();
+    let mut groups_builder = MemberChainGroupsBuilder::default();
 
-        match item {
-            FlattenItem::StaticMember(_) => {
+    for member in members {
+        let has_trailing_comments = comments.has_trailing_comments(member.syntax());
+
+        match member {
+            // [0] should be appended at the end of the group instead of the
+            // beginning of the next one
+            ChainMember::ComputedMember { .. } if is_computed_array_member_access(&member) => {
+                groups_builder.start_or_continue_group(member);
+            }
+
+            ChainMember::StaticMember { .. } | ChainMember::ComputedMember { .. } => {
                 // if we have seen a JsCallExpression, we want to close the group.
                 // The resultant group will be something like: [ . , then, () ];
                 // `.` and `then` belong to the previous StaticMemberExpression,
                 // and `()` belong to the call expression we just encountered
-
                 if has_seen_call_expression {
-                    groups.close_group();
-                    groups.start_or_continue_group(item);
+                    groups_builder.close_group();
+                    groups_builder.start_group(member);
                     has_seen_call_expression = false;
                 } else {
-                    groups.start_or_continue_group(item);
+                    groups_builder.start_or_continue_group(member);
                 }
             }
-            FlattenItem::CallExpression(_) => {
-                let is_loose_call_expression = item.is_loose_call_expression();
-                groups.start_or_continue_group(item);
-                if is_loose_call_expression {
-                    has_seen_call_expression = true;
-                }
+
+            ChainMember::CallExpression { .. } => {
+                groups_builder.start_or_continue_group(member);
+                has_seen_call_expression = true;
             }
-            FlattenItem::ComputedMember(_) => {
-                groups.start_or_continue_group(item);
+
+            ChainMember::TsNonNullAssertionExpression { .. } => {
+                groups_builder.start_or_continue_group(member);
             }
-            FlattenItem::Node(_) => groups.continue_group(item),
+
+            ChainMember::Node(_) if member.is_call_like_expression() => {
+                groups_builder.start_or_continue_group(member);
+                has_seen_call_expression = true;
+            }
+
+            ChainMember::Node(_) => groups_builder.continue_group(member),
         }
 
         // Close the group immediately if the node had any trailing comments to
         // ensure those are printed in a trailing position for the token they
         // were originally commenting
         if has_trailing_comments {
-            groups.close_group();
+            groups_builder.close_group();
+            has_seen_call_expression = false;
         }
     }
 
-    // closing possible loose groups
-    groups.close_group();
-
-    groups
+    groups_builder.finish()
 }
 
-/// Formats together the first group and the rest of groups
-fn write_groups(
-    calls_count: usize,
-    head_group: HeadGroup,
-    groups: Groups,
-    f: &mut JsFormatter,
-) -> FormatResult<()> {
-    // TODO use Alternatives once available
-    write!(f, [head_group])?;
-
-    if groups.groups_should_break(calls_count, &head_group)? {
-        write!(
-            f,
-            [indent(&format_args!(
-                hard_line_break(),
-                format_with(|f| { groups.write_joined_with_hard_line_breaks(f) })
-            ))]
+fn is_computed_array_member_access(member: &ChainMember) -> bool {
+    if let ChainMember::ComputedMember { expression } = member {
+        matches!(
+            expression.member(),
+            Ok(JsAnyExpression::JsAnyLiteralExpression(
+                JsAnyLiteralExpression::JsNumberLiteralExpression(_)
+            ))
         )
     } else {
-        // TODO This line suffix boundary shouldn't be needed but currently is because comments
-        // can move over node boundaries. Follow up when re-working member chain formatting
-        let mut buffer = PreambleBuffer::new(f, line_suffix_boundary());
-
-        write!(buffer, [format_with(|f| { groups.write(f) })])
+        false
     }
 }
 
-/// This function tries to flatten the AST. It stores nodes and its formatted version
-/// inside an vector of [FlattenItem]. The first element of the vector is the last one.
-fn flatten_call_expression(
-    queue: &mut Vec<FlattenItem>,
-    node: &JsSyntaxNode,
-    comments: &Comments<JsLanguage>,
-) -> SyntaxResult<()> {
-    if comments.is_suppressed(node) {
-        queue.push(FlattenItem::Node(node.clone()))
+fn has_arrow_or_function_expression_arg(call: &JsCallExpression) -> bool {
+    call.arguments().map_or(false, |arguments| {
+        arguments.args().iter().any(|argument| {
+            matches!(
+                argument,
+                Ok(JsAnyCallArgument::JsAnyExpression(
+                    JsAnyExpression::JsArrowFunctionExpression(_)
+                        | JsAnyExpression::JsFunctionExpression(_)
+                ))
+            )
+        })
+    })
+}
+
+fn has_simple_arguments(call: &JsCallExpression) -> bool {
+    call.arguments().map_or(false, |arguments| {
+        arguments.args().iter().all(|argument| {
+            argument.map_or(false, |argument| SimpleArgument::new(argument).is_simple())
+        })
+    })
+}
+
+/// In order to detect those cases, we use an heuristic: if the first
+/// node is an identifier with the name starting with a capital
+/// letter or just a sequence of _$. The rationale is that they are
+/// likely to be factories.
+fn is_factory(token: &JsSyntaxToken) -> bool {
+    let text = token.text_trimmed();
+
+    let mut chars = text.chars();
+
+    match text.chars().next() {
+        // Any sequence of '$' or '_' characters
+        Some('_') | Some('$') => chars.all(|c| matches!(c, '_' | '$')),
+        Some(c) => c.is_uppercase(),
+        _ => false,
     }
-
-    match node.kind() {
-        JsSyntaxKind::JS_CALL_EXPRESSION => {
-            let call_expression = JsCallExpression::cast(node.clone()).unwrap();
-            let callee = call_expression.callee()?;
-            flatten_call_expression(queue, callee.syntax(), comments)?;
-
-            queue.push(FlattenItem::CallExpression(call_expression));
-        }
-        JsSyntaxKind::JS_STATIC_MEMBER_EXPRESSION => {
-            let static_member = JsStaticMemberExpression::cast(node.clone()).unwrap();
-            let object = static_member.object()?;
-            flatten_call_expression(queue, object.syntax(), comments)?;
-
-            queue.push(FlattenItem::StaticMember(static_member));
-        }
-
-        JsSyntaxKind::JS_COMPUTED_MEMBER_EXPRESSION => {
-            let computed_expression = JsComputedMemberExpression::cast(node.clone()).unwrap();
-            let object = computed_expression.object()?;
-            flatten_call_expression(queue, object.syntax(), comments)?;
-
-            queue.push(FlattenItem::ComputedMember(computed_expression));
-        }
-
-        _ => {
-            queue.push(FlattenItem::Node(node.clone()));
-        }
-    }
-
-    Ok(())
 }
 
 /// Here we check if the length of the groups exceeds the cutoff or there are comments
 /// This function is the inverse of the prettier function
 /// [Prettier applies]: https://github.com/prettier/prettier/blob/a043ac0d733c4d53f980aa73807a63fc914f23bd/src/language-js/print/member-chain.js#L342
 pub fn is_member_call_chain(
-    expression: &JsCallExpression,
-    f: &mut JsFormatter,
+    expression: JsCallExpression,
+    comments: &JsComments,
+    tab_width: TabWidth,
 ) -> SyntaxResult<bool> {
-    let (_, _, groups) = get_call_expression_groups(expression.syntax(), f)?;
-    groups.is_member_call_chain()
+    let chain = MemberChain::from_call_expression(expression, comments, tab_width)?;
+
+    Ok(chain.tail.is_member_call_chain(comments))
 }
+
+fn has_short_name(identifier: &JsIdentifierExpression, tab_width: TabWidth) -> bool {
+    identifier
+        .name()
+        .and_then(|name| name.value_token())
+        .map_or(false, |name| {
+            name.text_trimmed().len() <= u8::from(tab_width) as usize
+        })
+}
+
+struct ChainMembersIterator<'a> {
+    next: Option<JsAnyExpression>,
+    comments: &'a JsComments,
+    root: bool,
+}
+
+impl<'a> ChainMembersIterator<'a> {
+    fn new(root: JsAnyExpression, comments: &'a JsComments) -> Self {
+        Self {
+            next: Some(root),
+            comments,
+            root: true,
+        }
+    }
+}
+
+impl Iterator for ChainMembersIterator<'_> {
+    type Item = ChainMember;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        use JsAnyExpression::*;
+
+        let expression = self.next.take()?;
+
+        if self.comments.is_suppressed(expression.syntax()) {
+            return Some(ChainMember::Node(expression.into_syntax()));
+        }
+
+        let member = match expression {
+            JsCallExpression(call_expression) => {
+                let callee = call_expression.callee().ok();
+
+                let is_chain = matches!(
+                    callee,
+                    Some(
+                        JsStaticMemberExpression(_)
+                            | JsComputedMemberExpression(_)
+                            | JsCallExpression(_)
+                    )
+                );
+
+                if is_chain {
+                    self.next = callee;
+                }
+
+                let position = if self.root {
+                    CallExpressionPosition::End
+                } else if !is_chain {
+                    CallExpressionPosition::Start
+                } else {
+                    CallExpressionPosition::Middle
+                };
+
+                ChainMember::CallExpression {
+                    expression: call_expression,
+                    position,
+                }
+            }
+
+            JsStaticMemberExpression(static_member) => {
+                self.next = static_member.object().ok();
+                ChainMember::StaticMember {
+                    expression: static_member,
+                }
+            }
+
+            JsComputedMemberExpression(computed_expression) => {
+                self.next = computed_expression.object().ok();
+
+                ChainMember::ComputedMember {
+                    expression: computed_expression,
+                }
+            }
+
+            TsNonNullAssertionExpression(expression) => {
+                self.next = expression.expression().ok();
+                ChainMember::TsNonNullAssertionExpression { expression }
+            }
+
+            expression => ChainMember::Node(expression.into_syntax()),
+        };
+
+        self.root = false;
+
+        Some(member)
+    }
+}
+
+impl FusedIterator for ChainMembersIterator<'_> {}

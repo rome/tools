@@ -1,8 +1,9 @@
 use crate::prelude::*;
 use rome_formatter::write;
 
-use rome_js_syntax::JsPostUpdateExpression;
+use crate::parentheses::{unary_like_expression_needs_parentheses, NeedsParentheses};
 use rome_js_syntax::JsPostUpdateExpressionFields;
+use rome_js_syntax::{JsPostUpdateExpression, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsPostUpdateExpression;
@@ -14,6 +15,42 @@ impl FormatNodeRule<JsPostUpdateExpression> for FormatJsPostUpdateExpression {
             operator_token,
         } = node.as_fields();
 
-        write![f, [operand.format(), operator_token.format(),]]
+        write![f, [operand.format(), operator_token.format()]]
+    }
+
+    fn needs_parentheses(&self, item: &JsPostUpdateExpression) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl NeedsParentheses for JsPostUpdateExpression {
+    fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
+        unary_like_expression_needs_parentheses(self.syntax(), parent)
+    }
+}
+
+#[cfg(test)]
+mod tests {
+
+    use crate::{assert_needs_parentheses, assert_not_needs_parentheses};
+    use rome_js_syntax::JsPostUpdateExpression;
+
+    #[test]
+    fn needs_parentheses() {
+        assert_needs_parentheses!("class A extends (A++) {}", JsPostUpdateExpression);
+
+        assert_needs_parentheses!("(a++).b", JsPostUpdateExpression);
+        assert_needs_parentheses!("(a++)[b]", JsPostUpdateExpression);
+        assert_not_needs_parentheses!("a[b++]", JsPostUpdateExpression);
+
+        assert_needs_parentheses!("(a++)`template`", JsPostUpdateExpression);
+
+        assert_needs_parentheses!("(a++)()", JsPostUpdateExpression);
+        assert_needs_parentheses!("new (a++)()", JsPostUpdateExpression);
+
+        assert_needs_parentheses!("(a++)!", JsPostUpdateExpression);
+
+        assert_needs_parentheses!("(a++) ** 3", JsPostUpdateExpression);
+        assert_not_needs_parentheses!("(a++) + 3", JsPostUpdateExpression);
     }
 }

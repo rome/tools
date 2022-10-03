@@ -1,134 +1,121 @@
-use crate::context::TabWidth;
+use crate::parentheses::NeedsParentheses;
 use crate::prelude::*;
-use crate::utils::member_chain::flatten_item::FlattenItem;
-use crate::utils::member_chain::simple_argument::SimpleArgument;
-use rome_js_syntax::JsCallExpression;
-use rome_rowan::{AstSeparatedList, SyntaxResult};
-use std::mem;
+use crate::utils::member_chain::chain_member::ChainMember;
+use rome_formatter::write;
+use std::cell::RefCell;
 
-#[derive(Clone)]
-/// Handles creation of groups while scanning the flatten items
-pub(crate) struct Groups {
-    /// If the current group is inside an expression statement.
-    ///
-    /// This information is important when evaluating the break of the groups.
-    in_expression_statement: bool,
+#[derive(Default)]
+pub(super) struct MemberChainGroupsBuilder {
     /// keeps track of the groups created
-    groups: Vec<Vec<FlattenItem>>,
+    groups: Vec<MemberChainGroup>,
     /// keeps track of the current group that is being created/updated
-    current_group: Vec<FlattenItem>,
-
-    /// This is a threshold of when we should start breaking the groups
-    ///
-    /// By default, it's 1, meaning that we start breaking after the first group.
-    cutoff: u8,
-
-    tab_width: TabWidth,
+    current_group: Option<MemberChainGroup>,
 }
 
-impl Groups {
-    pub fn new(in_expression_statement: bool, tab_width: TabWidth) -> Self {
-        Self {
-            in_expression_statement,
-            groups: Vec::new(),
-            current_group: Vec::new(),
-            cutoff: 1,
-            tab_width,
-        }
-    }
-
-    /// This function checks if the current grouping should be merged with the first group.
-    pub fn should_merge(&self, head_group: &HeadGroup) -> SyntaxResult<bool> {
-        Ok(!self.groups.len() >= 1
-            && self.should_not_wrap(head_group)?
-            && !self.groups[0]
-                .first()
-                .map_or(false, |item| item.has_trailing_comments()))
-    }
-
+impl MemberChainGroupsBuilder {
     /// starts a new group
-    pub fn start_group<I: Into<FlattenItem>>(&mut self, flatten_item: I) {
-        debug_assert!(self.current_group.is_empty());
-        self.current_group.push(flatten_item.into());
+    pub fn start_group(&mut self, member: ChainMember) {
+        debug_assert!(self.current_group.is_none());
+        let mut group = MemberChainGroup::default();
+        group.members.push(member);
+        self.current_group = Some(group);
     }
 
     /// continues of starts a new group
-    pub fn start_or_continue_group<I: Into<FlattenItem>>(&mut self, flatten_item: I) {
-        if self.current_group.is_empty() {
-            self.start_group(flatten_item);
-        } else {
-            self.continue_group(flatten_item);
+    pub fn start_or_continue_group(&mut self, member: ChainMember) {
+        match &mut self.current_group {
+            None => self.start_group(member),
+            Some(group) => group.members.push(member),
         }
     }
 
-    /// adds the passed element to the current group
-    pub fn continue_group<I: Into<FlattenItem>>(&mut self, flatten_item: I) {
-        debug_assert!(!self.current_group.is_empty());
-        self.current_group.push(flatten_item.into());
+    /// adds the passed element to the current group.
+    ///
+    /// # Panics
+    ///
+    /// If there's no started group.
+    pub fn continue_group(&mut self, member: ChainMember) {
+        match &mut self.current_group {
+            None => {
+                panic!("It is necessary to start a group first using `start_group`.");
+            }
+            Some(group) => {
+                group.members.push(member);
+            }
+        }
     }
 
-    /// clears the current group, and adds a new group to the groups
+    /// clears the current group, and adds it to the groups collection
     pub fn close_group(&mut self) {
-        if !self.current_group.is_empty() {
-            let mut elements = vec![];
-            std::mem::swap(&mut elements, &mut self.current_group);
-            self.groups.push(elements);
+        if let Some(group) = self.current_group.take() {
+            self.groups.push(group);
         }
     }
 
-    /// It tells if the groups should be break on multiple lines
-    pub fn groups_should_break(
-        &self,
-        calls_count: usize,
-        head_group: &HeadGroup,
-    ) -> FormatResult<bool> {
-        // Do not allow the group to break if it only contains a single call expression
-        if calls_count <= 1 {
-            return Ok(false);
+    pub(super) fn finish(self) -> TailChainGroups {
+        let mut groups = self.groups;
+
+        if let Some(group) = self.current_group {
+            groups.push(group);
         }
 
-        // we want to check the simplicity of the call expressions only if we have at least
-        // two of them
-        // Check prettier: https://github.com/prettier/prettier/blob/main/src/language-js/print/member-chain.js#L389
-        let call_expressions_are_not_simple =
-            calls_count > 2 && self.call_expressions_are_not_simple()?;
+        TailChainGroups { groups }
+    }
+}
 
-        // TODO: add here will_break logic
+/// Groups following on the head group.
+///
+/// May be empty if all members are part of the head group
+#[derive(Clone, Debug)]
+pub(super) struct TailChainGroups {
+    groups: Vec<MemberChainGroup>,
+}
 
-        let node_has_comments = self.has_comments()? || head_group.has_comments();
+impl TailChainGroups {
+    /// Returns `true` if there are no tail groups.
+    pub(crate) fn is_empty(&self) -> bool {
+        self.groups.is_empty()
+    }
 
-        let should_break = node_has_comments || call_expressions_are_not_simple;
+    /// Returns the number of tail groups.
+    pub(crate) fn len(&self) -> usize {
+        self.groups.len()
+    }
 
-        Ok(should_break)
+    /// Returns the first group
+    pub(crate) fn first(&self) -> Option<&MemberChainGroup> {
+        self.groups.first()
+    }
+
+    /// Returns the last group
+    pub(crate) fn last(&self) -> Option<&MemberChainGroup> {
+        self.groups.last()
+    }
+
+    /// Removes the first group and returns it
+    pub(super) fn pop_first(&mut self) -> Option<MemberChainGroup> {
+        match self.groups.len() {
+            0 => None,
+            _ => Some(self.groups.remove(0)),
+        }
     }
 
     /// Checks if the groups contain comments.
-    pub fn has_comments(&self) -> SyntaxResult<bool> {
-        let mut has_leading_comments = false;
+    pub fn has_comments(&self, comments: &JsComments) -> bool {
+        let mut members = self.groups.iter().flat_map(|item| item.members.iter());
 
-        let flat_groups = self.groups.iter().flat_map(|item| item.iter());
-        for item in flat_groups {
-            if item.has_leading_comments()? {
-                has_leading_comments = true;
-                break;
-            }
-        }
+        let has_comments = members.any(|item| {
+            comments.has_trailing_comments(item.syntax())
+                || comments.has_leading_comments(item.syntax())
+        });
 
-        let has_trailing_comments = self
-            .groups
-            .iter()
-            .flat_map(|item| item.iter())
-            .any(|item| item.has_trailing_comments());
-
-        let cutoff_has_leading_comments = if self.groups.len() >= self.cutoff as usize {
-            let group = self.groups.get(self.cutoff as usize);
+        let cutoff_has_leading_comments = if !self.groups.is_empty() {
+            let group = self.groups.get(1);
             if let Some(group) = group {
-                let first_item = group.first();
-                if let Some(first_item) = first_item {
-                    first_item.has_leading_comments()?
-                } else {
-                    false
-                }
+                let first_item = group.members.first();
+                first_item.map_or(false, |first_item| {
+                    comments.has_leading_comments(first_item.syntax())
+                })
             } else {
                 false
             }
@@ -136,151 +123,154 @@ impl Groups {
             false
         };
 
-        Ok(has_leading_comments || has_trailing_comments || cutoff_has_leading_comments)
-    }
-
-    /// Format groups on multiple lines
-    pub fn write_joined_with_hard_line_breaks(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        f.join_with(hard_line_break())
-            .entries(
-                self.groups
-                    .iter()
-                    .map(|group| format_with(|f| f.join().entries(group.iter()).finish())),
-            )
-            .finish()
-    }
-
-    /// Creates two different versions of the formatted groups, one that goes in one line
-    /// and the other one that goes on multiple lines.
-    ///
-    /// It's up to the printer to decide which one to use.
-    pub fn write(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        if self.groups.is_empty() {
-            return Ok(());
-        }
-
-        f.join()
-            .entries(self.groups.iter().flat_map(|group| group.iter()))
-            .finish()
-    }
-
-    /// Filters the stack of [FlattenItem] and return only the ones that
-    /// contain [JsCallExpression]. The function returns the actual nodes.
-    pub fn get_call_expressions(&self) -> impl Iterator<Item = &JsCallExpression> {
-        self.groups
-            .iter()
-            .flat_map(|group| group.iter())
-            .filter_map(|item| {
-                if let FlattenItem::CallExpression(call_expression, ..) = item {
-                    Some(call_expression)
-                } else {
-                    None
-                }
-            })
-    }
-
-    /// We retrieve all the call expressions inside the group and we check if
-    /// their arguments are not simple.
-    pub fn call_expressions_are_not_simple(&self) -> SyntaxResult<bool> {
-        Ok(self.get_call_expressions().any(|call_expression| {
-            call_expression.arguments().map_or(false, |arguments| {
-                !arguments
-                    .args()
-                    .iter()
-                    .filter_map(|argument| argument.ok())
-                    .all(|argument| SimpleArgument::new(argument).is_simple(0))
-            })
-        }))
-    }
-
-    /// This is an heuristic needed to check when the first element of the group
-    /// Should be part of the "head" or the "tail".
-    fn should_not_wrap(&self, first_group: &HeadGroup) -> SyntaxResult<bool> {
-        let tab_with = self.tab_width;
-        let has_computed_property = if self.groups.len() > 1 {
-            // SAFETY: guarded by the previous check
-            let group = &self.groups[0];
-            group
-                .first()
-                .map_or(false, |item| item.is_computed_expression())
-        } else {
-            false
-        };
-
-        if first_group.items.len() == 1 {
-            // SAFETY: access is guarded by the previous check
-            let first_node = first_group.items().first().unwrap();
-
-            return Ok(first_node.is_this_expression()
-                || (first_node.is_identifier_expression()
-                    && (first_node.is_factory(true)?
-                // If an identifier has a name that is shorter than the tab with, then we join it with the "head"
-                || (self.in_expression_statement
-                && first_node.has_short_name(tab_with)?)
-                || has_computed_property)));
-        }
-
-        let last_node_is_factory = self
-            .groups
-            .iter()
-            .flat_map(|group| group.iter())
-            .last()
-            .map_or(false, |item| item.is_factory(false).unwrap_or(false));
-
-        Ok(last_node_is_factory || has_computed_property)
-    }
-
-    /// Here we check if the first group can be merged to the head. If so, then
-    /// we move out the first group out of the groups
-    pub(crate) fn should_merge_with_first_group(
-        &mut self,
-        head_group: &HeadGroup,
-    ) -> Option<Vec<Vec<FlattenItem>>> {
-        if self.should_merge(head_group).unwrap_or(false) {
-            let mut new_groups = self.groups.split_off(1);
-            // self.groups is now the head (one element), while `new_groups` is a new vector without the
-            // first element.
-            // As we need to achieve the opposite, we now swap them.
-            mem::swap(&mut self.groups, &mut new_groups);
-            Some(new_groups)
-        } else {
-            None
-        }
+        has_comments || cutoff_has_leading_comments
     }
 
     /// Here we check if the length of the groups exceeds the cutoff or there are comments
     /// This function is the inverse of the prettier function
     /// [Prettier applies]: https://github.com/prettier/prettier/blob/a043ac0d733c4d53f980aa73807a63fc914f23bd/src/language-js/print/member-chain.js#L342
-    pub(crate) fn is_member_call_chain(&self) -> SyntaxResult<bool> {
-        Ok(self.groups.len() > self.cutoff as usize || self.has_comments()?)
+    pub(crate) fn is_member_call_chain(&self, comments: &JsComments) -> bool {
+        self.groups.len() > 1 || self.has_comments(comments)
+    }
+
+    /// Returns an iterator over the groups.
+    pub(super) fn iter(&self) -> impl Iterator<Item = &MemberChainGroup> + DoubleEndedIterator {
+        self.groups.iter()
+    }
+
+    /// Test if any group except the last group [break](FormatElements::will_break).
+    pub(super) fn any_except_last_will_break(&self, f: &mut JsFormatter) -> FormatResult<bool> {
+        for group in &self.groups[..self.groups.len().saturating_sub(1)] {
+            if group.will_break(f)? {
+                return Ok(true);
+            }
+        }
+
+        Ok(false)
+    }
+
+    /// Returns an iterator over all members
+    pub(super) fn members(&self) -> impl Iterator<Item = &ChainMember> + DoubleEndedIterator {
+        self.groups.iter().flat_map(|group| group.members().iter())
     }
 }
 
-#[derive(Debug)]
-pub(crate) struct HeadGroup {
-    items: Vec<FlattenItem>,
-}
-
-impl HeadGroup {
-    pub(crate) fn new(items: Vec<FlattenItem>) -> Self {
-        Self { items }
-    }
-
-    fn items(&self) -> &[FlattenItem] {
-        &self.items
-    }
-
-    pub fn expand_group(&mut self, group: Vec<FlattenItem>) {
-        self.items.extend(group)
-    }
-
-    fn has_comments(&self) -> bool {
-        self.items.iter().any(|item| item.has_trailing_comments())
+impl Format<JsFormatContext> for TailChainGroups {
+    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        f.join().entries(self.groups.iter()).finish()
     }
 }
 
-impl Format<JsFormatContext> for HeadGroup {
-    fn fmt(&self, f: &mut JsFormatter) -> FormatResult<()> {
-        f.join().entries(self.items.iter()).finish()
+#[derive(Clone, Default)]
+pub(super) struct MemberChainGroup {
+    members: Vec<ChainMember>,
+
+    /// Stores the formatted result of this group.
+    ///
+    /// Manual implementation of `Memoized` to only memorizing the formatted result
+    /// if [MemberChainGroup::will_break] is called but not otherwise.
+    formatted: RefCell<Option<FormatElement>>,
+}
+
+impl MemberChainGroup {
+    pub(super) fn into_members(self) -> Vec<ChainMember> {
+        self.members
+    }
+
+    /// Returns the chain members of the group.
+    pub(super) fn members(&self) -> &[ChainMember] {
+        &self.members
+    }
+
+    /// Extends the members of this group with the passed in members
+    pub(super) fn extend_members(&mut self, members: impl IntoIterator<Item = ChainMember>) {
+        self.members.extend(members)
+    }
+
+    /// Tests if the formatted result of this group results in a [break](FormatElements::will_break).
+    pub(super) fn will_break(&self, f: &mut JsFormatter) -> FormatResult<bool> {
+        let mut cell = self.formatted.borrow_mut();
+        let result = match cell.as_ref() {
+            Some(formatted) => formatted.will_break(),
+            None => {
+                let interned = f.intern(&FormatMemberChainGroup { group: self })?;
+
+                if let Some(interned) = interned {
+                    let breaks = interned.will_break();
+                    *cell = Some(interned);
+                    breaks
+                } else {
+                    false
+                }
+            }
+        };
+
+        Ok(result)
+    }
+
+    pub(super) fn has_comments(&self, comments: &JsComments) -> bool {
+        self.members.iter().enumerate().any(|(index, member)| {
+            if index == 0 {
+                comments.has_trailing_comments(member.syntax())
+            } else if index < self.members.len() {
+                comments.has_leading_comments(member.syntax())
+                    || comments.has_trailing_comments(member.syntax())
+            } else {
+                false
+            }
+        })
+    }
+}
+
+impl From<Vec<ChainMember>> for MemberChainGroup {
+    fn from(entries: Vec<ChainMember>) -> Self {
+        Self {
+            members: entries,
+            formatted: RefCell::new(None),
+        }
+    }
+}
+
+impl std::fmt::Debug for MemberChainGroup {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_tuple("MemberChainGroup")
+            .field(&self.members)
+            .finish()
+    }
+}
+
+impl Format<JsFormatContext> for MemberChainGroup {
+    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        if let Some(formatted) = self.formatted.borrow().as_ref() {
+            return f.write_element(formatted.clone());
+        }
+
+        FormatMemberChainGroup { group: self }.fmt(f)
+    }
+}
+
+pub struct FormatMemberChainGroup<'a> {
+    group: &'a MemberChainGroup,
+}
+
+impl Format<JsFormatContext> for FormatMemberChainGroup<'_> {
+    fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        let group = self.group;
+
+        let last = group.members.last();
+
+        let needs_parens = last.map_or(false, |last| match last {
+            ChainMember::StaticMember { expression, .. } => expression.needs_parentheses(),
+            ChainMember::ComputedMember { expression, .. } => expression.needs_parentheses(),
+            _ => false,
+        });
+
+        let format_entries = format_with(|f| f.join().entries(group.members.iter()).finish());
+
+        if needs_parens {
+            write!(f, [text("("), format_entries, text(")")])
+        } else {
+            write!(f, [format_entries])
+        }
     }
 }

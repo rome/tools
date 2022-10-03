@@ -1,7 +1,7 @@
 use hashbrown::hash_map::{RawEntryMut, RawOccupiedEntryMut, RawVacantEntryMut};
+use rome_text_size::TextSize;
 use rustc_hash::FxHasher;
 use std::hash::{BuildHasherDefault, Hash, Hasher};
-use text_size::TextSize;
 
 use crate::green::Slot;
 use crate::syntax::{TriviaPiece, TriviaPieceKind};
@@ -323,7 +323,7 @@ mod tests {
     use crate::green::node_cache::token_hash;
     use crate::green::trivia::GreenTrivia;
     use crate::{GreenToken, RawSyntaxKind};
-    use text_size::TextSize;
+    use rome_text_size::TextSize;
 
     #[test]
     fn green_token_hash() {

@@ -56,11 +56,13 @@ JsModule {
       1: (empty)
   3: EOF@30..31 "" [Newline("\n")] []
 --
-error[SyntaxError]: 'async' keyword cannot contain escape character.
-  ┌─ function_escaped_async.js:1:6
-  │
-1 │ void \u0061sync function f(){}
-  │      ^^^^^^^^^^
+function_escaped_async.js:1:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'async' keyword cannot contain escape character.
+  
+  > 1 │ void \u0061sync function f(){}
+      │      ^^^^^^^^^^
+    2 │ 
+  
 --
 void \u0061sync function f(){}

@@ -1,0 +1,34 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+expression: content
+---
+## `ci.js`
+
+```js
+if
+
+```
+
+# Termination Message
+
+```block
+errors where emitted while running checks
+```
+
+# Emitted Messages
+
+```block
+ci.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected `(` but instead the file ends
+  
+  × the file ends here
+  
+    1 │ if
+  > 2 │ 
+      │ 
+  
+
+```
+
+

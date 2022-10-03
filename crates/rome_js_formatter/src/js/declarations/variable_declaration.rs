@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::write;
+use rome_formatter::{format_args, write};
 
 use rome_js_syntax::JsVariableDeclaration;
 use rome_js_syntax::JsVariableDeclarationFields;
@@ -11,6 +11,13 @@ impl FormatNodeRule<JsVariableDeclaration> for FormatJsVariableDeclaration {
     fn fmt_fields(&self, node: &JsVariableDeclaration, f: &mut JsFormatter) -> FormatResult<()> {
         let JsVariableDeclarationFields { kind, declarators } = node.as_fields();
 
-        write!(f, [kind.format(), space(), declarators.format()])
+        write!(
+            f,
+            [group(&format_args![
+                kind.format(),
+                space(),
+                declarators.format()
+            ])]
+        )
     }
 }

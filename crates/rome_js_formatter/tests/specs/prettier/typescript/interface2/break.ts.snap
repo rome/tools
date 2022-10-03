@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "typescript\\interface2\\break.ts"
 ---
 
 # Input
@@ -8,7 +10,7 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
 export interface Environment1 extends GenericEnvironment<
   SomeType,
   AnotherType,
-  YetAnotherType
+  YetAnotherType,
 > {
   m(): void;
 };
@@ -19,7 +21,7 @@ export class Environment2 extends GenericEnvironment<
   DifferentType1,
   DifferentType2,
   DifferentType3,
-  DifferentType4
+  DifferentType4,
 > {
   m() {};
 };
@@ -79,46 +81,39 @@ export interface ExtendsLongOneWithGenerics extends Bar< SomeLongTypeSomeLongTyp
 ```diff
 --- Prettier
 +++ Rome
-@@ -68,14 +68,14 @@
- 
- interface ExtendsMany
-   extends ASingleGenericInterface<
--    Interface1,
--    Interface2,
--    Interface3,
--    Interface4,
--    Interface5,
--    Interface6,
--    Interface7
--  > {
-+      Interface1,
-+      Interface2,
-+      Interface3,
-+      Interface4,
-+      Interface5,
-+      Interface6,
-+      Interface7
-+    > {
-   x: string;
+@@ -1,5 +1,8 @@
+-export interface Environment1
+-  extends GenericEnvironment<SomeType, AnotherType, YetAnotherType> {
++export interface Environment1 extends GenericEnvironment<
++  SomeType,
++  AnotherType,
++  YetAnotherType,
++> {
+   m(): void;
+ }
+ export class Environment2 extends GenericEnvironment<
+@@ -9,9 +12,9 @@
+   DifferentType1,
+   DifferentType2,
+   DifferentType3,
+-  DifferentType4
++  DifferentType4,
+ > {
+-  m() {}
++  m() {};
  }
  
-@@ -97,6 +97,6 @@
- 
- export interface ExtendsLongOneWithGenerics
-   extends Bar<
--    SomeLongTypeSomeLongTypeSomeLongTypeSomeLongType,
--    ToBreakLineToBreakLineToBreakLine
--  > {}
-+      SomeLongTypeSomeLongTypeSomeLongTypeSomeLongType,
-+      ToBreakLineToBreakLineToBreakLine
-+    > {}
+ // Declare Interface Break
 ```
 
 # Output
 
 ```js
-export interface Environment1
-  extends GenericEnvironment<SomeType, AnotherType, YetAnotherType> {
+export interface Environment1 extends GenericEnvironment<
+  SomeType,
+  AnotherType,
+  YetAnotherType,
+> {
   m(): void;
 }
 export class Environment2 extends GenericEnvironment<
@@ -128,9 +123,9 @@ export class Environment2 extends GenericEnvironment<
   DifferentType1,
   DifferentType2,
   DifferentType3,
-  DifferentType4
+  DifferentType4,
 > {
-  m() {}
+  m() {};
 }
 
 // Declare Interface Break
@@ -187,14 +182,14 @@ interface ExtendsLarge
 
 interface ExtendsMany
   extends ASingleGenericInterface<
-      Interface1,
-      Interface2,
-      Interface3,
-      Interface4,
-      Interface5,
-      Interface6,
-      Interface7
-    > {
+    Interface1,
+    Interface2,
+    Interface3,
+    Interface4,
+    Interface5,
+    Interface6,
+    Interface7
+  > {
   x: string;
 }
 
@@ -216,10 +211,41 @@ interface ExtendsManyWithGenerics
 
 export interface ExtendsLongOneWithGenerics
   extends Bar<
-      SomeLongTypeSomeLongTypeSomeLongTypeSomeLongType,
-      ToBreakLineToBreakLineToBreakLine
-    > {}
+    SomeLongTypeSomeLongTypeSomeLongTypeSomeLongType,
+    ToBreakLineToBreakLineToBreakLine
+  > {}
 ```
 
+
+# Errors
+```
+break.ts:5:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected a type parameter but instead found '>'
+  
+  × Expected a type parameter here
+  
+    3 │   AnotherType,
+    4 │   YetAnotherType,
+  > 5 │ > {
+      │ ^
+    6 │   m(): void;
+    7 │ };
+  
+break.ts:16:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × expected a type parameter but instead found '>'
+  
+  × Expected a type parameter here
+  
+    14 │   DifferentType3,
+    15 │   DifferentType4,
+  > 16 │ > {
+       │ ^
+    17 │   m() {};
+    18 │ };
+  
+
+```
 
 

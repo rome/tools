@@ -1,0 +1,5 @@
+error: failed to parse "diagnostic" attribute: expected parentheses
+ --> tests/macros/tags_eq.rs:4:19
+  |
+4 | #[diagnostic(tags = Identifier)]
+  |                   ^

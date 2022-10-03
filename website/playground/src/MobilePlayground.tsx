@@ -1,21 +1,39 @@
 import { useCallback } from "react";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import CodeMirror from "@uiw/react-codemirror";
+import type { ViewUpdate } from "@codemirror/view";
 import { javascript } from "@codemirror/lang-javascript";
 import { PlaygroundProps } from "./types";
 import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
+import MermaidGraph from "./MermaidGraph";
 
-export function MobilePlayground(
-	{
-		setPlaygroundState,
-		playgroundState: { code, ...settings },
-		prettierOutput,
-		romeOutput: { cst, ast, formatted_code, formatter_ir, errors },
-	}: PlaygroundProps,
-) {
+export function MobilePlayground({
+	setPlaygroundState,
+	playgroundState: { code, ...settings },
+	prettierOutput,
+	romeOutput: {
+		cst,
+		ast,
+		formatted_code,
+		formatter_ir,
+		errors,
+		control_flow_graph,
+	},
+}: PlaygroundProps) {
 	const { isJsx, isTypeScript } = settings;
 
+	const onUpdate = useCallback((viewUpdate: ViewUpdate) => {
+		const cursorPosition = viewUpdate.state.selection.ranges[0]?.from ?? 0;
+		setPlaygroundState((state) =>
+			state.cursorPosition !== cursorPosition
+				? {
+						...state,
+						cursorPosition,
+				  }
+				: state,
+		);
+	}, []);
 	const onChange = useCallback((value) => {
 		setPlaygroundState((state) => ({ ...state, code: value }));
 	}, []);
@@ -39,13 +57,22 @@ export function MobilePlayground(
 					<Tab selectedClassName="bg-slate-300">AST</Tab>
 					<Tab selectedClassName="bg-slate-300">Rome IR</Tab>
 					<Tab selectedClassName="bg-slate-300">Prettier IR</Tab>
-					<Tab disabled={errors === ""} selectedClassName="bg-slate-300">Errors</Tab>
+					<Tab disabled={errors === ""} selectedClassName="bg-slate-300">
+						Errors
+					</Tab>
+					<Tab
+						disabled={control_flow_graph === ""}
+						selectedClassName="bg-slate-300"
+					>
+						Control Flow Graph
+					</Tab>
 				</TabList>
 				<TabPanel>
 					<CodeMirror
 						value={code}
 						extensions={extensions}
 						placeholder="Enter your code here"
+						onUpdate={onUpdate}
 						onChange={onChange}
 						style={{
 							fontSize: 12,
@@ -91,8 +118,12 @@ export function MobilePlayground(
 						}}
 					/>
 				</TabPanel>
-				<TabPanel><TreeView tree={cst} /></TabPanel>
-				<TabPanel><TreeView tree={ast} /></TabPanel>
+				<TabPanel>
+					<TreeView tree={cst} />
+				</TabPanel>
+				<TabPanel>
+					<TreeView tree={ast} />
+				</TabPanel>
 				<TabPanel>
 					<pre className="h-screen overflow-y-scroll">{formatter_ir}</pre>
 				</TabPanel>
@@ -100,11 +131,12 @@ export function MobilePlayground(
 					<pre className="h-screen overflow-y-scroll">{prettierOutput.ir}</pre>
 				</TabPanel>
 				<TabPanel>
-					<pre
-						className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs"
-					>
+					<pre className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs">
 						{errors}
 					</pre>
+				</TabPanel>
+				<TabPanel>
+					<MermaidGraph graph={control_flow_graph} />
 				</TabPanel>
 			</Tabs>
 		</div>

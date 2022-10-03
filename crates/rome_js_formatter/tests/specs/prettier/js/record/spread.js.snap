@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\record\\spread.js"
 ---
 
 # Input
@@ -11,7 +13,6 @@ const taskLater = #{ ...taskNow, status: "DONE" }
 
 // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
 assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
-
 ```
 
 
@@ -67,99 +68,196 @@ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
 
 # Errors
 ```
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ spread.js:1:19
-  │
-1 │ const formData = #{ title: "Implement all the things" }
-  │                   ^ Expected an identifier here
+spread.js:1:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ spread.js:1:18
-  │
-1 │ const formData = #{ title: "Implement all the things" }
-  │                  ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+  > 1 │ const formData = #{ title: "Implement all the things" }
+      │                   ^
+    2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+  
+spread.js:1:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ spread.js:1:19
-  │
-1 │ const formData = #{ title: "Implement all the things" }
-  │ ------------------^ An explicit or implicit semicolon is expected here...
-  │ │                  
-  │ ...Which is required to end this statement
+  × Private names are only allowed on the left side of a 'in' expression
+  
+  > 1 │ const formData = #{ title: "Implement all the things" }
+      │                  ^
+    2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+  
+spread.js:1:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ spread.js:2:18
-  │
-2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
-  │                  ^ Expected an identifier here
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+  > 1 │ const formData = #{ title: "Implement all the things" }
+      │                   ^
+    2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+  
+  i ...Which is required to end this statement
+  
+  > 1 │ const formData = #{ title: "Implement all the things" }
+      │ ^^^^^^^^^^^^^^^^^^
+    2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+  
+spread.js:2:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ spread.js:2:17
-  │
-2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
-  │                 ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    1 │ const formData = #{ title: "Implement all the things" }
+  > 2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+      │                  ^
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+    4 │ 
+  
+spread.js:2:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ spread.js:2:18
-  │
-2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
-  │ -----------------^ An explicit or implicit semicolon is expected here...
-  │ │                 
-  │ ...Which is required to end this statement
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    1 │ const formData = #{ title: "Implement all the things" }
+  > 2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+      │                 ^
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+    4 │ 
+  
+spread.js:2:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ spread.js:2:34
-  │
-2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
-  │                        ----------^
-  │                        │         │
-  │                        │         An explicit or implicit semicolon is expected here...
-  │                        ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    1 │ const formData = #{ title: "Implement all the things" }
+  > 2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+      │                  ^
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+    4 │ 
+  
+  i ...Which is required to end this statement
+  
+    1 │ const formData = #{ title: "Implement all the things" }
+  > 2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+      │ ^^^^^^^^^^^^^^^^^
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+    4 │ 
+  
+spread.js:2:34 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ spread.js:3:20
-  │
-3 │ const taskLater = #{ ...taskNow, status: "DONE" }
-  │                    ^ Expected an identifier here
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    1 │ const formData = #{ title: "Implement all the things" }
+  > 2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+      │                                  ^
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+    4 │ 
+  
+  i ...Which is required to end this statement
+  
+    1 │ const formData = #{ title: "Implement all the things" }
+  > 2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+      │                        ^^^^^^^^^^^
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+    4 │ 
+  
+spread.js:3:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ spread.js:3:19
-  │
-3 │ const taskLater = #{ ...taskNow, status: "DONE" }
-  │                   ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    1 │ const formData = #{ title: "Implement all the things" }
+    2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+  > 3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+      │                    ^
+    4 │ 
+    5 │ // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
+  
+spread.js:3:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ spread.js:3:20
-  │
-3 │ const taskLater = #{ ...taskNow, status: "DONE" }
-  │ -------------------^ An explicit or implicit semicolon is expected here...
-  │ │                   
-  │ ...Which is required to end this statement
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    1 │ const formData = #{ title: "Implement all the things" }
+    2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+  > 3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+      │                   ^
+    4 │ 
+    5 │ // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
+  
+spread.js:3:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an expression but instead found '...taskNow, status: "DONE"'
-  ┌─ spread.js:3:22
-  │
-3 │ const taskLater = #{ ...taskNow, status: "DONE" }
-  │                      ^^^^^^^^^^^^^^^^^^^^^^^^^^ Expected an expression here
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    1 │ const formData = #{ title: "Implement all the things" }
+    2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+  > 3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+      │                    ^
+    4 │ 
+    5 │ // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
+  
+  i ...Which is required to end this statement
+  
+    1 │ const formData = #{ title: "Implement all the things" }
+    2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+  > 3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+      │ ^^^^^^^^^^^^^^^^^^^
+    4 │ 
+    5 │ // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
+  
+spread.js:3:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an identifier but instead found '{'
-  ┌─ spread.js:6:23
-  │
-6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
-  │                       ^ Expected an identifier here
+  × expected an expression but instead found '...taskNow, status: "DONE"'
+  
+  × Expected an expression here
+  
+    1 │ const formData = #{ title: "Implement all the things" }
+    2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+  > 3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+      │                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │ 
+    5 │ // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
+  
+spread.js:6:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Private names are only allowed on the left side of a 'in' expression
-  ┌─ spread.js:6:22
-  │
-6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
-  │                      ^
+  × expected an identifier but instead found '{'
+  
+  × Expected an identifier here
+  
+    5 │ // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
+  > 6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
+      │                       ^
+    7 │ 
+  
+spread.js:6:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `{`
-  ┌─ spread.js:6:23
-  │
-6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
-  │                       ^ unexpected
+  × Private names are only allowed on the left side of a 'in' expression
+  
+    5 │ // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
+  > 6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
+      │                      ^
+    7 │ 
+  
+spread.js:6:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `{`
+  
+  × unexpected
+  
+    5 │ // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
+  > 6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
+      │                       ^
+    7 │ 
+  
 
 ```
 

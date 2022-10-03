@@ -1,7 +1,8 @@
-use parking_lot::{const_mutex, Mutex};
+use rome_diagnostics::file::FileId;
 use rome_rowan::{TextRange, TextSize};
 use similar::{utils::diff_lines, Algorithm, ChangeTag, TextDiff};
 use std::fs::remove_file;
+use std::sync::Mutex;
 use std::{
     env,
     ffi::OsStr,
@@ -15,8 +16,8 @@ use std::{
 };
 
 use rome_diagnostics::{file::SimpleFiles, termcolor, Emitter};
-use rome_formatter::IndentStyle;
-use rome_js_formatter::context::JsFormatContext;
+use rome_formatter::{FormatOptions, IndentStyle};
+use rome_js_formatter::context::JsFormatOptions;
 use rome_js_parser::parse;
 use rome_js_syntax::SourceType;
 use serde::Serialize;
@@ -30,7 +31,7 @@ struct TestInfo {
 
 mod check_reformat;
 
-tests_macros::gen_tests! {"tests/specs/prettier/{js,typescript}/**/*.{js,ts,jsx,tsx}", crate::test_snapshot, "script"}
+tests_macros::gen_tests! {"tests/specs/prettier/{js,typescript,jsx}/**/*.{js,ts,jsx,tsx}", crate::test_snapshot, "script"}
 
 const PRETTIER_IGNORE: &str = "prettier-ignore";
 const ROME_IGNORE: &str = "rome-ignore format: prettier ignore";
@@ -61,12 +62,12 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
         input_file.try_into().unwrap()
     };
 
-    let parsed = parse(&parse_input, 0, source_type);
+    let parsed = parse(&parse_input, FileId::zero(), source_type);
 
     let has_errors = parsed.has_errors();
     let syntax = parsed.syntax();
 
-    let context = JsFormatContext::default().with_indent_style(IndentStyle::Space(2));
+    let options = JsFormatOptions::new(source_type).with_indent_style(IndentStyle::Space(2));
 
     let result = match (range_start_index, range_end_index) {
         (Some(start), Some(end)) => {
@@ -77,7 +78,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
             }
 
             rome_js_formatter::format_range(
-                context.clone(),
+                options.clone(),
                 &syntax,
                 TextRange::new(
                     TextSize::try_from(start).unwrap(),
@@ -85,8 +86,8 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
                 ),
             )
         }
-        _ => rome_js_formatter::format_node(context.clone(), &syntax)
-            .map(|formatted| formatted.print()),
+        _ => rome_js_formatter::format_node(options.clone(), &syntax)
+            .map(|formatted| formatted.print().unwrap()),
     };
 
     let formatted = result.expect("formatting failed");
@@ -110,7 +111,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
                     text: &result,
                     source_type,
                     file_name,
-                    format_context: context.clone(),
+                    options: options.clone(),
                 });
             }
 
@@ -236,7 +237,7 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
         writeln!(snapshot).unwrap();
     }
 
-    let max_width = context.line_width().value() as usize;
+    let max_width = options.line_width().value() as usize;
     let mut lines_exceeding_max_width = formatted
         .lines()
         .enumerate()
@@ -364,7 +365,7 @@ struct DiffReport {
 impl DiffReport {
     fn get() -> &'static Self {
         static REPORTER: DiffReport = DiffReport {
-            state: const_mutex(Vec::new()),
+            state: Mutex::new(Vec::new()),
         };
 
         // Use an atomic Once to register an exit callback the first time any
@@ -397,12 +398,46 @@ impl DiffReport {
         rome_formatted_result: &str,
         prettier_formatted_result: &str,
     ) {
-        self.state.lock().push(DiffReportItem {
-            file_name,
-            rome_formatted_result: rome_formatted_result.to_owned(),
-            prettier_formatted_result: prettier_formatted_result.to_owned(),
-        });
+        match env::var("REPORT_PRETTIER") {
+            Ok(value) if value == "1" => {
+                if !Self::is_ignored(file_name) {
+                    self.state.lock().unwrap().push(DiffReportItem {
+                        file_name,
+                        rome_formatted_result: rome_formatted_result.to_owned(),
+                        prettier_formatted_result: prettier_formatted_result.to_owned(),
+                    });
+                }
+            }
+            _ => {}
+        }
     }
+
+    fn is_ignored(file_name: &str) -> bool {
+        let patterns = [
+            "arrows-bind",
+            "async-do-expressions",
+            "async-do-expressions.js",
+            "decimal.js",
+            "do-expressions.js",
+            "export-default-from",
+            "function-bind.js",
+            "module-blocks",
+            "partial-application",
+            "pipeline",
+            "record",
+            "throw-expressions.js",
+            "v8intrinsic.js",
+            "v8_intrinsic",
+            "bind-expressions",
+            "destructuring-private-fields",
+            "/do/",
+            "export-extension",
+            "js/tuple",
+        ];
+
+        patterns.iter().any(|pattern| file_name.contains(pattern))
+    }
+
     fn print(&self) {
         if let Some(report) = rome_rowan::check_live() {
             panic!("\n{report}")
@@ -429,7 +464,7 @@ impl DiffReport {
     }
 
     fn report_prettier(&self, report_type: ReportType, report_filename: String) {
-        let mut state = self.state.lock();
+        let mut state = self.state.lock().unwrap();
         state.sort_by_key(|DiffReportItem { file_name, .. }| *file_name);
 
         let mut report_metric_data = PrettierCompatibilityMetricData::default();
@@ -469,10 +504,9 @@ impl DiffReport {
                     writeln!(diff, "{}{}", tag, line).unwrap();
                 }
 
-                let single_file_compatibility =
-                    matched_lines as f64 / rome_lines.max(prettier_lines) as f64;
+                let ratio = matched_lines as f64 / rome_lines.max(prettier_lines) as f64;
 
-                (matched_lines, single_file_compatibility, Some(diff))
+                (matched_lines, ratio, Some(diff))
             };
 
             total_lines += rome_lines.max(prettier_lines);
@@ -518,19 +552,59 @@ impl DiffReport {
                 writeln!(report, "{diff}").unwrap();
                 writeln!(report, "```").unwrap()
             }
+            writeln!(report).unwrap();
             writeln!(
                 report,
                 "**Prettier Similarity**: {:.2}%",
                 single_file_compatibility * 100_f64
             )
             .unwrap();
+            writeln!(report).unwrap();
+            writeln!(report).unwrap();
         }
-        // extra two space force markdown render insert a new line
-        report = format!(
-            "**File Based Average Prettier Similarity**: {:.2}%  \n**Line Based Average Prettier Similarity**: {:.2}%  \nthe definition of similarity you could found here: https://github.com/rome/tools/issues/2555#issuecomment-1124787893\n",
+
+        let mut header = String::from("# Overall Metrics\n\n");
+
+        writeln!(
+            header,
+            "**Average compatibility**: {:.2}",
             report_metric_data.file_based_average_prettier_similarity * 100_f64,
+        )
+        .unwrap();
+
+        header.push_str(
+            r#"
+<details>
+	<summary>Definition</summary>
+
+	$$average = \frac\{\sum_{file}^\{files}compatibility_\{file}}\{files}$$
+</details>
+
+"#,
+        );
+
+        write!(
+            header,
+            "**Compatible lines**: {:.2}",
             report_metric_data.line_based_average_prettier_similarity * 100_f64
-        ) + &report;
+        )
+        .unwrap();
+
+        header.push_str(
+            r#"
+<details>
+	<summary>Definition</summary>
+
+	$$average = \frac{\sum_{file}^{files}matching\_lines_{file}}{max(lines_{rome}, lines_{prettier})}$$
+</details>
+
+
+[Metric definition discussion](https://github.com/rome/tools/issues/2555#issuecomment-1124787893)
+            "#,
+        );
+
+        let report = format!("{header}\n\n{report}");
+
         write(report_filename, report).unwrap();
     }
 

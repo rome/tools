@@ -1,34 +1,55 @@
 use crate::prelude::*;
 
-use rome_formatter::write;
-use rome_js_syntax::{JsxSelfClosingElement, JsxSelfClosingElementFields};
+use crate::jsx::tag::opening_element::JsxAnyOpeningElement;
+
+use crate::utils::jsx::is_jsx_suppressed;
+use rome_js_syntax::JsxSelfClosingElement;
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsxSelfClosingElement;
 
 impl FormatNodeRule<JsxSelfClosingElement> for FormatJsxSelfClosingElement {
     fn fmt_fields(&self, node: &JsxSelfClosingElement, f: &mut JsFormatter) -> FormatResult<()> {
-        let JsxSelfClosingElementFields {
-            l_angle_token,
-            name,
-            type_arguments,
-            attributes,
-            slash_token,
-            r_angle_token,
-        } = node.as_fields();
+        JsxAnyOpeningElement::from(node.clone()).fmt(f)
+    }
 
-        write![
-            f,
-            [
-                l_angle_token.format(),
-                name.format(),
-                type_arguments.format(),
-                space(),
-                attributes.format(),
-                space(),
-                slash_token.format(),
-                r_angle_token.format()
-            ]
-        ]
+    fn is_suppressed(&self, node: &JsxSelfClosingElement, f: &JsFormatter) -> bool {
+        is_jsx_suppressed(&node.clone().into(), f.comments())
+    }
+
+    fn fmt_leading_comments(
+        &self,
+        node: &JsxSelfClosingElement,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        debug_assert!(
+            !f.comments().has_leading_comments(node.syntax()),
+            "JsxSelfClosingElement can not have comments."
+        );
+        Ok(())
+    }
+
+    fn fmt_dangling_comments(
+        &self,
+        node: &JsxSelfClosingElement,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        debug_assert!(
+            !f.comments().has_dangling_comments(node.syntax()),
+            "JsxSelfClosingElement can not have comments."
+        );
+        Ok(())
+    }
+
+    fn fmt_trailing_comments(
+        &self,
+        node: &JsxSelfClosingElement,
+        f: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        debug_assert!(
+            !f.comments().has_trailing_comments(node.syntax()),
+            "JsxSelfClosingElement can not have comments."
+        );
+        Ok(())
     }
 }

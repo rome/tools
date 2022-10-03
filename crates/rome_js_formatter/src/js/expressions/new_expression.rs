@@ -1,8 +1,9 @@
 use crate::prelude::*;
 
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
-use rome_js_syntax::JsNewExpressionFields;
 use rome_js_syntax::{JsNewExpression, JsSyntaxKind};
+use rome_js_syntax::{JsNewExpressionFields, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsNewExpression;
@@ -31,14 +32,18 @@ impl FormatNodeRule<JsNewExpression> for FormatJsNewExpression {
                 write!(f, [arguments.format()])
             }
             None => {
-                write!(
-                    f,
-                    [
-                        format_inserted(JsSyntaxKind::L_PAREN),
-                        format_inserted(JsSyntaxKind::R_PAREN)
-                    ]
-                )
+                write!(f, [text("("), text(")")])
             }
         }
+    }
+
+    fn needs_parentheses(&self, item: &JsNewExpression) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl NeedsParentheses for JsNewExpression {
+    fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
+        matches!(parent.kind(), JsSyntaxKind::JS_EXTENDS_CLAUSE)
     }
 }

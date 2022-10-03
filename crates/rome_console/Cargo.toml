@@ -2,7 +2,8 @@
 name = "rome_console"
 version = "0.0.0"
 edition = "2021"
-authors = ["Rome Tools Developers and Contributros"]
+authors = ["Rome Tools Developers and Contributors"]
+repository = "https://github.com/rome/tools"
 license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -10,12 +11,15 @@ license = "MIT"
 [dependencies]
 rome_markup = { path = "../rome_markup" }
 atty = "0.2.14"
-text-size = "1.1.0"
+rome_text_size = { path = "../rome_text_size"}
 lazy_static = "1.4.0"
 termcolor = "1.1.2"
-similar = "2.1.0"
 unicode-width = "0.1.9"
 serde = { version = "1.0.133", optional = true, features = ["derive"] }
+schemars = { version = "0.8.10", optional = true }
 
 [dev-dependencies]
 trybuild = "1.0"
+
+[features]
+serde_markup = ["serde", "schemars"]

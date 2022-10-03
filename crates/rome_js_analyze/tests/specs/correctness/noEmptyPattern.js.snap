@@ -1,0 +1,159 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noEmptyPattern.js
+---
+# Input
+```js
+// valid
+var {a = {}} = foo;
+var {a, b = {}} = foo;
+var {a = []} = foo;
+function foo({a = {}}) {}
+function foo({a = []}) {}
+var [a] = foo;
+// invalid
+var {} = foo;
+var [] = foo;
+var {a: {}} = foo;
+var {a, b: {}} = foo;
+var {a: []} = foo;
+function foo({}) {};
+function foo([]) {};
+function foo({a: {}}) {};
+function foo({a: []}) {};
+```
+
+# Diagnostics
+```
+noEmptyPattern.js:9:5 lint/correctness/noEmptyPattern ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected empty object pattern.
+  
+     7 │ var [a] = foo;
+     8 │ // invalid
+   > 9 │ var {} = foo;
+       │     ^^
+    10 │ var [] = foo;
+    11 │ var {a: {}} = foo;
+  
+
+```
+
+```
+noEmptyPattern.js:10:5 lint/correctness/noEmptyPattern ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected empty array pattern.
+  
+     8 │ // invalid
+     9 │ var {} = foo;
+  > 10 │ var [] = foo;
+       │     ^^
+    11 │ var {a: {}} = foo;
+    12 │ var {a, b: {}} = foo;
+  
+
+```
+
+```
+noEmptyPattern.js:11:9 lint/correctness/noEmptyPattern ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected empty object pattern.
+  
+     9 │ var {} = foo;
+    10 │ var [] = foo;
+  > 11 │ var {a: {}} = foo;
+       │         ^^
+    12 │ var {a, b: {}} = foo;
+    13 │ var {a: []} = foo;
+  
+
+```
+
+```
+noEmptyPattern.js:12:12 lint/correctness/noEmptyPattern ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected empty object pattern.
+  
+    10 │ var [] = foo;
+    11 │ var {a: {}} = foo;
+  > 12 │ var {a, b: {}} = foo;
+       │            ^^
+    13 │ var {a: []} = foo;
+    14 │ function foo({}) {};
+  
+
+```
+
+```
+noEmptyPattern.js:13:9 lint/correctness/noEmptyPattern ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected empty array pattern.
+  
+    11 │ var {a: {}} = foo;
+    12 │ var {a, b: {}} = foo;
+  > 13 │ var {a: []} = foo;
+       │         ^^
+    14 │ function foo({}) {};
+    15 │ function foo([]) {};
+  
+
+```
+
+```
+noEmptyPattern.js:14:14 lint/correctness/noEmptyPattern ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected empty object pattern.
+  
+    12 │ var {a, b: {}} = foo;
+    13 │ var {a: []} = foo;
+  > 14 │ function foo({}) {};
+       │              ^^
+    15 │ function foo([]) {};
+    16 │ function foo({a: {}}) {};
+  
+
+```
+
+```
+noEmptyPattern.js:15:14 lint/correctness/noEmptyPattern ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected empty array pattern.
+  
+    13 │ var {a: []} = foo;
+    14 │ function foo({}) {};
+  > 15 │ function foo([]) {};
+       │              ^^
+    16 │ function foo({a: {}}) {};
+    17 │ function foo({a: []}) {};
+  
+
+```
+
+```
+noEmptyPattern.js:16:18 lint/correctness/noEmptyPattern ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected empty object pattern.
+  
+    14 │ function foo({}) {};
+    15 │ function foo([]) {};
+  > 16 │ function foo({a: {}}) {};
+       │                  ^^
+    17 │ function foo({a: []}) {};
+  
+
+```
+
+```
+noEmptyPattern.js:17:18 lint/correctness/noEmptyPattern ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected empty array pattern.
+  
+    15 │ function foo([]) {};
+    16 │ function foo({a: {}}) {};
+  > 17 │ function foo({a: []}) {};
+       │                  ^^
+  
+
+```
+
+

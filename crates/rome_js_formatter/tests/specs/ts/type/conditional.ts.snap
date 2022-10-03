@@ -27,6 +27,7 @@ type T4 = test extends string
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 type test = string;
 
@@ -39,25 +40,22 @@ type T1 = test extends string
 type T2 = test extends string
 	? unknown
 	: test extends number
-		? undefined
-		: undefined;
+	? undefined
+	: undefined;
 
 type T3 = test extends string
-	?
-	// something
-	unknown
+	? // something
+	  unknown
 	: test extends number
-		? undefined
-		:
-		// else
-		undefined;
+	? undefined
+	: // else
+	  undefined;
 
 type T4 = test extends string
-	// something
-	? unknown
+	? // something
+	  unknown
 	: test extends number
-		? undefined
-		:
-		// else
-		undefined;
+	? undefined
+	: // else
+	  undefined;
 

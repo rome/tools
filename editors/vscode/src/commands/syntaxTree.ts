@@ -86,21 +86,20 @@ class SyntaxTreeProvider
 		if (document) {
 			return document.value;
 		}
+
 		const params: SyntaxTreeParams = {
 			textDocument: { uri: this.session.editor.document.uri.toString() },
 		};
 
 		// send request to the server and store its content in the cache if successful
-		return this.session.client.sendRequest(
-			syntaxTreeRequest,
-			params,
-			token,
-		).then((result) => {
-			const document = new SyntaxTreeDocument(uri, result);
-			this.documents.set(documentUri, document);
+		return this.session.client
+			.sendRequest(syntaxTreeRequest, params, token)
+			.then((result) => {
+				const document = new SyntaxTreeDocument(uri, result);
+				this.documents.set(documentUri, document);
 
-			return document.value;
-		});
+				return document.value;
+			});
 	}
 
 	dispose(): any {
@@ -111,10 +110,7 @@ class SyntaxTreeProvider
 		return this.eventEmitter.event;
 	}
 
-	provideDocumentLinks(
-		document: TextDocument,
-		token: CancellationToken,
-	): ProviderResult<DocumentLink[]> {
+	provideDocumentLinks(document: TextDocument): ProviderResult<DocumentLink[]> {
 		const doc = this.documents.get(document.uri.toString());
 		if (doc) {
 			return [];
@@ -145,9 +141,9 @@ export function syntaxTree(session: Session): Command {
 	return async () => {
 		const document = await workspace.openTextDocument(provider.uri);
 		provider.eventEmitter.fire(provider.uri);
-		void await window.showTextDocument(document, {
+		void (await window.showTextDocument(document, {
 			viewColumn: ViewColumn.Two,
 			preserveFocus: true,
-		});
+		}));
 	};
 }

@@ -1,3 +1,4 @@
+use std::collections::hash_map::IntoIter;
 use std::{
     collections::HashMap,
     io,
@@ -41,6 +42,11 @@ impl MemoryFileSystem {
         let files = &mut self.files.0.write();
         files.insert(path, Arc::new(Mutex::new(content.into())));
     }
+
+    pub fn files(self) -> IntoIter<PathBuf, FileEntry> {
+        let files = self.files.0.into_inner();
+        files.into_iter()
+    }
 }
 
 impl FileSystem for MemoryFileSystem {
@@ -71,6 +77,20 @@ impl FileSystemExt for MemoryFileSystem {
     }
 
     fn open(&self, path: &Path) -> io::Result<Box<dyn File>> {
+        let files = &self.files.0.read();
+        let entry = files.get(path).ok_or_else(|| {
+            io::Error::new(
+                io::ErrorKind::NotFound,
+                format!("path {path:?} does not exists in memory filesystem"),
+            )
+        })?;
+
+        let lock = entry.lock_arc();
+
+        Ok(Box::new(MemoryFile { inner: lock }))
+    }
+
+    fn read(&self, path: &Path) -> io::Result<Box<dyn File>> {
         let files = &self.files.0.read();
         let entry = files.get(path).ok_or_else(|| {
             io::Error::new(
@@ -138,9 +158,9 @@ mod tests {
 
     use crate::fs::FileSystemExt;
     use crate::{
-        interner::FileId, AtomicInterner, FileSystem, MemoryFileSystem, PathInterner, RomePath,
-        TraversalContext,
+        AtomicInterner, FileSystem, MemoryFileSystem, PathInterner, RomePath, TraversalContext,
     };
+    use rome_diagnostics::{file::FileId, v2::Category};
 
     #[test]
     fn file_read_write() {
@@ -205,8 +225,11 @@ mod tests {
                 &self.interner
             }
 
-            fn push_diagnostic(&self, file_id: FileId, code: &'static str, message: String) {
-                panic!("unexpected error {code:?} in file {file_id}: {message}")
+            fn push_diagnostic(&self, file_id: FileId, code: &'static Category, message: String) {
+                panic!(
+                    "unexpected error {:?} in file {file_id:?}: {message}",
+                    code.name()
+                )
             }
 
             fn can_handle(&self, _: &RomePath) -> bool {

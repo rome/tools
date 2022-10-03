@@ -48,19 +48,30 @@ JsModule {
       1: SEMICOLON@11..12 ";" [] []
   3: EOF@12..13 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected an identifier, or a member expression but instead found ';'
-  ┌─ unary_expr.js:1:4
-  │
-1 │ ++ ;
-  │    ^ Expected an identifier, or a member expression here
+unary_expr.js:1:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier, or a member expression but instead found ';'
+  
+  × Expected an identifier, or a member expression here
+  
+  > 1 │ ++ ;
+      │    ^
+    2 │ -- ;
+    3 │ -;
+  
 --
-error[SyntaxError]: expected an identifier, or a member expression but instead found ';'
-  ┌─ unary_expr.js:2:4
-  │
-2 │ -- ;
-  │    ^ Expected an identifier, or a member expression here
+unary_expr.js:2:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier, or a member expression but instead found ';'
+  
+  × Expected an identifier, or a member expression here
+  
+    1 │ ++ ;
+  > 2 │ -- ;
+      │    ^
+    3 │ -;
+    4 │ 
+  
 --
 ++ ;
 -- ;

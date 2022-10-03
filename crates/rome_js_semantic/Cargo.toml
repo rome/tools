@@ -2,7 +2,7 @@
 edition = "2021"
 name = "rome_js_semantic"
 version = "0.0.0"
-authors = ["Rome Tools Developers and Contributros"]
+authors = ["Rome Tools Developers and Contributors"]
 license = "MIT"
 description = "Semantic model for the JavaScript language"
 repository = "https://github.com/rome/tools"

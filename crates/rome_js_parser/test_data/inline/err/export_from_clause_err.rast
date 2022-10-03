@@ -116,40 +116,71 @@ JsModule {
         5: SEMICOLON@68..69 ";" [] []
   3: EOF@69..70 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `from` but instead found `;`
-  ┌─ export_from_clause_err.js:1:9
-  │
-1 │ export *;
-  │         ^ unexpected
+export_from_clause_err.js:1:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `from` but instead found `;`
+  
+  × unexpected
+  
+  > 1 │ export *;
+      │         ^
+    2 │ export * from 5;
+    3 │ export as from "test";
+  
 --
-error[SyntaxError]: expected a string literal but instead found '5'
-  ┌─ export_from_clause_err.js:2:15
-  │
-2 │ export * from 5;
-  │               ^ Expected a string literal here
+export_from_clause_err.js:2:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a string literal but instead found '5'
+  
+  × Expected a string literal here
+  
+    1 │ export *;
+  > 2 │ export * from 5;
+      │               ^
+    3 │ export as from "test";
+    4 │ export from "test";
+  
 --
-error[SyntaxError]: expected `*` but instead found `as`
-  ┌─ export_from_clause_err.js:3:8
-  │
-3 │ export as from "test";
-  │        ^^ unexpected
+export_from_clause_err.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `*` but instead found `as`
+  
+  × unexpected
+  
+    1 │ export *;
+    2 │ export * from 5;
+  > 3 │ export as from "test";
+      │        ^^
+    4 │ export from "test";
+    5 │ 
+  
 --
-error[SyntaxError]: expected `from` but instead found `"test"`
-  ┌─ export_from_clause_err.js:3:16
-  │
-3 │ export as from "test";
-  │                ^^^^^^ unexpected
+export_from_clause_err.js:3:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `from` but instead found `"test"`
+  
+  × unexpected
+  
+    1 │ export *;
+    2 │ export * from 5;
+  > 3 │ export as from "test";
+      │                ^^^^^^
+    4 │ export from "test";
+    5 │ 
+  
 --
-error[SyntaxError]: expected `*` but instead found `from`
-  ┌─ export_from_clause_err.js:4:8
-  │
-4 │ export from "test";
-  │        ^^^^ unexpected
+export_from_clause_err.js:4:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `*` but instead found `from`
+  
+  × unexpected
+  
+    2 │ export * from 5;
+    3 │ export as from "test";
+  > 4 │ export from "test";
+      │        ^^^^
+    5 │ 
+  
 --
 export *;
 export * from 5;

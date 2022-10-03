@@ -433,85 +433,146 @@ JsModule {
         3: R_CURLY@206..207 "}" [] []
   3: EOF@207..208 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected a name for the function in a function declaration, but found none
-  ┌─ function_decl_err.js:1:9
-  │
-1 │ function() {}
-  │         ^
+function_decl_err.js:1:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a name for the function in a function declaration, but found none
+  
+  > 1 │ function() {}
+      │         ^
+    2 │ function foo {}
+    3 │ function {}
+  
 --
-error[SyntaxError]: expected a parenthesis '(' but instead found '{'
-  ┌─ function_decl_err.js:2:14
-  │
-2 │ function foo {}
-  │              ^ Expected a parenthesis '(' here
+function_decl_err.js:2:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a parenthesis '(' but instead found '{'
+  
+  × Expected a parenthesis '(' here
+  
+    1 │ function() {}
+  > 2 │ function foo {}
+      │              ^
+    3 │ function {}
+    4 │ function *() {}
+  
 --
-error[SyntaxError]: expected a name for the function in a function declaration, but found none
-  ┌─ function_decl_err.js:3:10
-  │
-3 │ function {}
-  │          ^
+function_decl_err.js:3:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a name for the function in a function declaration, but found none
+  
+    1 │ function() {}
+    2 │ function foo {}
+  > 3 │ function {}
+      │          ^
+    4 │ function *() {}
+    5 │ async function() {}
+  
 --
-error[SyntaxError]: expected a name for the function in a function declaration, but found none
-  ┌─ function_decl_err.js:4:11
-  │
-4 │ function *() {}
-  │           ^
+function_decl_err.js:4:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a name for the function in a function declaration, but found none
+  
+    2 │ function foo {}
+    3 │ function {}
+  > 4 │ function *() {}
+      │           ^
+    5 │ async function() {}
+    6 │ async function *() {}
+  
 --
-error[SyntaxError]: expected a name for the function in a function declaration, but found none
-  ┌─ function_decl_err.js:5:15
-  │
-5 │ async function() {}
-  │               ^
+function_decl_err.js:5:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a name for the function in a function declaration, but found none
+  
+    3 │ function {}
+    4 │ function *() {}
+  > 5 │ async function() {}
+      │               ^
+    6 │ async function *() {}
+    7 │ function *foo2() {}
+  
 --
-error[SyntaxError]: expected a name for the function in a function declaration, but found none
-  ┌─ function_decl_err.js:6:17
-  │
-6 │ async function *() {}
-  │                 ^
+function_decl_err.js:6:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a name for the function in a function declaration, but found none
+  
+    4 │ function *() {}
+    5 │ async function() {}
+  > 6 │ async function *() {}
+      │                 ^
+    7 │ function *foo2() {}
+    8 │ yield foo3;
+  
 --
-error[SyntaxError]: Illegal use of reserved keyword `yield` as an identifier in strict mode
-  ┌─ function_decl_err.js:8:1
-  │
-8 │ yield foo3;
-  │ ^^^^^
+function_decl_err.js:8:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of reserved keyword `yield` as an identifier in strict mode
+  
+     6 │ async function *() {}
+     7 │ function *foo2() {}
+   > 8 │ yield foo3;
+       │ ^^^^^
+     9 │ function test2(): number {}
+    10 │ function foo4(await) {}
+  
 --
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ function_decl_err.js:8:7
-  │
-8 │ yield foo3;
-  │ ------^^^^
-  │ │     │
-  │ │     An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
+function_decl_err.js:8:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+     6 │ async function *() {}
+     7 │ function *foo2() {}
+   > 8 │ yield foo3;
+       │       ^^^^
+     9 │ function test2(): number {}
+    10 │ function foo4(await) {}
+  
+  i ...Which is required to end this statement
+  
+     6 │ async function *() {}
+     7 │ function *foo2() {}
+   > 8 │ yield foo3;
+       │ ^^^^^^^^^^
+     9 │ function test2(): number {}
+    10 │ function foo4(await) {}
+  
 --
-error[SyntaxError]: return types can only be used in TypeScript files
-  ┌─ function_decl_err.js:9:17
-  │
-9 │ function test2(): number {}
-  │                 ^^^^^^^^
+function_decl_err.js:9:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × return types can only be used in TypeScript files
+  
+     7 │ function *foo2() {}
+     8 │ yield foo3;
+   > 9 │ function test2(): number {}
+       │                 ^^^^^^^^
+    10 │ function foo4(await) {}
+    11 │ function foo5(yield) {}
+  
 --
-error[SyntaxError]: Illegal use of `await` as an identifier inside of a module
-   ┌─ function_decl_err.js:10:15
-   │
-10 │ function foo4(await) {}
-   │               ^^^^^
+function_decl_err.js:10:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of `await` as an identifier inside of a module
+  
+     8 │ yield foo3;
+     9 │ function test2(): number {}
+  > 10 │ function foo4(await) {}
+       │               ^^^^^
+    11 │ function foo5(yield) {}
+    12 │ 
+  
 --
-error[SyntaxError]: Illegal use of reserved keyword `yield` as an identifier in strict mode
-   ┌─ function_decl_err.js:11:15
-   │
-11 │ function foo5(yield) {}
-   │               ^^^^^
+function_decl_err.js:11:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of reserved keyword `yield` as an identifier in strict mode
+  
+     9 │ function test2(): number {}
+    10 │ function foo4(await) {}
+  > 11 │ function foo5(yield) {}
+       │               ^^^^^
+    12 │ 
+  
 --
 function() {}
 function foo {}

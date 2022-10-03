@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\destructuring-private-fields\\nested-bindings.js"
 ---
 
 # Input
@@ -49,18 +51,32 @@ class C {
 
 # Errors
 ```
-error[SyntaxError]: expected an identifier, a member name, or a rest pattern but instead found '#x: [x]'
-  ┌─ nested-bindings.js:4:17
-  │
-4 │     const {x: { #x: [x] }, y: [...{ #x: y }]} = this;
-  │                 ^^^^^^^ Expected an identifier, a member name, or a rest pattern here
+nested-bindings.js:4:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an identifier, a member name, or a rest pattern but instead found '#x: y'
-  ┌─ nested-bindings.js:4:37
-  │
-4 │     const {x: { #x: [x] }, y: [...{ #x: y }]} = this;
-  │                                     ^^^^^ Expected an identifier, a member name, or a rest pattern here
+  × expected an identifier, a member name, or a rest pattern but instead found '#x: [x]'
+  
+  × Expected an identifier, a member name, or a rest pattern here
+  
+    2 │   #x = 1;
+    3 │   m() {
+  > 4 │     const {x: { #x: [x] }, y: [...{ #x: y }]} = this;
+      │                 ^^^^^^^
+    5 │   }
+    6 │ }
+  
+nested-bindings.js:4:37 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier, a member name, or a rest pattern but instead found '#x: y'
+  
+  × Expected an identifier, a member name, or a rest pattern here
+  
+    2 │   #x = 1;
+    3 │   m() {
+  > 4 │     const {x: { #x: [x] }, y: [...{ #x: y }]} = this;
+      │                                     ^^^^^
+    5 │   }
+    6 │ }
+  
 
 ```
 

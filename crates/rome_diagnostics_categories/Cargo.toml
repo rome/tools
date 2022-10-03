@@ -1,0 +1,14 @@
+[package]
+name = "rome_diagnostics_categories"
+version = "0.0.0"
+authors = ["Rome Tools Developers and Contributors"]
+repository = "https://github.com/rome/tools"
+license = "MIT"
+edition = "2021"
+
+[dependencies]
+serde = { version = "1.0.136", optional = true }
+schemars = { version = "0.8.10", optional = true }
+
+[build-dependencies]
+quote = "1.0.14"

@@ -1,6 +1,9 @@
 use rome_js_factory::make;
-use rome_js_syntax::{JsAnyRoot, JsAnyStatement, JsLanguage, JsModuleItemList, JsStatementList, T};
-use rome_rowan::{AstNode, BatchMutation};
+use rome_js_syntax::{
+    JsAnyStatement, JsLanguage, JsModuleItemList, JsStatementList, JsVariableDeclaration,
+    JsVariableDeclarator, JsVariableDeclaratorList, JsVariableStatement, T,
+};
+use rome_rowan::{AstNode, AstSeparatedList, BatchMutation};
 use std::borrow::Cow;
 
 pub mod batch;
@@ -34,7 +37,7 @@ impl<'a> Iterator for InterpretEscapedString<'a> {
     }
 }
 
-/// unescape   
+/// unescape
 ///
 pub(crate) fn escape_string(s: &str) -> Result<String, EscapeError> {
     (InterpretEscapedString { s: s.chars() }).collect()
@@ -123,10 +126,7 @@ pub fn to_camel_case(input: &str) -> Cow<str> {
 /// Utility function to remove a statement node from a syntax tree, by either
 /// removing the node from its parent if said parent is a statement list or
 /// module item list, or by replacing the statement node with an empty statement
-pub(crate) fn remove_statement<N>(
-    mutation: &mut BatchMutation<JsLanguage, JsAnyRoot>,
-    node: &N,
-) -> Option<()>
+pub(crate) fn remove_statement<N>(mutation: &mut BatchMutation<JsLanguage>, node: &N) -> Option<()>
 where
     N: AstNode<Language = JsLanguage> + Into<JsAnyStatement>,
 {
@@ -139,6 +139,53 @@ where
             node.clone().into(),
             JsAnyStatement::JsEmptyStatement(make::js_empty_statement(make::token(T![;]))),
         );
+    }
+
+    Some(())
+}
+
+/// Removes the declarator, and:
+/// 1 - removes the statement if the declaration only has one declarator;
+/// 2 - removes commas around the declarator to keep the declaration list valid.
+pub(crate) fn remove_declarator(
+    batch: &mut BatchMutation<JsLanguage>,
+    declarator: &JsVariableDeclarator,
+) -> Option<()> {
+    let list = declarator.parent::<JsVariableDeclaratorList>()?;
+    let declaration = list.parent::<JsVariableDeclaration>()?;
+
+    if list.syntax_list().len() == 1 {
+        let statement = declaration.parent::<JsVariableStatement>()?;
+        batch.remove_node(statement);
+    } else {
+        let mut elements = list.elements();
+
+        // Find the declarator we want to remove
+        // remove its trailing comma, if there is one
+        let mut previous_element = None;
+        for element in elements.by_ref() {
+            if let Ok(node) = element.node() {
+                if node == declarator {
+                    batch.remove_node(node.clone());
+                    if let Some(comma) = element.trailing_separator().ok().flatten() {
+                        batch.remove_token(comma.clone());
+                    }
+                    break;
+                }
+            }
+            previous_element = Some(element);
+        }
+
+        // if it is the last declarator of the list
+        // removes the comma before this element
+        let is_last = elements.next().is_none();
+        if is_last {
+            if let Some(element) = previous_element {
+                if let Some(comma) = element.trailing_separator().ok().flatten() {
+                    batch.remove_token(comma.clone());
+                }
+            }
+        }
     }
 
     Some(())

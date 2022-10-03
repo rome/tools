@@ -2,7 +2,8 @@
 name = "rome_js_analyze"
 version = "0.0.0"
 edition = "2021"
-authors = ["Rome Tools Developers and Contributros"]
+authors = ["Rome Tools Developers and Contributors"]
+repository = "https://github.com/rome/tools"
 license = "MIT"
 
 [dependencies]
@@ -16,10 +17,12 @@ rome_console = { path = "../rome_console" }
 rome_diagnostics = { path = "../rome_diagnostics" }
 roaring = "0.9.0"
 rustc-hash = "1.1.0"
+serde = { version = "1.0.136", features = ["derive"], optional = true }
 
 [dev-dependencies]
 tests_macros = { path = "../tests_macros" }
 rome_text_edit = { path = "../rome_text_edit" }
 rome_js_parser = { path = "../rome_js_parser", features = ["tests"] }
-insta = { version = "1.10.0", features = ["glob"] }
+insta = { version = "1.18.2", features = ["glob"] }
 countme = { version = "3.0.0", features = ["enable"] }
+similar = "2.1.0"

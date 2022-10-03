@@ -1,12 +1,8 @@
-use rome_text_edit::Indel;
-use text_size::TextRange;
+use rome_text_edit::TextEdit;
+use rome_text_size::TextRange;
 
-use crate::{
-    AstNode, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxNodeCast, SyntaxSlot,
-    SyntaxToken,
-};
+use crate::{AstNode, Language, SyntaxElement, SyntaxKind, SyntaxNode, SyntaxSlot, SyntaxToken};
 use std::{
-    any::type_name,
     cmp,
     collections::BinaryHeap,
     iter::{empty, once},
@@ -16,8 +12,9 @@ pub trait BatchMutationExt<L>: AstNode<Language = L>
 where
     L: Language,
 {
+    /// It starts a [BatchMutation]
     #[must_use = "This method consumes the node and return the BatchMutation api that returns the new SynytaxNode on commit"]
-    fn begin(self) -> BatchMutation<L, Self>;
+    fn begin(self) -> BatchMutation<L>;
 }
 
 impl<L, T> BatchMutationExt<L> for T
@@ -26,11 +23,8 @@ where
     T: AstNode<Language = L>,
 {
     #[must_use = "This method consumes the node and return the BatchMutation api that returns the new SynytaxNode on commit"]
-    fn begin(self) -> BatchMutation<L, Self> {
-        BatchMutation {
-            root: self,
-            changes: BinaryHeap::new(),
-        }
+    fn begin(self) -> BatchMutation<L> {
+        BatchMutation::new(self.into_syntax())
     }
 }
 
@@ -88,20 +82,25 @@ impl<L: Language> Ord for CommitChange<L> {
 }
 
 #[derive(Debug, Clone)]
-pub struct BatchMutation<L, N>
+pub struct BatchMutation<L>
 where
     L: Language,
-    N: AstNode<Language = L>,
 {
-    root: N,
+    root: SyntaxNode<L>,
     changes: BinaryHeap<CommitChange<L>>,
 }
 
-impl<L, N> BatchMutation<L, N>
+impl<L> BatchMutation<L>
 where
     L: Language,
-    N: AstNode<Language = L>,
 {
+    pub fn new(root: SyntaxNode<L>) -> Self {
+        Self {
+            root,
+            changes: BinaryHeap::new(),
+        }
+    }
+
     /// Push a change to replace the "prev_node" with "next_node".
     /// Trivia from "prev_node" is automatically copied to "next_node".
     ///
@@ -133,58 +132,58 @@ where
         prev_element: SyntaxElement<L>,
         next_element: SyntaxElement<L>,
     ) {
-        let (prev_leading, prev_trailing): (Vec<_>, Vec<_>) = match &prev_element {
+        let (prev_leading_trivia, prev_trailing_trivia) = match &prev_element {
             SyntaxElement::Node(node) => (
-                node.first_token()
-                    .map(|token| token.leading_trivia().pieces().collect())
-                    .unwrap_or_default(),
-                node.last_token()
-                    .map(|token| token.trailing_trivia().pieces().collect())
-                    .unwrap_or_default(),
+                node.first_token().map(|token| token.leading_trivia()),
+                node.last_token().map(|token| token.trailing_trivia()),
             ),
-            SyntaxElement::Token(token) => (
-                token.leading_trivia().pieces().collect(),
-                token.trailing_trivia().pieces().collect(),
-            ),
+            SyntaxElement::Token(token) => {
+                (Some(token.leading_trivia()), Some(token.trailing_trivia()))
+            }
         };
 
         let next_element = match next_element {
             SyntaxElement::Node(mut node) => {
                 if let Some(token) = node.first_token() {
-                    let new_token = token.clone().with_leading_trivia(
-                        prev_leading
-                            .iter()
-                            .map(|piece| (piece.kind(), piece.text())),
-                    );
+                    let new_token = match prev_leading_trivia {
+                        Some(prev_leading_trivia) => {
+                            token.with_leading_trivia_pieces(prev_leading_trivia.pieces())
+                        }
+                        None => token.with_leading_trivia_pieces(empty()),
+                    };
 
                     node = node.replace_child(token.into(), new_token.into()).unwrap();
                 }
 
                 if let Some(token) = node.last_token() {
-                    let new_token = token.clone().with_trailing_trivia(
-                        prev_trailing
-                            .iter()
-                            .map(|piece| (piece.kind(), piece.text())),
-                    );
+                    let new_token = match prev_trailing_trivia {
+                        Some(prev_trailing_trivia) => {
+                            token.with_trailing_trivia_pieces(prev_trailing_trivia.pieces())
+                        }
+                        None => token.with_trailing_trivia_pieces(empty()),
+                    };
 
                     node = node.replace_child(token.into(), new_token.into()).unwrap();
                 }
 
                 SyntaxElement::Node(node)
             }
-            SyntaxElement::Token(token) => SyntaxElement::Token(
-                token
-                    .with_leading_trivia(
-                        prev_leading
-                            .iter()
-                            .map(|piece| (piece.kind(), piece.text())),
-                    )
-                    .with_trailing_trivia(
-                        prev_trailing
-                            .iter()
-                            .map(|piece| (piece.kind(), piece.text())),
-                    ),
-            ),
+            SyntaxElement::Token(token) => {
+                let new_token = match prev_leading_trivia {
+                    Some(prev_leading_trivia) => {
+                        token.with_leading_trivia_pieces(prev_leading_trivia.pieces())
+                    }
+                    None => token.with_leading_trivia_pieces(empty()),
+                };
+
+                let new_token = match prev_trailing_trivia {
+                    Some(prev_trailing_trivia) => {
+                        new_token.with_trailing_trivia_pieces(prev_trailing_trivia.pieces())
+                    }
+                    None => new_token.with_trailing_trivia_pieces(empty()),
+                };
+                SyntaxElement::Token(new_token)
+            }
         };
 
         self.push_change(prev_element, Some(next_element))
@@ -262,36 +261,30 @@ where
     /// Returns the range of the document modified by this mutation along with
     /// a list of individual text edits to be performed on the source code, or
     /// [None] if the mutation is empty
-    pub fn as_text_edits(&self) -> Option<(TextRange, Vec<Indel>)> {
-        let iter = self.changes.iter().filter_map(|change| {
-            let parent = change.parent.as_ref().unwrap_or_else(|| self.root.syntax());
+    pub fn as_text_edits(&self) -> Option<(TextRange, TextEdit)> {
+        let mut range = None;
+
+        for change in &self.changes {
+            let parent = change.parent.as_ref().unwrap_or(&self.root);
             let delete = match parent.slots().nth(change.new_node_slot) {
                 Some(SyntaxSlot::Node(node)) => node.text_range(),
                 Some(SyntaxSlot::Token(token)) => token.text_range(),
-                _ => return None,
+                _ => continue,
             };
 
-            let insert = match &change.new_node {
-                Some(elem) => elem.to_string(),
-                None => String::new(),
+            range = match range {
+                None => Some(delete),
+                Some(range) => Some(range.cover(delete)),
             };
+        }
 
-            Some(Indel { delete, insert })
-        });
+        let text_range = range?;
 
-        let mut range = None;
-        let mut indels: Vec<_> = iter
-            .inspect(|indel| {
-                range = match range {
-                    None => Some(indel.delete),
-                    Some(range) => Some(range.cover(indel.delete)),
-                };
-            })
-            .collect();
+        let old = self.root.to_string();
+        let new = self.clone().commit().to_string();
+        let text_edit = TextEdit::from_unicode_words(&old, &new);
 
-        indels.sort_unstable_by(|a, b| a.delete.ordering(b.delete));
-
-        Some((range?, indels))
+        Some((text_range, text_edit))
     }
 
     /// The core of the batch mutation algorithm can be summarized as:
@@ -310,7 +303,7 @@ where
     /// To address this case at step 3, when we pop a new change to apply it, we actually aggregate all changes to the current
     /// parent together. This is done by the heap because we also sort by node and it's range.
     ///
-    pub fn commit(self) -> N {
+    pub fn commit(self) -> SyntaxNode<L> {
         let BatchMutation { root, mut changes } = self;
         // Fill the heap with the requested changes
 
@@ -376,16 +369,9 @@ where
                     .new_node
                     .expect("new_node")
                     .into_node()
-                    .expect("into_node");
-                let kind = root.kind();
-                match root.cast() {
-                    Some(root) => return root,
-                    None => panic!(
-                        "failed to cast root node with kind {:?} into {}",
-                        kind,
-                        type_name::<N>()
-                    ),
-                };
+                    .expect("expected root to be a node and not a token");
+
+                return root;
             }
         }
 
@@ -467,7 +453,7 @@ pub mod tests {
         let batch = before.begin();
         let after = batch.commit();
 
-        assert_eq!(before_debug, format!("{:#?}", after.syntax()));
+        assert_eq!(before_debug, format!("{:#?}", after));
     }
 
     #[test]
@@ -482,7 +468,7 @@ pub mod tests {
         batch.replace_node(a, b);
         let root = batch.commit();
 
-        assert_eq!(expected_debug, format!("{:#?}", root.syntax()));
+        assert_eq!(expected_debug, format!("{:#?}", root));
     }
 
     #[test]
@@ -500,6 +486,6 @@ pub mod tests {
         batch.replace_node(b, d);
         let after = batch.commit();
 
-        assert_eq!(expected_debug, format!("{:#?}", after.syntax()));
+        assert_eq!(expected_debug, format!("{:#?}", after));
     }
 }

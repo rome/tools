@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 242
 expression: empty_blocks.js
 ---
 # Input
@@ -41,6 +40,7 @@ do {} while (true);
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 // Line break before closing `}`
 if (true) {

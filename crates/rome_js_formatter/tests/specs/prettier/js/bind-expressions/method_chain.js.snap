@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\bind-expressions\\method_chain.js"
 ---
 
 # Input
@@ -78,24 +80,30 @@ function test(observable) {
 
 # Errors
 ```
-error[SyntaxError]: expected a statement but instead found '::filter(data => data.someTest)
-        ::throttle(() =>
-            interval(10)
-                ::take(1)
-                ::takeUntil(observable::filter(data => someOtherTest))
-        )
-        ::map(someFunction)'
-   ┌─ method_chain.js:10:9
-   │  
-10 │ ┌         ::filter(data => data.someTest)
-11 │ │         ::throttle(() =>
-12 │ │             interval(10)
-13 │ │                 ::take(1)
-14 │ │                 ::takeUntil(observable::filter(data => someOtherTest))
-15 │ │         )
-16 │ │         ::map(someFunction);
-   │ └───────────────────────────^ Expected a statement here
+method_chain.js:10:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a statement but instead found '::filter(data => data.someTest)
+            ::throttle(() =>
+                interval(10)
+                    ::take(1)
+                    ::takeUntil(observable::filter(data => someOtherTest))
+            )
+            ::map(someFunction)'
+  
+  × Expected a statement here
+  
+     8 │ function test(observable) {
+     9 │     return observable
+  > 10 │         ::filter(data => data.someTest)
+       │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 11 │         ::throttle(() =>
+        ...
+  > 15 │         )
+  > 16 │         ::map(someFunction);
+       │         ^^^^^^^^^^^^^^^^^^^
+    17 │ }
+    18 │ 
+  
 
 ```
 

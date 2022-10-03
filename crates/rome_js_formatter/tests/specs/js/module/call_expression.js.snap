@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 259
 expression: call_expression.js
 ---
 # Input
@@ -59,6 +58,7 @@ test.expect(t => {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 useEffect(() => {}, [a, b]);
 
@@ -69,7 +69,10 @@ useMemo(() => {
 	};
 }, [a, b]);
 
-useMemo(() => {}, [a, b]); // some comment
+useMemo(
+	() => {}, // some comment
+	[a, b],
+);
 
 useEffect(() => {
 	if (clipboardStatus !== "normal") {
@@ -99,9 +102,11 @@ test.expect((t) => {
 	t.true(a);
 }, false);
 
-test.expect((t) => {
-	t.true(a);
-}, false
-// comment
+test.expect(
+	(t) => {
+		t.true(a);
+	},
+	false,
+	// comment
 );
 

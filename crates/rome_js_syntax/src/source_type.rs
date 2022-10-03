@@ -1,5 +1,5 @@
 use std::fmt::Display;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 /// Enum of the different ECMAScript standard versions.
 /// The versions are ordered in increasing order; The newest version comes last.
@@ -28,12 +28,13 @@ impl Default for LanguageVersion {
 
 /// Is the source file an ECMAScript Module or Script.
 /// Changes the parsing semantic.
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Default)]
 pub enum ModuleKind {
     /// An ECMAScript [Script](https://tc39.es/ecma262/multipage/ecmascript-language-scripts-and-modules.html#sec-scripts)
     Script,
 
     /// AN ECMAScript [Module](https://tc39.es/ecma262/multipage/ecmascript-language-scripts-and-modules.html#sec-modules)
+    #[default]
     Module,
 }
 
@@ -46,15 +47,10 @@ impl ModuleKind {
     }
 }
 
-impl Default for ModuleKind {
-    fn default() -> Self {
-        ModuleKind::Module
-    }
-}
-
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Default)]
 pub enum LanguageVariant {
     /// Standard JavaScript or TypeScript syntax without any extensions
+    #[default]
     Standard,
 
     /// Allows JSX syntax inside a JavaScript or TypeScript file
@@ -70,21 +66,14 @@ impl LanguageVariant {
     }
 }
 
-impl Default for LanguageVariant {
-    fn default() -> Self {
-        LanguageVariant::Standard
-    }
-}
-
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Default)]
 pub enum Language {
+    #[default]
     JavaScript,
 
     /// TypeScript source with or without JSX.
     /// `definition_file` must be true for `d.ts` files.
-    TypeScript {
-        definition_file: bool,
-    },
+    TypeScript { definition_file: bool },
 }
 
 impl Language {
@@ -93,12 +82,6 @@ impl Language {
     }
     pub fn is_typescript(&self) -> bool {
         matches!(self, Language::TypeScript { .. })
-    }
-}
-
-impl Default for Language {
-    fn default() -> Self {
-        Language::JavaScript
     }
 }
 
@@ -194,15 +177,15 @@ impl TryFrom<&Path> for SourceType {
     fn try_from(path: &Path) -> Result<Self, Self::Error> {
         let file_name = path
             .file_name()
-            .expect("Can't read the file name")
+            .ok_or_else(|| SourceTypeError::MissingFileName(path.into()))?
             .to_str()
-            .expect("Can't read the file name");
+            .ok_or_else(|| SourceTypeError::MissingFileName(path.into()))?;
 
         let extension = path
             .extension()
-            .expect("Can't read the file extension")
+            .ok_or_else(|| SourceTypeError::MissingFileExtension(path.into()))?
             .to_str()
-            .expect("Can't read the file extension");
+            .ok_or_else(|| SourceTypeError::MissingFileExtension(path.into()))?;
 
         compute_source_type_from_path_or_extension(file_name, extension)
     }
@@ -211,6 +194,10 @@ impl TryFrom<&Path> for SourceType {
 /// Errors around the construct of the source type
 #[derive(Debug)]
 pub enum SourceTypeError {
+    /// The path has no file name
+    MissingFileName(PathBuf),
+    /// The path has no file extension
+    MissingFileExtension(PathBuf),
     /// The source type is unknown
     UnknownExtension(String),
 }
@@ -220,6 +207,12 @@ impl std::error::Error for SourceTypeError {}
 impl Display for SourceTypeError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
+            SourceTypeError::MissingFileName(path) => {
+                write!(f, "The path {path:?} has no file name")
+            }
+            SourceTypeError::MissingFileExtension(path) => {
+                write!(f, "The path {path:?} has no file extension")
+            }
             SourceTypeError::UnknownExtension(extension) => {
                 write!(f, "The parser can't parse the extension '{extension}' yet")
             }

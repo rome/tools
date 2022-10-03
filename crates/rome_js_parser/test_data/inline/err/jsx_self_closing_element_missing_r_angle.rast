@@ -83,11 +83,15 @@ JsModule {
       1: SEMICOLON@39..40 ";" [] []
   3: EOF@40..41 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `>` but instead found `some`
-  ┌─ jsx_self_closing_element_missing_r_angle.jsx:1:11
-  │
-1 │ <><test / some test followed by<a /></>;
-  │           ^^^^ unexpected
+jsx_self_closing_element_missing_r_angle.jsx:1:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `>` but instead found `some`
+  
+  × unexpected
+  
+  > 1 │ <><test / some test followed by<a /></>;
+      │           ^^^^
+    2 │ 
+  
 --
 <><test / some test followed by<a /></>;

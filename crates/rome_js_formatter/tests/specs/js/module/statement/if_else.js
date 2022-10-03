@@ -62,5 +62,8 @@ if (true) {
 if (true) that(); else;
 
 if (true) {}
-// rome-ignore format: Test suppression comments
-else     if (true &&  false) {}
+else     if (
+	// rome-ignore format: Test suppression comments
+
+true &&  false
+) {}

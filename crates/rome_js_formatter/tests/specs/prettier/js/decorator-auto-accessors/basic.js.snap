@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\decorator-auto-accessors\\basic.js"
 ---
 
 # Input
@@ -36,12 +38,16 @@ class Foo {
 
 # Errors
 ```
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-  ┌─ basic.js:2:3
-  │
-2 │   accessor bar;
-  │   ^^^^^^^^
+basic.js:2:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a semicolon to end the class property, but found none
+  
+    1 │ class Foo {
+  > 2 │   accessor bar;
+      │   ^^^^^^^^
+    3 │ }
+    4 │ 
+  
 
 ```
 

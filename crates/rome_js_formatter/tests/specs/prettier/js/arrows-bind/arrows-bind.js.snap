@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\arrows-bind\\arrows-bind.js"
 ---
 
 # Input
@@ -22,7 +24,7 @@ a::(b => c);
 -a::((b) => c);
 +a => ({}
 +::b()``[''].c++ && 0 ? 0 : 0)
-+((a) => b);
++(a) => b;
 +::c
 +a:
 +:(b => c)
@@ -33,7 +35,7 @@ a::(b => c);
 ```js
 a => ({}
 ::b()``[''].c++ && 0 ? 0 : 0)
-((a) => b);
+(a) => b;
 ::c
 a:
 :(b => c)
@@ -42,27 +44,49 @@ a:
 
 # Errors
 ```
-error[SyntaxError]: expected `)` but instead found `:`
-  ┌─ arrows-bind.js:1:9
-  │
-1 │ a => ({}::b()``[''].c++ && 0 ? 0 : 0);
-  │         ^ unexpected
+arrows-bind.js:1:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ arrows-bind.js:2:9
-  │
-2 │ (a => b)::c;
-  │ --------^
-  │ │       │
-  │ │       An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
+  × expected `)` but instead found `:`
+  
+  × unexpected
+  
+  > 1 │ a => ({}::b()``[''].c++ && 0 ? 0 : 0);
+      │         ^
+    2 │ (a => b)::c;
+    3 │ a::(b => c);
+  
+arrows-bind.js:2:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a statement but instead found ':'
-  ┌─ arrows-bind.js:3:3
-  │
-3 │ a::(b => c);
-  │   ^ Expected a statement here
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    1 │ a => ({}::b()``[''].c++ && 0 ? 0 : 0);
+  > 2 │ (a => b)::c;
+      │         ^
+    3 │ a::(b => c);
+    4 │ 
+  
+  i ...Which is required to end this statement
+  
+    1 │ a => ({}::b()``[''].c++ && 0 ? 0 : 0);
+  > 2 │ (a => b)::c;
+      │ ^^^^^^^^^
+    3 │ a::(b => c);
+    4 │ 
+  
+arrows-bind.js:3:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a statement but instead found ':'
+  
+  × Expected a statement here
+  
+    1 │ a => ({}::b()``[''].c++ && 0 ? 0 : 0);
+    2 │ (a => b)::c;
+  > 3 │ a::(b => c);
+      │   ^
+    4 │ 
+  
 
 ```
 

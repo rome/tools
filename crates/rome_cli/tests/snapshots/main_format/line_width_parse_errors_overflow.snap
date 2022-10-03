@@ -1,0 +1,11 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+expression: content
+---
+# Termination Message
+
+```block
+failed to parse argument '--line-width': failed to parse '321': TryFromIntError(LineWidthFromIntError(321))
+```
+
+

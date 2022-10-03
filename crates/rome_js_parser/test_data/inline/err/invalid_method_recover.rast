@@ -137,19 +137,29 @@ JsModule {
       0: SEMICOLON@46..47 ";" [] []
   3: EOF@47..48 "" [Newline("\n")] []
 --
-error[SyntaxError]: class declarations must have a name
-  ┌─ invalid_method_recover.js:1:1
-  │
-1 │ class {
-  │ ^^^^^^
+invalid_method_recover.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × class declarations must have a name
+  
+  > 1 │ class {
+      │ ^^^^^^
+    2 │   [1 + 1] = () => {
+    3 │     let a=;
+  
 --
-error[SyntaxError]: expected an expression, or an assignment but instead found ';'
-  ┌─ invalid_method_recover.js:3:11
-  │
-3 │     let a=;
-  │           ^ Expected an expression, or an assignment here
+invalid_method_recover.js:3:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an expression, or an assignment but instead found ';'
+  
+  × Expected an expression, or an assignment here
+  
+    1 │ class {
+    2 │   [1 + 1] = () => {
+  > 3 │     let a=;
+      │           ^
+    4 │   };
+    5 │ };
+  
 --
 class {
   [1 + 1] = () => {

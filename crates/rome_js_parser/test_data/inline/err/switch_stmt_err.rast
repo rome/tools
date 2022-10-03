@@ -268,70 +268,134 @@ JsModule {
       6: R_CURLY@149..150 "}" [] []
   3: EOF@150..151 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `(` but instead found `foo`
-  ┌─ switch_stmt_err.js:1:8
-  │
-1 │ switch foo {}
-  │        ^^^ unexpected
+switch_stmt_err.js:1:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `(` but instead found `foo`
+  
+  × unexpected
+  
+  > 1 │ switch foo {}
+      │        ^^^
+    2 │ switch {}
+    3 │ switch { var i = 0 }
+  
 --
-error[SyntaxError]: expected `)` but instead found `{`
-  ┌─ switch_stmt_err.js:1:12
-  │
-1 │ switch foo {}
-  │            ^ unexpected
+switch_stmt_err.js:1:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `)` but instead found `{`
+  
+  × unexpected
+  
+  > 1 │ switch foo {}
+      │            ^
+    2 │ switch {}
+    3 │ switch { var i = 0 }
+  
 --
-error[SyntaxError]: expected `(` but instead found `{`
-  ┌─ switch_stmt_err.js:2:8
-  │
-2 │ switch {}
-  │        ^ unexpected
+switch_stmt_err.js:2:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `(` but instead found `{`
+  
+  × unexpected
+  
+    1 │ switch foo {}
+  > 2 │ switch {}
+      │        ^
+    3 │ switch { var i = 0 }
+    4 │ switch { var i = 0; case "bar": {} }
+  
 --
-error[SyntaxError]: expected `(` but instead found `{`
-  ┌─ switch_stmt_err.js:3:8
-  │
-3 │ switch { var i = 0 }
-  │        ^ unexpected
+switch_stmt_err.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `(` but instead found `{`
+  
+  × unexpected
+  
+    1 │ switch foo {}
+    2 │ switch {}
+  > 3 │ switch { var i = 0 }
+      │        ^
+    4 │ switch { var i = 0; case "bar": {} }
+    5 │ switch (foo) {
+  
 --
-error[SyntaxError]: expected a default, or a case but instead found 'var i = 0'
-  ┌─ switch_stmt_err.js:3:10
-  │
-3 │ switch { var i = 0 }
-  │          ^^^^^^^^^ Expected a default, or a case here
+switch_stmt_err.js:3:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a default, or a case but instead found 'var i = 0'
+  
+  × Expected a default, or a case here
+  
+    1 │ switch foo {}
+    2 │ switch {}
+  > 3 │ switch { var i = 0 }
+      │          ^^^^^^^^^
+    4 │ switch { var i = 0; case "bar": {} }
+    5 │ switch (foo) {
+  
 --
-error[SyntaxError]: expected `(` but instead found `{`
-  ┌─ switch_stmt_err.js:4:8
-  │
-4 │ switch { var i = 0; case "bar": {} }
-  │        ^ unexpected
+switch_stmt_err.js:4:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `(` but instead found `{`
+  
+  × unexpected
+  
+    2 │ switch {}
+    3 │ switch { var i = 0 }
+  > 4 │ switch { var i = 0; case "bar": {} }
+      │        ^
+    5 │ switch (foo) {
+    6 │   default: {}
+  
 --
-error[SyntaxError]: expected a default, or a case but instead found 'var i = 0;'
-  ┌─ switch_stmt_err.js:4:10
-  │
-4 │ switch { var i = 0; case "bar": {} }
-  │          ^^^^^^^^^^ Expected a default, or a case here
+switch_stmt_err.js:4:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a default, or a case but instead found 'var i = 0;'
+  
+  × Expected a default, or a case here
+  
+    2 │ switch {}
+    3 │ switch { var i = 0 }
+  > 4 │ switch { var i = 0; case "bar": {} }
+      │          ^^^^^^^^^^
+    5 │ switch (foo) {
+    6 │   default: {}
+  
 --
-error[SyntaxError]: Multiple default clauses inside of a switch statement are not allowed
-  ┌─ switch_stmt_err.js:7:3
-  │
-6 │   default: {}
-  │   ----------- the first default clause is defined here
-7 │   default: {}
-  │   ^^^^^^^^^^^ a second clause here is not allowed
+switch_stmt_err.js:7:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Multiple default clauses inside of a switch statement are not allowed
+  
+  × a second clause here is not allowed
+  
+    5 │ switch (foo) {
+    6 │   default: {}
+  > 7 │   default: {}
+      │   ^^^^^^^^^^^
+    8 │ }
+    9 │ switch (foo) { case : }
+  
+  i the first default clause is defined here
+  
+    4 │ switch { var i = 0; case "bar": {} }
+    5 │ switch (foo) {
+  > 6 │   default: {}
+      │   ^^^^^^^^^^^
+    7 │   default: {}
+    8 │ }
+  
 --
-error[SyntaxError]: expected an expression but instead found ':'
-  ┌─ switch_stmt_err.js:9:21
-  │
-9 │ switch (foo) { case : }
-  │                     ^ Expected an expression here
+switch_stmt_err.js:9:21 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an expression but instead found ':'
+  
+  × Expected an expression here
+  
+     7 │   default: {}
+     8 │ }
+   > 9 │ switch (foo) { case : }
+       │                     ^
+    10 │ 
+  
 --
 switch foo {}
 switch {}

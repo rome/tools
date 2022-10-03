@@ -22,17 +22,28 @@ try {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noCatchAssign/">js/noCatchAssign</a></span><span style="color: Orange;">]</span><em>: </em><em> Do not </em><em><em>reassign catch parameters.</em></em><em></em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noCatchAssign.js:5:3
-  <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">3</span> <span style="color: rgb(38, 148, 255);">│</span> } catch (e) {
-  <span style="color: rgb(38, 148, 255);">│</span>          <span style="color: rgb(38, 148, 255);">-</span> <span style="color: rgb(38, 148, 255);">The catch parameter is declared here</span>
-<span style="color: rgb(38, 148, 255);">4</span> <span style="color: rgb(38, 148, 255);">│</span>   e;
-<span style="color: rgb(38, 148, 255);">5</span> <span style="color: rgb(38, 148, 255);">│</span>   e = 10;
-  <span style="color: rgb(38, 148, 255);">│</span>   <span style="color: rgb(38, 148, 255);">-</span>
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noCatchAssign.js:5:3 <a href="https://rome.tools/docs/lint/rules/noCatchAssign">lint/correctness/noCatchAssign</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-=  note: Use a local variable instead.
-
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;"> Do not </span><span style="color: Tomato;"><strong>reassign catch parameters.</strong></span>
+  
+    <strong>3 │ </strong>} catch (e) {
+    <strong>4 │ </strong>  e;
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>5 │ </strong>  e = 10;
+   <strong>   │ </strong>  <strong><span style="color: Tomato;">^</span></strong>
+    <strong>6 │ </strong>}
+    <strong>7 │ </strong>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">The catch parameter is declared here</span>
+  
+    <strong>1 │ </strong>try {
+    <strong>2 │ </strong>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>3 │ </strong>} catch (e) {
+   <strong>   │ </strong>         <strong><span style="color: Tomato;">^</span></strong>
+    <strong>4 │ </strong>  e;
+    <strong>5 │ </strong>  e = 10;
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Use a local variable instead.</span>
+  
 </code></pre>{% endraw %}
 
 ### Valid

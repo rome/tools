@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/method-chain/test.js
 ---
 
 # Input
@@ -19,15 +21,13 @@ method().then(x => x)
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,7 +1,5 @@
- method()
--  .then((x) => x)
--  ["abc"]((x) => x)
--  [abc]((x) => x);
-+  .then((x) => x)["abc"]((x) => x)[abc]((x) => x);
+@@ -3,5 +3,5 @@
+   ["abc"]((x) => x)
+   [abc]((x) => x);
  
 -({}.a().b());
- ({}.a().b());
+-({}.a().b());
++({}).a().b();
 +({}).a().b();
 ```
 
@@ -35,9 +35,11 @@ method().then(x => x)
 
 ```js
 method()
-  .then((x) => x)["abc"]((x) => x)[abc]((x) => x);
+  .then((x) => x)
+  ["abc"]((x) => x)
+  [abc]((x) => x);
 
-({}.a().b());
+({}).a().b();
 ({}).a().b();
 ```
 

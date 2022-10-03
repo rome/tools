@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/multiparser-comments/comment-inside.js
 ---
 
 # Input
@@ -74,19 +76,6 @@ expr1 = html`
 ```diff
 --- Prettier
 +++ Rome
-@@ -2,9 +2,9 @@
- html`
-   <div>
-     ${
--      this.set && this.set.artist
--      /* avoid console errors if `this.set` is undefined */
--    }
-+  this.set && this.set.artist
-+  /* avoid console errors if `this.set` is undefined */
-+}
-   </div>
- `;
- 
 @@ -13,36 +13,32 @@
    /* comment */
  }`;
@@ -101,17 +90,17 @@ expr1 = html`
 +}
  `;
  
--graphql`
--  ${
--    foo
--    /* comment */
--  }
--`;
 +graphql`${
 +  foo
 +  /* comment */
 +}`;
  graphql`
+-  ${
+-    foo
+-    /* comment */
+-  }
+-`;
+-graphql`
 -  ${
 -    foo
 -    /* comment */
@@ -144,21 +133,13 @@ expr1 = html`
  `;
  
  markdown`${
-@@ -59,9 +55,10 @@
- // https://github.com/prettier/prettier/pull/9278#issuecomment-700589195
- expr1 = html`
-   <div>
--    ${x(
--      foo, // fg
--      bar,
+@@ -62,6 +58,5 @@
+     ${x(
+       foo, // fg
+       bar,
 -    )}
 -  </div>
-+    ${
-+  x(
-+    foo, // fg
-+    bar,
-+  )
-+}</div>
++    )}</div>
  `;
 ```
 
@@ -169,9 +150,9 @@ expr1 = html`
 html`
   <div>
     ${
-  this.set && this.set.artist
-  /* avoid console errors if `this.set` is undefined */
-}
+      this.set && this.set.artist
+      /* avoid console errors if `this.set` is undefined */
+    }
   </div>
 `;
 
@@ -222,12 +203,10 @@ ${
 // https://github.com/prettier/prettier/pull/9278#issuecomment-700589195
 expr1 = html`
   <div>
-    ${
-  x(
-    foo, // fg
-    bar,
-  )
-}</div>
+    ${x(
+      foo, // fg
+      bar,
+    )}</div>
 `;
 ```
 

@@ -172,33 +172,52 @@ JsModule {
       1: (empty)
   3: EOF@69..70 "" [Newline("\n")] []
 --
-error[SyntaxError]: This expression is not valid as a JSX expression.
-  ┌─ jsx_children_expressions_not_accepted.jsx:2:4
-  │
-2 │   {import.meta}
-  │    ^^^^^^^^^^^
+jsx_children_expressions_not_accepted.jsx:2:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × This expression is not valid as a JSX expression.
+  
+    1 │ <div>
+  > 2 │   {import.meta}
+      │    ^^^^^^^^^^^
+    3 │   {class A{}}
+    4 │   {super()}
+  
 --
-error[SyntaxError]: This expression is not valid as a JSX expression.
-  ┌─ jsx_children_expressions_not_accepted.jsx:3:4
-  │
-3 │   {class A{}}
-  │    ^^^^^^^^^
+jsx_children_expressions_not_accepted.jsx:3:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × This expression is not valid as a JSX expression.
+  
+    1 │ <div>
+    2 │   {import.meta}
+  > 3 │   {class A{}}
+      │    ^^^^^^^^^
+    4 │   {super()}
+    5 │   {new.target}
+  
 --
-error[SyntaxError]: `super` is only valid inside of a class constructor of a subclass.
-  ┌─ jsx_children_expressions_not_accepted.jsx:4:4
-  │
-4 │   {super()}
-  │    ^^^^^
+jsx_children_expressions_not_accepted.jsx:4:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × `super` is only valid inside of a class constructor of a subclass.
+  
+    2 │   {import.meta}
+    3 │   {class A{}}
+  > 4 │   {super()}
+      │    ^^^^^
+    5 │   {new.target}
+    6 │ </div>
+  
 --
-error[SyntaxError]: This expression is not valid as a JSX expression.
-  ┌─ jsx_children_expressions_not_accepted.jsx:5:4
-  │
-5 │   {new.target}
-  │    ^^^^^^^^^^
+jsx_children_expressions_not_accepted.jsx:5:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × This expression is not valid as a JSX expression.
+  
+    3 │   {class A{}}
+    4 │   {super()}
+  > 5 │   {new.target}
+      │    ^^^^^^^^^^
+    6 │ </div>
+    7 │ 
+  
 --
 <div>
   {import.meta}

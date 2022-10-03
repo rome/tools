@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "typescript\\error-recovery\\jsdoc_only_types.ts"
 ---
 
 # Input
@@ -27,10 +29,10 @@ let h: !(string | number);
 +*
  function b(x: ?) {}
 -let c: ?string;
--let d: string?;
+-let d: ?string;
 -let e: ?(string | number);
 -let f: !string;
--let g: string!;
+-let g: !string;
 -let h: !(string | number);
 +let c:
 +?string
@@ -69,58 +71,124 @@ let h:
 
 # Errors
 ```
-error[SyntaxError]: expected a type but instead found '*'
-  ┌─ jsdoc_only_types.ts:1:8
-  │
-1 │ let a: *;
-  │        ^ Expected a type here
+jsdoc_only_types.ts:1:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type but instead found '?'
-  ┌─ jsdoc_only_types.ts:2:15
-  │
-2 │ function b(x: ?) {}
-  │               ^ Expected a type here
+  × expected a type but instead found '*'
+  
+  × Expected a type here
+  
+  > 1 │ let a: *;
+      │        ^
+    2 │ function b(x: ?) {}
+    3 │ let c: ?string;
+  
+jsdoc_only_types.ts:2:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type but instead found '?'
-  ┌─ jsdoc_only_types.ts:3:8
-  │
-3 │ let c: ?string;
-  │        ^ Expected a type here
+  × expected a type but instead found '?'
+  
+  × Expected a type here
+  
+    1 │ let a: *;
+  > 2 │ function b(x: ?) {}
+      │               ^
+    3 │ let c: ?string;
+    4 │ let d: string?;
+  
+jsdoc_only_types.ts:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ jsdoc_only_types.ts:4:14
-  │
-4 │ let d: string?;
-  │ -------------^ An explicit or implicit semicolon is expected here...
-  │ │             
-  │ ...Which is required to end this statement
+  × expected a type but instead found '?'
+  
+  × Expected a type here
+  
+    1 │ let a: *;
+    2 │ function b(x: ?) {}
+  > 3 │ let c: ?string;
+      │        ^
+    4 │ let d: string?;
+    5 │ let e: ?(string | number);
+  
+jsdoc_only_types.ts:4:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type but instead found '?'
-  ┌─ jsdoc_only_types.ts:5:8
-  │
-5 │ let e: ?(string | number);
-  │        ^ Expected a type here
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    2 │ function b(x: ?) {}
+    3 │ let c: ?string;
+  > 4 │ let d: string?;
+      │              ^
+    5 │ let e: ?(string | number);
+    6 │ let f: !string;
+  
+  i ...Which is required to end this statement
+  
+    2 │ function b(x: ?) {}
+    3 │ let c: ?string;
+  > 4 │ let d: string?;
+      │ ^^^^^^^^^^^^^
+    5 │ let e: ?(string | number);
+    6 │ let f: !string;
+  
+jsdoc_only_types.ts:5:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type but instead found '!'
-  ┌─ jsdoc_only_types.ts:6:8
-  │
-6 │ let f: !string;
-  │        ^ Expected a type here
+  × expected a type but instead found '?'
+  
+  × Expected a type here
+  
+    3 │ let c: ?string;
+    4 │ let d: string?;
+  > 5 │ let e: ?(string | number);
+      │        ^
+    6 │ let f: !string;
+    7 │ let g: string!;
+  
+jsdoc_only_types.ts:6:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ jsdoc_only_types.ts:7:14
-  │
-7 │ let g: string!;
-  │ -------------^ An explicit or implicit semicolon is expected here...
-  │ │             
-  │ ...Which is required to end this statement
+  × expected a type but instead found '!'
+  
+  × Expected a type here
+  
+    4 │ let d: string?;
+    5 │ let e: ?(string | number);
+  > 6 │ let f: !string;
+      │        ^
+    7 │ let g: string!;
+    8 │ let h: !(string | number);
+  
+jsdoc_only_types.ts:7:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type but instead found '!'
-  ┌─ jsdoc_only_types.ts:8:8
-  │
-8 │ let h: !(string | number);
-  │        ^ Expected a type here
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    5 │ let e: ?(string | number);
+    6 │ let f: !string;
+  > 7 │ let g: string!;
+      │              ^
+    8 │ let h: !(string | number);
+    9 │ 
+  
+  i ...Which is required to end this statement
+  
+    5 │ let e: ?(string | number);
+    6 │ let f: !string;
+  > 7 │ let g: string!;
+      │ ^^^^^^^^^^^^^
+    8 │ let h: !(string | number);
+    9 │ 
+  
+jsdoc_only_types.ts:8:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a type but instead found '!'
+  
+  × Expected a type here
+  
+    6 │ let f: !string;
+    7 │ let g: string!;
+  > 8 │ let h: !(string | number);
+      │        ^
+    9 │ 
+  
 
 ```
 

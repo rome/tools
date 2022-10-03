@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "typescript\\class\\constructor.ts"
 ---
 
 # Input
@@ -68,42 +70,72 @@ class B {
 
 # Errors
 ```
-error[SyntaxError]: 'static' cannot appear on a parameter.
-  ┌─ constructor.ts:2:15
-  │
-2 │   constructor(static a: number) {}
-  │               ^^^^^^
+constructor.ts:2:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a parameter but instead found 'export'
-  ┌─ constructor.ts:6:15
-  │
-6 │   constructor(export a: number) {}
-  │               ^^^^^^ Expected a parameter here
+  × 'static' cannot appear on a parameter.
+  
+    1 │ class foo {
+  > 2 │   constructor(static a: number) {}
+      │               ^^^^^^
+    3 │ }
+    4 │ 
+  
+constructor.ts:6:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `a`
-  ┌─ constructor.ts:6:22
-  │
-6 │   constructor(export a: number) {}
-  │                      ^ unexpected
+  × expected a parameter but instead found 'export'
+  
+  × Expected a parameter here
+  
+    5 │ class foo {
+  > 6 │   constructor(export a: number) {}
+      │               ^^^^^^
+    7 │ }
+    8 │ 
+  
+constructor.ts:6:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: class properties may not be called `constructor`
-   ┌─ constructor.ts:10:5
-   │
-10 │     'constructor': typeof A
-   │     ^^^^^^^^^^^^^^^^^^^^^^^
+  × expected `,` but instead found `a`
+  
+  × unexpected
+  
+    5 │ class foo {
+  > 6 │   constructor(export a: number) {}
+      │                      ^
+    7 │ }
+    8 │ 
+  
+constructor.ts:10:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a type parameter but instead found '>'
-   ┌─ constructor.ts:17:15
-   │
-17 │   constructor<>() {}
-   │               ^ Expected a type parameter here
+  × class properties may not be called `constructor`
+  
+     9 │ class A {
+  > 10 │     'constructor': typeof A
+       │     ^^^^^^^^^^^^^^^^^^^^^^^
+    11 │     static Foo() {
+    12 │         return new A()
+  
+constructor.ts:17:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: constructors cannot have type parameters.
-   ┌─ constructor.ts:17:14
-   │
-17 │   constructor<>() {}
-   │              ^^
+  × expected a type parameter but instead found '>'
+  
+  × Expected a type parameter here
+  
+    16 │ class B {
+  > 17 │   constructor<>() {}
+       │               ^
+    18 │ }
+    19 │ 
+  
+constructor.ts:17:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × constructors cannot have type parameters.
+  
+    16 │ class B {
+  > 17 │   constructor<>() {}
+       │              ^^
+    18 │ }
+    19 │ 
+  
 
 ```
 

@@ -45,11 +45,15 @@ JsModule {
         4: (empty)
   3: EOF@15..16 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected an identifier but instead found ''
-  ┌─ export_as_identifier_err.js:1:10
-  │
-1 │ export { as c }
-  │          ^ Expected an identifier here
+export_as_identifier_err.js:1:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier but instead found ''
+  
+  × Expected an identifier here
+  
+  > 1 │ export { as c }
+      │          
+    2 │ 
+  
 --
 export { as c }

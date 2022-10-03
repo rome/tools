@@ -25,19 +25,22 @@ comparing to both `null` and `undefined`.
 foo == bar
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text"><span style="color: Orange;">warning</span><span style="color: Orange;">[</span><span style="color: Orange;"><a href="https://rome.tools/docs/lint/rules/noDoubleEquals/">js/noDoubleEquals</a></span><span style="color: Orange;">]</span><em>: </em><em>Use </em><em><em>===</em></em><em> instead of </em><em><em>==</em></em>
-  <span style="color: rgb(38, 148, 255);">┌</span><span style="color: rgb(38, 148, 255);">─</span> js/noDoubleEquals.js:1:5
-  <span style="color: rgb(38, 148, 255);">│</span>
-<span style="color: rgb(38, 148, 255);">1</span> <span style="color: rgb(38, 148, 255);">│</span> foo == bar
-  <span style="color: rgb(38, 148, 255);">│</span>     <span style="color: rgb(38, 148, 255);">-</span><span style="color: rgb(38, 148, 255);">-</span> <span style="color: rgb(38, 148, 255);"><em>==</em></span><span style="color: rgb(38, 148, 255);"> is only allowed when comparing against </span><span style="color: rgb(38, 148, 255);"><em>null</em></span>
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noDoubleEquals.js:1:5 <a href="https://rome.tools/docs/lint/rules/noDoubleEquals">lint/correctness/noDoubleEquals</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━
 
-<span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Use </span><span style="color: rgb(38, 148, 255);"><em>===</em></span>
-    | <span style="color: rgb(38, 148, 255);">@@ -1 +1 @@</span>
-0   | <span style="color: Tomato;">- </span><span style="color: Tomato;">foo == bar</span>
-  0 | <span style="color: MediumSeaGreen;">+ </span><span style="color: MediumSeaGreen;">foo === bar</span>
-
-=  note: Using <em>===</em> may be unsafe if you are relying on type coercion
-
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Use </span><span style="color: Tomato;"><strong>===</strong></span><span style="color: Tomato;"> instead of </span><span style="color: Tomato;"><strong>==</strong></span>
+  
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;"><strong>==</strong></span><span style="color: Tomato;"> is only allowed when comparing against </span><span style="color: Tomato;"><strong>null</strong></span>
+  
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>foo == bar
+   <strong>   │ </strong>    <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
+    <strong>2 │ </strong>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Using </span><span style="color: rgb(38, 148, 255);"><strong>===</strong></span><span style="color: rgb(38, 148, 255);"> may be unsafe if you are relying on type coercion</span>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Use </span><span style="color: rgb(38, 148, 255);"><strong>===</strong></span>
+  
+<strong>  </strong><strong>  1 │ </strong>foo<span style="opacity: 0.8;">·</span>==<span style="color: MediumSeaGreen;">=</span><span style="opacity: 0.8;">·</span>bar
+<strong>  </strong><strong>    │ </strong>      <span style="color: MediumSeaGreen;">+</span>    
 </code></pre>{% endraw %}
 
 ### Valid

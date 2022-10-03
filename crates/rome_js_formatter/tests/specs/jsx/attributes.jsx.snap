@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 259
 expression: attributes.jsx
 ---
 # Input
@@ -54,7 +53,27 @@ expression: attributes.jsx
 //  https://github.com/rome/tools/issues/2944
 <div className={asdf asdf} />;
 <div className={asdf
-	/* comment */ asdf } />
+	/* comment */ asdf } />;
+
+// Wrapping JSX in attribute
+const a = <Popconfirm
+		title={
+			(
+				<span className="popconfirm-test">
+		Are you sure delete this task? let
+	</span>
+			)
+		}
+		okText="Yes"
+		cancelText="No"
+		mouseEnterDelay={0}
+		mouseLeaveDelay={0}
+		onVisibleChange={onVisibleChange}
+	>
+		<span>Delete</span>
+	</Popconfirm>
+;
+
 =============================
 # Outputs
 ## Output 1
@@ -62,6 +81,7 @@ expression: attributes.jsx
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 <CodeEditor
 	value={formatted_code}
@@ -122,8 +142,33 @@ let a = (
 <div
 	className={
 		asdf
-	/* comment */asdf }
+		/* comment */
+	asdf }
 />;
+
+// Wrapping JSX in attribute
+const a = (
+	<Popconfirm
+		title={
+			<span className="popconfirm-test">
+				Are you sure delete this task? let
+			</span>
+		}
+		okText="Yes"
+		cancelText="No"
+		mouseEnterDelay={0}
+		mouseLeaveDelay={0}
+		onVisibleChange={onVisibleChange}
+	>
+		<span>Delete</span>
+	</Popconfirm>
+);
+
+
+## Unimplemented nodes/tokens
+
+" asd" => 1130..1134
+"\tasd" => 1182..1186
 
 
 ## Lines exceeding width of 80 characters

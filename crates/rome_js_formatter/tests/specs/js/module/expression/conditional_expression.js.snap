@@ -20,11 +20,14 @@ somethingThatsAReallyLongPropName ? somethingThatsAReallyLongPropName : somethin
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 a ? b : c;
-d ? (e + f) : (g + h);
+d ? e + f : g + h;
 
-somethingThatsAReallyLongPropName ? somethingThatsAReallyLongPropName : somethingThatsAReallyLongPropName;
+somethingThatsAReallyLongPropName
+	? somethingThatsAReallyLongPropName
+	: somethingThatsAReallyLongPropName;
 
 somethingThatsAReallyLongPropName
 	? somethingThatsAReallyLongPropName
@@ -35,11 +38,6 @@ somethingThatsAReallyLongPropName
 somethingThatsAReallyLongPropName
 	? somethingThatsAReallyLongPropName
 	: somethingThatsAReallyLongPropName
-		? somethingThatsAReallyLongPropName
-		: somethingThatsAReallyLongPropName;
-
-
-## Lines exceeding width of 80 characters
-
-    4: somethingThatsAReallyLongPropName ? somethingThatsAReallyLongPropName : somethingThatsAReallyLongPropName;
+	? somethingThatsAReallyLongPropName
+	: somethingThatsAReallyLongPropName;
 

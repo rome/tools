@@ -125,18 +125,17 @@ impl Format<JsFormatContext> for JsObjectPatternLike {
         let is_in_assignment_like = self.is_in_assignment_like();
         let properties_len = self.properties_len();
 
-        if should_break_properties {
+        write!(f, [self.l_curly_token().format()])?;
+
+        if properties_len == 0 {
             write!(
                 f,
-                [
-                    &self.l_curly_token()?.format(),
-                    &block_indent(right),
-                    &self.r_curly_token()?.format(),
-                ]
-            )
+                [format_dangling_comments(self.syntax()).with_soft_block_indent()]
+            )?;
+        } else if should_break_properties {
+            write!(f, [block_indent(right)])?;
         } else if !should_break_properties && is_in_assignment_like {
             // no need to add a group if we know the parent already does that
-            write!(f, [&self.l_curly_token()?.format()])?;
             if properties_len > 0 {
                 write!(f, [soft_line_break_or_space()])?;
                 write!(f, [soft_block_indent(right)])?;
@@ -144,15 +143,10 @@ impl Format<JsFormatContext> for JsObjectPatternLike {
             } else {
                 write!(f, [right])?;
             }
-            write!(f, [&self.r_curly_token()?.format()])
         } else {
-            write!(
-                f,
-                [
-                    format_delimited(&self.l_curly_token()?, right, &self.r_curly_token()?,)
-                        .soft_block_spaces()
-                ]
-            )
+            write!(f, [group(&soft_space_or_block_indent(&right))])?;
         }
+
+        write!(f, [self.r_curly_token().format()])
     }
 }

@@ -130,115 +130,193 @@ JsModule {
       0: R_PAREN@46..47 ")" [] []
   3: EOF@47..48 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `while` but instead found `break`
-  ┌─ do_while_no_continue_break.js:1:8
-  │
-1 │ do { } break (continue)
-  │        ^^^^^ unexpected
+do_while_no_continue_break.js:1:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `while` but instead found `break`
+  
+  × unexpected
+  
+  > 1 │ do { } break (continue)
+      │        ^^^^^
+    2 │ do { } continue (break)
+    3 │ 
+  
 --
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ do_while_no_continue_break.js:1:14
-  │
-1 │ do { } break (continue)
-  │        ------^
-  │        │     │
-  │        │     An explicit or implicit semicolon is expected here...
-  │        ...Which is required to end this statement
+do_while_no_continue_break.js:1:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+  > 1 │ do { } break (continue)
+      │              ^
+    2 │ do { } continue (break)
+    3 │ 
+  
+  i ...Which is required to end this statement
+  
+  > 1 │ do { } break (continue)
+      │        ^^^^^^^
+    2 │ do { } continue (break)
+    3 │ 
+  
 --
-error[SyntaxError]: A `break` statement can only be used within an enclosing iteration or switch statement.
-  ┌─ do_while_no_continue_break.js:1:8
-  │
-1 │ do { } break (continue)
-  │        ^^^^^
+do_while_no_continue_break.js:1:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × A `break` statement can only be used within an enclosing iteration or switch statement.
+  
+  > 1 │ do { } break (continue)
+      │        ^^^^^
+    2 │ do { } continue (break)
+    3 │ 
+  
 --
-error[SyntaxError]: expected `)` but instead found `continue`
-  ┌─ do_while_no_continue_break.js:1:15
-  │
-1 │ do { } break (continue)
-  │               ^^^^^^^^ unexpected
+do_while_no_continue_break.js:1:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `)` but instead found `continue`
+  
+  × unexpected
+  
+  > 1 │ do { } break (continue)
+      │               ^^^^^^^^
+    2 │ do { } continue (break)
+    3 │ 
+  
 --
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ do_while_no_continue_break.js:1:23
-  │
-1 │ do { } break (continue)
-  │               --------^
-  │               │       │
-  │               │       An explicit or implicit semicolon is expected here...
-  │               ...Which is required to end this statement
+do_while_no_continue_break.js:1:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+  > 1 │ do { } break (continue)
+      │                       ^
+    2 │ do { } continue (break)
+    3 │ 
+  
+  i ...Which is required to end this statement
+  
+  > 1 │ do { } break (continue)
+      │               ^^^^^^^^^
+    2 │ do { } continue (break)
+    3 │ 
+  
 --
-error[SyntaxError]: A `continue` statement can only be used within an enclosing `for`, `while` or `do while` statement.
-  ┌─ do_while_no_continue_break.js:1:15
-  │
-1 │ do { } break (continue)
-  │               ^^^^^^^^
+do_while_no_continue_break.js:1:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × A `continue` statement can only be used within an enclosing `for`, `while` or `do while` statement.
+  
+  > 1 │ do { } break (continue)
+      │               ^^^^^^^^
+    2 │ do { } continue (break)
+    3 │ 
+  
 --
-error[SyntaxError]: expected a statement but instead found ')'
-  ┌─ do_while_no_continue_break.js:1:23
-  │
-1 │ do { } break (continue)
-  │                       ^ Expected a statement here
+do_while_no_continue_break.js:1:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a statement but instead found ')'
+  
+  × Expected a statement here
+  
+  > 1 │ do { } break (continue)
+      │                       ^
+    2 │ do { } continue (break)
+    3 │ 
+  
 --
-error[SyntaxError]: expected `while` but instead found `continue`
-  ┌─ do_while_no_continue_break.js:2:8
-  │
-2 │ do { } continue (break)
-  │        ^^^^^^^^ unexpected
+do_while_no_continue_break.js:2:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `while` but instead found `continue`
+  
+  × unexpected
+  
+    1 │ do { } break (continue)
+  > 2 │ do { } continue (break)
+      │        ^^^^^^^^
+    3 │ 
+  
 --
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ do_while_no_continue_break.js:2:17
-  │
-2 │ do { } continue (break)
-  │        ---------^
-  │        │        │
-  │        │        An explicit or implicit semicolon is expected here...
-  │        ...Which is required to end this statement
+do_while_no_continue_break.js:2:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    1 │ do { } break (continue)
+  > 2 │ do { } continue (break)
+      │                 ^
+    3 │ 
+  
+  i ...Which is required to end this statement
+  
+    1 │ do { } break (continue)
+  > 2 │ do { } continue (break)
+      │        ^^^^^^^^^^
+    3 │ 
+  
 --
-error[SyntaxError]: A `continue` statement can only be used within an enclosing `for`, `while` or `do while` statement.
-  ┌─ do_while_no_continue_break.js:2:8
-  │
-2 │ do { } continue (break)
-  │        ^^^^^^^^
+do_while_no_continue_break.js:2:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × A `continue` statement can only be used within an enclosing `for`, `while` or `do while` statement.
+  
+    1 │ do { } break (continue)
+  > 2 │ do { } continue (break)
+      │        ^^^^^^^^
+    3 │ 
+  
 --
-error[SyntaxError]: expected `)` but instead found `break`
-  ┌─ do_while_no_continue_break.js:2:18
-  │
-2 │ do { } continue (break)
-  │                  ^^^^^ unexpected
+do_while_no_continue_break.js:2:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `)` but instead found `break`
+  
+  × unexpected
+  
+    1 │ do { } break (continue)
+  > 2 │ do { } continue (break)
+      │                  ^^^^^
+    3 │ 
+  
 --
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ do_while_no_continue_break.js:2:23
-  │
-2 │ do { } continue (break)
-  │                  -----^
-  │                  │    │
-  │                  │    An explicit or implicit semicolon is expected here...
-  │                  ...Which is required to end this statement
+do_while_no_continue_break.js:2:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    1 │ do { } break (continue)
+  > 2 │ do { } continue (break)
+      │                       ^
+    3 │ 
+  
+  i ...Which is required to end this statement
+  
+    1 │ do { } break (continue)
+  > 2 │ do { } continue (break)
+      │                  ^^^^^^
+    3 │ 
+  
 --
-error[SyntaxError]: A `break` statement can only be used within an enclosing iteration or switch statement.
-  ┌─ do_while_no_continue_break.js:2:18
-  │
-2 │ do { } continue (break)
-  │                  ^^^^^
+do_while_no_continue_break.js:2:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × A `break` statement can only be used within an enclosing iteration or switch statement.
+  
+    1 │ do { } break (continue)
+  > 2 │ do { } continue (break)
+      │                  ^^^^^
+    3 │ 
+  
 --
-error[SyntaxError]: expected a statement but instead found ')'
-  ┌─ do_while_no_continue_break.js:2:23
-  │
-2 │ do { } continue (break)
-  │                       ^ Expected a statement here
+do_while_no_continue_break.js:2:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a statement but instead found ')'
+  
+  × Expected a statement here
+  
+    1 │ do { } break (continue)
+  > 2 │ do { } continue (break)
+      │                       ^
+    3 │ 
+  
 --
 do { } break (continue)
 do { } continue (break)

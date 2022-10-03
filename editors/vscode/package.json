@@ -3,7 +3,7 @@
 	"publisher": "rome",
 	"displayName": "Rome",
 	"description": "Rome LSP VS Code Extension",
-	"version": "0.12.0",
+	"version": "0.14.1",
 	"icon": "icon.png",
 	"activationEvents": [
 		"onLanguage:javascript",
@@ -21,7 +21,7 @@
 		"url": "https://github.com/rome/tools/issues"
 	},
 	"engines": {
-		"vscode": "^1.68.1",
+		"vscode": "^1.70.0",
 		"npm": "^8"
 	},
 	"contributes": {
@@ -81,10 +81,16 @@
 						"null"
 					],
 					"default": null,
-					"markdownDescription": "The rome lsp server executable."
+					"markdownDescription": "The rome lsp server executable. If the path is relative, the workspace folder will be used as base path"
 				}
 			}
-		}
+		},
+		"jsonValidation": [
+			{
+				"fileMatch": "rome.json",
+				"url": "./configuration_schema.json"
+			}
+		]
 	},
 	"categories": [
 		"Formatters",
@@ -102,8 +108,8 @@
 		"package": "vsce package -o rome_lsp.vsix",
 		"build": "npm run compile -- --minify && npm run package",
 		"install-extension": "code --install-extension rome_lsp.vsix",
-		"format": "cargo run --bin rome format ./src/ ./scripts",
-		"format:rome": "rome format src scripts --write",
+		"format": "cargo run --bin rome format ./src/ ./scripts --write",
+		"pack:dev": "npm run compile && npm run package && npm run install-extension",
 		"tsc": "tsc"
 	},
 	"dependencies": {
@@ -111,9 +117,9 @@
 	},
 	"devDependencies": {
 		"@types/node": "^18.0.0",
-		"@types/vscode": "^1.68.1",
-		"typescript": "^4.5.2",
-		"vsce": "^2.10.0",
+		"@types/vscode": "^1.70.0",
+		"typescript": "^4.8.2",
+		"vsce": "^2.11.0",
 		"esbuild": "^0.14.47",
 		"rome": "next"
 	}

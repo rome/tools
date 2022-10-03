@@ -1,7 +1,8 @@
+use crate::parentheses::NeedsParentheses;
 use crate::prelude::*;
 use rome_formatter::write;
 use rome_js_syntax::JsParenthesizedAssignment;
-use rome_js_syntax::JsParenthesizedAssignmentFields;
+use rome_js_syntax::{JsParenthesizedAssignmentFields, JsSyntaxNode};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsParenthesizedAssignment;
@@ -26,5 +27,21 @@ impl FormatNodeRule<JsParenthesizedAssignment> for FormatJsParenthesizedAssignme
                 r_paren_token.format(),
             ]
         ]
+    }
+
+    fn needs_parentheses(&self, item: &JsParenthesizedAssignment) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl NeedsParentheses for JsParenthesizedAssignment {
+    #[inline]
+    fn needs_parentheses(&self) -> bool {
+        false
+    }
+
+    #[inline]
+    fn needs_parentheses_with_parent(&self, _: &JsSyntaxNode) -> bool {
+        false
     }
 }

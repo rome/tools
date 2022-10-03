@@ -44,6 +44,7 @@ aLongIdentifierName,
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 a, b;
 
@@ -57,15 +58,13 @@ const f = () => (
 	____________third
 );
 
-(
-	____________first,
-		____________second,
-		____________third,
-		____________third,
-		____________third,
-		____________third,
-		____________third
-);
+____________first,
+	____________second,
+	____________third,
+	____________third,
+	____________third,
+	____________third,
+	____________third;
 
 function a() {
 	return (
@@ -80,15 +79,14 @@ function a() {
 }
 
 const object = {
-	something: (
-		____________first,
+	something:
+		(____________first,
 		____________second,
 		____________third,
 		____________third,
 		____________third,
 		____________third,
-		____________third
-	),
+		____________third),
 };
 
 a,

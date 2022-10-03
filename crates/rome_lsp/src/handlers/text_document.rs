@@ -1,5 +1,5 @@
 use anyhow::{bail, Result};
-use rome_service::workspace::{ChangeFileParams, CloseFileParams, OpenFileParams};
+use rome_service::workspace::{ChangeFileParams, CloseFileParams, Language, OpenFileParams};
 use tower_lsp::lsp_types;
 use tracing::error;
 
@@ -14,6 +14,7 @@ pub(crate) async fn did_open(
     let url = params.text_document.uri;
     let version = params.text_document.version;
     let content = params.text_document.text;
+    let language_hint = Language::from_language_id(&params.text_document.language_id);
 
     let rome_path = session.file_path(&url);
     let doc = Document::new(version, &content);
@@ -22,6 +23,7 @@ pub(crate) async fn did_open(
         path: rome_path,
         version,
         content,
+        language_hint,
     })?;
 
     session.insert_document(url.clone(), doc);

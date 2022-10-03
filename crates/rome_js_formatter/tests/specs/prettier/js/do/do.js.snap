@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\do\\do.js"
 ---
 
 # Input
@@ -234,170 +236,353 @@ do {
 
 # Errors
 ```
-error[SyntaxError]: expected an expression, or an assignment but instead found 'do'
-  ┌─ do.js:3:5
-  │
-3 │     do {
-  │     ^^ Expected an expression, or an assignment here
+do.js:3:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `:` but instead found `{`
-  ┌─ do.js:3:8
-  │
-3 │     do {
-  │        ^ unexpected
+  × expected an expression, or an assignment but instead found 'do'
+  
+  × Expected an expression, or an assignment here
+  
+    1 │ const envSpecific = {
+    2 │   domain:
+  > 3 │     do {
+      │     ^^
+    4 │       if(env === 'production') 'https://abc.mno.com/';
+    5 │       else if(env === 'development') 'http://localhost:4000';
+  
+do.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `===`
-  ┌─ do.js:4:14
-  │
-4 │       if(env === 'production') 'https://abc.mno.com/';
-  │              ^^^ unexpected
+  × expected `:` but instead found `{`
+  
+  × unexpected
+  
+    1 │ const envSpecific = {
+    2 │   domain:
+  > 3 │     do {
+      │        ^
+    4 │       if(env === 'production') 'https://abc.mno.com/';
+    5 │       else if(env === 'development') 'http://localhost:4000';
+  
+do.js:4:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a function body but instead found ''https://abc.mno.com/''
-  ┌─ do.js:4:32
-  │
-4 │       if(env === 'production') 'https://abc.mno.com/';
-  │                                ^^^^^^^^^^^^^^^^^^^^^^ Expected a function body here
+  × expected `,` but instead found `===`
+  
+  × unexpected
+  
+    2 │   domain:
+    3 │     do {
+  > 4 │       if(env === 'production') 'https://abc.mno.com/';
+      │              ^^^
+    5 │       else if(env === 'development') 'http://localhost:4000';
+    6 │     }
+  
+do.js:4:32 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `:` but instead found `;`
-  ┌─ do.js:4:54
-  │
-4 │       if(env === 'production') 'https://abc.mno.com/';
-  │                                                      ^ unexpected
+  × expected a function body but instead found ''https://abc.mno.com/''
+  
+  × Expected a function body here
+  
+    2 │   domain:
+    3 │     do {
+  > 4 │       if(env === 'production') 'https://abc.mno.com/';
+      │                                ^^^^^^^^^^^^^^^^^^^^^^
+    5 │       else if(env === 'development') 'http://localhost:4000';
+    6 │     }
+  
+do.js:4:54 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a statement but instead found 'else'
-  ┌─ do.js:5:7
-  │
-5 │       else if(env === 'development') 'http://localhost:4000';
-  │       ^^^^ Expected a statement here
+  × expected `:` but instead found `;`
+  
+  × unexpected
+  
+    2 │   domain:
+    3 │     do {
+  > 4 │       if(env === 'production') 'https://abc.mno.com/';
+      │                                                      ^
+    5 │       else if(env === 'development') 'http://localhost:4000';
+    6 │     }
+  
+do.js:5:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a statement but instead found '}
-}'
-  ┌─ do.js:6:5
-  │  
-6 │ ┌     }
-7 │ │ };
-  │ └─^ Expected a statement here
+  × expected a statement but instead found 'else'
+  
+  × Expected a statement here
+  
+    3 │     do {
+    4 │       if(env === 'production') 'https://abc.mno.com/';
+  > 5 │       else if(env === 'development') 'http://localhost:4000';
+      │       ^^^^
+    6 │     }
+    7 │ };
+  
+do.js:6:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an expression, or an assignment but instead found 'do'
-  ┌─ do.js:9:9
-  │
-9 │ let x = do {
-  │         ^^ Expected an expression, or an assignment here
+  × expected a statement but instead found '}
+    }'
+  
+  × Expected a statement here
+  
+    4 │       if(env === 'production') 'https://abc.mno.com/';
+    5 │       else if(env === 'development') 'http://localhost:4000';
+  > 6 │     }
+      │     ^
+  > 7 │ };
+      │ ^
+    8 │ 
+    9 │ let x = do {
+  
+do.js:9:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `while` but instead found `;`
-   ┌─ do.js:12:2
-   │
-12 │ };
-   │  ^ unexpected
+  × expected an expression, or an assignment but instead found 'do'
+  
+  × Expected an expression, or an assignment here
+  
+     7 │ };
+     8 │ 
+   > 9 │ let x = do {
+       │         ^^
+    10 │   let tmp = f();
+    11 │   tmp * tmp + 1
+  
+do.js:12:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an expression, or an assignment but instead found 'do'
-   ┌─ do.js:14:9
-   │
-14 │ let y = do {
-   │         ^^ Expected an expression, or an assignment here
+  × expected `while` but instead found `;`
+  
+  × unexpected
+  
+    10 │   let tmp = f();
+    11 │   tmp * tmp + 1
+  > 12 │ };
+       │  ^
+    13 │ 
+    14 │ let y = do {
+  
+do.js:14:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `while` but instead found `;`
-   ┌─ do.js:18:2
-   │
-18 │ };
-   │  ^ unexpected
+  × expected an expression, or an assignment but instead found 'do'
+  
+  × Expected an expression, or an assignment here
+  
+    12 │ };
+    13 │ 
+  > 14 │ let y = do {
+       │         ^^
+    15 │   if (foo()) { f() }
+    16 │   else if (bar()) { g() }
+  
+do.js:18:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `}` but instead found `do`
-   ┌─ do.js:25:9
-   │
-25 │         do {
-   │         ^^ unexpected
+  × expected `while` but instead found `;`
+  
+  × unexpected
+  
+    16 │   else if (bar()) { g() }
+    17 │   else { h() }
+  > 18 │ };
+       │  ^
+    19 │ 
+    20 │ function foo() {
+  
+do.js:25:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `}` but instead found `if`
-   ┌─ do.js:26:11
-   │
-26 │           if (loggedIn) {
-   │           ^^ unexpected
+  × expected `}` but instead found `do`
+  
+  × unexpected
+  
+    23 │       <Home />
+    24 │       {
+  > 25 │         do {
+       │         ^^
+    26 │           if (loggedIn) {
+    27 │             <LogoutButton />
+  
+do.js:26:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `)` but instead found `do`
-   ┌─ do.js:37:2
-   │
-37 │ (do {});
-   │  ^^ unexpected
+  × expected `}` but instead found `if`
+  
+  × unexpected
+  
+    24 │       {
+    25 │         do {
+  > 26 │           if (loggedIn) {
+       │           ^^
+    27 │             <LogoutButton />
+    28 │           } else {
+  
+do.js:37:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `while` but instead found `)`
-   ┌─ do.js:37:7
-   │
-37 │ (do {});
-   │       ^ unexpected
+  × expected `)` but instead found `do`
+  
+  × unexpected
+  
+    35 │ }
+    36 │ 
+  > 37 │ (do {});
+       │  ^^
+    38 │ (do {} + 1);
+    39 │ (1 + do {});
+  
+do.js:37:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `)` but instead found `do`
-   ┌─ do.js:38:2
-   │
-38 │ (do {} + 1);
-   │  ^^ unexpected
+  × expected `while` but instead found `)`
+  
+  × unexpected
+  
+    35 │ }
+    36 │ 
+  > 37 │ (do {});
+       │       ^
+    38 │ (do {} + 1);
+    39 │ (1 + do {});
+  
+do.js:38:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `while` but instead found `+`
-   ┌─ do.js:38:8
-   │
-38 │ (do {} + 1);
-   │        ^ unexpected
+  × expected `)` but instead found `do`
+  
+  × unexpected
+  
+    37 │ (do {});
+  > 38 │ (do {} + 1);
+       │  ^^
+    39 │ (1 + do {});
+    40 │ () => do {};
+  
+do.js:38:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an expression but instead found 'do'
-   ┌─ do.js:39:6
-   │
-39 │ (1 + do {});
-   │      ^^ Expected an expression here
+  × expected `while` but instead found `+`
+  
+  × unexpected
+  
+    37 │ (do {});
+  > 38 │ (do {} + 1);
+       │        ^
+    39 │ (1 + do {});
+    40 │ () => do {};
+  
+do.js:39:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `while` but instead found `)`
-   ┌─ do.js:39:11
-   │
-39 │ (1 + do {});
-   │           ^ unexpected
+  × expected an expression but instead found 'do'
+  
+  × Expected an expression here
+  
+    37 │ (do {});
+    38 │ (do {} + 1);
+  > 39 │ (1 + do {});
+       │      ^^
+    40 │ () => do {};
+    41 │ 
+  
+do.js:39:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a function body, or an expression but instead found 'do'
-   ┌─ do.js:40:7
-   │
-40 │ () => do {};
-   │       ^^ Expected a function body, or an expression here
+  × expected `while` but instead found `)`
+  
+  × unexpected
+  
+    37 │ (do {});
+    38 │ (do {} + 1);
+  > 39 │ (1 + do {});
+       │           ^
+    40 │ () => do {};
+    41 │ 
+  
+do.js:40:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `while` but instead found `;`
-   ┌─ do.js:40:12
-   │
-40 │ () => do {};
-   │            ^ unexpected
+  × expected a function body, or an expression but instead found 'do'
+  
+  × Expected a function body, or an expression here
+  
+    38 │ (do {} + 1);
+    39 │ (1 + do {});
+  > 40 │ () => do {};
+       │       ^^
+    41 │ 
+    42 │ (do {
+  
+do.js:40:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `)` but instead found `do`
-   ┌─ do.js:42:2
-   │
-42 │ (do {
-   │  ^^ unexpected
+  × expected `while` but instead found `;`
+  
+  × unexpected
+  
+    38 │ (do {} + 1);
+    39 │ (1 + do {});
+  > 40 │ () => do {};
+       │            ^
+    41 │ 
+    42 │ (do {
+  
+do.js:42:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `while` but instead found `)`
-   ┌─ do.js:47:2
-   │
-47 │ });
-   │  ^ unexpected
+  × expected `)` but instead found `do`
+  
+  × unexpected
+  
+    40 │ () => do {};
+    41 │ 
+  > 42 │ (do {
+       │  ^^
+    43 │   switch(0) {
+    44 │     case 0: "foo";
+  
+do.js:47:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a function body, or an expression but instead found 'do'
-   ┌─ do.js:49:7
-   │
-49 │ () => do {
-   │       ^^ Expected a function body, or an expression here
+  × expected `while` but instead found `)`
+  
+  × unexpected
+  
+    45 │     case 1: break;
+    46 │   }
+  > 47 │ });
+       │  ^
+    48 │ 
+    49 │ () => do {
+  
+do.js:49:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `while` but instead found `;`
-   ┌─ do.js:54:2
-   │
-54 │ };
-   │  ^ unexpected
+  × expected a function body, or an expression but instead found 'do'
+  
+  × Expected a function body, or an expression here
+  
+    47 │ });
+    48 │ 
+  > 49 │ () => do {
+       │       ^^
+    50 │   var obj = { foo: "bar", bar: "foo" };
+    51 │   for (var key in obj) {
+  
+do.js:54:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-   ┌─ do.js:31:9
-   │
-31 │         }
-   │         ^
+  × expected `while` but instead found `;`
+  
+  × unexpected
+  
+    52 │     obj[key];
+    53 │   }
+  > 54 │ };
+       │  ^
+    55 │ 
+  
+do.js:31:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error: Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
-   ┌─ do.js:32:7
-   │
-32 │       }
-   │       ^
+  × Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+  
+    29 │             <LoginButton />
+    30 │           }
+  > 31 │         }
+       │         ^
+    32 │       }
+    33 │     </nav>
+  
+do.js:32:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Unexpected token. Did you mean `{'}'}` or `&rbrace;`?
+  
+    30 │           }
+    31 │         }
+  > 32 │       }
+       │       ^
+    33 │     </nav>
+    34 │   );
+  
 
 ```
 

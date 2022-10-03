@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\decorators\\multiple.js"
 ---
 
 # Input
@@ -28,10 +30,9 @@ const foo = {
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,18 +1,16 @@
+@@ -1,18 +1,15 @@
  const dog = {
 -  @readonly
-+
 +@readonly
    @nonenumerable
    @doubledValue
@@ -60,7 +61,6 @@ const foo = {
 
 ```js
 const dog = {
-
 @readonly
   @nonenumerable
   @doubledValue
@@ -80,41 +80,73 @@ const foo = {
 
 # Errors
 ```
-error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '@'
-  ┌─ multiple.js:2:3
-  │
-2 │   @readonly
-  │   ^ Expected a property, a shorthand property, a getter, a setter, or a method here
+multiple.js:2:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an expression but instead found '@'
-  ┌─ multiple.js:7:3
-  │
-7 │   @readonly
-  │   ^ Expected an expression here
+  × expected a property, a shorthand property, a getter, a setter, or a method but instead found '@'
+  
+  × Expected a property, a shorthand property, a getter, a setter, or a method here
+  
+    1 │ const dog = {
+  > 2 │   @readonly
+      │   ^
+    3 │   @nonenumerable
+    4 │   @doubledValue
+  
+multiple.js:7:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a statement but instead found '}'
-   ┌─ multiple.js:11:1
-   │
-11 │ };
-   │ ^ Expected a statement here
+  × expected an expression but instead found '@'
+  
+  × Expected an expression here
+  
+    5 │   legs: 4,
+    6 │ 
+  > 7 │   @readonly
+      │   ^
+    8 │   @nonenumerable
+    9 │   @doubledValue
+  
+multiple.js:11:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a property, a shorthand property, a getter, a setter, or a method but instead found '@'
-   ┌─ multiple.js:14:3
-   │
-14 │   @multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value"
-   │   ^ Expected a property, a shorthand property, a getter, a setter, or a method here
+  × expected a statement but instead found '}'
+  
+  × Expected a statement here
+  
+     9 │   @doubledValue
+    10 │   eyes: 2
+  > 11 │ };
+       │ ^
+    12 │ 
+    13 │ const foo = {
+  
+multiple.js:14:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a statement but instead found '}'
-   ┌─ multiple.js:15:1
-   │
-15 │ };
-   │ ^ Expected a statement here
+  × expected a property, a shorthand property, a getter, a setter, or a method but instead found '@'
+  
+  × Expected a property, a shorthand property, a getter, a setter, or a method here
+  
+    13 │ const foo = {
+  > 14 │   @multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value"
+       │   ^
+    15 │ };
+    16 │ 
+  
+multiple.js:15:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a statement but instead found '}'
+  
+  × Expected a statement here
+  
+    13 │ const foo = {
+    14 │   @multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value"
+  > 15 │ };
+       │ ^
+    16 │ 
+  
 
 ```
 
 # Lines exceeding max width of 80 characters
 ```
-   15: @multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value";
+   14: @multipleDecorators @inline @theyWontAllFitInOneline aVeryLongPropName: "A very long string as value";
 ```
 

@@ -14,23 +14,33 @@ import.meta.aReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherR
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 console.log(import.meta);
 import.meta.field =
-	obj.aReallyLongVariableName.andAnotherReallyLongVariableName
-		.andAnotherReallyLongVariableName.andAnotherReallyLongVariable;
+	obj.aReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariable;
 import.meta.aReallyLongVariableName.andAnotherReallyLongVariableName
 	.andAnotherReallyLongVariableName.andAnotherReallyLongVariable;
+
+
+## Lines exceeding width of 80 characters
+
+    3: 	obj.aReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariable;
 ## Output 2
 -----
 Indent style: Spaces, size: 4
 Line width: 120
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 console.log(import.meta);
 import.meta.field =
-    obj.aReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariableName
-        .andAnotherReallyLongVariable;
+    obj.aReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariable;
 import.meta.aReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariableName
     .andAnotherReallyLongVariable;
+
+
+## Lines exceeding width of 120 characters
+
+    3:     obj.aReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariable;
 

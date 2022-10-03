@@ -1,0 +1,30 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+expression: content
+---
+## `rome.json`
+
+```json
+{
+  "linter": {
+    "enabled": true,
+    "rules": {
+        "correctness": {
+            "foo_rule": "off"
+        },
+        "style": {
+            "what_the_hell": "off"
+        }
+    }
+  }
+}
+```
+
+# Termination Message
+
+```block
+Rome couldn't load the configuration file, here's why: 
+invalid rule name `foo_rule` at line 7 column 9
+```
+
+

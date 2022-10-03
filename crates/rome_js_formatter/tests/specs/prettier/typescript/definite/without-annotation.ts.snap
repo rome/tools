@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "typescript\\definite\\without-annotation.ts"
 ---
 
 # Input
@@ -69,60 +71,111 @@ export const d! = x
 
 # Errors
 ```
-error[SyntaxError]: Properties with definite assignment assertions must also have type annotations.
-  ┌─ without-annotation.ts:3:3
-  │
-3 │   #b!
-  │   ^
+without-annotation.ts:3:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Properties with definite assignment assertions must also have type annotations.
-  ┌─ without-annotation.ts:4:3
-  │
-4 │   static c!
-  │   ^^^^^^
+  × Properties with definite assignment assertions must also have type annotations.
+  
+    1 │ class Foo {
+    2 │   a!
+  > 3 │   #b!
+      │   ^
+    4 │   static c!
+    5 │   [d]! = 1
+  
+without-annotation.ts:4:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Properties with definite assignment assertions must also have type annotations.
-  ┌─ without-annotation.ts:5:3
-  │
-5 │   [d]! = 1
-  │   ^
+  × Properties with definite assignment assertions must also have type annotations.
+  
+    2 │   a!
+    3 │   #b!
+  > 4 │   static c!
+      │   ^^^^^^
+    5 │   [d]! = 1
+    6 │   'e'!
+  
+without-annotation.ts:5:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Properties with definite assignment assertions must also have type annotations.
-  ┌─ without-annotation.ts:5:8
-  │
-5 │   [d]! = 1
-  │        ^
+  × Properties with definite assignment assertions must also have type annotations.
+  
+    3 │   #b!
+    4 │   static c!
+  > 5 │   [d]! = 1
+      │   ^
+    6 │   'e'!
+    7 │ }
+  
+without-annotation.ts:5:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Properties with definite assignment assertions must also have type annotations.
-  ┌─ without-annotation.ts:7:1
-  │
-7 │ }
-  │ ^
+  × Properties with definite assignment assertions must also have type annotations.
+  
+    3 │   #b!
+    4 │   static c!
+  > 5 │   [d]! = 1
+      │        ^
+    6 │   'e'!
+    7 │ }
+  
+without-annotation.ts:7:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `:` but instead found `=`
-  ┌─ without-annotation.ts:9:8
-  │
-9 │ let a! = x
-  │        ^ unexpected
+  × Properties with definite assignment assertions must also have type annotations.
+  
+    5 │   [d]! = 1
+    6 │   'e'!
+  > 7 │ }
+      │ ^
+    8 │ 
+    9 │ let a! = x
+  
+without-annotation.ts:9:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `:` but instead found `=`
-   ┌─ without-annotation.ts:10:10
-   │
-10 │ const b! = x
-   │          ^ unexpected
+  × expected `:` but instead found `=`
+  
+  × unexpected
+  
+     7 │ }
+     8 │ 
+   > 9 │ let a! = x
+       │        ^
+    10 │ const b! = x
+    11 │ var c/* */! = x
+  
+without-annotation.ts:10:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `:` but instead found `=`
-   ┌─ without-annotation.ts:11:13
-   │
-11 │ var c/* */! = x
-   │             ^ unexpected
+  × expected `:` but instead found `=`
+  
+  × unexpected
+  
+     9 │ let a! = x
+  > 10 │ const b! = x
+       │          ^
+    11 │ var c/* */! = x
+    12 │ export const d! = x
+  
+without-annotation.ts:11:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `:` but instead found `=`
-   ┌─ without-annotation.ts:12:17
-   │
-12 │ export const d! = x
-   │                 ^ unexpected
+  × expected `:` but instead found `=`
+  
+  × unexpected
+  
+     9 │ let a! = x
+    10 │ const b! = x
+  > 11 │ var c/* */! = x
+       │             ^
+    12 │ export const d! = x
+    13 │ 
+  
+without-annotation.ts:12:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `:` but instead found `=`
+  
+  × unexpected
+  
+    10 │ const b! = x
+    11 │ var c/* */! = x
+  > 12 │ export const d! = x
+       │                 ^
+    13 │ 
+  
 
 ```
 

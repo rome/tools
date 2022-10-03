@@ -14,6 +14,7 @@
 		"@11ty/eleventy": "^1.0.1",
 		"@11ty/eleventy-navigation": "^0.3.3",
 		"@11ty/eleventy-plugin-syntaxhighlight": "^4.1.0",
+		"@11ty/eleventy-plugin-rss": "^1.2.0",
 		"@types/markdown-it": "^12.2.3",
 		"clean-css": "^4.2.4",
 		"cross-env": "^7.0.3",

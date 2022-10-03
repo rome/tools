@@ -17,10 +17,12 @@ interface Suppressions {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 interface Suppressions {
 	// rome-ignore format: test
-    a: void
+	a: void
+
 	b: void;
 }
 

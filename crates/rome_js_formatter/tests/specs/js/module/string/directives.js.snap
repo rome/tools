@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 251
 expression: directives.js
 ---
 # Input
@@ -15,6 +14,7 @@ expression: directives.js
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 "use preferred quote";
 "use preferred quote";
@@ -25,9 +25,21 @@ Quote style: Double Quotes
 Indent style: Tab
 Line width: 80
 Quote style: Single Quotes
+Quote properties: As needed
 -----
 'use preferred quote';
 'use preferred quote';
+"keep quotes and escpaes \" ";
+'keep quotes and escpaes \' ';
+## Output 3
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: Preserve
+-----
+"use preferred quote";
+"use preferred quote";
 "keep quotes and escpaes \" ";
 'keep quotes and escpaes \' ';
 

@@ -62,15 +62,26 @@ JsModule {
         2: R_CURLY@40..42 "}" [Newline("\n")] []
   3: EOF@42..43 "" [Newline("\n")] []
 --
-error[SyntaxError]: Duplicate statement labels are not allowed
-  ┌─ double_label.js:3:5
-  │
-1 │ label1: {
-  │ ------ `label1` is first used as a label here
-2 │   label2: {
-3 │     label1: {}
-  │     ^^^^^^ a second use of `label1` here is not allowed
+double_label.js:3:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Duplicate statement labels are not allowed
+  
+  × a second use of `label1` here is not allowed
+  
+    1 │ label1: {
+    2 │   label2: {
+  > 3 │     label1: {}
+      │     ^^^^^^
+    4 │   }
+    5 │ }
+  
+  i `label1` is first used as a label here
+  
+  > 1 │ label1: {
+      │ ^^^^^^
+    2 │   label2: {
+    3 │     label1: {}
+  
 --
 label1: {
   label2: {

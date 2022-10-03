@@ -15,6 +15,7 @@ x = y--
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 y++;
 y--;

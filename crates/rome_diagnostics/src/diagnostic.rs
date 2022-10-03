@@ -1,22 +1,22 @@
-use crate::suggestion::SuggestionChange;
 use crate::{
     file::{FileId, FileSpan, Span},
-    Applicability, CodeSuggestion, DiagnosticTag, Severity, SuggestionStyle,
+    v2::Category,
+    Applicability, CodeSuggestion, DiagnosticTag,
 };
 use rome_console::fmt::Display;
 use rome_console::{markup, MarkupBuf};
-use rome_text_edit::*;
+use rome_text_edit::TextEdit;
+use serde::{Deserialize, Serialize};
 
 /// A diagnostic message that can give information
 /// like errors or warnings.
-#[derive(Debug, Clone, PartialEq, Hash)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct Diagnostic {
     pub file_id: FileId,
 
     pub severity: Severity,
-    pub code: Option<String>,
-    pub code_link: Option<String>,
+    pub code: Option<&'static Category>,
     pub title: MarkupBuf,
     pub summary: Option<String>,
     pub tag: Option<DiagnosticTag>,
@@ -29,23 +29,28 @@ pub struct Diagnostic {
 
 impl Diagnostic {
     /// Creates a new [`Diagnostic`] with the `Error` severity.
-    pub fn error(file_id: FileId, code: impl Into<String>, title: impl Display) -> Self {
-        Self::new_with_code(file_id, Severity::Error, title, Some(code.into()))
+    pub fn error(file_id: FileId, code: &'static Category, title: impl Display) -> Self {
+        Self::new_with_code(file_id, Severity::Error, title, Some(code))
     }
 
     /// Creates a new [`Diagnostic`] with the `Warning` severity.
-    pub fn warning(file_id: FileId, code: impl Into<String>, title: impl Display) -> Self {
-        Self::new_with_code(file_id, Severity::Warning, title, Some(code.into()))
+    pub fn warning(file_id: FileId, code: &'static Category, title: impl Display) -> Self {
+        Self::new_with_code(file_id, Severity::Warning, title, Some(code))
     }
 
     /// Creates a new [`Diagnostic`] with the `Help` severity.
-    pub fn help(file_id: FileId, code: impl Into<String>, title: impl Display) -> Self {
-        Self::new_with_code(file_id, Severity::Help, title, Some(code.into()))
+    pub fn help(file_id: FileId, code: &'static Category, title: impl Display) -> Self {
+        Self::new_with_code(file_id, Severity::Help, title, Some(code))
     }
 
     /// Creates a new [`Diagnostic`] with the `Note` severity.
-    pub fn note(file_id: FileId, code: impl Into<String>, title: impl Display) -> Self {
-        Self::new_with_code(file_id, Severity::Note, title, Some(code.into()))
+    pub fn note(file_id: FileId, code: &'static Category, title: impl Display) -> Self {
+        Self::new_with_code(file_id, Severity::Note, title, Some(code))
+    }
+
+    /// Creates a new [`Diagnostic`] with the `Bug` severity.
+    pub fn bug(file_id: FileId, code: &'static Category, title: impl Display) -> Self {
+        Self::new_with_code(file_id, Severity::Bug, title, Some(code))
     }
 
     /// Creates a new [`Diagnostic`] that will be used in a builder-like way
@@ -60,12 +65,11 @@ impl Diagnostic {
         file_id: FileId,
         severity: Severity,
         title: impl Display,
-        code: Option<String>,
+        code: Option<&'static Category>,
     ) -> Self {
         Self {
             file_id,
             code,
-            code_link: None,
             severity,
             title: markup!({ title }).to_owned(),
             summary: None,
@@ -86,12 +90,6 @@ impl Diagnostic {
     /// Set an explicit plain-text summary for this diagnostic.
     pub fn summary(mut self, summary: impl Into<String>) -> Self {
         self.summary = Some(summary.into());
-        self
-    }
-
-    /// Set a hyperlink for the code of this diagnostic.
-    pub fn code_link(mut self, code_link: impl Into<String>) -> Self {
-        self.code_link = Some(code_link.into());
         self
     }
 
@@ -159,260 +157,25 @@ impl Diagnostic {
         self.label(Severity::Note, span, msg)
     }
 
-    /// Prints out a message that suggests a possible solution, that is in another
-    /// file as this `Diagnostic`, to the error.
-    ///
-    /// If the message plus the suggestion is longer than 25 chars,
-    /// the suggestion is displayed as a new children of this `Diagnostic`,
-    /// otherwise it will be inlined with the other labels.
-    ///
-    /// A suggestion is displayed like:
-    /// ```no_rust
-    /// try adding a `;`: console.log();
-    /// ```
-    /// or in a separate multiline suggestion
-    ///
-    /// The message should not contain the `:` because it's added automatically.
-    /// The suggestion will automatically be wrapped inside two backticks.
-    pub fn suggestion_in_file(
-        self,
-        span: impl Span,
-        msg: impl Display,
-        suggestion: impl Into<String>,
-        applicability: Applicability,
-        file: FileId,
-    ) -> Self {
-        self.suggestion_inner(
-            span,
-            markup!({ msg }).to_owned(),
-            suggestion,
-            applicability,
-            None,
-            file,
-        )
-    }
-
-    fn auto_suggestion_style(span: &impl Span, msg: &MarkupBuf) -> SuggestionStyle {
-        if span.as_range().len() + msg.len() > TextSize::from(25u32) {
-            SuggestionStyle::Full
-        } else {
-            SuggestionStyle::Inline
-        }
-    }
-
-    /// Prints out a message that suggests a possible solution to the error.
-    ///
-    /// If the message plus the suggestion is longer than 25 chars,
-    /// the suggestion is displayed as a new children of this `Diagnostic`,
-    /// otherwise it will be inlined with the other labels.
-    ///
-    /// A suggestion is displayed like:
-    /// ```no_rust
-    /// try adding a `;`: console.log();
-    /// ```
-    /// or in a separate multiline suggestion
-    ///
-    /// The message should not contain the `:` because it's added automatically.
-    /// The suggestion will automatically be wrapped inside two backticks.
-    pub fn suggestion(
-        self,
-        span: impl Span,
-        msg: impl Display,
-        suggestion: impl Into<String>,
-        applicability: Applicability,
-    ) -> Self {
-        let file = self.file_id;
-        self.suggestion_inner(
-            span,
-            markup!({ msg }).to_owned(),
-            suggestion,
-            applicability,
-            None,
-            file,
-        )
-    }
-
-    /// Add a suggestion which is always shown in the [Full](SuggestionStyle::Full) style.
+    /// Add a suggestion to this `Diagnostic`
     pub fn suggestion_full(
-        self,
+        mut self,
         span: impl Span,
         msg: impl Display,
-        suggestion: impl Into<String>,
+        suggestion: TextEdit,
         applicability: Applicability,
     ) -> Self {
         let file = self.file_id;
-        self.suggestion_inner(
-            span,
-            markup!({ msg }).to_owned(),
-            suggestion,
-            applicability,
-            SuggestionStyle::Full,
-            file,
-        )
-    }
-
-    /// Add a suggestion which is always shown in the [Inline](SuggestionStyle::Inline) style.
-    pub fn suggestion_inline(
-        self,
-        span: impl Span,
-        msg: impl Display,
-        suggestion: impl Into<String>,
-        applicability: Applicability,
-    ) -> Self {
-        let file = self.file_id;
-        self.suggestion_inner(
-            span,
-            markup!({ msg }).to_owned(),
-            suggestion,
-            applicability,
-            SuggestionStyle::Inline,
-            file,
-        )
-    }
-
-    /// Add a suggestion which does not have a suggestion code.
-    pub fn suggestion_no_code(
-        self,
-        span: impl Span,
-        msg: impl Display,
-        applicability: Applicability,
-    ) -> Self {
-        let file = self.file_id;
-        self.suggestion_inner(
-            span,
-            markup!({ msg }).to_owned(),
-            "",
-            applicability,
-            SuggestionStyle::HideCode,
-            file,
-        )
-    }
-
-    pub fn indel_suggestion(
-        mut self,
-        indels: impl IntoIterator<Item = Indel>,
-        span: impl Span,
-        msg: impl Display,
-        applicability: Applicability,
-    ) -> Self {
         let span = FileSpan {
-            file: self.file_id,
+            file,
             range: span.as_range(),
         };
-        let indels = indels.into_iter().collect::<Vec<_>>();
-        let labels = indels
-            .iter()
-            .filter(|x| !x.insert.is_empty())
-            .map(|x| {
-                TextRange::new(
-                    x.delete.as_range().start(),
-                    x.delete.as_range().start() + TextSize::of(&x.insert),
-                )
-            })
-            .collect();
-
         let suggestion = CodeSuggestion {
-            substitution: SuggestionChange::Indels(indels),
             applicability,
             msg: markup!({ msg }).to_owned(),
-            labels,
-            span,
-            style: SuggestionStyle::Full,
-        };
-        self.suggestions.push(suggestion);
-        self
-    }
-
-    /// Add a suggestion with info labels which point to places in the suggestion.
-    ///
-    /// **The label ranges are relative to the start of the span, not relative to the original code**
-    pub fn suggestion_with_labels(
-        mut self,
-        span: impl Span,
-        msg: impl Display,
-        suggestion: impl Into<String>,
-        applicability: Applicability,
-        labels: impl IntoIterator<Item = impl Span>,
-    ) -> Self {
-        let span = FileSpan {
-            file: self.file_id,
-            range: span.as_range(),
-        };
-
-        let labels = labels
-            .into_iter()
-            .map(|x| {
-                let range = x.as_range();
-                TextRange::new(
-                    span.range.start() + range.start(),
-                    span.range.start() + range.end(),
-                )
-            })
-            .collect::<Vec<_>>();
-        let suggestion = CodeSuggestion {
-            substitution: SuggestionChange::String(suggestion.into()),
-            applicability,
-            msg: markup!({ msg }).to_owned(),
-            labels,
-            span,
-            style: SuggestionStyle::Full,
-        };
-        self.suggestions.push(suggestion);
-        self
-    }
-
-    /// Add a suggestion with info labels which point to places in the suggestion.
-    ///
-    /// **The label ranges are relative to the source code, not relative to the original code**
-    pub fn suggestion_with_src_labels(
-        mut self,
-        span: impl Span,
-        msg: impl Display,
-        suggestion: impl Into<String>,
-        applicability: Applicability,
-        labels: impl IntoIterator<Item = impl Span>,
-    ) -> Self {
-        let span = FileSpan {
-            file: self.file_id,
-            range: span.as_range(),
-        };
-
-        let labels = labels.into_iter().map(|x| x.as_range()).collect::<Vec<_>>();
-        let suggestion = CodeSuggestion {
-            substitution: SuggestionChange::String(suggestion.into()),
-            applicability,
-            msg: markup!({ msg }).to_owned(),
-            labels,
-            span,
-            style: SuggestionStyle::Full,
-        };
-        self.suggestions.push(suggestion);
-        self
-    }
-
-    fn suggestion_inner(
-        mut self,
-        span: impl Span,
-        msg: MarkupBuf,
-        suggestion: impl Into<String>,
-        applicability: Applicability,
-        style: impl Into<Option<SuggestionStyle>>,
-        file: FileId,
-    ) -> Self {
-        let style = style
-            .into()
-            .unwrap_or_else(|| Self::auto_suggestion_style(&span, &msg));
-        let span = FileSpan {
-            file,
-            range: span.as_range(),
-        };
-        let suggestion = CodeSuggestion {
-            substitution: SuggestionChange::String(suggestion.into()),
-            applicability,
-            msg,
             labels: vec![],
             span,
-            style,
+            suggestion,
         };
         self.suggestions.push(suggestion);
         self
@@ -443,10 +206,40 @@ impl Diagnostic {
     }
 }
 
+/// A severity level for diagnostic messages.
+///
+/// These are ordered in the following way:
+#[derive(Copy, Clone, PartialEq, Eq, PartialOrd, Ord, Hash, Debug, Serialize, Deserialize)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
+pub enum Severity {
+    /// A help message.
+    Help,
+    /// A note.
+    Note,
+    /// A warning.
+    Warning,
+    /// An error.
+    Error,
+    /// An unexpected bug.
+    Bug,
+}
+
+impl From<Severity> for &'static str {
+    fn from(level: Severity) -> Self {
+        match level {
+            Severity::Bug => "bug",
+            Severity::Error => "error",
+            Severity::Warning => "warning",
+            Severity::Help => "help",
+            Severity::Note => "note",
+        }
+    }
+}
+
 /// Everything that can be added to a diagnostic, like
 /// a suggestion that will be displayed under the actual error.
-#[derive(Debug, Clone, PartialEq, Hash)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct SubDiagnostic {
     pub severity: Severity,
     pub msg: MarkupBuf,
@@ -454,8 +247,8 @@ pub struct SubDiagnostic {
 }
 
 /// A note or help that is displayed under the diagnostic.
-#[derive(Debug, Clone, PartialEq, Hash)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 pub struct Footer {
     pub msg: MarkupBuf,
     pub severity: Severity,

@@ -1,9 +1,10 @@
 use crate::prelude::*;
 use crate::AsFormat;
 use rome_formatter::{write, GroupId};
-use rome_js_syntax::{JsLanguage, JsSyntaxKind};
+use rome_js_syntax::JsLanguage;
 use rome_rowan::{
     AstNode, AstSeparatedElement, AstSeparatedList, AstSeparatedListElementsIterator, Language,
+    SyntaxResult,
 };
 use std::iter::FusedIterator;
 
@@ -13,8 +14,15 @@ pub struct FormatSeparatedElement<L: Language, N> {
     element: AstSeparatedElement<L, N>,
     is_last: bool,
     /// The separator to write if the element has no separator yet.
-    separator: JsSyntaxKind,
+    separator: &'static str,
     options: FormatSeparatedOptions,
+}
+
+impl<L: Language, N: AstNode<Language = L>> FormatSeparatedElement<L, N> {
+    /// Returns the node belonging to the element.
+    pub fn node(&self) -> SyntaxResult<&N> {
+        self.element.node()
+    }
 }
 
 impl<N> Format<JsFormatContext> for FormatSeparatedElement<JsLanguage, N>
@@ -63,12 +71,12 @@ where
                 TrailingSeparator::Allowed => {
                     write!(
                         f,
-                        [if_group_breaks(&format_inserted(self.separator))
+                        [if_group_breaks(&text(self.separator))
                             .with_group_id(self.options.group_id)]
                     )?;
                 }
                 TrailingSeparator::Mandatory => {
-                    format_inserted(self.separator).fmt(f)?;
+                    text(self.separator).fmt(f)?;
                 }
                 TrailingSeparator::Omit | TrailingSeparator::Disallowed => { /* no op */ }
             }
@@ -90,7 +98,7 @@ where
 {
     next: Option<AstSeparatedElement<Language, Node>>,
     inner: I,
-    separator: JsSyntaxKind,
+    separator: &'static str,
     options: FormatSeparatedOptions,
 }
 
@@ -98,7 +106,7 @@ impl<I, L, Node> FormatSeparatedIter<I, L, Node>
 where
     L: Language,
 {
-    fn new(inner: I, separator: JsSyntaxKind) -> Self {
+    fn new(inner: I, separator: &'static str) -> Self {
         Self {
             inner,
             separator,
@@ -166,7 +174,7 @@ pub trait FormatAstSeparatedListExtension: AstSeparatedList<Language = JsLanguag
     /// if the outer group breaks.
     fn format_separated(
         &self,
-        separator: JsSyntaxKind,
+        separator: &'static str,
     ) -> FormatSeparatedIter<
         AstSeparatedListElementsIterator<JsLanguage, Self::Node>,
         JsLanguage,
@@ -178,9 +186,10 @@ pub trait FormatAstSeparatedListExtension: AstSeparatedList<Language = JsLanguag
 
 impl<T> FormatAstSeparatedListExtension for T where T: AstSeparatedList<Language = JsLanguage> {}
 
-#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[derive(Debug, Copy, Clone, Eq, PartialEq, Default)]
 pub enum TrailingSeparator {
     /// A trailing separator is allowed and preferred
+    #[default]
     Allowed,
 
     /// A trailing separator is not allowed
@@ -192,12 +201,6 @@ pub enum TrailingSeparator {
     /// A trailing separator might be present, but the consumer
     /// decides to remove it
     Omit,
-}
-
-impl Default for TrailingSeparator {
-    fn default() -> Self {
-        TrailingSeparator::Allowed
-    }
 }
 
 #[derive(Debug, Default, Copy, Clone, Eq, PartialEq)]

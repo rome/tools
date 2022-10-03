@@ -9,18 +9,16 @@ interface Props {
 	sourceType: SourceType;
 }
 
-export default function SourceTypeSelect(
-	{
-		setIsTypeScript,
-		isTypeScript,
-		setIsJsx,
-		isJsx,
-		setSourceType,
-		sourceType,
-	}: Props,
-) {
+export default function SourceTypeSelect({
+	setIsTypeScript,
+	isTypeScript,
+	setIsJsx,
+	isJsx,
+	setSourceType,
+	sourceType,
+}: Props) {
 	return (
-		<div className="p-5 sm:pr-0 sm:pt-0">
+		<div className="pl-5 pb-5">
 			<fieldset className="flex items-center">
 				<legend className="sr-only">File Type</legend>
 				<div className="relative flex items-start">
@@ -85,7 +83,9 @@ export default function SourceTypeSelect(
 						/>
 					</div>
 					<div className="ml-1 text-sm">
-						<label htmlFor="jsx" className="font-medium text-gray-700">JSX</label>
+						<label htmlFor="jsx" className="font-medium text-gray-700">
+							JSX
+						</label>
 						<span id="jsx-description" className="text-gray-500">
 							<span className="sr-only">JSX</span>
 						</span>

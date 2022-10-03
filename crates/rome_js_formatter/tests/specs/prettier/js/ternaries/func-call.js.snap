@@ -21,15 +21,14 @@ fn(
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,8 +1,5 @@
- fn(
+@@ -2,7 +2,7 @@
    bifornCringerMoshedPerplexSawder,
    askTrovenaBeenaDependsRowans,
--  glimseGlyphsHazardNoopsTieTie === averredBathersBoxroomBuggyNurl &&
+   glimseGlyphsHazardNoopsTieTie === averredBathersBoxroomBuggyNurl &&
 -    anodyneCondosMalateOverateRetinol
--    ? annularCooeedSplicesWalksWayWay
--    : kochabCooieGameOnOboleUnweave,
-+  glimseGlyphsHazardNoopsTieTie === averredBathersBoxroomBuggyNurl && anodyneCondosMalateOverateRetinol ? annularCooeedSplicesWalksWayWay : kochabCooieGameOnOboleUnweave,
++  anodyneCondosMalateOverateRetinol
+     ? annularCooeedSplicesWalksWayWay
+     : kochabCooieGameOnOboleUnweave,
  );
 ```
 
@@ -39,13 +38,12 @@ fn(
 fn(
   bifornCringerMoshedPerplexSawder,
   askTrovenaBeenaDependsRowans,
-  glimseGlyphsHazardNoopsTieTie === averredBathersBoxroomBuggyNurl && anodyneCondosMalateOverateRetinol ? annularCooeedSplicesWalksWayWay : kochabCooieGameOnOboleUnweave,
+  glimseGlyphsHazardNoopsTieTie === averredBathersBoxroomBuggyNurl &&
+  anodyneCondosMalateOverateRetinol
+    ? annularCooeedSplicesWalksWayWay
+    : kochabCooieGameOnOboleUnweave,
 );
 ```
 
 
-# Lines exceeding max width of 80 characters
-```
-    4:   glimseGlyphsHazardNoopsTieTie === averredBathersBoxroomBuggyNurl && anodyneCondosMalateOverateRetinol ? annularCooeedSplicesWalksWayWay : kochabCooieGameOnOboleUnweave,
-```
 

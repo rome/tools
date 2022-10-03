@@ -3,26 +3,28 @@
 //! The configuration is divided by "tool", and then it's possible to further customise it
 //! by language. The language might further options divided by tool.
 
-use crate::configuration::formatter::FormatterConfiguration;
-use crate::configuration::javascript::JavascriptConfiguration;
-use crate::configuration::linter::LinterConfiguration;
 use crate::{DynRef, RomeError};
+use indexmap::IndexSet;
 use rome_fs::{FileSystem, OpenOptions};
+use serde::de::{SeqAccess, Visitor};
+use serde::ser::SerializeSeq;
 use serde::{Deserialize, Serialize};
 use std::fmt::{Debug, Display, Formatter};
 use std::io::ErrorKind;
+use std::marker::PhantomData;
 use std::path::PathBuf;
+use tracing::{error, info};
 
 mod formatter;
 mod javascript;
 pub mod linter;
-
-#[cfg(feature = "serde_workspace")]
-pub(crate) use javascript::{deserialize_globals, serialize_globals};
-pub use linter::{RuleConfiguration, Rules};
+pub use formatter::{FormatterConfiguration, PlainIndentStyle};
+pub use javascript::{JavascriptConfiguration, JavascriptFormatter};
+pub use linter::{LinterConfiguration, RuleConfiguration, Rules};
 
 /// The configuration that is contained inside the file `rome.json`
 #[derive(Debug, Deserialize, Serialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(deny_unknown_fields)]
 pub struct Configuration {
     /// The configuration of the formatter
@@ -62,6 +64,7 @@ impl Configuration {
 }
 
 /// Series of errors that can be thrown while computing the configuration
+#[derive(serde::Serialize, serde::Deserialize)]
 pub enum ConfigurationError {
     /// Thrown when the program can't serialize the configuration, while saving it
     SerializationError,
@@ -74,6 +77,12 @@ pub enum ConfigurationError {
     /// - incorrect fields
     /// - incorrect values
     DeserializationError(String),
+
+    /// Thrown when an unknown rule is found
+    UnknownRule(String),
+
+    /// Thrown when the pattern inside the `ignore` field errors
+    InvalidIgnorePattern(String, String),
 }
 
 impl Debug for ConfigurationError {
@@ -81,8 +90,9 @@ impl Debug for ConfigurationError {
         match self {
             ConfigurationError::SerializationError => std::fmt::Display::fmt(self, f),
             ConfigurationError::DeserializationError(_) => std::fmt::Display::fmt(self, f),
-
             ConfigurationError::ConfigAlreadyExists => std::fmt::Display::fmt(self, f),
+            ConfigurationError::UnknownRule(_) => std::fmt::Display::fmt(self, f),
+            ConfigurationError::InvalidIgnorePattern(_, _) => std::fmt::Display::fmt(self, f),
         }
     }
 }
@@ -106,21 +116,36 @@ impl Display for ConfigurationError {
             ConfigurationError::ConfigAlreadyExists => {
                 write!(f, "it seems that a configuration file already exists")
             }
+
+            ConfigurationError::UnknownRule(rule) => {
+                write!(f, "invalid rule name `{rule}`")
+            }
+            ConfigurationError::InvalidIgnorePattern(pattern, reason) => {
+                write!(f, "couldn't parse the pattern {pattern}, reason: {reason}")
+            }
         }
     }
 }
 
 /// This function is responsible to load the rome configuration.
 ///
-/// The `file_system` will read the configuration file
+/// The `file_system` will read the configuration file. A base path can be passed
 pub fn load_config(
     file_system: &DynRef<dyn FileSystem>,
+    base_path: Option<PathBuf>,
 ) -> Result<Option<Configuration>, RomeError> {
     let config_name = file_system.config_name();
-    let configuration_path = PathBuf::from(config_name);
+    let configuration_path = if let Some(base_path) = base_path {
+        base_path.join(config_name)
+    } else {
+        PathBuf::from(config_name)
+    };
+    info!(
+        "Attempting to load the configuration file at path {:?}",
+        configuration_path
+    );
     let options = OpenOptions::default().read(true).write(true);
     let file = file_system.open_with_options(&configuration_path, options);
-
     match file {
         Ok(mut file) => {
             let mut buffer = String::new();
@@ -140,6 +165,11 @@ pub fn load_config(
             if err.kind() != ErrorKind::NotFound {
                 return Err(RomeError::CantReadFile(configuration_path));
             }
+            error!(
+                "Could not find the file configuration at {:?}",
+                configuration_path.display()
+            );
+            error!("Reason: {:?}", err);
             Ok(None)
         }
     }
@@ -176,4 +206,68 @@ pub fn create_config(
         .map_err(|_| RomeError::CantReadFile(path))?;
 
     Ok(())
+}
+
+/// Some documentation
+pub fn deserialize_set_of_strings<'de, D>(
+    deserializer: D,
+) -> Result<Option<IndexSet<String>>, D::Error>
+where
+    D: serde::de::Deserializer<'de>,
+{
+    struct IndexVisitor {
+        marker: PhantomData<fn() -> Option<IndexSet<String>>>,
+    }
+
+    impl IndexVisitor {
+        fn new() -> Self {
+            IndexVisitor {
+                marker: PhantomData,
+            }
+        }
+    }
+
+    impl<'de> Visitor<'de> for IndexVisitor {
+        type Value = Option<IndexSet<String>>;
+
+        // Format a message stating what data this Visitor expects to receive.
+        fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+            formatter.write_str("expecting a sequence")
+        }
+
+        fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error>
+        where
+            A: SeqAccess<'de>,
+        {
+            let mut index_set = IndexSet::with_capacity(seq.size_hint().unwrap_or(0));
+
+            while let Some(value) = seq.next_element()? {
+                index_set.insert(value);
+            }
+
+            Ok(Some(index_set))
+        }
+    }
+
+    deserializer.deserialize_seq(IndexVisitor::new())
+}
+
+pub fn serialize_set_of_strings<S>(
+    globals: &Option<IndexSet<String>>,
+    s: S,
+) -> Result<S::Ok, S::Error>
+where
+    S: serde::ser::Serializer,
+{
+    if let Some(globals) = globals {
+        let mut sequence = s.serialize_seq(Some(globals.len()))?;
+        let iter = globals.into_iter();
+        for global in iter {
+            sequence.serialize_element(global)?;
+        }
+
+        sequence.end()
+    } else {
+        s.serialize_none()
+    }
 }

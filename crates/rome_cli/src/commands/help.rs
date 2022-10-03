@@ -19,6 +19,7 @@ const MAIN: Markup = markup! {
 
 "<Emphasis>"OPTIONS:"</Emphasis>"
     "<Dim>"--no-colors"</Dim>"      Disable the formatting of markup (print everything as plain text)
+    "<Dim>"--use-server"</Dim>"     Connect to a running instance of the Rome daemon server
 "
 };
 
@@ -39,11 +40,15 @@ const CHECK: Markup = markup! {
 
 const FORMAT_OPTIONS: Markup = markup! {
     "
-    "<Dim>"--indent-style <tabs|space>"</Dim>"   Determine whether the formatter should use tabs or spaces for indentation (default: tabs)
-    "<Dim>"--indent-size <number>"</Dim>"        If the indentation style is set to spaces, determine how many spaces should be used for indentation (default: 2)
-    "<Dim>"--line-width <number>"</Dim>"         Determine how many characters the formatter is allowed to print in a single line (default: 80)
-    "<Dim>"--quote-style <single|double>"</Dim>" Determine whether the formatter should use single or double quotes for strings (default: double)
-"
+    "<Dim>"--write"</Dim>"                                  Edit the files in place (beware!) instead of printing the diff to the console
+    "<Dim>"--skip-errors"</Dim>"                            Skip over files containing syntax errors instead of emitting an error diagnostic.
+    "<Dim>"--indent-style <tabs|space>"</Dim>"              Change the indention character (default: tabs)
+    "<Dim>"--indent-size <number>"</Dim>"                   If the indentation style is set to spaces, determine how many spaces should be used for indentation (default: 2)
+    "<Dim>"--line-width <number>"</Dim>"                    Change how many characters the formatter is allowed to print in a single line (default: 80)
+    "<Dim>"--quote-style <single|double>"</Dim>"            Changes the quotation character for strings (default: \")
+    "<Dim>"--quote-properties <as-needed|preserve>"</Dim>"  Changes when properties in object should be quoted (default: as-needed)
+    "<Dim>"--stdin-file-path <string>"</Dim>"                A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path file.js
+    "
 };
 
 const CI: Markup = markup! {
@@ -66,15 +71,27 @@ const FORMAT: Markup = markup! {
 
     INPUTS can be one or more filesystem path, each pointing to a single file or an entire directory to be searched recursively for supported files
 
-"<Emphasis>"OPTIONS:"</Emphasis>"
-    "<Dim>"--write"</Dim>"                       Write the output of the formatter to the files instead of printing the diff to the console
-    "<Dim>"--skip-errors"</Dim>"                 Skip over files containing syntax errors instead of returning an error"
+"<Emphasis>"OPTIONS:"</Emphasis>""
     {FORMAT_OPTIONS}
 };
 
 const INIT: Markup = markup! {
 "Rome init: bootstraps a new rome project"
 
+};
+
+const START: Markup = markup! {
+"Rome start: Start the Rome daemon server process
+
+"<Emphasis>"USAGE:"</Emphasis>"
+    rome start"
+};
+
+const STOP: Markup = markup! {
+"Rome stop: Stop the Rome daemon server process
+
+"<Emphasis>"USAGE:"</Emphasis>"
+    rome stop"
 };
 
 pub(crate) fn help(mut session: CliSession, command: Option<&str>) -> Result<(), Termination> {
@@ -97,6 +114,14 @@ pub(crate) fn help(mut session: CliSession, command: Option<&str>) -> Result<(),
         }
         Some("init") => {
             session.app.console.log(INIT);
+            Ok(())
+        }
+        Some("start") => {
+            session.app.console.log(START);
+            Ok(())
+        }
+        Some("stop") => {
+            session.app.console.log(STOP);
             Ok(())
         }
 

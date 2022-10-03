@@ -1,0 +1,23 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+expression: content
+---
+## `rome.json`
+
+```json
+{
+  "formatter": {
+    "lineWidth": 500
+  }
+}
+```
+
+# Termination Message
+
+```block
+Rome couldn't load the configuration file, here's why: 
+The line width exceeds the maximum value (320)
+ at line 4 column 3
+```
+
+

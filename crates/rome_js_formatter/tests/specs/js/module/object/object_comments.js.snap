@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 257
 expression: object_comments.js
 ---
 # Input
@@ -15,6 +14,7 @@ let a = { // leading comment
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 let a = {
 	// leading comment

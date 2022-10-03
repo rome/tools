@@ -121,12 +121,15 @@ JsModule {
         3: R_CURLY@54..55 "}" [] []
   3: EOF@55..56 "" [Newline("\n")] []
 --
-error[SyntaxError]: An overload signature cannot be declared as a generator.
-  ┌─ ts_function_overload_generator.ts:1:9
-  │
-1 │ function* test(a: string);
-  │         ^
+ts_function_overload_generator.ts:1:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × An overload signature cannot be declared as a generator.
+  
+  > 1 │ function* test(a: string);
+      │         ^
+    2 │ function* test(a: string) {}
+    3 │ 
+  
 --
 function* test(a: string);
 function* test(a: string) {}

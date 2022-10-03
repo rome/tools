@@ -1,8 +1,11 @@
 use crate::prelude::*;
 
-use rome_formatter::write;
-use rome_js_syntax::JsSyntaxKind::{JS_PARENTHESIZED_EXPRESSION, JS_SEQUENCE_EXPRESSION};
-use rome_js_syntax::{JsSequenceExpression, JsSequenceExpressionFields, JsSyntaxKind};
+use crate::parentheses::NeedsParentheses;
+use rome_formatter::{format_args, write};
+use rome_js_syntax::JsSyntaxKind::JS_SEQUENCE_EXPRESSION;
+use rome_js_syntax::{
+    JsSequenceExpression, JsSequenceExpressionFields, JsSyntaxKind, JsSyntaxNode,
+};
 use rome_rowan::AstNode;
 
 #[derive(Debug, Clone, Default)]
@@ -23,7 +26,7 @@ impl FormatNodeRule<JsSequenceExpression> for FormatJsSequenceExpression {
         for parent in node.syntax().ancestors().skip(1) {
             if parent.kind() == JS_SEQUENCE_EXPRESSION {
                 is_nested = true;
-            } else if parent.kind() != JS_PARENTHESIZED_EXPRESSION {
+            } else {
                 first_non_sequence_or_paren_parent = Some(parent);
                 break;
             }
@@ -41,7 +44,7 @@ impl FormatNodeRule<JsSequenceExpression> for FormatJsSequenceExpression {
                             left.format(),
                             comma_token.format(),
                             line_suffix_boundary(),
-                            soft_line_indent_or_space(&right.format())
+                            indent(&format_args![soft_line_break_or_space(), right.format()])
                         ]
                     );
                 }
@@ -64,5 +67,41 @@ impl FormatNodeRule<JsSequenceExpression> for FormatJsSequenceExpression {
         } else {
             write!(f, [group(&format_inner)])
         }
+    }
+
+    fn needs_parentheses(&self, item: &JsSequenceExpression) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl NeedsParentheses for JsSequenceExpression {
+    fn needs_parentheses_with_parent(&self, parent: &JsSyntaxNode) -> bool {
+        !matches!(
+            parent.kind(),
+            JsSyntaxKind::JS_RETURN_STATEMENT |
+            // There's a precedence for writing `x++, y++`
+            JsSyntaxKind::JS_FOR_STATEMENT |
+            JsSyntaxKind::JS_EXPRESSION_STATEMENT |
+            JsSyntaxKind::JS_SEQUENCE_EXPRESSION  |
+            // Handled as part of the arrow function formatting
+            JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION
+        )
+    }
+}
+
+#[cfg(test)]
+mod tests {
+
+    use crate::assert_not_needs_parentheses;
+    use rome_js_syntax::JsSequenceExpression;
+
+    #[test]
+    fn needs_parentheses() {
+        assert_not_needs_parentheses!("function test() { return a, b }", JsSequenceExpression);
+        assert_not_needs_parentheses!("for (let i, x; i++, x++;) {}", JsSequenceExpression);
+        assert_not_needs_parentheses!("a, b;", JsSequenceExpression);
+        assert_not_needs_parentheses!("a, b, c", JsSequenceExpression[0]);
+        assert_not_needs_parentheses!("a, b, c", JsSequenceExpression[1]);
+        assert_not_needs_parentheses!("a => a, b", JsSequenceExpression);
     }
 }

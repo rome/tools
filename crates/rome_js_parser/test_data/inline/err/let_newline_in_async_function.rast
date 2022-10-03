@@ -88,21 +88,41 @@ JsModule {
         3: R_CURLY@37..39 "}" [Newline("\n")] []
   3: EOF@39..40 "" [Newline("\n")] []
 --
-error[SyntaxError]: Illegal use of `await` as an identifier in an async context
-  ┌─ let_newline_in_async_function.js:3:3
-  │
-3 │   await 0;
-  │   ^^^^^
+let_newline_in_async_function.js:3:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of `await` as an identifier in an async context
+  
+    1 │ async function f() {
+    2 │   let
+  > 3 │   await 0;
+      │   ^^^^^
+    4 │ }
+    5 │ 
+  
 --
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ let_newline_in_async_function.js:3:9
-  │  
-2 │ ┌   let
-3 │ │   await 0;
-  │ │         ^ An explicit or implicit semicolon is expected here...
-  │ └────────' ...Which is required to end this statement
+let_newline_in_async_function.js:3:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    1 │ async function f() {
+    2 │   let
+  > 3 │   await 0;
+      │         ^
+    4 │ }
+    5 │ 
+  
+  i ...Which is required to end this statement
+  
+    1 │ async function f() {
+  > 2 │   let
+      │   ^^^
+  > 3 │   await 0;
+      │   ^^^^^^
+    4 │ }
+    5 │ 
+  
 --
 async function f() {
   let

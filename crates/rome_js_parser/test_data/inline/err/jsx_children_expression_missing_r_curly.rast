@@ -88,12 +88,19 @@ JsModule {
       1: (empty)
   3: EOF@36..37 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `}` but instead found `some`
-  ┌─ jsx_children_expression_missing_r_curly.jsx:3:3
-  │
-3 │   some text
-  │   ^^^^ unexpected
+jsx_children_expression_missing_r_curly.jsx:3:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `}` but instead found `some`
+  
+  × unexpected
+  
+    1 │ <test>
+    2 │   { 5 + 3
+  > 3 │   some text
+      │   ^^^^
+    4 │ </test>
+    5 │ 
+  
 --
 <test>
   { 5 + 3

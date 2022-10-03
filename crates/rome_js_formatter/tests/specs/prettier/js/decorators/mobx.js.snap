@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\decorators\\mobx.js"
 ---
 
 # Input
@@ -132,30 +134,57 @@ import { observable } from "mobx";
 
 # Errors
 ```
-error[SyntaxError]: return types can only be used in TypeScript files
-  ┌─ mobx.js:4:20
-  │
-4 │   @observable price:number = 0;
-  │                    ^^^^^^^ remove this type annotation
+mobx.js:4:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: return types can only be used in TypeScript files
-  ┌─ mobx.js:5:21
-  │
-5 │   @observable amount:number = 1;
-  │                     ^^^^^^^ remove this type annotation
+  × return types can only be used in TypeScript files
+  
+  × remove this type annotation
+  
+    3 │ @observer class OrderLine {
+  > 4 │   @observable price:number = 0;
+      │                    ^^^^^^^
+    5 │   @observable amount:number = 1;
+    6 │ 
+  
+mobx.js:5:21 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-   ┌─ mobx.js:33:34
-   │
-33 │   @action handleDecrease = (event: React.ChangeEvent<HTMLInputElement>) => this.count--;
-   │                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ TypeScript only syntax
+  × return types can only be used in TypeScript files
+  
+  × remove this type annotation
+  
+    3 │ @observer class OrderLine {
+    4 │   @observable price:number = 0;
+  > 5 │   @observable amount:number = 1;
+      │                     ^^^^^^^
+    6 │ 
+    7 │   constructor(price) {
+  
+mobx.js:33:34 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-   ┌─ mobx.js:35:35
-   │
-35 │   @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) => doSomething();
-   │                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ TypeScript only syntax
+  × Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  
+  × TypeScript only syntax
+  
+    31 │   }
+    32 │ 
+  > 33 │   @action handleDecrease = (event: React.ChangeEvent<HTMLInputElement>) => this.count--;
+       │                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    34 │   
+    35 │   @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) => doSomething();
+  
+mobx.js:35:35 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  
+  × TypeScript only syntax
+  
+    33 │   @action handleDecrease = (event: React.ChangeEvent<HTMLInputElement>) => this.count--;
+    34 │   
+  > 35 │   @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) => doSomething();
+       │                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    36 │ }
+    37 │ 
+  
 
 ```
 

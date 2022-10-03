@@ -15,7 +15,7 @@ We aim to offer everything out of the box and only introduce configuration if [a
 ```json
 {
   "formatter": {
-    "identStyle": "tab",
+    "indentStyle": "tab",
     "lineWidth": 120
   },
   "linter": {
@@ -47,11 +47,6 @@ A list of rules for `JavaScript` category.
 
 Enables the [recommended rules](/docs/lint/rules) for the category `JavaScript`.
 
-#### `linter.rules.js.rules`
-
-A map with the name of the rule as key, and their configuration as value. Check [rule configuration section](#configure-a-rule).
-for more details.
-
 Example:
 
 ```json
@@ -60,9 +55,7 @@ Example:
     "enabled": true,
     "rules": {
       "js": {
-        "rules": {
-          "noDebugger": "off"
-        }
+        "noDebugger": "off"
       }
     }
   }
@@ -79,10 +72,6 @@ A list of rules for `TypeScript` category.
 
 Enables the [recommended rules](/docs/lint/rules) for the category `TypeScript`.
 
-#### `linter.rules.ts.rules`
-
-A map with the name of the rule as key, and their configuration as value. Check [rule configuration section](#configure-a-rule).
-for more details.
 
 Example:
 
@@ -92,9 +81,7 @@ Example:
     "enabled": true,
     "rules": {
       "ts": {
-        "rules": {
-          "useShorthandArrayType": "off"
-        }
+        "useShorthandArrayType": "off"
       }
     }
   }
@@ -111,11 +98,6 @@ A list of rules for `JSX` category.
 
 Enables the [recommended rules](/docs/lint/rules) for the category `JSX`.
 
-#### `linter.rules.jsx.rules`
-
-A map with the name of the rule as key, and their configuration as value. Check [rule configuration section](#configure-a-rule).
-for more details.
-
 Example:
 
 ```json
@@ -124,9 +106,7 @@ Example:
     "enabled": true,
     "rules": {
       "jsx": {
-        "rules": {
-          "noCommentText": "off"
-        }
+        "noCommentText": "off"
       }
     }
   }
@@ -143,11 +123,6 @@ A list of rules for `Regex` category.
 
 Enables the [recommended rules](/docs/lint/rules) for the category `Regex`.
 
-#### `linter.rules.regex.rules`
-
-A map with the name of the rule as key, and their configuration as value. Check [rule configuration section](#configure-a-rule).
-for more details.
-
 Example:
 
 ```json
@@ -156,9 +131,7 @@ Example:
     "enabled": true,
     "rules": {
       "regex": {
-        "rules": {
-          "noMultipleSpacesInRegularExpressionLiterals": "off"
-        }
+        "noMultipleSpacesInRegularExpressionLiterals": "off"
       }
     }
   }
@@ -173,7 +146,7 @@ Enables Rome's formatter
 > Default: `true`
 
 
-#### `format.indentStyle`
+#### `formatter.indentStyle`
 
 The style of the indentation. It can be `"tab"` or `"space"`.
 
@@ -181,11 +154,11 @@ The style of the indentation. It can be `"tab"` or `"space"`.
 
 Rome's default is `"tab"`.
 
-#### `format.indentSize`
+#### `formatter.indentSize`
 
 How big the indentation should be.
 
-#### `format.lineWidth`
+#### `formatter.lineWidth`
 
 How many characters can be written on a single line.
 
@@ -197,12 +170,40 @@ The type of quote used when representing string literals. It can be `single` or 
 
 > Default: `double`
 
+#### `javascript.formatter.quoteProperties`
+
+When properties inside objects should be quoted. It can be `asNeeded` or `preserve`.
+
+> Default: `asNeeded`
+
+
 ### Configure a rule
 
 A rule can be configured for multiple purposes:
 - change the severity of their diagnostics;
 - turn the rule off;
 - pass possible options to customize the rule;
+
+#### Turn a rule on
+
+Rules that are recommended are enabled by default. Rules that are not recommended
+are not enabled, but they should be enabled via configuration.
+
+To enable rules, you need to change their diagnostics severity based on your needs:
+
+```json
+{
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "js": {
+        "noDeadCode": "error",
+        "useCamelCase": "warn"
+      }
+    }
+  }
+}
+```
 
 #### Turn a rule off
 
@@ -214,14 +215,10 @@ Just add `"off"` as value inside its configuration. For example:
     "enabled": true,
     "rules": {
       "jsx": {
-        "rules": {
-          "noCommentText": "off"
-        }
+        "noCommentText": "off"
       },
       "regex": {
-        "rules": {
-          "noMultipleSpacesInRegularExpressionLiterals": "off"
-        }
+        "noMultipleSpacesInRegularExpressionLiterals": "off"
       }
     }
   }
@@ -239,14 +236,10 @@ Just add `"warn"` as value of the rule. Example:
     "enabled": true,
     "rules": {
       "jsx": {
-        "rules": {
-          "noCommentText": "warn"
-        }
+        "noCommentText": "warn"
       },
       "regex": {
-        "rules": {
-          "noMultipleSpacesInRegularExpressionLiterals": "warn"
-        }
+        "noMultipleSpacesInRegularExpressionLiterals": "error"
       }
     }
   }
@@ -267,11 +260,9 @@ by shaping the value of the rule in a different way.
     "enabled": true,
     "rules": {
       "jsx": {
-        "rules": {
-          "noCommentText": {
-            "level": "warn",
-            "options": {}
-          }
+        "noCommentText": {
+          "level": "warn",
+          "options": {}
         }
       }
     }

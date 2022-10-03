@@ -67,11 +67,15 @@ JsModule {
       1: SEMICOLON@29..30 ";" [] []
   3: EOF@30..31 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `}` but instead found `asdf`
-  ┌─ jsx_element_attribute_expression_error.jsx:1:22
-  │
-1 │ <div className={asdf asdf} />;
-  │                      ^^^^ unexpected
+jsx_element_attribute_expression_error.jsx:1:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `}` but instead found `asdf`
+  
+  × unexpected
+  
+  > 1 │ <div className={asdf asdf} />;
+      │                      ^^^^
+    2 │ 
+  
 --
 <div className={asdf asdf} />;

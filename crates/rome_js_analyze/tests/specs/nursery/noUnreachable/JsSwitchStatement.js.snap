@@ -1,0 +1,57 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: JsSwitchStatement.js
+---
+# Input
+```js
+function JsSwitchStatement1() {
+    switch (value) {
+        case 0:
+            case0();
+            break;
+        default:
+            caseDefault();
+            break;
+        case 1: // afterDefault
+            afterDefault();
+    }
+}
+
+function JsSwitchStatement2() {
+    switch (value) {
+        case 0:
+            break;
+            afterBreak();
+    }
+}
+
+```
+
+# Diagnostics
+```
+JsSwitchStatement.js:18:13 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+    16 │         case 0:
+    17 │             break;
+  > 18 │             afterBreak();
+       │             ^^^^^^^^^^^^^
+    19 │     }
+    20 │ }
+  
+  i This statement will break the flow of the code ...
+  
+    15 │     switch (value) {
+    16 │         case 0:
+  > 17 │             break;
+       │             ^^^^^^
+    18 │             afterBreak();
+    19 │     }
+  
+
+```
+
+

@@ -1,9 +1,9 @@
 use crate::cursor::SyntaxToken;
 use crate::green::GreenTrivia;
 use crate::TriviaPiece;
+use rome_text_size::{TextRange, TextSize};
 use std::fmt;
 use std::iter::FusedIterator;
-use text_size::{TextRange, TextSize};
 
 #[derive(PartialEq, Eq, Clone, Hash)]
 pub(crate) struct SyntaxTrivia {
@@ -52,7 +52,7 @@ impl SyntaxTrivia {
     }
 
     /// Get the number of TriviaPiece inside this trivia
-    fn len(&self) -> usize {
+    pub(crate) fn len(&self) -> usize {
         self.green_trivia().len()
     }
 

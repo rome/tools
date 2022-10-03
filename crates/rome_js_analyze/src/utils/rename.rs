@@ -49,6 +49,7 @@ impl RenamableNode for JsAnyRenamableDeclaration {
     }
 }
 
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum RenameError {
     CannotFindDeclaration,
     CannotBeRenamed {
@@ -151,7 +152,7 @@ fn token_with_new_text(token: &JsSyntaxToken, new_text: &str) -> JsSyntaxToken {
     JsSyntaxToken::new_detached(JsSyntaxKind::IDENT, new_text.as_str(), leading, trailing)
 }
 
-impl<N: AstNode<Language = JsLanguage>> RenameSymbolExtensions for BatchMutation<JsLanguage, N> {
+impl RenameSymbolExtensions for BatchMutation<JsLanguage> {
     /// Rename the binding and all its references to "new_name".
     /// If we can´t rename the binding, the [BatchMutation] is never changes and it is left
     /// intact.
@@ -197,8 +198,7 @@ impl<N: AstNode<Language = JsLanguage>> RenameSymbolExtensions for BatchMutation
             let scope = reference.scope();
             if scope
                 .ancestors()
-                .filter_map(|scope| scope.get_binding(new_name))
-                .next()
+                .find_map(|scope| scope.get_binding(new_name))
                 .is_some()
             {
                 return false;

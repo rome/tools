@@ -1,0 +1,5 @@
+error: unexpected token
+ --> tests/macros/category_paren.rs:4:22
+  |
+4 | #[diagnostic(message(description = Ident))]
+  |                      ^^^^^^^^^^^

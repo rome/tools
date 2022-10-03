@@ -9,9 +9,8 @@ use std::{
 
 use crossbeam::channel::{unbounded, Receiver, Sender};
 use indexmap::IndexSet;
-use parking_lot::RwLock;
-
-pub type FileId = usize;
+use rome_diagnostics::file::FileId;
+use std::sync::RwLock;
 
 pub trait PathInterner {
     fn intern_path(&self, path: PathBuf) -> FileId;
@@ -23,8 +22,8 @@ pub struct IndexSetInterner {
 
 impl PathInterner for IndexSetInterner {
     fn intern_path(&self, path: PathBuf) -> FileId {
-        let (index, _) = self.storage.write().insert_full(path);
-        index
+        let (index, _) = self.storage.write().unwrap().insert_full(path);
+        FileId::from(index)
     }
 }
 
@@ -53,7 +52,7 @@ impl AtomicInterner {
 
 impl PathInterner for AtomicInterner {
     fn intern_path(&self, path: PathBuf) -> FileId {
-        let id = self.counter.fetch_add(1, Ordering::Relaxed);
+        let id = FileId::from(self.counter.fetch_add(1, Ordering::Relaxed));
         self.storage.send((id, path)).ok();
         id
     }

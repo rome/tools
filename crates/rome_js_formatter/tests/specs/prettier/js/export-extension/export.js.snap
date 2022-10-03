@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\export-extension\\export.js"
 ---
 
 # Input
@@ -103,132 +105,299 @@ export {
 
 # Errors
 ```
-error[SyntaxError]: expected `*` but instead found `v`
-  ┌─ export.js:2:8
-  │
-2 │ export v from 'mod';
-  │        ^ unexpected
+export.js:2:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ export.js:2:10
-  │
-2 │ export v from 'mod';
-  │        --^^^^
-  │        │ │
-  │        │ An explicit or implicit semicolon is expected here...
-  │        ...Which is required to end this statement
+  × expected `*` but instead found `v`
+  
+  × unexpected
+  
+    1 │ export * as ns from 'mod';
+  > 2 │ export v from 'mod';
+      │        ^
+    3 │ export a, * as b from 'mod';
+    4 │ export c, { foo } from 'mod';
+  
+export.js:2:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ export.js:2:15
-  │
-2 │ export v from 'mod';
-  │          -----^^^^^
-  │          │    │
-  │          │    An explicit or implicit semicolon is expected here...
-  │          ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    1 │ export * as ns from 'mod';
+  > 2 │ export v from 'mod';
+      │          ^^^^
+    3 │ export a, * as b from 'mod';
+    4 │ export c, { foo } from 'mod';
+  
+  i ...Which is required to end this statement
+  
+    1 │ export * as ns from 'mod';
+  > 2 │ export v from 'mod';
+      │        ^^^^^^
+    3 │ export a, * as b from 'mod';
+    4 │ export c, { foo } from 'mod';
+  
+export.js:2:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a class, a function, or a variable declaration but instead found 'a'
-  ┌─ export.js:3:8
-  │
-3 │ export a, * as b from 'mod';
-  │        ^ Expected a class, a function, or a variable declaration here
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    1 │ export * as ns from 'mod';
+  > 2 │ export v from 'mod';
+      │               ^^^^^
+    3 │ export a, * as b from 'mod';
+    4 │ export c, { foo } from 'mod';
+  
+  i ...Which is required to end this statement
+  
+    1 │ export * as ns from 'mod';
+  > 2 │ export v from 'mod';
+      │          ^^^^^^^^^^
+    3 │ export a, * as b from 'mod';
+    4 │ export c, { foo } from 'mod';
+  
+export.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected an expression for the left hand side of the `*` operator.
-  ┌─ export.js:3:11
-  │
-3 │ export a, * as b from 'mod';
-  │           ^ This operator requires a left hand side value
+  × expected a class, a function, or a variable declaration but instead found 'a'
+  
+  × Expected a class, a function, or a variable declaration here
+  
+    1 │ export * as ns from 'mod';
+    2 │ export v from 'mod';
+  > 3 │ export a, * as b from 'mod';
+      │        ^
+    4 │ export c, { foo } from 'mod';
+    5 │ export * as d, { bar } from 'mod';
+  
+export.js:3:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ export.js:3:16
-  │
-3 │ export a, * as b from 'mod';
-  │        --------^
-  │        │       │
-  │        │       An explicit or implicit semicolon is expected here...
-  │        ...Which is required to end this statement
+  × Expected an expression for the left hand side of the `*` operator.
+  
+  × This operator requires a left hand side value
+  
+    1 │ export * as ns from 'mod';
+    2 │ export v from 'mod';
+  > 3 │ export a, * as b from 'mod';
+      │           ^
+    4 │ export c, { foo } from 'mod';
+    5 │ export * as d, { bar } from 'mod';
+  
+export.js:3:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ export.js:3:18
-  │
-3 │ export a, * as b from 'mod';
-  │                --^^^^
-  │                │ │
-  │                │ An explicit or implicit semicolon is expected here...
-  │                ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    1 │ export * as ns from 'mod';
+    2 │ export v from 'mod';
+  > 3 │ export a, * as b from 'mod';
+      │                ^
+    4 │ export c, { foo } from 'mod';
+    5 │ export * as d, { bar } from 'mod';
+  
+  i ...Which is required to end this statement
+  
+    1 │ export * as ns from 'mod';
+    2 │ export v from 'mod';
+  > 3 │ export a, * as b from 'mod';
+      │        ^^^^^^^^^
+    4 │ export c, { foo } from 'mod';
+    5 │ export * as d, { bar } from 'mod';
+  
+export.js:3:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ export.js:3:23
-  │
-3 │ export a, * as b from 'mod';
-  │                  -----^^^^^
-  │                  │    │
-  │                  │    An explicit or implicit semicolon is expected here...
-  │                  ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    1 │ export * as ns from 'mod';
+    2 │ export v from 'mod';
+  > 3 │ export a, * as b from 'mod';
+      │                  ^^^^
+    4 │ export c, { foo } from 'mod';
+    5 │ export * as d, { bar } from 'mod';
+  
+  i ...Which is required to end this statement
+  
+    1 │ export * as ns from 'mod';
+    2 │ export v from 'mod';
+  > 3 │ export a, * as b from 'mod';
+      │                ^^^^^^
+    4 │ export c, { foo } from 'mod';
+    5 │ export * as d, { bar } from 'mod';
+  
+export.js:3:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a class, a function, or a variable declaration but instead found 'c'
-  ┌─ export.js:4:8
-  │
-4 │ export c, { foo } from 'mod';
-  │        ^ Expected a class, a function, or a variable declaration here
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    1 │ export * as ns from 'mod';
+    2 │ export v from 'mod';
+  > 3 │ export a, * as b from 'mod';
+      │                       ^^^^^
+    4 │ export c, { foo } from 'mod';
+    5 │ export * as d, { bar } from 'mod';
+  
+  i ...Which is required to end this statement
+  
+    1 │ export * as ns from 'mod';
+    2 │ export v from 'mod';
+  > 3 │ export a, * as b from 'mod';
+      │                  ^^^^^^^^^^
+    4 │ export c, { foo } from 'mod';
+    5 │ export * as d, { bar } from 'mod';
+  
+export.js:4:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ export.js:4:19
-  │
-4 │ export c, { foo } from 'mod';
-  │        -----------^^^^
-  │        │          │
-  │        │          An explicit or implicit semicolon is expected here...
-  │        ...Which is required to end this statement
+  × expected a class, a function, or a variable declaration but instead found 'c'
+  
+  × Expected a class, a function, or a variable declaration here
+  
+    2 │ export v from 'mod';
+    3 │ export a, * as b from 'mod';
+  > 4 │ export c, { foo } from 'mod';
+      │        ^
+    5 │ export * as d, { bar } from 'mod';
+    6 │ export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
+  
+export.js:4:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ export.js:4:24
-  │
-4 │ export c, { foo } from 'mod';
-  │                   -----^^^^^
-  │                   │    │
-  │                   │    An explicit or implicit semicolon is expected here...
-  │                   ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    2 │ export v from 'mod';
+    3 │ export a, * as b from 'mod';
+  > 4 │ export c, { foo } from 'mod';
+      │                   ^^^^
+    5 │ export * as d, { bar } from 'mod';
+    6 │ export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
+  
+  i ...Which is required to end this statement
+  
+    2 │ export v from 'mod';
+    3 │ export a, * as b from 'mod';
+  > 4 │ export c, { foo } from 'mod';
+      │        ^^^^^^^^^^^^^^^
+    5 │ export * as d, { bar } from 'mod';
+    6 │ export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
+  
+export.js:4:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `from` but instead found `,`
-  ┌─ export.js:5:14
-  │
-5 │ export * as d, { bar } from 'mod';
-  │              ^ unexpected
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    2 │ export v from 'mod';
+    3 │ export a, * as b from 'mod';
+  > 4 │ export c, { foo } from 'mod';
+      │                        ^^^^^
+    5 │ export * as d, { bar } from 'mod';
+    6 │ export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
+  
+  i ...Which is required to end this statement
+  
+    2 │ export v from 'mod';
+    3 │ export a, * as b from 'mod';
+  > 4 │ export c, { foo } from 'mod';
+      │                   ^^^^^^^^^^
+    5 │ export * as d, { bar } from 'mod';
+    6 │ export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
+  
+export.js:5:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ export.js:5:29
-  │
-5 │ export * as d, { bar } from 'mod';
-  │                        -----^^^^^
-  │                        │    │
-  │                        │    An explicit or implicit semicolon is expected here...
-  │                        ...Which is required to end this statement
+  × expected `from` but instead found `,`
+  
+  × unexpected
+  
+    3 │ export a, * as b from 'mod';
+    4 │ export c, { foo } from 'mod';
+  > 5 │ export * as d, { bar } from 'mod';
+      │              ^
+    6 │ export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
+    7 │ export Bar, { barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr } from "barrrrrrrrrrrrrrrrrrrrrrrrrrrr";
+  
+export.js:5:29 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a class, a function, or a variable declaration but instead found 'Bar'
-  ┌─ export.js:7:8
-  │
-7 │ export Bar, { barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr } from "barrrrrrrrrrrrrrrrrrrrrrrrrrrr";
-  │        ^^^ Expected a class, a function, or a variable declaration here
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    3 │ export a, * as b from 'mod';
+    4 │ export c, { foo } from 'mod';
+  > 5 │ export * as d, { bar } from 'mod';
+      │                             ^^^^^
+    6 │ export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
+    7 │ export Bar, { barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr } from "barrrrrrrrrrrrrrrrrrrrrrrrrrrr";
+  
+  i ...Which is required to end this statement
+  
+    3 │ export a, * as b from 'mod';
+    4 │ export c, { foo } from 'mod';
+  > 5 │ export * as d, { bar } from 'mod';
+      │                        ^^^^^^^^^^
+    6 │ export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
+    7 │ export Bar, { barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr } from "barrrrrrrrrrrrrrrrrrrrrrrrrrrr";
+  
+export.js:7:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ export.js:7:63
-  │
-7 │ export Bar, { barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr } from "barrrrrrrrrrrrrrrrrrrrrrrrrrrr";
-  │        -------------------------------------------------------^^^^
-  │        │                                                      │
-  │        │                                                      An explicit or implicit semicolon is expected here...
-  │        ...Which is required to end this statement
+  × expected a class, a function, or a variable declaration but instead found 'Bar'
+  
+  × Expected a class, a function, or a variable declaration here
+  
+    5 │ export * as d, { bar } from 'mod';
+    6 │ export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
+  > 7 │ export Bar, { barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr } from "barrrrrrrrrrrrrrrrrrrrrrrrrrrr";
+      │        ^^^
+    8 │ export { foooooooooooooooooooooooooooooooooooooooooooooo, fooooooooooooooooooooooooooooooooooooooooooooooo  } from "fooooooooooooooooooooooooooooo";
+    9 │ 
+  
+export.js:7:63 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ export.js:7:68
-  │
-7 │ export Bar, { barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr } from "barrrrrrrrrrrrrrrrrrrrrrrrrrrr";
-  │                                                               -----^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  │                                                               │    │
-  │                                                               │    An explicit or implicit semicolon is expected here...
-  │                                                               ...Which is required to end this statement
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    5 │ export * as d, { bar } from 'mod';
+    6 │ export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
+  > 7 │ export Bar, { barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr } from "barrrrrrrrrrrrrrrrrrrrrrrrrrrr";
+      │                                                               ^^^^
+    8 │ export { foooooooooooooooooooooooooooooooooooooooooooooo, fooooooooooooooooooooooooooooooooooooooooooooooo  } from "fooooooooooooooooooooooooooooo";
+    9 │ 
+  
+  i ...Which is required to end this statement
+  
+    5 │ export * as d, { bar } from 'mod';
+    6 │ export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
+  > 7 │ export Bar, { barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr } from "barrrrrrrrrrrrrrrrrrrrrrrrrrrr";
+      │        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │ export { foooooooooooooooooooooooooooooooooooooooooooooo, fooooooooooooooooooooooooooooooooooooooooooooooo  } from "fooooooooooooooooooooooooooooo";
+    9 │ 
+  
+export.js:7:68 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    5 │ export * as d, { bar } from 'mod';
+    6 │ export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
+  > 7 │ export Bar, { barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr } from "barrrrrrrrrrrrrrrrrrrrrrrrrrrr";
+      │                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │ export { foooooooooooooooooooooooooooooooooooooooooooooo, fooooooooooooooooooooooooooooooooooooooooooooooo  } from "fooooooooooooooooooooooooooooo";
+    9 │ 
+  
+  i ...Which is required to end this statement
+  
+    5 │ export * as d, { bar } from 'mod';
+    6 │ export { fooooooooooooooooooooooooooooooooooooooooooooooooo } from "fooooooooooooooooooooooooooooo";
+  > 7 │ export Bar, { barrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr } from "barrrrrrrrrrrrrrrrrrrrrrrrrrrr";
+      │                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │ export { foooooooooooooooooooooooooooooooooooooooooooooo, fooooooooooooooooooooooooooooooooooooooooooooooo  } from "fooooooooooooooooooooooooooooo";
+    9 │ 
+  
 
 ```
 

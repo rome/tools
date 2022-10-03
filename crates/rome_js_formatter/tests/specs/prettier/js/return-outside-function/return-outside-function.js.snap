@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\return-outside-function\\return-outside-function.js"
 ---
 
 # Input
@@ -33,12 +35,14 @@ return someVeryLongStringA && someVeryLongStringB && someVeryLongStringC && some
 
 # Errors
 ```
-error[SyntaxError]: Illegal return statement outside of a function
-  ┌─ return-outside-function.js:1:1
-  │
-1 │ return someVeryLongStringA && someVeryLongStringB && someVeryLongStringC && someVeryLongStringD
-  │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+return-outside-function.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal return statement outside of a function
+  
+  > 1 │ return someVeryLongStringA && someVeryLongStringB && someVeryLongStringC && someVeryLongStringD
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    2 │ 
+  
 
 ```
 

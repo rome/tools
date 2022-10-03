@@ -87,18 +87,24 @@ JsModule {
         3: R_CURLY@19..20 "}" [] []
   3: EOF@20..21 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected a name for the function in a function declaration, but found none
-  ┌─ formal_params_invalid.js:1:10
-  │
-1 │ function (a++, c) {}
-  │          ^
+formal_params_invalid.js:1:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a name for the function in a function declaration, but found none
+  
+  > 1 │ function (a++, c) {}
+      │          ^
+    2 │ 
+  
 --
-error[SyntaxError]: expected `,` but instead found `++`
-  ┌─ formal_params_invalid.js:1:12
-  │
-1 │ function (a++, c) {}
-  │            ^^ unexpected
+formal_params_invalid.js:1:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `++`
+  
+  × unexpected
+  
+  > 1 │ function (a++, c) {}
+      │            ^^
+    2 │ 
+  
 --
 function (a++, c) {}

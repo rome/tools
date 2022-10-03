@@ -213,47 +213,82 @@ JsModule {
         4: SEMICOLON@100..101 ";" [] []
   3: EOF@101..102 "" [Newline("\n")] []
 --
-error[SyntaxError]: "default" can only be used with "export ... from ..."
-  ┌─ export_named_clause_err.js:1:10
-  │
-1 │ export { default as "b" };
-  │          ^^^^^^^
+export_named_clause_err.js:1:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × "default" can only be used with "export ... from ..."
+  
+  > 1 │ export { default as "b" };
+      │          ^^^^^^^
+    2 │ export { "a" as b };
+    3 │ export { as b };
+  
 --
-error[SyntaxError]: expected an export name but instead found '"a" as b'
-  ┌─ export_named_clause_err.js:2:10
-  │
-2 │ export { "a" as b };
-  │          ^^^^^^^^ Expected an export name here
+export_named_clause_err.js:2:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an export name but instead found '"a" as b'
+  
+  × Expected an export name here
+  
+    1 │ export { default as "b" };
+  > 2 │ export { "a" as b };
+      │          ^^^^^^^^
+    3 │ export { as b };
+    4 │ export { a as 5 };
+  
 --
-error[SyntaxError]: expected an identifier but instead found ''
-  ┌─ export_named_clause_err.js:3:10
-  │
-3 │ export { as b };
-  │          ^ Expected an identifier here
+export_named_clause_err.js:3:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier but instead found ''
+  
+  × Expected an identifier here
+  
+    1 │ export { default as "b" };
+    2 │ export { "a" as b };
+  > 3 │ export { as b };
+      │          
+    4 │ export { a as 5 };
+    5 │ export { a b c };
+  
 --
-error[SyntaxError]: expected a string literal, or an identifier but instead found '5'
-  ┌─ export_named_clause_err.js:4:15
-  │
-4 │ export { a as 5 };
-  │               ^ Expected a string literal, or an identifier here
+export_named_clause_err.js:4:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a string literal, or an identifier but instead found '5'
+  
+  × Expected a string literal, or an identifier here
+  
+    2 │ export { "a" as b };
+    3 │ export { as b };
+  > 4 │ export { a as 5 };
+      │               ^
+    5 │ export { a b c };
+    6 │ 
+  
 --
-error[SyntaxError]: expected `,` but instead found `b`
-  ┌─ export_named_clause_err.js:5:12
-  │
-5 │ export { a b c };
-  │            ^ unexpected
+export_named_clause_err.js:5:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `b`
+  
+  × unexpected
+  
+    3 │ export { as b };
+    4 │ export { a as 5 };
+  > 5 │ export { a b c };
+      │            ^
+    6 │ 
+  
 --
-error[SyntaxError]: expected `,` but instead found `c`
-  ┌─ export_named_clause_err.js:5:14
-  │
-5 │ export { a b c };
-  │              ^ unexpected
+export_named_clause_err.js:5:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `,` but instead found `c`
+  
+  × unexpected
+  
+    3 │ export { as b };
+    4 │ export { a as 5 };
+  > 5 │ export { a b c };
+      │              ^
+    6 │ 
+  
 --
 export { default as "b" };
 export { "a" as b };

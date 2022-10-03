@@ -1,17 +1,21 @@
 use control_flow::make_visitor;
 use rome_analyze::{
-    AnalysisFilter, Analyzer, AnalyzerContext, AnalyzerSignal, ControlFlow, LanguageRoot, Phases,
-    RegistryRuleMetadata, RuleAction, ServiceBag, SyntaxVisitor,
+    AnalysisFilter, Analyzer, AnalyzerContext, AnalyzerSignal, ControlFlow, InspectMatcher,
+    LanguageRoot, MatchQueryParams, Phases, RegistryRuleMetadata, RuleAction, ServiceBag,
+    SyntaxVisitor,
 };
 use rome_diagnostics::file::FileId;
 use rome_js_syntax::{
     suppression::{parse_suppression_comment, SuppressionCategory},
     JsLanguage,
 };
+use std::{borrow::Cow, error::Error};
 
 mod analyzers;
 mod assists;
 mod control_flow;
+pub mod globals;
+mod react;
 mod registry;
 mod semantic_analyzers;
 mod semantic_services;
@@ -29,14 +33,19 @@ pub fn metadata(filter: AnalysisFilter) -> impl Iterator<Item = RegistryRuleMeta
 
 /// Run the analyzer on the provided `root`: this process will use the given `filter`
 /// to selectively restrict analysis to specific rules / a specific source range,
-/// then call `emit_signal` when an analysis rule emits a diagnostic or action
-pub fn analyze<'a, F, B>(
+/// then call `emit_signal` when an analysis rule emits a diagnostic or action.
+/// Additionally, this function takes a `inspect_matcher` function that can be
+/// used to inspect the "query matches" emitted by the analyzer before they are
+/// processed by the lint rules registry
+pub fn analyze_with_inspect_matcher<'a, V, F, B>(
     file_id: FileId,
     root: &LanguageRoot<JsLanguage>,
     filter: AnalysisFilter,
+    inspect_matcher: V,
     mut emit_signal: F,
 ) -> Option<B>
 where
+    V: FnMut(&MatchQueryParams<JsLanguage>) + 'a,
     F: FnMut(&dyn AnalyzerSignal<JsLanguage>) -> ControlFlow<B> + 'a,
     B: 'a,
 {
@@ -54,7 +63,7 @@ where
     }
 
     let mut analyzer = Analyzer::new(
-        build_registry(&filter),
+        InspectMatcher::new(build_registry(&filter), inspect_matcher),
         parse_linter_suppression_comment,
         &mut emit_signal,
     );
@@ -73,61 +82,142 @@ where
     })
 }
 
+/// Run the analyzer on the provided `root`: this process will use the given `filter`
+/// to selectively restrict analysis to specific rules / a specific source range,
+/// then call `emit_signal` when an analysis rule emits a diagnostic or action
+pub fn analyze<'a, F, B>(
+    file_id: FileId,
+    root: &LanguageRoot<JsLanguage>,
+    filter: AnalysisFilter,
+    emit_signal: F,
+) -> Option<B>
+where
+    F: FnMut(&dyn AnalyzerSignal<JsLanguage>) -> ControlFlow<B> + 'a,
+    B: 'a,
+{
+    analyze_with_inspect_matcher(file_id, root, filter, |_| {}, emit_signal)
+}
+
 #[cfg(test)]
 mod tests {
 
     use rome_analyze::Never;
+    use rome_diagnostics::Severity;
+    use rome_diagnostics::{file::FileId, v2::category};
     use rome_js_parser::parse;
     use rome_js_syntax::{SourceType, TextRange, TextSize};
 
     use crate::{analyze, AnalysisFilter, ControlFlow};
+
+    #[ignore]
+    #[test]
+    fn quick_test() {
+        const SOURCE: &str = r#"document;
+        "#;
+
+        let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
+
+        let mut error_ranges = Vec::new();
+        analyze(
+            FileId::zero(),
+            &parsed.tree(),
+            AnalysisFilter::default(),
+            |signal| {
+                if let Some(diag) = signal.diagnostic() {
+                    let diag = diag.into_diagnostic(Severity::Warning);
+                    let primary = diag.primary.as_ref().unwrap();
+
+                    error_ranges.push(primary.span.range);
+                }
+
+                if let Some(action) = signal.action() {
+                    let new_code = action.mutation.commit();
+
+                    eprintln!("{new_code}");
+                }
+
+                ControlFlow::<Never>::Continue(())
+            },
+        );
+
+        assert_eq!(error_ranges.as_slice(), &[]);
+    }
 
     #[test]
     fn suppression() {
         const SOURCE: &str = "
             function checkSuppressions1(a, b) {
                 a == b;
-                // rome-ignore lint(js): whole group
+                // rome-ignore lint(correctness): whole group
                 a == b;
-                // rome-ignore lint(js/noDoubleEquals): single rule
+                // rome-ignore lint(correctness/noDoubleEquals): single rule
                 a == b;
-                /* rome-ignore lint(js/useWhile): multiple block comments */ /* rome-ignore lint(js/noDoubleEquals): multiple block comments */
+                /* rome-ignore lint(correctness/useWhile): multiple block comments */ /* rome-ignore lint(correctness/noDoubleEquals): multiple block comments */
                 a == b;
-                // rome-ignore lint(js/useWhile): multiple line comments
-                // rome-ignore lint(js/noDoubleEquals): multiple line comments
+                // rome-ignore lint(correctness/useWhile): multiple line comments
+                // rome-ignore lint(correctness/noDoubleEquals): multiple line comments
                 a == b;
                 a == b;
             }
 
-            // rome-ignore lint(js/noDoubleEquals): do not suppress warning for the whole function
+            // rome-ignore lint(correctness/noDoubleEquals): do not suppress warning for the whole function
             function checkSuppressions2(a, b) {
                 a == b;
             }
         ";
 
-        let parsed = parse(SOURCE, 0, SourceType::js_module());
+        let parsed = parse(SOURCE, FileId::zero(), SourceType::js_module());
 
         let mut error_ranges = Vec::new();
-        analyze(0, &parsed.tree(), AnalysisFilter::default(), |signal| {
-            if let Some(diag) = signal.diagnostic() {
-                let code = diag.code.as_deref().unwrap();
-                let primary = diag.primary.as_ref().unwrap();
+        analyze(
+            FileId::zero(),
+            &parsed.tree(),
+            AnalysisFilter::default(),
+            |signal| {
+                if let Some(diag) = signal.diagnostic() {
+                    let diag = diag.into_diagnostic(Severity::Warning);
+                    let code = diag.code.unwrap();
+                    let primary = diag.primary.as_ref().unwrap();
 
-                if code == "js/noDoubleEquals" {
-                    error_ranges.push(primary.span.range);
+                    if code == category!("lint/correctness/noDoubleEquals") {
+                        error_ranges.push(primary.span.range);
+                    }
                 }
-            }
 
-            ControlFlow::<Never>::Continue(())
-        });
+                ControlFlow::<Never>::Continue(())
+            },
+        );
 
         assert_eq!(
             error_ranges.as_slice(),
             &[
                 TextRange::new(TextSize::from(67), TextSize::from(69)),
-                TextRange::new(TextSize::from(604), TextSize::from(606)),
-                TextRange::new(TextSize::from(790), TextSize::from(792)),
+                TextRange::new(TextSize::from(658), TextSize::from(660)),
+                TextRange::new(TextSize::from(853), TextSize::from(855)),
             ]
         );
     }
 }
+
+/// Series of errors encountered when running rules on a file
+#[derive(Debug, PartialEq, Eq, Clone)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub enum RuleError {
+    /// The rule with the specified name replaced the root of the file with a node that is not a valid root for that language.
+    ReplacedRootWithNonRootError { rule_name: Cow<'static, str> },
+}
+
+impl std::fmt::Display for RuleError {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::fmt::Result {
+        match self {
+            RuleError::ReplacedRootWithNonRootError { rule_name } => {
+                std::write!(
+                    fmt,
+                    "the rule '{rule_name}' replaced the root of the file with a non-root node."
+                )
+            }
+        }
+    }
+}
+
+impl Error for RuleError {}

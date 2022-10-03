@@ -2,10 +2,14 @@
 name = "rome_cli"
 version = "0.0.0"
 edition = "2021"
-authors = ["Rome Tools Developers and Contributros"]
+authors = ["Rome Tools Developers and Contributors"]
+repository = "https://github.com/rome/tools"
 license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[[bin]]
+name = "rome"
+path = "src/main.rs"
 
 [dependencies]
 rome_formatter = { path = "../rome_formatter" }
@@ -14,15 +18,34 @@ rome_service = { path = "../rome_service" }
 rome_flags = { path = "../rome_flags" }
 rome_fs = { path = "../rome_fs" }
 rome_console = { path = "../rome_console" }
-pico-args = "0.4.2"
+rome_text_edit = { path = "../rome_text_edit" }
+rome_lsp = { path = "../rome_lsp" }
+pico-args = { version ="0.5.0", features=["eq-separator"] }
 tracing = { version = "0.1.31", default-features = false, features = ["std"] }
-tracing-subscriber = "0.3.6"
-parking_lot = "0.12.0"
+tracing-tree = "0.2.0"
+tracing-subscriber = { version = "0.3.6", features = ["env-filter"] }
+tracing-appender = "0.2"
 lazy_static = "1.4.0"
 hdrhistogram = { version = "7.5.0", default-features = false }
 crossbeam = "0.8.1"
 thiserror = "1.0.30"
 rayon = "1.5.1"
+serde = { version = "1.0.133", features = ["derive"] }
+serde_json = { version = "1.0.74" }
+tokio = { version = "1.15.0", features = ["io-std", "io-util", "net", "time", "rt", "rt-multi-thread", "macros"] }
+anyhow = "1.0.52"
+dashmap = "5.2.0"
 
-[target.'cfg(target_os = "windows")'.dependencies]
+[target.'cfg(unix)'.dependencies]
+libc = "0.2.127"
+tokio = { version = "1.15.0", features = ["process"] }
+
+[target.'cfg(windows)'.dependencies]
 mimalloc = "0.1.29"
+
+[target.'cfg(not(windows))'.dependencies]
+tikv-jemallocator = "0.5.0"
+
+[dev-dependencies]
+insta = "1.18.2"
+tokio = { version = "1.15.0", features = ["io-util"] }

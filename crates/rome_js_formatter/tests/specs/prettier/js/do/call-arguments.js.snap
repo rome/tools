@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\do\\call-arguments.js"
 ---
 
 # Input
@@ -168,92 +170,188 @@ bar;
 
 # Errors
 ```
-error[SyntaxError]: expected an expression but instead found 'do'
-  ┌─ call-arguments.js:3:3
-  │
-3 │   do {
-  │   ^^ Expected an expression here
+call-arguments.js:3:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `while` but instead found `)`
-   ┌─ call-arguments.js:10:1
-   │
-10 │ ).toBe("foo");
-   │ ^ unexpected
+  × expected an expression but instead found 'do'
+  
+  × Expected an expression here
+  
+    1 │ // from https://github.com/babel/babel/pull/13122/
+    2 │ expect(
+  > 3 │   do {
+      │   ^^
+    4 │     var bar = "foo";
+    5 │     if (!bar) throw new Error(
+  
+call-arguments.js:10:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a statement but instead found '.toBe("foo")'
-   ┌─ call-arguments.js:10:2
-   │
-10 │ ).toBe("foo");
-   │  ^^^^^^^^^^^^ Expected a statement here
+  × expected `while` but instead found `)`
+  
+  × unexpected
+  
+     8 │     bar;
+     9 │   }
+  > 10 │ ).toBe("foo");
+       │ ^
+    11 │ expect(bar).toBe("foo");
+    12 │ 
+  
+call-arguments.js:10:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an expression, or an assignment but instead found 'do'
-   ┌─ call-arguments.js:13:9
-   │
-13 │ var x = do {
-   │         ^^ Expected an expression, or an assignment here
+  × expected a statement but instead found '.toBe("foo")'
+  
+  × Expected a statement here
+  
+     8 │     bar;
+     9 │   }
+  > 10 │ ).toBe("foo");
+       │  ^^^^^^^^^^^^
+    11 │ expect(bar).toBe("foo");
+    12 │ 
+  
+call-arguments.js:13:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `while` but instead found `;`
-   ┌─ call-arguments.js:19:2
-   │
-19 │ };
-   │  ^ unexpected
+  × expected an expression, or an assignment but instead found 'do'
+  
+  × Expected an expression, or an assignment here
+  
+    11 │ expect(bar).toBe("foo");
+    12 │ 
+  > 13 │ var x = do {
+       │         ^^
+    14 │   var bar = "foo";
+    15 │   if (!bar) throw new Error(
+  
+call-arguments.js:19:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an expression but instead found 'do'
-   ┌─ call-arguments.js:22:3
-   │
-22 │   do {
-   │   ^^ Expected an expression here
+  × expected `while` but instead found `;`
+  
+  × unexpected
+  
+    17 │   )
+    18 │   bar;
+  > 19 │ };
+       │  ^
+    20 │ 
+    21 │ expect(
+  
+call-arguments.js:22:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `while` but instead found `)`
-   ┌─ call-arguments.js:26:1
-   │
-26 │ ).toBe("foo");
-   │ ^ unexpected
+  × expected an expression but instead found 'do'
+  
+  × Expected an expression here
+  
+    21 │ expect(
+  > 22 │   do {
+       │   ^^
+    23 │     var bar = "foo";
+    24 │     bar;
+  
+call-arguments.js:26:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a statement but instead found '.toBe("foo")'
-   ┌─ call-arguments.js:26:2
-   │
-26 │ ).toBe("foo");
-   │  ^^^^^^^^^^^^ Expected a statement here
+  × expected `while` but instead found `)`
+  
+  × unexpected
+  
+    24 │     bar;
+    25 │   }
+  > 26 │ ).toBe("foo");
+       │ ^
+    27 │ expect(bar).toBe("foo");
+    28 │ 
+  
+call-arguments.js:26:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected an expression, or an assignment but instead found 'do'
-   ┌─ call-arguments.js:29:9
-   │
-29 │ var x = do {
-   │         ^^ Expected an expression, or an assignment here
+  × expected a statement but instead found '.toBe("foo")'
+  
+  × Expected a statement here
+  
+    24 │     bar;
+    25 │   }
+  > 26 │ ).toBe("foo");
+       │  ^^^^^^^^^^^^
+    27 │ expect(bar).toBe("foo");
+    28 │ 
+  
+call-arguments.js:29:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `while` but instead found `;`
-   ┌─ call-arguments.js:32:2
-   │
-32 │ };
-   │  ^ unexpected
+  × expected an expression, or an assignment but instead found 'do'
+  
+  × Expected an expression, or an assignment here
+  
+    27 │ expect(bar).toBe("foo");
+    28 │ 
+  > 29 │ var x = do {
+       │         ^^
+    30 │   var bar = "foo";
+    31 │   bar;
+  
+call-arguments.js:32:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a function body, or an expression but instead found 'do'
-   ┌─ call-arguments.js:35:9
-   │
-35 │   () => do {
-   │         ^^ Expected a function body, or an expression here
+  × expected `while` but instead found `;`
+  
+  × unexpected
+  
+    30 │   var bar = "foo";
+    31 │   bar;
+  > 32 │ };
+       │  ^
+    33 │ 
+    34 │ expect(
+  
+call-arguments.js:35:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `(`
-   ┌─ call-arguments.js:36:5
-   │
-36 │     () => {
-   │     ^ unexpected
+  × expected a function body, or an expression but instead found 'do'
+  
+  × Expected a function body, or an expression here
+  
+    34 │ expect(
+  > 35 │   () => do {
+       │         ^^
+    36 │     () => {
+    37 │       var bar = "foo";
+  
+call-arguments.js:36:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `,` but instead found `;`
-   ┌─ call-arguments.js:38:6
-   │
-38 │     };
-   │      ^ unexpected
+  × expected `,` but instead found `(`
+  
+  × unexpected
+  
+    34 │ expect(
+    35 │   () => do {
+  > 36 │     () => {
+       │     ^
+    37 │       var bar = "foo";
+    38 │     };
+  
+call-arguments.js:38:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a statement but instead found '}
-).toThrow(ReferenceError)'
-   ┌─ call-arguments.js:40:3
-   │  
-40 │ ┌   }
-41 │ │ ).toThrow(ReferenceError);
-   │ └─────────────────────────^ Expected a statement here
+  × expected `,` but instead found `;`
+  
+  × unexpected
+  
+    36 │     () => {
+    37 │       var bar = "foo";
+  > 38 │     };
+       │      ^
+    39 │     bar;
+    40 │   }
+  
+call-arguments.js:40:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a statement but instead found '}
+    ).toThrow(ReferenceError)'
+  
+  × Expected a statement here
+  
+    38 │     };
+    39 │     bar;
+  > 40 │   }
+       │   ^
+  > 41 │ ).toThrow(ReferenceError);
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^
+    42 │ 
+  
 
 ```
 

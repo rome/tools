@@ -1,0 +1,40 @@
+[package]
+name = "rome_wasm"
+version = "0.0.0"
+edition = "2021"
+authors = ["Rome Tools Developers and Contributors"]
+repository = "https://github.com/rome/tools"
+description = "WebAssembly bindings to the Rome Workspace API"
+license = "MIT"
+
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[features]
+default = ["console_error_panic_hook"]
+
+[dependencies]
+wasm-bindgen = { version = "0.2.82", features = ["serde-serialize"] }
+js-sys = "0.3.59"
+rome_service = { path = "../../crates/rome_service" }
+rome_console = { path = "../../crates/rome_console" }
+rome_diagnostics = { path = "../../crates/rome_diagnostics" }
+
+# The `console_error_panic_hook` crate provides better debugging of panics by
+# logging them with `console.error`. This is great for development, but requires
+# all the `std::fmt` and `std::panicking` infrastructure, so isn't great for
+# code size when deploying.
+console_error_panic_hook = { version = "0.1.6", optional = true }
+
+[dev-dependencies]
+wasm-bindgen-test = "0.3.13"
+
+[build-dependencies]
+serde_json = "1.0.79"
+rome_service = { path = "../../crates/rome_service", features = ["schemars"] }
+rome_rowan = { path = "../../crates/rome_rowan" }
+rome_js_factory = { path = "../../crates/rome_js_factory" }
+rome_js_formatter = { path = "../../crates/rome_js_formatter" }
+schemars = "0.8.10"
+quote = "1.0.14"

@@ -1,0 +1,11 @@
+error: unknown attribute
+ --> tests/macros/unknown_field_attr.rs:5:7
+  |
+5 |     #[unknown_attr]
+  |       ^^^^^^^^^^^^
+
+error: cannot find attribute `unknown_attr` in this scope
+ --> tests/macros/unknown_field_attr.rs:5:7
+  |
+5 |     #[unknown_attr]
+  |       ^^^^^^^^^^^^

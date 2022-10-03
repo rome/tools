@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\module-blocks\\comments.js"
 ---
 
 # Input
@@ -23,10 +25,10 @@ const m2 = module/* B1 */{
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,12 +1,14 @@
+@@ -1,12 +1,13 @@
 -const m = /*A1*/ module {
 -  /*A2*/ /*A3*/
-+const m = /*A1*/ module /*A2*/;
++const m = /*A1*/ module; /*A2*/
 +{
 +  /*A3*/
    /*A4*/
@@ -34,12 +36,11 @@ const m2 = module/* B1 */{
    export { foo }; /*A5*/
    /*A6*/
 -}; /*A7*/ /*A8*/
-+} /*A7*/
-+/*A8*/
++} /*A7*/ /*A8*/
  
 -const m2 = module {
 -  /* B1 */
-+const m2 = module /* B1 */;
++const m2 = module; /* B1 */
 +{
    /* B2 */
 -};
@@ -49,17 +50,16 @@ const m2 = module/* B1 */{
 # Output
 
 ```js
-const m = /*A1*/ module /*A2*/;
+const m = /*A1*/ module; /*A2*/
 {
   /*A3*/
   /*A4*/
   export const foo = "foo";
   export { foo }; /*A5*/
   /*A6*/
-} /*A7*/
-/*A8*/
+} /*A7*/ /*A8*/
 
-const m2 = module /* B1 */;
+const m2 = module; /* B1 */
 {
   /* B2 */
 }
@@ -68,34 +68,72 @@ const m2 = module /* B1 */;
 
 # Errors
 ```
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ comments.js:1:32
-  │
-1 │ const m = /*A1*/ module /*A2*/ { /*A3*/
-  │ -------------------------------^ An explicit or implicit semicolon is expected here...
-  │ │                               
-  │ ...Which is required to end this statement
+comments.js:1:32 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Illegal use of an export declaration not at the top level
-  ┌─ comments.js:3:3
-  │
-3 │   export const foo = "foo";
-  │   ^^^^^^^^^^^^^^^^^^^^^^^^^ move this declaration to the top level
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+  > 1 │ const m = /*A1*/ module /*A2*/ { /*A3*/
+      │                                ^
+    2 │   /*A4*/
+    3 │   export const foo = "foo";
+  
+  i ...Which is required to end this statement
+  
+  > 1 │ const m = /*A1*/ module /*A2*/ { /*A3*/
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    2 │   /*A4*/
+    3 │   export const foo = "foo";
+  
+comments.js:3:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Illegal use of an export declaration not at the top level
-  ┌─ comments.js:4:3
-  │
-4 │   export { foo }; /*A5*/
-  │   ^^^^^^^^^^^^^^^ move this declaration to the top level
+  × Illegal use of an export declaration not at the top level
+  
+  × move this declaration to the top level
+  
+    1 │ const m = /*A1*/ module /*A2*/ { /*A3*/
+    2 │   /*A4*/
+  > 3 │   export const foo = "foo";
+      │   ^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │   export { foo }; /*A5*/
+    5 │   /*A6*/
+  
+comments.js:4:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ comments.js:8:26
-  │
-8 │ const m2 = module/* B1 */{
-  │ -------------------------^ An explicit or implicit semicolon is expected here...
-  │ │                         
-  │ ...Which is required to end this statement
+  × Illegal use of an export declaration not at the top level
+  
+  × move this declaration to the top level
+  
+    2 │   /*A4*/
+    3 │   export const foo = "foo";
+  > 4 │   export { foo }; /*A5*/
+      │   ^^^^^^^^^^^^^^^
+    5 │   /*A6*/
+    6 │ }/*A7*/;/*A8*/
+  
+comments.js:8:26 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+     6 │ }/*A7*/;/*A8*/
+     7 │ 
+   > 8 │ const m2 = module/* B1 */{
+       │                          ^
+     9 │   /* B2 */
+    10 │ };
+  
+  i ...Which is required to end this statement
+  
+     6 │ }/*A7*/;/*A8*/
+     7 │ 
+   > 8 │ const m2 = module/* B1 */{
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^
+     9 │   /* B2 */
+    10 │ };
+  
 
 ```
 

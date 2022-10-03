@@ -517,146 +517,346 @@ JsModule {
       8: R_CURLY@444..446 "}" [Newline("\n")] []
   3: EOF@446..447 "" [Newline("\n")] []
 --
-error[SyntaxError]: 'override' already seen
-  ┌─ ts_class_invalid_modifier_combinations.ts:3:14
-  │
-3 │     override override base1;
-  │     -------- ^^^^^^^^ duplicate modifier
-  │     │         
-  │     first seen here
+ts_class_invalid_modifier_combinations.ts:3:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'override' already seen
+  
+  × duplicate modifier
+  
+    1 │ class Base { base1; base2; }
+    2 │ abstract class Test extends Base {
+  > 3 │     override override base1;
+      │              ^^^^^^^^
+    4 │     declare declare a;
+    5 │     private protected public c;
+  
+  i first seen here
+  
+    1 │ class Base { base1; base2; }
+    2 │ abstract class Test extends Base {
+  > 3 │     override override base1;
+      │     ^^^^^^^^
+    4 │     declare declare a;
+    5 │     private protected public c;
+  
 --
-error[SyntaxError]: 'declare' already seen
-  ┌─ ts_class_invalid_modifier_combinations.ts:4:13
-  │
-4 │     declare declare a;
-  │     ------- ^^^^^^^ duplicate modifier
-  │     │        
-  │     first seen here
+ts_class_invalid_modifier_combinations.ts:4:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'declare' already seen
+  
+  × duplicate modifier
+  
+    2 │ abstract class Test extends Base {
+    3 │     override override base1;
+  > 4 │     declare declare a;
+      │             ^^^^^^^
+    5 │     private protected public c;
+    6 │     private private d;
+  
+  i first seen here
+  
+    2 │ abstract class Test extends Base {
+    3 │     override override base1;
+  > 4 │     declare declare a;
+      │     ^^^^^^^
+    5 │     private protected public c;
+    6 │     private private d;
+  
 --
-error[SyntaxError]: Accessibility modifier already seen.
-  ┌─ ts_class_invalid_modifier_combinations.ts:5:13
-  │
-5 │     private protected public c;
-  │     ------- ^^^^^^^^^ duplicate modifier
-  │     │        
-  │     first modifier
+ts_class_invalid_modifier_combinations.ts:5:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Accessibility modifier already seen.
+  
+  × duplicate modifier
+  
+    3 │     override override base1;
+    4 │     declare declare a;
+  > 5 │     private protected public c;
+      │             ^^^^^^^^^
+    6 │     private private d;
+    7 │     protected protected e;
+  
+  i first modifier
+  
+    3 │     override override base1;
+    4 │     declare declare a;
+  > 5 │     private protected public c;
+      │     ^^^^^^^
+    6 │     private private d;
+    7 │     protected protected e;
+  
 --
-error[SyntaxError]: Accessibility modifier already seen.
-  ┌─ ts_class_invalid_modifier_combinations.ts:5:23
-  │
-5 │     private protected public c;
-  │     -------           ^^^^^^ duplicate modifier
-  │     │                  
-  │     first modifier
+ts_class_invalid_modifier_combinations.ts:5:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Accessibility modifier already seen.
+  
+  × duplicate modifier
+  
+    3 │     override override base1;
+    4 │     declare declare a;
+  > 5 │     private protected public c;
+      │                       ^^^^^^
+    6 │     private private d;
+    7 │     protected protected e;
+  
+  i first modifier
+  
+    3 │     override override base1;
+    4 │     declare declare a;
+  > 5 │     private protected public c;
+      │     ^^^^^^^
+    6 │     private private d;
+    7 │     protected protected e;
+  
 --
-error[SyntaxError]: Accessibility modifier already seen.
-  ┌─ ts_class_invalid_modifier_combinations.ts:6:13
-  │
-6 │     private private d;
-  │     ------- ^^^^^^^ duplicate modifier
-  │     │        
-  │     first modifier
+ts_class_invalid_modifier_combinations.ts:6:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Accessibility modifier already seen.
+  
+  × duplicate modifier
+  
+    4 │     declare declare a;
+    5 │     private protected public c;
+  > 6 │     private private d;
+      │             ^^^^^^^
+    7 │     protected protected e;
+    8 │     public public f;
+  
+  i first modifier
+  
+    4 │     declare declare a;
+    5 │     private protected public c;
+  > 6 │     private private d;
+      │     ^^^^^^^
+    7 │     protected protected e;
+    8 │     public public f;
+  
 --
-error[SyntaxError]: Accessibility modifier already seen.
-  ┌─ ts_class_invalid_modifier_combinations.ts:7:15
-  │
-7 │     protected protected e;
-  │     --------- ^^^^^^^^^ duplicate modifier
-  │     │          
-  │     first modifier
+ts_class_invalid_modifier_combinations.ts:7:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Accessibility modifier already seen.
+  
+  × duplicate modifier
+  
+    5 │     private protected public c;
+    6 │     private private d;
+  > 7 │     protected protected e;
+      │               ^^^^^^^^^
+    8 │     public public f;
+    9 │     abstract abstract g;
+  
+  i first modifier
+  
+    5 │     private protected public c;
+    6 │     private private d;
+  > 7 │     protected protected e;
+      │     ^^^^^^^^^
+    8 │     public public f;
+    9 │     abstract abstract g;
+  
 --
-error[SyntaxError]: Accessibility modifier already seen.
-  ┌─ ts_class_invalid_modifier_combinations.ts:8:12
-  │
-8 │     public public f;
-  │     ------ ^^^^^^ duplicate modifier
-  │     │       
-  │     first modifier
+ts_class_invalid_modifier_combinations.ts:8:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Accessibility modifier already seen.
+  
+  × duplicate modifier
+  
+     6 │     private private d;
+     7 │     protected protected e;
+   > 8 │     public public f;
+       │            ^^^^^^
+     9 │     abstract abstract g;
+    10 │     static static h;
+  
+  i first modifier
+  
+     6 │     private private d;
+     7 │     protected protected e;
+   > 8 │     public public f;
+       │     ^^^^^^
+     9 │     abstract abstract g;
+    10 │     static static h;
+  
 --
-error[SyntaxError]: 'abstract' already seen
-  ┌─ ts_class_invalid_modifier_combinations.ts:9:14
-  │
-9 │     abstract abstract g;
-  │     -------- ^^^^^^^^ duplicate modifier
-  │     │         
-  │     first seen here
+ts_class_invalid_modifier_combinations.ts:9:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'abstract' already seen
+  
+  × duplicate modifier
+  
+     7 │     protected protected e;
+     8 │     public public f;
+   > 9 │     abstract abstract g;
+       │              ^^^^^^^^
+    10 │     static static h;
+    11 │     readonly readonly i;
+  
+  i first seen here
+  
+     7 │     protected protected e;
+     8 │     public public f;
+   > 9 │     abstract abstract g;
+       │     ^^^^^^^^
+    10 │     static static h;
+    11 │     readonly readonly i;
+  
 --
-error[SyntaxError]: 'static' already seen
-   ┌─ ts_class_invalid_modifier_combinations.ts:10:12
-   │
-10 │     static static h;
-   │     ------ ^^^^^^ duplicate modifier
-   │     │       
-   │     first seen here
+ts_class_invalid_modifier_combinations.ts:10:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'static' already seen
+  
+  × duplicate modifier
+  
+     8 │     public public f;
+     9 │     abstract abstract g;
+  > 10 │     static static h;
+       │            ^^^^^^
+    11 │     readonly readonly i;
+    12 │     override declare base2;
+  
+  i first seen here
+  
+     8 │     public public f;
+     9 │     abstract abstract g;
+  > 10 │     static static h;
+       │     ^^^^^^
+    11 │     readonly readonly i;
+    12 │     override declare base2;
+  
 --
-error[SyntaxError]: 'readonly' already seen
-   ┌─ ts_class_invalid_modifier_combinations.ts:11:14
-   │
-11 │     readonly readonly i;
-   │     -------- ^^^^^^^^ duplicate modifier
-   │     │         
-   │     first seen here
+ts_class_invalid_modifier_combinations.ts:11:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'readonly' already seen
+  
+  × duplicate modifier
+  
+     9 │     abstract abstract g;
+    10 │     static static h;
+  > 11 │     readonly readonly i;
+       │              ^^^^^^^^
+    12 │     override declare base2;
+    13 │     private abstract j;
+  
+  i first seen here
+  
+     9 │     abstract abstract g;
+    10 │     static static h;
+  > 11 │     readonly readonly i;
+       │     ^^^^^^^^
+    12 │     override declare base2;
+    13 │     private abstract j;
+  
 --
-error[SyntaxError]: 'declare' cannot be used with 'override' modifier.
-   ┌─ ts_class_invalid_modifier_combinations.ts:12:14
-   │
-12 │     override declare base2;
-   │     -------- ^^^^^^^
-   │     │         
-   │     'override' modifier
+ts_class_invalid_modifier_combinations.ts:12:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'declare' cannot be used with 'override' modifier.
+  
+    10 │     static static h;
+    11 │     readonly readonly i;
+  > 12 │     override declare base2;
+       │              ^^^^^^^
+    13 │     private abstract j;
+    14 │     abstract #j;
+  
+  i 'override' modifier
+  
+    10 │     static static h;
+    11 │     readonly readonly i;
+  > 12 │     override declare base2;
+       │     ^^^^^^^^
+    13 │     private abstract j;
+    14 │     abstract #j;
+  
 --
-error[SyntaxError]: 'private' cannot be used with 'abstract' modifier.
-   ┌─ ts_class_invalid_modifier_combinations.ts:13:5
-   │
-13 │     private abstract j;
-   │     ^^^^^^^ -------- 'abstract' modifier
+ts_class_invalid_modifier_combinations.ts:13:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'private' cannot be used with 'abstract' modifier.
+  
+    11 │     readonly readonly i;
+    12 │     override declare base2;
+  > 13 │     private abstract j;
+       │     ^^^^^^^
+    14 │     abstract #j;
+    15 │     abstract static k;
+  
+  i 'abstract' modifier
+  
+    11 │     readonly readonly i;
+    12 │     override declare base2;
+  > 13 │     private abstract j;
+       │             ^^^^^^^^
+    14 │     abstract #j;
+    15 │     abstract static k;
+  
 --
-error[SyntaxError]: 'abstract' modifier cannot be used with a private identifier'.
-   ┌─ ts_class_invalid_modifier_combinations.ts:14:5
-   │
-14 │     abstract #j;
-   │     ^^^^^^^^
+ts_class_invalid_modifier_combinations.ts:14:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'abstract' modifier cannot be used with a private identifier'.
+  
+    12 │     override declare base2;
+    13 │     private abstract j;
+  > 14 │     abstract #j;
+       │     ^^^^^^^^
+    15 │     abstract static k;
+    16 │     abstract async l();
+  
 --
-error[SyntaxError]: 'abstract' cannot be used with 'static' modifier.
-   ┌─ ts_class_invalid_modifier_combinations.ts:15:5
-   │
-15 │     abstract static k;
-   │     ^^^^^^^^ ------ 'static' modifier
+ts_class_invalid_modifier_combinations.ts:15:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'abstract' cannot be used with 'static' modifier.
+  
+    13 │     private abstract j;
+    14 │     abstract #j;
+  > 15 │     abstract static k;
+       │     ^^^^^^^^
+    16 │     abstract async l();
+    17 │     declare async m();
+  
+  i 'static' modifier
+  
+    13 │     private abstract j;
+    14 │     abstract #j;
+  > 15 │     abstract static k;
+       │              ^^^^^^
+    16 │     abstract async l();
+    17 │     declare async m();
+  
 --
-error[SyntaxError]: async members cannot be abstract
-   ┌─ ts_class_invalid_modifier_combinations.ts:16:5
-   │
-16 │     abstract async l();
-   │     ^^^^^^^^
+ts_class_invalid_modifier_combinations.ts:16:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × async members cannot be abstract
+  
+    14 │     abstract #j;
+    15 │     abstract static k;
+  > 16 │     abstract async l();
+       │     ^^^^^^^^
+    17 │     declare async m();
+    18 │     declare #l;
+  
 --
-error[SyntaxError]: 'declare' modifier is only allowed on properties.
-   ┌─ ts_class_invalid_modifier_combinations.ts:17:5
-   │
-17 │     declare async m();
-   │     ^^^^^^^
+ts_class_invalid_modifier_combinations.ts:17:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'declare' modifier is only allowed on properties.
+  
+    15 │     abstract static k;
+    16 │     abstract async l();
+  > 17 │     declare async m();
+       │     ^^^^^^^
+    18 │     declare #l;
+    19 │ }
+  
 --
-error[SyntaxError]: 'declare' modifier cannot be used with a private identifier'.
-   ┌─ ts_class_invalid_modifier_combinations.ts:18:5
-   │
-18 │     declare #l;
-   │     ^^^^^^^
+ts_class_invalid_modifier_combinations.ts:18:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'declare' modifier cannot be used with a private identifier'.
+  
+    16 │     abstract async l();
+    17 │     declare async m();
+  > 18 │     declare #l;
+       │     ^^^^^^^
+    19 │ }
+    20 │ 
+  
 --
 class Base { base1; base2; }
 abstract class Test extends Base {

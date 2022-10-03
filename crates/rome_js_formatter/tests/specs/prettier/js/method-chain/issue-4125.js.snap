@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: js/method-chain/issue-4125.js
 ---
 
 # Input
@@ -162,162 +164,7 @@ var l = base
 ```diff
 --- Prettier
 +++ Rome
-@@ -19,7 +19,8 @@
- 
- // you can still force multi-line chaining with a comment:
- const sha256_2 = (data) =>
--  crypto // breakme
-+  crypto
-+    // breakme
-     .createHash("sha256")
-     .update(data)
-     .digest("hex");
-@@ -44,14 +45,15 @@
- 
- // examples from https://github.com/prettier/prettier/issues/1565
- 
--d3.select("body")
-+d3
-+  .select("body")
-   .selectAll("p")
-   .data([1, 2, 3])
-   .enter()
-   .style("color", "white");
- 
- Object.keys(props)
--  .filter((key) => key in own === false)
-+  .filter((key) => (key in own) === false)
-   .reduce((a, key) => {
-     a[key] = props[key];
-     return a;
-@@ -67,7 +69,10 @@
- 
- db.branch(
-   db.table("users").filter({ email }).count(),
--  db.table("users").filter({ email: "a@b.com" }).count(),
-+  db
-+    .table("users")
-+    .filter({ email: "a@b.com" })
-+    .count(),
-   db.table("users").insert({ email }),
-   db.table("users").filter({ email }),
- );
-@@ -78,7 +83,8 @@
- 
- fetchUser(id).then(fetchAccountForUser).catch(handleFetchError);
- 
--fetchUser(id) //
-+fetchUser(id)
-+  //
-   .then(fetchAccountForUser)
-   .catch(handleFetchError);
- 
-@@ -90,39 +96,40 @@
-     authorizationToken: data.token,
-   }).initVerify("foo_container");
- 
--  fejax
--    .ajax({
--      url: "/verification/",
--      dataType: "json",
--    })
--    .then(
--      (data) => {
--        this.setState({ isLoading: false });
--        this.initWidget(data);
--      },
--      (data) => {
--        this.logImpression("foo_fetch_error", data);
--        Flash.error(I18n.t("offline_identity.foo_issue"));
--      },
--    );
-+  fejax.ajax({
-+    url: "/verification/",
-+    dataType: "json",
-+  }).then(
-+    (data) => {
-+      this.setState({ isLoading: false });
-+      this.initWidget(data);
-+    },
-+    (data) => {
-+      this.logImpression("foo_fetch_error", data);
-+      Flash.error(I18n.t("offline_identity.foo_issue"));
-+    },
-+  );
- }
- 
- action$
-   .ofType(ActionTypes.SEARCHED_USERS)
-   .map((action) => action.payload.query)
-   .filter((q) => !!q)
--  .switchMap((q) =>
--    Observable.timer(800) // debounce
--      .takeUntil(action$.ofType(ActionTypes.CLEARED_SEARCH_RESULTS))
--      .mergeMap(() =>
--        Observable.merge(
--          Observable.of(replace(`?q=${q}`)),
--          ajax
--            .getJSON(`https://api.github.com/search/users?q=${q}`)
--            .map((res) => res.items)
--            .map(receiveUsers),
-+  .switchMap(
-+    (q) =>
-+      Observable.timer(800)
-+        // debounce
-+        .takeUntil(action$.ofType(ActionTypes.CLEARED_SEARCH_RESULTS))
-+        .mergeMap(
-+          () =>
-+            Observable.merge(
-+              Observable.of(replace(`?q=${q}`)),
-+              ajax
-+                .getJSON(`https://api.github.com/search/users?q=${q}`)
-+                .map((res) => res.items)
-+                .map(receiveUsers),
-+            ),
-         ),
--      ),
-   );
- 
- window.FooClient.setVars({
-@@ -138,21 +145,32 @@
- const a1 = x.a(true).b(null).c(123);
- const a2 = x.d("").e(``).f(g);
- const a3 = x.d("").e(`${123}`).f(g);
--const a4 = x.h(i.j).k(l()).m([n, o]);
-+const a4 = x
-+  .h(i.j)
-+  .k(l())
-+  .m([n, o]);
- class X {
-   y() {
--    const j = x.a(this).b(super.cde()).f(/g/).h(new i()).j();
-+    const j = x
-+      .a(this)
-+      .b(super.cde())
-+      .f(/g/)
-+      .h(new i())
-+      .j();
-   }
- }
- 
- // should break when call expressions get complex
--x.a()
-+x
-+  .a()
-   .b([c, [d, [e]]])
-   .f();
--x.a()
-+x
-+  .a()
-   .b(c(d(e())))
-   .f();
--x.a()
-+x
-+  .a()
-   .b(`${c(d())}`)
-   .f();
- 
-@@ -161,7 +179,4 @@
+@@ -161,7 +161,4 @@
    .b()
    .c(a(a(b(c(d().p).p).p).p));
  
@@ -352,8 +199,7 @@ somePromise
 
 // you can still force multi-line chaining with a comment:
 const sha256_2 = (data) =>
-  crypto
-    // breakme
+  crypto // breakme
     .createHash("sha256")
     .update(data)
     .digest("hex");
@@ -378,15 +224,14 @@ function palindrome(a, b) {
 
 // examples from https://github.com/prettier/prettier/issues/1565
 
-d3
-  .select("body")
+d3.select("body")
   .selectAll("p")
   .data([1, 2, 3])
   .enter()
   .style("color", "white");
 
 Object.keys(props)
-  .filter((key) => (key in own) === false)
+  .filter((key) => key in own === false)
   .reduce((a, key) => {
     a[key] = props[key];
     return a;
@@ -402,10 +247,7 @@ something()
 
 db.branch(
   db.table("users").filter({ email }).count(),
-  db
-    .table("users")
-    .filter({ email: "a@b.com" })
-    .count(),
+  db.table("users").filter({ email: "a@b.com" }).count(),
   db.table("users").insert({ email }),
   db.table("users").filter({ email }),
 );
@@ -416,8 +258,7 @@ const date = moment.utc(userInput).hour(0).minute(0).second(0);
 
 fetchUser(id).then(fetchAccountForUser).catch(handleFetchError);
 
-fetchUser(id)
-  //
+fetchUser(id) //
   .then(fetchAccountForUser)
   .catch(handleFetchError);
 
@@ -429,40 +270,39 @@ function HelloWorld() {
     authorizationToken: data.token,
   }).initVerify("foo_container");
 
-  fejax.ajax({
-    url: "/verification/",
-    dataType: "json",
-  }).then(
-    (data) => {
-      this.setState({ isLoading: false });
-      this.initWidget(data);
-    },
-    (data) => {
-      this.logImpression("foo_fetch_error", data);
-      Flash.error(I18n.t("offline_identity.foo_issue"));
-    },
-  );
+  fejax
+    .ajax({
+      url: "/verification/",
+      dataType: "json",
+    })
+    .then(
+      (data) => {
+        this.setState({ isLoading: false });
+        this.initWidget(data);
+      },
+      (data) => {
+        this.logImpression("foo_fetch_error", data);
+        Flash.error(I18n.t("offline_identity.foo_issue"));
+      },
+    );
 }
 
 action$
   .ofType(ActionTypes.SEARCHED_USERS)
   .map((action) => action.payload.query)
   .filter((q) => !!q)
-  .switchMap(
-    (q) =>
-      Observable.timer(800)
-        // debounce
-        .takeUntil(action$.ofType(ActionTypes.CLEARED_SEARCH_RESULTS))
-        .mergeMap(
-          () =>
-            Observable.merge(
-              Observable.of(replace(`?q=${q}`)),
-              ajax
-                .getJSON(`https://api.github.com/search/users?q=${q}`)
-                .map((res) => res.items)
-                .map(receiveUsers),
-            ),
+  .switchMap((q) =>
+    Observable.timer(800) // debounce
+      .takeUntil(action$.ofType(ActionTypes.CLEARED_SEARCH_RESULTS))
+      .mergeMap(() =>
+        Observable.merge(
+          Observable.of(replace(`?q=${q}`)),
+          ajax
+            .getJSON(`https://api.github.com/search/users?q=${q}`)
+            .map((res) => res.items)
+            .map(receiveUsers),
         ),
+      ),
   );
 
 window.FooClient.setVars({
@@ -478,32 +318,21 @@ it("gets triggered by mouseenter", () => {
 const a1 = x.a(true).b(null).c(123);
 const a2 = x.d("").e(``).f(g);
 const a3 = x.d("").e(`${123}`).f(g);
-const a4 = x
-  .h(i.j)
-  .k(l())
-  .m([n, o]);
+const a4 = x.h(i.j).k(l()).m([n, o]);
 class X {
   y() {
-    const j = x
-      .a(this)
-      .b(super.cde())
-      .f(/g/)
-      .h(new i())
-      .j();
+    const j = x.a(this).b(super.cde()).f(/g/).h(new i()).j();
   }
 }
 
 // should break when call expressions get complex
-x
-  .a()
+x.a()
   .b([c, [d, [e]]])
   .f();
-x
-  .a()
+x.a()
   .b(c(d(e())))
   .f();
-x
-  .a()
+x.a()
   .b(`${c(d())}`)
   .f();
 

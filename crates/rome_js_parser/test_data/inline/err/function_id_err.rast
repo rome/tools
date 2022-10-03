@@ -106,12 +106,16 @@ JsModule {
         3: R_CURLY@44..46 "}" [Newline("\n")] []
   3: EOF@46..47 "" [Newline("\n")] []
 --
-error[SyntaxError]: Illegal use of `yield` as an identifier in generator function
-  ┌─ function_id_err.js:2:12
-  │
-2 │   function yield(test) {}
-  │            ^^^^^
+function_id_err.js:2:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of `yield` as an identifier in generator function
+  
+    1 │ function* test() {
+  > 2 │   function yield(test) {}
+      │            ^^^^^
+    3 │ }
+    4 │ 
+  
 --
 function* test() {
   function yield(test) {}

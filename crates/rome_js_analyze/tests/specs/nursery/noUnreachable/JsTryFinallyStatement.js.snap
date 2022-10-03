@@ -1,0 +1,275 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: JsTryFinallyStatement.js
+---
+# Input
+```js
+function JsTryFinallyStatement1() {
+    try {
+        tryBlock();
+    } catch (err) {
+        catchClause();
+    } finally {
+        finallyClause();
+        return;
+    }
+
+    afterFinallyReturn();
+}
+
+function JsTryFinallyStatement2() {
+    return;
+
+    try {
+        tryBlock();
+    } catch (err) {
+        catchClause();
+    } finally {
+        finallyClause();
+    }
+}
+
+function JsTryFinallyStatement3() {
+    try {
+        try {
+            tryBlock1();
+        } catch {
+        } finally {
+            return;
+        }
+
+        afterTryStatement1();
+    } catch (err) {
+        catchClause2();
+    }
+
+    afterTryStatement2();
+}
+
+function JsTryFinallyStatement4() {
+    try {
+        tryBlock1();
+        return;
+    } catch {
+        return;
+    } finally {
+        if (value) {
+            statement1();
+        } else {
+            statement2();
+        }
+
+        finallyClause();
+    }
+
+    afterTryStatement();
+}
+
+```
+
+# Diagnostics
+```
+JsTryFinallyStatement.js:11:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+     9 │     }
+    10 │ 
+  > 11 │     afterFinallyReturn();
+       │     ^^^^^^^^^^^^^^^^^^^^^
+    12 │ }
+    13 │ 
+  
+  i This statement will return from the function ...
+  
+     6 │     } finally {
+     7 │         finallyClause();
+   > 8 │         return;
+       │         ^^^^^^^
+     9 │     }
+    10 │ 
+  
+
+```
+
+```
+JsTryFinallyStatement.js:18:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+    17 │     try {
+  > 18 │         tryBlock();
+       │         ^^^^^^^^^^^
+    19 │     } catch (err) {
+    20 │         catchClause();
+  
+  i This statement will return from the function ...
+  
+    14 │ function JsTryFinallyStatement2() {
+  > 15 │     return;
+       │     ^^^^^^^
+    16 │ 
+    17 │     try {
+  
+
+```
+
+```
+JsTryFinallyStatement.js:20:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+    18 │         tryBlock();
+    19 │     } catch (err) {
+  > 20 │         catchClause();
+       │         ^^^^^^^^^^^^^^
+    21 │     } finally {
+    22 │         finallyClause();
+  
+  i This statement will return from the function ...
+  
+    14 │ function JsTryFinallyStatement2() {
+  > 15 │     return;
+       │     ^^^^^^^
+    16 │ 
+    17 │     try {
+  
+
+```
+
+```
+JsTryFinallyStatement.js:22:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+    20 │         catchClause();
+    21 │     } finally {
+  > 22 │         finallyClause();
+       │         ^^^^^^^^^^^^^^^^
+    23 │     }
+    24 │ }
+  
+  i This statement will return from the function ...
+  
+    14 │ function JsTryFinallyStatement2() {
+  > 15 │     return;
+       │     ^^^^^^^
+    16 │ 
+    17 │     try {
+  
+
+```
+
+```
+JsTryFinallyStatement.js:35:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+    33 │         }
+    34 │ 
+  > 35 │         afterTryStatement1();
+       │         ^^^^^^^^^^^^^^^^^^^^^
+    36 │     } catch (err) {
+    37 │         catchClause2();
+  
+  i This statement will return from the function ...
+  
+    30 │         } catch {
+    31 │         } finally {
+  > 32 │             return;
+       │             ^^^^^^^
+    33 │         }
+    34 │ 
+  
+
+```
+
+```
+JsTryFinallyStatement.js:37:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+    35 │         afterTryStatement1();
+    36 │     } catch (err) {
+  > 37 │         catchClause2();
+       │         ^^^^^^^^^^^^^^^
+    38 │     }
+    39 │ 
+  
+  i This statement will return from the function ...
+  
+    30 │         } catch {
+    31 │         } finally {
+  > 32 │             return;
+       │             ^^^^^^^
+    33 │         }
+    34 │ 
+  
+
+```
+
+```
+JsTryFinallyStatement.js:40:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+    38 │     }
+    39 │ 
+  > 40 │     afterTryStatement2();
+       │     ^^^^^^^^^^^^^^^^^^^^^
+    41 │ }
+    42 │ 
+  
+  i This statement will return from the function ...
+  
+    30 │         } catch {
+    31 │         } finally {
+  > 32 │             return;
+       │             ^^^^^^^
+    33 │         }
+    34 │ 
+  
+
+```
+
+```
+JsTryFinallyStatement.js:59:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+    57 │     }
+    58 │ 
+  > 59 │     afterTryStatement();
+       │     ^^^^^^^^^^^^^^^^^^^^
+    60 │ }
+    61 │ 
+  
+  i This statement will return from the function ...
+  
+    44 │     try {
+    45 │         tryBlock1();
+  > 46 │         return;
+       │         ^^^^^^^
+    47 │     } catch {
+    48 │         return;
+  
+
+```
+
+

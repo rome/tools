@@ -1,0 +1,32 @@
+{
+  "name": "@rometools/backend-jsonrpc",
+  "version": "0.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "vitest",
+    "test:ci": "pnpm build && vitest --run",
+    "tsc": "tsc --noEmit",
+    "build": "tsc"
+  },
+  "homepage": "https://rome.tools",
+  "author": "Rome Tools Developers and Contributors",
+  "bugs": "https://github.com/rome/tools/issues",
+  "description": "Bindings to the JSON-RPC Workspace API of the Rome daemon",
+  "keywords": [
+    "JavaScript",
+    "TypeScript",
+    "format",
+    "lint",
+    "toolchain"
+  ],
+  "engines": {
+    "node": ">=14.*"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^18.7.2",
+    "typescript": "^4.8.2",
+    "vite": "^3.0.8",
+    "vitest": "^0.22.0"
+  }
+}

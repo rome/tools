@@ -24,54 +24,57 @@
 mod arguments;
 mod buffer;
 mod builders;
-mod comments;
+pub mod comments;
 pub mod format_element;
 mod format_extensions;
 pub mod formatter;
 pub mod group_id;
-pub mod intersperse;
 pub mod macros;
 pub mod prelude;
 #[cfg(debug_assertions)]
 pub mod printed_tokens;
 pub mod printer;
-pub mod token;
+mod source_map;
+pub mod trivia;
+mod verbatim;
 
 use crate::formatter::Formatter;
 use crate::group_id::UniqueGroupIdBuilder;
-use crate::prelude::syntax_token_cow_slice;
-use std::any::TypeId;
+use crate::prelude::TagKind;
 
+use crate::format_element::document::Document;
 #[cfg(debug_assertions)]
 use crate::printed_tokens::PrintedTokens;
 use crate::printer::{Printer, PrinterOptions};
 pub use arguments::{Argument, Arguments};
 pub use buffer::{
-    Buffer, BufferExtensions, BufferSnapshot, HasLabelBuffer, Inspect, PreambleBuffer, VecBuffer,
-    WillBreakBuffer,
+    Buffer, BufferExtensions, BufferSnapshot, Inspect, PreambleBuffer, RemoveSoftLinesBuffer,
+    VecBuffer,
 };
-pub use builders::{
-    block_indent, comment, empty_line, get_lines_before, group, hard_line_break, if_group_breaks,
-    if_group_fits_on_line, indent, labelled, line_suffix, soft_block_indent, soft_line_break,
-    soft_line_break_or_space, soft_line_indent_or_space, space, text, BestFitting,
-};
-pub use comments::{CommentKind, CommentStyle, Comments, SourceComment};
-pub use format_element::{normalize_newlines, FormatElement, Text, Verbatim, LINE_TERMINATORS};
+pub use builders::BestFitting;
+
+use crate::builders::syntax_token_cow_slice;
+use crate::comments::{CommentStyle, Comments, SourceComment};
+pub use format_element::{normalize_newlines, FormatElement, Text, LINE_TERMINATORS};
 pub use group_id::GroupId;
-use indexmap::IndexSet;
 use rome_rowan::{
-    Language, RawSyntaxKind, SyntaxElement, SyntaxError, SyntaxKind, SyntaxNode, SyntaxResult,
-    SyntaxToken, SyntaxTriviaPieceComments, TextRange, TextSize, TokenAtOffset,
+    Language, SyntaxElement, SyntaxError, SyntaxNode, SyntaxResult, SyntaxToken, SyntaxTriviaPiece,
+    TextLen, TextRange, TextSize, TokenAtOffset,
 };
+pub use source_map::{TransformSourceMap, TransformSourceMapBuilder};
 use std::error::Error;
 use std::num::ParseIntError;
-use std::rc::Rc;
 use std::str::FromStr;
 
-#[derive(Debug, Eq, PartialEq, Clone, Copy)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[derive(Debug, Eq, PartialEq, Clone, Copy, Hash)]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
+#[derive(Default)]
 pub enum IndentStyle {
     /// Tab
+    #[default]
     Tab,
     /// Space, with its quantity
     Space(u8),
@@ -79,11 +82,15 @@ pub enum IndentStyle {
 
 impl IndentStyle {
     pub const DEFAULT_SPACES: u8 = 2;
-}
 
-impl Default for IndentStyle {
-    fn default() -> Self {
-        Self::Tab
+    /// Returns `true` if this is an [IndentStyle::Tab].
+    pub const fn is_tab(&self) -> bool {
+        matches!(self, IndentStyle::Tab)
+    }
+
+    /// Returns `true` if this is an [IndentStyle::Space].
+    pub const fn is_space(&self) -> bool {
+        matches!(self, IndentStyle::Space(_))
     }
 }
 
@@ -113,7 +120,10 @@ impl std::fmt::Display for IndentStyle {
 ///
 /// The allowed range of values is 1..=320
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
 pub struct LineWidth(u16);
 
 impl LineWidth {
@@ -189,11 +199,23 @@ impl From<LineWidth> for u16 {
     }
 }
 
-/// Context configuring how an object gets formatted.
-///
-/// Defines the common formatting options. Implementations can define additional options that
-/// are specific to formatting a specific object.
+/// Context object storing data relevant when formatting an object.
 pub trait FormatContext {
+    type Options: FormatOptions;
+
+    /// Returns the formatting options
+    fn options(&self) -> &Self::Options;
+
+    /// Returns [None] if the CST has not been pre-processed.
+    ///
+    /// Returns [Some] if the CST has been pre-processed to simplify formatting.
+    /// The source map can be used to map positions of the formatted nodes back to their original
+    /// source locations or to resolve the source text.
+    fn source_map(&self) -> Option<&TransformSourceMap>;
+}
+
+/// Options customizing how the source code should be formatted.
+pub trait FormatOptions {
     /// The indent style.
     fn indent_style(&self) -> IndentStyle;
 
@@ -210,39 +232,45 @@ pub trait FormatContext {
 /// The context customizes the comments formatting and stores the comments of the CST.
 pub trait CstFormatContext: FormatContext {
     type Language: Language;
-    type Style: CommentStyle<Self::Language>;
+    type Style: CommentStyle<Language = Self::Language>;
 
-    /// Customizes how comments are formatted
-    fn comment_style(&self) -> Self::Style;
+    /// Rule for formatting comments.
+    type CommentRule: FormatRule<SourceComment<Self::Language>, Context = Self> + Default;
 
-    /// Returns a ref counted [Comments].
-    ///
-    /// The use of a [Rc] is necessary to achieve that [Comments] has a lifetime that is independent of the [crate::Formatter].
-    /// Having independent lifetimes is necessary to support the use case where a (formattable object)[Format]
-    /// iterates over all comments and writes them into the [crate::Formatter] (mutably borrowing the [crate::Formatter] and in turn this context).
-    ///
-    /// ```block
-    /// for leading in f.context().comments().leading_comments(node) {
-    ///     ^
-    ///     |- Borrows comments
-    ///   write!(f, [comment(leading.piece.text())])?;
-    ///          ^
-    ///          |- Mutably borrows the formatter, state, context (and comments, if they aren't wrapped by a Rc)
-    /// }
-    /// ```
-    fn comments(&self) -> Rc<Comments<Self::Language>>;
-
-    /// Consumes `self` and returns a new context with the provided extracted (`comments`)[Comments].
-    fn with_comments(self, comments: Rc<Comments<Self::Language>>) -> Self;
+    /// Returns a reference to the program's comments.
+    fn comments(&self) -> &Comments<Self::Language>;
 }
 
 #[derive(Debug, Default, Eq, PartialEq)]
 pub struct SimpleFormatContext {
+    options: SimpleFormatOptions,
+}
+
+impl SimpleFormatContext {
+    pub fn new(options: SimpleFormatOptions) -> Self {
+        Self { options }
+    }
+}
+
+impl FormatContext for SimpleFormatContext {
+    type Options = SimpleFormatOptions;
+
+    fn options(&self) -> &Self::Options {
+        &self.options
+    }
+
+    fn source_map(&self) -> Option<&TransformSourceMap> {
+        None
+    }
+}
+
+#[derive(Debug, Default, Eq, PartialEq)]
+pub struct SimpleFormatOptions {
     pub indent_style: IndentStyle,
     pub line_width: LineWidth,
 }
 
-impl FormatContext for SimpleFormatContext {
+impl FormatOptions for SimpleFormatOptions {
     fn indent_style(&self) -> IndentStyle {
         self.indent_style
     }
@@ -254,13 +282,16 @@ impl FormatContext for SimpleFormatContext {
     fn as_print_options(&self) -> PrinterOptions {
         PrinterOptions::default()
             .with_indent(self.indent_style)
-            .with_print_width(self.line_width)
+            .with_print_width(self.line_width.into())
     }
 }
 
 /// Lightweight sourcemap marker between source and output tokens
-#[derive(Debug, Clone, Eq, PartialEq)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
 pub struct SourceMarker {
     /// Position of the marker in the original source
     pub source: TextSize,
@@ -270,21 +301,28 @@ pub struct SourceMarker {
 
 #[derive(Debug, Clone, Eq, PartialEq)]
 pub struct Formatted<Context> {
-    root: FormatElement,
+    document: Document,
     context: Context,
 }
 
 impl<Context> Formatted<Context> {
-    pub fn new(root: FormatElement, context: Context) -> Self {
-        Self { root, context }
+    pub fn new(document: Document, context: Context) -> Self {
+        Self { document, context }
     }
 
+    /// Returns the context used during formatting.
     pub fn context(&self) -> &Context {
         &self.context
     }
 
-    pub fn into_format_element(self) -> FormatElement {
-        self.root
+    /// Returns the formatted document.
+    pub fn document(&self) -> &Document {
+        &self.document
+    }
+
+    /// Consumes `self` and returns the formatted document.
+    pub fn into_document(self) -> Document {
+        self.document
     }
 }
 
@@ -292,17 +330,143 @@ impl<Context> Formatted<Context>
 where
     Context: FormatContext,
 {
-    pub fn print(&self) -> Printed {
-        Printer::new(self.context.as_print_options()).print(&self.root)
+    pub fn print(&self) -> PrintResult<Printed> {
+        let print_options = self.context.options().as_print_options();
+
+        let printed = Printer::new(print_options).print(&self.document)?;
+
+        let printed = match self.context.source_map() {
+            Some(source_map) => source_map.map_printed(printed),
+            None => printed,
+        };
+
+        Ok(printed)
     }
 
-    pub fn print_with_indent(&self, indent: u16) -> Printed {
-        Printer::new(self.context.as_print_options()).print_with_indent(&self.root, indent)
+    pub fn print_with_indent(&self, indent: u16) -> PrintResult<Printed> {
+        let print_options = self.context.options().as_print_options();
+        let printed = Printer::new(print_options).print_with_indent(&self.document, indent)?;
+
+        let printed = match self.context.source_map() {
+            Some(source_map) => source_map.map_printed(printed),
+            None => printed,
+        };
+
+        Ok(printed)
     }
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
+pub enum PrintError {
+    InvalidDocument(InvalidDocumentError),
+}
+
+impl Error for PrintError {}
+
+impl std::fmt::Display for PrintError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            PrintError::InvalidDocument(inner) => {
+                std::write!(f, "Invalid document: {inner}")
+            }
+        }
+    }
+}
+
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub enum InvalidDocumentError {
+    /// Mismatching start/end kinds
+    ///
+    /// ```plain
+    /// StartIndent
+    /// ...
+    /// EndGroup
+    /// ```
+    StartEndTagMismatch {
+        start_kind: TagKind,
+        end_kind: TagKind,
+    },
+
+    /// End tag without a corresponding start tag.
+    ///
+    /// ```plain
+    /// Text
+    /// EndGroup
+    /// ```
+    StartTagMissing { kind: TagKind },
+
+    /// Expected a specific start tag but instead is:
+    /// * at the end of the document
+    /// * at another start tag
+    /// * at an end tag
+    ExpectedStart {
+        expected_start: TagKind,
+        actual: ActualStart,
+    },
+}
+
+#[derive(Debug, Copy, Clone, Eq, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+pub enum ActualStart {
+    /// The actual element is not a tag.
+    Content,
+
+    /// The actual element was a start tag of another kind.
+    Start(TagKind),
+
+    /// The actual element is an end tag instead of a start tag.
+    End(TagKind),
+
+    /// Reached the end of the document
+    EndOfDocument,
+}
+
+impl std::fmt::Display for InvalidDocumentError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            InvalidDocumentError::StartEndTagMismatch {
+                start_kind,
+                end_kind,
+            } => {
+                std::write!(
+                    f,
+                    "Expected end tag of kind {start_kind:?} but found {end_kind:?}."
+                )
+            }
+            InvalidDocumentError::StartTagMissing { kind } => {
+                std::write!(f, "End tag of kind {kind:?} without matching start tag.")
+            }
+            InvalidDocumentError::ExpectedStart {
+                expected_start,
+                actual,
+            } => {
+                match actual {
+                    ActualStart::EndOfDocument => {
+                        std::write!(f, "Expected start tag of kind {expected_start:?} but at the end of document.")
+                    }
+                    ActualStart::Start(start) => {
+                        std::write!(f, "Expected start tag of kind {expected_start:?} but found start tag of kind {start:?}.")
+                    }
+                    ActualStart::End(end) => {
+                        std::write!(f, "Expected start tag of kind {expected_start:?} but found end tag of kind {end:?}.")
+                    }
+                    ActualStart::Content => {
+                        std::write!(f, "Expected start tag of kind {expected_start:?} but found non-tag element.")
+                    }
+                }
+            }
+        }
+    }
+}
+
+pub type PrintResult<T> = Result<T, PrintError>;
+
+#[derive(Debug, Clone, Eq, PartialEq)]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
 pub struct Printed {
     code: String,
     range: Option<TextRange>,
@@ -342,7 +506,8 @@ impl Printed {
     }
 
     /// Returns a list of [SourceMarker] mapping byte positions
-    /// in the output string to the input source code
+    /// in the output string to the input source code.
+    /// It's not guaranteed that the markers are sorted by source position.
     pub fn sourcemap(&self) -> &[SourceMarker] {
         &self.sourcemap
     }
@@ -351,6 +516,12 @@ impl Printed {
     /// in the output string to the input source code, consuming the result
     pub fn into_sourcemap(self) -> Vec<SourceMarker> {
         self.sourcemap
+    }
+
+    /// Takes the list of [SourceMarker] mapping byte positions in the output string
+    /// to the input source code.
+    pub fn take_sourcemap(&mut self) -> Vec<SourceMarker> {
+        std::mem::take(&mut self.sourcemap)
     }
 
     /// Access the resulting code, borrowing the result
@@ -374,12 +545,18 @@ impl Printed {
     pub fn verbatim_ranges(&self) -> &[TextRange] {
         &self.verbatim_ranges
     }
+
+    /// Takes the ranges of nodes that have been formatted as verbatim, replacing them with an empty list.
+    pub fn take_verbatim_ranges(&mut self) -> Vec<TextRange> {
+        std::mem::take(&mut self.verbatim_ranges)
+    }
 }
 
 /// Public return type of the formatter
 pub type FormatResult<F> = Result<F, FormatError>;
 
-#[derive(Debug, PartialEq, Copy, Clone)]
+#[derive(Debug, PartialEq, Eq, Copy, Clone)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 /// Series of errors encountered during formatting
 pub enum FormatError {
     /// In case a node can't be formatted because it either misses a require child element or
@@ -388,6 +565,17 @@ pub enum FormatError {
     /// In case range formatting failed because the provided range was larger
     /// than the formatted syntax tree
     RangeError { input: TextRange, tree: TextRange },
+
+    /// In case printing the document failed because it has an invalid structure.
+    InvalidDocument(InvalidDocumentError),
+
+    /// Formatting failed because some content encountered a situation where a layout
+    /// choice by an enclosing [`Format`] resulted in a poor layout for a child [`Format`].
+    ///
+    /// It's up to an enclosing [`Format`] to handle the error and pick another layout.
+    /// This error should not be raised if there's no outer [`Format`] handling the poor layout error,
+    /// avoiding that formatting of the whole document fails.
+    PoorLayout,
 }
 
 impl std::fmt::Display for FormatError {
@@ -398,6 +586,10 @@ impl std::fmt::Display for FormatError {
                 fmt,
                 "formatting range {input:?} is larger than syntax tree {tree:?}"
             ),
+            FormatError::InvalidDocument(error) => std::write!(fmt, "Invalid document: {error}\n\n This is an internal Rome error. Please report if necessary."),
+            FormatError::PoorLayout => {
+                std::write!(fmt, "Poor layout: The formatter wasn't able to pick a good layout for your document. This is an internal Rome error. Please report if necessary.")
+            }
         }
     }
 }
@@ -414,6 +606,20 @@ impl From<&SyntaxError> for FormatError {
     fn from(syntax_error: &SyntaxError) -> Self {
         match syntax_error {
             SyntaxError::MissingRequiredChild => FormatError::SyntaxError,
+        }
+    }
+}
+
+impl From<PrintError> for FormatError {
+    fn from(error: PrintError) -> Self {
+        FormatError::from(&error)
+    }
+}
+
+impl From<&PrintError> for FormatError {
+    fn from(error: &PrintError) -> Self {
+        match error {
+            PrintError::InvalidDocument(reason) => FormatError::InvalidDocument(*reason),
         }
     }
 }
@@ -441,10 +647,13 @@ impl From<&SyntaxError> for FormatError {
 ///     }
 /// }
 ///
+/// # fn main() -> FormatResult<()> {
 /// let paragraph = Paragraph(String::from("test"));
-/// let formatted = format!(SimpleFormatContext::default(), [paragraph]).unwrap();
+/// let formatted = format!(SimpleFormatContext::default(), [paragraph])?;
 ///
-/// assert_eq!("test\n", formatted.print().as_code())
+/// assert_eq!("test\n", formatted.print()?.as_code());
+/// # Ok(())
+/// # }
 /// ```
 pub trait Format<Context> {
     /// Formats the object using the given formatter.
@@ -455,6 +664,7 @@ impl<T, Context> Format<Context> for &T
 where
     T: ?Sized + Format<Context>,
 {
+    #[inline(always)]
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         Format::fmt(&**self, f)
     }
@@ -464,6 +674,7 @@ impl<T, Context> Format<Context> for &mut T
 where
     T: ?Sized + Format<Context>,
 {
+    #[inline(always)]
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         Format::fmt(&**self, f)
     }
@@ -600,7 +811,7 @@ impl<T, R> Format<R::Context> for FormatRefWithRule<'_, T, R>
 where
     R: FormatRule<T>,
 {
-    #[inline]
+    #[inline(always)]
     fn fmt(&self, f: &mut Formatter<R::Context>) -> FormatResult<()> {
         self.rule.fmt(self.item, f)
     }
@@ -638,7 +849,7 @@ impl<T, R> Format<R::Context> for FormatOwnedWithRule<T, R>
 where
     R: FormatRule<T>,
 {
-    #[inline]
+    #[inline(always)]
     fn fmt(&self, f: &mut Formatter<R::Context>) -> FormatResult<()> {
         self.rule.fmt(&self.item, f)
     }
@@ -675,14 +886,17 @@ where
 /// use rome_formatter::prelude::*;
 /// use rome_formatter::{VecBuffer, format_args, FormatState, write, Formatted};
 ///
+/// # fn main() -> FormatResult<()> {
 /// let mut state = FormatState::new(SimpleFormatContext::default());
 /// let mut buffer = VecBuffer::new(&mut state);
 ///
-/// write!(&mut buffer, [format_args!(text("Hello World"))]).unwrap();
+/// write!(&mut buffer, [format_args!(text("Hello World"))])?;
 ///
-/// let formatted = Formatted::new(buffer.into_element(), SimpleFormatContext::default());
+/// let formatted = Formatted::new(Document::from(buffer.into_vec()), SimpleFormatContext::default());
 ///
-/// assert_eq!("Hello World", formatted.print().as_code())
+/// assert_eq!("Hello World", formatted.print()?.as_code());
+/// # Ok(())
+/// # }
 /// ```
 ///
 /// Please note that using [`write!`] might be preferable. Example:
@@ -691,16 +905,20 @@ where
 /// use rome_formatter::prelude::*;
 /// use rome_formatter::{VecBuffer, format_args, FormatState, write, Formatted};
 ///
+/// # fn main() -> FormatResult<()> {
 /// let mut state = FormatState::new(SimpleFormatContext::default());
 /// let mut buffer = VecBuffer::new(&mut state);
 ///
-/// write!(&mut buffer, [text("Hello World")]).unwrap();
+/// write!(&mut buffer, [text("Hello World")])?;
 ///
-/// let formatted = Formatted::new(buffer.into_element(), SimpleFormatContext::default());
+/// let formatted = Formatted::new(Document::from(buffer.into_vec()), SimpleFormatContext::default());
 ///
-/// assert_eq!("Hello World", formatted.print().as_code())
+/// assert_eq!("Hello World", formatted.print()?.as_code());
+/// # Ok(())
+/// # }
 /// ```
 ///
+#[inline(always)]
 pub fn write<Context>(
     output: &mut dyn Buffer<Context = Context>,
     args: Arguments<Context>,
@@ -722,8 +940,11 @@ pub fn write<Context>(
 /// use rome_formatter::prelude::*;
 /// use rome_formatter::{format, format_args};
 ///
-/// let formatted = format!(SimpleFormatContext::default(), [&format_args!(text("test"))]).unwrap();
-/// assert_eq!("test", formatted.print().as_code());
+/// # fn main() -> FormatResult<()> {
+/// let formatted = format!(SimpleFormatContext::default(), [&format_args!(text("test"))])?;
+/// assert_eq!("test", formatted.print()?.as_code());
+/// # Ok(())
+/// # }
 /// ```
 ///
 /// Please note that using [`format!`] might be preferable. Example:
@@ -732,8 +953,11 @@ pub fn write<Context>(
 /// use rome_formatter::prelude::*;
 /// use rome_formatter::{format};
 ///
-/// let formatted = format!(SimpleFormatContext::default(), [text("test")]).unwrap();
-/// assert_eq!("test", formatted.print().as_code());
+/// # fn main() -> FormatResult<()> {
+/// let formatted = format!(SimpleFormatContext::default(), [text("test")])?;
+/// assert_eq!("test", formatted.print()?.as_code());
+/// # Ok(())
+/// # }
 /// ```
 pub fn format<Context>(
     context: Context,
@@ -747,40 +971,90 @@ where
 
     buffer.write_fmt(arguments)?;
 
-    Ok(Formatted {
-        root: buffer.into_element(),
-        context: state.into_context(),
-    })
+    let mut document = Document::from(buffer.into_vec());
+    document.propagate_expand();
+
+    Ok(Formatted::new(document, state.into_context()))
+}
+
+/// Entry point for formatting a [SyntaxNode] for a specific language.
+pub trait FormatLanguage {
+    type SyntaxLanguage: Language;
+
+    /// The type of the formatting context
+    type Context: CstFormatContext<Language = Self::SyntaxLanguage>;
+
+    /// The type specifying how to format comments.
+    type CommentStyle: CommentStyle<Language = Self::SyntaxLanguage>;
+
+    /// The rule type that can format a [SyntaxNode] of this language
+    type FormatRule: FormatRule<SyntaxNode<Self::SyntaxLanguage>, Context = Self::Context> + Default;
+
+    /// Performs an optional pre-processing of the tree. This can be useful to remove nodes
+    /// that otherwise complicate formatting.
+    ///
+    /// Return [None] if the tree shouldn't be processed. Return [Some] with the transformed
+    /// tree and the source map otherwise.
+    fn transform(
+        &self,
+        _root: &SyntaxNode<Self::SyntaxLanguage>,
+    ) -> Option<(SyntaxNode<Self::SyntaxLanguage>, TransformSourceMap)> {
+        None
+    }
+
+    /// This is used to select appropriate "root nodes" for the
+    /// range formatting process: for instance in JavaScript the function returns
+    /// true for statement and declaration nodes, to ensure the entire statement
+    /// gets formatted instead of the smallest sub-expression that fits the range
+    fn is_range_formatting_node(&self, _node: &SyntaxNode<Self::SyntaxLanguage>) -> bool {
+        true
+    }
+
+    /// Returns the formatting options
+    fn options(&self) -> &<Self::Context as FormatContext>::Options;
+
+    /// Creates the [FormatContext] with the given `source map` and `comments`
+    fn create_context(
+        self,
+        comments: Comments<Self::SyntaxLanguage>,
+        source_map: Option<TransformSourceMap>,
+    ) -> Self::Context;
 }
 
 /// Formats a syntax node file based on its features.
 ///
 /// It returns a [Formatted] result, which the user can use to override a file.
-pub fn format_node<
-    Context: CstFormatContext,
-    N: FormatWithRule<Context, Item = SyntaxNode<Context::Language>>,
->(
-    context: Context,
-    root: &N,
-) -> FormatResult<Formatted<Context>> {
+pub fn format_node<L: FormatLanguage>(
+    root: &SyntaxNode<L::SyntaxLanguage>,
+    language: L,
+) -> FormatResult<Formatted<L::Context>> {
     tracing::trace_span!("format_node").in_scope(move || {
-        let suppressions = Comments::from_node(root.item(), &context);
-        let context = context.with_comments(Rc::new(suppressions));
+        let (root, source_map) = match language.transform(root) {
+            Some((root, source_map)) => (root, Some(source_map)),
+            None => (root.clone(), None),
+        };
 
+        let comments = Comments::from_node(&root, &L::CommentStyle::default(), source_map.as_ref());
+        let format_node = FormatRefWithRule::new(&root, L::FormatRule::default());
+
+        let context = language.create_context(comments, source_map);
         let mut state = FormatState::new(context);
         let mut buffer = VecBuffer::new(&mut state);
 
-        write!(&mut buffer, [root])?;
+        write!(buffer, [format_node])?;
 
-        let document = buffer.into_element();
+        let mut document = Document::from(buffer.into_vec());
+        document.propagate_expand();
 
-        state.assert_formatted_all_tokens(root.item());
-        state
-            .context()
-            .comments()
-            .assert_checked_all_suppressions(root.item());
+        state.assert_formatted_all_tokens(&root);
 
-        Ok(Formatted::new(document, state.into_context()))
+        let context = state.into_context();
+        let comments = context.comments();
+
+        comments.assert_checked_all_suppressions(&root);
+        comments.assert_formatted_all_comments();
+
+        Ok(Formatted::new(document, context))
     })
 }
 
@@ -824,12 +1098,6 @@ where
 
 /// Formats a range within a file, supported by Rome
 ///
-/// Because this function is language-agnostic, it must be provided with a
-/// `predicate` function that's used to select appropriate "root nodes" for the
-/// range formatting process: for instance in JavaScript the predicate returns
-/// true for statement and declaration nodes, to ensure the entire statement
-/// gets formatted instead of the smallest sub-expression that fits the range
-///
 /// This runs a simple heuristic to determine the initial indentation
 /// level of the node based on the provided [FormatContext], which
 /// must match currently the current initial of the file. Additionally,
@@ -839,17 +1107,11 @@ where
 ///
 /// It returns a [Formatted] result with a range corresponding to the
 /// range of the input that was effectively overwritten by the formatter
-pub fn format_range<Context, R, P>(
-    context: Context,
-    root: &SyntaxNode<Context::Language>,
+pub fn format_range<Language: FormatLanguage>(
+    root: &SyntaxNode<Language::SyntaxLanguage>,
     mut range: TextRange,
-    mut predicate: P,
-) -> FormatResult<Printed>
-where
-    Context: CstFormatContext,
-    R: FormatRule<SyntaxNode<Context::Language>, Context = Context> + Default,
-    P: FnMut(&SyntaxNode<Context::Language>) -> bool,
-{
+    language: Language,
+) -> FormatResult<Printed> {
     if range.is_empty() {
         return Ok(Printed::new(
             String::new(),
@@ -940,11 +1202,11 @@ where
     // the language implementation) in the ancestors of the start and end tokens
     let start_node = start_token
         .ancestors()
-        .find(&mut predicate)
+        .find(|node| language.is_range_formatting_node(node))
         .unwrap_or_else(|| root.clone());
     let end_node = end_token
         .ancestors()
-        .find(predicate)
+        .find(|node| language.is_range_formatting_node(node))
         .unwrap_or_else(|| root.clone());
 
     let common_root = if start_node == end_node {
@@ -997,10 +1259,7 @@ where
 
     // Perform the actual formatting of the root node with
     // an appropriate indentation level
-    let formatted = format_sub_tree(
-        context,
-        &FormatRefWithRule::<_, R>::new(common_root, R::default()),
-    )?;
+    let mut printed = format_sub_tree(common_root, language)?;
 
     // This finds the closest marker to the beginning of the source
     // starting before or at said starting point, and the closest
@@ -1009,8 +1268,8 @@ where
     let mut range_start = None;
     let mut range_end = None;
 
-    let sourcemap = Vec::from(formatted.sourcemap());
-    for marker in &sourcemap {
+    let sourcemap = printed.sourcemap();
+    for marker in sourcemap {
         // marker.source <= range.start()
         if let Some(start_dist) = range.start().checked_sub(marker.source) {
             range_start = match range_start {
@@ -1052,15 +1311,15 @@ where
         Some((end_marker, _)) => (end_marker.source, end_marker.dest),
         None => (
             common_root.text_range().end(),
-            TextSize::try_from(formatted.as_code().len()).expect("code length out of bounds"),
+            TextSize::try_from(printed.as_code().len()).expect("code length out of bounds"),
         ),
     };
 
     let input_range = TextRange::new(start_source, end_source);
     let output_range = TextRange::new(start_dest, end_dest);
-    let sourcemap = Vec::from(formatted.sourcemap());
-    let verbatim_ranges = Vec::from(formatted.verbatim_ranges());
-    let code = &formatted.into_code()[output_range];
+    let sourcemap = printed.take_sourcemap();
+    let verbatim_ranges = printed.take_verbatim_ranges();
+    let code = &printed.into_code()[output_range];
     Ok(Printed::new(
         code.into(),
         Some(input_range),
@@ -1079,17 +1338,13 @@ where
 /// even if it's a mismatch from the rest of the block the selection is in
 ///
 /// It returns a [Formatted] result
-pub fn format_sub_tree<
-    C: CstFormatContext,
-    N: FormatWithRule<C, Item = SyntaxNode<C::Language>>,
->(
-    context: C,
-    root: &N,
+pub fn format_sub_tree<L: FormatLanguage>(
+    root: &SyntaxNode<L::SyntaxLanguage>,
+    language: L,
 ) -> FormatResult<Printed> {
-    let syntax = root.item();
     // Determine the initial indentation level for the printer by inspecting the trivia pieces
     // of each token from the first token of the common root towards the start of the file
-    let mut tokens = std::iter::successors(syntax.first_token(), |token| token.prev_token());
+    let mut tokens = std::iter::successors(root.first_token(), |token| token.prev_token());
 
     // From the iterator of tokens, build an iterator of trivia pieces (once again the iterator is
     // reversed, starting from the last trailing trivia towards the first leading trivia).
@@ -1125,7 +1380,7 @@ pub fn format_sub_tree<
             // of indentation type detection yet. Unfortunately this
             // may not actually match the current content of the file
             let length = trivia.text().len() as u16;
-            match context.indent_style() {
+            match language.options().indent_style() {
                 IndentStyle::Tab => length,
                 IndentStyle::Space(width) => length / u16::from(width),
             }
@@ -1135,28 +1390,34 @@ pub fn format_sub_tree<
         None => 0,
     };
 
-    let formatted = format_node(context, root)?;
-    let printed = formatted.print_with_indent(initial_indent);
-    let sourcemap = Vec::from(printed.sourcemap());
-    let verbatim_ranges = Vec::from(printed.verbatim_ranges());
+    let formatted = format_node(root, language)?;
+    let mut printed = formatted.print_with_indent(initial_indent)?;
+    let sourcemap = printed.take_sourcemap();
+    let verbatim_ranges = printed.take_verbatim_ranges();
+
     Ok(Printed::new(
         printed.into_code(),
-        Some(syntax.text_range()),
+        Some(root.text_range()),
         sourcemap,
         verbatim_ranges,
     ))
 }
 
-impl<L: Language, Context> Format<Context> for SyntaxTriviaPieceComments<L> {
+impl<L: Language, Context> Format<Context> for SyntaxTriviaPiece<L> {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
         let range = self.text_range();
+
+        // Trim start/end and update the range
+        let trimmed = self.text().trim_start();
+        let trimmed_start = range.start() + (range.len() - trimmed.text_len());
+        let trimmed = trimmed.trim_end();
 
         write!(
             f,
             [syntax_token_cow_slice(
-                normalize_newlines(self.text().trim(), LINE_TERMINATORS),
-                &self.as_piece().token(),
-                range.start()
+                normalize_newlines(trimmed, LINE_TERMINATORS),
+                &self.token(),
+                trimmed_start
             )]
         )
     }
@@ -1167,25 +1428,10 @@ impl<L: Language, Context> Format<Context> for SyntaxTriviaPieceComments<L> {
 /// This structure is different from [crate::Formatter] in that the formatting infrastructure
 /// creates a new [crate::Formatter] for every [crate::write!] call, whereas this structure stays alive
 /// for the whole process of formatting a root with [crate::format!].
-#[derive(Default)]
 pub struct FormatState<Context> {
     context: Context,
+
     group_id_builder: UniqueGroupIdBuilder,
-
-    /// `true` if the last formatted output is an inline comment that may need a space between the next token or comment.
-    last_content_inline_comment: bool,
-
-    /// The kind of the last formatted token
-    last_token_kind: Option<LastTokenKind>,
-
-    /// Tracks comments that have been formatted manually and shouldn't be emitted again
-    /// when formatting the token the comments belong to.
-    ///
-    /// The map stores the absolute position of the manually formatted comments.
-    /// Storing the position is sufficient because comments are guaranteed to not be empty
-    /// (all start with a specific comment sequence) and thus, no two comments can have the same
-    /// absolute position.
-    manually_formatted_comments: IndexSet<TextSize>,
 
     // This is using a RefCell as it only exists in debug mode,
     // the Formatter is still completely immutable in release builds
@@ -1200,11 +1446,6 @@ where
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         f.debug_struct("FormatState")
             .field("context", &self.context)
-            .field(
-                "has_trailing_inline_comment",
-                &self.last_content_inline_comment,
-            )
-            .field("last_token_kind", &self.last_token_kind)
             .finish()
     }
 }
@@ -1215,9 +1456,7 @@ impl<Context> FormatState<Context> {
         Self {
             context,
             group_id_builder: Default::default(),
-            last_content_inline_comment: false,
-            last_token_kind: None,
-            manually_formatted_comments: IndexSet::default(),
+
             #[cfg(debug_assertions)]
             printed_tokens: Default::default(),
         }
@@ -1225,74 +1464,6 @@ impl<Context> FormatState<Context> {
 
     pub fn into_context(self) -> Context {
         self.context
-    }
-
-    /// Returns `true` if the last written content is an inline comment with no trailing whitespace.
-    ///
-    /// The formatting of the next content may need to insert a whitespace to separate the
-    /// inline comment from the next content.
-    pub fn is_last_content_inline_comment(&self) -> bool {
-        self.last_content_inline_comment
-    }
-
-    /// Sets whether the last written content is an inline comment that has no trailing whitespace.
-    pub fn set_last_content_inline_comment(&mut self, has_comment: bool) {
-        self.last_content_inline_comment = has_comment;
-    }
-
-    /// Returns the kind of the last formatted token.
-    pub fn last_token_kind(&self) -> Option<LastTokenKind> {
-        self.last_token_kind
-    }
-
-    /// Sets the kind of the last formatted token and sets `last_content_inline_comment` to `false`.
-    pub fn set_last_token_kind<Kind: SyntaxKind + 'static>(&mut self, kind: Kind) {
-        self.set_last_token_kind_raw(Some(LastTokenKind {
-            kind_type: TypeId::of::<Kind>(),
-            kind: kind.to_raw(),
-        }));
-    }
-
-    pub fn set_last_token_kind_raw(&mut self, kind: Option<LastTokenKind>) {
-        self.last_token_kind = kind;
-    }
-
-    /// Mark the passed comment as formatted. This is necessary if a comment from a token is formatted
-    /// to avoid that the comment gets emitted again when formatting that token.
-    ///
-    /// # Examples
-    /// This can be useful when you want to move comments from one token to another.
-    /// For example, when parenthesising an expression:
-    ///
-    /// ```javascript
-    /// console.log("test");
-    /// /* leading */ "string" /* trailing */;
-    /// ```
-    ///
-    /// It is then desired that the leading and trailing comments are outside of the parentheses.
-    ///
-    /// ```javascript
-    /// /* leading */ ("string") /* trailing */;
-    /// ```
-    ///
-    /// This can be accomplished by manually formatting the leading/trailing trivia of the string literal expression
-    /// before/after the close parentheses and then mark the comments as handled.
-    pub fn mark_comment_as_formatted<L: Language>(
-        &mut self,
-        comment: &SyntaxTriviaPieceComments<L>,
-    ) {
-        self.manually_formatted_comments
-            .insert(comment.text_range().start());
-    }
-
-    /// Returns `true` if this comment has already been formatted manually
-    /// and shouldn't be formatted again when formatting the token to which the comment belongs.
-    pub fn is_comment_formatted<L: Language>(
-        &self,
-        comment: &SyntaxTriviaPieceComments<L>,
-    ) -> bool {
-        self.manually_formatted_comments
-            .contains(&comment.text_range().start())
     }
 
     /// Returns the context specifying how to format the current CST
@@ -1322,6 +1493,30 @@ impl<Context> FormatState<Context> {
         }
     }
 
+    #[cfg(not(debug_assertions))]
+    #[inline]
+    pub fn set_token_tracking_disabled(&mut self, _: bool) {}
+
+    /// Disables or enables token tracking for a portion of the code.
+    ///
+    /// It can be useful to disable the token tracking when it is necessary to re-format a node with different parameters.
+    #[cfg(debug_assertions)]
+    pub fn set_token_tracking_disabled(&mut self, enabled: bool) {
+        self.printed_tokens.set_disabled(enabled)
+    }
+
+    #[cfg(not(debug_assertions))]
+    #[inline]
+    pub fn is_token_tracking_disabled(&self) -> bool {
+        false
+    }
+
+    /// Returns `true` if token tracking is currently disabled.
+    #[cfg(debug_assertions)]
+    pub fn is_token_tracking_disabled(&self) -> bool {
+        self.printed_tokens.is_disabled()
+    }
+
     /// Asserts in debug builds that all tokens have been printed.
     #[inline]
     pub fn assert_formatted_all_tokens<L: Language>(
@@ -1342,55 +1537,26 @@ where
 {
     pub fn snapshot(&self) -> FormatStateSnapshot {
         FormatStateSnapshot {
-            last_content_inline_comment: self.last_content_inline_comment,
-            last_token_kind: self.last_token_kind,
-            manual_handled_comments_len: self.manually_formatted_comments.len(),
             #[cfg(debug_assertions)]
-            printed_tokens: self.printed_tokens.clone(),
+            printed_tokens: self.printed_tokens.snapshot(),
         }
     }
 
     pub fn restore_snapshot(&mut self, snapshot: FormatStateSnapshot) {
         let FormatStateSnapshot {
-            last_content_inline_comment,
-            last_token_kind,
-            manual_handled_comments_len,
             #[cfg(debug_assertions)]
             printed_tokens,
         } = snapshot;
 
-        self.last_content_inline_comment = last_content_inline_comment;
-        self.last_token_kind = last_token_kind;
-        self.manually_formatted_comments
-            .truncate(manual_handled_comments_len);
         cfg_if::cfg_if! {
             if #[cfg(debug_assertions)] {
-                self.printed_tokens = printed_tokens;
+                self.printed_tokens.restore(printed_tokens);
             }
         }
     }
 }
 
-#[derive(Eq, PartialEq, Debug, Copy, Clone)]
-pub struct LastTokenKind {
-    kind_type: TypeId,
-    kind: RawSyntaxKind,
-}
-
-impl LastTokenKind {
-    pub fn as_language<L: Language + 'static>(&self) -> Option<L::Kind> {
-        if self.kind_type == TypeId::of::<L::Kind>() {
-            Some(L::Kind::from_raw(self.kind))
-        } else {
-            None
-        }
-    }
-}
-
 pub struct FormatStateSnapshot {
-    last_content_inline_comment: bool,
-    last_token_kind: Option<LastTokenKind>,
-    manual_handled_comments_len: usize,
     #[cfg(debug_assertions)]
-    printed_tokens: PrintedTokens,
+    printed_tokens: printed_tokens::PrintedTokensSnapshot,
 }

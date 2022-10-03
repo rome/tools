@@ -156,18 +156,22 @@ JsModule {
       8: R_CURLY@61..62 "}" [] []
   3: EOF@62..63 "" [Newline("\n")] []
 --
-error[SyntaxError]: A parameter property may not be declared using a binding pattern.
-  ┌─ ts_property_parameter_pattern.ts:1:31
-  │
-1 │ class A { constructor(private { x, y }, protected [a, b]) {} }
-  │                               ^^^^^^^^
+ts_property_parameter_pattern.ts:1:31 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × A parameter property may not be declared using a binding pattern.
+  
+  > 1 │ class A { constructor(private { x, y }, protected [a, b]) {} }
+      │                               ^^^^^^^^
+    2 │ 
+  
 --
-error[SyntaxError]: A parameter property may not be declared using a binding pattern.
-  ┌─ ts_property_parameter_pattern.ts:1:51
-  │
-1 │ class A { constructor(private { x, y }, protected [a, b]) {} }
-  │                                                   ^^^^^^
+ts_property_parameter_pattern.ts:1:51 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × A parameter property may not be declared using a binding pattern.
+  
+  > 1 │ class A { constructor(private { x, y }, protected [a, b]) {} }
+      │                                                   ^^^^^^
+    2 │ 
+  
 --
 class A { constructor(private { x, y }, protected [a, b]) {} }

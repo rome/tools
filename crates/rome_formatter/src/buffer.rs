@@ -1,6 +1,8 @@
 use super::{write, Arguments, FormatElement};
-use crate::format_element::{LabelId, List};
+use crate::format_element::Interned;
+use crate::prelude::LineMode;
 use crate::{Format, FormatResult, FormatState};
+use rustc_hash::FxHashMap;
 use std::any::{Any, TypeId};
 use std::fmt::Debug;
 use std::ops::{Deref, DerefMut};
@@ -23,12 +25,18 @@ pub trait Buffer {
     /// let mut state = FormatState::new(SimpleFormatContext::default());
     /// let mut buffer = VecBuffer::new(&mut state);
     ///
-    /// buffer.write_element(FormatElement::Text( Text::Static { text: "test"})).unwrap();
+    /// buffer.write_element(FormatElement::Text(Text::Static { text: "test"})).unwrap();
     ///
-    /// assert_eq!(buffer.into_element(), FormatElement::Text( Text::Static { text: "test"}));
+    /// assert_eq!(buffer.into_vec(), vec![FormatElement::Text(Text::Static { text: "test" })]);
     /// ```
     ///
     fn write_element(&mut self, element: FormatElement) -> FormatResult<()>;
+
+    /// Returns a slice containing all elements written into this buffer.
+    ///
+    /// Prefer using [BufferExtensions::start_recording] over accessing [Buffer::elements] directly.
+    #[doc(hidden)]
+    fn elements(&self) -> &[FormatElement];
 
     /// Glue for usage of the [`write!`] macro with implementors of this trait.
     ///
@@ -45,7 +53,7 @@ pub trait Buffer {
     ///
     /// buffer.write_fmt(format_args!(text("Hello World"))).unwrap();
     ///
-    /// assert_eq!(buffer.into_element(), FormatElement::Text( Text::Static { text: "Hello World"}));
+    /// assert_eq!(buffer.into_vec(), vec![FormatElement::Text(Text::Static { text: "Hello World" })]);
     /// ```
     fn write_fmt(mut self: &mut Self, arguments: Arguments<Self::Context>) -> FormatResult<()> {
         write(&mut self, arguments)
@@ -132,6 +140,10 @@ impl<W: Buffer<Context = Context> + ?Sized, Context> Buffer for &mut W {
         (**self).write_element(element)
     }
 
+    fn elements(&self) -> &[FormatElement] {
+        (**self).elements()
+    }
+
     fn write_fmt(&mut self, args: Arguments<Context>) -> FormatResult<()> {
         (**self).write_fmt(args)
     }
@@ -164,23 +176,19 @@ pub struct VecBuffer<'a, Context> {
 
 impl<'a, Context> VecBuffer<'a, Context> {
     pub fn new(state: &'a mut FormatState<Context>) -> Self {
-        Self {
-            state,
-            elements: vec![],
-        }
+        Self::new_with_vec(state, Vec::new())
+    }
+
+    pub fn new_with_vec(state: &'a mut FormatState<Context>, elements: Vec<FormatElement>) -> Self {
+        Self { state, elements }
     }
 
     /// Creates a buffer with the specified capacity
-    pub fn with_capacity(capacity: usize, context: &'a mut FormatState<Context>) -> Self {
+    pub fn with_capacity(capacity: usize, state: &'a mut FormatState<Context>) -> Self {
         Self {
-            state: context,
+            state,
             elements: Vec::with_capacity(capacity),
         }
-    }
-
-    /// Consumes the buffer and returns its content as a [`FormatElement`]
-    pub fn into_element(mut self) -> FormatElement {
-        self.take_element()
     }
 
     /// Consumes the buffer and returns the written [`FormatElement]`s as a vector.
@@ -189,13 +197,8 @@ impl<'a, Context> VecBuffer<'a, Context> {
     }
 
     /// Takes the elements without consuming self
-    pub fn take_element(&mut self) -> FormatElement {
-        if self.len() == 1 {
-            // Safety: Guaranteed by len check above
-            self.elements.pop().unwrap()
-        } else {
-            FormatElement::List(List::new(std::mem::take(&mut self.elements)))
-        }
+    pub fn take_vec(&mut self) -> Vec<FormatElement> {
+        std::mem::take(&mut self.elements)
     }
 }
 
@@ -217,12 +220,13 @@ impl<Context> Buffer for VecBuffer<'_, Context> {
     type Context = Context;
 
     fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
-        match element {
-            FormatElement::List(list) => self.elements.extend(list.into_vec()),
-            element => self.elements.push(element),
-        }
+        self.elements.push(element);
 
         Ok(())
+    }
+
+    fn elements(&self) -> &[FormatElement] {
+        self
     }
 
     fn state(&self) -> &FormatState<Self::Context> {
@@ -230,7 +234,7 @@ impl<Context> Buffer for VecBuffer<'_, Context> {
     }
 
     fn state_mut(&mut self) -> &mut FormatState<Self::Context> {
-        &mut self.state
+        self.state
     }
 
     fn snapshot(&self) -> BufferSnapshot {
@@ -259,9 +263,6 @@ Make sure that you take and restore the snapshot in order and that this snapshot
 /// use rome_formatter::{FormatState, Formatted, PreambleBuffer, SimpleFormatContext, VecBuffer, write};
 /// use rome_formatter::prelude::*;
 ///
-/// let mut state = FormatState::new(SimpleFormatContext::default());
-/// let mut buffer = VecBuffer::new(&mut state);
-///
 /// struct Preamble;
 ///
 /// impl Format<SimpleFormatContext> for Preamble {
@@ -270,14 +271,21 @@ Make sure that you take and restore the snapshot in order and that this snapshot
 ///     }
 /// }
 ///
-/// let mut with_preamble = PreambleBuffer::new(&mut buffer, Preamble);
+/// # fn main() -> FormatResult<()> {
+/// let mut state = FormatState::new(SimpleFormatContext::default());
+/// let mut buffer = VecBuffer::new(&mut state);
 ///
-/// write!(&mut with_preamble, [text("this text will be on a new line")]).unwrap();
+/// {
+///     let mut with_preamble = PreambleBuffer::new(&mut buffer, Preamble);
 ///
-/// drop(with_preamble);
+///     write!(&mut with_preamble, [text("this text will be on a new line")])?;
+/// }
 ///
-/// let formatted = Formatted::new(buffer.into_element(), SimpleFormatContext::default());
-/// assert_eq!("# heading\nthis text will be on a new line", formatted.print().as_code());
+/// let formatted = Formatted::new(Document::from(buffer.into_vec()), SimpleFormatContext::default());
+/// assert_eq!("# heading\nthis text will be on a new line", formatted.print()?.as_code());
+///
+/// # Ok(())
+/// # }
 /// ```
 ///
 /// The pre-amble does not get written if no content is written to the buffer.
@@ -286,9 +294,6 @@ Make sure that you take and restore the snapshot in order and that this snapshot
 /// use rome_formatter::{FormatState, Formatted, PreambleBuffer, SimpleFormatContext, VecBuffer, write};
 /// use rome_formatter::prelude::*;
 ///
-/// let mut state = FormatState::new(SimpleFormatContext::default());
-/// let mut buffer = VecBuffer::new(&mut state);
-///
 /// struct Preamble;
 ///
 /// impl Format<SimpleFormatContext> for Preamble {
@@ -297,11 +302,17 @@ Make sure that you take and restore the snapshot in order and that this snapshot
 ///     }
 /// }
 ///
-/// let mut with_preamble = PreambleBuffer::new(&mut buffer, Preamble);
-/// drop(with_preamble);
+/// # fn main() -> FormatResult<()> {
+/// let mut state = FormatState::new(SimpleFormatContext::default());
+/// let mut buffer = VecBuffer::new(&mut state);
+/// {
+///     let mut with_preamble = PreambleBuffer::new(&mut buffer, Preamble);
+/// }
 ///
-/// let formatted = Formatted::new(buffer.into_element(), SimpleFormatContext::default());
-/// assert_eq!("", formatted.print().as_code());
+/// let formatted = Formatted::new(Document::from(buffer.into_vec()), SimpleFormatContext::default());
+/// assert_eq!("", formatted.print()?.as_code());
+/// # Ok(())
+/// # }
 /// ```
 pub struct PreambleBuffer<'buf, Preamble, Context> {
     /// The wrapped buffer
@@ -336,16 +347,16 @@ where
     type Context = Context;
 
     fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
-        if element.is_empty() {
-            Ok(())
-        } else {
-            if self.empty {
-                write!(self.inner, [&self.preamble])?;
-                self.empty = false;
-            }
-
-            self.inner.write_element(element)
+        if self.empty {
+            write!(self.inner, [&self.preamble])?;
+            self.empty = false;
         }
+
+        self.inner.write_element(element)
+    }
+
+    fn elements(&self) -> &[FormatElement] {
+        self.inner.elements()
     }
 
     fn state(&self) -> &FormatState<Self::Context> {
@@ -399,6 +410,181 @@ where
         self.inner.write_element(element)
     }
 
+    fn elements(&self) -> &[FormatElement] {
+        self.inner.elements()
+    }
+
+    fn state(&self) -> &FormatState<Self::Context> {
+        self.inner.state()
+    }
+
+    fn state_mut(&mut self) -> &mut FormatState<Self::Context> {
+        self.inner.state_mut()
+    }
+
+    fn snapshot(&self) -> BufferSnapshot {
+        self.inner.snapshot()
+    }
+
+    fn restore_snapshot(&mut self, snapshot: BufferSnapshot) {
+        self.inner.restore_snapshot(snapshot)
+    }
+}
+
+/// A Buffer that removes any soft line breaks.
+///
+/// * Removes [`lines`](FormatElement::Line) with the mode [`Soft`](LineMode::Soft).
+/// * Replaces [`lines`](FormatElement::Line) with the mode [`Soft`](LineMode::SoftOrSpace) with a [`Space`](FormatElement::Space)
+///
+/// # Examples
+///
+/// ```
+/// use rome_formatter::prelude::*;
+/// use rome_formatter::{format, write};
+///
+/// # fn main() -> FormatResult<()> {
+/// use rome_formatter::{RemoveSoftLinesBuffer, SimpleFormatContext, VecBuffer};
+/// use rome_formatter::prelude::format_with;
+/// let formatted = format!(
+///     SimpleFormatContext::default(),
+///     [format_with(|f| {
+///         let mut buffer = RemoveSoftLinesBuffer::new(f);
+///
+///         write!(
+///             buffer,
+///             [
+///                 text("The next soft line or space gets replaced by a space"),
+///                 soft_line_break_or_space(),
+///                 text("and the line here"),
+///                 soft_line_break(),
+///                 text("is removed entirely.")
+///             ]
+///         )
+///     })]
+/// )?;
+///
+/// assert_eq!(
+///     formatted.document().as_ref(),
+///     &[
+///         FormatElement::Text(Text::Static { text: "The next soft line or space gets replaced by a space" }),
+///         FormatElement::Space,
+///         FormatElement::Text(Text::Static { text: "and the line here" }),
+///         FormatElement::Text(Text::Static { text: "is removed entirely." })
+///     ]
+/// );
+///
+/// # Ok(())
+/// # }
+/// ```
+pub struct RemoveSoftLinesBuffer<'a, Context> {
+    inner: &'a mut dyn Buffer<Context = Context>,
+
+    /// Caches the interned elements after the soft line breaks have been removed.
+    ///
+    /// The `key` is the [Interned] element as it has been passed to [Self::write_element] or the child of another
+    /// [Interned] element. The `value` is the matching document of the key where all soft line breaks have been removed.
+    ///
+    /// It's fine to not snapshot the cache. The worst that can happen is that it holds on interned elements
+    /// that are now unused. But there's little harm in that and the cache is cleaned when dropping the buffer.
+    interned_cache: FxHashMap<Interned, Interned>,
+}
+
+impl<'a, Context> RemoveSoftLinesBuffer<'a, Context> {
+    /// Creates a new buffer that removes the soft line breaks before writing them into `buffer`.
+    pub fn new(inner: &'a mut dyn Buffer<Context = Context>) -> Self {
+        Self {
+            inner,
+            interned_cache: FxHashMap::default(),
+        }
+    }
+
+    /// Removes the soft line breaks from an interned element.
+    fn clean_interned(&mut self, interned: &Interned) -> Interned {
+        clean_interned(interned, &mut self.interned_cache)
+    }
+}
+
+// Extracted to function to avoid monomorphization
+fn clean_interned(
+    interned: &Interned,
+    interned_cache: &mut FxHashMap<Interned, Interned>,
+) -> Interned {
+    match interned_cache.get(interned) {
+        Some(cleaned) => cleaned.clone(),
+        None => {
+            // Find the first soft line break element or interned element that must be changed
+            let result = interned
+                .iter()
+                .enumerate()
+                .find_map(|(index, element)| match element {
+                    FormatElement::Line(LineMode::Soft | LineMode::SoftOrSpace) => {
+                        let mut cleaned = Vec::new();
+                        cleaned.extend_from_slice(&interned[..index]);
+                        Some((cleaned, &interned[index..]))
+                    }
+                    FormatElement::Interned(inner) => {
+                        let cleaned_inner = clean_interned(inner, interned_cache);
+
+                        if &cleaned_inner != inner {
+                            let mut cleaned = Vec::with_capacity(interned.len());
+                            cleaned.extend_from_slice(&interned[..index]);
+                            cleaned.push(FormatElement::Interned(cleaned_inner));
+                            Some((cleaned, &interned[index + 1..]))
+                        } else {
+                            None
+                        }
+                    }
+
+                    _ => None,
+                });
+
+            let result = match result {
+                // Copy the whole interned buffer so that becomes possible to change the necessary elements.
+                Some((mut cleaned, rest)) => {
+                    for element in rest {
+                        let element = match element {
+                            FormatElement::Line(LineMode::Soft) => continue,
+                            FormatElement::Line(LineMode::SoftOrSpace) => FormatElement::Space,
+                            FormatElement::Interned(interned) => {
+                                FormatElement::Interned(clean_interned(interned, interned_cache))
+                            }
+                            element => element.clone(),
+                        };
+                        cleaned.push(element)
+                    }
+
+                    Interned::new(cleaned)
+                }
+                // No change necessary, return existing interned element
+                None => interned.clone(),
+            };
+
+            interned_cache.insert(interned.clone(), result.clone());
+            result
+        }
+    }
+}
+
+impl<Context> Buffer for RemoveSoftLinesBuffer<'_, Context> {
+    type Context = Context;
+
+    fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
+        let element = match element {
+            FormatElement::Line(LineMode::Soft) => return Ok(()),
+            FormatElement::Line(LineMode::SoftOrSpace) => FormatElement::Space,
+            FormatElement::Interned(interned) => {
+                FormatElement::Interned(self.clean_interned(&interned))
+            }
+            element => element,
+        };
+
+        self.inner.write_element(element)
+    }
+
+    fn elements(&self) -> &[FormatElement] {
+        self.inner.elements()
+    }
+
     fn state(&self) -> &FormatState<Self::Context> {
         self.inner.state()
     }
@@ -426,238 +612,112 @@ pub trait BufferExtensions: Buffer + Sized {
         Inspect::new(self, inspector)
     }
 
+    /// Starts a recording that gives you access to all elements that have been written between the start
+    /// and end of the recording
+    ///
+    /// #Examples
+    ///
+    /// ```
+    /// use std::ops::Deref;
+    /// use rome_formatter::prelude::*;
+    /// use rome_formatter::{write, format, SimpleFormatContext};
+    ///
+    /// # fn main() -> FormatResult<()> {
+    /// let formatted = format!(SimpleFormatContext::default(), [format_with(|f| {
+    ///     let mut recording = f.start_recording();
+    ///
+    ///     write!(recording, [text("A")])?;
+    ///     write!(recording, [text("B")])?;
+    ///
+    ///     write!(recording, [format_with(|f| write!(f, [text("C"), text("D")]))])?;
+    ///
+    ///     let recorded = recording.stop();
+    ///     assert_eq!(
+    ///         recorded.deref(),
+    ///         &[
+    ///             FormatElement::Text(Text::Static{ text: "A" }),
+    ///             FormatElement::Text(Text::Static{ text: "B" }),
+    ///             FormatElement::Text(Text::Static{ text: "C" }),
+    ///             FormatElement::Text(Text::Static{ text: "D" })
+    ///         ]
+    ///     );
+    ///
+    ///     Ok(())
+    /// })])?;
+    ///
+    /// assert_eq!(formatted.print()?.as_code(), "ABCD");
+    /// # Ok(())
+    /// # }
+    /// ```
+    #[must_use]
+    fn start_recording(&mut self) -> Recording<Self> {
+        Recording::new(self)
+    }
+
     /// Writes a sequence of elements into this buffer.
     fn write_elements<I>(&mut self, elements: I) -> FormatResult<()>
     where
         I: IntoIterator<Item = FormatElement>,
     {
-        for element in elements {
+        for element in elements.into_iter() {
             self.write_element(element)?;
         }
 
         Ok(())
     }
-
-    /// It emits a custom buffer called [WillBreakBuffer], which tracks
-    /// it he last element written in the main buffer breaks, it does so by
-    /// checking if their IR emits an [element](FormatElement) that breaks.
-    ///
-    /// This functionality can be used only one element and only after the element
-    /// is written in the buffer.
-    ///
-    /// ## Examples
-    ///
-    /// ```
-    /// use rome_formatter::{format, format_args, write, LineWidth};
-    /// use rome_formatter::prelude::*;
-    ///
-    /// let context = SimpleFormatContext {
-    ///     line_width: LineWidth::try_from(20).unwrap(),
-    ///     ..SimpleFormatContext::default()
-    /// };
-    ///
-    ///
-    /// let formatted = format!(context, [format_with(|f| {
-    ///
-    ///     let element = format_with(|f| {
-    ///         write!(f, [
-    ///             text("hello"),
-    ///             hard_line_break(),
-    ///             text("world!")
-    ///         ])
-    ///     });
-    ///     let mut buffer = f.inspect_will_break();
-    ///     write!(buffer, [element])?;
-    ///     let does_element_break = buffer.will_break();
-    ///
-    ///     if does_element_break {
-    ///         write!(f, [hard_line_break(), text("break")])
-    ///     } else {
-    ///         write!(f, [text("did not break")])
-    ///     }
-    ///
-    /// })]).unwrap();
-    ///
-    /// assert_eq!(
-    ///     "hello\nworld!\nbreak",
-    ///     formatted.print().as_code()
-    /// );
-    /// ```
-    ///
-    /// ## Alternatives
-    ///
-    /// Use `Memoized.inspect(f)?.will_break()` if you need to know if some content breaks that should
-    /// only be written later.
-    fn inspect_will_break(&mut self) -> WillBreakBuffer<Self::Context> {
-        WillBreakBuffer::new(self)
-    }
-
-    /// Wraps the current buffer in a [HasLabelBuffer], which tracks
-    /// labelled elements written in the main buffer, it does so by
-    /// checking if [element](FormatElement) is a [label](FormatElement::Label)
-    /// with the expected [label_id](LabelId).
-    ///
-    /// This functionality can be used only on one element and only after the element
-    /// is written in the buffer.
-    ///
-    /// ## Examples
-    ///
-    /// ```rust
-    /// use rome_formatter::prelude::*;
-    /// use rome_formatter::{format, write, LineWidth};
-    ///
-    /// enum SomeLabelId {}
-    ///
-    /// let context = SimpleFormatContext {
-    ///     line_width: LineWidth::try_from(20).unwrap(),
-    ///     ..SimpleFormatContext::default()
-    /// };
-    ///
-    /// let formatted = format!(
-    ///     context,
-    ///     [format_with(|f| {
-    ///         let mut buffer = f.inspect_is_labelled::<SomeLabelId>();
-    ///
-    ///         write!(buffer, [
-    ///             labelled(
-    ///                 LabelId::of::<SomeLabelId>(),
-    ///                 &text("'I have a label'")
-    ///             )
-    ///         ])?;
-    ///
-    ///         let is_labelled = buffer.has_label();
-    ///
-    ///         if is_labelled {
-    ///             write!(f, [text(" has label SomeLabelId")])
-    ///         } else {
-    ///             write!(f, [text(" doesn't have label SomeLabelId")])
-    ///         }
-    ///     })]
-    /// )
-    /// .unwrap();
-    ///
-    /// assert_eq!("'I have a label' has label SomeLabelId", formatted.print().as_code());
-    /// ```
-    ///
-    /// /// ## Alternatives
-    ///
-    /// Use `Memoized.inspect(f)?.has_label(LabelId::of::<SomeLabelId>()` if you need to know if some content breaks that should
-    /// only be written later.
-    fn inspect_is_labelled<T: ?Sized + 'static>(&mut self) -> HasLabelBuffer<Self::Context> {
-        let label_id = LabelId::of::<T>();
-        HasLabelBuffer::new(self, label_id)
-    }
 }
 
 impl<T> BufferExtensions for T where T: Buffer {}
 
-#[must_use = "must eventually call `is_labelled()` to retrieve the information"]
-pub struct HasLabelBuffer<'buffer, Context> {
-    inner: &'buffer mut dyn Buffer<Context = Context>,
-    label_id: LabelId,
-    has_label: bool,
+#[derive(Debug)]
+pub struct Recording<'buf, Buffer> {
+    start: usize,
+    buffer: &'buf mut Buffer,
 }
 
-impl<'buffer, Context> HasLabelBuffer<'buffer, Context> {
-    pub fn new(buffer: &'buffer mut dyn Buffer<Context = Context>, label_id: LabelId) -> Self {
+impl<'buf, B> Recording<'buf, B>
+where
+    B: Buffer,
+{
+    fn new(buffer: &'buf mut B) -> Self {
         Self {
-            inner: buffer,
-            label_id,
-            has_label: false,
+            start: buffer.elements().len(),
+            buffer,
         }
     }
 
-    pub fn has_label(self) -> bool {
-        self.has_label
+    #[inline(always)]
+    pub fn write_fmt(&mut self, arguments: Arguments<B::Context>) -> FormatResult<()> {
+        self.buffer.write_fmt(arguments)
+    }
+
+    #[inline(always)]
+    pub fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
+        self.buffer.write_element(element)
+    }
+
+    pub fn stop(self) -> Recorded<'buf> {
+        let buffer: &'buf B = self.buffer;
+        let elements = buffer.elements();
+
+        let recorded = if self.start > elements.len() {
+            // May happen if buffer was rewinded.
+            &[]
+        } else {
+            &elements[self.start..]
+        };
+
+        Recorded(recorded)
     }
 }
 
-impl<Context> Buffer for HasLabelBuffer<'_, Context> {
-    type Context = Context;
+#[derive(Debug, Copy, Clone)]
+pub struct Recorded<'a>(&'a [FormatElement]);
 
-    fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
-        self.has_label |= element.has_label(self.label_id);
+impl Deref for Recorded<'_> {
+    type Target = [FormatElement];
 
-        self.inner.write_element(element)
+    fn deref(&self) -> &Self::Target {
+        self.0
     }
-
-    fn state(&self) -> &FormatState<Self::Context> {
-        self.inner.state()
-    }
-
-    fn state_mut(&mut self) -> &mut FormatState<Self::Context> {
-        self.inner.state_mut()
-    }
-
-    fn snapshot(&self) -> BufferSnapshot {
-        BufferSnapshot::Any(Box::new(HasLabelledSnapshot {
-            inner: self.inner.snapshot(),
-            has_label: self.has_label,
-        }))
-    }
-
-    fn restore_snapshot(&mut self, snapshot: BufferSnapshot) {
-        let snapshot = snapshot.unwrap_any::<HasLabelledSnapshot>();
-        self.inner.restore_snapshot(snapshot.inner);
-        self.has_label = snapshot.has_label;
-    }
-}
-
-struct HasLabelledSnapshot {
-    inner: BufferSnapshot,
-    has_label: bool,
-}
-
-#[must_use = "must eventually call `will_break()` to retrieve the information"]
-pub struct WillBreakBuffer<'buffer, Context> {
-    breaks: bool,
-    inner: &'buffer mut dyn Buffer<Context = Context>,
-}
-
-impl<'buffer, Context> WillBreakBuffer<'buffer, Context> {
-    pub fn new(buffer: &'buffer mut dyn Buffer<Context = Context>) -> Self {
-        Self {
-            breaks: false,
-            inner: buffer,
-        }
-    }
-
-    pub fn will_break(&self) -> bool {
-        self.breaks
-    }
-}
-
-impl<Context> Buffer for WillBreakBuffer<'_, Context> {
-    type Context = Context;
-
-    fn write_element(&mut self, element: FormatElement) -> FormatResult<()> {
-        self.breaks = self.breaks || element.will_break();
-        self.inner.write_element(element)
-    }
-
-    fn state(&self) -> &FormatState<Self::Context> {
-        self.inner.state()
-    }
-
-    fn state_mut(&mut self) -> &mut FormatState<Self::Context> {
-        self.inner.state_mut()
-    }
-
-    fn snapshot(&self) -> BufferSnapshot {
-        BufferSnapshot::Any(Box::new(WillBreakSnapshot {
-            inner: self.inner.snapshot(),
-            breaks: self.breaks,
-        }))
-    }
-
-    fn restore_snapshot(&mut self, snapshot: BufferSnapshot) {
-        let snapshot = snapshot.unwrap_any::<WillBreakSnapshot>();
-        self.inner.restore_snapshot(snapshot.inner);
-        self.breaks = snapshot.breaks;
-    }
-}
-
-struct WillBreakSnapshot {
-    inner: BufferSnapshot,
-    breaks: bool,
 }

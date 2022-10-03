@@ -1,3 +1,46 @@
+// Single string attribute
+<div tooltip="A very long tooltip text that would otherwise make the attribute break onto the same line but it is not because of the single string layout"></div>;
+
+// Not single string because of the new line
+a = <div tooltip="A very long tooltip text that would otherwise make the attribute break
+					onto the same line but it is not because of the single string layout"></div>;
+
+// Inline
+a = <ASuperLongComponentNameThatWouldBreakButDoesntSinceTheComponent></ASuperLongComponentNameThatWouldBreakButDoesntSinceTheComponent>;
+
+// IndentAttributes
+a = <ASuperLongComponentNameThatWouldBreakButDoesntSinceTheComponent a b  c d></ASuperLongComponentNameThatWouldBreakButDoesntSinceTheComponent>;
+
+// Empty
+a = <div></div>;
+<>
+
+
+</>;
+
+// Not empty
+a = <div> </div>;
+
+// Template
+a = <div>{`A Long Tempalte String That uses ${5 + 4} that will eventually break across multiple lines ${40 / 3 * 45}`}</div>;
+
+// Meaningful text after self closing element adds a hard line break
+a = <div><pre className="h-screen overflow-y-scroll" />adefg</div>;
+
+// Meaningful text after a non-self closing element should add a soft line break
+b = a = <div><pre className="h-screen overflow-y-scroll">a</pre>abcd</div>;
+
+// A word right before a self-closing element inserts a hard line break
+a = <div>ab<br/></div>;
+
+// A Word not right before a self-closing element inserts a soft line break.
+a = <div>ab<pre>text</pre></div>;
+
+// whitespaces
+c = <div>a{' '}{' '}{' '}{' '}{' '}{' '}{' '}{' '}b{' '}{' '}{' '}{' '}{' '}{' '}</div>;
+
+c2 = <div>a{' '}{' '}{' '}{' '}{' '}{' '}{' '}{' '}<div></div>content{' '}{' '}{' '}{' '}{' '}{' '}</div>;
+
 <div><div></div><a> jumps over the lazy dog </a></div>;
 
 const Essay = () => <div>The films of Wong Kar-Wai exemplify the synthesis of French New Wave cinema—specifically the unrelenting
@@ -128,14 +171,14 @@ function MapoTofuRecipe() {
 let component = <div> La Haine dir. Mathieu Kassovitz </div>;
 
 let component = (
- <div> Uncle Boonmee Who Can Recall His Past Lives dir. Apichatpong Weerasethakul </div>
+	<div> Uncle Boonmee Who Can Recall His Past Lives dir. Apichatpong Weerasethakul </div>
 );
 
 (<div>Badlands</div>).property;
 
- let bar = <div>
-   {foo(() => <div> the quick brown fox jumps over the lazy dog and then jumps over the lazy cat and then over the lazy fish. </div>)}
- </div>;
+let bar = <div>
+	{foo(() => <div> the quick brown fox jumps over the lazy dog and then jumps over the lazy cat and then over the lazy fish. </div>)}
+</div>;
 
 <Component // here is a comment
 	className={bar} index={0} name="Component" // here is another comment
@@ -150,3 +193,12 @@ let a = <a>{ /* comment */ " " /* comment */ }</a>;
 let a = <a>{  " "
 	/* comment */ }</a>;
 let a = <a>{ /* comment */ " " }</a>;
+
+// in array
+const breadcrumbItems = [
+	(
+		<Breadcrumb.Item key="home">
+			<Link to="/">Home</Link>
+		</Breadcrumb.Item>
+	),
+].concat(extraBreadcrumbItems);

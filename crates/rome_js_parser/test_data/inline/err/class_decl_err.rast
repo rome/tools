@@ -150,54 +150,88 @@ JsModule {
       8: R_CURLY@66..67 "}" [] []
   3: EOF@67..68 "" [Newline("\n")] []
 --
-error[SyntaxError]: class declarations must have a name
-  ┌─ class_decl_err.js:1:1
-  │
-1 │ class {}
-  │ ^^^^^^
+class_decl_err.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × class declarations must have a name
+  
+  > 1 │ class {}
+      │ ^^^^^^
+    2 │ class extends bar {}
+    3 │ class foo { set {} }
+  
 --
-error[SyntaxError]: class declarations must have a name
-  ┌─ class_decl_err.js:2:1
-  │
-2 │ class extends bar {}
-  │ ^^^^^^
+class_decl_err.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × class declarations must have a name
+  
+    1 │ class {}
+  > 2 │ class extends bar {}
+      │ ^^^^^^
+    3 │ class foo { set {} }
+    4 │ class extends {}
+  
 --
-error[SyntaxError]: expected a semicolon to end the class property, but found none
-  ┌─ class_decl_err.js:3:13
-  │
-3 │ class foo { set {} }
-  │             ^^^
+class_decl_err.js:3:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a semicolon to end the class property, but found none
+  
+    1 │ class {}
+    2 │ class extends bar {}
+  > 3 │ class foo { set {} }
+      │             ^^^
+    4 │ class extends {}
+    5 │ 
+  
 --
-error[SyntaxError]: expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
-  ┌─ class_decl_err.js:3:17
-  │
-3 │ class foo { set {} }
-  │                 ^ Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+class_decl_err.js:3:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
+  
+  × Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+  
+    1 │ class {}
+    2 │ class extends bar {}
+  > 3 │ class foo { set {} }
+      │                 ^
+    4 │ class extends {}
+    5 │ 
+  
 --
-error[SyntaxError]: expected a statement but instead found '}'
-  ┌─ class_decl_err.js:3:20
-  │
-3 │ class foo { set {} }
-  │                    ^ Expected a statement here
+class_decl_err.js:3:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a statement but instead found '}'
+  
+  × Expected a statement here
+  
+    1 │ class {}
+    2 │ class extends bar {}
+  > 3 │ class foo { set {} }
+      │                    ^
+    4 │ class extends {}
+    5 │ 
+  
 --
-error[SyntaxError]: class declarations must have a name
-  ┌─ class_decl_err.js:4:1
-  │
-4 │ class extends {}
-  │ ^^^^^^
+class_decl_err.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × class declarations must have a name
+  
+    2 │ class extends bar {}
+    3 │ class foo { set {} }
+  > 4 │ class extends {}
+      │ ^^^^^^
+    5 │ 
+  
 --
-error[SyntaxError]: 'extends' list cannot be empty.
-  ┌─ class_decl_err.js:4:14
-  │
-4 │ class extends {}
-  │              ^
+class_decl_err.js:4:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'extends' list cannot be empty.
+  
+    2 │ class extends bar {}
+    3 │ class foo { set {} }
+  > 4 │ class extends {}
+      │              
+    5 │ 
+  
 --
 class {}
 class extends bar {}

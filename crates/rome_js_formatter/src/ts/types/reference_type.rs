@@ -1,7 +1,8 @@
 use crate::prelude::*;
 
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
-use rome_js_syntax::{TsReferenceType, TsReferenceTypeFields};
+use rome_js_syntax::{JsSyntaxNode, TsReferenceType, TsReferenceTypeFields};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsReferenceType;
@@ -14,5 +15,15 @@ impl FormatNodeRule<TsReferenceType> for FormatTsReferenceType {
         } = node.as_fields();
 
         write![f, [name.format(), type_arguments.format()]]
+    }
+
+    fn needs_parentheses(&self, item: &TsReferenceType) -> bool {
+        item.needs_parentheses()
+    }
+}
+
+impl NeedsParentheses for TsReferenceType {
+    fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
+        false
     }
 }

@@ -14,7 +14,10 @@ if (!version.includes("-")) {
 	version += "-next";
 }
 
-if (typeof process.env.GITHUB_SHA !== "string" || process.env.GITHUB_SHA === "") {
+if (
+	typeof process.env.GITHUB_SHA !== "string" ||
+	process.env.GITHUB_SHA === ""
+) {
 	throw new Error("GITHUB_SHA environment variable is undefined");
 }
 

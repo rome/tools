@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "js\\decorators\\class-expression\\member-expression.js"
 ---
 
 # Input
@@ -46,36 +48,59 @@ source: crates/rome_js_formatter/tests/prettier_tests.rs
 
 # Errors
 ```
-error[SyntaxError]: expected `)` but instead found `@`
-  ┌─ member-expression.js:1:2
-  │
-1 │ (@deco class Foo {}).name;
-  │  ^ unexpected
+member-expression.js:1:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a statement but instead found ').name'
-  ┌─ member-expression.js:1:20
-  │
-1 │ (@deco class Foo {}).name;
-  │                    ^^^^^^ Expected a statement here
+  × expected `)` but instead found `@`
+  
+  × unexpected
+  
+  > 1 │ (@deco class Foo {}).name;
+      │  ^
+    2 │ (@deco class {}).name;
+    3 │ 
+  
+member-expression.js:1:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected `)` but instead found `@`
-  ┌─ member-expression.js:2:2
-  │
-2 │ (@deco class {}).name;
-  │  ^ unexpected
+  × expected a statement but instead found ').name'
+  
+  × Expected a statement here
+  
+  > 1 │ (@deco class Foo {}).name;
+      │                    ^^^^^^
+    2 │ (@deco class {}).name;
+    3 │ 
+  
+member-expression.js:2:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: class declarations must have a name
-  ┌─ member-expression.js:2:8
-  │
-2 │ (@deco class {}).name;
-  │        ^^^^^^
+  × expected `)` but instead found `@`
+  
+  × unexpected
+  
+    1 │ (@deco class Foo {}).name;
+  > 2 │ (@deco class {}).name;
+      │  ^
+    3 │ 
+  
+member-expression.js:2:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-error[SyntaxError]: expected a statement but instead found ').name'
-  ┌─ member-expression.js:2:16
-  │
-2 │ (@deco class {}).name;
-  │                ^^^^^^ Expected a statement here
+  × class declarations must have a name
+  
+    1 │ (@deco class Foo {}).name;
+  > 2 │ (@deco class {}).name;
+      │        ^^^^^^
+    3 │ 
+  
+member-expression.js:2:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a statement but instead found ').name'
+  
+  × Expected a statement here
+  
+    1 │ (@deco class Foo {}).name;
+  > 2 │ (@deco class {}).name;
+      │                ^^^^^^
+    3 │ 
+  
 
 ```
 

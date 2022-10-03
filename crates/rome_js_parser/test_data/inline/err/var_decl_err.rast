@@ -108,21 +108,36 @@ JsModule {
       1: SEMICOLON@30..31 ";" [] []
   3: EOF@31..32 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected an expression, or an assignment but instead found ';'
-  ┌─ var_decl_err.js:1:8
-  │
-1 │ var a =;
-  │        ^ Expected an expression, or an assignment here
+var_decl_err.js:1:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an expression, or an assignment but instead found ';'
+  
+  × Expected an expression, or an assignment here
+  
+  > 1 │ var a =;
+      │        ^
+    2 │ const b = 5 let c = 5;
+    3 │ 
+  
 --
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ var_decl_err.js:2:13
-  │
-2 │ const b = 5 let c = 5;
-  │ ------------^^^ An explicit or implicit semicolon is expected here...
-  │ │            
-  │ ...Which is required to end this statement
+var_decl_err.js:2:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    1 │ var a =;
+  > 2 │ const b = 5 let c = 5;
+      │             ^^^
+    3 │ 
+  
+  i ...Which is required to end this statement
+  
+    1 │ var a =;
+  > 2 │ const b = 5 let c = 5;
+      │ ^^^^^^^^^^^^
+    3 │ 
+  
 --
 var a =;
 const b = 5 let c = 5;

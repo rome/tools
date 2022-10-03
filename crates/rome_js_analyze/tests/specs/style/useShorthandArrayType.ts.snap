@@ -1,0 +1,202 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: useShorthandArrayType.ts
+---
+# Input
+```js
+// valid
+let valid: Array<Foo | Bar>;
+let valid: Array<keyof Bar>;
+let valid: Array<foo | bar>;
+// invalid
+let valid: Array<foo>;
+let invalid1: Array<foo, Array<string>>;
+let invalid2: Promise<Array<string>>;
+let invalid3: Array<Foo<Bar>>;
+let invalid4: Array<[number, number]>;
+
+// valid
+let valid5: Array<string & number>;
+let valid6: Array<() => string>;
+type valid7<T> = Array<T extends string ? string : number>
+type valid8 = Array<new (string, number) => string>
+// valid end
+
+//parenthesized type
+let valid8: Array<(string & number)>;
+// infer type
+type valid9<T> = T extends Array<infer R> ? R : any;
+// mapped type
+type valid10<T> = { [K in keyof T]: T[K] };
+
+```
+
+# Diagnostics
+```
+useShorthandArrayType.ts:6:12 lint/style/useShorthandArrayType  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use shorthand T[] syntax instead of Array<T> syntax.
+  
+    4 │ let valid: Array<foo | bar>;
+    5 │ // invalid
+  > 6 │ let valid: Array<foo>;
+      │            ^^^^^^^^^^
+    7 │ let invalid1: Array<foo, Array<string>>;
+    8 │ let invalid2: Promise<Array<string>>;
+  
+  i Suggested fix: Use shorthand T[] syntax to replace
+  
+     4  4 │   let·valid:·Array<foo·|·bar>;
+     5  5 │   //·invalid
+     6    │ - let·valid:·Array<foo>;
+        6 │ + let·valid:·foo[];
+     7  7 │   let·invalid1:·Array<foo,·Array<string>>;
+     8  8 │   let·invalid2:·Promise<Array<string>>;
+  
+
+```
+
+```
+useShorthandArrayType.ts:7:15 lint/style/useShorthandArrayType  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use shorthand T[] syntax instead of Array<T> syntax.
+  
+    5 │ // invalid
+    6 │ let valid: Array<foo>;
+  > 7 │ let invalid1: Array<foo, Array<string>>;
+      │               ^^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │ let invalid2: Promise<Array<string>>;
+    9 │ let invalid3: Array<Foo<Bar>>;
+  
+  i Suggested fix: Use shorthand T[] syntax to replace
+  
+     5  5 │   //·invalid
+     6  6 │   let·valid:·Array<foo>;
+     7    │ - let·invalid1:·Array<foo,·Array<string>>;
+        7 │ + let·invalid1:·foo[]·|·string[][];
+     8  8 │   let·invalid2:·Promise<Array<string>>;
+     9  9 │   let·invalid3:·Array<Foo<Bar>>;
+  
+
+```
+
+```
+useShorthandArrayType.ts:7:26 lint/style/useShorthandArrayType  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use shorthand T[] syntax instead of Array<T> syntax.
+  
+    5 │ // invalid
+    6 │ let valid: Array<foo>;
+  > 7 │ let invalid1: Array<foo, Array<string>>;
+      │                          ^^^^^^^^^^^^^
+    8 │ let invalid2: Promise<Array<string>>;
+    9 │ let invalid3: Array<Foo<Bar>>;
+  
+  i Suggested fix: Use shorthand T[] syntax to replace
+  
+     5  5 │   //·invalid
+     6  6 │   let·valid:·Array<foo>;
+     7    │ - let·invalid1:·Array<foo,·Array<string>>;
+        7 │ + let·invalid1:·Array<foo,·string[]>;
+     8  8 │   let·invalid2:·Promise<Array<string>>;
+     9  9 │   let·invalid3:·Array<Foo<Bar>>;
+  
+
+```
+
+```
+useShorthandArrayType.ts:8:23 lint/style/useShorthandArrayType  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use shorthand T[] syntax instead of Array<T> syntax.
+  
+     6 │ let valid: Array<foo>;
+     7 │ let invalid1: Array<foo, Array<string>>;
+   > 8 │ let invalid2: Promise<Array<string>>;
+       │                       ^^^^^^^^^^^^^
+     9 │ let invalid3: Array<Foo<Bar>>;
+    10 │ let invalid4: Array<[number, number]>;
+  
+  i Suggested fix: Use shorthand T[] syntax to replace
+  
+     6  6 │   let·valid:·Array<foo>;
+     7  7 │   let·invalid1:·Array<foo,·Array<string>>;
+     8    │ - let·invalid2:·Promise<Array<string>>;
+        8 │ + let·invalid2:·Promise<string[]>;
+     9  9 │   let·invalid3:·Array<Foo<Bar>>;
+    10 10 │   let·invalid4:·Array<[number,·number]>;
+  
+
+```
+
+```
+useShorthandArrayType.ts:9:15 lint/style/useShorthandArrayType  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use shorthand T[] syntax instead of Array<T> syntax.
+  
+     7 │ let invalid1: Array<foo, Array<string>>;
+     8 │ let invalid2: Promise<Array<string>>;
+   > 9 │ let invalid3: Array<Foo<Bar>>;
+       │               ^^^^^^^^^^^^^^^
+    10 │ let invalid4: Array<[number, number]>;
+    11 │ 
+  
+  i Suggested fix: Use shorthand T[] syntax to replace
+  
+     7  7 │   let·invalid1:·Array<foo,·Array<string>>;
+     8  8 │   let·invalid2:·Promise<Array<string>>;
+     9    │ - let·invalid3:·Array<Foo<Bar>>;
+        9 │ + let·invalid3:·Foo<Bar>[];
+    10 10 │   let·invalid4:·Array<[number,·number]>;
+    11 11 │   
+  
+
+```
+
+```
+useShorthandArrayType.ts:10:15 lint/style/useShorthandArrayType  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use shorthand T[] syntax instead of Array<T> syntax.
+  
+     8 │ let invalid2: Promise<Array<string>>;
+     9 │ let invalid3: Array<Foo<Bar>>;
+  > 10 │ let invalid4: Array<[number, number]>;
+       │               ^^^^^^^^^^^^^^^^^^^^^^^
+    11 │ 
+    12 │ // valid
+  
+  i Suggested fix: Use shorthand T[] syntax to replace
+  
+     8  8 │   let·invalid2:·Promise<Array<string>>;
+     9  9 │   let·invalid3:·Array<Foo<Bar>>;
+    10    │ - let·invalid4:·Array<[number,·number]>;
+       10 │ + let·invalid4:·[number,·number][];
+    11 11 │   
+    12 12 │   //·valid
+  
+
+```
+
+```
+useShorthandArrayType.ts:20:13 lint/style/useShorthandArrayType  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Use shorthand T[] syntax instead of Array<T> syntax.
+  
+    19 │ //parenthesized type
+  > 20 │ let valid8: Array<(string & number)>;
+       │             ^^^^^^^^^^^^^^^^^^^^^^^^
+    21 │ // infer type
+    22 │ type valid9<T> = T extends Array<infer R> ? R : any;
+  
+  i Suggested fix: Use shorthand T[] syntax to replace
+  
+    18 18 │   
+    19 19 │   //parenthesized·type
+    20    │ - let·valid8:·Array<(string·&·number)>;
+       20 │ + let·valid8:·(string·&·number)[];
+    21 21 │   //·infer·type
+    22 22 │   type·valid9<T>·=·T·extends·Array<infer·R>·?·R·:·any;
+  
+
+```
+
+

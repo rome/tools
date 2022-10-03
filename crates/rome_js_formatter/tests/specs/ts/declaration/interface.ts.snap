@@ -32,10 +32,10 @@ interface D extends B<string, symbol>, F<string, symbol> {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 interface A {}
-interface B extends A {
-	/** comment **/
+interface B extends A /** comment **/ {
 	something: string;
 }
 

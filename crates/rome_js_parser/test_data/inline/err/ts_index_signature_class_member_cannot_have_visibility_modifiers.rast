@@ -234,26 +234,40 @@ JsModule {
       8: R_CURLY@136..138 "}" [Newline("\n")] []
   3: EOF@138..139 "" [Newline("\n")] []
 --
-error[SyntaxError]: 'public' modifier cannot appear on an index signature.
-  ┌─ ts_index_signature_class_member_cannot_have_visibility_modifiers.ts:2:5
-  │
-2 │     public  [a: number]: string;
-  │     ^^^^^^
+ts_index_signature_class_member_cannot_have_visibility_modifiers.ts:2:5 parse ━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'public' modifier cannot appear on an index signature.
+  
+    1 │ class A {
+  > 2 │     public  [a: number]: string;
+      │     ^^^^^^
+    3 │ }
+    4 │ class B {
+  
 --
-error[SyntaxError]: 'private' modifier cannot appear on an index signature.
-  ┌─ ts_index_signature_class_member_cannot_have_visibility_modifiers.ts:5:5
-  │
-5 │     private  [a: number]: string;
-  │     ^^^^^^^
+ts_index_signature_class_member_cannot_have_visibility_modifiers.ts:5:5 parse ━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'private' modifier cannot appear on an index signature.
+  
+    3 │ }
+    4 │ class B {
+  > 5 │     private  [a: number]: string;
+      │     ^^^^^^^
+    6 │ }
+    7 │ class C {
+  
 --
-error[SyntaxError]: 'protected' modifier cannot appear on an index signature.
-  ┌─ ts_index_signature_class_member_cannot_have_visibility_modifiers.ts:8:5
-  │
-8 │     protected  [a: number]: string;
-  │     ^^^^^^^^^
+ts_index_signature_class_member_cannot_have_visibility_modifiers.ts:8:5 parse ━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'protected' modifier cannot appear on an index signature.
+  
+     6 │ }
+     7 │ class C {
+   > 8 │     protected  [a: number]: string;
+       │     ^^^^^^^^^
+     9 │ }
+    10 │ 
+  
 --
 class A {
     public  [a: number]: string;

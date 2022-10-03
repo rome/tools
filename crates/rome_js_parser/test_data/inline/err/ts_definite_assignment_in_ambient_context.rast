@@ -127,19 +127,25 @@ JsModule {
       8: R_CURLY@66..67 "}" [] []
   3: EOF@67..68 "" [Newline("\n")] []
 --
-error[SyntaxError]: Definite assignment operators '!' aren't allowed in ambient contexts.
-  ┌─ ts_definite_assignment_in_ambient_context.ts:1:23
-  │
-1 │ declare class A { prop!: string }
-  │                       ^
+ts_definite_assignment_in_ambient_context.ts:1:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Definite assignment operators '!' aren't allowed in ambient contexts.
+  
+  > 1 │ declare class A { prop!: string }
+      │                       ^
+    2 │ class B { declare prop!: string }
+    3 │ 
+  
 --
-error[SyntaxError]: Definite assignment operators '!' aren't allowed in ambient contexts.
-  ┌─ ts_definite_assignment_in_ambient_context.ts:2:23
-  │
-2 │ class B { declare prop!: string }
-  │                       ^
+ts_definite_assignment_in_ambient_context.ts:2:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Definite assignment operators '!' aren't allowed in ambient contexts.
+  
+    1 │ declare class A { prop!: string }
+  > 2 │ class B { declare prop!: string }
+      │                       ^
+    3 │ 
+  
 --
 declare class A { prop!: string }
 class B { declare prop!: string }

@@ -453,87 +453,168 @@ JsModule {
       2: (empty)
   3: EOF@379..380 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `:` but instead found `,`
-  ┌─ import_assertion_err.js:1:27
-  │
-1 │ import "foo" assert { type, "json" };
-  │                           ^ unexpected
+import_assertion_err.js:1:27 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `:` but instead found `,`
+  
+  × unexpected
+  
+  > 1 │ import "foo" assert { type, "json" };
+      │                           ^
+    2 │ import "bar" \u{61}ssert { type: "json" };
+    3 │ import { foo } assert { type: "json" };
+  
 --
-error[SyntaxError]: expected `:` but instead found `}`
-  ┌─ import_assertion_err.js:1:36
-  │
-1 │ import "foo" assert { type, "json" };
-  │                                    ^ unexpected
+import_assertion_err.js:1:36 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `:` but instead found `}`
+  
+  × unexpected
+  
+  > 1 │ import "foo" assert { type, "json" };
+      │                                    ^
+    2 │ import "bar" \u{61}ssert { type: "json" };
+    3 │ import { foo } assert { type: "json" };
+  
 --
-error[SyntaxError]: 'assert' keyword cannot contain escape character.
-  ┌─ import_assertion_err.js:2:14
-  │
-2 │ import "bar" \u{61}ssert { type: "json" };
-  │              ^^^^^^^^^^^
+import_assertion_err.js:2:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'assert' keyword cannot contain escape character.
+  
+    1 │ import "foo" assert { type, "json" };
+  > 2 │ import "bar" \u{61}ssert { type: "json" };
+      │              ^^^^^^^^^^^
+    3 │ import { foo } assert { type: "json" };
+    4 │ import "lorem"
+  
 --
-error[SyntaxError]: expected `from` but instead found `assert`
-  ┌─ import_assertion_err.js:3:16
-  │
-3 │ import { foo } assert { type: "json" };
-  │                ^^^^^^ unexpected
+import_assertion_err.js:3:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `from` but instead found `assert`
+  
+  × unexpected
+  
+    1 │ import "foo" assert { type, "json" };
+    2 │ import "bar" \u{61}ssert { type: "json" };
+  > 3 │ import { foo } assert { type: "json" };
+      │                ^^^^^^
+    4 │ import "lorem"
+    5 │ assert { type: "json" }
+  
 --
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ import_assertion_err.js:5:8
-  │
-5 │ assert { type: "json" }
-  │ -------^
-  │ │      │
-  │ │      An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
+import_assertion_err.js:5:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    3 │ import { foo } assert { type: "json" };
+    4 │ import "lorem"
+  > 5 │ assert { type: "json" }
+      │        ^
+    6 │ import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
+    7 │ import "x" assert;
+  
+  i ...Which is required to end this statement
+  
+    3 │ import { foo } assert { type: "json" };
+    4 │ import "lorem"
+  > 5 │ assert { type: "json" }
+      │ ^^^^^^^^
+    6 │ import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
+    7 │ import "x" assert;
+  
 --
-error[SyntaxError]: Duplicate assertion keys are not allowed
-  ┌─ import_assertion_err.js:6:38
-  │
-6 │ import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
-  │                                      ^^^^^^          ---- second use here
-  │                                      │                
-  │                                      First use of the key `type`
+import_assertion_err.js:6:38 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Duplicate assertion keys are not allowed
+  
+  × First use of the key `type`
+  
+    4 │ import "lorem"
+    5 │ assert { type: "json" }
+  > 6 │ import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
+      │                                      ^^^^^^
+    7 │ import "x" assert;
+    8 │ import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
+  
+  i second use here
+  
+    4 │ import "lorem"
+    5 │ assert { type: "json" }
+  > 6 │ import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
+      │                                                      ^^^^
+    7 │ import "x" assert;
+    8 │ import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
+  
 --
-error[SyntaxError]: expected `{` but instead found `;`
-  ┌─ import_assertion_err.js:7:18
-  │
-7 │ import "x" assert;
-  │                  ^ unexpected
+import_assertion_err.js:7:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `{` but instead found `;`
+  
+  × unexpected
+  
+    5 │ assert { type: "json" }
+    6 │ import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
+  > 7 │ import "x" assert;
+      │                  ^
+    8 │ import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
+    9 │ import { a } from "a.json" assert
+  
 --
-error[SyntaxError]: expected `string literal` but instead found `true`
-  ┌─ import_assertion_err.js:8:61
-  │
-8 │ import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
-  │                                                             ^^^^ unexpected
+import_assertion_err.js:8:61 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `string literal` but instead found `true`
+  
+  × unexpected
+  
+     6 │ import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
+     7 │ import "x" assert;
+   > 8 │ import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
+       │                                                             ^^^^
+     9 │ import { a } from "a.json" assert
+    10 │ 
+  
 --
-error[SyntaxError]: expected `:` but instead found `,`
-  ┌─ import_assertion_err.js:8:65
-  │
-8 │ import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
-  │                                                                 ^ unexpected
+import_assertion_err.js:8:65 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `:` but instead found `,`
+  
+  × unexpected
+  
+     6 │ import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
+     7 │ import "x" assert;
+   > 8 │ import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
+       │                                                                 ^
+     9 │ import { a } from "a.json" assert
+    10 │ 
+  
 --
-error[SyntaxError]: expected `string literal` but instead found `1`
-  ┌─ import_assertion_err.js:8:80
-  │
-8 │ import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
-  │                                                                                ^ unexpected
+import_assertion_err.js:8:80 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `string literal` but instead found `1`
+  
+  × unexpected
+  
+     6 │ import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
+     7 │ import "x" assert;
+   > 8 │ import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
+       │                                                                                ^
+     9 │ import { a } from "a.json" assert
+    10 │ 
+  
 --
-error[SyntaxError]: expected `{` but instead the file ends
-   ┌─ import_assertion_err.js:10:1
-   │
-10 │ 
-   │ ^ the file ends here
+import_assertion_err.js:10:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `{` but instead the file ends
+  
+  × the file ends here
+  
+     8 │ import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
+     9 │ import { a } from "a.json" assert
+  > 10 │ 
+       │ 
+  
 --
 import "foo" assert { type, "json" };
 import "bar" \u{61}ssert { type: "json" };

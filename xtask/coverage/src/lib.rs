@@ -33,7 +33,7 @@ pub struct TestResult {
     pub test_case: String,
 }
 
-#[derive(Debug, PartialEq, Serialize, Deserialize, Copy, Clone)]
+#[derive(Debug, PartialEq, Eq, Serialize, Deserialize, Copy, Clone)]
 pub enum Outcome {
     Passed,
     Failed,
@@ -138,7 +138,11 @@ pub fn run(
     let mut context = TestRunContext {
         filter: filter.map(|s| s.to_string()),
         reporter: &mut reporters,
-        pool: &yastl::Pool::new(num_cpus::get().max(2)),
+        pool: &yastl::Pool::new(
+            std::thread::available_parallelism()
+                .map_or(2, usize::from)
+                .max(2),
+        ),
     };
 
     let mut ran_any_tests = false;

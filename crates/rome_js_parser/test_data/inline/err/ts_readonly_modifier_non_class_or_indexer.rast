@@ -226,33 +226,52 @@ JsModule {
       8: R_CURLY@139..141 "}" [Newline("\n")] []
   3: EOF@141..142 "" [Newline("\n")] []
 --
-error[SyntaxError]: 'readonly' cannot appear on a constructor declaration.
-  ┌─ ts_readonly_modifier_non_class_or_indexer.ts:2:3
-  │
-2 │   readonly constructor() {}
-  │   ^^^^^^^^
+ts_readonly_modifier_non_class_or_indexer.ts:2:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'readonly' cannot appear on a constructor declaration.
+  
+    1 │ class Test {
+  > 2 │   readonly constructor() {}
+      │   ^^^^^^^^
+    3 │   readonly method() {}
+    4 │   readonly get test() { return "a"; }
+  
 --
-error[SyntaxError]: Readonly can only appear on a property declaration or index signature.
-  ┌─ ts_readonly_modifier_non_class_or_indexer.ts:3:3
-  │
-3 │   readonly method() {}
-  │   ^^^^^^^^
+ts_readonly_modifier_non_class_or_indexer.ts:3:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Readonly can only appear on a property declaration or index signature.
+  
+    1 │ class Test {
+    2 │   readonly constructor() {}
+  > 3 │   readonly method() {}
+      │   ^^^^^^^^
+    4 │   readonly get test() { return "a"; }
+    5 │   readonly set test(value: string) {}
+  
 --
-error[SyntaxError]: Readonly can only appear on a property declaration or index signature.
-  ┌─ ts_readonly_modifier_non_class_or_indexer.ts:4:3
-  │
-4 │   readonly get test() { return "a"; }
-  │   ^^^^^^^^
+ts_readonly_modifier_non_class_or_indexer.ts:4:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Readonly can only appear on a property declaration or index signature.
+  
+    2 │   readonly constructor() {}
+    3 │   readonly method() {}
+  > 4 │   readonly get test() { return "a"; }
+      │   ^^^^^^^^
+    5 │   readonly set test(value: string) {}
+    6 │ }
+  
 --
-error[SyntaxError]: Readonly can only appear on a property declaration or index signature.
-  ┌─ ts_readonly_modifier_non_class_or_indexer.ts:5:3
-  │
-5 │   readonly set test(value: string) {}
-  │   ^^^^^^^^
+ts_readonly_modifier_non_class_or_indexer.ts:5:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Readonly can only appear on a property declaration or index signature.
+  
+    3 │   readonly method() {}
+    4 │   readonly get test() { return "a"; }
+  > 5 │   readonly set test(value: string) {}
+      │   ^^^^^^^^
+    6 │ }
+    7 │ 
+  
 --
 class Test {
   readonly constructor() {}

@@ -51,156 +51,182 @@
 //! document does not implement the required capability: for instance trying to
 //! format a file with a language that does not have a formatter
 
-use crate::settings::WorkspaceSettings;
-use crate::RomeError;
+use crate::{Configuration, RomeError};
 use rome_analyze::ActionCategory;
 pub use rome_analyze::RuleCategories;
 use rome_diagnostics::{CodeSuggestion, Diagnostic};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
 use rome_js_syntax::{TextRange, TextSize};
-use rome_text_edit::Indel;
-use std::{borrow::Cow, panic::RefUnwindSafe};
+use rome_text_edit::TextEdit;
+use std::{borrow::Cow, panic::RefUnwindSafe, sync::Arc};
 
+pub use self::client::{TransportRequest, WorkspaceClient, WorkspaceTransport};
+pub use crate::file_handlers::Language;
+
+mod client;
 pub(crate) mod server;
 
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct SupportsFeatureParams {
     pub path: RomePath,
     pub feature: FeatureName,
 }
 
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[derive(Debug, serde::Serialize, serde::Deserialize, Default)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+pub struct SupportsFeatureResult {
+    pub reason: Option<UnsupportedReason>,
+}
+
+impl SupportsFeatureResult {
+    const fn ignored() -> Self {
+        Self {
+            reason: Some(UnsupportedReason::Ignored),
+        }
+    }
+
+    const fn disabled() -> Self {
+        Self {
+            reason: Some(UnsupportedReason::FeatureNotEnabled),
+        }
+    }
+
+    const fn file_not_supported() -> Self {
+        Self {
+            reason: Some(UnsupportedReason::FileNotSupported),
+        }
+    }
+}
+
+#[derive(Debug, serde::Serialize, serde::Deserialize, Eq, PartialEq)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+pub enum UnsupportedReason {
+    Ignored,
+    FeatureNotEnabled,
+    FileNotSupported,
+}
+
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub enum FeatureName {
     Format,
     Lint,
 }
 
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct UpdateSettingsParams {
-    pub settings: WorkspaceSettings,
+    pub configuration: Configuration,
 }
 
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct OpenFileParams {
     pub path: RomePath,
     pub content: String,
     pub version: i32,
+    #[serde(default)]
+    pub language_hint: Language,
 }
 
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct GetSyntaxTreeParams {
     pub path: RomePath,
 }
 
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+pub struct GetSyntaxTreeResult {
+    pub cst: String,
+    pub ast: String,
+}
+
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+pub struct GetControlFlowGraphParams {
+    pub path: RomePath,
+    pub cursor: TextSize,
+}
+
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+pub struct GetFormatterIRParams {
+    pub path: RomePath,
+}
+
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct ChangeFileParams {
     pub path: RomePath,
     pub content: String,
     pub version: i32,
 }
 
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct CloseFileParams {
     pub path: RomePath,
 }
 
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct PullDiagnosticsParams {
     pub path: RomePath,
     pub categories: RuleCategories,
 }
 
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct PullDiagnosticsResult {
     pub diagnostics: Vec<Diagnostic>,
 }
 
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct PullActionsParams {
     pub path: RomePath,
     pub range: TextRange,
 }
 
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct PullActionsResult {
     pub actions: Vec<CodeAction>,
 }
 
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct CodeAction {
     pub category: ActionCategory,
     pub rule_name: Cow<'static, str>,
     pub suggestion: CodeSuggestion,
 }
 
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct FormatFileParams {
     pub path: RomePath,
 }
 
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct FormatRangeParams {
     pub path: RomePath,
     pub range: TextRange,
 }
 
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct FormatOnTypeParams {
     pub path: RomePath,
     pub offset: TextSize,
 }
 
-#[derive(Clone, Copy)]
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[derive(Debug, Clone, Copy, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 /// Which fixes should be applied during the analyzing phase
 pub enum FixFileMode {
     /// Applies [safe](rome_diagnostics::Applicability::Always) fixes
@@ -209,20 +235,15 @@ pub enum FixFileMode {
     SafeAndSuggestedFixes,
 }
 
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct FixFileParams {
     pub path: RomePath,
     pub fix_file_mode: FixFileMode,
 }
 
-#[derive(Debug)]
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct FixFileResult {
     /// New source code for the file with all fixes applied
     pub code: String,
@@ -233,11 +254,8 @@ pub struct FixFileResult {
     pub skipped_suggested_fixes: u32,
 }
 
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
-)]
-#[derive(Debug)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct FixAction {
     /// Name of the rule that emitted this code action
     pub rule_name: Cow<'static, str>,
@@ -245,32 +263,32 @@ pub struct FixAction {
     pub range: TextRange,
 }
 
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct RenameParams {
     pub path: RomePath,
     pub symbol_at: TextSize,
     pub new_name: String,
 }
 
-#[cfg_attr(
-    feature = "serde_workspace",
-    derive(serde::Serialize, serde::Deserialize)
-)]
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct RenameResult {
     /// Range of source code modified by this rename operation
     pub range: TextRange,
     /// List of text edit operations to apply on the source code
-    pub indels: Vec<Indel>,
+    pub indels: TextEdit,
 }
 
 pub trait Workspace: Send + Sync + RefUnwindSafe {
     /// Checks whether a certain feature is supported. There are different conditions:
-    /// - Rome doesn't recognize a file, so it can provide the feature;
+    /// - Rome doesn't recognize a file, so it can't provide the feature;
     /// - the feature is disabled inside the configuration;
-    fn supports_feature(&self, params: SupportsFeatureParams) -> bool;
+    /// - the file is ignored
+    fn supports_feature(
+        &self,
+        params: SupportsFeatureParams,
+    ) -> Result<SupportsFeatureResult, RomeError>;
 
     /// Update the global settings for this workspace
     fn update_settings(&self, params: UpdateSettingsParams) -> Result<(), RomeError>;
@@ -279,7 +297,19 @@ pub trait Workspace: Send + Sync + RefUnwindSafe {
     fn open_file(&self, params: OpenFileParams) -> Result<(), RomeError>;
 
     // Return a textual, debug representation of the syntax tree for a given document
-    fn get_syntax_tree(&self, params: GetSyntaxTreeParams) -> Result<String, RomeError>;
+    fn get_syntax_tree(
+        &self,
+        params: GetSyntaxTreeParams,
+    ) -> Result<GetSyntaxTreeResult, RomeError>;
+
+    // Return a textual, debug representation of the control flow graph at a given position in the document
+    fn get_control_flow_graph(
+        &self,
+        params: GetControlFlowGraphParams,
+    ) -> Result<String, RomeError>;
+
+    // Return a textual, debug representation of the formatter IR for a given document
+    fn get_formatter_ir(&self, params: GetFormatterIRParams) -> Result<String, RomeError>;
 
     /// Change the content of an open file
     fn change_file(&self, params: ChangeFileParams) -> Result<(), RomeError>;
@@ -320,6 +350,19 @@ pub fn server() -> Box<dyn Workspace> {
     Box::new(server::WorkspaceServer::new())
 }
 
+/// Convenience function for constructing a server instance of [Workspace]
+pub fn server_sync() -> Arc<dyn Workspace> {
+    Arc::new(server::WorkspaceServer::new())
+}
+
+/// Convenience function for constructing a client instance of [Workspace]
+pub fn client<T>(transport: T) -> Result<Box<dyn Workspace>, RomeError>
+where
+    T: WorkspaceTransport + RefUnwindSafe + Send + Sync + 'static,
+{
+    Ok(Box::new(client::WorkspaceClient::new(transport)?))
+}
+
 /// [RAII](https://en.wikipedia.org/wiki/Resource_acquisition_is_initialization)
 /// guard for an open file in a workspace, takes care of closing the file
 /// automatically on drop
@@ -335,7 +378,7 @@ impl<'app, W: Workspace + ?Sized> FileGuard<'app, W> {
         Ok(Self { workspace, path })
     }
 
-    pub fn get_syntax_tree(&self) -> Result<String, RomeError> {
+    pub fn get_syntax_tree(&self) -> Result<GetSyntaxTreeResult, RomeError> {
         self.workspace.get_syntax_tree(GetSyntaxTreeParams {
             path: self.path.clone(),
         })
@@ -401,7 +444,7 @@ impl<'app, W: Workspace + ?Sized> Drop for FileGuard<'app, W> {
                 path: self.path.clone(),
             })
             // `close_file` can only error if the file was already closed, in
-            // this case it's generally better to silently ignore the error
+            // this case it's generally better to silently matcher the error
             // than panic (especially in a drop handler)
             .ok();
     }

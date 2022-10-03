@@ -2,23 +2,21 @@ pub mod analyzer;
 pub mod formatter;
 pub mod parser;
 
-#[cfg(feature = "dhat-on")]
-fn print_diff(before: dhat::Stats, current: dhat::Stats) -> dhat::Stats {
+#[cfg(feature = "dhat-heap")]
+fn print_diff(before: dhat::HeapStats, current: dhat::HeapStats) -> dhat::HeapStats {
     use humansize::{file_size_opts as options, FileSize};
 
     println!("\tMemory");
-    if let Some(heap) = &current.heap {
-        println!("\t\tCurrent Blocks: {}", heap.curr_blocks);
-        println!(
-            "\t\tCurrent Bytes: {}",
-            heap.curr_bytes.file_size(options::CONVENTIONAL).unwrap()
-        );
-        println!("\t\tMax Blocks: {}", heap.max_blocks);
-        println!(
-            "\t\tMax Bytes: {}",
-            heap.max_bytes.file_size(options::CONVENTIONAL).unwrap()
-        );
-    }
+    println!("\t\tCurrent Blocks: {}", current.curr_blocks);
+    println!(
+        "\t\tCurrent Bytes: {}",
+        current.curr_bytes.file_size(options::CONVENTIONAL).unwrap()
+    );
+    println!("\t\tMax Blocks: {}", current.max_blocks);
+    println!(
+        "\t\tMax Bytes: {}",
+        current.max_bytes.file_size(options::CONVENTIONAL).unwrap()
+    );
 
     println!(
         "\t\tTotal Blocks: {}",

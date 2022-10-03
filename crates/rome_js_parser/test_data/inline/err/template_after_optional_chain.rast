@@ -184,26 +184,37 @@ JsModule {
       1: (empty)
   3: EOF@76..77 "" [Newline("\n")] []
 --
-error[SyntaxError]: Tagged template expressions are not permitted in an optional chain.
-  ┌─ template_after_optional_chain.js:1:1
-  │
-1 │ obj.val?.prop`template`
-  │ ^^^^^^^^^^^^^^^^^^^^^^^
+template_after_optional_chain.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Tagged template expressions are not permitted in an optional chain.
+  
+  > 1 │ obj.val?.prop`template`
+      │ ^^^^^^^^^^^^^^^^^^^^^^^
+    2 │ obj.val?.[expr]`template`
+    3 │ obj.func?.(args)`template`
+  
 --
-error[SyntaxError]: Tagged template expressions are not permitted in an optional chain.
-  ┌─ template_after_optional_chain.js:2:1
-  │
-2 │ obj.val?.[expr]`template`
-  │ ^^^^^^^^^^^^^^^^^^^^^^^^^
+template_after_optional_chain.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Tagged template expressions are not permitted in an optional chain.
+  
+    1 │ obj.val?.prop`template`
+  > 2 │ obj.val?.[expr]`template`
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ obj.func?.(args)`template`
+    4 │ 
+  
 --
-error[SyntaxError]: Tagged template expressions are not permitted in an optional chain.
-  ┌─ template_after_optional_chain.js:3:1
-  │
-3 │ obj.func?.(args)`template`
-  │ ^^^^^^^^^^^^^^^^^^^^^^^^^^
+template_after_optional_chain.js:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Tagged template expressions are not permitted in an optional chain.
+  
+    1 │ obj.val?.prop`template`
+    2 │ obj.val?.[expr]`template`
+  > 3 │ obj.func?.(args)`template`
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │ 
+  
 --
 obj.val?.prop`template`
 obj.val?.[expr]`template`

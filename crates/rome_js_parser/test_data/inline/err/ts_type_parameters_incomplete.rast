@@ -50,11 +50,15 @@ JsModule {
       5: (empty)
   3: EOF@8..9 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected `>` but instead the file ends
-  ┌─ ts_type_parameters_incomplete.ts:2:1
-  │
-2 │ 
-  │ ^ the file ends here
+ts_type_parameters_incomplete.ts:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected `>` but instead the file ends
+  
+  × the file ends here
+  
+    1 │ type A<T
+  > 2 │ 
+      │ 
+  
 --
 type A<T

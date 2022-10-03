@@ -141,33 +141,58 @@ JsModule {
       8: R_CURLY@72..74 "}" [Newline("\n")] []
   3: EOF@74..75 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected a class method body but instead found 'method'
-  ┌─ ts_method_members_with_missing_body.ts:2:20
-  │
-2 │      constructor() method() get test()
-  │                    ^^^^^^ Expected a class method body here
+ts_method_members_with_missing_body.ts:2:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a class method body but instead found 'method'
+  
+  × Expected a class method body here
+  
+    1 │ class Test {
+  > 2 │      constructor() method() get test()
+      │                    ^^^^^^
+    3 │      set test(value)
+    4 │ }
+  
 --
-error[SyntaxError]: expected a class method body but instead found 'get'
-  ┌─ ts_method_members_with_missing_body.ts:2:29
-  │
-2 │      constructor() method() get test()
-  │                             ^^^ Expected a class method body here
+ts_method_members_with_missing_body.ts:2:29 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a class method body but instead found 'get'
+  
+  × Expected a class method body here
+  
+    1 │ class Test {
+  > 2 │      constructor() method() get test()
+      │                             ^^^
+    3 │      set test(value)
+    4 │ }
+  
 --
-error[SyntaxError]: expected a class method body but instead found 'set'
-  ┌─ ts_method_members_with_missing_body.ts:3:6
-  │
-3 │      set test(value)
-  │      ^^^ Expected a class method body here
+ts_method_members_with_missing_body.ts:3:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a class method body but instead found 'set'
+  
+  × Expected a class method body here
+  
+    1 │ class Test {
+    2 │      constructor() method() get test()
+  > 3 │      set test(value)
+      │      ^^^
+    4 │ }
+    5 │ 
+  
 --
-error[SyntaxError]: expected a class method body but instead found '}'
-  ┌─ ts_method_members_with_missing_body.ts:4:1
-  │
-4 │ }
-  │ ^ Expected a class method body here
+ts_method_members_with_missing_body.ts:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a class method body but instead found '}'
+  
+  × Expected a class method body here
+  
+    2 │      constructor() method() get test()
+    3 │      set test(value)
+  > 4 │ }
+      │ ^
+    5 │ 
+  
 --
 class Test {
      constructor() method() get test()

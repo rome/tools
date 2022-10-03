@@ -274,7 +274,7 @@ const StyledDiv = styled.div`
 ```diff
 --- Prettier
 +++ Rome
-@@ -1,78 +1,74 @@
+@@ -1,39 +1,35 @@
  const ListItem1 = styled.li``;
  
 -const ListItem2 = styled.li``;
@@ -296,11 +296,11 @@ const StyledDiv = styled.div`
  const TomatoButton = Button.extend`
 -  color: tomato;
 +	color  : tomato  ;
-+
-+border-color : tomato
-+    ;
  
 -  border-color: tomato;
++border-color : tomato
++    ;
++
  `;
  
  Button.extend.attr({})`
@@ -326,46 +326,16 @@ const StyledDiv = styled.div`
  
  styled.div`
    color: ${(props) => props.theme.colors.paragraph};
-   /* prettier-ignore */
--  ${(props) => (props.small ? "font-size: 0.8em;" : "")};
-+  ${(props) => props.small ? "font-size: 0.8em;" : ""};
- `;
- 
- styled.div`
-   color: ${(props) => props.theme.colors.paragraph};
-   /* prettier-ignore */
--  ${(props) => (props.small ? "font-size: 0.8em;" : "")}
-+  ${(props) => props.small ? "font-size: 0.8em;" : ""}
+@@ -48,7 +44,7 @@
  `;
  
  styled.div`
 -  /* prettier-ignore */
 +   /* prettier-ignore */
    color: ${(props) => props.theme.colors.paragraph};
--  ${(props) => (props.small ? "font-size: 0.8em;" : "")};
-+  ${(props) => props.small ? "font-size: 0.8em;" : ""};
+   ${(props) => (props.small ? "font-size: 0.8em;" : "")};
  `;
- 
- styled.div`
-   color: ${(props) => props.theme.colors.paragraph};
-   /* prettier-ignore */
--  ${(props) => (props.small ? "font-size: 0.8em;" : "")};
-+  ${(props) => props.small ? "font-size: 0.8em;" : ""};
-   /* prettier-ignore */
--  ${(props) => (props.red ? "color: red;" : "")};
-+  ${(props) => props.red ? "color: red;" : ""};
- `;
- 
- styled.div`
-   /* prettier-ignore */
-   color: ${(props) => props.theme.colors.paragraph};
-   /* prettier-ignore */
--  ${(props) => (props.small ? "font-size: 0.8em;" : "")};
-+  ${(props) => props.small ? "font-size: 0.8em;" : ""};
-   /* prettier-ignore */
--  ${(props) => (props.red ? "color: red;" : "")};
-+  ${(props) => props.red ? "color: red;" : ""};
-   /* prettier-ignore */
+@@ -72,7 +68,7 @@
  `;
  
  styled.div`
@@ -434,84 +404,19 @@ const StyledDiv = styled.div`
  `;
  
  const Single2 = styled.div`
-@@ -198,11 +196,12 @@
-   height: 40px;
-   width: 40px;
- 
--  ${(props) =>
--    (props.complete || props.inProgress) &&
--    css`
-+  ${
-+  (props) =>
-+    (props.complete || props.inProgress) && css`
-       border-color: rgba(var(--green-rgb), 0.15);
--    `}
-+    `
-+}
- 
-   div {
-     background-color: var(--purpleTT);
-@@ -211,39 +210,44 @@
-     color: var(--purpleTT);
-     display: inline-flex;
- 
--    ${(props) =>
--      props.complete &&
--      css`
-+    ${
-+  (props) =>
-+    props.complete && css`
-         background-color: var(--green);
-         border-width: 7px;
--      `}
-+      `
-+}
- 
--    ${(props) =>
--      (props.complete || props.inProgress) &&
--      css`
-+    ${
-+  (props) =>
-+    (props.complete || props.inProgress) && css`
-         border-color: var(--green);
--      `}
-+      `
-+}
-   }
- `;
- 
- const A = styled.a`
-   display: inline-block;
-   color: #fff;
--  ${(props) =>
--    props.a &&
--    css`
+@@ -232,9 +230,9 @@
+   ${(props) =>
+     props.a &&
+     css`
 -      display: none;
 -    `}
 -  height: 30px;
-+  ${
-+  (props) =>
-+    props.a && css`
 +    display: none;
-+  `
-+}
++  `}
 +   height: 30px;
  `;
  
  const Foo = styled.p`
-   max-width: 980px;
--  ${mediaBreakpointOnlyXs`
-+  ${
-+  mediaBreakpointOnlyXs`
-     && {
-       font-size: 0.8rem;
-     }
--  `}
-+  `
-+}
- 
-   &.bottom {
-     margin-top: 3rem;
 ```
 
 # Output
@@ -553,36 +458,36 @@ border : rebeccapurple`;
 styled.div`
   color: ${(props) => props.theme.colors.paragraph};
   /* prettier-ignore */
-  ${(props) => props.small ? "font-size: 0.8em;" : ""};
+  ${(props) => (props.small ? "font-size: 0.8em;" : "")};
 `;
 
 styled.div`
   color: ${(props) => props.theme.colors.paragraph};
   /* prettier-ignore */
-  ${(props) => props.small ? "font-size: 0.8em;" : ""}
+  ${(props) => (props.small ? "font-size: 0.8em;" : "")}
 `;
 
 styled.div`
    /* prettier-ignore */
   color: ${(props) => props.theme.colors.paragraph};
-  ${(props) => props.small ? "font-size: 0.8em;" : ""};
+  ${(props) => (props.small ? "font-size: 0.8em;" : "")};
 `;
 
 styled.div`
   color: ${(props) => props.theme.colors.paragraph};
   /* prettier-ignore */
-  ${(props) => props.small ? "font-size: 0.8em;" : ""};
+  ${(props) => (props.small ? "font-size: 0.8em;" : "")};
   /* prettier-ignore */
-  ${(props) => props.red ? "color: red;" : ""};
+  ${(props) => (props.red ? "color: red;" : "")};
 `;
 
 styled.div`
   /* prettier-ignore */
   color: ${(props) => props.theme.colors.paragraph};
   /* prettier-ignore */
-  ${(props) => props.small ? "font-size: 0.8em;" : ""};
+  ${(props) => (props.small ? "font-size: 0.8em;" : "")};
   /* prettier-ignore */
-  ${(props) => props.red ? "color: red;" : ""};
+  ${(props) => (props.red ? "color: red;" : "")};
   /* prettier-ignore */
 `;
 
@@ -715,12 +620,11 @@ const bar = styled.div`
   height: 40px;
   width: 40px;
 
-  ${
-  (props) =>
-    (props.complete || props.inProgress) && css`
+  ${(props) =>
+    (props.complete || props.inProgress) &&
+    css`
       border-color: rgba(var(--green-rgb), 0.15);
-    `
-}
+    `}
 
   div {
     background-color: var(--purpleTT);
@@ -729,44 +633,39 @@ const bar = styled.div`
     color: var(--purpleTT);
     display: inline-flex;
 
-    ${
-  (props) =>
-    props.complete && css`
+    ${(props) =>
+      props.complete &&
+      css`
         background-color: var(--green);
         border-width: 7px;
-      `
-}
+      `}
 
-    ${
-  (props) =>
-    (props.complete || props.inProgress) && css`
+    ${(props) =>
+      (props.complete || props.inProgress) &&
+      css`
         border-color: var(--green);
-      `
-}
+      `}
   }
 `;
 
 const A = styled.a`
   display: inline-block;
   color: #fff;
-  ${
-  (props) =>
-    props.a && css`
+  ${(props) =>
+    props.a &&
+    css`
     display: none;
-  `
-}
+  `}
    height: 30px;
 `;
 
 const Foo = styled.p`
   max-width: 980px;
-  ${
-  mediaBreakpointOnlyXs`
+  ${mediaBreakpointOnlyXs`
     && {
       font-size: 0.8rem;
     }
-  `
-}
+  `}
 
   &.bottom {
     margin-top: 3rem;

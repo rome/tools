@@ -75,11 +75,13 @@ JsModule {
       0: SEMICOLON@28..29 ";" [] []
   3: EOF@29..30 "" [Newline("\n")] []
 --
-error[SyntaxError]: 'declare' modifier is only allowed on properties.
-  ┌─ ts_declare_property_private_name.ts:1:11
-  │
-1 │ class A { declare #name(); };
-  │           ^^^^^^^
+ts_declare_property_private_name.ts:1:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'declare' modifier is only allowed on properties.
+  
+  > 1 │ class A { declare #name(); };
+      │           ^^^^^^^
+    2 │ 
+  
 --
 class A { declare #name(); };

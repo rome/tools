@@ -84,12 +84,17 @@ JsModule {
         2: R_CURLY@51..53 "}" [Newline("\n")] []
   3: EOF@53..54 "" [Newline("\n")] []
 --
-error[SyntaxError]: A `break` statement can only be used within an enclosing iteration or switch statement.
-  ┌─ break_in_nested_function.js:3:5
-  │
-3 │     break;
-  │     ^^^^^
+break_in_nested_function.js:3:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × A `break` statement can only be used within an enclosing iteration or switch statement.
+  
+    1 │ while (true) {
+    2 │   function helper() {
+  > 3 │     break;
+      │     ^^^^^
+    4 │   }
+    5 │ }
+  
 --
 while (true) {
   function helper() {

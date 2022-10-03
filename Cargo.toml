@@ -4,12 +4,12 @@
 resolver = "2"
 members = [
 	"crates/*",
-	"website/playground",
 	"xtask/bench",
 	"xtask/codegen",
 	"xtask/coverage",
 	"xtask/lintdoc",
 	"xtask/libs_bench",
+	"xtask/contributors",
 ]
 
 [profile.release-with-debug]

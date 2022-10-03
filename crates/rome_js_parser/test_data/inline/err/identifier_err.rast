@@ -199,54 +199,89 @@ JsModule {
       1: SEMICOLON@96..97 ";" [] []
   3: EOF@97..98 "" [Newline("\n")] []
 --
-error[SyntaxError]: Illegal use of reserved keyword `yield` as an identifier in strict mode
-  ┌─ identifier_err.js:1:1
-  │
-1 │ yield;
-  │ ^^^^^
+identifier_err.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of reserved keyword `yield` as an identifier in strict mode
+  
+  > 1 │ yield;
+      │ ^^^^^
+    2 │ await;
+    3 │ async function test(await) {}
+  
 --
-error[SyntaxError]: expected an unary expression but instead found ';'
-  ┌─ identifier_err.js:2:6
-  │
-2 │ await;
-  │      ^ Expected an unary expression here
+identifier_err.js:2:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected an unary expression but instead found ';'
+  
+  × Expected an unary expression here
+  
+    1 │ yield;
+  > 2 │ await;
+      │      ^
+    3 │ async function test(await) {}
+    4 │ function* test(yield) {}
+  
 --
-error[SyntaxError]: Illegal use of `await` as an identifier in an async context
-  ┌─ identifier_err.js:3:21
-  │
-3 │ async function test(await) {}
-  │                     ^^^^^
+identifier_err.js:3:21 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of `await` as an identifier in an async context
+  
+    1 │ yield;
+    2 │ await;
+  > 3 │ async function test(await) {}
+      │                     ^^^^^
+    4 │ function* test(yield) {}
+    5 │ enum;
+  
 --
-error[SyntaxError]: Illegal use of `yield` as an identifier in generator function
-  ┌─ identifier_err.js:4:16
-  │
-4 │ function* test(yield) {}
-  │                ^^^^^
+identifier_err.js:4:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of `yield` as an identifier in generator function
+  
+    2 │ await;
+    3 │ async function test(await) {}
+  > 4 │ function* test(yield) {}
+      │                ^^^^^
+    5 │ enum;
+    6 │ implements;
+  
 --
-error[SyntaxError]: 'enum's are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  ┌─ identifier_err.js:5:1
-  │
-5 │ enum;
-  │ ^^^^ TypeScript only syntax
+identifier_err.js:5:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × 'enum's are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
+  
+  × TypeScript only syntax
+  
+    3 │ async function test(await) {}
+    4 │ function* test(yield) {}
+  > 5 │ enum;
+      │ ^^^^
+    6 │ implements;
+    7 │ interface;
+  
 --
-error[SyntaxError]: Illegal use of reserved keyword `implements` as an identifier in strict mode
-  ┌─ identifier_err.js:6:1
-  │
-6 │ implements;
-  │ ^^^^^^^^^^
+identifier_err.js:6:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of reserved keyword `implements` as an identifier in strict mode
+  
+    4 │ function* test(yield) {}
+    5 │ enum;
+  > 6 │ implements;
+      │ ^^^^^^^^^^
+    7 │ interface;
+    8 │ 
+  
 --
-error[SyntaxError]: Illegal use of reserved keyword `interface` as an identifier in strict mode
-  ┌─ identifier_err.js:7:1
-  │
-7 │ interface;
-  │ ^^^^^^^^^
+identifier_err.js:7:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Illegal use of reserved keyword `interface` as an identifier in strict mode
+  
+    5 │ enum;
+    6 │ implements;
+  > 7 │ interface;
+      │ ^^^^^^^^^
+    8 │ 
+  
 --
 yield;
 await;

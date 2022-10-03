@@ -7,11 +7,16 @@ use std::fs::read_to_string;
 use std::io::Read;
 use std::{fs::File, io, io::Write, ops::Deref, path::PathBuf};
 
+use rome_diagnostics::file::FileId;
+
 #[derive(Debug, Clone, Eq, Hash, PartialEq)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[cfg_attr(
+    feature = "serde",
+    derive(serde::Serialize, serde::Deserialize, schemars::JsonSchema)
+)]
 pub struct RomePath {
     path: PathBuf,
-    id: usize,
+    id: FileId,
 }
 
 impl Deref for RomePath {
@@ -23,7 +28,7 @@ impl Deref for RomePath {
 }
 
 impl RomePath {
-    pub fn new(path_to_file: impl Into<PathBuf>, id: usize) -> Self {
+    pub fn new(path_to_file: impl Into<PathBuf>, id: FileId) -> Self {
         Self {
             path: path_to_file.into(),
             id,
@@ -61,7 +66,7 @@ impl RomePath {
     }
 
     /// Retrieves the ID assigned to the file
-    pub fn file_id(&self) -> usize {
+    pub fn file_id(&self) -> FileId {
         self.id
     }
 

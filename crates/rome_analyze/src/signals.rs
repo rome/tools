@@ -1,28 +1,26 @@
-use std::marker::PhantomData;
-
-use rome_console::MarkupBuf;
-use rome_diagnostics::{
-    file::{FileId, FileSpan},
-    Applicability, CodeSuggestion, Diagnostic, SuggestionChange, SuggestionStyle,
-};
-use rome_rowan::{BatchMutation, Language};
-
 use crate::{
     categories::ActionCategory,
     context::RuleContext,
-    registry::{LanguageRoot, RuleLanguage, RuleRoot},
+    registry::{RuleLanguage, RuleRoot},
     rule::Rule,
-    Queryable, RuleGroup, ServiceBag,
+    AnalyzerDiagnostic, Queryable, RuleGroup, ServiceBag,
 };
+use rome_console::MarkupBuf;
+use rome_diagnostics::{
+    file::{FileId, FileSpan},
+    Applicability, CodeSuggestion,
+};
+use rome_rowan::{BatchMutation, Language};
+use std::marker::PhantomData;
 
 /// Event raised by the analyzer when a [Rule](crate::Rule)
 /// emits a diagnostic, a code action, or both
 pub trait AnalyzerSignal<L: Language> {
-    fn diagnostic(&self) -> Option<Diagnostic>;
+    fn diagnostic(&self) -> Option<AnalyzerDiagnostic>;
     fn action(&self) -> Option<AnalyzerAction<L>>;
 }
 
-/// Simple implementation of [AnalyzerSignal] generating a diagnostic from a
+/// Simple implementation of [AnalyzerSignal] generating a [AnalyzerDiagnostic] from a
 /// provided factory function
 pub(crate) struct DiagnosticSignal<F> {
     factory: F,
@@ -30,7 +28,7 @@ pub(crate) struct DiagnosticSignal<F> {
 
 impl<F> DiagnosticSignal<F>
 where
-    F: Fn() -> Diagnostic,
+    F: Fn() -> AnalyzerDiagnostic,
 {
     pub(crate) fn new(factory: F) -> Self {
         Self { factory }
@@ -39,9 +37,9 @@ where
 
 impl<L: Language, F> AnalyzerSignal<L> for DiagnosticSignal<F>
 where
-    F: Fn() -> Diagnostic,
+    F: Fn() -> AnalyzerDiagnostic,
 {
-    fn diagnostic(&self) -> Option<Diagnostic> {
+    fn diagnostic(&self) -> Option<AnalyzerDiagnostic> {
         Some((self.factory)())
     }
 
@@ -63,7 +61,7 @@ pub struct AnalyzerAction<L: Language> {
     pub category: ActionCategory,
     pub applicability: Applicability,
     pub message: MarkupBuf,
-    pub mutation: BatchMutation<L, LanguageRoot<L>>,
+    pub mutation: BatchMutation<L>,
 }
 
 impl<L> From<AnalyzerAction<L>> for CodeSuggestion
@@ -71,17 +69,16 @@ where
     L: Language,
 {
     fn from(action: AnalyzerAction<L>) -> Self {
-        let (range, indels) = action.mutation.as_text_edits().unwrap_or_default();
+        let (range, suggestion) = action.mutation.as_text_edits().unwrap_or_default();
 
         CodeSuggestion {
-            substitution: SuggestionChange::Indels(indels),
             span: FileSpan {
                 file: action.file_id,
                 range,
             },
             applicability: action.applicability,
             msg: action.message,
-            style: SuggestionStyle::Full,
+            suggestion,
             labels: Vec::new(),
         }
     }
@@ -124,16 +121,9 @@ where
     G: RuleGroup,
     R: Rule,
 {
-    fn diagnostic(&self) -> Option<Diagnostic> {
+    fn diagnostic(&self) -> Option<AnalyzerDiagnostic> {
         let ctx = RuleContext::new(&self.query_result, self.root, self.services).ok()?;
-
-        R::diagnostic(&ctx, &self.state).map(|diag| {
-            diag.into_diagnostic(
-                self.file_id,
-                format!("{}/{}", G::NAME, R::METADATA.name),
-                format!("https://rome.tools/docs/lint/rules/{}/", R::METADATA.name),
-            )
-        })
+        R::diagnostic(&ctx, &self.state).map(|diag| diag.into_analyzer_diagnostic(self.file_id))
     }
 
     fn action(&self) -> Option<AnalyzerAction<RuleLanguage<R>>> {

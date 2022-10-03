@@ -45,11 +45,15 @@ JsModule {
       5: (empty)
   3: EOF@17..18 "" [Newline("\n")] []
 --
-error[SyntaxError]: expected a type but instead found ''
-  ┌─ ts_tuple_type_incomplete.ts:2:1
-  │
-2 │ 
-  │ ^ Expected a type here
+ts_tuple_type_incomplete.ts:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × expected a type but instead found ''
+  
+  × Expected a type here
+  
+    1 │ type A = [string,
+  > 2 │ 
+      │ 
+  
 --
 type A = [string,

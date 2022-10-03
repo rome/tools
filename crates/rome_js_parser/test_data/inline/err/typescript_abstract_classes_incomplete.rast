@@ -38,11 +38,13 @@ JsModule {
       0: SEMICOLON@17..18 ";" [] []
   3: EOF@18..19 "" [Newline("\n")] []
 --
-error[SyntaxError]: class declarations must have a name
-  ┌─ typescript_abstract_classes_incomplete.ts:1:10
-  │
-1 │ abstract class {};
-  │          ^^^^^^
+typescript_abstract_classes_incomplete.ts:1:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × class declarations must have a name
+  
+  > 1 │ abstract class {};
+      │          ^^^^^^
+    2 │ 
+  
 --
 abstract class {};

@@ -1,7 +1,8 @@
 use crate::prelude::*;
 
+use crate::parentheses::NeedsParentheses;
 use rome_formatter::write;
-use rome_js_syntax::{TsTupleType, TsTupleTypeFields};
+use rome_js_syntax::{JsSyntaxNode, TsTupleType, TsTupleTypeFields};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsTupleType;
@@ -14,12 +15,32 @@ impl FormatNodeRule<TsTupleType> for FormatTsTupleType {
             r_brack_token,
         } = node.as_fields();
 
-        write!(
-            f,
-            [
-                format_delimited(&l_brack_token?, &elements.format(), &r_brack_token?,)
-                    .soft_block_indent()
-            ]
-        )
+        write!(f, [l_brack_token.format(),])?;
+
+        if elements.is_empty() {
+            write!(
+                f,
+                [format_dangling_comments(node.syntax()).with_soft_block_indent()]
+            )?;
+        } else {
+            write!(f, [group(&soft_block_indent(&elements.format())),])?;
+        }
+
+        write!(f, [r_brack_token.format(),])
+    }
+
+    fn needs_parentheses(&self, item: &TsTupleType) -> bool {
+        item.needs_parentheses()
+    }
+
+    fn fmt_dangling_comments(&self, _: &TsTupleType, _: &mut JsFormatter) -> FormatResult<()> {
+        // Handled inside of `fmt_fields`
+        Ok(())
+    }
+}
+
+impl NeedsParentheses for TsTupleType {
+    fn needs_parentheses_with_parent(&self, _parent: &JsSyntaxNode) -> bool {
+        false
     }
 }

@@ -9,6 +9,7 @@ self.addEventListener("message", (e) => {
 				indentStyle,
 				indentWidth,
 				quoteStyle,
+				quoteProperties,
 				isTypeScript,
 			} = e.data.playgroundState;
 			const prettierOutput = formatWithPrettier(code, {
@@ -17,6 +18,7 @@ self.addEventListener("message", (e) => {
 				indentWidth,
 				language: isTypeScript ? "ts" : "js",
 				quoteStyle,
+				quoteProperties,
 			});
 
 			self.postMessage({

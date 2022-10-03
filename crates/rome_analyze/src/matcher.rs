@@ -113,17 +113,58 @@ impl<'phase, L: Language> PartialEq for SignalEntry<'phase, L> {
     }
 }
 
+/// Adapter type wrapping a [QueryMatcher] type with a function that can be
+/// used to inspect the query matches emitted by the analyzer
+pub struct InspectMatcher<F, I> {
+    func: F,
+    inner: I,
+}
+
+impl<F, I> InspectMatcher<F, I> {
+    ///  Create a new instance of [InspectMatcher] from an existing [QueryMatcher]
+    /// object and an inspection function
+    pub fn new<L>(inner: I, func: F) -> Self
+    where
+        L: Language,
+        F: FnMut(&MatchQueryParams<L>),
+        I: QueryMatcher<L>,
+    {
+        Self { func, inner }
+    }
+}
+
+impl<L, F, I> QueryMatcher<L> for InspectMatcher<F, I>
+where
+    L: Language,
+    F: FnMut(&MatchQueryParams<L>),
+    I: QueryMatcher<L>,
+{
+    fn find_group(&self, group: &str) -> Option<GroupKey> {
+        self.inner.find_group(group)
+    }
+
+    fn find_rule(&self, group: &str, rule: &str) -> Option<RuleKey> {
+        self.inner.find_rule(group, rule)
+    }
+
+    fn match_query(&mut self, params: MatchQueryParams<L>) {
+        (self.func)(&params);
+        self.inner.match_query(params);
+    }
+}
+
 #[cfg(test)]
 mod tests {
-    use rome_diagnostics::Diagnostic;
+    use rome_diagnostics::{file::FileId, v2::category, Diagnostic, Severity};
     use rome_rowan::{
         raw_language::{RawLanguage, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
         AstNode, TextRange, TextSize, TriviaPiece, TriviaPieceKind,
     };
 
     use crate::{
-        signals::DiagnosticSignal, Analyzer, AnalyzerContext, AnalyzerSignal, ControlFlow, Never,
-        Phases, QueryMatch, QueryMatcher, RuleKey, ServiceBag, SignalEntry, SyntaxVisitor,
+        signals::DiagnosticSignal, Analyzer, AnalyzerContext, AnalyzerDiagnostic, AnalyzerSignal,
+        ControlFlow, Never, Phases, QueryMatch, QueryMatcher, RuleKey, ServiceBag, SignalEntry,
+        SyntaxVisitor,
     };
 
     use super::{GroupKey, MatchQueryParams};
@@ -164,7 +205,17 @@ mod tests {
             let span = node.text_trimmed_range();
             params.signal_queue.push(SignalEntry {
                 signal: Box::new(DiagnosticSignal::new(move || {
-                    Diagnostic::warning(0, "test_suppression", "test_suppression").primary(span, "")
+                    AnalyzerDiagnostic::from_diagnostic(
+                        Diagnostic::warning(
+                            FileId::zero(),
+                            // This is a random category for testing that's
+                            // pretty much guaranteed to never be emitted by
+                            // the analyzer
+                            category!("args/fileNotFound"),
+                            "test_suppression",
+                        )
+                        .primary(span, ""),
+                    )
                 })),
                 rule: RuleKey::new("group", "rule"),
                 text_range: span,
@@ -264,7 +315,10 @@ mod tests {
 
         let mut diagnostics = Vec::new();
         let mut emit_signal = |signal: &dyn AnalyzerSignal<RawLanguage>| -> ControlFlow<Never> {
-            let diag = signal.diagnostic().expect("diagnostic");
+            let diag = signal
+                .diagnostic()
+                .expect("diagnostic")
+                .into_diagnostic(Severity::Warning);
 
             let code = diag.code.expect("code");
             let label = diag.primary.expect("primary label");
@@ -290,7 +344,7 @@ mod tests {
         analyzer.add_visitor(Phases::Syntax, SyntaxVisitor::default());
 
         let ctx: AnalyzerContext<RawLanguage> = AnalyzerContext {
-            file_id: 0,
+            file_id: FileId::zero(),
             root,
             range: None,
             services: ServiceBag::default(),
@@ -303,19 +357,19 @@ mod tests {
             diagnostics.as_slice(),
             &[
                 (
-                    String::from("Linter"),
+                    category!("suppressions/unknownGroup"),
                     TextRange::new(TextSize::from(47), TextSize::from(62))
                 ),
                 (
-                    String::from("test_suppression"),
+                    category!("args/fileNotFound"),
                     TextRange::new(TextSize::from(63), TextSize::from(74))
                 ),
                 (
-                    String::from("Linter"),
+                    category!("suppressions/unknownRule"),
                     TextRange::new(TextSize::from(76), TextSize::from(96))
                 ),
                 (
-                    String::from("test_suppression"),
+                    category!("args/fileNotFound"),
                     TextRange::new(TextSize::from(97), TextSize::from(108))
                 ),
             ]

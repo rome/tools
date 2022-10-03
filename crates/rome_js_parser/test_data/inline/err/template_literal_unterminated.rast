@@ -74,13 +74,14 @@ JsModule {
       1: (empty)
   3: EOF@20..20 "" [] []
 --
-error: unterminated template literal
-  ┌─ template_literal_unterminated.js:1:16
-  │  
-1 │   let a = `${foo} bar
-  │ ┌────────────────^
-2 │ │ 
-  │ └^
+template_literal_unterminated.js:1:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × unterminated template literal
+  
+  > 1 │ let a = `${foo} bar
+      │                ^^^^
+  > 2 │ 
+      │ 
+  
 --
 let a = `${foo} bar

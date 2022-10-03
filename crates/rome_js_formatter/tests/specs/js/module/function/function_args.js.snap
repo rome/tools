@@ -13,6 +13,7 @@ function foo(someotherlongvariableshould1, someotherlongvariableshould2, someoth
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 function foo(
 	someotherlongvariableshould1,

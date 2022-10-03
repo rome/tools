@@ -1,12 +1,12 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import prettier from "prettier";
+import prettier, { Options } from "prettier";
 // @ts-ignore
 import parserBabel from "prettier/esm/parser-babel";
 import {
-	defaultRomeConfig,
 	IndentStyle,
 	PlaygroundState,
 	QuoteStyle,
+	QuoteProperties,
 	RomeConfiguration,
 	SourceType,
 } from "./types";
@@ -46,39 +46,41 @@ export function useWindowSize(): Size {
 	return windowSize;
 }
 
-export function usePlaygroundState(defaultRomeConfig: RomeConfiguration): [
-	PlaygroundState,
-	Dispatch<SetStateAction<PlaygroundState>>,
-] {
+export function usePlaygroundState(
+	defaultRomeConfig: RomeConfiguration,
+): [PlaygroundState, Dispatch<SetStateAction<PlaygroundState>>] {
 	const searchParams = new URLSearchParams(window.location.search);
 	const initState = () => ({
 		code:
-			window.location.hash !== "#" ? decodeCode(
-				window.location.hash.substring(1),
-			) : "",
+			window.location.hash !== "#"
+				? decodeCode(window.location.hash.substring(1))
+				: "",
 		lineWidth: parseInt(
 			searchParams.get("lineWidth") ?? defaultRomeConfig.lineWidth,
 		),
 		indentStyle:
-			(
-				searchParams.get("indentStyle") as IndentStyle
-			) ?? defaultRomeConfig.indentStyle,
+			(searchParams.get("indentStyle") as IndentStyle) ??
+			defaultRomeConfig.indentStyle,
 		quoteStyle:
-			(
-				searchParams.get("quoteStyle") as QuoteStyle
-			) ?? defaultRomeConfig.quoteStyle,
+			(searchParams.get("quoteStyle") as QuoteStyle) ??
+			defaultRomeConfig.quoteStyle,
+		quoteProperties:
+			(searchParams.get("quoteProperties") as QuoteProperties) ??
+			defaultRomeConfig.quoteProperties,
 		indentWidth: parseInt(
 			searchParams.get("indentWidth") ?? defaultRomeConfig.indentWidth,
 		),
 		isTypeScript:
-			searchParams.get(
-				"typescript",
-			) === "true" || defaultRomeConfig.isTypeScript,
+			searchParams.get("typescript") === "true" ||
+			defaultRomeConfig.isTypeScript,
 		isJsx: searchParams.get("jsx") === "true" || defaultRomeConfig.isJsx,
 		sourceType:
-			(
-				searchParams.get("sourceType") as SourceType
-			) ?? defaultRomeConfig.sourceType,
+			(searchParams.get("sourceType") as SourceType) ??
+			defaultRomeConfig.sourceType,
+		cursorPosition: 0,
+		enabledNurseryRules:
+			searchParams.get("enabledNurseryRules") === "true" ||
+			defaultRomeConfig.enabledNurseryRules,
 	});
 	const [playgroundState, setPlaygroundState] = useState(initState());
 
@@ -89,12 +91,17 @@ export function usePlaygroundState(defaultRomeConfig: RomeConfiguration): [
 	useEffect(() => {
 		const { code, isTypeScript, isJsx } = playgroundState;
 		const queryString = new URLSearchParams({
-			...crateObjectExcludeKeys(playgroundState, ["isTypeScript", "isJsx"]),
+			...crateObjectExcludeKeys(playgroundState, [
+				"isTypeScript",
+				"isJsx",
+				"cursorPosition",
+			]),
 			typescript: isTypeScript.toString(),
 			jsx: isJsx.toString(),
 		}).toString();
-		const url = `${window.location.protocol}//${window.location.host}${window
-			.location.pathname}?${queryString}#${encodeCode(code)}`;
+		const url = `${window.location.protocol}//${window.location.host}${
+			window.location.pathname
+		}?${queryString}#${encodeCode(code)}`;
 
 		window.history.replaceState({ path: url }, "", url);
 	}, [playgroundState]);
@@ -122,27 +129,33 @@ export function formatWithPrettier(
 		indentWidth: number;
 		language: "js" | "ts";
 		quoteStyle: QuoteStyle;
+		quoteProperties: QuoteProperties;
 	},
 ): { code: string; ir: string } {
 	try {
-		const prettierOptions = {
+		const prettierOptions: Options = {
 			useTabs: options.indentStyle === IndentStyle.Tab,
 			tabWidth: options.indentWidth,
 			printWidth: options.lineWidth,
 			parser: getPrettierParser(options.language),
 			plugins: [parserBabel],
 			singleQuote: options.quoteStyle === QuoteStyle.Single,
+			quoteProps: options.quoteProperties,
 		};
 
 		// @ts-ignore
 		let debug = prettier.__debug;
 		const document = debug.printToDoc(code, prettierOptions);
-		const formattedCode = debug.printDocToString(document, prettierOptions)
-			.formatted;
+
+		// formatDoc must be before printDocToString because printDocToString mutates the document and breaks the ir
 		const ir = debug.formatDoc(document, {
 			parser: "babel",
 			plugins: [parserBabel],
 		});
+		const formattedCode = debug.printDocToString(
+			document,
+			prettierOptions,
+		).formatted;
 		return { code: formattedCode, ir };
 	} catch (err: any) {
 		console.error(err);

@@ -1,14 +1,27 @@
-import { ExtensionContext, Uri, window, workspace } from "vscode";
+import { spawn } from "child_process";
+import { connect } from "net";
 import {
+	ExtensionContext,
+	languages,
+	TextEditor,
+	Uri,
+	window,
+	workspace,
+} from "vscode";
+import {
+	DocumentFilter,
 	LanguageClient,
 	LanguageClientOptions,
 	ServerOptions,
-	TransportKind,
+	StreamInfo,
 } from "vscode-languageclient/node";
+import { join, isAbsolute } from "path";
+import { existsSync } from "fs";
 import { setContextValue } from "./utils";
 import { Session } from "./session";
 import { syntaxTree } from "./commands/syntaxTree";
 import { Commands } from "./commands";
+import { StatusBar } from "./statusBar";
 
 let client: LanguageClient;
 
@@ -17,6 +30,7 @@ const IN_ROME_PROJECT = "inRomeProject";
 export async function activate(context: ExtensionContext) {
 	const command =
 		process.env.DEBUG_SERVER_PATH || (await getServerPath(context));
+
 	if (!command) {
 		await window.showErrorMessage(
 			"The Rome extensions doesn't ship with prebuilt binaries for your platform yet. " +
@@ -26,28 +40,24 @@ export async function activate(context: ExtensionContext) {
 		return;
 	}
 
-	const serverOptions: ServerOptions = {
+	const statusBar = new StatusBar();
+
+	const serverOptions: ServerOptions = createMessageTransports.bind(
+		undefined,
 		command,
-		transport: TransportKind.stdio,
-	};
+	);
 
 	const traceOutputChannel = window.createOutputChannel("Rome Trace");
 
-	// only override serverOptions.options when developing extension,
-	// this is convenient for debugging
-	// Before, every time we modify the client package, we need to rebuild vscode extension and install, for now, we could use Launching Client or press F5 to open a separate debug window and doing some check, finally we could bundle the vscode and do some final check.
-	// Passing such variable via `Launch.json`, you need not to add an extra environment variable or change the setting.json `rome.lspBin`,
-	if (process.env.DEBUG_SERVER_PATH) {
-		serverOptions.options = { env: { ...process.env } };
-	}
+	const documentSelector: DocumentFilter[] = [
+		{ language: "javascript" },
+		{ language: "typescript" },
+		{ language: "javascriptreact" },
+		{ language: "typescriptreact" },
+	];
 
 	const clientOptions: LanguageClientOptions = {
-		documentSelector: [
-			{ scheme: "file", language: "javascript" },
-			{ scheme: "file", language: "typescript" },
-			{ scheme: "file", language: "javascriptreact" },
-			{ scheme: "file", language: "typescriptreact" },
-		],
+		documentSelector,
 		traceOutputChannel,
 	};
 
@@ -55,10 +65,37 @@ export async function activate(context: ExtensionContext) {
 
 	const session = new Session(context, client);
 
+	const codeDocumentSelector =
+		client.protocol2CodeConverter.asDocumentSelector(documentSelector);
+
 	// we are now in a rome project
 	setContextValue(IN_ROME_PROJECT, true);
 
 	session.registerCommand(Commands.SyntaxTree, syntaxTree(session));
+	session.registerCommand(Commands.ServerStatus, () => {
+		traceOutputChannel.show();
+	});
+
+	context.subscriptions.push(
+		client.onDidChangeState((evt) => {
+			statusBar.setServerState(evt.newState);
+		}),
+	);
+
+	const handleActiveTextEditorChanged = (textEditor?: TextEditor) => {
+		if (!textEditor) {
+			statusBar.setActive(false);
+		}
+
+		const { document } = textEditor;
+		statusBar.setActive(languages.match(codeDocumentSelector, document) > 0);
+	};
+
+	context.subscriptions.push(
+		window.onDidChangeActiveTextEditor(handleActiveTextEditorChanged),
+	);
+
+	handleActiveTextEditorChanged(window.activeTextEditor);
 
 	client.start();
 }
@@ -80,13 +117,24 @@ const PLATFORM_TRIPLETS: PlatformTriplets = {
 	},
 };
 
-async function getServerPath(context: ExtensionContext): Promise<
-	string | undefined
-> {
+async function getServerPath(
+	context: ExtensionContext,
+): Promise<string | undefined> {
 	const config = workspace.getConfiguration();
 	const explicitPath = config.get("rome.lspBin");
 	if (typeof explicitPath === "string" && explicitPath !== "") {
-		return explicitPath;
+		if (isAbsolute(explicitPath)) {
+			return explicitPath;
+		} else {
+			for (let i = 0; i < workspace.workspaceFolders.length; i++) {
+				const workspaceFolder = workspace.workspaceFolders[i];
+				const possiblePath = join(workspaceFolder.uri.path, explicitPath);
+				if (existsSync(possiblePath)) {
+					return possiblePath;
+				}
+			}
+			return undefined;
+		}
 	}
 
 	const triplet = PLATFORM_TRIPLETS[process.platform]?.[process.arch];
@@ -95,7 +143,7 @@ async function getServerPath(context: ExtensionContext): Promise<
 	}
 
 	const binaryExt = triplet.includes("windows") ? ".exe" : "";
-	const binaryName = `rome_lsp${binaryExt}`;
+	const binaryName = `rome${binaryExt}`;
 
 	const bundlePath = Uri.joinPath(context.extensionUri, "server", binaryName);
 	const bundleExists = await fileExists(bundlePath);
@@ -114,6 +162,42 @@ async function fileExists(path: Uri) {
 			throw err;
 		}
 	}
+}
+
+function getSocket(command: string): Promise<string> {
+	return new Promise((resolve, reject) => {
+		const process = spawn(command, ["__print_socket"], {
+			stdio: "pipe",
+		});
+
+		process.on("error", reject);
+
+		let pipeName = "";
+		process.stdout.on("data", (data) => {
+			pipeName += data.toString("utf-8");
+		});
+
+		process.on("exit", (code) => {
+			if (code === 0) {
+				console.log(`"${pipeName}"`);
+				resolve(pipeName.trimEnd());
+			} else {
+				reject(code);
+			}
+		});
+	});
+}
+
+async function createMessageTransports(command: string): Promise<StreamInfo> {
+	const path = await getSocket(command);
+	const socket = connect(path);
+
+	await new Promise((resolve, reject) => {
+		socket.once("error", reject);
+		socket.once("ready", resolve);
+	});
+
+	return { writer: socket, reader: socket };
 }
 
 export function deactivate(): Thenable<void> | undefined {

@@ -1,5 +1,49 @@
 use crate::{AstNode, Language};
 
+/// Matches a `SyntaxNode` against an `ast` type.
+///
+/// # Example:
+///
+/// ```
+/// use rome_rowan::{match_ast, AstNode};
+/// use rome_rowan::raw_language::{LiteralExpression, RawLanguageRoot, RawLanguageKind, RawSyntaxTreeBuilder};
+///
+/// let mut builder = RawSyntaxTreeBuilder::new();
+/// builder.start_node(RawLanguageKind::ROOT);
+/// builder.start_node(RawLanguageKind::LITERAL_EXPRESSION);
+/// builder.token(RawLanguageKind::NUMBER_TOKEN, "5");
+/// builder.finish_node();
+/// builder.finish_node();
+///
+/// let root = builder.finish();
+///
+/// let text = match_ast! {
+///     match &root {
+///         RawLanguageRoot(root) => { format!("root: {}", root.text()) },
+///         LiteralExpression(literal) => { format!("literal: {}", literal.text()) },
+///         _ => {
+///             root.text().to_string()
+///         }
+///     }
+/// };
+///
+/// assert_eq!(text, "root: 5");
+/// ```
+#[macro_export]
+macro_rules! match_ast {
+    // Necessary because expressions aren't allowed in front of `{`
+    (match &$node:ident { $($tt:tt)* }) => { match_ast!(match (&$node) { $($tt)* }) };
+    (match $node:ident { $($tt:tt)* }) => { match_ast!(match ($node) { $($tt)* }) };
+
+    (match ($node:expr) {
+        $( $( $path:ident )::+ ($it:pat) => $res:expr, )*
+        _ => $catch_all:expr $(,)?
+    }) => {{
+        $( if let Some($it) = $($path::)+cast_ref($node) { $res } else )*
+        { $catch_all }
+    }};
+}
+
 /// Declares a custom union AstNode type with an ungram-like syntax
 ///
 /// # Example

@@ -1,0 +1,54 @@
+# We have code that relies on Rust code AND JS code, we want to run this job when the relevant code changes
+name: Checks for our runtimes
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'npm/**'
+      - 'crates/**'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'npm/**'
+      - 'crates/**'
+
+env:
+  RUST_LOG: info
+  RUST_BACKTRACE: 1
+
+jobs:
+  apis-check:
+    name: Checks on APIs project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR Branch
+        uses: actions/checkout@v3
+        with:
+          submodules: false
+      - name: Install wasm-pack
+        uses: jetli/wasm-pack-action@v0.3.0
+        with:
+          version: 'latest'
+      - name: Cache pnpm modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-
+      - uses: pnpm/action-setup@v2.1.0
+        with:
+          version: 7
+      - name: Install libraries
+        working-directory: npm/rome
+        run: pnpm i
+      - name: Compile backends
+        run: |      
+          pnpm --prefix npm/rome build:wasm-node
+          pnpm --prefix npm/backend-jsonrpc i
+          pnpm --prefix npm/backend-jsonrpc run build
+      - name: CI checks
+        working-directory: npm/rome
+        run: pnpm ci

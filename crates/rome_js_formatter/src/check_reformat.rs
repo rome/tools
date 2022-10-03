@@ -1,5 +1,5 @@
-use crate::{format_node, JsFormatContext};
-use rome_diagnostics::{file::SimpleFiles, termcolor, Emitter};
+use crate::{format_node, JsFormatOptions};
+use rome_diagnostics::{file::FileId, file::SimpleFiles, termcolor, Emitter};
 use rome_js_parser::parse;
 use rome_js_syntax::{JsSyntaxNode, SourceType};
 
@@ -8,7 +8,7 @@ pub struct CheckReformatParams<'a> {
     pub text: &'a str,
     pub source_type: SourceType,
     pub file_name: &'a str,
-    pub format_context: JsFormatContext,
+    pub options: JsFormatOptions,
 }
 
 /// Perform a second pass of formatting on a file, printing a diff if the
@@ -19,10 +19,10 @@ pub fn check_reformat(params: CheckReformatParams) {
         text,
         source_type,
         file_name,
-        format_context: context,
+        options,
     } = params;
 
-    let re_parse = parse(text, 0, source_type);
+    let re_parse = parse(text, FileId::zero(), source_type);
 
     // Panic if the result from the formatter has syntax errors
     if re_parse.has_errors() {
@@ -44,17 +44,17 @@ pub fn check_reformat(params: CheckReformatParams) {
         )
     }
 
-    let formatted = format_node(context.clone(), &re_parse.syntax()).unwrap();
-    let printed = formatted.print();
+    let formatted = format_node(options.clone(), &re_parse.syntax()).unwrap();
+    let printed = formatted.print().unwrap();
 
     if text != printed.as_code() {
-        let input_formatted = format_node(context, root).unwrap().into_format_element();
+        let input_formatted = format_node(options, root).unwrap().into_document();
 
         let pretty_input_ir = format!("{input_formatted}");
-        let pretty_reformat_ir = format!("{}", formatted.into_format_element());
+        let pretty_reformat_ir = format!("{}", formatted.into_document());
 
         // Print a diff of the Formatter IR emitted for the input and the output
-        let diff = similar_asserts::Diff::from_str(
+        let diff = similar_asserts::SimpleDiff::from_str(
             &pretty_input_ir,
             &pretty_reformat_ir,
             "input",
@@ -63,6 +63,6 @@ pub fn check_reformat(params: CheckReformatParams) {
 
         println!("{diff}");
 
-        similar_asserts::assert_str_eq!(text, printed.as_code());
+        similar_asserts::assert_eq!(text, printed.as_code());
     }
 }

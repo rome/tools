@@ -1,0 +1,11 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+expression: content
+---
+# Termination Message
+
+```block
+failed to parse argument '--indent-size': failed to parse '257': number too large to fit in target type
+```
+
+

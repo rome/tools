@@ -1,5 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
+info:
+  test_file: "typescript\\class\\methods.ts"
 ---
 
 # Input
@@ -56,12 +58,18 @@ export class Check {
 
 # Errors
 ```
-error[SyntaxError]: ';' expected'
-  ┌─ methods.ts:6:10
-  │
-6 │   export [Symbol.iterator](): Iterator<T>;
-  │          ^ An explicit or implicit semicolon is expected here...
+methods.ts:6:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × ';' expected'
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    5 │ interface Iterable<T> {
+  > 6 │   export [Symbol.iterator](): Iterator<T>;
+      │          ^
+    7 │ }
+    8 │ 
+  
 
 ```
 

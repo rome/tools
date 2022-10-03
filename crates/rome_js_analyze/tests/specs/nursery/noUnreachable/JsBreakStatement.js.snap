@@ -1,0 +1,76 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: JsBreakStatement.js
+---
+# Input
+```js
+function JsBreakStatement1() {
+    while (true) {
+        break;
+        break; // afterBreak
+    }
+}
+
+function JsBreakStatement2() {
+    while (true) {
+        break;
+        continue; // afterBreak
+    }
+}
+
+```
+
+# Diagnostics
+```
+JsBreakStatement.js:4:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+    2 │     while (true) {
+    3 │         break;
+  > 4 │         break; // afterBreak
+      │         ^^^^^^
+    5 │     }
+    6 │ }
+  
+  i This statement will break the flow of the code ...
+  
+    1 │ function JsBreakStatement1() {
+    2 │     while (true) {
+  > 3 │         break;
+      │         ^^^^^^
+    4 │         break; // afterBreak
+    5 │     }
+  
+
+```
+
+```
+JsBreakStatement.js:11:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This code is unreachable
+  
+  ! ... before it can reach this code
+  
+     9 │     while (true) {
+    10 │         break;
+  > 11 │         continue; // afterBreak
+       │         ^^^^^^^^^
+    12 │     }
+    13 │ }
+  
+  i This statement will break the flow of the code ...
+  
+     8 │ function JsBreakStatement2() {
+     9 │     while (true) {
+  > 10 │         break;
+       │         ^^^^^^
+    11 │         continue; // afterBreak
+    12 │     }
+  
+
+```
+
+

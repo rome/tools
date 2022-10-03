@@ -1,4 +1,3 @@
-
 # Jobs run on pull request
 name: Pull request
 on:
@@ -81,6 +80,55 @@ jobs:
           command: test
           args: --workspace --verbose
 
+  test-node-api:
+    name: Test node.js API
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 1
+      - name: Install toolchain
+        run: rustup show
+      - name: Cache
+        uses: Swatinem/rust-cache@v1
+      - name: Build main binary
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: -p rome_cli --release
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14.x
+      - name: Cache pnpm modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-
+      - uses: pnpm/action-setup@v2.1.0
+        with:
+          version: 7
+      - name: Install wasm-pack
+        uses: jetli/wasm-pack-action@v0.3.0
+        with:
+          version: 'latest'
+      - name: Build TypeScript code
+        run: |
+          pnpm --prefix npm/backend-jsonrpc i
+          pnpm --prefix npm/backend-jsonrpc run build
+          pnpm --prefix npm/rome run build:wasm-node
+          pnpm --prefix npm/rome i
+          pnpm --prefix npm/rome run build
+      - name: Run JS tests
+        run: |
+          pnpm --prefix npm/backend-jsonrpc test:ci
+          pnpm --prefix npm/rome test:ci
+
   documentation:
     name: Documentation
     runs-on: ubuntu-latest
@@ -122,8 +170,15 @@ jobs:
       - name: Run the configuration codegen
         uses: actions-rs/cargo@v1
         with:
-          command: codegen
-          args: configuration
+          command: codegen-configuration
+      - name: Run the schema codegen
+        uses: actions-rs/cargo@v1
+        with:
+          command: codegen-schema
+      - name: Run the bindings codegen
+        uses: actions-rs/cargo@v1
+        with:
+          command: codegen-bindings
       - name: Run the website codegen
         uses: actions-rs/cargo@v1
         with:
@@ -134,21 +189,3 @@ jobs:
             git status
             exit 1
           fi
-
-  test-cli:
-    name: Test CLI
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      - name: Install toolchain
-        run: rustup show
-      - name: Cache
-        uses: Swatinem/rust-cache@v1
-      - name: Run CLI on JavaScript code
-        uses: actions-rs/cargo@v1
-        continue-on-error: true
-        with:
-          command: rome-cli
-          args: ci editors website

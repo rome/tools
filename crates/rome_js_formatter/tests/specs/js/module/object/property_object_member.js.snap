@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_formatter/tests/spec_test.rs
-assertion_line: 257
 expression: property_object_member.js
 ---
 # Input
@@ -100,6 +99,7 @@ const fluidObject = {
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
+Quote properties: As needed
 -----
 const neverBreakAfterColonObject = {
 	"this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-1": require(),
@@ -136,63 +136,87 @@ const breakAfterColonObject = {
 	"logical-expression-2":
 		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337,
 	"binary-expression-1":
-		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132,
+		13321321312312321311332132131231232131232132132132232132132132 +
+		1332132131231232131232132132132,
 	"binary-expression-2":
-		1332132131231232131232132132132 - 13321321312312321312321321321321332132131231232131232132132132,
+		1332132131231232131232132132132 -
+		13321321312312321312321321321321332132131231232131232132132132,
 	"instanceof-expression":
 		"321321312312ddddddddddddddddddddddd312312312312" instanceof Object,
 	"in-expression":
-		{
-			"long-key": "123123213123213123edwqdqwdasdasdsaewqewqewqdas",
-		} in "long-key",
-	"sequence-expression": (
-		33333333333333331, "dsadsadasdsadas", 3, "dsadsadasdsadasdsadsadasdsadas", 5
-	),
+		{ "long-key": "123123213123213123edwqdqwdasdasdsaewqewqewqdas" } in
+		"long-key",
+	"sequence-expression":
+		(33333333333333331,
+		"dsadsadasdsadas",
+		3,
+		"dsadsadasdsadasdsadsadasdsadas",
+		5),
 	"conditional-expression-1":
-		this.state
-			.longLongLongLongLongLongLongLongLongTooLongProp === true ? {} : {},
+		this.state.longLongLongLongLongLongLongLongLongTooLongProp === true
+			? {}
+			: {},
 	"conditional-expression-2":
-		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {},
+		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337
+			? {}
+			: {},
 	"conditional-expression-3":
-		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {},
+		13321321312312321311332132131231232131232132132132232132132132 +
+		1332132131231232131232132132132
+			? {}
+			: {},
 	"conditional-expression-4":
-		"321321312312ddddddddddddddddddddddd312312312312" instanceof Object ? {} : {},
+		"321321312312ddddddddddddddddddddddd312312312312" instanceof Object
+			? {}
+			: {},
 	"conditional-expression-5":
-		{
-			"long-key": "123123213123213123edwqdqwdasdasdsaewqewqewqdas",
-		} in "long-key",
+		{ "long-key": "123123213123213123edwqdqwdasdasdsaewqewqewqdas" } in
+		"long-key",
 
 	1:
 		this.state
-			.longLongLongLongLongLlongLongLongLongLongLongLongLongLongTooLongPropongLongLongLongTooLongProp === true,
+			.longLongLongLongLongLlongLongLongLongLongLongLongLongLongTooLongPropongLongLongLongTooLongProp ===
+		true,
 	2:
-		longLongLongLongLongLongLongLongLonlongLongLongLongLongLongLongLongLongTooLongPropgLongLongLongLongTooLongVar || 1337,
+		longLongLongLongLongLongLongLongLonlongLongLongLongLongLongLongLongLongTooLongPropgLongLongLongLongTooLongVar ||
+		1337,
 	11:
-		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132,
+		13321321312312321311332132131231232131232132132132232132132132 +
+		1332132131231232131232132132132,
 	22:
-		1332132131231232131232132132132 - 13321321312312321312321321321321332132131231232131232132132132,
+		1332132131231232131232132132132 -
+		13321321312312321312321321321321332132131231232131232132132132,
 	33: "321321312312ddddddddddddddddddddddd312312312312" instanceof Object,
 	44:
-		{
-			"long-key": "123123213123213123edwqdqwdasdasdsaewqewqewqdas",
-		} in "long-key",
-	5: (
-		33333333333333331, "dsadsadasdsadas", 3, "dsadsadasdsadasdsadsadasdsadas", 5
-	),
+		{ "long-key": "123123213123213123edwqdqwdasdasdsaewqewqewqdas" } in
+		"long-key",
+	5:
+		(33333333333333331,
+		"dsadsadasdsadas",
+		3,
+		"dsadsadasdsadasdsadsadasdsadas",
+		5),
 
 	a:
-		this.state
-			.longLongLongLongLongLongLongLongLongTooLongProp === true ? {} : {},
+		this.state.longLongLongLongLongLongLongLongLongTooLongProp === true
+			? {}
+			: {},
 	b:
-		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {},
+		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337
+			? {}
+			: {},
 	c:
-		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {},
+		13321321312312321311332132131231232131232132132132232132132132 +
+		1332132131231232131232132132132
+			? {}
+			: {},
 	d:
-		"321321312312ddddddddddddddddddddddd312312312312" instanceof Object ? {} : {},
+		"321321312312ddddddddddddddddddddddd312312312312" instanceof Object
+			? {}
+			: {},
 	g:
-		{
-			"long-key": "123123213123213123edwqdqwdasdasdsaewqewqewqdas",
-		} in "long-key",
+		{ "long-key": "123123213123213123edwqdqwdasdasdsaewqewqewqdas" } in
+		"long-key",
 	blablah:
 		"aldkfkladfskladklsfkladklfkaldfadfkdaf" +
 		"adlfasdklfkldsklfakldsfkladsfkadsfladsfa" +
@@ -222,12 +246,12 @@ const fluidObject = {
 			created: "09/01/2017 17:25",
 		},
 	],
-	render: withGraphQLQuery("node(1234567890){image{uri}}", function (
-		container,
-		data,
-	) {
-		return "image";
-	}),
+	render: withGraphQLQuery(
+		"node(1234567890){image{uri}}",
+		function (container, data) {
+			return "image";
+		},
+	),
 	loadNext: (stateIsOK && hasNext) || {
 		skipNext: true,
 	},
@@ -250,14 +274,6 @@ const fluidObject = {
    18: 	number: 1232132132131231232132112321321321312312321321123213213213123123213211232132132131231232132112321321321312312321321,
    19: 	"number-with-dot": 12321321321312312321321123213213213123123213211232132132131231232132112321321321312312321321.12321321321312312321321,
    28: 		"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
-   36: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132,
-   38: 		1332132131231232131232132132132 - 13321321312312321312321321321321332132131231232131232132132132,
-   52: 		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {},
-   54: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {},
-   64: 			.longLongLongLongLongLlongLongLongLongLongLongLongLongLongTooLongPropongLongLongLongTooLongProp === true,
-   66: 		longLongLongLongLongLongLongLongLonlongLongLongLongLongLongLongLongLongTooLongPropgLongLongLongLongTooLongVar || 1337,
-   68: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132,
-   70: 		1332132131231232131232132132132 - 13321321312312321312321321321321332132131231232131232132132132,
-   84: 		longLongLongLongLongLongLongLongLongLongLongLongLongTooLongVar || 1337 ? {} : {},
-   86: 		13321321312312321311332132131231232131232132132132232132132132 + 1332132131231232131232132132132 ? {} : {},
+   75: 			.longLongLongLongLongLlongLongLongLongLongLongLongLongLongTooLongPropongLongLongLongTooLongProp ===
+   78: 		longLongLongLongLongLongLongLongLonlongLongLongLongLongLongLongLongLongTooLongPropgLongLongLongLongTooLongVar ||
 

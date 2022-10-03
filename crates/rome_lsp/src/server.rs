@@ -1,11 +1,16 @@
+use std::sync::Arc;
+
 use crate::capabilities::server_capabilities;
 use crate::requests::syntax_tree::{SyntaxTreePayload, SYNTAX_TREE_REQUEST};
 use crate::session::Session;
-use crate::utils::into_lsp_error;
+use crate::utils::{into_lsp_error, panic_to_lsp_error};
 use crate::{handlers, requests};
-use rome_service::load_config;
-use serde_json::Value;
-use tokio::io::{Stdin, Stdout};
+use futures::future::ready;
+use futures::FutureExt;
+use rome_service::{workspace, Workspace};
+use tokio::io::{AsyncRead, AsyncWrite};
+use tokio::sync::Notify;
+use tokio::task::spawn_blocking;
 use tower_lsp::jsonrpc::Result as LspResult;
 use tower_lsp::{lsp_types::*, ClientSocket};
 use tower_lsp::{Client, LanguageServer, LspService, Server};
@@ -16,12 +21,13 @@ pub struct LSPServer {
 }
 
 impl LSPServer {
-    fn new(client: Client) -> Self {
-        let session = Session::new(client);
-        Self { session }
+    fn new(client: Client, workspace: Arc<dyn Workspace>, cancellation: Arc<Notify>) -> Self {
+        Self {
+            session: Session::new(client, workspace, cancellation),
+        }
     }
 
-    async fn syntax_tree_request(&self, params: SyntaxTreePayload) -> LspResult<Option<Value>> {
+    async fn syntax_tree_request(&self, params: SyntaxTreePayload) -> LspResult<String> {
         trace!(
             "Calling method: {}\n with params: {:?}",
             SYNTAX_TREE_REQUEST,
@@ -29,11 +35,7 @@ impl LSPServer {
         );
 
         let url = params.text_document.uri;
-        let result =
-            requests::syntax_tree::syntax_tree(&self.session, &url).map_err(into_lsp_error)?;
-
-        let result = serde_json::to_value(result).map_err(into_lsp_error)?;
-        Ok(Some(result))
+        requests::syntax_tree::syntax_tree(&self.session, &url).map_err(into_lsp_error)
     }
 }
 
@@ -46,7 +48,12 @@ impl LanguageServer for LSPServer {
         self.session
             .client_capabilities
             .write()
+            .unwrap()
             .replace(params.capabilities);
+
+        if let Some(uri) = params.root_uri {
+            self.session.root_uri.write().unwrap().replace(uri);
+        }
 
         let init = InitializeResult {
             capabilities: server_capabilities(),
@@ -65,17 +72,7 @@ impl LanguageServer for LSPServer {
 
         info!("Attempting to load the configuration from 'rome.json' file");
 
-        match load_config(&self.session.fs) {
-            Ok(Some(configuration)) => {
-                info!("Configuration found, and it is valid!");
-                self.session.configuration.write().replace(configuration);
-            }
-            Err(err) => {
-                error!("Couldn't load the configuration file, reason:\n {}", err);
-            }
-            _ => {}
-        };
-
+        self.session.update_configuration().await;
         self.session.fetch_client_configuration().await;
 
         let msg = format!("Server initialized with PID: {}", std::process::id());
@@ -162,13 +159,122 @@ impl LanguageServer for LSPServer {
     }
 }
 
-pub fn build_server() -> (LspService<LSPServer>, ClientSocket) {
-    LspService::build(LSPServer::new)
-        .custom_method(SYNTAX_TREE_REQUEST, LSPServer::syntax_tree_request)
-        .finish()
+/// Factory data structure responsible for creating [ServerConnection] handles
+/// for each incoming connection accepted by the server
+#[derive(Default)]
+pub struct ServerFactory {
+    /// Synchronisation primitve used to broadcast a shutdown signal to all
+    /// active connections
+    cancellation: Arc<Notify>,
+    /// Optional [Workspace] instance shared between all clients. Currently
+    /// this field is always [None] (meaning each connection will get its own
+    /// workspace) until we figure out how to handle concurrent access to the
+    /// same workspace from multiple client
+    workspace: Option<Arc<dyn Workspace>>,
 }
 
-pub async fn run_server(stdin: Stdin, stdout: Stdout) {
-    let (service, messages) = build_server();
-    Server::new(stdin, stdout, messages).serve(service).await;
+/// Helper method for wrapping a [Workspace] method in a `custom_method` for
+/// the [LSPServer]
+macro_rules! workspace_method {
+    ( $builder:ident, $method:ident ) => {
+        $builder = $builder.custom_method(
+            concat!("rome/", stringify!($method)),
+            |server: &LSPServer, params| {
+                let span = tracing::trace_span!(concat!("rome/", stringify!($method)), params = ?params).or_current();
+
+                let workspace = server.session.workspace.clone();
+                let result = spawn_blocking(move || {
+                    let _guard = span.entered();
+                    workspace.$method(params)
+                });
+
+                result.map(move |result| {
+                    // The type of `result` is `Result<Result<R, RomeError>, JoinError>`,
+                    // where the inner result is the return value of `$method` while the
+                    // outer one is added by `spawn_blocking` to catch panics or
+                    // cancellations of the task
+                    match result {
+                        Ok(Ok(result)) => Ok(result),
+                        Ok(Err(err)) => Err(into_lsp_error(err)),
+                        Err(err) => match err.try_into_panic() {
+                            Ok(err) => Err(panic_to_lsp_error(err)),
+                            Err(err) => Err(into_lsp_error(err)),
+                        },
+                    }
+                })
+            },
+        );
+    };
+}
+
+impl ServerFactory {
+    /// Create a new [ServerConnection] from this factory
+    pub fn create(&self) -> ServerConnection {
+        let workspace = self
+            .workspace
+            .clone()
+            .unwrap_or_else(workspace::server_sync);
+
+        let mut builder = LspService::build(move |client| {
+            LSPServer::new(client, workspace, self.cancellation.clone())
+        });
+
+        builder = builder.custom_method(SYNTAX_TREE_REQUEST, LSPServer::syntax_tree_request);
+
+        // "shutdown" is not part of the Workspace API
+        builder = builder.custom_method("rome/shutdown", |server: &LSPServer, (): ()| {
+            tracing::info!("Sending shutdown signal");
+            server.session.broadcast_shutdown();
+            ready(Ok(Some(())))
+        });
+
+        workspace_method!(builder, supports_feature);
+        workspace_method!(builder, update_settings);
+        workspace_method!(builder, open_file);
+        workspace_method!(builder, get_syntax_tree);
+        workspace_method!(builder, get_control_flow_graph);
+        workspace_method!(builder, get_formatter_ir);
+        workspace_method!(builder, change_file);
+        workspace_method!(builder, close_file);
+        workspace_method!(builder, pull_diagnostics);
+        workspace_method!(builder, pull_actions);
+        workspace_method!(builder, format_file);
+        workspace_method!(builder, format_range);
+        workspace_method!(builder, format_on_type);
+        workspace_method!(builder, fix_file);
+        workspace_method!(builder, rename);
+
+        let (service, socket) = builder.finish();
+        ServerConnection { socket, service }
+    }
+
+    /// Return a handle to the cancellation token for this server process
+    pub fn cancellation(&self) -> Arc<Notify> {
+        self.cancellation.clone()
+    }
+}
+
+/// Handle type created by the server for each incoming connection
+pub struct ServerConnection {
+    socket: ClientSocket,
+    service: LspService<LSPServer>,
+}
+
+impl ServerConnection {
+    /// Destructure a connection into its inner service instance and socket
+    pub fn into_inner(self) -> (LspService<LSPServer>, ClientSocket) {
+        (self.service, self.socket)
+    }
+
+    /// Accept an incoming connection and run the server async I/O loop to
+    /// completion
+    pub async fn accept<I, O>(self, stdin: I, stdout: O)
+    where
+        I: AsyncRead + Unpin,
+        O: AsyncWrite,
+    {
+        Server::new(stdin, stdout, self.socket)
+            .serve(self.service)
+            .await;
+    }
 }

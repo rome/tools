@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::write;
+use rome_formatter::{format_args, write};
 
 use rome_js_syntax::{TsEnumDeclaration, TsEnumDeclarationFields};
 
@@ -28,9 +28,30 @@ impl FormatNodeRule<TsEnumDeclaration> for FormatTsEnumDeclaration {
                 space(),
                 id.format(),
                 space(),
-                format_delimited(&l_curly_token?, &members.format(), &r_curly_token?,)
-                    .soft_block_spaces()
+                l_curly_token.format(),
             ]
-        )
+        )?;
+
+        if members.is_empty() {
+            write!(
+                f,
+                [group(&format_args![
+                    format_dangling_comments(node.syntax()),
+                    soft_line_break()
+                ])]
+            )?;
+        } else {
+            write!(f, [block_indent(&members.format())])?;
+        }
+
+        write!(f, [r_curly_token.format()])
+    }
+
+    fn fmt_dangling_comments(
+        &self,
+        _: &TsEnumDeclaration,
+        _: &mut JsFormatter,
+    ) -> FormatResult<()> {
+        Ok(())
     }
 }

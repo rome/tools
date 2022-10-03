@@ -57,15 +57,26 @@ JsModule {
       2: R_CURLY@76..78 "}" [Newline("\n")] []
   3: EOF@78..79 "" [Newline("\n")] []
 --
-error[SyntaxError]: Expected a semicolon or an implicit semicolon after a statement, but found none
-  ┌─ statements_closing_curly.js:2:7
-  │
-2 │ "name": "troublesome-lib",
-  │ ------^
-  │ │     │
-  │ │     An explicit or implicit semicolon is expected here...
-  │ ...Which is required to end this statement
+statements_closing_curly.js:2:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × Expected a semicolon or an implicit semicolon after a statement, but found none
+  
+  × An explicit or implicit semicolon is expected here...
+  
+    1 │ {
+  > 2 │ "name": "troublesome-lib",
+      │       ^
+    3 │ "typings": "lib/index.d.ts",
+    4 │ "version": "0.0.1"
+  
+  i ...Which is required to end this statement
+  
+    1 │ {
+  > 2 │ "name": "troublesome-lib",
+      │ ^^^^^^^
+    3 │ "typings": "lib/index.d.ts",
+    4 │ "version": "0.0.1"
+  
 --
 {
 "name": "troublesome-lib",

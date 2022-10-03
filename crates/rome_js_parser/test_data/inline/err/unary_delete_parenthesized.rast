@@ -367,61 +367,97 @@ JsModule {
       1: SEMICOLON@184..185 ";" [] []
   3: EOF@185..186 "" [Newline("\n")] []
 --
-error[SyntaxError]: the target for a delete operator cannot be a single identifier
-  ┌─ unary_delete_parenthesized.js:1:9
-  │
-1 │ delete (ident);
-  │         ^^^^^
+unary_delete_parenthesized.js:1:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × the target for a delete operator cannot be a single identifier
+  
+  > 1 │ delete (ident);
+      │         ^^^^^
+    2 │ delete ((ident));
+    3 │ delete (obj.key, ident);
+  
 --
-error[SyntaxError]: the target for a delete operator cannot be a single identifier
-  ┌─ unary_delete_parenthesized.js:2:10
-  │
-2 │ delete ((ident));
-  │          ^^^^^
+unary_delete_parenthesized.js:2:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × the target for a delete operator cannot be a single identifier
+  
+    1 │ delete (ident);
+  > 2 │ delete ((ident));
+      │          ^^^^^
+    3 │ delete (obj.key, ident);
+    4 │ delete (obj.#member);
+  
 --
-error[SyntaxError]: the target for a delete operator cannot be a single identifier
-  ┌─ unary_delete_parenthesized.js:3:18
-  │
-3 │ delete (obj.key, ident);
-  │                  ^^^^^
+unary_delete_parenthesized.js:3:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × the target for a delete operator cannot be a single identifier
+  
+    1 │ delete (ident);
+    2 │ delete ((ident));
+  > 3 │ delete (obj.key, ident);
+      │                  ^^^^^
+    4 │ delete (obj.#member);
+    5 │ delete (func().#member);
+  
 --
-error[SyntaxError]: the target for a delete operator cannot be a private member
-  ┌─ unary_delete_parenthesized.js:4:9
-  │
-4 │ delete (obj.#member);
-  │         ^^^^^^^^^^^
+unary_delete_parenthesized.js:4:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × the target for a delete operator cannot be a private member
+  
+    2 │ delete ((ident));
+    3 │ delete (obj.key, ident);
+  > 4 │ delete (obj.#member);
+      │         ^^^^^^^^^^^
+    5 │ delete (func().#member);
+    6 │ delete (obj?.#member);
+  
 --
-error[SyntaxError]: the target for a delete operator cannot be a private member
-  ┌─ unary_delete_parenthesized.js:5:9
-  │
-5 │ delete (func().#member);
-  │         ^^^^^^^^^^^^^^
+unary_delete_parenthesized.js:5:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × the target for a delete operator cannot be a private member
+  
+    3 │ delete (obj.key, ident);
+    4 │ delete (obj.#member);
+  > 5 │ delete (func().#member);
+      │         ^^^^^^^^^^^^^^
+    6 │ delete (obj?.#member);
+    7 │ delete (obj?.inner.#member);
+  
 --
-error[SyntaxError]: the target for a delete operator cannot be a private member
-  ┌─ unary_delete_parenthesized.js:6:9
-  │
-6 │ delete (obj?.#member);
-  │         ^^^^^^^^^^^^
+unary_delete_parenthesized.js:6:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × the target for a delete operator cannot be a private member
+  
+    4 │ delete (obj.#member);
+    5 │ delete (func().#member);
+  > 6 │ delete (obj?.#member);
+      │         ^^^^^^^^^^^^
+    7 │ delete (obj?.inner.#member);
+    8 │ delete (obj.key, obj.#key);
+  
 --
-error[SyntaxError]: the target for a delete operator cannot be a private member
-  ┌─ unary_delete_parenthesized.js:7:9
-  │
-7 │ delete (obj?.inner.#member);
-  │         ^^^^^^^^^^^^^^^^^^
+unary_delete_parenthesized.js:7:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × the target for a delete operator cannot be a private member
+  
+    5 │ delete (func().#member);
+    6 │ delete (obj?.#member);
+  > 7 │ delete (obj?.inner.#member);
+      │         ^^^^^^^^^^^^^^^^^^
+    8 │ delete (obj.key, obj.#key);
+    9 │ 
+  
 --
-error[SyntaxError]: the target for a delete operator cannot be a private member
-  ┌─ unary_delete_parenthesized.js:8:18
-  │
-8 │ delete (obj.key, obj.#key);
-  │                  ^^^^^^^^
+unary_delete_parenthesized.js:8:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+  × the target for a delete operator cannot be a private member
+  
+    6 │ delete (obj?.#member);
+    7 │ delete (obj?.inner.#member);
+  > 8 │ delete (obj.key, obj.#key);
+      │                  ^^^^^^^^
+    9 │ 
+  
 --
 delete (ident);
 delete ((ident));

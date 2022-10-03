@@ -12,7 +12,7 @@ jobs:
   deploy:
     if: ${{ !github.event.pull_request.head.repo.fork }}
     runs-on: ubuntu-latest
-    environment: aws
+    environment: netlify-playground
     name: Deploy Playground (Preview)
     steps:
       - uses: actions/checkout@master
@@ -27,6 +27,8 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-
+      - name: Build WASM module for the web
+        run: wasm-pack build --out-dir ../../npm/wasm-web --target web --release --scope rometools crates/rome_wasm
       - uses: pnpm/action-setup@v2.1.0
         with:
           version: 7
@@ -38,22 +40,25 @@ jobs:
         id: sha
         run: echo "::set-output name=sha::$(git rev-parse --short HEAD)"
 
-      - run: BASE_URL="/${{ steps.sha.outputs.sha }}/" pnpm --prefix website/playground build
+      - run: pnpm --prefix website/playground build:js
+
+      - name: Install netlify-cli
+        run: npm i -g netlify-cli
 
       - name: Publish
-        uses: jakejarvis/s3-sync-action@master
-        env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          SOURCE_DIR: 'website/playground/dist' # optional: defaults to entire repository
-          DEST_DIR: ${{ steps.sha.outputs.sha }}
+        id: publish
+        run: |
+          OUT=$(netlify deploy --dir=website/playground/dist --alias ${{ steps.sha.outputs.sha }} --site playground-rometools --auth ${{ secrets.NETLIFY_AUTH_TOKEN }})
+          echo "$OUT"
+
+          URL=$(echo "$OUT" | grep -Eo "https://(.*?)--playground-rometools.netlify.app")
+          echo "::set-output name=url::$URL"
 
       - name: Set Playground URL
         if: github.event_name == 'pull_request'
         id: url
         run: |
-          url="[Playground for commit ${{ steps.sha.outputs.sha }}](https://play.rome.tools/${{ steps.sha.outputs.sha }}/)"
+          url="[Playground for commit ${{ steps.sha.outputs.sha }}](${{ steps.publish.outputs.url }}/)"
           echo "::set-output name=url::$url"
 
       - name: Get the PR number

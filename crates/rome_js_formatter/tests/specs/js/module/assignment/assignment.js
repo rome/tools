@@ -149,6 +149,6 @@ a =
 a =
     {
 // rome-ignore format: test
-        a: { t: c = b }, loreum, ipsurm
+        a: { t: c = b       }, loreum, ipsurm
     } = {}
 
