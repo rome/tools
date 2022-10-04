@@ -12,7 +12,8 @@
 				"useOptionalChain": "error",
 				"noUselessFragments": "error",
 				"noNewSymbol": "error",
-				"noVoidElementsWithChildren": "error"
+				"noVoidElementsWithChildren": "error",
+				"noDangerouslySetInnerHtmlWithChildren": "error"
 			}
 		}
 	}

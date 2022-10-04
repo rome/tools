@@ -51,6 +51,7 @@ define_dategories! {
     "lint/nursery/noChildrenProp": "https://rome.tools/docs/lint/rules/noChildrenProp",
     "lint/nursery/useFragmentSyntax": "https://rome.tools/docs/lint/rules/useFragmentSyntax",
     "lint/nursery/noArrayIndexKey": "https://rome.tools/docs/lint/rules/noArrayIndexKey",
+    "lint/nursery/noDangerouslySetInnerHtmlWithChildren": "https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtmlWithChildren",
     "lint/style/noNegationElse": "https://rome.tools/docs/lint/rules/noNegationElse",
     "lint/style/noShoutyConstants": "https://rome.tools/docs/lint/rules/noShoutyConstants",
     "lint/style/useSelfClosingElements": "https://rome.tools/docs/lint/rules/useSelfClosingElements",

@@ -267,6 +267,13 @@ Discourage the usage of Array index in keys.
 Prevent the usage of dangerous JSX props
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noDangerouslySetInnerHtmlWithChildren">
+	<a href="/docs/lint/rules/noDangerouslySetInnerHtmlWithChildren">noDangerouslySetInnerHtmlWithChildren (since v0.10.0)</a>
+	<a class="header-anchor" href="#noDangerouslySetInnerHtmlWithChildren"></a>
+</h3>
+Report when a DOM element or a component uses both <code>children</code> and <code>dangerouslySetInnerHTML</code> prop.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noNewSymbol">
 	<a href="/docs/lint/rules/noNewSymbol">noNewSymbol (since v0.10.0)</a>
 	<a class="header-anchor" href="#noNewSymbol"></a>
