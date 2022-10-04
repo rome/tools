@@ -5,7 +5,7 @@ use rome_js_semantic::{AllReferencesExtensions, SemanticScopeExtensions};
 use rome_js_syntax::{
     JsClassExpression, JsConstructorParameterList, JsConstructorParameters, JsFunctionDeclaration,
     JsFunctionExpression, JsIdentifierBinding, JsParameterList, JsParameters, JsSyntaxKind,
-    JsVariableDeclarator, TsPropertyParameter, TsDeclareStatement,
+    JsVariableDeclarator, TsDeclareStatement, TsPropertyParameter,
 };
 use rome_rowan::{AstNode, SyntaxNodeCast};
 
