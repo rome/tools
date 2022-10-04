@@ -105,7 +105,7 @@ declare_rule! {
 
 // It is ok in some Typescripts constructs for a parameter to be unused.
 fn is_typescript_unused_ok(binding: &JsIdentifierBinding) -> Option<()> {
-    let parent = binding.syntax().parent()?; 
+    let parent = binding.syntax().parent()?;
     match parent.kind() {
         JsSyntaxKind::JS_FORMAL_PARAMETER | JsSyntaxKind::JS_REST_PARAMETER => {
             let parameter = binding.syntax().parent()?;
@@ -160,16 +160,18 @@ fn is_typescript_unused_ok(binding: &JsIdentifierBinding) -> Option<()> {
         // example: [key: string]: string;
         JsSyntaxKind::TS_INDEX_SIGNATURE_PARAMETER => Some(()),
         // example: declare function notUsedParameters(a);
-        JsSyntaxKind::TS_DECLARE_FUNCTION_DECLARATION  => Some(()),
+        JsSyntaxKind::TS_DECLARE_FUNCTION_DECLARATION => Some(()),
         _ => {
             // Anything below a declare
-            if parent.ancestors()
-                .any(|x| matches!(x.kind(), JsSyntaxKind::TS_DECLARE_STATEMENT)) {
+            if parent
+                .ancestors()
+                .any(|x| matches!(x.kind(), JsSyntaxKind::TS_DECLARE_STATEMENT))
+            {
                 Some(())
             } else {
                 None
             }
-        },
+        }
     }
 }
 
