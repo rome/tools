@@ -42,6 +42,8 @@ f();
 
 export type Command = (...args: any[]) => unknown;
 
+declare function notUsedParameters(a);
+
 function used_overloaded(): number;
 function used_overloaded(s: string): string;
 function used_overloaded(s?: string) {
