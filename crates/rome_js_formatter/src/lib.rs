@@ -861,9 +861,13 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-function test() {
-return srcPipe.pipe(generator.stream).pipe(compile()).pipe(gulp.dest(out));
-}"#;
+ (
+  <div>
+    <br />
+    texttexttexttexttexttexttexttexttexxxxxxxxxxttextxxxtexttext{typeeeggggee}{" "}
+  </div>
+);
+"#;
         let syntax = SourceType::jsx();
         let tree = parse(src, FileId::zero(), syntax);
         let options = JsFormatOptions::new(syntax);

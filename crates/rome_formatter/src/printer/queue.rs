@@ -335,6 +335,7 @@ impl FitsPredicate for SingleEntryPredicate {
 
                     if *depth == 0 {
                         *self = SingleEntryPredicate::Done;
+                        return Ok(false);
                     }
 
                     true

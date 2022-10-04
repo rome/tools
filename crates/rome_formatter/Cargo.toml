@@ -17,6 +17,7 @@ schemars = { version = "0.8.10", optional = true }
 rustc-hash = "1.1.0"
 countme = "3.0.1"
 indexmap = "1.9.1"
+drop_bomb = "0.1.5"
 
 [dev-dependencies]
 rome_js_parser = { path = "../rome_js_parser"}
