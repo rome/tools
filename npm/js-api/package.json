@@ -1,0 +1,40 @@
+{
+  "name": "@rometools/js-api",
+  "version": "0.0.0",
+  "description": "JavaScript bindings for the Rome package",
+  "scripts": {
+    "tsc": "tsc --noEmit",
+    "format": "cargo rome-cli-dev format ./ --write",
+    "ci": "cargo rome-cli-dev ci ./src && tsc --noEmit",
+    "check": "cargo rome-cli-dev check ./src && tsc --noEmit",
+    "build:wasm-node-dev": "wasm-pack build --out-dir ../../npm/wasm-nodejs --target nodejs --dev --scope rometools ../../crates/rome_wasm",
+    "build:wasm-node": "wasm-pack build --out-dir ../../npm/wasm-nodejs --target nodejs --release --scope rometools ../../crates/rome_wasm",
+    "build:wasm-web-dev": "wasm-pack build --out-dir ../../npm/wasm-web --target web --dev --scope rometools ../../crates/rome_wasm",
+    "build:wasm-web": "wasm-pack build --out-dir ../../npm/wasm-web --target web --release --scope rometools ../../crates/rome_wasm",
+    "test": "vitest",
+    "test:ci": "vitest --run",
+    "build": "tsc "
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "keywords": [
+    "JavaScript",
+    "bindings",
+    "rome"
+  ],
+  "license": "MIT",
+  "homepage": "https://rome.tools",
+  "author": "Rome Tools Developers and Contributors",
+  "bugs": "https://github.com/rome/tools/issues",
+  "devDependencies": {
+    "typescript": "^4.8.2",
+    "vitest": "^0.22.0",
+    "vite": "^3.0.8",
+    "@rometools/wasm-nodejs": "../wasm-nodejs",
+    "@rometools/backend-jsonrpc": "../backend-jsonrpc",
+    "rome": "../rome"
+  },
+  "peerDependencies": {
+    "rome": "^0.10.0-next"
+  }
+}

@@ -121,13 +121,13 @@ jobs:
         run: |
           pnpm --prefix npm/backend-jsonrpc i
           pnpm --prefix npm/backend-jsonrpc run build
-          pnpm --prefix npm/rome run build:wasm-node
-          pnpm --prefix npm/rome i
-          pnpm --prefix npm/rome run build
+          pnpm --prefix npm/js-api run build:wasm-node
+          pnpm --prefix npm/js-api i
+          pnpm --prefix npm/js-api run build
       - name: Run JS tests
         run: |
           pnpm --prefix npm/backend-jsonrpc test:ci
-          pnpm --prefix npm/rome test:ci
+          pnpm --prefix npm/js-api test:ci
 
   documentation:
     name: Documentation
