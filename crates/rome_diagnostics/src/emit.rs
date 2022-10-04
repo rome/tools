@@ -136,7 +136,7 @@ impl<'a> Display for DiagnosticPrinter<'a> {
 }
 
 impl v2::Diagnostic for DiagnosticPrinter<'_> {
-    fn category(&self) -> Option<&Category> {
+    fn category(&self) -> Option<&'static Category> {
         self.d.code
     }
 

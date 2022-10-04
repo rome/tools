@@ -53,7 +53,7 @@ impl From<io::Error> for IoError {
 }
 
 impl Diagnostic for IoError {
-    fn category(&self) -> Option<&Category> {
+    fn category(&self) -> Option<&'static Category> {
         Some(category!("internalError/io"))
     }
 

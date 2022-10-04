@@ -5,9 +5,14 @@ use crate::{
 use crossbeam::channel::{unbounded, Receiver, Sender};
 use rome_console::{markup, Console, ConsoleExt};
 use rome_diagnostics::{
-    file::{FileId, SimpleFile},
-    v2::{self, category, Advices, Category, LogCategory, PrintDiagnostic, Visit},
-    Diagnostic, Severity, MAXIMUM_DISPLAYABLE_DIAGNOSTICS,
+    file::FileId,
+    v2::{
+        self,
+        adapters::{IoError, StdError},
+        category, Advices, Category, Diagnostic, DiagnosticExt, Error, FilePath, LogCategory,
+        PrintDescription, PrintDiagnostic, Severity, Visit,
+    },
+    MAXIMUM_DISPLAYABLE_DIAGNOSTICS,
 };
 use rome_fs::{AtomicInterner, FileSystem, OpenOptions, PathInterner, RomePath};
 use rome_fs::{TraversalContext, TraversalScope};
@@ -22,9 +27,7 @@ use rome_text_edit::TextEdit;
 use std::{
     collections::HashMap,
     ffi::OsString,
-    fmt::Display,
     io,
-    ops::Deref,
     panic::catch_unwind,
     path::{Path, PathBuf},
     sync::atomic::{AtomicUsize, Ordering},
@@ -284,51 +287,65 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
                 total_skipped_suggested_fixes += skipped_suggested_fixes;
             }
 
-            Message::Error(err) => {
-                // Retrieves the file name from the file ID cache, if it's a miss
-                // flush entries from the interner channel until it's found
-                let file_name = match paths.get(&err.file_id) {
-                    Some(path) => Some(path),
-                    None => loop {
-                        match recv_files.recv() {
-                            Ok((file_id, path)) => {
-                                paths.insert(file_id, path.display().to_string());
-                                if file_id == err.file_id {
-                                    break Some(&paths[&file_id]);
+            Message::Error(mut err) => {
+                if let Some(location) = err.location() {
+                    if let v2::Resource::File(FilePath::FileId(file_id)) = location.resource {
+                        // Retrieves the file name from the file ID cache, if it's a miss
+                        // flush entries from the interner channel until it's found
+                        let file_name = match paths.get(&file_id) {
+                            Some(path) => Some(path),
+                            None => loop {
+                                match recv_files.recv() {
+                                    Ok((id, path)) => {
+                                        paths.insert(id, path.display().to_string());
+                                        if id == file_id {
+                                            break Some(&paths[&file_id]);
+                                        }
+                                    }
+                                    // In case the channel disconnected without sending
+                                    // the path we need, print the error without a file
+                                    // name (normally this should never happen)
+                                    Err(_) => break None,
                                 }
-                            }
-                            // In case the channel disconnected without sending
-                            // the path we need, print the error without a file
-                            // name (normally this should never happen)
-                            Err(_) => break None,
+                            },
+                        };
+
+                        if let Some(path) = file_name {
+                            err = err.with_file_path(FilePath::PathAndId {
+                                path: path.as_str(),
+                                file_id,
+                            });
                         }
-                    },
-                };
+                    }
+                }
 
                 if mode.should_report_to_terminal() {
-                    let diag = TraversalDiagnostic {
-                        file_name: file_name.map(Deref::deref),
-                        severity: match err.severity {
-                            Severity::Help => v2::Severity::Hint,
-                            Severity::Note => v2::Severity::Information,
-                            Severity::Warning => v2::Severity::Warning,
-                            Severity::Error => v2::Severity::Error,
-                            Severity::Bug => v2::Severity::Fatal,
-                        },
-                        category: err.code,
-                        message: &err.message,
-                    };
                     console.error(markup! {
-                        {PrintDiagnostic(&diag)}
+                        {PrintDiagnostic(&err)}
                     });
                 } else {
+                    let file_name = err
+                        .location()
+                        .and_then(|location| {
+                            let path = match &location.resource {
+                                v2::Resource::File(file) => file,
+                                _ => return None,
+                            };
+
+                            path.path()
+                        })
+                        .unwrap_or("<unknown>");
+
+                    let title = PrintDescription(&err).to_string();
+                    let code = err.category().and_then(|code| code.name().parse().ok());
+
                     sender_reports
                         .send(ReportKind::Error(
-                            file_name.unwrap().to_string(),
+                            file_name.to_string(),
                             ReportErrorKind::Diagnostic(ReportDiagnostic {
-                                code: Some(err.code),
-                                title: err.message,
-                                severity: err.severity,
+                                code,
+                                title,
+                                severity: err.severity(),
                             }),
                         ))
                         .ok();
@@ -340,7 +357,6 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
                 content,
                 diagnostics,
             } => {
-                let file = SimpleFile::new(name.clone(), content);
                 // The command `rome check` gives a default value of 20.
                 // In case of other commands that pass here, we limit to 50 to avoid to delay the terminal.
                 // Once `--max-diagnostics` will be a global argument, `unwrap_of_default` should be enough.
@@ -350,33 +366,42 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
                 // is CI mode we want to print all the diagnostics
                 if mode.is_ci() {
                     for diag in diagnostics {
-                        has_errors |= diag.is_error();
+                        has_errors |= diag.severity() == Severity::Error;
+                        let diag = diag.with_file_path(&name).with_file_source_code(&content);
                         console.error(markup! {
-                            {diag.display(&file)}
+                            {PrintDiagnostic(&diag)}
                         });
                     }
                 } else {
                     for diag in diagnostics {
-                        has_errors |= diag.is_error();
-                        if printed_diagnostics < max_diagnostics {
-                            if mode.should_report_to_terminal() {
-                                console.error(markup! {
-                                    {diag.display(&file)}
-                                });
-                            }
+                        let severity = diag.severity();
+                        has_errors |= severity == Severity::Error;
+
+                        let should_print = printed_diagnostics < max_diagnostics;
+                        if should_print {
                             printed_diagnostics += 1;
                         } else {
                             not_printed_diagnostics += 1;
                         }
 
-                        if !mode.should_report_to_terminal() {
+                        if mode.should_report_to_terminal() {
+                            if should_print {
+                                let diag =
+                                    diag.with_file_path(&name).with_file_source_code(&content);
+                                console.error(markup! {
+                                    {PrintDiagnostic(&diag)}
+                                });
+                            }
+                        } else {
                             sender_reports
                                 .send(ReportKind::Error(
                                     name.to_string(),
                                     ReportErrorKind::Diagnostic(ReportDiagnostic {
-                                        code: diag.code,
+                                        code: diag
+                                            .category()
+                                            .and_then(|code| code.name().parse().ok()),
                                         title: String::from("test here"),
-                                        severity: diag.severity,
+                                        severity,
                                     }),
                                 ))
                                 .ok();
@@ -424,10 +449,10 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
                 } else {
                     sender_reports
                         .send(ReportKind::Error(
-                            file_name.to_string(),
+                            file_name,
                             ReportErrorKind::Diff(ReportDiff {
-                                before: old.to_string(),
-                                after: new.to_string(),
+                                before: old,
+                                after: new,
                                 severity: Severity::Error,
                             }),
                         ))
@@ -515,13 +540,8 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
         &self.interner
     }
 
-    fn push_diagnostic(&self, file_id: FileId, code: &'static Category, message: String) {
-        self.push_message(TraversalError {
-            severity: Severity::Error,
-            file_id,
-            code,
-            message,
-        });
+    fn push_diagnostic(&self, error: Error) {
+        self.push_message(error);
     }
 
     fn can_handle(&self, rome_path: &RomePath) -> bool {
@@ -537,9 +557,9 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
             Ok(result) => result.reason.is_none(),
             Err(err) => {
                 self.push_diagnostic(
-                    rome_path.file_id(),
-                    category!("files/missingHandler"),
-                    err.to_string(),
+                    StdError::from(err)
+                        .with_category(category!("files/missingHandler"))
+                        .with_file_path(rome_path.file_id()),
                 );
                 false
             }
@@ -577,12 +597,7 @@ fn handle_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) {
                 },
             };
 
-            ctx.push_message(TraversalError {
-                severity: Severity::Bug,
-                file_id,
-                code: category!("internalError/panic"),
-                message,
-            });
+            ctx.push_message(PanicDiagnostic { message }.with_file_path(file_id));
         }
     }
 }
@@ -629,17 +644,15 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
 
         if let Some(reason) = supported_file {
             return match reason {
-                UnsupportedReason::FileNotSupported => Err(Message::from(TraversalError {
-                    severity: Severity::Error,
-                    file_id,
-                    code: category!("files/missingHandler"),
-                    message: String::from("unhandled file type"),
-                })),
+                UnsupportedReason::FileNotSupported => {
+                    Err(Message::from(UnhandledDiagnostic.with_file_path(file_id)))
+                }
                 UnsupportedReason::FeatureNotEnabled | UnsupportedReason::Ignored => {
                     Ok(FileStatus::Ignored)
                 }
             };
         }
+
         let open_options = OpenOptions::default().read(true).write(true);
         let mut file = ctx
             .fs
@@ -693,23 +706,18 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
         let has_errors = result
             .diagnostics
             .iter()
-            .any(|diag| diag.severity >= Severity::Error);
+            .any(|diag| diag.severity() >= Severity::Error);
 
         // In formatting mode, abort immediately if the file has errors
         match ctx.execution.traversal_mode() {
             TraversalMode::Format { ignore_errors, .. } if has_errors => {
                 return Err(if *ignore_errors {
-                    Message::from(TraversalError {
-                        severity: Severity::Warning,
-                        file_id,
-                        code: category!("parse"),
-                        message: String::from("Skipped file with syntax errors"),
-                    })
+                    Message::from(SkippedDiagnostic.with_file_path(file_id))
                 } else {
                     Message::Diagnostics {
                         name: path.display().to_string(),
                         content: input,
-                        diagnostics: result.diagnostics,
+                        diagnostics: result.diagnostics.into_iter().map(Error::from).collect(),
                     }
                 });
             }
@@ -726,7 +734,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
             FileStatus::Message(Message::Diagnostics {
                 name: path.display().to_string(),
                 content: input.clone(),
-                diagnostics: result.diagnostics,
+                diagnostics: result.diagnostics.into_iter().map(Error::from).collect(),
             })
         };
 
@@ -798,11 +806,11 @@ enum Message {
         /// Suggested fixes skipped during the lint traversal
         skipped_suggested_fixes: u32,
     },
-    Error(TraversalError),
+    Error(Error),
     Diagnostics {
         name: String,
         content: String,
-        diagnostics: Vec<Diagnostic>,
+        diagnostics: Vec<Error>,
     },
     Diff {
         file_name: String,
@@ -811,19 +819,30 @@ enum Message {
     },
 }
 
-impl From<TraversalError> for Message {
-    fn from(err: TraversalError) -> Self {
-        Self::Error(err)
+impl<D> From<D> for Message
+where
+    Error: From<D>,
+{
+    fn from(err: D) -> Self {
+        Self::Error(Error::from(err))
     }
 }
 
-/// Generic error type returned by the traversal process
-struct TraversalError {
-    severity: Severity,
-    file_id: FileId,
-    code: &'static Category,
+#[derive(Debug, v2::Diagnostic)]
+#[diagnostic(category = "internalError/panic", tags(INTERNAL))]
+struct PanicDiagnostic {
+    #[description]
+    #[message]
     message: String,
 }
+
+#[derive(Debug, v2::Diagnostic)]
+#[diagnostic(category = "files/missingHandler", message = "unhandled file type")]
+struct UnhandledDiagnostic;
+
+#[derive(Debug, v2::Diagnostic)]
+#[diagnostic(category = "parse", message = "Skipped file with syntax errors")]
+struct SkippedDiagnostic;
 
 /// Extension trait for turning [Display]-able error types into [TraversalError]
 trait ResultExt {
@@ -832,12 +851,12 @@ trait ResultExt {
         self,
         file_id: FileId,
         code: &'static Category,
-    ) -> Result<Self::Result, TraversalError>;
+    ) -> Result<Self::Result, Error>;
 }
 
 impl<T, E> ResultExt for Result<T, E>
 where
-    E: Display,
+    E: std::error::Error + Send + Sync + 'static,
 {
     type Result = T;
 
@@ -845,23 +864,22 @@ where
         self,
         file_id: FileId,
         code: &'static Category,
-    ) -> Result<Self::Result, TraversalError> {
-        self.map_err(move |err| TraversalError {
-            severity: Severity::Error,
-            file_id,
-            code,
-            message: err.to_string(),
+    ) -> Result<Self::Result, Error> {
+        self.map_err(move |err| {
+            StdError::from(err)
+                .with_category(code)
+                .with_file_path(file_id)
         })
     }
 }
 
-/// Extension trait for turning [io::Error] into [TraversalError]
+/// Extension trait for turning [io::Error] into [Error]
 trait ResultIoExt: ResultExt {
-    fn with_file_id(self, file_id: FileId) -> Result<Self::Result, TraversalError>;
+    fn with_file_id(self, file_id: FileId) -> Result<Self::Result, Error>;
 }
 
 impl<T> ResultIoExt for io::Result<T> {
-    fn with_file_id(self, file_id: FileId) -> Result<Self::Result, TraversalError> {
-        self.with_file_id_and_code(file_id, category!("internalError/fs"))
+    fn with_file_id(self, file_id: FileId) -> Result<Self::Result, Error> {
+        self.map_err(|error| IoError::from(error).with_file_path(file_id))
     }
 }

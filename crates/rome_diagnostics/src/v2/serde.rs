@@ -18,7 +18,7 @@ use super::{
 #[cfg_attr(feature = "schema", derive(schemars::JsonSchema))]
 #[cfg_attr(test, derive(Eq, PartialEq))]
 pub struct Diagnostic {
-    category: Option<String>,
+    category: Option<&'static Category>,
     severity: Severity,
     description: String,
     message: MarkupBuf,
@@ -35,7 +35,7 @@ impl Diagnostic {
     }
 
     fn new_impl<D: super::Diagnostic + ?Sized>(diag: &D) -> Self {
-        let category = diag.category().map(|category| category.name().to_string());
+        let category = diag.category();
 
         let severity = diag.severity();
 
@@ -75,15 +75,8 @@ impl Diagnostic {
 }
 
 impl super::Diagnostic for Diagnostic {
-    fn category(&self) -> Option<&Category> {
-        self.category.as_deref().and_then(|name| {
-            let category: Option<&Category> = name.parse().ok();
-            debug_assert!(
-                category.is_some(),
-                "diagnostic category {name:?} does not exist in the static registry"
-            );
-            category
-        })
+    fn category(&self) -> Option<&'static Category> {
+        self.category
     }
 
     fn severity(&self) -> Severity {

@@ -589,7 +589,7 @@ mod tests {
     }
 
     impl<A: Advices + std::fmt::Debug> Diagnostic for TestDiagnostic<A> {
-        fn category(&self) -> Option<&Category> {
+        fn category(&self) -> Option<&'static Category> {
             Some(category!("internalError/io"))
         }
 

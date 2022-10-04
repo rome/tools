@@ -2,6 +2,7 @@ use anyhow::bail;
 use anyhow::Context;
 use anyhow::Error;
 use anyhow::Result;
+use futures::channel::mpsc::{channel, Sender};
 use futures::Sink;
 use futures::SinkExt;
 use futures::Stream;
@@ -17,6 +18,7 @@ use std::collections::HashMap;
 use std::fmt::Display;
 use std::slice;
 use std::time::Duration;
+use tokio::time::sleep;
 use tower::timeout::Timeout;
 use tower::{Service, ServiceExt};
 use tower_lsp::jsonrpc;
@@ -27,14 +29,20 @@ use tower_lsp::lsp_types::CodeActionKind;
 use tower_lsp::lsp_types::CodeActionOrCommand;
 use tower_lsp::lsp_types::CodeActionParams;
 use tower_lsp::lsp_types::CodeActionResponse;
+use tower_lsp::lsp_types::Diagnostic;
+use tower_lsp::lsp_types::DiagnosticRelatedInformation;
+use tower_lsp::lsp_types::DiagnosticSeverity;
 use tower_lsp::lsp_types::DidCloseTextDocumentParams;
 use tower_lsp::lsp_types::DidOpenTextDocumentParams;
 use tower_lsp::lsp_types::DocumentFormattingParams;
 use tower_lsp::lsp_types::FormattingOptions;
 use tower_lsp::lsp_types::InitializeResult;
 use tower_lsp::lsp_types::InitializedParams;
+use tower_lsp::lsp_types::Location;
+use tower_lsp::lsp_types::NumberOrString;
 use tower_lsp::lsp_types::PartialResultParams;
 use tower_lsp::lsp_types::Position;
+use tower_lsp::lsp_types::PublishDiagnosticsParams;
 use tower_lsp::lsp_types::Range;
 use tower_lsp::lsp_types::TextDocumentIdentifier;
 use tower_lsp::lsp_types::TextDocumentItem;
@@ -208,8 +216,20 @@ impl Server {
     }
 }
 
+/// Number of notifications buffered by the server-to-client channel before it starts blocking the current task
+const CHANNEL_BUFFER_SIZE: usize = 8;
+
+#[derive(Debug, PartialEq, Eq)]
+enum ServerNotification {
+    PublishDiagnostics(PublishDiagnosticsParams),
+}
+
 /// Basic handler for requests and notifications coming from the server for tests
-async fn client_handler<I, O>(mut stream: I, mut sink: O) -> Result<()>
+async fn client_handler<I, O>(
+    mut stream: I,
+    mut sink: O,
+    mut notify: Sender<ServerNotification>,
+) -> Result<()>
 where
     // This function has to be generic as `RequestStream` and `ResponseSink`
     // are not exported from `tower_lsp` and cannot be named in the signature
@@ -217,6 +237,16 @@ where
     O: Sink<Response> + Unpin,
 {
     while let Some(req) = stream.next().await {
+        if req.method() == "textDocument/publishDiagnostics" {
+            let params = req.params().expect("invalid request");
+            let diagnostics = from_value(params.clone()).expect("invalid params");
+            let notification = ServerNotification::PublishDiagnostics(diagnostics);
+            match notify.send(notification).await {
+                Ok(_) => continue,
+                Err(_) => break,
+            }
+        }
+
         let id = match req.id() {
             Some(id) => id,
             None => continue,
@@ -249,7 +279,8 @@ async fn basic_lifecycle() -> Result<()> {
     let (stream, sink) = client.split();
     let mut server = Server::new(service);
 
-    let reader = tokio::spawn(client_handler(stream, sink));
+    let (sender, _) = channel(CHANNEL_BUFFER_SIZE);
+    let reader = tokio::spawn(client_handler(stream, sink, sender));
 
     server.initialize().await?;
     server.initialized().await?;
@@ -267,7 +298,8 @@ async fn document_lifecycle() -> Result<()> {
     let (stream, sink) = client.split();
     let mut server = Server::new(service);
 
-    let reader = tokio::spawn(client_handler(stream, sink));
+    let (sender, _) = channel(CHANNEL_BUFFER_SIZE);
+    let reader = tokio::spawn(client_handler(stream, sink, sender));
 
     server.initialize().await?;
     server.initialized().await?;
@@ -288,7 +320,8 @@ async fn document_no_extension() -> Result<()> {
     let (stream, sink) = client.split();
     let mut server = Server::new(service);
 
-    let reader = tokio::spawn(client_handler(stream, sink));
+    let (sender, _) = channel(CHANNEL_BUFFER_SIZE);
+    let reader = tokio::spawn(client_handler(stream, sink, sender));
 
     server.initialize().await?;
     server.initialized().await?;
@@ -352,13 +385,93 @@ async fn document_no_extension() -> Result<()> {
 }
 
 #[tokio::test]
+async fn pull_diagnostics() -> Result<()> {
+    let factory = ServerFactory::default();
+    let (service, client) = factory.create().into_inner();
+    let (stream, sink) = client.split();
+    let mut server = Server::new(service);
+
+    let (sender, mut receiver) = channel(CHANNEL_BUFFER_SIZE);
+    let reader = tokio::spawn(client_handler(stream, sink, sender));
+
+    server.initialize().await?;
+    server.initialized().await?;
+
+    server.open_document("if(a == b) {}").await?;
+
+    let notification = tokio::select! {
+        msg = receiver.next() => msg,
+        _ = sleep(Duration::from_secs(1)) => {
+            panic!("timed out waiting for the server to send diagnostics")
+        }
+    };
+
+    assert_eq!(
+        notification,
+        Some(ServerNotification::PublishDiagnostics(
+            PublishDiagnosticsParams {
+                uri: Url::parse("test://workspace/document.js")?,
+                version: Some(0),
+                diagnostics: vec![Diagnostic {
+                    range: Range {
+                        start: Position {
+                            line: 0,
+                            character: 5
+                        },
+                        end: Position {
+                            line: 0,
+                            character: 7
+                        }
+                    },
+                    severity: Some(DiagnosticSeverity::ERROR),
+                    code: Some(NumberOrString::String(String::from(
+                        "lint/correctness/noDoubleEquals"
+                    ))),
+                    code_description: None,
+                    source: Some(String::from("rome")),
+                    message: String::from(
+                        "Use === instead of ==.\n== is only allowed when comparing against `null`"
+                    ),
+                    related_information: Some(vec![DiagnosticRelatedInformation {
+                        location: Location {
+                            uri: Url::parse("test://workspace/document.js")?,
+                            range: Range {
+                                start: Position {
+                                    line: 0,
+                                    character: 5
+                                },
+                                end: Position {
+                                    line: 0,
+                                    character: 7
+                                }
+                            }
+                        },
+                        message: String::new()
+                    }]),
+                    tags: None,
+                    data: None
+                }],
+            }
+        ))
+    );
+
+    server.close_document().await?;
+
+    server.shutdown().await?;
+    reader.abort();
+
+    Ok(())
+}
+
+#[tokio::test]
 async fn pull_quick_fixes() -> Result<()> {
     let factory = ServerFactory::default();
     let (service, client) = factory.create().into_inner();
     let (stream, sink) = client.split();
     let mut server = Server::new(service);
 
-    let reader = tokio::spawn(client_handler(stream, sink));
+    let (sender, _) = channel(CHANNEL_BUFFER_SIZE);
+    let reader = tokio::spawn(client_handler(stream, sink, sender));
 
     server.initialize().await?;
     server.initialized().await?;
@@ -423,7 +536,8 @@ async fn pull_refactors() -> Result<()> {
     let (stream, sink) = client.split();
     let mut server = Server::new(service);
 
-    let reader = tokio::spawn(client_handler(stream, sink));
+    let (sender, _) = channel(CHANNEL_BUFFER_SIZE);
+    let reader = tokio::spawn(client_handler(stream, sink, sender));
 
     server.initialize().await?;
     server.initialized().await?;
@@ -490,7 +604,8 @@ async fn format_with_syntax_errors() -> Result<()> {
     let (stream, sink) = client.split();
     let mut server = Server::new(service);
 
-    let reader = tokio::spawn(client_handler(stream, sink));
+    let (sender, _) = channel(CHANNEL_BUFFER_SIZE);
+    let reader = tokio::spawn(client_handler(stream, sink, sender));
 
     server.initialize().await?;
     server.initialized().await?;
@@ -538,7 +653,8 @@ async fn server_shutdown() -> Result<()> {
     let (stream, sink) = client.split();
     let mut server = Server::new(service);
 
-    let reader = tokio::spawn(client_handler(stream, sink));
+    let (sender, _) = channel(CHANNEL_BUFFER_SIZE);
+    let reader = tokio::spawn(client_handler(stream, sink, sender));
 
     server.initialize().await?;
     server.initialized().await?;

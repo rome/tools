@@ -1,6 +1,7 @@
 use std::any::Any;
 use std::collections::HashMap;
 use std::fmt::{Debug, Display};
+use std::io;
 
 use crate::line_index::{LineCol, LineIndex};
 use anyhow::{Context, Result};
@@ -9,8 +10,10 @@ use rome_console::fmt::Termcolor;
 use rome_console::fmt::{self, Formatter};
 use rome_console::MarkupBuf;
 use rome_diagnostics::termcolor::NoColor;
-use rome_diagnostics::Severity;
-use rome_diagnostics::{Applicability, Diagnostic};
+use rome_diagnostics::{
+    v2::{Diagnostic, DiagnosticTags, Location, PrintDescription, Severity, Visit},
+    Applicability,
+};
 use rome_rowan::{TextRange, TextSize};
 use rome_service::workspace::CodeAction;
 use rome_text_edit::{CompressedOp, DiffOp, TextEdit};
@@ -175,61 +178,91 @@ pub(crate) fn code_fix_to_lsp(
 /// of the diagnostic's primary label as the diagnostic range.
 /// Requires a [LineIndex] to convert a byte offset range to the line/col range
 /// expected by LSP.
-pub(crate) fn diagnostic_to_lsp(
-    diagnostic: Diagnostic,
+pub(crate) fn diagnostic_to_lsp<D: Diagnostic>(
+    diagnostic: D,
     url: &lsp::Url,
     line_index: &LineIndex,
 ) -> Option<lsp::Diagnostic> {
-    let primary = diagnostic.primary?;
+    let location = diagnostic.location()?;
+    let span = range(line_index, location.span?);
 
-    let related_information = if !diagnostic.children.is_empty() {
-        Some(
-            diagnostic
-                .children
-                .into_iter()
-                .map(|label| lsp::DiagnosticRelatedInformation {
-                    location: lsp::Location {
-                        uri: url.clone(),
-                        range: range(line_index, label.span.range),
-                    },
-
-                    message: print_markup(&label.msg),
-                })
-                .collect(),
-        )
-    } else {
-        None
+    let severity = match diagnostic.severity() {
+        Severity::Fatal | Severity::Error => lsp::DiagnosticSeverity::ERROR,
+        Severity::Warning => lsp::DiagnosticSeverity::WARNING,
+        Severity::Information => lsp::DiagnosticSeverity::INFORMATION,
+        Severity::Hint => lsp::DiagnosticSeverity::HINT,
     };
+
+    let code = diagnostic
+        .category()
+        .map(|category| lsp::NumberOrString::String(category.name().to_string()));
+
+    let message = PrintDescription(&diagnostic).to_string();
+
+    let mut related_information = None;
+    let mut visitor = RelatedInformationVisitor {
+        url,
+        line_index,
+        related_information: &mut related_information,
+    };
+
+    diagnostic.advices(&mut visitor).unwrap();
+
+    let tags = diagnostic.tags();
+    let tags = {
+        let mut result = Vec::new();
+
+        if tags.contains(DiagnosticTags::UNNECESSARY_CODE) {
+            result.push(lsp::DiagnosticTag::UNNECESSARY);
+        }
+
+        if tags.contains(DiagnosticTags::DEPRECATED_CODE) {
+            result.push(lsp::DiagnosticTag::DEPRECATED);
+        }
+
+        if !result.is_empty() {
+            Some(result)
+        } else {
+            None
+        }
+    };
+
     Some(lsp::Diagnostic::new(
-        range(line_index, primary.span.range),
-        Some(match diagnostic.severity {
-            Severity::Help => lsp::DiagnosticSeverity::HINT,
-            Severity::Note => lsp::DiagnosticSeverity::INFORMATION,
-            Severity::Warning => lsp::DiagnosticSeverity::WARNING,
-            Severity::Error | Severity::Bug => lsp::DiagnosticSeverity::ERROR,
-        }),
-        diagnostic
-            .code
-            .map(|code| lsp::NumberOrString::String(code.name().into())),
+        span,
+        Some(severity),
+        code,
         Some("rome".into()),
-        diagnostic
-            .summary
-            .unwrap_or_else(|| print_markup(&diagnostic.title)),
+        message,
         related_information,
-        diagnostic.tag.map(|tag| {
-            let mut result = Vec::new();
-
-            if tag.is_unnecessary() {
-                result.push(lsp::DiagnosticTag::UNNECESSARY);
-            }
-
-            if tag.is_deprecated() {
-                result.push(lsp::DiagnosticTag::DEPRECATED);
-            }
-
-            result
-        }),
+        tags,
     ))
+}
+
+struct RelatedInformationVisitor<'a> {
+    url: &'a lsp::Url,
+    line_index: &'a LineIndex,
+    related_information: &'a mut Option<Vec<lsp::DiagnosticRelatedInformation>>,
+}
+
+impl Visit for RelatedInformationVisitor<'_> {
+    fn record_frame(&mut self, location: Location<'_>) -> io::Result<()> {
+        let span = match location.span {
+            Some(span) => span,
+            None => return Ok(()),
+        };
+
+        let related_information = self.related_information.get_or_insert_with(Vec::new);
+
+        related_information.push(lsp::DiagnosticRelatedInformation {
+            location: lsp::Location {
+                uri: self.url.clone(),
+                range: range(self.line_index, span),
+            },
+            message: String::new(),
+        });
+
+        Ok(())
+    }
 }
 
 /// Convert a piece of markup into a String

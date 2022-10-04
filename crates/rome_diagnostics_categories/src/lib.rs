@@ -54,16 +54,52 @@ impl serde::Serialize for &'static Category {
 }
 
 #[cfg(feature = "serde")]
+struct CategoryVisitor;
+
+#[cfg(feature = "serde")]
+fn deserialize_parse<E: serde::de::Error>(code: &str) -> Result<&'static Category, E> {
+    code.parse().map_err(|()| {
+        serde::de::Error::custom(format_args!("failed to deserialize category from {code}"))
+    })
+}
+
+#[cfg(feature = "serde")]
+impl<'de> serde::de::Visitor<'de> for CategoryVisitor {
+    type Value = &'static Category;
+
+    fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+        formatter.write_str("a borrowed string")
+    }
+
+    fn visit_str<E>(self, v: &str) -> Result<Self::Value, E>
+    where
+        E: serde::de::Error,
+    {
+        deserialize_parse(v)
+    }
+
+    fn visit_borrowed_str<E>(self, v: &'de str) -> Result<Self::Value, E>
+    where
+        E: serde::de::Error,
+    {
+        deserialize_parse(v)
+    }
+
+    fn visit_string<E>(self, v: String) -> Result<Self::Value, E>
+    where
+        E: serde::de::Error,
+    {
+        deserialize_parse(&v)
+    }
+}
+
+#[cfg(feature = "serde")]
 impl<'de> serde::Deserialize<'de> for &'static Category {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
-        <&str>::deserialize(deserializer).and_then(|code| {
-            code.parse().map_err(|()| {
-                serde::de::Error::custom(format_args!("failed to deserialize category from {code}"))
-            })
-        })
+        deserializer.deserialize_str(CategoryVisitor)
     }
 }
 

@@ -6,8 +6,7 @@ use crate::{
     FileSystem, RomePath,
 };
 use rayon::{scope, Scope};
-use rome_diagnostics::file::FileId;
-use rome_diagnostics::v2::category;
+use rome_diagnostics::v2::{adapters::IoError, Diagnostic, DiagnosticExt, Error, FileId};
 use std::{
     ffi::OsStr,
     fs,
@@ -108,7 +107,7 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
         let file_type = match path.metadata() {
             Ok(meta) => meta.file_type(),
             Err(err) => {
-                ctx.push_diagnostic(file_id, category!("internalError/fs"), err.to_string());
+                ctx.push_diagnostic(IoError::from(err).with_file_path(file_id));
                 return;
             }
         };
@@ -127,11 +126,7 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
             return;
         }
 
-        ctx.push_diagnostic(
-            file_id,
-            category!("internalError/fs"),
-            "unhandled file type".into(),
-        );
+        ctx.push_diagnostic(Error::from(UnhandledDiagnostic { file_id }));
     }
 }
 
@@ -157,7 +152,7 @@ fn handle_dir<'scope>(
     let iter = match fs::read_dir(path) {
         Ok(iter) => iter,
         Err(err) => {
-            ctx.push_diagnostic(file_id, category!("internalError/fs"), err.to_string());
+            ctx.push_diagnostic(IoError::from(err).with_file_path(file_id));
             return;
         }
     };
@@ -166,7 +161,7 @@ fn handle_dir<'scope>(
         let entry = match entry {
             Ok(entry) => entry,
             Err(err) => {
-                ctx.push_diagnostic(file_id, category!("internalError/fs"), err.to_string());
+                ctx.push_diagnostic(IoError::from(err).with_file_path(file_id));
                 continue;
             }
         };
@@ -177,7 +172,7 @@ fn handle_dir<'scope>(
         let file_type = match entry.file_type() {
             Ok(file_type) => file_type,
             Err(err) => {
-                ctx.push_diagnostic(file_id, category!("internalError/fs"), err.to_string());
+                ctx.push_diagnostic(IoError::from(err).with_file_path(file_id));
                 continue;
             }
         };
@@ -205,10 +200,13 @@ fn handle_dir<'scope>(
             continue;
         }
 
-        ctx.push_diagnostic(
-            file_id,
-            category!("internalError/fs"),
-            "unhandled file type".into(),
-        );
+        ctx.push_diagnostic(Error::from(UnhandledDiagnostic { file_id }));
     }
+}
+
+#[derive(Debug, Diagnostic)]
+#[diagnostic(category = "internalError/fs", message = "unhandled file type")]
+struct UnhandledDiagnostic {
+    #[location(resource)]
+    file_id: FileId,
 }
