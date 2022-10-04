@@ -189,7 +189,7 @@ pub trait GroupLanguage {
 }
 
 /// This trait is implemented for tuples of [Rule] types of size 1 to 29 if the
-/// languageof all the groups in the tuple share the same associated
+/// language of all the groups in the tuple share the same associated
 /// [Language] (which is then aliased as the `Language` associated type on
 /// [CategoryLanguage] itself). It is used to ensure all the groups in a given
 /// category are all querying the same underlying language
