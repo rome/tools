@@ -42,6 +42,7 @@ The new groups are heavily inspired from [`clippy`](https://github.com/rust-lang
 - Fixed a code action for `useBlockStatements` [#3199](https://github.com/rome/tools/issues/3199)
 - Improved the rule `useCamelCase` [#3190](https://github.com/rome/tools/pull/3190) [#3210](https://github.com/rome/tools/pull/3210)
 - Fixed invalid code action for `useOptionalChain` [#3257](https://github.com/rome/tools/issues/3257)
+- Fixed bugs in `noUnusedVariables` [#3170](https://github.com/rome/tools/issues/3170), [#3316](https://github.com/rome/tools/pull/3316)
 
 #### New rules
 
@@ -55,6 +56,7 @@ The new groups are heavily inspired from [`clippy`](https://github.com/rust-lang
 - [`noArrayIndexKey`](https://rome.tools/docs/lint/rules/noArrayIndexKey/)
 - [`noVoidElementsWithChildren`](https://rome.tools/docs/lint/rules/noVoidElementsWithChildren/)
 - [`noUndeclaredVariables`](https://rome.tools/docs/lint/rules/noUndeclaredVariables/)
+- [`noDangerouslySetInnerHtmlWithChildren`](https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtmlWithChildren/)
 
 
 ### Parser
