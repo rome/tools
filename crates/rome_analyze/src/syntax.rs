@@ -81,7 +81,7 @@ mod tests {
                 QueryMatch::Syntax(node) => {
                     self.nodes.push(node.kind());
                 }
-                QueryMatch::ControlFlowGraph(..) => unreachable!(),
+                _ => unreachable!(),
             }
         }
     }

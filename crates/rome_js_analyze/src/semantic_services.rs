@@ -33,6 +33,25 @@ impl Phase for SemanticServices {
     }
 }
 
+/// The [SemanticServices] types can be used as a queryable to get an instance
+/// of the whole [SemanticModel] without matching on a specific AST node
+impl Queryable for SemanticServices {
+    type Output = SemanticModel;
+    type Language = JsLanguage;
+    type Services = Self;
+
+    const KEY: QueryKey<Self::Language> = QueryKey::SemanticModel;
+
+    fn unwrap_match(services: &ServiceBag, query: &QueryMatch<Self::Language>) -> Self::Output {
+        match query {
+            QueryMatch::SemanticModel(..) => services
+                .get_service::<SemanticModel>()
+                .expect("SemanticModel service is not registered"),
+            _ => panic!("tried to unwrap unsupported QueryMatch kind, expected SemanticModel"),
+        }
+    }
+}
+
 /// Query type usable by lint rules **that uses the semantic model** to match on specific [AstNode] types
 #[derive(Clone)]
 pub struct Semantic<N>(pub N);
@@ -49,7 +68,7 @@ where
     /// the kind set of `N`
     const KEY: QueryKey<Self::Language> = QueryKey::Syntax(N::KIND_SET);
 
-    fn unwrap_match(query: &QueryMatch<Self::Language>) -> Self::Output {
+    fn unwrap_match(_: &ServiceBag, query: &QueryMatch<Self::Language>) -> Self::Output {
         match query {
             QueryMatch::Syntax(node) => N::unwrap_cast(node.clone()),
             _ => panic!("tried to unwrap unsupported QueryMatch kind, expected Syntax"),
@@ -97,5 +116,31 @@ impl Visitor for SemanticModelBuilderVisitor {
     fn finish(self: Box<Self>, ctx: VisitorFinishContext<JsLanguage>) {
         let model = self.builder.build();
         ctx.services.insert_service(model);
+    }
+}
+
+pub(crate) struct SemanticModelVisitor;
+
+impl Visitor for SemanticModelVisitor {
+    type Language = JsLanguage;
+
+    fn visit(
+        &mut self,
+        event: &WalkEvent<SyntaxNode<JsLanguage>>,
+        mut ctx: VisitorContext<JsLanguage>,
+    ) {
+        let root = match event {
+            WalkEvent::Enter(node) => {
+                if node.parent().is_some() {
+                    return;
+                }
+
+                node
+            }
+            WalkEvent::Leave(_) => return,
+        };
+
+        let text_range = root.text_range();
+        ctx.match_query(QueryMatch::SemanticModel(text_range));
     }
 }

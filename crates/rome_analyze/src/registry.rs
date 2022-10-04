@@ -56,6 +56,7 @@ struct PhaseRules<L: Language> {
     /// lint rules associated with it
     ast_rules: Vec<SyntaxKindRules<L>>,
     control_flow: Vec<RegistryRule<L>>,
+    semantic_model: Vec<RegistryRule<L>>,
     /// Holds a list of states for all the rules in this phase
     rule_states: Vec<RuleState<L>>,
 }
@@ -113,6 +114,9 @@ impl<L: Language + Default> RuleRegistry<L> {
             QueryKey::ControlFlowGraph => {
                 phase.control_flow.push(rule);
             }
+            QueryKey::SemanticModel => {
+                phase.semantic_model.push(rule);
+            }
         }
 
         phase.rule_states.push(RuleState::default());
@@ -169,6 +173,7 @@ impl<L: Language> QueryMatcher<L> for RuleRegistry<L> {
                 }
             }
             QueryMatch::ControlFlowGraph(..) => &mut phase.control_flow,
+            QueryMatch::SemanticModel(..) => &mut phase.semantic_model,
         };
 
         // Run all the rules registered to this QueryMatch
@@ -275,7 +280,9 @@ impl<L: Language + Default> RegistryRule<L> {
 
             // SAFETY: The rule should never get executed in the first place
             // if the query doesn't match
-            let query_result = <R::Query as Queryable>::unwrap_match(&params.query);
+            let query_result =
+                <R::Query as Queryable>::unwrap_match(params.services, &params.query);
+
             let ctx = match RuleContext::new(&query_result, params.root, params.services) {
                 Ok(ctx) => ctx,
                 Err(_) => return,

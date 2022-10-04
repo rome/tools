@@ -21,7 +21,10 @@ mod semantic_analyzers;
 mod semantic_services;
 pub mod utils;
 
-use crate::{registry::build_registry, semantic_services::SemanticModelBuilderVisitor};
+use crate::{
+    registry::build_registry,
+    semantic_services::{SemanticModelBuilderVisitor, SemanticModelVisitor},
+};
 
 pub(crate) type JsRuleAction = RuleAction<JsLanguage>;
 
@@ -72,6 +75,7 @@ where
     analyzer.add_visitor(Phases::Syntax, SyntaxVisitor::default());
     analyzer.add_visitor(Phases::Syntax, SemanticModelBuilderVisitor::new(root));
 
+    analyzer.add_visitor(Phases::Semantic, SemanticModelVisitor);
     analyzer.add_visitor(Phases::Semantic, SyntaxVisitor::default());
 
     analyzer.run(AnalyzerContext {

@@ -195,7 +195,7 @@ mod tests {
         fn match_query(&mut self, params: MatchQueryParams<RawLanguage>) {
             let node = match params.query {
                 QueryMatch::Syntax(node) => node,
-                QueryMatch::ControlFlowGraph(..) => unreachable!(),
+                _ => unreachable!(),
             };
 
             if node.kind() != RawLanguageKind::LITERAL_EXPRESSION {

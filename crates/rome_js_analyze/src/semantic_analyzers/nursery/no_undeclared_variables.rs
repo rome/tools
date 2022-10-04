@@ -2,12 +2,11 @@ use crate::globals::browser::BROWSER;
 use crate::globals::node::NODE;
 use crate::globals::runtime::ES_2021;
 use crate::globals::typescript::TYPESCRIPT_BUILTIN;
-use crate::semantic_services::Semantic;
+use crate::semantic_services::SemanticServices;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_semantic::Scope;
-use rome_js_syntax::{JsReferenceIdentifier, JsxReferenceIdentifier};
+use rome_js_syntax::{JsReferenceIdentifier, JsxReferenceIdentifier, TextRange};
 use rome_rowan::{declare_node_union, AstNode};
 
 declare_rule! {
@@ -28,56 +27,50 @@ declare_rule! {
 }
 
 declare_node_union! {
-    pub(crate) NoUndeclaredVariablesQuery = JsReferenceIdentifier| JsxReferenceIdentifier
+    pub(crate) AnyIdentifier = JsReferenceIdentifier| JsxReferenceIdentifier
 }
 
 impl Rule for NoUndeclaredVariables {
-    type Query = Semantic<NoUndeclaredVariablesQuery>;
-    type State = String;
-    type Signals = Option<Self::State>;
+    type Query = SemanticServices;
+    type State = (TextRange, String);
+    type Signals = Vec<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
-        let node = ctx.query();
-        let model = ctx.model();
-        match node {
-            NoUndeclaredVariablesQuery::JsxReferenceIdentifier(reference) => {
-                let value = reference.value_token().ok()?;
-                let reference_name = value.text_trimmed();
-                let scope = model.scope(reference.syntax());
-                if !is_declared(reference_name, scope) {
-                    return Some(reference_name.to_string());
+        ctx.query()
+            .all_unresolved_references()
+            .filter_map(|node| {
+                let node = AnyIdentifier::unwrap_cast(node.clone());
+                let token = match node {
+                    AnyIdentifier::JsReferenceIdentifier(node) => node.value_token(),
+                    AnyIdentifier::JsxReferenceIdentifier(node) => node.value_token(),
+                };
+
+                let token = token.ok()?;
+                let text = token.text_trimmed();
+                if is_global(text) {
+                    return None;
                 }
-            }
-            NoUndeclaredVariablesQuery::JsReferenceIdentifier(reference) => {
-                let value = reference.value_token().ok()?;
-                let reference_name = value.text_trimmed();
-                let scope = model.scope(reference.syntax());
-                if !is_declared(reference_name, scope) {
-                    return Some(reference_name.to_string());
-                }
-            }
-        }
-        None
+
+                let span = token.text_trimmed_range();
+                let text = text.to_string();
+                Some((span, text))
+            })
+            .collect()
     }
 
-    fn diagnostic(ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
-        let node = ctx.query();
+    fn diagnostic(_ctx: &RuleContext<Self>, (span, name): &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic::new(
             rule_category!(),
-            node.syntax().text_trimmed_range(),
+            *span,
             markup! {
-                "The "<Emphasis>{state}</Emphasis>" variable is undeclared"
+                "The "<Emphasis>{name}</Emphasis>" variable is undeclared"
             },
         ))
     }
 }
 
-fn is_declared(reference_name: &str, scope: Scope) -> bool {
-    let binding = scope.get_binding(reference_name);
-
-    // TODO: add here the check for global variables defined in the configuration, currently not supported
-    binding.is_some()
-        || ES_2021.binary_search(&reference_name).is_ok()
+fn is_global(reference_name: &str) -> bool {
+    ES_2021.binary_search(&reference_name).is_ok()
         || BROWSER.binary_search(&reference_name).is_ok()
         || NODE.binary_search(&reference_name).is_ok()
         || TYPESCRIPT_BUILTIN.binary_search(&reference_name).is_ok()
