@@ -64,15 +64,13 @@ pub struct Analyzer<'analyzer, L: Language, Matcher, Break> {
 }
 
 /// A convenient new type data structure to store the options that belong to a rule
-///
-/// To work around the `Clone` constraint, the data structure uses [Arc]
 #[derive(Debug, Clone)]
 pub struct RuleOptions(Box<RawValue>);
 
 impl RuleOptions {
     /// It returns the [RawValue] for the relative rule
     #[allow(dead_code)]
-    fn value(&self) -> &Box<RawValue> {
+    fn value(&self) -> &RawValue {
         &self.0
     }
 
@@ -155,10 +153,7 @@ impl AnalyzerOptions {
         rule_name: &'static str,
         mapper: F,
     ) -> Option<ToType> {
-        self.configuration
-            .rules
-            .get_rule(rule_name)
-            .and_then(|rule_options| Some(mapper(rule_options)))
+        self.configuration.rules.get_rule(rule_name).map(mapper)
     }
 }
 
@@ -225,7 +220,7 @@ where
                 root: &ctx.root,
                 services: &ctx.services,
                 range: ctx.range,
-                options: &ctx.options,
+                options: ctx.options,
             };
 
             // The first phase being run will inspect the tokens and parse the
