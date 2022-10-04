@@ -5,7 +5,7 @@ use rome_js_semantic::{AllReferencesExtensions, SemanticScopeExtensions};
 use rome_js_syntax::{
     JsClassExpression, JsConstructorParameterList, JsConstructorParameters, JsFunctionDeclaration,
     JsFunctionExpression, JsIdentifierBinding, JsParameterList, JsParameters, JsSyntaxKind,
-    JsVariableDeclarator, TsPropertyParameter,
+    JsVariableDeclarator, TsDeclareStatement, TsPropertyParameter,
 };
 use rome_rowan::{AstNode, SyntaxNodeCast};
 
@@ -105,7 +105,8 @@ declare_rule! {
 
 // It is ok in some Typescripts constructs for a parameter to be unused.
 fn is_typescript_unused_ok(binding: &JsIdentifierBinding) -> Option<()> {
-    match binding.syntax().parent()?.kind() {
+    let parent = binding.syntax().parent()?;
+    match parent.kind() {
         JsSyntaxKind::JS_FORMAL_PARAMETER | JsSyntaxKind::JS_REST_PARAMETER => {
             let parameter = binding.syntax().parent()?;
             let parent = parameter.parent()?;
@@ -160,7 +161,13 @@ fn is_typescript_unused_ok(binding: &JsIdentifierBinding) -> Option<()> {
         JsSyntaxKind::TS_INDEX_SIGNATURE_PARAMETER => Some(()),
         // example: declare function notUsedParameters(a);
         JsSyntaxKind::TS_DECLARE_FUNCTION_DECLARATION => Some(()),
-        _ => None,
+        _ => {
+            // Anything below a declare
+            parent
+                .ancestors()
+                .any(|x| TsDeclareStatement::can_cast(x.kind()))
+                .then_some(())
+        }
     }
 }
 
