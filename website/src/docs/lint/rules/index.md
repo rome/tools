@@ -260,6 +260,13 @@ to promote these rules into a more appropriate category.
 Discourage the usage of Array index in keys.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noChildrenProp">
+	<a href="/docs/lint/rules/noChildrenProp">noChildrenProp (since v0.10.0)</a>
+	<a class="header-anchor" href="#noChildrenProp"></a>
+</h3>
+Prevent passing of <strong>children</strong> as props.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noDangerouslySetInnerHtml">
 	<a href="/docs/lint/rules/noDangerouslySetInnerHtml">noDangerouslySetInnerHtml (since v0.10.0)</a>
 	<a class="header-anchor" href="#noDangerouslySetInnerHtml"></a>

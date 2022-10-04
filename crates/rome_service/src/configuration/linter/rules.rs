@@ -387,6 +387,7 @@ pub struct Nursery {
 #[doc = r" A list of rules that belong to this group"]
 struct NurserySchema {
     no_array_index_key: Option<RuleConfiguration>,
+    no_children_prop: Option<RuleConfiguration>,
     no_dangerously_set_inner_html: Option<RuleConfiguration>,
     no_dangerously_set_inner_html_with_children: Option<RuleConfiguration>,
     no_new_symbol: Option<RuleConfiguration>,
@@ -403,8 +404,9 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 14] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 15] = [
         "noArrayIndexKey",
+        "noChildrenProp",
         "noDangerouslySetInnerHtml",
         "noDangerouslySetInnerHtmlWithChildren",
         "noNewSymbol",
