@@ -270,7 +270,8 @@ impl SemanticEventExtractor {
             | JS_FUNCTION_BODY
             | TS_INTERFACE_DECLARATION
             | TS_ENUM_DECLARATION
-            | TS_TYPE_ALIAS_DECLARATION => {
+            | TS_TYPE_ALIAS_DECLARATION
+            | TS_FUNCTION_TYPE => {
                 self.push_scope(
                     node.text_range(),
                     ScopeHoisting::DontHoistDeclarationsToParent,
@@ -486,6 +487,7 @@ impl SemanticEventExtractor {
             | TS_INTERFACE_DECLARATION
             | TS_ENUM_DECLARATION
             | TS_TYPE_ALIAS_DECLARATION
+            | TS_FUNCTION_TYPE
             | JS_BLOCK_STATEMENT
             | JS_FOR_STATEMENT
             | JS_FOR_OF_STATEMENT
