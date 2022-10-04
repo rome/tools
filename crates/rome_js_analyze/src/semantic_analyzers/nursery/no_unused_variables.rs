@@ -5,7 +5,7 @@ use rome_js_semantic::{AllReferencesExtensions, SemanticScopeExtensions};
 use rome_js_syntax::{
     JsClassExpression, JsConstructorParameterList, JsConstructorParameters, JsFunctionDeclaration,
     JsFunctionExpression, JsIdentifierBinding, JsParameterList, JsParameters, JsSyntaxKind,
-    JsVariableDeclarator, TsPropertyParameter,
+    JsVariableDeclarator, TsPropertyParameter, TsDeclareStatement,
 };
 use rome_rowan::{AstNode, SyntaxNodeCast};
 
@@ -163,14 +163,10 @@ fn is_typescript_unused_ok(binding: &JsIdentifierBinding) -> Option<()> {
         JsSyntaxKind::TS_DECLARE_FUNCTION_DECLARATION => Some(()),
         _ => {
             // Anything below a declare
-            if parent
+            parent
                 .ancestors()
-                .any(|x| matches!(x.kind(), JsSyntaxKind::TS_DECLARE_STATEMENT))
-            {
-                Some(())
-            } else {
-                None
-            }
+                .any(|x| TsDeclareStatement::can_cast(x.kind()))
+                .then_some(())
         }
     }
 }
