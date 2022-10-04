@@ -283,10 +283,12 @@ impl<L: Language + Default> RegistryRule<L> {
             let query_result =
                 <R::Query as Queryable>::unwrap_match(params.services, &params.query);
 
-            let ctx = match RuleContext::new(&query_result, params.root, params.services) {
-                Ok(ctx) => ctx,
-                Err(_) => return,
-            };
+            let ctx =
+                match RuleContext::new(&query_result, params.root, params.services, params.options)
+                {
+                    Ok(ctx) => ctx,
+                    Err(_) => return,
+                };
 
             for result in R::run(&ctx) {
                 let text_range =
@@ -300,6 +302,7 @@ impl<L: Language + Default> RegistryRule<L> {
                     query_result.clone(),
                     result,
                     params.services,
+                    params.options.clone(),
                 ));
 
                 params.signal_queue.push(SignalEntry {

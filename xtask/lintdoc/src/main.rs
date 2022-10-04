@@ -1,5 +1,5 @@
 use pulldown_cmark::{html::write_html, CodeBlockKind, Event, LinkType, Parser, Tag};
-use rome_analyze::{AnalysisFilter, ControlFlow, RuleCategories, RuleFilter};
+use rome_analyze::{AnalysisFilter, AnalyzerOptions, ControlFlow, RuleCategories, RuleFilter};
 use rome_console::{
     fmt::{Formatter, HTML},
     markup, Markup,
@@ -485,7 +485,8 @@ fn assert_lint(
             ..AnalysisFilter::default()
         };
 
-        let result = analyze(FileId::zero(), &root, filter, |signal| {
+        let options = AnalyzerOptions::default();
+        let result = analyze(FileId::zero(), &root, filter, &options, |signal| {
             if let Some(diag) = signal.diagnostic() {
                 let category = diag.code().expect("linter diagnostic has no code");
                 let severity = settings.get_severity_from_rule_code(category).expect(

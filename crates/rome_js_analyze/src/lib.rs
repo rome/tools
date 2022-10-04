@@ -1,8 +1,8 @@
 use control_flow::make_visitor;
 use rome_analyze::{
-    AnalysisFilter, Analyzer, AnalyzerContext, AnalyzerSignal, ControlFlow, InspectMatcher,
-    LanguageRoot, MatchQueryParams, Phases, RegistryRuleMetadata, RuleAction, ServiceBag,
-    SyntaxVisitor,
+    AnalysisFilter, Analyzer, AnalyzerContext, AnalyzerOptions, AnalyzerSignal, ControlFlow,
+    InspectMatcher, LanguageRoot, MatchQueryParams, Phases, RegistryRuleMetadata, RuleAction,
+    ServiceBag, SyntaxVisitor,
 };
 use rome_diagnostics::file::FileId;
 use rome_js_syntax::{
@@ -45,6 +45,7 @@ pub fn analyze_with_inspect_matcher<'a, V, F, B>(
     root: &LanguageRoot<JsLanguage>,
     filter: AnalysisFilter,
     inspect_matcher: V,
+    options: &'a AnalyzerOptions,
     mut emit_signal: F,
 ) -> Option<B>
 where
@@ -70,7 +71,6 @@ where
         parse_linter_suppression_comment,
         &mut emit_signal,
     );
-
     analyzer.add_visitor(Phases::Syntax, make_visitor());
     analyzer.add_visitor(Phases::Syntax, SyntaxVisitor::default());
     analyzer.add_visitor(Phases::Syntax, SemanticModelBuilderVisitor::new(root));
@@ -83,6 +83,7 @@ where
         root: root.clone(),
         range: filter.range,
         services: ServiceBag::default(),
+        options,
     })
 }
 
@@ -93,19 +94,20 @@ pub fn analyze<'a, F, B>(
     file_id: FileId,
     root: &LanguageRoot<JsLanguage>,
     filter: AnalysisFilter,
+    options: &'a AnalyzerOptions,
     emit_signal: F,
 ) -> Option<B>
 where
     F: FnMut(&dyn AnalyzerSignal<JsLanguage>) -> ControlFlow<B> + 'a,
     B: 'a,
 {
-    analyze_with_inspect_matcher(file_id, root, filter, |_| {}, emit_signal)
+    analyze_with_inspect_matcher(file_id, root, filter, |_| {}, options, emit_signal)
 }
 
 #[cfg(test)]
 mod tests {
 
-    use rome_analyze::Never;
+    use rome_analyze::{AnalyzerOptions, Never};
     use rome_diagnostics::Severity;
     use rome_diagnostics::{file::FileId, v2::category};
     use rome_js_parser::parse;
@@ -122,10 +124,12 @@ mod tests {
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
 
         let mut error_ranges = Vec::new();
+        let options = AnalyzerOptions::default();
         analyze(
             FileId::zero(),
             &parsed.tree(),
             AnalysisFilter::default(),
+            &options,
             |signal| {
                 if let Some(diag) = signal.diagnostic() {
                     let diag = diag.into_diagnostic(Severity::Warning);
@@ -173,10 +177,12 @@ mod tests {
         let parsed = parse(SOURCE, FileId::zero(), SourceType::js_module());
 
         let mut error_ranges = Vec::new();
+        let options = AnalyzerOptions::default();
         analyze(
             FileId::zero(),
             &parsed.tree(),
             AnalysisFilter::default(),
+            &options,
             |signal| {
                 if let Some(diag) = signal.diagnostic() {
                     let diag = diag.into_diagnostic(Severity::Warning);

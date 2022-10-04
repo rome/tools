@@ -1,4 +1,6 @@
-use rome_analyze::{AnalysisFilter, ControlFlow, Never, QueryMatch, RuleCategories, RuleFilter};
+use rome_analyze::{
+    AnalysisFilter, AnalyzerOptions, ControlFlow, Never, QueryMatch, RuleCategories, RuleFilter,
+};
 use rome_diagnostics::{Applicability, CodeSuggestion, Diagnostic};
 use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
@@ -155,6 +157,7 @@ fn debug_control_flow(rome_path: &RomePath, parse: AnyParse, cursor: TextSize) -
         enabled_rules: Some(&[RuleFilter::Rule("js", "noDeadCode")]),
         ..AnalysisFilter::default()
     };
+    let options = AnalyzerOptions::default();
 
     analyze_with_inspect_matcher(
         rome_path.file_id(),
@@ -181,6 +184,7 @@ fn debug_control_flow(rome_path: &RomePath, parse: AnyParse, cursor: TextSize) -
                 }
             }
         },
+        &options,
         |_| ControlFlow::<Never>::Continue(()),
     );
 
@@ -211,7 +215,9 @@ fn lint(
     let mut diagnostics = parse.into_diagnostics();
 
     let file_id = rome_path.file_id();
-    analyze(file_id, &tree, filter, |signal| {
+    let options = AnalyzerOptions::default();
+
+    analyze(file_id, &tree, filter, &options, |signal| {
         if let Some(diagnostic) = signal.diagnostic() {
             // We do now check if the severity of the diagnostics should be changed.
             // The configuration allows to change the severity of the diagnostics emitted by rules.
@@ -275,7 +281,9 @@ fn code_actions(
     filter.range = Some(range);
 
     let file_id = rome_path.file_id();
-    analyze(file_id, &tree, filter, |signal| {
+    let options = AnalyzerOptions::default();
+
+    analyze(file_id, &tree, filter, &options, |signal| {
         if let Some(action) = signal.action() {
             actions.push(CodeAction {
                 category: action.category,
@@ -319,8 +327,9 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
     filter.categories = RuleCategories::SYNTAX | RuleCategories::LINT;
     let file_id = rome_path.file_id();
     let mut skipped_suggested_fixes = 0;
+    let options = AnalyzerOptions::default();
     loop {
-        let action = analyze(file_id, &tree, filter, |signal| {
+        let action = analyze(file_id, &tree, filter, &options, |signal| {
             if let Some(action) = signal.action() {
                 match fix_file_mode {
                     FixFileMode::SafeFixes => {

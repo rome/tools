@@ -58,8 +58,8 @@ mod tests {
     use crate::{
         matcher::{GroupKey, MatchQueryParams},
         registry::Phases,
-        Analyzer, AnalyzerContext, AnalyzerSignal, ControlFlow, Never, QueryMatch, QueryMatcher,
-        RuleKey, ServiceBag, SyntaxVisitor,
+        Analyzer, AnalyzerContext, AnalyzerOptions, AnalyzerSignal, ControlFlow, Never, QueryMatch,
+        QueryMatcher, RuleKey, ServiceBag, SyntaxVisitor,
     };
 
     #[derive(Default)]
@@ -122,6 +122,7 @@ mod tests {
             root,
             range: None,
             services: ServiceBag::default(),
+            options: &AnalyzerOptions::default(),
         };
 
         let result: Option<Never> = analyzer.run(ctx);
