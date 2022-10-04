@@ -56,7 +56,7 @@ pub trait RuleMeta {
 ///
 /// The macro itself expect the following syntax:
 ///
-/// ```rust
+/// ```rust,ignore
 ///use rome_analyze::declare_rule;
 ///
 /// declare_rule! {

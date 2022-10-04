@@ -1,7 +1,7 @@
 use crate::react::{ReactApiCall, ReactCreateElementCall};
 use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
-use rome_analyze::{declare_rule, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
@@ -153,7 +153,6 @@ impl JsAnyCreateElement {
 }
 
 impl Rule for NoDangerouslySetInnerHtmlWithChildren {
-    const CATEGORY: RuleCategory = RuleCategory::Lint;
     type Query = Semantic<JsAnyCreateElement>;
     type State = RuleState;
     type Signals = Option<Self::State>;
