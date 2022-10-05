@@ -1,0 +1,70 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noAutoFocusInvalid.jsx
+---
+# Input
+```js
+<>
+    <input autoFocus />
+    <input autoFocus="true" />
+    <input autoFocus={"false"} />
+</>
+```
+
+# Diagnostics
+```
+noAutoFocusInvalid.jsx:2:12 lint/nursery/noAutofocus  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid the autoFocus attribute.
+  
+    1 │ <>
+  > 2 │     <input autoFocus />
+      │            ^^^^^^^^^
+    3 │     <input autoFocus="true" />
+    4 │     <input autoFocus={"false"} />
+  
+  i Suggested fix: Remove the autoFocus attribute.
+  
+    2 │ ····<input·autoFocus·/>
+      │            ----------  
+
+```
+
+```
+noAutoFocusInvalid.jsx:3:12 lint/nursery/noAutofocus  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid the autoFocus attribute.
+  
+    1 │ <>
+    2 │     <input autoFocus />
+  > 3 │     <input autoFocus="true" />
+      │            ^^^^^^^^^^^^^^^^
+    4 │     <input autoFocus={"false"} />
+    5 │ </>
+  
+  i Suggested fix: Remove the autoFocus attribute.
+  
+    3 │ ····<input·autoFocus="true"·/>
+      │            -----------------  
+
+```
+
+```
+noAutoFocusInvalid.jsx:4:12 lint/nursery/noAutofocus  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid the autoFocus attribute.
+  
+    2 │     <input autoFocus />
+    3 │     <input autoFocus="true" />
+  > 4 │     <input autoFocus={"false"} />
+      │            ^^^^^^^^^^^^^^^^^^^
+    5 │ </>
+  
+  i Suggested fix: Remove the autoFocus attribute.
+  
+    4 │ ····<input·autoFocus={"false"}·/>
+      │            --------------------  
+
+```
+
+

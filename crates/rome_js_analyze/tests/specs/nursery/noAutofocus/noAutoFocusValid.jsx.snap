@@ -1,0 +1,14 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noAutoFocusValid.jsx
+---
+# Input
+```js
+<>
+	<input />
+    <input autoFocus={undefined} />
+    <Input autoFocus={"false"} />
+</>
+```
+
+

@@ -156,6 +156,7 @@ export interface Correctness {
  */
 export interface Nursery {
 	noArrayIndexKey?: RuleConfiguration;
+	noAutofocus?: RuleConfiguration;
 	noChildrenProp?: RuleConfiguration;
 	noDangerouslySetInnerHtml?: RuleConfiguration;
 	noDangerouslySetInnerHtmlWithChildren?: RuleConfiguration;
@@ -306,6 +307,7 @@ export type Category =
 	| "lint/nursery/useFragmentSyntax"
 	| "lint/nursery/noArrayIndexKey"
 	| "lint/nursery/noDangerouslySetInnerHtmlWithChildren"
+	| "lint/nursery/noAutofocus"
 	| "lint/style/noNegationElse"
 	| "lint/style/noShoutyConstants"
 	| "lint/style/useSelfClosingElements"

@@ -260,6 +260,13 @@ to promote these rules into a more appropriate category.
 Discourage the usage of Array index in keys.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noAutofocus">
+	<a href="/docs/lint/rules/noAutofocus">noAutofocus (since v10.0.0)</a>
+	<a class="header-anchor" href="#noAutofocus"></a>
+</h3>
+Avoid the <code>autoFocus</code> attribute
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noChildrenProp">
 	<a href="/docs/lint/rules/noChildrenProp">noChildrenProp (since v0.10.0)</a>
 	<a class="header-anchor" href="#noChildrenProp"></a>

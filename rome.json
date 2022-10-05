@@ -13,7 +13,8 @@
 				"noUselessFragments": "error",
 				"noNewSymbol": "error",
 				"noVoidElementsWithChildren": "error",
-				"noDangerouslySetInnerHtmlWithChildren": "error"
+				"noDangerouslySetInnerHtmlWithChildren": "error",
+				"noAutofocus": "error"
 			}
 		}
 	}
