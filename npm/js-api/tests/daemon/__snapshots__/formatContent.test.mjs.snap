@@ -3,56 +3,37 @@
 exports[`Rome Deamon formatter > should not format and have diagnostics > syntax error 1`] = `
 [
   {
-    "advices": {
-      "advices": [
+    "children": [],
+    "code": "SyntaxError",
+    "code_link": null,
+    "file_id": 0,
+    "footers": [],
+    "primary": {
+      "msg": [
         {
-          "Frame": {
-            "path": {
-              "File": {
-                "PathAndId": {
-                  "file_id": 0,
-                  "path": "example.js",
-                },
-              },
-            },
-            "source_code": null,
-            "span": [
-              11,
-              12,
-            ],
-          },
+          "content": "",
+          "elements": [],
         },
       ],
-    },
-    "category": "parse",
-    "description": "expected a name for the function in a function declaration, but found none",
-    "location": {
-      "path": {
-        "File": {
-          "PathAndId": {
-            "file_id": 0,
-            "path": "example.js",
-          },
-        },
+      "severity": "Error",
+      "span": {
+        "file": 0,
+        "range": [
+          11,
+          12,
+        ],
       },
-      "source_code": null,
-      "span": [
-        11,
-        12,
-      ],
     },
-    "message": [
+    "severity": "Error",
+    "suggestions": [],
+    "summary": null,
+    "tag": null,
+    "title": [
       {
         "content": "expected a name for the function in a function declaration, but found none",
         "elements": [],
       },
     ],
-    "severity": "Error",
-    "source": null,
-    "tags": [],
-    "verbose_advices": {
-      "advices": [],
-    },
   },
 ]
 `;
