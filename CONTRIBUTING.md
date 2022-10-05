@@ -189,7 +189,7 @@ from the main repository (not a fork), use these comments to run specific workfl
 ### Analyzers and lint rules
 
 To know the technical details of how our analyzer works, how to create a rule and how to write tests, please check our [internal
-documentation page](https://rome.github.io/tools/rome_analyzer/index.html)
+documentation page](https://rome.github.io/tools/rome_analyze/index.html)
 
 ### JavaScript Parser
 
