@@ -60,6 +60,11 @@ impl MemoryFileSystem {
         self.errors.insert(path, kind);
     }
 
+    /// Remove a file from the filesystem
+    pub fn remove(&mut self, path: &Path) {
+        self.files.0.write().remove(path);
+    }
+
     pub fn files(self) -> IntoIter<PathBuf, FileEntry> {
         let files = self.files.0.into_inner();
         files.into_iter()

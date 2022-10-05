@@ -724,6 +724,34 @@ mod check {
             result,
         ));
     }
+
+    #[test]
+    fn file_too_large() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("check.js");
+        fs.insert(file_path.into(), "statement();\n".repeat(80660).as_bytes());
+
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+        );
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        // Do not store the content of the file in the snapshot
+        fs.remove(file_path);
+
+        assert_cli_snapshot(SnapshotPayload::new(
+            module_path!(),
+            "file_too_large",
+            fs,
+            console,
+            result,
+        ));
+    }
 }
 
 mod ci {
@@ -929,6 +957,34 @@ mod ci {
         assert_cli_snapshot(SnapshotPayload::new(
             module_path!(),
             "ci_does_not_run_linter",
+            fs,
+            console,
+            result,
+        ));
+    }
+
+    #[test]
+    fn file_too_large() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("ci.js");
+        fs.insert(file_path.into(), "statement();\n".repeat(80660).as_bytes());
+
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+        );
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        // Do not store the content of the file in the snapshot
+        fs.remove(file_path);
+
+        assert_cli_snapshot(SnapshotPayload::new(
+            module_path!(),
+            "file_too_large",
             fs,
             console,
             result,
@@ -1735,6 +1791,38 @@ mod format {
         assert_cli_snapshot(SnapshotPayload::new(
             module_path!(),
             "does_not_format_ignored_files",
+            fs,
+            console,
+            result,
+        ));
+    }
+
+    #[test]
+    fn file_too_large() {
+        let mut fs = MemoryFileSystem::default();
+        let mut console = BufferConsole::default();
+
+        let file_path = Path::new("format.js");
+        fs.insert(file_path.into(), "statement();\n".repeat(80660).as_bytes());
+
+        let result = run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![
+                OsString::from("format"),
+                file_path.as_os_str().into(),
+                OsString::from("--write"),
+            ]),
+        );
+
+        assert!(result.is_ok(), "run_cli returned {result:?}");
+
+        // Do not store the content of the file in the snapshot
+        fs.remove(file_path);
+
+        assert_cli_snapshot(SnapshotPayload::new(
+            module_path!(),
+            "file_too_large",
             fs,
             console,
             result,
