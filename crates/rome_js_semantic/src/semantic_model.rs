@@ -97,6 +97,8 @@ struct SemanticModelData {
     declaration_all_reads: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
     // Maps a declaration range to the range of its "writes"
     declaration_all_writes: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
+    /// All references that could not be resolved
+    unresolved_references: Vec<(ReferenceType, TextRange)>,
     // All bindings that were exported
     exported: HashSet<TextRange>,
 }
@@ -381,6 +383,34 @@ impl<'a> ExactSizeIterator for ReferencesIter<'a> {
 
 impl<'a> FusedIterator for ReferencesIter<'a> {}
 
+pub struct UnresolvedReferencesIter<'a> {
+    data: Arc<SemanticModelData>,
+    iter: std::slice::Iter<'a, (ReferenceType, TextRange)>,
+}
+
+impl<'a> Iterator for UnresolvedReferencesIter<'a> {
+    type Item = Reference;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let (ty, range) = self.iter.next()?;
+        let node = self.data.node_by_range.get(range)?;
+        Some(Reference {
+            data: self.data.clone(),
+            node: node.clone(),
+            range: *range,
+            ty: *ty,
+        })
+    }
+}
+
+impl<'a> ExactSizeIterator for UnresolvedReferencesIter<'a> {
+    fn len(&self) -> usize {
+        self.iter.len()
+    }
+}
+
+impl<'a> FusedIterator for UnresolvedReferencesIter<'a> {}
+
 /// Iterate all bindings that were bound in a given scope. It **does
 /// not** Returns bindings of parent scopes.
 pub struct ScopeBindingsIter {
@@ -590,6 +620,14 @@ impl SemanticModel {
         }
     }
 
+    /// Returns an iterator of all the unresolved references in the program
+    pub fn all_unresolved_references(&self) -> UnresolvedReferencesIter<'_> {
+        UnresolvedReferencesIter {
+            data: self.data.clone(),
+            iter: self.data.unresolved_references.iter(),
+        }
+    }
+
     /// Returns if the node is exported or is a reference to a binding
     /// that is exported.
     ///
@@ -686,6 +724,7 @@ pub struct SemanticModelBuilder {
     declaration_all_references: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
     declaration_all_reads: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
     declaration_all_writes: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
+    unresolved_references: Vec<(ReferenceType, TextRange)>,
     exported: HashSet<TextRange>,
 }
 
@@ -701,6 +740,7 @@ impl SemanticModelBuilder {
             declaration_all_references: HashMap::new(),
             declaration_all_reads: HashMap::new(),
             declaration_all_writes: HashMap::new(),
+            unresolved_references: Vec::new(),
             exported: HashSet::new(),
         }
     }
@@ -825,7 +865,15 @@ impl SemanticModelBuilder {
                     .or_default()
                     .push((ReferenceType::Write { hoisted: true }, range));
             }
-            UnresolvedReference { .. } => {}
+            UnresolvedReference { is_read, range } => {
+                let ty = if is_read {
+                    ReferenceType::Read { hoisted: false }
+                } else {
+                    ReferenceType::Write { hoisted: false }
+                };
+
+                self.unresolved_references.push((ty, range));
+            }
             Exported { range } => {
                 self.exported.insert(range);
             }
@@ -850,6 +898,7 @@ impl SemanticModelBuilder {
             declaration_all_references: self.declaration_all_references,
             declaration_all_reads: self.declaration_all_reads,
             declaration_all_writes: self.declaration_all_writes,
+            unresolved_references: self.unresolved_references,
             exported: self.exported,
         };
         SemanticModel::new(data)

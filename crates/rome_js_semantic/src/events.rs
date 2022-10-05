@@ -66,7 +66,7 @@ pub enum SemanticEvent {
     /// Tracks references that do no have any matching binding
     /// Generated for:
     /// - Unmatched reference identifiers
-    UnresolvedReference { range: TextRange },
+    UnresolvedReference { is_read: bool, range: TextRange },
 
     /// Tracks where a new scope starts
     /// Generated for:
@@ -104,7 +104,7 @@ impl SemanticEvent {
             SemanticEvent::HoistedRead { range, .. } => range,
             SemanticEvent::Write { range, .. } => range,
             SemanticEvent::HoistedWrite { range, .. } => range,
-            SemanticEvent::UnresolvedReference { range } => range,
+            SemanticEvent::UnresolvedReference { range, .. } => range,
             SemanticEvent::Exported { range } => range,
         }
     }
@@ -169,6 +169,10 @@ enum Reference {
 }
 
 impl Reference {
+    fn is_read(&self) -> bool {
+        matches!(self, Reference::Read { .. })
+    }
+
     pub fn range(&self) -> &TextRange {
         match self {
             Reference::Read { range, .. } => range,
@@ -580,6 +584,7 @@ impl SemanticEventExtractor {
                     // ... or raise UnresolvedReference if this is the global scope.
                     for reference in references {
                         self.stash.push_back(SemanticEvent::UnresolvedReference {
+                            is_read: reference.is_read(),
                             range: *reference.range(),
                         });
                     }

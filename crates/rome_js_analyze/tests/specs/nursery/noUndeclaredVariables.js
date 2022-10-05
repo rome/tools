@@ -3,6 +3,9 @@ foobar;
 function f() {
     lorem;
 }
+assignment = "value";
+<Missing />;
+
 // valid
 document;
 navigator;
