@@ -4,6 +4,7 @@ use rome_js_syntax::{
     JsSyntaxNode, JsSyntaxToken,
 };
 use rome_rowan::{AstNode, BatchMutation, SyntaxNodeCast, TriviaPiece};
+use serde::{Deserialize, Serialize};
 
 pub trait RenamableNode {
     fn declaration(&self, model: &SemanticModel) -> Option<JsSyntaxNode>;
@@ -49,7 +50,7 @@ impl RenamableNode for JsAnyRenamableDeclaration {
     }
 }
 
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[derive(Deserialize, Serialize)]
 pub enum RenameError {
     CannotFindDeclaration,
     CannotBeRenamed {
