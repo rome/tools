@@ -20,6 +20,10 @@ test = <div tabIndex={"0"} />;
 
 test = <div tabIndex={'-5'} />;
 
+test = <div tabIndex={.5} />;
+
+test = <div tabIndex={-5.5} />;
+
 // string literals are skipped
 test = <div tabIndex={`-1`} />;
 test = <div tabIndex={`1`} />;

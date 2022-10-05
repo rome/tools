@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 98
+assertion_line: 100
 expression: validJsx.jsx
 ---
 # Input
@@ -26,6 +26,10 @@ test = <div tabIndex={-1} />;
 test = <div tabIndex={"0"} />;
 
 test = <div tabIndex={'-5'} />;
+
+test = <div tabIndex={.5} />;
+
+test = <div tabIndex={-5.5} />;
 
 // string literals are skipped
 test = <div tabIndex={`-1`} />;
