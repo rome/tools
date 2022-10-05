@@ -15,9 +15,7 @@ function JsThrowStatement1() {
 ```
 JsThrowStatement.js:3:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This code is unreachable
-  
-  ! ... before it can reach this code
+  ! This code will never be reached ...
   
     1 │ function JsThrowStatement1() {
     2 │     throw new Error();
@@ -26,7 +24,7 @@ JsThrowStatement.js:3:5 lint/nursery/noUnreachable ━━━━━━━━━�
     4 │ }
     5 │ 
   
-  i This statement will throw an exception ...
+  i ... because this statement will throw an exception beforehand
   
     1 │ function JsThrowStatement1() {
   > 2 │     throw new Error();

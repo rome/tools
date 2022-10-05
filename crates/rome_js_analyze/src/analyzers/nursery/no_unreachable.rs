@@ -2,7 +2,6 @@ use std::{cmp::Ordering, collections::VecDeque, num::NonZeroU32, vec::IntoIter};
 
 use roaring::bitmap::RoaringBitmap;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
-use rome_console::markup;
 use rome_control_flow::{builder::BlockId, ExceptionHandler, Instruction, InstructionKind};
 use rome_js_syntax::{
     JsBlockStatement, JsCaseClause, JsDefaultClause, JsDoWhileStatement, JsForInStatement,
@@ -75,16 +74,14 @@ impl Rule for NoUnreachable {
         let mut diagnostic = RuleDiagnostic::new(
             rule_category!(),
             state.text_trimmed_range,
-            markup! {
+            if state.terminators.is_empty() {
                 "This code is unreachable"
+            } else {
+                "This code will never be reached ..."
             },
         )
+        .summary("This code is unreachable")
         .unnecessary();
-
-        /// Primary label of the diagnostic if it comes earlier in the source than its secondary labels
-        const PRIMARY_LABEL_BEFORE: &str = "This code will never be reached ...";
-        /// Primary label of the diagnostic if it comes later in the source than its secondary labels
-        const PRIMARY_LABEL_AFTER: &str = "... before it can reach this code";
 
         // Pluralize and adapt the error message accordingly based on the
         // number and position of secondary labels
@@ -94,44 +91,42 @@ impl Rule for NoUnreachable {
             [] => {}
             // A single node is responsible for this range being unreachable
             [node] => {
-                if node.range.start() < state.text_trimmed_range.start() {
-                    diagnostic = diagnostic
-                        .secondary(
-                            node.range,
-                            format_args!("This statement will {} ...", node.reason()),
-                        )
-                        .primary(PRIMARY_LABEL_AFTER);
-                } else {
-                    diagnostic = diagnostic.primary(PRIMARY_LABEL_BEFORE).secondary(
-                        node.range,
-                        format_args!(
-                            "... because this statement will {} beforehand",
-                            node.reason()
-                        ),
-                    );
-                }
+                diagnostic = diagnostic.secondary(
+                    node.range,
+                    format_args!(
+                        "... because this statement will {} beforehand",
+                        node.reason()
+                    ),
+                );
             }
             // The range has two dominating terminator instructions
             [node_a, node_b] => {
                 if node_a.kind == node_b.kind {
                     diagnostic = diagnostic
-                        .secondary(node_a.range, "Either this statement ...")
+                        .secondary(node_a.range, "... because either this statement ...")
                         .secondary(
                             node_b.range,
-                            format_args!("... or this statement will {} ...", node_b.reason()),
-                        )
-                        .primary(PRIMARY_LABEL_AFTER);
+                            format_args!(
+                                "... or this statement will {} beforehand",
+                                node_b.reason()
+                            ),
+                        );
                 } else {
                     diagnostic = diagnostic
                         .secondary(
                             node_a.range,
-                            format_args!("Either this statement will {} ...", node_a.reason()),
+                            format_args!(
+                                "... because either this statement will {} ...",
+                                node_a.reason()
+                            ),
                         )
                         .secondary(
                             node_b.range,
-                            format_args!("... or this statement will {} ...", node_b.reason()),
-                        )
-                        .primary(PRIMARY_LABEL_AFTER);
+                            format_args!(
+                                "... or this statement will {} beforehand",
+                                node_b.reason()
+                            ),
+                        );
                 }
             }
             // The range has three or more dominating terminator instructions
@@ -153,15 +148,18 @@ impl Rule for NoUnreachable {
                 if has_homogeneous_kind {
                     for (index, node) in terminators.iter().enumerate() {
                         if index == 0 {
-                            diagnostic =
-                                diagnostic.secondary(node.range, "Either this statement, ...");
+                            diagnostic = diagnostic
+                                .secondary(node.range, "... because either this statement, ...");
                         } else if index < last {
                             diagnostic =
                                 diagnostic.secondary(node.range, "... this statement, ...");
                         } else {
                             diagnostic = diagnostic.secondary(
                                 node.range,
-                                format_args!("... or this statement will {} ...", node.reason()),
+                                format_args!(
+                                    "... or this statement will {} beforehand",
+                                    node.reason()
+                                ),
                             );
                         }
                     }
@@ -170,7 +168,10 @@ impl Rule for NoUnreachable {
                         if index == 0 {
                             diagnostic = diagnostic.secondary(
                                 node.range,
-                                format_args!("Either this statement will {}, ...", node.reason()),
+                                format_args!(
+                                    "... because either this statement will {}, ...",
+                                    node.reason()
+                                ),
                             );
                         } else if index < last {
                             diagnostic = diagnostic.secondary(
@@ -180,13 +181,14 @@ impl Rule for NoUnreachable {
                         } else {
                             diagnostic = diagnostic.secondary(
                                 node.range,
-                                format_args!("... or this statement will {} ...", node.reason()),
+                                format_args!(
+                                    "... or this statement will {} beforehand",
+                                    node.reason()
+                                ),
                             );
                         }
                     }
                 }
-
-                diagnostic = diagnostic.primary(PRIMARY_LABEL_AFTER);
             }
         }
 

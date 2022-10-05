@@ -41,9 +41,7 @@ function JsVariableStatement6() {
 ```
 JsVariableStatement.js:8:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This code is unreachable
-  
-  ! ... before it can reach this code
+  ! This code will never be reached ...
   
      6 │ function JsVariableStatement2() {
      7 │     return;
@@ -52,7 +50,7 @@ JsVariableStatement.js:8:5 lint/nursery/noUnreachable ━━━━━━━━�
      9 │ }
     10 │ 
   
-  i This statement will return from the function ...
+  i ... because this statement will return from the function beforehand
   
     6 │ function JsVariableStatement2() {
   > 7 │     return;
@@ -66,9 +64,7 @@ JsVariableStatement.js:8:5 lint/nursery/noUnreachable ━━━━━━━━�
 ```
 JsVariableStatement.js:18:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This code is unreachable
-  
-  ! ... before it can reach this code
+  ! This code will never be reached ...
   
     16 │ function JsVariableStatement4() {
     17 │     return;
@@ -77,7 +73,7 @@ JsVariableStatement.js:18:5 lint/nursery/noUnreachable ━━━━━━━━�
     19 │ }
     20 │ 
   
-  i This statement will return from the function ...
+  i ... because this statement will return from the function beforehand
   
     16 │ function JsVariableStatement4() {
   > 17 │     return;
@@ -91,9 +87,7 @@ JsVariableStatement.js:18:5 lint/nursery/noUnreachable ━━━━━━━━�
 ```
 JsVariableStatement.js:23:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This code is unreachable
-  
-  ! ... before it can reach this code
+  ! This code will never be reached ...
   
     21 │ function JsVariableStatement5() {
     22 │     return;
@@ -102,7 +96,7 @@ JsVariableStatement.js:23:5 lint/nursery/noUnreachable ━━━━━━━━�
     24 │ }
     25 │ 
   
-  i This statement will return from the function ...
+  i ... because this statement will return from the function beforehand
   
     21 │ function JsVariableStatement5() {
   > 22 │     return;
@@ -116,9 +110,7 @@ JsVariableStatement.js:23:5 lint/nursery/noUnreachable ━━━━━━━━�
 ```
 JsVariableStatement.js:28:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This code is unreachable
-  
-  ! ... before it can reach this code
+  ! This code will never be reached ...
   
     26 │ function JsVariableStatement6() {
     27 │     return;
@@ -129,7 +121,7 @@ JsVariableStatement.js:28:5 lint/nursery/noUnreachable ━━━━━━━━�
     30 │ }
     31 │ 
   
-  i This statement will return from the function ...
+  i ... because this statement will return from the function beforehand
   
     26 │ function JsVariableStatement6() {
   > 27 │     return;

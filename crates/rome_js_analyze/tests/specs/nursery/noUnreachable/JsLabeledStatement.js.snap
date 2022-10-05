@@ -32,9 +32,7 @@ function JsLabeledStatement2() {
 ```
 JsLabeledStatement.js:9:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This code is unreachable
-  
-  ! ... before it can reach this code
+  ! This code will never be reached ...
   
      7 │         }
      8 │ 
@@ -43,7 +41,7 @@ JsLabeledStatement.js:9:9 lint/nursery/noUnreachable ━━━━━━━━━
     10 │     }
     11 │ }
   
-  i Either this statement will continue the loop ...
+  i ... because either this statement will continue the loop ...
   
     2 │     label: while (true) {
     3 │         if (true) {
@@ -52,7 +50,7 @@ JsLabeledStatement.js:9:9 lint/nursery/noUnreachable ━━━━━━━━━
     5 │         } else {
     6 │             break label;
   
-  i ... or this statement will break the flow of the code ...
+  i ... or this statement will break the flow of the code beforehand
   
     4 │             continue label;
     5 │         } else {
@@ -67,9 +65,7 @@ JsLabeledStatement.js:9:9 lint/nursery/noUnreachable ━━━━━━━━━
 ```
 JsLabeledStatement.js:17:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This code is unreachable
-  
-  ! ... before it can reach this code
+  ! This code will never be reached ...
   
     15 │         beforeBreak();
     16 │         break label;
@@ -78,7 +74,7 @@ JsLabeledStatement.js:17:9 lint/nursery/noUnreachable ━━━━━━━━�
     18 │     }
     19 │ 
   
-  i This statement will break the flow of the code ...
+  i ... because this statement will break the flow of the code beforehand
   
     14 │     label: {
     15 │         beforeBreak();

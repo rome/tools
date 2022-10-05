@@ -20,9 +20,7 @@ function JsIfStatement1() {
 ```
 JsIfStatement.js:8:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This code is unreachable
-  
-  ! ... before it can reach this code
+  ! This code will never be reached ...
   
      6 │     }
      7 │ 
@@ -31,7 +29,7 @@ JsIfStatement.js:8:5 lint/nursery/noUnreachable ━━━━━━━━━━�
      9 │ }
     10 │ 
   
-  i Either this statement ...
+  i ... because either this statement ...
   
     1 │ function JsIfStatement1() {
     2 │     if (true) {
@@ -40,7 +38,7 @@ JsIfStatement.js:8:5 lint/nursery/noUnreachable ━━━━━━━━━━�
     4 │     } else {
     5 │         return;
   
-  i ... or this statement will return from the function ...
+  i ... or this statement will return from the function beforehand
   
     3 │         return;
     4 │     } else {
