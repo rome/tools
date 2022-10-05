@@ -25,10 +25,6 @@ declare_rule! {
 }
 
 declare_node_union! {
-    pub(crate) JsAnyCreateElement = JsxAttribute | JsCallExpression
-}
-
-declare_node_union! {
     pub(crate) NoPositiveTabindexQuery = JsxOpeningElement | JsxSelfClosingElement | JsCallExpression
 }
 
@@ -44,7 +40,6 @@ impl Rule for NoPositiveTabindex {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
-        let model = ctx.model();
 
         match node {
             NoPositiveTabindexQuery::JsxOpeningElement(opening_element) => {
@@ -72,9 +67,9 @@ impl Rule for NoPositiveTabindex {
                 }
             }
             NoPositiveTabindexQuery::JsCallExpression(expression) => {
+                let model = ctx.model();
                 let react_create_element =
                     ReactCreateElementCall::from_call_expression(expression, model)?;
-
                 let tabindex_prop = react_create_element.find_prop_by_name("tabIndex");
 
                 if let Some(prop) = tabindex_prop {
@@ -159,16 +154,8 @@ fn is_jsx_attribute_valid(jsx_attribute: &Option<JsxAttribute>) -> Option<bool> 
 fn is_valid_tabindex(token_text: &SyntaxTokenText) -> bool {
     let number_string_result = token_text.trim().parse::<i32>();
 
-    println!("INNER STRING TEXT {:#?}", token_text.to_string());
-
     match number_string_result {
-        Ok(number) => {
-            println!("NUMBER {}", number);
-            return number <= 0;
-        }
-        Err(e) => {
-            println!("ERROR {}", e);
-            return true;
-        }
+        Ok(number) => number <= 0,
+        Err(_) => true,
     }
 }
