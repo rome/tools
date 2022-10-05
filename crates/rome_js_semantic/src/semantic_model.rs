@@ -1,16 +1,18 @@
+mod closure;
+
+use crate::{SemanticEvent, SemanticEventExtractor};
+pub use closure::*;
 use rome_js_syntax::{
     JsAnyRoot, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier,
-    JsSyntaxNode, JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding,
+    JsSyntaxKind, JsSyntaxNode, JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding,
 };
 use rome_rowan::{AstNode, SyntaxTokenText};
 use rust_lapper::{Interval, Lapper};
 use std::{
-    collections::{BTreeSet, HashMap, HashSet},
+    collections::{BTreeSet, HashMap, HashSet, VecDeque},
     iter::FusedIterator,
     sync::Arc,
 };
-
-use crate::{SemanticEvent, SemanticEventExtractor};
 
 /// Marker trait that groups all "AstNode" that are declarations
 pub trait IsDeclarationAstNode: AstNode<Language = JsLanguage> {
@@ -68,13 +70,28 @@ impl<T: HasDeclarationAstNode> IsExportedCanBeQueried for T {
     }
 }
 
+/// Represents a refererence inside a scope.
+#[derive(Clone, Debug, Hash, PartialEq, Eq)]
+struct ScopeReference {
+    range: TextRange,
+}
+
 #[derive(Debug)]
 struct SemanticModelScopeData {
+    // The scope range
     range: TextRange,
+    // The parent scope of this scope
     parent: Option<usize>,
+    // All children scope of this scope
     children: Vec<usize>,
+    // All bindings of this scope
     bindings: Vec<TextRange>,
+    // Map pointing to the [bindings] vec  of each bindings by its name
     bindings_by_name: HashMap<SyntaxTokenText, usize>,
+    // All read references of a scope
+    read_references: Vec<ScopeReference>,
+    // All write references of a scope
+    write_references: Vec<ScopeReference>,
 }
 
 /// Contains all the data of the [SemanticModel] and only lives behind an [Arc].
@@ -84,10 +101,12 @@ struct SemanticModelScopeData {
 #[derive(Debug)]
 struct SemanticModelData {
     root: JsAnyRoot,
+    // All scopes of this model
     scopes: Vec<SemanticModelScopeData>,
     scope_by_range: rust_lapper::Lapper<usize, usize>,
     // Maps the start of a node range to a scope id
     scope_hoisted_to_by_range: HashMap<TextSize, usize>,
+    // Map to each by its range
     node_by_range: HashMap<TextRange, JsSyntaxNode>,
     // Maps any range in the code to its declaration
     declared_at_by_range: HashMap<TextRange, TextRange>,
@@ -105,9 +124,12 @@ struct SemanticModelData {
 
 impl SemanticModelData {
     fn scope(&self, range: &TextRange) -> usize {
+        let start = range.start().into();
+        let end = range.end().into();
         let scopes = self
             .scope_by_range
-            .find(range.start().into(), range.end().into());
+            .find(start, end)
+            .filter(|x| !(start < x.start || end > x.stop));
 
         // We always want the most tight scope
         match scopes.map(|x| x.val).max() {
@@ -167,6 +189,29 @@ impl PartialEq for SemanticModelData {
 
 impl Eq for SemanticModelData {}
 
+/// Iterate all descendas scopes of the specified scope in breadth-first order.
+pub struct ScopeDescendantsIter {
+    data: Arc<SemanticModelData>,
+    q: VecDeque<usize>,
+}
+
+impl Iterator for ScopeDescendantsIter {
+    type Item = Scope;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if let Some(id) = self.q.pop_front() {
+            let scope = &self.data.scopes[id];
+            self.q.extend(scope.children.iter());
+            Some(Scope {
+                data: self.data.clone(),
+                id,
+            })
+        } else {
+            None
+        }
+    }
+}
+
 /// Provides all information regarding a specific scope.
 /// Allows navigation to parent and children scope and binding information.
 #[derive(Clone, Debug)]
@@ -188,6 +233,18 @@ impl Scope {
     /// [Scope].
     pub fn ancestors(&self) -> impl Iterator<Item = Scope> {
         std::iter::successors(Some(self.clone()), |scope| scope.parent())
+    }
+
+    /// Returns all descendts of this scope in breadth-first order. Starting with the current
+    /// [Scope].
+    pub fn descendants(&self) -> impl Iterator<Item = Scope> {
+        let mut q = VecDeque::new();
+        q.push_back(self.id);
+
+        ScopeDescendantsIter {
+            data: self.data.clone(),
+            q,
+        }
     }
 
     /// Returns this scope parent.
@@ -246,6 +303,13 @@ impl Scope {
 
     pub fn syntax(&self) -> &JsSyntaxNode {
         &self.data.node_by_range[self.range()]
+    }
+
+    /// Return the [Closure] associated with this scope if
+    /// it has one, otherwise returns None.  
+    /// See [HasClosureAstNode] for nodes that have closure.
+    pub fn closure(&self) -> Option<Closure> {
+        Closure::from_scope(self.data.clone(), self.id, self.range())
     }
 }
 
@@ -641,6 +705,11 @@ impl SemanticModel {
     {
         node.is_exported(self)
     }
+
+    /// Returns the [Closure] associated with the node.
+    pub fn closure(&self, node: &impl HasClosureAstNode) -> Closure {
+        Closure::from_node(self.data.clone(), node)
+    }
 }
 
 // Extensions
@@ -708,6 +777,17 @@ pub trait AllReferencesExtensions {
 
 impl<T: IsDeclarationAstNode> AllReferencesExtensions for T {}
 
+pub trait ClosureExtensions {
+    fn closure(&self, model: &SemanticModel) -> Closure
+    where
+        Self: HasClosureAstNode + Sized,
+    {
+        model.closure(self)
+    }
+}
+
+impl<T: HasClosureAstNode> ClosureExtensions for T {}
+
 /// Builds the [SemanticModel] consuming [SemanticEvent] and [SyntaxNode].
 /// For a good example on how to use it see [semantic_model].
 ///
@@ -768,6 +848,8 @@ impl SemanticModelBuilder {
                     children: vec![],
                     bindings: vec![],
                     bindings_by_name: HashMap::new(),
+                    read_references: vec![],
+                    write_references: vec![],
                 });
 
                 if let Some(parent_scope_id) = parent_scope_id {
@@ -812,6 +894,7 @@ impl SemanticModelBuilder {
             Read {
                 range,
                 declared_at: declaration_at,
+                scope_id,
             } => {
                 self.declarations_by_range.insert(range, declaration_at);
                 self.declaration_all_references
@@ -822,10 +905,14 @@ impl SemanticModelBuilder {
                     .entry(declaration_at)
                     .or_default()
                     .push((ReferenceType::Read { hoisted: false }, range));
+
+                let scope = &mut self.scopes[scope_id];
+                scope.read_references.push(ScopeReference { range });
             }
             HoistedRead {
                 range,
                 declared_at: declaration_at,
+                scope_id,
             } => {
                 self.declarations_by_range.insert(range, declaration_at);
                 self.declaration_all_references
@@ -836,10 +923,14 @@ impl SemanticModelBuilder {
                     .entry(declaration_at)
                     .or_default()
                     .push((ReferenceType::Read { hoisted: true }, range));
+
+                let scope = &mut self.scopes[scope_id];
+                scope.read_references.push(ScopeReference { range });
             }
             Write {
                 range,
                 declared_at: declaration_at,
+                scope_id,
             } => {
                 self.declarations_by_range.insert(range, declaration_at);
                 self.declaration_all_references
@@ -850,10 +941,14 @@ impl SemanticModelBuilder {
                     .entry(declaration_at)
                     .or_default()
                     .push((ReferenceType::Write { hoisted: false }, range));
+
+                let scope = &mut self.scopes[scope_id];
+                scope.write_references.push(ScopeReference { range });
             }
             HoistedWrite {
                 range,
                 declared_at: declaration_at,
+                scope_id,
             } => {
                 self.declarations_by_range.insert(range, declaration_at);
                 self.declaration_all_references
@@ -864,6 +959,9 @@ impl SemanticModelBuilder {
                     .entry(declaration_at)
                     .or_default()
                     .push((ReferenceType::Write { hoisted: true }, range));
+
+                let scope = &mut self.scopes[scope_id];
+                scope.write_references.push(ScopeReference { range });
             }
             UnresolvedReference { is_read, range } => {
                 let ty = if is_read {
