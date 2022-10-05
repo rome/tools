@@ -2,9 +2,7 @@ use crate::JsRuleAction;
 use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_syntax::{
-    JsAnyExpression, JsxAttribute, JsxSelfClosingElement, JsxSelfClosingElementFields,
-};
+use rome_js_syntax::{JsAnyExpression, JsxAttribute, JsxSelfClosingElement};
 use rome_rowan::{AstNode, BatchMutationExt};
 
 declare_rule! {
@@ -53,20 +51,13 @@ impl Rule for NoAutoFocus {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
-        let JsxSelfClosingElementFields {
-            l_angle_token: _,
-            name,
-            type_arguments: _,
-            attributes: _,
-            slash_token: _,
-            r_angle_token: _,
-        } = node.as_fields();
+        let name = node.name().ok()?;
 
-        if name.ok()?.text().trim() == "input" {
+        if name.syntax().text_trimmed() == "input" {
             let attribute = node.find_attribute_by_name("autoFocus").ok()??;
 
             if let Some(value) = get_attribute_value(&attribute) {
-                if value.text().trim() == "undefined" {
+                if value.syntax().text_trimmed() == "undefined" {
                     return None;
                 }
             }
@@ -103,11 +94,11 @@ impl Rule for NoAutoFocus {
 }
 
 fn get_attribute_value(attribute: &JsxAttribute) -> Option<JsAnyExpression> {
-    return attribute
+    attribute
         .initializer()?
         .value()
         .ok()?
         .as_jsx_expression_attribute_value()?
         .expression()
-        .ok();
+        .ok()
 }
