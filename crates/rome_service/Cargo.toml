@@ -17,7 +17,7 @@ rome_console = { path = "../rome_console" }
 rome_diagnostics = { path = "../rome_diagnostics" }
 rome_formatter = { path = "../rome_formatter", features = ["serde"] }
 rome_fs = { path = "../rome_fs", features = ["serde"] }
-rome_js_analyze = { path = "../rome_js_analyze", features = ["serde"] }
+rome_js_analyze = { path = "../rome_js_analyze" }
 rome_js_syntax = { path = "../rome_js_syntax", features = ["serde"] }
 rome_js_parser = { path = "../rome_js_parser" }
 rome_js_factory = { path = "../rome_js_factory", optional = true }

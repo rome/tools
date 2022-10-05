@@ -288,13 +288,16 @@ impl<L: Language + Default> RegistryRule<L> {
             // if the query doesn't match
             let query_result =
                 <R::Query as Queryable>::unwrap_match(params.services, &params.query);
-
-            let ctx =
-                match RuleContext::new(&query_result, params.root, params.services, params.options)
-                {
-                    Ok(ctx) => ctx,
-                    Err(_) => return,
-                };
+            let ctx = match RuleContext::new(
+                RuleKey::rule::<R>(),
+                &query_result,
+                params.root,
+                params.services,
+                params.options,
+            ) {
+                Ok(ctx) => ctx,
+                Err(_) => return,
+            };
 
             for result in R::run(&ctx) {
                 let text_range =
