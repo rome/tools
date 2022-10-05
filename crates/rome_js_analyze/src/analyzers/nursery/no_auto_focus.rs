@@ -62,31 +62,19 @@ impl Rule for NoAutoFocus {
 
         if name.ok()?.text().trim() == "input" {
             let attribute = node.find_attribute_by_name("autoFocus").ok()??;
-            match attribute.initializer() {
-                Some(initializer) => match initializer.value().ok() {
-                    Some(value) => {
-                        let value = match value.as_jsx_expression_attribute_value() {
-                            Some(value) => value,
-                            None => return Some(attribute),
-                        };
-                        let value = match value.expression().ok() {
-                            Some(value) => value.text(),
-                            None => return Some(attribute),
-                        };
-                        if value.trim() == "undefined" {
-                            return None;
-                        } else {
-                            return Some(attribute);
+            if let Some(initializer) = attribute.initializer() {
+                if let Some(value) = initializer.value().ok() {
+                    if let Some(value) = value.as_jsx_expression_attribute_value() {
+                        if let Some(value) = value.expression().ok() {
+                            if value.text().trim() == "undefined" {
+                                return None;
+                            }
                         }
                     }
-                    None => {
-                        return Some(attribute);
-                    }
-                },
-                None => {
-                    return Some(attribute);
                 }
             }
+
+            return Some(attribute);
         }
 
         None
@@ -98,15 +86,14 @@ impl Rule for NoAutoFocus {
             attr.range(),
             markup! {
                 "Avoid the "<Emphasis>"autoFocus"</Emphasis>" attribute."
-            }
-            .to_owned(),
+            },
         ))
     }
 
     fn action(ctx: &RuleContext<Self>, attr: &Self::State) -> Option<JsRuleAction> {
         let mut mutation = ctx.root().begin();
 
-        mutation.remove_node(attr.to_owned());
+        mutation.remove_node(attr.clone());
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
