@@ -1,11 +1,10 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 98
+assertion_line: 100
 expression: reactCreateElementInvalid.js
 ---
 # Input
 ```js
-// not working - token_text is adding a space at the end
 React.createElement("div", { tabIndex: '1' })
 React.createElement("div", { tabIndex: 1 })
 
@@ -13,15 +12,29 @@ React.createElement("div", { tabIndex: 1 })
 
 # Diagnostics
 ```
-reactCreateElementInvalid.js:3:30 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+reactCreateElementInvalid.js:1:30 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid positive values for the tabIndex prop.
   
-    1 │ // not working - token_text is adding a space at the end
-    2 │ React.createElement("div", { tabIndex: '1' })
-  > 3 │ React.createElement("div", { tabIndex: 1 })
+  > 1 │ React.createElement("div", { tabIndex: '1' })
       │                              ^^^^^^^^
-    4 │ 
+    2 │ React.createElement("div", { tabIndex: 1 })
+    3 │ 
+  
+  i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
+  
+
+```
+
+```
+reactCreateElementInvalid.js:2:30 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid positive values for the tabIndex prop.
+  
+    1 │ React.createElement("div", { tabIndex: '1' })
+  > 2 │ React.createElement("div", { tabIndex: 1 })
+      │                              ^^^^^^^^
+    3 │ 
   
   i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
   
