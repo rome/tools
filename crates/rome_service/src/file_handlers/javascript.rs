@@ -267,7 +267,7 @@ fn code_actions(
             ..AnalysisFilter::default()
         };
 
-        for meta in metadata(actions_filter) {
+        for meta in metadata(&actions_filter) {
             enabled_rules.push(RuleFilter::Rule(meta.group, meta.rule.name));
         }
     }

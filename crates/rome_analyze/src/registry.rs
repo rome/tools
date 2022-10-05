@@ -227,6 +227,12 @@ pub struct RegistryRuleMetadata {
     pub rule: RuleMetadata,
 }
 
+impl RegistryRuleMetadata {
+    pub fn to_rule_key(&self) -> RuleKey {
+        RuleKey::new(self.group, self.rule.name)
+    }
+}
+
 /// Internal representation of a single rule in the registry
 #[derive(Copy, Clone)]
 pub struct RegistryRule<L: Language> {

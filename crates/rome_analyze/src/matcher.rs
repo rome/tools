@@ -54,7 +54,7 @@ impl From<GroupKey> for RuleFilter<'static> {
 }
 
 /// Opaque identifier for a single rule
-#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, Hash)]
 pub struct RuleKey {
     group: &'static str,
     rule: &'static str,
@@ -67,6 +67,14 @@ impl RuleKey {
 
     pub fn rule<R: Rule>() -> Self {
         Self::new(<R::Group as RuleGroup>::NAME, R::METADATA.name)
+    }
+
+    pub fn group(&self) -> &'static str {
+        self.group
+    }
+
+    pub fn rule_name(&self) -> &'static str {
+        self.rule
     }
 }
 
