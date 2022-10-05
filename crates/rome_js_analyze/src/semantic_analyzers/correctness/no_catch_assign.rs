@@ -1,5 +1,5 @@
 use crate::{semantic_services::Semantic, JsRuleAction};
-use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{JsCatchClause, JsSyntaxNode};
 use rome_rowan::AstNode;
@@ -38,8 +38,6 @@ declare_rule! {
 }
 
 impl Rule for NoCatchAssign {
-    const CATEGORY: RuleCategory = RuleCategory::Lint;
-
     /// Why use [JsCatchClause] instead of [JsIdentifierAssignment] ? Because this could reduce search range.
     /// We only compare the declaration of [JsCatchClause] with all descent [JsIdentifierAssignment] of its body.
     type Query = Semantic<JsCatchClause>;

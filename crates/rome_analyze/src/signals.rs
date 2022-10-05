@@ -11,7 +11,6 @@ use rome_diagnostics::{
     Applicability, CodeSuggestion,
 };
 use rome_rowan::{BatchMutation, Language};
-use std::marker::PhantomData;
 
 /// Event raised by the analyzer when a [Rule](crate::Rule)
 /// emits a diagnostic, a code action, or both
@@ -85,16 +84,15 @@ where
 }
 
 /// Analyzer-internal implementation of [AnalyzerSignal] for a specific [Rule](crate::registry::Rule)
-pub(crate) struct RuleSignal<'phase, G, R: Rule> {
+pub(crate) struct RuleSignal<'phase, R: Rule> {
     file_id: FileId,
     root: &'phase RuleRoot<R>,
     query_result: <<R as Rule>::Query as Queryable>::Output,
     state: R::State,
     services: &'phase ServiceBag,
-    _rule: PhantomData<(G, R)>,
 }
 
-impl<'phase, G, R> RuleSignal<'phase, G, R>
+impl<'phase, R> RuleSignal<'phase, R>
 where
     R: Rule + 'static,
 {
@@ -110,15 +108,13 @@ where
             root,
             query_result,
             state,
-            _rule: PhantomData,
             services,
         }
     }
 }
 
-impl<'bag, G, R> AnalyzerSignal<RuleLanguage<R>> for RuleSignal<'bag, G, R>
+impl<'bag, R> AnalyzerSignal<RuleLanguage<R>> for RuleSignal<'bag, R>
 where
-    G: RuleGroup,
     R: Rule,
 {
     fn diagnostic(&self) -> Option<AnalyzerDiagnostic> {
@@ -130,7 +126,7 @@ where
         let ctx = RuleContext::new(&self.query_result, self.root, self.services).ok()?;
 
         R::action(&ctx, &self.state).map(|action| AnalyzerAction {
-            group_name: G::NAME,
+            group_name: <R::Group as RuleGroup>::NAME,
             rule_name: R::METADATA.name,
             file_id: self.file_id,
             category: action.category,

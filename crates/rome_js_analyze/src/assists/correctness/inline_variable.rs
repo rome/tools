@@ -1,4 +1,4 @@
-use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory};
+use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_semantic::{AllReferencesExtensions, Reference};
@@ -35,8 +35,6 @@ pub(crate) struct State {
 }
 
 impl Rule for InlineVariable {
-    const CATEGORY: RuleCategory = RuleCategory::Action;
-
     type Query = Semantic<JsVariableDeclarator>;
     type State = State;
     type Signals = Option<Self::State>;

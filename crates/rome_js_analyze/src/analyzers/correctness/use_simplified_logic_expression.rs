@@ -1,6 +1,4 @@
-use rome_analyze::{
-    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
-};
+use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -57,8 +55,6 @@ declare_rule! {
 }
 
 impl Rule for UseSimplifiedLogicExpression {
-    const CATEGORY: RuleCategory = RuleCategory::Lint;
-
     type Query = Ast<JsLogicalExpression>;
     /// First element of tuple is if the expression is simplified by [De Morgan's Law](https://en.wikipedia.org/wiki/De_Morgan%27s_laws) rule, the second element is the expression to replace.
     type State = (bool, JsAnyExpression);

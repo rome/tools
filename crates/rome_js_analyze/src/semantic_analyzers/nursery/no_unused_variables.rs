@@ -1,5 +1,5 @@
 use crate::semantic_services::Semantic;
-use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::{AllReferencesExtensions, SemanticScopeExtensions};
 use rome_js_syntax::{
@@ -172,8 +172,6 @@ fn is_typescript_unused_ok(binding: &JsIdentifierBinding) -> Option<()> {
 }
 
 impl Rule for NoUnusedVariables {
-    const CATEGORY: RuleCategory = RuleCategory::Lint;
-
     type Query = Semantic<JsIdentifierBinding>;
     type State = ();
     type Signals = Option<Self::State>;

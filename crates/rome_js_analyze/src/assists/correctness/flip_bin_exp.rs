@@ -1,4 +1,4 @@
-use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory};
+use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
@@ -25,8 +25,6 @@ declare_rule! {
 }
 
 impl Rule for FlipBinExp {
-    const CATEGORY: RuleCategory = RuleCategory::Action;
-
     type Query = Ast<JsBinaryExpression>;
     type State = JsSyntaxKind;
     type Signals = Option<Self::State>;

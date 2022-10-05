@@ -1,7 +1,7 @@
 use crate::react::{ReactApiCall, ReactCreateElementCall};
 use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
-use rome_analyze::{declare_rule, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{JsCallExpression, JsPropertyObjectMember, JsxAttribute, JsxName};
 use rome_rowan::{declare_node_union, AstNode};
@@ -39,7 +39,6 @@ pub(crate) enum NoChildrenPropState {
 }
 
 impl Rule for NoChildrenProp {
-    const CATEGORY: RuleCategory = RuleCategory::Syntax;
     type Query = Semantic<NoChildrenPropQuery>;
     type State = NoChildrenPropState;
     type Signals = Option<Self::State>;

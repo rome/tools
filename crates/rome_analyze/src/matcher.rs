@@ -62,8 +62,8 @@ impl RuleKey {
         Self { group, rule }
     }
 
-    pub fn rule<G: RuleGroup, R: Rule>() -> Self {
-        Self::new(G::NAME, R::METADATA.name)
+    pub fn rule<R: Rule>() -> Self {
+        Self::new(<R::Group as RuleGroup>::NAME, R::METADATA.name)
     }
 }
 

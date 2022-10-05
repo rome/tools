@@ -39,7 +39,7 @@ Let's say we want to create a new rule called `useAwesomeTricks`, which uses the
 2. run the cargo alias `cargo codegen analyzer`, this command will update the file called `nursery.rs`
 inside the `semantic_analyzers` folder
 3. from there, use the [`declare_rule`](#declare_rule) macro to create a new type
-   ```rust
+   ```rust,ignore
    use rome_analyze::declare_rule;
     
    declare_rule! {
@@ -160,7 +160,7 @@ for more information about it;
  # Example
 
  The macro itself expect the following syntax:
- ```rust
+ ```rust,ignore
 use rome_analyze::declare_rule;
 
  declare_rule! {
@@ -185,7 +185,7 @@ use rome_analyze::declare_rule;
  blocks in Rust doc-comments are assumed to be written in Rust by default
  the language of the test must be explicitly specified, for instance:
 
- ```rust
+ ```rust,ignore
 use rome_analyze::declare_rule;
 declare_rule! {
      /// Disallow the use of `var`
@@ -206,7 +206,7 @@ declare_rule! {
  Additionally, it's possible to declare that a test should emit a diagnostic
  by adding `expect_diagnostic` to the language metadata:
 
- ```rust
+ ```rust,ignore
 use rome_analyze::declare_rule;
  declare_rule! {
      ///  Disallow the use of `var`
@@ -235,7 +235,7 @@ use rome_analyze::declare_rule;
 
  In order to do, the macro allows to add additional field to add the reason for deprecation
 
- ```rust
+ ```rust,ignore
 use rome_analyze::declare_rule;
 
  declare_rule! {

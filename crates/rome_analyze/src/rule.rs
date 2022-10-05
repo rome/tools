@@ -46,6 +46,7 @@ impl RuleMetadata {
 }
 
 pub trait RuleMeta {
+    type Group: RuleGroup;
     const METADATA: RuleMetadata;
 }
 
@@ -55,7 +56,7 @@ pub trait RuleMeta {
 ///
 /// The macro itself expect the following syntax:
 ///
-/// ```rust
+/// ```rust,ignore
 ///use rome_analyze::declare_rule;
 ///
 /// declare_rule! {
@@ -81,6 +82,7 @@ macro_rules! declare_rule {
         $vis enum $id {}
 
         impl $crate::RuleMeta for $id {
+            type Group = super::Group;
             const METADATA: $crate::RuleMetadata =
                 $crate::RuleMetadata::new($version, $name, concat!( $( $doc, "\n", )* )) $( .$key($value) )*;
         }
@@ -102,9 +104,10 @@ macro_rules! declare_rule {
 /// disabled at once
 pub trait RuleGroup {
     type Language: Language;
+    type Category: GroupCategory;
     /// The name of this group, displayed in the diagnostics emitted by its rules
     const NAME: &'static str;
-    /// Register all the rules belonging to this group into `registry` if they match `filter`
+    /// Register all the rules belonging to this group into `registry`
     fn push_rules(registry: &mut RuleRegistry<Self::Language>, filter: &AnalysisFilter);
 }
 
@@ -117,13 +120,16 @@ macro_rules! declare_group {
 
         impl $crate::RuleGroup for $id {
             type Language = <( $( $( $rule )::* , )* ) as $crate::GroupLanguage>::Language;
+            type Category = super::Category;
 
             const NAME: &'static str = $name;
 
             fn push_rules(registry: &mut $crate::RuleRegistry<Self::Language>, filter: &$crate::AnalysisFilter) {
-                $( if filter.match_rule::<Self, $( $rule )::*>() { registry.push::<Self, $( $rule )::*>(); } )*
+                $( registry.push_rule::<$( $rule )::*>(filter); )*
             }
         }
+
+        pub(self) use $id as Group;
 
         // Declare a `group_category!` macro in the context of this module (and
         // all its children). This macro takes the name of a rule as a string
@@ -142,12 +148,52 @@ macro_rules! declare_group {
     };
 }
 
-/// This trait is implemented for tuples of [Rule] types of size 1 to 20 if the
+/// A group category is a collection of rule groups under a given category ID,
+/// serving as a broad classification on the kind of diagnostic or code action
+/// these rule emit, and allowing whole categories of rules to be disabled at
+/// once depending on the kind of analysis being performed
+pub trait GroupCategory {
+    type Language: Language;
+    /// The category ID used for all groups and rule belonging to this category
+    const CATEGORY: RuleCategory;
+    /// Register all the groups belonging to this category into `registry`
+    fn push_groups(registry: &mut RuleRegistry<Self::Language>, filter: &AnalysisFilter);
+}
+
+#[macro_export]
+macro_rules! declare_category {
+    ( $vis:vis $id:ident { kind: $kind:ident, groups: [ $( $( $group:ident )::* , )* ] } ) => {
+        $vis enum $id {}
+
+        impl $crate::GroupCategory for $id {
+            type Language = <( $( $( $group )::* , )* ) as $crate::CategoryLanguage>::Language;
+
+            const CATEGORY: $crate::RuleCategory = $crate::RuleCategory::$kind;
+
+            fn push_groups(registry: &mut $crate::RuleRegistry<Self::Language>, filter: &$crate::AnalysisFilter) {
+                $( registry.push_group::<$( $group )::*>(filter); )*
+            }
+        }
+
+        pub(self) use $id as Category;
+    };
+}
+
+/// This trait is implemented for tuples of [Rule] types of size 1 to 29 if the
 /// query type of all the rules in the tuple share the same associated
 /// [Language] (which is then aliased as the `Language` associated type on
 /// [GroupLanguage] itself). It is used to ensure all the rules in a given
 /// group are all querying the same underlying language
 pub trait GroupLanguage {
+    type Language: Language;
+}
+
+/// This trait is implemented for tuples of [Rule] types of size 1 to 29 if the
+/// language of all the groups in the tuple share the same associated
+/// [Language] (which is then aliased as the `Language` associated type on
+/// [CategoryLanguage] itself). It is used to ensure all the groups in a given
+/// category are all querying the same underlying language
+pub trait CategoryLanguage {
     type Language: Language;
 }
 
@@ -159,6 +205,13 @@ macro_rules! impl_group_language {
             $head: Rule $( , $rest: Rule, <$rest as Rule>::Query: Queryable<Language = RuleLanguage<$head>> )*
         {
             type Language = RuleLanguage<$head>;
+        }
+
+        impl<$head $( , $rest )*> CategoryLanguage for ($head, $( $rest ),*)
+        where
+            $head: RuleGroup $( , $rest: RuleGroup<Language = <$head as RuleGroup>::Language> )*
+        {
+            type Language = <$head as RuleGroup>::Language;
         }
 
         impl_group_language!( $( $rest ),* );
@@ -176,10 +229,6 @@ impl_group_language!(
 /// and a callback function to be executed on all nodes matching the query to possibly
 /// raise an analysis event
 pub trait Rule: RuleMeta {
-    /// The category this rule belong to, this is used for broadly filtering
-    /// rules when running the analyzer
-    const CATEGORY: RuleCategory;
-
     /// The type of AstNode this rule is interested in
     type Query: Queryable;
     /// A generic type that will be kept in memory between a call to `run` and

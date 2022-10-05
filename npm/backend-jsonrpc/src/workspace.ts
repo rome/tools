@@ -156,6 +156,7 @@ export interface Correctness {
  */
 export interface Nursery {
 	noArrayIndexKey?: RuleConfiguration;
+	noChildrenProp?: RuleConfiguration;
 	noDangerouslySetInnerHtml?: RuleConfiguration;
 	noDangerouslySetInnerHtmlWithChildren?: RuleConfiguration;
 	noNewSymbol?: RuleConfiguration;

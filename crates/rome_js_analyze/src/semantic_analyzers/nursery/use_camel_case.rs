@@ -3,9 +3,7 @@ use crate::{
     utils::{rename::RenameSymbolExtensions, ToCamelCase},
     JsRuleAction,
 };
-use rome_analyze::{
-    context::RuleContext, declare_rule, ActionCategory, Rule, RuleCategory, RuleDiagnostic,
-};
+use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_semantic::{AllReferencesExtensions, IsExportedCanBeQueried, SemanticModel};
@@ -97,8 +95,6 @@ fn is_non_camel_ok(binding: &JsIdentifierBinding, model: &SemanticModel) -> Opti
 }
 
 impl Rule for UseCamelCase {
-    const CATEGORY: RuleCategory = RuleCategory::Lint;
-
     type Query = Semantic<JsAnyCamelCaseName>;
     type State = State;
     type Signals = Option<Self::State>;

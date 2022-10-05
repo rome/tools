@@ -1,6 +1,4 @@
-use rome_analyze::{
-    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
-};
+use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_syntax::{
@@ -146,8 +144,6 @@ fn is_negation(node: &JsSyntaxNode) -> Option<JsUnaryExpression> {
 }
 
 impl Rule for NoExtraBooleanCast {
-    const CATEGORY: RuleCategory = RuleCategory::Lint;
-
     type Query = Ast<JsAnyExpression>;
     type State = (JsAnyExpression, ExtraBooleanCastType);
     type Signals = Option<Self::State>;

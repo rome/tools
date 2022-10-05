@@ -4,7 +4,7 @@ use crate::globals::runtime::ES_2021;
 use crate::globals::typescript::TYPESCRIPT_BUILTIN;
 use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
-use rome_analyze::{declare_rule, Rule, RuleCategory, RuleDiagnostic};
+use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::Scope;
 use rome_js_syntax::{JsReferenceIdentifier, JsxReferenceIdentifier};
@@ -32,7 +32,6 @@ declare_node_union! {
 }
 
 impl Rule for NoUndeclaredVariables {
-    const CATEGORY: RuleCategory = RuleCategory::Lint;
     type Query = Semantic<NoUndeclaredVariablesQuery>;
     type State = String;
     type Signals = Option<Self::State>;

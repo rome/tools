@@ -1,6 +1,4 @@
-use rome_analyze::{
-    context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleCategory, RuleDiagnostic,
-};
+use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_syntax::{JsRegexLiteralExpression, JsSyntaxKind, JsSyntaxToken, TextRange, TextSize};
@@ -65,8 +63,6 @@ declare_rule! {
 }
 
 impl Rule for NoMultipleSpacesInRegularExpressionLiterals {
-    const CATEGORY: RuleCategory = RuleCategory::Lint;
-
     type Query = Ast<JsRegexLiteralExpression>;
     type State = Vec<(usize, usize)>;
     type Signals = Option<Self::State>;
