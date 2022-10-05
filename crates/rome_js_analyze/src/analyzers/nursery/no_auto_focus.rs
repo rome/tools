@@ -71,7 +71,7 @@ impl Rule for NoAutoFocus {
     fn diagnostic(_ctx: &RuleContext<Self>, attr: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic::new(
             rule_category!(),
-            attr.range(),
+            attr.syntax().text_trimmed_range(),
             markup! {
                 "Avoid the "<Emphasis>"autoFocus"</Emphasis>" attribute."
             },
