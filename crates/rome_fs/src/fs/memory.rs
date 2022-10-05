@@ -9,16 +9,18 @@ use std::{
 };
 
 use parking_lot::{lock_api::ArcMutexGuard, Mutex, RawMutex, RwLock};
+use rome_diagnostics::v2::Error;
 
 use crate::fs::{FileSystemExt, OpenOptions};
 use crate::{FileSystem, TraversalContext, TraversalScope};
 
-use super::{BoxedTraversal, File};
+use super::{BoxedTraversal, File, UnhandledDiagnostic, UnhandledKind};
 
 /// Fully in-memory file system, stores the content of all known files in a hashmap
 #[derive(Default)]
 pub struct MemoryFileSystem {
     files: AssertUnwindSafe<RwLock<HashMap<PathBuf, FileEntry>>>,
+    errors: HashMap<PathBuf, ErrorEntry>,
 }
 
 /// This is what's actually being stored for each file in the filesystem
@@ -36,11 +38,26 @@ pub struct MemoryFileSystem {
 ///   or write either happens or not, but will never panic halfway through)
 type FileEntry = Arc<Mutex<Vec<u8>>>;
 
+/// Error entries are special file system entries that cause an error to be
+/// emitted when they are reached through a filesystem traversal. This is
+/// mainly useful as a mechanism to test the handling of filesystem error in
+/// client code.
+#[derive(Clone, Copy, Debug)]
+pub enum ErrorEntry {
+    SymbolicLink,
+    Unknown,
+}
+
 impl MemoryFileSystem {
     /// Create or update a file in the filesystem
     pub fn insert(&mut self, path: PathBuf, content: impl Into<Vec<u8>>) {
-        let files = &mut self.files.0.write();
+        let files = self.files.0.get_mut();
         files.insert(path, Arc::new(Mutex::new(content.into())));
+    }
+
+    /// Create or update an error in the filesystem
+    pub fn insert_error(&mut self, path: PathBuf, kind: ErrorEntry) {
+        self.errors.insert(path, kind);
     }
 
     pub fn files(self) -> IntoIter<PathBuf, FileEntry> {
@@ -136,11 +153,27 @@ impl<'scope> TraversalScope<'scope> for MemoryTraversalScope<'scope> {
     fn spawn(&self, ctx: &'scope dyn TraversalContext, base: PathBuf) {
         // Traversal is implemented by iterating on all keys, and matching on
         // those that are prefixed with the provided `base` path
-        let files = &self.fs.files.0.read();
-        for path in files.keys() {
+        {
+            let files = &self.fs.files.0.read();
+            for path in files.keys() {
+                if path.strip_prefix(&base).is_ok() {
+                    let file_id = ctx.interner().intern_path(path.into());
+                    ctx.handle_file(path, file_id);
+                }
+            }
+        }
+
+        for (path, entry) in &self.fs.errors {
             if path.strip_prefix(&base).is_ok() {
                 let file_id = ctx.interner().intern_path(path.into());
-                ctx.handle_file(path, file_id);
+
+                ctx.push_diagnostic(Error::from(UnhandledDiagnostic {
+                    file_id,
+                    file_kind: match entry {
+                        ErrorEntry::SymbolicLink => UnhandledKind::Symlink,
+                        ErrorEntry::Unknown => UnhandledKind::Other,
+                    },
+                }));
             }
         }
     }
