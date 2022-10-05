@@ -17,7 +17,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
 
     // Ensure the list of rules is stored alphabetically
     let mut groups = BTreeMap::new();
-    for meta in metadata(filter) {
+    for meta in metadata(&filter) {
         groups
             .entry(meta.group)
             .or_insert_with(BTreeMap::new)

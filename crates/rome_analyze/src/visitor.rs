@@ -6,7 +6,7 @@ use rome_rowan::{AstNode, Language, SyntaxNode, TextRange, WalkEvent};
 use crate::{
     matcher::MatchQueryParams,
     registry::{NodeLanguage, Phases},
-    LanguageRoot, QueryMatch, QueryMatcher, ServiceBag, SignalEntry,
+    AnalyzerOptions, LanguageRoot, QueryMatch, QueryMatcher, ServiceBag, SignalEntry,
 };
 
 /// Mutable context objects shared by all visitors
@@ -18,6 +18,7 @@ pub struct VisitorContext<'phase, 'query, L: Language> {
     pub range: Option<TextRange>,
     pub(crate) query_matcher: &'query mut dyn QueryMatcher<L>,
     pub(crate) signal_queue: &'query mut BinaryHeap<SignalEntry<'phase, L>>,
+    pub options: &'query AnalyzerOptions,
 }
 
 impl<'phase, 'query, L: Language> VisitorContext<'phase, 'query, L> {
@@ -29,6 +30,7 @@ impl<'phase, 'query, L: Language> VisitorContext<'phase, 'query, L> {
             query,
             services: self.services,
             signal_queue: self.signal_queue,
+            options: self.options,
         })
     }
 }
