@@ -66,12 +66,12 @@ useSingleCaseStatement.js:4:9 lint/correctness/useSingleCaseStatement  FIXABLE  
   
   i Suggested fix: Wrap the statements in a block
   
-     1  1 │   switch·(foo)·{
-     2  2 │   ····case·true:
+     1  1 │   switch (foo) {
+     2  2 │       case true:
      3    │ - ····case·false:
         3 │ + ····case·false:·{
-     4  4 │   ········let·foo·=·'';
-     5  5 │   ········foo;
+     4  4 │           let foo = '';
+     5  5 │           foo;
         6 │ + ····}
      6  7 │   }
      7  8 │   
@@ -95,12 +95,12 @@ useSingleCaseStatement.js:11:9 lint/correctness/useSingleCaseStatement  FIXABLE 
   
   i Suggested fix: Wrap the statements in a block
   
-     8  8 │   switch·(foo)·{
-     9  9 │   ····//·comment
+     8  8 │   switch (foo) {
+     9  9 │       // comment
     10    │ - ····case·false·:
        10 │ + ····case·false·:·{
-    11 11 │   ········let·foo·=·'';
-    12 12 │   ········foo;
+    11 11 │           let foo = '';
+    12 12 │           foo;
        13 │ + ····}
     13 14 │   }
     14 15 │   
@@ -125,11 +125,11 @@ useSingleCaseStatement.js:17:9 lint/correctness/useSingleCaseStatement  FIXABLE 
   i Suggested fix: Wrap the statements in a block
   
     14 14 │   
-    15 15 │   switch·(foo)·{
+    15 15 │   switch (foo) {
     16    │ - ····case·false·:·//·comment
        16 │ + ····case·false·:·{·//·comment
-    17 17 │   ········let·foo·=·'';
-    18 18 │   ········foo;
+    17 17 │           let foo = '';
+    18 18 │           foo;
        19 │ + ····}
     19 20 │   }
     20 21 │   
@@ -153,12 +153,12 @@ useSingleCaseStatement.js:24:9 lint/correctness/useSingleCaseStatement  FIXABLE 
   
   i Suggested fix: Wrap the statements in a block
   
-    21 21 │   switch·(foo)·{
-    22 22 │   ····case·false
+    21 21 │   switch (foo) {
+    22 22 │       case false
     23    │ - ····/*·comment·*/·:
        23 │ + ····/*·comment·*/·:·{
-    24 24 │   ········let·foo·=·'';
-    25 25 │   ········foo;
+    24 24 │           let foo = '';
+    25 25 │           foo;
        26 │ + ····}
     26 27 │   }
     27 28 │   

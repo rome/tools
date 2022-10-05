@@ -86,8 +86,8 @@ noNewSymbol.js:11:26 lint/nursery/noNewSymbol  FIXABLE  ━━━━━━━━
   
   i Suggested fix: Remove new.
   
-     9  9 │   var·foo2·=·new·Symbol();
-    10 10 │   var·lorem·=·new·Symbol()·//·comment
+     9  9 │   var foo2 = new Symbol();
+    10 10 │   var lorem = new Symbol() // comment
     11    │ - var·s·=·/*·prefix_cmt·*/·new·/*·suffix_cmt·*/·Symbol()·//·comment
        11 │ + var·s·=·/*·prefix_cmt·*/··/*·suffix_cmt·*/·Symbol()·//·comment
   

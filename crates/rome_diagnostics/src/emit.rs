@@ -279,12 +279,12 @@ labore et dolore magna aliqua";
             "  \n"
             <Emphasis><Info>"  ℹ"</Info></Emphasis>" "<Info>"Safe fix: suggestion"</Info>"\n"
             "  \n"
-            "    "<Emphasis>"1"</Emphasis>" "<Emphasis>"1 │ "</Emphasis>"  Lorem"<Dim>"·"</Dim>"ipsum"<Dim>"·"</Dim>"dolor"<Dim>"·"</Dim>"sit"<Dim>"·"</Dim>"amet,\n"
+            "    "<Emphasis>"1"</Emphasis>" "<Emphasis>"1 │ "</Emphasis>"  Lorem ipsum dolor sit amet,\n"
             "    "<Emphasis>"2"</Emphasis>"  "<Emphasis>" │ "</Emphasis><Error>"-"</Error>" "<Error>"consectetur"</Error><Error><Dim>"·"</Dim></Error><Error><Emphasis>"adipiscing"</Emphasis></Error><Error><Dim>"·"</Dim></Error><Error><Emphasis>"elit"</Emphasis></Error><Error>","</Error>"\n"
             "      "<Emphasis>"2 │ "</Emphasis><Success>"+"</Success>" "<Success>"consectetur"</Success><Success><Dim>"·"</Dim></Success><Success><Emphasis>"completely"</Emphasis></Success><Success><Dim>"·"</Dim></Success><Success><Emphasis>"different"</Emphasis></Success>"\n"
             "      "<Emphasis>"3 │ "</Emphasis><Success>"+"</Success>" "<Success><Emphasis>"text"</Emphasis></Success><Success>","</Success>"\n"
-            "    "<Emphasis>"3"</Emphasis>" "<Emphasis>"4 │ "</Emphasis>"  sed"<Dim>"·"</Dim>"do"<Dim>"·"</Dim>"eiusmod"<Dim>"·"</Dim>"tempor"<Dim>"·"</Dim>"incididunt"<Dim>"·"</Dim>"ut\n"
-            "    "<Emphasis>"4"</Emphasis>" "<Emphasis>"5 │ "</Emphasis>"  labore"<Dim>"·"</Dim>"et"<Dim>"·"</Dim>"dolore"<Dim>"·"</Dim>"magna"<Dim>"·"</Dim>"aliqua\n"
+            "    "<Emphasis>"3"</Emphasis>" "<Emphasis>"4 │ "</Emphasis>"  sed do eiusmod tempor incididunt ut\n"
+            "    "<Emphasis>"4"</Emphasis>" "<Emphasis>"5 │ "</Emphasis>"  labore et dolore magna aliqua\n"
             "  \n"
         }.to_owned();
 

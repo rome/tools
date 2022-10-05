@@ -70,7 +70,7 @@ useCamelCase.js:1:5 lint/nursery/useCamelCase  FIXABLE  ━━━━━━━━
      2    │ - snake_case·=·1;
         1 │ + let·snakeCase;
         2 │ + snakeCase·=·1;
-     3  3 │   let·_snake_case;
+     3  3 │   let _snake_case;
      4  4 │   console.log(_snake_case);
   
 
@@ -95,7 +95,7 @@ useCamelCase.js:6:10 lint/nursery/useCamelCase  FIXABLE  ━━━━━━━�
      6    │ - function·snake_function(snake_case,·PascalCase)·{}
         6 │ + function·snakeFunction(snake_case,·PascalCase)·{}
      7  7 │   
-     8  8 │   class·PascalCase·{
+     8  8 │   class PascalCase {
   
 
 ```
@@ -119,7 +119,7 @@ useCamelCase.js:6:25 lint/nursery/useCamelCase  FIXABLE  ━━━━━━━�
      6    │ - function·snake_function(snake_case,·PascalCase)·{}
         6 │ + function·snake_function(snakeCase,·PascalCase)·{}
      7  7 │   
-     8  8 │   class·PascalCase·{
+     8  8 │   class PascalCase {
   
 
 ```
@@ -143,7 +143,7 @@ useCamelCase.js:6:37 lint/nursery/useCamelCase  FIXABLE  ━━━━━━━�
      6    │ - function·snake_function(snake_case,·PascalCase)·{}
         6 │ + function·snake_function(snake_case,·pascalCase)·{}
      7  7 │   
-     8  8 │   class·PascalCase·{
+     8  8 │   class PascalCase {
   
 
 ```
@@ -235,12 +235,12 @@ useCamelCase.js:31:5 lint/nursery/useCamelCase  FIXABLE  ━━━━━━━�
   
   i Safe fix: Rename this symbol to camel case
   
-    29 29 │   let·longCamelCase;
+    29 29 │   let longCamelCase;
     30 30 │   
     31    │ - let·UPPER_CASE·=·1;
        31 │ + let·uPPERCASE·=·1;
-    32 32 │   let·{·UPPER_CASE·}·=·env;
-    33 33 │   let·[·UPPER_CASE·]·=·env;
+    32 32 │   let { UPPER_CASE } = env;
+    33 33 │   let [ UPPER_CASE ] = env;
   
 
 ```
@@ -259,7 +259,7 @@ useCamelCase.js:45:10 lint/nursery/useCamelCase  FIXABLE  ━━━━━━━�
   
   i Safe fix: Rename this symbol to camel case
   
-    43 43 │   export·default·PascalCaseOkBecauseExport;
+    43 43 │   export default PascalCaseOkBecauseExport;
     44 44 │   
     45    │ - function·PascalCaseNOk()·{·}
     46    │ - console.log(PascalCaseNOk());

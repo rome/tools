@@ -95,8 +95,8 @@ useSimplifiedLogicExpression.js:17:12 lint/correctness/useSimplifiedLogicExpress
   
   i Suggested fix: Reduce the complexity of the logical expression.
   
-    15 15 │   const·boolExpr1·=·true;
-    16 16 │   const·boolExpr2·=·false;
+    15 15 │   const boolExpr1 = true;
+    16 16 │   const boolExpr2 = false;
     17    │ - const·r4·=·!boolExpr1·||·!boolExpr2;
        17 │ + const·r4·=·!(boolExpr1·&&·boolExpr2);
     18 18 │   
