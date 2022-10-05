@@ -51,9 +51,9 @@ impl Rule for NoAutoFocus {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
-        let name = node.name().ok()?;
+        let name = node.name().ok()?.syntax().text_trimmed();
 
-        if name.syntax().text_trimmed() == "input" {
+        if name == "input" {
             let attribute = node.find_attribute_by_name("autoFocus").ok()??;
 
             if let Some(value) = get_attribute_value(&attribute) {
