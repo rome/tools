@@ -1,0 +1,40 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: missingCapturesInvalid.js
+---
+# Input
+```js
+function MyComponent() {
+    const local = 1;
+    useEffect(() => {
+      console.log(local);
+    });
+  }
+```
+
+# Diagnostics
+```
+missingCapturesInvalid.js:3:5 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This useEffect has missing dependencies
+  
+    1 │ function MyComponent() {
+    2 │     const local = 1;
+  > 3 │     useEffect(() => {
+      │     ^^^^^^^^^
+    4 │       console.log(local);
+    5 │     });
+  
+  i This capture is not in the dependency list
+  
+    2 │     const local = 1;
+    3 │     useEffect(() => {
+  > 4 │       console.log(local);
+      │                   ^^^^^
+    5 │     });
+    6 │   }
+  
+
+```
+
+

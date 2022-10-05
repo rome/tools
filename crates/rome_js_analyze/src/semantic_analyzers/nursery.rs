@@ -14,6 +14,7 @@ mod no_undeclared_variables;
 mod no_unused_variables;
 mod no_useless_fragments;
 mod no_void_elements_with_children;
+mod react_extensive_dependencies;
 mod use_button_type;
 mod use_camel_case;
 mod use_fragment_syntax;

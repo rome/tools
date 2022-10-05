@@ -1,0 +1,20 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: valid.js
+---
+# Input
+```js
+function MyComponent1() {
+    useEffect(() => {
+    });
+}
+
+function MyComponent2() {
+    const local = 1;
+    useEffect(() => {
+        console.log(local);
+    }, [local]);
+}
+```
+
+

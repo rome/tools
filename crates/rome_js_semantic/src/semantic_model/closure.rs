@@ -72,12 +72,14 @@ SyntaxTextRangeHasClosureAstNode! {
     JS_SETTER_OBJECT_MEMBER => JsSetterObjectMember,
 }
 
+#[derive(Clone)]
 pub enum CaptureType {
     ByReference,
     Type,
 }
 
 /// Provides all information regarding a specific closure capture.
+#[derive(Clone)]
 pub struct Capture {
     ty: CaptureType,
     node: JsSyntaxNode,
