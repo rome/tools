@@ -6,6 +6,8 @@
 	<div tabIndex={undefined} />
 	<div tabIndex={"abc"} />
 	<div tabIndex={0} />
+	<div tabIndex={+0} />
+	<div tabIndex={-0} />
 	<div tabIndex={-1} />
 	<div tabIndex={"0"} />
 	<div tabIndex={'-5'} />

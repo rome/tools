@@ -4,6 +4,7 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Severity;
+use rome_js_factory::make;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsCallExpression, JsPropertyObjectMember,
     JsxAnyAttributeValue, JsxAttribute, JsxOpeningElement, JsxSelfClosingElement,
@@ -145,6 +146,27 @@ fn get_expression_value(expression: &JsAnyExpression) -> Option<SyntaxTokenText>
         JsAnyExpression::JsAnyLiteralExpression(
             JsAnyLiteralExpression::JsNumberLiteralExpression(literal),
         ) => Some(literal.value_token().ok()?.token_text()),
+        JsAnyExpression::JsUnaryExpression(unary_expression) => {
+            let argument_expression = unary_expression.argument().ok()?;
+            let argument_value = get_expression_value(&argument_expression);
+            let operator = unary_expression.operator_token().ok()?.token_text_trimmed();
+
+            if let Some(value) = argument_value {
+                let string_literal = String::from_iter([operator.to_string(), value.to_string()]);
+
+                // Build a string literal expression with the operator and the argument
+                // e.g. operator MINUS and argument value 5 becomes "-5"
+                return get_expression_value(&JsAnyExpression::JsAnyLiteralExpression(
+                    JsAnyLiteralExpression::JsStringLiteralExpression(
+                        make::js_string_literal_expression(make::js_string_literal(
+                            &string_literal,
+                        )),
+                    ),
+                ));
+            }
+
+            None
+        }
         _ => None,
     }
 }
