@@ -6,7 +6,9 @@ use crate::semantic_services::SemanticServices;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{JsReferenceIdentifier, JsxReferenceIdentifier, TextRange};
+use rome_js_syntax::{
+    JsIdentifierAssignment, JsReferenceIdentifier, JsxReferenceIdentifier, TextRange,
+};
 use rome_rowan::{declare_node_union, AstNode};
 
 declare_rule! {
@@ -27,7 +29,7 @@ declare_rule! {
 }
 
 declare_node_union! {
-    pub(crate) AnyIdentifier = JsReferenceIdentifier| JsxReferenceIdentifier
+    pub(crate) AnyIdentifier = JsReferenceIdentifier | JsIdentifierAssignment | JsxReferenceIdentifier
 }
 
 impl Rule for NoUndeclaredVariables {
@@ -38,10 +40,12 @@ impl Rule for NoUndeclaredVariables {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         ctx.query()
             .all_unresolved_references()
-            .filter_map(|node| {
-                let node = AnyIdentifier::unwrap_cast(node.clone());
+            .filter_map(|reference| {
+                let node = reference.node().clone();
+                let node = AnyIdentifier::unwrap_cast(node);
                 let token = match node {
                     AnyIdentifier::JsReferenceIdentifier(node) => node.value_token(),
+                    AnyIdentifier::JsIdentifierAssignment(node) => node.name_token(),
                     AnyIdentifier::JsxReferenceIdentifier(node) => node.value_token(),
                 };
 

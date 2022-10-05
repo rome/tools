@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 98
 expression: noUndeclaredVariables.js
 ---
 # Input
@@ -9,6 +10,9 @@ foobar;
 function f() {
     lorem;
 }
+assignment = "value";
+<Missing />;
+
 // valid
 document;
 navigator;
@@ -40,7 +44,37 @@ noUndeclaredVariables.js:4:5 lint/nursery/noUndeclaredVariables ━━━━━�
   > 4 │     lorem;
       │     ^^^^^
     5 │ }
-    6 │ // valid
+    6 │ assignment = "value";
+  
+
+```
+
+```
+noUndeclaredVariables.js:6:1 lint/nursery/noUndeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The assignment variable is undeclared
+  
+    4 │     lorem;
+    5 │ }
+  > 6 │ assignment = "value";
+      │ ^^^^^^^^^^
+    7 │ <Missing />;
+    8 │ 
+  
+
+```
+
+```
+noUndeclaredVariables.js:7:2 lint/nursery/noUndeclaredVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The Missing variable is undeclared
+  
+    5 │ }
+    6 │ assignment = "value";
+  > 7 │ <Missing />;
+      │  ^^^^^^^
+    8 │ 
+    9 │ // valid
   
 
 ```
