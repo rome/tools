@@ -11,13 +11,14 @@ impl JsxString {
     ///
     /// ```
     /// use rome_js_factory::make::{jsx_ident, jsx_string};
+    /// use rome_rowan::TriviaPieceKind;
     ///
-    ///let string = jsx_string(jsx_ident("button"));
+    ///let string = jsx_string(jsx_ident("button").with_leading_trivia(vec![(TriviaPieceKind::Whitespace, " ")]));
     /// assert_eq!(string.inner_string_text().unwrap().text(), "button");
     /// ```
     pub fn inner_string_text(&self) -> SyntaxResult<SyntaxTokenText> {
         let value = self.value_token()?;
-        let mut text = value.token_text();
+        let mut text = value.token_text_trimmed();
 
         static QUOTES: [char; 2] = ['"', '\''];
 

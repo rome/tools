@@ -36,13 +36,14 @@ impl JsModuleSource {
     /// ```
     /// use rome_js_factory::make::{ident, js_module_source};
     /// use rome_js_syntax::{JsAnyBinding, JsAnyImportClause, T};
-    /// let source = js_module_source(ident("react"));
+    /// use rome_rowan::TriviaPieceKind;
+    /// let source = js_module_source(ident("react").with_leading_trivia(vec![(TriviaPieceKind::Whitespace, " ")]));
     /// let text = source.inner_string_text().unwrap();
     /// assert_eq!(text.text(), "react");
     /// ```
     pub fn inner_string_text(&self) -> SyntaxResult<SyntaxTokenText> {
         let value = self.value_token()?;
-        let mut text = value.token_text();
+        let mut text = value.token_text_trimmed();
 
         static QUOTES: [char; 2] = ['"', '\''];
 
