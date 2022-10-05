@@ -304,7 +304,8 @@ impl Scope {
     }
 
     /// Return the [Closure] associated with this scope if
-    /// this scope comes from a function or arrow function.
+    /// it has one, otherwise returns None.  
+    /// See [HasClosureAstNode] for nodes that have closure.
     pub fn closure(&self) -> Option<Closure> {
         Closure::from_scope(self.data.clone(), self.id, self.range())
     }

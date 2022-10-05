@@ -24,6 +24,8 @@ macro_rules! SyntaxTextRangeHasClosureAstNode {
             }
         )*
 
+        /// All nodes that have an associated closure
+        /// and can be used by the [SemanticModel].
         pub enum AnyHasClosureNode {
             $(
                 $node($node),
@@ -142,6 +144,8 @@ impl Iterator for AllCapturesIter {
     }
 }
 
+impl FusedIterator for AllCapturesIter {}
+
 pub struct ChildrenIter {
     data: Arc<SemanticModelData>,
     closure_range: TextRange,
@@ -217,7 +221,7 @@ impl Closure {
 
     /// Return all [Reference] this closure captures, not taking into
     /// consideration any capture of children closures
-    /// 
+    ///
     /// ```rust,ignore
     /// let inner_function = "let a, b;
     /// function f(c) {
@@ -247,7 +251,7 @@ impl Closure {
     }
 
     /// Return all immediate children closures of this closure.
-    /// 
+    ///
     /// ```rust,ignore
     /// let inner_function = "let a, b;
     /// function f(c) {
