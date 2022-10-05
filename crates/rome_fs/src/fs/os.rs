@@ -1,13 +1,12 @@
 //! Implementation of the [FileSystem] and related traits for the underlying OS filesystem
-use super::{BoxedTraversal, File};
+use super::{BoxedTraversal, File, UnhandledDiagnostic, UnhandledKind};
 use crate::fs::{FileSystemExt, OpenOptions};
 use crate::{
     fs::{TraversalContext, TraversalScope},
     FileSystem, RomePath,
 };
 use rayon::{scope, Scope};
-use rome_diagnostics::v2::{adapters::IoError, console, Diagnostic, DiagnosticExt, Error, FileId};
-use rome_diagnostics::v2::{Advices, LogCategory, Visit};
+use rome_diagnostics::v2::{adapters::IoError, DiagnosticExt, Error, FileId};
 use std::{
     ffi::OsStr,
     fs,
@@ -208,56 +207,6 @@ fn handle_dir<'scope>(
             file_id,
             file_kind: UnhandledKind::from(file_type),
         }));
-    }
-}
-
-#[derive(Debug, Diagnostic)]
-#[diagnostic(severity = Warning, category = "internalError/fs")]
-struct UnhandledDiagnostic {
-    #[location(resource)]
-    file_id: FileId,
-    #[message]
-    #[description]
-    #[advice]
-    file_kind: UnhandledKind,
-}
-
-#[derive(Clone, Copy, Debug)]
-enum UnhandledKind {
-    Symlink,
-    Other,
-}
-
-impl console::fmt::Display for UnhandledKind {
-    fn fmt(&self, fmt: &mut console::fmt::Formatter) -> io::Result<()> {
-        match self {
-            UnhandledKind::Symlink => fmt.write_str("Symbolic links are not supported"),
-            UnhandledKind::Other => fmt.write_str("Encountered an unknown file type"),
-        }
-    }
-}
-
-impl std::fmt::Display for UnhandledKind {
-    fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            UnhandledKind::Symlink => write!(fmt, "Symbolic links are not supported"),
-            UnhandledKind::Other => write!(fmt, "Encountered an unknown file type"),
-        }
-    }
-}
-
-impl Advices for UnhandledKind {
-    fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
-        match self {
-            UnhandledKind::Symlink => visitor.record_log(
-                LogCategory::Info,
-                &"Rome does not currently support visiting the content of symbolic links since it could lead to an infinite traversal loop",
-            ),
-            UnhandledKind::Other => visitor.record_log(
-                LogCategory::Info,
-                &"Rome encountered a file system entry that's neither a file, directory or symbolic link",
-            ),
-        }
     }
 }
 

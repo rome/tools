@@ -1,0 +1,17 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+expression: content
+---
+# Emitted Messages
+
+```block
+prefix/ci.js internalError/fs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Encountered an unknown file type
+  
+  i Rome encountered a file system entry that's neither a file, directory or symbolic link
+  
+
+```
+
+

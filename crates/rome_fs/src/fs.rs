@@ -6,12 +6,15 @@ use std::{
 };
 
 use crate::{PathInterner, RomePath};
-use rome_diagnostics::file::FileId;
+use rome_diagnostics::{
+    file::FileId,
+    v2::{console, Advices, Diagnostic, LogCategory, Visit},
+};
 
 mod memory;
 mod os;
 
-pub use memory::MemoryFileSystem;
+pub use memory::{ErrorEntry, MemoryFileSystem};
 pub use os::OsFileSystem;
 use rome_diagnostics::v2::Error;
 pub const CONFIG_NAME: &str = "rome.json";
@@ -150,5 +153,55 @@ where
 
     fn traversal<'scope>(&'scope self, func: BoxedTraversal<'_, 'scope>) {
         T::traversal(self, func)
+    }
+}
+
+#[derive(Debug, Diagnostic)]
+#[diagnostic(severity = Warning, category = "internalError/fs")]
+struct UnhandledDiagnostic {
+    #[location(resource)]
+    file_id: FileId,
+    #[message]
+    #[description]
+    #[advice]
+    file_kind: UnhandledKind,
+}
+
+#[derive(Clone, Copy, Debug)]
+enum UnhandledKind {
+    Symlink,
+    Other,
+}
+
+impl console::fmt::Display for UnhandledKind {
+    fn fmt(&self, fmt: &mut console::fmt::Formatter) -> io::Result<()> {
+        match self {
+            UnhandledKind::Symlink => fmt.write_str("Symbolic links are not supported"),
+            UnhandledKind::Other => fmt.write_str("Encountered an unknown file type"),
+        }
+    }
+}
+
+impl std::fmt::Display for UnhandledKind {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            UnhandledKind::Symlink => write!(fmt, "Symbolic links are not supported"),
+            UnhandledKind::Other => write!(fmt, "Encountered an unknown file type"),
+        }
+    }
+}
+
+impl Advices for UnhandledKind {
+    fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
+        match self {
+            UnhandledKind::Symlink => visitor.record_log(
+                LogCategory::Info,
+                &"Rome does not currently support visiting the content of symbolic links since it could lead to an infinite traversal loop",
+            ),
+            UnhandledKind::Other => visitor.record_log(
+                LogCategory::Info,
+                &"Rome encountered a file system entry that's neither a file, directory or symbolic link",
+            ),
+        }
     }
 }
