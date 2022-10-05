@@ -21,10 +21,49 @@ const r3 = null ?? nonNullExp;
 const boolExpr1 = true;
 const boolExpr2 = false;
 const r4 = !boolExpr1 || !boolExpr2;
+!!x
 
 ```
 
 # Diagnostics
+```
+useSimplifiedLogicExpression.js:7:12 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━
+
+  ! Logical expression contains unnecessary complexity.
+  
+    5 │ const boolExpr5 = true;
+    6 │ const boolExpr6 = false;
+  > 7 │ const r6 = !!boolExpr1 || !!boolExpr2;
+      │            ^^^^^^^^^^^
+    8 │ // invalid
+    9 │ const boolExp = true;
+  
+  i Suggested fix: Discard redundant terms from the logical expression.
+  
+    7 │ const·r6·=·!!boolExpr1·||·!!boolExpr2;
+      │            --                         
+
+```
+
+```
+useSimplifiedLogicExpression.js:7:27 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━
+
+  ! Logical expression contains unnecessary complexity.
+  
+    5 │ const boolExpr5 = true;
+    6 │ const boolExpr6 = false;
+  > 7 │ const r6 = !!boolExpr1 || !!boolExpr2;
+      │                           ^^^^^^^^^^^
+    8 │ // invalid
+    9 │ const boolExp = true;
+  
+  i Suggested fix: Discard redundant terms from the logical expression.
+  
+    7 │ const·r6·=·!!boolExpr1·||·!!boolExpr2;
+      │                           --          
+
+```
+
 ```
 useSimplifiedLogicExpression.js:10:11 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━
 
@@ -91,7 +130,8 @@ useSimplifiedLogicExpression.js:17:12 lint/correctness/useSimplifiedLogicExpress
     16 │ const boolExpr2 = false;
   > 17 │ const r4 = !boolExpr1 || !boolExpr2;
        │            ^^^^^^^^^^^^^^^^^^^^^^^^
-    18 │ 
+    18 │ !!x
+    19 │ 
   
   i Suggested fix: Reduce the complexity of the logical expression.
   
@@ -99,8 +139,27 @@ useSimplifiedLogicExpression.js:17:12 lint/correctness/useSimplifiedLogicExpress
     16 16 │   const boolExpr2 = false;
     17    │ - const·r4·=·!boolExpr1·||·!boolExpr2;
        17 │ + const·r4·=·!(boolExpr1·&&·boolExpr2);
-    18 18 │   
+    18 18 │   !!x
+    19 19 │   
   
+
+```
+
+```
+useSimplifiedLogicExpression.js:18:1 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━
+
+  ! Logical expression contains unnecessary complexity.
+  
+    16 │ const boolExpr2 = false;
+    17 │ const r4 = !boolExpr1 || !boolExpr2;
+  > 18 │ !!x
+       │ ^^^
+    19 │ 
+  
+  i Suggested fix: Discard redundant terms from the logical expression.
+  
+    18 │ !!x
+       │ -- 
 
 ```
 
