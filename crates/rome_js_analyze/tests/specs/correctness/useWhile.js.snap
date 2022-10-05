@@ -24,7 +24,7 @@ useWhile.js:3:1 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━�
   
   i Suggested fix: Use a while loop
   
-    1 1 │   for·(let·i·=·0;·i·<·16;·++i)·{}
+    1 1 │   for (let i = 0; i < 16; ++i) {}
     2 2 │   
     3   │ - for·(;·true;·)·{}
       3 │ + while·(true)·{}

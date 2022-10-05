@@ -55,12 +55,12 @@ noShoutyConstants.js:1:7 lint/style/noShoutyConstants  FIXABLE  ━━━━━�
      2    │ - console.log(FOO,·FOO2);
         2 │ + console.log("FOO",·FOO2);
      3  3 │   
-     4  4 │   const·FOO2·=·"FOO2",·a·=·"FOO3",·FOO4·=·"FOO4";
+     4  4 │   const FOO2 = "FOO2", a = "FOO3", FOO4 = "FOO4";
      5  5 │   
      6    │ - console.log(FOO,·FOO4);
         6 │ + console.log("FOO",·FOO4);
      7  7 │   
-     8  8 │   let·foo·=·"foo";
+     8  8 │   let foo = "foo";
   
 
 ```
@@ -91,14 +91,14 @@ noShoutyConstants.js:4:7 lint/style/noShoutyConstants  FIXABLE  ━━━━━�
   
   i Suggested fix: Use the constant value directly
   
-     1  1 │   const·FOO·=·"FOO";
+     1  1 │   const FOO = "FOO";
      2    │ - console.log(FOO,·FOO2);
         2 │ + console.log(FOO,·"FOO2");
      3  3 │   
      4    │ - const·FOO2·=·"FOO2",·a·=·"FOO3",·FOO4·=·"FOO4";
         4 │ + const·a·=·"FOO3",·FOO4·=·"FOO4";
      5  5 │   
-     6  6 │   console.log(FOO,·FOO4);
+     6  6 │   console.log(FOO, FOO4);
   
 
 ```
@@ -130,7 +130,7 @@ noShoutyConstants.js:4:34 lint/style/noShoutyConstants  FIXABLE  ━━━━━
   
   i Suggested fix: Use the constant value directly
   
-     2  2 │   console.log(FOO,·FOO2);
+     2  2 │   console.log(FOO, FOO2);
      3  3 │   
      4    │ - const·FOO2·=·"FOO2",·a·=·"FOO3",·FOO4·=·"FOO4";
         4 │ + const·FOO2·=·"FOO2",·a·=·"FOO3";
@@ -138,7 +138,7 @@ noShoutyConstants.js:4:34 lint/style/noShoutyConstants  FIXABLE  ━━━━━
      6    │ - console.log(FOO,·FOO4);
         6 │ + console.log(FOO,·"FOO4");
      7  7 │   
-     8  8 │   let·foo·=·"foo";
+     8  8 │   let foo = "foo";
   
 
 ```

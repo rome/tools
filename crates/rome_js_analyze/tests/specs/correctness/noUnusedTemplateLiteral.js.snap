@@ -49,8 +49,8 @@ noUnusedTemplateLiteral.js:13:11 lint/correctness/noUnusedTemplateLiteral  FIXAB
     12 12 │   //invalid
     13    │ - var·foo·=·`bar`;
        13 │ + var·foo·=·"bar";
-    14 14 │   var·foo1·=·`bar·`;
-    15 15 │   var·foo·=·`back\rtick`;
+    14 14 │   var foo1 = `bar `;
+    15 15 │   var foo = `back\rtick`;
   
 
 ```
@@ -70,11 +70,11 @@ noUnusedTemplateLiteral.js:14:12 lint/correctness/noUnusedTemplateLiteral  FIXAB
   i Suggested fix: Replace with string literal
   
     12 12 │   //invalid
-    13 13 │   var·foo·=·`bar`;
+    13 13 │   var foo = `bar`;
     14    │ - var·foo1·=·`bar·`;
        14 │ + var·foo1·=·"bar·";
-    15 15 │   var·foo·=·`back\rtick`;
-    16 16 │   var·foo·=·`back\ntick`;
+    15 15 │   var foo = `back\rtick`;
+    16 16 │   var foo = `back\ntick`;
   
 
 ```
@@ -93,12 +93,12 @@ noUnusedTemplateLiteral.js:15:11 lint/correctness/noUnusedTemplateLiteral  FIXAB
   
   i Suggested fix: Replace with string literal
   
-    13 13 │   var·foo·=·`bar`;
-    14 14 │   var·foo1·=·`bar·`;
+    13 13 │   var foo = `bar`;
+    14 14 │   var foo1 = `bar `;
     15    │ - var·foo·=·`back\rtick`;
        15 │ + var·foo·=·"back\rtick";
-    16 16 │   var·foo·=·`back\ntick`;
-    17 17 │   var·foo·=·`back\u2028tick`
+    16 16 │   var foo = `back\ntick`;
+    17 17 │   var foo = `back\u2028tick`
   
 
 ```
@@ -117,12 +117,12 @@ noUnusedTemplateLiteral.js:16:11 lint/correctness/noUnusedTemplateLiteral  FIXAB
   
   i Suggested fix: Replace with string literal
   
-    14 14 │   var·foo1·=·`bar·`;
-    15 15 │   var·foo·=·`back\rtick`;
+    14 14 │   var foo1 = `bar `;
+    15 15 │   var foo = `back\rtick`;
     16    │ - var·foo·=·`back\ntick`;
        16 │ + var·foo·=·"back\ntick";
-    17 17 │   var·foo·=·`back\u2028tick`
-    18 18 │   var·foo·=·`back\u2029tick`;
+    17 17 │   var foo = `back\u2028tick`
+    18 18 │   var foo = `back\u2029tick`;
   
 
 ```
@@ -141,12 +141,12 @@ noUnusedTemplateLiteral.js:17:11 lint/correctness/noUnusedTemplateLiteral  FIXAB
   
   i Suggested fix: Replace with string literal
   
-    15 15 │   var·foo·=·`back\rtick`;
-    16 16 │   var·foo·=·`back\ntick`;
+    15 15 │   var foo = `back\rtick`;
+    16 16 │   var foo = `back\ntick`;
     17    │ - var·foo·=·`back\u2028tick`
        17 │ + var·foo·=·"back\u2028tick"
-    18 18 │   var·foo·=·`back\u2029tick`;
-    19 19 │   var·foo·=·`back\\\\\ntick`;
+    18 18 │   var foo = `back\u2029tick`;
+    19 19 │   var foo = `back\\\\\ntick`;
   
 
 ```
@@ -165,12 +165,12 @@ noUnusedTemplateLiteral.js:18:11 lint/correctness/noUnusedTemplateLiteral  FIXAB
   
   i Suggested fix: Replace with string literal
   
-    16 16 │   var·foo·=·`back\ntick`;
-    17 17 │   var·foo·=·`back\u2028tick`
+    16 16 │   var foo = `back\ntick`;
+    17 17 │   var foo = `back\u2028tick`
     18    │ - var·foo·=·`back\u2029tick`;
        18 │ + var·foo·=·"back\u2029tick";
-    19 19 │   var·foo·=·`back\\\\\ntick`;
-    20 20 │   var·foo·=·`\n`;
+    19 19 │   var foo = `back\\\\\ntick`;
+    20 20 │   var foo = `\n`;
   
 
 ```
@@ -189,12 +189,12 @@ noUnusedTemplateLiteral.js:19:11 lint/correctness/noUnusedTemplateLiteral  FIXAB
   
   i Suggested fix: Replace with string literal
   
-    17 17 │   var·foo·=·`back\u2028tick`
-    18 18 │   var·foo·=·`back\u2029tick`;
+    17 17 │   var foo = `back\u2028tick`
+    18 18 │   var foo = `back\u2029tick`;
     19    │ - var·foo·=·`back\\\\\ntick`;
        19 │ + var·foo·=·"back\\\\\ntick";
-    20 20 │   var·foo·=·`\n`;
-    21 21 │   function·foo()·{·`use·strict`;·foo();·}
+    20 20 │   var foo = `\n`;
+    21 21 │   function foo() { `use strict`; foo(); }
   
 
 ```
@@ -213,12 +213,12 @@ noUnusedTemplateLiteral.js:20:11 lint/correctness/noUnusedTemplateLiteral  FIXAB
   
   i Suggested fix: Replace with string literal
   
-    18 18 │   var·foo·=·`back\u2029tick`;
-    19 19 │   var·foo·=·`back\\\\\ntick`;
+    18 18 │   var foo = `back\u2029tick`;
+    19 19 │   var foo = `back\\\\\ntick`;
     20    │ - var·foo·=·`\n`;
        20 │ + var·foo·=·"\n";
-    21 21 │   function·foo()·{·`use·strict`;·foo();·}
-    22 22 │   var·foo·=·`foo\\nbar`;
+    21 21 │   function foo() { `use strict`; foo(); }
+    22 22 │   var foo = `foo\\nbar`;
   
 
 ```
@@ -237,12 +237,12 @@ noUnusedTemplateLiteral.js:21:18 lint/correctness/noUnusedTemplateLiteral  FIXAB
   
   i Suggested fix: Replace with string literal
   
-    19 19 │   var·foo·=·`back\\\\\ntick`;
-    20 20 │   var·foo·=·`\n`;
+    19 19 │   var foo = `back\\\\\ntick`;
+    20 20 │   var foo = `\n`;
     21    │ - function·foo()·{·`use·strict`;·foo();·}
        21 │ + function·foo()·{·"use·strict";·foo();·}
-    22 22 │   var·foo·=·`foo\\nbar`;
-    23 23 │   var·foo·=·`foo\\\nbar`;
+    22 22 │   var foo = `foo\\nbar`;
+    23 23 │   var foo = `foo\\\nbar`;
   
 
 ```
@@ -261,12 +261,12 @@ noUnusedTemplateLiteral.js:22:11 lint/correctness/noUnusedTemplateLiteral  FIXAB
   
   i Suggested fix: Replace with string literal
   
-    20 20 │   var·foo·=·`\n`;
-    21 21 │   function·foo()·{·`use·strict`;·foo();·}
+    20 20 │   var foo = `\n`;
+    21 21 │   function foo() { `use strict`; foo(); }
     22    │ - var·foo·=·`foo\\nbar`;
        22 │ + var·foo·=·"foo\\nbar";
-    23 23 │   var·foo·=·`foo\\\nbar`;
-    24 24 │   var·foo·=·`foo\\\\\\\nbar`;
+    23 23 │   var foo = `foo\\\nbar`;
+    24 24 │   var foo = `foo\\\\\\\nbar`;
   
 
 ```
@@ -284,11 +284,11 @@ noUnusedTemplateLiteral.js:23:11 lint/correctness/noUnusedTemplateLiteral  FIXAB
   
   i Suggested fix: Replace with string literal
   
-    21 21 │   function·foo()·{·`use·strict`;·foo();·}
-    22 22 │   var·foo·=·`foo\\nbar`;
+    21 21 │   function foo() { `use strict`; foo(); }
+    22 22 │   var foo = `foo\\nbar`;
     23    │ - var·foo·=·`foo\\\nbar`;
        23 │ + var·foo·=·"foo\\\nbar";
-    24 24 │   var·foo·=·`foo\\\\\\\nbar`;
+    24 24 │   var foo = `foo\\\\\\\nbar`;
   
 
 ```
@@ -305,8 +305,8 @@ noUnusedTemplateLiteral.js:24:11 lint/correctness/noUnusedTemplateLiteral  FIXAB
   
   i Suggested fix: Replace with string literal
   
-    22 22 │   var·foo·=·`foo\\nbar`;
-    23 23 │   var·foo·=·`foo\\\nbar`;
+    22 22 │   var foo = `foo\\nbar`;
+    23 23 │   var foo = `foo\\\nbar`;
     24    │ - var·foo·=·`foo\\\\\\\nbar`;
        24 │ + var·foo·=·"foo\\\\\\\nbar";
   

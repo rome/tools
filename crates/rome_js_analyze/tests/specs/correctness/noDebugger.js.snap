@@ -31,7 +31,7 @@ noDebugger.js:3:10 lint/correctness/noDebugger  FIXABLE  ━━━━━━━�
   
   i Suggested fix: Remove debugger statement
   
-     1  1 │   const·test·=·{·debugger:·1·};·test.debugger;
+     1  1 │   const test = { debugger: 1 }; test.debugger;
      2  2 │   
      3    │ - if·(foo)·debugger
         3 │ + if·(foo)·;

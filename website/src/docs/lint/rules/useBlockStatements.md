@@ -155,7 +155,7 @@ if (x) {
   
     <strong>1</strong>  <strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><span style="opacity: 0.8;">·</span></span><span style="color: Tomato;"><span style="opacity: 0.8;">·</span></span><span style="color: Tomato;">d</span><span style="color: Tomato;">o</span><span style="color: Tomato;"><strong>;</strong></span>
       <strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">·</span></span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">·</span></span><span style="color: MediumSeaGreen;">d</span><span style="color: MediumSeaGreen;">o</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;"><strong>·</strong></span></span><span style="color: MediumSeaGreen;"><strong>{</strong></span><span style="color: MediumSeaGreen;"><strong>}</strong></span>
-    <strong>2</strong> <strong>2</strong><strong> │ </strong>  <span style="opacity: 0.8;">·</span><span style="opacity: 0.8;">·</span>while<span style="opacity: 0.8;">·</span>(x);
+    <strong>2</strong> <strong>2</strong><strong> │ </strong>    while (x);
     <strong>3</strong> <strong>3</strong><strong> │ </strong>  
   
 </code></pre>{% endraw %}

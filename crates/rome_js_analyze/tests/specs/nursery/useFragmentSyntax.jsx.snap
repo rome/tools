@@ -58,15 +58,15 @@ useFragmentSyntax.jsx:5:5 lint/nursery/useFragmentSyntax  FIXABLE  ━━━━�
   i Suggested fix: Replace <Fragment> with the fragment syntax
   
      3  3 │   <div>
-     4  4 │   ····{/*·invalid·*/}
+     4  4 │       {/* invalid */}
      5    │ - ····<Fragment>
         5 │ + ····<>
-     6  6 │   ········<p>Lorem</p>
-     7  7 │   ········<strong>Ipsum</strong>
+     6  6 │           <p>Lorem</p>
+     7  7 │           <strong>Ipsum</strong>
      8    │ - ····</Fragment>
         8 │ + ····</>
      9  9 │   
-    10 10 │   ····<React.Fragment>
+    10 10 │       <React.Fragment>
   
 
 ```
@@ -91,16 +91,16 @@ useFragmentSyntax.jsx:10:5 lint/nursery/useFragmentSyntax  FIXABLE  ━━━━
   
   i Suggested fix: Replace <Fragment> with the fragment syntax
   
-     8  8 │   ····</Fragment>
+     8  8 │       </Fragment>
      9  9 │   
     10    │ - ····<React.Fragment>
        10 │ + ····<>
-    11 11 │   ········<acronym>Lorem</acronym>
-    12 12 │   ········<aside>Ipsum</aside>
+    11 11 │           <acronym>Lorem</acronym>
+    12 12 │           <aside>Ipsum</aside>
     13    │ - ····</React.Fragment>
        13 │ + ····</>
     14 14 │   
-    15 15 │   ····</*comment*/Fragment>
+    15 15 │       </*comment*/Fragment>
   
 
 ```
@@ -125,16 +125,16 @@ useFragmentSyntax.jsx:15:5 lint/nursery/useFragmentSyntax  FIXABLE  ━━━━
   
   i Suggested fix: Replace <Fragment> with the fragment syntax
   
-    13 13 │   ····</React.Fragment>
+    13 13 │       </React.Fragment>
     14 14 │   
     15    │ - ····</*comment*/Fragment>
        15 │ + ····</*comment*/>
-    16 16 │   ········<p>Lorem</p>
-    17 17 │   ········<strong>Ipsum</strong>
+    16 16 │           <p>Lorem</p>
+    17 17 │           <strong>Ipsum</strong>
     18    │ - ····</·/*comment*/Fragment>
        18 │ + ····</·/*comment*/>
     19 19 │   
-    20 20 │   ····{/*·valid·*/}
+    20 20 │       {/* valid */}
   
 
 ```
