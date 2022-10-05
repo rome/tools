@@ -54,7 +54,7 @@ pub struct AnalyzerOptions {
 }
 
 impl AnalyzerOptions {
-    /// It retrieves the options that belong to a rule, it they exists.
+    /// It retrieves the options that belong to a rule, if they exist.
     ///
     /// In order to retrieve a typed data structure, the function has to accept a `FromType`, a
     /// `ToType` (this one, inferrable by the compiler) and a closure that does the mapping.
