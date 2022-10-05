@@ -11,12 +11,33 @@ use rome_js_syntax::{
 use rome_rowan::{declare_node_union, AstNode, SyntaxTokenText};
 
 declare_rule! {
-    /// TODO
+    /// Prevent the usage of positive integers on tabIndex property
     ///
     /// ## Examples
     ///
     /// ### Invalid
     ///
+    /// ```jsx,expect_diagnostic
+    /// <div tabIndex={1}>foo</div>
+    /// ```
+    ///
+    /// ```jsx,expect_diagnostic
+    /// <div tabIndex={"1"} />
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// React.createElement("div", { tabIndex: 1 })
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```jsx
+    /// <div tabIndex="0" />
+    /// ```
+    ///
+    /// ```js
+    /// React.createElement("div", { tabIndex: -1 })
+    /// ```
     pub(crate) NoPositiveTabindex {
         version: "0.10.0",
         name: "noPositiveTabindex",
