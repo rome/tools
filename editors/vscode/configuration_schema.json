@@ -541,6 +541,16 @@
             }
           ]
         },
+        "noPositiveTabindex": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noRenderReturnValue": {
           "anyOf": [
             {
