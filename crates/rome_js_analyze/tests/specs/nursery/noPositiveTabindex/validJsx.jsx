@@ -1,58 +1,30 @@
-let test;
-
-test = <div />;
-
-test = <div tabIndex={func} />;
-
-test = <div tabIndex={func()} />;
-
-test = <div tabIndex={null} />;
-
-test = <div tabIndex={undefined} />;
-
-test = <div tabIndex={"abc"} />;
-
-test = <div tabIndex={0} />;
-
-test = <div tabIndex={-1} />;
-
-test = <div tabIndex={"0"} />;
-
-test = <div tabIndex={'-5'} />;
-
-test = <div tabIndex={.5} />;
-
-test = <div tabIndex={-5.5} />;
-
-// string literals are skipped
-test = <div tabIndex={`-1`} />;
-test = <div tabIndex={`1`} />;
-
-test = <div tabIndex="-1" />;
-
-test = <div tabIndex="abc" />;
-
-test = <div>foo</div>;
-
-test = <div tabIndex={-1}>foo</div>;
-
-test = <div tabIndex={"-1"}>foo</div>;
-
-test = <div tabIndex={'-5'}>foo</div>;
-
-test = <div tabIndex="-1">foo</div>;
-
-// string literals are skipped
-test = <div tabIndex={`-1`}>foo</div>;
-test = <div tabIndex={`1`}>foo</div>;
-
-test = <div tabIndex={`abc`}>foo</div>;
-
-test = <div tabIndex={null}>foo</div>;
-
-test = <div tabIndex={undefined}>foo</div>;
-
-test = <div tabIndex={func()}>foo</div>;
-
-test = <div tabIndex={func}>foo</div>;
-
+<>
+	<div />
+	<div tabIndex={func} />
+	<div tabIndex={func()} />
+	<div tabIndex={null} />
+	<div tabIndex={undefined} />
+	<div tabIndex={"abc"} />
+	<div tabIndex={0} />
+	<div tabIndex={-1} />
+	<div tabIndex={"0"} />
+	<div tabIndex={'-5'} />
+	<div tabIndex={.5} />
+	<div tabIndex={-5.5} />
+	<div tabIndex={`-1`} />
+	<div tabIndex={`1`} />
+	<div tabIndex="-1" />
+	<div tabIndex="abc" />
+	<div>foo</div>
+	<div tabIndex={-1}>foo</div>
+	<div tabIndex={"-1"}>foo</div>
+	<div tabIndex={'-5'}>foo</div>
+	<div tabIndex="-1">foo</div>
+	<div tabIndex={`-1`}>foo</div>
+	<div tabIndex={`1`}>foo</div>
+	<div tabIndex={`abc`}>foo</div>
+	<div tabIndex={null}>foo</div>
+	<div tabIndex={undefined}>foo</div>
+	<div tabIndex={func()}>foo</div>
+	<div tabIndex={func}>foo</div>
+</>

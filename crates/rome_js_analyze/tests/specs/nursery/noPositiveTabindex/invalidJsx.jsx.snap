@@ -5,38 +5,30 @@ expression: invalidJsx.jsx
 ---
 # Input
 ```js
-let test;
-
-test = <div tabIndex={1} />;
-
-test = <div tabIndex={"1"} />;
-
-test = <div tabIndex={'5'} />;
-
-test = <div tabIndex="1" />;
-
-test = <div tabIndex={1}>foo</div>;
-
-test = <div tabIndex={"1"}>foo</div>;
-
-test = <div tabIndex={'5'}>foo</div>;
-
-test = <div tabIndex="1">foo</div>;
+<>
+	<div tabIndex={1} />
+	<div tabIndex={"1"} />
+	<div tabIndex={'5'} />
+	<div tabIndex="1" />
+	<div tabIndex={1}>foo</div>
+	<div tabIndex={"1"}>foo</div>
+	<div tabIndex={'5'}>foo</div>
+	<div tabIndex="1">foo</div>
+</>
 
 ```
 
 # Diagnostics
 ```
-invalidJsx.jsx:3:13 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidJsx.jsx:2:7 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid positive values for the tabIndex prop.
   
-    1 │ let test;
-    2 │ 
-  > 3 │ test = <div tabIndex={1} />;
-      │             ^^^^^^^^
-    4 │ 
-    5 │ test = <div tabIndex={"1"} />;
+    1 │ <>
+  > 2 │ 	<div tabIndex={1} />
+      │ 	     ^^^^^^^^
+    3 │ 	<div tabIndex={"1"} />
+    4 │ 	<div tabIndex={'5'} />
   
   i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
   
@@ -44,16 +36,16 @@ invalidJsx.jsx:3:13 lint/nursery/noPositiveTabindex ━━━━━━━━━�
 ```
 
 ```
-invalidJsx.jsx:5:13 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidJsx.jsx:3:7 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid positive values for the tabIndex prop.
   
-    3 │ test = <div tabIndex={1} />;
-    4 │ 
-  > 5 │ test = <div tabIndex={"1"} />;
-      │             ^^^^^^^^
-    6 │ 
-    7 │ test = <div tabIndex={'5'} />;
+    1 │ <>
+    2 │ 	<div tabIndex={1} />
+  > 3 │ 	<div tabIndex={"1"} />
+      │ 	     ^^^^^^^^
+    4 │ 	<div tabIndex={'5'} />
+    5 │ 	<div tabIndex="1" />
   
   i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
   
@@ -61,16 +53,16 @@ invalidJsx.jsx:5:13 lint/nursery/noPositiveTabindex ━━━━━━━━━�
 ```
 
 ```
-invalidJsx.jsx:7:13 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidJsx.jsx:4:7 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid positive values for the tabIndex prop.
   
-    5 │ test = <div tabIndex={"1"} />;
-    6 │ 
-  > 7 │ test = <div tabIndex={'5'} />;
-      │             ^^^^^^^^
-    8 │ 
-    9 │ test = <div tabIndex="1" />;
+    2 │ 	<div tabIndex={1} />
+    3 │ 	<div tabIndex={"1"} />
+  > 4 │ 	<div tabIndex={'5'} />
+      │ 	     ^^^^^^^^
+    5 │ 	<div tabIndex="1" />
+    6 │ 	<div tabIndex={1}>foo</div>
   
   i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
   
@@ -78,16 +70,16 @@ invalidJsx.jsx:7:13 lint/nursery/noPositiveTabindex ━━━━━━━━━�
 ```
 
 ```
-invalidJsx.jsx:9:13 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidJsx.jsx:5:7 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid positive values for the tabIndex prop.
   
-     7 │ test = <div tabIndex={'5'} />;
-     8 │ 
-   > 9 │ test = <div tabIndex="1" />;
-       │             ^^^^^^^^
-    10 │ 
-    11 │ test = <div tabIndex={1}>foo</div>;
+    3 │ 	<div tabIndex={"1"} />
+    4 │ 	<div tabIndex={'5'} />
+  > 5 │ 	<div tabIndex="1" />
+      │ 	     ^^^^^^^^
+    6 │ 	<div tabIndex={1}>foo</div>
+    7 │ 	<div tabIndex={"1"}>foo</div>
   
   i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
   
@@ -95,16 +87,16 @@ invalidJsx.jsx:9:13 lint/nursery/noPositiveTabindex ━━━━━━━━━�
 ```
 
 ```
-invalidJsx.jsx:11:13 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidJsx.jsx:6:7 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid positive values for the tabIndex prop.
   
-     9 │ test = <div tabIndex="1" />;
-    10 │ 
-  > 11 │ test = <div tabIndex={1}>foo</div>;
-       │             ^^^^^^^^
-    12 │ 
-    13 │ test = <div tabIndex={"1"}>foo</div>;
+    4 │ 	<div tabIndex={'5'} />
+    5 │ 	<div tabIndex="1" />
+  > 6 │ 	<div tabIndex={1}>foo</div>
+      │ 	     ^^^^^^^^
+    7 │ 	<div tabIndex={"1"}>foo</div>
+    8 │ 	<div tabIndex={'5'}>foo</div>
   
   i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
   
@@ -112,16 +104,16 @@ invalidJsx.jsx:11:13 lint/nursery/noPositiveTabindex ━━━━━━━━━
 ```
 
 ```
-invalidJsx.jsx:13:13 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidJsx.jsx:7:7 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid positive values for the tabIndex prop.
   
-    11 │ test = <div tabIndex={1}>foo</div>;
-    12 │ 
-  > 13 │ test = <div tabIndex={"1"}>foo</div>;
-       │             ^^^^^^^^
-    14 │ 
-    15 │ test = <div tabIndex={'5'}>foo</div>;
+    5 │ 	<div tabIndex="1" />
+    6 │ 	<div tabIndex={1}>foo</div>
+  > 7 │ 	<div tabIndex={"1"}>foo</div>
+      │ 	     ^^^^^^^^
+    8 │ 	<div tabIndex={'5'}>foo</div>
+    9 │ 	<div tabIndex="1">foo</div>
   
   i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
   
@@ -129,16 +121,16 @@ invalidJsx.jsx:13:13 lint/nursery/noPositiveTabindex ━━━━━━━━━
 ```
 
 ```
-invalidJsx.jsx:15:13 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidJsx.jsx:8:7 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid positive values for the tabIndex prop.
   
-    13 │ test = <div tabIndex={"1"}>foo</div>;
-    14 │ 
-  > 15 │ test = <div tabIndex={'5'}>foo</div>;
-       │             ^^^^^^^^
-    16 │ 
-    17 │ test = <div tabIndex="1">foo</div>;
+     6 │ 	<div tabIndex={1}>foo</div>
+     7 │ 	<div tabIndex={"1"}>foo</div>
+   > 8 │ 	<div tabIndex={'5'}>foo</div>
+       │ 	     ^^^^^^^^
+     9 │ 	<div tabIndex="1">foo</div>
+    10 │ </>
   
   i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
   
@@ -146,15 +138,16 @@ invalidJsx.jsx:15:13 lint/nursery/noPositiveTabindex ━━━━━━━━━
 ```
 
 ```
-invalidJsx.jsx:17:13 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidJsx.jsx:9:7 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid positive values for the tabIndex prop.
   
-    15 │ test = <div tabIndex={'5'}>foo</div>;
-    16 │ 
-  > 17 │ test = <div tabIndex="1">foo</div>;
-       │             ^^^^^^^^
-    18 │ 
+     7 │ 	<div tabIndex={"1"}>foo</div>
+     8 │ 	<div tabIndex={'5'}>foo</div>
+   > 9 │ 	<div tabIndex="1">foo</div>
+       │ 	     ^^^^^^^^
+    10 │ </>
+    11 │ 
   
   i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
   
