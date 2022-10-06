@@ -785,9 +785,10 @@ impl<'a, 'print> FitsOnLine<'a, 'print> {
             &self.printer.options,
         );
 
-        if !matches!(self.queue.top(), Some(FormatElement::Tag(Tag::StartEntry)))
-            && !matches!(self.queue.top(), Some(FormatElement::Tag(Tag::EndFill)))
-        {
+        if !matches!(
+            self.queue.top(),
+            Some(FormatElement::Tag(Tag::StartEntry | Tag::EndFill))
+        ) {
             self.queue.skip_content(TagKind::Entry);
         }
 
