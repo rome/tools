@@ -477,7 +477,6 @@ impl<'a> ExactSizeIterator for UnresolvedReferencesIter<'a> {
 
 impl<'a> FusedIterator for UnresolvedReferencesIter<'a> {}
 
-
 pub struct GlobalsReferencesIter<'a> {
     data: Arc<SemanticModelData>,
     iter: std::slice::Iter<'a, (ReferenceType, TextRange)>,
@@ -587,11 +586,11 @@ impl SemanticModel {
     /// ```rust
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
     /// use rome_js_syntax::{SourceType, JsReferenceIdentifier};
-    /// use rome_js_semantic::{semantic_model, SemanticScopeExtensions};
+    /// use rome_js_semantic::{semantic_model, SemanticModelOptions, SemanticScopeExtensions};
     /// use rome_diagnostics::file::FileId;
     ///
     /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", FileId::zero(), SourceType::js_module());
-    /// let model = semantic_model(&r.tree());
+    /// let model = semantic_model(&r.tree(), SemanticModelOptions::default());
     ///
     /// let arguments_reference = r
     ///     .syntax()
@@ -630,11 +629,11 @@ impl SemanticModel {
     /// ```rust
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
     /// use rome_js_syntax::{SourceType, JsReferenceIdentifier};
-    /// use rome_js_semantic::{semantic_model, DeclarationExtensions};
+    /// use rome_js_semantic::{semantic_model, DeclarationExtensions, SemanticModelOptions};
     /// use rome_diagnostics::file::FileId;
     ///
     /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", FileId::zero(), SourceType::js_module());
-    /// let model = semantic_model(&r.tree());
+    /// let model = semantic_model(&r.tree(), SemanticModelOptions::default());
     ///
     /// let arguments_reference = r
     ///     .syntax()
@@ -664,11 +663,11 @@ impl SemanticModel {
     /// ```rust
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
     /// use rome_js_syntax::{SourceType, JsIdentifierBinding};
-    /// use rome_js_semantic::{semantic_model, AllReferencesExtensions};
+    /// use rome_js_semantic::{semantic_model, AllReferencesExtensions, SemanticModelOptions};
     /// use rome_diagnostics::file::FileId;
     ///
     /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", FileId::zero(), SourceType::js_module());
-    /// let model = semantic_model(&r.tree());
+    /// let model = semantic_model(&r.tree(), SemanticModelOptions::default());
     ///
     /// let a_binding = r
     ///     .syntax()
@@ -1063,7 +1062,7 @@ impl SemanticModelBuilder {
 /// Extra options for the [SemanticModel] creation.
 pub struct SemanticModelOptions {
     /// All the allowed globals names
-    pub globals: HashSet<String>
+    pub globals: HashSet<String>,
 }
 
 /// Build the complete [SemanticModel] of a parsed file.
@@ -1072,9 +1071,7 @@ pub fn semantic_model(root: &JsAnyRoot, options: SemanticModelOptions) -> Semant
     let mut extractor = SemanticEventExtractor::default();
     let mut builder = SemanticModelBuilder::new(root.clone());
 
-    let SemanticModelOptions {
-        globals
-    } = options;
+    let SemanticModelOptions { globals } = options;
 
     for global in globals {
         builder.push_global(global);
@@ -1386,11 +1383,7 @@ mod test {
 
     #[test]
     pub fn ok_semantic_model_globals() {
-        let r = rome_js_parser::parse(
-            "console.log()",
-            FileId::zero(),
-            SourceType::js_module(),
-        );
+        let r = rome_js_parser::parse("console.log()", FileId::zero(), SourceType::js_module());
 
         let mut options = SemanticModelOptions::default();
         options.globals.insert("console".into());
@@ -1398,7 +1391,7 @@ mod test {
         let model = semantic_model(&r.tree(), options);
 
         let globals: Vec<_> = model.all_globals().collect();
-        
+
         assert_eq!(globals.len(), 1);
         assert!(globals[0].declaration().is_none());
         assert!(globals[0].is_read());
