@@ -2,8 +2,8 @@ use crate::JsRuleAction;
 use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_syntax::{JsAnyExpression, JsxAttribute, JsxSelfClosingElement};
-use rome_rowan::{AstNode, BatchMutationExt};
+use rome_js_syntax::{JsxAttribute, JsxOpeningElement, JsxSelfClosingElement};
+use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
 
 declare_rule! {
     /// Avoid the `autoFocus` attribute
@@ -24,6 +24,10 @@ declare_rule! {
     /// <input autoFocus={"false"} />
     /// ```
     ///
+    /// ```jsx,expect_diagnostic
+    /// <input autoFocus={undefined} />
+    /// ```
+    ///
     /// ### Valid
     ///
     /// ```jsx
@@ -31,11 +35,16 @@ declare_rule! {
     ///```
     ///
     /// ```jsx
-    /// <input autoFocus={undefined} />
+    /// <div />
     ///```
     ///
     /// ```jsx
-    /// <Input autoFocus={"false"} />
+    /// <button />
+    ///```
+    ///
+    /// ```jsx
+    /// // `autoFocus` prop in user created component is valid
+    /// <MyComponent autoFocus={true} />
     ///```
     pub(crate) NoAutoFocus {
         version: "10.0.0",
@@ -44,28 +53,27 @@ declare_rule! {
     }
 }
 
+declare_node_union! {
+    pub(crate) JsxAnyElement = JsxOpeningElement | JsxSelfClosingElement
+}
+
 impl Rule for NoAutoFocus {
-    type Query = Ast<JsxSelfClosingElement>;
+    type Query = Ast<JsxAnyElement>;
     type State = JsxAttribute;
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
-        let name = node.name().ok()?.syntax().text_trimmed();
-
-        if name == "input" {
-            let attribute = node.find_attribute_by_name("autoFocus").ok()??;
-
-            if let Some(value) = get_attribute_value(&attribute) {
-                if value.syntax().text_trimmed() == "undefined" {
-                    return None;
-                }
+        match node {
+            JsxAnyElement::JsxOpeningElement(element) => {
+                element.name().ok()?.as_jsx_name()?;
+                element.find_attribute_by_name("autoFocus").ok()?
             }
-
-            return Some(attribute);
+            JsxAnyElement::JsxSelfClosingElement(element) => {
+                element.name().ok()?.as_jsx_name()?;
+                element.find_attribute_by_name("autoFocus").ok()?
+            }
         }
-
-        None
     }
 
     fn diagnostic(_ctx: &RuleContext<Self>, attr: &Self::State) -> Option<RuleDiagnostic> {
@@ -91,14 +99,4 @@ impl Rule for NoAutoFocus {
             mutation,
         })
     }
-}
-
-fn get_attribute_value(attribute: &JsxAttribute) -> Option<JsAnyExpression> {
-    attribute
-        .initializer()?
-        .value()
-        .ok()?
-        .as_jsx_expression_attribute_value()?
-        .expression()
-        .ok()
 }

@@ -1,5 +1,6 @@
 <>
-	<input />
-    <input autoFocus={undefined} />
-    <Input autoFocus={"false"} />
+	<div />
+	<button />
+    <input />
+    <MyComponent autoFocus={true} />
 </>
