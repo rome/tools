@@ -24,9 +24,7 @@ function SuppressionComments2() {
 ```
 SuppressionComments.js:5:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This code is unreachable
-  
-  ! ... before it can reach this code
+  ! This code will never be reached ...
   
     3 │     beforeReturn();
     4 │     return;
@@ -35,7 +33,7 @@ SuppressionComments.js:5:5 lint/nursery/noUnreachable ━━━━━━━━�
     6 │ }
     7 │ 
   
-  i This statement will return from the function ...
+  i ... because this statement will return from the function beforehand
   
     2 │ function SuppressionComments1() {
     3 │     beforeReturn();

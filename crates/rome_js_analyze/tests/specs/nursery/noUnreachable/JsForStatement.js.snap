@@ -16,8 +16,6 @@ function JsForStatement1() {
 ```
 JsForStatement.js:2:29 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This code is unreachable
-  
   ! This code will never be reached ...
   
     1 │ function JsForStatement1() {

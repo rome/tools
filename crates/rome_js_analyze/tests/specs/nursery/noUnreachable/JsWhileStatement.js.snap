@@ -17,9 +17,7 @@ function JsWhileStatement1() {
 ```
 JsWhileStatement.js:4:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This code is unreachable
-  
-  ! ... before it can reach this code
+  ! This code will never be reached ...
   
     2 │     while (true) {
     3 │         break;
@@ -28,7 +26,7 @@ JsWhileStatement.js:4:9 lint/nursery/noUnreachable ━━━━━━━━━�
     5 │     }
     6 │ }
   
-  i This statement will break the flow of the code ...
+  i ... because this statement will break the flow of the code beforehand
   
     1 │ function JsWhileStatement1() {
     2 │     while (true) {
