@@ -36,6 +36,7 @@ impl Rule for NoArguments {
     type Query = Semantic<JsReferenceIdentifier>;
     type State = ();
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let reference = ctx.query();

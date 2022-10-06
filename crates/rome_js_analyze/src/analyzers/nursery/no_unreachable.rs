@@ -51,6 +51,7 @@ impl Rule for NoUnreachable {
     type Query = ControlFlowGraph;
     type State = UnreachableRange;
     type Signals = UnreachableRanges;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let mut signals = UnreachableRanges::new();

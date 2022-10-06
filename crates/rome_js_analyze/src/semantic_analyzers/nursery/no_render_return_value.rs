@@ -44,6 +44,7 @@ impl Rule for NoRenderReturnValue {
     type Query = Semantic<JsCallExpression>;
     type State = ();
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();

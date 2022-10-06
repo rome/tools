@@ -38,6 +38,7 @@ impl Rule for UseFragmentSyntax {
     type Query = Semantic<JsxElement>;
     type State = ();
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();

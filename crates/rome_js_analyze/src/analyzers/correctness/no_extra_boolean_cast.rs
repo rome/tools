@@ -147,6 +147,7 @@ impl Rule for NoExtraBooleanCast {
     type Query = Ast<JsAnyExpression>;
     type State = (JsAnyExpression, ExtraBooleanCastType);
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let n = ctx.query();

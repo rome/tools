@@ -85,6 +85,7 @@ impl Rule for NoShoutyConstants {
     type Query = Semantic<JsVariableDeclarator>;
     type State = State;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let declarator = ctx.query();

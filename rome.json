@@ -13,7 +13,10 @@
 				"noUselessFragments": "error",
 				"noNewSymbol": "error",
 				"noVoidElementsWithChildren": "error",
-				"noDangerouslySetInnerHtmlWithChildren": "error"
+				"noDangerouslySetInnerHtmlWithChildren": {
+					"level": "error",
+					"options": true
+				}
 			}
 		}
 	}

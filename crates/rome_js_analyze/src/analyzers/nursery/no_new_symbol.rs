@@ -37,6 +37,7 @@ impl Rule for NoNewSymbol {
     type Query = Semantic<JsNewExpression>;
     type State = ();
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let new_expression = ctx.query();

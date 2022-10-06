@@ -67,6 +67,7 @@ inside the `semantic_analyzers` folder
         type Query = Semantic<JsAnyExpression>;
         type State = String;
         type Signals = Option<Self::State>;
+        type Options = ();
    
         fn run(ctx: &RuleContext<Self>) -> Self::Signals {}
    }

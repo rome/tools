@@ -1,8 +1,7 @@
 use crate::{
-    registry::RuleRoot, AnalyzerOptions, CannotCreateServicesError, FromServices, Queryable, Rule,
+    registry::RuleRoot, AnalyzerOptions, FromServices, Queryable, Rule, RuleContextDiagnostic,
     RuleKey, ServiceBag,
 };
-use serde::Deserialize;
 use std::ops::Deref;
 
 type RuleQueryResult<R> = <<R as Rule>::Query as Queryable>::Output;
@@ -15,7 +14,7 @@ where
     query_result: &'a RuleQueryResult<R>,
     root: &'a RuleRoot<R>,
     services: RuleServiceBag<R>,
-    options: &'a AnalyzerOptions,
+    options: Option<R::Options>,
 }
 
 impl<'a, R> RuleContext<'a, R>
@@ -27,11 +26,22 @@ where
         root: &'a RuleRoot<R>,
         services: &ServiceBag,
         options: &'a AnalyzerOptions,
-    ) -> Result<Self, CannotCreateServicesError> {
+    ) -> Result<Self, RuleContextDiagnostic> {
+        let rule_key = RuleKey::rule::<R>();
+        let options = options.configuration.rules.get_rule(&rule_key);
+        let options = if let Some(options) = options {
+            let value = options.value();
+            serde_json::from_str(value).map_err(|error| {
+                RuleContextDiagnostic::from_serde(rule_key.rule_name(), value, error)
+            })?
+        } else {
+            None
+        };
+
         Ok(Self {
             query_result,
             root,
-            services: FromServices::from_services(services)?,
+            services: FromServices::from_services(&rule_key, services)?,
             options,
         })
     }
@@ -45,17 +55,10 @@ where
         self.root.clone()
     }
 
-    /// Returns the analyzer options
-    pub fn options(&self) -> &AnalyzerOptions {
-        self.options
-    }
-
     /// It retrieves the options that belong to a rule, if they exist.
     ///
-    /// In order to retrieve a typed data structure, the function has to accept a `FromType`, a
-    /// `ToType` (this one, inferrable by the compiler) and a closure that does the mapping.
-    ///
-    /// Usually, options are a `serde::RawValue` and need to be mapped to a sized type.
+    /// In order to retrieve a typed data structure, you have to create a deserializable
+    /// data structure and define it inside the generic type `type Options` of the [Rule]
     ///
     /// ## Examples
     ///
@@ -73,27 +76,24 @@ where
     /// }
     ///
     /// #[derive(Deserialize)]
-    /// struct RuleSettings {}
+    /// struct RuleOptions {}
     ///
     /// impl Rule for Name {
     ///     const CATEGORY: RuleCategory = RuleCategory::Lint;
     ///     type Query = ();
     ///     type State = ();
     ///     type Signals = ();
+    ///     type Options = RuleOptions;
     ///
     ///     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
-    ///         let options = ctx.rule_settings::<RuleSettings>();
+    ///         if let Some(options) = ctx.options() {
+    ///             // do something with the options now
+    ///         }
     ///     }
     /// }
     /// ```
-    pub fn rule_settings<'de, ToType: Deserialize<'de>>(&'de self) -> Option<ToType> {
-        self.options
-            .configuration
-            .rules
-            .get_rule(&RuleKey::rule::<R>())
-            .map(|options| serde_json::from_str::<ToType>(options.value()))
-            // TODO: ignore the error for now, it should be handled differently https://github.com/rome/tools/issues/3346
-            .and_then(|result| result.ok())
+    pub fn options(&self) -> Option<&R::Options> {
+        self.options.as_ref()
     }
 }
 

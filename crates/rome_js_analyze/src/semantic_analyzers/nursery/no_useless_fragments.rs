@@ -99,6 +99,7 @@ impl Rule for NoUselessFragments {
     type Query = Semantic<NoUselessFragmentsQuery>;
     type State = NoUselessFragmentsState;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
