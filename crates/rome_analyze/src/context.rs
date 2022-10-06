@@ -31,8 +31,8 @@ where
         let options = options.configuration.rules.get_rule(&rule_key);
         let options = if let Some(options) = options {
             let value = options.value();
-            serde_json::from_str(value).map_err(|error| {
-                RuleContextDiagnostic::from_serde(rule_key.rule_name(), value, error)
+            serde_json::from_value(value.clone()).map_err(|error| {
+                RuleContextDiagnostic::from_serde(rule_key.rule_name(), &value.to_string(), error)
             })?
         } else {
             None

@@ -1,20 +1,20 @@
 use crate::RuleKey;
 use serde::Deserialize;
-use serde_json::value::RawValue;
+use serde_json::Value;
 use std::collections::HashMap;
 
 /// A convenient new type data structure to store the options that belong to a rule
 #[derive(Debug, Clone, Deserialize)]
-pub struct RuleOptions(Box<RawValue>);
+pub struct RuleOptions(Value);
 
 impl RuleOptions {
     /// It returns the string contained in [RawValue], for the relative rule
-    pub fn value(&self) -> &str {
-        self.0.get()
+    pub fn value(&self) -> &Value {
+        &self.0
     }
 
     /// Creates a new [RuleOptions]
-    pub fn new(options: Box<RawValue>) -> Self {
+    pub fn new(options: Value) -> Self {
         Self(options)
     }
 }
@@ -25,7 +25,7 @@ pub struct AnalyzerRules(HashMap<RuleKey, RuleOptions>);
 
 impl AnalyzerRules {
     /// It tracks the options of a specific rule
-    pub fn push_rule(&mut self, rule_key: RuleKey, options: Box<RawValue>) {
+    pub fn push_rule(&mut self, rule_key: RuleKey, options: Value) {
         self.0.insert(rule_key, RuleOptions::new(options));
     }
 
