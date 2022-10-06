@@ -434,7 +434,7 @@ impl<'a> Printer<'a> {
             return Ok(());
         }
 
-        while matches!(queue.top(), Some(FormatElement::Tag(Tag::StartEntry))) {
+        while let Some(FormatElement::Tag(Tag::StartEntry)) = queue.top() {
             let mut fits_on_line = FitsOnLine::new(queue, self);
 
             let item_fits = fits_on_line.fits_fill_entry(PrintMode::Flat, stack)?;
@@ -454,7 +454,7 @@ impl<'a> Printer<'a> {
                 continue;
             }
 
-            // If there is no next item print it in flat mode
+            // If there is no next item, print the current item in flat mode
             if !matches!(
                 fits_on_line.queue.top(),
                 Some(FormatElement::Tag(Tag::StartEntry))
@@ -465,11 +465,11 @@ impl<'a> Printer<'a> {
                 break;
             }
 
-            let is_separator_fits_in_flat_mode =
+            let separator_fits_in_flat_mode =
                 fits_on_line.fits_fill_entry(PrintMode::Flat, stack)?;
 
             // Separator doesn't fit in flat mode
-            if !is_separator_fits_in_flat_mode {
+            if !separator_fits_in_flat_mode {
                 fits_on_line.finish();
 
                 // Now test if the separator fits in expanded mode
@@ -478,12 +478,12 @@ impl<'a> Printer<'a> {
                 // Skip item, we know it fits
                 let _ = fits_on_line.fits_fill_entry(PrintMode::Flat, stack)?;
 
-                let is_separator_fits_in_expanded_mode =
+                let separator_fits_in_expanded_mode =
                     fits_on_line.fits_fill_entry(PrintMode::Expanded, stack)?;
 
                 fits_on_line.finish();
 
-                if is_separator_fits_in_expanded_mode {
+                if separator_fits_in_expanded_mode {
                     // If the separator fits, then print the item in flat mode, but expand the separator
                     self.state.measured_group_fits = true;
                     self.print_entry(queue, stack, args.with_print_mode(PrintMode::Flat))?;
@@ -499,7 +499,7 @@ impl<'a> Printer<'a> {
                 continue;
             }
 
-            // If we don't have next item print the item and the separator in flat mode
+            // If we don't have a next item, print the current item and the current separator in flat mode
             if !matches!(
                 fits_on_line.queue.top(),
                 Some(FormatElement::Tag(Tag::StartEntry))
@@ -511,9 +511,10 @@ impl<'a> Printer<'a> {
                 break;
             }
 
-            // We know here that the item + separator fit. Now the question is if the next item fits as well
+            // We know here that the item and separator both fit. Now the question is if the next item fits as well
             // Test if the next item fits too
-            let next_fits = fits_on_line.fits_fill_entry(PrintMode::Flat, stack)?;
+            let next_item_fits_in_flat_mode =
+                fits_on_line.fits_fill_entry(PrintMode::Flat, stack)?;
             fits_on_line.finish();
 
             // Print the item in flat mode because we know the flat or expanded separator always fit
@@ -521,11 +522,11 @@ impl<'a> Printer<'a> {
             self.print_entry(queue, stack, args.with_print_mode(PrintMode::Flat))?;
 
             // Print the separator in flat or expanded mode, depending if the next item also fits on the line
-            self.state.measured_group_fits = next_fits;
+            self.state.measured_group_fits = next_item_fits_in_flat_mode;
             self.print_entry(
                 queue,
                 stack,
-                args.with_print_mode(if next_fits {
+                args.with_print_mode(if next_item_fits_in_flat_mode {
                     PrintMode::Flat
                 } else {
                     PrintMode::Expanded
