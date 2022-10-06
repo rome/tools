@@ -23,7 +23,7 @@ url = "2.2.2"
 itertools = "0.10.3"
 ansi_rgb = "0.2.0"
 
-countme = "3.0.1"
+countme = { workspace = true }
 
 # dhat-on
 dhat = { version = "0.3.0", optional = true }
