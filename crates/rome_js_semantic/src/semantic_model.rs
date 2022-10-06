@@ -116,10 +116,12 @@ struct SemanticModelData {
     declaration_all_reads: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
     // Maps a declaration range to the range of its "writes"
     declaration_all_writes: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
-    /// All references that could not be resolved
-    unresolved_references: Vec<(ReferenceType, TextRange)>,
     // All bindings that were exported
     exported: HashSet<TextRange>,
+    /// All references that could not be resolved
+    unresolved_references: Vec<(ReferenceType, TextRange)>,
+    /// All references that are resolved to globals
+    global_references: Vec<(ReferenceType, TextRange)>,
 }
 
 impl SemanticModelData {
@@ -475,6 +477,35 @@ impl<'a> ExactSizeIterator for UnresolvedReferencesIter<'a> {
 
 impl<'a> FusedIterator for UnresolvedReferencesIter<'a> {}
 
+
+pub struct GlobalsReferencesIter<'a> {
+    data: Arc<SemanticModelData>,
+    iter: std::slice::Iter<'a, (ReferenceType, TextRange)>,
+}
+
+impl<'a> Iterator for GlobalsReferencesIter<'a> {
+    type Item = Reference;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let (ty, range) = self.iter.next()?;
+        let node = self.data.node_by_range.get(range)?;
+        Some(Reference {
+            data: self.data.clone(),
+            node: node.clone(),
+            range: *range,
+            ty: *ty,
+        })
+    }
+}
+
+impl<'a> ExactSizeIterator for GlobalsReferencesIter<'a> {
+    fn len(&self) -> usize {
+        self.iter.len()
+    }
+}
+
+impl<'a> FusedIterator for GlobalsReferencesIter<'a> {}
+
 /// Iterate all bindings that were bound in a given scope. It **does
 /// not** Returns bindings of parent scopes.
 pub struct ScopeBindingsIter {
@@ -684,6 +715,14 @@ impl SemanticModel {
         }
     }
 
+    /// Returns an iterator of all the globals references in the program
+    pub fn all_globals(&self) -> GlobalsReferencesIter<'_> {
+        GlobalsReferencesIter {
+            data: self.data.clone(),
+            iter: self.data.global_references.iter(),
+        }
+    }
+
     /// Returns an iterator of all the unresolved references in the program
     pub fn all_unresolved_references(&self) -> UnresolvedReferencesIter<'_> {
         UnresolvedReferencesIter {
@@ -796,38 +835,47 @@ impl<T: HasClosureAstNode> ClosureExtensions for T {}
 /// and stored inside the [SemanticModel].
 pub struct SemanticModelBuilder {
     root: JsAnyRoot,
+    node_by_range: HashMap<TextRange, JsSyntaxNode>,
+    globals: HashSet<String>,
     scopes: Vec<SemanticModelScopeData>,
     scope_range_by_start: HashMap<TextSize, BTreeSet<Interval<usize, usize>>>,
     scope_hoisted_to_by_range: HashMap<TextSize, usize>,
-    node_by_range: HashMap<TextRange, JsSyntaxNode>,
     declarations_by_range: HashMap<TextRange, TextRange>,
     declaration_all_references: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
     declaration_all_reads: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
     declaration_all_writes: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
-    unresolved_references: Vec<(ReferenceType, TextRange)>,
     exported: HashSet<TextRange>,
+    unresolved_references: Vec<(ReferenceType, TextRange)>,
+    global_references: Vec<(ReferenceType, TextRange)>,
 }
 
 impl SemanticModelBuilder {
     pub fn new(root: JsAnyRoot) -> Self {
         Self {
             root,
+            node_by_range: HashMap::new(),
+            globals: HashSet::new(),
             scopes: vec![],
             scope_range_by_start: HashMap::new(),
             scope_hoisted_to_by_range: HashMap::new(),
-            node_by_range: HashMap::new(),
             declarations_by_range: HashMap::new(),
             declaration_all_references: HashMap::new(),
             declaration_all_reads: HashMap::new(),
             declaration_all_writes: HashMap::new(),
-            unresolved_references: Vec::new(),
             exported: HashSet::new(),
+            unresolved_references: Vec::new(),
+            global_references: Vec::new(),
         }
     }
 
     #[inline]
     pub fn push_node(&mut self, node: &JsSyntaxNode) {
         self.node_by_range.insert(node.text_range(), node.clone());
+    }
+
+    #[inline]
+    pub fn push_global(&mut self, name: impl Into<String>) {
+        self.globals.insert(name.into());
     }
 
     #[inline]
@@ -970,7 +1018,14 @@ impl SemanticModelBuilder {
                     ReferenceType::Write { hoisted: false }
                 };
 
-                self.unresolved_references.push((ty, range));
+                let node = &self.node_by_range[&range];
+                let name = node.text_trimmed().to_string();
+
+                if self.globals.get(&name).is_some() {
+                    self.global_references.push((ty, range));
+                } else {
+                    self.unresolved_references.push((ty, range));
+                }
             }
             Exported { range } => {
                 self.exported.insert(range);
@@ -996,18 +1051,34 @@ impl SemanticModelBuilder {
             declaration_all_references: self.declaration_all_references,
             declaration_all_reads: self.declaration_all_reads,
             declaration_all_writes: self.declaration_all_writes,
-            unresolved_references: self.unresolved_references,
             exported: self.exported,
+            unresolved_references: self.unresolved_references,
+            global_references: self.global_references,
         };
         SemanticModel::new(data)
     }
 }
 
+#[derive(Default)]
+/// Extra options for the [SemanticModel] creation.
+pub struct SemanticModelOptions {
+    /// All the allowed globals names
+    pub globals: HashSet<String>
+}
+
 /// Build the complete [SemanticModel] of a parsed file.
 /// For a push based model to build the [SemanticModel], see [SemanticModelBuilder].
-pub fn semantic_model(root: &JsAnyRoot) -> SemanticModel {
+pub fn semantic_model(root: &JsAnyRoot, options: SemanticModelOptions) -> SemanticModel {
     let mut extractor = SemanticEventExtractor::default();
     let mut builder = SemanticModelBuilder::new(root.clone());
+
+    let SemanticModelOptions {
+        globals
+    } = options;
+
+    for global in globals {
+        builder.push_global(global);
+    }
 
     let root = root.syntax();
     for node in root.preorder() {
@@ -1041,7 +1112,7 @@ mod test {
             FileId::zero(),
             SourceType::js_module(),
         );
-        let model = semantic_model(&r.tree());
+        let model = semantic_model(&r.tree(), SemanticModelOptions::default());
 
         let arguments_reference = r
             .syntax()
@@ -1145,7 +1216,7 @@ mod test {
             FileId::zero(),
             SourceType::js_module(),
         );
-        let model = semantic_model(&r.tree());
+        let model = semantic_model(&r.tree(), SemanticModelOptions::default());
 
         let function_f = r
             .syntax()
@@ -1183,7 +1254,7 @@ mod test {
     /// Finds the last time a token named "name" is used and see if its node is marked as exported
     fn assert_is_exported(is_exported: bool, name: &str, code: &str) {
         let r = rome_js_parser::parse(code, FileId::zero(), SourceType::tsx());
-        let model = semantic_model(&r.tree());
+        let model = semantic_model(&r.tree(), SemanticModelOptions::default());
 
         let node = r
             .syntax()
@@ -1311,5 +1382,26 @@ mod test {
         assert_is_exported(true, "A", "enum A {}; module.exports = A");
         assert_is_exported(true, "A", "enum A {}; exports = A");
         assert_is_exported(true, "A", "enum A {}; exports.A = A");
+    }
+
+    #[test]
+    pub fn ok_semantic_model_globals() {
+        let r = rome_js_parser::parse(
+            "console.log()",
+            FileId::zero(),
+            SourceType::js_module(),
+        );
+
+        let mut options = SemanticModelOptions::default();
+        options.globals.insert("console".into());
+
+        let model = semantic_model(&r.tree(), options);
+
+        let globals: Vec<_> = model.all_globals().collect();
+        
+        assert_eq!(globals.len(), 1);
+        assert!(globals[0].declaration().is_none());
+        assert!(globals[0].is_read());
+        assert_eq!(globals[0].node().text_trimmed(), "console");
     }
 }

@@ -8,7 +8,7 @@ use rome_js_analyze::{analyze, analyze_with_inspect_matcher, metadata, RuleError
 use rome_js_formatter::context::{QuoteProperties, QuoteStyle};
 use rome_js_formatter::{context::JsFormatOptions, format_node};
 use rome_js_parser::Parse;
-use rome_js_semantic::semantic_model;
+use rome_js_semantic::{semantic_model, SemanticModelOptions};
 use rome_js_syntax::{
     JsAnyRoot, JsLanguage, JsSyntaxNode, SourceType, TextRange, TextSize, TokenAtOffset,
 };
@@ -456,7 +456,7 @@ fn rename(
     new_name: String,
 ) -> Result<RenameResult, RomeError> {
     let root = parse.tree();
-    let model = semantic_model(&root);
+    let model = semantic_model(&root, SemanticModelOptions::default());
 
     if let Some(node) = parse
         .syntax()
