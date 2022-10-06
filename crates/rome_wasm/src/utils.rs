@@ -6,7 +6,8 @@ use wasm_bindgen::prelude::*;
 use rome_console::fmt::HTML;
 use rome_console::{fmt::Formatter, markup};
 use rome_diagnostics::file::SimpleFile;
-use rome_diagnostics::Diagnostic;
+use rome_diagnostics::v2::serde::Diagnostic;
+use rome_diagnostics::v2::{DiagnosticExt, PrintDiagnostic};
 
 use super::IDiagnostic;
 
@@ -39,10 +40,11 @@ impl DiagnosticPrinter {
 
     pub fn print(&mut self, diagnostic: IDiagnostic) -> Result<(), Error> {
         let diag: Diagnostic = diagnostic.into_serde().map_err(into_error)?;
+        let err = diag.with_file_source_code(self.file.source_code());
 
         let mut html = HTML(&mut self.buffer);
         Formatter::new(&mut html)
-            .write_markup(markup!({ diag.display(&self.file) }))
+            .write_markup(markup!({ PrintDiagnostic(&err) }))
             .map_err(into_error)?;
 
         Ok(())

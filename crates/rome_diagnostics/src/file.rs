@@ -157,6 +157,13 @@ impl SimpleFile {
     pub fn empty() -> SimpleFile {
         SimpleFile::new(String::new(), String::new())
     }
+
+    pub fn source_code(&self) -> SourceCode<&'_ str, &'_ LineIndex> {
+        SourceCode {
+            text: &self.source,
+            line_starts: Some(&self.line_starts),
+        }
+    }
 }
 
 impl Files for SimpleFile {
@@ -165,10 +172,7 @@ impl Files for SimpleFile {
     }
 
     fn source(&self, _id: FileId) -> Option<SourceCode<&'_ str, &'_ LineIndex>> {
-        Some(SourceCode {
-            text: &self.source,
-            line_starts: Some(&self.line_starts),
-        })
+        Some(self.source_code())
     }
 }
 
