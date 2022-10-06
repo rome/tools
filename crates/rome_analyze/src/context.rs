@@ -12,7 +12,6 @@ pub struct RuleContext<'a, R>
 where
     R: ?Sized + Rule,
 {
-    rule_key: RuleKey,
     query_result: &'a RuleQueryResult<R>,
     root: &'a RuleRoot<R>,
     services: RuleServiceBag<R>,
@@ -21,17 +20,15 @@ where
 
 impl<'a, R> RuleContext<'a, R>
 where
-    R: ?Sized + Rule,
+    R: Rule + Sized,
 {
     pub fn new(
-        rule_key: RuleKey,
         query_result: &'a RuleQueryResult<R>,
         root: &'a RuleRoot<R>,
         services: &ServiceBag,
         options: &'a AnalyzerOptions,
     ) -> Result<Self, CannotCreateServicesError> {
         Ok(Self {
-            rule_key,
             query_result,
             root,
             services: FromServices::from_services(services)?,
@@ -93,7 +90,7 @@ where
         self.options
             .configuration
             .rules
-            .get_rule(&self.rule_key)
+            .get_rule(&RuleKey::rule::<R>())
             .map(|options| serde_json::from_str::<ToType>(options.value()))
             // TODO: ignore the error for now, it should be handled differently https://github.com/rome/tools/issues/3346
             .and_then(|result| result.ok())
