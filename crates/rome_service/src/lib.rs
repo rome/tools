@@ -1,3 +1,4 @@
+use rome_console::fmt::Bytes;
 use rome_console::{Console, EnvConsole};
 use rome_formatter::FormatError;
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
@@ -71,6 +72,12 @@ pub enum RomeError {
     TransportError(TransportError),
     /// Emitted when the file is ignored and should not be processed
     FileIgnored(PathBuf),
+    /// Emitted when a file could not be parsed because it's larger than the size limite
+    FileTooLarge {
+        path: PathBuf,
+        size: usize,
+        limit: usize,
+    },
 }
 
 impl Debug for RomeError {
@@ -162,6 +169,9 @@ impl Display for RomeError {
             }
             RomeError::FileIgnored(path) => {
                 write!(f, "The file {} was ignored", path.display())
+            }
+            RomeError::FileTooLarge { path, size, limit } => {
+                write!(f, "The file {} could not be parsed because it's too large (the file is {} long, but the size limit is {})", path.display(), Bytes(*size), Bytes(*limit))
             }
         }
     }

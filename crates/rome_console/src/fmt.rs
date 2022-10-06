@@ -233,3 +233,67 @@ impl Display for Duration {
         })
     }
 }
+
+#[repr(transparent)]
+#[derive(Clone, Copy, Debug)]
+pub struct Bytes(pub usize);
+
+impl std::fmt::Display for Bytes {
+    fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let Self(mut value) = *self;
+
+        if value < 1024 {
+            return write!(fmt, "{value} B");
+        }
+
+        const PREFIX: [char; 4] = ['K', 'M', 'G', 'T'];
+        let prefix = PREFIX
+            .into_iter()
+            .find(|_| {
+                let next_value = value / 1024;
+                if next_value < 1024 {
+                    return true;
+                }
+
+                value = next_value;
+                false
+            })
+            .unwrap_or('T');
+
+        write!(fmt, "{:.1} {prefix}iB", value as f32 / 1024.0)
+    }
+}
+
+impl Display for Bytes {
+    fn fmt(&self, fmt: &mut Formatter) -> io::Result<()> {
+        write!(fmt, "{self}")
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::fmt::Bytes;
+
+    #[test]
+    fn display_bytes() {
+        // Examples taken from https://stackoverflow.com/a/3758880
+        assert_eq!(Bytes(0).to_string(), "0 B");
+        assert_eq!(Bytes(27).to_string(), "27 B");
+        assert_eq!(Bytes(999).to_string(), "999 B");
+        assert_eq!(Bytes(1_000).to_string(), "1000 B");
+        assert_eq!(Bytes(1_023).to_string(), "1023 B");
+        assert_eq!(Bytes(1_024).to_string(), "1.0 KiB");
+        assert_eq!(Bytes(1_728).to_string(), "1.7 KiB");
+        assert_eq!(Bytes(110_592).to_string(), "108.0 KiB");
+        assert_eq!(Bytes(999_999).to_string(), "976.6 KiB");
+        assert_eq!(Bytes(7_077_888).to_string(), "6.8 MiB");
+        assert_eq!(Bytes(452_984_832).to_string(), "432.0 MiB");
+        assert_eq!(Bytes(28_991_029_248).to_string(), "27.0 GiB");
+        assert_eq!(Bytes(1_855_425_871_872).to_string(), "1.7 TiB");
+
+        #[cfg(target_pointer_width = "32")]
+        assert_eq!(Bytes(usize::MAX).to_string(), "4.0 GiB");
+        #[cfg(target_pointer_width = "64")]
+        assert_eq!(Bytes(usize::MAX).to_string(), "16384.0 TiB");
+    }
+}
