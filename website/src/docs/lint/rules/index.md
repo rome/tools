@@ -295,6 +295,13 @@ Report when a DOM element or a component uses both <code>children</code> and <co
 Disallow <code>new</code> operators with the <code>Symbol</code> object
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noPositiveTabindex">
+	<a href="/docs/lint/rules/noPositiveTabindex">noPositiveTabindex (since v0.10.0)</a>
+	<a class="header-anchor" href="#noPositiveTabindex"></a>
+</h3>
+Prevent the usage of positive integers on tabIndex property
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noRenderReturnValue">
 	<a href="/docs/lint/rules/noRenderReturnValue">noRenderReturnValue (since v0.10.0)</a>
 	<a class="header-anchor" href="#noRenderReturnValue"></a>
