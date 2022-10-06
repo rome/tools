@@ -69,9 +69,7 @@ impl Rule for NoPositiveTabindex {
 
                 if let Some(is_valid) = is_jsx_attribute_valid(&attribute) {
                     if !is_valid {
-                        return Some(NoPositiveTabindexState::Attribute(
-                            attribute.unwrap().clone(),
-                        ));
+                        return Some(NoPositiveTabindexState::Attribute(attribute.unwrap()));
                     }
                 }
             }
@@ -82,9 +80,7 @@ impl Rule for NoPositiveTabindex {
 
                 if let Some(is_valid) = is_jsx_attribute_valid(&attribute) {
                     if !is_valid {
-                        return Some(NoPositiveTabindexState::Attribute(
-                            attribute.unwrap().clone(),
-                        ));
+                        return Some(NoPositiveTabindexState::Attribute(attribute.unwrap()));
                     }
                 }
             }
@@ -101,7 +97,7 @@ impl Rule for NoPositiveTabindex {
                         let is_valid = is_valid_tabindex(&expression_value);
 
                         if !is_valid {
-                            return Some(NoPositiveTabindexState::MemberProp(prop.clone()));
+                            return Some(NoPositiveTabindexState::MemberProp(prop));
                         }
                     }
                 }
@@ -191,7 +187,7 @@ fn is_jsx_attribute_valid(jsx_attribute: &Option<JsxAttribute>) -> Option<bool> 
         }
     }
 
-    return Some(true);
+    Some(true)
 }
 
 fn is_valid_tabindex(token_text: &SyntaxTokenText) -> bool {
