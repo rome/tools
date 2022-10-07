@@ -3,7 +3,7 @@ use crate::semantic_services::SemanticServices;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_semantic::Scope;
+use rome_js_semantic::{Binding, DeclarationExtensions, Scope};
 use rome_js_syntax::{JsReferenceIdentifier, JsxReferenceIdentifier, TextRange};
 use rome_rowan::{declare_node_union, AstNode};
 
@@ -49,18 +49,24 @@ impl Rule for NoRestrictedGlobals {
         let model = ctx.model();
         ctx.query()
             .all_unresolved_references()
+            .chain(model.all_globals())
             .filter_map(|reference| {
                 let node = reference.node().clone();
                 let node = AnyIdentifier::unwrap_cast(node);
-                let scope = model.scope(node.syntax());
-                let token = match node {
-                    AnyIdentifier::JsReferenceIdentifier(node) => node.value_token(),
-                    AnyIdentifier::JsxReferenceIdentifier(node) => node.value_token(),
-                    AnyIdentifier::JsIdentifierAssignment(node) => node.name_token(),
+                let (token, declaration) = match node {
+                    AnyIdentifier::JsReferenceIdentifier(node) => {
+                        (node.value_token(), node.declaration(model))
+                    }
+                    AnyIdentifier::JsxReferenceIdentifier(node) => {
+                        (node.value_token(), node.declaration(model))
+                    }
+                    AnyIdentifier::JsIdentifierAssignment(node) => {
+                        (node.name_token(), node.declaration(model))
+                    }
                 };
                 let token = token.ok()?;
                 let text = token.text_trimmed();
-                is_restricted(text, scope).map(|text| (token.text_trimmed_range(), text))
+                is_restricted(text, declaration).map(|text| (token.text_trimmed_range(), text))
             })
             .collect()
     }
@@ -81,9 +87,7 @@ impl Rule for NoRestrictedGlobals {
     }
 }
 
-fn is_restricted(name: &str, scope: Scope) -> Option<String> {
-    let binding = scope.get_binding(name);
-    // TODO: add check for globals here
+fn is_restricted(name: &str, binding: Option<Binding>) -> Option<String> {
     if binding.is_none() && RESTRICTED_GLOBALS.contains(&name) {
         Some(name.to_string())
     } else {
