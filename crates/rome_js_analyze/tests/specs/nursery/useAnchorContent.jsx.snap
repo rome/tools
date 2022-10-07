@@ -1,0 +1,150 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 100
+expression: useAnchorContent.jsx
+---
+# Input
+```js
+<>
+    {/* invalid */}
+    <a />
+		<a><TextWrapper aria-hidden /></a>
+		<a><TextWrapper aria-hidden={true} /></a>
+    <a><span aria-hidden="true">anchor content</span></a>
+		<a></a>
+		<a>{null}</a>
+		<a>{undefined}</a>
+    {/*  valid  */}
+    <a>Anchor Content!</a>
+    <a><TextWrapper /></a>
+    <a dangerouslySetInnerHTML={{ __html: "foo" }} />
+    <a><TextWrapper aria-hidden={true} /> visible content</a>
+    <a><TextWrapper aria-hidden={false} /></a>
+    <a><div aria-hidden="true"></div>visible content</a>
+    <a><span aria-hidden="false">visible content</span></a>
+    <a>{anchorContent}</a>
+</>
+
+```
+
+# Diagnostics
+```
+useAnchorContent.jsx:3:5 lint/nursery/useAnchorContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide screen reader accessible content when using anchor elements.
+  
+    1 │ <>
+    2 │     {/* invalid */}
+  > 3 │     <a />
+      │     ^^^^^
+    4 │ 		<a><TextWrapper aria-hidden /></a>
+    5 │ 		<a><TextWrapper aria-hidden={true} /></a>
+  
+  i All links on a page should have content that is accessible to screen readers.
+  
+
+```
+
+```
+useAnchorContent.jsx:4:3 lint/nursery/useAnchorContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide screen reader accessible content when using anchor elements.
+  
+    2 │     {/* invalid */}
+    3 │     <a />
+  > 4 │ 		<a><TextWrapper aria-hidden /></a>
+      │ 		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    5 │ 		<a><TextWrapper aria-hidden={true} /></a>
+    6 │     <a><span aria-hidden="true">anchor content</span></a>
+  
+  i All links on a page should have content that is accessible to screen readers.
+  
+
+```
+
+```
+useAnchorContent.jsx:5:3 lint/nursery/useAnchorContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide screen reader accessible content when using anchor elements.
+  
+    3 │     <a />
+    4 │ 		<a><TextWrapper aria-hidden /></a>
+  > 5 │ 		<a><TextWrapper aria-hidden={true} /></a>
+      │ 		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    6 │     <a><span aria-hidden="true">anchor content</span></a>
+    7 │ 		<a></a>
+  
+  i All links on a page should have content that is accessible to screen readers.
+  
+
+```
+
+```
+useAnchorContent.jsx:6:5 lint/nursery/useAnchorContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide screen reader accessible content when using anchor elements.
+  
+    4 │ 		<a><TextWrapper aria-hidden /></a>
+    5 │ 		<a><TextWrapper aria-hidden={true} /></a>
+  > 6 │     <a><span aria-hidden="true">anchor content</span></a>
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    7 │ 		<a></a>
+    8 │ 		<a>{null}</a>
+  
+  i All links on a page should have content that is accessible to screen readers.
+  
+
+```
+
+```
+useAnchorContent.jsx:7:3 lint/nursery/useAnchorContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide screen reader accessible content when using anchor elements.
+  
+    5 │ 		<a><TextWrapper aria-hidden={true} /></a>
+    6 │     <a><span aria-hidden="true">anchor content</span></a>
+  > 7 │ 		<a></a>
+      │ 		^^^^^^^
+    8 │ 		<a>{null}</a>
+    9 │ 		<a>{undefined}</a>
+  
+  i All links on a page should have content that is accessible to screen readers.
+  
+
+```
+
+```
+useAnchorContent.jsx:8:3 lint/nursery/useAnchorContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide screen reader accessible content when using anchor elements.
+  
+     6 │     <a><span aria-hidden="true">anchor content</span></a>
+     7 │ 		<a></a>
+   > 8 │ 		<a>{null}</a>
+       │ 		^^^^^^^^^^^^^
+     9 │ 		<a>{undefined}</a>
+    10 │     {/*  valid  */}
+  
+  i All links on a page should have content that is accessible to screen readers.
+  
+
+```
+
+```
+useAnchorContent.jsx:9:3 lint/nursery/useAnchorContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide screen reader accessible content when using anchor elements.
+  
+     7 │ 		<a></a>
+     8 │ 		<a>{null}</a>
+   > 9 │ 		<a>{undefined}</a>
+       │ 		^^^^^^^^^^^^^^^^^^
+    10 │     {/*  valid  */}
+    11 │     <a>Anchor Content!</a>
+  
+  i All links on a page should have content that is accessible to screen readers.
+  
+
+```
+
+

@@ -628,6 +628,16 @@
             "null"
           ]
         },
+        "useAnchorContent": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useBlankTarget": {
           "anyOf": [
             {

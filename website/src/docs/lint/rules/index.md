@@ -351,6 +351,13 @@ Disallow unnecessary fragments
 This rules prevents void elements (AKA self-closing elements) from having children.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useAnchorContent">
+	<a href="/docs/lint/rules/useAnchorContent">useAnchorContent (since v10.0.0)</a>
+	<a class="header-anchor" href="#useAnchorContent"></a>
+</h3>
+Enforce that anchor elements have content and that the content is accessible to screen readers.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useBlankTarget">
 	<a href="/docs/lint/rules/useBlankTarget">useBlankTarget (since v10.0.0)</a>
 	<a class="header-anchor" href="#useBlankTarget"></a>
