@@ -1287,7 +1287,7 @@ pub(crate) fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyn
         p.re_lex(ReLexContext::TypeArgumentLessThan);
         let arguments = parse_ts_type_arguments_impl(p, false);
 
-        if p.last() == Some(T![>]) && can_follow_type_arguments_in_expr(p, p.cur()) {
+        if p.last() == Some(T![>]) && can_follow_type_arguments_in_expr(p) {
             Ok(Present(arguments))
         } else {
             Err(())
@@ -1297,7 +1297,8 @@ pub(crate) fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyn
 }
 
 #[inline]
-fn can_follow_type_arguments_in_expr(p: &mut Parser, cur_kind: JsSyntaxKind) -> bool {
+fn can_follow_type_arguments_in_expr(p: &mut Parser) -> bool {
+    let cur_kind = p.cur();
     match cur_kind {
         T!['('] | BACKTICK => true,
         _ => !is_start_of_expr(p),
@@ -1334,31 +1335,6 @@ fn is_binary_operator(p: &mut Parser) -> bool {
     // In typescript, the operatorPrecedence of `Comma` is 0(https://github.com/microsoft/TypeScript/blob/42b1049aee8c655631cb4f0065de86ec1023d20a/src/compiler/utilities.ts#L3555), so https://github.com/microsoft/TypeScript/blob/42b1049aee8c655631cb4f0065de86ec1023d20a/src/compiler/parser.ts#L5146 means we need to ensure the `OperatorPrecedence` is bigger than `Comma`
     matches!(OperatorPrecedence::try_from_binary_operator(p.cur()), Some(precedence) if precedence > OperatorPrecedence::Comma)
 }
-
-// case SyntaxKind.ThisKeyword:
-//                 case SyntaxKind.SuperKeyword:
-//                 case SyntaxKind.NullKeyword:
-//                 case SyntaxKind.TrueKeyword:
-//                 case SyntaxKind.FalseKeyword:
-//                 case SyntaxKind.NumericLiteral:
-//                 case SyntaxKind.BigIntLiteral:
-//                 case SyntaxKind.StringLiteral:
-//                 case SyntaxKind.NoSubstitutionTemplateLiteral:
-//                 case SyntaxKind.TemplateHead:
-//                 case SyntaxKind.OpenParenToken:
-//                 case SyntaxKind.OpenBracketToken:
-//                 case SyntaxKind.OpenBraceToken:
-//                 case SyntaxKind.FunctionKeyword:
-//                 case SyntaxKind.ClassKeyword:
-//                 case SyntaxKind.NewKeyword:
-//                 case SyntaxKind.SlashToken:
-//                 case SyntaxKind.SlashEqualsToken:
-//                 case SyntaxKind.Identifier:
-//                     return true;
-//                 case SyntaxKind.ImportKeyword:
-//                     return lookAhead(nextTokenIsOpenParenOrLessThanOrDot);
-//                 default:
-//                     return isIdentifier();
 
 /// You could refer to https://github.com/microsoft/TypeScript/blob/42b1049aee8c655631cb4f0065de86ec1023d20a/src/compiler/parser.ts#L4446
 fn is_start_of_left_hand_side_expression(p: &mut Parser) -> bool {
