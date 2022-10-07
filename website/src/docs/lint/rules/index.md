@@ -337,6 +337,13 @@ Disallow unnecessary fragments
 This rules prevents void elements (AKA self-closing elements) from having children.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useBlankTarget">
+	<a href="/docs/lint/rules/useBlankTarget">useBlankTarget (since v10.0.0)</a>
+	<a class="header-anchor" href="#useBlankTarget"></a>
+</h3>
+Disallow <code>target=&quot;_blank&quot;</code> attribute without <code>rel=&quot;noreferrer&quot;</code>
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useButtonType">
 	<a href="/docs/lint/rules/useButtonType">useButtonType (since v0.10.0)</a>
 	<a class="header-anchor" href="#useButtonType"></a>
