@@ -364,6 +364,13 @@ This rule enforces the use of <code>&lt;&gt;...&lt;/&gt;</code> over <code>&lt;F
 </h3>
 Enforce using concise optional chain instead of chained logical expressions.
 </div>
+<div class="rule">
+<h3 data-toc-exclude id="useValidAnchor">
+	<a href="/docs/lint/rules/useValidAnchor">useValidAnchor (since v10.0.0)</a>
+	<a class="header-anchor" href="#useValidAnchor"></a>
+</h3>
+Enforce that all anchors are valid, and they are navigable elements.
+</div>
 </section>
 <section>
 <h2>Style</h2>
