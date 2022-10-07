@@ -25,14 +25,61 @@ JsModule {
             },
             semicolon_token: SEMICOLON@28..29 ";" [] [],
         },
+        JsVariableStatement {
+            declaration: JsVariableDeclaration {
+                kind: CONST_KW@29..74 "const" [Newline("\n"), Comments("// Parsed as instanti ..."), Newline("\n")] [Whitespace(" ")],
+                declarators: JsVariableDeclaratorList [
+                    JsVariableDeclarator {
+                        id: JsIdentifierBinding {
+                            name_token: IDENT@74..77 "x4" [] [Whitespace(" ")],
+                        },
+                        variable_annotation: missing (optional),
+                        initializer: JsInitializerClause {
+                            eq_token: EQ@77..79 "=" [] [Whitespace(" ")],
+                            expression: TsInstantiationExpression {
+                                expression: JsIdentifierExpression {
+                                    name: JsReferenceIdentifier {
+                                        value_token: IDENT@79..80 "f" [] [],
+                                    },
+                                },
+                                arguments: TsTypeArguments {
+                                    l_angle_token: L_ANGLE@80..81 "<" [] [],
+                                    ts_type_argument_list: TsTypeArgumentList [
+                                        TsBooleanLiteralType {
+                                            literal: TRUE_KW@81..85 "true" [] [],
+                                        },
+                                    ],
+                                    r_angle_token: R_ANGLE@85..86 ">" [] [],
+                                },
+                            },
+                        },
+                    },
+                ],
+            },
+            semicolon_token: missing (optional),
+        },
+        JsIfStatement {
+            if_token: IF_KW@86..90 "if" [Newline("\n")] [Whitespace(" ")],
+            l_paren_token: L_PAREN@90..91 "(" [] [],
+            test: JsBooleanLiteralExpression {
+                value_token: TRUE_KW@91..95 "true" [] [],
+            },
+            r_paren_token: R_PAREN@95..97 ")" [] [Whitespace(" ")],
+            consequent: JsBlockStatement {
+                l_curly_token: L_CURLY@97..98 "{" [] [],
+                statements: JsStatementList [],
+                r_curly_token: R_CURLY@98..99 "}" [] [],
+            },
+            else_clause: missing (optional),
+        },
     ],
-    eof_token: EOF@29..30 "" [Newline("\n")] [],
+    eof_token: EOF@99..100 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..30
+0: JS_MODULE@0..100
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..29
+  2: JS_MODULE_ITEM_LIST@0..99
     0: TS_TYPE_ALIAS_DECLARATION@0..29
       0: TYPE_KW@0..5 "type" [] [Whitespace(" ")]
       1: TS_IDENTIFIER_BINDING@5..15
@@ -49,4 +96,36 @@ JsModule {
               0: STRING_KW@21..27 "string" [] []
           2: R_ANGLE@27..28 ">" [] []
       5: SEMICOLON@28..29 ";" [] []
-  3: EOF@29..30 "" [Newline("\n")] []
+    1: JS_VARIABLE_STATEMENT@29..86
+      0: JS_VARIABLE_DECLARATION@29..86
+        0: CONST_KW@29..74 "const" [Newline("\n"), Comments("// Parsed as instanti ..."), Newline("\n")] [Whitespace(" ")]
+        1: JS_VARIABLE_DECLARATOR_LIST@74..86
+          0: JS_VARIABLE_DECLARATOR@74..86
+            0: JS_IDENTIFIER_BINDING@74..77
+              0: IDENT@74..77 "x4" [] [Whitespace(" ")]
+            1: (empty)
+            2: JS_INITIALIZER_CLAUSE@77..86
+              0: EQ@77..79 "=" [] [Whitespace(" ")]
+              1: TS_INSTANTIATION_EXPRESSION@79..86
+                0: JS_IDENTIFIER_EXPRESSION@79..80
+                  0: JS_REFERENCE_IDENTIFIER@79..80
+                    0: IDENT@79..80 "f" [] []
+                1: TS_TYPE_ARGUMENTS@80..86
+                  0: L_ANGLE@80..81 "<" [] []
+                  1: TS_TYPE_ARGUMENT_LIST@81..85
+                    0: TS_BOOLEAN_LITERAL_TYPE@81..85
+                      0: TRUE_KW@81..85 "true" [] []
+                  2: R_ANGLE@85..86 ">" [] []
+      1: (empty)
+    2: JS_IF_STATEMENT@86..99
+      0: IF_KW@86..90 "if" [Newline("\n")] [Whitespace(" ")]
+      1: L_PAREN@90..91 "(" [] []
+      2: JS_BOOLEAN_LITERAL_EXPRESSION@91..95
+        0: TRUE_KW@91..95 "true" [] []
+      3: R_PAREN@95..97 ")" [] [Whitespace(" ")]
+      4: JS_BLOCK_STATEMENT@97..99
+        0: L_CURLY@97..98 "{" [] []
+        1: JS_STATEMENT_LIST@98..98
+        2: R_CURLY@98..99 "}" [] []
+      5: (empty)
+  3: EOF@99..100 "" [Newline("\n")] []

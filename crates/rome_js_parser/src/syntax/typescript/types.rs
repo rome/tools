@@ -1264,6 +1264,9 @@ fn parse_ts_type_predicate(p: &mut Parser) -> ParsedSyntax {
 
 // test ts ts_type_instantiation_expression
 // type StringBox = Box<string>;
+// // Parsed as instantiation expression
+// const x4 = f<true>
+// if (true) {}
 
 // test_err ts ts_instantiation_expressions1
 // const a8 = f<number><number>;  // Relational operator error
@@ -1284,7 +1287,7 @@ pub(crate) fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyn
         p.re_lex(ReLexContext::TypeArgumentLessThan);
         let arguments = parse_ts_type_arguments_impl(p, false);
 
-        if p.last() == Some(T![>]) && can_follow_type_arguments_in_expr(p.cur()) {
+        if p.last() == Some(T![>]) && can_follow_type_arguments_in_expr(p, p.cur()) {
             Ok(Present(arguments))
         } else {
             Err(())
@@ -1294,35 +1297,92 @@ pub(crate) fn parse_ts_type_arguments_in_expression(p: &mut Parser) -> ParsedSyn
 }
 
 #[inline]
-pub fn can_follow_type_arguments_in_expr(cur_kind: JsSyntaxKind) -> bool {
-    matches!(
-        cur_kind,
-        T!['(']
+fn can_follow_type_arguments_in_expr(p: &mut Parser, cur_kind: JsSyntaxKind) -> bool {
+    match cur_kind {
+        T!['('] | BACKTICK => true,
+        _ => !is_start_of_expr(p),
+    }
+}
+
+/// You could refer to https://github.com/microsoft/TypeScript/blob/42b1049aee8c655631cb4f0065de86ec1023d20a/src/compiler/parser.ts#L4475
+fn is_start_of_expr(p: &mut Parser) -> bool {
+    if is_start_of_left_hand_side_expression(p) {
+        return true;
+    }
+    match p.cur() {
+        T![+]
+        | T![-]
+        | T![~]
+        | T![!]
+        | T![delete]
+        | T![typeof]
+        | T![void]
+        | T![++]
+        | T![--]
+        | T![<]
+        | T![await]
+        | T![yield] => true,
+        // TODO: how to represent private identifier
+        _ => is_binary_operator(p) || is_at_identifier(p),
+    }
+}
+
+/// Please refer to https://github.com/microsoft/TypeScript/blob/42b1049aee8c655631cb4f0065de86ec1023d20a/src/compiler/parser.ts#L5141-L5147
+fn is_binary_operator(p: &mut Parser) -> bool {
+    // TODO: https://github.dev/microsoft/TypeScript/blob/42b1049aee8c655631cb4f0065de86ec1023d20a/src/compiler/parser.ts#L5142-L5144 Optional variance
+
+    // In typescript, the operatorPrecedence of `Comma` is 0(https://github.com/microsoft/TypeScript/blob/42b1049aee8c655631cb4f0065de86ec1023d20a/src/compiler/utilities.ts#L3555), so https://github.com/microsoft/TypeScript/blob/42b1049aee8c655631cb4f0065de86ec1023d20a/src/compiler/parser.ts#L5146 means we need to ensure the `OperatorPrecedence` is bigger than `Comma`
+    matches!(OperatorPrecedence::try_from_binary_operator(p.cur()), Some(precedence) if precedence > OperatorPrecedence::Comma)
+}
+
+// case SyntaxKind.ThisKeyword:
+//                 case SyntaxKind.SuperKeyword:
+//                 case SyntaxKind.NullKeyword:
+//                 case SyntaxKind.TrueKeyword:
+//                 case SyntaxKind.FalseKeyword:
+//                 case SyntaxKind.NumericLiteral:
+//                 case SyntaxKind.BigIntLiteral:
+//                 case SyntaxKind.StringLiteral:
+//                 case SyntaxKind.NoSubstitutionTemplateLiteral:
+//                 case SyntaxKind.TemplateHead:
+//                 case SyntaxKind.OpenParenToken:
+//                 case SyntaxKind.OpenBracketToken:
+//                 case SyntaxKind.OpenBraceToken:
+//                 case SyntaxKind.FunctionKeyword:
+//                 case SyntaxKind.ClassKeyword:
+//                 case SyntaxKind.NewKeyword:
+//                 case SyntaxKind.SlashToken:
+//                 case SyntaxKind.SlashEqualsToken:
+//                 case SyntaxKind.Identifier:
+//                     return true;
+//                 case SyntaxKind.ImportKeyword:
+//                     return lookAhead(nextTokenIsOpenParenOrLessThanOrDot);
+//                 default:
+//                     return isIdentifier();
+
+/// You could refer to https://github.com/microsoft/TypeScript/blob/42b1049aee8c655631cb4f0065de86ec1023d20a/src/compiler/parser.ts#L4446
+fn is_start_of_left_hand_side_expression(p: &mut Parser) -> bool {
+    match p.cur() {
+        T![super]
+        | T![null]
+        | T![true]
+        | T![false]
+        | JS_NUMBER_LITERAL
+        | JS_BIG_INT_LITERAL
+        | JS_STRING_LITERAL
         | BACKTICK
-         // These tokens can't follow in a call expression, nor can they start an
-        // expression. So, consider the type argument list part of an instantiation
-        // expression.
-        | T![,]
-        | T![.]
-        | T![?.]
-        | T![')']
-        | T![']']
-        | T![:]
-        | T![;]
-        | T![?]
-        | T![==]
-        | T![===]
-        | T![!=]
-        | T![!==]
-        | T![&&]
-        | T![||]
-        | T![??]
-        | T![^]
-        | T![&]
-        | T![|]
-        | T!['}']
-        | EOF
-    )
+        | T!['(']
+        | T!['{']
+        | T!['[']
+        | T![function]
+        | T![class]
+        | T![new]
+        | T![/]
+        | T![/=] => true,
+        T![import] => p.nth_at(1, T!['(']) || p.nth_at(1, T![<]),
+
+        _ => is_at_identifier(p),
+    }
 }
 
 pub(crate) fn parse_ts_type_arguments(p: &mut Parser) -> ParsedSyntax {
