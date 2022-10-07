@@ -63,13 +63,11 @@ impl Rule for UseBlankTarget {
         let (target_attribute, rel_attribute) = match node {
             UseBlankTargetQuery::JsxElement(element) => {
                 let opening_element = element.opening_element().ok()?;
-                if opening_element.name().ok()?.text() != "a" {
-                    return None;
-                }
-                if opening_element
-                    .find_attribute_by_name("href")
-                    .ok()
-                    .is_none()
+                if opening_element.name().ok()?.text() != "a"
+                    || opening_element
+                        .find_attribute_by_name("href")
+                        .ok()
+                        .is_none()
                 {
                     return None;
                 }
@@ -80,10 +78,9 @@ impl Rule for UseBlankTarget {
                 )
             }
             UseBlankTargetQuery::JsxSelfClosingElement(element) => {
-                if element.name().ok()?.text() != "a" {
-                    return None;
-                }
-                if element.find_attribute_by_name("href").ok().is_none() {
+                if element.name().ok()?.text() != "a"
+                    || element.find_attribute_by_name("href").ok().is_none()
+                {
                     return None;
                 }
                 (
