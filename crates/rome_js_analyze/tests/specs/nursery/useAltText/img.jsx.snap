@@ -1,0 +1,140 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: img.jsx
+---
+# Input
+```js
+// invalid
+
+<>
+	<img src="foo" />
+	<img {...props} />
+	<img {...props} alt={undefined} />
+	<img src="foo" role="presentation" />
+	<img src="foo" role="none" />
+	<img alt />
+</>
+
+// valid
+
+<>
+	<img {...props} alt />
+	<img src="foo" alt="Foo eating a sandwich." />
+	<img src="foo" alt={"Foo eating a sandwich."} />
+	<img src="foo" alt={altText} />
+    <img src="foo" alt={<><span class="token punctuation">${</span><span class="token variable">person</span><span class="token punctuation">}</span><span class="token string"> smiling</span><span class="token string"></>} />
+    <img src="foo" alt="" />
+
+</>;
+
+```
+
+# Diagnostics
+```
+img.jsx:4:2 lint/nursery/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide alt when using img, area, input type='image'
+  
+    3 │ <>
+  > 4 │ 	<img src="foo" />
+      │ 	^^^^^^^^^^^^^^^^^
+    5 │ 	<img {...props} />
+    6 │ 	<img {...props} alt={undefined} />
+  
+  i Meaningful alternative text on elements helps users relying on screen
+                    readers to understand content's purpose within a page.
+  
+
+```
+
+```
+img.jsx:5:2 lint/nursery/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide alt when using img, area, input type='image'
+  
+    3 │ <>
+    4 │ 	<img src="foo" />
+  > 5 │ 	<img {...props} />
+      │ 	^^^^^^^^^^^^^^^^^^
+    6 │ 	<img {...props} alt={undefined} />
+    7 │ 	<img src="foo" role="presentation" />
+  
+  i Meaningful alternative text on elements helps users relying on screen
+                    readers to understand content's purpose within a page.
+  
+
+```
+
+```
+img.jsx:6:2 lint/nursery/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide alt when using img, area, input type='image'
+  
+    4 │ 	<img src="foo" />
+    5 │ 	<img {...props} />
+  > 6 │ 	<img {...props} alt={undefined} />
+      │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    7 │ 	<img src="foo" role="presentation" />
+    8 │ 	<img src="foo" role="none" />
+  
+  i Meaningful alternative text on elements helps users relying on screen
+                    readers to understand content's purpose within a page.
+  
+
+```
+
+```
+img.jsx:7:2 lint/nursery/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide alt when using img, area, input type='image'
+  
+    5 │ 	<img {...props} />
+    6 │ 	<img {...props} alt={undefined} />
+  > 7 │ 	<img src="foo" role="presentation" />
+      │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │ 	<img src="foo" role="none" />
+    9 │ 	<img alt />
+  
+  i Meaningful alternative text on elements helps users relying on screen
+                    readers to understand content's purpose within a page.
+  
+
+```
+
+```
+img.jsx:8:2 lint/nursery/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide alt when using img, area, input type='image'
+  
+     6 │ 	<img {...props} alt={undefined} />
+     7 │ 	<img src="foo" role="presentation" />
+   > 8 │ 	<img src="foo" role="none" />
+       │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     9 │ 	<img alt />
+    10 │ </>
+  
+  i Meaningful alternative text on elements helps users relying on screen
+                    readers to understand content's purpose within a page.
+  
+
+```
+
+```
+img.jsx:9:2 lint/nursery/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide alt when using img, area, input type='image'
+  
+     7 │ 	<img src="foo" role="presentation" />
+     8 │ 	<img src="foo" role="none" />
+   > 9 │ 	<img alt />
+       │ 	^^^^^^^^^^^
+    10 │ </>
+    11 │ 
+  
+  i Meaningful alternative text on elements helps users relying on screen
+                    readers to understand content's purpose within a page.
+  
+
+```
+
+

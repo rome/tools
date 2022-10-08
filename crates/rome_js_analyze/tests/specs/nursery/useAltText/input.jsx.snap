@@ -1,0 +1,99 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: input.jsx
+---
+# Input
+```js
+// invalid
+<>
+	<input type="image" {...props} />
+	<input type="image" {...props} alt={undefined} />
+	<input type="image" />
+	<input type="image" alt />
+</>;
+
+// valid
+
+<>
+	<input type="image" {...props} alt />
+	<input type="image" alt="This is descriptive!" />
+	<input type="image" aria-label="foo" />
+	<input type="image" aria-labelledby="id1" />
+</>;
+
+```
+
+# Diagnostics
+```
+input.jsx:3:2 lint/nursery/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide alt when using img, area, input type='image'
+  
+    1 │ // invalid
+    2 │ <>
+  > 3 │ 	<input type="image" {...props} />
+      │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │ 	<input type="image" {...props} alt={undefined} />
+    5 │ 	<input type="image" />
+  
+  i Meaningful alternative text on elements helps users relying on screen
+                    readers to understand content's purpose within a page.
+  
+
+```
+
+```
+input.jsx:4:2 lint/nursery/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide alt when using img, area, input type='image'
+  
+    2 │ <>
+    3 │ 	<input type="image" {...props} />
+  > 4 │ 	<input type="image" {...props} alt={undefined} />
+      │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    5 │ 	<input type="image" />
+    6 │ 	<input type="image" alt />
+  
+  i Meaningful alternative text on elements helps users relying on screen
+                    readers to understand content's purpose within a page.
+  
+
+```
+
+```
+input.jsx:5:2 lint/nursery/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide alt when using img, area, input type='image'
+  
+    3 │ 	<input type="image" {...props} />
+    4 │ 	<input type="image" {...props} alt={undefined} />
+  > 5 │ 	<input type="image" />
+      │ 	^^^^^^^^^^^^^^^^^^^^^^
+    6 │ 	<input type="image" alt />
+    7 │ </>;
+  
+  i Meaningful alternative text on elements helps users relying on screen
+                    readers to understand content's purpose within a page.
+  
+
+```
+
+```
+input.jsx:6:2 lint/nursery/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide alt when using img, area, input type='image'
+  
+    4 │ 	<input type="image" {...props} alt={undefined} />
+    5 │ 	<input type="image" />
+  > 6 │ 	<input type="image" alt />
+      │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^
+    7 │ </>;
+    8 │ 
+  
+  i Meaningful alternative text on elements helps users relying on screen
+                    readers to understand content's purpose within a page.
+  
+
+```
+
+
