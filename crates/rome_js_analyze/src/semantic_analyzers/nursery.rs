@@ -10,7 +10,8 @@ mod no_undeclared_variables;
 mod no_unused_variables;
 mod no_useless_fragments;
 mod no_void_elements_with_children;
+mod use_alt_text;
 mod use_button_type;
 mod use_camel_case;
 mod use_fragment_syntax;
-declare_group! { pub (crate) Nursery { name : "nursery" , rules : [self :: no_array_index_key :: NoArrayIndexKey , self :: no_children_prop :: NoChildrenProp , self :: no_dangerously_set_inner_html :: NoDangerouslySetInnerHtml , self :: no_dangerously_set_inner_html_with_children :: NoDangerouslySetInnerHtmlWithChildren , self :: no_render_return_value :: NoRenderReturnValue , self :: no_undeclared_variables :: NoUndeclaredVariables , self :: no_unused_variables :: NoUnusedVariables , self :: no_useless_fragments :: NoUselessFragments , self :: no_void_elements_with_children :: NoVoidElementsWithChildren , self :: use_button_type :: UseButtonType , self :: use_camel_case :: UseCamelCase , self :: use_fragment_syntax :: UseFragmentSyntax ,] } }
+declare_group! { pub (crate) Nursery { name : "nursery" , rules : [self :: no_array_index_key :: NoArrayIndexKey , self :: no_children_prop :: NoChildrenProp , self :: no_dangerously_set_inner_html :: NoDangerouslySetInnerHtml , self :: no_dangerously_set_inner_html_with_children :: NoDangerouslySetInnerHtmlWithChildren , self :: no_render_return_value :: NoRenderReturnValue , self :: no_undeclared_variables :: NoUndeclaredVariables , self :: no_unused_variables :: NoUnusedVariables , self :: no_useless_fragments :: NoUselessFragments , self :: no_void_elements_with_children :: NoVoidElementsWithChildren , self :: use_alt_text :: UseAltText , self :: use_button_type :: UseButtonType , self :: use_camel_case :: UseCamelCase , self :: use_fragment_syntax :: UseFragmentSyntax ,] } }
