@@ -1,0 +1,26 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: useKeyWithClickEventsInvalid.jsx
+---
+# Input
+```js
+<>
+    <div onClick={() => {}} />
+</>
+```
+
+# Diagnostics
+```
+useKeyWithClickEventsInvalid.jsx:2:5 lint/nursery/useKeyWithClickEvents ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Pair the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event.
+  
+    1 │ <>
+  > 2 │     <div onClick={() => {}} />
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ </>
+  
+
+```
+
+

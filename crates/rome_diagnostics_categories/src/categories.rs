@@ -53,6 +53,7 @@ define_dategories! {
     "lint/nursery/noArrayIndexKey": "https://rome.tools/docs/lint/rules/noArrayIndexKey",
     "lint/nursery/noDangerouslySetInnerHtmlWithChildren": "https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtmlWithChildren",
     "lint/nursery/noAutofocus": "https://rome.tools/docs/lint/rules/noAutofocus",
+    "lint/nursery/useKeyWithClickEvents": "https://rome.tools/docs/lint/rules/useKeyWithClickEvents",
     "lint/style/noNegationElse": "https://rome.tools/docs/lint/rules/noNegationElse",
     "lint/style/noShoutyConstants": "https://rome.tools/docs/lint/rules/noShoutyConstants",
     "lint/style/useSelfClosingElements": "https://rome.tools/docs/lint/rules/useSelfClosingElements",
