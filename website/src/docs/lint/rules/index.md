@@ -351,6 +351,15 @@ Enforce camel case naming convention.
 This rule enforces the use of <code>&lt;&gt;...&lt;/&gt;</code> over <code>&lt;Fragment&gt;...&lt;/Fragment&gt;</code>.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useKeyWithMouseEvents">
+	<a href="/docs/lint/rules/useKeyWithMouseEvents">useKeyWithMouseEvents (since v10.0.0)</a>
+	<a class="header-anchor" href="#useKeyWithMouseEvents"></a>
+</h3>
+Enforce that <code>onMouseOver</code>/<code>onMouseOut</code> are accompanied by <code>onFocus</code>/<code>onBlur</code> for keyboard-only users.
+It is important to take into account users with physical disabilities who cannot use a mouse,
+who use assistive technology or screenreader.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useOptionalChain">
 	<a href="/docs/lint/rules/useOptionalChain">useOptionalChain (since v0.10.0)</a>
 	<a class="header-anchor" href="#useOptionalChain"></a>
