@@ -18,6 +18,9 @@ React.createElement("div", { tabIndex: `1` })
 React.createElement("div", { tabIndex: func() })
 React.createElement("div", { tabIndex: null })
 React.createElement("div", { tabIndex: undefined })
+React.createElement("div", { tabIndex: typeof e })
+React.createElement("div", { ...props })
+React.createElement("div", props)
 React.createElement("div", {})
 
 ```

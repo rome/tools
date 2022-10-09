@@ -14,6 +14,7 @@ expression: invalidJsx.jsx
 	<div tabIndex={"1"}>foo</div>
 	<div tabIndex={'5'}>foo</div>
 	<div tabIndex={+5}>foo</div>
+	<div tabIndex={+05}>foo</div>
 	<div tabIndex="1">foo</div>
 </>
 
@@ -131,7 +132,7 @@ invalidJsx.jsx:8:7 lint/nursery/noPositiveTabindex ━━━━━━━━━�
    > 8 │ 	<div tabIndex={'5'}>foo</div>
        │ 	     ^^^^^^^^
      9 │ 	<div tabIndex={+5}>foo</div>
-    10 │ 	<div tabIndex="1">foo</div>
+    10 │ 	<div tabIndex={+05}>foo</div>
   
   i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
   
@@ -147,8 +148,8 @@ invalidJsx.jsx:9:7 lint/nursery/noPositiveTabindex ━━━━━━━━━�
      8 │ 	<div tabIndex={'5'}>foo</div>
    > 9 │ 	<div tabIndex={+5}>foo</div>
        │ 	     ^^^^^^^^
-    10 │ 	<div tabIndex="1">foo</div>
-    11 │ </>
+    10 │ 	<div tabIndex={+05}>foo</div>
+    11 │ 	<div tabIndex="1">foo</div>
   
   i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
   
@@ -162,10 +163,27 @@ invalidJsx.jsx:10:7 lint/nursery/noPositiveTabindex ━━━━━━━━━�
   
      8 │ 	<div tabIndex={'5'}>foo</div>
      9 │ 	<div tabIndex={+5}>foo</div>
-  > 10 │ 	<div tabIndex="1">foo</div>
+  > 10 │ 	<div tabIndex={+05}>foo</div>
        │ 	     ^^^^^^^^
-    11 │ </>
-    12 │ 
+    11 │ 	<div tabIndex="1">foo</div>
+    12 │ </>
+  
+  i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
+  
+
+```
+
+```
+invalidJsx.jsx:11:7 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Avoid positive values for the tabIndex prop.
+  
+     9 │ 	<div tabIndex={+5}>foo</div>
+    10 │ 	<div tabIndex={+05}>foo</div>
+  > 11 │ 	<div tabIndex="1">foo</div>
+       │ 	     ^^^^^^^^
+    12 │ </>
+    13 │ 
   
   i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
   
