@@ -8,6 +8,7 @@ use std::ops;
 mod categories;
 pub mod context;
 mod matcher;
+mod options;
 mod query;
 mod registry;
 mod rule;
@@ -21,6 +22,7 @@ pub use rome_diagnostics::v2::category_concat;
 
 pub use crate::categories::{ActionCategory, RuleCategories, RuleCategory};
 pub use crate::matcher::{InspectMatcher, MatchQueryParams, QueryMatcher, RuleKey, SignalEntry};
+pub use crate::options::{AnalyzerConfiguration, AnalyzerOptions, AnalyzerRules};
 pub use crate::query::{Ast, QueryKey, QueryMatch, Queryable};
 pub use crate::registry::{
     LanguageRoot, Phase, Phases, RegistryRuleMetadata, RuleRegistry, RuleSuppressions,
@@ -59,15 +61,16 @@ pub struct Analyzer<'analyzer, L: Language, Matcher, Break> {
     query_matcher: Matcher,
     /// Language-specific suppression comment parsing function
     parse_suppression_comment: SuppressionParser,
-    /// Handles analyzer signals emitted by invidual rules
+    /// Handles analyzer signals emitted by individual rules
     emit_signal: SignalHandler<'analyzer, L, Break>,
 }
 
-pub struct AnalyzerContext<L: Language> {
+pub struct AnalyzerContext<'a, L: Language> {
     pub file_id: FileId,
     pub root: LanguageRoot<L>,
     pub services: ServiceBag,
     pub range: Option<TextRange>,
+    pub options: &'a AnalyzerOptions,
 }
 
 impl<'analyzer, L, Matcher, Break> Analyzer<'analyzer, L, Matcher, Break>
@@ -125,6 +128,7 @@ where
                 root: &ctx.root,
                 services: &ctx.services,
                 range: ctx.range,
+                options: ctx.options,
             };
 
             // The first phase being run will inspect the tokens and parse the
@@ -181,6 +185,8 @@ struct PhaseRunner<'analyzer, 'phase, L: Language, Matcher, Break> {
     services: &'phase ServiceBag,
     /// Optional text range to restrict the analysis to
     range: Option<TextRange>,
+
+    options: &'phase AnalyzerOptions,
 }
 
 /// Single entry for a suppression comment in the `line_suppressions` buffer
@@ -233,6 +239,7 @@ where
                     range: self.range,
                     query_matcher: self.query_matcher,
                     signal_queue: &mut self.signal_queue,
+                    options: self.options,
                 };
 
                 visitor.visit(&node_event, ctx);
@@ -257,6 +264,7 @@ where
                     range: self.range,
                     query_matcher: self.query_matcher,
                     signal_queue: &mut self.signal_queue,
+                    options: self.options,
                 };
 
                 visitor.visit(&event, ctx);

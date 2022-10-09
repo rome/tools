@@ -3,7 +3,9 @@ use std::{cmp::Ordering, collections::BinaryHeap};
 use rome_diagnostics::file::FileId;
 use rome_rowan::{Language, TextRange};
 
-use crate::{AnalyzerSignal, Phases, QueryMatch, Rule, RuleFilter, RuleGroup, ServiceBag};
+use crate::{
+    AnalyzerOptions, AnalyzerSignal, Phases, QueryMatch, Rule, RuleFilter, RuleGroup, ServiceBag,
+};
 
 /// The [QueryMatcher] trait is responsible of running lint rules on
 /// [QueryMatch] instances emitted by the various [Visitor](crate::Visitor)
@@ -26,6 +28,7 @@ pub struct MatchQueryParams<'phase, 'query, L: Language> {
     pub query: QueryMatch<L>,
     pub services: &'phase ServiceBag,
     pub signal_queue: &'query mut BinaryHeap<SignalEntry<'phase, L>>,
+    pub options: &'query AnalyzerOptions,
 }
 
 /// Opaque identifier for a group of rule
@@ -51,7 +54,7 @@ impl From<GroupKey> for RuleFilter<'static> {
 }
 
 /// Opaque identifier for a single rule
-#[derive(Copy, Clone, Debug, PartialEq, Eq)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, Hash)]
 pub struct RuleKey {
     group: &'static str,
     rule: &'static str,
@@ -64,6 +67,14 @@ impl RuleKey {
 
     pub fn rule<R: Rule>() -> Self {
         Self::new(<R::Group as RuleGroup>::NAME, R::METADATA.name)
+    }
+
+    pub fn group(&self) -> &'static str {
+        self.group
+    }
+
+    pub fn rule_name(&self) -> &'static str {
+        self.rule
     }
 }
 
@@ -162,9 +173,9 @@ mod tests {
     };
 
     use crate::{
-        signals::DiagnosticSignal, Analyzer, AnalyzerContext, AnalyzerDiagnostic, AnalyzerSignal,
-        ControlFlow, Never, Phases, QueryMatch, QueryMatcher, RuleKey, ServiceBag, SignalEntry,
-        SyntaxVisitor,
+        signals::DiagnosticSignal, Analyzer, AnalyzerContext, AnalyzerDiagnostic, AnalyzerOptions,
+        AnalyzerSignal, ControlFlow, Never, Phases, QueryMatch, QueryMatcher, RuleKey, ServiceBag,
+        SignalEntry, SyntaxVisitor,
     };
 
     use super::{GroupKey, MatchQueryParams};
@@ -348,6 +359,7 @@ mod tests {
             root,
             range: None,
             services: ServiceBag::default(),
+            options: &AnalyzerOptions::default(),
         };
 
         let result: Option<Never> = analyzer.run(ctx);

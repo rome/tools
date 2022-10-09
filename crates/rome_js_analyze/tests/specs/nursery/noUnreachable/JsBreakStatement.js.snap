@@ -24,9 +24,7 @@ function JsBreakStatement2() {
 ```
 JsBreakStatement.js:4:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This code is unreachable
-  
-  ! ... before it can reach this code
+  ! This code will never be reached ...
   
     2 │     while (true) {
     3 │         break;
@@ -35,7 +33,7 @@ JsBreakStatement.js:4:9 lint/nursery/noUnreachable ━━━━━━━━━�
     5 │     }
     6 │ }
   
-  i This statement will break the flow of the code ...
+  i ... because this statement will break the flow of the code beforehand
   
     1 │ function JsBreakStatement1() {
     2 │     while (true) {
@@ -50,9 +48,7 @@ JsBreakStatement.js:4:9 lint/nursery/noUnreachable ━━━━━━━━━�
 ```
 JsBreakStatement.js:11:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This code is unreachable
-  
-  ! ... before it can reach this code
+  ! This code will never be reached ...
   
      9 │     while (true) {
     10 │         break;
@@ -61,7 +57,7 @@ JsBreakStatement.js:11:9 lint/nursery/noUnreachable ━━━━━━━━━�
     12 │     }
     13 │ }
   
-  i This statement will break the flow of the code ...
+  i ... because this statement will break the flow of the code beforehand
   
      8 │ function JsBreakStatement2() {
      9 │     while (true) {

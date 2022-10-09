@@ -23,9 +23,7 @@ function JsDoWhileStatement2() {
 ```
 JsDoWhileStatement.js:4:14 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This code is unreachable
-  
-  ! ... before it can reach this code
+  ! This code will never be reached ...
   
     2 │     do {
     3 │         break;
@@ -34,7 +32,7 @@ JsDoWhileStatement.js:4:14 lint/nursery/noUnreachable ━━━━━━━━�
     5 │ }
     6 │ 
   
-  i This statement will break the flow of the code ...
+  i ... because this statement will break the flow of the code beforehand
   
     1 │ function JsDoWhileStatement1() {
     2 │     do {
@@ -49,9 +47,7 @@ JsDoWhileStatement.js:4:14 lint/nursery/noUnreachable ━━━━━━━━�
 ```
 JsDoWhileStatement.js:10:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This code is unreachable
-  
-  ! ... before it can reach this code
+  ! This code will never be reached ...
   
      8 │     do {
      9 │         continue;
@@ -60,7 +56,7 @@ JsDoWhileStatement.js:10:9 lint/nursery/noUnreachable ━━━━━━━━�
     11 │     } while (true);
     12 │ }
   
-  i This statement will continue the loop ...
+  i ... because this statement will continue the loop beforehand
   
      7 │ function JsDoWhileStatement2() {
      8 │     do {

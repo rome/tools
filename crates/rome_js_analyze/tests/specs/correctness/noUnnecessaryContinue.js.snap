@@ -152,13 +152,13 @@ noUnnecessaryContinue.js:14:3 lint/correctness/noUnnecessaryContinue  FIXABLE  �
   
   i Suggested fix: Delete the unnecessary continue statement
   
-    12 12 │   → if·(i·>·5)·{
-    13 13 │   → → console.log("foo");
+    12 12 │   	if (i > 5) {
+    13 13 │   		console.log("foo");
     14    │ - → → continue;
     15    │ - → }·else·if·(i·>=·5·&&·i·<·8)·{
        14 │ + → }·else·if·(i·>=·5·&&·i·<·8)·{
-    16 15 │   → → console.log("test");
-    17 16 │   → }·else·{
+    16 15 │   		console.log("test");
+    17 16 │   	} else {
   
 
 ```

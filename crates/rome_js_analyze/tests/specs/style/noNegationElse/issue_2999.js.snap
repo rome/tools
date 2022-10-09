@@ -33,11 +33,11 @@ issue_2999.js:1:1 lint/style/noNegationElse  FIXABLE  ━━━━━━━━�
   
     1   │ - if·(!true)·{
       1 │ + if·(true)·something();·else·{
-    2 2 │   → consequent;
+    2 2 │   	consequent;
     3   │ - }·else·something();
       3 │ + }
-    4 4 │   //valid·https://github.com/rome/tools/issues/2999·
-    5 5 │   if·(!/^NCT/.test(input))·{
+    4 4 │   //valid https://github.com/rome/tools/issues/2999·
+    5 5 │   if (!/^NCT/.test(input)) {
   
 
 ```

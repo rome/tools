@@ -39,12 +39,12 @@ useTemplate.js:6:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━━
   
   i Suggested fix: Use a TemplateLiteral.
   
-     4  4 │   //·invalid
-     5  5 │   const·foo·=·"bar";
+     4  4 │   // invalid
+     5  5 │   const foo = "bar";
      6    │ - console.log(foo·+·"baz");
         6 │ + console.log(`${foo}baz`);
-     7  7 │   console.log(1·*·2·+·"foo");
-     8  8 │   console.log(1·+·"foo"·+·2·+·"bar"·+·"baz"·+·3);
+     7  7 │   console.log(1 * 2 + "foo");
+     8  8 │   console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
   
 
 ```
@@ -63,12 +63,12 @@ useTemplate.js:7:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━━
   
   i Suggested fix: Use a TemplateLiteral.
   
-     5  5 │   const·foo·=·"bar";
-     6  6 │   console.log(foo·+·"baz");
+     5  5 │   const foo = "bar";
+     6  6 │   console.log(foo + "baz");
      7    │ - console.log(1·*·2·+·"foo");
         7 │ + console.log(`${1·*·2}foo`);
-     8  8 │   console.log(1·+·"foo"·+·2·+·"bar"·+·"baz"·+·3);
-     9  9 │   console.log((1·+·"foo")·*·2);
+     8  8 │   console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+     9  9 │   console.log((1 + "foo") * 2);
   
 
 ```
@@ -87,12 +87,12 @@ useTemplate.js:8:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━━
   
   i Suggested fix: Use a TemplateLiteral.
   
-     6  6 │   console.log(foo·+·"baz");
-     7  7 │   console.log(1·*·2·+·"foo");
+     6  6 │   console.log(foo + "baz");
+     7  7 │   console.log(1 * 2 + "foo");
      8    │ - console.log(1·+·"foo"·+·2·+·"bar"·+·"baz"·+·3);
         8 │ + console.log(`${1}foo${2}barbaz${3}`);
-     9  9 │   console.log((1·+·"foo")·*·2);
-    10 10 │   console.log(1·*·(2·+·"foo")·+·"bar");
+     9  9 │   console.log((1 + "foo") * 2);
+    10 10 │   console.log(1 * (2 + "foo") + "bar");
   
 
 ```
@@ -111,12 +111,12 @@ useTemplate.js:9:14 lint/correctness/useTemplate  FIXABLE  ━━━━━━━
   
   i Suggested fix: Use a TemplateLiteral.
   
-     7  7 │   console.log(1·*·2·+·"foo");
-     8  8 │   console.log(1·+·"foo"·+·2·+·"bar"·+·"baz"·+·3);
+     7  7 │   console.log(1 * 2 + "foo");
+     8  8 │   console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
      9    │ - console.log((1·+·"foo")·*·2);
         9 │ + console.log((`${1}foo`)·*·2);
-    10 10 │   console.log(1·*·(2·+·"foo")·+·"bar");
-    11 11 │   console.log("foo"·+·1);
+    10 10 │   console.log(1 * (2 + "foo") + "bar");
+    11 11 │   console.log("foo" + 1);
   
 
 ```
@@ -135,12 +135,12 @@ useTemplate.js:10:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━�
   
   i Suggested fix: Use a TemplateLiteral.
   
-     8  8 │   console.log(1·+·"foo"·+·2·+·"bar"·+·"baz"·+·3);
-     9  9 │   console.log((1·+·"foo")·*·2);
+     8  8 │   console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+     9  9 │   console.log((1 + "foo") * 2);
     10    │ - console.log(1·*·(2·+·"foo")·+·"bar");
        10 │ + console.log(`${1·*·(2·+·"foo")}bar`);
-    11 11 │   console.log("foo"·+·1);
-    12 12 │   console.log("foo"·+·`bar${`baz${"bat"·+·"bam"}`}`·+·"boo");
+    11 11 │   console.log("foo" + 1);
+    12 12 │   console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
   
 
 ```
@@ -159,12 +159,12 @@ useTemplate.js:10:18 lint/correctness/useTemplate  FIXABLE  ━━━━━━�
   
   i Suggested fix: Use a TemplateLiteral.
   
-     8  8 │   console.log(1·+·"foo"·+·2·+·"bar"·+·"baz"·+·3);
-     9  9 │   console.log((1·+·"foo")·*·2);
+     8  8 │   console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+     9  9 │   console.log((1 + "foo") * 2);
     10    │ - console.log(1·*·(2·+·"foo")·+·"bar");
        10 │ + console.log(1·*·(`${2}foo`)·+·"bar");
-    11 11 │   console.log("foo"·+·1);
-    12 12 │   console.log("foo"·+·`bar${`baz${"bat"·+·"bam"}`}`·+·"boo");
+    11 11 │   console.log("foo" + 1);
+    12 12 │   console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
   
 
 ```
@@ -183,12 +183,12 @@ useTemplate.js:11:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━�
   
   i Suggested fix: Use a TemplateLiteral.
   
-     9  9 │   console.log((1·+·"foo")·*·2);
-    10 10 │   console.log(1·*·(2·+·"foo")·+·"bar");
+     9  9 │   console.log((1 + "foo") * 2);
+    10 10 │   console.log(1 * (2 + "foo") + "bar");
     11    │ - console.log("foo"·+·1);
        11 │ + console.log(`foo${1}`);
-    12 12 │   console.log("foo"·+·`bar${`baz${"bat"·+·"bam"}`}`·+·"boo");
-    13 13 │   console.log("foo"·+·1·+·2);
+    12 12 │   console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
+    13 13 │   console.log("foo" + 1 + 2);
   
 
 ```
@@ -207,12 +207,12 @@ useTemplate.js:12:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━�
   
   i Suggested fix: Use a TemplateLiteral.
   
-    10 10 │   console.log(1·*·(2·+·"foo")·+·"bar");
-    11 11 │   console.log("foo"·+·1);
+    10 10 │   console.log(1 * (2 + "foo") + "bar");
+    11 11 │   console.log("foo" + 1);
     12    │ - console.log("foo"·+·`bar${`baz${"bat"·+·"bam"}`}`·+·"boo");
        12 │ + console.log(`foobarbaz${"bat"·+·"bam"}boo`);
-    13 13 │   console.log("foo"·+·1·+·2);
-    14 14 │   1·+·"2"·-·3;
+    13 13 │   console.log("foo" + 1 + 2);
+    14 14 │   1 + "2" - 3;
   
 
 ```
@@ -231,12 +231,12 @@ useTemplate.js:13:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━�
   
   i Suggested fix: Use a TemplateLiteral.
   
-    11 11 │   console.log("foo"·+·1);
-    12 12 │   console.log("foo"·+·`bar${`baz${"bat"·+·"bam"}`}`·+·"boo");
+    11 11 │   console.log("foo" + 1);
+    12 12 │   console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
     13    │ - console.log("foo"·+·1·+·2);
        13 │ + console.log(`foo${1}${2}`);
-    14 14 │   1·+·"2"·-·3;
-    15 15 │   foo()·+·"·bar";
+    14 14 │   1 + "2" - 3;
+    15 15 │   foo() + " bar";
   
 
 ```
@@ -255,11 +255,11 @@ useTemplate.js:14:1 lint/correctness/useTemplate  FIXABLE  ━━━━━━━
   
   i Suggested fix: Use a TemplateLiteral.
   
-    12 12 │   console.log("foo"·+·`bar${`baz${"bat"·+·"bam"}`}`·+·"boo");
-    13 13 │   console.log("foo"·+·1·+·2);
+    12 12 │   console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
+    13 13 │   console.log("foo" + 1 + 2);
     14    │ - 1·+·"2"·-·3;
        14 │ + `${1}2`·-·3;
-    15 15 │   foo()·+·"·bar";
+    15 15 │   foo() + " bar";
     16 16 │   
   
 
@@ -279,12 +279,12 @@ useTemplate.js:15:1 lint/correctness/useTemplate  FIXABLE  ━━━━━━━
   
   i Suggested fix: Use a TemplateLiteral.
   
-    13 13 │   console.log("foo"·+·1·+·2);
-    14 14 │   1·+·"2"·-·3;
+    13 13 │   console.log("foo" + 1 + 2);
+    14 14 │   1 + "2" - 3;
     15    │ - foo()·+·"·bar";
        15 │ + `${foo()}·bar`;
     16 16 │   
-    17 17 │   1·*·/**leading*/"foo"····/**trailing·*/···················+·"bar"
+    17 17 │   1 * /**leading*/"foo"    /**trailing */                   + "bar"
   
 
 ```
@@ -302,7 +302,7 @@ useTemplate.js:17:1 lint/correctness/useTemplate  FIXABLE  ━━━━━━━
   
   i Suggested fix: Use a TemplateLiteral.
   
-    15 15 │   foo()·+·"·bar";
+    15 15 │   foo() + " bar";
     16 16 │   
     17    │ - 1·*·/**leading*/"foo"····/**trailing·*/···················+·"bar"
        17 │ + `${1·*·/**leading*/"foo"····/**trailing·*/}bar`

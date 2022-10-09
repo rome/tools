@@ -1,5 +1,6 @@
 use crate::{
-    registry::RuleRoot, CannotCreateServicesError, FromServices, Queryable, Rule, ServiceBag,
+    registry::RuleRoot, AnalyzerOptions, CannotCreateServicesError, FromServices, Queryable, Rule,
+    ServiceBag,
 };
 use std::ops::Deref;
 
@@ -13,6 +14,7 @@ where
     query_result: &'a RuleQueryResult<R>,
     root: &'a RuleRoot<R>,
     services: RuleServiceBag<R>,
+    options: &'a AnalyzerOptions,
 }
 
 impl<'a, R> RuleContext<'a, R>
@@ -23,11 +25,13 @@ where
         query_result: &'a RuleQueryResult<R>,
         root: &'a RuleRoot<R>,
         services: &ServiceBag,
+        options: &'a AnalyzerOptions,
     ) -> Result<Self, CannotCreateServicesError> {
         Ok(Self {
             query_result,
             root,
             services: FromServices::from_services(services)?,
+            options,
         })
     }
 
@@ -35,8 +39,14 @@ where
         self.query_result
     }
 
+    /// Returns a clone of the AST root
     pub fn root(&self) -> RuleRoot<R> {
         self.root.clone()
+    }
+
+    /// Returns the analyzer options
+    pub fn options(&self) -> &AnalyzerOptions {
+        self.options
     }
 }
 

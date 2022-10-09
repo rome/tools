@@ -1,12 +1,12 @@
 //! Implementation of the [FileSystem] and related traits for the underlying OS filesystem
-use super::{BoxedTraversal, File};
+use super::{BoxedTraversal, File, UnhandledDiagnostic, UnhandledKind};
 use crate::fs::{FileSystemExt, OpenOptions};
 use crate::{
     fs::{TraversalContext, TraversalScope},
     FileSystem, RomePath,
 };
 use rayon::{scope, Scope};
-use rome_diagnostics::v2::{adapters::IoError, Diagnostic, DiagnosticExt, Error, FileId};
+use rome_diagnostics::v2::{adapters::IoError, DiagnosticExt, Error, FileId};
 use std::{
     ffi::OsStr,
     fs,
@@ -126,7 +126,10 @@ impl<'scope> TraversalScope<'scope> for OsTraversalScope<'scope> {
             return;
         }
 
-        ctx.push_diagnostic(Error::from(UnhandledDiagnostic { file_id }));
+        ctx.push_diagnostic(Error::from(UnhandledDiagnostic {
+            file_id,
+            file_kind: UnhandledKind::from(file_type),
+        }));
     }
 }
 
@@ -200,13 +203,19 @@ fn handle_dir<'scope>(
             continue;
         }
 
-        ctx.push_diagnostic(Error::from(UnhandledDiagnostic { file_id }));
+        ctx.push_diagnostic(Error::from(UnhandledDiagnostic {
+            file_id,
+            file_kind: UnhandledKind::from(file_type),
+        }));
     }
 }
 
-#[derive(Debug, Diagnostic)]
-#[diagnostic(category = "internalError/fs", message = "unhandled file type")]
-struct UnhandledDiagnostic {
-    #[location(resource)]
-    file_id: FileId,
+impl From<fs::FileType> for UnhandledKind {
+    fn from(file_type: fs::FileType) -> Self {
+        if file_type.is_symlink() {
+            Self::Symlink
+        } else {
+            Self::Other
+        }
+    }
 }

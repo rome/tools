@@ -15,3 +15,11 @@ members = [
 [profile.release-with-debug]
 inherits = "release"
 debug = true
+
+[workspace.dependencies]
+indexmap = "1.9.1"
+tracing = { version = "0.1.31", default-features = false, features = ["std"] }
+dashmap = "5.4.0"
+rustc-hash = "1.1.0"
+countme = "3.0.1"
+tokio = { version = "1.15.0" }

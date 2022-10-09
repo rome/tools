@@ -28,11 +28,11 @@ noCommentText.tsx:2:17 lint/correctness/noCommentText  FIXABLE  ━━━━━�
   
   i Suggested fix: Wrap the comments with braces
   
-    1 1 │   //·invalid
+    1 1 │   // invalid
     2   │ - const·a3·=·<div>//·comment</div>;
       2 │ + const·a3·=·<div>{/*·comment*/}</div>;
-    3 3 │   const·a4·=·<div>/*·comment·*/</div>;
-    4 4 │   const·a5·=·<div>/**·comment·*/</div>;
+    3 3 │   const a4 = <div>/* comment */</div>;
+    4 4 │   const a5 = <div>/** comment */</div>;
   
 
 ```
@@ -70,12 +70,12 @@ noCommentText.tsx:4:17 lint/correctness/noCommentText  FIXABLE  ━━━━━�
   
   i Suggested fix: Wrap the comments with braces
   
-    2 2 │   const·a3·=·<div>//·comment</div>;
-    3 3 │   const·a4·=·<div>/*·comment·*/</div>;
+    2 2 │   const a3 = <div>// comment</div>;
+    3 3 │   const a4 = <div>/* comment */</div>;
     4   │ - const·a5·=·<div>/**·comment·*/</div>;
       4 │ + const·a5·=·<div>{/*·comment·*/}</div>;
-    5 5 │   //·valid
-    6 6 │   const·a·=·<div>{/*·comment·*/}</div>;
+    5 5 │   // valid
+    6 6 │   const a = <div>{/* comment */}</div>;
   
 
 ```

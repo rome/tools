@@ -58,8 +58,8 @@ useSelfClosingElements.tsx:11:1 lint/style/useSelfClosingElements  FIXABLE  ━�
   
   i Suggested fix: Use a SelfClosingElement instead
   
-     9  9 │   //·invalid
-    10 10 │   <div···············></div>;
+     9  9 │   // invalid
+    10 10 │   <div               ></div>;
     11    │ - <Component></Component>;
        11 │ + <Component·/>;
     12 12 │   <Foo.bar></Foo.bar>;
@@ -82,7 +82,7 @@ useSelfClosingElements.tsx:12:1 lint/style/useSelfClosingElements  FIXABLE  ━�
   
   i Suggested fix: Use a SelfClosingElement instead
   
-    10 10 │   <div···············></div>;
+    10 10 │   <div               ></div>;
     11 11 │   <Component></Component>;
     12    │ - <Foo.bar></Foo.bar>;
        12 │ + <Foo.bar·/>;
@@ -162,8 +162,8 @@ useSelfClosingElements.tsx:19:1 lint/style/useSelfClosingElements  FIXABLE  ━�
   
   i Suggested fix: Use a SelfClosingElement instead
   
-    17 17 │   <div·></div>·/*·comment·*/;
-    18 18 │   /*·comment·*/·<div·></div>;
+    17 17 │   <div ></div> /* comment */;
+    18 18 │   /* comment */ <div ></div>;
     19    │ - <Generic<true>></Generic>;
        19 │ + <Generic<true>·/>;
   

@@ -46,12 +46,12 @@ useShorthandArrayType.ts:6:12 lint/style/useShorthandArrayType  FIXABLE  ━━�
   
   i Suggested fix: Use shorthand T[] syntax to replace
   
-     4  4 │   let·valid:·Array<foo·|·bar>;
-     5  5 │   //·invalid
+     4  4 │   let valid: Array<foo | bar>;
+     5  5 │   // invalid
      6    │ - let·valid:·Array<foo>;
         6 │ + let·valid:·foo[];
-     7  7 │   let·invalid1:·Array<foo,·Array<string>>;
-     8  8 │   let·invalid2:·Promise<Array<string>>;
+     7  7 │   let invalid1: Array<foo, Array<string>>;
+     8  8 │   let invalid2: Promise<Array<string>>;
   
 
 ```
@@ -70,12 +70,12 @@ useShorthandArrayType.ts:7:15 lint/style/useShorthandArrayType  FIXABLE  ━━�
   
   i Suggested fix: Use shorthand T[] syntax to replace
   
-     5  5 │   //·invalid
-     6  6 │   let·valid:·Array<foo>;
+     5  5 │   // invalid
+     6  6 │   let valid: Array<foo>;
      7    │ - let·invalid1:·Array<foo,·Array<string>>;
         7 │ + let·invalid1:·foo[]·|·string[][];
-     8  8 │   let·invalid2:·Promise<Array<string>>;
-     9  9 │   let·invalid3:·Array<Foo<Bar>>;
+     8  8 │   let invalid2: Promise<Array<string>>;
+     9  9 │   let invalid3: Array<Foo<Bar>>;
   
 
 ```
@@ -94,12 +94,12 @@ useShorthandArrayType.ts:7:26 lint/style/useShorthandArrayType  FIXABLE  ━━�
   
   i Suggested fix: Use shorthand T[] syntax to replace
   
-     5  5 │   //·invalid
-     6  6 │   let·valid:·Array<foo>;
+     5  5 │   // invalid
+     6  6 │   let valid: Array<foo>;
      7    │ - let·invalid1:·Array<foo,·Array<string>>;
         7 │ + let·invalid1:·Array<foo,·string[]>;
-     8  8 │   let·invalid2:·Promise<Array<string>>;
-     9  9 │   let·invalid3:·Array<Foo<Bar>>;
+     8  8 │   let invalid2: Promise<Array<string>>;
+     9  9 │   let invalid3: Array<Foo<Bar>>;
   
 
 ```
@@ -118,12 +118,12 @@ useShorthandArrayType.ts:8:23 lint/style/useShorthandArrayType  FIXABLE  ━━�
   
   i Suggested fix: Use shorthand T[] syntax to replace
   
-     6  6 │   let·valid:·Array<foo>;
-     7  7 │   let·invalid1:·Array<foo,·Array<string>>;
+     6  6 │   let valid: Array<foo>;
+     7  7 │   let invalid1: Array<foo, Array<string>>;
      8    │ - let·invalid2:·Promise<Array<string>>;
         8 │ + let·invalid2:·Promise<string[]>;
-     9  9 │   let·invalid3:·Array<Foo<Bar>>;
-    10 10 │   let·invalid4:·Array<[number,·number]>;
+     9  9 │   let invalid3: Array<Foo<Bar>>;
+    10 10 │   let invalid4: Array<[number, number]>;
   
 
 ```
@@ -142,11 +142,11 @@ useShorthandArrayType.ts:9:15 lint/style/useShorthandArrayType  FIXABLE  ━━�
   
   i Suggested fix: Use shorthand T[] syntax to replace
   
-     7  7 │   let·invalid1:·Array<foo,·Array<string>>;
-     8  8 │   let·invalid2:·Promise<Array<string>>;
+     7  7 │   let invalid1: Array<foo, Array<string>>;
+     8  8 │   let invalid2: Promise<Array<string>>;
      9    │ - let·invalid3:·Array<Foo<Bar>>;
         9 │ + let·invalid3:·Foo<Bar>[];
-    10 10 │   let·invalid4:·Array<[number,·number]>;
+    10 10 │   let invalid4: Array<[number, number]>;
     11 11 │   
   
 
@@ -166,12 +166,12 @@ useShorthandArrayType.ts:10:15 lint/style/useShorthandArrayType  FIXABLE  ━━
   
   i Suggested fix: Use shorthand T[] syntax to replace
   
-     8  8 │   let·invalid2:·Promise<Array<string>>;
-     9  9 │   let·invalid3:·Array<Foo<Bar>>;
+     8  8 │   let invalid2: Promise<Array<string>>;
+     9  9 │   let invalid3: Array<Foo<Bar>>;
     10    │ - let·invalid4:·Array<[number,·number]>;
        10 │ + let·invalid4:·[number,·number][];
     11 11 │   
-    12 12 │   //·valid
+    12 12 │   // valid
   
 
 ```
@@ -190,11 +190,11 @@ useShorthandArrayType.ts:20:13 lint/style/useShorthandArrayType  FIXABLE  ━━
   i Suggested fix: Use shorthand T[] syntax to replace
   
     18 18 │   
-    19 19 │   //parenthesized·type
+    19 19 │   //parenthesized type
     20    │ - let·valid8:·Array<(string·&·number)>;
        20 │ + let·valid8:·(string·&·number)[];
-    21 21 │   //·infer·type
-    22 22 │   type·valid9<T>·=·T·extends·Array<infer·R>·?·R·:·any;
+    21 21 │   // infer type
+    22 22 │   type valid9<T> = T extends Array<infer R> ? R : any;
   
 
 ```

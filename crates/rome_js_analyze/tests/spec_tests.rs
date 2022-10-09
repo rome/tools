@@ -4,7 +4,9 @@ use std::{
 
 use similar::TextDiff;
 
-use rome_analyze::{AnalysisFilter, AnalyzerAction, ControlFlow, Never, RuleFilter};
+use rome_analyze::{
+    AnalysisFilter, AnalyzerAction, AnalyzerOptions, ControlFlow, Never, RuleFilter,
+};
 use rome_console::{
     fmt::{Formatter, Termcolor},
     markup, Markup,
@@ -42,8 +44,8 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
 
     let mut diagnostics = Vec::new();
     let mut code_fixes = Vec::new();
-
-    rome_js_analyze::analyze(FileId::zero(), &root, filter, |event| {
+    let options = AnalyzerOptions::default();
+    rome_js_analyze::analyze(FileId::zero(), &root, filter, &options, |event| {
         if let Some(diag) = event.diagnostic() {
             let mut diag = diag.into_diagnostic(Severity::Warning);
             if let Some(action) = event.action() {

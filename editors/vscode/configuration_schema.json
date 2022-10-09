@@ -491,6 +491,16 @@
             }
           ]
         },
+        "noAutofocus": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noChildrenProp": {
           "anyOf": [
             {

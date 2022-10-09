@@ -34,7 +34,7 @@ useSingleVarDeclarator.js:1:1 lint/correctness/useSingleVarDeclarator  FIXABLE  
         1 │ + var·x
         2 │ + var·y
      2  3 │   
-     3  4 │   function·test()·{
+     3  4 │   function test() {
   
 
 ```
@@ -53,8 +53,8 @@ useSingleVarDeclarator.js:5:2 lint/correctness/useSingleVarDeclarator  FIXABLE  
   
   i Suggested fix: Break out into multiple declarations
   
-     3  3 │   function·test()·{
-     4  4 │   → //·Comment
+     3  3 │   function test() {
+     4  4 │   	// Comment
      5    │ - → let·foo,·bar;
         5 │ + → let·foo;
         6 │ + → let·bar;

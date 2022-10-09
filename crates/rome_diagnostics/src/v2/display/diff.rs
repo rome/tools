@@ -416,10 +416,11 @@ fn print_short_diff(
     let last_index = entry.diffs.len().saturating_sub(1);
 
     for (i, (tag, text)) in entry.diffs.iter().enumerate() {
+        let is_changed = *tag != ChangeTag::Equal;
         let options = PrintInvisiblesOptions {
             ignore_leading_tabs: false,
             ignore_lone_spaces: false,
-            ignore_trailing_carriage_return: *tag != ChangeTag::Equal,
+            ignore_trailing_carriage_return: is_changed,
             at_line_start,
             at_line_end: i == last_index,
         };
@@ -523,15 +524,20 @@ fn print_full_diff(
         last_displayed_line = Some(i);
 
         if single_line {
+            let line = FormatDiffLine {
+                is_equal: line_type == ChangeTag::Equal,
+                ops: &line.diffs,
+            };
+
             match line_type {
                 ChangeTag::Equal => fmt.write_markup(markup! {
-                    "  "{FormatDiffLine(&line.diffs)}"\n"
+                    "  "{line}"\n"
                 })?,
                 ChangeTag::Delete => fmt.write_markup(markup! {
-                    {marker}" "<Error>{FormatDiffLine(&line.diffs)}</Error>"\n"
+                    {marker}" "<Error>{line}</Error>"\n"
                 })?,
                 ChangeTag::Insert => fmt.write_markup(markup! {
-                    {marker}" "<Success>{FormatDiffLine(&line.diffs)}</Success>"\n"
+                    {marker}" "<Success>{line}</Success>"\n"
                 })?,
             }
         } else {
@@ -567,15 +573,20 @@ fn print_full_diff(
                 <Emphasis>" \u{2502} "</Emphasis>{marker}' '
             })?;
 
+            let line = FormatDiffLine {
+                is_equal: line_type == ChangeTag::Equal,
+                ops: &line.diffs,
+            };
+
             match line_type {
                 ChangeTag::Equal => fmt.write_markup(markup! {
-                    {FormatDiffLine(&line.diffs)}"\n"
+                    {line}"\n"
                 })?,
                 ChangeTag::Delete => fmt.write_markup(markup! {
-                    <Error>{FormatDiffLine(&line.diffs)}</Error>"\n"
+                    <Error>{line}</Error>"\n"
                 })?,
                 ChangeTag::Insert => fmt.write_markup(markup! {
-                    <Success>{FormatDiffLine(&line.diffs)}</Success>"\n"
+                    <Success>{line}</Success>"\n"
                 })?,
             }
         }
@@ -590,23 +601,27 @@ fn print_full_diff(
     fmt.write_str("\n")
 }
 
-struct FormatDiffLine<'a>(&'a [(ChangeTag, &'a str)]);
+struct FormatDiffLine<'a> {
+    is_equal: bool,
+    ops: &'a [(ChangeTag, &'a str)],
+}
 
 impl fmt::Display for FormatDiffLine<'_> {
     fn fmt(&self, fmt: &mut fmt::Formatter<'_>) -> io::Result<()> {
         let mut at_line_start = true;
-        let last_index = self.0.len().saturating_sub(1);
+        let last_index = self.ops.len().saturating_sub(1);
 
-        for (i, (tag, text)) in self.0.iter().enumerate() {
+        for (i, (tag, text)) in self.ops.iter().enumerate() {
+            let is_changed = *tag != ChangeTag::Equal;
             let options = PrintInvisiblesOptions {
-                ignore_leading_tabs: false,
-                ignore_lone_spaces: false,
-                ignore_trailing_carriage_return: *tag != ChangeTag::Equal,
+                ignore_leading_tabs: self.is_equal,
+                ignore_lone_spaces: self.is_equal,
+                ignore_trailing_carriage_return: is_changed,
                 at_line_start,
                 at_line_end: i == last_index,
             };
 
-            let has_non_whitespace = if *tag != ChangeTag::Equal {
+            let has_non_whitespace = if is_changed {
                 let mut slot = None;
                 let mut fmt = ElementWrapper::wrap(fmt, &mut slot, MarkupElement::Emphasis);
                 print_invisibles(&mut fmt, text, options)?
@@ -752,7 +767,7 @@ function name(args) {
             "  "<Emphasis>" 7"</Emphasis>"   "<Emphasis>" │ "</Emphasis><Error>"-"</Error>" "<Error>"name("</Error>"\n"
             "  "<Emphasis>" 8"</Emphasis>"   "<Emphasis>" │ "</Emphasis><Error>"-"</Error>" "<Error><Dim><Emphasis>"····"</Emphasis></Dim></Error><Error>"args"</Error>"\n"
             "     "<Emphasis>" 6 │ "</Emphasis><Success>"+"</Success>" "<Success>"function"</Success><Success><Dim><Emphasis>"·"</Emphasis></Dim></Success><Success>"name(args)"</Success><Success><Dim>"·"</Dim></Success><Success>"{"</Success>"\n"
-            "  "<Emphasis>" 9"</Emphasis>" "<Emphasis>" 7 │ "</Emphasis>"  )"<Dim>"·"</Dim>"{}\n"
+            "  "<Emphasis>" 9"</Emphasis>" "<Emphasis>" 7 │ "</Emphasis>"  ) {}\n"
             "  "<Emphasis>"10"</Emphasis>" "<Emphasis>" 8 │ "</Emphasis>"  consectetur\n"
             <Emphasis>"  ····· │ \n"
             </Emphasis>"  "<Emphasis>"16"</Emphasis>" "<Emphasis>"14 │ "</Emphasis>"  \n"
@@ -761,7 +776,7 @@ function name(args) {
             "  "<Emphasis>"19"</Emphasis>"   "<Emphasis>" │ "</Emphasis><Error>"-"</Error>" "<Error>"name("</Error>"\n"
             "  "<Emphasis>"20"</Emphasis>"   "<Emphasis>" │ "</Emphasis><Error>"-"</Error>" "<Error><Dim><Emphasis>"····"</Emphasis></Dim></Error><Error>"args"</Error>"\n"
             "     "<Emphasis>"16 │ "</Emphasis><Success>"+"</Success>" "<Success>"function"</Success><Success><Dim><Emphasis>"·"</Emphasis></Dim></Success><Success>"name(args)"</Success><Success><Dim>"·"</Dim></Success><Success>"{"</Success>"\n"
-            "  "<Emphasis>"21"</Emphasis>" "<Emphasis>"17 │ "</Emphasis>"  )"<Dim>"·"</Dim>"{}\n"
+            "  "<Emphasis>"21"</Emphasis>" "<Emphasis>"17 │ "</Emphasis>"  ) {}\n"
             "\n"
         }.to_owned();
 

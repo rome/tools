@@ -3,7 +3,7 @@ use crate::{
     context::RuleContext,
     registry::{RuleLanguage, RuleRoot},
     rule::Rule,
-    AnalyzerDiagnostic, Queryable, RuleGroup, ServiceBag,
+    AnalyzerDiagnostic, AnalyzerOptions, Queryable, RuleGroup, ServiceBag,
 };
 use rome_console::MarkupBuf;
 use rome_diagnostics::{
@@ -90,6 +90,7 @@ pub(crate) struct RuleSignal<'phase, R: Rule> {
     query_result: <<R as Rule>::Query as Queryable>::Output,
     state: R::State,
     services: &'phase ServiceBag,
+    options: AnalyzerOptions,
 }
 
 impl<'phase, R> RuleSignal<'phase, R>
@@ -102,6 +103,7 @@ where
         query_result: <<R as Rule>::Query as Queryable>::Output,
         state: R::State,
         services: &'phase ServiceBag,
+        options: AnalyzerOptions,
     ) -> Self {
         Self {
             file_id,
@@ -109,6 +111,7 @@ where
             query_result,
             state,
             services,
+            options,
         }
     }
 }
@@ -118,12 +121,14 @@ where
     R: Rule,
 {
     fn diagnostic(&self) -> Option<AnalyzerDiagnostic> {
-        let ctx = RuleContext::new(&self.query_result, self.root, self.services).ok()?;
+        let ctx =
+            RuleContext::new(&self.query_result, self.root, self.services, &self.options).ok()?;
         R::diagnostic(&ctx, &self.state).map(|diag| diag.into_analyzer_diagnostic(self.file_id))
     }
 
     fn action(&self) -> Option<AnalyzerAction<RuleLanguage<R>>> {
-        let ctx = RuleContext::new(&self.query_result, self.root, self.services).ok()?;
+        let ctx =
+            RuleContext::new(&self.query_result, self.root, self.services, &self.options).ok()?;
 
         R::action(&ctx, &self.state).map(|action| AnalyzerAction {
             group_name: <R::Group as RuleGroup>::NAME,

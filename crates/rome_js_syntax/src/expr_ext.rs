@@ -469,13 +469,15 @@ impl JsStringLiteralExpression {
     ///
     /// ```
     /// use rome_js_factory::make::{js_string_literal_expression, ident};
+    /// use rome_rowan::TriviaPieceKind;
     ///
-    ///let string = js_string_literal_expression(ident("foo"));
+    ///let string = js_string_literal_expression(ident("foo")
+    ///     .with_leading_trivia(vec![(TriviaPieceKind::Whitespace, " ")]));
     /// assert_eq!(string.inner_string_text().unwrap().text(), "foo");
     /// ```
     pub fn inner_string_text(&self) -> SyntaxResult<SyntaxTokenText> {
         let value = self.value_token()?;
-        let mut text = value.token_text();
+        let mut text = value.token_text_trimmed();
 
         static QUOTES: [char; 2] = ['"', '\''];
 

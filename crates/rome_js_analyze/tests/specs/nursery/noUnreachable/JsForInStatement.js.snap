@@ -24,9 +24,7 @@ function JsForInStatement2() {
 ```
 JsForInStatement.js:4:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This code is unreachable
-  
-  ! ... before it can reach this code
+  ! This code will never be reached ...
   
     2 │     for (const key in value) {
     3 │         break;
@@ -35,7 +33,7 @@ JsForInStatement.js:4:9 lint/nursery/noUnreachable ━━━━━━━━━�
     5 │     }
     6 │ }
   
-  i This statement will break the flow of the code ...
+  i ... because this statement will break the flow of the code beforehand
   
     1 │ function JsForInStatement1() {
     2 │     for (const key in value) {
@@ -50,9 +48,7 @@ JsForInStatement.js:4:9 lint/nursery/noUnreachable ━━━━━━━━━�
 ```
 JsForInStatement.js:11:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This code is unreachable
-  
-  ! ... before it can reach this code
+  ! This code will never be reached ...
   
      9 │     for (const key in value) {
     10 │         continue;
@@ -61,7 +57,7 @@ JsForInStatement.js:11:9 lint/nursery/noUnreachable ━━━━━━━━━�
     12 │     }
     13 │ }
   
-  i This statement will continue the loop ...
+  i ... because this statement will continue the loop beforehand
   
      8 │ function JsForInStatement2() {
      9 │     for (const key in value) {

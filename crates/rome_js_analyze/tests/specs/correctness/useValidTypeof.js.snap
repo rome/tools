@@ -128,12 +128,12 @@ useValidTypeof.js:14:15 lint/correctness/useValidTypeof  FIXABLE  ━━━━�
   
   i Suggested fix: Compare the result of `typeof` with a valid type name
   
-    12 12 │   //·Invalid·expressions
-    13 13 │   typeof·foo·===·undefined
+    12 12 │   // Invalid expressions
+    13 13 │   typeof foo === undefined
     14    │ - typeof·bar·==·Object
        14 │ + typeof·bar·==·"object"
-    15 15 │   typeof·foo·===·baz
-    16 16 │   typeof·foo·==·5
+    15 15 │   typeof foo === baz
+    16 16 │   typeof foo == 5
   
 
 ```
