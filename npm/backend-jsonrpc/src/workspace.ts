@@ -178,6 +178,7 @@ export interface Nursery {
 	useButtonType?: RuleConfiguration;
 	useCamelCase?: RuleConfiguration;
 	useFragmentSyntax?: RuleConfiguration;
+	useKeyWithClickEvents?: RuleConfiguration;
 	useOptionalChain?: RuleConfiguration;
 	useValidAnchor?: RuleConfiguration;
 }

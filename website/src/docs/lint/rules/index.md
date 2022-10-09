@@ -388,6 +388,13 @@ Enforce camel case naming convention.
 This rule enforces the use of <code>&lt;&gt;...&lt;/&gt;</code> over <code>&lt;Fragment&gt;...&lt;/Fragment&gt;</code>.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useKeyWithClickEvents">
+	<a href="/docs/lint/rules/useKeyWithClickEvents">useKeyWithClickEvents (since v10.0.0)</a>
+	<a class="header-anchor" href="#useKeyWithClickEvents"></a>
+</h3>
+Pair the <code>onClick</code> mouse event with the <code>onKeyUp</code>, the <code>onKeyDown</code>, or the <code>noKeyPress</code> keyboard event.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useOptionalChain">
 	<a href="/docs/lint/rules/useOptionalChain">useOptionalChain (since v0.10.0)</a>
 	<a class="header-anchor" href="#useOptionalChain"></a>
