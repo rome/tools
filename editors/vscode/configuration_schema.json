@@ -638,6 +638,16 @@
             }
           ]
         },
+        "useKeyWithMouseEvents": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useOptionalChain": {
           "anyOf": [
             {

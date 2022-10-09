@@ -161,18 +161,31 @@ fn is_value_undefined_or_null(attribute: &JsxAttribute) -> bool {
     attribute
         .initializer()
         .and_then(|x| {
-            let name = x
+            let expression = x
                 .value()
                 .ok()?
                 .as_jsx_expression_attribute_value()?
                 .expression()
-                .ok()?
-                .as_js_identifier_expression()?
-                .name()
-                .ok()?
+                .ok()?;
+
+            if expression.as_js_identifier_expression().is_some() {
+                let name = expression
+                    .as_js_identifier_expression()?
+                    .name()
+                    .ok()?
+                    .syntax()
+                    .text_trimmed();
+
+                return Some(name == "undefined");
+            }
+
+            let name = expression
+                .as_js_any_literal_expression()?
+                .as_js_null_literal_expression()?
                 .syntax()
                 .text_trimmed();
-            Some(name == "undefined" || name == "null")
+
+            Some(name == "null")
         })
         .unwrap_or(false)
 }
