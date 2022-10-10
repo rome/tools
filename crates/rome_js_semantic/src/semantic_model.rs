@@ -1,16 +1,18 @@
+mod closure;
+
+use crate::{SemanticEvent, SemanticEventExtractor};
+pub use closure::*;
 use rome_js_syntax::{
     JsAnyRoot, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier,
-    JsSyntaxNode, JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding,
+    JsSyntaxKind, JsSyntaxNode, JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding,
 };
 use rome_rowan::{AstNode, SyntaxTokenText};
 use rust_lapper::{Interval, Lapper};
 use std::{
-    collections::{BTreeSet, HashMap, HashSet},
+    collections::{BTreeSet, HashMap, HashSet, VecDeque},
     iter::FusedIterator,
     sync::Arc,
 };
-
-use crate::{SemanticEvent, SemanticEventExtractor};
 
 /// Marker trait that groups all "AstNode" that are declarations
 pub trait IsDeclarationAstNode: AstNode<Language = JsLanguage> {
@@ -68,13 +70,28 @@ impl<T: HasDeclarationAstNode> IsExportedCanBeQueried for T {
     }
 }
 
+/// Represents a refererence inside a scope.
+#[derive(Clone, Debug, Hash, PartialEq, Eq)]
+struct ScopeReference {
+    range: TextRange,
+}
+
 #[derive(Debug)]
 struct SemanticModelScopeData {
+    // The scope range
     range: TextRange,
+    // The parent scope of this scope
     parent: Option<usize>,
+    // All children scope of this scope
     children: Vec<usize>,
+    // All bindings of this scope
     bindings: Vec<TextRange>,
+    // Map pointing to the [bindings] vec  of each bindings by its name
     bindings_by_name: HashMap<SyntaxTokenText, usize>,
+    // All read references of a scope
+    read_references: Vec<ScopeReference>,
+    // All write references of a scope
+    write_references: Vec<ScopeReference>,
 }
 
 /// Contains all the data of the [SemanticModel] and only lives behind an [Arc].
@@ -84,10 +101,12 @@ struct SemanticModelScopeData {
 #[derive(Debug)]
 struct SemanticModelData {
     root: JsAnyRoot,
+    // All scopes of this model
     scopes: Vec<SemanticModelScopeData>,
     scope_by_range: rust_lapper::Lapper<usize, usize>,
     // Maps the start of a node range to a scope id
     scope_hoisted_to_by_range: HashMap<TextSize, usize>,
+    // Map to each by its range
     node_by_range: HashMap<TextRange, JsSyntaxNode>,
     // Maps any range in the code to its declaration
     declared_at_by_range: HashMap<TextRange, TextRange>,
@@ -97,17 +116,22 @@ struct SemanticModelData {
     declaration_all_reads: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
     // Maps a declaration range to the range of its "writes"
     declaration_all_writes: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
-    /// All references that could not be resolved
-    unresolved_references: Vec<(ReferenceType, TextRange)>,
     // All bindings that were exported
     exported: HashSet<TextRange>,
+    /// All references that could not be resolved
+    unresolved_references: Vec<(ReferenceType, TextRange)>,
+    /// All references that are resolved to globals
+    global_references: Vec<(ReferenceType, TextRange)>,
 }
 
 impl SemanticModelData {
     fn scope(&self, range: &TextRange) -> usize {
+        let start = range.start().into();
+        let end = range.end().into();
         let scopes = self
             .scope_by_range
-            .find(range.start().into(), range.end().into());
+            .find(start, end)
+            .filter(|x| !(start < x.start || end > x.stop));
 
         // We always want the most tight scope
         match scopes.map(|x| x.val).max() {
@@ -167,6 +191,29 @@ impl PartialEq for SemanticModelData {
 
 impl Eq for SemanticModelData {}
 
+/// Iterate all descendas scopes of the specified scope in breadth-first order.
+pub struct ScopeDescendantsIter {
+    data: Arc<SemanticModelData>,
+    q: VecDeque<usize>,
+}
+
+impl Iterator for ScopeDescendantsIter {
+    type Item = Scope;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if let Some(id) = self.q.pop_front() {
+            let scope = &self.data.scopes[id];
+            self.q.extend(scope.children.iter());
+            Some(Scope {
+                data: self.data.clone(),
+                id,
+            })
+        } else {
+            None
+        }
+    }
+}
+
 /// Provides all information regarding a specific scope.
 /// Allows navigation to parent and children scope and binding information.
 #[derive(Clone, Debug)]
@@ -188,6 +235,18 @@ impl Scope {
     /// [Scope].
     pub fn ancestors(&self) -> impl Iterator<Item = Scope> {
         std::iter::successors(Some(self.clone()), |scope| scope.parent())
+    }
+
+    /// Returns all descendts of this scope in breadth-first order. Starting with the current
+    /// [Scope].
+    pub fn descendants(&self) -> impl Iterator<Item = Scope> {
+        let mut q = VecDeque::new();
+        q.push_back(self.id);
+
+        ScopeDescendantsIter {
+            data: self.data.clone(),
+            q,
+        }
     }
 
     /// Returns this scope parent.
@@ -246,6 +305,13 @@ impl Scope {
 
     pub fn syntax(&self) -> &JsSyntaxNode {
         &self.data.node_by_range[self.range()]
+    }
+
+    /// Return the [Closure] associated with this scope if
+    /// it has one, otherwise returns None.  
+    /// See [HasClosureAstNode] for nodes that have closure.
+    pub fn closure(&self) -> Option<Closure> {
+        Closure::from_scope(self.data.clone(), self.id, self.range())
     }
 }
 
@@ -411,6 +477,34 @@ impl<'a> ExactSizeIterator for UnresolvedReferencesIter<'a> {
 
 impl<'a> FusedIterator for UnresolvedReferencesIter<'a> {}
 
+pub struct GlobalsReferencesIter<'a> {
+    data: Arc<SemanticModelData>,
+    iter: std::slice::Iter<'a, (ReferenceType, TextRange)>,
+}
+
+impl<'a> Iterator for GlobalsReferencesIter<'a> {
+    type Item = Reference;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        let (ty, range) = self.iter.next()?;
+        let node = self.data.node_by_range.get(range)?;
+        Some(Reference {
+            data: self.data.clone(),
+            node: node.clone(),
+            range: *range,
+            ty: *ty,
+        })
+    }
+}
+
+impl<'a> ExactSizeIterator for GlobalsReferencesIter<'a> {
+    fn len(&self) -> usize {
+        self.iter.len()
+    }
+}
+
+impl<'a> FusedIterator for GlobalsReferencesIter<'a> {}
+
 /// Iterate all bindings that were bound in a given scope. It **does
 /// not** Returns bindings of parent scopes.
 pub struct ScopeBindingsIter {
@@ -492,11 +586,11 @@ impl SemanticModel {
     /// ```rust
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
     /// use rome_js_syntax::{SourceType, JsReferenceIdentifier};
-    /// use rome_js_semantic::{semantic_model, SemanticScopeExtensions};
+    /// use rome_js_semantic::{semantic_model, SemanticModelOptions, SemanticScopeExtensions};
     /// use rome_diagnostics::file::FileId;
     ///
     /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", FileId::zero(), SourceType::js_module());
-    /// let model = semantic_model(&r.tree());
+    /// let model = semantic_model(&r.tree(), SemanticModelOptions::default());
     ///
     /// let arguments_reference = r
     ///     .syntax()
@@ -535,11 +629,11 @@ impl SemanticModel {
     /// ```rust
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
     /// use rome_js_syntax::{SourceType, JsReferenceIdentifier};
-    /// use rome_js_semantic::{semantic_model, DeclarationExtensions};
+    /// use rome_js_semantic::{semantic_model, DeclarationExtensions, SemanticModelOptions};
     /// use rome_diagnostics::file::FileId;
     ///
     /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", FileId::zero(), SourceType::js_module());
-    /// let model = semantic_model(&r.tree());
+    /// let model = semantic_model(&r.tree(), SemanticModelOptions::default());
     ///
     /// let arguments_reference = r
     ///     .syntax()
@@ -569,11 +663,11 @@ impl SemanticModel {
     /// ```rust
     /// use rome_rowan::{AstNode, SyntaxNodeCast};
     /// use rome_js_syntax::{SourceType, JsIdentifierBinding};
-    /// use rome_js_semantic::{semantic_model, AllReferencesExtensions};
+    /// use rome_js_semantic::{semantic_model, AllReferencesExtensions, SemanticModelOptions};
     /// use rome_diagnostics::file::FileId;
     ///
     /// let r = rome_js_parser::parse("function f(){let a = arguments[0]; let b = a + 1;}", FileId::zero(), SourceType::js_module());
-    /// let model = semantic_model(&r.tree());
+    /// let model = semantic_model(&r.tree(), SemanticModelOptions::default());
     ///
     /// let a_binding = r
     ///     .syntax()
@@ -620,6 +714,14 @@ impl SemanticModel {
         }
     }
 
+    /// Returns an iterator of all the globals references in the program
+    pub fn all_globals(&self) -> GlobalsReferencesIter<'_> {
+        GlobalsReferencesIter {
+            data: self.data.clone(),
+            iter: self.data.global_references.iter(),
+        }
+    }
+
     /// Returns an iterator of all the unresolved references in the program
     pub fn all_unresolved_references(&self) -> UnresolvedReferencesIter<'_> {
         UnresolvedReferencesIter {
@@ -640,6 +742,11 @@ impl SemanticModel {
         T: IsExportedCanBeQueried,
     {
         node.is_exported(self)
+    }
+
+    /// Returns the [Closure] associated with the node.
+    pub fn closure(&self, node: &impl HasClosureAstNode) -> Closure {
+        Closure::from_node(self.data.clone(), node)
     }
 }
 
@@ -708,6 +815,17 @@ pub trait AllReferencesExtensions {
 
 impl<T: IsDeclarationAstNode> AllReferencesExtensions for T {}
 
+pub trait ClosureExtensions {
+    fn closure(&self, model: &SemanticModel) -> Closure
+    where
+        Self: HasClosureAstNode + Sized,
+    {
+        model.closure(self)
+    }
+}
+
+impl<T: HasClosureAstNode> ClosureExtensions for T {}
+
 /// Builds the [SemanticModel] consuming [SemanticEvent] and [SyntaxNode].
 /// For a good example on how to use it see [semantic_model].
 ///
@@ -716,38 +834,47 @@ impl<T: IsDeclarationAstNode> AllReferencesExtensions for T {}
 /// and stored inside the [SemanticModel].
 pub struct SemanticModelBuilder {
     root: JsAnyRoot,
+    node_by_range: HashMap<TextRange, JsSyntaxNode>,
+    globals: HashSet<String>,
     scopes: Vec<SemanticModelScopeData>,
     scope_range_by_start: HashMap<TextSize, BTreeSet<Interval<usize, usize>>>,
     scope_hoisted_to_by_range: HashMap<TextSize, usize>,
-    node_by_range: HashMap<TextRange, JsSyntaxNode>,
     declarations_by_range: HashMap<TextRange, TextRange>,
     declaration_all_references: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
     declaration_all_reads: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
     declaration_all_writes: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
-    unresolved_references: Vec<(ReferenceType, TextRange)>,
     exported: HashSet<TextRange>,
+    unresolved_references: Vec<(ReferenceType, TextRange)>,
+    global_references: Vec<(ReferenceType, TextRange)>,
 }
 
 impl SemanticModelBuilder {
     pub fn new(root: JsAnyRoot) -> Self {
         Self {
             root,
+            node_by_range: HashMap::new(),
+            globals: HashSet::new(),
             scopes: vec![],
             scope_range_by_start: HashMap::new(),
             scope_hoisted_to_by_range: HashMap::new(),
-            node_by_range: HashMap::new(),
             declarations_by_range: HashMap::new(),
             declaration_all_references: HashMap::new(),
             declaration_all_reads: HashMap::new(),
             declaration_all_writes: HashMap::new(),
-            unresolved_references: Vec::new(),
             exported: HashSet::new(),
+            unresolved_references: Vec::new(),
+            global_references: Vec::new(),
         }
     }
 
     #[inline]
     pub fn push_node(&mut self, node: &JsSyntaxNode) {
         self.node_by_range.insert(node.text_range(), node.clone());
+    }
+
+    #[inline]
+    pub fn push_global(&mut self, name: impl Into<String>) {
+        self.globals.insert(name.into());
     }
 
     #[inline]
@@ -768,6 +895,8 @@ impl SemanticModelBuilder {
                     children: vec![],
                     bindings: vec![],
                     bindings_by_name: HashMap::new(),
+                    read_references: vec![],
+                    write_references: vec![],
                 });
 
                 if let Some(parent_scope_id) = parent_scope_id {
@@ -812,6 +941,7 @@ impl SemanticModelBuilder {
             Read {
                 range,
                 declared_at: declaration_at,
+                scope_id,
             } => {
                 self.declarations_by_range.insert(range, declaration_at);
                 self.declaration_all_references
@@ -822,10 +952,14 @@ impl SemanticModelBuilder {
                     .entry(declaration_at)
                     .or_default()
                     .push((ReferenceType::Read { hoisted: false }, range));
+
+                let scope = &mut self.scopes[scope_id];
+                scope.read_references.push(ScopeReference { range });
             }
             HoistedRead {
                 range,
                 declared_at: declaration_at,
+                scope_id,
             } => {
                 self.declarations_by_range.insert(range, declaration_at);
                 self.declaration_all_references
@@ -836,10 +970,14 @@ impl SemanticModelBuilder {
                     .entry(declaration_at)
                     .or_default()
                     .push((ReferenceType::Read { hoisted: true }, range));
+
+                let scope = &mut self.scopes[scope_id];
+                scope.read_references.push(ScopeReference { range });
             }
             Write {
                 range,
                 declared_at: declaration_at,
+                scope_id,
             } => {
                 self.declarations_by_range.insert(range, declaration_at);
                 self.declaration_all_references
@@ -850,10 +988,14 @@ impl SemanticModelBuilder {
                     .entry(declaration_at)
                     .or_default()
                     .push((ReferenceType::Write { hoisted: false }, range));
+
+                let scope = &mut self.scopes[scope_id];
+                scope.write_references.push(ScopeReference { range });
             }
             HoistedWrite {
                 range,
                 declared_at: declaration_at,
+                scope_id,
             } => {
                 self.declarations_by_range.insert(range, declaration_at);
                 self.declaration_all_references
@@ -864,6 +1006,9 @@ impl SemanticModelBuilder {
                     .entry(declaration_at)
                     .or_default()
                     .push((ReferenceType::Write { hoisted: true }, range));
+
+                let scope = &mut self.scopes[scope_id];
+                scope.write_references.push(ScopeReference { range });
             }
             UnresolvedReference { is_read, range } => {
                 let ty = if is_read {
@@ -872,7 +1017,14 @@ impl SemanticModelBuilder {
                     ReferenceType::Write { hoisted: false }
                 };
 
-                self.unresolved_references.push((ty, range));
+                let node = &self.node_by_range[&range];
+                let name = node.text_trimmed().to_string();
+
+                if self.globals.get(&name).is_some() {
+                    self.global_references.push((ty, range));
+                } else {
+                    self.unresolved_references.push((ty, range));
+                }
             }
             Exported { range } => {
                 self.exported.insert(range);
@@ -898,18 +1050,32 @@ impl SemanticModelBuilder {
             declaration_all_references: self.declaration_all_references,
             declaration_all_reads: self.declaration_all_reads,
             declaration_all_writes: self.declaration_all_writes,
-            unresolved_references: self.unresolved_references,
             exported: self.exported,
+            unresolved_references: self.unresolved_references,
+            global_references: self.global_references,
         };
         SemanticModel::new(data)
     }
 }
 
+#[derive(Default)]
+/// Extra options for the [SemanticModel] creation.
+pub struct SemanticModelOptions {
+    /// All the allowed globals names
+    pub globals: HashSet<String>,
+}
+
 /// Build the complete [SemanticModel] of a parsed file.
 /// For a push based model to build the [SemanticModel], see [SemanticModelBuilder].
-pub fn semantic_model(root: &JsAnyRoot) -> SemanticModel {
+pub fn semantic_model(root: &JsAnyRoot, options: SemanticModelOptions) -> SemanticModel {
     let mut extractor = SemanticEventExtractor::default();
     let mut builder = SemanticModelBuilder::new(root.clone());
+
+    let SemanticModelOptions { globals } = options;
+
+    for global in globals {
+        builder.push_global(global);
+    }
 
     let root = root.syntax();
     for node in root.preorder() {
@@ -943,7 +1109,7 @@ mod test {
             FileId::zero(),
             SourceType::js_module(),
         );
-        let model = semantic_model(&r.tree());
+        let model = semantic_model(&r.tree(), SemanticModelOptions::default());
 
         let arguments_reference = r
             .syntax()
@@ -1047,7 +1213,7 @@ mod test {
             FileId::zero(),
             SourceType::js_module(),
         );
-        let model = semantic_model(&r.tree());
+        let model = semantic_model(&r.tree(), SemanticModelOptions::default());
 
         let function_f = r
             .syntax()
@@ -1085,7 +1251,7 @@ mod test {
     /// Finds the last time a token named "name" is used and see if its node is marked as exported
     fn assert_is_exported(is_exported: bool, name: &str, code: &str) {
         let r = rome_js_parser::parse(code, FileId::zero(), SourceType::tsx());
-        let model = semantic_model(&r.tree());
+        let model = semantic_model(&r.tree(), SemanticModelOptions::default());
 
         let node = r
             .syntax()
@@ -1213,5 +1379,22 @@ mod test {
         assert_is_exported(true, "A", "enum A {}; module.exports = A");
         assert_is_exported(true, "A", "enum A {}; exports = A");
         assert_is_exported(true, "A", "enum A {}; exports.A = A");
+    }
+
+    #[test]
+    pub fn ok_semantic_model_globals() {
+        let r = rome_js_parser::parse("console.log()", FileId::zero(), SourceType::js_module());
+
+        let mut options = SemanticModelOptions::default();
+        options.globals.insert("console".into());
+
+        let model = semantic_model(&r.tree(), options);
+
+        let globals: Vec<_> = model.all_globals().collect();
+
+        assert_eq!(globals.len(), 1);
+        assert!(globals[0].declaration().is_none());
+        assert!(globals[0].is_read());
+        assert_eq!(globals[0].node().text_trimmed(), "console");
     }
 }

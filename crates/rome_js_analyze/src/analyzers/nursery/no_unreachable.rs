@@ -2,10 +2,14 @@ use std::{cmp::Ordering, collections::VecDeque, num::NonZeroU32, vec::IntoIter};
 
 use roaring::bitmap::RoaringBitmap;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
-use rome_console::markup;
 use rome_control_flow::{builder::BlockId, ExceptionHandler, Instruction, InstructionKind};
-use rome_js_syntax::{JsLanguage, JsReturnStatement, JsSyntaxElement, JsSyntaxKind, TextRange};
-use rome_rowan::AstNode;
+use rome_js_syntax::{
+    JsBlockStatement, JsCaseClause, JsDefaultClause, JsDoWhileStatement, JsForInStatement,
+    JsForOfStatement, JsForStatement, JsFunctionBody, JsIfStatement, JsLabeledStatement,
+    JsLanguage, JsReturnStatement, JsSwitchStatement, JsSyntaxElement, JsSyntaxKind, JsSyntaxNode,
+    JsTryFinallyStatement, JsTryStatement, JsVariableStatement, JsWhileStatement, TextRange,
+};
+use rome_rowan::{declare_node_union, AstNode};
 use rustc_hash::FxHashMap;
 
 use crate::control_flow::ControlFlowGraph;
@@ -71,16 +75,14 @@ impl Rule for NoUnreachable {
         let mut diagnostic = RuleDiagnostic::new(
             rule_category!(),
             state.text_trimmed_range,
-            markup! {
+            if state.terminators.is_empty() {
                 "This code is unreachable"
+            } else {
+                "This code will never be reached ..."
             },
         )
+        .summary("This code is unreachable")
         .unnecessary();
-
-        /// Primary label of the diagnostic if it comes earlier in the source than its secondary labels
-        const PRIMARY_LABEL_BEFORE: &str = "This code will never be reached ...";
-        /// Primary label of the diagnostic if it comes later in the source than its secondary labels
-        const PRIMARY_LABEL_AFTER: &str = "... before it can reach this code";
 
         // Pluralize and adapt the error message accordingly based on the
         // number and position of secondary labels
@@ -90,44 +92,42 @@ impl Rule for NoUnreachable {
             [] => {}
             // A single node is responsible for this range being unreachable
             [node] => {
-                if node.range.start() < state.text_trimmed_range.start() {
-                    diagnostic = diagnostic
-                        .secondary(
-                            node.range,
-                            format_args!("This statement will {} ...", node.reason()),
-                        )
-                        .primary(PRIMARY_LABEL_AFTER);
-                } else {
-                    diagnostic = diagnostic.primary(PRIMARY_LABEL_BEFORE).secondary(
-                        node.range,
-                        format_args!(
-                            "... because this statement will {} beforehand",
-                            node.reason()
-                        ),
-                    );
-                }
+                diagnostic = diagnostic.secondary(
+                    node.range,
+                    format_args!(
+                        "... because this statement will {} beforehand",
+                        node.reason()
+                    ),
+                );
             }
             // The range has two dominating terminator instructions
             [node_a, node_b] => {
                 if node_a.kind == node_b.kind {
                     diagnostic = diagnostic
-                        .secondary(node_a.range, "Either this statement ...")
+                        .secondary(node_a.range, "... because either this statement ...")
                         .secondary(
                             node_b.range,
-                            format_args!("... or this statement will {} ...", node_b.reason()),
-                        )
-                        .primary(PRIMARY_LABEL_AFTER);
+                            format_args!(
+                                "... or this statement will {} beforehand",
+                                node_b.reason()
+                            ),
+                        );
                 } else {
                     diagnostic = diagnostic
                         .secondary(
                             node_a.range,
-                            format_args!("Either this statement will {} ...", node_a.reason()),
+                            format_args!(
+                                "... because either this statement will {} ...",
+                                node_a.reason()
+                            ),
                         )
                         .secondary(
                             node_b.range,
-                            format_args!("... or this statement will {} ...", node_b.reason()),
-                        )
-                        .primary(PRIMARY_LABEL_AFTER);
+                            format_args!(
+                                "... or this statement will {} beforehand",
+                                node_b.reason()
+                            ),
+                        );
                 }
             }
             // The range has three or more dominating terminator instructions
@@ -149,15 +149,18 @@ impl Rule for NoUnreachable {
                 if has_homogeneous_kind {
                     for (index, node) in terminators.iter().enumerate() {
                         if index == 0 {
-                            diagnostic =
-                                diagnostic.secondary(node.range, "Either this statement, ...");
+                            diagnostic = diagnostic
+                                .secondary(node.range, "... because either this statement, ...");
                         } else if index < last {
                             diagnostic =
                                 diagnostic.secondary(node.range, "... this statement, ...");
                         } else {
                             diagnostic = diagnostic.secondary(
                                 node.range,
-                                format_args!("... or this statement will {} ...", node.reason()),
+                                format_args!(
+                                    "... or this statement will {} beforehand",
+                                    node.reason()
+                                ),
                             );
                         }
                     }
@@ -166,7 +169,10 @@ impl Rule for NoUnreachable {
                         if index == 0 {
                             diagnostic = diagnostic.secondary(
                                 node.range,
-                                format_args!("Either this statement will {}, ...", node.reason()),
+                                format_args!(
+                                    "... because either this statement will {}, ...",
+                                    node.reason()
+                                ),
                             );
                         } else if index < last {
                             diagnostic = diagnostic.secondary(
@@ -176,13 +182,14 @@ impl Rule for NoUnreachable {
                         } else {
                             diagnostic = diagnostic.secondary(
                                 node.range,
-                                format_args!("... or this statement will {} ...", node.reason()),
+                                format_args!(
+                                    "... or this statement will {} beforehand",
+                                    node.reason()
+                                ),
                             );
                         }
                     }
                 }
-
-                diagnostic = diagnostic.primary(PRIMARY_LABEL_AFTER);
             }
         }
 
@@ -618,7 +625,7 @@ impl UnreachableRanges {
             }
         });
 
-        match insertion {
+        let index = match insertion {
             // The search returned an existing overlapping range, extend it to
             // cover the incoming range
             Ok(index) => {
@@ -638,6 +645,8 @@ impl UnreachableRanges {
                         entry.terminators.insert(index, terminator);
                     }
                 }
+
+                index
             }
             // No overlapping range was found, insert at the appropriate
             // position to preserve the ordering instead
@@ -650,9 +659,256 @@ impl UnreachableRanges {
                         terminators: terminator.into_iter().collect(),
                     },
                 );
+
+                index
             }
+        };
+
+        let node = match node.parent() {
+            Some(parent) => parent,
+            None => return,
+        };
+
+        self.propagate_ranges(node, index);
+    }
+
+    /// Propagate unreachable ranges upward in the tree by detecting and
+    /// merging disjoint ranges that cover all the fields of a certain node
+    /// type. This requires specialized logic for each control flow node type,
+    /// for instance an if-statement is considered fully unreachable if its
+    /// test expression, consequent statement and optional else clause are all
+    /// fully unreachable.
+    fn propagate_ranges(&mut self, mut node: JsSyntaxNode, mut index: usize) -> Option<()> {
+        while let Some(parent) = node.ancestors().find_map(JsControlFlowNode::cast) {
+            // Merge the adjacent and overlapping ranges
+            self.merge_adjacent_ranges();
+
+            let fields = match &parent {
+                JsControlFlowNode::JsFunctionBody(_) => break,
+
+                JsControlFlowNode::JsBlockStatement(stmt) => {
+                    let statements = stmt.statements().into_syntax();
+                    if statements.text_trimmed_range().is_empty() {
+                        vec![]
+                    } else {
+                        vec![statements.text_range()]
+                    }
+                }
+
+                JsControlFlowNode::JsVariableStatement(stmt) => {
+                    let declaration = stmt.declaration().ok()?;
+                    declaration
+                        .declarators()
+                        .into_iter()
+                        .filter_map(|declarator| match declarator {
+                            Ok(declarator) => match declarator.initializer()?.expression() {
+                                Ok(expression) => Some(Ok(expression.syntax().text_range())),
+                                Err(err) => Some(Err(err)),
+                            },
+                            Err(err) => Some(Err(err)),
+                        })
+                        .collect::<Result<Vec<_>, _>>()
+                        .ok()?
+                }
+                JsControlFlowNode::JsLabeledStatement(stmt) => {
+                    vec![stmt.body().ok()?.syntax().text_range()]
+                }
+                JsControlFlowNode::JsDoWhileStatement(stmt) => vec![
+                    stmt.body().ok()?.syntax().text_range(),
+                    stmt.test().ok()?.syntax().text_range(),
+                ],
+                JsControlFlowNode::JsForInStatement(stmt) => vec![
+                    stmt.initializer().ok()?.syntax().text_range(),
+                    stmt.body().ok()?.syntax().text_range(),
+                ],
+                JsControlFlowNode::JsForOfStatement(stmt) => vec![
+                    stmt.initializer().ok()?.syntax().text_range(),
+                    stmt.body().ok()?.syntax().text_range(),
+                ],
+                JsControlFlowNode::JsForStatement(stmt) => {
+                    let mut res = Vec::new();
+
+                    if let Some(initializer) = stmt.initializer() {
+                        res.push(initializer.syntax().text_range());
+                    }
+
+                    if let Some(test) = stmt.test() {
+                        res.push(test.syntax().text_range());
+                    }
+
+                    if let Some(update) = stmt.update() {
+                        res.push(update.syntax().text_range());
+                    }
+
+                    res.push(stmt.body().ok()?.syntax().text_range());
+                    res
+                }
+                JsControlFlowNode::JsIfStatement(stmt) => {
+                    let mut res = vec![
+                        stmt.test().ok()?.syntax().text_range(),
+                        stmt.consequent().ok()?.syntax().text_range(),
+                    ];
+
+                    if let Some(else_clause) = stmt.else_clause() {
+                        res.push(else_clause.alternate().ok()?.syntax().text_range());
+                    }
+
+                    res
+                }
+                JsControlFlowNode::JsSwitchStatement(stmt) => {
+                    let mut res = vec![stmt.discriminant().ok()?.syntax().text_range()];
+
+                    let cases = stmt.cases().into_syntax();
+                    if !cases.text_trimmed_range().is_empty() {
+                        res.push(cases.text_range());
+                    }
+
+                    res
+                }
+                JsControlFlowNode::JsTryStatement(stmt) => vec![
+                    stmt.body().ok()?.syntax().text_range(),
+                    stmt.catch_clause().ok()?.body().ok()?.syntax().text_range(),
+                ],
+                JsControlFlowNode::JsTryFinallyStatement(stmt) => {
+                    let mut res = vec![stmt.body().ok()?.syntax().text_range()];
+
+                    if let Some(catch_clause) = stmt.catch_clause() {
+                        res.push(catch_clause.body().ok()?.syntax().text_range());
+                    }
+
+                    res.push(
+                        stmt.finally_clause()
+                            .ok()?
+                            .body()
+                            .ok()?
+                            .syntax()
+                            .text_range(),
+                    );
+
+                    res
+                }
+                JsControlFlowNode::JsWhileStatement(stmt) => vec![
+                    stmt.test().ok()?.syntax().text_range(),
+                    stmt.body().ok()?.syntax().text_range(),
+                ],
+                JsControlFlowNode::JsCaseClause(stmt) => {
+                    let mut res = vec![stmt.test().ok()?.syntax().text_range()];
+
+                    let consequent = stmt.consequent().into_syntax();
+                    if !consequent.text_trimmed_range().is_empty() {
+                        res.push(consequent.text_range());
+                    }
+
+                    res
+                }
+                JsControlFlowNode::JsDefaultClause(stmt) => {
+                    let mut res = vec![stmt.default_token().ok()?.text_range()];
+
+                    let consequent = stmt.consequent().into_syntax();
+                    if !consequent.text_trimmed_range().is_empty() {
+                        res.push(consequent.text_range());
+                    }
+
+                    res
+                }
+            };
+
+            let next_index = check_neighbors(&self.ranges, index, &fields)?;
+
+            // Extend the range at the specific index to cover the whole parent node
+            let entry = &mut self.ranges[next_index];
+            entry.text_range = entry.text_range.cover(parent.syntax().text_range());
+            entry.text_trimmed_range = entry
+                .text_trimmed_range
+                .cover(parent.syntax().text_trimmed_range());
+
+            index = next_index;
+            node = parent.syntax().parent()?;
+        }
+
+        // Merge the adjacent and overlapping ranges
+        self.merge_adjacent_ranges();
+
+        Some(())
+    }
+
+    /// Merge adjacent unreachable ranges into a single entry
+    fn merge_adjacent_ranges(&mut self) {
+        let mut index = 0;
+        while index < self.ranges.len().saturating_sub(1) {
+            let text_range = self.ranges[index].text_range;
+
+            if self.ranges[index + 1].text_range.start() <= text_range.end() {
+                let prev_entry = self.ranges.remove(index + 1);
+
+                let entry = &mut self.ranges[index];
+                entry.text_range = entry.text_range.cover(prev_entry.text_range);
+                entry.text_trimmed_range = entry
+                    .text_trimmed_range
+                    .cover(prev_entry.text_trimmed_range);
+
+                continue;
+            }
+
+            index += 1;
         }
     }
+}
+
+declare_node_union! {
+    JsControlFlowNode =
+        JsFunctionBody |
+        JsVariableStatement |
+        JsLabeledStatement |
+        JsBlockStatement |
+        JsDoWhileStatement |
+        JsForInStatement |
+        JsForOfStatement |
+        JsForStatement |
+        JsIfStatement |
+        JsSwitchStatement |
+        JsTryStatement |
+        JsTryFinallyStatement |
+        JsWhileStatement |
+        JsCaseClause |
+        JsDefaultClause
+}
+
+/// Try to find a section of `ranges` that matches `fields`, and returns an
+/// index `i` into `ranges` such that the ranges from `i` to `i + fields.len()`
+/// cover the corresponding entry in `fields`.
+///
+/// To avoid having to iterate over the whole length of `ranges`, the search is
+/// guided using `index` to only try ranges starting between
+/// `index - fields.len()` and `index`, clamped within the limits of `ranges`.
+fn check_neighbors(
+    ranges: &[UnreachableRange],
+    index: usize,
+    fields: &[TextRange],
+) -> Option<usize> {
+    if fields.len() > ranges.len() {
+        return None;
+    }
+
+    let fields_end = fields.len().saturating_sub(1);
+    let min_start = index.saturating_sub(fields_end);
+    let max_start = (min_start + fields.len()).min(ranges.len().saturating_sub(fields_end));
+
+    for start in min_start..max_start {
+        let end = start + fields.len();
+        let slice = &ranges[start..end];
+
+        let is_matching = slice
+            .iter()
+            .zip(fields.iter().filter(|field| !field.is_empty()))
+            .all(|(range, field)| range.text_range.contains_range(*field));
+
+        if is_matching {
+            return Some(start);
+        }
+    }
+
+    None
 }
 
 impl IntoIterator for UnreachableRanges {

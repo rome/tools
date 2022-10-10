@@ -24,9 +24,7 @@ function JsContinueStatement2() {
 ```
 JsContinueStatement.js:4:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This code is unreachable
-  
-  ! ... before it can reach this code
+  ! This code will never be reached ...
   
     2 │     while (true) {
     3 │         continue;
@@ -35,7 +33,7 @@ JsContinueStatement.js:4:9 lint/nursery/noUnreachable ━━━━━━━━�
     5 │     }
     6 │ }
   
-  i This statement will continue the loop ...
+  i ... because this statement will continue the loop beforehand
   
     1 │ function JsContinueStatement1() {
     2 │     while (true) {
@@ -50,9 +48,7 @@ JsContinueStatement.js:4:9 lint/nursery/noUnreachable ━━━━━━━━�
 ```
 JsContinueStatement.js:11:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This code is unreachable
-  
-  ! ... before it can reach this code
+  ! This code will never be reached ...
   
      9 │     while (true) {
     10 │         continue;
@@ -61,7 +57,7 @@ JsContinueStatement.js:11:9 lint/nursery/noUnreachable ━━━━━━━━�
     12 │     }
     13 │ }
   
-  i This statement will continue the loop ...
+  i ... because this statement will continue the loop beforehand
   
      8 │ function JsContinueStatement2() {
      9 │     while (true) {

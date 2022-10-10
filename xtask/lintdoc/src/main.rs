@@ -293,10 +293,17 @@ fn parse_documentation(
                 write!(content, "`{text}`")?;
             }
 
-            Event::Start(Tag::Link(kind, _, _)) => {
-                assert_eq!(kind, LinkType::Inline, "unimplemented link type");
-                write!(content, "[")?;
-            }
+            Event::Start(Tag::Link(kind, _, _)) => match kind {
+                LinkType::Inline => {
+                    write!(content, "[")?;
+                }
+                LinkType::Shortcut => {
+                    write!(content, "[")?;
+                }
+                _ => {
+                    panic!("unimplemented link type")
+                }
+            },
             Event::End(Tag::Link(_, url, title)) => {
                 write!(content, "]({url}")?;
                 if !title.is_empty() {

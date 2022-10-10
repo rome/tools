@@ -20,9 +20,7 @@ function JsReturnStatement2() {
 ```
 JsReturnStatement.js:3:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This code is unreachable
-  
-  ! ... before it can reach this code
+  ! This code will never be reached ...
   
     1 │ function JsReturnStatement1() {
     2 │     return;
@@ -31,7 +29,7 @@ JsReturnStatement.js:3:5 lint/nursery/noUnreachable ━━━━━━━━━�
     4 │ }
     5 │ 
   
-  i This statement will return from the function ...
+  i ... because this statement will return from the function beforehand
   
     1 │ function JsReturnStatement1() {
   > 2 │     return;
@@ -45,9 +43,7 @@ JsReturnStatement.js:3:5 lint/nursery/noUnreachable ━━━━━━━━━�
 ```
 JsReturnStatement.js:8:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This code is unreachable
-  
-  ! ... before it can reach this code
+  ! This code will never be reached ...
   
      6 │ function JsReturnStatement2() {
      7 │     return;
@@ -56,7 +52,7 @@ JsReturnStatement.js:8:5 lint/nursery/noUnreachable ━━━━━━━━━�
      9 │ }
     10 │ 
   
-  i This statement will return from the function ...
+  i ... because this statement will return from the function beforehand
   
     6 │ function JsReturnStatement2() {
   > 7 │     return;

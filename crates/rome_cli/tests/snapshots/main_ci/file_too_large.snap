@@ -1,0 +1,19 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+expression: content
+---
+# Emitted Messages
+
+```block
+ci.js lint ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × The file ci.js could not be parsed because it's too large (the file is 1.0 MiB long, but the size limit is 1.0 MiB)
+  
+
+```
+
+```block
+Skipped 1 files
+```
+
+

@@ -169,6 +169,18 @@ impl WorkspaceServer {
                     .parse
                     .ok_or_else(self.build_capability_error(rome_path))?;
 
+                /// Limit the size of files to 1.0 MiB
+                const SIZE_LIMIT_IN_BYTES: usize = 1024 * 1024;
+
+                let size = document.content.as_bytes().len();
+                if size >= SIZE_LIMIT_IN_BYTES {
+                    return Err(RomeError::FileTooLarge {
+                        path: rome_path.to_path_buf(),
+                        size,
+                        limit: SIZE_LIMIT_IN_BYTES,
+                    });
+                }
+
                 let parsed = parse(rome_path, document.language_hint, &document.content);
 
                 Ok(entry.insert(parsed).clone())

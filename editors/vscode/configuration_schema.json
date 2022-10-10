@@ -491,6 +491,16 @@
             }
           ]
         },
+        "noAutofocus": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noChildrenProp": {
           "anyOf": [
             {
@@ -629,6 +639,16 @@
           ]
         },
         "useOptionalChain": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useValidAnchor": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

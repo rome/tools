@@ -2,6 +2,7 @@ use crate::{
     registry::RuleRoot, AnalyzerOptions, FromServices, Queryable, Rule, RuleContextDiagnostic,
     RuleKey, ServiceBag,
 };
+use serde::Deserialize;
 use std::ops::Deref;
 
 type RuleQueryResult<R> = <<R as Rule>::Query as Queryable>::Output;
@@ -94,6 +95,52 @@ where
     /// ```
     pub fn options(&self) -> Option<&R::Options> {
         self.options.as_ref()
+    }
+
+    /// It retrieves the options that belong to a rule, if they exist.
+    ///
+    /// In order to retrieve a typed data structure, the function has to accept a `FromType`, a
+    /// `ToType` (this one, inferrable by the compiler) and a closure that does the mapping.
+    ///
+    /// Usually, options are a `serde::RawValue` and need to be mapped to a sized type.
+    ///
+    /// ## Examples
+    ///
+    /// ```rust,ignore
+    /// use rome_analyze::{declare_rule, Rule, RuleCategory, RuleMeta, RuleMetadata};
+    /// use rome_analyze::context::RuleContext;
+    /// use serde::Deserialize;
+    /// declare_rule! {    
+    ///     /// Some doc
+    ///     pub(crate) Name {
+    ///         version: "0.0.0",
+    ///         name: "name",
+    ///         recommended: true,
+    ///     }
+    /// }
+    ///
+    /// #[derive(Deserialize)]
+    /// struct RuleSettings {}
+    ///
+    /// impl Rule for Name {
+    ///     const CATEGORY: RuleCategory = RuleCategory::Lint;
+    ///     type Query = ();
+    ///     type State = ();
+    ///     type Signals = ();
+    ///
+    ///     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
+    ///         let options = ctx.rule_settings::<RuleSettings>();
+    ///     }
+    /// }
+    /// ```
+    pub fn rule_settings<'de, ToType: Deserialize<'de>>(&'de self) -> Option<ToType> {
+        self.options
+            .configuration
+            .rules
+            .get_rule(&RuleKey::rule::<R>())
+            .map(|options| serde_json::from_str::<ToType>(options.value()))
+            // TODO: ignore the error for now, it should be handled differently https://github.com/rome/tools/issues/3346
+            .and_then(|result| result.ok())
     }
 }
 

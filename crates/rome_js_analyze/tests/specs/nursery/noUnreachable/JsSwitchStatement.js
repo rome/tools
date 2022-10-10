@@ -18,3 +18,8 @@ function JsSwitchStatement2() {
             afterBreak();
     }
 }
+
+function JsSwitchStatement3() {
+    return;
+    switch (value) {}
+}

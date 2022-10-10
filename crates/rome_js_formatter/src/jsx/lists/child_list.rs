@@ -108,7 +108,11 @@ impl FormatJsxChildList {
                             ),
                         }),
 
-                        _ => None,
+                        Some(JsxChild::Newline | JsxChild::Whitespace | JsxChild::EmptyLine) => {
+                            None
+                        }
+
+                        None => None,
                     };
 
                     child_breaks = separator.map_or(false, |separator| separator.will_break());
@@ -116,9 +120,10 @@ impl FormatJsxChildList {
                     flat.write(&format_args![word, separator], f);
 
                     if let Some(separator) = separator {
-                        multiline.write(word, &separator, f);
+                        multiline.write_with_separator(word, &separator, f);
                     } else {
-                        multiline.write_with_empty_separator(word, f);
+                        // it's safe to write without a separator because None means that next element is a separator or end of the iterator
+                        multiline.write_content(word, f);
                     }
                 }
 
@@ -139,7 +144,7 @@ impl FormatJsxChildList {
                     let is_trailing_or_only_whitespace = children_iter.peek().is_none();
 
                     if is_trailing_or_only_whitespace || is_after_line_break {
-                        multiline.write_with_empty_separator(&JsxRawSpace, f);
+                        multiline.write_separator(&JsxRawSpace, f);
                     }
                     // Leading whitespace. Only possible if used together with a expression child
                     //
@@ -151,9 +156,9 @@ impl FormatJsxChildList {
                     // </div>
                     // ```
                     else if last.is_none() {
-                        multiline.write(&JsxRawSpace, &hard_line_break(), f);
+                        multiline.write_with_separator(&JsxRawSpace, &hard_line_break(), f);
                     } else {
-                        multiline.write_with_empty_separator(&JsxSpace, f);
+                        multiline.write_separator(&JsxSpace, f);
                     }
                 }
 
@@ -161,20 +166,20 @@ impl FormatJsxChildList {
                 JsxChild::Newline => {
                     child_breaks = true;
 
-                    multiline.write_with_empty_separator(&hard_line_break(), f);
+                    multiline.write_separator(&hard_line_break(), f);
                 }
 
                 // An empty line between some JSX text and an element
                 JsxChild::EmptyLine => {
                     child_breaks = true;
 
-                    multiline.write_with_empty_separator(&empty_line(), f);
+                    multiline.write_separator(&empty_line(), f);
                 }
 
                 // Any child that isn't text
                 JsxChild::NonText(non_text) => {
                     let line_mode = match children_iter.peek() {
-                        Some(JsxChild::Newline | JsxChild::Word(_) | JsxChild::Whitespace) => {
+                        Some(JsxChild::Word(word)) => {
                             // Break if the current or next element is a self closing element
                             // ```javascript
                             // <pre className="h-screen overflow-y-scroll" />adefg
@@ -184,7 +189,9 @@ impl FormatJsxChildList {
                             // <pre className="h-screen overflow-y-scroll" />
                             // adefg
                             // ```
-                            if matches!(non_text, JsxAnyChild::JsxSelfClosingElement(_)) {
+                            if matches!(non_text, JsxAnyChild::JsxSelfClosingElement(_))
+                                && !word.is_ascii_punctuation()
+                            {
                                 Some(LineMode::Hard)
                             } else {
                                 Some(LineMode::Soft)
@@ -192,28 +199,44 @@ impl FormatJsxChildList {
                         }
 
                         // Add a hard line break if what comes after the element is not a text or is all whitespace
-                        Some(_) => Some(LineMode::Hard),
+                        Some(JsxChild::NonText(_)) => Some(LineMode::Hard),
 
+                        Some(JsxChild::Newline | JsxChild::Whitespace | JsxChild::EmptyLine) => {
+                            None
+                        }
                         // Don't insert trailing line breaks
                         None => None,
                     };
 
                     child_breaks = line_mode.map_or(false, |mode| mode.is_hard());
 
-                    let format_separator = format_with(|f| match line_mode {
-                        Some(mode) => f.write_element(FormatElement::Line(mode)),
-                        None => Ok(()),
+                    let format_separator = line_mode.map(|mode| {
+                        format_with(move |f| f.write_element(FormatElement::Line(mode)))
                     });
 
                     if force_multiline {
-                        multiline.write(&non_text.format(), &format_separator, f);
+                        if let Some(format_separator) = format_separator {
+                            multiline.write_with_separator(
+                                &non_text.format(),
+                                &format_separator,
+                                f,
+                            );
+                        } else {
+                            // it's safe to write without a separator because None means that next element is a separator or end of the iterator
+                            multiline.write_content(&non_text.format(), f);
+                        }
                     } else {
                         let mut memoized = non_text.format().memoized();
 
                         force_multiline = memoized.inspect(f)?.will_break();
-
                         flat.write(&format_args![memoized, format_separator], f);
-                        multiline.write(&memoized, &format_separator, f);
+
+                        if let Some(format_separator) = format_separator {
+                            multiline.write_with_separator(&memoized, &format_separator, f);
+                        } else {
+                            // it's safe to write without a separator because None means that next element is a separator or end of the iterator
+                            multiline.write_content(&memoized, f);
+                        }
                     }
                 }
             }
@@ -476,18 +499,30 @@ impl MultilineBuilder {
     }
 
     /// Formats an element that does not require a separator
-    fn write_with_empty_separator(
+    /// It is safe to omit the separator because at the call side we must guarantee that we have reached the end of the iterator
+    /// or the next element is a space/newline that should be written into the separator "slot".
+    fn write_content(&mut self, content: &dyn Format<JsFormatContext>, f: &mut JsFormatter) {
+        self.write(content, None, f);
+    }
+
+    /// Formatting a separator does not require any element in the separator slot
+    fn write_separator(&mut self, separator: &dyn Format<JsFormatContext>, f: &mut JsFormatter) {
+        self.write(separator, None, f);
+    }
+
+    fn write_with_separator(
         &mut self,
         content: &dyn Format<JsFormatContext>,
+        separator: &dyn Format<JsFormatContext>,
         f: &mut JsFormatter,
     ) {
-        self.write(content, &format_with(|_| Ok(())), f)
+        self.write(content, Some(separator), f);
     }
 
     fn write(
         &mut self,
         content: &dyn Format<JsFormatContext>,
-        separator: &dyn Format<JsFormatContext>,
+        separator: Option<&dyn Format<JsFormatContext>>,
         f: &mut JsFormatter,
     ) {
         let result = std::mem::replace(&mut self.result, Ok(Vec::new()));
@@ -502,12 +537,18 @@ impl MultilineBuilder {
                         write!(buffer, [content])?;
                         buffer.write_element(FormatElement::Tag(Tag::EndEntry))?;
 
-                        buffer.write_element(FormatElement::Tag(Tag::StartEntry))?;
-                        write!(buffer, [separator])?;
-                        buffer.write_element(FormatElement::Tag(Tag::EndEntry))?;
+                        if let Some(separator) = separator {
+                            buffer.write_element(FormatElement::Tag(Tag::StartEntry))?;
+                            write!(buffer, [separator])?;
+                            buffer.write_element(FormatElement::Tag(Tag::EndEntry))?;
+                        }
                     }
                     MultilineLayout::NoFill => {
                         write!(buffer, [content, separator])?;
+
+                        if let Some(separator) = separator {
+                            write!(buffer, [separator])?;
+                        }
                     }
                 };
                 buffer.into_vec()

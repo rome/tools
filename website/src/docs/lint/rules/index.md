@@ -260,6 +260,13 @@ to promote these rules into a more appropriate category.
 Discourage the usage of Array index in keys.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noAutofocus">
+	<a href="/docs/lint/rules/noAutofocus">noAutofocus (since v10.0.0)</a>
+	<a class="header-anchor" href="#noAutofocus"></a>
+</h3>
+Avoid the <code>autoFocus</code> attribute
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noChildrenProp">
 	<a href="/docs/lint/rules/noChildrenProp">noChildrenProp (since v0.10.0)</a>
 	<a class="header-anchor" href="#noChildrenProp"></a>
@@ -356,6 +363,13 @@ This rule enforces the use of <code>&lt;&gt;...&lt;/&gt;</code> over <code>&lt;F
 	<a class="header-anchor" href="#useOptionalChain"></a>
 </h3>
 Enforce using concise optional chain instead of chained logical expressions.
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useValidAnchor">
+	<a href="/docs/lint/rules/useValidAnchor">useValidAnchor (since v10.0.0)</a>
+	<a class="header-anchor" href="#useValidAnchor"></a>
+</h3>
+Enforce that all anchors are valid, and they are navigable elements.
 </div>
 </section>
 <section>

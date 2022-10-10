@@ -10,13 +10,13 @@ license = "MIT"
 
 [dependencies]
 rome_rowan = { path = "../rome_rowan" }
-tracing = { version = "0.1.31", default-features = false, features = ["std"] }
+tracing = { workspace = true }
 serde = { version = "1.0.136", features = ["derive"], optional = true }
 cfg-if = "1.0.0"
 schemars = { version = "0.8.10", optional = true }
-rustc-hash = "1.1.0"
-countme = "3.0.1"
-indexmap = "1.9.1"
+rustc-hash = { workspace = true }
+countme = { workspace = true }
+indexmap = { workspace = true }
 
 [dev-dependencies]
 rome_js_parser = { path = "../rome_js_parser"}

@@ -25,15 +25,18 @@ function JsSwitchStatement2() {
     }
 }
 
+function JsSwitchStatement3() {
+    return;
+    switch (value) {}
+}
+
 ```
 
 # Diagnostics
 ```
 JsSwitchStatement.js:18:13 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This code is unreachable
-  
-  ! ... before it can reach this code
+  ! This code will never be reached ...
   
     16 │         case 0:
     17 │             break;
@@ -42,7 +45,7 @@ JsSwitchStatement.js:18:13 lint/nursery/noUnreachable ━━━━━━━━�
     19 │     }
     20 │ }
   
-  i This statement will break the flow of the code ...
+  i ... because this statement will break the flow of the code beforehand
   
     15 │     switch (value) {
     16 │         case 0:
@@ -50,6 +53,29 @@ JsSwitchStatement.js:18:13 lint/nursery/noUnreachable ━━━━━━━━�
        │             ^^^^^^
     18 │             afterBreak();
     19 │     }
+  
+
+```
+
+```
+JsSwitchStatement.js:24:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This code will never be reached ...
+  
+    22 │ function JsSwitchStatement3() {
+    23 │     return;
+  > 24 │     switch (value) {}
+       │     ^^^^^^^^^^^^^^^^^
+    25 │ }
+    26 │ 
+  
+  i ... because this statement will return from the function beforehand
+  
+    22 │ function JsSwitchStatement3() {
+  > 23 │     return;
+       │     ^^^^^^^
+    24 │     switch (value) {}
+    25 │ }
   
 
 ```

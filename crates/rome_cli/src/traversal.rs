@@ -9,8 +9,8 @@ use rome_diagnostics::{
     v2::{
         self,
         adapters::{IoError, StdError},
-        category, Advices, Category, Diagnostic, DiagnosticExt, Error, FilePath, LogCategory,
-        PrintDescription, PrintDiagnostic, Severity, Visit,
+        category, Advices, Category, Diagnostic, DiagnosticExt, Error, FilePath, PrintDescription,
+        PrintDiagnostic, Severity, Visit,
     },
     MAXIMUM_DISPLAYABLE_DIAGNOSTICS,
 };
@@ -238,14 +238,8 @@ struct FormatDiffAdvice<'a> {
 
 impl Advices for FormatDiffAdvice<'_> {
     fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
-        // Skip printing the diff for files over 1Mb (probably a minified file)
-        let max_len = self.old.len().max(self.new.len());
-        if max_len >= 1_000_000 {
-            visitor.record_log(LogCategory::Info, &"[Diff not printed for file over 1Mb]")
-        } else {
-            let diff = TextEdit::from_unicode_words(self.old, self.new);
-            visitor.record_diff(&diff)
-        }
+        let diff = TextEdit::from_unicode_words(self.old, self.new);
+        visitor.record_diff(&diff)
     }
 }
 

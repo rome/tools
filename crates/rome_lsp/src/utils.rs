@@ -51,22 +51,19 @@ pub(crate) fn text_range(line_index: &LineIndex, range: lsp::Range) -> Result<Te
 
 pub(crate) fn text_edit(line_index: &LineIndex, diff: TextEdit) -> Vec<lsp::TextEdit> {
     let mut result: Vec<lsp::TextEdit> = Vec::new();
-    let mut old_offset = TextSize::from(0);
-    let mut new_offset = TextSize::from(0);
+    let mut offset = TextSize::from(0);
 
     for op in diff.iter() {
         match op {
             CompressedOp::DiffOp(DiffOp::Equal { range }) => {
-                old_offset += range.len();
-                new_offset += range.len();
+                offset += range.len();
             }
             CompressedOp::DiffOp(DiffOp::Insert { range }) => {
-                let start = position(line_index, new_offset);
-                new_offset += range.len();
+                let start = position(line_index, offset);
 
                 // Merge with a previous delete operation if possible
                 let last_edit = result.last_mut().filter(|text_edit| {
-                    text_edit.range.start == start && text_edit.new_text.is_empty()
+                    text_edit.range.end == start && text_edit.new_text.is_empty()
                 });
 
                 if let Some(last_edit) = last_edit {
@@ -79,9 +76,9 @@ pub(crate) fn text_edit(line_index: &LineIndex, diff: TextEdit) -> Vec<lsp::Text
                 }
             }
             CompressedOp::DiffOp(DiffOp::Delete { range }) => {
-                let start = position(line_index, old_offset);
-                old_offset += range.len();
-                let end = position(line_index, old_offset);
+                let start = position(line_index, offset);
+                offset += range.len();
+                let end = position(line_index, offset);
 
                 result.push(lsp::TextEdit {
                     range: lsp::Range::new(start, end),
@@ -90,18 +87,17 @@ pub(crate) fn text_edit(line_index: &LineIndex, diff: TextEdit) -> Vec<lsp::Text
             }
 
             CompressedOp::EqualLines { line_count } => {
-                let mut line_col = line_index.line_col(old_offset);
+                let mut line_col = line_index.line_col(offset);
                 line_col.line += line_count.get() + 1;
                 line_col.col = 0;
 
                 // SAFETY: This should only happen if `line_index` wasn't built
                 // from the same string as the old revision of `diff`
-                let offset = line_index
+                let new_offset = line_index
                     .offset(line_col)
                     .expect("diff length is overflowing the line count in the original file");
 
-                new_offset += offset - old_offset;
-                old_offset = offset;
+                offset = new_offset;
             }
         }
     }
@@ -313,7 +309,7 @@ mod tests {
     use crate::line_index::LineIndex;
 
     #[test]
-    fn test_diff() {
+    fn test_diff_1() {
         const OLD: &str = "line 1 old
 line 2
 line 3
@@ -363,6 +359,62 @@ line 7 new";
                         }
                     },
                     new_text: String::from("new"),
+                },
+            ]
+        );
+    }
+
+    #[test]
+    fn test_diff_2() {
+        const OLD: &str = "console.log(\"Variable: \" + variable);";
+        const NEW: &str = "console.log(`Variable: ${variable}`);";
+
+        let line_index = LineIndex::new(OLD);
+        let diff = TextEdit::from_unicode_words(OLD, NEW);
+
+        let text_edit = super::text_edit(&line_index, diff);
+
+        assert_eq!(
+            text_edit.as_slice(),
+            &[
+                lsp::TextEdit {
+                    range: lsp::Range {
+                        start: lsp::Position {
+                            line: 0,
+                            character: 12,
+                        },
+                        end: lsp::Position {
+                            line: 0,
+                            character: 13,
+                        },
+                    },
+                    new_text: String::from("`"),
+                },
+                lsp::TextEdit {
+                    range: lsp::Range {
+                        start: lsp::Position {
+                            line: 0,
+                            character: 23
+                        },
+                        end: lsp::Position {
+                            line: 0,
+                            character: 27
+                        }
+                    },
+                    new_text: String::from("${"),
+                },
+                lsp::TextEdit {
+                    range: lsp::Range {
+                        start: lsp::Position {
+                            line: 0,
+                            character: 35
+                        },
+                        end: lsp::Position {
+                            line: 0,
+                            character: 35
+                        }
+                    },
+                    new_text: String::from("}`"),
                 },
             ]
         );

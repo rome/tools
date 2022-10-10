@@ -21,7 +21,7 @@ rome_console = { path = "../rome_console" }
 rome_text_edit = { path = "../rome_text_edit" }
 rome_lsp = { path = "../rome_lsp" }
 pico-args = { version ="0.5.0", features=["eq-separator"] }
-tracing = { version = "0.1.31", default-features = false, features = ["std"] }
+tracing = { workspace = true }
 tracing-tree = "0.2.0"
 tracing-subscriber = { version = "0.3.6", features = ["env-filter"] }
 tracing-appender = "0.2"
@@ -32,13 +32,13 @@ thiserror = "1.0.30"
 rayon = "1.5.1"
 serde = { version = "1.0.133", features = ["derive"] }
 serde_json = { version = "1.0.74" }
-tokio = { version = "1.15.0", features = ["io-std", "io-util", "net", "time", "rt", "rt-multi-thread", "macros"] }
+tokio = { workspace = true, features = ["io-std", "io-util", "net", "time", "rt", "rt-multi-thread", "macros"] }
 anyhow = "1.0.52"
-dashmap = "5.2.0"
+dashmap = { workspace = true }
 
 [target.'cfg(unix)'.dependencies]
 libc = "0.2.127"
-tokio = { version = "1.15.0", features = ["process"] }
+tokio = { workspace = true, features = ["process"] }
 
 [target.'cfg(windows)'.dependencies]
 mimalloc = "0.1.29"
@@ -48,4 +48,4 @@ tikv-jemallocator = "0.5.0"
 
 [dev-dependencies]
 insta = "1.18.2"
-tokio = { version = "1.15.0", features = ["io-util"] }
+tokio = { workspace = true, features = ["io-util"] }

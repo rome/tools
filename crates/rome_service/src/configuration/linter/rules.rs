@@ -387,6 +387,7 @@ pub struct Nursery {
 #[doc = r" A list of rules that belong to this group"]
 struct NurserySchema {
     no_array_index_key: Option<RuleConfiguration>,
+    no_autofocus: Option<RuleConfiguration>,
     no_children_prop: Option<RuleConfiguration>,
     no_dangerously_set_inner_html: Option<RuleConfiguration>,
     no_dangerously_set_inner_html_with_children: Option<RuleConfiguration>,
@@ -401,11 +402,13 @@ struct NurserySchema {
     use_camel_case: Option<RuleConfiguration>,
     use_fragment_syntax: Option<RuleConfiguration>,
     use_optional_chain: Option<RuleConfiguration>,
+    use_valid_anchor: Option<RuleConfiguration>,
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 15] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 17] = [
         "noArrayIndexKey",
+        "noAutofocus",
         "noChildrenProp",
         "noDangerouslySetInnerHtml",
         "noDangerouslySetInnerHtmlWithChildren",
@@ -420,6 +423,7 @@ impl Nursery {
         "useCamelCase",
         "useFragmentSyntax",
         "useOptionalChain",
+        "useValidAnchor",
     ];
     const RECOMMENDED_RULES: [&'static str; 0] = [];
     const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 0] = [];

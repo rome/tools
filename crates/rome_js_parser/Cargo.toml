@@ -14,10 +14,10 @@ rome_js_factory = { path = "../rome_js_factory" }
 rome_rowan = { path = "../rome_rowan" }
 drop_bomb = "0.1.5"
 bitflags = "1.3.2"
-indexmap = "1.8.0"
+indexmap = { workspace = true }
 cfg-if = "1.0.0"
 smallvec = { version = "1.8.0", features = ["union", "const_new"] }
-tracing = { version = "0.1.31", default-features = false, features = ["std"] }
+tracing = { workspace = true }
 
 [dev-dependencies]
 tests_macros = { path = "../tests_macros" }

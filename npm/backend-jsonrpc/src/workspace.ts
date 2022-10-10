@@ -156,6 +156,7 @@ export interface Correctness {
  */
 export interface Nursery {
 	noArrayIndexKey?: RuleConfiguration;
+	noAutofocus?: RuleConfiguration;
 	noChildrenProp?: RuleConfiguration;
 	noDangerouslySetInnerHtml?: RuleConfiguration;
 	noDangerouslySetInnerHtmlWithChildren?: RuleConfiguration;
@@ -174,6 +175,7 @@ export interface Nursery {
 	useCamelCase?: RuleConfiguration;
 	useFragmentSyntax?: RuleConfiguration;
 	useOptionalChain?: RuleConfiguration;
+	useValidAnchor?: RuleConfiguration;
 }
 /**
  * A list of rules that belong to this group
@@ -306,6 +308,8 @@ export type Category =
 	| "lint/nursery/useFragmentSyntax"
 	| "lint/nursery/noArrayIndexKey"
 	| "lint/nursery/noDangerouslySetInnerHtmlWithChildren"
+	| "lint/nursery/noAutofocus"
+	| "lint/nursery/useValidAnchor"
 	| "lint/style/noNegationElse"
 	| "lint/style/noShoutyConstants"
 	| "lint/style/useSelfClosingElements"
