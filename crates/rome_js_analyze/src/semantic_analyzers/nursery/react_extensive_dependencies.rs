@@ -1,14 +1,14 @@
 use crate::semantic_services::Semantic;
+use crate::utils::react::*;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::{Capture, SemanticModel};
 use rome_js_syntax::{
     JsAnyCallArgument, JsAnyExpression, JsArrayExpression, JsArrowFunctionExpression,
-    JsCallExpression, JsSyntaxKind, TextRange, JsIdentifierBinding,
+    JsCallExpression, JsIdentifierBinding, JsSyntaxKind, TextRange,
 };
 use rome_rowan::{AstNode, SyntaxNodeCast};
 use std::collections::{HashMap, HashSet};
-use crate::utils::react::*;
 
 declare_rule! {
     /// Enforce all dependencies are correctly specified.
@@ -55,15 +55,14 @@ impl Rule for ReactExtensiveDependencies {
                         let node = declaration.syntax().parent()?;
                         use JsSyntaxKind::*;
                         match node.kind() {
-                            JS_FUNCTION_DECLARATION 
+                            JS_FUNCTION_DECLARATION
                             | JS_CLASS_DECLARATION
-                            | TS_ENUM_DECLARATION 
-                            | TS_TYPE_ALIAS_DECLARATION 
+                            | TS_ENUM_DECLARATION
+                            | TS_TYPE_ALIAS_DECLARATION
                             | TS_DECLARE_FUNCTION_DECLARATION => None,
                             _ => {
-                                let declaration = declaration.syntax()
-                                    .clone()
-                                    .cast::<JsIdentifierBinding>()?;
+                                let declaration =
+                                    declaration.syntax().clone().cast::<JsIdentifierBinding>()?;
                                 let not_stable = !is_stable_binding(&declaration, &stables);
                                 not_stable.then_some(capture)
                             }
@@ -95,7 +94,7 @@ impl Rule for ReactExtensiveDependencies {
 
             //TODO Search for dependencies not captured
 
-            // Generate signals 
+            // Generate signals
             for (_, captures) in add_deps {
                 signals.push((range, captures));
             }
