@@ -16,6 +16,7 @@ cfg-if = "1.0.0"
 schemars = { version = "0.8.10", optional = true }
 rustc-hash = { workspace = true }
 countme = { workspace = true }
+drop_bomb = "0.1.5"
 indexmap = { workspace = true }
 
 [dev-dependencies]
