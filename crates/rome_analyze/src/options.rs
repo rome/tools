@@ -88,7 +88,7 @@ impl OptionsDeserializationDiagnostic {
 
         let message = format!(
             "Errors emitted while attempting run the rule {rule_name}: \n {}",
-            error.to_string()
+            error
         );
 
         Self {
