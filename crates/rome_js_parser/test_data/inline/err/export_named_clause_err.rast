@@ -12,7 +12,9 @@ JsModule {
                             items: [
                                 JsUnknown {
                                     items: [
-                                        DEFAULT_KW@9..17 "default" [] [Whitespace(" ")],
+                                        JsLiteralExportName {
+                                            value: IDENT@9..17 "default" [] [Whitespace(" ")],
+                                        },
                                         AS_KW@17..20 "as" [] [Whitespace(" ")],
                                         JsLiteralExportName {
                                             value: JS_STRING_LITERAL@20..24 "\"b\"" [] [Whitespace(" ")],
@@ -37,7 +39,9 @@ JsModule {
                             items: [
                                 JsUnknown {
                                     items: [
-                                        JS_STRING_LITERAL@36..40 "\"a\"" [] [Whitespace(" ")],
+                                        JsLiteralExportName {
+                                            value: JS_STRING_LITERAL@36..40 "\"a\"" [] [Whitespace(" ")],
+                                        },
                                         AS_KW@40..43 "as" [] [Whitespace(" ")],
                                         JsLiteralExportName {
                                             value: IDENT@43..45 "b" [] [Whitespace(" ")],
@@ -145,7 +149,8 @@ JsModule {
         0: L_CURLY@7..9 "{" [] [Whitespace(" ")]
         1: JS_UNKNOWN@9..24
           0: JS_UNKNOWN@9..24
-            0: DEFAULT_KW@9..17 "default" [] [Whitespace(" ")]
+            0: JS_LITERAL_EXPORT_NAME@9..17
+              0: IDENT@9..17 "default" [] [Whitespace(" ")]
             1: AS_KW@17..20 "as" [] [Whitespace(" ")]
             2: JS_LITERAL_EXPORT_NAME@20..24
               0: JS_STRING_LITERAL@20..24 "\"b\"" [] [Whitespace(" ")]
@@ -157,7 +162,8 @@ JsModule {
         0: L_CURLY@34..36 "{" [] [Whitespace(" ")]
         1: JS_UNKNOWN@36..45
           0: JS_UNKNOWN@36..45
-            0: JS_STRING_LITERAL@36..40 "\"a\"" [] [Whitespace(" ")]
+            0: JS_LITERAL_EXPORT_NAME@36..40
+              0: JS_STRING_LITERAL@36..40 "\"a\"" [] [Whitespace(" ")]
             1: AS_KW@40..43 "as" [] [Whitespace(" ")]
             2: JS_LITERAL_EXPORT_NAME@43..45
               0: IDENT@43..45 "b" [] [Whitespace(" ")]
