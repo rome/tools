@@ -22,13 +22,13 @@ expression: invalidJsx.jsx
 
 # Diagnostics
 ```
-invalidJsx.jsx:2:7 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidJsx.jsx:2:16 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid positive values for the tabIndex prop.
   
     1 │ <>
   > 2 │ 	<div tabIndex={1} />
-      │ 	     ^^^^^^^^
+      │ 	              ^^^
     3 │ 	<div tabIndex={"1"} />
     4 │ 	<div tabIndex={'5'} />
   
@@ -38,14 +38,14 @@ invalidJsx.jsx:2:7 lint/nursery/noPositiveTabindex ━━━━━━━━━�
 ```
 
 ```
-invalidJsx.jsx:3:7 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidJsx.jsx:3:16 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid positive values for the tabIndex prop.
   
     1 │ <>
     2 │ 	<div tabIndex={1} />
   > 3 │ 	<div tabIndex={"1"} />
-      │ 	     ^^^^^^^^
+      │ 	              ^^^^^
     4 │ 	<div tabIndex={'5'} />
     5 │ 	<div tabIndex="1" />
   
@@ -55,14 +55,14 @@ invalidJsx.jsx:3:7 lint/nursery/noPositiveTabindex ━━━━━━━━━�
 ```
 
 ```
-invalidJsx.jsx:4:7 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidJsx.jsx:4:16 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid positive values for the tabIndex prop.
   
     2 │ 	<div tabIndex={1} />
     3 │ 	<div tabIndex={"1"} />
   > 4 │ 	<div tabIndex={'5'} />
-      │ 	     ^^^^^^^^
+      │ 	              ^^^^^
     5 │ 	<div tabIndex="1" />
     6 │ 	<div tabIndex={1}>foo</div>
   
@@ -72,14 +72,14 @@ invalidJsx.jsx:4:7 lint/nursery/noPositiveTabindex ━━━━━━━━━�
 ```
 
 ```
-invalidJsx.jsx:5:7 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidJsx.jsx:5:16 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid positive values for the tabIndex prop.
   
     3 │ 	<div tabIndex={"1"} />
     4 │ 	<div tabIndex={'5'} />
   > 5 │ 	<div tabIndex="1" />
-      │ 	     ^^^^^^^^
+      │ 	              ^^^
     6 │ 	<div tabIndex={1}>foo</div>
     7 │ 	<div tabIndex={"1"}>foo</div>
   
@@ -89,14 +89,14 @@ invalidJsx.jsx:5:7 lint/nursery/noPositiveTabindex ━━━━━━━━━�
 ```
 
 ```
-invalidJsx.jsx:6:7 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidJsx.jsx:6:16 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid positive values for the tabIndex prop.
   
     4 │ 	<div tabIndex={'5'} />
     5 │ 	<div tabIndex="1" />
   > 6 │ 	<div tabIndex={1}>foo</div>
-      │ 	     ^^^^^^^^
+      │ 	              ^^^
     7 │ 	<div tabIndex={"1"}>foo</div>
     8 │ 	<div tabIndex={'5'}>foo</div>
   
@@ -106,14 +106,14 @@ invalidJsx.jsx:6:7 lint/nursery/noPositiveTabindex ━━━━━━━━━�
 ```
 
 ```
-invalidJsx.jsx:7:7 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidJsx.jsx:7:16 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid positive values for the tabIndex prop.
   
     5 │ 	<div tabIndex="1" />
     6 │ 	<div tabIndex={1}>foo</div>
   > 7 │ 	<div tabIndex={"1"}>foo</div>
-      │ 	     ^^^^^^^^
+      │ 	              ^^^^^
     8 │ 	<div tabIndex={'5'}>foo</div>
     9 │ 	<div tabIndex={+5}>foo</div>
   
@@ -123,14 +123,14 @@ invalidJsx.jsx:7:7 lint/nursery/noPositiveTabindex ━━━━━━━━━�
 ```
 
 ```
-invalidJsx.jsx:8:7 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidJsx.jsx:8:16 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid positive values for the tabIndex prop.
   
      6 │ 	<div tabIndex={1}>foo</div>
      7 │ 	<div tabIndex={"1"}>foo</div>
    > 8 │ 	<div tabIndex={'5'}>foo</div>
-       │ 	     ^^^^^^^^
+       │ 	              ^^^^^
      9 │ 	<div tabIndex={+5}>foo</div>
     10 │ 	<div tabIndex={+05}>foo</div>
   
@@ -140,14 +140,14 @@ invalidJsx.jsx:8:7 lint/nursery/noPositiveTabindex ━━━━━━━━━�
 ```
 
 ```
-invalidJsx.jsx:9:7 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidJsx.jsx:9:16 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid positive values for the tabIndex prop.
   
      7 │ 	<div tabIndex={"1"}>foo</div>
      8 │ 	<div tabIndex={'5'}>foo</div>
    > 9 │ 	<div tabIndex={+5}>foo</div>
-       │ 	     ^^^^^^^^
+       │ 	              ^^^^
     10 │ 	<div tabIndex={+05}>foo</div>
     11 │ 	<div tabIndex="1">foo</div>
   
@@ -157,14 +157,14 @@ invalidJsx.jsx:9:7 lint/nursery/noPositiveTabindex ━━━━━━━━━�
 ```
 
 ```
-invalidJsx.jsx:10:7 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidJsx.jsx:10:16 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid positive values for the tabIndex prop.
   
      8 │ 	<div tabIndex={'5'}>foo</div>
      9 │ 	<div tabIndex={+5}>foo</div>
   > 10 │ 	<div tabIndex={+05}>foo</div>
-       │ 	     ^^^^^^^^
+       │ 	              ^^^^^
     11 │ 	<div tabIndex="1">foo</div>
     12 │ </>
   
@@ -174,14 +174,14 @@ invalidJsx.jsx:10:7 lint/nursery/noPositiveTabindex ━━━━━━━━━�
 ```
 
 ```
-invalidJsx.jsx:11:7 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalidJsx.jsx:11:16 lint/nursery/noPositiveTabindex ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Avoid positive values for the tabIndex prop.
   
      9 │ 	<div tabIndex={+5}>foo</div>
     10 │ 	<div tabIndex={+05}>foo</div>
   > 11 │ 	<div tabIndex="1">foo</div>
-       │ 	     ^^^^^^^^
+       │ 	              ^^^
     12 │ </>
     13 │ 
   

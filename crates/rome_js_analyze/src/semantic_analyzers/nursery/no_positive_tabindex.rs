@@ -8,7 +8,7 @@ use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
     JsCallExpression, JsNumberLiteralExpression, JsPropertyObjectMember, JsStringLiteralExpression,
     JsUnaryExpression, JsxAnyAttributeValue, JsxAttribute, JsxOpeningElement,
-    JsxSelfClosingElement,
+    JsxSelfClosingElement, TextRange,
 };
 use rome_rowan::{declare_node_union, AstNode};
 
@@ -116,14 +116,10 @@ impl AnyNumberLikeExpression {
         None
     }
 }
-pub(crate) enum NoPositiveTabindexState {
-    Attribute(JsxAttribute),
-    MemberProp(JsPropertyObjectMember),
-}
 
 impl Rule for NoPositiveTabindex {
     type Query = Semantic<NoPositiveTabindexQuery>;
-    type State = NoPositiveTabindexState;
+    type State = TextRange;
     type Signals = Option<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
@@ -136,16 +132,17 @@ impl Rule for NoPositiveTabindex {
                 let jsx_any_attribute_value = jsx_attribute.initializer()?.value().ok()?;
 
                 if !attribute_has_valid_tabindex(&jsx_any_attribute_value)? {
-                    return Some(NoPositiveTabindexState::Attribute(jsx_attribute));
+                    return Some(jsx_any_attribute_value.syntax().text_trimmed_range());
                 }
             }
             TabindexProp::JsPropertyObjectMember(js_object_member) => {
                 let expression = js_object_member.value().ok()?;
+                let expression_syntax_node = expression.syntax();
                 let expression_value =
-                    AnyNumberLikeExpression::cast_ref(expression.syntax())?.value()?;
+                    AnyNumberLikeExpression::cast_ref(expression_syntax_node)?.value()?;
 
                 if !is_tabindex_valid(&expression_value) {
-                    return Some(NoPositiveTabindexState::MemberProp(js_object_member));
+                    return Some(expression_syntax_node.text_trimmed_range());
                 }
             }
         }
@@ -154,20 +151,9 @@ impl Rule for NoPositiveTabindex {
     }
 
     fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
-        let text_range = match state {
-            NoPositiveTabindexState::Attribute(jsx_attribute) => {
-                let name = jsx_attribute.name().ok()?;
-                name.syntax().text_trimmed_range()
-            }
-            NoPositiveTabindexState::MemberProp(object_member) => {
-                let name = object_member.name().ok()?;
-                name.syntax().text_trimmed_range()
-            }
-        };
-
         let diagnostic = RuleDiagnostic::new(
             rule_category!(),
-            text_range,
+            state,
             markup! { "Avoid positive values for the "<Emphasis>"tabIndex"</Emphasis>" prop." }
                 .to_owned(),
         )
