@@ -60,6 +60,7 @@ impl Rule for UseBlankTarget {
     /// 2. The attribute `rel=`, if present
     type State = (JsxAttribute, Option<JsxAttribute>);
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();

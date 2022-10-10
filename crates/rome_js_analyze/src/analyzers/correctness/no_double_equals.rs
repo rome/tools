@@ -55,6 +55,7 @@ impl Rule for NoDoubleEquals {
     type Query = Ast<JsBinaryExpression>;
     type State = JsSyntaxToken;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let n = ctx.query();

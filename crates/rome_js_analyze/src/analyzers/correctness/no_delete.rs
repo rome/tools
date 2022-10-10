@@ -45,6 +45,7 @@ impl Rule for NoDelete {
     type Query = Ast<JsUnaryExpression>;
     type State = MemberExpression;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let node = ctx.query();

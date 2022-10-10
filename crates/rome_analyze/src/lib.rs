@@ -31,7 +31,7 @@ pub use crate::rule::{
     CategoryLanguage, GroupCategory, GroupLanguage, Rule, RuleAction, RuleDiagnostic, RuleGroup,
     RuleMeta, RuleMetadata,
 };
-pub use crate::services::{CannotCreateServicesError, FromServices, ServiceBag};
+pub use crate::services::{FromServices, MissingServicesDiagnostic, ServiceBag};
 use crate::signals::DiagnosticSignal;
 pub use crate::signals::{AnalyzerAction, AnalyzerSignal};
 pub use crate::syntax::SyntaxVisitor;

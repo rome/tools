@@ -42,6 +42,7 @@ impl Rule for NoChildrenProp {
     type Query = Semantic<NoChildrenPropQuery>;
     type State = NoChildrenPropState;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();

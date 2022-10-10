@@ -66,6 +66,7 @@ impl Rule for NoMultipleSpacesInRegularExpressionLiterals {
     type Query = Ast<JsRegexLiteralExpression>;
     type State = Vec<(usize, usize)>;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let value_token = ctx.query().value_token().ok()?;

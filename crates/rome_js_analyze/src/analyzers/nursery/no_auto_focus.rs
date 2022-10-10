@@ -61,6 +61,7 @@ impl Rule for NoAutoFocus {
     type Query = Ast<JsxAnyElement>;
     type State = JsxAttribute;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();

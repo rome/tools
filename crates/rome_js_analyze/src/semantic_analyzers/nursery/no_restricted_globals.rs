@@ -44,6 +44,7 @@ impl Rule for NoRestrictedGlobals {
     type Query = SemanticServices;
     type State = (TextRange, String);
     type Signals = Vec<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let model = ctx.model();

@@ -200,6 +200,7 @@ impl Rule for UseValidAnchor {
     type Query = Ast<UseValidAnchorQuery>;
     type State = UseValidAnchorState;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();

@@ -52,6 +52,7 @@ impl Rule for NoImplicitBoolean {
     type Query = Ast<JsxAttribute>;
     type State = ();
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let n = ctx.query();

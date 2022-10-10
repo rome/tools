@@ -50,6 +50,7 @@ impl Rule for UseSingleCaseStatement {
     type Query = Ast<JsCaseClause>;
     type State = ();
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let n = ctx.query();

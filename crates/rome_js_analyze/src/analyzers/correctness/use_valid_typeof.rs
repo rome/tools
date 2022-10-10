@@ -79,6 +79,7 @@ impl Rule for UseValidTypeof {
     type Query = Ast<JsBinaryExpression>;
     type State = (TypeofError, Option<(JsAnyExpression, JsTypeName)>);
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let n = ctx.query();

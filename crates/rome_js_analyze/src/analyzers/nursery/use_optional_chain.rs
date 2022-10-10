@@ -86,6 +86,7 @@ impl Rule for UseOptionalChain {
     type Query = Ast<JsLogicalExpression>;
     type State = UseOptionalChainState;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let logical = ctx.query();

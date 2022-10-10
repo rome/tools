@@ -47,6 +47,7 @@ impl Rule for NoUnusedTemplateLiteral {
     type Query = Ast<JsTemplate>;
     type State = ();
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let node = ctx.query();

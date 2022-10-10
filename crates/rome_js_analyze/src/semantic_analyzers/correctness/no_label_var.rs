@@ -34,6 +34,7 @@ impl Rule for NoLabelVar {
     /// The first element of the tuple is the name of the binding, the second element of the tuple is the label name
     type State = (JsSyntaxNode, JsSyntaxToken);
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let label_statement = ctx.query();

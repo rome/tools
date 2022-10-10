@@ -1,15 +1,43 @@
+use crate::{RuleKey, TextRange};
+use rome_diagnostics::v2::{Diagnostic, LineIndexBuf, Resource, Result, SourceCode};
 use std::{
     any::{Any, TypeId},
     collections::HashMap,
 };
 
-pub enum CannotCreateServicesError {
-    /// List the missing services necessary to create the service bag
-    MissingServices(&'static [&'static str]),
+#[derive(Debug, Diagnostic)]
+#[diagnostic(category = "internalError/io", tags(INTERNAL))]
+pub struct MissingServicesDiagnostic {
+    #[message]
+    message: String,
+    #[description]
+    description: String,
+    #[location(resource)]
+    path: Resource<&'static str>,
+    #[location(span)]
+    span: Option<TextRange>,
+    #[location(source_code)]
+    source_code: Option<SourceCode<String, LineIndexBuf>>,
+}
+
+impl MissingServicesDiagnostic {
+    pub fn new(rule_name: &str, missing_services: &'static [&'static str]) -> Self {
+        let description = missing_services.join(", ");
+        Self {
+            message: format!("Errors emitted while attempting run the rule: {rule_name}"),
+            description: format!("Missing services: {description}"),
+            source_code: None,
+            path: Resource::Memory,
+            span: None,
+        }
+    }
 }
 
 pub trait FromServices: Sized {
-    fn from_services(services: &ServiceBag) -> Result<Self, CannotCreateServicesError>;
+    fn from_services(
+        rule_key: &RuleKey,
+        services: &ServiceBag,
+    ) -> Result<Self, MissingServicesDiagnostic>;
 }
 
 #[derive(Default)]
@@ -31,7 +59,7 @@ impl ServiceBag {
 }
 
 impl FromServices for () {
-    fn from_services(_: &ServiceBag) -> Result<Self, CannotCreateServicesError> {
+    fn from_services(_: &RuleKey, _: &ServiceBag) -> Result<Self, MissingServicesDiagnostic> {
         Ok(())
     }
 }

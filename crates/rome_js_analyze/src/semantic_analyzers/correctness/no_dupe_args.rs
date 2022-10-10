@@ -44,6 +44,7 @@ impl Rule for NoDupeArgs {
     type Query = Ast<JsAnyFunctionAndMethod>;
     type State = JsIdentifierBinding;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let function = ctx.query();

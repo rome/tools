@@ -67,6 +67,7 @@ inside the `semantic_analyzers` folder
         type Query = Semantic<JsAnyExpression>;
         type State = String;
         type Signals = Option<Self::State>;
+        type Options = ();
    
         fn run(ctx: &RuleContext<Self>) -> Self::Signals {}
    }
@@ -79,15 +80,18 @@ be defined as `type State = ()`
 8. The `run` function must be implemented. This function is called every time the analyzer
 finds a match for the query specified by the rule, and may return zero or more "signals".
 9. Implement the optional `diagnostic` function, to tell the user where's the error and why:
-   ```rust,ignore
-   impl Rule for UseAwesomeTricks {
+    ```rust,ignore
+    impl Rule for UseAwesomeTricks {
         // .. code
         fn diagnostic(_ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {}
-   }
-   ```
-   While implementing the diagnostic, please keep [Rome's technical principals](https://rome.tools/#technical) in mind.
-   This function is called of every signal emitted by the `run` function, and it may return
-   zero or one diagnostic. 
+    }
+    ```
+    While implementing the diagnostic, please keep [Rome's technical principals](https://rome.tools/#technical) in mind.
+    This function is called of every signal emitted by the `run` function, and it may return
+    zero or one diagnostic. 
+
+    You will have to manually update the file `rome_diagnostics_categories/src/categories.rs` and add a new category
+    for the new rule you're about to create.
 10. Implement the optional `action` function, if we are able to provide automatic code fix to the rule:
     ```rust,ignore
     impl Rule for UseAwesomeTricks {

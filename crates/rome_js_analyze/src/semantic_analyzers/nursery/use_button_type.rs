@@ -62,6 +62,7 @@ impl Rule for UseButtonType {
     type Query = Semantic<UseButtonTypeQuery>;
     type State = UseButtonTypeState;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();

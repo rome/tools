@@ -194,6 +194,7 @@ impl Rule for NoVoidElementsWithChildren {
     type Query = Semantic<NoVoidElementsWithChildrenQuery>;
     type State = NoVoidElementsWithChildrenState;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();

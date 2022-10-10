@@ -8,6 +8,7 @@ use rome_diagnostics::v2::Category;
 use rome_diagnostics::{file::FileId, Applicability, Severity};
 use rome_diagnostics::{DiagnosticTag, Footer, Span};
 use rome_rowan::{BatchMutation, Language, TextRange};
+use serde::de::DeserializeOwned;
 
 /// Static metadata containing information about a rule
 pub struct RuleMetadata {
@@ -239,6 +240,8 @@ pub trait Rule: RuleMeta {
     /// An iterator type returned by `run` to yield zero or more signals to the
     /// analyzer
     type Signals: IntoIterator<Item = Self::State>;
+    /// The options that belong to a rule
+    type Options: DeserializeOwned;
 
     fn phase() -> Phases {
         <<<Self as Rule>::Query as Queryable>::Services as Phase>::phase()

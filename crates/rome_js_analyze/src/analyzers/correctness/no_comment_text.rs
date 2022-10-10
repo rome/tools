@@ -43,6 +43,7 @@ impl Rule for NoCommentText {
     type Query = Ast<JsxText>;
     type State = ();
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let n = ctx.query();
