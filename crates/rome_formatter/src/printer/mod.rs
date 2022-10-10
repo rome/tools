@@ -26,6 +26,7 @@ use crate::printer::queue::{
 use drop_bomb::DebugDropBomb;
 use rome_rowan::{TextLen, TextSize};
 use std::num::NonZeroU8;
+use unicode_width::UnicodeWidthChar;
 
 /// Prints the format elements into a string
 #[derive(Debug, Default)]
@@ -657,7 +658,7 @@ impl<'a> Printer<'a> {
             let char_width = if char == '\t' {
                 self.options.tab_width as usize
             } else {
-                1
+                char.width().unwrap_or(0)
             };
 
             self.state.line_width += char_width;
@@ -1000,7 +1001,7 @@ impl<'a, 'print> FitsMeasurer<'a, 'print> {
 
                 for c in token.chars() {
                     let char_width = match c {
-                        '\t' => self.options().tab_width,
+                        '\t' => self.options().tab_width as usize,
                         '\n' => {
                             return Ok(if self.must_be_flat {
                                 Fits::No
@@ -1008,9 +1009,9 @@ impl<'a, 'print> FitsMeasurer<'a, 'print> {
                                 Fits::Yes
                             });
                         }
-                        _ => 1,
+                        c => c.width().unwrap_or(0),
                     };
-                    self.state.line_width += char_width as usize;
+                    self.state.line_width += char_width;
                 }
 
                 if self.state.line_width > self.options().print_width.into() {
