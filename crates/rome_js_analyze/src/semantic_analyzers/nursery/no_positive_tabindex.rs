@@ -19,7 +19,7 @@ declare_rule! {
     /// ## Accessibility guidelines
     ///
     /// [WCAG 2.4.3](https://www.w3.org/WAI/WCAG21/Understanding/focus-order)
-	///
+    ///
     /// ## Examples
     ///
     /// ### Invalid
@@ -154,12 +154,13 @@ impl Rule for NoPositiveTabindex {
         let diagnostic = RuleDiagnostic::new(
             rule_category!(),
             state,
-            markup! { "Avoid positive values for the "<Emphasis>"tabIndex"</Emphasis>" prop." }
-                .to_owned(),
+            markup!{"Avoid positive values for the "<Emphasis>"tabIndex"</Emphasis>" prop."}.to_owned(),
         )
         .footer(
             Severity::Note,
-            "Elements with a positive "<Emphasis>"tabIndex"</Emphasis> override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.",
+            markup!{
+				"Elements with a positive "<Emphasis>"tabIndex"</Emphasis>" override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard."
+			}.to_owned(),
         );
 
         Some(diagnostic)

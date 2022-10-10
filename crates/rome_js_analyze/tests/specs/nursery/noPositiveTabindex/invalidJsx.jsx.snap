@@ -32,7 +32,7 @@ invalidJsx.jsx:2:16 lint/nursery/noPositiveTabindex ━━━━━━━━━�
     3 │ 	<div tabIndex={"1"} />
     4 │ 	<div tabIndex={'5'} />
   
-  i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
+  i Elements with a positive tabIndex override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
   
 
 ```
@@ -49,7 +49,7 @@ invalidJsx.jsx:3:16 lint/nursery/noPositiveTabindex ━━━━━━━━━�
     4 │ 	<div tabIndex={'5'} />
     5 │ 	<div tabIndex="1" />
   
-  i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
+  i Elements with a positive tabIndex override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
   
 
 ```
@@ -66,7 +66,7 @@ invalidJsx.jsx:4:16 lint/nursery/noPositiveTabindex ━━━━━━━━━�
     5 │ 	<div tabIndex="1" />
     6 │ 	<div tabIndex={1}>foo</div>
   
-  i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
+  i Elements with a positive tabIndex override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
   
 
 ```
@@ -83,7 +83,7 @@ invalidJsx.jsx:5:16 lint/nursery/noPositiveTabindex ━━━━━━━━━�
     6 │ 	<div tabIndex={1}>foo</div>
     7 │ 	<div tabIndex={"1"}>foo</div>
   
-  i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
+  i Elements with a positive tabIndex override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
   
 
 ```
@@ -100,7 +100,7 @@ invalidJsx.jsx:6:16 lint/nursery/noPositiveTabindex ━━━━━━━━━�
     7 │ 	<div tabIndex={"1"}>foo</div>
     8 │ 	<div tabIndex={'5'}>foo</div>
   
-  i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
+  i Elements with a positive tabIndex override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
   
 
 ```
@@ -117,7 +117,7 @@ invalidJsx.jsx:7:16 lint/nursery/noPositiveTabindex ━━━━━━━━━�
     8 │ 	<div tabIndex={'5'}>foo</div>
     9 │ 	<div tabIndex={+5}>foo</div>
   
-  i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
+  i Elements with a positive tabIndex override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
   
 
 ```
@@ -134,7 +134,7 @@ invalidJsx.jsx:8:16 lint/nursery/noPositiveTabindex ━━━━━━━━━�
      9 │ 	<div tabIndex={+5}>foo</div>
     10 │ 	<div tabIndex={+05}>foo</div>
   
-  i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
+  i Elements with a positive tabIndex override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
   
 
 ```
@@ -151,7 +151,7 @@ invalidJsx.jsx:9:16 lint/nursery/noPositiveTabindex ━━━━━━━━━�
     10 │ 	<div tabIndex={+05}>foo</div>
     11 │ 	<div tabIndex="1">foo</div>
   
-  i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
+  i Elements with a positive tabIndex override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
   
 
 ```
@@ -168,7 +168,7 @@ invalidJsx.jsx:10:16 lint/nursery/noPositiveTabindex ━━━━━━━━━
     11 │ 	<div tabIndex="1">foo</div>
     12 │ </>
   
-  i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
+  i Elements with a positive tabIndex override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
   
 
 ```
@@ -185,7 +185,7 @@ invalidJsx.jsx:11:16 lint/nursery/noPositiveTabindex ━━━━━━━━━
     12 │ </>
     13 │ 
   
-  i Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
+  i Elements with a positive tabIndex override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.
   
 
 ```
