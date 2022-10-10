@@ -4,10 +4,10 @@ use rome_console::markup;
 use rome_js_semantic::{Capture, SemanticModel};
 use rome_js_syntax::{
     JsAnyCallArgument, JsAnyExpression, JsArrayExpression, JsArrowFunctionExpression,
-    JsCallExpression, JsSyntaxKind, TextRange,
+    JsCallExpression, JsSyntaxKind, TextRange, JsIdentifierBinding,
 };
-use rome_rowan::AstNode;
-use std::collections::HashMap;
+use rome_rowan::{AstNode, SyntaxNodeCast};
+use std::collections::{HashMap, HashSet};
 use crate::utils::react::*;
 
 declare_rule! {
@@ -26,6 +26,17 @@ impl Rule for ReactExtensiveDependencies {
     type Signals = Vec<Self::State>;
 
     fn run(ctx: &RuleContext<Self>) -> Vec<Self::State> {
+        //TODO: move this to config
+        let stables = HashSet::from_iter([
+            ReactHookStable::new("useState", Some(1)),
+            ReactHookStable::new("useReducer", Some(1)),
+            ReactHookStable::new("useTransition", Some(1)),
+            ReactHookStable::new("useRef", None),
+            ReactHookStable::new("useContext", None),
+            ReactHookStable::new("useId", None),
+            ReactHookStable::new("useSyncExternalStore", None),
+        ]);
+
         let mut signals = vec![];
 
         let node = ctx.query();
@@ -49,7 +60,13 @@ impl Rule for ReactExtensiveDependencies {
                             | TS_ENUM_DECLARATION 
                             | TS_TYPE_ALIAS_DECLARATION 
                             | TS_DECLARE_FUNCTION_DECLARATION => None,
-                            _ => Some(capture)
+                            _ => {
+                                let declaration = declaration.syntax()
+                                    .clone()
+                                    .cast::<JsIdentifierBinding>()?;
+                                let not_stable = !is_stable_binding(&declaration, &stables);
+                                not_stable.then_some(capture)
+                            }
                         }
                     })
                 })
@@ -66,9 +83,6 @@ impl Rule for ReactExtensiveDependencies {
                 })
                 .unwrap_or_default();
 
-            dbg!(&captures.iter().map(|x| &x.0).collect::<Vec<_>>());
-            dbg!(&deps);
-
             let mut add_deps: HashMap<String, Vec<Capture>> = HashMap::new();
 
             // Search for captures not in the dependency
@@ -79,8 +93,9 @@ impl Rule for ReactExtensiveDependencies {
                 }
             }
 
-            // Search for dependencies not captured
+            //TODO Search for dependencies not captured
 
+            // Generate signals 
             for (_, captures) in add_deps {
                 signals.push((range, captures));
             }

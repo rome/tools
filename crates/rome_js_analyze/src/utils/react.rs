@@ -1,7 +1,7 @@
 use std::collections::HashSet;
 
 use rome_js_syntax::{JsIdentifierBinding, JsVariableDeclarator, JsArrayBindingPatternElementList, JsArrayBindingPattern, SourceType};
-use rome_rowan::{SyntaxNodeCast, AstNode};
+use rome_rowan::AstNode;
 
 #[derive(PartialEq, Eq, Hash)]
 pub struct ReactHookStable  {
@@ -13,7 +13,7 @@ impl ReactHookStable {
     pub fn new(hook_name: &str, index: Option<usize>) -> Self { Self { hook_name: hook_name.into(), index } }
 }
 
-fn is_react_hook_state(binding: &JsIdentifierBinding, stables: &HashSet<ReactHookStable>) -> bool {
+pub fn is_stable_binding(binding: &JsIdentifierBinding, stables: &HashSet<ReactHookStable>) -> bool {
     fn array_binding_declarator_index(binding: &JsIdentifierBinding) -> Option<(JsVariableDeclarator, Option<usize>)> {
         let index = binding.syntax().index() / 2;
         let declarator = binding.parent::<JsArrayBindingPatternElementList>()?
@@ -51,6 +51,7 @@ fn is_react_hook_state(binding: &JsIdentifierBinding, stables: &HashSet<ReactHoo
 #[cfg(test)]
 mod test {
     use rome_js_parser::FileId;
+    use rome_rowan::SyntaxNodeCast;
     use super::*;
 
     #[test]
@@ -69,7 +70,7 @@ mod test {
             ReactHookStable::new("useState", Some(1))
         ]);
     
-        assert!(is_react_hook_state(&setName, &stables));
+        assert!(is_stable_binding(&setName, &stables));
     }
 }
 
