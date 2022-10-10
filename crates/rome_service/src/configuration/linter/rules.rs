@@ -402,10 +402,11 @@ struct NurserySchema {
     use_camel_case: Option<RuleConfiguration>,
     use_fragment_syntax: Option<RuleConfiguration>,
     use_optional_chain: Option<RuleConfiguration>,
+    use_valid_anchor: Option<RuleConfiguration>,
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 16] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 17] = [
         "noArrayIndexKey",
         "noAutofocus",
         "noChildrenProp",
@@ -422,6 +423,7 @@ impl Nursery {
         "useCamelCase",
         "useFragmentSyntax",
         "useOptionalChain",
+        "useValidAnchor",
     ];
     const RECOMMENDED_RULES: [&'static str; 0] = [];
     const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 0] = [];

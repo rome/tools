@@ -647,6 +647,16 @@
               "type": "null"
             }
           ]
+        },
+        "useValidAnchor": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       }
     },
