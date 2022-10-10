@@ -299,7 +299,7 @@ Disallow <code>new</code> operators with the <code>Symbol</code> object
 	<a href="/docs/lint/rules/noPositiveTabindex">noPositiveTabindex (since v0.10.0)</a>
 	<a class="header-anchor" href="#noPositiveTabindex"></a>
 </h3>
-Prevent the usage of positive integers on tabIndex property
+Prevent the usage of positive integers on <code>tabIndex</code> property
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noRenderReturnValue">
