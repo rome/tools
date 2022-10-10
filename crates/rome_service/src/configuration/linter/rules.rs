@@ -407,7 +407,7 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 17] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 18] = [
         "noArrayIndexKey",
         "noAutofocus",
         "noChildrenProp",
