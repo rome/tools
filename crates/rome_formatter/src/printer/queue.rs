@@ -290,16 +290,16 @@ impl<'a, Q> FusedIterator for QueueContentIterator<'a, '_, Q> where Q: Queue<'a>
 /// Called for every [`element`](FormatElement) in the [FitsQueue] when measuring if a content
 /// fits on the line. The measuring of the content ends for the first [`element`](FormatElement) that this
 /// predicate returns `false`.
-pub(super) trait FitsPredicate {
-    fn apply(&mut self, element: &FormatElement) -> PrintResult<bool>;
+pub(super) trait FitsEndPredicate {
+    fn is_end(&mut self, element: &FormatElement) -> PrintResult<bool>;
 }
 
 /// Filter that includes all elements until it reaches the end of the document.
 pub(super) struct AllPredicate;
 
-impl FitsPredicate for AllPredicate {
-    fn apply(&mut self, _element: &FormatElement) -> PrintResult<bool> {
-        Ok(true)
+impl FitsEndPredicate for AllPredicate {
+    fn is_end(&mut self, _element: &FormatElement) -> PrintResult<bool> {
+        Ok(false)
     }
 }
 
@@ -310,21 +310,27 @@ pub(super) enum SingleEntryPredicate {
     Done,
 }
 
+impl SingleEntryPredicate {
+    pub(super) const fn is_done(&self) -> bool {
+        matches!(self, SingleEntryPredicate::Done)
+    }
+}
+
 impl Default for SingleEntryPredicate {
     fn default() -> Self {
         SingleEntryPredicate::Entry { depth: 0 }
     }
 }
 
-impl FitsPredicate for SingleEntryPredicate {
-    fn apply(&mut self, element: &FormatElement) -> PrintResult<bool> {
+impl FitsEndPredicate for SingleEntryPredicate {
+    fn is_end(&mut self, element: &FormatElement) -> PrintResult<bool> {
         let result = match self {
-            SingleEntryPredicate::Done => false,
+            SingleEntryPredicate::Done => true,
             SingleEntryPredicate::Entry { depth } => match element {
                 FormatElement::Tag(Tag::StartEntry) => {
                     *depth += 1;
 
-                    true
+                    false
                 }
                 FormatElement::Tag(Tag::EndEntry) => {
                     if *depth == 0 {
@@ -333,91 +339,20 @@ impl FitsPredicate for SingleEntryPredicate {
 
                     *depth -= 1;
 
-                    if *depth == 0 {
+                    let is_end = *depth == 0;
+
+                    if is_end {
                         *self = SingleEntryPredicate::Done;
                     }
 
-                    true
+                    is_end
                 }
-                FormatElement::Interned(_) => true,
+                FormatElement::Interned(_) => false,
                 element if *depth == 0 => {
                     return invalid_start_tag(TagKind::Entry, Some(element));
                 }
-                _ => true,
+                _ => false,
             },
-        };
-
-        Ok(result)
-    }
-}
-
-/// Queue filter that returns all elements belonging to the separator and the following item of a fill pair.
-///
-/// The fill element consists of entries where each entry is separated by [Tag::StartEntry] and [Tag::EndEntry].
-/// This filter takes up to two [Tag::StartEntry]/[Tag::StopEntry] but may end after one if
-/// it reaches the [Tag::EndFill] element (last item without a separator).
-#[derive(Debug)]
-pub(super) enum SeparatorItemPairPredicate {
-    Separator { depth: usize },
-    Item { depth: usize },
-    Done,
-}
-
-impl SeparatorItemPairPredicate {
-    const fn is_item(&self) -> bool {
-        matches!(self, SeparatorItemPairPredicate::Item { .. })
-    }
-}
-
-impl Default for SeparatorItemPairPredicate {
-    fn default() -> Self {
-        Self::Separator { depth: 0 }
-    }
-}
-
-impl FitsPredicate for SeparatorItemPairPredicate {
-    fn apply(&mut self, element: &FormatElement) -> PrintResult<bool> {
-        let is_item = self.is_item();
-
-        let result = match self {
-            SeparatorItemPairPredicate::Item { depth }
-            | SeparatorItemPairPredicate::Separator { depth } => {
-                match element {
-                    FormatElement::Tag(Tag::StartEntry) => {
-                        *depth += 1;
-
-                        true
-                    }
-                    FormatElement::Tag(Tag::EndEntry) => {
-                        if *depth == 0 {
-                            return invalid_end_tag(TagKind::Entry, None);
-                        }
-
-                        *depth -= 1;
-
-                        if *depth == 0 {
-                            if is_item {
-                                *self = SeparatorItemPairPredicate::Done;
-                            } else {
-                                *self = SeparatorItemPairPredicate::Item { depth: 0 }
-                            }
-                        }
-
-                        true
-                    }
-                    // No item, trailing separator only
-                    FormatElement::Tag(Tag::EndFill) if *depth == 0 && is_item => {
-                        *self = SeparatorItemPairPredicate::Done;
-                        false
-                    }
-                    FormatElement::Interned(_) => true,
-                    element if *depth == 0 => {
-                        return invalid_start_tag(TagKind::Entry, Some(element));
-                    }
-                    _ => true,
-                }
-            }
-            SeparatorItemPairPredicate::Done => false,
         };
 
         Ok(result)
