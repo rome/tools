@@ -200,14 +200,60 @@ JsModule {
                 semicolon_token: missing (optional),
             },
         },
+        JsExport {
+            export_token: EXPORT_KW@230..238 "export" [Newline("\n")] [Whitespace(" ")],
+            export_clause: JsExportNamedFromClause {
+                type_token: missing (optional),
+                l_curly_token: L_CURLY@238..240 "{" [] [Whitespace(" ")],
+                specifiers: JsExportNamedFromSpecifierList [
+                    JsExportNamedFromSpecifier {
+                        type_token: missing (optional),
+                        source_name: JsLiteralExportName {
+                            value: JS_STRING_LITERAL@240..244 "\"a\"" [] [Whitespace(" ")],
+                        },
+                        export_as: missing (optional),
+                    },
+                ],
+                r_curly_token: R_CURLY@244..246 "}" [] [Whitespace(" ")],
+                from_token: FROM_KW@246..251 "from" [] [Whitespace(" ")],
+                source: JsModuleSource {
+                    value_token: JS_STRING_LITERAL@251..258 "\"./mod\"" [] [],
+                },
+                assertion: missing (optional),
+                semicolon_token: SEMICOLON@258..259 ";" [] [],
+            },
+        },
+        JsExport {
+            export_token: EXPORT_KW@259..267 "export" [Newline("\n")] [Whitespace(" ")],
+            export_clause: JsExportNamedFromClause {
+                type_token: missing (optional),
+                l_curly_token: L_CURLY@267..268 "{" [] [],
+                specifiers: JsExportNamedFromSpecifierList [
+                    JsExportNamedFromSpecifier {
+                        type_token: missing (optional),
+                        source_name: JsLiteralExportName {
+                            value: JS_STRING_LITERAL@268..277 "\"a\"" [Newline("\n"), Whitespace("     ")] [],
+                        },
+                        export_as: missing (optional),
+                    },
+                ],
+                r_curly_token: R_CURLY@277..280 "}" [Newline("\n")] [Whitespace(" ")],
+                from_token: FROM_KW@280..285 "from" [] [Whitespace(" ")],
+                source: JsModuleSource {
+                    value_token: JS_STRING_LITERAL@285..292 "\"./mod\"" [] [],
+                },
+                assertion: missing (optional),
+                semicolon_token: SEMICOLON@292..293 ";" [] [],
+            },
+        },
     ],
-    eof_token: EOF@230..231 "" [Newline("\n")] [],
+    eof_token: EOF@293..294 "" [Newline("\n")] [],
 }
 
-0: JS_MODULE@0..231
+0: JS_MODULE@0..294
   0: (empty)
   1: JS_DIRECTIVE_LIST@0..0
-  2: JS_MODULE_ITEM_LIST@0..230
+  2: JS_MODULE_ITEM_LIST@0..293
     0: JS_EXPORT@0..33
       0: EXPORT_KW@0..7 "export" [] [Whitespace(" ")]
       1: JS_EXPORT_NAMED_FROM_CLAUSE@7..33
@@ -351,4 +397,38 @@ JsModule {
               2: JS_STRING_LITERAL@222..229 "\"json\"" [] [Whitespace(" ")]
           3: R_CURLY@229..230 "}" [] []
         7: (empty)
-  3: EOF@230..231 "" [Newline("\n")] []
+    6: JS_EXPORT@230..259
+      0: EXPORT_KW@230..238 "export" [Newline("\n")] [Whitespace(" ")]
+      1: JS_EXPORT_NAMED_FROM_CLAUSE@238..259
+        0: (empty)
+        1: L_CURLY@238..240 "{" [] [Whitespace(" ")]
+        2: JS_EXPORT_NAMED_FROM_SPECIFIER_LIST@240..244
+          0: JS_EXPORT_NAMED_FROM_SPECIFIER@240..244
+            0: (empty)
+            1: JS_LITERAL_EXPORT_NAME@240..244
+              0: JS_STRING_LITERAL@240..244 "\"a\"" [] [Whitespace(" ")]
+            2: (empty)
+        3: R_CURLY@244..246 "}" [] [Whitespace(" ")]
+        4: FROM_KW@246..251 "from" [] [Whitespace(" ")]
+        5: JS_MODULE_SOURCE@251..258
+          0: JS_STRING_LITERAL@251..258 "\"./mod\"" [] []
+        6: (empty)
+        7: SEMICOLON@258..259 ";" [] []
+    7: JS_EXPORT@259..293
+      0: EXPORT_KW@259..267 "export" [Newline("\n")] [Whitespace(" ")]
+      1: JS_EXPORT_NAMED_FROM_CLAUSE@267..293
+        0: (empty)
+        1: L_CURLY@267..268 "{" [] []
+        2: JS_EXPORT_NAMED_FROM_SPECIFIER_LIST@268..277
+          0: JS_EXPORT_NAMED_FROM_SPECIFIER@268..277
+            0: (empty)
+            1: JS_LITERAL_EXPORT_NAME@268..277
+              0: JS_STRING_LITERAL@268..277 "\"a\"" [Newline("\n"), Whitespace("     ")] []
+            2: (empty)
+        3: R_CURLY@277..280 "}" [Newline("\n")] [Whitespace(" ")]
+        4: FROM_KW@280..285 "from" [] [Whitespace(" ")]
+        5: JS_MODULE_SOURCE@285..292
+          0: JS_STRING_LITERAL@285..292 "\"./mod\"" [] []
+        6: (empty)
+        7: SEMICOLON@292..293 ";" [] []
+  3: EOF@293..294 "" [Newline("\n")] []
