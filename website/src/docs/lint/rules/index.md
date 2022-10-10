@@ -302,6 +302,13 @@ Disallow <code>new</code> operators with the <code>Symbol</code> object
 Prevent the usage of the return value of <code>React.render</code>.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noRestrictedGlobals">
+	<a href="/docs/lint/rules/noRestrictedGlobals">noRestrictedGlobals (since v0.10.0)</a>
+	<a class="header-anchor" href="#noRestrictedGlobals"></a>
+</h3>
+This rule allows you to specify global variable names that you don’t want to use in your application.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noUndeclaredVariables">
 	<a href="/docs/lint/rules/noUndeclaredVariables">noUndeclaredVariables (since v0.10.0)</a>
 	<a class="header-anchor" href="#noUndeclaredVariables"></a>

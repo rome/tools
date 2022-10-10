@@ -749,8 +749,7 @@ impl ParseSeparatedList for ExportNamedSpecifierList {
 }
 
 fn parse_any_export_named_specifier(p: &mut Parser) -> ParsedSyntax {
-    if !matches!(p.cur(), T![type] | T![as] | T![default]) && !is_nth_at_reference_identifier(p, 0)
-    {
+    if !matches!(p.cur(), T![type] | T![as] | T![default]) && !is_nth_at_literal_export_name(p, 0) {
         return Absent;
     }
 
@@ -778,17 +777,27 @@ fn parse_any_export_named_specifier(p: &mut Parser) -> ParsedSyntax {
             p,
             TextRange::new(p.cur_range().start(), p.cur_range().start()),
         ));
+    } else if is_nth_at_reference_identifier(p, 0) {
+        parse_reference_identifier(p).ok();
     } else {
-        // We need to parse "default" here and fail so the "export ... from..." rewind later works.
-        if p.cur() == T![default] {
-            let range = p.cur_range();
-            p.bump_any();
-            let err = p
-                .err_builder("\"default\" can only be used with \"export ... from ...\"")
-                .primary(range, "");
-            p.error(err);
-        } else {
-            parse_reference_identifier(p).or_add_diagnostic(p, expected_identifier);
+        // We need to parse "default" or any string literal here so the "export ... from..." rewind later works.
+        let is_string = matches!(p.cur(), JS_STRING_LITERAL);
+
+        if let Some(export_name) =
+            parse_literal_export_name(p).or_add_diagnostic(p, expected_identifier)
+        {
+            let error = if is_string {
+                p.err_builder(
+                    "A string literal cannot be used as an export binding without `from`.",
+                )
+            } else {
+                p.err_builder(&format!(
+                    "\"{}\" can only be used with \"export ... from ...\"",
+                    export_name.text(p)
+                ))
+            };
+
+            p.error(error.primary(export_name.range(p), ""));
         }
     }
 
@@ -934,6 +943,10 @@ fn parse_export_from_clause(p: &mut Parser) -> ParsedSyntax {
 // export { default as "b" } from "mod";
 // export { "a" as b } from "mod";
 // export { a } from "mod" assert { type: "json" }
+// export { "a" } from "./mod";
+// export {
+//      "a"
+// } from "./mod";
 //
 // test_err export_named_from_clause_err
 // export { as b } from "mod";

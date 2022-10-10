@@ -507,6 +507,7 @@ impl<'a> FusedIterator for GlobalsReferencesIter<'a> {}
 
 /// Iterate all bindings that were bound in a given scope. It **does
 /// not** Returns bindings of parent scopes.
+#[derive(Debug)]
 pub struct ScopeBindingsIter {
     data: Arc<SemanticModelData>,
     scope_id: usize,
