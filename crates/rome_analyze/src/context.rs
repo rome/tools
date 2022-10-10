@@ -1,7 +1,8 @@
+use crate::options::OptionsDeserializationDiagnostic;
 use crate::{
-    registry::RuleRoot, AnalyzerOptions, FromServices, Queryable, Rule, RuleContextDiagnostic,
-    RuleKey, ServiceBag,
+    registry::RuleRoot, AnalyzerOptions, FromServices, Queryable, Rule, RuleKey, ServiceBag,
 };
+use rome_diagnostics::v2::{Error, Result};
 use std::ops::Deref;
 
 type RuleQueryResult<R> = <<R as Rule>::Query as Queryable>::Output;
@@ -26,13 +27,17 @@ where
         root: &'a RuleRoot<R>,
         services: &ServiceBag,
         options: &'a AnalyzerOptions,
-    ) -> Result<Self, RuleContextDiagnostic> {
+    ) -> Result<Self, Error> {
         let rule_key = RuleKey::rule::<R>();
         let options = options.configuration.rules.get_rule(&rule_key);
         let options = if let Some(options) = options {
             let value = options.value();
             serde_json::from_value(value.clone()).map_err(|error| {
-                RuleContextDiagnostic::from_serde(rule_key.rule_name(), &value.to_string(), error)
+                OptionsDeserializationDiagnostic::new(
+                    rule_key.rule_name(),
+                    &value.to_string(),
+                    error,
+                )
             })?
         } else {
             None
