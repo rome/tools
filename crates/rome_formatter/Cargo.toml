@@ -18,6 +18,7 @@ rustc-hash = { workspace = true }
 countme = { workspace = true }
 drop_bomb = "0.1.5"
 indexmap = { workspace = true }
+unicode-width = "0.1.9"
 
 [dev-dependencies]
 rome_js_parser = { path = "../rome_js_parser"}
