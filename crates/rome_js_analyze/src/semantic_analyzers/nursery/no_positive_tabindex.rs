@@ -121,6 +121,7 @@ impl Rule for NoPositiveTabindex {
     type Query = Semantic<NoPositiveTabindexQuery>;
     type State = TextRange;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
