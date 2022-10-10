@@ -1,6 +1,7 @@
 use std::collections::HashSet;
 
-use rome_js_syntax::{JsIdentifierBinding, JsVariableDeclarator, JsArrayBindingPatternElementList, JsArrayBindingPattern};
+use rome_js_syntax::{JsIdentifierBinding, JsVariableDeclarator, JsArrayBindingPatternElementList, JsArrayBindingPattern, SourceType};
+use rome_rowan::{SyntaxNodeCast, AstNode};
 
 #[derive(PartialEq, Eq, Hash)]
 pub struct ReactHookStable  {
@@ -47,22 +48,28 @@ fn is_react_hook_state(binding: &JsIdentifierBinding, stables: &HashSet<ReactHoo
     }).unwrap_or(false)
 }
 
+#[cfg(test)]
+mod test {
+    use rome_js_parser::FileId;
+    use super::*;
 
-#[test]
-pub fn ok_react_stable_captures() {
-    let r = rome_js_parser::parse("const ref = useRef();", FileId::zero(), SourceType::js_module());
-    let node = r
-        .syntax()
-        .descendants()
-        .filter(|x| x.text_trimmed() == "ref")
-        .last()
-        .unwrap();
-    let setName = node.cast::<JsIdentifierBinding>().unwrap();
-
-    let stables = HashSet::from_iter([
-        ReactHookStable::new("useRef", None),
-        ReactHookStable::new("useState", Some(1))
-    ]);
-
-    assert!(is_react_hook_state(&setName, &stables));
+    #[test]
+    pub fn ok_react_stable_captures() {
+        let r = rome_js_parser::parse("const ref = useRef();", FileId::zero(), SourceType::js_module());
+        let node = r
+            .syntax()
+            .descendants()
+            .filter(|x| x.text_trimmed() == "ref")
+            .last()
+            .unwrap();
+        let setName = node.cast::<JsIdentifierBinding>().unwrap();
+    
+        let stables = HashSet::from_iter([
+            ReactHookStable::new("useRef", None),
+            ReactHookStable::new("useState", Some(1))
+        ]);
+    
+        assert!(is_react_hook_state(&setName, &stables));
+    }
 }
+

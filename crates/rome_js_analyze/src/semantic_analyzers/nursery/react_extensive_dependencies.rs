@@ -8,6 +8,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::AstNode;
 use std::collections::HashMap;
+use crate::utils::react::*;
 
 declare_rule! {
     /// Enforce all dependencies are correctly specified.
@@ -38,6 +39,20 @@ impl Rule for ReactExtensiveDependencies {
             let function = use_effect.effect().unwrap();
             let captures: Vec<_> = function
                 .all_captures(model)
+                .filter_map(|capture| {
+                    capture.declaration().and_then(|declaration| {
+                        let node = declaration.syntax().parent()?;
+                        use JsSyntaxKind::*;
+                        match node.kind() {
+                            JS_FUNCTION_DECLARATION 
+                            | JS_CLASS_DECLARATION
+                            | TS_ENUM_DECLARATION 
+                            | TS_TYPE_ALIAS_DECLARATION 
+                            | TS_DECLARE_FUNCTION_DECLARATION => None,
+                            _ => Some(capture)
+                        }
+                    })
+                })
                 .map(|x| (x.node().text_trimmed().to_string(), x))
                 .collect();
 

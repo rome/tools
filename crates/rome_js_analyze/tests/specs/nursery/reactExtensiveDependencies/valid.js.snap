@@ -4,17 +4,58 @@ expression: valid.js
 ---
 # Input
 ```js
+// No captures
 function MyComponent1() {
     useEffect(() => {
     });
 }
 
+// All captures in the dependency list
 function MyComponent2() {
     const local = 1;
     useEffect(() => {
         console.log(local);
     }, [local]);
 }
+
+// capturing declarations
+import { F } from 'something';
+
+function doSomething() { }
+class A {}
+
+function MyComponent3() {
+    useEffect(() => {
+        doSomething();
+        console.log(new A ());
+        console.log(F);
+    }, []);
+}
+
+```
+
+# Diagnostics
+```
+valid.js:22:5 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This useEffect has missing dependencies
+  
+    21 │ function MyComponent3() {
+  > 22 │     useEffect(() => {
+       │     ^^^^^^^^^
+    23 │         doSomething();
+    24 │         console.log(new A ());
+  
+  i This capture is not in the dependency list
+  
+    23 │         doSomething();
+    24 │         console.log(new A ());
+  > 25 │         console.log(F);
+       │                     ^
+    26 │     }, []);
+    27 │ }
+  
+
 ```
 
 

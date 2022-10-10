@@ -81,6 +81,7 @@ pub enum CaptureType {
 /// Provides all information regarding a specific closure capture.
 #[derive(Clone)]
 pub struct Capture {
+    data: Arc<SemanticModelData>,
     ty: CaptureType,
     node: JsSyntaxNode,
 }
@@ -91,9 +92,21 @@ impl Capture {
         &self.ty
     }
 
-    /// Returns the node of the capture
+    /// Returns the reference node of the capture
     pub fn node(&self) -> &SyntaxNode<JsLanguage> {
         &self.node
+    }
+
+    /// Returns the declaration of this capture
+    pub fn declaration(&self) -> Option<Binding> {
+        let reference_range = self.node.text_range();
+        let declaration_range = self.data.declared_at_by_range[&reference_range];
+        self.data.node_by_range.get(&declaration_range)
+            .map(|node| 
+                super::Binding {
+                    data: self.data.clone(),
+                    node: node.clone(),
+                })
     }
 }
 
@@ -113,6 +126,7 @@ impl Iterator for AllCapturesIter {
                 let declaration = self.data.declared_at_by_range[&reference.range];
                 if self.closure_range.intersect(declaration).is_none() {
                     return Some(Capture {
+                        data: self.data.clone(),
                         node: self.data.node_by_range[&reference.range].clone(),
                         ty: CaptureType::ByReference,
                     });
