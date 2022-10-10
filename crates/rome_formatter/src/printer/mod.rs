@@ -23,6 +23,7 @@ use crate::printer::line_suffixes::{LineSuffixEntry, LineSuffixes};
 use crate::printer::queue::{
     AllPredicate, FitsEndPredicate, FitsQueue, PrintQueue, Queue, SingleEntryPredicate,
 };
+use drop_bomb::DebugDropBomb;
 use rome_rowan::{TextLen, TextSize};
 use std::num::NonZeroU8;
 
@@ -828,12 +829,16 @@ impl Default for Indention {
     }
 }
 
+#[must_use = "FitsMeasurer must be finished."]
 struct FitsMeasurer<'a, 'print> {
     state: FitsState,
     queue: FitsQueue<'a, 'print>,
     stack: FitsCallStack<'print>,
     printer: &'print mut Printer<'a>,
     must_be_flat: bool,
+
+    /// Bomb that enforces that finish is explicitly called to restore the `fits_stack` and `fits_queue` vectors.
+    bomb: DebugDropBomb,
 }
 
 impl<'a, 'print> FitsMeasurer<'a, 'print> {}
@@ -875,6 +880,9 @@ impl<'a, 'print> FitsMeasurer<'a, 'print> {
             stack: fits_stack,
             must_be_flat: false,
             printer,
+            bomb: DebugDropBomb::new(
+                "MeasurerFits must be `finished` to restore the `fits_queue` and `fits_stack`.",
+            ),
         }
     }
 
@@ -1146,7 +1154,9 @@ impl<'a, 'print> FitsMeasurer<'a, 'print> {
         Ok(Fits::Maybe)
     }
 
-    fn finish(self) {
+    fn finish(mut self) {
+        self.bomb.defuse();
+
         let mut queue = self.queue.finish();
         queue.clear();
         self.printer.state.fits_queue = queue;
