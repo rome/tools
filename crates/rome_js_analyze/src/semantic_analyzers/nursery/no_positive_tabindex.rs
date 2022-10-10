@@ -13,8 +13,9 @@ use rome_js_syntax::{
 use rome_rowan::{declare_node_union, AstNode};
 
 declare_rule! {
-    /// Prevent the usage of positive integers on tabIndex property
+    /// Prevent the usage of positive integers on `tabIndex` property
     ///
+    /// Avoid positive `tabIndex` property values to synchronize the flow of the page with keyboard tab order.
     /// ## Examples
     ///
     /// ### Invalid
