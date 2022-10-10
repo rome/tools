@@ -57,7 +57,7 @@ pub struct AnalyzerOptions {
 }
 
 #[derive(Debug, Diagnostic)]
-#[diagnostic(category = "internalError/io", tags(INTERNAL))]
+#[diagnostic(category = "internalError/io")]
 pub struct OptionsDeserializationDiagnostic {
     #[message]
     message: String,
@@ -72,8 +72,8 @@ pub struct OptionsDeserializationDiagnostic {
 }
 
 impl OptionsDeserializationDiagnostic {
-    pub fn new(rule_name: &str, input: &str, error: Error) -> Self {
-        let line_starts = LineIndexBuf::from_source_text(input);
+    pub fn new(rule_name: &str, input: String, error: Error) -> Self {
+        let line_starts = LineIndexBuf::from_source_text(&input);
 
         let line_index = error.line().checked_sub(1);
         let span = line_index.and_then(|line_index| {
@@ -97,7 +97,7 @@ impl OptionsDeserializationDiagnostic {
             path: Resource::Memory,
             span,
             source_code: Some(SourceCode {
-                text: input.to_string(),
+                text: input,
                 line_starts: Some(line_starts),
             }),
         }
