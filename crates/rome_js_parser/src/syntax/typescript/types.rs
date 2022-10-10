@@ -1305,7 +1305,9 @@ fn can_follow_type_arguments_in_expr(p: &mut Parser) -> bool {
     }
 }
 
-/// You could refer to https://github.com/microsoft/TypeScript/blob/42b1049aee8c655631cb4f0065de86ec1023d20a/src/compiler/parser.ts#L4475
+/// Checking if parser is at start of expression with some error recovery logic in it, e.g.
+/// we counted `binary_operator` as start of an expression, but `binary_operator` is not part of expression actually
+/// For more details, you could refer to https://github.com/microsoft/TypeScript/blob/42b1049aee8c655631cb4f0065de86ec1023d20a/src/compiler/parser.ts#L4475
 fn is_start_of_expr(p: &mut Parser) -> bool {
     if is_start_of_left_hand_side_expression(p) {
         return true;
@@ -1328,19 +1330,21 @@ fn is_start_of_expr(p: &mut Parser) -> bool {
         // that the start of an expression.  That way we'll parse out a missing identifier,
         // give a good message about an identifier being missing, and then consume the
         // rest of the binary expression.
-        _ => is_binary_operator(p) || is_at_identifier(p),
+        _ => is_binary_operator(p),
     }
 }
 
-/// Please refer to https://github.com/microsoft/TypeScript/blob/42b1049aee8c655631cb4f0065de86ec1023d20a/src/compiler/parser.ts#L5141-L5147
 fn is_binary_operator(p: &mut Parser) -> bool {
-    // TODO: https://github.dev/microsoft/TypeScript/blob/42b1049aee8c655631cb4f0065de86ec1023d20a/src/compiler/parser.ts#L5142-L5144 Optional variance
+    // TODO: support Optional Variance Annotations
+    // https://github.dev/microsoft/TypeScript/blob/42b1049aee8c655631cb4f0065de86ec1023d20a/src/compiler/parser.ts#L5142-L5144
 
-    // In typescript, the operatorPrecedence of `Comma` is 0(https://github.com/microsoft/TypeScript/blob/42b1049aee8c655631cb4f0065de86ec1023d20a/src/compiler/utilities.ts#L3555), so https://github.com/microsoft/TypeScript/blob/42b1049aee8c655631cb4f0065de86ec1023d20a/src/compiler/parser.ts#L5146 means we need to ensure the `OperatorPrecedence` is bigger than `Comma`
+    // In typescript, the operatorPrecedence of `Comma` is 0,which means we need to ensure the `OperatorPrecedence` is bigger than `Comma`
+    // For more details, you could refer to (https://github.com/microsoft/TypeScript/blob/42b1049aee8c655631cb4f0065de86ec1023d20a/src/compiler/utilities.ts#L3555), https://github.com/microsoft/TypeScript/blob/42b1049aee8c655631cb4f0065de86ec1023d20a/src/compiler/parser.ts#L5146
+
     matches!(OperatorPrecedence::try_from_binary_operator(p.cur()), Some(precedence) if precedence > OperatorPrecedence::Comma)
 }
 
-/// You could refer to https://github.com/microsoft/TypeScript/blob/42b1049aee8c655631cb4f0065de86ec1023d20a/src/compiler/parser.ts#L4446
+/// Checking if parser at left_hand_side_expression
 fn is_start_of_left_hand_side_expression(p: &mut Parser) -> bool {
     match p.cur() {
         T![super]
