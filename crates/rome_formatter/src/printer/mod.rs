@@ -420,12 +420,24 @@ impl<'a> Printer<'a> {
     }
 
     /// Tries to fit as much content as possible on a single line.
-    /// Each item forms a virtual group that is either printed in flat or expanded mode.
-    /// It handles three different cases:
     ///
-    /// * The first and second content fit on a single line. It prints the content and separator in flat mode.
-    /// * The first content fits on a single line, but the second doesn't. It prints the content in flat and the separator in expanded mode.
-    /// * Neither the first nor the second content fit on the line. It brings the first content and the separator in expanded mode.
+    /// `Fill` is a sequence of *item*, *separator*, *item*, *separator*, *item*, ... entries.
+    /// The goal is to fit as many items (with their separators) on a single line as possible and
+    /// first expand the *separator* if the content exceeds the print width and only fallback to expanding
+    /// the *item*s if the *item* or the *item* and the expanded *separator* don't fit on the line.
+    ///
+    /// The implementation handles the following 5 cases:
+    ///
+    /// * The *item*, *separator*, and the *next item* fit on the same line.
+    ///   Print the *item* and *separator* in flat mode.
+    /// * The *item* and *separator* fit on the line but there's not enough space for the *next item*.
+    ///   Print the *item* in flat mode and the *separator* in expanded mode.
+    /// * The *item* fits on the line but the *separator* does not in flat mode.
+    ///   Print the *item* in flat mode and the *separator* in expanded mode.
+    /// * The *item* fits on the line but the *separator* does not in flat **NOR** expanded mode.
+    ///   Print the *item* and *separator* in expanded mode.
+    /// * The *item* does not fit on the line.
+    ///   Print the *item* and *separator* in expanded mode.
     fn print_fill_entries(
         &mut self,
         queue: &mut PrintQueue<'a>,
@@ -444,13 +456,15 @@ impl<'a> Printer<'a> {
         while matches!(queue.top(), Some(FormatElement::Tag(Tag::StartEntry))) {
             let mut measurer = FitsMeasurer::new_flat(queue, stack, self);
 
-            // The number of item/separator pairs that should be printed in flat.
-            let mut fitting_pairs = 0usize;
-            let mut item_fits = measurer.fill_entry_fits(PrintMode::Flat)?;
+            // The number of item/separator pairs that fit on the same line.
+            let mut flat_pairs = 0usize;
+            let mut item_fits = measurer.fill_item_fits()?;
 
             let last_pair_layout = if item_fits {
                 // Measure the remaining pairs until the first item or separator that does not fit (or the end of the fill element).
-                // Optimisation to avoid re-measuring the next-item.
+                // Optimisation to avoid re-measuring the next-item twice:
+                // * Once when measuring if the *item*, *separator*, *next-item* fit
+                // * A second time when measuring if *next-item*, *separator*, *next-next-item* fit.
                 loop {
                     // Item that fits without a following separator.
                     if !matches!(
@@ -460,7 +474,7 @@ impl<'a> Printer<'a> {
                         break FillPairLayout::Flat;
                     }
 
-                    let separator_fits = measurer.fill_entry_fits(PrintMode::Flat)?;
+                    let separator_fits = measurer.fill_separator_fits(PrintMode::Flat)?;
 
                     // Item fits but the flat separator does not.
                     if !separator_fits {
@@ -475,14 +489,14 @@ impl<'a> Printer<'a> {
                         break FillPairLayout::Flat;
                     }
 
-                    item_fits = measurer.fill_entry_fits(PrintMode::Flat)?;
+                    item_fits = measurer.fill_item_fits()?;
 
                     if item_fits {
-                        fitting_pairs += 1;
+                        flat_pairs += 1;
                     } else {
-                        // Item and separator both fit, but the next element won't. Therefore,
-                        // print the separator in expanded mode and then re-measure the item
-                        // in the next loop.
+                        // Item and separator both fit, but the next element doesn't.
+                        // Print the separator in expanded mode and then re-measure if the item now
+                        // fits in the next iteration of the outer loop.
                         break FillPairLayout::ItemFlatSeparatorExpanded;
                     }
                 }
@@ -495,9 +509,10 @@ impl<'a> Printer<'a> {
 
             self.state.measured_group_fits = true;
 
-            for _ in 0..fitting_pairs {
-                self.print_entry(queue, stack, args.with_print_mode(PrintMode::Flat))?;
-                self.print_entry(queue, stack, args.with_print_mode(PrintMode::Flat))?;
+            // Print all pairs that fit in flat mode.
+            for _ in 0..flat_pairs {
+                self.print_fill_item(queue, stack, args.with_print_mode(PrintMode::Flat))?;
+                self.print_fill_separator(queue, stack, args.with_print_mode(PrintMode::Flat))?;
             }
 
             let item_mode = match last_pair_layout {
@@ -507,8 +522,8 @@ impl<'a> Printer<'a> {
                     let mut measurer = FitsMeasurer::new_flat(queue, stack, self);
                     // SAFETY: That the item fits is guaranteed by `ItemMaybeFlat`.
                     // Re-measuring is required to get the measurer in the correct state for measuring the separator.
-                    assert!(measurer.fill_entry_fits(PrintMode::Flat)?);
-                    let separator_fits = measurer.fill_entry_fits(PrintMode::Expanded)?;
+                    assert!(measurer.fill_item_fits()?);
+                    let separator_fits = measurer.fill_separator_fits(PrintMode::Expanded)?;
                     measurer.finish();
 
                     if separator_fits {
@@ -519,7 +534,7 @@ impl<'a> Printer<'a> {
                 }
             };
 
-            self.print_entry(queue, stack, args.with_print_mode(item_mode))?;
+            self.print_fill_item(queue, stack, args.with_print_mode(item_mode))?;
 
             if matches!(queue.top(), Some(FormatElement::Tag(Tag::StartEntry))) {
                 let separator_mode = match last_pair_layout {
@@ -529,8 +544,10 @@ impl<'a> Printer<'a> {
                     | FillPairLayout::ItemMaybeFlat => PrintMode::Expanded,
                 };
 
+                // Push a new stack frame with print mode `Flat` for the case where the separator gets printed in expanded mode
+                // but does contain a group to ensure that the group will measure "fits" with the "flat" versions of the next item/separator.
                 stack.push(TagKind::Fill, args.with_print_mode(PrintMode::Flat));
-                self.print_entry(queue, stack, args.with_print_mode(separator_mode))?;
+                self.print_fill_separator(queue, stack, args.with_print_mode(separator_mode))?;
                 stack.pop(TagKind::Fill)?;
             }
         }
@@ -540,6 +557,26 @@ impl<'a> Printer<'a> {
         } else {
             invalid_end_tag(TagKind::Fill, stack.top_kind())
         }
+    }
+
+    /// Semantic alias for [Self::print_entry] for fill items.
+    fn print_fill_item(
+        &mut self,
+        queue: &mut PrintQueue<'a>,
+        stack: &mut PrintCallStack,
+        args: PrintElementArgs,
+    ) -> PrintResult<()> {
+        self.print_entry(queue, stack, args)
+    }
+
+    /// Semantic alias for [Self::print_entry] for fill separators.
+    fn print_fill_separator(
+        &mut self,
+        queue: &mut PrintQueue<'a>,
+        stack: &mut PrintCallStack,
+        args: PrintElementArgs,
+    ) -> PrintResult<()> {
+        self.print_entry(queue, stack, args)
     }
 
     /// Fully print an element (print the element itself and all its descendants)
@@ -796,6 +833,7 @@ struct FitsMeasurer<'a, 'print> {
     queue: FitsQueue<'a, 'print>,
     stack: FitsCallStack<'print>,
     printer: &'print mut Printer<'a>,
+    must_be_flat: bool,
 }
 
 impl<'a, 'print> FitsMeasurer<'a, 'print> {}
@@ -807,7 +845,7 @@ impl<'a, 'print> FitsMeasurer<'a, 'print> {
         printer: &'print mut Printer<'a>,
     ) -> Self {
         let mut measurer = Self::new(print_queue, print_stack, printer);
-        measurer.state.must_be_flat = true;
+        measurer.must_be_flat = true;
         measurer
     }
 
@@ -827,7 +865,6 @@ impl<'a, 'print> FitsMeasurer<'a, 'print> {
         let fits_state = FitsState {
             pending_indent: printer.state.pending_indent,
             pending_space: printer.state.pending_space,
-            must_be_flat: false,
             line_width: printer.state.line_width,
             has_line_suffix: printer.state.line_suffixes.has_pending(),
         };
@@ -836,6 +873,7 @@ impl<'a, 'print> FitsMeasurer<'a, 'print> {
             state: fits_state,
             queue: fits_queue,
             stack: fits_stack,
+            must_be_flat: false,
             printer,
         }
     }
@@ -865,10 +903,26 @@ impl<'a, 'print> FitsMeasurer<'a, 'print> {
         Ok(true)
     }
 
+    /// Tests if the content of a `Fill` item fits in [PrintMode::Flat].
+    ///
+    /// Returns `Err` if the top element of the queue is not a [Tag::StartEntry]
+    /// or if the document has any mismatching start/end tags.
+    fn fill_item_fits(&mut self) -> PrintResult<bool> {
+        self.fill_entry_fits(PrintMode::Flat)
+    }
+
+    /// Tests if the content of a `Fill` separator fits with `mode`.
+    ///
+    /// Returns `Err` if the top element of the queue is not a [Tag::StartEntry]
+    /// or if the document has any mismatching start/end tags.
+    fn fill_separator_fits(&mut self, mode: PrintMode) -> PrintResult<bool> {
+        self.fill_entry_fits(mode)
+    }
+
     /// Tests if the elements between the [Tag::StartEntry] and [Tag::EndEntry]
     /// of a fill item or separator fits with `mode`.
     ///
-    /// Returns `Err` if the queue isn't positioned at a [Tag::StartEntry] or
+    /// Returns `Err` if the queue isn't positioned at a [Tag::StartEntry] or if
     /// the matching [Tag::EndEntry] is missing.
     fn fill_entry_fits(&mut self, mode: PrintMode) -> PrintResult<bool> {
         let start_entry = self.queue.top();
@@ -910,7 +964,7 @@ impl<'a, 'print> FitsMeasurer<'a, 'print> {
                         }
                         LineMode::Soft => {}
                         LineMode::Hard | LineMode::Empty => {
-                            return Ok(if self.state.must_be_flat {
+                            return Ok(if self.must_be_flat {
                                 Fits::No
                             } else {
                                 Fits::Yes
@@ -940,7 +994,7 @@ impl<'a, 'print> FitsMeasurer<'a, 'print> {
                     let char_width = match c {
                         '\t' => self.options().tab_width,
                         '\n' => {
-                            return Ok(if self.state.must_be_flat {
+                            return Ok(if self.must_be_flat {
                                 Fits::No
                             } else {
                                 Fits::Yes
@@ -965,7 +1019,7 @@ impl<'a, 'print> FitsMeasurer<'a, 'print> {
             }
 
             FormatElement::ExpandParent => {
-                if self.state.must_be_flat {
+                if self.must_be_flat {
                     return Ok(Fits::No);
                 }
             }
@@ -1006,7 +1060,7 @@ impl<'a, 'print> FitsMeasurer<'a, 'print> {
             }
 
             FormatElement::Tag(StartGroup(group)) => {
-                if self.state.must_be_flat && !group.mode().is_flat() {
+                if self.must_be_flat && !group.mode().is_flat() {
                     return Ok(Fits::No);
                 }
 
@@ -1173,7 +1227,6 @@ struct FitsState {
     pending_indent: Indention,
     pending_space: bool,
     has_line_suffix: bool,
-    must_be_flat: bool,
     line_width: usize,
 }
 

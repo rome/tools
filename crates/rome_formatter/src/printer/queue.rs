@@ -288,8 +288,8 @@ impl<'a, Q> FusedIterator for QueueContentIterator<'a, '_, Q> where Q: Queue<'a>
 /// A predicate determining when to end measuring if some content fits on the line.
 ///
 /// Called for every [`element`](FormatElement) in the [FitsQueue] when measuring if a content
-/// fits on the line. The measuring of the content ends for the first [`element`](FormatElement) that this
-/// predicate returns `false`.
+/// fits on the line. The measuring of the content ends after the first element [`element`](FormatElement) for which this
+/// predicate returns `true` (similar to a take while iterator except that it takes while the predicate returns `false`).
 pub(super) trait FitsEndPredicate {
     fn is_end(&mut self, element: &FormatElement) -> PrintResult<bool>;
 }
