@@ -833,14 +833,6 @@ impl<'a, 'print> FitsOnLine<'a, 'print> {
 
         let fits = all_fit.fits();
 
-        // Advance the queue to the next entry
-        if !matches!(
-            self.queue.top(),
-            Some(FormatElement::Tag(Tag::StartEntry | Tag::EndFill))
-        ) {
-            self.queue.skip_content(TagKind::Entry);
-        }
-
         self.printer.state.fits_stack = fits_stack.finish();
         self.printer.state.fits_stack.clear();
 
