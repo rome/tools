@@ -33,7 +33,10 @@ declare_rule! {
     /// ```jsx,expect_diagnostic
     /// <a href='http://external.link' target='_blank' rel="noopener">child</a>
     /// ```
-    ///
+    /// ```jsx,expect_diagnostic
+    /// // case-insensitive
+    /// <a href='http://external.link' target='_BlaNk'>child</a>
+    /// ```
     /// ### Valid
     ///
     /// ```jsx
@@ -99,7 +102,7 @@ impl Rule for UseBlankTarget {
             .inner_string_text()
             .ok()?;
 
-        if text == "_blank" {
+        if text.to_lowercase() == "_blank" {
             match rel_attribute {
                 None => {
                     return Some((target_attribute, None));
