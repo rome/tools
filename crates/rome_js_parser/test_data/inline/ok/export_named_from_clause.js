@@ -4,3 +4,7 @@ export { as } from "mod";
 export { default as "b" } from "mod";
 export { "a" as b } from "mod";
 export { a } from "mod" assert { type: "json" }
+export { "a" } from "./mod";
+export {
+     "a"
+} from "./mod";
