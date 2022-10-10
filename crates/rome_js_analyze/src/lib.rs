@@ -119,7 +119,7 @@ mod tests {
     #[ignore]
     #[test]
     fn quick_test() {
-        const SOURCE: &str = r#"document;
+        const SOURCE: &str = r#"<a href='http://external.link' target='_blank'>child</a>
         "#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());

@@ -608,6 +608,16 @@
             "null"
           ]
         },
+        "useBlankTarget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useButtonType": {
           "anyOf": [
             {
