@@ -1,0 +1,36 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: useFlatMap.js
+---
+# Input
+```js
+// invalid
+[0, [12]].flat().map(Number)
+// valid
+[0, [12], [[16]]].flat(1).map(Number)
+```
+
+# Diagnostics
+```
+useFlatMap.js:2:1 lint/nursery/useFlatMap  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The call chain .flat().map() can be replaced with a simple .flatMap().
+  
+    1 │ // invalid
+  > 2 │ [0, [12]].flat().map(Number)
+      │ ^^^^^^^^^^^^^^^^^^^^
+    3 │ // valid
+    4 │ [0, [12], [[16]]].flat(1).map(Number)
+  
+  i Safe fix: Replace it with flatMap
+  
+    1 1 │   // invalid
+    2   │ - [0,·[12]].flat().map(Number)
+      2 │ + [0,·[12]].flatMap(Number)
+    3 3 │   // valid
+    4 4 │   [0, [12], [[16]]].flat(1).map(Number)
+  
+
+```
+
+
