@@ -162,6 +162,7 @@ export interface Nursery {
 	noDangerouslySetInnerHtmlWithChildren?: RuleConfiguration;
 	noNewSymbol?: RuleConfiguration;
 	noRenderReturnValue?: RuleConfiguration;
+	noRestrictedGlobals?: RuleConfiguration;
 	noUndeclaredVariables?: RuleConfiguration;
 	noUnreachable?: RuleConfiguration;
 	noUnusedVariables?: RuleConfiguration;
@@ -312,6 +313,7 @@ export type Category =
 	| "lint/nursery/noAutofocus"
 	| "lint/nursery/useBlankTarget"
 	| "lint/nursery/useValidAnchor"
+	| "lint/nursery/noRestrictedGlobals"
 	| "lint/style/noNegationElse"
 	| "lint/style/noShoutyConstants"
 	| "lint/style/useSelfClosingElements"

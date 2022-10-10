@@ -551,6 +551,16 @@
             }
           ]
         },
+        "noRestrictedGlobals": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noUndeclaredVariables": {
           "anyOf": [
             {

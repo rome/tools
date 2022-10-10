@@ -55,6 +55,7 @@ define_dategories! {
     "lint/nursery/noAutofocus": "https://rome.tools/docs/lint/rules/noAutofocus",
     "lint/nursery/useBlankTarget": "https://rome.tools/docs/lint/rules/useBlankTarget",
     "lint/nursery/useValidAnchor": "https://rome.tools/docs/lint/rules/useValidAnchor",
+    "lint/nursery/noRestrictedGlobals": "https://rome.tools/docs/lint/rules/noRestrictedGlobals",
     "lint/style/noNegationElse": "https://rome.tools/docs/lint/rules/noNegationElse",
     "lint/style/noShoutyConstants": "https://rome.tools/docs/lint/rules/noShoutyConstants",
     "lint/style/useSelfClosingElements": "https://rome.tools/docs/lint/rules/useSelfClosingElements",
