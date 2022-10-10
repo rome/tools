@@ -65,9 +65,9 @@ declare_node_union! {
     ///
     /// ## Examples
     ///
-    /// ### JsStringLiteralExpression &mdash; `"5"`
-    /// ### JsNumberLiteralExpression &mdash; `5`
-    /// ### JsUnaryExpression &mdash; `+5` | `-5`
+    /// - `JsStringLiteralExpression` &mdash; `"5"`
+    /// - `JsNumberLiteralExpression` &mdash; `5`
+    /// - `JsUnaryExpression` &mdash; `+5` | `-5`
     ///
     pub(crate) AnyNumberLikeExpression = JsStringLiteralExpression | JsNumberLiteralExpression | JsUnaryExpression
 }
