@@ -1,15 +1,16 @@
 use crate::RuleKey;
+use serde::Deserialize;
 use serde_json::value::RawValue;
 use std::collections::HashMap;
 
 /// A convenient new type data structure to store the options that belong to a rule
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Deserialize)]
 pub struct RuleOptions(Box<RawValue>);
 
 impl RuleOptions {
-    /// It returns the [RawValue] for the relative rule
-    pub fn value(&self) -> &RawValue {
-        &self.0
+    /// It returns the string contained in [RawValue], for the relative rule
+    pub fn value(&self) -> &str {
+        self.0.get()
     }
 
     /// Creates a new [RuleOptions]
@@ -50,47 +51,5 @@ pub struct AnalyzerConfiguration {
 #[derive(Debug, Clone, Default)]
 pub struct AnalyzerOptions {
     /// A data structured derived from the [`rome.json`] file
-    configuration: AnalyzerConfiguration,
-}
-
-impl AnalyzerOptions {
-    /// It retrieves the options that belong to a rule, if they exist.
-    ///
-    /// In order to retrieve a typed data structure, the function has to accept a `FromType`, a
-    /// `ToType` (this one, inferrable by the compiler) and a closure that does the mapping.
-    ///
-    /// Usually, options are a `serde::RawValue` and need to be mapped to a sized type.
-    ///
-    /// ## Examples
-    ///
-    /// ```rust,ignore
-    /// use rome_analyze::{declare_rule, Rule, RuleCategory, RuleMeta, RuleMetadata};
-    /// use rome_analyze::context::RuleContext;
-    /// declare_rule! {    
-    ///     /// Some doc
-    ///     pub(crate) Name {
-    ///         version: "0.0.0",
-    ///         name: "name",
-    ///         recommended: true,
-    ///     }
-    /// }
-    ///
-    /// impl Rule for Name {
-    ///     const CATEGORY: RuleCategory = RuleCategory::Lint;
-    ///     type Query = ();
-    ///     type State = ();
-    ///     type Signals = ();
-    ///
-    ///     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
-    ///         let options = ctx.options();
-    ///     }
-    /// }
-    /// ```
-    pub fn rule_options<F: FnOnce(&RuleOptions) -> ToType, ToType>(
-        &self,
-        rule_key: &RuleKey,
-        mapper: F,
-    ) -> Option<ToType> {
-        self.configuration.rules.get_rule(rule_key).map(mapper)
-    }
+    pub configuration: AnalyzerConfiguration,
 }

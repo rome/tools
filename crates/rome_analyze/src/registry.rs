@@ -288,7 +288,6 @@ impl<L: Language + Default> RegistryRule<L> {
             // if the query doesn't match
             let query_result =
                 <R::Query as Queryable>::unwrap_match(params.services, &params.query);
-
             let ctx =
                 match RuleContext::new(&query_result, params.root, params.services, params.options)
                 {
