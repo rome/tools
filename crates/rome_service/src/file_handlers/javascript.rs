@@ -27,6 +27,7 @@ use super::{
     AnalyzerCapabilities, DebugCapabilities, ExtensionHandler, FormatterCapabilities, Mime,
     ParserCapabilities,
 };
+use crate::configuration::to_analyzer_configuration;
 use crate::file_handlers::{FixAllParams, Language as LanguageId};
 use indexmap::IndexSet;
 use rome_diagnostics::Severity;
@@ -210,14 +211,14 @@ fn lint(
     parse: AnyParse,
     filter: AnalysisFilter,
     rules: Option<&Rules>,
+    settings: SettingsHandle,
 ) -> Vec<Diagnostic> {
     let tree = parse.tree();
     let mut diagnostics = parse.into_diagnostics();
 
     let file_id = rome_path.file_id();
-    let options = AnalyzerOptions::default();
-
-    analyze(file_id, &tree, filter, &options, |signal| {
+    let analyzer_options = compute_analyzer_options(&settings, &filter);
+    analyze(file_id, &tree, filter, &analyzer_options, |signal| {
         if let Some(diagnostic) = signal.diagnostic() {
             // We do now check if the severity of the diagnostics should be changed.
             // The configuration allows to change the severity of the diagnostics emitted by rules.
@@ -247,6 +248,7 @@ fn code_actions(
     parse: AnyParse,
     range: TextRange,
     rules: Option<&Rules>,
+    settings: SettingsHandle,
 ) -> PullActionsResult {
     let tree = parse.tree();
 
@@ -281,9 +283,10 @@ fn code_actions(
     filter.range = Some(range);
 
     let file_id = rome_path.file_id();
-    let options = AnalyzerOptions::default();
 
-    analyze(file_id, &tree, filter, &options, |signal| {
+    let analyzer_options = compute_analyzer_options(&settings, &filter);
+
+    analyze(file_id, &tree, filter, &analyzer_options, |signal| {
         if let Some(action) = signal.action() {
             actions.push(CodeAction {
                 category: action.category,
@@ -307,6 +310,7 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
         parse,
         rules,
         fix_file_mode,
+        settings,
     } = params;
 
     let mut tree: JsAnyRoot = parse.tree();
@@ -327,9 +331,9 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
     filter.categories = RuleCategories::SYNTAX | RuleCategories::LINT;
     let file_id = rome_path.file_id();
     let mut skipped_suggested_fixes = 0;
-    let options = AnalyzerOptions::default();
+    let analyzer_options = compute_analyzer_options(&settings, &filter);
     loop {
-        let action = analyze(file_id, &tree, filter, &options, |signal| {
+        let action = analyze(file_id, &tree, filter, &analyzer_options, |signal| {
             if let Some(action) = signal.action() {
                 match fix_file_mode {
                     FixFileMode::SafeFixes => {
@@ -484,4 +488,23 @@ fn rename(
     } else {
         Err(RomeError::RenameError(RenameError::CannotFindDeclaration))
     }
+}
+
+fn compute_analyzer_options(settings: &SettingsHandle, filter: &AnalysisFilter) -> AnalyzerOptions {
+    let configuration = to_analyzer_configuration(
+        settings.as_ref().linter(),
+        &settings.as_ref().languages,
+        &filter,
+        |settings| {
+            if let Some(globals) = settings.javascript.globals.as_ref() {
+                globals
+                    .iter()
+                    .map(|global| global.to_string())
+                    .collect::<Vec<_>>()
+            } else {
+                vec![]
+            }
+        },
+    );
+    AnalyzerOptions { configuration }
 }
