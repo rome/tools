@@ -16,6 +16,10 @@ declare_rule! {
     /// Prevent the usage of positive integers on `tabIndex` property
     ///
     /// Avoid positive `tabIndex` property values to synchronize the flow of the page with keyboard tab order.
+    /// ## Accessibility guidelines
+    ///
+    /// [WCAG 2.4.3](https://www.w3.org/WAI/WCAG21/Understanding/focus-order)
+	///
     /// ## Examples
     ///
     /// ### Invalid
