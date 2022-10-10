@@ -1324,6 +1324,10 @@ fn is_start_of_expr(p: &mut Parser) -> bool {
         | T![await]
         | T![yield] => true,
         // TODO: how to represent private identifier
+        // Error tolerance.  If we see the start of some binary operator, we consider
+        // that the start of an expression.  That way we'll parse out a missing identifier,
+        // give a good message about an identifier being missing, and then consume the
+        // rest of the binary expression.
         _ => is_binary_operator(p) || is_at_identifier(p),
     }
 }
