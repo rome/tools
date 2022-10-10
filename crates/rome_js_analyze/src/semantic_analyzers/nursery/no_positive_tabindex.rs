@@ -168,7 +168,7 @@ impl Rule for NoPositiveTabindex {
         )
         .footer(
             Severity::Note,
-            "Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.",
+            "Elements with a positive "<Emphasis>"tabIndex"</Emphasis> override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.",
         );
 
         Some(diagnostic)
