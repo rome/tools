@@ -1100,7 +1100,7 @@ pub fn semantic_model(root: &JsAnyRoot, options: SemanticModelOptions) -> Semant
 mod test {
     use super::*;
     use rome_diagnostics::file::FileId;
-    use rome_js_syntax::{JsReferenceIdentifier, JsSyntaxKind, SourceType, TsIdentifierBinding};
+    use rome_js_syntax::{JsReferenceIdentifier, JsSyntaxKind, SourceType, TsIdentifierBinding, JsArrayBindingPatternElementList, JsArrayBindingPattern, JsVariableDeclarator};
     use rome_rowan::SyntaxNodeCast;
 
     #[test]

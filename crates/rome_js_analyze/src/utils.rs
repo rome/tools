@@ -10,6 +10,7 @@ pub mod batch;
 pub mod rename;
 #[cfg(test)]
 pub mod tests;
+pub mod react;
 
 #[derive(Debug, PartialEq)]
 pub(crate) enum EscapeError {
