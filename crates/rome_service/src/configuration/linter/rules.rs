@@ -392,6 +392,7 @@ struct NurserySchema {
     no_dangerously_set_inner_html: Option<RuleConfiguration>,
     no_dangerously_set_inner_html_with_children: Option<RuleConfiguration>,
     no_new_symbol: Option<RuleConfiguration>,
+    no_positive_tabindex: Option<RuleConfiguration>,
     no_render_return_value: Option<RuleConfiguration>,
     no_restricted_globals: Option<RuleConfiguration>,
     no_undeclared_variables: Option<RuleConfiguration>,
@@ -408,13 +409,14 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 19] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 20] = [
         "noArrayIndexKey",
         "noAutofocus",
         "noChildrenProp",
         "noDangerouslySetInnerHtml",
         "noDangerouslySetInnerHtmlWithChildren",
         "noNewSymbol",
+        "noPositiveTabindex",
         "noRenderReturnValue",
         "noRestrictedGlobals",
         "noUndeclaredVariables",
