@@ -76,54 +76,6 @@ missingCapturesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━
   
   i This capture is not in the dependency list
   
-    22 │       dispatch(1);
-    23 │ 
-  > 24 │       console.log(memoizedCallback);
-       │                   ^^^^^^^^^^^^^^^^
-    25 │       console.log(memoizedValue);
-    26 │       console.log(deferredValue);
-  
-
-```
-
-```
-missingCapturesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This useEffect has missing dependencies
-  
-    15 │   const deferredValue = useDeferredValue(value);
-    16 │   const [isPending, startTransition] = useTransition();
-  > 17 │   useEffect(() => {
-       │   ^^^^^^^^^
-    18 │       console.log(name);
-    19 │       setName(1);
-  
-  i This capture is not in the dependency list
-  
-    16 │   const [isPending, startTransition] = useTransition();
-    17 │   useEffect(() => {
-  > 18 │       console.log(name);
-       │                   ^^^^
-    19 │       setName(1);
-    20 │ 
-  
-
-```
-
-```
-missingCapturesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This useEffect has missing dependencies
-  
-    15 │   const deferredValue = useDeferredValue(value);
-    16 │   const [isPending, startTransition] = useTransition();
-  > 17 │   useEffect(() => {
-       │   ^^^^^^^^^
-    18 │       console.log(name);
-    19 │       setName(1);
-  
-  i This capture is not in the dependency list
-  
     24 │       console.log(memoizedCallback);
     25 │       console.log(memoizedValue);
   > 26 │       console.log(deferredValue);
@@ -148,12 +100,60 @@ missingCapturesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━
   
   i This capture is not in the dependency list
   
+    22 │       dispatch(1);
+    23 │ 
+  > 24 │       console.log(memoizedCallback);
+       │                   ^^^^^^^^^^^^^^^^
+    25 │       console.log(memoizedValue);
+    26 │       console.log(deferredValue);
+  
+
+```
+
+```
+missingCapturesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This useEffect has missing dependencies
+  
+    15 │   const deferredValue = useDeferredValue(value);
+    16 │   const [isPending, startTransition] = useTransition();
+  > 17 │   useEffect(() => {
+       │   ^^^^^^^^^
+    18 │       console.log(name);
+    19 │       setName(1);
+  
+  i This capture is not in the dependency list
+  
     19 │       setName(1);
     20 │ 
   > 21 │       console.log(state);
        │                   ^^^^^
     22 │       dispatch(1);
     23 │ 
+  
+
+```
+
+```
+missingCapturesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This useEffect has missing dependencies
+  
+    15 │   const deferredValue = useDeferredValue(value);
+    16 │   const [isPending, startTransition] = useTransition();
+  > 17 │   useEffect(() => {
+       │   ^^^^^^^^^
+    18 │       console.log(name);
+    19 │       setName(1);
+  
+  i This capture is not in the dependency list
+  
+    16 │   const [isPending, startTransition] = useTransition();
+    17 │   useEffect(() => {
+  > 18 │       console.log(name);
+       │                   ^^^^
+    19 │       setName(1);
+    20 │ 
   
 
 ```

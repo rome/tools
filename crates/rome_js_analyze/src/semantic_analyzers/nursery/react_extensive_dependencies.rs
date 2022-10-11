@@ -8,7 +8,8 @@ use rome_js_syntax::{
     JsCallExpression, JsIdentifierBinding, JsSyntaxKind, TextRange,
 };
 use rome_rowan::{AstNode, SyntaxNodeCast};
-use std::collections::{HashMap, HashSet};
+use serde::{Serialize, Deserialize};
+use std::{collections::{HashMap, HashSet, BTreeMap}, borrow::Cow};
 
 declare_rule! {
     /// Enforce all dependencies are correctly specified.
@@ -20,14 +21,14 @@ declare_rule! {
     }
 }
 
-impl Rule for ReactExtensiveDependencies {
-    type Query = Semantic<JsCallExpression>;
-    type State = (TextRange, Vec<Capture>);
-    type Signals = Vec<Self::State>;
+#[derive(Clone, Serialize, Deserialize)]
+pub struct ReactExtensiveDependenciesOptions {
+    stables: HashSet<ReactHookStable>,
+}
 
-    fn run(ctx: &RuleContext<Self>) -> Vec<Self::State> {
-        //TODO: move this to config
-        let stables = HashSet::from_iter([
+impl Default for ReactExtensiveDependenciesOptions {
+    fn default() -> Self {
+        let stables: HashSet<ReactHookStable> = HashSet::from_iter([
             ReactHookStable::new("useState", Some(1)),
             ReactHookStable::new("useReducer", Some(1)),
             ReactHookStable::new("useTransition", Some(1)),
@@ -37,6 +38,26 @@ impl Rule for ReactExtensiveDependencies {
             ReactHookStable::new("useSyncExternalStore", None),
         ]);
 
+        Self { stables }
+    }
+}
+
+pub enum Problem {
+    MissingDependency (TextRange, Vec<Capture>),
+    ExtraDependency(TextRange, TextRange)
+}
+
+impl Rule for ReactExtensiveDependencies {
+    type Query = Semantic<JsCallExpression>;
+    type State = Problem;
+    type Signals = Vec<Self::State>;
+    type Options = ReactExtensiveDependenciesOptions;
+
+    fn run(ctx: &RuleContext<Self>) -> Vec<Self::State> {
+        let options = ctx.options()
+            .map(Cow::Borrowed)
+            .unwrap_or_else(|| Cow::Owned(ReactExtensiveDependenciesOptions::default()));
+        
         let mut signals = vec![];
 
         let node = ctx.query();
@@ -63,7 +84,7 @@ impl Rule for ReactExtensiveDependencies {
                             _ => {
                                 let declaration =
                                     declaration.syntax().clone().cast::<JsIdentifierBinding>()?;
-                                let not_stable = !is_stable_binding(&declaration, &stables);
+                                let not_stable = !is_stable_binding(&declaration, &options.stables);
                                 not_stable.then_some(capture)
                             }
                         }
@@ -72,31 +93,44 @@ impl Rule for ReactExtensiveDependencies {
                 .map(|x| (x.node().text_trimmed().to_string(), x))
                 .collect();
 
-            let deps: Vec<String> = use_effect
+            let deps: Vec<(String, TextRange)> = use_effect
                 .deps()
                 .map(|deps| {
                     deps.items()
                         .into_iter()
-                        .map(|x| x.syntax().text_trimmed().to_string())
+                        .map(|x| (
+                            x.syntax().text_trimmed().to_string(),
+                            x.syntax().text_trimmed_range(),
+                        ))
                         .collect()
                 })
                 .unwrap_or_default();
 
-            let mut add_deps: HashMap<String, Vec<Capture>> = HashMap::new();
+            let mut add_deps: BTreeMap<String, Vec<Capture>> = BTreeMap::new();
+            let mut remove_deps: Vec<TextRange> = vec![];
 
             // Search for captures not in the dependency
             for (text, capture) in captures.iter() {
-                if !deps.contains(text) {
+                if !deps.iter().any(|x| &x.0 == text) {
                     let captures = add_deps.entry(text.clone()).or_default();
                     captures.push(capture.clone());
                 }
             }
 
             //TODO Search for dependencies not captured
+            for dep in deps {
+                if !captures.iter().any(|x| x.0 == dep.0) {
+                    remove_deps.push(dep.1);
+                }
+            }
 
             // Generate signals
             for (_, captures) in add_deps {
-                signals.push((range, captures));
+                signals.push(Problem::MissingDependency(range, captures));
+            }
+
+            for dep_range in remove_deps {
+                signals.push(Problem::ExtraDependency(range, dep_range));
             }
         }
 
@@ -104,25 +138,43 @@ impl Rule for ReactExtensiveDependencies {
     }
 
     fn diagnostic(_: &RuleContext<Self>, dep: &Self::State) -> Option<RuleDiagnostic> {
-        let diag = RuleDiagnostic::new(
-            rule_category!(),
-            dep.0,
-            markup! {
-                "This useEffect has missing dependencies"
+        match dep {
+            Problem::MissingDependency(use_effect_range, captures) => {
+                let diag = RuleDiagnostic::new(
+                    rule_category!(),
+                    use_effect_range,
+                    markup! {
+                        "This useEffect has missing dependencies"
+                    },
+                );
+    
+                let mut diag = diag;
+    
+                for capture in captures.iter() {
+                    let node = capture.node();
+                    diag = diag.secondary(
+                        node.text_trimmed_range(),
+                        "This capture is not in the dependency list",
+                    );
+                }
+    
+                Some(diag)
             },
-        );
-
-        let mut diag = diag;
-
-        for capture in dep.1.iter() {
-            let node = capture.node();
-            diag = diag.secondary(
-                node.text_trimmed_range(),
-                "This capture is not in the dependency list",
-            );
+            Problem::ExtraDependency(use_effect_range, dep_range) => {
+                let diag = RuleDiagnostic::new(
+                    rule_category!(),
+                    use_effect_range,
+                    markup! {
+                        "This useEffect has dependencies that were not captured"
+                    },
+                ).secondary(
+                    dep_range,
+                    "This dependecy is not being captured",
+                );
+    
+                Some(diag)
+            }
         }
-
-        Some(diag)
     }
 }
 

@@ -1,0 +1,36 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: extraDependenciesInvalid.js
+---
+# Input
+```js
+function MyComponent() {
+    useEffect(() => {
+    }, [a]);
+  }
+```
+
+# Diagnostics
+```
+extraDependenciesInvalid.js:2:5 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This useEffect has dependencies that were not captured
+  
+    1 │ function MyComponent() {
+  > 2 │     useEffect(() => {
+      │     ^^^^^^^^^
+    3 │     }, [a]);
+    4 │   }
+  
+  i This dependecy is not being captured
+  
+    1 │ function MyComponent() {
+    2 │     useEffect(() => {
+  > 3 │     }, [a]);
+      │         ^
+    4 │   }
+  
+
+```
+
+

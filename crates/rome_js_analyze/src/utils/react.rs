@@ -5,8 +5,9 @@ use rome_js_syntax::{
     JsVariableDeclarator,
 };
 use rome_rowan::AstNode;
+use serde::{Serialize, Deserialize};
 
-#[derive(PartialEq, Eq, Hash)]
+#[derive(Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct ReactHookStable {
     hook_name: String,
     index: Option<usize>,

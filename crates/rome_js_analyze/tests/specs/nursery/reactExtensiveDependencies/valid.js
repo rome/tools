@@ -32,7 +32,6 @@ function MyComponent4() {
     const [state, dispatch] = useReducer();
     const memoizedCallback = useCallback();
     const memoizedValue = useMemo();
-    const deferredValue = useDeferredValue(value);
     const [isPending, startTransition] = useTransition();
     const id = useId();
     const externalStore = useSyncExternalStore();
@@ -48,6 +47,7 @@ function MyComponent4() {
         dispatch(1)
 
         memoizedCallback();
+        console.log(memoizedValue);
 
         console.log(isPending);
         startTransition();
@@ -55,5 +55,5 @@ function MyComponent4() {
         console.log(id);
 
         console.log(externalStore);
-    }, [name, state, memoizedCallback, memoizedValue, deferredValue, isPending]);
+    }, [name, state, memoizedCallback, memoizedValue, isPending]);
 }
