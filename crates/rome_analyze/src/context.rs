@@ -35,7 +35,7 @@ where
             serde_json::from_value(value.clone()).map_err(|error| {
                 OptionsDeserializationDiagnostic::new(
                     rule_key.rule_name(),
-                    &value.to_string(),
+                    value.to_string(),
                     error,
                 )
             })?

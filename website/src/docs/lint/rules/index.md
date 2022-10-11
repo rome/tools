@@ -295,11 +295,25 @@ Report when a DOM element or a component uses both <code>children</code> and <co
 Disallow <code>new</code> operators with the <code>Symbol</code> object
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noPositiveTabindex">
+	<a href="/docs/lint/rules/noPositiveTabindex">noPositiveTabindex (since v0.10.0)</a>
+	<a class="header-anchor" href="#noPositiveTabindex"></a>
+</h3>
+Prevent the usage of positive integers on <code>tabIndex</code> property
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noRenderReturnValue">
 	<a href="/docs/lint/rules/noRenderReturnValue">noRenderReturnValue (since v0.10.0)</a>
 	<a class="header-anchor" href="#noRenderReturnValue"></a>
 </h3>
 Prevent the usage of the return value of <code>React.render</code>.
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noRestrictedGlobals">
+	<a href="/docs/lint/rules/noRestrictedGlobals">noRestrictedGlobals (since v0.10.0)</a>
+	<a class="header-anchor" href="#noRestrictedGlobals"></a>
+</h3>
+This rule allows you to specify global variable names that you don’t want to use in your application.
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noUndeclaredVariables">
@@ -335,6 +349,13 @@ Disallow unnecessary fragments
 	<a class="header-anchor" href="#noVoidElementsWithChildren"></a>
 </h3>
 This rules prevents void elements (AKA self-closing elements) from having children.
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useBlankTarget">
+	<a href="/docs/lint/rules/useBlankTarget">useBlankTarget (since v10.0.0)</a>
+	<a class="header-anchor" href="#useBlankTarget"></a>
+</h3>
+Disallow <code>target=&quot;_blank&quot;</code> attribute without <code>rel=&quot;noreferrer&quot;</code>
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useButtonType">

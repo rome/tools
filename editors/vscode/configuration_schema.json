@@ -541,7 +541,27 @@
             }
           ]
         },
+        "noPositiveTabindex": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noRenderReturnValue": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noRestrictedGlobals": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -606,6 +626,16 @@
           "type": [
             "boolean",
             "null"
+          ]
+        },
+        "useBlankTarget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "useButtonType": {

@@ -119,7 +119,10 @@ mod tests {
     #[ignore]
     #[test]
     fn quick_test() {
-        const SOURCE: &str = r#"document;
+        const SOURCE: &str = r#"function f(event, error) {
+    console.log(event);
+    console.log(error);
+}
         "#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());

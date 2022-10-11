@@ -55,8 +55,13 @@ noDebugger.js:5:1 lint/correctness/noDebugger  FIXABLE  ━━━━━━━━
   
   i Suggested fix: Remove debugger statement
   
-    5 │ debugger;
-      │ ---------
+     3 3 │   if (foo) debugger
+     4 4 │   
+     5   │ - debugger;
+     6   │ - 
+     7 5 │   function test() {
+     8 6 │     let a = 3;
+  
 
 ```
 

@@ -24,9 +24,11 @@ pub(super) fn print_diff(fmt: &mut fmt::Formatter<'_>, diff: &TextEdit) -> io::R
 
     process_diff_ops(
         diff,
-        &mut modified_lines,
-        &mut inserted_lines,
-        &mut before_line_to_after,
+        PushToLineState {
+            modified_lines: &mut modified_lines,
+            inserted_lines: &mut inserted_lines,
+            before_line_to_after: &mut before_line_to_after,
+        },
         &mut after_line,
         &mut before_line,
     );
@@ -41,7 +43,19 @@ pub(super) fn print_diff(fmt: &mut fmt::Formatter<'_>, diff: &TextEdit) -> io::R
             return None;
         }
 
-        Some((key, inserted_lines.get(key)?))
+        let line = inserted_lines.get(key)?;
+        let mut has_non_empty = false;
+
+        for (_, text) in &line.diffs {
+            has_non_empty = has_non_empty || !text.is_empty();
+        }
+
+        // Disallow fully empty lines from being displayed in short mode
+        if has_non_empty {
+            Some((key, line))
+        } else {
+            None
+        }
     });
 
     if let Some((key, entry)) = modified_line {
@@ -83,11 +97,9 @@ pub(super) fn print_diff(fmt: &mut fmt::Formatter<'_>, diff: &TextEdit) -> io::R
 /// to line numbers in the new revision
 /// - `after_line` counts the number of lines in the new revision of the document
 /// - `before_line` counts the number of lines in the old revision of the document
-fn process_diff_ops<'diff>(
+fn process_diff_ops<'a, 'diff>(
     diff: &'diff TextEdit,
-    modified_lines: &mut BTreeSet<LineKey>,
-    inserted_lines: &mut BTreeMap<LineKey, GroupDiffsLine<'diff>>,
-    before_line_to_after: &mut BTreeMap<OneIndexed, OneIndexed>,
+    mut state: PushToLineState<'a, 'diff>,
     after_line: &mut OneIndexed,
     before_line: &mut OneIndexed,
 ) {
@@ -103,16 +115,15 @@ fn process_diff_ops<'diff>(
                         *before_line = before_line.saturating_add(1);
                     }
 
-                    before_line_to_after.insert(*before_line, *after_line);
+                    state.before_line_to_after.insert(*before_line, *after_line);
 
                     push_to_line(
-                        modified_lines,
-                        inserted_lines,
-                        before_line_to_after,
+                        &mut state,
                         *before_line,
                         *after_line,
                         ChangeTag::Equal,
                         "",
+                        false,
                     );
                 }
 
@@ -123,43 +134,36 @@ fn process_diff_ops<'diff>(
         let tag = op.tag();
         let text = op.text(diff);
 
-        // Doesn't contain a newline
-        if !text.contains('\n') {
-            push_to_line(
-                modified_lines,
-                inserted_lines,
-                before_line_to_after,
-                *before_line,
-                *after_line,
-                tag,
-                text,
-            );
-            continue;
-        }
+        let parts_count = text.split('\n').count();
+        let last_part = match parts_count.checked_sub(1) {
+            Some(last_part) => last_part,
+            None => {
+                // Doesn't contain a newline
+                push_to_line(&mut state, *before_line, *after_line, tag, text, false);
+                continue;
+            }
+        };
 
         // Get all the lines
-        let mut parts = text.split('\n');
+        let mut parts = text.split('\n').enumerate();
 
         // Deconstruct each text chunk
         let current_line = parts.next();
 
         // The first chunk belongs to the current line
-        if let Some(current_line) = current_line {
-            if !current_line.is_empty() {
-                push_to_line(
-                    modified_lines,
-                    inserted_lines,
-                    before_line_to_after,
-                    *before_line,
-                    *after_line,
-                    tag,
-                    current_line,
-                );
-            }
+        if let Some((part_index, current_line)) = current_line {
+            push_to_line(
+                &mut state,
+                *before_line,
+                *after_line,
+                tag,
+                current_line,
+                part_index < last_part,
+            );
         }
 
         // Create unique lines for each other chunk
-        for new_line in parts {
+        for (part_index, new_line) in parts {
             match tag {
                 ChangeTag::Equal => {
                     *after_line = after_line.saturating_add(1);
@@ -174,16 +178,15 @@ fn process_diff_ops<'diff>(
                 }
             }
 
-            before_line_to_after.insert(*before_line, *after_line);
+            state.before_line_to_after.insert(*before_line, *after_line);
 
             push_to_line(
-                modified_lines,
-                inserted_lines,
-                before_line_to_after,
+                &mut state,
                 *before_line,
                 *after_line,
                 tag,
                 new_line,
+                part_index < last_part,
             );
         }
     }
@@ -238,25 +241,36 @@ impl<'a> GroupDiffsLine<'a> {
     }
 }
 
-fn push_to_line<'a>(
-    modified_lines: &mut BTreeSet<LineKey>,
-    inserted_lines: &mut BTreeMap<LineKey, GroupDiffsLine<'a>>,
-    before_line_to_after: &mut BTreeMap<OneIndexed, OneIndexed>,
+struct PushToLineState<'a, 'b> {
+    modified_lines: &'a mut BTreeSet<LineKey>,
+    inserted_lines: &'a mut BTreeMap<LineKey, GroupDiffsLine<'b>>,
+    before_line_to_after: &'a mut BTreeMap<OneIndexed, OneIndexed>,
+}
+
+fn push_to_line<'a, 'b>(
+    state: &mut PushToLineState<'a, 'b>,
     before_line: OneIndexed,
     after_line: OneIndexed,
     tag: ChangeTag,
-    text: &'a str,
+    text: &'b str,
+    allow_empty: bool,
 ) {
+    let PushToLineState {
+        modified_lines,
+        inserted_lines,
+        before_line_to_after,
+    } = state;
+
     match tag {
         ChangeTag::Insert => {
             GroupDiffsLine::insert(inserted_lines, LineKey::after(after_line), tag, text);
-            if !text.is_empty() {
+            if allow_empty || !text.is_empty() {
                 modified_lines.insert(LineKey::after(after_line));
             }
         }
         ChangeTag::Delete => {
             GroupDiffsLine::insert(inserted_lines, LineKey::before(before_line), tag, text);
-            if !text.is_empty() {
+            if allow_empty || !text.is_empty() {
                 modified_lines.insert(LineKey::before(before_line));
             }
         }
@@ -779,6 +793,166 @@ function name(args) {
             "  "<Emphasis>"21"</Emphasis>" "<Emphasis>"17 │ "</Emphasis>"  ) {}\n"
             "\n"
         }.to_owned();
+
+        assert_eq!(
+            output, expected,
+            "\nactual:\n{output:#?}\nexpected:\n{expected:#?}",
+        );
+    }
+
+    #[test]
+    fn remove_single_line() {
+        const SOURCE_LEFT: &str = "declare module \"test\" {
+	interface A {
+
+		prop: string;
+	}
+}
+";
+
+        const SOURCE_RIGHT: &str = "declare module \"test\" {
+	interface A {
+		prop: string;
+	}
+}
+";
+
+        let diff = TextEdit::from_unicode_words(SOURCE_LEFT, SOURCE_RIGHT);
+
+        let mut output = MarkupBuf::default();
+        print_diff(&mut fmt::Formatter::new(&mut output), &diff).unwrap();
+
+        let expected = markup! {
+            "  "<Emphasis>"1"</Emphasis>" "<Emphasis>"1 │ "</Emphasis>"  declare module \"test\" {\n"
+            "  "<Emphasis>"2"</Emphasis>" "<Emphasis>"2 │ "</Emphasis>"  \tinterface A {\n"
+            "  "<Emphasis>"3"</Emphasis>"  "<Emphasis>" │ "</Emphasis><Error>"-"</Error>" \n"
+            "  "<Emphasis>"4"</Emphasis>" "<Emphasis>"3 │ "</Emphasis>"  \t\tprop: string;\n"
+            "  "<Emphasis>"5"</Emphasis>" "<Emphasis>"4 │ "</Emphasis>"  \t}\n"
+            "\n"
+        }
+        .to_owned();
+
+        assert_eq!(
+            output, expected,
+            "\nactual:\n{output:#?}\nexpected:\n{expected:#?}",
+        );
+    }
+
+    #[test]
+    fn remove_many_lines() {
+        const SOURCE_LEFT: &str = "declare module \"test\" {
+	interface A {
+
+
+
+		prop: string;
+	}
+}
+";
+
+        const SOURCE_RIGHT: &str = "declare module \"test\" {
+	interface A {
+		prop: string;
+	}
+}
+";
+
+        let diff = TextEdit::from_unicode_words(SOURCE_LEFT, SOURCE_RIGHT);
+
+        let mut output = MarkupBuf::default();
+        print_diff(&mut fmt::Formatter::new(&mut output), &diff).unwrap();
+
+        let expected = markup! {
+            "  "<Emphasis>"1"</Emphasis>" "<Emphasis>"1 │ "</Emphasis>"  declare module \"test\" {\n"
+            "  "<Emphasis>"2"</Emphasis>" "<Emphasis>"2 │ "</Emphasis>"  \tinterface A {\n"
+            "  "<Emphasis>"3"</Emphasis>"  "<Emphasis>" │ "</Emphasis><Error>"-"</Error>" \n"
+            "  "<Emphasis>"4"</Emphasis>"  "<Emphasis>" │ "</Emphasis><Error>"-"</Error>" \n"
+            "  "<Emphasis>"5"</Emphasis>"  "<Emphasis>" │ "</Emphasis><Error>"-"</Error>" \n"
+            "  "<Emphasis>"6"</Emphasis>" "<Emphasis>"3 │ "</Emphasis>"  \t\tprop: string;\n"
+            "  "<Emphasis>"7"</Emphasis>" "<Emphasis>"4 │ "</Emphasis>"  \t}\n"
+            "\n"
+        }
+        .to_owned();
+
+        assert_eq!(
+            output, expected,
+            "\nactual:\n{output:#?}\nexpected:\n{expected:#?}",
+        );
+    }
+
+    #[test]
+    fn insert_single_line() {
+        const SOURCE_LEFT: &str = "declare module \"test\" {
+	interface A {
+		prop: string;
+	}
+}
+";
+
+        const SOURCE_RIGHT: &str = "declare module \"test\" {
+	interface A {
+
+		prop: string;
+	}
+}
+";
+
+        let diff = TextEdit::from_unicode_words(SOURCE_LEFT, SOURCE_RIGHT);
+
+        let mut output = MarkupBuf::default();
+        print_diff(&mut fmt::Formatter::new(&mut output), &diff).unwrap();
+
+        let expected = markup! {
+            "  "<Emphasis>"1"</Emphasis>" "<Emphasis>"1 │ "</Emphasis>"  declare module \"test\" {\n"
+            "  "<Emphasis>"2"</Emphasis>" "<Emphasis>"2 │ "</Emphasis>"  \tinterface A {\n"
+            "    "<Emphasis>"3 │ "</Emphasis><Success>"+"</Success>" \n"
+            "  "<Emphasis>"3"</Emphasis>" "<Emphasis>"4 │ "</Emphasis>"  \t\tprop: string;\n"
+            "  "<Emphasis>"4"</Emphasis>" "<Emphasis>"5 │ "</Emphasis>"  \t}\n"
+            "\n"
+        }
+        .to_owned();
+
+        assert_eq!(
+            output, expected,
+            "\nactual:\n{output:#?}\nexpected:\n{expected:#?}",
+        );
+    }
+
+    #[test]
+    fn insert_many_lines() {
+        const SOURCE_LEFT: &str = "declare module \"test\" {
+	interface A {
+		prop: string;
+	}
+}
+";
+
+        const SOURCE_RIGHT: &str = "declare module \"test\" {
+	interface A {
+
+
+
+		prop: string;
+	}
+}
+";
+
+        let diff = TextEdit::from_unicode_words(SOURCE_LEFT, SOURCE_RIGHT);
+
+        let mut output = MarkupBuf::default();
+        print_diff(&mut fmt::Formatter::new(&mut output), &diff).unwrap();
+
+        let expected = markup! {
+            "  "<Emphasis>"1"</Emphasis>" "<Emphasis>"1 │ "</Emphasis>"  declare module \"test\" {\n"
+            "  "<Emphasis>"2"</Emphasis>" "<Emphasis>"2 │ "</Emphasis>"  \tinterface A {\n"
+            "    "<Emphasis>"3 │ "</Emphasis><Success>"+"</Success>" \n"
+            "    "<Emphasis>"4 │ "</Emphasis><Success>"+"</Success>" \n"
+            "    "<Emphasis>"5 │ "</Emphasis><Success>"+"</Success>" \n"
+            "  "<Emphasis>"3"</Emphasis>" "<Emphasis>"6 │ "</Emphasis>"  \t\tprop: string;\n"
+            "  "<Emphasis>"4"</Emphasis>" "<Emphasis>"7 │ "</Emphasis>"  \t}\n"
+            "\n"
+        }
+        .to_owned();
 
         assert_eq!(
             output, expected,
