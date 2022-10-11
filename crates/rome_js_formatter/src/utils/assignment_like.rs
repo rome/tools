@@ -538,7 +538,12 @@ impl JsAnyAssignmentLike {
                     let expression = initializer.expression()?;
                     write!(
                         f,
-                        [space(), with_assignment_layout(&expression, Some(layout))]
+                        [
+                            space(),
+                            format_leading_comments(initializer.syntax()),
+                            with_assignment_layout(&expression, Some(layout)),
+                            format_trailing_comments(initializer.syntax())
+                        ]
                     )?;
                 }
                 Ok(())
@@ -552,7 +557,12 @@ impl JsAnyAssignmentLike {
                     let expression = initializer.expression()?;
                     write!(
                         f,
-                        [space(), with_assignment_layout(&expression, Some(layout))]
+                        [
+                            space(),
+                            format_leading_comments(initializer.syntax()),
+                            with_assignment_layout(&expression, Some(layout)),
+                            format_trailing_comments(initializer.syntax())
+                        ]
                     )?;
                 }
                 Ok(())
@@ -826,7 +836,8 @@ impl JsAnyAssignmentLike {
                 should_break_after_operator(expression, comments)?
             }
             RightAssignmentLike::JsInitializerClause(initializer) => {
-                should_break_after_operator(&initializer.expression()?, comments)?
+                comments.has_leading_own_line_comment(initializer.syntax())
+                    || should_break_after_operator(&initializer.expression()?, comments)?
             }
             RightAssignmentLike::TsType(TsType::TsUnionType(ty)) => {
                 comments.has_leading_comments(ty.syntax())
