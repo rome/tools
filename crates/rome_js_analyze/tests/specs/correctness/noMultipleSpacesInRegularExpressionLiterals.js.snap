@@ -21,7 +21,7 @@ expression: noMultipleSpacesInRegularExpressionLiterals.js
 
 # Diagnostics
 ```
-noMultipleSpacesInRegularExpressionLiterals.js:7:2 lint/correctness/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  
+noMultipleSpacesInRegularExpressionLiterals.js:7:2 lint/correctness/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━━━━━
 
   ! This regular expression contains unclear uses of multiple spaces.
   
@@ -45,7 +45,7 @@ noMultipleSpacesInRegularExpressionLiterals.js:7:2 lint/correctness/noMultipleSp
 ```
 
 ```
-noMultipleSpacesInRegularExpressionLiterals.js:8:2 lint/correctness/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  
+noMultipleSpacesInRegularExpressionLiterals.js:8:2 lint/correctness/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━━━━━
 
   ! This regular expression contains unclear uses of multiple spaces.
   
@@ -69,7 +69,7 @@ noMultipleSpacesInRegularExpressionLiterals.js:8:2 lint/correctness/noMultipleSp
 ```
 
 ```
-noMultipleSpacesInRegularExpressionLiterals.js:9:5 lint/correctness/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  
+noMultipleSpacesInRegularExpressionLiterals.js:9:5 lint/correctness/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━━━━━
 
   ! This regular expression contains unclear uses of multiple spaces.
   
@@ -93,7 +93,7 @@ noMultipleSpacesInRegularExpressionLiterals.js:9:5 lint/correctness/noMultipleSp
 ```
 
 ```
-noMultipleSpacesInRegularExpressionLiterals.js:10:5 lint/correctness/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  
+noMultipleSpacesInRegularExpressionLiterals.js:10:5 lint/correctness/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━━━━━
 
   ! This regular expression contains unclear uses of multiple spaces.
   
@@ -117,7 +117,7 @@ noMultipleSpacesInRegularExpressionLiterals.js:10:5 lint/correctness/noMultipleS
 ```
 
 ```
-noMultipleSpacesInRegularExpressionLiterals.js:11:5 lint/correctness/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  
+noMultipleSpacesInRegularExpressionLiterals.js:11:5 lint/correctness/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━━━━━
 
   ! This regular expression contains unclear uses of multiple spaces.
   
@@ -141,7 +141,7 @@ noMultipleSpacesInRegularExpressionLiterals.js:11:5 lint/correctness/noMultipleS
 ```
 
 ```
-noMultipleSpacesInRegularExpressionLiterals.js:12:11 lint/correctness/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  
+noMultipleSpacesInRegularExpressionLiterals.js:12:11 lint/correctness/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━━━━━
 
   ! This regular expression contains unclear uses of multiple spaces.
   
