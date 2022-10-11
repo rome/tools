@@ -10,14 +10,14 @@ use crate::parentheses::{
     update_or_lower_expression_needs_parentheses, NeedsParentheses,
 };
 use crate::utils::function_body::{FormatMaybeCachedFunctionBody, FunctionBodyCacheMode};
-use crate::utils::test_call::is_test_call_expression;
+use crate::utils::test_call::is_test_call_argument;
 use crate::utils::{
     resolve_left_most_expression, AssignmentLikeLayout, JsAnyBinaryLikeLeftExpression,
 };
 use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyBindingPattern, JsAnyExpression, JsAnyFormalParameter,
     JsAnyFunctionBody, JsAnyParameter, JsAnyTemplateElement, JsArrowFunctionExpression,
-    JsCallArgumentList, JsCallExpression, JsSyntaxKind, JsSyntaxNode, JsTemplate,
+    JsSyntaxKind, JsSyntaxNode, JsTemplate,
 };
 use rome_rowan::SyntaxResult;
 
@@ -224,13 +224,7 @@ fn format_signature(
 
             match arrow.parameters()? {
                 JsAnyArrowFunctionParameters::JsAnyBinding(binding) => {
-                    let call_expression = arrow
-                        .parent::<JsCallArgumentList>()
-                        .and_then(|args| args.syntax().grand_parent())
-                        .and_then(JsCallExpression::cast);
-
-                    let should_hug = call_expression
-                        .map_or(false, |call| is_test_call_expression(&call) == Ok(true));
+                    let should_hug = is_test_call_argument(arrow.syntax())?;
 
                     write!(f, [text("(")])?;
 
