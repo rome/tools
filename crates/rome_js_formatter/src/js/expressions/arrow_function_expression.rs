@@ -458,10 +458,18 @@ impl Format<JsFormatContext> for ArrowChain {
                         soft_block_indent(&format_tail_body),
                         text(")")
                     ])]
-                )
+                )?;
             } else {
-                write!(f, [format_tail_body])
+                write!(f, [format_tail_body])?;
             }
+
+            // Format the trailing comments of all arrow function EXCEPT the first one because
+            // the comments of the head get formatted as part of the `FormatJsArrowFunctionExpression` call.
+            for arrow in self.arrows().skip(1) {
+                write!(f, [format_trailing_comments(arrow.syntax())])?;
+            }
+
+            Ok(())
         });
 
         let format_tail_body = format_with(|f| {
@@ -489,7 +497,7 @@ impl Format<JsFormatContext> for ArrowChain {
                         .should_expand(break_before_chain),
                     space(),
                     tail.fat_arrow_token().format(),
-                    indent_if_group_breaks(&format_tail_body, group_id)
+                    indent_if_group_breaks(&format_tail_body, group_id),
                 ]
             )?;
 
