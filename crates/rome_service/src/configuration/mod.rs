@@ -297,11 +297,7 @@ where
 /// // map globals from JS language
 /// let analyzer_configuration =
 ///     to_analyzer_configuration(&settings.linter, &settings.languages, &filter, |settings| {
-///         if let Some(globals) = settings
-///             .javascript
-///             .as_ref()
-///             .and_then(|j| j.globals.as_ref())
-///         {
+///         if let Some(globals) = settings.javascript.globals.as_ref() {
 ///             globals
 ///                 .iter()
 ///                 .map(|global| global.to_string())
@@ -311,7 +307,10 @@ where
 ///         }
 ///     });
 ///
-/// assert!(analyzer_configuration.globals, vec![])
+///  assert_eq!(
+///     analyzer_configuration.globals,
+///     vec!["jQuery".to_string(), "React".to_string()]
+///  )
 /// ```
 ///
 /// [metadata]: rome_analyze::RegistryRuleMetadata
