@@ -20,7 +20,7 @@ declare_rule! {
     /// <a />
     /// ```
     ///
-    /// ```js,expect_diagnostic
+    /// ```jsx,expect_diagnostic
     /// <a></a>
     /// ```
     ///
