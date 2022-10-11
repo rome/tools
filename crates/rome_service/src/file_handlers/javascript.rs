@@ -494,7 +494,7 @@ fn compute_analyzer_options(settings: &SettingsHandle, filter: &AnalysisFilter) 
     let configuration = to_analyzer_configuration(
         settings.as_ref().linter(),
         &settings.as_ref().languages,
-        &filter,
+        filter,
         |settings| {
             if let Some(globals) = settings.javascript.globals.as_ref() {
                 globals

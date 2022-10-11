@@ -1,5 +1,6 @@
 use std::{borrow, collections::BTreeMap};
 
+use rome_diagnostics::v2::Error;
 use rome_rowan::{AstNode, Language, RawSyntaxKind, SyntaxKind, SyntaxNode};
 use rustc_hash::FxHashSet;
 
@@ -179,7 +180,8 @@ impl<L: Language> QueryMatcher<L> for RuleRegistry<L> {
         // Run all the rules registered to this QueryMatch
         for rule in rules {
             let state = &mut phase.rule_states[rule.state_index];
-            (rule.run)(&mut params, state);
+            // TODO: #3394 track error in the signal queue
+            let _ = (rule.run)(&mut params, state);
         }
     }
 }
@@ -260,7 +262,7 @@ impl<L: Language> RuleSuppressions<L> {
 }
 
 /// Executor for rule as a generic function pointer
-type RuleExecutor<L> = fn(&mut MatchQueryParams<L>, &mut RuleState<L>);
+type RuleExecutor<L> = fn(&mut MatchQueryParams<L>, &mut RuleState<L>) -> Result<(), Error>;
 
 impl<L: Language + Default> RegistryRule<L> {
     fn new<R>(state_index: usize) -> Self
@@ -273,14 +275,15 @@ impl<L: Language + Default> RegistryRule<L> {
         fn run<R>(
             params: &mut MatchQueryParams<RuleLanguage<R>>,
             state: &mut RuleState<RuleLanguage<R>>,
-        ) where
+        ) -> Result<(), Error>
+        where
             R: Rule + 'static,
             R::Query: 'static,
             <R::Query as Queryable>::Output: Clone,
         {
             if let QueryMatch::Syntax(node) = &params.query {
                 if state.suppressions.inner.contains(node) {
-                    return;
+                    return Ok(());
                 }
             }
 
@@ -292,7 +295,7 @@ impl<L: Language + Default> RegistryRule<L> {
                 match RuleContext::new(&query_result, params.root, params.services, params.options)
                 {
                     Ok(ctx) => ctx,
-                    Err(_) => return,
+                    Err(error) => return Err(error),
                 };
 
             for result in R::run(&ctx) {
@@ -316,6 +319,8 @@ impl<L: Language + Default> RegistryRule<L> {
                     text_range,
                 });
             }
+
+            Ok(())
         }
 
         Self {
