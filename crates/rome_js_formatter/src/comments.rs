@@ -951,10 +951,13 @@ fn handle_variable_declarator_comment(
                 //   key: 'val'
                 // }
                 // ```
-                Some(initializer) if initializer.syntax() == following => {
-                    if let Ok(expression) = initializer.expression() {
-                        return CommentPlacement::leading(expression.into_syntax(), comment);
-                    }
+                Some(initializer)
+                    if initializer.syntax() == following
+                        && initializer
+                            .expression()
+                            .map_or(false, |expression| is_complex_value(expression.syntax())) =>
+                {
+                    return CommentPlacement::leading(initializer.into_syntax(), comment);
                 }
                 _ => {
                     // fall through
@@ -962,22 +965,29 @@ fn handle_variable_declarator_comment(
             }
         }
         JsSyntaxKind::JS_INITIALIZER_CLAUSE => {
-            if let Some(variable_declarator) =
-                enclosing.parent().and_then(JsVariableDeclarator::cast)
-            {
+            let parent_kind = enclosing.parent().map(|p| p.kind());
+
+            if matches!(
+                parent_kind,
+                Some(JsSyntaxKind::JS_VARIABLE_DECLARATOR | JsSyntaxKind::JS_PROPERTY_CLASS_MEMBER)
+            ) {
+                let not_complex =
+                    matches!(parent_kind, Some(JsSyntaxKind::JS_PROPERTY_CLASS_MEMBER))
+                        || !is_complex_value(following);
+
                 // Keep trailing comments with the id for variable declarators. Necessary because the value is wrapped
                 // inside of an initializer clause.
                 // ```javascript
                 // let a = // comment
                 //      b;
                 // ```
-                if !is_complex_value(following)
+                if not_complex
                     && !JsCommentStyle::is_suppression(comment.piece().text())
                     && comment.kind().is_line()
                     && comment.preceding_node().is_none()
                 {
-                    if let Ok(id) = variable_declarator.id() {
-                        return CommentPlacement::trailing(id.into_syntax(), comment);
+                    if let Some(prev_node) = enclosing.prev_sibling() {
+                        return CommentPlacement::trailing(prev_node, comment);
                     }
                 }
             }
