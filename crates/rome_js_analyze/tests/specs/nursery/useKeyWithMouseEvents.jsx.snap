@@ -11,20 +11,20 @@ expression: useKeyWithMouseEvents.jsx
 <div onMouseOut={() => {}} onBlur={undefined} />;
 <div onMouseOver={() => {}} onFocus={null} />;
 <div onMouseOut={() => {}} onBlur={null} />;
-<div onMouseOver={() => {}} {...props} />;
-<div onMouseOut={() => {}} {...props} />;
 <div onMouseOver={() => {}}></div>;
 <div onMouseOut={() => {}}></div>;
 
 // valid
+<div />;
+<div onFocus={() => {}} />;
 <div onMouseOver={() => {}} onFocus={() => {}} />;
+<div onMouseOver={() => {}} {...props} />;
 <div onMouseOver={() => {}} onFocus={() => {}} {...props} />;
 <div onMouseOver={handleMouseOver} onFocus={handleFocus} />;
 <div onMouseOver={handleMouseOver} onFocus={handleFocus} {...props} />;
-<div />;
 <div onBlur={() => {}} />;
-<div onFocus={() => {}} />;
 <div onMouseOut={() => {}} onBlur={() => {}} />;
+<div onMouseOut={() => {}} {...props} />;
 <div onMouseOut={() => {}} onBlur={() => {}} {...props} />;
 <div onMouseOut={handleMouseOut} onBlur={handleOnBlur} />;
 <div onMouseOut={handleMouseOut} onBlur={handleOnBlur} {...props} />;
@@ -119,7 +119,7 @@ useKeyWithMouseEvents.jsx:6:1 lint/nursery/useKeyWithMouseEvents ━━━━━
   > 6 │ <div onMouseOver={() => {}} onFocus={null} />;
       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     7 │ <div onMouseOut={() => {}} onBlur={null} />;
-    8 │ <div onMouseOver={() => {}} {...props} />;
+    8 │ <div onMouseOver={() => {}}></div>;
   
   i Actions triggered using mouse events should have corresponding events to account for keyboard-only navigation.
   
@@ -135,8 +135,8 @@ useKeyWithMouseEvents.jsx:7:1 lint/nursery/useKeyWithMouseEvents ━━━━━
     6 │ <div onMouseOver={() => {}} onFocus={null} />;
   > 7 │ <div onMouseOut={() => {}} onBlur={null} />;
       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    8 │ <div onMouseOver={() => {}} {...props} />;
-    9 │ <div onMouseOut={() => {}} {...props} />;
+    8 │ <div onMouseOver={() => {}}></div>;
+    9 │ <div onMouseOut={() => {}}></div>;
   
   i Actions triggered using mouse events should have corresponding events to account for keyboard-only navigation.
   
@@ -150,10 +150,10 @@ useKeyWithMouseEvents.jsx:8:1 lint/nursery/useKeyWithMouseEvents ━━━━━
   
      6 │ <div onMouseOver={() => {}} onFocus={null} />;
      7 │ <div onMouseOut={() => {}} onBlur={null} />;
-   > 8 │ <div onMouseOver={() => {}} {...props} />;
-       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-     9 │ <div onMouseOut={() => {}} {...props} />;
-    10 │ <div onMouseOver={() => {}}></div>;
+   > 8 │ <div onMouseOver={() => {}}></div>;
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     9 │ <div onMouseOut={() => {}}></div>;
+    10 │ 
   
   i Actions triggered using mouse events should have corresponding events to account for keyboard-only navigation.
   
@@ -166,45 +166,11 @@ useKeyWithMouseEvents.jsx:9:1 lint/nursery/useKeyWithMouseEvents ━━━━━
   ! onMouseOut must be accompanied by onBlur for accessibility.
   
      7 │ <div onMouseOut={() => {}} onBlur={null} />;
-     8 │ <div onMouseOver={() => {}} {...props} />;
-   > 9 │ <div onMouseOut={() => {}} {...props} />;
-       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    10 │ <div onMouseOver={() => {}}></div>;
-    11 │ <div onMouseOut={() => {}}></div>;
-  
-  i Actions triggered using mouse events should have corresponding events to account for keyboard-only navigation.
-  
-
-```
-
-```
-useKeyWithMouseEvents.jsx:10:1 lint/nursery/useKeyWithMouseEvents ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! onMouseOver must be accompanied by onFocus for accessibility.
-  
-     8 │ <div onMouseOver={() => {}} {...props} />;
-     9 │ <div onMouseOut={() => {}} {...props} />;
-  > 10 │ <div onMouseOver={() => {}}></div>;
-       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    11 │ <div onMouseOut={() => {}}></div>;
-    12 │ 
-  
-  i Actions triggered using mouse events should have corresponding events to account for keyboard-only navigation.
-  
-
-```
-
-```
-useKeyWithMouseEvents.jsx:11:1 lint/nursery/useKeyWithMouseEvents ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! onMouseOut must be accompanied by onBlur for accessibility.
-  
-     9 │ <div onMouseOut={() => {}} {...props} />;
-    10 │ <div onMouseOver={() => {}}></div>;
-  > 11 │ <div onMouseOut={() => {}}></div>;
+     8 │ <div onMouseOver={() => {}}></div>;
+   > 9 │ <div onMouseOut={() => {}}></div>;
        │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    12 │ 
-    13 │ // valid
+    10 │ 
+    11 │ // valid
   
   i Actions triggered using mouse events should have corresponding events to account for keyboard-only navigation.
   

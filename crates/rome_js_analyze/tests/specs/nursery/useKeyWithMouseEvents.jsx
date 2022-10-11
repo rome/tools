@@ -5,20 +5,20 @@
 <div onMouseOut={() => {}} onBlur={undefined} />;
 <div onMouseOver={() => {}} onFocus={null} />;
 <div onMouseOut={() => {}} onBlur={null} />;
-<div onMouseOver={() => {}} {...props} />;
-<div onMouseOut={() => {}} {...props} />;
 <div onMouseOver={() => {}}></div>;
 <div onMouseOut={() => {}}></div>;
 
 // valid
+<div />;
+<div onFocus={() => {}} />;
 <div onMouseOver={() => {}} onFocus={() => {}} />;
+<div onMouseOver={() => {}} {...props} />;
 <div onMouseOver={() => {}} onFocus={() => {}} {...props} />;
 <div onMouseOver={handleMouseOver} onFocus={handleFocus} />;
 <div onMouseOver={handleMouseOver} onFocus={handleFocus} {...props} />;
-<div />;
 <div onBlur={() => {}} />;
-<div onFocus={() => {}} />;
 <div onMouseOut={() => {}} onBlur={() => {}} />;
+<div onMouseOut={() => {}} {...props} />;
 <div onMouseOut={() => {}} onBlur={() => {}} {...props} />;
 <div onMouseOut={handleMouseOut} onBlur={handleOnBlur} />;
 <div onMouseOut={handleMouseOut} onBlur={handleOnBlur} {...props} />;

@@ -1,7 +1,7 @@
 use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
-use rome_console::markup;
+use rome_console::{markup, MarkupBuf};
 use rome_js_syntax::{JsxAttribute, JsxOpeningElement, JsxSelfClosingElement};
 use rome_rowan::{declare_node_union, AstNode};
 
@@ -22,20 +22,14 @@ declare_rule! {
     ///    <div onMouseOut={() => {}} />
     /// ```
     ///
-    /// ```jsx,expect_diagnostic
-    ///     <div onMouseOver={() => {}} {...otherProps} />
-    /// ```
-    ///
-    /// ```jsx,expect_diagnostic
-    ///     <div onMouseOut={() => {}} {...otherProps} />
-    /// ```
-    ///
     /// ### Valid
     ///
     /// ```jsx
     /// <>
     ///     <div onMouseOver={() => {}} onFocus={() => {}} />
     ///     <div onMouseOut={() => {}} onBlur={() => {}} />
+    ///     <div onMouseOver={() => {}} {...otherProps} />
+    ///     <div onMouseOut={() => {}} {...otherProps} />
     ///     <div onMouseOver={() => {}} onFocus={() => {}} {...otherProps} />
     ///     <div onMouseOut={() => {}} onBlur={() => {}} {...otherProps} />
     /// </>
@@ -64,6 +58,119 @@ pub(crate) enum UseKeyWithMouseEventsState {
     MissingOnBlur,
 }
 
+impl UseKeyWithMouseEventsState {
+    fn message(&self) -> MarkupBuf {
+        match self {
+            UseKeyWithMouseEventsState::MissingOnBlur => {
+                markup! {"onMouseOut must be accompanied by onBlur for accessibility."}.to_owned()
+            }
+            UseKeyWithMouseEventsState::MissingOnFocus => {
+                markup! {"onMouseOver must be accompanied by onFocus for accessibility."}.to_owned()
+            }
+        }
+    }
+}
+
+impl JsxAnyElement {
+    fn is_custom_component(&self) -> Option<bool> {
+        match self {
+            JsxAnyElement::JsxSelfClosingElement(element) => {
+                if element.name().ok()?.as_jsx_name().is_some() {
+                    return Some(true);
+                }
+                None
+            }
+            JsxAnyElement::JsxOpeningElement(element) => {
+                if element.name().ok()?.as_jsx_name().is_some() {
+                    return Some(true);
+                }
+                None
+            }
+        }
+    }
+
+    fn has_spread_attribute(&self) -> bool {
+        match self {
+            JsxAnyElement::JsxSelfClosingElement(element) => element
+                .attributes()
+                .into_iter()
+                .any(|attribute| attribute.as_jsx_spread_attribute().is_some()),
+            JsxAnyElement::JsxOpeningElement(element) => element
+                .attributes()
+                .into_iter()
+                .any(|attribute| attribute.as_jsx_spread_attribute().is_some()),
+        }
+    }
+
+    fn find_on_mouse_over_attribute(&self) -> Option<JsxAttribute> {
+        match self {
+            JsxAnyElement::JsxSelfClosingElement(element) => {
+                element.find_attribute_by_name("onMouseOver").ok()?
+            }
+            JsxAnyElement::JsxOpeningElement(element) => {
+                element.find_attribute_by_name("onMouseOver").ok()?
+            }
+        }
+    }
+
+    fn find_on_mouse_out_attribute(&self) -> Option<JsxAttribute> {
+        match self {
+            JsxAnyElement::JsxSelfClosingElement(element) => {
+                element.find_attribute_by_name("onMouseOut").ok()?
+            }
+            JsxAnyElement::JsxOpeningElement(element) => {
+                element.find_attribute_by_name("onMouseOut").ok()?
+            }
+        }
+    }
+
+    fn find_on_focus_attribute(&self) -> Option<JsxAttribute> {
+        match self {
+            JsxAnyElement::JsxSelfClosingElement(element) => {
+                element.find_attribute_by_name("onFocus").ok()?
+            }
+            JsxAnyElement::JsxOpeningElement(element) => {
+                element.find_attribute_by_name("onFocus").ok()?
+            }
+        }
+    }
+
+    fn find_on_blur_attribute(&self) -> Option<JsxAttribute> {
+        match self {
+            JsxAnyElement::JsxSelfClosingElement(element) => {
+                element.find_attribute_by_name("onBlur").ok()?
+            }
+            JsxAnyElement::JsxOpeningElement(element) => {
+                element.find_attribute_by_name("onBlur").ok()?
+            }
+        }
+    }
+
+    fn has_focus_attributes(&self) -> Option<bool> {
+        if self.find_on_mouse_over_attribute().is_some() {
+            let on_focus_attribute = self.find_on_focus_attribute();
+
+            if on_focus_attribute.is_none() || is_value_undefined_or_null(&on_focus_attribute?) {
+                return None;
+            }
+            return Some(true);
+        }
+        Some(true)
+    }
+
+    fn has_blur_attributes(&self) -> Option<bool> {
+        if self.find_on_mouse_out_attribute().is_some() {
+            let on_blur_attribute = self.find_on_blur_attribute();
+
+            if on_blur_attribute.is_none() || is_value_undefined_or_null(&on_blur_attribute?) {
+                return None;
+            }
+            return Some(true);
+        }
+        Some(true)
+    }
+}
+
 impl Rule for UseKeyWithMouseEvents {
     type Query = Semantic<JsxAnyElement>;
     type State = UseKeyWithMouseEventsState;
@@ -72,57 +179,18 @@ impl Rule for UseKeyWithMouseEvents {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
 
-        match node {
-            JsxAnyElement::JsxSelfClosingElement(element) => {
-                if element.name().ok()?.as_jsx_name().is_some() {
-                    let on_mouse_over_attribute =
-                        element.find_attribute_by_name("onMouseOver").ok()?;
-                    if on_mouse_over_attribute.is_some() {
-                        let on_focus_attribute = element.find_attribute_by_name("onFocus").ok()?;
-                        if on_focus_attribute.is_none()
-                            || is_value_undefined_or_null(&on_focus_attribute?)
-                        {
-                            return Some(UseKeyWithMouseEventsState::MissingOnFocus);
-                        }
-                    }
+        node.is_custom_component()?;
 
-                    let on_mouse_out_attribute =
-                        element.find_attribute_by_name("onMouseOut").ok()?;
-                    if on_mouse_out_attribute.is_some() {
-                        let on_blur_attribute = element.find_attribute_by_name("onBlur").ok()?;
-                        if on_blur_attribute.is_none()
-                            || is_value_undefined_or_null(&on_blur_attribute?)
-                        {
-                            return Some(UseKeyWithMouseEventsState::MissingOnBlur);
-                        }
-                    }
-                }
-            }
-            JsxAnyElement::JsxOpeningElement(element) => {
-                if element.name().ok()?.as_jsx_name().is_some() {
-                    let on_mouse_over_attribute =
-                        element.find_attribute_by_name("onMouseOver").ok()?;
-                    if on_mouse_over_attribute.is_some() {
-                        let on_focus_attribute = element.find_attribute_by_name("onFocus").ok()?;
-                        if on_focus_attribute.is_none()
-                            || is_value_undefined_or_null(&on_focus_attribute?)
-                        {
-                            return Some(UseKeyWithMouseEventsState::MissingOnFocus);
-                        }
-                    }
+        if node.has_spread_attribute() {
+            return None;
+        }
 
-                    let on_mouse_out_attribute =
-                        element.find_attribute_by_name("onMouseOut").ok()?;
-                    if on_mouse_out_attribute.is_some() {
-                        let on_blur_attribute = element.find_attribute_by_name("onBlur").ok()?;
-                        if on_blur_attribute.is_none()
-                            || is_value_undefined_or_null(&on_blur_attribute?)
-                        {
-                            return Some(UseKeyWithMouseEventsState::MissingOnBlur);
-                        }
-                    }
-                }
-            }
+        if node.has_focus_attributes().is_none() {
+            return Some(UseKeyWithMouseEventsState::MissingOnFocus);
+        }
+
+        if node.has_blur_attributes().is_none() {
+            return Some(UseKeyWithMouseEventsState::MissingOnBlur);
         }
 
         None
@@ -132,28 +200,14 @@ impl Rule for UseKeyWithMouseEvents {
         let node = ctx.query();
         let footer_note_text = markup! {"Actions triggered using mouse events should have corresponding events to account for keyboard-only navigation."};
 
-        match state {
-            UseKeyWithMouseEventsState::MissingOnBlur => Some(
-                RuleDiagnostic::new(
-                    rule_category!(),
-                    node.syntax().text_trimmed_range(),
-                    markup! {
-                        "onMouseOut must be accompanied by onBlur for accessibility."
-                    },
-                )
-                .footer_note(footer_note_text),
-            ),
-            UseKeyWithMouseEventsState::MissingOnFocus => Some(
-                RuleDiagnostic::new(
-                    rule_category!(),
-                    node.syntax().text_trimmed_range(),
-                    markup! {
-                        "onMouseOver must be accompanied by onFocus for accessibility."
-                    },
-                )
-                .footer_note(footer_note_text),
-            ),
-        }
+        Some(
+            RuleDiagnostic::new(
+                rule_category!(),
+                node.syntax().text_trimmed_range(),
+                state.message(),
+            )
+            .footer_note(footer_note_text),
+        )
     }
 }
 
@@ -168,24 +222,17 @@ fn is_value_undefined_or_null(attribute: &JsxAttribute) -> bool {
                 .expression()
                 .ok()?;
 
-            if expression.as_js_identifier_expression().is_some() {
-                let name = expression
-                    .as_js_identifier_expression()?
-                    .name()
-                    .ok()?
-                    .syntax()
-                    .text_trimmed();
+            if let Some(id) = expression.as_js_identifier_expression() {
+                let name = id.name().ok()?.syntax().text_trimmed();
 
                 return Some(name == "undefined");
             }
 
-            let name = expression
+            expression
                 .as_js_any_literal_expression()?
-                .as_js_null_literal_expression()?
-                .syntax()
-                .text_trimmed();
+                .as_js_null_literal_expression()?;
 
-            Some(name == "null")
+            Some(true)
         })
         .unwrap_or(false)
 }
