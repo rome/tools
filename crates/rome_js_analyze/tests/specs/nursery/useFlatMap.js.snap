@@ -5,9 +5,11 @@ expression: useFlatMap.js
 # Input
 ```js
 // invalid
-[0, [12]].flat().map(Number)
+[0, [12]].map(Number).flat()
+[0, [12], [[16]]].map(Number).flat(1)
 // valid
-[0, [12], [[16]]].flat(1).map(Number)
+[0, [12], [[16]]].map(Number).flat(2)
+
 ```
 
 # Diagnostics
@@ -17,18 +19,43 @@ useFlatMap.js:2:1 lint/nursery/useFlatMap  FIXABLE  ━━━━━━━━━�
   ! The call chain .flat().map() can be replaced with a simple .flatMap().
   
     1 │ // invalid
-  > 2 │ [0, [12]].flat().map(Number)
-      │ ^^^^^^^^^^^^^^^^^^^^
-    3 │ // valid
-    4 │ [0, [12], [[16]]].flat(1).map(Number)
+  > 2 │ [0, [12]].map(Number).flat()
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 3 │ [0, [12], [[16]]].map(Number).flat(1)
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │ // valid
+    5 │ [0, [12], [[16]]].map(Number).flat(2)
   
-  i Safe fix: Replace it with flatMap
+  i Safe fix: Replace it with .flatMap().
   
     1 1 │   // invalid
-    2   │ - [0,·[12]].flat().map(Number)
+    2 2 │   [0, [12]].map(Number).flat()
+    3   │ - [0,·[12],·[[16]]].map(Number).flat(1)
+      3 │ + [0,·[12],·[[16]]].flatMap(Number)
+    4 4 │   // valid
+    5 5 │   [0, [12], [[16]]].map(Number).flat(2)
+  
+
+```
+
+```
+useFlatMap.js:2:1 lint/nursery/useFlatMap  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The call chain .flat().map() can be replaced with a simple .flatMap().
+  
+    1 │ // invalid
+  > 2 │ [0, [12]].map(Number).flat()
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ [0, [12], [[16]]].map(Number).flat(1)
+    4 │ // valid
+  
+  i Safe fix: Replace it with .flatMap().
+  
+    1 1 │   // invalid
+    2   │ - [0,·[12]].map(Number).flat()
       2 │ + [0,·[12]].flatMap(Number)
-    3 3 │   // valid
-    4 4 │   [0, [12], [[16]]].flat(1).map(Number)
+    3 3 │   [0, [12], [[16]]].map(Number).flat(1)
+    4 4 │   // valid
   
 
 ```

@@ -399,7 +399,7 @@ Enforce camel case naming convention.
 	<a href="/docs/lint/rules/useFlatMap">useFlatMap (since v10.0.0)</a>
 	<a class="header-anchor" href="#useFlatMap"></a>
 </h3>
-Promotes the use of <code>.flatMap()</code> when <code>flat().map()</code> are used together.
+Promotes the use of <code>.flatMap()</code> when <code>map().flat()</code> are used together.
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useFragmentSyntax">
