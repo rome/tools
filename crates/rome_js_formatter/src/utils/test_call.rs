@@ -2,8 +2,20 @@ use crate::prelude::*;
 use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyCallArgument, JsAnyExpression, JsAnyFunctionBody,
     JsAnyLiteralExpression, JsAnyName, JsCallArgumentList, JsCallArguments, JsCallExpression,
+    JsSyntaxNode,
 };
 use rome_rowan::{SyntaxResult, SyntaxTokenText};
+
+/// Returns `Ok(true)` if `maybe_argument` is an argument of a [test call expression](is_test_call_expression).
+pub(crate) fn is_test_call_argument(maybe_argument: &JsSyntaxNode) -> SyntaxResult<bool> {
+    let call_expression = maybe_argument
+        .parent()
+        .and_then(JsCallArgumentList::cast)
+        .and_then(|args| args.syntax().grand_parent())
+        .and_then(JsCallExpression::cast);
+
+    call_expression.map_or(Ok(false), |call| is_test_call_expression(&call))
+}
 
 /// This is a specialised function that checks if the current [call expression]
 /// resembles a call expression usually used by a testing frameworks.

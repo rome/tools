@@ -10,6 +10,7 @@ use crate::parentheses::{
     update_or_lower_expression_needs_parentheses, NeedsParentheses,
 };
 use crate::utils::function_body::{FormatMaybeCachedFunctionBody, FunctionBodyCacheMode};
+use crate::utils::test_call::is_test_call_argument;
 use crate::utils::{
     resolve_left_most_expression, AssignmentLikeLayout, JsAnyBinaryLikeLeftExpression,
 };
@@ -222,17 +223,25 @@ fn format_signature(
             write!(f, [arrow.type_parameters().format()])?;
 
             match arrow.parameters()? {
-                JsAnyArrowFunctionParameters::JsAnyBinding(binding) => write!(
-                    f,
-                    [
-                        text("("),
-                        &soft_block_indent(&format_args![
-                            binding.format(),
-                            if_group_breaks(&text(","))
-                        ]),
-                        text(")")
-                    ]
-                )?,
+                JsAnyArrowFunctionParameters::JsAnyBinding(binding) => {
+                    let should_hug = is_test_call_argument(arrow.syntax())?;
+
+                    write!(f, [text("(")])?;
+
+                    if should_hug {
+                        write!(f, [binding.format()])?;
+                    } else {
+                        write!(
+                            f,
+                            [&soft_block_indent(&format_args![
+                                binding.format(),
+                                if_group_breaks(&text(","))
+                            ])]
+                        )?
+                    }
+
+                    write!(f, [text(")")])?;
+                }
                 JsAnyArrowFunctionParameters::JsParameters(params) => {
                     write!(f, [params.format()])?;
                 }
