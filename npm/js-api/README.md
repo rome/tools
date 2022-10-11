@@ -5,8 +5,11 @@ Official JavaScript bindings for the package [rome](https://www.npmjs.com/packag
 ## Installation
 
 ```shell
+npm i rome
 npm i @rometools/js-api
 ```
+
+The package `rome` is marked as **peer dependency** of this package.
 
 ## Usage
 
