@@ -35,8 +35,13 @@ file.js format ━━━━━━━━━━━━━━━━━━━━━�
 
   × File content differs from formatting output
   
-    2 │ → return·{·something·};
-      │ ++                    +
+    1   │ - 
+    2 1 │   function f() {
+    3   │ - return·{·something·}
+      2 │ + → return·{·something·};
+    4 3 │   }
+    5 4 │   
+  
 
 ```
 
