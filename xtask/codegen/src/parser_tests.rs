@@ -103,6 +103,7 @@ struct Test {
 enum Language {
     JavaScript,
     TypeScript,
+    TypeScriptDefinition,
     Jsx,
     Tsx,
 }
@@ -112,17 +113,21 @@ impl Language {
         match self {
             Language::JavaScript => "js",
             Language::TypeScript => "ts",
+            Language::TypeScriptDefinition => "d.ts",
             Language::Jsx => "jsx",
             Language::Tsx => "tsx",
         }
     }
 
-    fn from_extension(extension: &str) -> Option<Language> {
-        let language = match extension {
-            "js" => Language::JavaScript,
-            "ts" => Language::TypeScript,
-            "jsx" => Language::Jsx,
-            "tsx" => Language::Tsx,
+    fn from_file_name(name: &str) -> Option<Language> {
+        let language = match name.rsplit_once('.')? {
+            (_, "js") => Language::JavaScript,
+            (rest, "ts") => match rest.rsplit_once('.') {
+                Some((_, "d")) => Language::TypeScriptDefinition,
+                _ => Language::TypeScript,
+            },
+            (_, "jsx") => Language::Jsx,
+            (_, "tsx") => Language::Tsx,
             _ => {
                 return None;
             }
@@ -153,6 +158,7 @@ fn collect_tests(s: &str) -> Vec<Test> {
             Some(("jsx", name)) => (Language::Jsx, name),
             Some(("js", name)) => (Language::JavaScript, name),
             Some(("ts", name)) => (Language::TypeScript, name),
+            Some(("d.ts", name)) => (Language::TypeScriptDefinition, name),
             Some(("tsx", name)) => (Language::Tsx, name),
             Some((name, _)) => (Language::JavaScript, name),
             _ => (Language::JavaScript, suffix),
@@ -212,7 +218,7 @@ fn existing_tests(dir: &Path, ok: bool) -> Result<HashMap<String, (PathBuf, Test
         let language = path
             .extension()
             .and_then(|ext| ext.to_str())
-            .and_then(Language::from_extension);
+            .and_then(Language::from_file_name);
 
         if let Some(language) = language {
             let name = path
