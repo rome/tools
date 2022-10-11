@@ -314,7 +314,7 @@ where
 /// assert!(analyzer_configuration.globals, vec![])
 /// ```
 ///
-/// [metadata]: crate::rome_analyze::RegistryRuleMetadata
+/// [metadata]: rome_analyze::RegistryRuleMetadata
 /// [configuration for the analyzer]: AnalyzerConfiguration
 pub fn to_analyzer_configuration<ToGlobals>(
     linter_settings: &LinterSettings,
