@@ -861,16 +861,14 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-  function a({
-  animationConfig,
-  style,
-  unit,
-}: { animationConfig: AnimationConfig;
-  style: string | undefined | null;
-  unit: Unit;
-}) {
-}
-
+const b4 = (
+	<div>
+		Text <a data-very-long-prop-breakline-rome-playground data-other>
+			some link
+		</a>{" "}
+		| some other text,{" "}
+	</div>
+);
 
 "#;
         let syntax = SourceType::jsx();
