@@ -2,14 +2,11 @@ use crate::semantic_services::Semantic;
 use crate::utils::react::*;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_semantic::{Capture, SemanticModel};
-use rome_js_syntax::{
-    JsAnyCallArgument, JsAnyExpression, JsArrayExpression, JsArrowFunctionExpression,
-    JsCallExpression, JsIdentifierBinding, JsSyntaxKind, TextRange,
-};
+use rome_js_semantic::Capture;
+use rome_js_syntax::{JsCallExpression, JsIdentifierBinding, JsSyntaxKind, TextRange};
 use rome_rowan::{AstNode, SyntaxNodeCast};
-use serde::{Serialize, Deserialize};
-use std::{collections::{HashMap, HashSet, BTreeMap}, borrow::Cow};
+use serde::{Deserialize, Serialize};
+use std::collections::{BTreeMap, HashMap, HashSet};
 
 declare_rule! {
     /// Enforce all dependencies are correctly specified.
@@ -25,7 +22,6 @@ lazy_static::lazy_static! {
     static ref OPTIONS: ReactExtensiveDependenciesOptions = ReactExtensiveDependenciesOptions::new();
 }
 
-
 #[derive(Clone, Serialize, Deserialize)]
 pub struct ReactExtensiveDependenciesOptions {
     hooks: HashMap<String, ReactHookClosureDependenciesPosition>,
@@ -33,7 +29,7 @@ pub struct ReactExtensiveDependenciesOptions {
 }
 
 impl ReactExtensiveDependenciesOptions {
-    pub fn new() -> Self { 
+    pub fn new() -> Self {
         let hooks = HashMap::from_iter([
             ("useEffect".to_string(), (0, 1).into()),
             ("useLayoutEffect".to_string(), (0, 1).into()),
@@ -58,8 +54,8 @@ impl ReactExtensiveDependenciesOptions {
 }
 
 pub enum Problem {
-    MissingDependency (TextRange, Vec<Capture>),
-    ExtraDependency(TextRange, TextRange)
+    MissingDependency(TextRange, Vec<Capture>),
+    ExtraDependency(TextRange, TextRange),
 }
 
 impl Rule for ReactExtensiveDependencies {
@@ -75,7 +71,8 @@ impl Rule for ReactExtensiveDependencies {
         if let Some(result) = react_hook_with_dependency(node, &OPTIONS.hooks) {
             let model = ctx.model();
 
-            let captures: Vec<_> = result.all_captures(model)
+            let captures: Vec<_> = result
+                .all_captures(model)
                 .into_iter()
                 .filter_map(|capture| {
                     capture.declaration().and_then(|declaration| {
@@ -99,12 +96,15 @@ impl Rule for ReactExtensiveDependencies {
                 .map(|x| (x.node().text_trimmed().to_string(), x))
                 .collect();
 
-            let deps: Vec<(String, TextRange)> = result.all_dependencies()
-                .into_iter()    
-                .map(|dep| (
-                    dep.syntax().text_trimmed().to_string(),
-                    dep.syntax().text_trimmed_range(),
-                ))
+            let deps: Vec<(String, TextRange)> = result
+                .all_dependencies()
+                .into_iter()
+                .map(|dep| {
+                    (
+                        dep.syntax().text_trimmed().to_string(),
+                        dep.syntax().text_trimmed_range(),
+                    )
+                })
                 .collect();
 
             let mut add_deps: BTreeMap<String, Vec<Capture>> = BTreeMap::new();
@@ -127,11 +127,17 @@ impl Rule for ReactExtensiveDependencies {
 
             // Generate signals
             for (_, captures) in add_deps {
-                signals.push(Problem::MissingDependency(result.function_name_range, captures));
+                signals.push(Problem::MissingDependency(
+                    result.function_name_range,
+                    captures,
+                ));
             }
 
             for dep_range in remove_deps {
-                signals.push(Problem::ExtraDependency(result.function_name_range, dep_range));
+                signals.push(Problem::ExtraDependency(
+                    result.function_name_range,
+                    dep_range,
+                ));
             }
         }
 
@@ -148,9 +154,9 @@ impl Rule for ReactExtensiveDependencies {
                         "This useEffect has missing dependencies"
                     },
                 );
-    
+
                 let mut diag = diag;
-    
+
                 for capture in captures.iter() {
                     let node = capture.node();
                     diag = diag.secondary(
@@ -158,9 +164,9 @@ impl Rule for ReactExtensiveDependencies {
                         "This capture is not in the dependency list",
                     );
                 }
-    
+
                 Some(diag)
-            },
+            }
             Problem::ExtraDependency(use_effect_range, dep_range) => {
                 let diag = RuleDiagnostic::new(
                     rule_category!(),
@@ -168,11 +174,9 @@ impl Rule for ReactExtensiveDependencies {
                     markup! {
                         "This useEffect has dependencies that were not captured"
                     },
-                ).secondary(
-                    dep_range,
-                    "This dependecy is not being captured",
-                );
-    
+                )
+                .secondary(dep_range, "This dependecy is not being captured");
+
                 Some(diag)
             }
         }
