@@ -65,8 +65,7 @@ impl Rule for ReactExtensiveDependencies {
     type Options = ReactExtensiveDependenciesOptions;
 
     fn run(ctx: &RuleContext<Self>) -> Vec<Self::State> {
-        let options = ctx.options()
-            .unwrap_or(&OPTIONS);
+        let options = ctx.options().unwrap_or(&OPTIONS);
 
         let mut signals = vec![];
 
