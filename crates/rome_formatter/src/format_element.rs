@@ -30,11 +30,11 @@ pub enum FormatElement {
     StaticText { text: &'static str },
 
     /// Token constructed from the input source as a dynamic
-    /// string and a range in the input source
+    /// string with its start position in the input document.
     DynamicText {
-        // There's no need for the text to be mutable, using `Box<str>` safes 8 bytes over `String`.
+        /// There's no need for the text to be mutable, using `Box<str>` safes 8 bytes over `String`.
         text: Box<str>,
-        // The position of the dynamic token in the unformatted source code
+        /// The start position of the dynamic token in the unformatted source code
         source_position: TextSize,
     },
 
