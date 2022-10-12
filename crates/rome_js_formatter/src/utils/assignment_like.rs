@@ -50,6 +50,26 @@ declare_node_union! {
 }
 
 impl AnyObjectPattern {
+    /// Determines if this is a complex pattern. A pattern is considered complex if it has more than 2 properties
+    /// and any property:
+    ///
+    /// * is a shorthand property with an initializer
+    /// * is a non-shorthand property
+    ///
+    /// ## Examples
+    ///
+    /// ```javascript
+    /// let { a, b, c = "test"} = ...
+    /// ```
+    ///
+    /// Is considered a complex binding because it has three properties and a shorthand property with an initializer.
+    ///
+    /// ```javascript
+    /// let { a, b, c: d } = ...
+    /// ```
+    ///
+    /// Is considered a complex binding because it has three properties and a non-shorthand property
+    ///
     fn is_complex(&self) -> bool {
         match self {
             AnyObjectPattern::JsObjectAssignmentPattern(assignment_pattern) => {
@@ -59,9 +79,6 @@ impl AnyObjectPattern {
                     return false;
                 }
 
-                // A binding is complex when we have at least one [JsObjectBindingPatternProperty]
-                // e.g. a = { a: c = f } = a
-                // The `c = f` will trigger the complex binding
                 assignment_pattern
                     .properties()
                     .iter()
@@ -79,9 +96,6 @@ impl AnyObjectPattern {
                     return false;
                 }
 
-                // A binding is complex when we have at least one [JsObjectBindingPatternProperty]
-                // e.g. const a = { a: c = f } = a
-                // The `c = f` will trigger the complex binding
                 binding_pattern
                     .properties()
                     .iter()
