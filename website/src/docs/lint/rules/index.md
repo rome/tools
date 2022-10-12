@@ -276,6 +276,13 @@ Avoid the <code>autoFocus</code> attribute
 Prevent passing of <strong>children</strong> as props.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noConstAssign">
+	<a href="/docs/lint/rules/noConstAssign">noConstAssign (since v10.0.0)</a>
+	<a class="header-anchor" href="#noConstAssign"></a>
+</h3>
+Prevents from having <code>const</code> variables being re-assigned.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noDangerouslySetInnerHtml">
 	<a href="/docs/lint/rules/noDangerouslySetInnerHtml">noDangerouslySetInnerHtml (since v0.10.0)</a>
 	<a class="header-anchor" href="#noDangerouslySetInnerHtml"></a>
