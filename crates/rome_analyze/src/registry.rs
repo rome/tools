@@ -64,8 +64,7 @@ impl MetadataRegistry {
     /// Return a unique identifier for a rule group if it's known by this registry
     pub fn find_group(&self, group: &str) -> Option<GroupKey> {
         let key = self.inner.get(group)?;
-        let (key, _) = key.inner;
-        Some(GroupKey::new(key))
+        Some(key.into_group_key())
     }
 
     /// Return a unique identifier for a rule if it's known by this registry
@@ -128,8 +127,8 @@ struct PhaseRules<L: Language> {
 }
 
 pub struct RuleRegistryBuilder<'a, L: Language> {
-    pub registry: RuleRegistry<L>,
-    pub filter: &'a AnalysisFilter<'a>,
+    registry: RuleRegistry<L>,
+    filter: &'a AnalysisFilter<'a>,
 }
 
 impl<L: Language + Default> RegistryVisitor<L> for RuleRegistryBuilder<'_, L> {
@@ -255,6 +254,11 @@ pub struct MetadataKey {
 }
 
 impl MetadataKey {
+    fn into_group_key(self) -> GroupKey {
+        let (group, _) = self.inner;
+        GroupKey::new(group)
+    }
+
     fn into_rule_key(self) -> RuleKey {
         let (group, rule) = self.inner;
         RuleKey::new(group, rule)

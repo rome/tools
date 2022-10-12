@@ -60,11 +60,11 @@ fn main() -> Result<()> {
     let mut errors = Vec::new();
 
     #[derive(Default)]
-    struct RulesVisitor {
+    struct LintRulesVisitor {
         groups: BTreeMap<&'static str, BTreeMap<&'static str, RuleMetadata>>,
     }
 
-    impl RegistryVisitor<JsLanguage> for RulesVisitor {
+    impl RegistryVisitor<JsLanguage> for LintRulesVisitor {
         fn record_category<C: GroupCategory<Language = JsLanguage>>(&mut self) {
             if matches!(C::CATEGORY, RuleCategory::Lint) {
                 C::record_groups(self);
@@ -84,10 +84,10 @@ fn main() -> Result<()> {
         }
     }
 
-    let mut visitor = RulesVisitor::default();
+    let mut visitor = LintRulesVisitor::default();
     visit_registry(&mut visitor);
 
-    let RulesVisitor { groups } = visitor;
+    let LintRulesVisitor { groups } = visitor;
 
     for (group, rules) in groups {
         let (group_name, description) = match group {

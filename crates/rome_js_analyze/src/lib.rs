@@ -28,7 +28,7 @@ use crate::semantic_services::{SemanticModelBuilderVisitor, SemanticModelVisitor
 pub(crate) type JsRuleAction = RuleAction<JsLanguage>;
 
 /// Return the static [MetadataRegistry] for the JS analyzer rules
-fn metadata() -> &'static MetadataRegistry {
+pub fn metadata() -> &'static MetadataRegistry {
     lazy_static::lazy_static! {
         static ref METADATA: MetadataRegistry = {
             let mut metadata = MetadataRegistry::default();
