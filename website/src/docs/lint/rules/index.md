@@ -252,8 +252,8 @@ Rules that are being written. Rules under this group are meant to be considered 
 
 Developers can opt-in these rules via configuration. We vehemently appreciate filing issue in case of bugs or performance problems. 
 
-Rules can be downgraded to this category in case a patch release is needed. After an arbitrary amount of time, the team can decide
-to promote these rules into an appropriate category. Doing so means that the rule is stable and ready for production.
+Rules can be downgraded to this group in case a patch release is needed. After an arbitrary amount of time, the team can decide
+to promote these rules into an appropriate group. Doing so means that the rule is stable and ready for production.
 <div class="rule">
 <h3 data-toc-exclude id="noArrayIndexKey">
 	<a href="/docs/lint/rules/noArrayIndexKey">noArrayIndexKey (since v0.10.0)</a>
