@@ -18,6 +18,7 @@ use tracing::{error, info};
 mod formatter;
 mod javascript;
 pub mod linter;
+use crate::settings::{LanguagesSettings, LinterSettings};
 pub use formatter::{FormatterConfiguration, PlainIndentStyle};
 pub use javascript::{JavascriptConfiguration, JavascriptFormatter};
 pub use linter::{LinterConfiguration, RuleConfiguration, Rules};
@@ -274,38 +275,61 @@ where
     }
 }
 
-/// Converts a [Configuration] into a suited [configuration for the analyzer].
+/// Converts a [WorkspaceSettings] into a suited [configuration for the analyzer].
 ///
 /// The function needs access to a filter, in order to have an easy access to the [metadata] of the
 /// rules.
 ///
-/// [metadata]: crate::rome_analyze::RegistryRuleMetadata
+/// The third argument is a closure that accepts a reference to `linter_settings`.
+///
+/// The closure is responsible to map the globals from the correct
+/// location of the settings.
+///
+/// ## Examples
+///
+/// ```rust
+/// use rome_analyze::AnalysisFilter;
+/// use rome_service::configuration::to_analyzer_configuration;
+/// use rome_service::settings::{LanguagesSettings, WorkspaceSettings};
+/// let filter = AnalysisFilter::default();
+/// let mut settings = WorkspaceSettings::default();
+/// settings.languages.javascript.globals = Some(["jQuery".to_string(), "React".to_string()].into());
+/// // map globals from JS language
+/// let analyzer_configuration =
+///     to_analyzer_configuration(&settings.linter, &settings.languages, &filter, |settings| {
+///         if let Some(globals) = settings.javascript.globals.as_ref() {
+///             globals
+///                 .iter()
+///                 .map(|global| global.to_string())
+///                 .collect::<Vec<_>>()
+///         } else {
+///             vec![]
+///         }
+///     });
+///
+///  assert_eq!(
+///     analyzer_configuration.globals,
+///     vec!["jQuery".to_string(), "React".to_string()]
+///  )
+/// ```
+///
+/// [metadata]: rome_analyze::RegistryRuleMetadata
 /// [configuration for the analyzer]: AnalyzerConfiguration
-pub fn to_analyzer_configuration(
-    configuration: &Configuration,
+pub fn to_analyzer_configuration<ToGlobals>(
+    linter_settings: &LinterSettings,
+    language_settings: &LanguagesSettings,
     filter: &AnalysisFilter,
-) -> AnalyzerConfiguration {
-    let globals: Vec<String> = if let Some(globals) = configuration
-        .javascript
-        .as_ref()
-        .and_then(|j| j.globals.as_ref())
-    {
-        globals
-            .iter()
-            .map(|global| global.to_string())
-            .collect::<Vec<_>>()
-    } else {
-        vec![]
-    };
+    to_globals: ToGlobals,
+) -> AnalyzerConfiguration
+where
+    ToGlobals: FnOnce(&LanguagesSettings) -> Vec<String>,
+{
+    let globals: Vec<String> = to_globals(language_settings);
 
     let mut analyzer_rules = AnalyzerRules::default();
     let mut metadata = metadata(filter);
 
-    if let Some(rules) = configuration
-        .linter
-        .as_ref()
-        .and_then(|linter| linter.rules.as_ref())
-    {
+    if let Some(rules) = linter_settings.rules.as_ref() {
         if let Some(rules) = rules.correctness.as_ref() {
             push_rules(
                 "correctness",
@@ -353,30 +377,5 @@ fn push_rules<M>(
                 }
             }
         }
-    }
-}
-
-#[cfg(test)]
-mod test {
-    use crate::configuration::{to_analyzer_configuration, JavascriptConfiguration};
-    use crate::Configuration;
-    use rome_analyze::AnalysisFilter;
-
-    #[test]
-    fn correctly_converts_configuration() {
-        let configuration = Configuration {
-            javascript: Some(JavascriptConfiguration {
-                globals: Some(["jQuery".to_string(), "React".to_string()].into()),
-                ..JavascriptConfiguration::default()
-            }),
-            ..Configuration::default()
-        };
-        let filter = AnalysisFilter::default();
-        let analyzer_configuration = to_analyzer_configuration(&configuration, &filter);
-
-        assert_eq!(
-            analyzer_configuration.globals,
-            vec!["jQuery".to_string(), "React".to_string()]
-        )
     }
 }

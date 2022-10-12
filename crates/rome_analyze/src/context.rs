@@ -32,13 +32,14 @@ where
         let options = options.configuration.rules.get_rule(&rule_key);
         let options = if let Some(options) = options {
             let value = options.value();
-            serde_json::from_value(value.clone()).map_err(|error| {
+            let result = serde_json::from_value::<R::Options>(value.clone()).map_err(|error| {
                 OptionsDeserializationDiagnostic::new(
                     rule_key.rule_name(),
                     value.to_string(),
                     error,
                 )
-            })?
+            })?;
+            Some(result)
         } else {
             None
         };
