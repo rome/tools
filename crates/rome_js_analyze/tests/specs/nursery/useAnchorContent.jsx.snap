@@ -8,12 +8,16 @@ expression: useAnchorContent.jsx
 <>
     {/* invalid */}
     <a />
-    <a><span aria-hidden="true">content</span></a>
-    <a><span aria-hidden={true}>content</span></a>
 		<a></a>
+		<a>   </a>
 		<a>{null}</a>
 		<a>{undefined}</a>
 		<a aria-hidden>content</a>
+		<a><span aria-hidden="true">content</span></a>
+    <a><span aria-hidden={true}>content</span></a>
+    <a><span aria-hidden={"true"}>content</span></a>
+    <a><span aria-hidden={`true`}>content</span></a>
+    <a><span aria-hidden={`${true}`}>content</span></a>
     {/*  valid  */}
     <a>content</a>
     <a><TextWrapper /></a>
@@ -32,14 +36,14 @@ expression: useAnchorContent.jsx
 ```
 useAnchorContent.jsx:3:5 lint/nursery/useAnchorContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide screen reader accessible content when using a elements.
+  ! Provide screen reader accessible content when using `a` elements.
   
     1 │ <>
     2 │     {/* invalid */}
   > 3 │     <a />
       │     ^^^^^
-    4 │     <a><span aria-hidden="true">content</span></a>
-    5 │     <a><span aria-hidden={true}>content</span></a>
+    4 │ 		<a></a>
+    5 │ 		<a>   </a>
   
   i All links on a page should have content that is accessible to screen readers.
   
@@ -47,16 +51,16 @@ useAnchorContent.jsx:3:5 lint/nursery/useAnchorContent ━━━━━━━━�
 ```
 
 ```
-useAnchorContent.jsx:4:5 lint/nursery/useAnchorContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useAnchorContent.jsx:4:3 lint/nursery/useAnchorContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide screen reader accessible content when using a elements.
+  ! Provide screen reader accessible content when using `a` elements.
   
     2 │     {/* invalid */}
     3 │     <a />
-  > 4 │     <a><span aria-hidden="true">content</span></a>
-      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    5 │     <a><span aria-hidden={true}>content</span></a>
-    6 │ 		<a></a>
+  > 4 │ 		<a></a>
+      │ 		^^^^^^^
+    5 │ 		<a>   </a>
+    6 │ 		<a>{null}</a>
   
   i All links on a page should have content that is accessible to screen readers.
   
@@ -64,16 +68,16 @@ useAnchorContent.jsx:4:5 lint/nursery/useAnchorContent ━━━━━━━━�
 ```
 
 ```
-useAnchorContent.jsx:5:5 lint/nursery/useAnchorContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useAnchorContent.jsx:5:3 lint/nursery/useAnchorContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide screen reader accessible content when using a elements.
+  ! Provide screen reader accessible content when using `a` elements.
   
     3 │     <a />
-    4 │     <a><span aria-hidden="true">content</span></a>
-  > 5 │     <a><span aria-hidden={true}>content</span></a>
-      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    6 │ 		<a></a>
-    7 │ 		<a>{null}</a>
+    4 │ 		<a></a>
+  > 5 │ 		<a>   </a>
+      │ 		^^^^^^^^^^
+    6 │ 		<a>{null}</a>
+    7 │ 		<a>{undefined}</a>
   
   i All links on a page should have content that is accessible to screen readers.
   
@@ -83,14 +87,14 @@ useAnchorContent.jsx:5:5 lint/nursery/useAnchorContent ━━━━━━━━�
 ```
 useAnchorContent.jsx:6:3 lint/nursery/useAnchorContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide screen reader accessible content when using a elements.
+  ! Provide screen reader accessible content when using `a` elements.
   
-    4 │     <a><span aria-hidden="true">content</span></a>
-    5 │     <a><span aria-hidden={true}>content</span></a>
-  > 6 │ 		<a></a>
-      │ 		^^^^^^^
-    7 │ 		<a>{null}</a>
-    8 │ 		<a>{undefined}</a>
+    4 │ 		<a></a>
+    5 │ 		<a>   </a>
+  > 6 │ 		<a>{null}</a>
+      │ 		^^^^^^^^^^^^^
+    7 │ 		<a>{undefined}</a>
+    8 │ 		<a aria-hidden>content</a>
   
   i All links on a page should have content that is accessible to screen readers.
   
@@ -100,14 +104,14 @@ useAnchorContent.jsx:6:3 lint/nursery/useAnchorContent ━━━━━━━━�
 ```
 useAnchorContent.jsx:7:3 lint/nursery/useAnchorContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide screen reader accessible content when using a elements.
+  ! Provide screen reader accessible content when using `a` elements.
   
-    5 │     <a><span aria-hidden={true}>content</span></a>
-    6 │ 		<a></a>
-  > 7 │ 		<a>{null}</a>
-      │ 		^^^^^^^^^^^^^
-    8 │ 		<a>{undefined}</a>
-    9 │ 		<a aria-hidden>content</a>
+    5 │ 		<a>   </a>
+    6 │ 		<a>{null}</a>
+  > 7 │ 		<a>{undefined}</a>
+      │ 		^^^^^^^^^^^^^^^^^^
+    8 │ 		<a aria-hidden>content</a>
+    9 │ 		<a><span aria-hidden="true">content</span></a>
   
   i All links on a page should have content that is accessible to screen readers.
   
@@ -117,14 +121,14 @@ useAnchorContent.jsx:7:3 lint/nursery/useAnchorContent ━━━━━━━━�
 ```
 useAnchorContent.jsx:8:3 lint/nursery/useAnchorContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide screen reader accessible content when using a elements.
+  ! Provide screen reader accessible content when using `a` elements.
   
-     6 │ 		<a></a>
-     7 │ 		<a>{null}</a>
-   > 8 │ 		<a>{undefined}</a>
-       │ 		^^^^^^^^^^^^^^^^^^
-     9 │ 		<a aria-hidden>content</a>
-    10 │     {/*  valid  */}
+     6 │ 		<a>{null}</a>
+     7 │ 		<a>{undefined}</a>
+   > 8 │ 		<a aria-hidden>content</a>
+       │ 		^^^^^^^^^^^^^^^^^^^^^^^^^^
+     9 │ 		<a><span aria-hidden="true">content</span></a>
+    10 │     <a><span aria-hidden={true}>content</span></a>
   
   i All links on a page should have content that is accessible to screen readers.
   
@@ -134,14 +138,82 @@ useAnchorContent.jsx:8:3 lint/nursery/useAnchorContent ━━━━━━━━�
 ```
 useAnchorContent.jsx:9:3 lint/nursery/useAnchorContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide screen reader accessible content when using a elements.
+  ! Provide screen reader accessible content when using `a` elements.
   
-     7 │ 		<a>{null}</a>
-     8 │ 		<a>{undefined}</a>
-   > 9 │ 		<a aria-hidden>content</a>
-       │ 		^^^^^^^^^^^^^^^^^^^^^^^^^^
-    10 │     {/*  valid  */}
-    11 │     <a>content</a>
+     7 │ 		<a>{undefined}</a>
+     8 │ 		<a aria-hidden>content</a>
+   > 9 │ 		<a><span aria-hidden="true">content</span></a>
+       │ 		^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    10 │     <a><span aria-hidden={true}>content</span></a>
+    11 │     <a><span aria-hidden={"true"}>content</span></a>
+  
+  i All links on a page should have content that is accessible to screen readers.
+  
+
+```
+
+```
+useAnchorContent.jsx:10:5 lint/nursery/useAnchorContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide screen reader accessible content when using `a` elements.
+  
+     8 │ 		<a aria-hidden>content</a>
+     9 │ 		<a><span aria-hidden="true">content</span></a>
+  > 10 │     <a><span aria-hidden={true}>content</span></a>
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    11 │     <a><span aria-hidden={"true"}>content</span></a>
+    12 │     <a><span aria-hidden={`true`}>content</span></a>
+  
+  i All links on a page should have content that is accessible to screen readers.
+  
+
+```
+
+```
+useAnchorContent.jsx:11:5 lint/nursery/useAnchorContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide screen reader accessible content when using `a` elements.
+  
+     9 │ 		<a><span aria-hidden="true">content</span></a>
+    10 │     <a><span aria-hidden={true}>content</span></a>
+  > 11 │     <a><span aria-hidden={"true"}>content</span></a>
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    12 │     <a><span aria-hidden={`true`}>content</span></a>
+    13 │     <a><span aria-hidden={`${true}`}>content</span></a>
+  
+  i All links on a page should have content that is accessible to screen readers.
+  
+
+```
+
+```
+useAnchorContent.jsx:12:5 lint/nursery/useAnchorContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide screen reader accessible content when using `a` elements.
+  
+    10 │     <a><span aria-hidden={true}>content</span></a>
+    11 │     <a><span aria-hidden={"true"}>content</span></a>
+  > 12 │     <a><span aria-hidden={`true`}>content</span></a>
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    13 │     <a><span aria-hidden={`${true}`}>content</span></a>
+    14 │     {/*  valid  */}
+  
+  i All links on a page should have content that is accessible to screen readers.
+  
+
+```
+
+```
+useAnchorContent.jsx:13:5 lint/nursery/useAnchorContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide screen reader accessible content when using `a` elements.
+  
+    11 │     <a><span aria-hidden={"true"}>content</span></a>
+    12 │     <a><span aria-hidden={`true`}>content</span></a>
+  > 13 │     <a><span aria-hidden={`${true}`}>content</span></a>
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    14 │     {/*  valid  */}
+    15 │     <a>content</a>
   
   i All links on a page should have content that is accessible to screen readers.
   

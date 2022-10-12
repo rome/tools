@@ -2,10 +2,10 @@ use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyLiteralExpression, JsxAnyAttributeValue, JsxAnyChild, JsxAttribute,
-    JsxElement, JsxReferenceIdentifier, JsxSelfClosingElement,
+    JsAnyExpression, JsAnyLiteralExpression, JsAnyTemplateElement, JsxAnyAttributeValue,
+    JsxAnyChild, JsxAttribute, JsxElement, JsxReferenceIdentifier, JsxSelfClosingElement,
 };
-use rome_rowan::{declare_node_union, AstNode};
+use rome_rowan::{declare_node_union, AstNode, AstNodeList};
 
 declare_rule! {
     /// Enforce that anchor elements have content and that the content is accessible to screen readers.
@@ -22,6 +22,10 @@ declare_rule! {
     ///
     /// ```jsx,expect_diagnostic
     /// <a></a>
+    /// ```
+    ///
+    /// ```jsx,expect_diagnostic
+    /// <a>    </a>
     /// ```
     ///
     /// ```jsx,expect_diagnostic
@@ -73,14 +77,14 @@ impl UseAnchorContentNode {
         })
     }
 
-    /// Check if the a element has the `aria-hidden` attribute set to true.
+    /// Check if the `a` element has the `aria-hidden` attribute set to true.
     fn is_hidden_from_screen_reader(&self) -> bool {
         match self {
             UseAnchorContentNode::JsxElement(element) => {
                 if let Ok(opening_element) = element.opening_element() {
                     match opening_element.find_attribute_by_name("aria-hidden") {
                         Ok(Some(aria_hidden_attribute)) => {
-                            is_hidden_from_screen_reader(aria_hidden_attribute).unwrap_or(false)
+                            is_aria_hidden_truthy(aria_hidden_attribute).unwrap_or(false)
                         }
                         _ => false,
                     }
@@ -91,7 +95,7 @@ impl UseAnchorContentNode {
             UseAnchorContentNode::JsxSelfClosingElement(element) => {
                 match element.find_attribute_by_name("aria-hidden") {
                     Ok(Some(aria_hidden_attribute)) => {
-                        is_hidden_from_screen_reader(aria_hidden_attribute).unwrap_or(false)
+                        is_aria_hidden_truthy(aria_hidden_attribute).unwrap_or(false)
                     }
                     _ => false,
                 }
@@ -99,7 +103,7 @@ impl UseAnchorContentNode {
         }
     }
 
-    /// Check if the a element has content accessible to screen readers.
+    /// Check if the `a` element has content accessible to screen readers.
     /// Accessible means that the content is not hidden using the `aria-hidden` attribute.
     fn has_accessible_child(&self) -> Option<bool> {
         Some(match self {
@@ -127,7 +131,7 @@ impl Rule for UseAnchorContent {
             return None;
         }
 
-        // If there's no `aria-hidden` attribute on the a element,
+        // If there's no `aria-hidden` attribute on the `a` element,
         // proceed to check the accessibility of its child elements
         if !node.is_hidden_from_screen_reader() && node.has_accessible_child()? {
             return None;
@@ -142,7 +146,7 @@ impl Rule for UseAnchorContent {
 			rule_category!(),
             node.syntax().text_trimmed_range(),
             markup! {
-				"Provide screen reader accessible content when using "<Emphasis>"a"</Emphasis>" elements."
+				"Provide screen reader accessible content when using "<Emphasis>"`a`"</Emphasis>" elements."
 			}
         ).footer_note(
 			markup! {
@@ -156,7 +160,10 @@ impl Rule for UseAnchorContent {
 /// or it is not hidden using the `aria-hidden` attribute
 fn is_accessible_to_screen_reader(element: JsxAnyChild) -> Option<bool> {
     Some(match element {
-        JsxAnyChild::JsxText(text) => text.value_token().is_ok(),
+        JsxAnyChild::JsxText(text) => {
+            let value_token = text.value_token().ok()?;
+            value_token.text_trimmed().trim() != ""
+        }
         JsxAnyChild::JsxElement(element) => {
             let opening_element = element.opening_element().ok()?;
 
@@ -170,7 +177,7 @@ fn is_accessible_to_screen_reader(element: JsxAnyChild) -> Option<bool> {
             let aria_hidden_attribute = opening_element
                 .find_attribute_by_name("aria-hidden")
                 .ok()??;
-            !is_hidden_from_screen_reader(aria_hidden_attribute)?
+            !is_aria_hidden_truthy(aria_hidden_attribute)?
         }
         JsxAnyChild::JsxSelfClosingElement(element) => {
             // We don't check if a component (e.g. <Text aria-hidden />) is using the `aria-hidden` property,
@@ -181,7 +188,7 @@ fn is_accessible_to_screen_reader(element: JsxAnyChild) -> Option<bool> {
             }
 
             let aria_hidden_attribute = element.find_attribute_by_name("aria-hidden").ok()??;
-            !is_hidden_from_screen_reader(aria_hidden_attribute)?
+            !is_aria_hidden_truthy(aria_hidden_attribute)?
         }
         JsxAnyChild::JsxExpressionChild(expression) => {
             let expression = expression.expression()?;
@@ -201,7 +208,7 @@ fn is_accessible_to_screen_reader(element: JsxAnyChild) -> Option<bool> {
 }
 
 /// Check if the `aria-hidden` attribute is present or the value is true.
-fn is_hidden_from_screen_reader(aria_hidden_attribute: JsxAttribute) -> Option<bool> {
+fn is_aria_hidden_truthy(aria_hidden_attribute: JsxAttribute) -> Option<bool> {
     let initializer = aria_hidden_attribute.initializer();
     if initializer.is_none() {
         return Some(true);
@@ -210,30 +217,52 @@ fn is_hidden_from_screen_reader(aria_hidden_attribute: JsxAttribute) -> Option<b
     Some(match attribute_value {
         JsxAnyAttributeValue::JsxExpressionAttributeValue(attribute_value) => {
             let expression = attribute_value.expression().ok()?;
-            match expression {
-                JsAnyExpression::JsAnyLiteralExpression(literal_expression) => {
-                    if let JsAnyLiteralExpression::JsBooleanLiteralExpression(boolean_literal) =
-                        literal_expression
-                    {
-                        let text = boolean_literal.value_token().ok()?;
-                        text.text_trimmed() == "true"
-                    } else if let JsAnyLiteralExpression::JsStringLiteralExpression(
-                        string_literal,
-                    ) = literal_expression
-                    {
-                        let text = string_literal.inner_string_text().ok()?;
-                        text == "true"
-                    } else {
-                        false
-                    }
-                }
-                _ => false,
-            }
+            is_expression_truthy(expression)?
         }
         JsxAnyAttributeValue::JsxAnyTag(_) => false,
         JsxAnyAttributeValue::JsxString(aria_hidden_string) => {
             let aria_hidden_value = aria_hidden_string.inner_string_text().ok()?;
             aria_hidden_value == "true"
         }
+    })
+}
+
+/// Check if the expression contains only one boolean literal `true`
+/// or one string literal `"true"`
+fn is_expression_truthy(expression: JsAnyExpression) -> Option<bool> {
+    Some(match expression {
+        JsAnyExpression::JsAnyLiteralExpression(literal_expression) => {
+            if let JsAnyLiteralExpression::JsBooleanLiteralExpression(boolean_literal) =
+                literal_expression
+            {
+                let text = boolean_literal.value_token().ok()?;
+                text.text_trimmed() == "true"
+            } else if let JsAnyLiteralExpression::JsStringLiteralExpression(string_literal) =
+                literal_expression
+            {
+                let text = string_literal.inner_string_text().ok()?;
+                text == "true"
+            } else {
+                false
+            }
+        }
+        JsAnyExpression::JsTemplate(template) => {
+            let mut iter = template.elements().iter();
+            if iter.len() != 1 {
+                return None;
+            }
+            match iter.next() {
+                Some(JsAnyTemplateElement::JsTemplateChunkElement(element)) => {
+                    let template_token = element.template_chunk_token().ok()?;
+                    template_token.text_trimmed() == "true"
+                }
+                Some(JsAnyTemplateElement::JsTemplateElement(element)) => {
+                    let expression = element.expression().ok()?;
+                    is_expression_truthy(expression)?
+                }
+                _ => false,
+            }
+        }
+        _ => false,
     })
 }
