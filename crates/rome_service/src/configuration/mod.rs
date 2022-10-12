@@ -6,9 +6,11 @@
 use crate::{DynRef, RomeError};
 use indexmap::{IndexMap, IndexSet};
 use rome_fs::{FileSystem, OpenOptions};
+use rome_js_syntax::JsLanguage;
 use serde::de::{SeqAccess, Visitor};
 use serde::ser::SerializeSeq;
 use serde::{Deserialize, Serialize};
+use std::collections::BTreeSet;
 use std::fmt::{Debug, Display, Formatter};
 use std::io::ErrorKind;
 use std::marker::PhantomData;
@@ -22,8 +24,10 @@ use crate::settings::{LanguagesSettings, LinterSettings};
 pub use formatter::{FormatterConfiguration, PlainIndentStyle};
 pub use javascript::{JavascriptConfiguration, JavascriptFormatter};
 pub use linter::{LinterConfiguration, RuleConfiguration, Rules};
-use rome_analyze::{AnalysisFilter, AnalyzerConfiguration, AnalyzerRules, RegistryRuleMetadata};
-use rome_js_analyze::metadata;
+use rome_analyze::{
+    AnalysisFilter, AnalyzerConfiguration, AnalyzerRules, RegistryVisitor, RuleKey,
+};
+use rome_js_analyze::visit_registry;
 
 /// The configuration that is contained inside the file `rome.json`
 #[derive(Debug, Deserialize, Serialize)]
@@ -326,8 +330,45 @@ where
 {
     let globals: Vec<String> = to_globals(language_settings);
 
+    struct MetadataVisitor<'a> {
+        registry: BTreeSet<RuleKey>,
+        filter: &'a AnalysisFilter<'a>,
+    }
+
+    impl RegistryVisitor<JsLanguage> for MetadataVisitor<'_> {
+        fn record_category<C: rome_analyze::GroupCategory<Language = JsLanguage>>(&mut self) {
+            if self.filter.match_category::<C>() {
+                C::record_groups(self);
+            }
+        }
+
+        fn record_group<G: rome_analyze::RuleGroup<Language = JsLanguage>>(&mut self) {
+            if self.filter.match_group::<G>() {
+                G::record_rules(self);
+            }
+        }
+
+        fn record_rule<R>(&mut self)
+        where
+            R: rome_analyze::Rule + 'static,
+            R::Query: rome_analyze::Queryable<Language = JsLanguage>,
+            <R::Query as rome_analyze::Queryable>::Output: Clone,
+        {
+            if self.filter.match_rule::<R>() {
+                self.registry.insert(RuleKey::rule::<R>());
+            }
+        }
+    }
+
+    let mut visitor = MetadataVisitor {
+        registry: BTreeSet::default(),
+        filter,
+    };
+
+    visit_registry(&mut visitor);
+
     let mut analyzer_rules = AnalyzerRules::default();
-    let mut metadata = metadata(filter);
+    let mut metadata = visitor.registry.into_iter();
 
     if let Some(rules) = linter_settings.rules.as_ref() {
         if let Some(rules) = rules.correctness.as_ref() {
@@ -358,19 +399,13 @@ fn push_rules<M>(
     analyzer_rules: &mut AnalyzerRules,
     rules: &IndexMap<String, RuleConfiguration>,
 ) where
-    M: Iterator<Item = RegistryRuleMetadata>,
+    M: Iterator<Item = RuleKey>,
 {
     for (rule_name, configuration) in rules {
         if let RuleConfiguration::WithOptions(rule_options) = configuration {
             if let Some(options) = &rule_options.options {
-                let rule_key = metadata.find_map(|m| {
-                    let rule_key = m.to_rule_key();
-
-                    if rule_key.group() == group_name && rule_key.rule_name() == rule_name {
-                        Some(rule_key)
-                    } else {
-                        None
-                    }
+                let rule_key = metadata.find(|rule_key| {
+                    rule_key.group() == group_name && rule_key.rule_name() == rule_name
                 });
                 if let Some(rule_key) = rule_key {
                     analyzer_rules.push_rule(rule_key, options.clone());

@@ -1,10 +1,11 @@
 use rome_analyze::{
-    AnalysisFilter, AnalyzerOptions, ControlFlow, Never, QueryMatch, RuleCategories, RuleFilter,
+    AnalysisFilter, AnalyzerOptions, ControlFlow, GroupCategory, Never, QueryMatch,
+    RegistryVisitor, RuleCategories, RuleCategory, RuleFilter, RuleGroup,
 };
 use rome_diagnostics::{Applicability, CodeSuggestion, Diagnostic};
 use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
-use rome_js_analyze::{analyze, analyze_with_inspect_matcher, metadata, RuleError};
+use rome_js_analyze::{analyze, analyze_with_inspect_matcher, visit_registry, RuleError};
 use rome_js_formatter::context::{QuoteProperties, QuoteStyle};
 use rome_js_formatter::{context::JsFormatOptions, format_node};
 use rome_js_parser::Parse;
@@ -243,6 +244,34 @@ fn lint(
     diagnostics
 }
 
+struct ActionsVisitor<'a, 'b> {
+    enabled_rules: &'a mut Vec<RuleFilter<'b>>,
+}
+
+impl RegistryVisitor<JsLanguage> for ActionsVisitor<'_, '_> {
+    fn record_category<C: GroupCategory<Language = JsLanguage>>(&mut self) {
+        if matches!(C::CATEGORY, RuleCategory::Action) {
+            C::record_groups(self);
+        }
+    }
+
+    fn record_group<G: RuleGroup<Language = JsLanguage>>(&mut self) {
+        G::record_rules(self)
+    }
+
+    fn record_rule<R>(&mut self)
+    where
+        R: rome_analyze::Rule + 'static,
+        R::Query: rome_analyze::Queryable<Language = JsLanguage>,
+        <R::Query as rome_analyze::Queryable>::Output: Clone,
+    {
+        self.enabled_rules.push(RuleFilter::Rule(
+            <R::Group as RuleGroup>::NAME,
+            R::METADATA.name,
+        ));
+    }
+}
+
 fn code_actions(
     rome_path: &RomePath,
     parse: AnyParse,
@@ -264,14 +293,7 @@ fn code_actions(
     // The rules in the assist category do not have configuration entries,
     // always add them all to the enabled rules list
     if let Some(enabled_rules) = &mut enabled_rules {
-        let actions_filter = AnalysisFilter {
-            categories: RuleCategories::ACTION,
-            ..AnalysisFilter::default()
-        };
-
-        for meta in metadata(&actions_filter) {
-            enabled_rules.push(RuleFilter::Rule(meta.group, meta.rule.name));
-        }
+        visit_registry(&mut ActionsVisitor { enabled_rules });
     }
 
     let mut filter = match &enabled_rules {

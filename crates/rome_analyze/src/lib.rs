@@ -25,7 +25,8 @@ pub use crate::matcher::{InspectMatcher, MatchQueryParams, QueryMatcher, RuleKey
 pub use crate::options::{AnalyzerConfiguration, AnalyzerOptions, AnalyzerRules};
 pub use crate::query::{Ast, QueryKey, QueryMatch, Queryable};
 pub use crate::registry::{
-    LanguageRoot, Phase, Phases, RegistryRuleMetadata, RuleRegistry, RuleSuppressions,
+    LanguageRoot, MetadataRegistry, Phase, Phases, RegistryRuleMetadata, RegistryVisitor,
+    RuleRegistry, RuleRegistryBuilder, RuleSuppressions,
 };
 pub use crate::rule::{
     CategoryLanguage, GroupCategory, GroupLanguage, Rule, RuleAction, RuleDiagnostic, RuleGroup,
@@ -57,6 +58,8 @@ use rome_rowan::{
 pub struct Analyzer<'analyzer, L: Language, Matcher, Break> {
     /// List of visitors being run by this instance of the analyzer for each phase
     phases: BTreeMap<Phases, Vec<Box<dyn Visitor<Language = L> + 'analyzer>>>,
+    /// Holds the metadata for all the rules statically known to the analyzer
+    metadata: &'analyzer MetadataRegistry,
     /// Executor for the query matches emitted by the visitors
     query_matcher: Matcher,
     /// Language-specific suppression comment parsing function
@@ -81,12 +84,14 @@ where
     /// Construct a new instance of the analyzer with the given rule registry
     /// and suppression comment parser
     pub fn new(
+        metadata: &'analyzer MetadataRegistry,
         query_matcher: Matcher,
         parse_suppression_comment: SuppressionParser,
         emit_signal: SignalHandler<'analyzer, L, Break>,
     ) -> Self {
         Self {
             phases: BTreeMap::new(),
+            metadata,
             query_matcher,
             parse_suppression_comment,
             emit_signal,
@@ -106,6 +111,7 @@ where
     pub fn run(self, mut ctx: AnalyzerContext<L>) -> Option<Break> {
         let Self {
             phases,
+            metadata,
             mut query_matcher,
             parse_suppression_comment,
             mut emit_signal,
@@ -118,6 +124,7 @@ where
             let runner = PhaseRunner {
                 phase,
                 visitors: &mut visitors,
+                metadata,
                 query_matcher: &mut query_matcher,
                 signal_queue: BinaryHeap::new(),
                 parse_suppression_comment,
@@ -165,6 +172,8 @@ struct PhaseRunner<'analyzer, 'phase, L: Language, Matcher, Break> {
     phase: Phases,
     /// List of visitors being run by this instance of the analyzer for each phase
     visitors: &'phase mut [Box<dyn Visitor<Language = L> + 'analyzer>],
+    /// Holds the metadata for all the rules statically known to the analyzer
+    metadata: &'analyzer MetadataRegistry,
     /// Executor for the query matches emitted by the visitors
     query_matcher: &'phase mut Matcher,
     /// Queue for pending analyzer signals
@@ -398,11 +407,10 @@ where
                 });
 
                 let key = match group_rule {
-                    None => self.query_matcher.find_group(rule).map(RuleFilter::from),
-                    Some((group, rule)) => self
-                        .query_matcher
-                        .find_rule(group, rule)
-                        .map(RuleFilter::from),
+                    None => self.metadata.find_group(rule).map(RuleFilter::from),
+                    Some((group, rule)) => {
+                        self.metadata.find_rule(group, rule).map(RuleFilter::from)
+                    }
                 };
 
                 if let Some(key) = key {
@@ -571,12 +579,12 @@ pub struct AnalysisFilter<'a> {
 
 impl<'analysis> AnalysisFilter<'analysis> {
     /// Return `true` if the category `C` matches this filter
-    fn match_category<C: GroupCategory>(&self) -> bool {
+    pub fn match_category<C: GroupCategory>(&self) -> bool {
         self.categories.contains(C::CATEGORY.into())
     }
 
     /// Return `true` if the group `G` matches this filter
-    fn match_group<G: RuleGroup>(&self) -> bool {
+    pub fn match_group<G: RuleGroup>(&self) -> bool {
         self.match_category::<G::Category>()
             && self.enabled_rules.map_or(true, |enabled_rules| {
                 enabled_rules.iter().any(|filter| filter.match_group::<G>())
@@ -589,7 +597,7 @@ impl<'analysis> AnalysisFilter<'analysis> {
     }
 
     /// Return `true` if the rule `R` matches this filter
-    fn match_rule<R>(&self) -> bool
+    pub fn match_rule<R>(&self) -> bool
     where
         R: Rule,
     {

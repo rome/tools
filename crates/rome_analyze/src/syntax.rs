@@ -56,10 +56,9 @@ mod tests {
     };
 
     use crate::{
-        matcher::{GroupKey, MatchQueryParams},
-        registry::Phases,
-        Analyzer, AnalyzerContext, AnalyzerOptions, AnalyzerSignal, ControlFlow, Never, QueryMatch,
-        QueryMatcher, RuleKey, ServiceBag, SyntaxVisitor,
+        matcher::MatchQueryParams, registry::Phases, Analyzer, AnalyzerContext, AnalyzerOptions,
+        AnalyzerSignal, ControlFlow, MetadataRegistry, Never, QueryMatch, QueryMatcher, ServiceBag,
+        SyntaxVisitor,
     };
 
     #[derive(Default)]
@@ -68,14 +67,6 @@ mod tests {
     }
 
     impl<'a> QueryMatcher<RawLanguage> for &'a mut BufferMatcher {
-        fn find_group(&self, _group: &str) -> Option<GroupKey> {
-            None
-        }
-
-        fn find_rule(&self, _group: &str, _rule: &str) -> Option<RuleKey> {
-            None
-        }
-
         fn match_query(&mut self, params: MatchQueryParams<RawLanguage>) {
             match params.query {
                 QueryMatch::Syntax(node) => {
@@ -113,7 +104,14 @@ mod tests {
         let mut emit_signal =
             |_: &dyn AnalyzerSignal<RawLanguage>| -> ControlFlow<Never> { unreachable!() };
 
-        let mut analyzer = Analyzer::new(&mut matcher, |_| unreachable!(), &mut emit_signal);
+        let metadata = MetadataRegistry::default();
+
+        let mut analyzer = Analyzer::new(
+            &metadata,
+            &mut matcher,
+            |_| unreachable!(),
+            &mut emit_signal,
+        );
 
         analyzer.add_visitor(Phases::Syntax, SyntaxVisitor::default());
 
