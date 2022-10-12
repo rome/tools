@@ -7,30 +7,36 @@ expression: useFlatMap.js
 // invalid
 [0, [12]].map(Number).flat();
 [0, [12], [[16]]].map(Number).flat(1);
+[0, [12], [[16]]].map((element) => {}).flat(1);
+[0, [12], [[16]]].map((element, index) => {}).flat(1);
+[0, [12], [[16]]].map((element, index, array) => {}).flat(1);
 // valid
 [0, [12], [[16]]].map(Number).flat(2);
-
+array.flat().map(Number);
+array.map(Number).flat(customFn);
+MyObject.map(one, two, tree).flat();
+MyObject.map().flat(1, "test")
 ```
 
 # Diagnostics
 ```
 useFlatMap.js:2:1 lint/nursery/useFlatMap  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! The call chain .map().flat() can be replaced with a simple .flatMap().
+  ! The call chain .map().flat() can be replaced with a single .flatMap() call.
   
     1 │ // invalid
   > 2 │ [0, [12]].map(Number).flat();
       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     3 │ [0, [12], [[16]]].map(Number).flat(1);
-    4 │ // valid
+    4 │ [0, [12], [[16]]].map((element) => {}).flat(1);
   
-  i Safe fix: Replace it with .flatMap().
+  i Safe fix: Replace the chain with .flatMap().
   
-    1 1 │   // invalid
-    2   │ - [0,·[12]].map(Number).flat();
-      2 │ + [0,·[12]].flatMap(Number);
-    3 3 │   [0, [12], [[16]]].map(Number).flat(1);
-    4 4 │   // valid
+     1  1 │   // invalid
+     2    │ - [0,·[12]].map(Number).flat();
+        2 │ + [0,·[12]].flatMap(Number);
+     3  3 │   [0, [12], [[16]]].map(Number).flat(1);
+     4  4 │   [0, [12], [[16]]].map((element) => {}).flat(1);
   
 
 ```
@@ -38,23 +44,95 @@ useFlatMap.js:2:1 lint/nursery/useFlatMap  FIXABLE  ━━━━━━━━━�
 ```
 useFlatMap.js:3:1 lint/nursery/useFlatMap  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! The call chain .map().flat() can be replaced with a simple .flatMap().
+  ! The call chain .map().flat() can be replaced with a single .flatMap() call.
   
     1 │ // invalid
     2 │ [0, [12]].map(Number).flat();
   > 3 │ [0, [12], [[16]]].map(Number).flat(1);
       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    4 │ // valid
-    5 │ [0, [12], [[16]]].map(Number).flat(2);
+    4 │ [0, [12], [[16]]].map((element) => {}).flat(1);
+    5 │ [0, [12], [[16]]].map((element, index) => {}).flat(1);
   
-  i Safe fix: Replace it with .flatMap().
+  i Safe fix: Replace the chain with .flatMap().
   
-    1 1 │   // invalid
-    2 2 │   [0, [12]].map(Number).flat();
-    3   │ - [0,·[12],·[[16]]].map(Number).flat(1);
-      3 │ + [0,·[12],·[[16]]].flatMap(Number);
-    4 4 │   // valid
-    5 5 │   [0, [12], [[16]]].map(Number).flat(2);
+     1  1 │   // invalid
+     2  2 │   [0, [12]].map(Number).flat();
+     3    │ - [0,·[12],·[[16]]].map(Number).flat(1);
+        3 │ + [0,·[12],·[[16]]].flatMap(Number);
+     4  4 │   [0, [12], [[16]]].map((element) => {}).flat(1);
+     5  5 │   [0, [12], [[16]]].map((element, index) => {}).flat(1);
+  
+
+```
+
+```
+useFlatMap.js:4:1 lint/nursery/useFlatMap  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The call chain .map().flat() can be replaced with a single .flatMap() call.
+  
+    2 │ [0, [12]].map(Number).flat();
+    3 │ [0, [12], [[16]]].map(Number).flat(1);
+  > 4 │ [0, [12], [[16]]].map((element) => {}).flat(1);
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    5 │ [0, [12], [[16]]].map((element, index) => {}).flat(1);
+    6 │ [0, [12], [[16]]].map((element, index, array) => {}).flat(1);
+  
+  i Safe fix: Replace the chain with .flatMap().
+  
+     2  2 │   [0, [12]].map(Number).flat();
+     3  3 │   [0, [12], [[16]]].map(Number).flat(1);
+     4    │ - [0,·[12],·[[16]]].map((element)·=>·{}).flat(1);
+        4 │ + [0,·[12],·[[16]]].flatMap((element)·=>·{});
+     5  5 │   [0, [12], [[16]]].map((element, index) => {}).flat(1);
+     6  6 │   [0, [12], [[16]]].map((element, index, array) => {}).flat(1);
+  
+
+```
+
+```
+useFlatMap.js:5:1 lint/nursery/useFlatMap  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The call chain .map().flat() can be replaced with a single .flatMap() call.
+  
+    3 │ [0, [12], [[16]]].map(Number).flat(1);
+    4 │ [0, [12], [[16]]].map((element) => {}).flat(1);
+  > 5 │ [0, [12], [[16]]].map((element, index) => {}).flat(1);
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    6 │ [0, [12], [[16]]].map((element, index, array) => {}).flat(1);
+    7 │ // valid
+  
+  i Safe fix: Replace the chain with .flatMap().
+  
+     3  3 │   [0, [12], [[16]]].map(Number).flat(1);
+     4  4 │   [0, [12], [[16]]].map((element) => {}).flat(1);
+     5    │ - [0,·[12],·[[16]]].map((element,·index)·=>·{}).flat(1);
+        5 │ + [0,·[12],·[[16]]].flatMap((element,·index)·=>·{});
+     6  6 │   [0, [12], [[16]]].map((element, index, array) => {}).flat(1);
+     7  7 │   // valid
+  
+
+```
+
+```
+useFlatMap.js:6:1 lint/nursery/useFlatMap  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The call chain .map().flat() can be replaced with a single .flatMap() call.
+  
+    4 │ [0, [12], [[16]]].map((element) => {}).flat(1);
+    5 │ [0, [12], [[16]]].map((element, index) => {}).flat(1);
+  > 6 │ [0, [12], [[16]]].map((element, index, array) => {}).flat(1);
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    7 │ // valid
+    8 │ [0, [12], [[16]]].map(Number).flat(2);
+  
+  i Safe fix: Replace the chain with .flatMap().
+  
+     4  4 │   [0, [12], [[16]]].map((element) => {}).flat(1);
+     5  5 │   [0, [12], [[16]]].map((element, index) => {}).flat(1);
+     6    │ - [0,·[12],·[[16]]].map((element,·index,·array)·=>·{}).flat(1);
+        6 │ + [0,·[12],·[[16]]].flatMap((element,·index,·array)·=>·{});
+     7  7 │   // valid
+     8  8 │   [0, [12], [[16]]].map(Number).flat(2);
   
 
 ```
