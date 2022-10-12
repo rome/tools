@@ -3,7 +3,7 @@ use crate::utils::react::*;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::Capture;
-use rome_js_syntax::{JsCallExpression, JsIdentifierBinding, JsSyntaxKind, TextRange};
+use rome_js_syntax::{JsCallExpression, JsIdentifierBinding, JsSyntaxKind, TextRange, TsIdentifierBinding};
 use rome_rowan::{AstNode, SyntaxNodeCast};
 use serde::{Deserialize, Serialize};
 use std::collections::{BTreeMap, HashMap, HashSet};
@@ -78,7 +78,8 @@ impl Rule for ReactExtensiveDependencies {
                 .into_iter()
                 .filter_map(|capture| {
                     capture.declaration().and_then(|declaration| {
-                        let node = declaration.syntax().parent()?;
+                        let declaration_syntax = declaration.syntax();
+                        let node = declaration_syntax.parent()?;
                         use JsSyntaxKind::*;
                         match node.kind() {
                             JS_FUNCTION_DECLARATION
@@ -87,10 +88,19 @@ impl Rule for ReactExtensiveDependencies {
                             | TS_TYPE_ALIAS_DECLARATION
                             | TS_DECLARE_FUNCTION_DECLARATION => None,
                             _ => {
-                                let declaration =
-                                    declaration.syntax().clone().cast::<JsIdentifierBinding>()?;
-                                let not_stable = !is_stable_binding(&declaration, &options.stables);
-                                not_stable.then_some(capture)
+                                // Ignore if imported
+                                if let Some(true) = declaration_syntax.clone().cast::<JsIdentifierBinding>()
+                                    .map(|node| model.is_imported(&node))
+                                    .or_else(|| Some(model.is_imported(&node.cast::<TsIdentifierBinding>()?)))
+                                {
+                                    None 
+                                } else {
+                                    // Ignore if stable
+                                    let declaration =
+                                        declaration.syntax().clone().cast::<JsIdentifierBinding>()?;
+                                    let not_stable = !is_stable_binding(&declaration, &options.stables);
+                                    not_stable.then_some(capture)
+                                }
                             }
                         }
                     })

@@ -1,3 +1,5 @@
+import doSomething from 'a';
+
 // No captures
 function MyComponent1() {
     useEffect(() => {
@@ -75,6 +77,16 @@ function MyComponent5() {
 function MyComponent5() {
     const a = 1;
     useEffect(() => {
-        return () => console.log(a)
+        const b = 2;
+        return () => console.log(a, b)
     }, [a]);
 }
+
+// from import 
+
+function MyComponent6() {
+    useEffect(() => {
+        doSomething();
+    });
+}
+

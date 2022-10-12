@@ -41,6 +41,7 @@ impl HasDeclarationAstNode for JsxReferenceIdentifier {}
 pub trait IsExportedCanBeQueried: AstNode<Language = JsLanguage> {
     type Result;
     fn is_exported(&self, model: &SemanticModel) -> Self::Result;
+    fn is_imported(&self, model: &SemanticModel) -> Self::Result;
 }
 
 impl IsExportedCanBeQueried for JsIdentifierBinding {
@@ -49,6 +50,14 @@ impl IsExportedCanBeQueried for JsIdentifierBinding {
     fn is_exported(&self, model: &SemanticModel) -> Self::Result {
         let range = self.syntax().text_range();
         model.data.is_exported(range)
+    }
+
+    fn is_imported(&self, _: &SemanticModel) -> Self::Result {
+        self.syntax().ancestors()
+            .any(|x| match x.kind() {
+                JsSyntaxKind::JS_IMPORT => true,
+                _ => false
+            })
     }
 }
 
@@ -59,6 +68,14 @@ impl IsExportedCanBeQueried for TsIdentifierBinding {
         let range = self.syntax().text_range();
         model.data.is_exported(range)
     }
+
+    fn is_imported(&self, _: &SemanticModel) -> Self::Result {
+        self.syntax().ancestors()
+            .any(|x| match x.kind() {
+                JsSyntaxKind::JS_IMPORT => true,
+                _ => false
+            })
+    }
 }
 
 impl<T: HasDeclarationAstNode> IsExportedCanBeQueried for T {
@@ -67,6 +84,16 @@ impl<T: HasDeclarationAstNode> IsExportedCanBeQueried for T {
     fn is_exported(&self, model: &SemanticModel) -> Self::Result {
         let range = self.declaration(model)?.syntax().text_range();
         Some(model.data.is_exported(range))
+    }
+
+    fn is_imported(&self, model: &SemanticModel) -> Self::Result {
+        Some(self.declaration(model)?.syntax()
+            .ancestors()
+            .any(|x| match x.kind() {
+                JsSyntaxKind::JS_IMPORT => true,
+                _ => false
+            })
+        )
     }
 }
 
@@ -745,6 +772,13 @@ impl SemanticModel {
         T: IsExportedCanBeQueried,
     {
         node.is_exported(self)
+    }
+
+    pub fn is_imported<T>(&self, node: &T) -> T::Result
+    where
+        T: IsExportedCanBeQueried,
+    {
+        node.is_imported(self)
     }
 
     /// Returns the [Closure] associated with the node.
