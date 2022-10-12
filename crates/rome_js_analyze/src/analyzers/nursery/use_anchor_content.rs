@@ -3,7 +3,7 @@ use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsxAnyAttributeValue, JsxAnyChild, JsxAttribute,
-    JsxElement, JsxSelfClosingElement,
+    JsxElement, JsxReferenceIdentifier, JsxSelfClosingElement,
 };
 use rome_rowan::{declare_node_union, AstNode};
 
@@ -74,23 +74,29 @@ impl UseAnchorContentNode {
     }
 
     /// Check if the a element has the `aria-hidden` attribute set to true.
-    /// Return `None` if no `aria-hidden` attribute is present.
-    fn is_hidden_from_screen_reader(&self) -> Option<bool> {
-        Some(match self {
+    fn is_hidden_from_screen_reader(&self) -> bool {
+        match self {
             UseAnchorContentNode::JsxElement(element) => {
-                let aria_hidden_attribute = element
-                    .opening_element()
-                    .ok()?
-                    .find_attribute_by_name("aria-hidden")
-                    .ok()??;
-                is_hidden_from_screen_reader(aria_hidden_attribute)?
+                if let Ok(opening_element) = element.opening_element() {
+                    match opening_element.find_attribute_by_name("aria-hidden") {
+                        Ok(Some(aria_hidden_attribute)) => {
+                            is_hidden_from_screen_reader(aria_hidden_attribute).unwrap_or(false)
+                        }
+                        _ => false,
+                    }
+                } else {
+                    false
+                }
             }
             UseAnchorContentNode::JsxSelfClosingElement(element) => {
-                let aria_hidden_attribute =
-                    element.find_attribute_by_name("aria-hidden").ok()??;
-                is_hidden_from_screen_reader(aria_hidden_attribute)?
+                match element.find_attribute_by_name("aria-hidden") {
+                    Ok(Some(aria_hidden_attribute)) => {
+                        is_hidden_from_screen_reader(aria_hidden_attribute).unwrap_or(false)
+                    }
+                    _ => false,
+                }
             }
-        })
+        }
     }
 
     /// Check if the a element has content accessible to screen readers.
@@ -123,7 +129,7 @@ impl Rule for UseAnchorContent {
 
         // If there's no `aria-hidden` attribute on the a element,
         // proceed to check the accessibility of its child elements
-        if !node.is_hidden_from_screen_reader().unwrap_or(false) && node.has_accessible_child()? {
+        if !node.is_hidden_from_screen_reader() && node.has_accessible_child()? {
             return None;
         }
 
@@ -156,7 +162,10 @@ fn is_accessible_to_screen_reader(element: JsxAnyChild) -> Option<bool> {
 
             // We don't check if a component (e.g. <Text aria-hidden />) is using the `aria-hidden` property,
             // since we don't have enough information about how the property is used.
-            opening_element.name().ok()?.as_jsx_name()?;
+            let element_name = opening_element.name().ok()?;
+            if JsxReferenceIdentifier::can_cast(element_name.syntax().kind()) {
+                return None;
+            }
 
             let aria_hidden_attribute = opening_element
                 .find_attribute_by_name("aria-hidden")
@@ -166,7 +175,10 @@ fn is_accessible_to_screen_reader(element: JsxAnyChild) -> Option<bool> {
         JsxAnyChild::JsxSelfClosingElement(element) => {
             // We don't check if a component (e.g. <Text aria-hidden />) is using the `aria-hidden` property,
             // since we don't have enough information about how the property is used.
-            element.name().ok()?.as_jsx_name()?;
+            let element_name = element.name().ok()?;
+            if JsxReferenceIdentifier::can_cast(element_name.syntax().kind()) {
+                return None;
+            }
 
             let aria_hidden_attribute = element.find_attribute_by_name("aria-hidden").ok()??;
             !is_hidden_from_screen_reader(aria_hidden_attribute)?
