@@ -102,7 +102,7 @@ impl<'a> Printer<'a> {
             FormatElement::SyntaxTokenTextSlice {
                 slice,
                 source_position,
-            } => self.print_text(&slice, Some(*source_position)),
+            } => self.print_text(slice, Some(*source_position)),
 
             FormatElement::Line(line_mode) => {
                 if args.mode().is_flat()
