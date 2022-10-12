@@ -68,7 +68,7 @@ impl JsObjectPatternLike {
             return false;
         }
 
-        let has_at_least_a_complex_property = match self {
+        match self {
             JsObjectPatternLike::JsObjectAssignmentPattern(node) => {
                 node.properties().iter().any(|property| {
                     if let Ok(
@@ -104,9 +104,7 @@ impl JsObjectPatternLike {
                     }
                 })
             }
-        };
-
-        has_at_least_a_complex_property
+        }
     }
 
     fn is_in_assignment_like(&self) -> bool {
