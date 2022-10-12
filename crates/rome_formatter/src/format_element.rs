@@ -229,6 +229,10 @@ impl FormatElement {
                 | FormatElement::StaticText { .. }
         )
     }
+
+    pub const fn is_space(&self) -> bool {
+        matches!(self, FormatElement::Space)
+    }
 }
 
 impl FormatElements for FormatElement {

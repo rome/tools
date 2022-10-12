@@ -209,7 +209,7 @@ impl Format<IrFormatContext> for &[FormatElement] {
                         _ => unreachable!(),
                     }
 
-                    let is_next_text = iter.peek().map_or(false, |e| e.is_text());
+                    let is_next_text = iter.peek().map_or(false, |e| e.is_text() || e.is_space());
 
                     if !is_next_text {
                         write!(f, [text("\"")])?;
@@ -679,16 +679,16 @@ mod tests {
         use Tag::*;
 
         let document = Document::from(vec![
-            FormatElement::Text(Text::Static { text: "[" }),
+            FormatElement::StaticText { text: "[" },
             FormatElement::Tag(StartGroup(tag::Group::new())),
             FormatElement::Tag(StartIndent),
             FormatElement::Line(LineMode::Soft),
-            FormatElement::Text(Text::Static { text: "a" }),
+            FormatElement::StaticText { text: "a" },
             // Close group instead of indent
             FormatElement::Tag(EndGroup),
             FormatElement::Line(LineMode::Soft),
             FormatElement::Tag(EndIndent),
-            FormatElement::Text(Text::Static { text: "]" }),
+            FormatElement::StaticText { text: "]" },
             // End tag without start
             FormatElement::Tag(EndIndent),
             // Start tag without an end
