@@ -160,6 +160,7 @@ export interface Nursery {
 	noChildrenProp?: RuleConfiguration;
 	noDangerouslySetInnerHtml?: RuleConfiguration;
 	noDangerouslySetInnerHtmlWithChildren?: RuleConfiguration;
+	noExplicitAny?: RuleConfiguration;
 	noNewSymbol?: RuleConfiguration;
 	noPositiveTabindex?: RuleConfiguration;
 	noRenderReturnValue?: RuleConfiguration;
@@ -316,6 +317,7 @@ export type Category =
 	| "lint/nursery/useValidAnchor"
 	| "lint/nursery/noRestrictedGlobals"
 	| "lint/nursery/noPositiveTabindex"
+	| "lint/nursery/noExplicitAny"
 	| "lint/style/noNegationElse"
 	| "lint/style/noShoutyConstants"
 	| "lint/style/useSelfClosingElements"

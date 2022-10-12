@@ -290,6 +290,13 @@ Prevent the usage of dangerous JSX props
 Report when a DOM element or a component uses both <code>children</code> and <code>dangerouslySetInnerHTML</code> prop.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noExplicitAny">
+	<a href="/docs/lint/rules/noExplicitAny">noExplicitAny (since v0.10.0)</a>
+	<a class="header-anchor" href="#noExplicitAny"></a>
+</h3>
+Disallow the <code>any</code> type usage
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noNewSymbol">
 	<a href="/docs/lint/rules/noNewSymbol">noNewSymbol (since v0.10.0)</a>
 	<a class="header-anchor" href="#noNewSymbol"></a>

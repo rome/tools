@@ -1,0 +1,263 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 100
+expression: invalidClass.ts
+---
+# Input
+```js
+class Greeter {
+	constructor(param: Array<any>) {}
+}
+
+class Greeter {
+	message: any;
+}
+
+class Greeter {
+	message: Array<any>;
+}
+
+class Greeter {
+	message: any[];
+}
+
+class Greeter {
+	message: Array<Array<any>>;
+}
+
+class Greeter {
+	message: Array<any[]>;
+}
+
+class Foo<t = any> extends Bar<any> {}
+
+abstract class Foo<t = any> extends Bar<any> {}
+
+abstract class Foo<t = any> implements Bar<any>, Baz<any> {}
+
+new Foo<any>()
+
+Foo<any>()
+
+```
+
+# Diagnostics
+```
+invalidClass.ts:2:27 lint/nursery/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    1 │ class Greeter {
+  > 2 │ 	constructor(param: Array<any>) {}
+      │ 	                         ^^^
+    3 │ }
+    4 │ 
+  
+
+```
+
+```
+invalidClass.ts:6:11 lint/nursery/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    5 │ class Greeter {
+  > 6 │ 	message: any;
+      │ 	         ^^^
+    7 │ }
+    8 │ 
+  
+
+```
+
+```
+invalidClass.ts:10:17 lint/nursery/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+     9 │ class Greeter {
+  > 10 │ 	message: Array<any>;
+       │ 	               ^^^
+    11 │ }
+    12 │ 
+  
+
+```
+
+```
+invalidClass.ts:14:11 lint/nursery/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    13 │ class Greeter {
+  > 14 │ 	message: any[];
+       │ 	         ^^^
+    15 │ }
+    16 │ 
+  
+
+```
+
+```
+invalidClass.ts:18:23 lint/nursery/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    17 │ class Greeter {
+  > 18 │ 	message: Array<Array<any>>;
+       │ 	                     ^^^
+    19 │ }
+    20 │ 
+  
+
+```
+
+```
+invalidClass.ts:22:17 lint/nursery/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    21 │ class Greeter {
+  > 22 │ 	message: Array<any[]>;
+       │ 	               ^^^
+    23 │ }
+    24 │ 
+  
+
+```
+
+```
+invalidClass.ts:25:15 lint/nursery/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    23 │ }
+    24 │ 
+  > 25 │ class Foo<t = any> extends Bar<any> {}
+       │               ^^^
+    26 │ 
+    27 │ abstract class Foo<t = any> extends Bar<any> {}
+  
+
+```
+
+```
+invalidClass.ts:25:32 lint/nursery/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    23 │ }
+    24 │ 
+  > 25 │ class Foo<t = any> extends Bar<any> {}
+       │                                ^^^
+    26 │ 
+    27 │ abstract class Foo<t = any> extends Bar<any> {}
+  
+
+```
+
+```
+invalidClass.ts:27:24 lint/nursery/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    25 │ class Foo<t = any> extends Bar<any> {}
+    26 │ 
+  > 27 │ abstract class Foo<t = any> extends Bar<any> {}
+       │                        ^^^
+    28 │ 
+    29 │ abstract class Foo<t = any> implements Bar<any>, Baz<any> {}
+  
+
+```
+
+```
+invalidClass.ts:27:41 lint/nursery/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    25 │ class Foo<t = any> extends Bar<any> {}
+    26 │ 
+  > 27 │ abstract class Foo<t = any> extends Bar<any> {}
+       │                                         ^^^
+    28 │ 
+    29 │ abstract class Foo<t = any> implements Bar<any>, Baz<any> {}
+  
+
+```
+
+```
+invalidClass.ts:29:24 lint/nursery/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    27 │ abstract class Foo<t = any> extends Bar<any> {}
+    28 │ 
+  > 29 │ abstract class Foo<t = any> implements Bar<any>, Baz<any> {}
+       │                        ^^^
+    30 │ 
+    31 │ new Foo<any>()
+  
+
+```
+
+```
+invalidClass.ts:29:44 lint/nursery/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    27 │ abstract class Foo<t = any> extends Bar<any> {}
+    28 │ 
+  > 29 │ abstract class Foo<t = any> implements Bar<any>, Baz<any> {}
+       │                                            ^^^
+    30 │ 
+    31 │ new Foo<any>()
+  
+
+```
+
+```
+invalidClass.ts:29:54 lint/nursery/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    27 │ abstract class Foo<t = any> extends Bar<any> {}
+    28 │ 
+  > 29 │ abstract class Foo<t = any> implements Bar<any>, Baz<any> {}
+       │                                                      ^^^
+    30 │ 
+    31 │ new Foo<any>()
+  
+
+```
+
+```
+invalidClass.ts:31:9 lint/nursery/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    29 │ abstract class Foo<t = any> implements Bar<any>, Baz<any> {}
+    30 │ 
+  > 31 │ new Foo<any>()
+       │         ^^^
+    32 │ 
+    33 │ Foo<any>()
+  
+
+```
+
+```
+invalidClass.ts:33:5 lint/nursery/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Unexpected any. Specify a different type.
+  
+    31 │ new Foo<any>()
+    32 │ 
+  > 33 │ Foo<any>()
+       │     ^^^
+    34 │ 
+  
+
+```
+
+
