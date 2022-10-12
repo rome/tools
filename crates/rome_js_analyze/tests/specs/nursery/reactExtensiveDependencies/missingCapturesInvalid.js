@@ -29,3 +29,15 @@ function MyComponent4() {
       startTransition();
   }, []);
 }
+
+// all hooks with dependencies
+
+function MyComponent5() {
+  const a = 1;
+  useEffect(() => console.log(a));
+  useCallback(() => console.log(a));
+  useMemo(() => console.log(a));
+  useImperativeHandle(ref, () => console.log(a));
+  useLayoutEffect(() => console.log(a));
+  useInsertionEffect(() => console.log(a));
+}

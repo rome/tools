@@ -1,11 +1,78 @@
-use std::collections::HashSet;
+use std::collections::{HashSet, HashMap};
 
+use rome_js_semantic::{SemanticModel, ClosureExtensions, Capture};
 use rome_js_syntax::{
     JsArrayBindingPattern, JsArrayBindingPatternElementList, JsIdentifierBinding,
-    JsVariableDeclarator,
+    JsVariableDeclarator, JsCallExpression, JsAnyExpression, TextRange,
 };
 use rome_rowan::AstNode;
 use serde::{Serialize, Deserialize};
+
+pub(crate) struct ReactCallWithDependencyResult {
+    pub(crate) function_name_range: TextRange,
+    pub(crate) closure_node: Option<JsAnyExpression>,
+    pub(crate) dependencies_node: Option<JsAnyExpression>
+}
+
+impl ReactCallWithDependencyResult {
+    pub fn all_captures(&self, model: &SemanticModel) -> Vec<Capture> {
+        self.closure_node.as_ref()
+            .and_then(|node| 
+                Some(node.as_js_arrow_function_expression()?
+                    .closure(model)
+                    .all_captures()
+                    .collect::<Vec<_>>()
+            )).unwrap_or_default()
+    }
+
+    pub fn all_dependencies(&self) -> Vec<JsAnyExpression>  {
+        self.dependencies_node.as_ref()
+            .and_then(|x| 
+                Some(x.as_js_array_expression()?
+                        .elements()
+                        .into_iter()
+                        .filter_map(|x| x.ok()?.as_js_any_expression().cloned())
+                        .collect::<Vec<_>>())
+            ).unwrap_or_default()
+    }
+}
+
+fn get_call_expression(call: &JsCallExpression, i: usize) -> Option<JsAnyExpression> {
+    let args = call.arguments().ok()?;
+    let args = args.args().into_iter();
+    args.skip(i).next()?.ok()?.as_js_any_expression().cloned()
+}
+
+#[derive(Copy, Clone, Serialize, Deserialize)]
+pub struct ReactHookClosureDependenciesPosition {
+    closure: usize,
+    dependencies: usize
+}
+
+impl From<(usize, usize)> for ReactHookClosureDependenciesPosition {
+    fn from((closure, dependencies): (usize, usize)) -> Self {
+        Self { closure, dependencies }
+    }
+}
+
+pub(crate) fn react_hook_with_dependency(call: &JsCallExpression, hooks: &HashMap<String, ReactHookClosureDependenciesPosition>) -> Option<ReactCallWithDependencyResult> {
+    let name = call.callee().ok()?
+        .as_js_identifier_expression()?
+        .name().ok()?
+        .value_token().ok()?;
+    let function_name_range = name.text_trimmed_range();
+    let name = name.text_trimmed();
+
+    let hook = hooks.get(name)?;
+    let closure_node = get_call_expression(call, hook.closure);
+    let dependencies_node = get_call_expression(call, hook.dependencies);
+
+    Some(ReactCallWithDependencyResult {
+        function_name_range,
+        closure_node,
+        dependencies_node,
+    })
+}
 
 #[derive(Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct ReactHookStable {

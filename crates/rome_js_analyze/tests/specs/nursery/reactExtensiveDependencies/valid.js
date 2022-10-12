@@ -57,3 +57,15 @@ function MyComponent4() {
         console.log(externalStore);
     }, [name, state, memoizedCallback, memoizedValue, isPending]);
 }
+
+// all hooks with dependencies
+
+function MyComponent5() {
+    const a = 1;
+    useEffect(() => console.log(a), [a]);
+    useCallback(() => console.log(a), [a]);
+    useMemo(() => console.log(a), [a]);
+    useImperativeHandle(ref, () => console.log(a), [a]);
+    useLayoutEffect(() => console.log(a), [a]);
+    useInsertionEffect(() => console.log(a), [a]);
+}

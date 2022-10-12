@@ -21,13 +21,28 @@ declare_rule! {
     }
 }
 
+lazy_static::lazy_static! {
+    static ref OPTIONS: ReactExtensiveDependenciesOptions = ReactExtensiveDependenciesOptions::new();
+}
+
+
 #[derive(Clone, Serialize, Deserialize)]
 pub struct ReactExtensiveDependenciesOptions {
+    hooks: HashMap<String, ReactHookClosureDependenciesPosition>,
     stables: HashSet<ReactHookStable>,
 }
 
-impl Default for ReactExtensiveDependenciesOptions {
-    fn default() -> Self {
+impl ReactExtensiveDependenciesOptions {
+    pub fn new() -> Self { 
+        let hooks = HashMap::from_iter([
+            ("useEffect".to_string(), (0, 1).into()),
+            ("useLayoutEffect".to_string(), (0, 1).into()),
+            ("useInsertionEffect".to_string(), (0, 1).into()),
+            ("useCallback".to_string(), (0, 1).into()),
+            ("useMemo".to_string(), (0, 1).into()),
+            ("useImperativeHandle".to_string(), (1, 2).into()),
+        ]);
+
         let stables: HashSet<ReactHookStable> = HashSet::from_iter([
             ReactHookStable::new("useState", Some(1)),
             ReactHookStable::new("useReducer", Some(1)),
@@ -38,7 +53,7 @@ impl Default for ReactExtensiveDependenciesOptions {
             ReactHookStable::new("useSyncExternalStore", None),
         ]);
 
-        Self { stables }
+        Self { hooks, stables }
     }
 }
 
@@ -54,23 +69,14 @@ impl Rule for ReactExtensiveDependencies {
     type Options = ReactExtensiveDependenciesOptions;
 
     fn run(ctx: &RuleContext<Self>) -> Vec<Self::State> {
-        let options = ctx.options()
-            .map(Cow::Borrowed)
-            .unwrap_or_else(|| Cow::Owned(ReactExtensiveDependenciesOptions::default()));
-        
         let mut signals = vec![];
 
         let node = ctx.query();
-        if let Some(use_effect) = ReactUseEffectCallExpression::new(node) {
-            let range = match use_effect.callee_trimmed_range() {
-                Some(range) => range,
-                None => return signals,
-            };
-
+        if let Some(result) = react_hook_with_dependency(node, &OPTIONS.hooks) {
             let model = ctx.model();
-            let function = use_effect.effect().unwrap();
-            let captures: Vec<_> = function
-                .all_captures(model)
+
+            let captures: Vec<_> = result.all_captures(model)
+                .into_iter()
                 .filter_map(|capture| {
                     capture.declaration().and_then(|declaration| {
                         let node = declaration.syntax().parent()?;
@@ -84,7 +90,7 @@ impl Rule for ReactExtensiveDependencies {
                             _ => {
                                 let declaration =
                                     declaration.syntax().clone().cast::<JsIdentifierBinding>()?;
-                                let not_stable = !is_stable_binding(&declaration, &options.stables);
+                                let not_stable = !is_stable_binding(&declaration, &OPTIONS.stables);
                                 not_stable.then_some(capture)
                             }
                         }
@@ -93,18 +99,13 @@ impl Rule for ReactExtensiveDependencies {
                 .map(|x| (x.node().text_trimmed().to_string(), x))
                 .collect();
 
-            let deps: Vec<(String, TextRange)> = use_effect
-                .deps()
-                .map(|deps| {
-                    deps.items()
-                        .into_iter()
-                        .map(|x| (
-                            x.syntax().text_trimmed().to_string(),
-                            x.syntax().text_trimmed_range(),
-                        ))
-                        .collect()
-                })
-                .unwrap_or_default();
+            let deps: Vec<(String, TextRange)> = result.all_dependencies()
+                .into_iter()    
+                .map(|dep| (
+                    dep.syntax().text_trimmed().to_string(),
+                    dep.syntax().text_trimmed_range(),
+                ))
+                .collect();
 
             let mut add_deps: BTreeMap<String, Vec<Capture>> = BTreeMap::new();
             let mut remove_deps: Vec<TextRange> = vec![];
@@ -126,11 +127,11 @@ impl Rule for ReactExtensiveDependencies {
 
             // Generate signals
             for (_, captures) in add_deps {
-                signals.push(Problem::MissingDependency(range, captures));
+                signals.push(Problem::MissingDependency(result.function_name_range, captures));
             }
 
             for dep_range in remove_deps {
-                signals.push(Problem::ExtraDependency(range, dep_range));
+                signals.push(Problem::ExtraDependency(result.function_name_range, dep_range));
             }
         }
 
@@ -174,89 +175,6 @@ impl Rule for ReactExtensiveDependencies {
     
                 Some(diag)
             }
-        }
-    }
-}
-
-struct ReactUseEffectCallExpression<'a> {
-    call: &'a JsCallExpression,
-    effect: Option<JsAnyCallArgument>,
-    deps: Option<JsAnyCallArgument>,
-}
-
-pub enum ReactUseEffectEffect<'a> {
-    JsArrowFunctionExpression(&'a JsArrowFunctionExpression),
-}
-
-impl<'a> ReactUseEffectEffect<'a> {
-    pub fn all_captures(&self, model: &SemanticModel) -> impl Iterator<Item = Capture> {
-        use ReactUseEffectEffect::*;
-        match self {
-            JsArrowFunctionExpression(node) => {
-                let closure = model.closure(*node);
-                closure.all_captures()
-            }
-        }
-    }
-}
-
-pub enum ReactUseEffectDeps<'a> {
-    JsArrayExpression(&'a JsArrayExpression),
-}
-
-impl<'a> ReactUseEffectDeps<'a> {
-    pub fn items(&self) -> Vec<JsAnyExpression> {
-        match self {
-            ReactUseEffectDeps::JsArrayExpression(node) => node
-                .elements()
-                .into_iter()
-                .filter_map(|x| x.ok()?.as_js_any_expression().cloned())
-                .collect(),
-        }
-    }
-}
-
-impl<'a> ReactUseEffectCallExpression<'a> {
-    pub fn new(call: &'a JsCallExpression) -> Option<Self> {
-        let name = call.callee().ok()?.syntax().text_trimmed();
-        (name == "useEffect").then(|| {
-            let (effect, deps) = call
-                .arguments()
-                .map(|args| {
-                    let mut args = args.args().into_iter();
-                    let effect = args.next().and_then(|x| x.ok());
-                    let deps = args.next().and_then(|x| x.ok());
-                    (effect, deps)
-                })
-                .unwrap_or((None, None));
-
-            Self { call, effect, deps }
-        })
-    }
-
-    pub fn callee_trimmed_range(&self) -> Option<TextRange> {
-        Some(self.call.callee().ok()?.syntax().text_trimmed_range())
-    }
-
-    pub fn effect(&self) -> Option<ReactUseEffectEffect> {
-        let expr = self.effect.as_ref()?.as_js_any_expression()?;
-        match expr.syntax().kind() {
-            JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION => {
-                let expr = expr.as_js_arrow_function_expression()?;
-                Some(ReactUseEffectEffect::JsArrowFunctionExpression(expr))
-            }
-            _ => None,
-        }
-    }
-
-    pub fn deps(&self) -> Option<ReactUseEffectDeps> {
-        let expr = self.deps.as_ref()?.as_js_any_expression()?;
-        match expr.syntax().kind() {
-            JsSyntaxKind::JS_ARRAY_EXPRESSION => {
-                let expr = expr.as_js_array_expression()?;
-                Some(ReactUseEffectDeps::JsArrayExpression(expr))
-            }
-            _ => None,
         }
     }
 }

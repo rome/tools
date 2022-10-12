@@ -35,6 +35,19 @@ function MyComponent4() {
       startTransition();
   }, []);
 }
+
+// all hooks with dependencies
+
+function MyComponent5() {
+  const a = 1;
+  useEffect(() => console.log(a));
+  useCallback(() => console.log(a));
+  useMemo(() => console.log(a));
+  useImperativeHandle(ref, () => console.log(a));
+  useLayoutEffect(() => console.log(a));
+  useInsertionEffect(() => console.log(a));
+}
+
 ```
 
 # Diagnostics
@@ -201,6 +214,150 @@ missingCapturesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━
        │                   ^^^^^^^^^^^^^
     26 │       console.log(deferredValue);
     27 │ 
+  
+
+```
+
+```
+missingCapturesInvalid.js:37:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This useEffect has missing dependencies
+  
+    35 │ function MyComponent5() {
+    36 │   const a = 1;
+  > 37 │   useEffect(() => console.log(a));
+       │   ^^^^^^^^^
+    38 │   useCallback(() => console.log(a));
+    39 │   useMemo(() => console.log(a));
+  
+  i This capture is not in the dependency list
+  
+    35 │ function MyComponent5() {
+    36 │   const a = 1;
+  > 37 │   useEffect(() => console.log(a));
+       │                               ^
+    38 │   useCallback(() => console.log(a));
+    39 │   useMemo(() => console.log(a));
+  
+
+```
+
+```
+missingCapturesInvalid.js:38:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This useEffect has missing dependencies
+  
+    36 │   const a = 1;
+    37 │   useEffect(() => console.log(a));
+  > 38 │   useCallback(() => console.log(a));
+       │   ^^^^^^^^^^^
+    39 │   useMemo(() => console.log(a));
+    40 │   useImperativeHandle(ref, () => console.log(a));
+  
+  i This capture is not in the dependency list
+  
+    36 │   const a = 1;
+    37 │   useEffect(() => console.log(a));
+  > 38 │   useCallback(() => console.log(a));
+       │                                 ^
+    39 │   useMemo(() => console.log(a));
+    40 │   useImperativeHandle(ref, () => console.log(a));
+  
+
+```
+
+```
+missingCapturesInvalid.js:39:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This useEffect has missing dependencies
+  
+    37 │   useEffect(() => console.log(a));
+    38 │   useCallback(() => console.log(a));
+  > 39 │   useMemo(() => console.log(a));
+       │   ^^^^^^^
+    40 │   useImperativeHandle(ref, () => console.log(a));
+    41 │   useLayoutEffect(() => console.log(a));
+  
+  i This capture is not in the dependency list
+  
+    37 │   useEffect(() => console.log(a));
+    38 │   useCallback(() => console.log(a));
+  > 39 │   useMemo(() => console.log(a));
+       │                             ^
+    40 │   useImperativeHandle(ref, () => console.log(a));
+    41 │   useLayoutEffect(() => console.log(a));
+  
+
+```
+
+```
+missingCapturesInvalid.js:40:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This useEffect has missing dependencies
+  
+    38 │   useCallback(() => console.log(a));
+    39 │   useMemo(() => console.log(a));
+  > 40 │   useImperativeHandle(ref, () => console.log(a));
+       │   ^^^^^^^^^^^^^^^^^^^
+    41 │   useLayoutEffect(() => console.log(a));
+    42 │   useInsertionEffect(() => console.log(a));
+  
+  i This capture is not in the dependency list
+  
+    38 │   useCallback(() => console.log(a));
+    39 │   useMemo(() => console.log(a));
+  > 40 │   useImperativeHandle(ref, () => console.log(a));
+       │                                              ^
+    41 │   useLayoutEffect(() => console.log(a));
+    42 │   useInsertionEffect(() => console.log(a));
+  
+
+```
+
+```
+missingCapturesInvalid.js:41:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This useEffect has missing dependencies
+  
+    39 │   useMemo(() => console.log(a));
+    40 │   useImperativeHandle(ref, () => console.log(a));
+  > 41 │   useLayoutEffect(() => console.log(a));
+       │   ^^^^^^^^^^^^^^^
+    42 │   useInsertionEffect(() => console.log(a));
+    43 │ }
+  
+  i This capture is not in the dependency list
+  
+    39 │   useMemo(() => console.log(a));
+    40 │   useImperativeHandle(ref, () => console.log(a));
+  > 41 │   useLayoutEffect(() => console.log(a));
+       │                                     ^
+    42 │   useInsertionEffect(() => console.log(a));
+    43 │ }
+  
+
+```
+
+```
+missingCapturesInvalid.js:42:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This useEffect has missing dependencies
+  
+    40 │   useImperativeHandle(ref, () => console.log(a));
+    41 │   useLayoutEffect(() => console.log(a));
+  > 42 │   useInsertionEffect(() => console.log(a));
+       │   ^^^^^^^^^^^^^^^^^^
+    43 │ }
+    44 │ 
+  
+  i This capture is not in the dependency list
+  
+    40 │   useImperativeHandle(ref, () => console.log(a));
+    41 │   useLayoutEffect(() => console.log(a));
+  > 42 │   useInsertionEffect(() => console.log(a));
+       │                                        ^
+    43 │ }
+    44 │ 
   
 
 ```
