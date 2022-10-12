@@ -21,9 +21,7 @@ require("dotenv").config();
  * @type {any}
  */
 const grayMatter = require("gray-matter");
-const {resolve, join} = require("node:path");
-const {readFile} = require("node:fs/promises");
-const {readFileSync} = require("fs");
+const { resolve, join } = require("node:path");
 
 const isProduction = process.env.ELEVENTY_ENV === "production";
 
@@ -212,7 +210,7 @@ module.exports = function (eleventyConfig) {
 
 	eleventyConfig.addShortcode("romeVersion", function () {
 		const manifestPath = resolve(join("..", "npm/rome", "package.json"));
-		const content = readFileSync(manifestPath, "utf8");
+		const content = fs.readFileSync(manifestPath, "utf8");
 		const version = JSON.parse(content).version;
 		return `${version}`;
 	});
