@@ -82,10 +82,12 @@ fn main() -> Result<()> {
             "nursery" => (
                 "Nursery",
                 markup! {
-                    "Rules that are being written. Rules under this category are meant to be considered unstable or buggy.
+                    "Rules that are being written. Rules under this group are meant to be considered unstable or buggy.
 
-Rules can be downgraded to this category in case some path release is needed. After an arbitrary amount of time, the team can decide
-to promote these rules into a more appropriate category."
+Developers can opt-in these rules via configuration. We vehemently appreciate filing issue in case of bugs or performance problems. 
+
+Rules can be downgraded to this group in case a patch release is needed. After an arbitrary amount of time, the team can decide
+to promote these rules into an appropriate group. Doing so means that the rule is stable and ready for production."
 
                 },
             ),
@@ -99,7 +101,7 @@ to promote these rules into a more appropriate category."
         };
 
         writeln!(index, "<section>")?;
-        writeln!(index, "<h2>{group_name}</h2>")?;
+        writeln!(index, "<h2>{group_name}<a class=\"header-anchor\" href=\"#{group_name}\" aria-label=\"{group_name}\"></a></h2>")?;
         writeln!(index)?;
         markup_to_string(&mut index, description)?;
         writeln!(index)?;

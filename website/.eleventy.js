@@ -21,6 +21,7 @@ require("dotenv").config();
  * @type {any}
  */
 const grayMatter = require("gray-matter");
+const { resolve, join } = require("node:path");
 
 const isProduction = process.env.ELEVENTY_ENV === "production";
 
@@ -208,7 +209,10 @@ module.exports = function (eleventyConfig) {
 	});
 
 	eleventyConfig.addShortcode("romeVersion", function () {
-		return "?.?.?";
+		const manifestPath = resolve(join("..", "npm/rome", "package.json"));
+		const content = fs.readFileSync(manifestPath, "utf8");
+		const version = JSON.parse(content).version;
+		return `${version}`;
 	});
 
 	// Customize YAML engine so we can parse hard tabs lol...
