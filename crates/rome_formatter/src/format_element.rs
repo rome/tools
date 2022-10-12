@@ -29,8 +29,8 @@ pub enum FormatElement {
     /// Token constructed by the formatter from a static string
     StaticText { text: &'static str },
 
-    /// Token constructed from the input source as a dynamics
-    /// string and a range of the input source
+    /// Token constructed from the input source as a dynamic
+    /// string and a range in the input source
     DynamicText {
         // There's no need for the text to be mutable, using `Box<str>` safes 8 bytes over `String`.
         text: Box<str>,
