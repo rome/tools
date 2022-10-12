@@ -14,7 +14,7 @@ use rome_js_syntax::{
     JsFormalParameter, JsFunctionBody, JsIdentifierExpression, JsIfStatement, JsLanguage,
     JsSyntaxKind, JsSyntaxNode, JsVariableDeclarator, JsWhileStatement, TsInterfaceDeclaration,
 };
-use rome_rowan::{AstNode, SyntaxTriviaPieceComments, TextLen};
+use rome_rowan::{AstNode, SyntaxNodeOptionExt, SyntaxTriviaPieceComments, TextLen};
 
 pub type JsComments = Comments<JsLanguage>;
 
@@ -965,7 +965,7 @@ fn handle_variable_declarator_comment(
             }
         }
         JsSyntaxKind::JS_INITIALIZER_CLAUSE => {
-            let parent_kind = enclosing.parent().map(|p| p.kind());
+            let parent_kind = enclosing.parent().kind();
 
             if matches!(
                 parent_kind,

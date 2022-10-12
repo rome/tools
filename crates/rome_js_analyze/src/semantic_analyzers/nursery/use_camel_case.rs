@@ -13,7 +13,7 @@ use rome_js_syntax::{
     JsPrivateClassMemberName, JsPropertyClassMember, JsSetterClassMember, JsSyntaxKind,
     JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList, JsxReferenceIdentifier,
 };
-use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
+use rome_rowan::{declare_node_union, AstNode, BatchMutationExt, SyntaxNodeOptionExt};
 use std::{borrow::Cow, iter::once};
 
 declare_rule! {
@@ -67,7 +67,7 @@ fn is_non_camel_ok(binding: &JsIdentifierBinding, model: &SemanticModel) -> Opti
     match binding.syntax().parent()?.kind() {
         JS_VARIABLE_DECLARATOR => {
             let declarator = binding.parent::<JsVariableDeclarator>()?;
-            let is_ok = match declarator.syntax().parent().map(|parent| parent.kind()) {
+            let is_ok = match declarator.syntax().parent().kind() {
                 Some(JS_VARIABLE_DECLARATOR_LIST) => declarator
                     .parent::<JsVariableDeclaratorList>()?
                     .parent::<JsVariableDeclaration>()?

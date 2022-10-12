@@ -9,7 +9,7 @@ use rome_js_syntax::{
     JsSyntaxToken, JsVariableDeclaration, JsVariableDeclarator, JsVariableDeclaratorList,
     JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding,
 };
-use rome_rowan::{syntax::Preorder, AstNode, SyntaxNodeCast, SyntaxTokenText};
+use rome_rowan::{syntax::Preorder, AstNode, SyntaxNodeCast, SyntaxNodeOptionExt, SyntaxTokenText};
 
 /// Events emitted by the [SemanticEventExtractor]. These events are later
 /// made into the Semantic Model.
@@ -29,7 +29,7 @@ pub enum SemanticEvent {
     },
 
     /// Tracks where a symbol is read, but only if its declaration
-    /// is before this refence.
+    /// is before this reference.
     /// Generated for:
     /// - All reference identifiers
     Read {
@@ -147,7 +147,7 @@ impl SemanticEvent {
 ///         WalkEvent::Leave(node) => extractor.leave(&node),
 ///         _ => {}
 ///     }
-///     
+///
 ///     while let Some(e) = extractor.pop() {
 ///         dbg!(e);
 ///     }
@@ -299,7 +299,7 @@ impl SemanticEventExtractor {
         let declarator = binding.parent::<JsVariableDeclarator>()?;
 
         use JsSyntaxKind::*;
-        let is_var = match declarator.syntax().parent().map(|parent| parent.kind()) {
+        let is_var = match declarator.syntax().parent().kind() {
             Some(JS_VARIABLE_DECLARATOR_LIST) => declarator
                 .parent::<JsVariableDeclaratorList>()?
                 .parent::<JsVariableDeclaration>()?
@@ -734,7 +734,7 @@ impl SemanticEventExtractor {
         }
 
         let is_exported = matches!(
-            function_declaration.parent().map(|p| p.kind()),
+            function_declaration.parent().kind(),
             Some(JS_EXPORT | JS_EXPORT_DEFAULT_DECLARATION_CLAUSE)
         );
         if is_exported {
@@ -808,7 +808,7 @@ impl SemanticEventExtractor {
         }
 
         let is_exported = matches!(
-            declaration.parent().map(|p| p.kind()),
+            declaration.parent().kind(),
             Some(JS_EXPORT | JS_EXPORT_DEFAULT_DECLARATION_CLAUSE)
         );
 
@@ -865,12 +865,12 @@ impl SemanticEventExtractor {
 
         // check export keyword
         matches!(
-            reference_parent.as_ref().map(|p| p.kind()),
+            reference_parent.kind(),
             Some(JS_EXPORT_NAMED_SHORTHAND_SPECIFIER | JS_EXPORT_NAMED_SPECIFIER)
         ) | {
             // check "export default" keyword
             matches!(
-                reference_greatparent.as_ref().map(|p| p.kind()),
+                reference_greatparent.kind(),
                 Some(JS_EXPORT_DEFAULT_EXPRESSION_CLAUSE)
             )
         } | {

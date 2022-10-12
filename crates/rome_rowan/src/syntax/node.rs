@@ -791,3 +791,21 @@ impl<L: Language> DoubleEndedIterator for SyntaxSlots<L> {
         self.raw.nth_back(n).map(SyntaxSlot::from)
     }
 }
+
+/// Trait with extension methods for [Option<SyntaxNode>].
+pub trait SyntaxNodeOptionExt<L: Language> {
+    /// Returns the kind of the node if self is [Some], [None] otherwise.
+    fn kind(&self) -> Option<L::Kind>;
+}
+
+impl<L: Language> SyntaxNodeOptionExt<L> for Option<&SyntaxNode<L>> {
+    fn kind(&self) -> Option<L::Kind> {
+        self.map(|node| node.kind())
+    }
+}
+
+impl<L: Language> SyntaxNodeOptionExt<L> for Option<SyntaxNode<L>> {
+    fn kind(&self) -> Option<L::Kind> {
+        self.as_ref().kind()
+    }
+}

@@ -12,7 +12,9 @@ use rome_js_syntax::{
     JsLanguage, JsSyntaxKind, JsxAnyChild, JsxAnyElementName, JsxAnyTag, JsxChildList, JsxElement,
     JsxFragment, JsxTagExpression,
 };
-use rome_rowan::{declare_node_union, AstNode, AstNodeList, BatchMutation, BatchMutationExt};
+use rome_rowan::{
+    declare_node_union, AstNode, AstNodeList, BatchMutation, BatchMutationExt, SyntaxNodeOptionExt,
+};
 
 declare_rule! {
     /// Disallow unnecessary fragments
@@ -111,7 +113,7 @@ impl Rule for NoUselessFragments {
                     .parent()
                     .map(|parent| match JsxTagExpression::try_cast(parent) {
                         Ok(parent) => {
-                            let parent_kind = parent.syntax().parent().map(|p| p.kind());
+                            let parent_kind = parent.syntax().parent().kind();
                             matches!(
                                 parent_kind,
                                 Some(
