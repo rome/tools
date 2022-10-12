@@ -94,64 +94,15 @@ impl<'a> Printer<'a> {
                 }
             }
 
-            FormatElement::Text(token) => {
-                if !self.state.pending_indent.is_empty() {
-                    let (indent_char, repeat_count) = match self.options.indent_style() {
-                        IndentStyle::Tab => ('\t', 1),
-                        IndentStyle::Space(count) => (' ', count),
-                    };
-
-                    let indent = std::mem::take(&mut self.state.pending_indent);
-                    let total_indent_char_count = indent.level() as usize * repeat_count as usize;
-
-                    self.state
-                        .buffer
-                        .reserve(total_indent_char_count + indent.align() as usize);
-
-                    for _ in 0..total_indent_char_count {
-                        self.print_char(indent_char);
-                    }
-
-                    for _ in 0..indent.align() {
-                        self.print_char(' ');
-                    }
-                }
-
-                // Print pending spaces
-                if self.state.pending_space {
-                    self.print_str(" ");
-                    self.state.pending_space = false;
-                }
-
-                // Insert source map markers before and after the token
-                //
-                // If the token has source position information the start marker
-                // will use the start position of the original token, and the end
-                // marker will use that position + the text length of the token
-                //
-                // If the token has no source position (was created by the formatter)
-                // both the start and end marker will use the last known position
-                // in the input source (from state.source_position)
-                if let Some(source) = token.source_position() {
-                    self.state.source_position = *source;
-                }
-
-                self.push_marker(SourceMarker {
-                    source: self.state.source_position,
-                    dest: self.state.buffer.text_len(),
-                });
-
-                self.print_str(token);
-
-                if token.source_position().is_some() {
-                    self.state.source_position += TextSize::of(&**token);
-                }
-
-                self.push_marker(SourceMarker {
-                    source: self.state.source_position,
-                    dest: self.state.buffer.text_len(),
-                });
-            }
+            FormatElement::StaticText { text } => self.print_text(text, None),
+            FormatElement::DynamicText {
+                text,
+                source_position,
+            } => self.print_text(text, Some(*source_position)),
+            FormatElement::SyntaxTokenTextSlice {
+                slice,
+                source_position,
+            } => self.print_text(slice, Some(*source_position)),
 
             FormatElement::Line(line_mode) => {
                 if args.mode().is_flat()
@@ -325,6 +276,65 @@ impl<'a> Printer<'a> {
         let result = measure.fits(&mut AllPredicate);
         measure.finish();
         result
+    }
+
+    fn print_text(&mut self, text: &str, source_position: Option<TextSize>) {
+        if !self.state.pending_indent.is_empty() {
+            let (indent_char, repeat_count) = match self.options.indent_style() {
+                IndentStyle::Tab => ('\t', 1),
+                IndentStyle::Space(count) => (' ', count),
+            };
+
+            let indent = std::mem::take(&mut self.state.pending_indent);
+            let total_indent_char_count = indent.level() as usize * repeat_count as usize;
+
+            self.state
+                .buffer
+                .reserve(total_indent_char_count + indent.align() as usize);
+
+            for _ in 0..total_indent_char_count {
+                self.print_char(indent_char);
+            }
+
+            for _ in 0..indent.align() {
+                self.print_char(' ');
+            }
+        }
+
+        // Print pending spaces
+        if self.state.pending_space {
+            self.print_str(" ");
+            self.state.pending_space = false;
+        }
+
+        // Insert source map markers before and after the token
+        //
+        // If the token has source position information the start marker
+        // will use the start position of the original token, and the end
+        // marker will use that position + the text length of the token
+        //
+        // If the token has no source position (was created by the formatter)
+        // both the start and end marker will use the last known position
+        // in the input source (from state.source_position)
+        if let Some(source) = source_position {
+            self.state.source_position = source;
+        }
+
+        self.push_marker(SourceMarker {
+            source: self.state.source_position,
+            dest: self.state.buffer.text_len(),
+        });
+
+        self.print_str(text);
+
+        if source_position.is_some() {
+            self.state.source_position += text.text_len();
+        }
+
+        self.push_marker(SourceMarker {
+            source: self.state.source_position,
+            dest: self.state.buffer.text_len(),
+        });
     }
 
     fn push_marker(&mut self, marker: SourceMarker) {
@@ -989,37 +999,9 @@ impl<'a, 'print> FitsMeasurer<'a, 'print> {
                 }
             }
 
-            FormatElement::Text(token) => {
-                let indent = std::mem::take(&mut self.state.pending_indent);
-                self.state.line_width += indent.level() as usize
-                    * self.options().indent_width() as usize
-                    + indent.align() as usize;
-
-                if self.state.pending_space {
-                    self.state.line_width += 1;
-                }
-
-                for c in token.chars() {
-                    let char_width = match c {
-                        '\t' => self.options().tab_width as usize,
-                        '\n' => {
-                            return Ok(if self.must_be_flat {
-                                Fits::No
-                            } else {
-                                Fits::Yes
-                            });
-                        }
-                        c => c.width().unwrap_or(0),
-                    };
-                    self.state.line_width += char_width;
-                }
-
-                if self.state.line_width > self.options().print_width.into() {
-                    return Ok(Fits::No);
-                }
-
-                self.state.pending_space = false;
-            }
+            FormatElement::StaticText { text } => return Ok(self.fits_text(text)),
+            FormatElement::DynamicText { text, .. } => return Ok(self.fits_text(text)),
+            FormatElement::SyntaxTokenTextSlice { slice, .. } => return Ok(self.fits_text(slice)),
 
             FormatElement::LineSuffixBoundary => {
                 if self.state.has_line_suffix {
@@ -1153,6 +1135,39 @@ impl<'a, 'print> FitsMeasurer<'a, 'print> {
         }
 
         Ok(Fits::Maybe)
+    }
+
+    fn fits_text(&mut self, text: &str) -> Fits {
+        let indent = std::mem::take(&mut self.state.pending_indent);
+        self.state.line_width += indent.level() as usize * self.options().indent_width() as usize
+            + indent.align() as usize;
+
+        if self.state.pending_space {
+            self.state.line_width += 1;
+        }
+
+        for c in text.chars() {
+            let char_width = match c {
+                '\t' => self.options().tab_width as usize,
+                '\n' => {
+                    return if self.must_be_flat {
+                        Fits::No
+                    } else {
+                        Fits::Yes
+                    };
+                }
+                c => c.width().unwrap_or(0),
+            };
+            self.state.line_width += char_width;
+        }
+
+        if self.state.line_width > self.options().print_width.into() {
+            return Fits::No;
+        }
+
+        self.state.pending_space = false;
+
+        Fits::Maybe
     }
 
     fn finish(mut self) {

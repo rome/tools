@@ -20,14 +20,14 @@ pub trait Buffer {
     /// # Examples
     ///
     /// ```
-    /// use rome_formatter::{Buffer, FormatElement, FormatState, SimpleFormatContext, Text, VecBuffer};
+    /// use rome_formatter::{Buffer, FormatElement, FormatState, SimpleFormatContext, VecBuffer};
     ///
     /// let mut state = FormatState::new(SimpleFormatContext::default());
     /// let mut buffer = VecBuffer::new(&mut state);
     ///
-    /// buffer.write_element(FormatElement::Text(Text::Static { text: "test"})).unwrap();
+    /// buffer.write_element(FormatElement::StaticText { text: "test"}).unwrap();
     ///
-    /// assert_eq!(buffer.into_vec(), vec![FormatElement::Text(Text::Static { text: "test" })]);
+    /// assert_eq!(buffer.into_vec(), vec![FormatElement::StaticText { text: "test" }]);
     /// ```
     ///
     fn write_element(&mut self, element: FormatElement) -> FormatResult<()>;
@@ -46,14 +46,14 @@ pub trait Buffer {
     ///
     /// ```
     /// use rome_formatter::prelude::*;
-    /// use rome_formatter::{Buffer, FormatState, SimpleFormatContext, Text, VecBuffer, format_args};
+    /// use rome_formatter::{Buffer, FormatState, SimpleFormatContext, VecBuffer, format_args};
     ///
     /// let mut state = FormatState::new(SimpleFormatContext::default());
     /// let mut buffer = VecBuffer::new(&mut state);
     ///
     /// buffer.write_fmt(format_args!(text("Hello World"))).unwrap();
     ///
-    /// assert_eq!(buffer.into_vec(), vec![FormatElement::Text(Text::Static { text: "Hello World" })]);
+    /// assert_eq!(buffer.into_vec(), vec![FormatElement::StaticText{ text: "Hello World" }]);
     /// ```
     fn write_fmt(mut self: &mut Self, arguments: Arguments<Self::Context>) -> FormatResult<()> {
         write(&mut self, arguments)
@@ -466,10 +466,10 @@ where
 /// assert_eq!(
 ///     formatted.document().as_ref(),
 ///     &[
-///         FormatElement::Text(Text::Static { text: "The next soft line or space gets replaced by a space" }),
+///         FormatElement::StaticText { text: "The next soft line or space gets replaced by a space" },
 ///         FormatElement::Space,
-///         FormatElement::Text(Text::Static { text: "and the line here" }),
-///         FormatElement::Text(Text::Static { text: "is removed entirely." })
+///         FormatElement::StaticText { text: "and the line here" },
+///         FormatElement::StaticText { text: "is removed entirely." }
 ///     ]
 /// );
 ///
@@ -635,10 +635,10 @@ pub trait BufferExtensions: Buffer + Sized {
     ///     assert_eq!(
     ///         recorded.deref(),
     ///         &[
-    ///             FormatElement::Text(Text::Static{ text: "A" }),
-    ///             FormatElement::Text(Text::Static{ text: "B" }),
-    ///             FormatElement::Text(Text::Static{ text: "C" }),
-    ///             FormatElement::Text(Text::Static{ text: "D" })
+    ///             FormatElement::StaticText{ text: "A" },
+    ///             FormatElement::StaticText{ text: "B" },
+    ///             FormatElement::StaticText{ text: "C" },
+    ///             FormatElement::StaticText{ text: "D" }
     ///         ]
     ///     );
     ///

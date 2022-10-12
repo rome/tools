@@ -418,10 +418,10 @@ impl JsxWord {
 
 impl Format<JsFormatContext> for JsxWord {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        f.write_element(FormatElement::Text(Text::SyntaxTokenTextSlice {
+        f.write_element(FormatElement::SyntaxTokenTextSlice {
             source_position: self.source_position,
             slice: self.text.clone(),
-        }))
+        })
     }
 }
 

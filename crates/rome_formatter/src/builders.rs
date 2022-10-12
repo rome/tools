@@ -265,7 +265,7 @@ pub struct StaticText {
 
 impl<Context> Format<Context> for StaticText {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        f.write_element(FormatElement::Text(Text::Static { text: self.text }))
+        f.write_element(FormatElement::StaticText { text: self.text })
     }
 }
 
@@ -290,10 +290,10 @@ pub struct DynamicText<'a> {
 
 impl<Context> Format<Context> for DynamicText<'_> {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        f.write_element(FormatElement::Text(Text::Dynamic {
+        f.write_element(FormatElement::DynamicText {
             text: self.text.to_string().into_boxed_str(),
             source_position: self.position,
-        }))
+        })
     }
 }
 
@@ -335,15 +335,15 @@ impl<L: Language, Context> Format<Context> for SyntaxTokenCowSlice<'_, L> {
                 let relative_range = range - self.token.text_range().start();
                 let slice = self.token.token_text().slice(relative_range);
 
-                f.write_element(FormatElement::Text(Text::SyntaxTokenTextSlice {
+                f.write_element(FormatElement::SyntaxTokenTextSlice {
                     slice,
                     source_position: self.start,
-                }))
+                })
             }
-            Cow::Owned(text) => f.write_element(FormatElement::Text(Text::Dynamic {
+            Cow::Owned(text) => f.write_element(FormatElement::DynamicText {
                 text: text.to_string().into_boxed_str(),
                 source_position: self.start,
-            })),
+            }),
         }
     }
 }
@@ -377,10 +377,10 @@ pub struct SyntaxTokenTextSlice {
 
 impl<Context> Format<Context> for SyntaxTokenTextSlice {
     fn fmt(&self, f: &mut Formatter<Context>) -> FormatResult<()> {
-        f.write_element(FormatElement::Text(Text::SyntaxTokenTextSlice {
+        f.write_element(FormatElement::SyntaxTokenTextSlice {
             slice: self.text.clone(),
             source_position: self.source_position,
-        }))
+        })
     }
 }
 
