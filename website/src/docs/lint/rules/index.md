@@ -12,7 +12,7 @@ eleventyNavigation:
 # Rules
 
 <section>
-<h2>Correctness</h2>
+<h2>Correctness<a class="header-anchor" href="#Correctness" aria-label="Correctness"></a></h2>
 
 This group should includes those rules that are meant to prevent possible bugs and misuse of the language.
 <div class="rule">
@@ -246,12 +246,14 @@ initializer and update expressions are not needed
 </div>
 </section>
 <section>
-<h2>Nursery</h2>
+<h2>Nursery<a class="header-anchor" href="#Nursery" aria-label="Nursery"></a></h2>
 
-Rules that are being written. Rules under this category are meant to be considered unstable or buggy.
+Rules that are being written. Rules under this group are meant to be considered unstable or buggy.
 
-Rules can be downgraded to this category in case some path release is needed. After an arbitrary amount of time, the team can decide
-to promote these rules into a more appropriate category.
+Developers can opt-in these rules via configuration. We vehemently appreciate filing issue in case of bugs or performance problems. 
+
+Rules can be downgraded to this category in case a patch release is needed. After an arbitrary amount of time, the team can decide
+to promote these rules into an appropriate category. Doing so means that the rule is stable and ready for production.
 <div class="rule">
 <h3 data-toc-exclude id="noArrayIndexKey">
 	<a href="/docs/lint/rules/noArrayIndexKey">noArrayIndexKey (since v0.10.0)</a>
@@ -394,7 +396,7 @@ Enforce that all anchors are valid, and they are navigable elements.
 </div>
 </section>
 <section>
-<h2>Style</h2>
+<h2>Style<a class="header-anchor" href="#Style" aria-label="Style"></a></h2>
 
 Rules that focus mostly on making the code more consistent.
 <div class="rule">
