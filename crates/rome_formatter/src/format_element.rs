@@ -26,8 +26,26 @@ pub enum FormatElement {
     /// Forces the parent group to print in expanded mode.
     ExpandParent,
 
-    /// A text that should be printed as is, see [crate::builders::text] for documentation and examples.
-    Text(Text),
+    /// Token constructed by the formatter from a static string
+    StaticText { text: &'static str },
+
+    /// Token constructed from the input source as a dynamics
+    /// string and a range of the input source
+    DynamicText {
+        // There's no need for the text to be mutable, using `Box<str>` safes 8 bytes over `String`.
+        text: Box<str>,
+        // The position of the dynamic token in the unformatted source code
+        source_position: TextSize,
+    },
+
+    /// A token for a text that is taken as is from the source code (input text and formatted representation are identical).
+    /// Implementing by taking a slice from a `SyntaxToken` to avoid allocating a new string.
+    SyntaxTokenTextSlice {
+        /// The start position of the token in the unformatted source code
+        source_position: TextSize,
+        /// The token text
+        slice: SyntaxTokenText,
+    },
 
     /// Prevents that line suffixes move past this boundary. Forces the printer to print any pending
     /// line suffixes, potentially by inserting a hard line break.
@@ -51,7 +69,16 @@ impl std::fmt::Debug for FormatElement {
             FormatElement::Space => write!(fmt, "Space"),
             FormatElement::Line(mode) => fmt.debug_tuple("Line").field(mode).finish(),
             FormatElement::ExpandParent => write!(fmt, "ExpandParent"),
-            FormatElement::Text(text) => text.fmt(fmt),
+            FormatElement::StaticText { text } => {
+                fmt.debug_tuple("StaticText").field(text).finish()
+            }
+            FormatElement::DynamicText { text, .. } => {
+                fmt.debug_tuple("DynamicText").field(text).finish()
+            }
+            FormatElement::SyntaxTokenTextSlice { slice, .. } => fmt
+                .debug_tuple("SyntaxTokenTextSlice")
+                .field(slice)
+                .finish(),
             FormatElement::LineSuffixBoundary => write!(fmt, "LineSuffixBoundary"),
             FormatElement::BestFitting(best_fitting) => {
                 fmt.debug_tuple("BestFitting").field(&best_fitting).finish()
@@ -140,68 +167,6 @@ impl Deref for Interned {
     }
 }
 
-/// See [crate::builders::text] for documentation
-#[derive(Eq, Clone)]
-pub enum Text {
-    /// Token constructed by the formatter from a static string
-    Static { text: &'static str },
-    /// Token constructed from the input source as a dynamics
-    /// string and a range of the input source
-    Dynamic {
-        // There's no need for the text to be mutable, using `Box<str>` safes 8 bytes over `String`.
-        text: Box<str>,
-        // The position of the dynamic token in the unformatted source code
-        source_position: TextSize,
-    },
-    /// A token for a text that is taken as is from the source code (input text and formatted representation are identical).
-    /// Implementing by taking a slice from a `SyntaxToken` to avoid allocating a new string.
-    SyntaxTokenTextSlice {
-        /// The start position of the token in the unformatted source code
-        source_position: TextSize,
-        /// The token text
-        slice: SyntaxTokenText,
-    },
-}
-
-impl std::fmt::Debug for Text {
-    fn fmt(&self, fmt: &mut std::fmt::Formatter) -> std::fmt::Result {
-        // This does not use debug_tuple so the tokens are
-        // written on a single line even when pretty-printing
-        match self {
-            Text::Static { text } => write!(fmt, "StaticText({:?})", text),
-            Text::Dynamic { text, .. } => write!(fmt, "DynamicText({:?})", text),
-            Text::SyntaxTokenTextSlice {
-                slice: token_text, ..
-            } => {
-                write!(fmt, "SyntaxTokenTextSlice({:?})", token_text)
-            }
-        }
-    }
-}
-
-impl Text {
-    /// Get the range of the input source covered by this token,
-    /// or None if the token was synthesized by the formatter
-    pub fn source_position(&self) -> Option<&TextSize> {
-        match self {
-            Text::Static { .. } => None,
-            Text::Dynamic {
-                source_position, ..
-            } => Some(source_position),
-            Text::SyntaxTokenTextSlice {
-                source_position, ..
-            } => Some(source_position),
-        }
-    }
-}
-
-// Token equality only compares the text content
-impl PartialEq for Text {
-    fn eq(&self, other: &Self) -> bool {
-        **self == **other
-    }
-}
-
 const LINE_SEPARATOR: char = '\u{2028}';
 const PARAGRAPH_SEPARATOR: char = '\u{2029}';
 pub const LINE_TERMINATORS: [char; 3] = ['\r', LINE_SEPARATOR, PARAGRAPH_SEPARATOR];
@@ -234,19 +199,6 @@ pub fn normalize_newlines<const N: usize>(text: &str, terminators: [char; N]) ->
     }
 }
 
-impl Deref for Text {
-    type Target = str;
-    fn deref(&self) -> &Self::Target {
-        match self {
-            Text::Static { text } => text,
-            Text::Dynamic { text, .. } => text,
-            Text::SyntaxTokenTextSlice {
-                slice: token_text, ..
-            } => token_text.deref(),
-        }
-    }
-}
-
 impl FormatElement {
     /// Returns `true` if self is a [FormatElement::Tag]
     pub const fn is_tag(&self) -> bool {
@@ -268,6 +220,15 @@ impl FormatElement {
             _ => false,
         }
     }
+
+    pub const fn is_text(&self) -> bool {
+        matches!(
+            self,
+            FormatElement::SyntaxTokenTextSlice { .. }
+                | FormatElement::DynamicText { .. }
+                | FormatElement::StaticText { .. }
+        )
+    }
 }
 
 impl FormatElements for FormatElement {
@@ -276,7 +237,9 @@ impl FormatElements for FormatElement {
             FormatElement::ExpandParent => true,
             FormatElement::Tag(Tag::StartGroup(group)) => !group.mode().is_flat(),
             FormatElement::Line(line_mode) => matches!(line_mode, LineMode::Hard | LineMode::Empty),
-            FormatElement::Text(text) => text.contains('\n'),
+            FormatElement::StaticText { text } => text.contains('\n'),
+            FormatElement::DynamicText { text, .. } => text.contains('\n'),
+            FormatElement::SyntaxTokenTextSlice { slice, .. } => slice.contains('\n'),
             FormatElement::Interned(interned) => interned.will_break(),
             // Traverse into the most flat version because the content is guaranteed to expand when even
             // the most flat version contains some content that forces a break.
@@ -304,12 +267,6 @@ impl FormatElements for FormatElement {
             FormatElement::Tag(tag) if tag.kind() == kind && tag.is_end() => Some(tag),
             _ => None,
         }
-    }
-}
-
-impl From<Text> for FormatElement {
-    fn from(token: Text) -> Self {
-        FormatElement::Text(token)
     }
 }
 
@@ -420,9 +377,6 @@ static_assert!(std::mem::size_of::<rome_rowan::TextRange>() == 8usize);
 #[cfg(target_pointer_width = "64")]
 static_assert!(std::mem::size_of::<crate::format_element::tag::VerbatimKind>() == 8usize);
 
-#[cfg(target_pointer_width = "64")]
-static_assert!(std::mem::size_of::<crate::format_element::Text>() == 24usize);
-
 #[cfg(not(debug_assertions))]
 #[cfg(target_pointer_width = "64")]
 static_assert!(std::mem::size_of::<crate::format_element::Tag>() == 16usize);
@@ -434,4 +388,4 @@ static_assert!(std::mem::size_of::<crate::format_element::Tag>() == 16usize);
 
 #[cfg(not(debug_assertions))]
 #[cfg(target_pointer_width = "64")]
-static_assert!(std::mem::size_of::<crate::FormatElement>() == 32usize);
+static_assert!(std::mem::size_of::<crate::FormatElement>() == 24usize);

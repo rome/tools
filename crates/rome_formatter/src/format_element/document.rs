@@ -79,7 +79,9 @@ impl Document {
                         enclosing.pop();
                         continue;
                     }
-                    FormatElement::Text(text) => text.contains('\n'),
+                    FormatElement::StaticText { text } => text.contains('\n'),
+                    FormatElement::DynamicText { text, .. } => text.contains('\n'),
+                    FormatElement::SyntaxTokenTextSlice { slice, .. } => slice.contains('\n'),
                     FormatElement::ExpandParent
                     | FormatElement::Line(LineMode::Hard | LineMode::Empty) => true,
                     _ => false,
@@ -189,7 +191,10 @@ impl Format<IrFormatContext> for &[FormatElement] {
             first_element = false;
 
             match element {
-                element @ FormatElement::Space | element @ FormatElement::Text(_) => {
+                element @ FormatElement::Space
+                | element @ FormatElement::StaticText { .. }
+                | element @ FormatElement::DynamicText { .. }
+                | element @ FormatElement::SyntaxTokenTextSlice { .. } => {
                     if !in_text {
                         write!(f, [text("\"")])?;
                     }
@@ -197,17 +202,14 @@ impl Format<IrFormatContext> for &[FormatElement] {
                     in_text = true;
 
                     match element {
-                        FormatElement::Text(_) => f.write_element(element.clone())?,
                         FormatElement::Space => {
                             write!(f, [text(" ")])?;
                         }
+                        element if element.is_text() => f.write_element(element.clone())?,
                         _ => unreachable!(),
                     }
 
-                    let is_next_text = matches!(
-                        iter.peek(),
-                        Some(FormatElement::Space | FormatElement::Text(_))
-                    );
+                    let is_next_text = iter.peek().map_or(false, |e| e.is_text());
 
                     if !is_next_text {
                         write!(f, [text("\"")])?;
