@@ -53,11 +53,9 @@ impl IsExportedCanBeQueried for JsIdentifierBinding {
     }
 
     fn is_imported(&self, _: &SemanticModel) -> Self::Result {
-        self.syntax().ancestors()
-            .any(|x| match x.kind() {
-                JsSyntaxKind::JS_IMPORT => true,
-                _ => false
-            })
+        self.syntax()
+            .ancestors()
+            .any(|x| matches!(x.kind(), JsSyntaxKind::JS_IMPORT))
     }
 }
 
@@ -70,11 +68,9 @@ impl IsExportedCanBeQueried for TsIdentifierBinding {
     }
 
     fn is_imported(&self, _: &SemanticModel) -> Self::Result {
-        self.syntax().ancestors()
-            .any(|x| match x.kind() {
-                JsSyntaxKind::JS_IMPORT => true,
-                _ => false
-            })
+        self.syntax()
+            .ancestors()
+            .any(|x| matches!(x.kind(), JsSyntaxKind::JS_IMPORT))
     }
 }
 
@@ -87,12 +83,11 @@ impl<T: HasDeclarationAstNode> IsExportedCanBeQueried for T {
     }
 
     fn is_imported(&self, model: &SemanticModel) -> Self::Result {
-        Some(self.declaration(model)?.syntax()
-            .ancestors()
-            .any(|x| match x.kind() {
-                JsSyntaxKind::JS_IMPORT => true,
-                _ => false
-            })
+        Some(
+            self.declaration(model)?
+                .syntax()
+                .ancestors()
+                .any(|x| matches!(x.kind(), JsSyntaxKind::JS_IMPORT)),
         )
     }
 }

@@ -16,21 +16,23 @@ pub(crate) struct ReactCallWithDependencyResult {
 
 impl ReactCallWithDependencyResult {
     pub fn all_captures(&self, model: &SemanticModel) -> Vec<Capture> {
-        if let Some(closure) = self.closure_node
+        if let Some(closure) = self
+            .closure_node
             .as_ref()
             .and_then(|node| node.as_js_arrow_function_expression())
-            .map(|x| x.closure(model)) {
+            .map(|x| x.closure(model))
+        {
             let range = closure.closure_range();
 
             let mut descendents = closure.descendents();
 
             let mut captures: Vec<Capture> = if let Some(closure) = descendents.next() {
-                 closure.all_captures().collect()
+                closure.all_captures().collect()
             } else {
                 vec![]
             };
-            
-            while let Some(closure) = descendents.next() {
+
+            for closure in descendents {
                 for capture in closure.all_captures() {
                     if capture.declaration_range().intersect(*range).is_none() {
                         captures.push(capture);

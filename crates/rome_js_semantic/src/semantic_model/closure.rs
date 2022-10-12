@@ -134,7 +134,7 @@ impl Iterator for AllCapturesIter {
                         data: self.data.clone(),
                         node: self.data.node_by_range[&reference.range].clone(),
                         ty: CaptureType::ByReference,
-                        declaration_range
+                        declaration_range,
                     });
                 }
             }
@@ -192,7 +192,6 @@ impl Iterator for ChildrenIter {
 }
 
 impl FusedIterator for ChildrenIter {}
-
 
 // Iterate all descendents closures of a specific closure
 pub struct DescendentsIter {
@@ -266,7 +265,7 @@ impl Closure {
 
     /// Range of this [Closure]
     pub fn closure_range(&self) -> &TextRange {
-        &&self.closure_range
+        &self.closure_range
     }
 
     /// Return all [Reference] this closure captures, not taking into
