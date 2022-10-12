@@ -16,17 +16,31 @@ pub(crate) struct ReactCallWithDependencyResult {
 
 impl ReactCallWithDependencyResult {
     pub fn all_captures(&self, model: &SemanticModel) -> Vec<Capture> {
-        self.closure_node
+        if let Some(closure) = self.closure_node
             .as_ref()
-            .and_then(|node| {
-                Some(
-                    node.as_js_arrow_function_expression()?
-                        .closure(model)
-                        .all_captures()
-                        .collect::<Vec<_>>(),
-                )
-            })
-            .unwrap_or_default()
+            .and_then(|node| node.as_js_arrow_function_expression())
+            .map(|x| x.closure(model)) {
+            let range = closure.closure_range();
+
+            let mut descendents = closure.descendents();
+
+            let mut captures: Vec<Capture> = if let Some(closure) = descendents.next() {
+                 closure.all_captures().collect()
+            } else {
+                vec![]
+            };
+            
+            while let Some(closure) = descendents.next() {
+                for capture in closure.all_captures() {
+                    if capture.declaration_range().intersect(*range).is_none() {
+                        captures.push(capture);
+                    }
+                }
+            }
+            captures
+        } else {
+            vec![]
+        }
     }
 
     pub fn all_dependencies(&self) -> Vec<JsAnyExpression> {

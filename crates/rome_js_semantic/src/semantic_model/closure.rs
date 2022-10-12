@@ -84,6 +84,7 @@ pub struct Capture {
     data: Arc<SemanticModelData>,
     ty: CaptureType,
     node: JsSyntaxNode,
+    declaration_range: TextRange,
 }
 
 impl Capture {
@@ -99,15 +100,18 @@ impl Capture {
 
     /// Returns the declaration of this capture
     pub fn declaration(&self) -> Option<Binding> {
-        let reference_range = self.node.text_range();
-        let declaration_range = self.data.declared_at_by_range[&reference_range];
         self.data
             .node_by_range
-            .get(&declaration_range)
+            .get(&self.declaration_range)
             .map(|node| super::Binding {
                 data: self.data.clone(),
                 node: node.clone(),
             })
+    }
+
+    /// Returns the [TextRange] of declaration of this capture
+    pub fn declaration_range(&self) -> &TextRange {
+        &self.declaration_range
     }
 }
 
@@ -124,12 +128,13 @@ impl Iterator for AllCapturesIter {
     fn next(&mut self) -> Option<Self::Item> {
         'references: loop {
             while let Some(reference) = self.references.pop() {
-                let declaration = self.data.declared_at_by_range[&reference.range];
-                if self.closure_range.intersect(declaration).is_none() {
+                let declaration_range = self.data.declared_at_by_range[&reference.range];
+                if self.closure_range.intersect(declaration_range).is_none() {
                     return Some(Capture {
                         data: self.data.clone(),
                         node: self.data.node_by_range[&reference.range].clone(),
                         ty: CaptureType::ByReference,
+                        declaration_range
                     });
                 }
             }
@@ -138,21 +143,16 @@ impl Iterator for AllCapturesIter {
                 let scope = &self.data.scopes[scope_id];
                 let node = &self.data.node_by_range[&scope.range];
 
-                match node.kind() {
-                    JsSyntaxKind::JS_FUNCTION_DECLARATION
-                    | JsSyntaxKind::JS_FUNCTION_EXPRESSION
-                    | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION => {
-                        continue 'scopes;
-                    }
-                    _ => {
-                        self.references.clear();
-                        self.references
-                            .extend(scope.read_references.iter().cloned());
-                        self.references
-                            .extend(scope.write_references.iter().cloned());
-                        self.scopes.extend(scope.children.iter());
-                        continue 'references;
-                    }
+                if AnyHasClosureNode::from_node(node).is_some() {
+                    continue 'scopes;
+                } else {
+                    self.references.clear();
+                    self.references
+                        .extend(scope.read_references.iter().cloned());
+                    self.references
+                        .extend(scope.write_references.iter().cloned());
+                    self.scopes.extend(scope.children.iter());
+                    continue 'references;
                 }
             }
 
@@ -163,9 +163,9 @@ impl Iterator for AllCapturesIter {
 
 impl FusedIterator for AllCapturesIter {}
 
+// Iterate all immediate children closures of a specific closure
 pub struct ChildrenIter {
     data: Arc<SemanticModelData>,
-    closure_range: TextRange,
     scopes: Vec<usize>,
 }
 
@@ -176,19 +176,14 @@ impl Iterator for ChildrenIter {
         while let Some(scope_id) = self.scopes.pop() {
             let scope = &self.data.scopes[scope_id];
             let node = &self.data.node_by_range[&scope.range];
-            match node.kind() {
-                JsSyntaxKind::JS_FUNCTION_DECLARATION
-                | JsSyntaxKind::JS_FUNCTION_EXPRESSION
-                | JsSyntaxKind::JS_ARROW_FUNCTION_EXPRESSION => {
-                    return Some(Closure {
-                        data: self.data.clone(),
-                        scope_id,
-                        closure_range: self.closure_range,
-                    });
-                }
-                _ => {
-                    self.scopes.extend(scope.children.iter());
-                }
+            if AnyHasClosureNode::from_node(node).is_some() {
+                return Some(Closure {
+                    data: self.data.clone(),
+                    scope_id,
+                    closure_range: scope.range,
+                });
+            } else {
+                self.scopes.extend(scope.children.iter());
             }
         }
 
@@ -196,7 +191,40 @@ impl Iterator for ChildrenIter {
     }
 }
 
+impl FusedIterator for ChildrenIter {}
+
+
+// Iterate all descendents closures of a specific closure
+pub struct DescendentsIter {
+    data: Arc<SemanticModelData>,
+    scopes: Vec<usize>,
+}
+
+impl Iterator for DescendentsIter {
+    type Item = Closure;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        while let Some(scope_id) = self.scopes.pop() {
+            let scope = &self.data.scopes[scope_id];
+            let node = &self.data.node_by_range[&scope.range];
+            self.scopes.extend(scope.children.iter());
+            if AnyHasClosureNode::from_node(node).is_some() {
+                return Some(Closure {
+                    data: self.data.clone(),
+                    scope_id,
+                    closure_range: scope.range,
+                });
+            }
+        }
+
+        None
+    }
+}
+
+impl FusedIterator for DescendentsIter {}
+
 /// Provides all information regarding a specific closure.
+#[derive(Clone)]
 pub struct Closure {
     data: Arc<SemanticModelData>,
     scope_id: usize,
@@ -234,6 +262,11 @@ impl Closure {
             }),
             _ => None,
         }
+    }
+
+    /// Range of this [Closure]
+    pub fn closure_range(&self) -> &TextRange {
+        &&self.closure_range
     }
 
     /// Return all [Reference] this closure captures, not taking into
@@ -274,6 +307,8 @@ impl Closure {
     /// function f(c) {
     ///     console.log(a);
     ///     function g() {
+    ///         function h() {
+    ///         }
     ///         console.log(b, c);
     ///     }
     /// }";
@@ -287,7 +322,31 @@ impl Closure {
 
         ChildrenIter {
             data: self.data.clone(),
-            closure_range: self.closure_range,
+            scopes,
+        }
+    }
+
+    /// Returns all descendents of this closure in breadth-first order. Starting with the current
+    /// [Closure].
+    ///
+    /// ```rust,ignore
+    /// let inner_function = "let a, b;
+    /// function f(c) {
+    ///     console.log(a);
+    ///     function g() {
+    ///         function h() {
+    ///         }
+    ///         console.log(b, c);
+    ///     }
+    /// }";
+    /// assert!(model.closure(function_f).descendents(), &["f", "g", "h"]);
+    /// ```
+    pub fn descendents(&self) -> impl Iterator<Item = Closure> {
+        let mut scopes = Vec::with_capacity(128);
+        scopes.push(self.scope_id);
+
+        DescendentsIter {
+            data: self.data.clone(),
             scopes,
         }
     }

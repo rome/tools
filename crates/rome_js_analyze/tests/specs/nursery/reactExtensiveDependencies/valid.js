@@ -69,3 +69,12 @@ function MyComponent5() {
     useLayoutEffect(() => console.log(a), [a]);
     useInsertionEffect(() => console.log(a), [a]);
 }
+
+// inner closures
+
+function MyComponent5() {
+    const a = 1;
+    useEffect(() => {
+        return () => console.log(a)
+    }, [a]);
+}

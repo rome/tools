@@ -1,6 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-expression: missingCapturesInvalid.js
+expression: missingDependenciesInvalid.js
 ---
 # Input
 ```js
@@ -48,11 +48,20 @@ function MyComponent5() {
   useInsertionEffect(() => console.log(a));
 }
 
+// inner closures
+
+function MyComponent6() {
+  const a = 1;
+  useEffect(() => {
+      return () => console.log(a)
+  }, []);
+}
+
 ```
 
 # Diagnostics
 ```
-missingCapturesInvalid.js:3:5 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:3:5 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -76,7 +85,7 @@ missingCapturesInvalid.js:3:5 lint/nursery/reactExtensiveDependencies ━━━�
 ```
 
 ```
-missingCapturesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -100,7 +109,7 @@ missingCapturesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━
 ```
 
 ```
-missingCapturesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -124,7 +133,7 @@ missingCapturesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━
 ```
 
 ```
-missingCapturesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -148,7 +157,7 @@ missingCapturesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━
 ```
 
 ```
-missingCapturesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -172,7 +181,7 @@ missingCapturesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━
 ```
 
 ```
-missingCapturesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -196,7 +205,7 @@ missingCapturesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━
 ```
 
 ```
-missingCapturesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -219,7 +228,7 @@ missingCapturesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━
 ```
 
 ```
-missingCapturesInvalid.js:37:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:37:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -243,7 +252,7 @@ missingCapturesInvalid.js:37:3 lint/nursery/reactExtensiveDependencies ━━━
 ```
 
 ```
-missingCapturesInvalid.js:38:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:38:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -267,7 +276,7 @@ missingCapturesInvalid.js:38:3 lint/nursery/reactExtensiveDependencies ━━━
 ```
 
 ```
-missingCapturesInvalid.js:39:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:39:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -291,7 +300,7 @@ missingCapturesInvalid.js:39:3 lint/nursery/reactExtensiveDependencies ━━━
 ```
 
 ```
-missingCapturesInvalid.js:40:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:40:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -315,7 +324,7 @@ missingCapturesInvalid.js:40:3 lint/nursery/reactExtensiveDependencies ━━━
 ```
 
 ```
-missingCapturesInvalid.js:41:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:41:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -339,7 +348,7 @@ missingCapturesInvalid.js:41:3 lint/nursery/reactExtensiveDependencies ━━━
 ```
 
 ```
-missingCapturesInvalid.js:42:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:42:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -358,6 +367,30 @@ missingCapturesInvalid.js:42:3 lint/nursery/reactExtensiveDependencies ━━━
        │                                        ^
     43 │ }
     44 │ 
+  
+
+```
+
+```
+missingDependenciesInvalid.js:49:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This useEffect has missing dependencies
+  
+    47 │ function MyComponent6() {
+    48 │   const a = 1;
+  > 49 │   useEffect(() => {
+       │   ^^^^^^^^^
+    50 │       return () => console.log(a)
+    51 │   }, []);
+  
+  i This capture is not in the dependency list
+  
+    48 │   const a = 1;
+    49 │   useEffect(() => {
+  > 50 │       return () => console.log(a)
+       │                                ^
+    51 │   }, []);
+    52 │ }
   
 
 ```

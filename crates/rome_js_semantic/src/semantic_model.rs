@@ -191,13 +191,13 @@ impl PartialEq for SemanticModelData {
 
 impl Eq for SemanticModelData {}
 
-/// Iterate all descendas scopes of the specified scope in breadth-first order.
-pub struct ScopeDescendantsIter {
+/// Iterate all descendents scopes of the specified scope in breadth-first order.
+pub struct ScopeDescendentsIter {
     data: Arc<SemanticModelData>,
     q: VecDeque<usize>,
 }
 
-impl Iterator for ScopeDescendantsIter {
+impl Iterator for ScopeDescendentsIter {
     type Item = Scope;
 
     fn next(&mut self) -> Option<Self::Item> {
@@ -213,6 +213,8 @@ impl Iterator for ScopeDescendantsIter {
         }
     }
 }
+
+impl FusedIterator for ScopeDescendentsIter {}
 
 /// Provides all information regarding a specific scope.
 /// Allows navigation to parent and children scope and binding information.
@@ -237,13 +239,13 @@ impl Scope {
         std::iter::successors(Some(self.clone()), |scope| scope.parent())
     }
 
-    /// Returns all descendts of this scope in breadth-first order. Starting with the current
+    /// Returns all descendents of this scope in breadth-first order. Starting with the current
     /// [Scope].
-    pub fn descendants(&self) -> impl Iterator<Item = Scope> {
+    pub fn descendents(&self) -> impl Iterator<Item = Scope> {
         let mut q = VecDeque::new();
         q.push_back(self.id);
 
-        ScopeDescendantsIter {
+        ScopeDescendentsIter {
             data: self.data.clone(),
             q,
         }
