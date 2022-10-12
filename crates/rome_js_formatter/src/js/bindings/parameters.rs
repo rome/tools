@@ -172,7 +172,7 @@ pub enum ParameterLayout {
     Default,
 }
 
-fn should_hug_function_parameters(
+pub(crate) fn should_hug_function_parameters(
     parameters: &FormatJsAnyParameters,
     comments: &JsComments,
 ) -> FormatResult<bool> {

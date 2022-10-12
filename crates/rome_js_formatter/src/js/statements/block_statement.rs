@@ -5,7 +5,7 @@ use rome_js_syntax::{JsAnyStatement, JsEmptyStatement};
 
 use rome_js_syntax::JsBlockStatementFields;
 use rome_js_syntax::JsSyntaxKind;
-use rome_rowan::{AstNode, AstNodeList};
+use rome_rowan::{AstNode, AstNodeList, SyntaxNodeOptionExt};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsBlockStatement;
@@ -96,7 +96,7 @@ fn is_empty_block(block: &JsBlockStatement, comments: &JsComments) -> bool {
 fn is_non_collapsible(block: &JsBlockStatement) -> bool {
     // reference https://github.com/prettier/prettier/blob/b188c905cfaeb238a122b4a95c230da83f2f3226/src/language-js/print/block.js#L19
     let parent = block.syntax().parent();
-    match parent.clone().map(|p| p.kind()) {
+    match parent.kind() {
         Some(
             JsSyntaxKind::JS_FUNCTION_BODY
             | JsSyntaxKind::JS_FOR_STATEMENT
