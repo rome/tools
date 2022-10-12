@@ -12,7 +12,7 @@ declare_rule! {
     /// Enforce all dependencies are correctly specified.
     ///
     pub(crate) ReactExtensiveDependencies {
-        version: "0.10.0",
+        version: "10.0.0",
         name: "reactExtensiveDependencies",
         recommended: false,
     }
@@ -65,10 +65,13 @@ impl Rule for ReactExtensiveDependencies {
     type Options = ReactExtensiveDependenciesOptions;
 
     fn run(ctx: &RuleContext<Self>) -> Vec<Self::State> {
+        let options = ctx.options()
+            .unwrap_or(&OPTIONS);
+
         let mut signals = vec![];
 
         let node = ctx.query();
-        if let Some(result) = react_hook_with_dependency(node, &OPTIONS.hooks) {
+        if let Some(result) = react_hook_with_dependency(node, &options.hooks) {
             let model = ctx.model();
 
             let captures: Vec<_> = result
@@ -87,7 +90,7 @@ impl Rule for ReactExtensiveDependencies {
                             _ => {
                                 let declaration =
                                     declaration.syntax().clone().cast::<JsIdentifierBinding>()?;
-                                let not_stable = !is_stable_binding(&declaration, &OPTIONS.stables);
+                                let not_stable = !is_stable_binding(&declaration, &options.stables);
                                 not_stable.then_some(capture)
                             }
                         }
