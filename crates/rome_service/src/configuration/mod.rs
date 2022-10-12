@@ -275,20 +275,20 @@ where
     }
 }
 
-/// Converts a [Configuration] into a suited [configuration for the analyzer].
+/// Converts a [WorkspaceSettings] into a suited [configuration for the analyzer].
 ///
 /// The function needs access to a filter, in order to have an easy access to the [metadata] of the
 /// rules.
 ///
-/// The third argument is closure that accepts a reference to [Configuration] and has to map
-/// to a vector or strings. The closure is responsible to map the globals from the correct
-/// location of the configuration.
+/// The third argument is a closure that accepts a reference to `linter_settings`.
+///
+/// The closure is responsible to map the globals from the correct
+/// location of the settings.
 ///
 /// ## Examples
 ///
 /// ```rust
 /// use rome_analyze::AnalysisFilter;
-/// use rome_service::Configuration;
 /// use rome_service::configuration::to_analyzer_configuration;
 /// use rome_service::settings::{LanguagesSettings, WorkspaceSettings};
 /// let filter = AnalysisFilter::default();
@@ -377,37 +377,5 @@ fn push_rules<M>(
                 }
             }
         }
-    }
-}
-
-#[cfg(test)]
-mod test {
-    use crate::configuration::to_analyzer_configuration;
-    use crate::settings::WorkspaceSettings;
-    use rome_analyze::AnalysisFilter;
-
-    #[test]
-    fn correctly_converts_configuration() {
-        let mut settings = WorkspaceSettings::default();
-        settings.languages.javascript.globals =
-            Some(["jQuery".to_string(), "React".to_string()].into());
-
-        let filter = AnalysisFilter::default();
-        let analyzer_configuration =
-            to_analyzer_configuration(&settings.linter, &settings.languages, &filter, |settings| {
-                if let Some(globals) = settings.javascript.globals.as_ref() {
-                    globals
-                        .iter()
-                        .map(|global| global.to_string())
-                        .collect::<Vec<_>>()
-                } else {
-                    vec![]
-                }
-            });
-
-        assert_eq!(
-            analyzer_configuration.globals,
-            vec!["jQuery".to_string(), "React".to_string()]
-        )
     }
 }
