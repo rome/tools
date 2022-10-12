@@ -99,7 +99,7 @@ impl Rule for UseFlatMap {
             rule_category!(),
             node.syntax().text_trimmed_range(),
             markup! {
-                "The call chain "<Emphasis>".flat().map()"</Emphasis>" can be replaced with a simple "<Emphasis>".flatMap()"</Emphasis>"."
+                "The call chain "<Emphasis>".map().flat()"</Emphasis>" can be replaced with a simple "<Emphasis>".flatMap()"</Emphasis>"."
             },
         ))
     }

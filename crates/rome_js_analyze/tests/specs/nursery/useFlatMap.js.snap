@@ -5,10 +5,10 @@ expression: useFlatMap.js
 # Input
 ```js
 // invalid
-[0, [12]].map(Number).flat()
-[0, [12], [[16]]].map(Number).flat(1)
+[0, [12]].map(Number).flat();
+[0, [12], [[16]]].map(Number).flat(1);
 // valid
-[0, [12], [[16]]].map(Number).flat(2)
+[0, [12], [[16]]].map(Number).flat(2);
 
 ```
 
@@ -16,46 +16,45 @@ expression: useFlatMap.js
 ```
 useFlatMap.js:2:1 lint/nursery/useFlatMap  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! The call chain .flat().map() can be replaced with a simple .flatMap().
+  ! The call chain .map().flat() can be replaced with a simple .flatMap().
   
     1 │ // invalid
-  > 2 │ [0, [12]].map(Number).flat()
+  > 2 │ [0, [12]].map(Number).flat();
       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  > 3 │ [0, [12], [[16]]].map(Number).flat(1)
+    3 │ [0, [12], [[16]]].map(Number).flat(1);
+    4 │ // valid
+  
+  i Safe fix: Replace it with .flatMap().
+  
+    1 1 │   // invalid
+    2   │ - [0,·[12]].map(Number).flat();
+      2 │ + [0,·[12]].flatMap(Number);
+    3 3 │   [0, [12], [[16]]].map(Number).flat(1);
+    4 4 │   // valid
+  
+
+```
+
+```
+useFlatMap.js:3:1 lint/nursery/useFlatMap  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! The call chain .map().flat() can be replaced with a simple .flatMap().
+  
+    1 │ // invalid
+    2 │ [0, [12]].map(Number).flat();
+  > 3 │ [0, [12], [[16]]].map(Number).flat(1);
       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     4 │ // valid
-    5 │ [0, [12], [[16]]].map(Number).flat(2)
+    5 │ [0, [12], [[16]]].map(Number).flat(2);
   
   i Safe fix: Replace it with .flatMap().
   
     1 1 │   // invalid
-    2 2 │   [0, [12]].map(Number).flat()
-    3   │ - [0,·[12],·[[16]]].map(Number).flat(1)
-      3 │ + [0,·[12],·[[16]]].flatMap(Number)
+    2 2 │   [0, [12]].map(Number).flat();
+    3   │ - [0,·[12],·[[16]]].map(Number).flat(1);
+      3 │ + [0,·[12],·[[16]]].flatMap(Number);
     4 4 │   // valid
-    5 5 │   [0, [12], [[16]]].map(Number).flat(2)
-  
-
-```
-
-```
-useFlatMap.js:2:1 lint/nursery/useFlatMap  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! The call chain .flat().map() can be replaced with a simple .flatMap().
-  
-    1 │ // invalid
-  > 2 │ [0, [12]].map(Number).flat()
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    3 │ [0, [12], [[16]]].map(Number).flat(1)
-    4 │ // valid
-  
-  i Safe fix: Replace it with .flatMap().
-  
-    1 1 │   // invalid
-    2   │ - [0,·[12]].map(Number).flat()
-      2 │ + [0,·[12]].flatMap(Number)
-    3 3 │   [0, [12], [[16]]].map(Number).flat(1)
-    4 4 │   // valid
+    5 5 │   [0, [12], [[16]]].map(Number).flat(2);
   
 
 ```

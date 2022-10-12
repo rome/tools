@@ -18,7 +18,7 @@ arr.map(Number).flat();
 
 {% raw %}<pre class="language-text"><code class="language-text">nursery/useFlatMap.js:2:1 <a href="https://rome.tools/docs/lint/rules/useFlatMap">lint/nursery/useFlatMap</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">The call chain </span><span style="color: Orange;"><strong>.flat().map()</strong></span><span style="color: Orange;"> can be replaced with a simple </span><span style="color: Orange;"><strong>.flatMap()</strong></span><span style="color: Orange;">.</span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">The call chain </span><span style="color: Orange;"><strong>.map().flat()</strong></span><span style="color: Orange;"> can be replaced with a simple </span><span style="color: Orange;"><strong>.flatMap()</strong></span><span style="color: Orange;">.</span>
   
     <strong>1 │ </strong>let arr = [&quot;1&quot;, &quot;4&quot;, [&quot;3&quot;, &quot;6&quot;]];
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>arr.map(Number).flat();
@@ -41,7 +41,7 @@ arr.map(Number).flat(1);
 
 {% raw %}<pre class="language-text"><code class="language-text">nursery/useFlatMap.js:2:1 <a href="https://rome.tools/docs/lint/rules/useFlatMap">lint/nursery/useFlatMap</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">The call chain </span><span style="color: Orange;"><strong>.flat().map()</strong></span><span style="color: Orange;"> can be replaced with a simple </span><span style="color: Orange;"><strong>.flatMap()</strong></span><span style="color: Orange;">.</span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">The call chain </span><span style="color: Orange;"><strong>.map().flat()</strong></span><span style="color: Orange;"> can be replaced with a simple </span><span style="color: Orange;"><strong>.flatMap()</strong></span><span style="color: Orange;">.</span>
   
     <strong>1 │ </strong>let arr = [&quot;1&quot;, &quot;4&quot;, [&quot;3&quot;, &quot;6&quot;]];
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>arr.map(Number).flat(1);
