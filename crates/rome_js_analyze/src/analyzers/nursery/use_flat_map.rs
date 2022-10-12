@@ -52,19 +52,16 @@ impl Rule for UseFlatMap {
         if arguments.len() > 1 {
             return None;
         }
-        match arguments.first() {
-            Some(first_argument) => {
-                let first_argument = first_argument.ok()?;
-                let first_argument = first_argument
-                    .as_js_any_expression()?
-                    .as_js_any_literal_expression()?
-                    .as_js_number_literal_expression()?;
+        if let Some(first_argument) = arguments.first() {
+            let first_argument = first_argument.ok()?;
+            let first_argument = first_argument
+                .as_js_any_expression()?
+                .as_js_any_literal_expression()?
+                .as_js_number_literal_expression()?;
 
-                if first_argument.value_token().ok()?.text_trimmed() != "1" {
-                    return None;
-                }
+            if first_argument.value_token().ok()?.text_trimmed() != "1" {
+                return None;
             }
-            _ => {}
         }
         let static_member_expression = node.callee().ok()?;
         let static_member_expression = static_member_expression.as_js_static_member_expression()?;
