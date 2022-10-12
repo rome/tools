@@ -176,6 +176,7 @@ export interface Nursery {
 	noUnusedVariables?: RuleConfiguration;
 	noUselessFragments?: RuleConfiguration;
 	noVoidElementsWithChildren?: RuleConfiguration;
+	reactExtensiveDependencies?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */

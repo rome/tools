@@ -650,6 +650,16 @@
             }
           ]
         },
+        "reactExtensiveDependencies": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "recommended": {
           "description": "It enables the recommended rules for this group",
           "type": [
