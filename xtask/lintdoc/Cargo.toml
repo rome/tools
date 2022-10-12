@@ -1,7 +1,10 @@
 [package]
 name = "xtask_lintdoc"
 version = "0.0.0"
-edition = "2021"
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+license.workspace = true
 publish = false
 
 [dependencies]

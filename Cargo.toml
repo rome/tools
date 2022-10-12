@@ -11,6 +11,11 @@ members = [
 	"xtask/libs_bench",
 	"xtask/contributors",
 ]
+[workspace.package]
+edition = "2021"
+authors = ["Rome Tools Developers and Contributors"]
+repository = "https://github.com/rome/tools"
+license = "MIT"
 
 [profile.release-with-debug]
 inherits = "release"

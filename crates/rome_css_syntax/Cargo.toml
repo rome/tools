@@ -1,10 +1,10 @@
 [package]
 name = "rome_css_syntax"
 version = "0.0.0"
-edition = "2021"
-authors = ["Rome Tools Developers and Contributors"]
-repository = "https://github.com/rome/tools"
-license = "MIT"
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+license.workspace = true
 
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html

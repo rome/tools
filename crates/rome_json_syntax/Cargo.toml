@@ -1,11 +1,11 @@
 [package]
 name = "rome_json_syntax"
 version = "0.0.0"
-edition = "2021"
-authors = ["Rome Tools"]
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+license.workspace = true
 description = "SyntaxKind and common rowan definitions for rome_json_parser"
-license = "MIT"
-repository = "https://github.com/rome/tools"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

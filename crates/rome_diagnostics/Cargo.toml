@@ -2,7 +2,7 @@
 name = "rome_diagnostics"
 version = "0.0.0"
 authors = ["RSLint developers"]
-edition = "2021"
+edition .workspace= true
 license = "MIT"
 description = "Pretty error reporting library based on codespan-reporting built for the RSLint project"
 

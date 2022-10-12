@@ -5,7 +5,7 @@ authors = ["Aleksey Kladov <aleksey.kladov@gmail.com>"]
 repository = "https://github.com/rust-analyzer/rowan"
 license = "MIT OR Apache-2.0"
 description = "Library for generic lossless syntax trees"
-edition = "2021"
+edition.workspace = true
 
 [dependencies]
 rustc-hash = { workspace = true }

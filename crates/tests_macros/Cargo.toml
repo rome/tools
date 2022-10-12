@@ -1,9 +1,10 @@
 [package]
 name = "tests_macros"
 version = "0.0.0"
-description = ""
-license = "MIT"
-edition = "2021"
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+license.workspace = true
 
 [lib]
 proc-macro = true

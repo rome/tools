@@ -1,11 +1,11 @@
 [package]
-edition = "2021"
 name = "rome_js_parser"
 version = "0.0.0"
-authors = ["Rome Tools Developers and Contributors"]
-license = "MIT"
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+license.workspace = true
 description = "An extremely fast ECMAScript parser made for the rslint project"
-repository = "https://github.com/rome/tools"
 
 [dependencies]
 rome_diagnostics = { path = "../rome_diagnostics" }

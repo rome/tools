@@ -2,10 +2,10 @@
 name = "rome_markup"
 version = "0.0.0"
 description = ""
-license = "MIT"
-edition = "2021"
-authors = ["Rome Tools Developers and Contributors"]
-repository = "https://github.com/rome/tools"
+edition.workspace = true
+authors.workspace = true
+repository.workspace = true
+license.workspace = true
 
 [lib]
 proc-macro = true
