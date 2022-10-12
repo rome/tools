@@ -87,46 +87,6 @@ impl FileSystem for MemoryFileSystem {
     }
 }
 
-impl FileSystemExt for MemoryFileSystem {
-    fn create(&self, path: &Path) -> io::Result<Box<dyn File>> {
-        let files = &mut self.files.0.write();
-        // we create an empty file
-        let file: FileEntry = Arc::new(Mutex::new(vec![]));
-        let path = PathBuf::from(path);
-        files.insert(path, file.clone());
-        let inner = file.lock_arc();
-        Ok(Box::new(MemoryFile { inner }))
-    }
-
-    fn open(&self, path: &Path) -> io::Result<Box<dyn File>> {
-        let files = &self.files.0.read();
-        let entry = files.get(path).ok_or_else(|| {
-            io::Error::new(
-                io::ErrorKind::NotFound,
-                format!("path {path:?} does not exists in memory filesystem"),
-            )
-        })?;
-
-        let lock = entry.lock_arc();
-
-        Ok(Box::new(MemoryFile { inner: lock }))
-    }
-
-    fn read(&self, path: &Path) -> io::Result<Box<dyn File>> {
-        let files = &self.files.0.read();
-        let entry = files.get(path).ok_or_else(|| {
-            io::Error::new(
-                io::ErrorKind::NotFound,
-                format!("path {path:?} does not exists in memory filesystem"),
-            )
-        })?;
-
-        let lock = entry.lock_arc();
-
-        Ok(Box::new(MemoryFile { inner: lock }))
-    }
-}
-
 struct MemoryFile {
     inner: ArcMutexGuard<RawMutex, Vec<u8>>,
 }

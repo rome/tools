@@ -29,6 +29,7 @@ coverage = "run -p xtask_coverage --profile=release-with-debug --"
 rome-cli = "run -p rome_cli --release --"
 rome-cli-dev = "run -p rome_cli --"
 contributors = "run -p xtask_contributors --"
+codemod = "run -p rome_v8 --example codemod --"
 
 [profile.release]
 lto = true

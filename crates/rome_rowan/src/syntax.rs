@@ -14,8 +14,8 @@ pub use trivia::{
 pub use element::{SyntaxElement, SyntaxElementKey};
 pub(crate) use node::SyntaxSlots;
 pub use node::{
-    Preorder, PreorderWithTokens, SendNode, SyntaxElementChildren, SyntaxNode, SyntaxNodeChildren,
-    SyntaxNodeOptionExt, SyntaxSlot,
+    Descendants, DescendantsTokens, DescendantsWithTokens, Preorder, PreorderWithTokens, SendNode,
+    SyntaxElementChildren, SyntaxNode, SyntaxNodeChildren, SyntaxNodeOptionExt, SyntaxSlot,
 };
 
 pub use token::SyntaxToken;

@@ -21,6 +21,7 @@ use crate::{
     generate_macros::generate_macros,
     generate_nodes::generate_nodes,
     generate_syntax_kinds::generate_syntax_kinds,
+    generate_v8::generate_v8,
     kinds_src::{AstEnumSrc, AstNodeSrc, JS_KINDS_SRC},
     update, LanguageKind,
 };
@@ -66,7 +67,8 @@ pub fn generate_ast(mode: Mode, language_kind_list: Vec<String>) -> Result<()> {
 }
 
 pub(crate) fn generate_syntax(ast: AstSrc, mode: &Mode, language_kind: LanguageKind) -> Result<()> {
-    let (nodes, nodes_mut, kinds, factory, node_factory, macros, kind_src) = match language_kind {
+    let (nodes, nodes_mut, kinds, factory, node_factory, macros, v8, kind_src) = match language_kind
+    {
         LanguageKind::Js => (
             crate::JS_AST_NODES,
             crate::JS_AST_NODES_MUT,
@@ -74,6 +76,7 @@ pub(crate) fn generate_syntax(ast: AstSrc, mode: &Mode, language_kind: LanguageK
             crate::JS_SYNTAX_FACTORY,
             crate::JS_NODE_FACTORY,
             crate::JS_AST_MACROS,
+            crate::JS_V8,
             JS_KINDS_SRC,
         ),
         LanguageKind::Css => (
@@ -83,6 +86,7 @@ pub(crate) fn generate_syntax(ast: AstSrc, mode: &Mode, language_kind: LanguageK
             crate::CSS_SYNTAX_FACTORY,
             crate::CSS_NODE_FACTORY,
             crate::CSS_AST_MACROS,
+            crate::CSS_V8,
             CSS_KINDS_SRC,
         ),
         LanguageKind::Json => (
@@ -92,6 +96,7 @@ pub(crate) fn generate_syntax(ast: AstSrc, mode: &Mode, language_kind: LanguageK
             crate::JSON_SYNTAX_FACTORY,
             crate::JSON_NODE_FACTORY,
             crate::JSON_AST_MACROS,
+            crate::JSON_V8,
             JSON_KINDS_SRC,
         ),
     };
@@ -104,7 +109,7 @@ pub(crate) fn generate_syntax(ast: AstSrc, mode: &Mode, language_kind: LanguageK
     update(ast_nodes_mut_file.as_path(), &contents, mode)?;
 
     let syntax_kinds_file = project_root().join(kinds);
-    let contents = generate_syntax_kinds(kind_src, language_kind)?;
+    let contents = generate_syntax_kinds(&kind_src, language_kind)?;
     update(syntax_kinds_file.as_path(), &contents, mode)?;
 
     let syntax_factory_file = project_root().join(factory);
@@ -118,6 +123,10 @@ pub(crate) fn generate_syntax(ast: AstSrc, mode: &Mode, language_kind: LanguageK
     let ast_macros_file = project_root().join(macros);
     let contents = generate_macros(&ast, language_kind)?;
     update(ast_macros_file.as_path(), &contents, mode)?;
+
+    let ast_v8_file = project_root().join(v8);
+    let contents = generate_v8(&kind_src, &ast, language_kind)?;
+    update(ast_v8_file.as_path(), &contents, mode)?;
 
     Ok(())
 }
