@@ -7,7 +7,7 @@ use rome_formatter::Printed;
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 use serde_json::json;
 
-use crate::workspace::SupportsFeatureResult;
+use crate::workspace::{ServerInfo, SupportsFeatureResult};
 use crate::{RomeError, TransportError, Workspace};
 
 use super::{
@@ -21,6 +21,7 @@ use super::{
 pub struct WorkspaceClient<T> {
     transport: T,
     request_id: AtomicU64,
+    server_info: Option<ServerInfo>,
 }
 
 pub trait WorkspaceTransport {
@@ -37,33 +38,41 @@ pub struct TransportRequest<P> {
     pub params: P,
 }
 
-#[derive(Debug, Deserialize)]
-struct InitializeResult {}
+#[derive(Debug, PartialEq, Clone, Default, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct InitializeResult {
+    /// Information about the server.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub server_info: Option<ServerInfo>,
+}
 
 impl<T> WorkspaceClient<T>
 where
     T: WorkspaceTransport + RefUnwindSafe + Send + Sync,
 {
     pub fn new(transport: T) -> Result<Self, RomeError> {
-        let client = Self {
+        let mut client = Self {
             transport,
             request_id: AtomicU64::new(0),
+            server_info: None,
         };
 
         // TODO: The current implementation of the JSON-RPC protocol in
         // tower_lsp doesn't allow any request to be sent before a call to
         // initialize, this is something we could be able to lift by using our
         // own RPC protocol implementation
-        let _value: InitializeResult = client.request(
+        let value: InitializeResult = client.request(
             "initialize",
             json!({
                 "capabilities": {},
                 "client_info": {
                     "name": "rome_service",
-                    "version": env!("CARGO_PKG_VERSION")
+                    "version": crate::VERSION
                 },
             }),
         )?;
+
+        client.server_info = value.server_info;
 
         Ok(client)
     }
@@ -160,5 +169,9 @@ where
 
     fn rename(&self, params: RenameParams) -> Result<RenameResult, RomeError> {
         self.request("rome/rename", params)
+    }
+
+    fn server_info(&self) -> Option<&ServerInfo> {
+        self.server_info.as_ref()
     }
 }
