@@ -1,8 +1,7 @@
-use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
-use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
+use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{TextRange, TsAnyType};
+use rome_js_syntax::TsAnyType;
 use rome_rowan::AstNode;
 
 declare_rule! {
@@ -52,19 +51,19 @@ declare_rule! {
 }
 
 impl Rule for NoExplicitAny {
-    type Query = Semantic<TsAnyType>;
-    type State = TextRange;
+    type Query = Ast<TsAnyType>;
+    type State = ();
     type Signals = Option<Self::State>;
     type Options = ();
 
-    fn run(ctx: &RuleContext<Self>) -> Self::Signals {
-        Some(ctx.query().range())
+    fn run(_: &RuleContext<Self>) -> Self::Signals {
+        Some(())
     }
 
-    fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let diagnostic = RuleDiagnostic::new(
             rule_category!(),
-            state,
+            ctx.query().range(),
             markup! {"Unexpected any. Specify a different type."}.to_owned(),
         );
 
