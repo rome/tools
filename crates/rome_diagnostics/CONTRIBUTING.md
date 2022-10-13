@@ -1,10 +1,10 @@
 # Writing Diagnostics
 
 The `rome_diagnostics` crate implements "Diagnostics", the generic concept of
-how various the errors and issues that can be raised in the Rome codebase are
-represented in code, and displayed to the final user. This guide is aimed at
-contributors to the Rome codebase to help with writing diagnostics, both at the
-technical level and as general best practices to make diagnostics easier to
+how the various errors and issues that can be raised in the Rome codebase, 
+and displayed to the final user. This guide is aimed at
+contributors to the Rome codebase to help writing diagnostics, both at the
+technical level, and as general best practices to make diagnostics easier to
 understand for the final user.
 
 ## What is a Diagnostic
@@ -20,30 +20,30 @@ diagnostic type such as `lint/correctness/noArguments`, `args/invalid` or
 to the user. The severity of a diagnostic can be `Fatal`, `Error`, `Warning`,
 `Information` or `Hint`
 - A `description` text explaining the diagnostic to the user. This is what will
-be displayed in contexts that do not support rich formatting, such as embedded
+be displayed in contexts that do not support rich markup, such as embedded
 error popovers in editors. Since the description is shown in contexts where the
-advices cannot be rendered, it should provided as much information about the
-error as possible.
+advices cannot be rendered, it should provide as much information as possible about the
+error.
 - A `message`, a piece of rich markup that will be displayed at the top of the
 diagnostic advices. Contrary to the description, the message is displayed along
 with the other advices of the diagnostic and should only provide a short and
-clear explanation of the error, while advices will be used to provided
+clear explanation of the error, while advices will be used to provide
 additional information with the appropriate context.
 - A set of `advices`, the main building blocks used to provide the user with
-rich information about the diagnostic. Depending on the use case advices can be
+rich information about the diagnostic. Depending on the use case, advices can be
 used to log pieces of markup, lists of items, annotated code frames, text diffs,
 Rust backtraces, command lines, or groups of more advices.
 - An optional set of `verbose_advices` the user can optionally enable to get
 further information about a given diagnostic
 - A `location` describing where the error happened. It can be a path to a file
-on the disk, a command line argument, or an arbitrary memory buffer. It may
+on the file system, a command line argument, or an arbitrary memory buffer. It may
 optionally specify a specific range within the text content of this resource,
 as well as embed said text content to faciliate it's retrieval when displaying
 code frames in the diagnostic
 - `tags` conveying additional informations about the diagnostic: if the
-diagnostic has information on how is can be fixed, if it resulted from an
+diagnostic has information on how it can be fixed, if it resulted from an
 internal error in Rome and was not directly caused by the user, if it is being
-emitted to warn the user about unused or deprecated code
+emitted to warn the user about unused or deprecated code.
 - An optional `source`, another diagnostic that details the low-level reason
 why this diagnostic was emitted: for instance a diagnostic reporting a failed
 request to a remote server may have a deserialization error for the server
