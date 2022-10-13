@@ -54,10 +54,9 @@ jobs:
       - name: Check prerelease status
         id: prerelease
         if: env.nightly == 'true' || steps.version.outputs.type == 'prerelease' || steps.version.outputs.type == 'prepatch' || steps.version.outputs.type == 'premajor' || steps.version.outputs.type == 'preminor'
-        working-directory: editors/vscode
         run: |
           echo "prerelease=true" >> $GITHUB_ENV
-          echo "version=$(node ./scripts/updateVersionForPrerelease.mjs)" >> $GITHUB_ENV
+          echo "version=$(node ./editors/vscode/scripts/updateVersionForPrerelease.mjs)" >> $GITHUB_ENV
           echo "rome_version=$(node ./npm/rome/scripts/update-nightly-version.mjs)" >> $GITHUB_ENV
 
       - name: Check version status
