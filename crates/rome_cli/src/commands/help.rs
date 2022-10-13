@@ -11,11 +11,13 @@ const MAIN: Markup = markup! {
 "Rome CLI v"{VERSION}"
 
 "<Emphasis>"COMMANDS:"</Emphasis>"
-    - "<Emphasis>"check"</Emphasis>"
-    - "<Emphasis>"ci"</Emphasis>"
-    - "<Emphasis>"format"</Emphasis>"
-    - "<Emphasis>"init"</Emphasis>"
-    - "<Emphasis>"help"</Emphasis>"
+    - "<Emphasis>"check"</Emphasis>"        Run the linter on a set of files
+    - "<Emphasis>"ci"</Emphasis>"           Run the linter and check the formatting of a set of files
+    - "<Emphasis>"format"</Emphasis>"       Run the formatter on a set of files
+    - "<Emphasis>"help"</Emphasis>"         Prints this help message
+    - "<Emphasis>"init"</Emphasis>"         Bootstraps a new rome project
+    - "<Emphasis>"start"</Emphasis>"        Start the Rome daemon server process
+    - "<Emphasis>"stop"</Emphasis>"         Stop the Rome daemon server process
 
 "<Emphasis>"OPTIONS:"</Emphasis>"
     "<Dim>"--no-colors"</Dim>"      Disable the formatting of markup (print everything as plain text)
