@@ -57,6 +57,7 @@ define_dategories! {
     "lint/nursery/useValidAnchor": "https://rome.tools/docs/lint/rules/useValidAnchor",
     "lint/nursery/noRestrictedGlobals": "https://rome.tools/docs/lint/rules/noRestrictedGlobals",
     "lint/nursery/noPositiveTabindex": "https://rome.tools/docs/lint/rules/noPositiveTabindex",
+    "lint/nursery/noExplicitAny": "https://rome.tools/docs/lint/rules/noExplicitAny",
     "lint/style/noNegationElse": "https://rome.tools/docs/lint/rules/noNegationElse",
     "lint/style/noShoutyConstants": "https://rome.tools/docs/lint/rules/noShoutyConstants",
     "lint/style/useSelfClosingElements": "https://rome.tools/docs/lint/rules/useSelfClosingElements",
