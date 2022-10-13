@@ -318,6 +318,9 @@ mod tests;
 pub mod syntax;
 mod token_source;
 
+use crate::parser::ToDiagnostic;
+pub(crate) use crate::parser::{ParseNodeList, ParseSeparatedList, ParsedSyntax};
+pub(crate) use crate::ParsedSyntax::{Absent, Present};
 pub use crate::{
     event::{process, Event},
     lexer::{LexContext, ReLexContext},
@@ -326,19 +329,101 @@ pub use crate::{
     token_set::TokenSet,
 };
 pub(crate) use parser::{Checkpoint, CompletedMarker, Marker, ParseRecovery, Parser};
+use rome_diagnostics::v2::console::markup;
+use rome_diagnostics::v2::location::AsSpan;
+use rome_diagnostics::v2::{Advices, Diagnostic, Location, LogCategory, Severity, Visit};
+use rome_js_syntax::{JsSyntaxKind, LanguageVariant};
+use rome_rowan::{TextRange, TextSize};
 pub(crate) use state::{ParserState, StrictMode};
 use std::fmt::Debug;
 
-/// The type of error emitted by the parser, this includes warnings, notes, and errors.
-/// It also includes labels and possibly notes
-pub type ParseDiagnostic = rome_diagnostics::Diagnostic;
+/// A specialized diagnostic for the parser
+#[derive(Debug, Diagnostic, Clone)]
+#[diagnostic(category = "parse")]
+pub struct ParseDiagnostic {
+    #[location(span)]
+    span: Option<TextRange>,
+    severity: Severity,
+    #[location(resource)]
+    file_id: FileId,
+    #[message]
+    message: String,
+    #[advice]
+    advice: ParserAdvice,
+}
 
-use crate::parser::ToDiagnostic;
-pub(crate) use crate::parser::{ParseNodeList, ParseSeparatedList, ParsedSyntax};
-pub(crate) use crate::ParsedSyntax::{Absent, Present};
-use rome_diagnostics::Diagnostic;
-use rome_js_syntax::{JsSyntaxKind, LanguageVariant};
-use rome_rowan::TextSize;
+#[derive(Debug, Default, Clone)]
+struct ParserAdvice {
+    advice: Vec<(String, Option<TextRange>, FileId)>,
+    note: Option<String>,
+}
+
+impl ParserAdvice {
+    fn push_advice(&mut self, message: String, span: Option<TextRange>, file_id: FileId) {
+        self.advice.push((message, span, file_id));
+    }
+
+    fn push_note(&mut self, message: String) {
+        self.note = Some(message);
+    }
+}
+
+impl<'a> Advices for ParserAdvice {
+    fn record(&self, visitor: &mut dyn Visit) -> std::io::Result<()> {
+        for (message, span, file_id) in &self.advice {
+            if !message.is_empty() {
+                visitor.record_log(LogCategory::Error, &markup! { {message} }.to_owned())?;
+            }
+            let location = Location::builder().span(span).resource(file_id).build();
+            if let Some(location) = location {
+                visitor.record_frame(location)?;
+            }
+        }
+        Ok(())
+    }
+}
+
+impl ParseDiagnostic {
+    fn new(file_id: FileId, message: impl Into<String>) -> Self {
+        Self {
+            file_id,
+            span: None,
+            message: message.into(),
+            advice: ParserAdvice::default(),
+            severity: Severity::Error,
+        }
+    }
+
+    pub(crate) const fn is_error(&self) -> bool {
+        matches!(self.severity, Severity::Error)
+    }
+
+    /// Compatibility API to assign the span to the diagnostic
+    fn primary(mut self, range: impl AsSpan, message: impl Into<String>) -> Self {
+        self.span = range.as_span();
+        self.advice
+            .push_advice(message.into(), None, self.file_id.clone());
+        self
+    }
+
+    /// Compatibility API to add a second message
+    fn secondary(mut self, range: impl AsSpan, message: impl Into<String>) -> Self {
+        self.advice
+            .push_advice(message.into(), range.as_span(), self.file_id.clone());
+        self
+    }
+
+    /// Compatibility API to add notes
+    fn footer_note(mut self, message: impl Into<String>) -> Self {
+        self.advice.push_note(message.into());
+        self
+    }
+
+    /// Retrieves the range that belongs to the diagnostic
+    fn diagnostic_range(&self) -> Option<&TextRange> {
+        self.span.as_ref()
+    }
+}
 
 /// An abstraction for syntax tree implementations
 pub trait TreeSink {
@@ -400,7 +485,7 @@ pub(crate) trait SyntaxFeature: Sized {
     ) -> ParsedSyntax
     where
         P: FnOnce(&mut Parser) -> ParsedSyntax,
-        E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
+        E: FnOnce(&Parser, &CompletedMarker) -> ParseDiagnostic,
     {
         if self.is_supported(p) {
             parse(p)
@@ -428,7 +513,7 @@ pub(crate) trait SyntaxFeature: Sized {
     fn excluding_syntax<S, E>(&self, p: &mut Parser, syntax: S, error_builder: E) -> ParsedSyntax
     where
         S: Into<ParsedSyntax>,
-        E: FnOnce(&Parser, &CompletedMarker) -> Diagnostic,
+        E: FnOnce(&Parser, &CompletedMarker) -> ParseDiagnostic,
     {
         syntax.into().map(|mut syntax| {
             if self.is_unsupported(p) {

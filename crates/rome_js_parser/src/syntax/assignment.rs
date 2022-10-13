@@ -12,8 +12,7 @@ use crate::syntax::js_parse_error::{
 use crate::syntax::object::{is_at_object_member_name, parse_object_member_name};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{Checkpoint, CompletedMarker, Parser};
-use rome_diagnostics::Diagnostic;
+use crate::{Checkpoint, CompletedMarker, ParseDiagnostic, Parser};
 use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_rowan::AstNode;
 
@@ -160,7 +159,7 @@ impl ParseWithDefaultPattern for AssignmentPatternWithDefault {
     }
 
     #[inline]
-    fn expected_pattern_error(p: &Parser, range: TextRange) -> Diagnostic {
+    fn expected_pattern_error(p: &Parser, range: TextRange) -> ParseDiagnostic {
         expected_assignment_target(p, range)
     }
 
@@ -218,7 +217,7 @@ impl ParseArrayPattern<AssignmentPatternWithDefault> for ArrayAssignmentPattern 
     }
 
     #[inline]
-    fn expected_element_error(p: &Parser, range: TextRange) -> Diagnostic {
+    fn expected_element_error(p: &Parser, range: TextRange) -> ParseDiagnostic {
         expected_any(&["assignment target", "rest element", "comma"], range).to_diagnostic(p)
     }
 
@@ -250,7 +249,7 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
     }
 
     #[inline]
-    fn expected_property_pattern_error(p: &Parser, range: TextRange) -> Diagnostic {
+    fn expected_property_pattern_error(p: &Parser, range: TextRange) -> ParseDiagnostic {
         expected_any(&["assignment target", "rest property"], range).to_diagnostic(p)
     }
 

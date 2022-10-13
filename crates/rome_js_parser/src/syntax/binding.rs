@@ -1,4 +1,4 @@
-use crate::parser::{expected_any, ToDiagnostic};
+use crate::parser::expected_any;
 use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{is_nth_at_identifier, parse_identifier, ExpressionContext};
 use crate::syntax::js_parse_error::{
@@ -8,8 +8,8 @@ use crate::syntax::object::{is_at_object_member_name, parse_object_member_name};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{ParsedSyntax, Parser, SyntaxFeature};
-use rome_diagnostics::{Diagnostic, Span};
+use crate::{ParseDiagnostic, ParsedSyntax, Parser, SyntaxFeature, ToDiagnostic};
+use rome_diagnostics::Span;
 use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind as SyntaxKindTrait;
 
@@ -137,7 +137,7 @@ impl ParseWithDefaultPattern for BindingPatternWithDefault {
     }
 
     #[inline]
-    fn expected_pattern_error(p: &Parser, range: TextRange) -> Diagnostic {
+    fn expected_pattern_error(p: &Parser, range: TextRange) -> ParseDiagnostic {
         expected_binding(p, range)
     }
 
@@ -193,7 +193,7 @@ impl ParseArrayPattern<BindingPatternWithDefault> for ArrayBindingPattern {
     }
 
     #[inline]
-    fn expected_element_error(p: &Parser, range: TextRange) -> Diagnostic {
+    fn expected_element_error(p: &Parser, range: TextRange) -> ParseDiagnostic {
         expected_any(
             &[
                 "identifier",
@@ -235,7 +235,7 @@ impl ParseObjectPattern for ObjectBindingPattern {
     }
 
     #[inline]
-    fn expected_property_pattern_error(p: &Parser, range: TextRange) -> Diagnostic {
+    fn expected_property_pattern_error(p: &Parser, range: TextRange) -> ParseDiagnostic {
         expected_any(&["identifier", "member name", "rest pattern"], range).to_diagnostic(p)
     }
 

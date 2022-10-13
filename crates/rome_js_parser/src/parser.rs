@@ -217,8 +217,9 @@ impl<'s> Parser<'s> {
 
     /// Make a new error builder with `error` severity
     #[must_use]
-    pub fn err_builder(&self, message: &str) -> Diagnostic {
-        Diagnostic::error(self.file_id, category!("parse"), message)
+    pub fn err_builder(&self, message: &str) -> ParseDiagnostic {
+        ParseDiagnostic::new(self.file_id, message)
+        // Diagnostic::error(self.file_id, category!("parse"), message)
     }
 
     /// Add an error
@@ -227,14 +228,13 @@ impl<'s> Parser<'s> {
 
         // Don't report another error if it would just be at the same position as the last error.
         if let Some(previous) = self.diagnostics.last() {
-            if err.code == Some(category!("parse"))
-                && previous.code == err.code
+            if err.category() == Some(category!("parse"))
+                && previous.category() == err.category()
                 && previous.file_id == err.file_id
             {
-                match (&err.primary, &previous.primary) {
-                    (Some(err_primary), Some(previous_primary))
-                        if err_primary.span.range.start()
-                            == previous_primary.span.range.start() =>
+                match (&err.diagnostic_range(), &previous.diagnostic_range()) {
+                    (Some(err_range), Some(previous_range))
+                        if err_range.start() == previous_range.start() =>
                     {
                         return;
                     }

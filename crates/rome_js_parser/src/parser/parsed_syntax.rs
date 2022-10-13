@@ -1,8 +1,7 @@
 use crate::parser::parse_recovery::RecoveryResult;
 use crate::parser::ParsedSyntax::{Absent, Present};
 use crate::parser::{ParseRecovery, ToDiagnostic};
-use crate::{CompletedMarker, Marker, Parser};
-use rome_diagnostics::Diagnostic;
+use crate::{CompletedMarker, Marker, ParseDiagnostic, Parser};
 use rome_js_syntax::JsSyntaxKind;
 use rome_rowan::TextRange;
 
@@ -252,7 +251,7 @@ impl ParsedSyntax {
         error_builder: E,
     ) -> RecoveryResult
     where
-        E: FnOnce(&Parser, TextRange) -> Diagnostic,
+        E: FnOnce(&Parser, TextRange) -> ParseDiagnostic,
     {
         match self {
             Present(syntax) => Ok(syntax),

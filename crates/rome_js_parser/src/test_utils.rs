@@ -1,10 +1,11 @@
-use std::{fmt::Debug, path::Path};
-
-use rome_diagnostics::{file::SimpleFile, termcolor::Buffer, Emitter};
+use rome_console::fmt::{Formatter, Termcolor};
+use rome_diagnostics::v2::DiagnosticExt;
+use rome_diagnostics::{termcolor::Buffer, v2::PrintDiagnostic};
 use rome_js_syntax::{JsLanguage, JsSyntaxNode};
 use rome_rowan::{AstNode, SyntaxKind, SyntaxSlot};
+use std::{fmt::Debug, path::Path};
 
-use crate::Parse;
+use crate::{markup, Parse};
 
 /// This check is used in the parser test to ensure it doesn't emit
 /// unknown nodes without diagnostics, and in the analyzer tests to
@@ -42,12 +43,17 @@ where
         return;
     }
 
-    let file = SimpleFile::new(path.to_str().unwrap().to_string(), syntax.to_string());
-    let mut emitter = Emitter::new(&file);
     let mut buffer = Buffer::no_color();
-
     for diagnostic in program.diagnostics() {
-        emitter.emit_with_writer(diagnostic, &mut buffer).unwrap();
+        let error = diagnostic
+            .clone()
+            .with_file_path(&path.to_str().unwrap())
+            .with_file_source_code(syntax.to_string());
+        Formatter::new(&mut Termcolor(&mut buffer))
+            .write_markup(markup! {
+                {PrintDiagnostic(&error)}
+            })
+            .unwrap();
     }
 
     panic!("There should be no errors in the file {:?} but the following errors where present:\n{}\n\nParsed tree:\n{:#?}",

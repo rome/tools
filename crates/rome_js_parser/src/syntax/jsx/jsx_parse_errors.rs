@@ -1,19 +1,18 @@
 use crate::{
     parser::{expected_any, expected_node, ToDiagnostic},
-    Parser,
+    ParseDiagnostic, Parser,
 };
-use rome_diagnostics::Diagnostic;
 use rome_js_syntax::TextRange;
 
-pub(crate) fn jsx_expected_attribute(p: &Parser, range: TextRange) -> Diagnostic {
+pub(crate) fn jsx_expected_attribute(p: &Parser, range: TextRange) -> ParseDiagnostic {
     expected_node("JSX attribute", range).to_diagnostic(p)
 }
 
-pub(crate) fn jsx_expected_attribute_value(p: &Parser, range: TextRange) -> Diagnostic {
+pub(crate) fn jsx_expected_attribute_value(p: &Parser, range: TextRange) -> ParseDiagnostic {
     expected_node("JSX attribute value", range).to_diagnostic(p)
 }
 
-pub(crate) fn jsx_expected_children(p: &Parser, range: TextRange) -> Diagnostic {
+pub(crate) fn jsx_expected_children(p: &Parser, range: TextRange) -> ParseDiagnostic {
     expected_any(&["JSX Expression", "Element", "text"], range).to_diagnostic(p)
 }
 
@@ -22,7 +21,7 @@ pub(crate) fn jsx_expected_closing_tag(
     opening_name: &str,
     opening_range: TextRange,
     closing_range: TextRange,
-) -> Diagnostic {
+) -> ParseDiagnostic {
     p.err_builder(&format!(
         "Expected corresponding JSX closing tag for '{opening_name}'."
     ))

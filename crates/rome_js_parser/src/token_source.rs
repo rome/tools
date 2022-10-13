@@ -1,6 +1,6 @@
 use crate::lexer::{BufferedLexer, LexContext, Lexer, LexerCheckpoint, ReLexContext, TextRange};
+use crate::ParseDiagnostic;
 use rome_diagnostics::file::FileId;
-use rome_diagnostics::Diagnostic;
 use rome_js_syntax::JsSyntaxKind;
 use rome_js_syntax::JsSyntaxKind::EOF;
 use rome_rowan::{TextSize, TriviaPieceKind};
@@ -298,7 +298,7 @@ impl<'l> TokenSource<'l> {
     }
 
     /// Ends this token source and returns the source text's trivia
-    pub fn finish(self) -> (Vec<Trivia>, Vec<Diagnostic>) {
+    pub fn finish(self) -> (Vec<Trivia>, Vec<ParseDiagnostic>) {
         (self.trivia_list, self.lexer.finish())
     }
 }
