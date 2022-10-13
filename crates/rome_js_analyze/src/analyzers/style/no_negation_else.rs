@@ -45,6 +45,7 @@ impl Rule for NoNegationElse {
     type Query = Ast<JsAnyCondition>;
     type State = JsUnaryExpression;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let n = ctx.query();

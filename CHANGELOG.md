@@ -1,6 +1,18 @@
 # Rome changelog
 
-### 0.10.0
+## 0.10.1
+
+### CLI
+- Fixed a poor diagnostic that was emitted when navigating a symbolic symbol [#3329](https://github.com/rome/tools/issues/3329)
+- Added a size limit when inspecting files [#3330](https://github.com/rome/tools/issues/3330)
+
+### Diagnostics
+- Do not print tabs and spaces for unchanged lines [#3327](https://github.com/rome/tools/issues/3327)
+
+### VSCode
+- Fixed the calculation of text diffs inside the LSP [#3350](https://github.com/rome/tools/pull/3350)
+
+## 0.10.0
 
 ### Core
 

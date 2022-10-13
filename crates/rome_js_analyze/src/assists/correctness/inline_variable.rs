@@ -38,6 +38,7 @@ impl Rule for InlineVariable {
     type Query = Semantic<JsVariableDeclarator>;
     type State = State;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let semantic_model = ctx.model();

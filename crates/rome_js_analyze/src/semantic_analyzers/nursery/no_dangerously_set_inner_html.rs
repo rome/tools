@@ -46,6 +46,7 @@ impl Rule for NoDangerouslySetInnerHtml {
     type Query = Semantic<JsAnyCreateElement>;
     type State = NoDangerState;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();

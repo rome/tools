@@ -10,6 +10,7 @@ pub use rules::*;
 #[cfg(feature = "schemars")]
 use schemars::{gen::SchemaGenerator, schema::Schema, JsonSchema};
 use serde::{Deserialize, Serialize};
+use serde_json::Value;
 
 #[derive(Deserialize, Serialize, Debug)]
 #[cfg_attr(feature = "schemars", derive(JsonSchema))]
@@ -141,7 +142,7 @@ pub struct RuleWithOptions {
     level: RulePlainConfiguration,
     #[serde(skip_serializing_if = "Option::is_none")]
     #[cfg_attr(feature = "schemars", schemars(schema_with = "schema_any"))]
-    pub options: Option<Box<serde_json::value::RawValue>>,
+    pub options: Option<Value>,
 }
 
 #[cfg(feature = "schemars")]

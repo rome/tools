@@ -8,6 +8,7 @@ use std::{
     any::type_name,
     borrow::Cow,
     io,
+    ops::Deref,
     panic::RefUnwindSafe,
     str::{from_utf8, FromStr},
     sync::Arc,
@@ -34,7 +35,7 @@ use tokio::{
     runtime::Runtime,
     sync::{
         mpsc::{channel, Receiver, Sender},
-        oneshot,
+        oneshot, Notify,
     },
     time::sleep,
 };
@@ -101,11 +102,38 @@ type JsonRpcResult = Result<Box<RawValue>, TransportError>;
 /// from the read task, or the request times out
 pub struct SocketTransport {
     runtime: Runtime,
-    write_send: Sender<Vec<u8>>,
+    write_send: Sender<(Vec<u8>, bool)>,
     pending_requests: PendingRequests,
 }
 
-type PendingRequests = Arc<DashMap<u64, oneshot::Sender<JsonRpcResult>>>;
+/// Stores a handle to the map of pending requests, and clears the map
+/// automatically when the handle is dropped
+#[derive(Clone, Default)]
+struct PendingRequests {
+    inner: Arc<DashMap<u64, oneshot::Sender<JsonRpcResult>>>,
+}
+
+impl Deref for PendingRequests {
+    type Target = DashMap<u64, oneshot::Sender<JsonRpcResult>>;
+
+    fn deref(&self) -> &Self::Target {
+        self.inner.as_ref()
+    }
+}
+
+/// There are two live handles to the pending requests map: one is in the
+/// `SocketTransport` and the other in the `read_task`. The `SocketTransport`
+/// instance can only be dropped if it's empty (since the `request` method
+/// blocks until the request is resolved, `&self` will always outlive any
+/// pending request), but the `read_task` may abort if it encounters an error
+/// or receives a shutdown broadcast while there are still pending requests. In
+/// this case the `Drop` implementation will ensure that all pending requests
+/// are cancelled immediately instead of timing out.
+impl Drop for PendingRequests {
+    fn drop(&mut self) {
+        self.inner.clear();
+    }
+}
 
 impl SocketTransport {
     pub fn open<R, W>(runtime: Runtime, socket_read: R, socket_write: W) -> Self
@@ -124,14 +152,26 @@ impl SocketTransport {
 
         let (write_send, write_recv) = channel(WRITE_CHANNEL_CAPACITY);
 
-        let pending_requests: Arc<DashMap<u64, oneshot::Sender<JsonRpcResult>>> = Arc::default();
-        let pending_requests_2 = Arc::clone(&pending_requests);
+        let pending_requests = PendingRequests::default();
+        let pending_requests_2 = pending_requests.clone();
 
         let socket_read = BufReader::new(socket_read);
         let socket_write = BufWriter::new(socket_write);
 
-        runtime.spawn(write_task(write_recv, socket_write));
-        runtime.spawn(read_task(socket_read, pending_requests));
+        let broadcast_shutdown = Arc::new(Notify::new());
+
+        runtime.spawn(write_task(
+            broadcast_shutdown.clone(),
+            write_recv,
+            socket_write,
+        ));
+
+        runtime.spawn(async move {
+            tokio::select! {
+                _ = read_task(socket_read, &pending_requests) => {}
+                _ = broadcast_shutdown.notified() => {}
+            }
+        });
 
         Self {
             runtime,
@@ -154,6 +194,8 @@ impl WorkspaceTransport for SocketTransport {
 
         self.pending_requests.insert(request.id, send);
 
+        let is_shutdown = request.method == "rome/shutdown";
+
         let request = JsonRpcRequest {
             jsonrpc: Cow::Borrowed("2.0"),
             id: request.id,
@@ -170,7 +212,7 @@ impl WorkspaceTransport for SocketTransport {
 
         let response = self.runtime.block_on(async move {
             self.write_send
-                .send(request)
+                .send((request, is_shutdown))
                 .await
                 .map_err(|_| TransportError::ChannelClosed)?;
 
@@ -200,7 +242,7 @@ impl WorkspaceTransport for SocketTransport {
     }
 }
 
-async fn read_task<R>(mut socket_read: BufReader<R>, pending_requests: PendingRequests)
+async fn read_task<R>(mut socket_read: BufReader<R>, pending_requests: &PendingRequests)
 where
     R: AsyncRead + Unpin,
 {
@@ -226,7 +268,7 @@ where
             Err(err) => {
                 eprintln!(
                     "{:?}",
-                    err.context("remote connection write task exited with an error")
+                    err.context("remote connection read task exited with an error")
                 );
                 break;
             }
@@ -320,16 +362,27 @@ where
     Ok(result)
 }
 
-async fn write_task<W>(mut write_recv: Receiver<Vec<u8>>, mut socket_write: BufWriter<W>)
-where
+async fn write_task<W>(
+    broadcast_shutdown: Arc<Notify>,
+    mut write_recv: Receiver<(Vec<u8>, bool)>,
+    mut socket_write: BufWriter<W>,
+) where
     W: AsyncWrite + Unpin,
 {
-    while let Some(message) = write_recv.recv().await {
+    while let Some((message, is_shutdown)) = write_recv.recv().await {
+        if is_shutdown {
+            broadcast_shutdown.notify_waiters();
+        }
+
         if let Err(err) = write_message(&mut socket_write, message).await {
             eprintln!(
                 "{:?}",
-                err.context("remote connection read task exited with an error")
+                err.context("remote connection write task exited with an error")
             );
+            break;
+        }
+
+        if is_shutdown {
             break;
         }
     }

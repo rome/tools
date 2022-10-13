@@ -44,6 +44,7 @@ impl Rule for NoCatchAssign {
     /// The first element of `State` is the reassignment of catch parameter, the second element of `State` is the declaration of catch clause.
     type State = (JsSyntaxNode, JsSyntaxNode);
     type Signals = Vec<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Vec<Self::State> {
         let catch_clause = ctx.query();

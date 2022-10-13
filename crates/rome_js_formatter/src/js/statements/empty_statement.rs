@@ -2,7 +2,7 @@ use crate::prelude::*;
 use rome_formatter::write;
 
 use rome_js_syntax::{JsEmptyStatement, JsEmptyStatementFields, JsSyntaxKind};
-use rome_rowan::AstNode;
+use rome_rowan::{AstNode, SyntaxNodeOptionExt};
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatJsEmptyStatement;
@@ -10,7 +10,7 @@ pub struct FormatJsEmptyStatement;
 impl FormatNodeRule<JsEmptyStatement> for FormatJsEmptyStatement {
     fn fmt_fields(&self, node: &JsEmptyStatement, f: &mut JsFormatter) -> FormatResult<()> {
         let JsEmptyStatementFields { semicolon_token } = node.as_fields();
-        let parent_kind = node.syntax().parent().map(|p| p.kind());
+        let parent_kind = node.syntax().parent().kind();
 
         if matches!(
             parent_kind,

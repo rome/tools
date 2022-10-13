@@ -27,7 +27,7 @@ const r4 = !boolExpr1 || !boolExpr2;
 
 # Diagnostics
 ```
-useSimplifiedLogicExpression.js:7:12 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━
+useSimplifiedLogicExpression.js:7:12 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━━━━
 
   ! Logical expression contains unnecessary complexity.
   
@@ -46,7 +46,7 @@ useSimplifiedLogicExpression.js:7:12 lint/correctness/useSimplifiedLogicExpressi
 ```
 
 ```
-useSimplifiedLogicExpression.js:7:27 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━
+useSimplifiedLogicExpression.js:7:27 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━━━━
 
   ! Logical expression contains unnecessary complexity.
   
@@ -65,7 +65,7 @@ useSimplifiedLogicExpression.js:7:27 lint/correctness/useSimplifiedLogicExpressi
 ```
 
 ```
-useSimplifiedLogicExpression.js:10:11 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━
+useSimplifiedLogicExpression.js:10:11 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━━━━
 
   ! Logical expression contains unnecessary complexity.
   
@@ -84,7 +84,7 @@ useSimplifiedLogicExpression.js:10:11 lint/correctness/useSimplifiedLogicExpress
 ```
 
 ```
-useSimplifiedLogicExpression.js:12:12 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━
+useSimplifiedLogicExpression.js:12:12 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━━━━
 
   ! Logical expression contains unnecessary complexity.
   
@@ -103,7 +103,7 @@ useSimplifiedLogicExpression.js:12:12 lint/correctness/useSimplifiedLogicExpress
 ```
 
 ```
-useSimplifiedLogicExpression.js:14:12 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━
+useSimplifiedLogicExpression.js:14:12 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━━━━
 
   ! Logical expression contains unnecessary complexity.
   
@@ -122,7 +122,7 @@ useSimplifiedLogicExpression.js:14:12 lint/correctness/useSimplifiedLogicExpress
 ```
 
 ```
-useSimplifiedLogicExpression.js:17:12 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━
+useSimplifiedLogicExpression.js:17:12 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━━━━
 
   ! Logical expression contains unnecessary complexity.
   
@@ -146,7 +146,7 @@ useSimplifiedLogicExpression.js:17:12 lint/correctness/useSimplifiedLogicExpress
 ```
 
 ```
-useSimplifiedLogicExpression.js:18:1 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━
+useSimplifiedLogicExpression.js:18:1 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━━━━
 
   ! Logical expression contains unnecessary complexity.
   

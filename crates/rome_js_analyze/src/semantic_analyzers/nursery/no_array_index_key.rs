@@ -123,6 +123,7 @@ impl Rule for NoArrayIndexKey {
     type Query = Semantic<NoArrayIndexKeyQuery>;
     type State = NoArrayIndexKeyState;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();

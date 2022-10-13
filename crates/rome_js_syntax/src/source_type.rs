@@ -39,10 +39,10 @@ pub enum ModuleKind {
 }
 
 impl ModuleKind {
-    pub fn is_script(&self) -> bool {
+    pub const fn is_script(&self) -> bool {
         matches!(self, ModuleKind::Script)
     }
-    pub fn is_module(&self) -> bool {
+    pub const fn is_module(&self) -> bool {
         matches!(self, ModuleKind::Module)
     }
 }
@@ -58,10 +58,10 @@ pub enum LanguageVariant {
 }
 
 impl LanguageVariant {
-    pub fn is_standard(&self) -> bool {
+    pub const fn is_standard(&self) -> bool {
         matches!(self, LanguageVariant::Standard)
     }
-    pub fn is_jsx(&self) -> bool {
+    pub const fn is_jsx(&self) -> bool {
         matches!(self, LanguageVariant::Jsx)
     }
 }
@@ -77,11 +77,20 @@ pub enum Language {
 }
 
 impl Language {
-    pub fn is_javascript(&self) -> bool {
+    pub const fn is_javascript(&self) -> bool {
         matches!(self, Language::JavaScript)
     }
-    pub fn is_typescript(&self) -> bool {
+    pub const fn is_typescript(&self) -> bool {
         matches!(self, Language::TypeScript { .. })
+    }
+
+    pub const fn is_definition_file(&self) -> bool {
+        matches!(
+            self,
+            Language::TypeScript {
+                definition_file: true
+            }
+        )
     }
 }
 
@@ -135,17 +144,17 @@ impl SourceType {
         }
     }
 
-    pub fn with_module_kind(mut self, kind: ModuleKind) -> Self {
+    pub const fn with_module_kind(mut self, kind: ModuleKind) -> Self {
         self.module_kind = kind;
         self
     }
 
-    pub fn with_version(mut self, version: LanguageVersion) -> Self {
+    pub const fn with_version(mut self, version: LanguageVersion) -> Self {
         self.version = version;
         self
     }
 
-    pub fn with_variant(mut self, variant: LanguageVariant) -> Self {
+    pub const fn with_variant(mut self, variant: LanguageVariant) -> Self {
         self.variant = variant;
         self
     }
@@ -166,7 +175,7 @@ impl SourceType {
         self.module_kind
     }
 
-    pub fn is_module(&self) -> bool {
+    pub const fn is_module(&self) -> bool {
         self.module_kind.is_module()
     }
 }

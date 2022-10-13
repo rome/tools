@@ -37,6 +37,7 @@ check.js:2:1 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
+     1  1 │   
      2    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
         2 │ + for(;true;)·{}for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      3  3 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -57,6 +58,7 @@ check.js:2:1 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━�
   
   i Suggested fix: Use a while loop
   
+     1  1 │   
      2    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
         2 │ + while·(true);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      3  3 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -77,6 +79,7 @@ check.js:2:13 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
+     1  1 │   
      2    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
         2 │ + for(;true;);for(;true;)·{}for(;true;);for(;true;);for(;true;);for(;true;);
      3  3 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -97,6 +100,7 @@ check.js:2:13 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
   
   i Suggested fix: Use a while loop
   
+     1  1 │   
      2    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
         2 │ + for(;true;);while·(true);for(;true;);for(;true;);for(;true;);for(;true;);
      3  3 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -117,6 +121,7 @@ check.js:2:25 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
+     1  1 │   
      2    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
         2 │ + for(;true;);for(;true;);for(;true;)·{}for(;true;);for(;true;);for(;true;);
      3  3 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -137,6 +142,7 @@ check.js:2:25 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
   
   i Suggested fix: Use a while loop
   
+     1  1 │   
      2    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
         2 │ + for(;true;);for(;true;);while·(true);for(;true;);for(;true;);for(;true;);
      3  3 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -157,6 +163,7 @@ check.js:2:37 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
+     1  1 │   
      2    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
         2 │ + for(;true;);for(;true;);for(;true;);for(;true;)·{}for(;true;);for(;true;);
      3  3 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -177,6 +184,7 @@ check.js:2:37 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
   
   i Suggested fix: Use a while loop
   
+     1  1 │   
      2    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
         2 │ + for(;true;);for(;true;);for(;true;);while·(true);for(;true;);for(;true;);
      3  3 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -197,6 +205,7 @@ check.js:2:49 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
+     1  1 │   
      2    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
         2 │ + for(;true;);for(;true;);for(;true;);for(;true;);for(;true;)·{}for(;true;);
      3  3 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -217,6 +226,7 @@ check.js:2:49 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
   
   i Suggested fix: Use a while loop
   
+     1  1 │   
      2    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
         2 │ + for(;true;);for(;true;);for(;true;);for(;true;);while·(true);for(;true;);
      3  3 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -237,6 +247,7 @@ check.js:2:61 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
+     1  1 │   
      2    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
         2 │ + for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;)·{}
      3  3 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -257,6 +268,7 @@ check.js:2:61 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
   
   i Suggested fix: Use a while loop
   
+     1  1 │   
      2    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
         2 │ + for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);while·(true);
      3  3 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -278,6 +290,7 @@ check.js:3:1 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
+     1  1 │   
      2  2 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      3    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
         3 │ + for(;true;)·{}for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -300,6 +313,7 @@ check.js:3:1 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━�
   
   i Suggested fix: Use a while loop
   
+     1  1 │   
      2  2 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      3    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
         3 │ + while·(true);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -322,6 +336,7 @@ check.js:3:13 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
+     1  1 │   
      2  2 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      3    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
         3 │ + for(;true;);for(;true;)·{}for(;true;);for(;true;);for(;true;);for(;true;);
@@ -344,6 +359,7 @@ check.js:3:13 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
   
   i Suggested fix: Use a while loop
   
+     1  1 │   
      2  2 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      3    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
         3 │ + for(;true;);while·(true);for(;true;);for(;true;);for(;true;);for(;true;);
@@ -366,6 +382,7 @@ check.js:3:25 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
+     1  1 │   
      2  2 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      3    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
         3 │ + for(;true;);for(;true;);for(;true;)·{}for(;true;);for(;true;);for(;true;);
@@ -388,6 +405,7 @@ check.js:3:25 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
   
   i Suggested fix: Use a while loop
   
+     1  1 │   
      2  2 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      3    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
         3 │ + for(;true;);for(;true;);while·(true);for(;true;);for(;true;);for(;true;);
@@ -410,6 +428,7 @@ check.js:3:37 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
+     1  1 │   
      2  2 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      3    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
         3 │ + for(;true;);for(;true;);for(;true;);for(;true;)·{}for(;true;);for(;true;);
@@ -432,6 +451,7 @@ check.js:3:37 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
   
   i Suggested fix: Use a while loop
   
+     1  1 │   
      2  2 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      3    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
         3 │ + for(;true;);for(;true;);for(;true;);while·(true);for(;true;);for(;true;);

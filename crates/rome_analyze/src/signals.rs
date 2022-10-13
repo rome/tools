@@ -123,6 +123,7 @@ where
     fn diagnostic(&self) -> Option<AnalyzerDiagnostic> {
         let ctx =
             RuleContext::new(&self.query_result, self.root, self.services, &self.options).ok()?;
+
         R::diagnostic(&ctx, &self.state).map(|diag| diag.into_analyzer_diagnostic(self.file_id))
     }
 

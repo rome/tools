@@ -531,6 +531,16 @@
             }
           ]
         },
+        "noExplicitAny": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noNewSymbol": {
           "anyOf": [
             {
@@ -541,7 +551,27 @@
             }
           ]
         },
+        "noPositiveTabindex": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noRenderReturnValue": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noRestrictedGlobals": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -608,6 +638,16 @@
             "null"
           ]
         },
+        "useBlankTarget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useButtonType": {
           "anyOf": [
             {
@@ -649,6 +689,16 @@
           ]
         },
         "useOptionalChain": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useValidAnchor": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

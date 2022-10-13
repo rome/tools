@@ -175,6 +175,7 @@ impl Rule for NoUnusedVariables {
     type Query = Semantic<JsIdentifierBinding>;
     type State = ();
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let binding = ctx.query();

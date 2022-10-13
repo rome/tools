@@ -60,6 +60,7 @@ impl Rule for NoImportAssign {
     /// The first element of the tuple is the invalid `JsIdentifierAssignment`, the second element of the tuple is the imported `JsIdentifierBinding`.
     type State = (JsIdentifierAssignment, JsIdentifierBinding);
     type Signals = Vec<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Vec<Self::State> {
         let label_statement = ctx.query();

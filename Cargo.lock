@@ -1613,6 +1613,7 @@ version = "0.0.0"
 dependencies = [
  "cfg-if",
  "countme",
+ "drop_bomb",
  "indexmap",
  "rome_diagnostics",
  "rome_js_parser",
@@ -1622,6 +1623,7 @@ dependencies = [
  "schemars",
  "serde",
  "tracing",
+ "unicode-width",
 ]
 
 [[package]]
@@ -1644,6 +1646,7 @@ version = "0.0.0"
 dependencies = [
  "countme",
  "insta",
+ "lazy_static",
  "roaring",
  "rome_analyze",
  "rome_console",

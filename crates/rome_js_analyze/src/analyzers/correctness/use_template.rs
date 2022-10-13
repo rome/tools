@@ -56,6 +56,7 @@ impl Rule for UseTemplate {
     type Query = Ast<JsBinaryExpression>;
     type State = Vec<JsAnyExpression>;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let binary_expr = ctx.query();

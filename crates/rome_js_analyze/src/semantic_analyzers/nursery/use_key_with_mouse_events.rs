@@ -175,6 +175,7 @@ impl Rule for UseKeyWithMouseEvents {
     type Query = Semantic<JsxAnyElement>;
     type State = UseKeyWithMouseEventsState;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();

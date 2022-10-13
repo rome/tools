@@ -10,7 +10,7 @@ use crate::workspace::SupportsFeatureResult;
 use crate::{
     file_handlers::Features,
     settings::{SettingsHandle, WorkspaceSettings},
-    RomeError, Workspace,
+    RomeError, Rules, Workspace,
 };
 use dashmap::{mapref::entry::Entry, DashMap};
 use indexmap::IndexSet;
@@ -135,6 +135,15 @@ impl WorkspaceServer {
 
             let language = Features::get_language(path).or(language_hint);
             RomeError::SourceFileNotSupported(language, path.clone())
+        }
+    }
+
+    fn build_rule_filter_list<'a>(&'a self, rules: Option<&'a Rules>) -> Vec<RuleFilter> {
+        if let Some(rules) = rules {
+            let enabled: IndexSet<RuleFilter> = rules.as_enabled_rules();
+            enabled.into_iter().collect::<Vec<RuleFilter>>()
+        } else {
+            vec![]
         }
     }
 
@@ -362,20 +371,11 @@ impl Workspace for WorkspaceServer {
         };
         let parse = self.get_parse(params.path.clone(), Some(feature))?;
         let rules = settings.linter().rules.as_ref();
-        let enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = rules {
-            let enabled: IndexSet<RuleFilter> = rules.as_enabled_rules();
-            Some(enabled.into_iter().collect())
-        } else {
-            None
-        };
-
-        let mut filter = match &enabled_rules {
-            Some(rules) => AnalysisFilter::from_enabled_rules(Some(rules.as_slice())),
-            _ => AnalysisFilter::default(),
-        };
-
+        let rule_filter_list = self.build_rule_filter_list(rules);
+        let mut filter = AnalysisFilter::from_enabled_rules(Some(rule_filter_list.as_slice()));
         filter.categories = params.categories;
-        let diagnostics = lint(&params.path, parse, filter, rules);
+
+        let diagnostics = lint(&params.path, parse, filter, rules, self.settings());
 
         if diagnostics.is_empty() {
             return Ok(PullDiagnosticsResult {
@@ -410,11 +410,16 @@ impl Workspace for WorkspaceServer {
             .code_actions
             .ok_or_else(self.build_capability_error(&params.path))?;
 
-        let settings = self.settings.read().unwrap();
         let parse = self.get_parse(params.path.clone(), Some(FeatureName::Lint))?;
-
+        let settings = self.settings.read().unwrap();
         let rules = settings.linter().rules.as_ref();
-        Ok(code_actions(&params.path, parse, params.range, rules))
+        Ok(code_actions(
+            &params.path,
+            parse,
+            params.range,
+            rules,
+            self.settings(),
+        ))
     }
 
     /// Runs the given file through the formatter using the provided options
@@ -482,6 +487,7 @@ impl Workspace for WorkspaceServer {
             parse,
             rules,
             fix_file_mode: params.fix_file_mode,
+            settings: self.settings(),
         })
     }
 

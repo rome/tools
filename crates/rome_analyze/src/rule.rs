@@ -1,13 +1,14 @@
 use crate::categories::{ActionCategory, RuleCategory};
 use crate::context::RuleContext;
-use crate::registry::{RuleLanguage, RuleSuppressions};
-use crate::{AnalysisFilter, AnalyzerDiagnostic, Phase, Phases, Queryable, RuleRegistry};
+use crate::registry::{RegistryVisitor, RuleLanguage, RuleSuppressions};
+use crate::{AnalyzerDiagnostic, Phase, Phases, Queryable};
 use rome_console::fmt::Display;
 use rome_console::{markup, MarkupBuf};
 use rome_diagnostics::v2::Category;
 use rome_diagnostics::{file::FileId, Applicability, Severity};
 use rome_diagnostics::{DiagnosticTag, Footer, Span};
 use rome_rowan::{BatchMutation, Language, TextRange};
+use serde::de::DeserializeOwned;
 
 /// Static metadata containing information about a rule
 pub struct RuleMetadata {
@@ -108,7 +109,7 @@ pub trait RuleGroup {
     /// The name of this group, displayed in the diagnostics emitted by its rules
     const NAME: &'static str;
     /// Register all the rules belonging to this group into `registry`
-    fn push_rules(registry: &mut RuleRegistry<Self::Language>, filter: &AnalysisFilter);
+    fn record_rules<V: RegistryVisitor<Self::Language> + ?Sized>(registry: &mut V);
 }
 
 /// This macro is used by the codegen script to declare an analyzer rule group,
@@ -124,8 +125,8 @@ macro_rules! declare_group {
 
             const NAME: &'static str = $name;
 
-            fn push_rules(registry: &mut $crate::RuleRegistry<Self::Language>, filter: &$crate::AnalysisFilter) {
-                $( registry.push_rule::<$( $rule )::*>(filter); )*
+            fn record_rules<V: $crate::RegistryVisitor<Self::Language> + ?Sized>(registry: &mut V) {
+                $( registry.record_rule::<$( $rule )::*>(); )*
             }
         }
 
@@ -157,7 +158,7 @@ pub trait GroupCategory {
     /// The category ID used for all groups and rule belonging to this category
     const CATEGORY: RuleCategory;
     /// Register all the groups belonging to this category into `registry`
-    fn push_groups(registry: &mut RuleRegistry<Self::Language>, filter: &AnalysisFilter);
+    fn record_groups<V: RegistryVisitor<Self::Language> + ?Sized>(registry: &mut V);
 }
 
 #[macro_export]
@@ -170,8 +171,8 @@ macro_rules! declare_category {
 
             const CATEGORY: $crate::RuleCategory = $crate::RuleCategory::$kind;
 
-            fn push_groups(registry: &mut $crate::RuleRegistry<Self::Language>, filter: &$crate::AnalysisFilter) {
-                $( registry.push_group::<$( $group )::*>(filter); )*
+            fn record_groups<V: $crate::RegistryVisitor<Self::Language> + ?Sized>(registry: &mut V) {
+                $( registry.record_group::<$( $group )::*>(); )*
             }
         }
 
@@ -239,6 +240,8 @@ pub trait Rule: RuleMeta {
     /// An iterator type returned by `run` to yield zero or more signals to the
     /// analyzer
     type Signals: IntoIterator<Item = Self::State>;
+    /// The options that belong to a rule
+    type Options: DeserializeOwned;
 
     fn phase() -> Phases {
         <<<Self as Rule>::Query as Queryable>::Services as Phase>::phase()

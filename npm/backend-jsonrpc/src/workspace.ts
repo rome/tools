@@ -160,8 +160,11 @@ export interface Nursery {
 	noChildrenProp?: RuleConfiguration;
 	noDangerouslySetInnerHtml?: RuleConfiguration;
 	noDangerouslySetInnerHtmlWithChildren?: RuleConfiguration;
+	noExplicitAny?: RuleConfiguration;
 	noNewSymbol?: RuleConfiguration;
+	noPositiveTabindex?: RuleConfiguration;
 	noRenderReturnValue?: RuleConfiguration;
+	noRestrictedGlobals?: RuleConfiguration;
 	noUndeclaredVariables?: RuleConfiguration;
 	noUnreachable?: RuleConfiguration;
 	noUnusedVariables?: RuleConfiguration;
@@ -171,11 +174,13 @@ export interface Nursery {
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
+	useBlankTarget?: RuleConfiguration;
 	useButtonType?: RuleConfiguration;
 	useCamelCase?: RuleConfiguration;
 	useFragmentSyntax?: RuleConfiguration;
 	useKeyWithMouseEvents?: RuleConfiguration;
 	useOptionalChain?: RuleConfiguration;
+	useValidAnchor?: RuleConfiguration;
 }
 /**
  * A list of rules that belong to this group
@@ -310,6 +315,11 @@ export type Category =
 	| "lint/nursery/noDangerouslySetInnerHtmlWithChildren"
 	| "lint/nursery/noAutofocus"
 	| "lint/nursery/useKeyWithMouseEvents"
+	| "lint/nursery/useBlankTarget"
+	| "lint/nursery/useValidAnchor"
+	| "lint/nursery/noRestrictedGlobals"
+	| "lint/nursery/noPositiveTabindex"
+	| "lint/nursery/noExplicitAny"
 	| "lint/style/noNegationElse"
 	| "lint/style/noShoutyConstants"
 	| "lint/style/useSelfClosingElements"

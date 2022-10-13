@@ -5,10 +5,10 @@ use crate::js::lists::parameter_list::{
     AnyParameter, FormatJsAnyParameterList, JsAnyParameterList,
 };
 
-use crate::utils::test_call::is_test_call_expression;
+use crate::utils::test_call::is_test_call_argument;
 use rome_js_syntax::{
-    JsAnyConstructorParameter, JsAnyFormalParameter, JsCallExpression, JsConstructorParameters,
-    JsParameters, JsSyntaxKind, JsSyntaxToken, TsType,
+    JsAnyConstructorParameter, JsAnyFormalParameter, JsConstructorParameters, JsParameters,
+    JsSyntaxToken, TsType,
 };
 use rome_rowan::{declare_node_union, SyntaxResult};
 
@@ -129,29 +129,10 @@ impl FormatJsAnyParameters {
     /// Returns `true` for function parameters if the function is an argument of a [test `CallExpression`](is_test_call_expression).
     fn is_in_test_call(&self) -> SyntaxResult<bool> {
         let result = match self {
-            FormatJsAnyParameters::JsParameters(parameters) => {
-                match parameters.syntax().grand_parent() {
-                    Some(function_parent) => match function_parent.kind() {
-                        JsSyntaxKind::JS_CALL_ARGUMENT_LIST => {
-                            let arguments = function_parent.parent();
-                            let call_expression = arguments.and_then(|args| args.parent());
-
-                            match call_expression {
-                                Some(call_expression)
-                                    if JsCallExpression::can_cast(call_expression.kind()) =>
-                                {
-                                    is_test_call_expression(&JsCallExpression::unwrap_cast(
-                                        call_expression,
-                                    ))?
-                                }
-                                _ => false,
-                            }
-                        }
-                        _ => false,
-                    },
-                    None => false,
-                }
-            }
+            FormatJsAnyParameters::JsParameters(parameters) => match parameters.syntax().parent() {
+                Some(function) => is_test_call_argument(&function)?,
+                None => false,
+            },
             FormatJsAnyParameters::JsConstructorParameters(_) => false,
         };
 
@@ -191,7 +172,7 @@ pub enum ParameterLayout {
     Default,
 }
 
-fn should_hug_function_parameters(
+pub(crate) fn should_hug_function_parameters(
     parameters: &FormatJsAnyParameters,
     comments: &JsComments,
 ) -> FormatResult<bool> {

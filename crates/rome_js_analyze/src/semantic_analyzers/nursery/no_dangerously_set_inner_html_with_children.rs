@@ -156,6 +156,7 @@ impl Rule for NoDangerouslySetInnerHtmlWithChildren {
     type Query = Semantic<JsAnyCreateElement>;
     type State = RuleState;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();

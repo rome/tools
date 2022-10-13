@@ -34,6 +34,7 @@ impl Rule for NoDebugger {
     type Query = Ast<JsDebuggerStatement>;
     type State = ();
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(_: &RuleContext<Self>) -> Option<Self::State> {
         Some(())

@@ -223,7 +223,7 @@ pub(crate) fn jsx_split_children<I>(
 where
     I: IntoIterator<Item = JsxAnyChild>,
 {
-    let mut result = Vec::new();
+    let mut builder = JsxSplitChildrenBuilder::new();
 
     for child in children.into_iter() {
         match child {
@@ -253,15 +253,15 @@ where
                                     // </div>
                                     // ```
                                     if newlines > 1 {
-                                        result.push(JsxChild::EmptyLine);
+                                        builder.entry(JsxChild::EmptyLine);
                                     }
 
                                     continue;
                                 }
 
-                                result.push(JsxChild::Newline)
-                            } else if !matches!(result.last(), Some(JsxChild::Whitespace)) {
-                                result.push(JsxChild::Whitespace)
+                                builder.entry(JsxChild::Newline)
+                            } else {
+                                builder.entry(JsxChild::Whitespace)
                             }
                         }
                         _ => unreachable!(),
@@ -274,15 +274,15 @@ where
                             // Only handle trailing whitespace. Words must always be joined by new lines
                             if chunks.peek().is_none() {
                                 if whitespace.contains('\n') {
-                                    result.push(JsxChild::Newline);
+                                    builder.entry(JsxChild::Newline);
                                 } else {
-                                    result.push(JsxChild::Whitespace)
+                                    builder.entry(JsxChild::Whitespace)
                                 }
                             }
                         }
 
                         (relative_start, JsxTextChunk::Word(word)) => {
-                            result.push(JsxChild::Word(JsxWord {
+                            builder.entry(JsxChild::Word(JsxWord {
                                 text: value_token
                                     .token_text()
                                     .slice(TextRange::at(relative_start, word.text_len())),
@@ -295,23 +295,50 @@ where
 
             JsxAnyChild::JsxExpressionChild(child) => {
                 if is_whitespace_jsx_expression(&child, comments) {
-                    match result.last() {
-                        Some(JsxChild::Whitespace) => {
-                            // Ignore
-                        }
-                        _ => result.push(JsxChild::Whitespace),
-                    }
+                    builder.entry(JsxChild::Whitespace)
                 } else {
-                    result.push(JsxChild::NonText(child.into()))
+                    builder.entry(JsxChild::NonText(child.into()))
                 }
             }
             child => {
-                result.push(JsxChild::NonText(child));
+                builder.entry(JsxChild::NonText(child));
             }
         }
     }
 
-    Ok(result)
+    Ok(builder.finish())
+}
+
+/// The builder is used to:
+/// 1. Remove [JsxChild::EmptyLine], [JsxChild::Newline], [JsxChild::Whitespace] if a next element is [JsxChild::Whitespace]
+/// 2. Don't push a new element [JsxChild::EmptyLine], [JsxChild::Newline], [JsxChild::Whitespace] if previous one is [JsxChild::EmptyLine], [JsxChild::Newline], [JsxChild::Whitespace]
+/// [Prettier applies]: https://github.com/prettier/prettier/blob/b0d9387b95cdd4e9d50f5999d3be53b0b5d03a97/src/language-js/print/jsx.js#L144-L180
+#[derive(Debug)]
+struct JsxSplitChildrenBuilder {
+    buffer: Vec<JsxChild>,
+}
+
+impl JsxSplitChildrenBuilder {
+    fn new() -> Self {
+        JsxSplitChildrenBuilder { buffer: vec![] }
+    }
+
+    fn entry(&mut self, child: JsxChild) {
+        match self.buffer.last_mut() {
+            Some(last @ (JsxChild::EmptyLine | JsxChild::Newline | JsxChild::Whitespace)) => {
+                if matches!(child, JsxChild::Whitespace) {
+                    *last = child;
+                } else if matches!(child, JsxChild::NonText(_) | JsxChild::Word(_)) {
+                    self.buffer.push(child);
+                }
+            }
+            _ => self.buffer.push(child),
+        }
+    }
+
+    fn finish(self) -> Vec<JsxChild> {
+        self.buffer
+    }
 }
 
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -378,12 +405,23 @@ pub(crate) struct JsxWord {
     source_position: TextSize,
 }
 
+impl JsxWord {
+    pub fn is_ascii_punctuation(&self) -> bool {
+        self.text.chars().count() == 1
+            && self
+                .text
+                .chars()
+                .next()
+                .map_or(false, |char| char.is_ascii_punctuation())
+    }
+}
+
 impl Format<JsFormatContext> for JsxWord {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
-        f.write_element(FormatElement::Text(Text::SyntaxTokenTextSlice {
+        f.write_element(FormatElement::SyntaxTokenTextSlice {
             source_position: self.source_position,
             slice: self.text.clone(),
-        }))
+        })
     }
 }
 
@@ -631,6 +669,44 @@ mod tests {
     #[test]
     fn split_children_empty_expression() {
         let child_list = parse_jsx_children(r#"a{' '}c{" "}"#);
+
+        let children = jsx_split_children(&child_list, &Comments::default()).unwrap();
+
+        assert_eq!(
+            4,
+            children.len(),
+            "Expected to contain four elements. Actual:\n{children:#?} "
+        );
+        assert_word(&children[0], "a");
+        assert_eq!(children[1], JsxChild::Whitespace);
+        assert_word(&children[2], "c");
+        assert_eq!(children[3], JsxChild::Whitespace);
+    }
+
+    #[test]
+    fn split_children_remove_in_row_jsx_whitespaces() {
+        let child_list = parse_jsx_children(r#"a{' '}{' '}{' '}c{" "}{' '}{" "}"#);
+
+        let children = jsx_split_children(&child_list, &Comments::default()).unwrap();
+
+        assert_eq!(
+            4,
+            children.len(),
+            "Expected to contain four elements. Actual:\n{children:#?} "
+        );
+        assert_word(&children[0], "a");
+        assert_eq!(children[1], JsxChild::Whitespace);
+        assert_word(&children[2], "c");
+        assert_eq!(children[3], JsxChild::Whitespace);
+    }
+
+    #[test]
+    fn split_children_remove_new_line_before_jsx_whitespaces() {
+        let child_list = parse_jsx_children(
+            r#"a
+            {' '}c{" "}
+            "#,
+        );
 
         let children = jsx_split_children(&child_list, &Comments::default()).unwrap();
 

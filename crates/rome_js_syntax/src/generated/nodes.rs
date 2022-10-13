@@ -13340,19 +13340,12 @@ impl JsAnyObjectAssignmentPatternMember {
 #[derive(Clone, PartialEq, Eq, Hash)]
 #[cfg_attr(feature = "serde", derive(Serialize))]
 pub enum JsAnyObjectBindingPatternMember {
-    JsIdentifierBinding(JsIdentifierBinding),
     JsObjectBindingPatternProperty(JsObjectBindingPatternProperty),
     JsObjectBindingPatternRest(JsObjectBindingPatternRest),
     JsObjectBindingPatternShorthandProperty(JsObjectBindingPatternShorthandProperty),
     JsUnknownBinding(JsUnknownBinding),
 }
 impl JsAnyObjectBindingPatternMember {
-    pub fn as_js_identifier_binding(&self) -> Option<&JsIdentifierBinding> {
-        match &self {
-            JsAnyObjectBindingPatternMember::JsIdentifierBinding(item) => Some(item),
-            _ => None,
-        }
-    }
     pub fn as_js_object_binding_pattern_property(&self) -> Option<&JsObjectBindingPatternProperty> {
         match &self {
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(item) => Some(item),
@@ -28211,11 +28204,6 @@ impl From<JsAnyObjectAssignmentPatternMember> for SyntaxElement {
         node.into()
     }
 }
-impl From<JsIdentifierBinding> for JsAnyObjectBindingPatternMember {
-    fn from(node: JsIdentifierBinding) -> JsAnyObjectBindingPatternMember {
-        JsAnyObjectBindingPatternMember::JsIdentifierBinding(node)
-    }
-}
 impl From<JsObjectBindingPatternProperty> for JsAnyObjectBindingPatternMember {
     fn from(node: JsObjectBindingPatternProperty) -> JsAnyObjectBindingPatternMember {
         JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(node)
@@ -28238,16 +28226,14 @@ impl From<JsUnknownBinding> for JsAnyObjectBindingPatternMember {
 }
 impl AstNode for JsAnyObjectBindingPatternMember {
     type Language = Language;
-    const KIND_SET: SyntaxKindSet<Language> = JsIdentifierBinding::KIND_SET
-        .union(JsObjectBindingPatternProperty::KIND_SET)
+    const KIND_SET: SyntaxKindSet<Language> = JsObjectBindingPatternProperty::KIND_SET
         .union(JsObjectBindingPatternRest::KIND_SET)
         .union(JsObjectBindingPatternShorthandProperty::KIND_SET)
         .union(JsUnknownBinding::KIND_SET);
     fn can_cast(kind: SyntaxKind) -> bool {
         matches!(
             kind,
-            JS_IDENTIFIER_BINDING
-                | JS_OBJECT_BINDING_PATTERN_PROPERTY
+            JS_OBJECT_BINDING_PATTERN_PROPERTY
                 | JS_OBJECT_BINDING_PATTERN_REST
                 | JS_OBJECT_BINDING_PATTERN_SHORTHAND_PROPERTY
                 | JS_UNKNOWN_BINDING
@@ -28255,9 +28241,6 @@ impl AstNode for JsAnyObjectBindingPatternMember {
     }
     fn cast(syntax: SyntaxNode) -> Option<Self> {
         let res = match syntax.kind() {
-            JS_IDENTIFIER_BINDING => {
-                JsAnyObjectBindingPatternMember::JsIdentifierBinding(JsIdentifierBinding { syntax })
-            }
             JS_OBJECT_BINDING_PATTERN_PROPERTY => {
                 JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(
                     JsObjectBindingPatternProperty { syntax },
@@ -28282,7 +28265,6 @@ impl AstNode for JsAnyObjectBindingPatternMember {
     }
     fn syntax(&self) -> &SyntaxNode {
         match self {
-            JsAnyObjectBindingPatternMember::JsIdentifierBinding(it) => &it.syntax,
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(it) => &it.syntax,
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(it) => &it.syntax,
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(it) => {
@@ -28293,7 +28275,6 @@ impl AstNode for JsAnyObjectBindingPatternMember {
     }
     fn into_syntax(self) -> SyntaxNode {
         match self {
-            JsAnyObjectBindingPatternMember::JsIdentifierBinding(it) => it.syntax,
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(it) => it.syntax,
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(it) => it.syntax,
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(it) => {
@@ -28306,7 +28287,6 @@ impl AstNode for JsAnyObjectBindingPatternMember {
 impl std::fmt::Debug for JsAnyObjectBindingPatternMember {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            JsAnyObjectBindingPatternMember::JsIdentifierBinding(it) => std::fmt::Debug::fmt(it, f),
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(it) => {
                 std::fmt::Debug::fmt(it, f)
             }
@@ -28323,7 +28303,6 @@ impl std::fmt::Debug for JsAnyObjectBindingPatternMember {
 impl From<JsAnyObjectBindingPatternMember> for SyntaxNode {
     fn from(n: JsAnyObjectBindingPatternMember) -> SyntaxNode {
         match n {
-            JsAnyObjectBindingPatternMember::JsIdentifierBinding(it) => it.into(),
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(it) => it.into(),
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternRest(it) => it.into(),
             JsAnyObjectBindingPatternMember::JsObjectBindingPatternShorthandProperty(it) => {

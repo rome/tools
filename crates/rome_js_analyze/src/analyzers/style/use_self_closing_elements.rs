@@ -62,6 +62,7 @@ impl Rule for UseSelfClosingElements {
     type Query = Ast<JsxElement>;
     type State = ();
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         if ctx.query().children().is_empty() {

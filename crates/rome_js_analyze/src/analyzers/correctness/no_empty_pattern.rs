@@ -43,6 +43,7 @@ impl Rule for NoEmptyPattern {
     type Query = Ast<JsAnyBindPatternLike>;
     type State = ();
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         use JsAnyBindPatternLike::*;

@@ -10,6 +10,7 @@ use crate::parentheses::{
     update_or_lower_expression_needs_parentheses, NeedsParentheses,
 };
 use crate::utils::function_body::{FormatMaybeCachedFunctionBody, FunctionBodyCacheMode};
+use crate::utils::test_call::is_test_call_argument;
 use crate::utils::{
     resolve_left_most_expression, AssignmentLikeLayout, JsAnyBinaryLikeLeftExpression,
 };
@@ -222,17 +223,25 @@ fn format_signature(
             write!(f, [arrow.type_parameters().format()])?;
 
             match arrow.parameters()? {
-                JsAnyArrowFunctionParameters::JsAnyBinding(binding) => write!(
-                    f,
-                    [
-                        text("("),
-                        &soft_block_indent(&format_args![
-                            binding.format(),
-                            if_group_breaks(&text(","))
-                        ]),
-                        text(")")
-                    ]
-                )?,
+                JsAnyArrowFunctionParameters::JsAnyBinding(binding) => {
+                    let should_hug = is_test_call_argument(arrow.syntax())?;
+
+                    write!(f, [text("(")])?;
+
+                    if should_hug {
+                        write!(f, [binding.format()])?;
+                    } else {
+                        write!(
+                            f,
+                            [&soft_block_indent(&format_args![
+                                binding.format(),
+                                if_group_breaks(&text(","))
+                            ])]
+                        )?
+                    }
+
+                    write!(f, [text(")")])?;
+                }
                 JsAnyArrowFunctionParameters::JsParameters(params) => {
                     write!(f, [params.format()])?;
                 }
@@ -458,10 +467,18 @@ impl Format<JsFormatContext> for ArrowChain {
                         soft_block_indent(&format_tail_body),
                         text(")")
                     ])]
-                )
+                )?;
             } else {
-                write!(f, [format_tail_body])
+                write!(f, [format_tail_body])?;
             }
+
+            // Format the trailing comments of all arrow function EXCEPT the first one because
+            // the comments of the head get formatted as part of the `FormatJsArrowFunctionExpression` call.
+            for arrow in self.arrows().skip(1) {
+                write!(f, [format_trailing_comments(arrow.syntax())])?;
+            }
+
+            Ok(())
         });
 
         let format_tail_body = format_with(|f| {
@@ -489,7 +506,7 @@ impl Format<JsFormatContext> for ArrowChain {
                         .should_expand(break_before_chain),
                     space(),
                     tail.fat_arrow_token().format(),
-                    indent_if_group_breaks(&format_tail_body, group_id)
+                    indent_if_group_breaks(&format_tail_body, group_id),
                 ]
             )?;
 

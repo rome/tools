@@ -1,6 +1,6 @@
 use rome_analyze::{
-    CannotCreateServicesError, FromServices, Phase, Phases, QueryKey, QueryMatch, Queryable,
-    ServiceBag, Visitor, VisitorContext, VisitorFinishContext,
+    FromServices, MissingServicesDiagnostic, Phase, Phases, QueryKey, QueryMatch, Queryable,
+    RuleKey, ServiceBag, Visitor, VisitorContext, VisitorFinishContext,
 };
 use rome_js_semantic::{SemanticEventExtractor, SemanticModel, SemanticModelBuilder};
 use rome_js_syntax::{JsAnyRoot, JsLanguage, WalkEvent};
@@ -17,12 +17,13 @@ impl SemanticServices {
 }
 
 impl FromServices for SemanticServices {
-    fn from_services(services: &ServiceBag) -> Result<Self, CannotCreateServicesError> {
-        let model = services
-            .get_service()
-            .ok_or(CannotCreateServicesError::MissingServices(&[
-                "SemanticModel",
-            ]))?;
+    fn from_services(
+        rule_key: &RuleKey,
+        services: &ServiceBag,
+    ) -> Result<Self, MissingServicesDiagnostic> {
+        let model = services.get_service().ok_or_else(|| {
+            MissingServicesDiagnostic::new(rule_key.rule_name(), &["SemanticModel"])
+        })?;
         Ok(Self { model })
     }
 }

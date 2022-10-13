@@ -29,7 +29,12 @@ macro_rules! declare_visitor {
         /// Slice of the merged visitor state stack cut off at the current function
         pub(super) struct StatementStack<'a> {
             pub(super) stack: &'a mut [(TypeId, usize)],
-            $( $id: &'a mut [(usize, VisitorAdapter<$visitor>)], )*
+            $(
+                #[cfg(debug_assertions)]
+                $id: (usize, &'a mut [(usize, VisitorAdapter<$visitor>)]),
+                #[cfg(not(debug_assertions))]
+                $id: &'a mut [(usize, VisitorAdapter<$visitor>)],
+            )*
         }
 
         impl<'a> StatementStack<'a> {
@@ -39,19 +44,22 @@ macro_rules! declare_visitor {
                 let (index, builder) = visitor.function.last_mut()?;
 
                 Some((builder, Self {
-                    stack: &mut visitor.stack[*index + 1..],
+                    stack: {
+                        let stack_len = visitor.stack.len();
+                        visitor.stack.get_mut(*index + 1..).unwrap_or_else(|| panic!("stack index out of bounds: {} >= {stack_len}", *index + 1))
+                    },
                     $(
                         // For safety, cut off the stack slices below the start
                         // of the current function in debug mode
                         #[cfg(debug_assertions)]
-                        $id: {
-                            let index = visitor
+                        $id: (
+                            visitor
                                 .$id
                                 .iter()
                                 .rposition(|(stack_index, _)| *stack_index < *index)
-                                .map_or(0, |index| (index + 1).min(visitor.$id.len().saturating_sub(1)));
-                            &mut visitor.$id[index..]
-                        },
+                                .map_or(0, |index| (index + 1).min(visitor.$id.len().saturating_sub(1))),
+                            &mut visitor.$id,
+                        ),
                         #[cfg(not(debug_assertions))]
                         $id: &mut visitor.$id,
                     )*
@@ -61,8 +69,13 @@ macro_rules! declare_visitor {
 
         $( impl<'a> MergedVisitor<'a, $visitor> for StatementStack<'a> {
             fn read_top(self) -> SyntaxResult<&'a mut $visitor> {
+                #[cfg(debug_assertions)]
+                let (_, visitor) =
+                    self.$id.1.last_mut().ok_or(::rome_rowan::SyntaxError::MissingRequiredChild)?;
+                #[cfg(not(debug_assertions))]
                 let (_, visitor) =
                     self.$id.last_mut().ok_or(::rome_rowan::SyntaxError::MissingRequiredChild)?;
+
                 let VisitorAdapter(visitor) = visitor;
                 let visitor = visitor.as_mut().map_err(|err| *err)?;
                 Ok(visitor)
@@ -73,7 +86,14 @@ macro_rules! declare_visitor {
                     return None;
                 }
 
-                let (_, visitor) = &self.$id[index];
+                #[cfg(debug_assertions)]
+                let (_, visitor) = index.checked_sub(self.$id.0)
+                    .and_then(|index| self.$id.1.get(index))
+                    .unwrap_or_else(|| panic!(concat!(stringify!($id), " index out of bounds: {} + {} >= {}"), index, self.$id.0, self.$id.1.len()));
+                #[cfg(not(debug_assertions))]
+                let (_, visitor) = self.$id.get(index)
+                    .unwrap_or_else(|| panic!(concat!(stringify!($id), " index out of bounds: {} >= {}"), index, self.$id.len()));
+
                 let VisitorAdapter(visitor) = visitor;
                 let visitor = visitor.as_ref().ok()?;
                 Some(visitor)
