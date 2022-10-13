@@ -15,36 +15,23 @@ pub(super) trait Queue<'a> {
 
     fn stack_mut(&mut self) -> &mut Self::Stack;
 
-    fn next_index(&self) -> usize;
-
-    fn set_next_index(&mut self, index: usize);
-
     /// Pops the element at the end of the queue.
     fn pop(&mut self) -> Option<&'a FormatElement> {
-        match self.stack().top() {
-            Some(top_slice) => {
-                // SAFETY: Safe because queue ensures that slices inside `slices` are never empty.
-                let next_index = self.next_index();
-                let element = &top_slice[next_index];
-
-                if next_index + 1 == top_slice.len() {
-                    self.stack_mut().pop().unwrap();
-                    self.set_next_index(0);
-                } else {
-                    self.set_next_index(next_index + 1);
-                }
-
+        let stack = self.stack_mut();
+        match stack.pop() {
+            Some([element]) => Some(element),
+            Some([element, rest @ ..]) => {
+                stack.push(rest);
                 Some(element)
             }
+            Some([]) => unreachable!("Guaranteed by extend_back"),
             None => None,
         }
     }
 
     /// Returns the next element, not traversing into [FormatElement::Interned].
     fn top_with_interned(&self) -> Option<&'a FormatElement> {
-        self.stack()
-            .top()
-            .map(|top_slice| &top_slice[self.next_index()])
+        self.stack().top().and_then(|top_slice| top_slice.first())
     }
 
     /// Returns the next element, recursively resolving the first element of [FormatElement::Interned].
@@ -70,21 +57,13 @@ pub(super) trait Queue<'a> {
                 // Don't push empty slices
             }
             slice => {
-                let next_index = self.next_index();
-                let stack = self.stack_mut();
-                if let Some(top) = stack.pop() {
-                    stack.push(&top[next_index..])
-                }
-
-                stack.push(slice);
-                self.set_next_index(0);
+                self.stack_mut().push(slice);
             }
         }
     }
 
     /// Removes top slice.
     fn pop_slice(&mut self) -> Option<&'a [FormatElement]> {
-        self.set_next_index(0);
         self.stack_mut().pop()
     }
 
@@ -113,7 +92,6 @@ pub(super) trait Queue<'a> {
 #[derive(Debug, Default, Clone)]
 pub(super) struct PrintQueue<'a> {
     slices: Vec<&'a [FormatElement]>,
-    next_index: usize,
 }
 
 impl<'a> PrintQueue<'a> {
@@ -123,10 +101,7 @@ impl<'a> PrintQueue<'a> {
             slice => vec![slice],
         };
 
-        Self {
-            slices,
-            next_index: 0,
-        }
+        Self { slices }
     }
 
     pub(super) fn is_empty(&self) -> bool {
@@ -144,14 +119,6 @@ impl<'a> Queue<'a> for PrintQueue<'a> {
     fn stack_mut(&mut self) -> &mut Self::Stack {
         &mut self.slices
     }
-
-    fn next_index(&self) -> usize {
-        self.next_index
-    }
-
-    fn set_next_index(&mut self, index: usize) {
-        self.next_index = index
-    }
 }
 
 /// Queue for measuring if an element fits on the line.
@@ -162,7 +129,6 @@ impl<'a> Queue<'a> for PrintQueue<'a> {
 #[derive(Debug)]
 pub(super) struct FitsQueue<'a, 'print> {
     stack: StackedStack<'print, &'a [FormatElement]>,
-    next_index: usize,
 }
 
 impl<'a, 'print> FitsQueue<'a, 'print> {
@@ -172,10 +138,7 @@ impl<'a, 'print> FitsQueue<'a, 'print> {
     ) -> Self {
         let stack = StackedStack::with_vec(&print_queue.slices, saved);
 
-        Self {
-            stack,
-            next_index: print_queue.next_index,
-        }
+        Self { stack }
     }
 
     pub(super) fn finish(self) -> Vec<&'a [FormatElement]> {
@@ -192,14 +155,6 @@ impl<'a, 'print> Queue<'a> for FitsQueue<'a, 'print> {
 
     fn stack_mut(&mut self) -> &mut Self::Stack {
         &mut self.stack
-    }
-
-    fn next_index(&self) -> usize {
-        self.next_index
-    }
-
-    fn set_next_index(&mut self, index: usize) {
-        self.next_index = index;
     }
 }
 
