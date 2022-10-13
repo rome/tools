@@ -33,13 +33,19 @@ additional information with the appropriate context.
 rich information about the diagnostic. Depending on the use case, advices can be
 used to log pieces of markup, lists of items, annotated code frames, text diffs,
 Rust backtraces, command lines, or groups of more advices.
-- An optional set of `verbose_advices` the user can optionally enable to get
-further information about a given diagnostic
+- An optional set of `verbose_advices` the user can optionally enable (at the
+moment these are always printed but they will eventually have to be enabled,
+for instance by passing a `--verbose` flag to the CLI). Verbose advices are
+printed in a separate section below the main advices and can be used to provide
+further information about a given diagnostic (for instance a fixable linter
+diagnostic may print a verbose advice instructing the user to run
+`rome check --apply` to automatically apply the fix).
 - A `location` describing where the error happened. It can be a path to a file
 on the file system, a command line argument, or an arbitrary memory buffer. It may
 optionally specify a specific range within the text content of this resource,
 as well as embed said text content to faciliate it's retrieval when displaying
-code frames in the diagnostic
+code frames in the diagnostic. Conceptually the `location` points to a
+"resource" this error originated from.
 - `tags` conveying additional informations about the diagnostic: if the
 diagnostic has information on how it can be fixed, if it resulted from an
 internal error in Rome and was not directly caused by the user, if it is being
@@ -47,7 +53,12 @@ emitted to warn the user about unused or deprecated code.
 - An optional `source`, another diagnostic that details the low-level reason
 why this diagnostic was emitted: for instance a diagnostic reporting a failed
 request to a remote server may have a deserialization error for the server
-response as its cause.
+response as its cause. Conceptually the `source` points to a `Diagnostic` this
+error originated from, so while they are similar in purpose (explaining where
+an error comes from to the user) the `location` and `source` properties are not
+incompatible: taking from the above example of a "failed request" diagnostic,
+it may have a "deserialization error" diagnostic as a `source`, and the body
+of the invalid response as its `location`.
 
 ## How to implement Diagnostic
 
@@ -95,6 +106,13 @@ impl Advices for UnhandledKind {
 }
 ```
 
+In order to add advices to a diagnostic, you can either use some of the helper
+types in the `rome_diagnostics::v2` module (`CodeFrameAdvice`, `CommandAdvice`,
+`DiffAdvice`, `LogAdvice`), or implement the `Advices` trait yourself if you
+want more control over how the advices are recorded (this can be useful to
+optimize the performance of a diagnostic by reducing how much memory it
+allocates).
+
 The category may also require some special care if you're declaring a new one,
 since all diagnostic categories have to be statically registered you'll need to
 add it to `crates/rome_diagnostics_categories/src/categories.rs`
@@ -106,6 +124,8 @@ users, and providing high quality diagnostics is crucial to making the usage of
 Rome as frictionless as possible even when errors happen. What follows is a
 list of best practice for writing good diagnostics:
 
+- The Diagnostic should follow the (Technical Principles)[https://rome.tools/#technical]
+of the Rome project
 - A diagnostic should not simply state that something went wrong, it should
 explain why it went wrong. Add explanations in log advices, and show hyperlinks
 to relevant documentation pages in case the user wants to know more.
