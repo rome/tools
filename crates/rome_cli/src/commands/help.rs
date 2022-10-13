@@ -12,7 +12,7 @@ const MAIN: Markup = markup! {
 
 "<Emphasis>"COMMANDS:"</Emphasis>"
     - "<Emphasis>"check"</Emphasis>"        Run the linter on a set of files
-    - "<Emphasis>"ci"</Emphasis>"           Run the linter and formatter check on a set of files
+    - "<Emphasis>"ci"</Emphasis>"           Run the linter and check the formatting of a set of files
     - "<Emphasis>"format"</Emphasis>"       Run the formatter on a set of files
     - "<Emphasis>"help"</Emphasis>"         Prints this help message
     - "<Emphasis>"init"</Emphasis>"         Bootstraps a new rome project
