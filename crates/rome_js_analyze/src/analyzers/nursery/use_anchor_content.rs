@@ -151,7 +151,7 @@ impl Rule for UseAnchorContent {
             markup! {
 				"Provide screen reader accessible content when using "<Emphasis>"`a`"</Emphasis>" elements."
 			}
-        ).footer_note(
+        ).note(
 			markup! {
 				"All links on a page should have content that is accessible to screen readers."
 			}

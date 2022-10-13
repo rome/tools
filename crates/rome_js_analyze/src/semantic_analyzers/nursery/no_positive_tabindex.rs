@@ -3,7 +3,6 @@ use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_diagnostics::Severity;
 use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
     JsCallExpression, JsNumberLiteralExpression, JsPropertyObjectMember, JsStringLiteralExpression,
@@ -157,8 +156,7 @@ impl Rule for NoPositiveTabindex {
             state,
             markup!{"Avoid positive values for the "<Emphasis>"tabIndex"</Emphasis>" prop."}.to_owned(),
         )
-        .footer(
-            Severity::Note,
+        .note(
             markup!{
 				"Elements with a positive "<Emphasis>"tabIndex"</Emphasis>" override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard."
 			}.to_owned(),

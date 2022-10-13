@@ -81,7 +81,7 @@ impl Rule for NoRestrictedGlobals {
                     "Do not use the global variable "<Emphasis>{text}</Emphasis>"."
                 },
             )
-            .footer_note(markup! {
+            .note(markup! {
                 "Use a local variable instead."
             }),
         )

@@ -1,8 +1,10 @@
 #![deny(rustdoc::broken_intra_doc_links)]
 #![doc = include_str!("../CONTRIBUTING.md")]
 
+use rome_console::fmt::Display;
 use std::cmp::Ordering;
 use std::collections::{BTreeMap, BinaryHeap};
+use std::fmt::Formatter;
 use std::ops;
 
 mod categories;
@@ -37,13 +39,12 @@ use crate::signals::DiagnosticSignal;
 pub use crate::signals::{AnalyzerAction, AnalyzerSignal};
 pub use crate::syntax::SyntaxVisitor;
 pub use crate::visitor::{NodeVisitor, Visitor, VisitorContext, VisitorFinishContext};
-use rome_console::markup;
-use rome_diagnostics::file::{FileId, FileSpan};
-use rome_diagnostics::{
-    v2::{category, Category},
-    Severity,
+use rome_console::{markup, MarkupBuf};
+use rome_diagnostics::file::FileId;
+use rome_diagnostics::v2::advice::CodeSuggestionAdvice;
+use rome_diagnostics::v2::{
+    Advices, Category, Diagnostic, DiagnosticTags, Error, Location, Severity, Visit,
 };
-use rome_diagnostics::{Diagnostic, SubDiagnostic};
 use rome_rowan::{
     AstNode, Direction, Language, SyntaxElement, SyntaxToken, TextRange, TextSize, TriviaPieceKind,
     WalkEvent,
@@ -417,27 +418,27 @@ where
                     suppressions.push(key);
                 } else {
                     // Emit a warning for the unknown rule
-                    let signal =
-                        DiagnosticSignal::new(move || {
-                            let diag = match group_rule {
-                            Some((group, rule)) => Diagnostic::warning(
-                                file_id,
-                                category!("suppressions/unknownRule"),
+                    let signal = DiagnosticSignal::new(move || {
+                        let diag = match group_rule {
+                            Some((group, rule)) => SuppressionDiagnostic::new(
+                                range,
                                 markup! {
                                     "Unknown lint rule "{group}"/"{rule}" in suppression comment"
                                 },
-                            ).primary(range, ""),
-                            None => Diagnostic::warning(
                                 file_id,
-                                category!("suppressions/unknownGroup"),
+                            ),
+
+                            None => SuppressionDiagnostic::new(
+                                range,
                                 markup! {
                                     "Unknown lint rule group "{rule}" in suppression comment"
                                 },
-                            ).primary(range, ""),
+                                file_id,
+                            ),
                         };
 
-                            AnalyzerDiagnostic::from_diagnostic(diag)
-                        });
+                        AnalyzerDiagnostic::from_error(diag.into())
+                    });
 
                     (self.emit_signal)(&signal)?;
                 }
@@ -626,73 +627,200 @@ impl<'analysis> AnalysisFilter<'analysis> {
 ///
 /// This wrapper serves as glue, which eventually is able to spit out full fledged diagnostics.
 ///
+#[derive(Debug)]
 pub enum AnalyzerDiagnostic {
     /// It holds various info related to diagnostics emitted by the rules
     Rule {
+        /// The severity of the rule
+        severity: Option<Severity>,
+        /// Reference to the file
         file_id: FileId,
+        /// The diagnostic emitted by a rule
         rule_diagnostic: RuleDiagnostic,
+        /// Series of code suggestions offered by rule code actions
+        code_suggestion_list: Vec<CodeSuggestionAdvice<MarkupBuf>>,
     },
     /// We have raw information to create a basic [Diagnostic]
-    Raw(Diagnostic),
+    Raw(Error),
 }
 
-impl AnalyzerDiagnostic {
-    pub fn code(&self) -> Option<&'static Category> {
+impl Diagnostic for AnalyzerDiagnostic {
+    fn category(&self) -> Option<&'static Category> {
         match self {
             AnalyzerDiagnostic::Rule {
                 rule_diagnostic, ..
             } => Some(rule_diagnostic.category),
-            AnalyzerDiagnostic::Raw(diag) => diag.code,
+            AnalyzerDiagnostic::Raw(error) => error.category(),
+        }
+    }
+    fn description(&self, fmt: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            AnalyzerDiagnostic::Rule {
+                rule_diagnostic, ..
+            } => {
+                if let Some(description) = &rule_diagnostic.description {
+                    write!(fmt, "{}", description)
+                } else {
+                    Ok(())
+                }
+            }
+            AnalyzerDiagnostic::Raw(error) => error.description(fmt),
         }
     }
 
-    pub fn from_rule_diagnostic(file_id: FileId, rule_diagnostic: RuleDiagnostic) -> Self {
-        Self::Rule {
-            file_id,
-            rule_diagnostic,
+    fn message(&self, fmt: &mut rome_console::fmt::Formatter<'_>) -> std::io::Result<()> {
+        match self {
+            AnalyzerDiagnostic::Rule {
+                rule_diagnostic, ..
+            } => fmt.write_markup(markup!({ rule_diagnostic.message })),
+            AnalyzerDiagnostic::Raw(error) => error.message(fmt),
         }
     }
 
-    pub fn from_diagnostic(diagnostic: Diagnostic) -> Self {
-        Self::Raw(diagnostic)
+    fn severity(&self) -> Severity {
+        match self {
+            AnalyzerDiagnostic::Rule { severity, .. } => severity.unwrap_or(Severity::Error),
+            AnalyzerDiagnostic::Raw(error) => error.severity(),
+        }
     }
 
-    pub fn into_diagnostic(self, severity: Severity) -> Diagnostic {
+    fn tags(&self) -> DiagnosticTags {
+        match self {
+            AnalyzerDiagnostic::Rule {
+                rule_diagnostic, ..
+            } => {
+                if let Some(tags) = rule_diagnostic.tag {
+                    tags
+                } else {
+                    DiagnosticTags::empty()
+                }
+            }
+            AnalyzerDiagnostic::Raw(error) => error.tags(),
+        }
+    }
+
+    fn location(&self) -> Option<Location<'_>> {
         match self {
             AnalyzerDiagnostic::Rule {
                 rule_diagnostic,
                 file_id,
-            } => Diagnostic {
+                ..
+            } => {
+                let builder = Location::builder()
+                    .span(&rule_diagnostic.span)
+                    .resource(file_id);
+                builder.build()
+            }
+            AnalyzerDiagnostic::Raw(error) => error.location(),
+        }
+    }
+
+    fn advices(&self, visitor: &mut dyn Visit) -> std::io::Result<()> {
+        match self {
+            AnalyzerDiagnostic::Rule {
+                rule_diagnostic,
+                code_suggestion_list,
                 file_id,
-                severity,
-                code: Some(rule_diagnostic.category),
-                title: rule_diagnostic.title,
-                summary: rule_diagnostic.summary,
-                tag: rule_diagnostic.tag,
-                primary: Some(SubDiagnostic {
-                    severity,
-                    msg: rule_diagnostic.primary.unwrap_or_default(),
-                    span: FileSpan {
-                        file: file_id,
-                        range: rule_diagnostic.span,
-                    },
-                }),
-                children: rule_diagnostic
-                    .secondaries
-                    .into_iter()
-                    .map(|(severity, msg, range)| SubDiagnostic {
-                        severity,
-                        msg,
-                        span: FileSpan {
-                            file: file_id,
-                            range,
-                        },
-                    })
-                    .collect(),
-                suggestions: Vec::new(),
-                footers: rule_diagnostic.footers,
-            },
-            AnalyzerDiagnostic::Raw(diagnostic) => diagnostic,
+                ..
+            } => {
+                let rule_advices = rule_diagnostic.advices();
+                // we first print the details emitted by the rules
+                for detail in &rule_advices.details {
+                    visitor.record_log(
+                        detail.log_category,
+                        &markup! { {detail.message} }.to_owned(),
+                    )?;
+                    if let Some(location) = Location::builder()
+                        .resource(file_id)
+                        .span(&detail.range)
+                        .build()
+                    {
+                        visitor.record_frame(location)?;
+                    }
+                }
+                // we then print notes
+                for (log_category, note) in &rule_advices.notes {
+                    visitor.record_log(*log_category, &markup! { {note} }.to_owned())?;
+                }
+
+                // finally, we print possible code suggestions on how to fix the issue
+                for suggestion in code_suggestion_list {
+                    suggestion.record(visitor)?;
+                }
+                Ok(())
+            }
+            AnalyzerDiagnostic::Raw(error) => error.advices(visitor),
+        }
+    }
+}
+
+impl AnalyzerDiagnostic {
+    /// Creates a diagnostic from a [RuleDiagnostic]
+    pub fn from_rule_diagnostic(file_id: FileId, rule_diagnostic: RuleDiagnostic) -> Self {
+        Self::Rule {
+            file_id,
+            rule_diagnostic,
+            severity: None,
+            code_suggestion_list: vec![],
+        }
+    }
+
+    /// Creates a diagnostic from a generic [Error]
+    pub fn from_error(error: Error) -> Self {
+        Self::Raw(error)
+    }
+
+    /// Sets the severity of the current diagnostic
+    pub fn set_severity(&mut self, new_severity: Severity) {
+        if let AnalyzerDiagnostic::Rule { severity, .. } = self {
+            *severity = Some(new_severity);
+        }
+    }
+
+    pub fn get_span(&self) -> Option<TextRange> {
+        match self {
+            AnalyzerDiagnostic::Rule {
+                rule_diagnostic, ..
+            } => rule_diagnostic.span,
+            AnalyzerDiagnostic::Raw(_) => None,
+        }
+    }
+
+    /// It adds a code suggestion, use this API to tell the user that a rule can benefit from
+    /// a automatic code fix.
+    pub fn add_code_suggestion(&mut self, suggestion: CodeSuggestionAdvice<MarkupBuf>) {
+        if let AnalyzerDiagnostic::Rule {
+            code_suggestion_list: suggestions,
+            rule_diagnostic,
+            ..
+        } = self
+        {
+            rule_diagnostic.tag = Some(DiagnosticTags::FIXABLE);
+            suggestions.push(suggestion)
+        }
+    }
+}
+
+#[derive(Debug, Diagnostic)]
+#[diagnostic(category = "suppressions/unknownGroup")]
+pub(crate) struct SuppressionDiagnostic {
+    #[severity]
+    severity: Severity,
+    #[location(resource)]
+    file_id: FileId,
+    #[location(span)]
+    range: TextRange,
+    #[message]
+    message: MarkupBuf,
+}
+
+impl SuppressionDiagnostic {
+    pub(crate) fn new(range: TextRange, message: impl Display, file_id: FileId) -> Self {
+        Self {
+            severity: Severity::Warning,
+            range,
+            message: markup!({ message }).to_owned(),
+            file_id,
         }
     }
 }

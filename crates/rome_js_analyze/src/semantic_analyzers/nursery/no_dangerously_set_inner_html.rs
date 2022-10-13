@@ -3,7 +3,6 @@ use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_diagnostics::Severity;
 use rome_js_syntax::{JsCallExpression, JsLiteralMemberName, JsxAnyAttributeName, JsxAttribute};
 use rome_rowan::{declare_node_union, AstNode};
 
@@ -106,8 +105,8 @@ impl Rule for NoDangerouslySetInnerHtml {
                 "Avoid passing content using the "<Emphasis>"dangerouslySetInnerHTML"</Emphasis>" prop."
             }
                 .to_owned(),
-        ).footer(
-            Severity::Warning,
+        ).warning(
+
             "Setting content using code can expose users to cross-site scripting (XSS) attacks",
         );
         Some(diagnostic)

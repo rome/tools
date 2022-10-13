@@ -201,7 +201,7 @@ impl Rule for UseKeyWithMouseEvents {
                 node.syntax().text_trimmed_range(),
                 state.message(),
             )
-            .footer_note(footer_note_text),
+            .note(footer_note_text),
         )
     }
 }

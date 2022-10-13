@@ -115,7 +115,7 @@ impl Rule for UseKeyWithClickEvents {
             markup! {
                 "Enforce to have the "<Emphasis>"onClick"</Emphasis>" mouse event with the "<Emphasis>"onKeyUp"</Emphasis>", the "<Emphasis>"onKeyDown"</Emphasis>", or the "<Emphasis>"onKeyPress"</Emphasis>" keyboard event."
             },
-        ).footer_note(markup! {
+        ).note(markup! {
             "Actions triggered using mouse events should have corresponding keyboard events to account for keyboard-only navigation."
         }))
     }

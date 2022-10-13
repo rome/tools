@@ -84,7 +84,7 @@ impl Rule for NoConstAssign {
                 node.syntax().text_trimmed_range(),
                 markup! {"Can't assign "<Emphasis>{name}</Emphasis>" because it's a constant"},
             )
-            .secondary(
+            .detail(
                 state,
                 markup! {"This is where the variable is defined as constant"},
             ),

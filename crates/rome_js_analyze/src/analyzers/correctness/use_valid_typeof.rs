@@ -207,13 +207,13 @@ impl Rule for UseValidTypeof {
         Some(match err {
             TypeofError::InvalidLiteral(range, literal) => {
                 RuleDiagnostic::new(rule_category!(), range, TITLE)
-                    .primary("not a valid type name")
-                    .summary(format!("{TITLE}: \"{literal}\" is not a valid type name"))
+                    .note("not a valid type name")
+                    .description(format!("{TITLE}: \"{literal}\" is not a valid type name"))
             }
             TypeofError::InvalidExpression(range) => {
                 RuleDiagnostic::new(rule_category!(), range, TITLE)
-                    .primary("not a string literal")
-                    .summary(format!("{TITLE}: this expression is not a string literal",))
+                    .note("not a string literal")
+                    .description(format!("{TITLE}: this expression is not a string literal",))
             }
         })
     }

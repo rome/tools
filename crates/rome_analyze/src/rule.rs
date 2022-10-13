@@ -4,9 +4,9 @@ use crate::registry::{RegistryVisitor, RuleLanguage, RuleSuppressions};
 use crate::{AnalyzerDiagnostic, Phase, Phases, Queryable};
 use rome_console::fmt::Display;
 use rome_console::{markup, MarkupBuf};
-use rome_diagnostics::v2::Category;
-use rome_diagnostics::{file::FileId, Applicability, Severity};
-use rome_diagnostics::{DiagnosticTag, Footer, Span};
+use rome_diagnostics::v2::location::AsSpan;
+use rome_diagnostics::v2::{Category, Diagnostic, DiagnosticTags, LogCategory};
+use rome_diagnostics::{file::FileId, Applicability};
 use rome_rowan::{BatchMutation, Language, TextRange};
 use serde::de::DeserializeOwned;
 
@@ -263,7 +263,7 @@ pub trait Rule: RuleMeta {
     /// override this if generating a diagnostic for this rule requires heavy
     /// processing and the range could be determined through a faster path
     fn text_range(ctx: &RuleContext<Self>, state: &Self::State) -> Option<TextRange> {
-        Self::diagnostic(ctx, state).map(|diag| diag.span())
+        Self::diagnostic(ctx, state).and_then(|diag| diag.span())
     }
 
     /// Allows the rule to suppress a set of syntax nodes to prevent them from
@@ -326,15 +326,31 @@ pub trait Rule: RuleMeta {
 }
 
 /// Diagnostic object returned by a single analysis rule
+#[derive(Debug, Diagnostic)]
 pub struct RuleDiagnostic {
+    #[category]
     pub(crate) category: &'static Category,
-    pub(crate) span: TextRange,
-    pub(crate) title: MarkupBuf,
-    pub(crate) summary: Option<String>,
-    pub(crate) tag: Option<DiagnosticTag>,
-    pub(crate) primary: Option<MarkupBuf>,
-    pub(crate) secondaries: Vec<(Severity, MarkupBuf, TextRange)>,
-    pub(crate) footers: Vec<Footer>,
+    pub(crate) description: Option<String>,
+    #[location(span)]
+    pub(crate) span: Option<TextRange>,
+    #[message]
+    pub(crate) message: MarkupBuf,
+    pub(crate) tag: Option<DiagnosticTags>,
+    pub(crate) rule_advice: RuleAdvice,
+}
+
+#[derive(Debug, Default)]
+/// It contains possible advices to show when printing a diagnostic that belong to the rule
+pub struct RuleAdvice {
+    pub(crate) details: Vec<Detail>,
+    pub(crate) notes: Vec<(LogCategory, MarkupBuf)>,
+}
+
+#[derive(Debug)]
+pub struct Detail {
+    pub log_category: LogCategory,
+    pub message: MarkupBuf,
+    pub range: Option<TextRange>,
 }
 
 // Some of these methods aren't used by anything yet
@@ -342,22 +358,20 @@ pub struct RuleDiagnostic {
 impl RuleDiagnostic {
     /// Creates a new [`RuleDiagnostic`] with a severity and title that will be
     /// used in a builder-like way to modify labels.
-    pub fn new(category: &'static Category, span: impl Span, title: impl Display) -> Self {
+    pub fn new(category: &'static Category, span: impl AsSpan, title: impl Display) -> Self {
         Self {
             category,
-            span: span.as_range(),
-            title: markup!({ title }).to_owned(),
-            summary: None,
+            span: span.as_span(),
+            message: markup!({ title }).to_owned(),
+            description: None,
             tag: None,
-            primary: None,
-            secondaries: Vec::new(),
-            footers: Vec::new(),
+            rule_advice: RuleAdvice::default(),
         }
     }
 
     /// Set an explicit plain-text summary for this diagnostic.
-    pub fn summary(mut self, summary: impl Into<String>) -> Self {
-        self.summary = Some(summary.into());
+    pub fn description(mut self, summary: impl Into<String>) -> Self {
+        self.description = Some(summary.into());
         self
     }
 
@@ -366,10 +380,10 @@ impl RuleDiagnostic {
     ///
     /// This does not have any influence on the diagnostic rendering.
     pub fn deprecated(mut self) -> Self {
-        self.tag = if matches!(self.tag, Some(DiagnosticTag::Unnecessary)) {
-            Some(DiagnosticTag::Both)
+        self.tag = if matches!(self.tag, Some(DiagnosticTags::UNNECESSARY_CODE)) {
+            Some(DiagnosticTags::UNNECESSARY_CODE & DiagnosticTags::DEPRECATED_CODE)
         } else {
-            Some(DiagnosticTag::Deprecated)
+            Some(DiagnosticTags::DEPRECATED_CODE)
         };
         self
     }
@@ -379,62 +393,50 @@ impl RuleDiagnostic {
     ///
     /// This does not have any influence on the diagnostic rendering.
     pub fn unnecessary(mut self) -> Self {
-        self.tag = if matches!(self.tag, Some(DiagnosticTag::Deprecated)) {
-            Some(DiagnosticTag::Both)
+        self.tag = if matches!(self.tag, Some(DiagnosticTags::UNNECESSARY_CODE)) {
+            Some(DiagnosticTags::UNNECESSARY_CODE & DiagnosticTags::DEPRECATED_CODE)
         } else {
-            Some(DiagnosticTag::Unnecessary)
+            Some(DiagnosticTags::UNNECESSARY_CODE)
         };
-        self
-    }
-
-    /// Attaches a label to this [`RuleDiagnostic`], that will point to another file
-    /// that is provided.
-    pub fn label_in_file(mut self, severity: Severity, span: impl Span, msg: impl Display) -> Self {
-        self.secondaries
-            .push((severity, markup!({ msg }).to_owned(), span.as_range()));
         self
     }
 
     /// Attaches a label to this [`RuleDiagnostic`].
     ///
     /// The given span has to be in the file that was provided while creating this [`RuleDiagnostic`].
-    pub fn label(mut self, severity: Severity, span: impl Span, msg: impl Display) -> Self {
-        self.secondaries
-            .push((severity, markup!({ msg }).to_owned(), span.as_range()));
-        self
-    }
-
-    /// Attaches a primary label to this [`RuleDiagnostic`].
-    pub fn primary(mut self, msg: impl Display) -> Self {
-        self.primary = Some(markup!({ msg }).to_owned());
-        self
-    }
-
-    /// Attaches a secondary label to this [`RuleDiagnostic`].
-    pub fn secondary(self, span: impl Span, msg: impl Display) -> Self {
-        self.label(Severity::Note, span, msg)
-    }
-
-    /// Adds a footer to this [`RuleDiagnostic`], which will be displayed under the actual error.
-    pub fn footer(mut self, severity: Severity, msg: impl Display) -> Self {
-        self.footers.push(Footer {
-            msg: markup!({ msg }).to_owned(),
-            severity,
+    pub fn label(mut self, span: impl AsSpan, msg: impl Display) -> Self {
+        self.rule_advice.details.push(Detail {
+            log_category: LogCategory::Info,
+            message: markup!({ msg }).to_owned(),
+            range: span.as_span(),
         });
         self
     }
 
-    /// Adds a footer to this [`RuleDiagnostic`], with the `Help` severity.
-    pub fn footer_help(self, msg: impl Display) -> Self {
-        self.footer(Severity::Help, msg)
+    /// Attaches a detailed message to this [`RuleDiagnostic`].
+    pub fn detail(self, span: impl AsSpan, msg: impl Display) -> Self {
+        self.label(span, msg)
     }
 
-    /// Adds a footer to this [`RuleDiagnostic`], with the `Note` severity.
-    pub fn footer_note(self, msg: impl Display) -> Self {
-        self.footer(Severity::Note, msg)
+    /// Adds a footer to this [`RuleDiagnostic`], which will be displayed under the actual error.
+    fn footer(mut self, log_category: LogCategory, msg: impl Display) -> Self {
+        self.rule_advice
+            .notes
+            .push((log_category, markup!({ msg }).to_owned()));
+        self
     }
 
-    pub(crate) fn span(&self) -> TextRange {
+    /// Adds a footer to this [`RuleDiagnostic`], with the `Info` log category.
+    pub fn note(self, msg: impl Display) -> Self {
+        self.footer(LogCategory::Info, msg)
+    }
+
+    /// Adds a footer to this [`RuleDiagnostic`], with the `Warn` severity.
+    pub fn warning(self, msg: impl Display) -> Self {
+        self.footer(LogCategory::Warn, msg)
+    }
+
+    pub(crate) fn span(&self) -> Option<TextRange> {
         self.span
     }
 
@@ -443,6 +445,10 @@ impl RuleDiagnostic {
     /// the rule was being run on
     pub(crate) fn into_analyzer_diagnostic(self, file_id: FileId) -> AnalyzerDiagnostic {
         AnalyzerDiagnostic::from_rule_diagnostic(file_id, self)
+    }
+
+    pub fn advices(&self) -> &RuleAdvice {
+        &self.rule_advice
     }
 }
 

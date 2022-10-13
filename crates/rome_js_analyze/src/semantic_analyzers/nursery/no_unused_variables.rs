@@ -271,7 +271,7 @@ impl Rule for NoUnusedVariables {
             },
         );
 
-        let diag = diag.footer_note(
+        let diag = diag.note(
             markup! {"Unused variables usually are result of incomplete refactoring, typos and other source of bugs."},
         );
 

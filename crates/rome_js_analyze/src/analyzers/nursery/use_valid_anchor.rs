@@ -227,8 +227,8 @@ impl Rule for UseValidAnchor {
 
     fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let diagnostic = RuleDiagnostic::new(rule_category!(), state.range(), state.message())
-            .footer_note(state.note())
-            .footer_note(
+            .note(state.note())
+            .note(
             markup! {
                 "Check "<Hyperlink href="https://marcysutton.com/links-vs-buttons-in-modern-web-applications">"this thorough explanation"</Hyperlink>" to better understand the context."
             }
