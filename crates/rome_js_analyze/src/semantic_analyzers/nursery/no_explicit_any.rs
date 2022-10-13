@@ -44,7 +44,7 @@ declare_rule! {
     ///
     /// ```
     pub(crate) NoExplicitAny {
-        version: "0.10.0",
+        version: "10.0.0",
         name: "noExplicitAny",
         recommended: false,
     }
@@ -64,7 +64,8 @@ impl Rule for NoExplicitAny {
         let diagnostic = RuleDiagnostic::new(
             rule_category!(),
             ctx.query().range(),
-            markup! {"Unexpected any. Specify a different type."}.to_owned(),
+            markup! {"Unexpected "<Emphasis>"any"</Emphasis>". Specify a different type."}
+                .to_owned(),
         );
 
         Some(diagnostic)

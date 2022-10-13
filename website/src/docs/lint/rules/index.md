@@ -250,7 +250,7 @@ initializer and update expressions are not needed
 
 Rules that are being written. Rules under this group are meant to be considered unstable or buggy.
 
-Developers can opt-in these rules via configuration. We vehemently appreciate filing issue in case of bugs or performance problems. 
+Developers can opt-in these rules via configuration. We vehemently appreciate filing issue in case of bugs or performance problems.
 
 Rules can be downgraded to this group in case a patch release is needed. After an arbitrary amount of time, the team can decide
 to promote these rules into an appropriate group. Doing so means that the rule is stable and ready for production.
@@ -291,7 +291,7 @@ Report when a DOM element or a component uses both <code>children</code> and <co
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noExplicitAny">
-	<a href="/docs/lint/rules/noExplicitAny">noExplicitAny (since v0.10.0)</a>
+	<a href="/docs/lint/rules/noExplicitAny">noExplicitAny (since v10.0.0)</a>
 	<a class="header-anchor" href="#noExplicitAny"></a>
 </h3>
 Disallow the <code>any</code> type usage
