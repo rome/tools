@@ -305,7 +305,7 @@ Disallow <code>new</code> operators with the <code>Symbol</code> object
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noPositiveTabindex">
-	<a href="/docs/lint/rules/noPositiveTabindex">noPositiveTabindex (since v0.10.0)</a>
+	<a href="/docs/lint/rules/noPositiveTabindex">noPositiveTabindex (since v10.0.0)</a>
 	<a class="header-anchor" href="#noPositiveTabindex"></a>
 </h3>
 Prevent the usage of positive integers on <code>tabIndex</code> property
