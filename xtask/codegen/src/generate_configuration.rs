@@ -1,8 +1,9 @@
 use case::CaseExt;
 use proc_macro2::{Ident, Literal, Span};
 use quote::quote;
-use rome_analyze::{AnalysisFilter, RuleCategories};
-use rome_js_analyze::metadata;
+use rome_analyze::{GroupCategory, Queryable, RegistryVisitor, Rule, RuleCategory, RuleGroup};
+use rome_js_analyze::visit_registry;
+use rome_js_syntax::JsLanguage;
 use std::collections::BTreeMap;
 use xtask::*;
 use xtask_codegen::{to_lower_snake_case, update};
@@ -10,19 +11,35 @@ use xtask_codegen::{to_lower_snake_case, update};
 pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
     let config_root = project_root().join("crates/rome_service/src/configuration/linter");
 
-    let filter = AnalysisFilter {
-        categories: RuleCategories::LINT,
-        ..AnalysisFilter::default()
-    };
-
-    // Ensure the list of rules is stored alphabetically
-    let mut groups = BTreeMap::new();
-    for meta in metadata(&filter) {
-        groups
-            .entry(meta.group)
-            .or_insert_with(BTreeMap::new)
-            .insert(meta.rule.name, meta.rule.recommended);
+    #[derive(Default)]
+    struct LintRulesVisitor {
+        groups: BTreeMap<&'static str, BTreeMap<&'static str, bool>>,
     }
+
+    impl RegistryVisitor<JsLanguage> for LintRulesVisitor {
+        fn record_category<C: GroupCategory<Language = JsLanguage>>(&mut self) {
+            if matches!(C::CATEGORY, RuleCategory::Lint) {
+                C::record_groups(self);
+            }
+        }
+
+        fn record_rule<R>(&mut self)
+        where
+            R: Rule + 'static,
+            R::Query: Queryable<Language = JsLanguage>,
+            <R::Query as Queryable>::Output: Clone,
+        {
+            self.groups
+                .entry(<R::Group as RuleGroup>::NAME)
+                .or_insert_with(BTreeMap::new)
+                .insert(R::METADATA.name, R::METADATA.recommended);
+        }
+    }
+
+    let mut visitor = LintRulesVisitor::default();
+    visit_registry(&mut visitor);
+
+    let LintRulesVisitor { groups } = visitor;
 
     let mut struct_groups = Vec::new();
     let mut line_groups = Vec::new();

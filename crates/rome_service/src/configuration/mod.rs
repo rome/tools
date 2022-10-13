@@ -22,7 +22,7 @@ use crate::settings::{LanguagesSettings, LinterSettings};
 pub use formatter::{FormatterConfiguration, PlainIndentStyle};
 pub use javascript::{JavascriptConfiguration, JavascriptFormatter};
 pub use linter::{LinterConfiguration, RuleConfiguration, Rules};
-use rome_analyze::{AnalysisFilter, AnalyzerConfiguration, AnalyzerRules, RegistryRuleMetadata};
+use rome_analyze::{AnalyzerConfiguration, AnalyzerRules, MetadataRegistry};
 use rome_js_analyze::metadata;
 
 /// The configuration that is contained inside the file `rome.json`
@@ -288,15 +288,13 @@ where
 /// ## Examples
 ///
 /// ```rust
-/// use rome_analyze::AnalysisFilter;
 /// use rome_service::configuration::to_analyzer_configuration;
 /// use rome_service::settings::{LanguagesSettings, WorkspaceSettings};
-/// let filter = AnalysisFilter::default();
 /// let mut settings = WorkspaceSettings::default();
 /// settings.languages.javascript.globals = Some(["jQuery".to_string(), "React".to_string()].into());
 /// // map globals from JS language
 /// let analyzer_configuration =
-///     to_analyzer_configuration(&settings.linter, &settings.languages, &filter, |settings| {
+///     to_analyzer_configuration(&settings.linter, &settings.languages, |settings| {
 ///         if let Some(globals) = settings.javascript.globals.as_ref() {
 ///             globals
 ///                 .iter()
@@ -318,7 +316,6 @@ where
 pub fn to_analyzer_configuration<ToGlobals>(
     linter_settings: &LinterSettings,
     language_settings: &LanguagesSettings,
-    filter: &AnalysisFilter,
     to_globals: ToGlobals,
 ) -> AnalyzerConfiguration
 where
@@ -327,22 +324,16 @@ where
     let globals: Vec<String> = to_globals(language_settings);
 
     let mut analyzer_rules = AnalyzerRules::default();
-    let mut metadata = metadata(filter);
 
     if let Some(rules) = linter_settings.rules.as_ref() {
         if let Some(rules) = rules.correctness.as_ref() {
-            push_rules(
-                "correctness",
-                &mut metadata,
-                &mut analyzer_rules,
-                &rules.rules,
-            );
+            push_rules("correctness", metadata(), &mut analyzer_rules, &rules.rules);
         }
         if let Some(rules) = rules.nursery.as_ref() {
-            push_rules("nursery", &mut metadata, &mut analyzer_rules, &rules.rules);
+            push_rules("nursery", metadata(), &mut analyzer_rules, &rules.rules);
         }
         if let Some(rules) = rules.style.as_ref() {
-            push_rules("style", &mut metadata, &mut analyzer_rules, &rules.rules);
+            push_rules("style", metadata(), &mut analyzer_rules, &rules.rules);
         }
     }
 
@@ -352,27 +343,16 @@ where
     }
 }
 
-fn push_rules<M>(
+fn push_rules(
     group_name: &'static str,
-    metadata: &mut M,
+    metadata: &MetadataRegistry,
     analyzer_rules: &mut AnalyzerRules,
     rules: &IndexMap<String, RuleConfiguration>,
-) where
-    M: Iterator<Item = RegistryRuleMetadata>,
-{
+) {
     for (rule_name, configuration) in rules {
         if let RuleConfiguration::WithOptions(rule_options) = configuration {
             if let Some(options) = &rule_options.options {
-                let rule_key = metadata.find_map(|m| {
-                    let rule_key = m.to_rule_key();
-
-                    if rule_key.group() == group_name && rule_key.rule_name() == rule_name {
-                        Some(rule_key)
-                    } else {
-                        None
-                    }
-                });
-                if let Some(rule_key) = rule_key {
+                if let Some(rule_key) = metadata.find_rule(group_name, rule_name) {
                     analyzer_rules.push_rule(rule_key, options.clone());
                 }
             }

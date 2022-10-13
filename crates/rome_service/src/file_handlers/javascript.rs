@@ -1,10 +1,11 @@
 use rome_analyze::{
-    AnalysisFilter, AnalyzerOptions, ControlFlow, Never, QueryMatch, RuleCategories, RuleFilter,
+    AnalysisFilter, AnalyzerOptions, ControlFlow, GroupCategory, Never, QueryMatch,
+    RegistryVisitor, RuleCategories, RuleCategory, RuleFilter, RuleGroup,
 };
 use rome_diagnostics::{Applicability, CodeSuggestion, Diagnostic};
 use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
-use rome_js_analyze::{analyze, analyze_with_inspect_matcher, metadata, RuleError};
+use rome_js_analyze::{analyze, analyze_with_inspect_matcher, visit_registry, RuleError};
 use rome_js_formatter::context::{QuoteProperties, QuoteStyle};
 use rome_js_formatter::{context::JsFormatOptions, format_node};
 use rome_js_parser::Parse;
@@ -217,7 +218,7 @@ fn lint(
     let mut diagnostics = parse.into_diagnostics();
 
     let file_id = rome_path.file_id();
-    let analyzer_options = compute_analyzer_options(&settings, &filter);
+    let analyzer_options = compute_analyzer_options(&settings);
     analyze(file_id, &tree, filter, &analyzer_options, |signal| {
         if let Some(diagnostic) = signal.diagnostic() {
             // We do now check if the severity of the diagnostics should be changed.
@@ -243,6 +244,34 @@ fn lint(
     diagnostics
 }
 
+struct ActionsVisitor<'a> {
+    enabled_rules: Vec<RuleFilter<'a>>,
+}
+
+impl RegistryVisitor<JsLanguage> for ActionsVisitor<'_> {
+    fn record_category<C: GroupCategory<Language = JsLanguage>>(&mut self) {
+        if matches!(C::CATEGORY, RuleCategory::Action) {
+            C::record_groups(self);
+        }
+    }
+
+    fn record_group<G: RuleGroup<Language = JsLanguage>>(&mut self) {
+        G::record_rules(self)
+    }
+
+    fn record_rule<R>(&mut self)
+    where
+        R: rome_analyze::Rule + 'static,
+        R::Query: rome_analyze::Queryable<Language = JsLanguage>,
+        <R::Query as rome_analyze::Queryable>::Output: Clone,
+    {
+        self.enabled_rules.push(RuleFilter::Rule(
+            <R::Group as RuleGroup>::NAME,
+            R::METADATA.name,
+        ));
+    }
+}
+
 fn code_actions(
     rome_path: &RomePath,
     parse: AnyParse,
@@ -254,25 +283,18 @@ fn code_actions(
 
     let mut actions = Vec::new();
 
-    let mut enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = rules {
-        let enabled: IndexSet<RuleFilter> = rules.as_enabled_rules();
-        Some(enabled.into_iter().collect())
+    let enabled_rules: Option<Vec<RuleFilter>> = if let Some(rules) = rules {
+        let enabled_rules = rules.as_enabled_rules().into_iter().collect();
+
+        // The rules in the assist category do not have configuration entries,
+        // always add them all to the enabled rules list
+        let mut visitor = ActionsVisitor { enabled_rules };
+        visit_registry(&mut visitor);
+
+        Some(visitor.enabled_rules)
     } else {
         None
     };
-
-    // The rules in the assist category do not have configuration entries,
-    // always add them all to the enabled rules list
-    if let Some(enabled_rules) = &mut enabled_rules {
-        let actions_filter = AnalysisFilter {
-            categories: RuleCategories::ACTION,
-            ..AnalysisFilter::default()
-        };
-
-        for meta in metadata(&actions_filter) {
-            enabled_rules.push(RuleFilter::Rule(meta.group, meta.rule.name));
-        }
-    }
 
     let mut filter = match &enabled_rules {
         Some(rules) => AnalysisFilter::from_enabled_rules(Some(rules.as_slice())),
@@ -284,7 +306,7 @@ fn code_actions(
 
     let file_id = rome_path.file_id();
 
-    let analyzer_options = compute_analyzer_options(&settings, &filter);
+    let analyzer_options = compute_analyzer_options(&settings);
 
     analyze(file_id, &tree, filter, &analyzer_options, |signal| {
         if let Some(action) = signal.action() {
@@ -331,7 +353,7 @@ fn fix_all(params: FixAllParams) -> Result<FixFileResult, RomeError> {
     filter.categories = RuleCategories::SYNTAX | RuleCategories::LINT;
     let file_id = rome_path.file_id();
     let mut skipped_suggested_fixes = 0;
-    let analyzer_options = compute_analyzer_options(&settings, &filter);
+    let analyzer_options = compute_analyzer_options(&settings);
     loop {
         let action = analyze(file_id, &tree, filter, &analyzer_options, |signal| {
             if let Some(action) = signal.action() {
@@ -490,11 +512,10 @@ fn rename(
     }
 }
 
-fn compute_analyzer_options(settings: &SettingsHandle, filter: &AnalysisFilter) -> AnalyzerOptions {
+fn compute_analyzer_options(settings: &SettingsHandle) -> AnalyzerOptions {
     let configuration = to_analyzer_configuration(
         settings.as_ref().linter(),
         &settings.as_ref().languages,
-        filter,
         |settings| {
             if let Some(globals) = settings.javascript.globals.as_ref() {
                 globals

@@ -73,7 +73,7 @@ fn generate_category(
     entries.insert(
         key,
         quote! {
-            registry.push_category::<crate::#module_name::#category_name>(filter);
+            registry.record_category::<crate::#module_name::#category_name>();
         },
     );
 
@@ -199,13 +199,11 @@ fn update_registry_builder(
         .map(|(_, tokens)| tokens);
 
     let tokens = xtask::reformat(quote! {
-        use rome_analyze::{AnalysisFilter, RuleRegistry};
+        use rome_analyze::RegistryVisitor;
         use rome_js_syntax::JsLanguage;
 
-        pub(crate) fn build_registry(filter: &AnalysisFilter) -> RuleRegistry<JsLanguage> {
-            let mut registry = RuleRegistry::default();
+        pub fn visit_registry<V: RegistryVisitor<JsLanguage>>(registry: &mut V) {
             #( #categories )*
-            registry
         }
     })?;
 
