@@ -4,9 +4,7 @@ use crate::configs::{
 };
 use crate::snap_test::{markup_to_string, SnapshotPayload};
 use crate::{
-    assert_cli_snapshot, run_cli, APPLY_QUOTE_STYLE_AFTER, APPLY_QUOTE_STYLE_BEFORE,
-    CUSTOM_CONFIGURATION_AFTER, CUSTOM_CONFIGURATION_BEFORE, CUSTOM_FORMAT_AFTER,
-    CUSTOM_FORMAT_BEFORE, FORMATTED, LINT_ERROR, UNFORMATTED,
+    assert_cli_snapshot, run_cli, CUSTOM_FORMAT_BEFORE, FORMATTED, LINT_ERROR, UNFORMATTED,
 };
 use pico_args::Arguments;
 use rome_cli::Termination;
@@ -15,6 +13,33 @@ use rome_fs::{FileSystemExt, MemoryFileSystem};
 use rome_service::DynRef;
 use std::ffi::OsString;
 use std::path::Path;
+
+// six spaces
+const CUSTOM_FORMAT_AFTER: &str = r#"function f() {
+      return { something };
+}
+"#;
+
+const APPLY_QUOTE_STYLE_BEFORE: &str = r#"
+let a = "something";
+let b = {
+    "hey": "hello"
+};"#;
+
+const APPLY_QUOTE_STYLE_AFTER: &str = "let a = 'something';
+let b = {\n\t'hey': 'hello',\n};\n";
+
+const CUSTOM_CONFIGURATION_BEFORE: &str = r#"function f() {
+  return { a, b }
+}"#;
+
+const CUSTOM_CONFIGURATION_AFTER: &str = "function f() {
+        return {
+                a,
+                b,
+        };
+}
+";
 
 #[test]
 fn print() {

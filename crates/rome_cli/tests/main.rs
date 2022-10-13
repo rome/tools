@@ -26,33 +26,6 @@ return { something }
 }
 "#;
 
-// six spaces
-const CUSTOM_FORMAT_AFTER: &str = r#"function f() {
-      return { something };
-}
-"#;
-
-const APPLY_QUOTE_STYLE_BEFORE: &str = r#"
-let a = "something";
-let b = {
-    "hey": "hello"
-};"#;
-
-const APPLY_QUOTE_STYLE_AFTER: &str = "let a = 'something';
-let b = {\n\t'hey': 'hello',\n};\n";
-
-const CUSTOM_CONFIGURATION_BEFORE: &str = r#"function f() {
-  return { a, b }
-}"#;
-
-const CUSTOM_CONFIGURATION_AFTER: &str = "function f() {
-        return {
-                a,
-                b,
-        };
-}
-";
-
 mod help {
     use super::*;
 
