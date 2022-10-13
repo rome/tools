@@ -2,7 +2,7 @@ use std::env;
 
 use rome_console::{markup, ConsoleExt};
 use rome_lsp::ServerFactory;
-use rome_service::workspace::WorkspaceClient;
+use rome_service::{workspace::WorkspaceClient, RomeError, TransportError};
 use tokio::runtime::Runtime;
 use tracing::{debug_span, metadata::LevelFilter, Instrument, Metadata};
 use tracing_subscriber::{
@@ -40,8 +40,12 @@ pub(crate) fn stop(mut session: CliSession) -> Result<(), Termination> {
 
     if let Some(transport) = open_transport(rt)? {
         let client = WorkspaceClient::new(transport)?;
-        // This can be an error if the connection is closed before the empty response is sent
-        client.shutdown().ok();
+        match client.shutdown() {
+            // The `ChannelClosed` error is expected since the server can
+            // shutdown before sending a response
+            Ok(()) | Err(RomeError::TransportError(TransportError::ChannelClosed)) => {}
+            Err(err) => return Err(Termination::from(err)),
+        };
 
         session.app.console.log(markup! {
             "The Rome server was successfully stopped"
