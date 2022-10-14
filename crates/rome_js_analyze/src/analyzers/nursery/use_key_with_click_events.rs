@@ -64,28 +64,42 @@ impl Rule for UseKeyWithClickEvents {
                 element.find_attribute_by_name("onClick").ok()??;
 
                 for attr in element.attributes().into_iter() {
-                    let name = attr.as_jsx_attribute()?.name().ok()?.as_jsx_name()?.syntax().text_trimmed().to_string();
+                    let name = attr
+                        .as_jsx_attribute()?
+                        .name()
+                        .ok()?
+                        .as_jsx_name()?
+                        .syntax()
+                        .text_trimmed()
+                        .to_string();
 
                     if required_props.contains(&name.as_str()) {
                         return None;
                     }
                 }
 
-                return Some(());
+                Some(())
             }
             JsxAnyElement::JsxSelfClosingElement(element) => {
                 element.name().ok()?.as_jsx_name()?;
                 element.find_attribute_by_name("onClick").ok()??;
 
                 for attr in element.attributes().into_iter() {
-                    let name = attr.as_jsx_attribute()?.name().ok()?.as_jsx_name()?.syntax().text_trimmed().to_string();
+                    let name = attr
+                        .as_jsx_attribute()?
+                        .name()
+                        .ok()?
+                        .as_jsx_name()?
+                        .syntax()
+                        .text_trimmed()
+                        .to_string();
 
                     if required_props.contains(&name.as_str()) {
                         return None;
                     }
                 }
 
-                return Some(());
+                Some(())
             }
         }
     }
@@ -99,7 +113,7 @@ impl Rule for UseKeyWithClickEvents {
             markup! {
                 "Pair the "<Emphasis>"onClick"</Emphasis>" mouse event with the "<Emphasis>"onKeyUp"</Emphasis>", the "<Emphasis>"onKeyDown"</Emphasis>", or the "<Emphasis>"onKeyPress"</Emphasis>" keyboard event."
             },
-        ).footer_note(markup! { 
+        ).footer_note(markup! {
             "Actions triggered using mouse events should have corresponding keyboard events to account for keyboard-only navigation."
         }))
     }
