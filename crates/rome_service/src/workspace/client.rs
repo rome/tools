@@ -38,7 +38,7 @@ pub struct TransportRequest<P> {
     pub params: P,
 }
 
-#[derive(Debug, PartialEq, Clone, Default, Deserialize, Serialize)]
+#[derive(Debug, PartialEq, Eq, Clone, Default, Deserialize, Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct InitializeResult {
     /// Information about the server.
