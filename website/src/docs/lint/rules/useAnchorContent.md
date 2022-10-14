@@ -100,7 +100,10 @@ Accessible means that the content is not hidden using the `aria-hidden` attribut
 ```
 
 ```jsx
-<a dangerouslySetInnerHTML={{ __html: "foo" }} />
+function html() {
+    return { __html: "foo" }
+}
+<a dangerouslySetInnerHTML={html()} />
 ```
 
 ```jsx
