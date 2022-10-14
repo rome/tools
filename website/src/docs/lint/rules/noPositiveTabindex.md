@@ -3,7 +3,7 @@ title: Lint Rule noPositiveTabindex
 layout: layouts/rule.liquid
 ---
 
-# noPositiveTabindex (since v0.10.0)
+# noPositiveTabindex (since v10.0.0)
 
 Prevent the usage of positive integers on `tabIndex` property
 

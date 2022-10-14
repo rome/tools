@@ -46,7 +46,7 @@ declare_rule! {
     /// React.createElement("div", { tabIndex: -1 })
     /// ```
     pub(crate) NoPositiveTabindex {
-        version: "0.10.0",
+        version: "10.0.0",
         name: "noPositiveTabindex",
         recommended: false,
     }
