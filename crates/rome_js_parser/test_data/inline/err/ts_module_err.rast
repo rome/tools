@@ -78,8 +78,6 @@ ts_module_err.ts:1:17 parse ━━━━━━━━━━━━━━━━━�
 
   × expected `{` but instead found `;`
   
-  × unexpected
-  
   > 1 │ declare module a; // missing body
       │                 ^
     2 │ declare module "a" declare module "b"; // missing semi
@@ -90,14 +88,14 @@ ts_module_err.ts:2:20 parse ━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
-  
     1 │ declare module a; // missing body
   > 2 │ declare module "a" declare module "b"; // missing semi
       │                    ^^^^^^^
     3 │ 
   
-  i ...Which is required to end this statement
+  × An explicit or implicit semicolon is expected here...
+  
+  × ...Which is required to end this statement
   
     1 │ declare module a; // missing body
   > 2 │ declare module "a" declare module "b"; // missing semi

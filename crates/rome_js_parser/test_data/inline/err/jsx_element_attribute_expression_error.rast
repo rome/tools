@@ -71,8 +71,6 @@ jsx_element_attribute_expression_error.jsx:1:22 parse ━━━━━━━━�
 
   × expected `}` but instead found `asdf`
   
-  × unexpected
-  
   > 1 │ <div className={asdf asdf} />;
       │                      ^^^^
     2 │ 

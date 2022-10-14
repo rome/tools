@@ -315,20 +315,18 @@ ts_export_syntax_in_js.js:2:8 parse ━━━━━━━━━━━━━━�
 
   × 'export type' declarations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   
-  × TypeScript only syntax
-  
     1 │ let a, b, c;
   > 2 │ export type { a };
       │        ^^^^^^^^^^^
     3 │ export { type b };
     4 │ export { type c as cc };
   
+  × TypeScript only syntax
+  
 --
 ts_export_syntax_in_js.js:3:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × export { type ident }' are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  
-  × TypeScript only syntax
   
     1 │ let a, b, c;
     2 │ export type { a };
@@ -337,12 +335,12 @@ ts_export_syntax_in_js.js:3:10 parse ━━━━━━━━━━━━━━�
     4 │ export { type c as cc };
     5 │ export type { d } from "./d";
   
+  × TypeScript only syntax
+  
 --
 ts_export_syntax_in_js.js:4:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × export { type ident }' are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  
-  × TypeScript only syntax
   
     2 │ export type { a };
     3 │ export { type b };
@@ -351,12 +349,12 @@ ts_export_syntax_in_js.js:4:10 parse ━━━━━━━━━━━━━━�
     5 │ export type { d } from "./d";
     6 │ export { type e } from "./e";
   
+  × TypeScript only syntax
+  
 --
 ts_export_syntax_in_js.js:5:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'export type' declarations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  
-  × TypeScript only syntax
   
     3 │ export { type b };
     4 │ export { type c as cc };
@@ -365,12 +363,12 @@ ts_export_syntax_in_js.js:5:8 parse ━━━━━━━━━━━━━━�
     6 │ export { type e } from "./e";
     7 │ export { type e as ee } from "./e";
   
+  × TypeScript only syntax
+  
 --
 ts_export_syntax_in_js.js:6:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × export { type ident }'' are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  
-  × TypeScript only syntax
   
     4 │ export { type c as cc };
     5 │ export type { d } from "./d";
@@ -379,18 +377,20 @@ ts_export_syntax_in_js.js:6:10 parse ━━━━━━━━━━━━━━�
     7 │ export { type e as ee } from "./e";
     8 │ 
   
+  × TypeScript only syntax
+  
 --
 ts_export_syntax_in_js.js:7:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × export { type ident }'' are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  
-  × TypeScript only syntax
   
     5 │ export type { d } from "./d";
     6 │ export { type e } from "./e";
   > 7 │ export { type e as ee } from "./e";
       │          ^^^^^^^^^^^^
     8 │ 
+  
+  × TypeScript only syntax
   
 --
 let a, b, c;

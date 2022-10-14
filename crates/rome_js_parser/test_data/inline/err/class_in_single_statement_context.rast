@@ -50,11 +50,11 @@ class_in_single_statement_context.js:1:11 parse ━━━━━━━━━━�
 
   × Classes can only be declared at top level or inside a block
   
-  × wrap the class in a block statement
-  
   > 1 │ if (true) class A {}
       │           ^^^^^^^^^^
     2 │ 
+  
+  × wrap the class in a block statement
   
 --
 if (true) class A {}

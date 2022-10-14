@@ -100,8 +100,6 @@ formal_params_invalid.js:1:12 parse ━━━━━━━━━━━━━━�
 
   × expected `,` but instead found `++`
   
-  × unexpected
-  
   > 1 │ function (a++, c) {}
       │            ^^
     2 │ 

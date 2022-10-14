@@ -256,14 +256,14 @@ jsx_closing_element_mismatch.jsx:1:1 parse ━━━━━━━━━━━━�
 
   × Expected corresponding JSX closing tag for 'test'.
   
-  × Opening tag
-  
   > 1 │ <test></>;
       │ ^^^^^^
     2 │ <test></text>;
     3 │ <some><nested></some></nested>;
   
-  i closing tag
+  × Opening tag
+  
+  × closing tag
   
   > 1 │ <test></>;
       │       ^^^
@@ -275,15 +275,15 @@ jsx_closing_element_mismatch.jsx:2:1 parse ━━━━━━━━━━━━�
 
   × Expected corresponding JSX closing tag for 'test'.
   
-  × Opening tag
-  
     1 │ <test></>;
   > 2 │ <test></text>;
       │ ^^^^^^
     3 │ <some><nested></some></nested>;
     4 │ <><5></test></>;
   
-  i closing tag
+  × Opening tag
+  
+  × closing tag
   
     1 │ <test></>;
   > 2 │ <test></text>;
@@ -296,8 +296,6 @@ jsx_closing_element_mismatch.jsx:3:7 parse ━━━━━━━━━━━━�
 
   × Expected corresponding JSX closing tag for 'nested'.
   
-  × Opening tag
-  
     1 │ <test></>;
     2 │ <test></text>;
   > 3 │ <some><nested></some></nested>;
@@ -305,7 +303,9 @@ jsx_closing_element_mismatch.jsx:3:7 parse ━━━━━━━━━━━━�
     4 │ <><5></test></>;
     5 │ 
   
-  i closing tag
+  × Opening tag
+  
+  × closing tag
   
     1 │ <test></>;
     2 │ <test></text>;
@@ -319,8 +319,6 @@ jsx_closing_element_mismatch.jsx:3:1 parse ━━━━━━━━━━━━�
 
   × Expected corresponding JSX closing tag for 'some'.
   
-  × Opening tag
-  
     1 │ <test></>;
     2 │ <test></text>;
   > 3 │ <some><nested></some></nested>;
@@ -328,7 +326,9 @@ jsx_closing_element_mismatch.jsx:3:1 parse ━━━━━━━━━━━━�
     4 │ <><5></test></>;
     5 │ 
   
-  i closing tag
+  × Opening tag
+  
+  × closing tag
   
     1 │ <test></>;
     2 │ <test></text>;
@@ -342,13 +342,13 @@ jsx_closing_element_mismatch.jsx:4:4 parse ━━━━━━━━━━━━�
 
   × expected an identifier but instead found '5'
   
-  × Expected an identifier here
-  
     2 │ <test></text>;
     3 │ <some><nested></some></nested>;
   > 4 │ <><5></test></>;
       │    ^
     5 │ 
+  
+  × Expected an identifier here
   
 --
 <test></>;

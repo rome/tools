@@ -66,8 +66,6 @@ double_label.js:3:5 parse ━━━━━━━━━━━━━━━━━━
 
   × Duplicate statement labels are not allowed
   
-  × a second use of `label1` here is not allowed
-  
     1 │ label1: {
     2 │   label2: {
   > 3 │     label1: {}
@@ -75,12 +73,14 @@ double_label.js:3:5 parse ━━━━━━━━━━━━━━━━━━
     4 │   }
     5 │ }
   
-  i `label1` is first used as a label here
+  × `label1` is first used as a label here
   
   > 1 │ label1: {
       │ ^^^^^^
     2 │   label2: {
     3 │     label1: {}
+  
+  × a second use of `label1` here is not allowed
   
 --
 label1: {

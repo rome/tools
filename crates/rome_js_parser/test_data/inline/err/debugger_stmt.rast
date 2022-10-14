@@ -105,15 +105,15 @@ debugger_stmt.js:2:12 parse ━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
-  
     1 │ function foo() {
   > 2 │   debugger {
       │            ^
     3 │     var something = "lorem";
     4 │   }
   
-  i ...Which is required to end this statement
+  × An explicit or implicit semicolon is expected here...
+  
+  × ...Which is required to end this statement
   
     1 │ function foo() {
   > 2 │   debugger {

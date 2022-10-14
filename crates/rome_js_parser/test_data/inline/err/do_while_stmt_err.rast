@@ -102,20 +102,18 @@ do_while_stmt_err.js:2:11 parse ━━━━━━━━━━━━━━━━
 
   × expected an expression but instead found ')'
   
-  × Expected an expression here
-  
     1 │ do while (true)
   > 2 │ do while ()
       │           ^
     3 │ do while true
     4 │ 
   
+  × Expected an expression here
+  
 --
 do_while_stmt_err.js:3:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `(` but instead found `true`
-  
-  × unexpected
   
     1 │ do while (true)
     2 │ do while ()
@@ -128,12 +126,12 @@ do_while_stmt_err.js:4:1 parse ━━━━━━━━━━━━━━━━�
 
   × expected `)` but instead the file ends
   
-  × the file ends here
-  
     2 │ do while ()
     3 │ do while true
   > 4 │ 
       │ 
+  
+  × the file ends here
   
 --
 do while (true)

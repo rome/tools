@@ -209,7 +209,7 @@ ts_interface_heritage_clause_error.ts:3:23 parse ━━━━━━━━━━�
     4 │ interface D extends {}
     5 │ interface E extends A, {}
   
-  i first 'extends' clause
+  × first 'extends' clause
   
     1 │ interface A {}
     2 │ interface B implements A {}

@@ -93,15 +93,15 @@ ts_index_signature_class_member_static_readonly_precedence.ts:2:14 parse ━━�
 
   × 'static' must precede 'readonly'
   
-  × move this modifier
-  
     1 │ class A {
   > 2 │     readonly static [a: number]: string;
       │              ^^^^^^
     3 │ }
     4 │ 
   
-  i before this modifier
+  × move this modifier
+  
+  × before this modifier
   
     1 │ class A {
   > 2 │     readonly static [a: number]: string;

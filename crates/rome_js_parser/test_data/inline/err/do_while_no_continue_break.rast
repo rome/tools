@@ -134,8 +134,6 @@ do_while_no_continue_break.js:1:8 parse ━━━━━━━━━━━━━�
 
   × expected `while` but instead found `break`
   
-  × unexpected
-  
   > 1 │ do { } break (continue)
       │        ^^^^^
     2 │ do { } continue (break)
@@ -146,14 +144,14 @@ do_while_no_continue_break.js:1:14 parse ━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
-  
   > 1 │ do { } break (continue)
       │              ^
     2 │ do { } continue (break)
     3 │ 
   
-  i ...Which is required to end this statement
+  × An explicit or implicit semicolon is expected here...
+  
+  × ...Which is required to end this statement
   
   > 1 │ do { } break (continue)
       │        ^^^^^^^
@@ -175,8 +173,6 @@ do_while_no_continue_break.js:1:15 parse ━━━━━━━━━━━━━
 
   × expected `)` but instead found `continue`
   
-  × unexpected
-  
   > 1 │ do { } break (continue)
       │               ^^^^^^^^
     2 │ do { } continue (break)
@@ -187,14 +183,14 @@ do_while_no_continue_break.js:1:23 parse ━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
-  
   > 1 │ do { } break (continue)
       │                       ^
     2 │ do { } continue (break)
     3 │ 
   
-  i ...Which is required to end this statement
+  × An explicit or implicit semicolon is expected here...
+  
+  × ...Which is required to end this statement
   
   > 1 │ do { } break (continue)
       │               ^^^^^^^^^
@@ -216,19 +212,17 @@ do_while_no_continue_break.js:1:23 parse ━━━━━━━━━━━━━
 
   × expected a statement but instead found ')'
   
-  × Expected a statement here
-  
   > 1 │ do { } break (continue)
       │                       ^
     2 │ do { } continue (break)
     3 │ 
   
+  × Expected a statement here
+  
 --
 do_while_no_continue_break.js:2:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `while` but instead found `continue`
-  
-  × unexpected
   
     1 │ do { } break (continue)
   > 2 │ do { } continue (break)
@@ -240,14 +234,14 @@ do_while_no_continue_break.js:2:17 parse ━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
-  
     1 │ do { } break (continue)
   > 2 │ do { } continue (break)
       │                 ^
     3 │ 
   
-  i ...Which is required to end this statement
+  × An explicit or implicit semicolon is expected here...
+  
+  × ...Which is required to end this statement
   
     1 │ do { } break (continue)
   > 2 │ do { } continue (break)
@@ -269,8 +263,6 @@ do_while_no_continue_break.js:2:18 parse ━━━━━━━━━━━━━
 
   × expected `)` but instead found `break`
   
-  × unexpected
-  
     1 │ do { } break (continue)
   > 2 │ do { } continue (break)
       │                  ^^^^^
@@ -281,14 +273,14 @@ do_while_no_continue_break.js:2:23 parse ━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
-  
     1 │ do { } break (continue)
   > 2 │ do { } continue (break)
       │                       ^
     3 │ 
   
-  i ...Which is required to end this statement
+  × An explicit or implicit semicolon is expected here...
+  
+  × ...Which is required to end this statement
   
     1 │ do { } break (continue)
   > 2 │ do { } continue (break)
@@ -310,12 +302,12 @@ do_while_no_continue_break.js:2:23 parse ━━━━━━━━━━━━━
 
   × expected a statement but instead found ')'
   
-  × Expected a statement here
-  
     1 │ do { } break (continue)
   > 2 │ do { } continue (break)
       │                       ^
     3 │ 
+  
+  × Expected a statement here
   
 --
 do { } break (continue)

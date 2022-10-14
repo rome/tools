@@ -447,13 +447,13 @@ function_decl_err.js:2:14 parse ━━━━━━━━━━━━━━━━
 
   × expected a parenthesis '(' but instead found '{'
   
-  × Expected a parenthesis '(' here
-  
     1 │ function() {}
   > 2 │ function foo {}
       │              ^
     3 │ function {}
     4 │ function *() {}
+  
+  × Expected a parenthesis '(' here
   
 --
 function_decl_err.js:3:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -520,8 +520,6 @@ function_decl_err.js:8:7 parse ━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
-  
      6 │ async function *() {}
      7 │ function *foo2() {}
    > 8 │ yield foo3;
@@ -529,7 +527,9 @@ function_decl_err.js:8:7 parse ━━━━━━━━━━━━━━━━�
      9 │ function test2(): number {}
     10 │ function foo4(await) {}
   
-  i ...Which is required to end this statement
+  × An explicit or implicit semicolon is expected here...
+  
+  × ...Which is required to end this statement
   
      6 │ async function *() {}
      7 │ function *foo2() {}

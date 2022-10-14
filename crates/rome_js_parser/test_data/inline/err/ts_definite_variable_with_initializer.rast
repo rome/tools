@@ -72,11 +72,11 @@ ts_definite_variable_with_initializer.js:1:6 parse ━━━━━━━━━�
 
   × definite assertion assignments are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   
-  × TypeScript only syntax
-  
   > 1 │ let a!: string = "test";
       │      ^^^^^^^^^
     2 │ 
+  
+  × TypeScript only syntax
   
 --
 let a!: string = "test";

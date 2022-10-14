@@ -109,14 +109,14 @@ break_stmt.js:3:9 parse ━━━━━━━━━━━━━━━━━━�
 
   × Use of undefined statement label `foo`
   
-  × This label is used, but it is never defined
-  
     1 │ function foo() { break; }
     2 │ while (true) {
   > 3 │   break foo;
       │         ^^^
     4 │ }
     5 │ 
+  
+  × This label is used, but it is never defined
   
 --
 function foo() { break; }

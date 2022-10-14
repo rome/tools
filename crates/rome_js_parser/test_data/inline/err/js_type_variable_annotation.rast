@@ -86,22 +86,22 @@ js_type_variable_annotation.js:1:6 parse ━━━━━━━━━━━━━
 
   × type annotation are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   
-  × TypeScript only syntax
-  
   > 1 │ let a: string, b!: number;
       │      ^^^^^^^^
     2 │ 
+  
+  × TypeScript only syntax
   
 --
 js_type_variable_annotation.js:1:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × definite assertion assignments are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   
-  × TypeScript only syntax
-  
   > 1 │ let a: string, b!: number;
       │                 ^^^^^^^^^
     2 │ 
+  
+  × TypeScript only syntax
   
 --
 let a: string, b!: number;

@@ -457,8 +457,6 @@ import_assertion_err.js:1:27 parse ━━━━━━━━━━━━━━━
 
   × expected `:` but instead found `,`
   
-  × unexpected
-  
   > 1 │ import "foo" assert { type, "json" };
       │                           ^
     2 │ import "bar" \u{61}ssert { type: "json" };
@@ -468,8 +466,6 @@ import_assertion_err.js:1:27 parse ━━━━━━━━━━━━━━━
 import_assertion_err.js:1:36 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `:` but instead found `}`
-  
-  × unexpected
   
   > 1 │ import "foo" assert { type, "json" };
       │                                    ^
@@ -492,8 +488,6 @@ import_assertion_err.js:3:16 parse ━━━━━━━━━━━━━━━
 
   × expected `from` but instead found `assert`
   
-  × unexpected
-  
     1 │ import "foo" assert { type, "json" };
     2 │ import "bar" \u{61}ssert { type: "json" };
   > 3 │ import { foo } assert { type: "json" };
@@ -506,8 +500,6 @@ import_assertion_err.js:5:8 parse ━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
-  
     3 │ import { foo } assert { type: "json" };
     4 │ import "lorem"
   > 5 │ assert { type: "json" }
@@ -515,7 +507,9 @@ import_assertion_err.js:5:8 parse ━━━━━━━━━━━━━━━�
     6 │ import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
     7 │ import "x" assert;
   
-  i ...Which is required to end this statement
+  × An explicit or implicit semicolon is expected here...
+  
+  × ...Which is required to end this statement
   
     3 │ import { foo } assert { type: "json" };
     4 │ import "lorem"
@@ -529,8 +523,6 @@ import_assertion_err.js:6:38 parse ━━━━━━━━━━━━━━━
 
   × Duplicate assertion keys are not allowed
   
-  × First use of the key `type`
-  
     4 │ import "lorem"
     5 │ assert { type: "json" }
   > 6 │ import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
@@ -538,7 +530,9 @@ import_assertion_err.js:6:38 parse ━━━━━━━━━━━━━━━
     7 │ import "x" assert;
     8 │ import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
   
-  i second use here
+  × First use of the key `type`
+  
+  × second use here
   
     4 │ import "lorem"
     5 │ assert { type: "json" }
@@ -552,8 +546,6 @@ import_assertion_err.js:7:18 parse ━━━━━━━━━━━━━━━
 
   × expected `{` but instead found `;`
   
-  × unexpected
-  
     5 │ assert { type: "json" }
     6 │ import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
   > 7 │ import "x" assert;
@@ -565,8 +557,6 @@ import_assertion_err.js:7:18 parse ━━━━━━━━━━━━━━━
 import_assertion_err.js:8:61 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `string literal` but instead found `true`
-  
-  × unexpected
   
      6 │ import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
      7 │ import "x" assert;
@@ -580,8 +570,6 @@ import_assertion_err.js:8:65 parse ━━━━━━━━━━━━━━━
 
   × expected `:` but instead found `,`
   
-  × unexpected
-  
      6 │ import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
      7 │ import "x" assert;
    > 8 │ import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
@@ -593,8 +581,6 @@ import_assertion_err.js:8:65 parse ━━━━━━━━━━━━━━━
 import_assertion_err.js:8:80 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `string literal` but instead found `1`
-  
-  × unexpected
   
      6 │ import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
      7 │ import "x" assert;
@@ -608,12 +594,12 @@ import_assertion_err.js:10:1 parse ━━━━━━━━━━━━━━━
 
   × expected `{` but instead the file ends
   
-  × the file ends here
-  
      8 │ import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
      9 │ import { a } from "a.json" assert
   > 10 │ 
        │ 
+  
+  × the file ends here
   
 --
 import "foo" assert { type, "json" };
