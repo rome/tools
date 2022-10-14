@@ -75,16 +75,10 @@ impl JsxAnyElement {
     fn is_custom_component(&self) -> Option<bool> {
         match self {
             JsxAnyElement::JsxSelfClosingElement(element) => {
-                if element.name().ok()?.as_jsx_name().is_some() {
-                    return Some(true);
-                }
-                None
+                element.name().ok()?.as_jsx_name().map(|_| true)
             }
             JsxAnyElement::JsxOpeningElement(element) => {
-                if element.name().ok()?.as_jsx_name().is_some() {
-                    return Some(true);
-                }
-                None
+                element.name().ok()?.as_jsx_name().map(|_| true)
             }
         }
     }
