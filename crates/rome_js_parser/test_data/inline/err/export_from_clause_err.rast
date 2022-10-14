@@ -125,6 +125,8 @@ export_from_clause_err.js:1:9 parse ━━━━━━━━━━━━━━�
     2 │ export * from 5;
     3 │ export as from "test";
   
+  i Remove ;
+  
 --
 export_from_clause_err.js:2:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -138,6 +140,12 @@ export_from_clause_err.js:2:15 parse ━━━━━━━━━━━━━━�
   
   × Expected a string literal here
   
+    1 │ export *;
+  > 2 │ export * from 5;
+      │               ^
+    3 │ export as from "test";
+    4 │ export from "test";
+  
 --
 export_from_clause_err.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -149,6 +157,8 @@ export_from_clause_err.js:3:8 parse ━━━━━━━━━━━━━━�
       │        ^^
     4 │ export from "test";
     5 │ 
+  
+  i Remove as
   
 --
 export_from_clause_err.js:3:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -162,6 +172,8 @@ export_from_clause_err.js:3:16 parse ━━━━━━━━━━━━━━�
     4 │ export from "test";
     5 │ 
   
+  i Remove "test"
+  
 --
 export_from_clause_err.js:4:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -172,6 +184,8 @@ export_from_clause_err.js:4:8 parse ━━━━━━━━━━━━━━�
   > 4 │ export from "test";
       │        ^^^^
     5 │ 
+  
+  i Remove from
   
 --
 export *;

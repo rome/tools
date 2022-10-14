@@ -57,6 +57,11 @@ variable_declarator_list_empty.js:1:6 parse ━━━━━━━━━━━━
   
   × Expected an identifier, an array pattern, or an object pattern here
   
+  > 1 │ const;
+      │      ^
+    2 │ const
+    3 │ 
+  
 --
 variable_declarator_list_empty.js:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -68,6 +73,11 @@ variable_declarator_list_empty.js:3:1 parse ━━━━━━━━━━━━
       │ 
   
   × Expected an identifier, an array pattern, or an object pattern here
+  
+    1 │ const;
+    2 │ const
+  > 3 │ 
+      │ 
   
 --
 const;

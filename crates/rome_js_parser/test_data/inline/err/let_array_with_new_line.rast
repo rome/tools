@@ -75,7 +75,7 @@ let_array_with_new_line.js:2:4 parse ━━━━━━━━━━━━━━�
       │ ^^^^^^^^
     4 │ 
   
-  × Wrap this declaration in a block statement
+  i Wrap this declaration in a block statement
   
 --
 // SCRIPT

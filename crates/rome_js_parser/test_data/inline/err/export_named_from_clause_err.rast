@@ -231,6 +231,11 @@ export_named_from_clause_err.js:1:10 parse ━━━━━━━━━━━━�
   
   × Expected a string literal, or an identifier here
   
+  > 1 │ export { as b } from "mod";
+      │          
+    2 │ export { a as 5 } from "mod";
+    3 │ export { a b c } from "mod";
+  
 --
 export_named_from_clause_err.js:2:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -244,6 +249,12 @@ export_named_from_clause_err.js:2:15 parse ━━━━━━━━━━━━�
   
   × Expected a string literal, or an identifier here
   
+    1 │ export { as b } from "mod";
+  > 2 │ export { a as 5 } from "mod";
+      │               ^
+    3 │ export { a b c } from "mod";
+    4 │ export { 5 as b } from "mod";
+  
 --
 export_named_from_clause_err.js:3:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -255,6 +266,8 @@ export_named_from_clause_err.js:3:12 parse ━━━━━━━━━━━━�
       │            ^
     4 │ export { 5 as b } from "mod";
     5 │ 
+  
+  i Remove b
   
 --
 export_named_from_clause_err.js:3:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -268,6 +281,8 @@ export_named_from_clause_err.js:3:14 parse ━━━━━━━━━━━━�
     4 │ export { 5 as b } from "mod";
     5 │ 
   
+  i Remove c
+  
 --
 export_named_from_clause_err.js:4:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -280,6 +295,12 @@ export_named_from_clause_err.js:4:10 parse ━━━━━━━━━━━━�
     5 │ 
   
   × Expected a string literal, or an identifier here
+  
+    2 │ export { a as 5 } from "mod";
+    3 │ export { a b c } from "mod";
+  > 4 │ export { 5 as b } from "mod";
+      │          ^^^^^^
+    5 │ 
   
 --
 export { as b } from "mod";

@@ -110,6 +110,11 @@ subscripts_err.js:1:12 parse ━━━━━━━━━━━━━━━━━
   
   × Expected an expression here
   
+  > 1 │ foo()?.baz[].;
+      │            ^
+    2 │ BAR`b
+    3 │ 
+  
 --
 subscripts_err.js:1:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -121,6 +126,11 @@ subscripts_err.js:1:14 parse ━━━━━━━━━━━━━━━━━
     3 │ 
   
   × Expected an identifier here
+  
+  > 1 │ foo()?.baz[].;
+      │              ^
+    2 │ BAR`b
+    3 │ 
   
 --
 subscripts_err.js:2:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

@@ -83,6 +83,8 @@ ts_module_err.ts:1:17 parse ━━━━━━━━━━━━━━━━━�
     2 │ declare module "a" declare module "b"; // missing semi
     3 │ 
   
+  i Remove ;
+  
 --
 ts_module_err.ts:2:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -94,6 +96,11 @@ ts_module_err.ts:2:20 parse ━━━━━━━━━━━━━━━━━�
     3 │ 
   
   × An explicit or implicit semicolon is expected here...
+  
+    1 │ declare module a; // missing body
+  > 2 │ declare module "a" declare module "b"; // missing semi
+      │                    ^^^^^^^
+    3 │ 
   
   × ...Which is required to end this statement
   

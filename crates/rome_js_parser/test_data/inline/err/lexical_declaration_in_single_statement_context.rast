@@ -113,7 +113,7 @@ lexical_declaration_in_single_statement_context.js:1:11 parse ━━━━━━
     2 │ while (true) const b = 5;
     3 │ 
   
-  × Wrap this declaration in a block statement
+  i Wrap this declaration in a block statement
   
 --
 lexical_declaration_in_single_statement_context.js:2:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -125,7 +125,7 @@ lexical_declaration_in_single_statement_context.js:2:14 parse ━━━━━━
       │              ^^^^^^^^^^^^
     3 │ 
   
-  × Wrap this declaration in a block statement
+  i Wrap this declaration in a block statement
   
 --
 if (true) let a;

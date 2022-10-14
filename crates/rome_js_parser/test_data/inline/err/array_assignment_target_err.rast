@@ -302,6 +302,8 @@ array_assignment_target_err.js:1:4 parse ━━━━━━━━━━━━━
     2 │ [a, c, ...rest,] = test;
     3 │ [a = , = "test"] = test;
   
+  i Remove a
+  
 --
 array_assignment_target_err.js:1:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -312,7 +314,7 @@ array_assignment_target_err.js:1:7 parse ━━━━━━━━━━━━━
     2 │ [a, c, ...rest,] = test;
     3 │ [a = , = "test"] = test;
   
-  × This expression cannot be assigned to
+  i This expression cannot be assigned to
   
 --
 array_assignment_target_err.js:2:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -326,6 +328,12 @@ array_assignment_target_err.js:2:15 parse ━━━━━━━━━━━━�
     4 │ [[a b] [c]]= test;
   
   × Remove the trailing comma here
+  
+    1 │ [a a, ++b, ] = test;
+  > 2 │ [a, c, ...rest,] = test;
+      │               ^
+    3 │ [a = , = "test"] = test;
+    4 │ [[a b] [c]]= test;
   
   × Rest element
   
@@ -349,6 +357,13 @@ array_assignment_target_err.js:3:6 parse ━━━━━━━━━━━━━
   
   × Expected an expression, or an assignment here
   
+    1 │ [a a, ++b, ] = test;
+    2 │ [a, c, ...rest,] = test;
+  > 3 │ [a = , = "test"] = test;
+      │      ^
+    4 │ [[a b] [c]]= test;
+    5 │ [a: b] = c
+  
 --
 array_assignment_target_err.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -363,6 +378,13 @@ array_assignment_target_err.js:3:8 parse ━━━━━━━━━━━━━
   
   × Expected an identifier, or an assignment target here
   
+    1 │ [a a, ++b, ] = test;
+    2 │ [a, c, ...rest,] = test;
+  > 3 │ [a = , = "test"] = test;
+      │        ^
+    4 │ [[a b] [c]]= test;
+    5 │ [a: b] = c
+  
 --
 array_assignment_target_err.js:4:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -375,6 +397,8 @@ array_assignment_target_err.js:4:5 parse ━━━━━━━━━━━━━
     5 │ [a: b] = c
     6 │ 
   
+  i Remove b
+  
 --
 array_assignment_target_err.js:5:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -385,6 +409,8 @@ array_assignment_target_err.js:5:3 parse ━━━━━━━━━━━━━
   > 5 │ [a: b] = c
       │   ^
     6 │ 
+  
+  i Remove :
   
 --
 [a a, ++b, ] = test;

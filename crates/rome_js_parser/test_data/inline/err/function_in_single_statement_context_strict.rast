@@ -154,7 +154,7 @@ function_in_single_statement_context_strict.js:1:11 parse ━━━━━━━�
     2 │ label1: function b() {}
     3 │ while (true) function c() {}
   
-  × wrap the function in a block statement
+  i wrap the function in a block statement
   
 --
 function_in_single_statement_context_strict.js:2:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -167,7 +167,7 @@ function_in_single_statement_context_strict.js:2:9 parse ━━━━━━━�
     3 │ while (true) function c() {}
     4 │ 
   
-  × wrap the function in a block statement
+  i wrap the function in a block statement
   
 --
 function_in_single_statement_context_strict.js:3:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -180,7 +180,7 @@ function_in_single_statement_context_strict.js:3:14 parse ━━━━━━━�
       │              ^^^^^^^^^^^^^^^
     4 │ 
   
-  × wrap the function in a block statement
+  i wrap the function in a block statement
   
 --
 if (true) function a() {}

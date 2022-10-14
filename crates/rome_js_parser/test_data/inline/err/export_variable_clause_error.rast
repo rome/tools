@@ -132,6 +132,11 @@ export_variable_clause_error.js:1:16 parse ━━━━━━━━━━━━�
   
   × Expected an expression, or an assignment here
   
+  > 1 │ export let a = ;
+      │                ^
+    2 │ export const b;
+    3 │ export let d, c;
+  
 --
 export_variable_clause_error.js:2:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -143,7 +148,7 @@ export_variable_clause_error.js:2:14 parse ━━━━━━━━━━━━�
     3 │ export let d, c;
     4 │ 
   
-  × this variable needs to be initialized
+  i this variable needs to be initialized
   
 --
 export let a = ;

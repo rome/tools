@@ -84,6 +84,12 @@ module_closing_curly.ts:2:8 parse ━━━━━━━━━━━━━━━�
   
   × An explicit or implicit semicolon is expected here...
   
+    1 │ declare module A {
+  > 2 │  "name": "troublesome-lib",
+      │        ^
+    3 │  "typings": "lib/index.d.ts",
+    4 │  "version": "0.0.1"
+  
   × ...Which is required to end this statement
   
     1 │ declare module A {

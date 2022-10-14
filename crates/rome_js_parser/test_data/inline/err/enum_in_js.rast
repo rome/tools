@@ -38,7 +38,7 @@ enum_in_js.js:1:1 parse ━━━━━━━━━━━━━━━━━━�
       │ ^^^^^^^^^
     2 │ 
   
-  × TypeScript only syntax
+  i TypeScript only syntax
   
 --
 enum A {}

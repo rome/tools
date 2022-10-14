@@ -188,6 +188,11 @@ array_binding_rest_err.js:1:10 parse ━━━━━━━━━━━━━━�
   
   × Expected an identifier, an array pattern, or an object pattern here
   
+  > 1 │ let [ ... ] = a;
+      │          
+    2 │ let [ ...c = "default" ] = a;
+    3 │ let [ ...rest, other_assignment ] = a;
+  
 --
 array_binding_rest_err.js:2:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -200,6 +205,12 @@ array_binding_rest_err.js:2:12 parse ━━━━━━━━━━━━━━�
     4 │ 
   
   × Remove the default value here
+  
+    1 │ let [ ... ] = a;
+  > 2 │ let [ ...c = "default" ] = a;
+      │            ^^^^^^^^^^^^
+    3 │ let [ ...rest, other_assignment ] = a;
+    4 │ 
   
   × Rest element
   
@@ -220,7 +231,7 @@ array_binding_rest_err.js:3:7 parse ━━━━━━━━━━━━━━�
       │       ^^^^^^^
     4 │ 
   
-  × Move the rest element to the end of the pattern, right before the closing ']'
+  i Move the rest element to the end of the pattern, right before the closing ']'
   
 --
 let [ ... ] = a;

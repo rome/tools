@@ -86,7 +86,7 @@ index_signature_class_member_in_js.js:2:5 parse ━━━━━━━━━━�
     3 │ }
     4 │ 
   
-  × TypeScript only syntax
+  i TypeScript only syntax
   
 --
 class A {

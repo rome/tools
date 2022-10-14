@@ -116,7 +116,7 @@ break_stmt.js:3:9 parse ━━━━━━━━━━━━━━━━━━�
     4 │ }
     5 │ 
   
-  × This label is used, but it is never defined
+  i This label is used, but it is never defined
   
 --
 function foo() { break; }

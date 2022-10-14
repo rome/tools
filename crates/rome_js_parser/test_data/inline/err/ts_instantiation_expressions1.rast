@@ -149,6 +149,11 @@ ts_instantiation_expressions1.ts:1:29 parse ━━━━━━━━━━━━
   
   × Expected an expression here
   
+  > 1 │ const a8 = f<number><number>;  // Relational operator error
+      │                             ^
+    2 │ const b1 = f?.<number>;  // Error, `(` expected
+    3 │ 
+  
 --
 ts_instantiation_expressions1.ts:2:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -158,6 +163,8 @@ ts_instantiation_expressions1.ts:2:23 parse ━━━━━━━━━━━━
   > 2 │ const b1 = f?.<number>;  // Error, `(` expected
       │                       ^
     3 │ 
+  
+  i Remove ;
   
 --
 const a8 = f<number><number>;  // Relational operator error

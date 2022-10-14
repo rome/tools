@@ -455,6 +455,12 @@ function_decl_err.js:2:14 parse ━━━━━━━━━━━━━━━━
   
   × Expected a parenthesis '(' here
   
+    1 │ function() {}
+  > 2 │ function foo {}
+      │              ^
+    3 │ function {}
+    4 │ function *() {}
+  
 --
 function_decl_err.js:3:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -528,6 +534,13 @@ function_decl_err.js:8:7 parse ━━━━━━━━━━━━━━━━�
     10 │ function foo4(await) {}
   
   × An explicit or implicit semicolon is expected here...
+  
+     6 │ async function *() {}
+     7 │ function *foo2() {}
+   > 8 │ yield foo3;
+       │       ^^^^
+     9 │ function test2(): number {}
+    10 │ function foo4(await) {}
   
   × ...Which is required to end this statement
   

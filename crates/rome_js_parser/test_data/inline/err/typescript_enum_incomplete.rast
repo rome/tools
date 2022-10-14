@@ -40,5 +40,9 @@ typescript_enum_incomplete.ts:2:1 parse ━━━━━━━━━━━━━�
   
   × the file ends here
   
+    1 │ enum A {
+  > 2 │ 
+      │ 
+  
 --
 enum A {

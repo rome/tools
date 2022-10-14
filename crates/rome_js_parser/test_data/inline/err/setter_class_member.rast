@@ -78,6 +78,12 @@ setter_class_member.js:2:11 parse ━━━━━━━━━━━━━━━�
   
   × Expected a parameter here
   
+    1 │ class Setters {
+  > 2 │   set foo() {}
+      │           ^
+    3 │ }
+    4 │ 
+  
 --
 class Setters {
   set foo() {}

@@ -188,6 +188,11 @@ async_arrow_expr_await_parameter.js:2:24 parse ━━━━━━━━━━━
   
   × Expected an unary expression here
   
+    1 │ let a = async await => {}
+  > 2 │ async() => { (a = await) => {} };
+      │                        ^
+    3 │ 
+  
 --
 async_arrow_expr_await_parameter.js:2:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

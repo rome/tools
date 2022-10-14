@@ -39,7 +39,7 @@ js_regex_assignment.js:1:1 parse ━━━━━━━━━━━━━━━�
       │ ^^^^^^^^
     2 │ 
   
-  × This expression cannot be assigned to
+  i This expression cannot be assigned to
   
 --
 js_regex_assignment.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -52,6 +52,10 @@ js_regex_assignment.js:2:1 parse ━━━━━━━━━━━━━━━�
   
   × Expected an expression, or an assignment here
   
+    1 │ /=0*_:m/=/*_:|
+  > 2 │ 
+      │ 
+  
 --
 js_regex_assignment.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -62,6 +66,10 @@ js_regex_assignment.js:2:1 parse ━━━━━━━━━━━━━━━�
       │ 
   
   × ... but the file ends here
+  
+    1 │ /=0*_:m/=/*_:|
+  > 2 │ 
+      │ 
   
   × A block comment starts here
   

@@ -44,5 +44,9 @@ spread.js:1:5 parse ━━━━━━━━━━━━━━━━━━━━
   
   × Expected an expression, or an assignment here
   
+  > 1 │ [...]
+      │     ^
+    2 │ 
+  
 --
 [...]

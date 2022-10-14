@@ -176,6 +176,8 @@ ts_template_literal_error.ts:3:15 parse ━━━━━━━━━━━━━�
     4 │ type D = `${A B`
     5 │ 
   
+  i Remove B
+  
 --
 ts_template_literal_error.ts:4:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -186,6 +188,8 @@ ts_template_literal_error.ts:4:15 parse ━━━━━━━━━━━━━�
   > 4 │ type D = `${A B`
       │               ^
     5 │ 
+  
+  i Remove B
   
 --
 type A = "a";

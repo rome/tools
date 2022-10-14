@@ -92,7 +92,7 @@ binding_identifier_invalid_script.js:2:5 parse ━━━━━━━━━━━
     3 │ const let = 5;
     4 │ 
   
-  × Rename the let identifier here
+  i Rename the let identifier here
   
 --
 binding_identifier_invalid_script.js:3:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -105,7 +105,7 @@ binding_identifier_invalid_script.js:3:7 parse ━━━━━━━━━━━
       │       ^^^
     4 │ 
   
-  × Rename the let identifier here
+  i Rename the let identifier here
   
 --
 // SCRIPT

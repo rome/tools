@@ -196,6 +196,13 @@ class_decl_err.js:3:17 parse ━━━━━━━━━━━━━━━━━
   
   × Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
   
+    1 │ class {}
+    2 │ class extends bar {}
+  > 3 │ class foo { set {} }
+      │                 ^
+    4 │ class extends {}
+    5 │ 
+  
 --
 class_decl_err.js:3:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -209,6 +216,13 @@ class_decl_err.js:3:20 parse ━━━━━━━━━━━━━━━━━
     5 │ 
   
   × Expected a statement here
+  
+    1 │ class {}
+    2 │ class extends bar {}
+  > 3 │ class foo { set {} }
+      │                    ^
+    4 │ class extends {}
+    5 │ 
   
 --
 class_decl_err.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

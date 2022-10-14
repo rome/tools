@@ -422,6 +422,13 @@ ts_class_modifier_precedence.ts:4:14 parse ━━━━━━━━━━━━�
   
   × move this modifier
   
+    2 │ abstract class Test extends Base {
+    3 │     // Accessibility
+  > 4 │     readonly private a: string;
+      │              ^^^^^^^
+    5 │     override protected base1;
+    6 │     static private b: string;
+  
   × before this modifier
   
     2 │ abstract class Test extends Base {
@@ -444,6 +451,13 @@ ts_class_modifier_precedence.ts:5:14 parse ━━━━━━━━━━━━�
     7 │     abstract protected d: string;
   
   × move this modifier
+  
+    3 │     // Accessibility
+    4 │     readonly private a: string;
+  > 5 │     override protected base1;
+      │              ^^^^^^^^^
+    6 │     static private b: string;
+    7 │     abstract protected d: string;
   
   × before this modifier
   
@@ -468,6 +482,13 @@ ts_class_modifier_precedence.ts:6:12 parse ━━━━━━━━━━━━�
   
   × move this modifier
   
+    4 │     readonly private a: string;
+    5 │     override protected base1;
+  > 6 │     static private b: string;
+      │            ^^^^^^^
+    7 │     abstract protected d: string;
+    8 │     // Static
+  
   × before this modifier
   
     4 │     readonly private a: string;
@@ -490,6 +511,13 @@ ts_class_modifier_precedence.ts:7:14 parse ━━━━━━━━━━━━�
     9 │     readonly static c: string;
   
   × move this modifier
+  
+    5 │     override protected base1;
+    6 │     static private b: string;
+  > 7 │     abstract protected d: string;
+      │              ^^^^^^^^^
+    8 │     // Static
+    9 │     readonly static c: string;
   
   × before this modifier
   
@@ -514,6 +542,13 @@ ts_class_modifier_precedence.ts:9:14 parse ━━━━━━━━━━━━�
   
   × move this modifier
   
+     7 │     abstract protected d: string;
+     8 │     // Static
+   > 9 │     readonly static c: string;
+       │              ^^^^^^
+    10 │     override static base2: string;
+    11 │     // abstract
+  
   × before this modifier
   
      7 │     abstract protected d: string;
@@ -536,6 +571,13 @@ ts_class_modifier_precedence.ts:10:14 parse ━━━━━━━━━━━━
     12 │     override abstract base3: string;
   
   × move this modifier
+  
+     8 │     // Static
+     9 │     readonly static c: string;
+  > 10 │     override static base2: string;
+       │              ^^^^^^
+    11 │     // abstract
+    12 │     override abstract base3: string;
   
   × before this modifier
   
@@ -560,6 +602,13 @@ ts_class_modifier_precedence.ts:12:14 parse ━━━━━━━━━━━━
   
   × move this modifier
   
+    10 │     override static base2: string;
+    11 │     // abstract
+  > 12 │     override abstract base3: string;
+       │              ^^^^^^^^
+    13 │     // override
+    14 │     readonly override base4: string;
+  
   × before this modifier
   
     10 │     override static base2: string;
@@ -582,6 +631,13 @@ ts_class_modifier_precedence.ts:14:14 parse ━━━━━━━━━━━━
     16 │ 
   
   × move this modifier
+  
+    12 │     override abstract base3: string;
+    13 │     // override
+  > 14 │     readonly override base4: string;
+       │              ^^^^^^^^
+    15 │ }
+    16 │ 
   
   × before this modifier
   

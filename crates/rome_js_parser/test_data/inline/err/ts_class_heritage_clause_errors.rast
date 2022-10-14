@@ -270,6 +270,13 @@ ts_class_heritage_clause_errors.ts:3:24 parse ━━━━━━━━━━━�
     1 │ class A {}
     2 │ interface Int {}
   > 3 │ class B implements Int extends A {}
+      │                        ^^^^^^^^^
+    4 │ class C implements Int implements Int {}
+    5 │ class D implements {}
+  
+    1 │ class A {}
+    2 │ interface Int {}
+  > 3 │ class B implements Int extends A {}
       │         ^^^^^^^^^^^^^^
     4 │ class C implements Int implements Int {}
     5 │ class D implements {}
@@ -278,6 +285,13 @@ ts_class_heritage_clause_errors.ts:3:24 parse ━━━━━━━━━━━�
 ts_class_heritage_clause_errors.ts:4:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'implements' clause already seen.
+  
+    2 │ interface Int {}
+    3 │ class B implements Int extends A {}
+  > 4 │ class C implements Int implements Int {}
+      │                        ^^^^^^^^^^^^^^
+    5 │ class D implements {}
+    6 │ class E extends {}
   
     2 │ interface Int {}
     3 │ class B implements Int extends A {}

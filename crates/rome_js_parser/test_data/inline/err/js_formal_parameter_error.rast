@@ -133,7 +133,7 @@ js_formal_parameter_error.js:1:13 parse ━━━━━━━━━━━━━�
     2 │ function b(x?) {}
     3 │ 
   
-  × TypeScript only syntax
+  i TypeScript only syntax
   
 --
 js_formal_parameter_error.js:2:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -145,7 +145,7 @@ js_formal_parameter_error.js:2:13 parse ━━━━━━━━━━━━━�
       │             ^
     3 │ 
   
-  × TypeScript only syntax
+  i TypeScript only syntax
   
 --
 function a(x: string) {}

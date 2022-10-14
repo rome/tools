@@ -391,7 +391,7 @@ jsx_or_type_assertion.js:3:13 parse ━━━━━━━━━━━━━━�
     4 │     let b = <string>b; // type assertion
     5 │     let c = <string>b<a>d; // type assertion
   
-  × TypeScript only syntax
+  i TypeScript only syntax
   
 --
 jsx_or_type_assertion.js:4:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -405,7 +405,7 @@ jsx_or_type_assertion.js:4:13 parse ━━━━━━━━━━━━━━�
     5 │     let c = <string>b<a>d; // type assertion
     6 │     let d = <div>a</div>/; // ambiguous: JSX or "type assertion a less than regex /div>/". Probably JSX.
   
-  × TypeScript only syntax
+  i TypeScript only syntax
   
 --
 jsx_or_type_assertion.js:5:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -419,7 +419,7 @@ jsx_or_type_assertion.js:5:13 parse ━━━━━━━━━━━━━━�
     6 │     let d = <div>a</div>/; // ambiguous: JSX or "type assertion a less than regex /div>/". Probably JSX.
     7 │     let d = <string>a</string>/;
   
-  × TypeScript only syntax
+  i TypeScript only syntax
   
 --
 jsx_or_type_assertion.js:6:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -433,7 +433,7 @@ jsx_or_type_assertion.js:6:13 parse ━━━━━━━━━━━━━━�
     7 │     let d = <string>a</string>/;
     8 │ }
   
-  × TypeScript only syntax
+  i TypeScript only syntax
   
 --
 jsx_or_type_assertion.js:7:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -447,7 +447,7 @@ jsx_or_type_assertion.js:7:13 parse ━━━━━━━━━━━━━━�
     8 │ }
     9 │ 
   
-  × TypeScript only syntax
+  i TypeScript only syntax
   
 --
 // SCRIPT

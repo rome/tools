@@ -81,6 +81,12 @@ setter_class_no_body.js:3:1 parse ━━━━━━━━━━━━━━━�
   
   × Expected a class method body here
   
+    1 │ class Setters {
+    2 │   set foo(a)
+  > 3 │ }
+      │ ^
+    4 │ 
+  
 --
 class Setters {
   set foo(a)

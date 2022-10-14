@@ -205,6 +205,13 @@ ts_invalid_decorated_class_members.ts:6:29 parse ━━━━━━━━━━�
   
   × Expected a parameter here
   
+    4 │   @test abstract method2();
+    5 │   @test abstract get getter();
+  > 6 │   @test abstract set setter();
+      │                             ^
+    7 │ }
+    8 │ 
+  
 --
 abstract class Test {
   @test method();

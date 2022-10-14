@@ -238,6 +238,8 @@ ts_named_import_specifier_error.ts:1:18 parse ━━━━━━━━━━━�
     2 │ import { type default } from "./mod";
     3 │ import { "literal-name" } from "./mod";
   
+  i Remove }
+  
 --
 ts_named_import_specifier_error.ts:2:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -248,6 +250,8 @@ ts_named_import_specifier_error.ts:2:23 parse ━━━━━━━━━━━�
       │                       ^
     3 │ import { "literal-name" } from "./mod";
     4 │ import { type "literal-name" } from "./mod";
+  
+  i Remove }
   
 --
 ts_named_import_specifier_error.ts:3:25 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -261,6 +265,8 @@ ts_named_import_specifier_error.ts:3:25 parse ━━━━━━━━━━━�
     4 │ import { type "literal-name" } from "./mod";
     5 │ import {
   
+  i Remove }
+  
 --
 ts_named_import_specifier_error.ts:4:30 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -273,6 +279,8 @@ ts_named_import_specifier_error.ts:4:30 parse ━━━━━━━━━━━�
     5 │ import {
     6 │ 
   
+  i Remove }
+  
 --
 ts_named_import_specifier_error.ts:6:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -284,6 +292,11 @@ ts_named_import_specifier_error.ts:6:1 parse ━━━━━━━━━━━�
       │ 
   
   × the file ends here
+  
+    4 │ import { type "literal-name" } from "./mod";
+    5 │ import {
+  > 6 │ 
+      │ 
   
 --
 import { default } from "./mod";

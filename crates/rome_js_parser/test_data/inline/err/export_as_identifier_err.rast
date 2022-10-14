@@ -55,5 +55,9 @@ export_as_identifier_err.js:1:10 parse ━━━━━━━━━━━━━�
   
   × Expected an identifier here
   
+  > 1 │ export { as c }
+      │          
+    2 │ 
+  
 --
 export { as c }

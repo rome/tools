@@ -69,6 +69,12 @@ statements_closing_curly.js:2:7 parse ━━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
+    1 │ {
+  > 2 │ "name": "troublesome-lib",
+      │       ^
+    3 │ "typings": "lib/index.d.ts",
+    4 │ "version": "0.0.1"
+  
   × ...Which is required to end this statement
   
     1 │ {

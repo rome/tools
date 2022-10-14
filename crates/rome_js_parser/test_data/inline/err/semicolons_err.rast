@@ -73,6 +73,10 @@ semicolons_err.js:1:15 parse ━━━━━━━━━━━━━━━━━
   
   × An explicit or implicit semicolon is expected here...
   
+  > 1 │ let foo = bar throw foo
+      │               ^^^^^
+    2 │ 
+  
   × ...Which is required to end this statement
   
   > 1 │ let foo = bar throw foo

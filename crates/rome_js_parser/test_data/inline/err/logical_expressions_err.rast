@@ -127,7 +127,7 @@ logical_expressions_err.js:1:8 parse ━━━━━━━━━━━━━━�
     2 │ !foo && bar;
     3 │ foo(foo ||)
   
-  × This operator requires a left hand side value
+  i This operator requires a left hand side value
   
 --
 logical_expressions_err.js:3:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -141,6 +141,12 @@ logical_expressions_err.js:3:11 parse ━━━━━━━━━━━━━━
     4 │ 
   
   × Expected an expression here
+  
+    1 │ foo ?? * 2;
+    2 │ !foo && bar;
+  > 3 │ foo(foo ||)
+      │           ^
+    4 │ 
   
 --
 foo ?? * 2;
