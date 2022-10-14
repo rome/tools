@@ -1,9 +1,9 @@
-use std::env;
+use std::{env, io::Write};
 
 use rome_console::{markup, ConsoleExt};
 use rome_lsp::ServerFactory;
 use rome_service::{workspace::WorkspaceClient, RomeError, TransportError};
-use tokio::runtime::Runtime;
+use tokio::{io::AsyncWriteExt, runtime::Runtime, sync::mpsc};
 use tracing::{debug_span, metadata::LevelFilter, Instrument, Metadata};
 use tracing_subscriber::{
     layer::{Context, Filter},
@@ -14,7 +14,7 @@ use tracing_tree::HierarchicalLayer;
 
 use crate::{
     open_transport,
-    service::{self, ensure_daemon, run_daemon},
+    service::{self, ensure_daemon, open_socket, run_daemon},
     CliSession, Termination,
 };
 
@@ -86,6 +86,46 @@ pub(crate) fn run_server() -> Result<(), Termination> {
 pub(crate) fn print_socket() -> Result<(), Termination> {
     let rt = Runtime::new()?;
     rt.block_on(service::print_socket())?;
+    Ok(())
+}
+
+pub(crate) fn lsp_proxy() -> Result<(), Termination> {
+    let rt = Runtime::new()?;
+
+    rt.block_on(async {
+        let did_spawn = ensure_daemon().await.expect("can't start rome");
+
+        if did_spawn {
+            match open_socket().await.expect("connect error") {
+                Some((_owned_read_half, mut _owned_write_half)) => {
+                    let (tx, mut rx) = mpsc::channel::<String>(100000);
+                    rt.spawn(async move {
+                        while let Some(msg) = rx.recv().await {
+                            let res = _owned_write_half.write(msg.as_bytes()).await;
+                            match res {
+                                Ok(lsp_response) => {
+                                    std::io::stdout()
+                                        .write_all(&lsp_response.to_owned().to_be_bytes())
+                                        .expect("response err");
+                                }
+                                Err(err) => panic!("owned_write error: {:#?}", err),
+                            };
+                        }
+                    });
+
+                    loop {
+                        let mut receive_msg = String::new();
+                        match std::io::stdin().read_line(&mut receive_msg) {
+                            Ok(_) => tx.send(receive_msg).await.expect("send msg error"),
+                            Err(_) => todo!(),
+                        };
+                    }
+                }
+                None => print!("rome not start"),
+            };
+        }
+    });
+
     Ok(())
 }
 

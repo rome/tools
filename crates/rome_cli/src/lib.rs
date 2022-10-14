@@ -81,13 +81,14 @@ impl<'app> CliSession<'app> {
             Some("check") if !is_empty => crate::commands::check::check(self),
             Some("ci") if !is_empty => crate::commands::ci::ci(self),
             Some("format") if !is_empty => crate::commands::format::format(self),
-
             Some("start") => crate::commands::daemon::start(self),
             Some("stop") => crate::commands::daemon::stop(self),
 
             // Internal commands
             Some("__run_server") => crate::commands::daemon::run_server(),
             Some("__print_socket") => crate::commands::daemon::print_socket(),
+            Some("lsp_proxy") => crate::commands::daemon::lsp_proxy(),
+
 
             // Print the help for known commands called without any arguments, and exit with an error
             Some(cmd @ ("check" | "ci" | "format")) => {
