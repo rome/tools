@@ -316,6 +316,7 @@ export type Category =
 	| "lint/nursery/noAutofocus"
 	| "lint/nursery/useBlankTarget"
 	| "lint/nursery/useValidAnchor"
+	| "lint/nursery/useKeyWithClickEvents"
 	| "lint/nursery/noRestrictedGlobals"
 	| "lint/nursery/noPositiveTabindex"
 	| "lint/nursery/noExplicitAny"

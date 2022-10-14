@@ -20,6 +20,8 @@ useKeyWithClickEventsInvalid.jsx:2:5 lint/nursery/useKeyWithClickEvents ━━�
       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^
     3 │ </>
   
+  i Actions triggered using mouse events should have corresponding keyboard events to account for keyboard-only navigation.
+  
 
 ```
 

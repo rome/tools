@@ -1,4 +1,3 @@
-use crate::JsRuleAction;
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{JsxOpeningElement, JsxSelfClosingElement};
@@ -52,6 +51,7 @@ impl Rule for UseKeyWithClickEvents {
     type Query = Ast<JsxAnyElement>;
     type State = ();
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
@@ -63,30 +63,34 @@ impl Rule for UseKeyWithClickEvents {
                 element.name().ok()?.as_jsx_name()?;
                 element.find_attribute_by_name("onClick").ok()??;
 
-                match required_props
-                    .iter()
-                    .find_map(|key_event| element.find_attribute_by_name(key_event).ok().flatten())
-                {
-                    Some(_) => None,
-                    None => Some(()),
+                for attr in element.attributes().into_iter() {
+                    let name = attr.as_jsx_attribute()?.name().ok()?.as_jsx_name()?.syntax().text_trimmed().to_string();
+
+                    if required_props.contains(&name.as_str()) {
+                        return None;
+                    }
                 }
+
+                return Some(());
             }
             JsxAnyElement::JsxSelfClosingElement(element) => {
                 element.name().ok()?.as_jsx_name()?;
                 element.find_attribute_by_name("onClick").ok()??;
 
-                match required_props
-                    .iter()
-                    .find_map(|key_event| element.find_attribute_by_name(key_event).ok().flatten())
-                {
-                    Some(_) => None,
-                    None => Some(()),
+                for attr in element.attributes().into_iter() {
+                    let name = attr.as_jsx_attribute()?.name().ok()?.as_jsx_name()?.syntax().text_trimmed().to_string();
+
+                    if required_props.contains(&name.as_str()) {
+                        return None;
+                    }
                 }
+
+                return Some(());
             }
         }
     }
 
-    fn diagnostic(ctx: &RuleContext<Self>, _attr: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(ctx: &RuleContext<Self>, _: &Self::State) -> Option<RuleDiagnostic> {
         let node = ctx.query();
 
         Some(RuleDiagnostic::new(
@@ -95,10 +99,8 @@ impl Rule for UseKeyWithClickEvents {
             markup! {
                 "Pair the "<Emphasis>"onClick"</Emphasis>" mouse event with the "<Emphasis>"onKeyUp"</Emphasis>", the "<Emphasis>"onKeyDown"</Emphasis>", or the "<Emphasis>"onKeyPress"</Emphasis>" keyboard event."
             },
-        ))
-    }
-
-    fn action(_ctx: &RuleContext<Self>, _attr: &Self::State) -> Option<JsRuleAction> {
-        None
+        ).footer_note(markup! { 
+            "Actions triggered using mouse events should have corresponding keyboard events to account for keyboard-only navigation."
+        }))
     }
 }
