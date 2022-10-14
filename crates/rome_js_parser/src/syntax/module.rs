@@ -241,8 +241,8 @@ fn parse_import_default_or_named_clause_rest(
 
                 // test_err ts ts_typed_default_import_with_named
                 // import type A, { B, C } from './a';
-                p.error(p.err_builder("A type-only import can specify a default import or named bindings, but not both.")
-                    .primary(default_start..end, ""))
+                p.error(p.err_builder("A type-only import can specify a default import or named bindings, but not both.",
+                    default_start..end,))
             }
 
             p.expect(T![from]);
@@ -789,15 +789,19 @@ fn parse_any_export_named_specifier(p: &mut Parser) -> ParsedSyntax {
             let error = if is_string {
                 p.err_builder(
                     "A string literal cannot be used as an export binding without `from`.",
+                    export_name.range(p),
                 )
             } else {
-                p.err_builder(&format!(
-                    "\"{}\" can only be used with \"export ... from ...\"",
-                    export_name.text(p)
-                ))
+                p.err_builder(
+                    &format!(
+                        "\"{}\" can only be used with \"export ... from ...\"",
+                        export_name.text(p)
+                    ),
+                    export_name.range(p),
+                )
             };
 
-            p.error(error.primary(export_name.range(p), ""));
+            p.error(error.detail(export_name.range(p), ""));
         }
     }
 
@@ -1113,12 +1117,15 @@ fn parse_export_default_clause(p: &mut Parser) -> ParsedSyntax {
                 // or if the overloads define different functions.
             } else {
                 let err = p
-                    .err_builder("Illegal duplicate default export declarations")
-                    .secondary(
+                    .err_builder(
+                        "Illegal duplicate default export declarations",
+                        clause.range(p),
+                    )
+                    .detail(clause.range(p), "multiple default exports are erroneous")
+                    .detail(
                         &existing_default_item.range.to_owned(),
                         "the module's default export is first defined here",
-                    )
-                    .primary(clause.range(p), "multiple default exports are erroneous");
+                    );
 
                 p.error(err);
                 clause.change_kind(p, JsSyntaxKind::JS_UNKNOWN);
@@ -1176,8 +1183,8 @@ fn parse_export_default_declaration_clause(
             // test_err ts ts_export_default_enum
             // export default enum A { X, Y, Z }
             parse_ts_enum_declaration(p).map(|enum_declaration| {
-                p.error(p.err_builder("'export default' isn't allowed for 'enum's. Move the 'enum' declaration in its own statement and then export the enum's name.")
-                    .primary(enum_declaration.range(p), "")
+                p.error(p.err_builder("'export default' isn't allowed for 'enum's. Move the 'enum' declaration in its own statement and then export the enum's name.",
+                    enum_declaration.range(p))
                 );
 
                 enum_declaration

@@ -3,21 +3,25 @@ use crate::features::print_diff;
 use crate::BenchmarkSummary;
 use itertools::Itertools;
 use rome_diagnostics::file::FileId;
-use rome_diagnostics::file::SimpleFile;
-use rome_diagnostics::{Diagnostic, Emitter, Severity};
-use rome_js_parser::{parse_common, Parse};
+use rome_diagnostics::termcolor::Buffer;
+use rome_diagnostics::v2::console::fmt::Termcolor;
+use rome_diagnostics::v2::console::markup;
+use rome_diagnostics::v2::DiagnosticExt;
+use rome_diagnostics::v2::PrintDiagnostic;
+use rome_js_parser::{parse_common, Parse, ParseDiagnostic};
 use rome_js_syntax::{JsAnyRoot, SourceType};
 use std::fmt::{Display, Formatter};
 use std::ops::Add;
 use std::time::Duration;
 
 #[derive(Debug, Clone)]
+
 pub struct ParseMeasurement {
     id: String,
     code: String,
     parsing: Duration,
     tree_sink: Duration,
-    diagnostics: Vec<Diagnostic>,
+    diagnostics: Vec<ParseDiagnostic>,
 }
 
 pub fn benchmark_parse_lib(id: &str, code: &str, source_type: SourceType) -> BenchmarkSummary {
@@ -84,20 +88,27 @@ impl Display for ParseMeasurement {
 
         let _ = writeln!(f, "\tDiagnostics");
 
-        let diagnostics = &self.diagnostics.iter().group_by(|x| x.severity);
+        let diagnostics = &self
+            .diagnostics
+            .iter()
+            .map(|diagnostic| rome_diagnostics::v2::Error::from(diagnostic.clone()))
+            .group_by(|x| x.severity());
         for (severity, items) in diagnostics {
             let _ = writeln!(f, "\t\t{:?}: {}", severity, items.count());
         }
 
-        let file = SimpleFile::new(self.id.to_string(), self.code.clone());
-        let mut emitter = Emitter::new(&file);
+        let mut buffer = Buffer::no_color();
 
-        for diagnostic in self
-            .diagnostics
-            .iter()
-            .filter(|diag| diag.severity == Severity::Error)
-        {
-            emitter.emit_stderr(diagnostic, true).unwrap();
+        for diagnostic in self.diagnostics.iter().filter(|diag| diag.is_error()) {
+            let error = diagnostic
+                .clone()
+                .with_file_path(self.id.to_string())
+                .with_file_source_code(self.code.clone());
+            rome_diagnostics::v2::console::fmt::Formatter::new(&mut Termcolor(&mut buffer))
+                .write_markup(markup! {
+                    {PrintDiagnostic(&error)}
+                })
+                .unwrap();
         }
 
         Ok(())

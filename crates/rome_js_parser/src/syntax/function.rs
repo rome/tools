@@ -84,7 +84,7 @@ pub(super) fn parse_function_declaration(
             // if (true) function a() {}
             // label1: function b() {}
             // while (true) function c() {}
-            p.error(p.err_builder("In strict mode code, functions can only be declared at top level or inside a block").primary(function.range(p), "wrap the function in a block statement"));
+            p.error(p.err_builder("In strict mode code, functions can only be declared at top level or inside a block", function.range(p)).hint( "wrap the function in a block statement"));
             function.change_to_unknown(p);
         } else if !matches!(context, StatementContext::If | StatementContext::Label) {
             // test function_in_if_or_labelled_stmt_loose_mode
@@ -93,7 +93,7 @@ pub(super) fn parse_function_declaration(
             // if (true) function b() {} else function c() {}
             // if (true) function d() {}
             // if (true) "test"; else function e() {}
-            p.error(p.err_builder("In non-strict mode code, functions can only be declared at top level, inside a block, or as the body of an if or labelled statement").primary(function.range(p), "wrap the function in a block statement"));
+            p.error(p.err_builder("In non-strict mode code, functions can only be declared at top level, inside a block, or as the body of an if or labelled statement", function.range(p)).hint( "wrap the function in a block statement"));
             function.change_to_unknown(p);
         }
     }
@@ -201,15 +201,17 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
         id.or_add_diagnostic(p, |p, range| {
             p.err_builder(
                 "expected a name for the function in a function declaration, but found none",
+                range,
             )
-            .primary(range, "")
         });
     }
 
     TypeScript
         .parse_exclusive_syntax(p, parse_ts_type_parameters, |p, marker| {
-            p.err_builder("type parameters can only be used in TypeScript files")
-                .primary(marker.range(p), "")
+            p.err_builder(
+                "type parameters can only be used in TypeScript files",
+                marker.range(p),
+            )
         })
         .ok();
 
@@ -228,8 +230,10 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
 
     TypeScript
         .parse_exclusive_syntax(p, parse_ts_return_type_annotation, |p, marker| {
-            p.err_builder("return types can only be used in TypeScript files")
-                .primary(marker.range(p), "")
+            p.err_builder(
+                "return types can only be used in TypeScript files",
+                marker.range(p),
+            )
         })
         .ok();
 
@@ -254,10 +258,10 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
         // function* test(a: string);
         // function* test(a: string) {}
         if let Some(generator_range) = generator_range {
-            p.error(
-                p.err_builder("An overload signature cannot be declared as a generator.")
-                    .primary(generator_range, ""),
-            );
+            p.error(p.err_builder(
+                "An overload signature cannot be declared as a generator.",
+                generator_range,
+            ));
         }
 
         m.complete(p, TS_DECLARE_FUNCTION_DECLARATION)
@@ -270,7 +274,7 @@ fn parse_function(p: &mut Parser, m: Marker, kind: FunctionKind) -> CompletedMar
         // if (true) async function t() {}
         // if (true) function* t() {}
         if kind.is_in_single_statement_context() && (in_async || generator_range.is_some()) {
-            p.error(p.err_builder("`async` and generator functions can only be declared at top level or inside a block").primary(function.range(p), ""));
+            p.error(p.err_builder("`async` and generator functions can only be declared at top level or inside a block", function.range(p) ));
             function.change_to_unknown(p);
         }
 
@@ -347,10 +351,10 @@ pub(crate) fn parse_ambient_function(p: &mut Parser, m: Marker) -> CompletedMark
     // declare async function test();
     let is_async = p.at(T![async]);
     if is_async {
-        p.error(
-            p.err_builder("'async' modifier cannot be used in an ambient context.")
-                .primary(p.cur_range(), ""),
-        );
+        p.error(p.err_builder(
+            "'async' modifier cannot be used in an ambient context.",
+            p.cur_range(),
+        ));
         p.bump(T![async]);
     }
 
@@ -363,8 +367,11 @@ pub(crate) fn parse_ambient_function(p: &mut Parser, m: Marker) -> CompletedMark
 
     if let Present(body) = parse_function_body(p, SignatureFlags::empty()) {
         p.error(
-            p.err_builder("A 'declare' function cannot have a function body")
-                .primary(body.range(p), "remove this body"),
+            p.err_builder(
+                "A 'declare' function cannot have a function body",
+                body.range(p),
+            )
+            .hint("remove this body"),
         );
     }
 
@@ -379,8 +386,11 @@ pub(crate) fn parse_ambient_function(p: &mut Parser, m: Marker) -> CompletedMark
 
 pub(crate) fn parse_ts_type_annotation_or_error(p: &mut Parser) -> ParsedSyntax {
     TypeScript.parse_exclusive_syntax(p, parse_ts_type_annotation, |p, annotation| {
-        p.err_builder("return types can only be used in TypeScript files")
-            .primary(annotation.range(p), "remove this type annotation")
+        p.err_builder(
+            "return types can only be used in TypeScript files",
+            annotation.range(p),
+        )
+        .hint("remove this type annotation")
     })
 }
 
@@ -488,10 +498,7 @@ fn try_parse_parenthesized_arrow_function_head(
         .ok();
 
     if p.has_preceding_line_break() {
-        p.error(
-            p.err_builder("Line terminator not permitted before arrow.")
-                .primary(p.cur_range(), ""),
-        );
+        p.error(p.err_builder("Line terminator not permitted before arrow.", p.cur_range()));
     }
 
     if !p.expect(T![=>]) && ambiguity.is_disallowed() {
@@ -814,10 +821,10 @@ pub(crate) fn parse_any_parameter(
                 // test_err ts ts_arrow_function_this_parameter
                 // let a = (this: string) => {}
                 parameter.change_to_unknown(p);
-                p.error(
-                    p.err_builder("An arrow function cannot have a 'this' parameter.")
-                        .primary(parameter.range(p), ""),
-                );
+                p.error(p.err_builder(
+                    "An arrow function cannot have a 'this' parameter.",
+                    parameter.range(p),
+                ));
             }
         }
 
@@ -837,9 +844,7 @@ pub(crate) fn parse_rest_parameter(p: &mut Parser, context: ExpressionContext) -
     let mut valid = true;
 
     if p.eat(T![?]) {
-        let err = p
-            .err_builder("rest patterns cannot be optional")
-            .primary(p.cur_range(), "");
+        let err = p.err_builder("rest patterns cannot be optional", p.cur_range());
 
         p.error(err);
         valid = false;
@@ -855,9 +860,10 @@ pub(crate) fn parse_rest_parameter(p: &mut Parser, context: ExpressionContext) -
     if let Present(initializer) = parse_initializer_clause(p, ExpressionContext::default()) {
         // test_err arrow_rest_in_expr_in_initializer
         // for ((...a = "b" in {}) => {};;) {}
-        let err = p
-            .err_builder("rest elements may not have default initializers")
-            .primary(initializer.range(p), "");
+        let err = p.err_builder(
+            "rest elements may not have default initializers",
+            initializer.range(p),
+        );
 
         p.error(err);
         valid = false;
@@ -866,9 +872,10 @@ pub(crate) fn parse_rest_parameter(p: &mut Parser, context: ExpressionContext) -
     let mut rest_parameter = m.complete(p, JS_REST_PARAMETER);
 
     if p.at(T![,]) {
-        let err = p
-            .err_builder("rest elements may not have trailing commas")
-            .primary(rest_parameter.range(p), "");
+        let err = p.err_builder(
+            "rest elements may not have trailing commas",
+            rest_parameter.range(p),
+        );
 
         p.error(err);
         valid = false;
@@ -961,10 +968,10 @@ pub(crate) fn parse_formal_parameter(
                 ));
                 valid = false;
             } else if parameter_context.is_setter() {
-                p.error(
-                    p.err_builder("A 'set' accessor cannot have an optional parameter.")
-                        .primary(p.cur_range(), ""),
-                );
+                p.error(p.err_builder(
+                    "A 'set' accessor cannot have an optional parameter.",
+                    p.cur_range(),
+                ));
                 valid = false;
             }
 
@@ -988,10 +995,10 @@ pub(crate) fn parse_formal_parameter(
             && parameter_context.is_parameter_property()
         {
             valid = false;
-            p.error(
-                p.err_builder("A parameter property may not be declared using a binding pattern.")
-                    .primary(binding_range, ""),
-            );
+            p.error(p.err_builder(
+                "A parameter property may not be declared using a binding pattern.",
+                binding_range,
+            ));
         }
 
         TypeScript
@@ -1002,15 +1009,15 @@ pub(crate) fn parse_formal_parameter(
 
         if let Present(initializer) = parse_initializer_clause(p, expression_context) {
             if valid && parameter_context.is_setter() && TypeScript.is_supported(p) {
-                p.error(
-                    p.err_builder("A 'set' accessor parameter cannot have an initializer.")
-                        .primary(initializer.range(p), ""),
-                );
+                p.error(p.err_builder(
+                    "A 'set' accessor parameter cannot have an initializer.",
+                    initializer.range(p),
+                ));
             } else if is_optional && valid {
-                p.error(
-                    p.err_builder("Parameter cannot have question mark and initializer")
-                        .primary(initializer.range(p), ""),
-                );
+                p.error(p.err_builder(
+                    "Parameter cannot have question mark and initializer",
+                    initializer.range(p),
+                ));
             }
         }
 

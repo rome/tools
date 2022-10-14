@@ -147,9 +147,9 @@ pub(crate) fn duplicate_assertion_keys_error(
     first_use: TextRange,
     duplicate_range: TextRange,
 ) -> ParseDiagnostic {
-    p.err_builder("Duplicate assertion keys are not allowed")
-        .primary(&first_use, &format!("First use of the key `{}`", key))
-        .secondary(duplicate_range, "second use here")
+    p.err_builder("Duplicate assertion keys are not allowed", &first_use)
+        .detail(&first_use, &format!("First use of the key `{}`", key))
+        .detail(duplicate_range, "second use here")
 }
 
 pub(crate) fn expected_expression(p: &Parser, range: TextRange) -> ParseDiagnostic {
@@ -187,24 +187,28 @@ pub(crate) fn unexpected_body_inside_ambient_context(
     p: &Parser,
     range: TextRange,
 ) -> ParseDiagnostic {
-    p.err_builder("members inside ambient contexts should not have a body")
-        .primary(range, "")
+    p.err_builder(
+        "members inside ambient contexts should not have a body",
+        range,
+    )
 }
 
 pub(crate) fn private_names_only_allowed_on_left_side_of_in_expression(
     p: &Parser,
     private_name_range: TextRange,
 ) -> ParseDiagnostic {
-    p.err_builder("Private names are only allowed on the left side of a 'in' expression")
-        .primary(private_name_range, "")
+    p.err_builder(
+        "Private names are only allowed on the left side of a 'in' expression",
+        private_name_range,
+    )
 }
 
 pub(crate) fn invalid_assignment_error(p: &Parser, range: TextRange) -> ParseDiagnostic {
-    p.err_builder(&format!(
-        "Invalid assignment to `{}`",
-        p.source(range.as_range())
-    ))
-    .primary(range, "This expression cannot be assigned to")
+    p.err_builder(
+        &format!("Invalid assignment to `{}`", p.source(range.as_range()),),
+        range,
+    )
+    .hint("This expression cannot be assigned to")
 }
 
 pub(crate) fn modifier_already_seen(
@@ -213,9 +217,9 @@ pub(crate) fn modifier_already_seen(
     first_range: TextRange,
 ) -> ParseDiagnostic {
     let modifier = p.source(second_range);
-    p.err_builder(&format!("'{modifier}' already seen"))
-        .primary(second_range, "duplicate modifier")
-        .secondary(first_range, "first seen here")
+    p.err_builder(&format!("'{modifier}' already seen"), second_range)
+        .detail(second_range, "duplicate modifier")
+        .detail(first_range, "first seen here")
 }
 
 pub(crate) fn modifier_cannot_be_used_with_modifier(
@@ -226,11 +230,12 @@ pub(crate) fn modifier_cannot_be_used_with_modifier(
     let modifier = p.source(range);
     let other_modifier = p.source(other_modifier_range);
 
-    p.err_builder(&format!(
-        "'{modifier}' cannot be used with '{other_modifier}' modifier."
-    ))
-    .primary(range, "")
-    .secondary(
+    p.err_builder(
+        &format!("'{modifier}' cannot be used with '{other_modifier}' modifier."),
+        range,
+    )
+    .detail(range, &format!("'{modifier}' modifier"))
+    .detail(
         other_modifier_range,
         &format!("'{other_modifier}' modifier"),
     )
@@ -244,9 +249,10 @@ pub(crate) fn modifier_must_precede_modifier(
     let modifier_name = p.source(range);
     let to_precede_name = p.source(to_precede_modifier_range);
 
-    p.err_builder(&format!(
-        "'{modifier_name}' must precede '{to_precede_name}'"
-    ))
-    .primary(range, "move this modifier")
-    .secondary(to_precede_modifier_range, "before this modifier")
+    p.err_builder(
+        &format!("'{modifier_name}' must precede '{to_precede_name}'",),
+        range,
+    )
+    .detail(range, "move this modifier")
+    .detail(to_precede_modifier_range, "before this modifier")
 }

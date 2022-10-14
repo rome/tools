@@ -151,8 +151,11 @@ pub(super) fn parse_class_declaration(p: &mut Parser, context: StatementContext)
         // test_err class_in_single_statement_context
         // if (true) class A {}
         p.error(
-            p.err_builder("Classes can only be declared at top level or inside a block")
-                .primary(class.range(p), "wrap the class in a block statement"),
+            p.err_builder(
+                "Classes can only be declared at top level or inside a block",
+                class.range(p),
+            )
+            .hint("wrap the class in a block statement"),
         );
         class.change_to_unknown(p)
     }
@@ -229,17 +232,17 @@ fn parse_class(p: &mut Parser, kind: ClassKind) -> CompletedMarker {
                     .err_builder(&format!(
                             "`{}` cannot be used as a class name because it is already reserved as a type",
                             text
-                        ))
-                    .primary(id.range(p), "");
+                        ),id.range(p), );
 
                 p.error(err);
             }
         }
         Absent => {
             if !kind.is_id_optional() {
-                let err = p
-                    .err_builder("class declarations must have a name")
-                    .primary(class_token_range.start()..p.cur_range().start(), "");
+                let err = p.err_builder(
+                    "class declarations must have a name",
+                    class_token_range.start()..p.cur_range().start(),
+                );
 
                 p.error(err);
             }
@@ -300,9 +303,10 @@ fn eat_class_heritage_clause(p: &mut Parser) {
                                 p.error(
                                     p.err_builder(
                                         "'extends' clause must precede 'implements' clause.",
+                                        current.range(p),
                                     )
-                                    .primary(current.range(p), "")
-                                    .secondary(first_implements.range(p), ""),
+                                    .detail(current.range(p), "")
+                                    .detail(first_implements.range(p), ""),
                                 )
                             }
 
@@ -310,9 +314,9 @@ fn eat_class_heritage_clause(p: &mut Parser) {
                         }
                     }
                     Some(first_extends) => p.error(
-                        p.err_builder("'extends' clause already seen.")
-                            .primary(current.range(p), "")
-                            .secondary(first_extends.range(p), "first 'extends' clause"),
+                        p.err_builder("'extends' clause already seen.", current.range(p))
+                            .detail(current.range(p), "")
+                            .detail(first_extends.range(p), "first 'extends' clause"),
                     ),
                 }
             }
@@ -323,12 +327,10 @@ fn eat_class_heritage_clause(p: &mut Parser) {
                     None => {
                         first_implements = {
                             if TypeScript.is_unsupported(p) {
-                                p.error(
-                                    p.err_builder(
-                                        "classes can only implement interfaces in TypeScript files",
-                                    )
-                                    .primary(current.range(p), ""),
-                                );
+                                p.error(p.err_builder(
+                                    "classes can only implement interfaces in TypeScript files",
+                                    current.range(p),
+                                ));
                                 current.change_to_unknown(p);
                             }
                             Some(current)
@@ -336,9 +338,9 @@ fn eat_class_heritage_clause(p: &mut Parser) {
                     }
                     Some(first_implements) => {
                         p.error(
-                            p.err_builder("'implements' clause already seen.")
-                                .primary(current.range(p), "")
-                                .secondary(first_implements.range(p), "first 'implements' clause"),
+                            p.err_builder("'implements' clause already seen.", current.range(p))
+                                .detail(current.range(p), "")
+                                .detail(first_implements.range(p), "first 'implements' clause"),
                         );
                     }
                 }
@@ -363,10 +365,7 @@ fn parse_extends_clause(p: &mut Parser) -> ParsedSyntax {
     p.expect(T![extends]);
 
     if parse_extends_expression(p).is_absent() {
-        p.error(
-            p.err_builder("'extends' list cannot be empty.")
-                .primary(extends_end..extends_end, ""),
-        )
+        p.error(p.err_builder("'extends' list cannot be empty.", extends_end..extends_end))
     } else {
         TypeScript
             .parse_exclusive_syntax(p, parse_ts_type_arguments, |p, arguments| {
@@ -381,10 +380,7 @@ fn parse_extends_clause(p: &mut Parser) -> ParsedSyntax {
 
         let extra = p.start();
         if parse_extends_expression(p).is_absent() {
-            p.error(
-                p.err_builder("Trailing comma not allowed.")
-                    .primary(comma_range, ""),
-            );
+            p.error(p.err_builder("Trailing comma not allowed.", comma_range));
             extra.abandon(p);
             break;
         }
@@ -393,10 +389,10 @@ fn parse_extends_clause(p: &mut Parser) -> ParsedSyntax {
 
         let extra_class = extra.complete(p, JS_UNKNOWN);
 
-        p.error(
-            p.err_builder("Classes can only extend a single class.")
-                .primary(extra_class.range(p), ""),
-        );
+        p.error(p.err_builder(
+            "Classes can only extend a single class.",
+            extra_class.range(p),
+        ));
     }
 
     Present(m.complete(p, JS_EXTENDS_CLAUSE))
@@ -512,9 +508,10 @@ fn parse_class_member(p: &mut Parser, inside_abstract_class: bool) -> ParsedSynt
                 if let Some(abstract_token_range) =
                     modifiers.get_first_range(ModifierKind::Abstract)
                 {
-                    let err = p
-                        .err_builder("Only abstract classes can have abstract members")
-                        .primary(abstract_token_range, "");
+                    let err = p.err_builder(
+                        "Only abstract classes can have abstract members",
+                        abstract_token_range,
+                    );
                     p.error(err);
                     valid = false;
                 }
@@ -578,9 +575,7 @@ fn parse_class_member_impl(
     if p.at(T![*]) {
         p.bump_any(); // bump * token
         if is_at_constructor(p, modifiers) {
-            let err = p
-                .err_builder("constructors can't be generators")
-                .primary(generator_range, "");
+            let err = p.err_builder("constructors can't be generators", generator_range);
 
             p.error(err);
         }
@@ -609,9 +604,7 @@ fn parse_class_member_impl(
         }
 
         return Present(if is_at_constructor(p, modifiers) {
-            let err = p
-                .err_builder("constructors cannot be async")
-                .primary(async_range, "");
+            let err = p.err_builder("constructors cannot be async", async_range);
 
             p.error(err);
             parse_class_member_name(p, modifiers).unwrap();
@@ -818,9 +811,10 @@ fn parse_class_member_impl(
             let mut property = parse_property_class_member_body(p, member_marker, modifiers);
 
             if !property.kind().is_unknown() && is_constructor {
-                let err = p
-                    .err_builder("class properties may not be called `constructor`")
-                    .primary(property.range(p), "");
+                let err = p.err_builder(
+                    "class properties may not be called `constructor`",
+                    property.range(p),
+                );
 
                 p.error(err);
                 property.change_to_unknown(p);
@@ -867,10 +861,10 @@ fn parse_static_initialization_block_class_member(
         // class A {
         //   public static { }
         // }
-        p.error(
-            p.err_builder("Static class blocks cannot have any modifier.")
-                .primary(modifiers.list_marker.range(p), ""),
-        );
+        p.error(p.err_builder(
+            "Static class blocks cannot have any modifier.",
+            modifiers.list_marker.range(p),
+        ));
         modifiers.validate_and_complete(p, JS_STATIC_INITIALIZATION_BLOCK_CLASS_MEMBER);
     }
 
@@ -937,18 +931,18 @@ fn parse_property_class_member_body(
             // abstract class A {
             //     abstract name: string = "";
             // }
-            p.error(
-                p.err_builder("Property cannot have an initializer because it is marked abstract.")
-                    .primary(initializer.range(p), ""),
-            );
+            p.error(p.err_builder(
+                "Property cannot have an initializer because it is marked abstract.",
+                initializer.range(p),
+            ));
         } else if modifiers.has(ModifierKind::Declare) || p.state.in_ambient_context() {
             // test_err ts ts_property_initializer_ambient_context
             // declare class A { prop = "test" }
             // class B { declare prop = "test" }
-            p.error(
-                p.err_builder("Initializers are not allowed in ambient contexts.")
-                    .primary(initializer.range(p), ""),
-            );
+            p.error(p.err_builder(
+                "Initializers are not allowed in ambient contexts.",
+                initializer.range(p),
+            ));
         }
     }
 
@@ -960,11 +954,10 @@ fn expect_member_semi(p: &mut Parser, member_marker: &Marker, name: &str) {
         // Gets the start of the member
         let end = p.last_end().unwrap_or_else(|| p.cur_range().start());
 
-        let err = p
-            .err_builder(&format!(
-                "expected a semicolon to end the {name}, but found none"
-            ))
-            .primary(member_marker.start()..end, "");
+        let err = p.err_builder(
+            &format!("expected a semicolon to end the {name}, but found none"),
+            member_marker.start()..end,
+        );
 
         p.error(err);
     }
@@ -1008,9 +1001,7 @@ fn parse_ts_property_annotation(p: &mut Parser, modifiers: &ClassMemberModifiers
         p.bump(T![!]);
 
         if TypeScript.is_unsupported(p) {
-            let error = p
-                .err_builder("`!` modifiers can only be used in TypeScript files")
-                .primary(range, "");
+            let error = p.err_builder("`!` modifiers can only be used in TypeScript files", range);
 
             p.error(error);
             valid = false;
@@ -1020,23 +1011,19 @@ fn parse_ts_property_annotation(p: &mut Parser, modifiers: &ClassMemberModifiers
         //      abstract name!: string;
         // }
         else if modifiers.has(ModifierKind::Abstract) {
-            p.error(
-                p.err_builder(
-                    "A definite assignment operator '!' cannot appear on an 'abstract' property.",
-                )
-                .primary(range, ""),
-            );
+            p.error(p.err_builder(
+                "A definite assignment operator '!' cannot appear on an 'abstract' property.",
+                range,
+            ));
             valid = false;
         } else if modifiers.has(ModifierKind::Declare) || p.state.in_ambient_context() {
             // test_err ts ts_definite_assignment_in_ambient_context
             // declare class A { prop!: string }
             // class B { declare prop!: string }
-            p.error(
-                p.err_builder(
-                    "Definite assignment operators '!' aren't allowed in ambient contexts.",
-                )
-                .primary(range, ""),
-            );
+            p.error(p.err_builder(
+                "Definite assignment operators '!' aren't allowed in ambient contexts.",
+                range,
+            ));
         }
 
         Some(range)
@@ -1051,16 +1038,19 @@ fn parse_ts_property_annotation(p: &mut Parser, modifiers: &ClassMemberModifiers
         }
         (None, Some(_)) => {
             parse_ts_type_annotation(p).or_add_diagnostic(p, |p, range| {
-                p.err_builder("Properties with definite assignment assertions must also have type annotations.").primary(range, "")
+                p.err_builder("Properties with definite assignment assertions must also have type annotations.",range, )
             });
             m.complete(p, TS_DEFINITE_PROPERTY_ANNOTATION)
         }
         (Some(optional_range), Some(definite_range)) => {
             parse_ts_type_annotation(p).ok();
             let error = p
-                .err_builder("class properties cannot be both optional and definite")
-                .primary(definite_range, "")
-                .secondary(optional_range, "");
+                .err_builder(
+                    "class properties cannot be both optional and definite",
+                    definite_range,
+                )
+                .detail(definite_range, "")
+                .detail(optional_range, "");
 
             p.error(error);
 
@@ -1089,9 +1079,7 @@ fn optional_member_token(p: &mut Parser) -> Result<Option<TextRange>, TextRange>
         if TypeScript.is_supported(p) {
             Ok(Some(range))
         } else {
-            let err = p
-                .err_builder("`?` modifiers can only be used in TypeScript files")
-                .primary(range, "");
+            let err = p.err_builder("`?` modifiers can only be used in TypeScript files", range);
 
             p.error(err);
             Err(range)
@@ -1193,17 +1181,17 @@ fn parse_method_class_member_rest(
         //      * overload();
         //      * overload() {}
         // }
-        p.error(
-            p.err_builder("A method signature cannot be declared as a generator.")
-                .primary(member.range(p), ""),
-        );
+        p.error(p.err_builder(
+            "A method signature cannot be declared as a generator.",
+            member.range(p),
+        ));
     } else if p.state.in_ambient_context() && is_async {
         // test_err ts ts_ambient_async_method
         // declare class A { async method(); }
-        p.error(
-            p.err_builder("'async' modifier cannot be used in an ambient context.")
-                .primary(member.range(p), ""),
-        );
+        p.error(p.err_builder(
+            "'async' modifier cannot be used in an ambient context.",
+            member.range(p),
+        ));
         member.change_to_unknown(p);
     } else if optional.is_err() {
         // error already emitted by `optional_member_token()`
@@ -1425,9 +1413,7 @@ fn parse_constructor_class_member_body(
     modifiers: &ClassMemberModifiers,
 ) -> CompletedMarker {
     if let Ok(Some(range)) = optional_member_token(p) {
-        let err = p
-            .err_builder("constructors cannot be optional")
-            .primary(range, "");
+        let err = p.err_builder("constructors cannot be optional", range);
 
         p.error(err);
     }
@@ -1442,9 +1428,7 @@ fn parse_constructor_class_member_body(
         .or_add_diagnostic(p, js_parse_error::expected_constructor_parameters);
 
     if let Present(marker) = parse_ts_type_annotation(p) {
-        let err = p
-            .err_builder("constructors cannot have type annotations")
-            .primary(marker.range(p), "");
+        let err = p.err_builder("constructors cannot have type annotations", marker.range(p));
 
         p.error(err);
     }
@@ -1509,10 +1493,10 @@ fn parse_constructor_parameter(p: &mut Parser, context: ExpressionContext) -> Pa
             // test_err ts ts_constructor_this_parameter
             // class C { constructor(this) {} }
             if parameter.kind() == TS_THIS_PARAMETER {
-                p.error(
-                    p.err_builder("A constructor cannot have a 'this' parameter.")
-                        .primary(parameter.range(p), ""),
-                );
+                p.error(p.err_builder(
+                    "A constructor cannot have a 'this' parameter.",
+                    parameter.range(p),
+                ));
                 parameter.change_to_unknown(p);
             }
             parameter
@@ -1954,13 +1938,13 @@ impl ClassMemberModifiers {
         //     [a: number]: string;
         // }
         if TypeScript.is_unsupported(p) && modifier.kind.is_ts_modifier() {
-            return Some(
-                p.err_builder(&format!(
+            return Some(p.err_builder(
+                &format!(
                     "'{}' modifier can only be used in TypeScript files",
                     p.source(modifier.as_text_range())
-                ))
-                .primary(modifier.as_text_range(), ""),
-            );
+                ),
+                modifier.as_text_range(),
+            ));
         }
 
         // test_err ts ts_index_signature_class_member_cannot_have_visibility_modifiers
@@ -1981,13 +1965,13 @@ impl ClassMemberModifiers {
         if member_kind == TS_INDEX_SIGNATURE_CLASS_MEMBER
             && !matches!(modifier.kind, ModifierKind::Static | ModifierKind::Readonly)
         {
-            return Some(
-                p.err_builder(&format!(
+            return Some(p.err_builder(
+                &format!(
                     "'{}' modifier cannot appear on an index signature.",
                     p.source(modifier.as_text_range())
-                ))
-                .primary(modifier.as_text_range(), ""),
-            );
+                ),
+                modifier.as_text_range(),
+            ));
         } else if matches!(
             member_kind,
             JS_CONSTRUCTOR_CLASS_MEMBER | TS_CONSTRUCTOR_SIGNATURE_CLASS_MEMBER
@@ -2046,12 +2030,10 @@ impl ClassMemberModifiers {
                     //   readonly get test() { return "a"; }
                     //   readonly set test(value: string) {}
                     // }
-                    return Some(
-                        p.err_builder(
-                            "Readonly can only appear on a property declaration or index signature."
-                        )
-                            .primary(modifier.as_text_range(), ""),
-                    );
+                    return Some(p.err_builder(
+                        "Readonly can only appear on a property declaration or index signature.",
+                        modifier.as_text_range(),
+                    ));
                 }
             }
             ModifierKind::Declare => {
@@ -2079,19 +2061,17 @@ impl ClassMemberModifiers {
                     member_kind,
                     JS_PROPERTY_CLASS_MEMBER | TS_PROPERTY_SIGNATURE_CLASS_MEMBER
                 ) {
-                    return Some(
-                        p.err_builder("'declare' modifier is only allowed on properties.")
-                            .primary(modifier.as_text_range(), ""),
-                    );
+                    return Some(p.err_builder(
+                        "'declare' modifier is only allowed on properties.",
+                        modifier.as_text_range(),
+                    ));
                 } else if self.flags.contains(ModifierFlags::PRIVATE_NAME) {
                     // test_err ts ts_declare_property_private_name
                     // class A { declare #name(); };
-                    return Some(
-                        p.err_builder(
-                            "'declare' modifier cannot be used with a private identifier'.",
-                        )
-                        .primary(modifier.as_text_range(), ""),
-                    );
+                    return Some(p.err_builder(
+                        "'declare' modifier cannot be used with a private identifier'.",
+                        modifier.as_text_range(),
+                    ));
                 }
             }
             ModifierKind::Abstract => {
@@ -2114,8 +2094,7 @@ impl ClassMemberModifiers {
                         | JS_UNKNOWN_MEMBER
                 ) {
                     return Some(
-                        p.err_builder("'abstract' modifier can only appear on a class, method or property declaration.")
-                            .primary(modifier.as_text_range(), "")
+                        p.err_builder("'abstract' modifier can only appear on a class, method or property declaration.",modifier.as_text_range(), )
                     );
                 } else if self.flags.contains(ModifierFlags::STATIC) {
                     // test_err ts typescript_abstract_classes_invalid_static_abstract_member
@@ -2135,12 +2114,10 @@ impl ClassMemberModifiers {
                 } else if self.flags.contains(ModifierFlags::PRIVATE_NAME) {
                     // test_err ts typescript_abstract_classes_invalid_abstract_private_member
                     // abstract class A { abstract #name(); };
-                    return Some(
-                        p.err_builder(
-                            "'abstract' modifier cannot be used with a private identifier'.",
-                        )
-                        .primary(modifier.as_text_range(), ""),
-                    );
+                    return Some(p.err_builder(
+                        "'abstract' modifier cannot be used with a private identifier'.",
+                        modifier.as_text_range(),
+                    ));
                 }
             }
             ModifierKind::Private | ModifierKind::Protected | ModifierKind::Public => {
@@ -2193,12 +2170,10 @@ impl ClassMemberModifiers {
                 } else if self.flags.contains(ModifierFlags::PRIVATE_NAME) {
                     // test_err ts typescript_classes_invalid_accessibility_modifier_private_member
                     // class A { private #name; protected #other; public #baz; };
-                    return Some(
-                        p.err_builder(
-                            "An accessibility modifier cannot be used with a private identifier.",
-                        )
-                        .primary(modifier.as_text_range(), ""),
-                    );
+                    return Some(p.err_builder(
+                        "An accessibility modifier cannot be used with a private identifier.",
+                        modifier.as_text_range(),
+                    ));
                 }
             }
             ModifierKind::Static => {

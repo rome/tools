@@ -331,7 +331,7 @@ pub use crate::{
 pub(crate) use parser::{Checkpoint, CompletedMarker, Marker, ParseRecovery, Parser};
 use rome_diagnostics::v2::console::markup;
 use rome_diagnostics::v2::location::AsSpan;
-use rome_diagnostics::v2::{Advices, Diagnostic, Location, LogCategory, Severity, Visit};
+use rome_diagnostics::v2::{Advices, Diagnostic, FileId, Location, LogCategory, Severity, Visit};
 use rome_js_syntax::{JsSyntaxKind, LanguageVariant};
 use rome_rowan::{TextRange, TextSize};
 pub(crate) use state::{ParserState, StrictMode};
@@ -354,23 +354,27 @@ pub struct ParseDiagnostic {
 
 #[derive(Debug, Default, Clone)]
 struct ParserAdvice {
-    advice: Vec<(String, Option<TextRange>, FileId)>,
-    note: Option<String>,
+    /// A list code frame details. The tuple contains the following:
+    /// - the message
+    /// - a text range
+    /// - the file id, reference to the actual file
+    detail_list: Vec<(String, Option<TextRange>, FileId)>,
+    hint: Option<String>,
 }
 
 impl ParserAdvice {
-    fn push_advice(&mut self, message: String, span: Option<TextRange>, file_id: FileId) {
-        self.advice.push((message, span, file_id));
+    fn set_detail(&mut self, message: String, span: Option<TextRange>, file_id: FileId) {
+        self.detail_list.push((message, span, file_id));
     }
 
-    fn push_note(&mut self, message: String) {
-        self.note = Some(message);
+    fn set_hint(&mut self, message: String) {
+        self.hint = Some(message);
     }
 }
 
-impl<'a> Advices for ParserAdvice {
+impl Advices for ParserAdvice {
     fn record(&self, visitor: &mut dyn Visit) -> std::io::Result<()> {
-        for (message, span, file_id) in &self.advice {
+        for (message, span, file_id) in &self.detail_list {
             if !message.is_empty() {
                 visitor.record_log(LogCategory::Error, &markup! { {message} }.to_owned())?;
             }
@@ -379,43 +383,38 @@ impl<'a> Advices for ParserAdvice {
                 visitor.record_frame(location)?;
             }
         }
+        if let Some(hint) = &self.hint {
+            visitor.record_log(LogCategory::Info, &markup! { {hint} }.to_owned())?;
+        }
         Ok(())
     }
 }
 
 impl ParseDiagnostic {
-    fn new(file_id: FileId, message: impl Into<String>) -> Self {
+    pub fn new(file_id: FileId, message: impl Into<String>, span: impl AsSpan) -> Self {
         Self {
             file_id,
-            span: None,
+            span: span.as_span(),
             message: message.into(),
             advice: ParserAdvice::default(),
             severity: Severity::Error,
         }
     }
 
-    pub(crate) const fn is_error(&self) -> bool {
+    pub const fn is_error(&self) -> bool {
         matches!(self.severity, Severity::Error)
     }
 
-    /// Compatibility API to assign the span to the diagnostic
-    fn primary(mut self, range: impl AsSpan, message: impl Into<String>) -> Self {
-        self.span = range.as_span();
+    /// Use this API if you want to highlight more code frame, to help to explain where's the error
+    pub fn detail(mut self, range: impl AsSpan, message: impl Into<String>) -> Self {
         self.advice
-            .push_advice(message.into(), None, self.file_id.clone());
+            .set_detail(message.into(), range.as_span(), self.file_id);
         self
     }
 
-    /// Compatibility API to add a second message
-    fn secondary(mut self, range: impl AsSpan, message: impl Into<String>) -> Self {
-        self.advice
-            .push_advice(message.into(), range.as_span(), self.file_id.clone());
-        self
-    }
-
-    /// Compatibility API to add notes
-    fn footer_note(mut self, message: impl Into<String>) -> Self {
-        self.advice.push_note(message.into());
+    /// Small message that should suggest the user how they could fix the error
+    pub fn hint(mut self, message: impl Into<String>) -> Self {
+        self.advice.set_hint(message.into());
         self
     }
 

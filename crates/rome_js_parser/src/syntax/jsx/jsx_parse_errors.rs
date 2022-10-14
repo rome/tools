@@ -22,9 +22,10 @@ pub(crate) fn jsx_expected_closing_tag(
     opening_range: TextRange,
     closing_range: TextRange,
 ) -> ParseDiagnostic {
-    p.err_builder(&format!(
-        "Expected corresponding JSX closing tag for '{opening_name}'."
-    ))
-    .primary(opening_range, "Opening tag")
-    .secondary(closing_range, "closing tag")
+    p.err_builder(
+        &format!("Expected corresponding JSX closing tag for '{opening_name}'."),
+        opening_range,
+    )
+    .detail(opening_range, "Opening tag")
+    .detail(closing_range, "closing tag")
 }

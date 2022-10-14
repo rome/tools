@@ -215,10 +215,10 @@ impl<'s> Parser<'s> {
         self.do_bump(kind, LexContext::default())
     }
 
-    /// Make a new error builder with `error` severity
+    /// Creates a new diagnostic. Pass the message and the range where the error occurred
     #[must_use]
-    pub fn err_builder(&self, message: &str) -> ParseDiagnostic {
-        ParseDiagnostic::new(self.file_id, message)
+    pub fn err_builder(&self, message: &str, span: impl AsSpan) -> ParseDiagnostic {
+        ParseDiagnostic::new(self.file_id, message, span)
     }
 
     /// Add an error
@@ -251,13 +251,13 @@ impl<'s> Parser<'s> {
 
     fn do_bump(&mut self, kind: JsSyntaxKind, context: LexContext) {
         let kind = if kind.is_keyword() && self.tokens.has_unicode_escape() {
-            self.error(
-                self.err_builder(&format!(
+            self.error(self.err_builder(
+                &format!(
                     "'{}' keyword cannot contain escape character.",
                     kind.to_string().expect("to return a value for a keyword")
-                ))
-                .primary(self.cur_range(), ""),
-            );
+                ),
+                self.cur_range(),
+            ));
             JsSyntaxKind::ERROR_TOKEN
         } else {
             kind

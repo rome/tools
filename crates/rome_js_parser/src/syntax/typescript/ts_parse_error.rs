@@ -14,13 +14,11 @@ pub(crate) fn unexpected_abstract_member_with_body(
     p: &Parser,
     range: TextRange,
 ) -> ParseDiagnostic {
-    p.err_builder("abstract members should not have a body")
-        .primary(range, "")
+    p.err_builder("abstract members should not have a body", range)
 }
 
 pub(crate) fn abstract_member_cannot_be_async(p: &Parser, range: &TextRange) -> ParseDiagnostic {
-    p.err_builder("async members cannot be abstract")
-        .primary(range, "")
+    p.err_builder("async members cannot be abstract", range)
 }
 
 pub(crate) fn ts_member_cannot_be(
@@ -30,7 +28,7 @@ pub(crate) fn ts_member_cannot_be(
     modifier_name: &str,
 ) -> ParseDiagnostic {
     let msg = format!("{} members cannot be {}", member_type_name, modifier_name);
-    p.err_builder(&msg).primary(range, "")
+    p.err_builder(&msg, range)
 }
 
 pub(crate) fn ts_modifier_cannot_appear_on_a_constructor_declaration(
@@ -38,10 +36,10 @@ pub(crate) fn ts_modifier_cannot_appear_on_a_constructor_declaration(
     modifier_range: TextRange,
 ) -> ParseDiagnostic {
     let modifier = p.source(modifier_range);
-    p.err_builder(&format!(
-        "'{modifier}' cannot appear on a constructor declaration."
-    ))
-    .primary(modifier_range, "")
+    p.err_builder(
+        &format!("'{modifier}' cannot appear on a constructor declaration."),
+        modifier_range,
+    )
 }
 
 pub(crate) fn ts_modifier_cannot_appear_on_a_parameter(
@@ -49,8 +47,10 @@ pub(crate) fn ts_modifier_cannot_appear_on_a_parameter(
     modifier_range: TextRange,
 ) -> ParseDiagnostic {
     let modifier = p.source(modifier_range);
-    p.err_builder(&format!("'{modifier}' cannot appear on a parameter."))
-        .primary(modifier_range, "")
+    p.err_builder(
+        &format!("'{modifier}' cannot appear on a parameter."),
+        modifier_range,
+    )
 }
 
 pub(crate) fn ts_accessibility_modifier_already_seen(
@@ -58,38 +58,44 @@ pub(crate) fn ts_accessibility_modifier_already_seen(
     second_range: TextRange,
     first_range: TextRange,
 ) -> ParseDiagnostic {
-    p.err_builder("Accessibility modifier already seen.")
-        .primary(second_range, "duplicate modifier")
-        .secondary(first_range, "first modifier")
+    p.err_builder("Accessibility modifier already seen.", second_range)
+        .detail(second_range, "duplicate modifier")
+        .detail(first_range, "first modifier")
 }
 
 pub(crate) fn ts_only_syntax_error(p: &Parser, syntax: &str, range: TextRange) -> ParseDiagnostic {
-    p.err_builder(&format!("{} are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.", syntax))
-        .primary(range, "TypeScript only syntax")
+    p.err_builder(&format!("{} are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.", syntax)
+        ,range).hint( "TypeScript only syntax")
 }
 
 pub(crate) fn ts_accessor_type_parameters_error(
     p: &Parser,
     type_parameters: &CompletedMarker,
 ) -> ParseDiagnostic {
-    p.err_builder("An accessor cannot have type parameters.")
-        .primary(type_parameters.range(p), "")
+    p.err_builder(
+        "An accessor cannot have type parameters.",
+        type_parameters.range(p),
+    )
 }
 
 pub(crate) fn ts_constructor_type_parameters_error(
     p: &Parser,
     type_parameters: &CompletedMarker,
 ) -> ParseDiagnostic {
-    p.err_builder("constructors cannot have type parameters.")
-        .primary(type_parameters.range(p), "")
+    p.err_builder(
+        "constructors cannot have type parameters.",
+        type_parameters.range(p),
+    )
 }
 
 pub(crate) fn ts_set_accessor_return_type_error(
     p: &Parser,
     type_annotation: &CompletedMarker,
 ) -> ParseDiagnostic {
-    p.err_builder("A 'set' accessor cannot have a return type annotation.")
-        .primary(type_annotation.range(p), "")
+    p.err_builder(
+        "A 'set' accessor cannot have a return type annotation.",
+        type_annotation.range(p),
+    )
 }
 
 pub(crate) fn expected_ts_type(p: &Parser, range: TextRange) -> ParseDiagnostic {
