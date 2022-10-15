@@ -4,7 +4,7 @@ use rome_js_syntax::{JsxOpeningElement, JsxSelfClosingElement};
 use rome_rowan::{declare_node_union, AstNode};
 
 declare_rule! {
-    /// Pair the `onClick` mouse event with the `onKeyUp`, the `onKeyDown`, or the `noKeyPress` keyboard event.
+    /// Enforce to have the `onClick` mouse event with the `onKeyUp`, the `onKeyDown`, or the `noKeyPress` keyboard event.
     ///
     /// ## Examples
     ///
@@ -47,6 +47,10 @@ declare_node_union! {
     pub(crate) JsxAnyElement = JsxOpeningElement | JsxSelfClosingElement
 }
 
+impl UseKeyWithClickEvents {
+    const REQUIRED_PROPS: [&str; 3] = ["onKeyDown", "onKeyUp", "onKeyPress"];
+}
+
 impl Rule for UseKeyWithClickEvents {
     type Query = Ast<JsxAnyElement>;
     type State = ();
@@ -55,8 +59,6 @@ impl Rule for UseKeyWithClickEvents {
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
-
-        let required_props = ["onKeyDown", "onKeyUp", "onKeyPress"];
 
         match node {
             JsxAnyElement::JsxOpeningElement(element) => {
@@ -73,7 +75,7 @@ impl Rule for UseKeyWithClickEvents {
                         .text_trimmed()
                         .to_string();
 
-                    if required_props.contains(&name.as_str()) {
+                    if Self::REQUIRED_PROPS.contains(&name.as_str()) {
                         return None;
                     }
                 }
@@ -94,7 +96,7 @@ impl Rule for UseKeyWithClickEvents {
                         .text_trimmed()
                         .to_string();
 
-                    if required_props.contains(&name.as_str()) {
+                    if Self::REQUIRED_PROPS.contains(&name.as_str()) {
                         return None;
                     }
                 }
@@ -111,7 +113,7 @@ impl Rule for UseKeyWithClickEvents {
             rule_category!(),
             node.range(),
             markup! {
-                "Pair the "<Emphasis>"onClick"</Emphasis>" mouse event with the "<Emphasis>"onKeyUp"</Emphasis>", the "<Emphasis>"onKeyDown"</Emphasis>", or the "<Emphasis>"onKeyPress"</Emphasis>" keyboard event."
+                "Enforce to have the "<Emphasis>"onClick"</Emphasis>" mouse event with the "<Emphasis>"onKeyUp"</Emphasis>", the "<Emphasis>"onKeyDown"</Emphasis>", or the "<Emphasis>"onKeyPress"</Emphasis>" keyboard event."
             },
         ).footer_note(markup! {
             "Actions triggered using mouse events should have corresponding keyboard events to account for keyboard-only navigation."
