@@ -360,6 +360,13 @@ Disallow unnecessary fragments
 This rules prevents void elements (AKA self-closing elements) from having children.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useAnchorContent">
+	<a href="/docs/lint/rules/useAnchorContent">useAnchorContent (since v10.0.0)</a>
+	<a class="header-anchor" href="#useAnchorContent"></a>
+</h3>
+Enforce that anchor elements have content and that the content is accessible to screen readers.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useBlankTarget">
 	<a href="/docs/lint/rules/useBlankTarget">useBlankTarget (since v10.0.0)</a>
 	<a class="header-anchor" href="#useBlankTarget"></a>
@@ -392,7 +399,16 @@ This rule enforces the use of <code>&lt;&gt;...&lt;/&gt;</code> over <code>&lt;F
 	<a href="/docs/lint/rules/useKeyWithClickEvents">useKeyWithClickEvents (since v10.0.0)</a>
 	<a class="header-anchor" href="#useKeyWithClickEvents"></a>
 </h3>
-Pair the <code>onClick</code> mouse event with the <code>onKeyUp</code>, the <code>onKeyDown</code>, or the <code>noKeyPress</code> keyboard event.
+Enforce to have the <code>onClick</code> mouse event with the <code>onKeyUp</code>, the <code>onKeyDown</code>, or the <code>noKeyPress</code> keyboard event.
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useKeyWithMouseEvents">
+	<a href="/docs/lint/rules/useKeyWithMouseEvents">useKeyWithMouseEvents (since v10.0.0)</a>
+	<a class="header-anchor" href="#useKeyWithMouseEvents"></a>
+</h3>
+Enforce that <code>onMouseOver</code>/<code>onMouseOut</code> are accompanied by <code>onFocus</code>/<code>onBlur</code> for keyboard-only users.
+It is important to take into account users with physical disabilities who cannot use a mouse,
+who use assistive technology or screenreader.
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useOptionalChain">

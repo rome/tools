@@ -174,11 +174,13 @@ export interface Nursery {
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
+	useAnchorContent?: RuleConfiguration;
 	useBlankTarget?: RuleConfiguration;
 	useButtonType?: RuleConfiguration;
 	useCamelCase?: RuleConfiguration;
 	useFragmentSyntax?: RuleConfiguration;
 	useKeyWithClickEvents?: RuleConfiguration;
+	useKeyWithMouseEvents?: RuleConfiguration;
 	useOptionalChain?: RuleConfiguration;
 	useValidAnchor?: RuleConfiguration;
 }
@@ -314,6 +316,8 @@ export type Category =
 	| "lint/nursery/noArrayIndexKey"
 	| "lint/nursery/noDangerouslySetInnerHtmlWithChildren"
 	| "lint/nursery/noAutofocus"
+	| "lint/nursery/useKeyWithMouseEvents"
+	| "lint/nursery/useAnchorContent"
 	| "lint/nursery/useBlankTarget"
 	| "lint/nursery/useValidAnchor"
 	| "lint/nursery/useKeyWithClickEvents"
