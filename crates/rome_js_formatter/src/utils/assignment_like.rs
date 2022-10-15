@@ -441,19 +441,15 @@ impl JsAnyAssignmentLike {
 
                 let name = name?;
 
-                let is_short = if f.context().comments().is_suppressed(name.syntax()) {
+                if f.context().comments().is_suppressed(name.syntax()) {
                     write!(f, [format_suppressed_node(name.syntax())])?;
-                    false
                 } else {
-                    let width = write_member_name(&name.into(), f)?;
-                    let text_width_for_break =
-                        (u8::from(f.options().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
-                    width < text_width_for_break && property_annotation.is_none()
+                    write_member_name(&name.into(), f)?;
                 };
 
                 write!(f, [property_annotation.format()])?;
 
-                Ok(is_short)
+                Ok(false)
             }
             JsAnyAssignmentLike::TsPropertySignatureClassMember(
                 property_signature_class_member,
@@ -1032,6 +1028,7 @@ fn is_poorly_breakable_member_or_call_chain(
 
     while let Some(node) = expression.take() {
         expression = match node {
+            JsAnyExpression::TsNonNullAssertionExpression(assertion) => assertion.expression().ok(),
             JsAnyExpression::JsCallExpression(call_expression) => {
                 is_chain = true;
                 let callee = call_expression.callee()?;
