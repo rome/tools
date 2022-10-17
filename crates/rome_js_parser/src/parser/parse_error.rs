@@ -144,13 +144,13 @@ impl ToDiagnostic for ExpectedToken {
         match p.cur() {
             JsSyntaxKind::EOF => p
                 .err_builder(
-                    &format!("expected `{}` but instead the file ends", self.0),
+                    format!("expected `{}` but instead the file ends", self.0),
                     p.cur_range(),
                 )
                 .detail(p.cur_range(), "the file ends here"),
             _ => p
                 .err_builder(
-                    &format!("expected `{}` but instead found `{}`", self.0, p.cur_src()),
+                    format!("expected `{}` but instead found `{}`", self.0, p.cur_src()),
                     p.cur_range(),
                 )
                 .hint(format!("Remove {}", p.cur_src())),
@@ -165,13 +165,13 @@ impl ToDiagnostic for ExpectedTokens {
         match p.cur() {
             JsSyntaxKind::EOF => p
                 .err_builder(
-                    &format!("expected {} but instead the file ends", self.0),
+                    format!("expected {} but instead the file ends", self.0),
                     p.cur_range(),
                 )
                 .detail(p.cur_range(), "the file ends here"),
             _ => p
                 .err_builder(
-                    &format!("expected {} but instead found `{}`", self.0, p.cur_src()),
+                    format!("expected {} but instead found `{}`", self.0, p.cur_src()),
                     p.cur_range(),
                 )
                 .hint(format!("Remove {}", p.cur_src())),

@@ -71,7 +71,7 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
 
         if StrictMode.is_supported(p) && matches!(identifier_name, "eval" | "arguments") {
             let err = p.err_builder(
-                &format!(
+                format!(
                     "Illegal use of `{}` as an identifier in strict mode",
                     identifier_name
                 ),
@@ -87,7 +87,7 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
             if identifier_name == "let" {
                 let err = p
                     .err_builder(
-                        &format!(
+                        format!(
                         "`let` cannot be declared as a variable name inside of a `{}` declaration",
                         parent,
 
@@ -104,7 +104,7 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
             if let Some(existing) = p.state.name_map.get(identifier_name) {
                 let err = p
                     .err_builder(
-                        &format!(
+                        format!(
                             "Declarations inside of a `{}` declaration may not have duplicates",
                             parent
                         ),
@@ -112,14 +112,14 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
                     )
                     .detail(
                         identifier.range(p),
-                        &format!(
+                        format!(
                             "a second declaration of `{}` is not allowed",
                             identifier_name
                         ),
                     )
                     .detail(
                         existing.to_owned(),
-                        &format!("`{}` is first declared here", identifier_name),
+                        format!("`{}` is first declared here", identifier_name),
                     );
                 p.error(err);
                 identifier.change_to_unknown(p);

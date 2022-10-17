@@ -448,7 +448,7 @@ impl RewriteParseEvents for ReparseAssignment {
                     let name = completed.text(p);
                     if matches!(name, "eval" | "arguments") && p.is_strict_mode() {
                         let error = p.err_builder(
-                            &format!("Illegal use of `{}` as an identifier in strict mode", name),
+                            format!("Illegal use of `{}` as an identifier in strict mode", name),
                             completed.range(p),
                         );
                         p.error(error);
@@ -460,7 +460,7 @@ impl RewriteParseEvents for ReparseAssignment {
                     let range = completed.range(p);
                     p.error(
                         p.err_builder(
-                            &format!("Invalid assignment to `{}`", completed.text(p)),
+                            format!("Invalid assignment to `{}`", completed.text(p)),
                             range,
                         )
                         .hint("This expression cannot be assigned to"),

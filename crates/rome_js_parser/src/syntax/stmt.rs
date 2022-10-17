@@ -384,11 +384,11 @@ fn parse_labeled_statement(p: &mut Parser, context: StatementContext) -> ParsedS
 					.err_builder("Duplicate statement labels are not allowed", identifier_range)
 					.detail(
 						identifier_range,
-						&format!("a second use of `{}` here is not allowed", label),
+						format!("a second use of `{}` here is not allowed", label),
 					)
 					.detail(
 						label_item.range().to_owned(),
-						&format!("`{}` is first used as a label here", label),
+						format!("`{}` is first used as a label here", label),
 					);
 
 				p.error(err);
@@ -534,7 +534,7 @@ fn parse_break_statement(p: &mut Parser) -> ParsedSyntax {
             Some(_) => None,
             None => Some(
                 p.err_builder(
-                    &format!("Use of undefined statement label `{}`", label_name,),
+                    format!("Use of undefined statement label `{}`", label_name,),
                     p.cur_range(),
                 )
                 .hint("This label is used, but it is never defined"),
@@ -597,7 +597,7 @@ fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax {
 			}
 			None => {
 				Some(p
-					.err_builder(&format!(
+					.err_builder(format!(
 						"Use of undefined statement label `{}`",
 						label_name
 					), p.cur_range())
@@ -1428,7 +1428,7 @@ fn parse_for_head(p: &mut Parser, has_l_paren: bool, is_for_await: bool) -> JsSy
             if let Some(additional_declarations_range) = additional_declarations {
                 p.error(
                     p.err_builder(
-                        &format!(
+                        format!(
                             "Only a single declaration is allowed in a `for...{}` statement.",
                             if is_of { "of" } else { "in" },
                         ),

@@ -37,7 +37,7 @@ pub(crate) fn ts_modifier_cannot_appear_on_a_constructor_declaration(
 ) -> ParseDiagnostic {
     let modifier = p.source(modifier_range);
     p.err_builder(
-        &format!("'{modifier}' cannot appear on a constructor declaration."),
+        format!("'{modifier}' cannot appear on a constructor declaration."),
         modifier_range,
     )
 }
@@ -48,7 +48,7 @@ pub(crate) fn ts_modifier_cannot_appear_on_a_parameter(
 ) -> ParseDiagnostic {
     let modifier = p.source(modifier_range);
     p.err_builder(
-        &format!("'{modifier}' cannot appear on a parameter."),
+        format!("'{modifier}' cannot appear on a parameter."),
         modifier_range,
     )
 }
@@ -64,7 +64,7 @@ pub(crate) fn ts_accessibility_modifier_already_seen(
 }
 
 pub(crate) fn ts_only_syntax_error(p: &Parser, syntax: &str, range: TextRange) -> ParseDiagnostic {
-    p.err_builder(&format!("{} are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.", syntax)
+    p.err_builder(format!("{} are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.", syntax)
         ,range).hint( "TypeScript only syntax")
 }
 

@@ -335,7 +335,7 @@ use rome_diagnostics::v2::{Advices, Diagnostic, FileId, Location, LogCategory, S
 use rome_js_syntax::{JsSyntaxKind, LanguageVariant};
 use rome_rowan::{TextRange, TextSize};
 pub(crate) use state::{ParserState, StrictMode};
-use std::fmt::Debug;
+use std::fmt::{Debug, Display};
 
 /// A specialized diagnostic for the parser
 #[derive(Debug, Diagnostic, Clone)]
@@ -391,11 +391,11 @@ impl Advices for ParserAdvice {
 }
 
 impl ParseDiagnostic {
-    pub fn new(file_id: FileId, message: impl Into<String>, span: impl AsSpan) -> Self {
+    pub fn new(file_id: FileId, message: impl Display, span: impl AsSpan) -> Self {
         Self {
             file_id,
             span: span.as_span(),
-            message: message.into(),
+            message: message.to_string(),
             advice: ParserAdvice::default(),
             severity: Severity::Error,
         }

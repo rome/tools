@@ -117,7 +117,7 @@ fn parse_ts_enum_id(p: &mut Parser, enum_token_range: TextRange) {
             let text = p.source(id.range(p));
             if is_reserved_enum_name(text) {
                 let err = p.err_builder(
-                    &format!(
+                    format!(
                         "`{}` cannot be used as a enum name because it is already reserved",
                         text
                     ),

@@ -16,6 +16,7 @@ use rome_js_syntax::{
     JsSyntaxKind::{self},
     SourceType, TextRange,
 };
+use std::fmt::Display;
 use std::num::NonZeroU32;
 
 pub(crate) use parse_error::*;
@@ -217,7 +218,7 @@ impl<'s> Parser<'s> {
 
     /// Creates a new diagnostic. Pass the message and the range where the error occurred
     #[must_use]
-    pub fn err_builder(&self, message: &str, span: impl AsSpan) -> ParseDiagnostic {
+    pub fn err_builder(&self, message: impl Display, span: impl AsSpan) -> ParseDiagnostic {
         ParseDiagnostic::new(self.file_id, message, span)
     }
 
@@ -252,7 +253,7 @@ impl<'s> Parser<'s> {
     fn do_bump(&mut self, kind: JsSyntaxKind, context: LexContext) {
         let kind = if kind.is_keyword() && self.tokens.has_unicode_escape() {
             self.error(self.err_builder(
-                &format!(
+                format!(
                     "'{}' keyword cannot contain escape character.",
                     kind.to_string().expect("to return a value for a keyword")
                 ),

@@ -148,7 +148,7 @@ pub(crate) fn duplicate_assertion_keys_error(
     duplicate_range: TextRange,
 ) -> ParseDiagnostic {
     p.err_builder("Duplicate assertion keys are not allowed", &first_use)
-        .detail(&first_use, &format!("First use of the key `{}`", key))
+        .detail(&first_use, format!("First use of the key `{}`", key))
         .detail(duplicate_range, "second use here")
 }
 
@@ -205,7 +205,7 @@ pub(crate) fn private_names_only_allowed_on_left_side_of_in_expression(
 
 pub(crate) fn invalid_assignment_error(p: &Parser, range: TextRange) -> ParseDiagnostic {
     p.err_builder(
-        &format!("Invalid assignment to `{}`", p.source(range.as_range()),),
+        format!("Invalid assignment to `{}`", p.source(range.as_range()),),
         range,
     )
     .hint("This expression cannot be assigned to")
@@ -217,7 +217,7 @@ pub(crate) fn modifier_already_seen(
     first_range: TextRange,
 ) -> ParseDiagnostic {
     let modifier = p.source(second_range);
-    p.err_builder(&format!("'{modifier}' already seen"), second_range)
+    p.err_builder(format!("'{modifier}' already seen"), second_range)
         .detail(second_range, "duplicate modifier")
         .detail(first_range, "first seen here")
 }
@@ -231,14 +231,11 @@ pub(crate) fn modifier_cannot_be_used_with_modifier(
     let other_modifier = p.source(other_modifier_range);
 
     p.err_builder(
-        &format!("'{modifier}' cannot be used with '{other_modifier}' modifier."),
+        format!("'{modifier}' cannot be used with '{other_modifier}' modifier."),
         range,
     )
-    .detail(range, &format!("'{modifier}' modifier"))
-    .detail(
-        other_modifier_range,
-        &format!("'{other_modifier}' modifier"),
-    )
+    .detail(range, format!("'{modifier}' modifier"))
+    .detail(other_modifier_range, format!("'{other_modifier}' modifier"))
 }
 
 pub(crate) fn modifier_must_precede_modifier(
@@ -250,7 +247,7 @@ pub(crate) fn modifier_must_precede_modifier(
     let to_precede_name = p.source(to_precede_modifier_range);
 
     p.err_builder(
-        &format!("'{modifier_name}' must precede '{to_precede_name}'",),
+        format!("'{modifier_name}' must precede '{to_precede_name}'",),
         range,
     )
     .detail(range, "move this modifier")

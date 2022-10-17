@@ -537,7 +537,7 @@ fn parse_binary_or_logical_expression_recursive(
         } else {
             let err = p
                 .err_builder(
-                    &format!(
+                    format!(
                         "Expected an expression for the left hand side of the `{}` operator.",
                         p.source(op_range),
                     ),
@@ -755,7 +755,7 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
             let name = p.cur_src();
             let error = p
                 .err_builder(
-                    &format!("'{name}' is not a valid meta-property for keyword 'new'."),
+                    format!("'{name}' is not a valid meta-property for keyword 'new'."),
                     identifier_range,
                 )
                 .hint("Did you mean 'target'?");
@@ -783,7 +783,7 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
         if p.at(T![?.]) {
             let error = p
                 .err_builder("Invalid optional chain from new expression.", p.cur_range())
-                .hint(&format!("Did you mean to call '{}()'?", lhs.text(p)));
+                .hint(format!("Did you mean to call '{}()'?", lhs.text(p)));
 
             p.error(error);
         }
@@ -1249,7 +1249,7 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
                     m.complete(p, IMPORT_META)
                 } else if p.at(T![ident]) {
                     let err = p.err_builder(
-                        &format!(
+                        format!(
                             "Expected `meta` following an import keyword, but found `{}`",
                             p.source(p.cur_range())
                         ),
@@ -1423,7 +1423,7 @@ pub(super) fn parse_identifier(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSynt
             if StrictMode.is_supported(p) {
                 let name = p.cur_src();
                 Some(p.err_builder(
-                    &format!(
+                    format!(
                         "Illegal use of reserved keyword `{}` as an identifier in strict mode",
                         name
                     ),

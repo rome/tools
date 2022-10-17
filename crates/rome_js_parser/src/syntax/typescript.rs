@@ -49,7 +49,7 @@ fn parse_ts_identifier_binding(
         let name = p.source(ident.range(p));
         let is_reserved_word_this_context = ts_identifier_context.is_reserved_word(name);
         if is_reserved_word_this_context {
-            let error = p.err_builder(&format!("Type alias cannot be {}", name), ident.range(p));
+            let error = p.err_builder(format!("Type alias cannot be {}", name), ident.range(p));
             p.error(error);
             ident.change_to_unknown(p);
         }
@@ -98,7 +98,7 @@ fn expect_ts_type_list(p: &mut Parser, clause_name: &str) -> CompletedMarker {
 
     if parse_ts_name_with_type_arguments(p).is_absent() {
         p.error(p.err_builder(
-            &format!("'{}' list cannot be empty.", clause_name),
+            format!("'{}' list cannot be empty.", clause_name),
             p.cur_range().start()..p.cur_range().start(),
         ))
     }

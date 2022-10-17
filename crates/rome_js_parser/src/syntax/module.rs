@@ -793,7 +793,7 @@ fn parse_any_export_named_specifier(p: &mut Parser) -> ParsedSyntax {
                 )
             } else {
                 p.err_builder(
-                    &format!(
+                    format!(
                         "\"{}\" can only be used with \"export ... from ...\"",
                         export_name.text(p)
                     ),

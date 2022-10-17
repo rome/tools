@@ -229,7 +229,7 @@ fn parse_class(p: &mut Parser, kind: ClassKind) -> CompletedMarker {
             let text = p.source(id.range(p));
             if TypeScript.is_supported(p) && is_reserved_type_name(text) {
                 let err = p
-                    .err_builder(&format!(
+                    .err_builder(format!(
                             "`{}` cannot be used as a class name because it is already reserved as a type",
                             text
                         ),id.range(p), );
@@ -955,7 +955,7 @@ fn expect_member_semi(p: &mut Parser, member_marker: &Marker, name: &str) {
         let end = p.last_end().unwrap_or_else(|| p.cur_range().start());
 
         let err = p.err_builder(
-            &format!("expected a semicolon to end the {name}, but found none"),
+            format!("expected a semicolon to end the {name}, but found none"),
             member_marker.start()..end,
         );
 
@@ -1939,7 +1939,7 @@ impl ClassMemberModifiers {
         // }
         if TypeScript.is_unsupported(p) && modifier.kind.is_ts_modifier() {
             return Some(p.err_builder(
-                &format!(
+                format!(
                     "'{}' modifier can only be used in TypeScript files",
                     p.source(modifier.as_text_range())
                 ),
@@ -1966,7 +1966,7 @@ impl ClassMemberModifiers {
             && !matches!(modifier.kind, ModifierKind::Static | ModifierKind::Readonly)
         {
             return Some(p.err_builder(
-                &format!(
+                format!(
                     "'{}' modifier cannot appear on an index signature.",
                     p.source(modifier.as_text_range())
                 ),
