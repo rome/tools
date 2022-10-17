@@ -13,9 +13,9 @@ struct InMessages {
     stdin: Option<String>,
 }
 
-struct CliSnapshot {
+pub(crate) struct CliSnapshot {
     /// input messages, coming from different sources
-    pub in_messages: InMessages,
+    in_messages: InMessages,
     /// the configuration, if set
     pub configuration: Option<String>,
     /// file name -> content
@@ -39,7 +39,7 @@ impl CliSnapshot {
 }
 
 impl CliSnapshot {
-    fn emit_content_snapshot(&self) -> String {
+    pub fn emit_content_snapshot(&self) -> String {
         let mut content = String::new();
 
         if let Some(configuration) = &self.configuration {
@@ -119,6 +119,52 @@ impl CliSnapshot {
     }
 }
 
+impl From<SnapshotPayload<'_>> for CliSnapshot {
+    fn from(payload: SnapshotPayload<'_>) -> Self {
+        let SnapshotPayload {
+            result,
+            console,
+            fs,
+            test_name: _,
+            module_path: _,
+        } = payload;
+        let mut cli_snapshot = CliSnapshot::from_result(result);
+        let config_path = PathBuf::from("rome.json");
+        let configuration = fs.read(&config_path).ok();
+        if let Some(mut configuration) = configuration {
+            let mut buffer = String::new();
+            if configuration.read_to_string(&mut buffer).is_ok() {
+                cli_snapshot.configuration = Some(buffer);
+            }
+        }
+
+        for (file, entry) in fs.files() {
+            let content = entry.lock();
+            let content = std::str::from_utf8(content.as_slice()).unwrap();
+
+            cli_snapshot
+                .files
+                .insert(file.to_str().unwrap().to_string(), String::from(content));
+        }
+
+        let in_buffer = &console.in_buffer;
+        for (index, message) in in_buffer.iter().enumerate() {
+            if index == 0 {
+                cli_snapshot.in_messages.stdin = Some(message.to_string());
+            }
+        }
+
+        for message in &console.out_buffer {
+            let content = markup_to_string(markup! {
+                {message.content}
+            });
+            cli_snapshot.messages.push(content)
+        }
+
+        cli_snapshot
+    }
+}
+
 pub fn markup_to_string(markup: Markup) -> String {
     let mut buffer = Vec::new();
     let mut write = Termcolor(NoColor::new(&mut buffer));
@@ -129,11 +175,11 @@ pub fn markup_to_string(markup: Markup) -> String {
 }
 
 pub struct SnapshotPayload<'a> {
-    module_path: &'a str,
-    test_name: &'a str,
-    fs: MemoryFileSystem,
-    console: BufferConsole,
-    result: Result<(), Termination>,
+    pub module_path: &'a str,
+    pub test_name: &'a str,
+    pub fs: MemoryFileSystem,
+    pub console: BufferConsole,
+    pub result: Result<(), Termination>,
 }
 
 impl<'a> SnapshotPayload<'a> {
@@ -156,49 +202,12 @@ impl<'a> SnapshotPayload<'a> {
 
 /// Function used to snapshot a session test of the a CLI run.
 pub fn assert_cli_snapshot(payload: SnapshotPayload<'_>) {
-    let SnapshotPayload {
-        result,
-        console,
-        fs,
-        test_name,
-        module_path,
-    } = payload;
-    let mut cli_snapshot = CliSnapshot::from_result(result);
-    let config_path = PathBuf::from("rome.json");
-    let configuration = fs.read(&config_path).ok();
-    if let Some(mut configuration) = configuration {
-        let mut buffer = String::new();
-        if configuration.read_to_string(&mut buffer).is_ok() {
-            cli_snapshot.configuration = Some(buffer);
-        }
-    }
-
-    for (file, entry) in fs.files() {
-        let content = entry.lock();
-        let content = std::str::from_utf8(content.as_slice()).unwrap();
-
-        cli_snapshot
-            .files
-            .insert(file.to_str().unwrap().to_string(), String::from(content));
-    }
-
-    let in_buffer = &console.in_buffer;
-    for (index, message) in in_buffer.iter().enumerate() {
-        if index == 0 {
-            cli_snapshot.in_messages.stdin = Some(message.to_string());
-        }
-    }
-
-    for message in &console.out_buffer {
-        let content = markup_to_string(markup! {
-            {message.content}
-        });
-        cli_snapshot.messages.push(content)
-    }
+    let module_path = payload.module_path.to_owned();
+    let test_name = payload.test_name;
+    let cli_snapshot = CliSnapshot::from(payload);
 
     let content = cli_snapshot.emit_content_snapshot();
 
-    let module_path = String::from(module_path);
     let module_path = module_path.replace("::", "_");
     let snapshot_path = PathBuf::from("snapshots").join(module_path);
 

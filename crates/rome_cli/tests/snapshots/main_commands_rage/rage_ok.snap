@@ -1,5 +1,5 @@
 ---
-source: crates/rome_cli/tests/snap_test.rs
+source: crates/rome_cli/tests/commands/rage.rs
 expression: content
 ---
 # Emitted Messages
@@ -10,12 +10,12 @@ CLI:
   Color support:        true
 
 Platform:
-  CPU Architecture:     x86_64
-  OS:                   linux
+  CPU Architecture:     **PLACEHOLDER**
+  OS:                   **PLACEHOLDER**
 
 Environment:
-  NO_COLOR:             unset
-  TERM:                 "ansi"
+  NO_COLOR:             **PLACEHOLDER**
+  TERM:                 **PLACEHOLDER**
 
 Rome Configuration:
   Status:               unset
@@ -23,12 +23,11 @@ Rome Configuration:
 Server:
   Version:              0.0.0
   Name:                 rome_lsp
-  CPU Architecture:     x86_64
-  OS:                   linux
+  CPU Architecture:     **PLACEHOLDER**
+  OS:                   **PLACEHOLDER**
 
 Workspace:
   Open Documents:       0
-
 ```
 
 

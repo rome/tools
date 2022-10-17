@@ -68,7 +68,7 @@ impl Display for WorkspaceRage<'_> {
                 Ok(())
             }
             Err(err) => {
-                write!(fmt, "\n")?;
+                writeln!(fmt)?;
                 (markup! {<Error>"\u{2716} Workspace rage failed:"</Error>}).fmt(fmt)?;
 
                 writeln!(fmt, " {err}")
@@ -123,7 +123,7 @@ impl Display for RageConfiguration<'_, '_> {
     fn fmt(&self, fmt: &mut Formatter) -> io::Result<()> {
         Section("Rome Configuration").fmt(fmt)?;
 
-        match load_config(&self.0, None) {
+        match load_config(self.0, None) {
             Ok(None) => KeyValuePair("Status", markup!(<Dim>"unset"</Dim>)).fmt(fmt)?,
             Ok(Some(configuration)) => {
                 markup! (
