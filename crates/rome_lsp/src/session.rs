@@ -23,15 +23,20 @@ use tower_lsp::lsp_types::Url;
 use tracing::{error, info, trace};
 
 pub(crate) struct ClientInformation {
+    /// The name of the client
     pub(crate) name: String,
+
+    /// The version of the client
     pub(crate) version: Option<String>,
 }
 
+/// Key, uniquely identifying a LSP session.
 #[derive(Clone, Copy, Eq, PartialEq, Hash, Debug)]
 pub(crate) struct SessionKey(pub usize);
 
 /// Represents the state of an LSP server session.
 pub(crate) struct Session {
+    /// The unique key identifying this session.
     pub(crate) key: SessionKey,
 
     /// The LSP client for this session.

@@ -18,10 +18,11 @@ use tokio::task::spawn_blocking;
 use tower_lsp::jsonrpc::Result as LspResult;
 use tower_lsp::{lsp_types::*, ClientSocket};
 use tower_lsp::{LanguageServer, LspService, Server};
-use tracing::{error, info, trace, trace_span};
+use tracing::{error, info, trace};
 
 pub struct LSPServer {
     session: SessionHandle,
+    /// Map of all sessions connected to the same [ServerFactory] as this [LSPServer].
     sessions: Sessions,
 }
 
@@ -41,9 +42,8 @@ impl LSPServer {
         requests::syntax_tree::syntax_tree(&self.session, &url).map_err(into_lsp_error)
     }
 
+    #[tracing::instrument(skip(self), name = "rome/rage", level = "trace")]
     async fn rage(&self, params: RageParams) -> LspResult<RageResult> {
-        trace_span!("rome/rage", params=?params);
-
         let mut entries = vec![
             RageEntry::section("Server"),
             RageEntry::pair("Version", rome_service::VERSION),
@@ -231,6 +231,7 @@ impl Drop for LSPServer {
     }
 }
 
+/// Map of active sessions connected to a [ServerFactory].
 type Sessions = Arc<Mutex<HashMap<SessionKey, SessionHandle>>>;
 
 /// Factory data structure responsible for creating [ServerConnection] handles
@@ -246,9 +247,11 @@ pub struct ServerFactory {
     /// same workspace from multiple client
     workspace: Option<Arc<dyn Workspace>>,
 
+    /// The sessions of the connected clients indexed by session key.
     sessions: Sessions,
 
-    session_id: AtomicUsize,
+    /// Session key generator. Stores the key of the next session.
+    next_session_key: AtomicUsize,
 }
 
 /// Helper method for wrapping a [Workspace] method in a `custom_method` for
@@ -293,7 +296,7 @@ impl ServerFactory {
             .clone()
             .unwrap_or_else(workspace::server_sync);
 
-        let session_key = SessionKey(self.session_id.fetch_add(1, Ordering::Relaxed));
+        let session_key = SessionKey(self.next_session_key.fetch_add(1, Ordering::Relaxed));
 
         let mut builder = LspService::build(move |client| {
             let session = Session::new(session_key, client, workspace, self.cancellation.clone());

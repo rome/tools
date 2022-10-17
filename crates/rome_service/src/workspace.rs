@@ -395,6 +395,7 @@ pub trait Workspace: Send + Sync + RefUnwindSafe {
     /// Return the content of the file after renaming a symbol
     fn rename(&self, params: RenameParams) -> Result<RenameResult, RomeError>;
 
+    /// Returns debug information about this workspace.
     fn rage(&self, params: RageParams) -> Result<RageResult, RomeError>;
 
     /// Returns information about the server this workspace is connected to or `None` if the workspace isn't connected to a server.
