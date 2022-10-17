@@ -406,6 +406,7 @@ struct NurserySchema {
     use_blank_target: Option<RuleConfiguration>,
     use_button_type: Option<RuleConfiguration>,
     use_camel_case: Option<RuleConfiguration>,
+    use_flat_map: Option<RuleConfiguration>,
     use_fragment_syntax: Option<RuleConfiguration>,
     use_key_with_click_events: Option<RuleConfiguration>,
     use_key_with_mouse_events: Option<RuleConfiguration>,
@@ -414,7 +415,7 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 25] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 26] = [
         "noArrayIndexKey",
         "noAutofocus",
         "noChildrenProp",
@@ -435,6 +436,7 @@ impl Nursery {
         "useBlankTarget",
         "useButtonType",
         "useCamelCase",
+        "useFlatMap",
         "useFragmentSyntax",
         "useKeyWithClickEvents",
         "useKeyWithMouseEvents",

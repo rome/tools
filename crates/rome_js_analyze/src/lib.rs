@@ -128,10 +128,7 @@ mod tests {
     #[ignore]
     #[test]
     fn quick_test() {
-        const SOURCE: &str = r#"function f(event, error) {
-    console.log(event);
-    console.log(error);
-}
+        const SOURCE: &str = r#"[0, [12]].map(Number).flat()
         "#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());

@@ -688,6 +688,16 @@
             }
           ]
         },
+        "useFlatMap": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useFragmentSyntax": {
           "anyOf": [
             {

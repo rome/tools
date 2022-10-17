@@ -59,6 +59,7 @@ define_dategories! {
     "lint/nursery/useValidAnchor": "https://rome.tools/docs/lint/rules/useValidAnchor",
     "lint/nursery/useKeyWithClickEvents": "https://rome.tools/docs/lint/rules/useKeyWithClickEvents",
     "lint/nursery/noRestrictedGlobals": "https://rome.tools/docs/lint/rules/noRestrictedGlobals",
+    "lint/nursery/useFlatMap": "https://rome.tools/docs/lint/rules/useFlatMap",
     "lint/nursery/noPositiveTabindex": "https://rome.tools/docs/lint/rules/noPositiveTabindex",
     "lint/nursery/noConstAssign": "https://rome.tools/docs/lint/rules/noConstAssign",
     "lint/nursery/noExplicitAny": "https://rome.tools/docs/lint/rules/noExplicitAny",
