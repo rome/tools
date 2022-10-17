@@ -253,13 +253,6 @@ Rules that are being written. Rules under this category are meant to be consider
 Rules can be downgraded to this category in case some path release is needed. After an arbitrary amount of time, the team can decide
 to promote these rules into a more appropriate category.
 <div class="rule">
-<h3 data-toc-exclude id="UseAltText">
-	<a href="/docs/lint/rules/UseAltText">UseAltText (since v0.10.0)</a>
-	<a class="header-anchor" href="#UseAltText"></a>
-</h3>
-It asserts that alternative text to images or areas, help to rely on to screen readers to understand the purpose and the context of the image.
-</div>
-<div class="rule">
 <h3 data-toc-exclude id="noArrayIndexKey">
 	<a href="/docs/lint/rules/noArrayIndexKey">noArrayIndexKey (since v0.10.0)</a>
 	<a class="header-anchor" href="#noArrayIndexKey"></a>
@@ -335,6 +328,13 @@ Disallow unnecessary fragments
 	<a class="header-anchor" href="#noVoidElementsWithChildren"></a>
 </h3>
 This rules prevents void elements (AKA self-closing elements) from having children.
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useAltText">
+	<a href="/docs/lint/rules/useAltText">useAltText (since v0.10.0)</a>
+	<a class="header-anchor" href="#useAltText"></a>
+</h3>
+It asserts that alternative text to images or areas, help to rely on to screen readers to understand the purpose and the context of the image.
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useButtonType">

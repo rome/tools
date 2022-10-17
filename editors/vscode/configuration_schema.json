@@ -431,15 +431,6 @@
               "$ref": "#/definitions/QuoteStyle"
             }
           ]
-        },
-        "trailingComma": {
-          "description": "Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to \"all\".",
-          "default": "all",
-          "allOf": [
-            {
-              "$ref": "#/definitions/TrailingComma"
-            }
-          ]
         }
       },
       "additionalProperties": false
@@ -500,27 +491,7 @@
             }
           ]
         },
-        "noAutofocus": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "noChildrenProp": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "noConstAssign": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -550,26 +521,6 @@
             }
           ]
         },
-        "noExplicitAny": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "noInvalidConstructorSuper": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "noNewSymbol": {
           "anyOf": [
             {
@@ -580,27 +531,7 @@
             }
           ]
         },
-        "noPositiveTabindex": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "noRenderReturnValue": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "noRestrictedGlobals": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -667,17 +598,7 @@
             "null"
           ]
         },
-        "useAnchorContent": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "useBlankTarget": {
+        "useAltText": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -707,26 +628,6 @@
             }
           ]
         },
-        "useExhaustiveDependencies": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "useFlatMap": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "useFragmentSyntax": {
           "anyOf": [
             {
@@ -737,47 +638,7 @@
             }
           ]
         },
-        "useKeyWithClickEvents": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "useKeyWithMouseEvents": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "useOptionalChain": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "useValidAnchor": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "useValidForDirection": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -937,14 +798,6 @@
           ]
         }
       }
-    },
-    "TrailingComma": {
-      "type": "string",
-      "enum": [
-        "all",
-        "es5",
-        "none"
-      ]
     }
   }
 }

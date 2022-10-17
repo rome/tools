@@ -7,7 +7,6 @@ expression: area.jsx
 // invalid
 
 <>
-	<area {...props} />
 	<area alt={undefined} />
 	<area />
 	<area alt />
@@ -16,6 +15,7 @@ expression: area.jsx
 //valid
 
 <>
+	<area {...props} />
 	<area {...props} alt />
 	<area aria-label="foo" />
 	<area aria-labelledby="id1" />
@@ -31,10 +31,10 @@ area.jsx:4:2 lint/nursery/useAltText ━━━━━━━━━━━━━━�
   ! Provide alt when using img, area, input type='image'
   
     3 │ <>
-  > 4 │ 	<area {...props} />
-      │ 	^^^^^^^^^^^^^^^^^^^
-    5 │ 	<area alt={undefined} />
-    6 │ 	<area />
+  > 4 │ 	<area alt={undefined} />
+      │ 	^^^^^^^^^^^^^^^^^^^^^^^^
+    5 │ 	<area />
+    6 │ 	<area alt />
   
   i Meaningful alternative text on elements helps users relying on screen
                     readers to understand content's purpose within a page.
@@ -48,11 +48,11 @@ area.jsx:5:2 lint/nursery/useAltText ━━━━━━━━━━━━━━�
   ! Provide alt when using img, area, input type='image'
   
     3 │ <>
-    4 │ 	<area {...props} />
-  > 5 │ 	<area alt={undefined} />
-      │ 	^^^^^^^^^^^^^^^^^^^^^^^^
-    6 │ 	<area />
-    7 │ 	<area alt />
+    4 │ 	<area alt={undefined} />
+  > 5 │ 	<area />
+      │ 	^^^^^^^^
+    6 │ 	<area alt />
+    7 │ </>
   
   i Meaningful alternative text on elements helps users relying on screen
                     readers to understand content's purpose within a page.
@@ -65,30 +65,12 @@ area.jsx:6:2 lint/nursery/useAltText ━━━━━━━━━━━━━━�
 
   ! Provide alt when using img, area, input type='image'
   
-    4 │ 	<area {...props} />
-    5 │ 	<area alt={undefined} />
-  > 6 │ 	<area />
-      │ 	^^^^^^^^
-    7 │ 	<area alt />
-    8 │ </>
-  
-  i Meaningful alternative text on elements helps users relying on screen
-                    readers to understand content's purpose within a page.
-  
-
-```
-
-```
-area.jsx:7:2 lint/nursery/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! Provide alt when using img, area, input type='image'
-  
-    5 │ 	<area alt={undefined} />
-    6 │ 	<area />
-  > 7 │ 	<area alt />
+    4 │ 	<area alt={undefined} />
+    5 │ 	<area />
+  > 6 │ 	<area alt />
       │ 	^^^^^^^^^^^^
-    8 │ </>
-    9 │ 
+    7 │ </>
+    8 │ 
   
   i Meaningful alternative text on elements helps users relying on screen
                     readers to understand content's purpose within a page.
