@@ -6,27 +6,40 @@ use crate::utils;
 use futures::stream::futures_unordered::FuturesUnordered;
 use futures::StreamExt;
 use rome_analyze::RuleCategories;
+use rome_console::markup;
 use rome_diagnostics::file::FileId;
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
 use rome_service::configuration::Configuration;
-use rome_service::workspace::UpdateSettingsParams;
 use rome_service::workspace::{FeatureName, PullDiagnosticsParams, SupportsFeatureParams};
+use rome_service::workspace::{RageEntry, RageParams, RageResult, UpdateSettingsParams};
 use rome_service::{load_config, Workspace};
 use rome_service::{DynRef, RomeError};
 use std::collections::HashMap;
-use std::sync::Arc;
 use std::sync::RwLock;
+use std::sync::{Arc, Mutex};
 use tokio::sync::Notify;
 use tower_lsp::lsp_types;
 use tower_lsp::lsp_types::Url;
 use tracing::{error, info, trace};
 
+pub(crate) struct ClientInformation {
+    pub(crate) name: String,
+    pub(crate) version: Option<String>,
+}
+
+#[derive(Clone, Copy, Eq, PartialEq, Hash, Debug)]
+pub(crate) struct SessionKey(pub usize);
+
 /// Represents the state of an LSP server session.
 pub(crate) struct Session {
+    pub(crate) key: SessionKey,
+
     /// The LSP client for this session.
     pub(crate) client: tower_lsp::Client,
     /// The capabilities provided by the client as part of [`lsp_types::InitializeParams`]
     pub(crate) client_capabilities: RwLock<Option<lsp_types::ClientCapabilities>>,
+
+    pub(crate) client_information: Mutex<Option<ClientInformation>>,
 
     /// the configuration of the LSP
     pub(crate) config: RwLock<Config>,
@@ -47,8 +60,11 @@ pub(crate) struct Session {
     cancellation: Arc<Notify>,
 }
 
+pub(crate) type SessionHandle = Arc<Session>;
+
 impl Session {
     pub(crate) fn new(
+        key: SessionKey,
         client: tower_lsp::Client,
         workspace: Arc<dyn Workspace>,
         cancellation: Arc<Notify>,
@@ -60,7 +76,9 @@ impl Session {
         let configuration = RwLock::new(None);
         let root_uri = RwLock::new(None);
         Self {
+            key,
             client,
+            client_information: Default::default(),
             client_capabilities,
             workspace,
             documents,
@@ -246,5 +264,21 @@ impl Session {
     /// Broadcast a shutdown signal to all active connections
     pub(crate) fn broadcast_shutdown(&self) {
         self.cancellation.notify_one();
+    }
+
+    pub(crate) fn failsafe_rage(&self, params: RageParams) -> RageResult {
+        match self.workspace.rage(params) {
+            Ok(result) => result,
+            Err(err) => {
+                let entries = vec![
+                    RageEntry::section("Workspace"),
+                    RageEntry::markup(markup! {
+                        <Error>"\u{2716} Rage command failed:"</Error> {&format!("{err}")}
+                    }),
+                ];
+
+                RageResult { entries }
+            }
+        }
     }
 }
