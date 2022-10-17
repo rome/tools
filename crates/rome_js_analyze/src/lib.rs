@@ -1,14 +1,15 @@
 use control_flow::make_visitor;
 use rome_analyze::{
     AnalysisFilter, Analyzer, AnalyzerContext, AnalyzerOptions, AnalyzerSignal, ControlFlow,
-    InspectMatcher, LanguageRoot, MatchQueryParams, Phases, RegistryRuleMetadata, RuleAction,
-    ServiceBag, SyntaxVisitor,
+    InspectMatcher, LanguageRoot, MatchQueryParams, MetadataRegistry, Phases, RuleAction,
+    RuleRegistry, ServiceBag, SyntaxVisitor,
 };
 use rome_diagnostics::file::FileId;
 use rome_js_syntax::{
     suppression::{parse_suppression_comment, SuppressionCategory},
     JsLanguage,
 };
+use serde::{Deserialize, Serialize};
 use std::{borrow::Cow, error::Error};
 
 mod analyzers;
@@ -21,17 +22,22 @@ mod semantic_analyzers;
 mod semantic_services;
 pub mod utils;
 
-use crate::{
-    registry::build_registry,
-    semantic_services::{SemanticModelBuilderVisitor, SemanticModelVisitor},
-};
+pub use crate::registry::visit_registry;
+use crate::semantic_services::{SemanticModelBuilderVisitor, SemanticModelVisitor};
 
 pub(crate) type JsRuleAction = RuleAction<JsLanguage>;
 
-/// Return an iterator over the name and documentation of all the rules
-/// implemented by the JS analyzer
-pub fn metadata(filter: &AnalysisFilter) -> impl Iterator<Item = RegistryRuleMetadata> {
-    build_registry(filter).metadata()
+/// Return the static [MetadataRegistry] for the JS analyzer rules
+pub fn metadata() -> &'static MetadataRegistry {
+    lazy_static::lazy_static! {
+        static ref METADATA: MetadataRegistry = {
+            let mut metadata = MetadataRegistry::default();
+            visit_registry(&mut metadata);
+            metadata
+        };
+    }
+
+    &*METADATA
 }
 
 /// Run the analyzer on the provided `root`: this process will use the given `filter`
@@ -66,8 +72,12 @@ where
             .collect()
     }
 
+    let mut registry = RuleRegistry::builder(&filter);
+    visit_registry(&mut registry);
+
     let mut analyzer = Analyzer::new(
-        InspectMatcher::new(build_registry(&filter), inspect_matcher),
+        metadata(),
+        InspectMatcher::new(registry.build(), inspect_matcher),
         parse_linter_suppression_comment,
         &mut emit_signal,
     );
@@ -107,7 +117,7 @@ where
 #[cfg(test)]
 mod tests {
 
-    use rome_analyze::{AnalyzerOptions, Never};
+    use rome_analyze::{AnalyzerOptions, Never, RuleCategories};
     use rome_diagnostics::Severity;
     use rome_diagnostics::{file::FileId, v2::category};
     use rome_js_parser::parse;
@@ -118,7 +128,7 @@ mod tests {
     #[ignore]
     #[test]
     fn quick_test() {
-        const SOURCE: &str = r#"document;
+        const SOURCE: &str = r#"[0, [12]].map(Number).flat()
         "#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
@@ -207,11 +217,37 @@ mod tests {
             ]
         );
     }
+
+    #[test]
+    fn suppression_syntax() {
+        const SOURCE: &str = "
+            // rome-ignore lint(correctness/noDoubleEquals): single rule
+            a == b;
+        ";
+
+        let parsed = parse(SOURCE, FileId::zero(), SourceType::js_module());
+
+        let filter = AnalysisFilter {
+            categories: RuleCategories::SYNTAX,
+            ..AnalysisFilter::default()
+        };
+
+        let options = AnalyzerOptions::default();
+        analyze(FileId::zero(), &parsed.tree(), filter, &options, |signal| {
+            if let Some(diag) = signal.diagnostic() {
+                let diag = diag.into_diagnostic(Severity::Warning);
+                let code = diag.code.unwrap();
+                let primary = diag.primary.as_ref().unwrap();
+                panic!("unexpected diagnostic {code:?} at {primary:?}");
+            }
+
+            ControlFlow::<Never>::Continue(())
+        });
+    }
 }
 
 /// Series of errors encountered when running rules on a file
-#[derive(Debug, PartialEq, Eq, Clone)]
-#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
+#[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub enum RuleError {
     /// The rule with the specified name replaced the root of the file with a node that is not a valid root for that language.
     ReplacedRootWithNonRootError { rule_name: Cow<'static, str> },

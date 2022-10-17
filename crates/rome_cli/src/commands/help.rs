@@ -1,25 +1,24 @@
 use rome_console::{markup, ConsoleExt, Markup};
 
-use crate::{CliSession, Termination};
-
-const VERSION: &str = match option_env!("ROME_VERSION") {
-    Some(version) => version,
-    None => env!("CARGO_PKG_VERSION"),
-};
+use crate::{CliSession, Termination, VERSION};
 
 const MAIN: Markup = markup! {
 "Rome CLI v"{VERSION}"
 
 "<Emphasis>"COMMANDS:"</Emphasis>"
-    - "<Emphasis>"check"</Emphasis>"
-    - "<Emphasis>"ci"</Emphasis>"
-    - "<Emphasis>"format"</Emphasis>"
-    - "<Emphasis>"init"</Emphasis>"
-    - "<Emphasis>"help"</Emphasis>"
+    - "<Emphasis>"check"</Emphasis>"        Run the linter on a set of files
+    - "<Emphasis>"ci"</Emphasis>"           Run the linter and check the formatting of a set of files
+    - "<Emphasis>"format"</Emphasis>"       Run the formatter on a set of files
+    - "<Emphasis>"help"</Emphasis>"         Prints this help message
+    - "<Emphasis>"init"</Emphasis>"         Bootstraps a new rome project
+    - "<Emphasis>"start"</Emphasis>"        Start the Rome daemon server process
+    - "<Emphasis>"stop"</Emphasis>"         Stop the Rome daemon server process
+    - "<Emphasis>"version"</Emphasis>"      Shows the Rome version information and quit
 
 "<Emphasis>"OPTIONS:"</Emphasis>"
     "<Dim>"--no-colors"</Dim>"      Disable the formatting of markup (print everything as plain text)
     "<Dim>"--use-server"</Dim>"     Connect to a running instance of the Rome daemon server
+    "<Dim>"--version"</Dim>"        Show the Rome version information and quit
 "
 };
 
@@ -47,7 +46,7 @@ const FORMAT_OPTIONS: Markup = markup! {
     "<Dim>"--line-width <number>"</Dim>"                    Change how many characters the formatter is allowed to print in a single line (default: 80)
     "<Dim>"--quote-style <single|double>"</Dim>"            Changes the quotation character for strings (default: \")
     "<Dim>"--quote-properties <as-needed|preserve>"</Dim>"  Changes when properties in object should be quoted (default: as-needed)
-    "<Dim>"--stdin-file-path <string>"</Dim>"                A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path file.js
+    "<Dim>"--stdin-file-path <string>"</Dim>"               A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path file.js
     "
 };
 
@@ -94,39 +93,31 @@ const STOP: Markup = markup! {
     rome stop"
 };
 
-pub(crate) fn help(mut session: CliSession, command: Option<&str>) -> Result<(), Termination> {
-    match command {
-        Some("help") | None => {
-            session.app.console.log(MAIN);
-            Ok(())
-        }
-        Some("check") => {
-            session.app.console.log(CHECK);
-            Ok(())
-        }
-        Some("ci") => {
-            session.app.console.log(CI);
-            Ok(())
-        }
-        Some("format") => {
-            session.app.console.log(FORMAT);
-            Ok(())
-        }
-        Some("init") => {
-            session.app.console.log(INIT);
-            Ok(())
-        }
-        Some("start") => {
-            session.app.console.log(START);
-            Ok(())
-        }
-        Some("stop") => {
-            session.app.console.log(STOP);
-            Ok(())
-        }
+const VERSION_HELP_TEXT: Markup = markup! {
+"Rome version: Show the Rome version information
 
-        Some(cmd) => Err(Termination::UnknownCommandHelp {
-            command: cmd.into(),
-        }),
-    }
+"<Emphasis>"USAGE:"</Emphasis>"
+    rome version"
+};
+
+pub(crate) fn help(mut session: CliSession, command: Option<&str>) -> Result<(), Termination> {
+    let help_text = match command {
+        Some("help") | None => MAIN,
+        Some("check") => CHECK,
+        Some("ci") => CI,
+        Some("format") => FORMAT,
+        Some("init") => INIT,
+        Some("start") => START,
+        Some("stop") => STOP,
+        Some("version") => VERSION_HELP_TEXT,
+
+        Some(cmd) => {
+            return Err(Termination::UnknownCommandHelp {
+                command: cmd.into(),
+            })
+        }
+    };
+
+    session.app.console.log(help_text);
+    Ok(())
 }

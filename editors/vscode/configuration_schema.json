@@ -491,7 +491,27 @@
             }
           ]
         },
+        "noAutofocus": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noChildrenProp": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noConstAssign": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -521,6 +541,16 @@
             }
           ]
         },
+        "noExplicitAny": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noNewSymbol": {
           "anyOf": [
             {
@@ -531,7 +561,27 @@
             }
           ]
         },
+        "noPositiveTabindex": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noRenderReturnValue": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noRestrictedGlobals": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -598,7 +648,21 @@
             "null"
           ]
         },
+<<<<<<< HEAD
         "useAltText": {
+=======
+        "useAnchorContent": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useBlankTarget": {
+>>>>>>> 004d7b932fa4686b4ad801597f81223fd93231dd
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -628,6 +692,16 @@
             }
           ]
         },
+        "useFlatMap": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useFragmentSyntax": {
           "anyOf": [
             {
@@ -638,7 +712,37 @@
             }
           ]
         },
+        "useKeyWithClickEvents": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useKeyWithMouseEvents": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useOptionalChain": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useValidAnchor": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

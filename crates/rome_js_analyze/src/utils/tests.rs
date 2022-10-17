@@ -1,7 +1,7 @@
 use super::rename::*;
 use crate::utils::batch::JsBatchMutation;
 use rome_diagnostics::file::FileId;
-use rome_js_semantic::semantic_model;
+use rome_js_semantic::{semantic_model, SemanticModelOptions};
 use rome_js_syntax::{JsFormalParameter, JsIdentifierBinding, JsVariableDeclarator, SourceType};
 use rome_rowan::{AstNode, BatchMutationExt, SyntaxNodeCast};
 
@@ -9,7 +9,7 @@ use rome_rowan::{AstNode, BatchMutationExt, SyntaxNodeCast};
 /// Asserts the renaming worked.
 pub fn assert_rename_ok(before: &str, expected: &str) {
     let r = rome_js_parser::parse(before, FileId::zero(), SourceType::js_module());
-    let model = semantic_model(&r.tree());
+    let model = semantic_model(&r.tree(), SemanticModelOptions::default());
 
     let binding_a = r
         .syntax()
@@ -30,7 +30,7 @@ pub fn assert_rename_ok(before: &str, expected: &str) {
 /// Asserts the renaming to fail.
 pub fn assert_rename_nok(before: &str) {
     let r = rome_js_parser::parse(before, FileId::zero(), SourceType::js_module());
-    let model = semantic_model(&r.tree());
+    let model = semantic_model(&r.tree(), SemanticModelOptions::default());
 
     let binding_a = r
         .syntax()

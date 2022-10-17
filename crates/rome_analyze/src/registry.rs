@@ -1,5 +1,6 @@
-use std::{borrow, collections::BTreeMap};
+use std::{borrow, collections::BTreeSet};
 
+use rome_diagnostics::v2::Error;
 use rome_rowan::{AstNode, Language, RawSyntaxKind, SyntaxKind, SyntaxNode};
 use rustc_hash::FxHashSet;
 
@@ -33,6 +34,63 @@ impl Phase for () {
     }
 }
 
+pub trait RegistryVisitor<L: Language> {
+    /// Record the category `C` to this visitor
+    fn record_category<C: GroupCategory<Language = L>>(&mut self) {
+        C::record_groups(self);
+    }
+
+    /// Record the group `G` to this visitor
+    fn record_group<G: RuleGroup<Language = L>>(&mut self) {
+        G::record_rules(self);
+    }
+
+    /// Record the rule `R` to this visitor
+    fn record_rule<R>(&mut self)
+    where
+        R: Rule + 'static,
+        R::Query: Queryable<Language = L>,
+        <R::Query as Queryable>::Output: Clone;
+}
+
+/// Stores metadata information for all the rules in the registry, sorted
+/// alphabetically
+#[derive(Default)]
+pub struct MetadataRegistry {
+    inner: BTreeSet<MetadataKey>,
+}
+
+impl MetadataRegistry {
+    /// Return a unique identifier for a rule group if it's known by this registry
+    pub fn find_group(&self, group: &str) -> Option<GroupKey> {
+        let key = self.inner.get(group)?;
+        Some(key.into_group_key())
+    }
+
+    /// Return a unique identifier for a rule if it's known by this registry
+    pub fn find_rule(&self, group: &str, rule: &str) -> Option<RuleKey> {
+        let key = self.inner.get(&(group, rule))?;
+        Some(key.into_rule_key())
+    }
+
+    pub(crate) fn insert_rule(&mut self, group: &'static str, rule: &'static str) {
+        self.inner.insert(MetadataKey {
+            inner: (group, rule),
+        });
+    }
+}
+
+impl<L: Language> RegistryVisitor<L> for MetadataRegistry {
+    fn record_rule<R>(&mut self)
+    where
+        R: Rule + 'static,
+        R::Query: Queryable<Language = L>,
+        <R::Query as Queryable>::Output: Clone,
+    {
+        self.insert_rule(<R::Group as RuleGroup>::NAME, R::METADATA.name);
+    }
+}
+
 /// The rule registry holds type-erased instances of all active analysis rules
 /// for each phase.
 /// What defines a phase is the set of services that a phase offers. Currently
@@ -40,13 +98,20 @@ impl Phase for () {
 /// - Syntax Phase: No services are offered, thus its rules can be run immediately;
 /// - Semantic Phase: Offers the semantic model, thus these rules can only run
 /// after the "SemanticModel" is ready, which demands a whole transverse of the parsed tree.
-#[derive(Default)]
 pub struct RuleRegistry<L: Language> {
-    /// Stores metadata information for all the rules in the registry, sorted
-    /// alphabetically
-    metadata: BTreeMap<MetadataKey, RuleMetadata>,
     /// Holds a collection of rules for each phase.
     phase_rules: [PhaseRules<L>; 2],
+}
+
+impl<L: Language + Default> RuleRegistry<L> {
+    pub fn builder<'a>(filter: &'a AnalysisFilter<'a>) -> RuleRegistryBuilder<'a, L> {
+        RuleRegistryBuilder {
+            registry: RuleRegistry {
+                phase_rules: Default::default(),
+            },
+            filter,
+        }
+    }
 }
 
 /// Holds a collection of rules for each phase.
@@ -61,32 +126,37 @@ struct PhaseRules<L: Language> {
     rule_states: Vec<RuleState<L>>,
 }
 
-impl<L: Language + Default> RuleRegistry<L> {
-    pub fn push_category<C: GroupCategory<Language = L>>(&mut self, filter: &AnalysisFilter) {
-        if filter.match_category::<C>() {
-            C::push_groups(self, filter);
+pub struct RuleRegistryBuilder<'a, L: Language> {
+    registry: RuleRegistry<L>,
+    filter: &'a AnalysisFilter<'a>,
+}
+
+impl<L: Language + Default> RegistryVisitor<L> for RuleRegistryBuilder<'_, L> {
+    fn record_category<C: GroupCategory<Language = L>>(&mut self) {
+        if self.filter.match_category::<C>() {
+            C::record_groups(self);
         }
     }
 
-    pub fn push_group<G: RuleGroup<Language = L>>(&mut self, filter: &AnalysisFilter) {
-        if filter.match_group::<G>() {
-            G::push_rules(self, filter);
+    fn record_group<G: RuleGroup<Language = L>>(&mut self) {
+        if self.filter.match_group::<G>() {
+            G::record_rules(self);
         }
     }
 
     /// Add the rule `R` to the list of rules stores in this registry instance
-    pub fn push_rule<R>(&mut self, filter: &AnalysisFilter)
+    fn record_rule<R>(&mut self)
     where
         R: Rule + 'static,
         R::Query: Queryable<Language = L>,
         <R::Query as Queryable>::Output: Clone,
     {
-        if !filter.match_rule::<R>() {
+        if !self.filter.match_rule::<R>() {
             return;
         }
 
         let phase = R::phase() as usize;
-        let phase = &mut self.phase_rules[phase];
+        let phase = &mut self.registry.phase_rules[phase];
 
         let rule = RegistryRule::new::<R>(phase.rule_states.len());
 
@@ -120,42 +190,16 @@ impl<L: Language + Default> RuleRegistry<L> {
         }
 
         phase.rule_states.push(RuleState::default());
-
-        self.metadata.insert(
-            MetadataKey {
-                inner: (<R::Group as RuleGroup>::NAME, R::METADATA.name),
-            },
-            R::METADATA,
-        );
     }
+}
 
-    /// Returns an iterator over the name and documentation of all active rules
-    /// in this instance of the registry
-    pub fn metadata(self) -> impl Iterator<Item = RegistryRuleMetadata> {
-        self.metadata.into_iter().map(|(key, value)| {
-            let (group, _) = key.inner;
-            RegistryRuleMetadata { group, rule: value }
-        })
+impl<L: Language> RuleRegistryBuilder<'_, L> {
+    pub fn build(self) -> RuleRegistry<L> {
+        self.registry
     }
 }
 
 impl<L: Language> QueryMatcher<L> for RuleRegistry<L> {
-    fn find_group(&self, group: &str) -> Option<GroupKey> {
-        self.metadata.keys().find_map(|key| {
-            let (key, _) = key.inner;
-            if key == group {
-                Some(GroupKey::new(key))
-            } else {
-                None
-            }
-        })
-    }
-
-    fn find_rule(&self, group: &str, rule: &str) -> Option<RuleKey> {
-        let (key, _) = self.metadata.get_key_value(&(group, rule))?;
-        Some(key.into_rule_key())
-    }
-
     fn match_query(&mut self, mut params: MatchQueryParams<L>) {
         let phase = &mut self.phase_rules[params.phase as usize];
 
@@ -179,7 +223,8 @@ impl<L: Language> QueryMatcher<L> for RuleRegistry<L> {
         // Run all the rules registered to this QueryMatch
         for rule in rules {
             let state = &mut phase.rule_states[rule.state_index];
-            (rule.run)(&mut params, state);
+            // TODO: #3394 track error in the signal queue
+            let _ = (rule.run)(&mut params, state);
         }
     }
 }
@@ -204,11 +249,16 @@ pub type LanguageRoot<L> = <L as Language>::Root;
 
 /// Key struct for a rule in the metadata map, sorted alphabetically
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
-struct MetadataKey {
+pub struct MetadataKey {
     inner: (&'static str, &'static str),
 }
 
 impl MetadataKey {
+    fn into_group_key(self) -> GroupKey {
+        let (group, _) = self.inner;
+        GroupKey::new(group)
+    }
+
     fn into_rule_key(self) -> RuleKey {
         let (group, rule) = self.inner;
         RuleKey::new(group, rule)
@@ -218,6 +268,12 @@ impl MetadataKey {
 impl<'a> borrow::Borrow<(&'a str, &'a str)> for MetadataKey {
     fn borrow(&self) -> &(&'a str, &'a str) {
         &self.inner
+    }
+}
+
+impl borrow::Borrow<str> for MetadataKey {
+    fn borrow(&self) -> &str {
+        self.inner.0
     }
 }
 
@@ -260,7 +316,7 @@ impl<L: Language> RuleSuppressions<L> {
 }
 
 /// Executor for rule as a generic function pointer
-type RuleExecutor<L> = fn(&mut MatchQueryParams<L>, &mut RuleState<L>);
+type RuleExecutor<L> = fn(&mut MatchQueryParams<L>, &mut RuleState<L>) -> Result<(), Error>;
 
 impl<L: Language + Default> RegistryRule<L> {
     fn new<R>(state_index: usize) -> Self
@@ -273,14 +329,15 @@ impl<L: Language + Default> RegistryRule<L> {
         fn run<R>(
             params: &mut MatchQueryParams<RuleLanguage<R>>,
             state: &mut RuleState<RuleLanguage<R>>,
-        ) where
+        ) -> Result<(), Error>
+        where
             R: Rule + 'static,
             R::Query: 'static,
             <R::Query as Queryable>::Output: Clone,
         {
             if let QueryMatch::Syntax(node) = &params.query {
                 if state.suppressions.inner.contains(node) {
-                    return;
+                    return Ok(());
                 }
             }
 
@@ -288,12 +345,11 @@ impl<L: Language + Default> RegistryRule<L> {
             // if the query doesn't match
             let query_result =
                 <R::Query as Queryable>::unwrap_match(params.services, &params.query);
-
             let ctx =
                 match RuleContext::new(&query_result, params.root, params.services, params.options)
                 {
                     Ok(ctx) => ctx,
-                    Err(_) => return,
+                    Err(error) => return Err(error),
                 };
 
             for result in R::run(&ctx) {
@@ -317,6 +373,8 @@ impl<L: Language + Default> RegistryRule<L> {
                     text_range,
                 });
             }
+
+            Ok(())
         }
 
         Self {

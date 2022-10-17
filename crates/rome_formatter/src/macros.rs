@@ -58,9 +58,9 @@ macro_rules! format_args {
 /// assert_eq!(
 ///     buffer.into_vec(),
 ///     vec![
-///         FormatElement::Text(Text::Static { text: "Hello" }),
+///         FormatElement::StaticText { text: "Hello" },
 ///         FormatElement::Space,
-///         FormatElement::Text(Text::Static { text: "World" }),
+///         FormatElement::StaticText { text: "World" },
 ///     ]
 ///  );
 /// #  Ok(())
@@ -89,7 +89,7 @@ macro_rules! write {
 /// dbg_write!(buffer, [text("Hello")])?;
 /// // ^-- prints: [src/main.rs:7][0] = StaticToken("Hello")
 ///
-/// assert_eq!(buffer.into_vec(), vec![FormatElement::Text(Text::Static { text: "Hello" })]);
+/// assert_eq!(buffer.into_vec(), vec![FormatElement::StaticText { text: "Hello" }]);
 /// # Ok(())
 /// # }
 /// ```
@@ -131,9 +131,9 @@ macro_rules! dbg_write {
 /// assert_eq!(
 ///     formatted.into_document(),
 ///     Document::from(vec![
-///         FormatElement::Text(Text::Static { text: "(" }),
-///         FormatElement::Text(Text::Static { text: "a" }),
-///         FormatElement::Text(Text::Static { text: ")" }),
+///         FormatElement::StaticText { text: "(" },
+///         FormatElement::StaticText { text: "a" },
+///         FormatElement::StaticText { text: ")" },
 ///     ])
 /// );
 /// ```
@@ -357,7 +357,7 @@ mod tests {
 
         assert_eq!(
             buffer.into_vec(),
-            vec![FormatElement::Text(Text::Static { text: "test" })]
+            vec![FormatElement::StaticText { text: "test" }]
         );
     }
 
@@ -375,11 +375,11 @@ mod tests {
         assert_eq!(
             buffer.into_vec(),
             vec![
-                FormatElement::Text(Text::Static { text: "a" }),
+                FormatElement::StaticText { text: "a" },
                 FormatElement::Space,
-                FormatElement::Text(Text::Static { text: "simple" }),
+                FormatElement::StaticText { text: "simple" },
                 FormatElement::Space,
-                FormatElement::Text(Text::Static { text: "test" })
+                FormatElement::StaticText { text: "test" }
             ]
         );
     }

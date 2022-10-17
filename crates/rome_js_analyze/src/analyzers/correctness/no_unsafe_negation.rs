@@ -41,6 +41,7 @@ impl Rule for NoUnsafeNegation {
     type Query = Ast<JsInOrInstanceOfExpression>;
     type State = ();
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let node = ctx.query();

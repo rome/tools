@@ -1,12 +1,15 @@
 use pulldown_cmark::{html::write_html, CodeBlockKind, Event, LinkType, Parser, Tag};
-use rome_analyze::{AnalysisFilter, AnalyzerOptions, ControlFlow, RuleCategories, RuleFilter};
+use rome_analyze::{
+    AnalysisFilter, AnalyzerOptions, ControlFlow, GroupCategory, Queryable, RegistryVisitor, Rule,
+    RuleCategory, RuleFilter, RuleGroup, RuleMetadata,
+};
 use rome_console::{
     fmt::{Formatter, HTML},
     markup, Markup,
 };
 use rome_diagnostics::{file::FileId, file::SimpleFile, Diagnostic};
-use rome_js_analyze::{analyze, metadata};
-use rome_js_syntax::{Language, LanguageVariant, ModuleKind, SourceType};
+use rome_js_analyze::{analyze, visit_registry};
+use rome_js_syntax::{JsLanguage, Language, LanguageVariant, ModuleKind, SourceType};
 use rome_service::settings::WorkspaceSettings;
 use std::{
     collections::BTreeMap,
@@ -56,19 +59,35 @@ fn main() -> Result<()> {
     // failure instead of just the first one
     let mut errors = Vec::new();
 
-    let filter = AnalysisFilter {
-        categories: RuleCategories::LINT,
-        ..AnalysisFilter::default()
-    };
-
-    // Ensure the list of rules is stored alphabetically
-    let mut groups = BTreeMap::new();
-    for meta in metadata(&filter) {
-        groups
-            .entry(meta.group)
-            .or_insert_with(BTreeMap::new)
-            .insert(meta.rule.name, meta.rule);
+    #[derive(Default)]
+    struct LintRulesVisitor {
+        groups: BTreeMap<&'static str, BTreeMap<&'static str, RuleMetadata>>,
     }
+
+    impl RegistryVisitor<JsLanguage> for LintRulesVisitor {
+        fn record_category<C: GroupCategory<Language = JsLanguage>>(&mut self) {
+            if matches!(C::CATEGORY, RuleCategory::Lint) {
+                C::record_groups(self);
+            }
+        }
+
+        fn record_rule<R>(&mut self)
+        where
+            R: Rule + 'static,
+            R::Query: Queryable<Language = JsLanguage>,
+            <R::Query as Queryable>::Output: Clone,
+        {
+            self.groups
+                .entry(<R::Group as RuleGroup>::NAME)
+                .or_insert_with(BTreeMap::new)
+                .insert(R::METADATA.name, R::METADATA);
+        }
+    }
+
+    let mut visitor = LintRulesVisitor::default();
+    visit_registry(&mut visitor);
+
+    let LintRulesVisitor { groups } = visitor;
 
     for (group, rules) in groups {
         let (group_name, description) = match group {
@@ -82,10 +101,12 @@ fn main() -> Result<()> {
             "nursery" => (
                 "Nursery",
                 markup! {
-                    "Rules that are being written. Rules under this category are meant to be considered unstable or buggy.
+                    "Rules that are being written. Rules under this group are meant to be considered unstable or buggy.
 
-Rules can be downgraded to this category in case some path release is needed. After an arbitrary amount of time, the team can decide
-to promote these rules into a more appropriate category."
+Developers can opt-in these rules via configuration. We vehemently appreciate filing issue in case of bugs or performance problems. 
+
+Rules can be downgraded to this group in case a patch release is needed. After an arbitrary amount of time, the team can decide
+to promote these rules into an appropriate group. Doing so means that the rule is stable and ready for production."
 
                 },
             ),
@@ -99,7 +120,7 @@ to promote these rules into a more appropriate category."
         };
 
         writeln!(index, "<section>")?;
-        writeln!(index, "<h2>{group_name}</h2>")?;
+        writeln!(index, "<h2>{group_name}<a class=\"header-anchor\" href=\"#{group_name}\" aria-label=\"{group_name}\"></a></h2>")?;
         writeln!(index)?;
         markup_to_string(&mut index, description)?;
         writeln!(index)?;
@@ -293,10 +314,17 @@ fn parse_documentation(
                 write!(content, "`{text}`")?;
             }
 
-            Event::Start(Tag::Link(kind, _, _)) => {
-                assert_eq!(kind, LinkType::Inline, "unimplemented link type");
-                write!(content, "[")?;
-            }
+            Event::Start(Tag::Link(kind, _, _)) => match kind {
+                LinkType::Inline => {
+                    write!(content, "[")?;
+                }
+                LinkType::Shortcut => {
+                    write!(content, "[")?;
+                }
+                _ => {
+                    panic!("unimplemented link type")
+                }
+            },
             Event::End(Tag::Link(_, url, title)) => {
                 write!(content, "]({url}")?;
                 if !title.is_empty() {

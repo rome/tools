@@ -197,9 +197,9 @@ To enable rules, you need to change their diagnostics severity based on your nee
   "linter": {
     "enabled": true,
     "rules": {
-      "js": {
-        "noDeadCode": "error",
-        "useCamelCase": "warn"
+      "correctness": {
+        "noDebugger": "error",
+        "noSparseArray": "warn"
       }
     }
   }
@@ -215,11 +215,11 @@ Just add `"off"` as value inside its configuration. For example:
   "linter": {
     "enabled": true,
     "rules": {
-      "jsx": {
+      "correctness": {
         "noCommentText": "off"
       },
-      "regex": {
-        "noMultipleSpacesInRegularExpressionLiterals": "off"
+      "style": {
+        "noNegationElse": "off"
       }
     }
   }
@@ -236,11 +236,11 @@ Just add `"warn"` as value of the rule. Example:
   "linter": {
     "enabled": true,
     "rules": {
-      "jsx": {
+      "correctness": {
         "noCommentText": "warn"
       },
-      "regex": {
-        "noMultipleSpacesInRegularExpressionLiterals": "error"
+      "style": {
+        "noNegationElse": "error"
       }
     }
   }
@@ -260,7 +260,7 @@ by shaping the value of the rule in a different way.
   "linter": {
     "enabled": true,
     "rules": {
-      "jsx": {
+      "correctness": {
         "noCommentText": {
           "level": "warn",
           "options": {}

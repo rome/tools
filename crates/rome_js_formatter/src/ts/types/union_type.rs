@@ -7,6 +7,7 @@ use crate::utils::{
 use rome_formatter::{format_args, write, Buffer};
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxToken, TsTupleTypeElementList, TsUnionType};
 use rome_js_syntax::{JsSyntaxNode, TsUnionTypeFields};
+use rome_rowan::SyntaxNodeOptionExt;
 
 #[derive(Debug, Clone, Default)]
 pub struct FormatTsUnionType;
@@ -39,7 +40,7 @@ impl FormatNodeRule<TsUnionType> for FormatTsUnionType {
         let has_leading_comments = f.comments().has_leading_comments(node.syntax());
 
         let should_indent = {
-            let parent_kind = node.syntax().parent().map(|p| p.kind());
+            let parent_kind = node.syntax().parent().kind();
 
             // These parents have indent for their content, so we don't need to indent here
             !match parent_kind {

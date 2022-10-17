@@ -473,147 +473,7 @@ let myDiv = ReactTestUtils.renderIntoDocument(
 ```diff
 --- Prettier
 +++ Rome
-@@ -9,8 +9,10 @@
- // Wrapping tags
- x = (
-   <div>
--    <first>f</first> <first>f</first> <first>f</first> <first>f</first>{" "}
--    <first>f</first> <first>f</first>
-+    <first>f</first> <first>f</first> <first>f</first> <first>f</first> <first>
-+      f
-+    </first>
-+    <first>f</first>
-   </div>
- );
- 
-@@ -32,15 +34,16 @@
-     <a />
-     <b />
-     <c />
--    <first>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</first>{" "}
--    <first>f</first>
-+    <first>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</first> <first>
-+      f
-+    </first>
-   </div>
- );
- 
- // Wrapping tags
- x = (
-   <div>
--    <sadashdkjahsdkjhaskjdhaksjdhkashdkashdkasjhdkajshdkashdkashd />{" "}
-+    <sadashdkjahsdkjhaskjdhaksjdhkashdkashdkasjhdkajshdkashdkashd />
-     <first>f</first>
-   </div>
- );
-@@ -66,15 +69,19 @@
- 
- x = (
-   <div>
--    before {stuff} after {stuff} after {stuff} after {stuff} after {stuff} after{" "}
--    {stuff} {stuff} {stuff} after {stuff} after
-+    before {stuff} after {stuff} after {stuff} after {stuff} after {stuff} after {
-+      stuff
-+    }
-+    {stuff} {stuff} after {stuff} after
-   </div>
- );
- 
- x = (
-   <div>
--    Please state your <b>name</b> and <b>occupation</b> for the board of{" "}
--    <b>school</b> directors.
-+    Please state your <b>name</b> and <b>occupation</b> for the board of <b>
-+      school
-+    </b>
-+    directors.
-   </div>
- );
- 
-@@ -101,9 +108,10 @@
- x = (
-   <font size={-3}>
-     <i>
--      Starting at minute {graphActivity.startTime}, running for{" "}
--      {graphActivity.length} to minute{" "}
--      {graphActivity.startTime + graphActivity.length}
-+      Starting at minute {graphActivity.startTime}, running for {
-+        graphActivity.length
-+      }
-+      to minute {graphActivity.startTime + graphActivity.length}
-     </i>
-   </font>
- );
-@@ -176,19 +184,17 @@
- 
- unstable_before = (
-   <div className="yourScore">
--    Your score:{" "}
--    <span className="score">{`${mini.crosstable.users[sessionUserId]} - ${
--      mini.crosstable.users[user.id]
--    }`}</span>
-+    Your score: <span className="score">{`${
-+      mini.crosstable.users[sessionUserId]
-+    } - ${mini.crosstable.users[user.id]}`}</span>
-   </div>
- );
- 
- unstable_after_first_run = (
-   <div className="yourScore">
--    Your score:{" "}
--    <span className="score">{`${mini.crosstable.users[sessionUserId]} - ${
--      mini.crosstable.users[user.id]
--    }`}</span>
-+    Your score: <span className="score">{`${
-+      mini.crosstable.users[sessionUserId]
-+    } - ${mini.crosstable.users[user.id]}`}</span>
-   </div>
- );
- 
-@@ -213,24 +219,22 @@
- 
- jsx_around_multiline_element = (
-   <div>
--    Before{" "}
--    <div>
-+    Before <div>
-       {
-         "Enough text to make this element wrap on to multiple lines when formatting"
-       }
--    </div>{" "}
-+    </div>
-     After
-   </div>
- );
- 
- jsx_around_multiline_element_second_pass = (
-   <div>
--    Before{" "}
--    <div>
-+    Before <div>
-       {
-         "Enough text to make this element wrap on to multiple lines when formatting"
-       }
--    </div>{" "}
-+    </div>
-     After
-   </div>
- );
-@@ -251,8 +255,11 @@
- const Abc = () => {
-   return (
-     <div>
--      Please state your <b>name</b> and <b>occupation</b> for the board of
--      directors.
-+      Please state your
-+      {" "}<b>name</b>
-+      and
-+      {" "}<b>occupation</b>
-+      for the board of directors.
-     </div>
-   );
- };
-@@ -318,19 +325,25 @@
+@@ -318,7 +318,11 @@
  
  line_after_br_2 = (
    <div>
@@ -626,14 +486,7 @@ let myDiv = ReactTestUtils.renderIntoDocument(
    </div>
  );
  
- br_followed_by_whitespace = (
-   <div>
--    <br /> text
-+    <br />
-+    text
-   </div>
- );
- 
+@@ -331,6 +335,7 @@
  dont_preserve_blank_lines_when_jsx_contains_text = (
    <div>
      <div>Zeroth</div>
@@ -641,71 +494,7 @@ let myDiv = ReactTestUtils.renderIntoDocument(
      <div>First</div>
      Second
    </div>
-@@ -346,15 +359,18 @@
- 
- single_expression_child_tags = (
-   <div>
--    You currently have <strong>{dashboardStr}</strong> and{" "}
--    <strong>{userStr}</strong>
-+    You currently have <strong>{dashboardStr}</strong> and <strong>
-+      {userStr}
-+    </strong>
-   </div>
- );
- 
- expression_does_not_break = (
-   <div>
--    texty text text text text text text text text text text text{" "}
--    {this.props.type}{" "}
-+    texty text text text text text text text text text text text {
-+      this.props.type
-+    }
-+    {" "}
-   </div>
- );
- 
-@@ -362,9 +378,8 @@
- br_triggers_expression_break = (
-   <div>
-     <br />
--    text text text text text text text text text text text {
--      this.props.type
--    }{" "}
-+    text text text text text text text text text text text {this.props.type}
-+    {" "}
-   </div>
- );
- 
-@@ -372,14 +387,14 @@
-   <div>
-     <span a="a" b="b">
-       {variable}
--    </span>{" "}
-+    </span>
-     ({variable})
-   </div>
- );
- 
- x = (
-   <div>
--    ENDS IN <div>text text text text text text text text text text text</div>{" "}
-+    ENDS IN <div>text text text text text text text text text text text</div>
-     HRS
-   </div>
- );
-@@ -404,8 +419,9 @@
-       <div>
-         <div>
-           <div>
--            Line {startRange.row + 1}:{startRange.column + 1} -{" "}
--            {endRange.row + 1}:{endRange.column + 1}
-+            Line {startRange.row + 1}:{startRange.column + 1} - {endRange.row +
-+              1}
-+            :{endRange.column + 1}
-             {caller}
-           </div>
-         </div>
-@@ -436,13 +452,16 @@
+@@ -436,13 +441,16 @@
  
  x = (
    <div>
@@ -724,7 +513,7 @@ let myDiv = ReactTestUtils.renderIntoDocument(
    </div>
  );
  
-@@ -496,19 +515,26 @@
+@@ -496,19 +504,26 @@
  
  x = (
    <div>
@@ -754,7 +543,7 @@ let myDiv = ReactTestUtils.renderIntoDocument(
    </div>
  );
  
-@@ -528,7 +554,8 @@
+@@ -528,7 +543,8 @@
      <span>
        <strong>{name}</strong>’s{" "}
      </span>
@@ -763,16 +552,6 @@ let myDiv = ReactTestUtils.renderIntoDocument(
 +    <br />
      <Text>You {type}ed this shipment to</Text>
    </div>
- );
-@@ -564,7 +591,8 @@
- 
- let myDiv = ReactTestUtils.renderIntoDocument(
-   <div>
--    <div key="theDog" className="dog" />,
-+    <div key="theDog" className="dog" />
-+    ,
-     <div key="theBird" className="bird" />
-   </div>,
  );
 ```
 
@@ -790,10 +569,8 @@ x = (
 // Wrapping tags
 x = (
   <div>
-    <first>f</first> <first>f</first> <first>f</first> <first>f</first> <first>
-      f
-    </first>
-    <first>f</first>
+    <first>f</first> <first>f</first> <first>f</first> <first>f</first>{" "}
+    <first>f</first> <first>f</first>
   </div>
 );
 
@@ -815,16 +592,15 @@ x = (
     <a />
     <b />
     <c />
-    <first>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</first> <first>
-      f
-    </first>
+    <first>aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</first>{" "}
+    <first>f</first>
   </div>
 );
 
 // Wrapping tags
 x = (
   <div>
-    <sadashdkjahsdkjhaskjdhaksjdhkashdkashdkasjhdkajshdkashdkashd />
+    <sadashdkjahsdkjhaskjdhaksjdhkashdkashdkasjhdkajshdkashdkashd />{" "}
     <first>f</first>
   </div>
 );
@@ -850,19 +626,15 @@ x = (
 
 x = (
   <div>
-    before {stuff} after {stuff} after {stuff} after {stuff} after {stuff} after {
-      stuff
-    }
-    {stuff} {stuff} after {stuff} after
+    before {stuff} after {stuff} after {stuff} after {stuff} after {stuff} after{" "}
+    {stuff} {stuff} {stuff} after {stuff} after
   </div>
 );
 
 x = (
   <div>
-    Please state your <b>name</b> and <b>occupation</b> for the board of <b>
-      school
-    </b>
-    directors.
+    Please state your <b>name</b> and <b>occupation</b> for the board of{" "}
+    <b>school</b> directors.
   </div>
 );
 
@@ -889,10 +661,9 @@ function DiffOverview(props) {
 x = (
   <font size={-3}>
     <i>
-      Starting at minute {graphActivity.startTime}, running for {
-        graphActivity.length
-      }
-      to minute {graphActivity.startTime + graphActivity.length}
+      Starting at minute {graphActivity.startTime}, running for{" "}
+      {graphActivity.length} to minute{" "}
+      {graphActivity.startTime + graphActivity.length}
     </i>
   </font>
 );
@@ -965,17 +736,19 @@ this_really_should_split_across_lines = (
 
 unstable_before = (
   <div className="yourScore">
-    Your score: <span className="score">{`${
-      mini.crosstable.users[sessionUserId]
-    } - ${mini.crosstable.users[user.id]}`}</span>
+    Your score:{" "}
+    <span className="score">{`${mini.crosstable.users[sessionUserId]} - ${
+      mini.crosstable.users[user.id]
+    }`}</span>
   </div>
 );
 
 unstable_after_first_run = (
   <div className="yourScore">
-    Your score: <span className="score">{`${
-      mini.crosstable.users[sessionUserId]
-    } - ${mini.crosstable.users[user.id]}`}</span>
+    Your score:{" "}
+    <span className="score">{`${mini.crosstable.users[sessionUserId]} - ${
+      mini.crosstable.users[user.id]
+    }`}</span>
   </div>
 );
 
@@ -1000,22 +773,24 @@ jsx_whitespace_on_newline = (
 
 jsx_around_multiline_element = (
   <div>
-    Before <div>
+    Before{" "}
+    <div>
       {
         "Enough text to make this element wrap on to multiple lines when formatting"
       }
-    </div>
+    </div>{" "}
     After
   </div>
 );
 
 jsx_around_multiline_element_second_pass = (
   <div>
-    Before <div>
+    Before{" "}
+    <div>
       {
         "Enough text to make this element wrap on to multiple lines when formatting"
       }
-    </div>
+    </div>{" "}
     After
   </div>
 );
@@ -1036,11 +811,8 @@ x = (
 const Abc = () => {
   return (
     <div>
-      Please state your
-      {" "}<b>name</b>
-      and
-      {" "}<b>occupation</b>
-      for the board of directors.
+      Please state your <b>name</b> and <b>occupation</b> for the board of
+      directors.
     </div>
   );
 };
@@ -1116,8 +888,7 @@ line_after_br_2 = (
 
 br_followed_by_whitespace = (
   <div>
-    <br />
-    text
+    <br /> text
   </div>
 );
 
@@ -1140,18 +911,15 @@ multiple_expressions = (
 
 single_expression_child_tags = (
   <div>
-    You currently have <strong>{dashboardStr}</strong> and <strong>
-      {userStr}
-    </strong>
+    You currently have <strong>{dashboardStr}</strong> and{" "}
+    <strong>{userStr}</strong>
   </div>
 );
 
 expression_does_not_break = (
   <div>
-    texty text text text text text text text text text text text {
-      this.props.type
-    }
-    {" "}
+    texty text text text text text text text text text text text{" "}
+    {this.props.type}{" "}
   </div>
 );
 
@@ -1159,8 +927,9 @@ expression_does_not_break = (
 br_triggers_expression_break = (
   <div>
     <br />
-    text text text text text text text text text text text {this.props.type}
-    {" "}
+    text text text text text text text text text text text {
+      this.props.type
+    }{" "}
   </div>
 );
 
@@ -1168,14 +937,14 @@ jsx_whitespace_after_tag = (
   <div>
     <span a="a" b="b">
       {variable}
-    </span>
+    </span>{" "}
     ({variable})
   </div>
 );
 
 x = (
   <div>
-    ENDS IN <div>text text text text text text text text text text text</div>
+    ENDS IN <div>text text text text text text text text text text text</div>{" "}
     HRS
   </div>
 );
@@ -1200,9 +969,8 @@ x = (
       <div>
         <div>
           <div>
-            Line {startRange.row + 1}:{startRange.column + 1} - {endRange.row +
-              1}
-            :{endRange.column + 1}
+            Line {startRange.row + 1}:{startRange.column + 1} -{" "}
+            {endRange.row + 1}:{endRange.column + 1}
             {caller}
           </div>
         </div>
@@ -1372,8 +1140,7 @@ this_really_should_split_across_lines = (
 
 let myDiv = ReactTestUtils.renderIntoDocument(
   <div>
-    <div key="theDog" className="dog" />
-    ,
+    <div key="theDog" className="dog" />,
     <div key="theBird" className="bird" />
   </div>,
 );
@@ -1382,9 +1149,10 @@ let myDiv = ReactTestUtils.renderIntoDocument(
 
 # Lines exceeding max width of 80 characters
 ```
-   72:     before {stuff} after {stuff} after {stuff} after {stuff} after {stuff} after {
-  122:     <div attr="a very long string attribute that will overflow because it is very long">
-  224:         "Enough text to make this element wrap on to multiple lines when formatting"
-  235:         "Enough text to make this element wrap on to multiple lines when formatting"
+   69:     before {stuff} after {stuff} after {stuff} after {stuff} after {stuff} after{" "}
+  114:     <div attr="a very long string attribute that will overflow because it is very long">
+  219:         "Enough text to make this element wrap on to multiple lines when formatting"
+  231:         "Enough text to make this element wrap on to multiple lines when formatting"
+  387:     ENDS IN <div>text text text text text text text text text text text</div>{" "}
 ```
 

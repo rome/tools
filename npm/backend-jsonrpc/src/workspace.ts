@@ -156,11 +156,16 @@ export interface Correctness {
  */
 export interface Nursery {
 	noArrayIndexKey?: RuleConfiguration;
+	noAutofocus?: RuleConfiguration;
 	noChildrenProp?: RuleConfiguration;
+	noConstAssign?: RuleConfiguration;
 	noDangerouslySetInnerHtml?: RuleConfiguration;
 	noDangerouslySetInnerHtmlWithChildren?: RuleConfiguration;
+	noExplicitAny?: RuleConfiguration;
 	noNewSymbol?: RuleConfiguration;
+	noPositiveTabindex?: RuleConfiguration;
 	noRenderReturnValue?: RuleConfiguration;
+	noRestrictedGlobals?: RuleConfiguration;
 	noUndeclaredVariables?: RuleConfiguration;
 	noUnreachable?: RuleConfiguration;
 	noUnusedVariables?: RuleConfiguration;
@@ -170,11 +175,20 @@ export interface Nursery {
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
+<<<<<<< HEAD
 	useAltText?: RuleConfiguration;
+=======
+	useAnchorContent?: RuleConfiguration;
+	useBlankTarget?: RuleConfiguration;
+>>>>>>> 004d7b932fa4686b4ad801597f81223fd93231dd
 	useButtonType?: RuleConfiguration;
 	useCamelCase?: RuleConfiguration;
+	useFlatMap?: RuleConfiguration;
 	useFragmentSyntax?: RuleConfiguration;
+	useKeyWithClickEvents?: RuleConfiguration;
+	useKeyWithMouseEvents?: RuleConfiguration;
 	useOptionalChain?: RuleConfiguration;
+	useValidAnchor?: RuleConfiguration;
 }
 /**
  * A list of rules that belong to this group
@@ -307,7 +321,21 @@ export type Category =
 	| "lint/nursery/useFragmentSyntax"
 	| "lint/nursery/noArrayIndexKey"
 	| "lint/nursery/noDangerouslySetInnerHtmlWithChildren"
+<<<<<<< HEAD
 	| "lint/nursery/useAltText"
+=======
+	| "lint/nursery/noAutofocus"
+	| "lint/nursery/useKeyWithMouseEvents"
+	| "lint/nursery/useAnchorContent"
+	| "lint/nursery/useBlankTarget"
+	| "lint/nursery/useValidAnchor"
+	| "lint/nursery/useKeyWithClickEvents"
+	| "lint/nursery/noRestrictedGlobals"
+	| "lint/nursery/useFlatMap"
+	| "lint/nursery/noPositiveTabindex"
+	| "lint/nursery/noConstAssign"
+	| "lint/nursery/noExplicitAny"
+>>>>>>> 004d7b932fa4686b4ad801597f81223fd93231dd
 	| "lint/style/noNegationElse"
 	| "lint/style/noShoutyConstants"
 	| "lint/style/useSelfClosingElements"

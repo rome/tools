@@ -31,6 +31,7 @@ impl Rule for UseWhile {
     type Query = Ast<JsForStatement>;
     type State = ();
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let n = ctx.query();

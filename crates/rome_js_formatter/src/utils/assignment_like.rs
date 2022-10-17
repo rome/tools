@@ -16,7 +16,7 @@ use rome_js_syntax::{
     TsAnyVariableAnnotation, TsIdentifierBinding, TsPropertySignatureClassMember,
     TsPropertySignatureClassMemberFields, TsType, TsTypeAliasDeclaration, TsTypeArguments,
 };
-use rome_rowan::{declare_node_union, AstNode, SyntaxResult};
+use rome_rowan::{declare_node_union, AstNode, SyntaxNodeOptionExt, SyntaxResult};
 use std::iter;
 
 declare_node_union! {
@@ -50,69 +50,78 @@ declare_node_union! {
 }
 
 impl AnyObjectPattern {
-    fn is_complex(&self) -> SyntaxResult<bool> {
+    /// Determines if this is a complex pattern. A pattern is considered complex if it has more than 2 properties
+    /// and any property:
+    ///
+    /// * is a shorthand property with an initializer
+    /// * is a non-shorthand property
+    ///
+    /// ## Examples
+    ///
+    /// ```javascript
+    /// let { a, b, c = "test"} = ...
+    /// ```
+    ///
+    /// Is considered a complex binding because it has three properties and a shorthand property with an initializer.
+    ///
+    /// ```javascript
+    /// let { a, b, c: d } = ...
+    /// ```
+    ///
+    /// Is considered a complex binding because it has three properties and a non-shorthand property
+    ///
+    fn is_complex(&self) -> bool {
         match self {
             AnyObjectPattern::JsObjectAssignmentPattern(assignment_pattern) => {
-                let properties_len = assignment_pattern.properties().len();
-                if properties_len <= 2 {
-                    return Ok(false);
+                use JsAnyObjectAssignmentPatternMember::*;
+
+                if assignment_pattern.properties().len() <= 2 {
+                    return false;
                 }
-                // A binding is complex when we have at least one [JsObjectBindingPatternProperty]
-                // e.g. a = { a: c = f } = a
-                // The `c = f` will trigger the complex binding
-                let has_at_least_a_complex_binding = assignment_pattern
+
+                assignment_pattern
                     .properties()
                     .iter()
-                    .map(|p| p.ok())
-                    .any(|property| {
-                        let property = property;
-
-                        matches!(
-                            property,
-                            Some(
-                                JsAnyObjectAssignmentPatternMember::JsObjectAssignmentPatternProperty(_),
-                            )
-                        )
-                    });
-                Ok(has_at_least_a_complex_binding)
+                    .flatten()
+                    .any(|property| match property {
+                        JsObjectAssignmentPatternProperty(_) => true,
+                        JsObjectAssignmentPatternShorthandProperty(short) => short.init().is_some(),
+                        _ => false,
+                    })
             }
             AnyObjectPattern::JsObjectBindingPattern(binding_pattern) => {
-                let properties_len = binding_pattern.properties().len();
-                if properties_len <= 2 {
-                    return Ok(false);
+                use JsAnyObjectBindingPatternMember::*;
+
+                if binding_pattern.properties().len() <= 2 {
+                    return false;
                 }
-                // A binding is complex when we have at least one [JsObjectBindingPatternProperty]
-                // e.g. const a = { a: c = f } = a
-                // The `c = f` will trigger the complex binding
-                let has_at_least_a_complex_binding = binding_pattern
+
+                binding_pattern
                     .properties()
                     .iter()
-                    .map(|p| p.ok())
-                    .any(|property| {
-                        let property = property;
-
-                        matches!(
-                            property,
-                            Some(
-                                JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(_),
-                            )
-                        )
-                    });
-                Ok(has_at_least_a_complex_binding)
+                    .flatten()
+                    .any(|property| match property {
+                        JsObjectBindingPatternProperty(_) => true,
+                        JsObjectBindingPatternShorthandProperty(member) => member.init().is_some(),
+                        _ => false,
+                    })
             }
         }
     }
 }
 
 impl LeftAssignmentLike {
-    fn as_object_pattern(&self) -> Option<AnyObjectPattern> {
+    fn into_object_pattern(self) -> Option<AnyObjectPattern> {
+        use JsAnyAssignmentPattern::*;
+        use JsAnyBindingPattern::*;
+
         match self {
-            LeftAssignmentLike::JsAnyAssignmentPattern(
-                JsAnyAssignmentPattern::JsObjectAssignmentPattern(node),
-            ) => Some(AnyObjectPattern::from(node.clone())),
-            LeftAssignmentLike::JsAnyBindingPattern(
-                JsAnyBindingPattern::JsObjectBindingPattern(node),
-            ) => Some(AnyObjectPattern::from(node.clone())),
+            LeftAssignmentLike::JsAnyAssignmentPattern(JsObjectAssignmentPattern(node)) => {
+                Some(AnyObjectPattern::from(node))
+            }
+            LeftAssignmentLike::JsAnyBindingPattern(JsObjectBindingPattern(node)) => {
+                Some(AnyObjectPattern::from(node))
+            }
             _ => None,
         }
     }
@@ -432,19 +441,15 @@ impl JsAnyAssignmentLike {
 
                 let name = name?;
 
-                let is_short = if f.context().comments().is_suppressed(name.syntax()) {
+                if f.context().comments().is_suppressed(name.syntax()) {
                     write!(f, [format_suppressed_node(name.syntax())])?;
-                    false
                 } else {
-                    let width = write_member_name(&name.into(), f)?;
-                    let text_width_for_break =
-                        (u8::from(f.options().tab_width()) + MIN_OVERLAP_FOR_BREAK) as usize;
-                    width < text_width_for_break && property_annotation.is_none()
+                    write_member_name(&name.into(), f)?;
                 };
 
                 write!(f, [property_annotation.format()])?;
 
-                Ok(is_short)
+                Ok(false)
             }
             JsAnyAssignmentLike::TsPropertySignatureClassMember(
                 property_signature_class_member,
@@ -538,7 +543,12 @@ impl JsAnyAssignmentLike {
                     let expression = initializer.expression()?;
                     write!(
                         f,
-                        [space(), with_assignment_layout(&expression, Some(layout))]
+                        [
+                            space(),
+                            format_leading_comments(initializer.syntax()),
+                            with_assignment_layout(&expression, Some(layout)),
+                            format_trailing_comments(initializer.syntax())
+                        ]
                     )?;
                 }
                 Ok(())
@@ -552,7 +562,12 @@ impl JsAnyAssignmentLike {
                     let expression = initializer.expression()?;
                     write!(
                         f,
-                        [space(), with_assignment_layout(&expression, Some(layout))]
+                        [
+                            space(),
+                            format_leading_comments(initializer.syntax()),
+                            with_assignment_layout(&expression, Some(layout)),
+                            format_trailing_comments(initializer.syntax())
+                        ]
                     )?;
                 }
                 Ok(())
@@ -711,7 +726,7 @@ impl JsAnyAssignmentLike {
                         JsSyntaxKind::JS_ASSIGNMENT_EXPRESSION
                             | JsSyntaxKind::JS_INITIALIZER_CLAUSE
                     ) {
-                        let great_parent_kind = parent.parent().map(|n| n.kind());
+                        let great_parent_kind = parent.parent().kind();
                         // Finally, we check the great parent.
                         // The great parent triggers the eligibility when
                         // - the current node that we were inspecting is not a "tail"
@@ -798,9 +813,8 @@ impl JsAnyAssignmentLike {
     fn should_break_left_hand_side(&self) -> SyntaxResult<bool> {
         let is_complex_destructuring = self
             .left()?
-            .as_object_pattern()
-            .and_then(|pattern| pattern.is_complex().ok())
-            .unwrap_or(false);
+            .into_object_pattern()
+            .map_or(false, |pattern| pattern.is_complex());
 
         let has_complex_type_annotation = self
             .annotation()
@@ -826,7 +840,8 @@ impl JsAnyAssignmentLike {
                 should_break_after_operator(expression, comments)?
             }
             RightAssignmentLike::JsInitializerClause(initializer) => {
-                should_break_after_operator(&initializer.expression()?, comments)?
+                comments.has_leading_own_line_comment(initializer.syntax())
+                    || should_break_after_operator(&initializer.expression()?, comments)?
             }
             RightAssignmentLike::TsType(TsType::TsUnionType(ty)) => {
                 comments.has_leading_comments(ty.syntax())
@@ -1013,6 +1028,7 @@ fn is_poorly_breakable_member_or_call_chain(
 
     while let Some(node) = expression.take() {
         expression = match node {
+            JsAnyExpression::TsNonNullAssertionExpression(assertion) => assertion.expression().ok(),
             JsAnyExpression::JsCallExpression(call_expression) => {
                 is_chain = true;
                 let callee = call_expression.callee()?;

@@ -1026,7 +1026,6 @@ JsAnyObjectBindingPatternMember =
 	JsObjectBindingPatternProperty
 	| JsObjectBindingPatternRest
 	| JsObjectBindingPatternShorthandProperty
-	| JsIdentifierBinding
 	| JsUnknownBinding
 
 // let { a: b.m } = {}

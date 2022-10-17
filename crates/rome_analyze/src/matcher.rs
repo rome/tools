@@ -11,11 +11,6 @@ use crate::{
 /// [QueryMatch] instances emitted by the various [Visitor](crate::Visitor)
 /// and push signals wrapped in [SignalEntry] to the signal queue
 pub trait QueryMatcher<L: Language> {
-    /// Return a unique identifier for a rule group if it's known by this query matcher
-    fn find_group(&self, group: &str) -> Option<GroupKey>;
-    /// Return a unique identifier for a rule if it's known by this query matcher
-    fn find_rule(&self, group: &str, rule: &str) -> Option<RuleKey>;
-
     /// Execute a single query match
     fn match_query(&mut self, params: MatchQueryParams<L>);
 }
@@ -54,7 +49,7 @@ impl From<GroupKey> for RuleFilter<'static> {
 }
 
 /// Opaque identifier for a single rule
-#[derive(Copy, Clone, Debug, PartialEq, Eq, Hash)]
+#[derive(Copy, Clone, Debug, PartialEq, Eq, PartialOrd, Ord, Hash)]
 pub struct RuleKey {
     group: &'static str,
     rule: &'static str,
@@ -150,14 +145,6 @@ where
     F: FnMut(&MatchQueryParams<L>),
     I: QueryMatcher<L>,
 {
-    fn find_group(&self, group: &str) -> Option<GroupKey> {
-        self.inner.find_group(group)
-    }
-
-    fn find_rule(&self, group: &str, rule: &str) -> Option<RuleKey> {
-        self.inner.find_rule(group, rule)
-    }
-
     fn match_query(&mut self, params: MatchQueryParams<L>) {
         (self.func)(&params);
         self.inner.match_query(params);
@@ -174,34 +161,15 @@ mod tests {
 
     use crate::{
         signals::DiagnosticSignal, Analyzer, AnalyzerContext, AnalyzerDiagnostic, AnalyzerOptions,
-        AnalyzerSignal, ControlFlow, Never, Phases, QueryMatch, QueryMatcher, RuleKey, ServiceBag,
-        SignalEntry, SyntaxVisitor,
+        AnalyzerSignal, ControlFlow, MetadataRegistry, Never, Phases, QueryMatch, QueryMatcher,
+        RuleKey, ServiceBag, SignalEntry, SyntaxVisitor,
     };
 
-    use super::{GroupKey, MatchQueryParams};
+    use super::MatchQueryParams;
 
     struct SuppressionMatcher;
 
     impl QueryMatcher<RawLanguage> for SuppressionMatcher {
-        // Recognize group name "group" and rule name "rule"
-        fn find_group(&self, group: &str) -> Option<GroupKey> {
-            if group == "group" {
-                Some(GroupKey::new("group"))
-            } else {
-                None
-            }
-        }
-
-        fn find_rule(&self, group: &str, rule: &str) -> Option<RuleKey> {
-            match group {
-                "group" => match rule {
-                    "rule" => Some(RuleKey::new("group", "rule")),
-                    _ => None,
-                },
-                _ => None,
-            }
-        }
-
         /// Emits a warning diagnostic for all literal expressions
         fn match_query(&mut self, params: MatchQueryParams<RawLanguage>) {
             let node = match params.query {
@@ -346,7 +314,11 @@ mod tests {
                 .collect()
         }
 
+        let mut metadata = MetadataRegistry::default();
+        metadata.insert_rule("group", "rule");
+
         let mut analyzer = Analyzer::new(
+            &metadata,
             SuppressionMatcher,
             parse_suppression_comment,
             &mut emit_signal,

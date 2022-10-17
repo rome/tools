@@ -145,14 +145,14 @@ mod tests {
         assert_eq!(
             buffer.into_vec(),
             vec![
-                FormatElement::Text(Text::Static { text: "function" }),
+                FormatElement::StaticText { text: "function" },
                 FormatElement::Space,
-                FormatElement::Text(Text::Static { text: "a" }),
+                FormatElement::StaticText { text: "a" },
                 FormatElement::Space,
                 // Group
                 FormatElement::Tag(Tag::StartGroup(tag::Group::new())),
-                FormatElement::Text(Text::Static { text: "(" }),
-                FormatElement::Text(Text::Static { text: ")" }),
+                FormatElement::StaticText { text: "(" },
+                FormatElement::StaticText { text: ")" },
                 FormatElement::Tag(Tag::EndGroup)
             ]
         );

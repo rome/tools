@@ -15,7 +15,7 @@ pub use element::{SyntaxElement, SyntaxElementKey};
 pub(crate) use node::SyntaxSlots;
 pub use node::{
     Preorder, PreorderWithTokens, SendNode, SyntaxElementChildren, SyntaxNode, SyntaxNodeChildren,
-    SyntaxSlot,
+    SyntaxNodeOptionExt, SyntaxSlot,
 };
 
 pub use token::SyntaxToken;

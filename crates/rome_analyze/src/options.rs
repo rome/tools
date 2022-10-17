@@ -1,19 +1,22 @@
-use crate::RuleKey;
-use serde_json::value::RawValue;
+use crate::{RuleKey, TextRange, TextSize};
+use rome_diagnostics::v2::{Diagnostic, LineIndexBuf, Resource, SourceCode};
+use serde::Deserialize;
+use serde_json::Error;
+use serde_json::Value;
 use std::collections::HashMap;
 
 /// A convenient new type data structure to store the options that belong to a rule
-#[derive(Debug, Clone)]
-pub struct RuleOptions(Box<RawValue>);
+#[derive(Debug, Clone, Deserialize)]
+pub struct RuleOptions(Value);
 
 impl RuleOptions {
-    /// It returns the [RawValue] for the relative rule
-    pub fn value(&self) -> &RawValue {
+    /// It returns the string contained in [RawValue], for the relative rule
+    pub fn value(&self) -> &Value {
         &self.0
     }
 
     /// Creates a new [RuleOptions]
-    pub fn new(options: Box<RawValue>) -> Self {
+    pub fn new(options: Value) -> Self {
         Self(options)
     }
 }
@@ -24,7 +27,7 @@ pub struct AnalyzerRules(HashMap<RuleKey, RuleOptions>);
 
 impl AnalyzerRules {
     /// It tracks the options of a specific rule
-    pub fn push_rule(&mut self, rule_key: RuleKey, options: Box<RawValue>) {
+    pub fn push_rule(&mut self, rule_key: RuleKey, options: Value) {
         self.0.insert(rule_key, RuleOptions::new(options));
     }
 
@@ -50,47 +53,53 @@ pub struct AnalyzerConfiguration {
 #[derive(Debug, Clone, Default)]
 pub struct AnalyzerOptions {
     /// A data structured derived from the [`rome.json`] file
-    configuration: AnalyzerConfiguration,
+    pub configuration: AnalyzerConfiguration,
 }
 
-impl AnalyzerOptions {
-    /// It retrieves the options that belong to a rule, if they exist.
-    ///
-    /// In order to retrieve a typed data structure, the function has to accept a `FromType`, a
-    /// `ToType` (this one, inferrable by the compiler) and a closure that does the mapping.
-    ///
-    /// Usually, options are a `serde::RawValue` and need to be mapped to a sized type.
-    ///
-    /// ## Examples
-    ///
-    /// ```rust,ignore
-    /// use rome_analyze::{declare_rule, Rule, RuleCategory, RuleMeta, RuleMetadata};
-    /// use rome_analyze::context::RuleContext;
-    /// declare_rule! {    
-    ///     /// Some doc
-    ///     pub(crate) Name {
-    ///         version: "0.0.0",
-    ///         name: "name",
-    ///         recommended: true,
-    ///     }
-    /// }
-    ///
-    /// impl Rule for Name {
-    ///     const CATEGORY: RuleCategory = RuleCategory::Lint;
-    ///     type Query = ();
-    ///     type State = ();
-    ///     type Signals = ();
-    ///
-    ///     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
-    ///         let options = ctx.options();
-    ///     }
-    /// }
-    /// ```
-    pub fn rule_options<F: FnOnce(&RuleOptions) -> ToType, ToType>(
-        &self,
-        rule_key: &RuleKey,
-        mapper: F,
-    ) -> Option<ToType> {
-        self.configuration.rules.get_rule(rule_key).map(mapper)
+#[derive(Debug, Diagnostic)]
+#[diagnostic(category = "internalError/io")]
+pub struct OptionsDeserializationDiagnostic {
+    #[message]
+    message: String,
+    #[description]
+    description: String,
+    #[location(resource)]
+    path: Resource<&'static str>,
+    #[location(span)]
+    span: Option<TextRange>,
+    #[location(source_code)]
+    source_code: Option<SourceCode<String, LineIndexBuf>>,
+}
+
+impl OptionsDeserializationDiagnostic {
+    pub fn new(rule_name: &str, input: String, error: Error) -> Self {
+        let line_starts = LineIndexBuf::from_source_text(&input);
+
+        let line_index = error.line().checked_sub(1);
+        let span = line_index.and_then(|line_index| {
+            let line_start = line_starts.get(line_index)?;
+
+            let column_index = error.column().checked_sub(1)?;
+            let column_offset = TextSize::try_from(column_index).ok()?;
+
+            let span_start = line_start + column_offset;
+            Some(TextRange::at(span_start, TextSize::from(0)))
+        });
+
+        let message = format!(
+            "Errors emitted while attempting run the rule {rule_name}: \n {}",
+            error
+        );
+
+        Self {
+            message: message.clone(),
+            description: message,
+            path: Resource::Memory,
+            span,
+            source_code: Some(SourceCode {
+                text: input,
+                line_starts: Some(line_starts),
+            }),
+        }
     }
 }

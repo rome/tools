@@ -109,6 +109,7 @@ impl Rule for NoFunctionAssign {
     type Query = Semantic<JsFunctionDeclaration>;
     type State = State;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let declaration = ctx.query();

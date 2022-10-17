@@ -37,9 +37,6 @@ pub(super) struct StackedStack<'a, T> {
     /// The content of the original stack.
     original: &'a [T],
 
-    /// The index of the "top" element in the original stack.
-    original_top: usize,
-
     /// Items that have been pushed since the creation of this stack and aren't part of the `original` stack.
     stack: Vec<T>,
 }
@@ -52,11 +49,7 @@ impl<'a, T> StackedStack<'a, T> {
 
     /// Creates a new stack that uses `stack` for storing its elements.
     pub(super) fn with_vec(original: &'a [T], stack: Vec<T>) -> Self {
-        Self {
-            original_top: original.len(),
-            original,
-            stack,
-        }
+        Self { original, stack }
     }
 
     /// Returns the underlying `stack` vector.
@@ -70,13 +63,12 @@ where
     T: Copy,
 {
     fn pop(&mut self) -> Option<T> {
-        self.stack.pop().or_else(|| {
-            if self.original_top == 0 {
-                None
-            } else {
-                self.original_top -= 1;
-                Some(self.original[self.original_top])
+        self.stack.pop().or_else(|| match self.original {
+            [rest @ .., last] => {
+                self.original = rest;
+                Some(*last)
             }
+            _ => None,
         })
     }
 
@@ -85,17 +77,11 @@ where
     }
 
     fn top(&self) -> Option<&T> {
-        self.stack.last().or_else(|| {
-            if self.original_top == 0 {
-                None
-            } else {
-                Some(&self.original[self.original_top - 1])
-            }
-        })
+        self.stack.last().or_else(|| self.original.last())
     }
 
     fn is_empty(&self) -> bool {
-        self.original_top == 0 && self.stack.is_empty()
+        self.original.is_empty() && self.stack.is_empty()
     }
 }
 

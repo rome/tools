@@ -55,7 +55,7 @@ pub use builders::BestFitting;
 
 use crate::builders::syntax_token_cow_slice;
 use crate::comments::{CommentStyle, Comments, SourceComment};
-pub use format_element::{normalize_newlines, FormatElement, Text, LINE_TERMINATORS};
+pub use format_element::{normalize_newlines, FormatElement, LINE_TERMINATORS};
 pub use group_id::GroupId;
 use rome_rowan::{
     Language, SyntaxElement, SyntaxError, SyntaxNode, SyntaxResult, SyntaxToken, SyntaxTriviaPiece,

@@ -168,8 +168,6 @@ impl DeriveInput {
                     result.source = Some(ident.clone());
                     continue;
                 }
-
-                abort!(attr.path.span(), "unknown attribute");
             }
         }
 

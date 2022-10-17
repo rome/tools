@@ -7,7 +7,7 @@ use std::{
 };
 
 use rome_console::{fmt, markup};
-use rome_text_size::{TextRange, TextSize};
+use rome_text_size::{TextLen, TextRange, TextSize};
 use unicode_width::UnicodeWidthChar;
 
 use crate::v2::{
@@ -173,31 +173,31 @@ pub(super) fn print_frame(fmt: &mut fmt::Formatter<'_>, location: Location<'_>) 
             let is_first_line = line_index == start_location.line_number;
             let is_last_line = line_index == end_location.line_number;
 
+            let start_index_relative_to_line =
+                start_index.max(line_range.start()) - line_range.start();
+            let end_index_relative_to_line = end_index.min(line_range.end()) - line_range.start();
+
             let marker = if is_first_line && is_last_line {
                 // Only line in the selection
-                let start_index =
-                    TextSize::try_from(start_location.column_number.to_zero_indexed())
-                        .expect("integer overflow");
-                let end_index = TextSize::try_from(end_location.column_number.to_zero_indexed())
-                    .expect("integer overflow");
-                Some(TextRange::new(start_index, end_index))
+                Some(TextRange::new(
+                    start_index_relative_to_line,
+                    end_index_relative_to_line,
+                ))
             } else if is_first_line {
                 // First line in selection
-                let start_index =
-                    TextSize::try_from(start_location.column_number.to_zero_indexed())
-                        .expect("integer overflow");
-                let end_index = TextSize::of(line_text);
-                Some(TextRange::new(start_index, end_index))
+                Some(TextRange::new(
+                    start_index_relative_to_line,
+                    line_text.text_len(),
+                ))
             } else if is_last_line {
                 // Last line in selection
-                let start_index = TextSize::of(line_text)
-                    .checked_sub(TextSize::of(line_text.trim_start()))
+                let start_index = line_text
+                    .text_len()
+                    .checked_sub(line_text.trim_start().text_len())
                     // SAFETY: The length of `line_text.trim_start()` should
                     // never be larger than `line_text` itself
                     .expect("integer overflow");
-                let end_index = TextSize::try_from(end_location.column_number.to_zero_indexed())
-                    .expect("integer overflow");
-                Some(TextRange::new(start_index, end_index))
+                Some(TextRange::new(start_index, end_index_relative_to_line))
             } else {
                 None
             };
@@ -440,7 +440,7 @@ impl<'diagnostic> SourceFile<'diagnostic> {
                 .get(line_index)
                 .cloned()
                 .expect("failed despite previous check")),
-            Ordering::Equal => Ok(TextSize::of(self.source)),
+            Ordering::Equal => Ok(self.source.text_len()),
             Ordering::Greater => Err(io::Error::new(
                 io::ErrorKind::InvalidInput,
                 "overflow error",
@@ -495,7 +495,7 @@ impl<'diagnostic> SourceFile<'diagnostic> {
 fn column_index(source: &str, line_range: TextRange, byte_index: TextSize) -> usize {
     let end_index = std::cmp::min(
         byte_index,
-        std::cmp::min(line_range.end(), TextSize::of(source)),
+        std::cmp::min(line_range.end(), source.text_len()),
     );
 
     (usize::from(line_range.start())..usize::from(end_index))

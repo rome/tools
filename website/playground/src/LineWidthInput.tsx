@@ -28,6 +28,7 @@ export default function LineWidthInput({ lineWidth, setLineWidth }: Props) {
 			<button
 				aria-label="Set line width to 80 characters"
 				onClick={() => setLineWidth(80)}
+				onKeyDown={() => setLineWidth(80)}
 				disabled={lineWidth === 80}
 				className="bg-slate-500 m-2 text-sm w-[80px] p-1 rounded text-slate-50 disabled:bg-slate-300 transition"
 			>
@@ -36,6 +37,7 @@ export default function LineWidthInput({ lineWidth, setLineWidth }: Props) {
 			<button
 				aria-label="Set line width to 120 characters"
 				onClick={() => setLineWidth(120)}
+				onKeyDown={() => setLineWidth(120)}
 				disabled={lineWidth === 120}
 				className="bg-slate-500 m-2 text-sm w-[80px] p-1 rounded text-slate-50 disabled:bg-slate-300 transition"
 			>

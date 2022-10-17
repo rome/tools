@@ -44,6 +44,7 @@ impl Rule for NoDupeArgs {
     type Query = Ast<JsAnyFunctionAndMethod>;
     type State = JsIdentifierBinding;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let function = ctx.query();
@@ -144,9 +145,6 @@ fn traverse_binding(
             return pattern.properties().into_iter().find_map(|prop| {
                 let prop = prop.ok()?;
                 match prop {
-                    JsAnyObjectBindingPatternMember::JsIdentifierBinding(id_binding) => {
-                        track_binding(&id_binding, tracked_bindings).then_some(id_binding)
-                    }
                     JsAnyObjectBindingPatternMember::JsObjectBindingPatternProperty(pattern) => {
                         let pattern = pattern.pattern().ok()?;
                         traverse_binding(pattern, tracked_bindings)

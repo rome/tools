@@ -1,7 +1,7 @@
 use crate::Parser;
 use bitflags::bitflags;
 use indexmap::IndexMap;
-use rome_js_syntax::{Language, SourceType};
+use rome_js_syntax::SourceType;
 use rome_rowan::{TextRange, TextSize};
 use std::collections::HashSet;
 use std::ops::{Deref, DerefMut, Range};
@@ -102,11 +102,10 @@ impl ParserState {
         let mut state = ParserState {
             parsing_context: ParsingContextFlags::TOP_LEVEL,
             label_set: IndexMap::new(),
-            strict: if source_type.module_kind().is_module() {
-                Some(StrictMode::Module)
-            } else {
-                None
-            },
+            strict: source_type
+                .module_kind()
+                .is_module()
+                .then_some(StrictMode::Module),
             default_item: None,
             name_map: IndexMap::new(),
             duplicate_binding_parent: None,
@@ -118,13 +117,10 @@ impl ParserState {
             state.parsing_context |= ParsingContextFlags::IN_ASYNC
         }
 
-        if matches!(
-            source_type.language(),
-            Language::TypeScript {
-                definition_file: true
-            }
-        ) {
-            state.parsing_context |= ParsingContextFlags::AMBIENT_CONTEXT
+        // test d.ts arguments_in_definition_file
+        // function a(...arguments: any[]): void;
+        if source_type.language().is_definition_file() {
+            EnterAmbientContext.apply(&mut state);
         }
 
         state

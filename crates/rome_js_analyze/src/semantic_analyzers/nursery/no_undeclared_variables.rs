@@ -36,6 +36,7 @@ impl Rule for NoUndeclaredVariables {
     type Query = SemanticServices;
     type State = (TextRange, String);
     type Signals = Vec<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         ctx.query()

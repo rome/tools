@@ -285,7 +285,7 @@ mod test {
 
     fn assert_closure(code: &str, name: &str, captures: &[&str]) {
         let r = rome_js_parser::parse(code, FileId::zero(), SourceType::tsx());
-        let model = semantic_model(&r.tree());
+        let model = semantic_model(&r.tree(), SemanticModelOptions::default());
 
         let closure = if name != "ARROWFUNCTION" {
             let node = r
@@ -327,7 +327,7 @@ mod test {
 
     fn get_closure_children(code: &str, name: &str) -> Vec<Closure> {
         let r = rome_js_parser::parse(code, FileId::zero(), SourceType::tsx());
-        let model = semantic_model(&r.tree());
+        let model = semantic_model(&r.tree(), SemanticModelOptions::default());
 
         let closure = if name != "ARROWFUNCTION" {
             let node = r

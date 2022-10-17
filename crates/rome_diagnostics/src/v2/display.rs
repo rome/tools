@@ -125,10 +125,12 @@ impl<'fmt, D: Diagnostic + ?Sized> fmt::Display for PrintHeader<'fmt, D> {
         }
 
         // Load the printed width for the header, and fill the rest of the line
-        // with the '━' line character up to 100 characters
+        // with the '━' line character up to 100 columns with at least 10 characters
         const HEADER_WIDTH: usize = 100;
+        const MIN_WIDTH: usize = 10;
+
         let text_width = slot.map_or(0, |writer| writer.width);
-        let line_width = HEADER_WIDTH.saturating_sub(text_width);
+        let line_width = HEADER_WIDTH.saturating_sub(text_width).max(MIN_WIDTH);
         f.write_str(&"\u{2501}".repeat(line_width))
     }
 }

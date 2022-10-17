@@ -33,7 +33,7 @@ declare_rule! {
     /// ```
     ///
 
-    pub(crate) UseAltText{
+    pub(crate) UseAltText {
         version:"0.10.0",
         name:"useAltText",
         recommended: false,
@@ -48,6 +48,7 @@ impl Rule for UseAltText {
     type Query = Ast<JsxSelfClosingElement>;
     type State = TextRange;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let element = ctx.query();

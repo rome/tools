@@ -45,6 +45,7 @@ impl Rule for NoAsyncPromiseExecutor {
     type Query = Ast<JsNewExpression>;
     type State = JsAnyFunction;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let node = ctx.query();

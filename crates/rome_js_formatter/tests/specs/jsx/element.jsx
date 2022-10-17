@@ -41,6 +41,70 @@ c = <div>a{' '}{' '}{' '}{' '}{' '}{' '}{' '}{' '}b{' '}{' '}{' '}{' '}{' '}{' '
 
 c2 = <div>a{' '}{' '}{' '}{' '}{' '}{' '}{' '}{' '}<div></div>content{' '}{' '}{' '}{' '}{' '}{' '}</div>;
 
+// this group should fit one line jsx whitespaces are hidden
+b =
+	<div>
+		<a></a>
+
+		{' '}
+
+		<a></a>
+
+		{' '}
+		1
+	</div>;
+
+// this group should break first tag and show only first jsx whitespace
+b1 =
+	<div>
+		<a>
+			{`
+12312
+12312
+			`}
+		</a>
+
+		{' '}
+
+		<a></a>
+
+		{' '}
+		1
+	</div>;
+
+// this group fit one line and hide jsx whitespace
+b2 =
+	<>
+		<a>123
+		</a>
+
+		{' '}
+		1
+	</>;
+
+// this group break group and show jsx whitespace
+b3 =
+	<>
+		<a>{`
+123`}
+		</a>
+
+		{' '}
+		1
+	</>;
+
+const b4 = <div>
+	Text <a data-very-long-prop-breakline-rome-playground data-other>
+	some link
+</a>{' '}
+	| some other text,{' '}
+</div>;
+
+b5 =
+	<div>
+		<br /> long text long text long text long text long text long text long text long text<link>url</link> long text long text
+	</div>;
+
 <div><div></div><a> jumps over the lazy dog </a></div>;
 
 const Essay = () => <div>The films of Wong Kar-Wai exemplify the synthesis of French New Wave cinema—specifically the unrelenting

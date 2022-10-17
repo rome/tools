@@ -12,7 +12,7 @@ eleventyNavigation:
 # Rules
 
 <section>
-<h2>Correctness</h2>
+<h2>Correctness<a class="header-anchor" href="#Correctness" aria-label="Correctness"></a></h2>
 
 This group should includes those rules that are meant to prevent possible bugs and misuse of the language.
 <div class="rule">
@@ -246,12 +246,14 @@ initializer and update expressions are not needed
 </div>
 </section>
 <section>
-<h2>Nursery</h2>
+<h2>Nursery<a class="header-anchor" href="#Nursery" aria-label="Nursery"></a></h2>
 
-Rules that are being written. Rules under this category are meant to be considered unstable or buggy.
+Rules that are being written. Rules under this group are meant to be considered unstable or buggy.
 
-Rules can be downgraded to this category in case some path release is needed. After an arbitrary amount of time, the team can decide
-to promote these rules into a more appropriate category.
+Developers can opt-in these rules via configuration. We vehemently appreciate filing issue in case of bugs or performance problems. 
+
+Rules can be downgraded to this group in case a patch release is needed. After an arbitrary amount of time, the team can decide
+to promote these rules into an appropriate group. Doing so means that the rule is stable and ready for production.
 <div class="rule">
 <h3 data-toc-exclude id="noArrayIndexKey">
 	<a href="/docs/lint/rules/noArrayIndexKey">noArrayIndexKey (since v0.10.0)</a>
@@ -260,11 +262,25 @@ to promote these rules into a more appropriate category.
 Discourage the usage of Array index in keys.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noAutofocus">
+	<a href="/docs/lint/rules/noAutofocus">noAutofocus (since v10.0.0)</a>
+	<a class="header-anchor" href="#noAutofocus"></a>
+</h3>
+Avoid the <code>autoFocus</code> attribute
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noChildrenProp">
 	<a href="/docs/lint/rules/noChildrenProp">noChildrenProp (since v0.10.0)</a>
 	<a class="header-anchor" href="#noChildrenProp"></a>
 </h3>
 Prevent passing of <strong>children</strong> as props.
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noConstAssign">
+	<a href="/docs/lint/rules/noConstAssign">noConstAssign (since v10.0.0)</a>
+	<a class="header-anchor" href="#noConstAssign"></a>
+</h3>
+Prevents from having <code>const</code> variables being re-assigned.
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noDangerouslySetInnerHtml">
@@ -281,6 +297,13 @@ Prevent the usage of dangerous JSX props
 Report when a DOM element or a component uses both <code>children</code> and <code>dangerouslySetInnerHTML</code> prop.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noExplicitAny">
+	<a href="/docs/lint/rules/noExplicitAny">noExplicitAny (since v10.0.0)</a>
+	<a class="header-anchor" href="#noExplicitAny"></a>
+</h3>
+Disallow the <code>any</code> type usage
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noNewSymbol">
 	<a href="/docs/lint/rules/noNewSymbol">noNewSymbol (since v0.10.0)</a>
 	<a class="header-anchor" href="#noNewSymbol"></a>
@@ -288,11 +311,25 @@ Report when a DOM element or a component uses both <code>children</code> and <co
 Disallow <code>new</code> operators with the <code>Symbol</code> object
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noPositiveTabindex">
+	<a href="/docs/lint/rules/noPositiveTabindex">noPositiveTabindex (since v10.0.0)</a>
+	<a class="header-anchor" href="#noPositiveTabindex"></a>
+</h3>
+Prevent the usage of positive integers on <code>tabIndex</code> property
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noRenderReturnValue">
 	<a href="/docs/lint/rules/noRenderReturnValue">noRenderReturnValue (since v0.10.0)</a>
 	<a class="header-anchor" href="#noRenderReturnValue"></a>
 </h3>
 Prevent the usage of the return value of <code>React.render</code>.
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noRestrictedGlobals">
+	<a href="/docs/lint/rules/noRestrictedGlobals">noRestrictedGlobals (since v0.10.0)</a>
+	<a class="header-anchor" href="#noRestrictedGlobals"></a>
+</h3>
+This rule allows you to specify global variable names that you don’t want to use in your application.
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noUndeclaredVariables">
@@ -330,11 +367,26 @@ Disallow unnecessary fragments
 This rules prevents void elements (AKA self-closing elements) from having children.
 </div>
 <div class="rule">
+<<<<<<< HEAD
 <h3 data-toc-exclude id="useAltText">
 	<a href="/docs/lint/rules/useAltText">useAltText (since v0.10.0)</a>
 	<a class="header-anchor" href="#useAltText"></a>
 </h3>
 It asserts that alternative text to images or areas, help to rely on to screen readers to understand the purpose and the context of the image.
+=======
+<h3 data-toc-exclude id="useAnchorContent">
+	<a href="/docs/lint/rules/useAnchorContent">useAnchorContent (since v10.0.0)</a>
+	<a class="header-anchor" href="#useAnchorContent"></a>
+</h3>
+Enforce that anchor elements have content and that the content is accessible to screen readers.
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useBlankTarget">
+	<a href="/docs/lint/rules/useBlankTarget">useBlankTarget (since v10.0.0)</a>
+	<a class="header-anchor" href="#useBlankTarget"></a>
+</h3>
+Disallow <code>target=&quot;_blank&quot;</code> attribute without <code>rel=&quot;noreferrer&quot;</code>
+>>>>>>> 004d7b932fa4686b4ad801597f81223fd93231dd
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useButtonType">
@@ -351,11 +403,34 @@ Enforces the usage of the attribute <code>type</code> for the element <code>butt
 Enforce camel case naming convention.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useFlatMap">
+	<a href="/docs/lint/rules/useFlatMap">useFlatMap (since v10.0.0)</a>
+	<a class="header-anchor" href="#useFlatMap"></a>
+</h3>
+Promotes the use of <code>.flatMap()</code> when <code>map().flat()</code> are used together.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useFragmentSyntax">
 	<a href="/docs/lint/rules/useFragmentSyntax">useFragmentSyntax (since v0.10.0)</a>
 	<a class="header-anchor" href="#useFragmentSyntax"></a>
 </h3>
 This rule enforces the use of <code>&lt;&gt;...&lt;/&gt;</code> over <code>&lt;Fragment&gt;...&lt;/Fragment&gt;</code>.
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useKeyWithClickEvents">
+	<a href="/docs/lint/rules/useKeyWithClickEvents">useKeyWithClickEvents (since v10.0.0)</a>
+	<a class="header-anchor" href="#useKeyWithClickEvents"></a>
+</h3>
+Enforce to have the <code>onClick</code> mouse event with the <code>onKeyUp</code>, the <code>onKeyDown</code>, or the <code>noKeyPress</code> keyboard event.
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useKeyWithMouseEvents">
+	<a href="/docs/lint/rules/useKeyWithMouseEvents">useKeyWithMouseEvents (since v10.0.0)</a>
+	<a class="header-anchor" href="#useKeyWithMouseEvents"></a>
+</h3>
+Enforce that <code>onMouseOver</code>/<code>onMouseOut</code> are accompanied by <code>onFocus</code>/<code>onBlur</code> for keyboard-only users.
+It is important to take into account users with physical disabilities who cannot use a mouse,
+who use assistive technology or screenreader.
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useOptionalChain">
@@ -364,9 +439,16 @@ This rule enforces the use of <code>&lt;&gt;...&lt;/&gt;</code> over <code>&lt;F
 </h3>
 Enforce using concise optional chain instead of chained logical expressions.
 </div>
+<div class="rule">
+<h3 data-toc-exclude id="useValidAnchor">
+	<a href="/docs/lint/rules/useValidAnchor">useValidAnchor (since v10.0.0)</a>
+	<a class="header-anchor" href="#useValidAnchor"></a>
+</h3>
+Enforce that all anchors are valid, and they are navigable elements.
+</div>
 </section>
 <section>
-<h2>Style</h2>
+<h2>Style<a class="header-anchor" href="#Style" aria-label="Style"></a></h2>
 
 Rules that focus mostly on making the code more consistent.
 <div class="rule">
