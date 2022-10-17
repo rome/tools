@@ -508,7 +508,6 @@ impl Workspace for WorkspaceServer {
         let entries = vec![
             RageEntry::section("Workspace"),
             RageEntry::pair("Open Documents", &format!("{}", self.documents.len())),
-            // RageEntry::pair("Settings", self.settings().)
         ];
 
         Ok(RageResult { entries })

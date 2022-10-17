@@ -1,0 +1,34 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+expression: content
+---
+# Emitted Messages
+
+```block
+CLI:
+  Version:              0.0.0
+  Color support:        true
+
+Platform:
+  CPU Architecture:     x86_64
+  OS:                   linux
+
+Environment:
+  NO_COLOR:             unset
+  TERM:                 "ansi"
+
+Rome Configuration:
+  Status:               unset
+
+Server:
+  Version:              0.0.0
+  Name:                 rome_lsp
+  CPU Architecture:     x86_64
+  OS:                   linux
+
+Workspace:
+  Open Documents:       0
+
+```
+
+

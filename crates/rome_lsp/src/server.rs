@@ -251,21 +251,6 @@ pub struct ServerFactory {
     session_id: AtomicUsize,
 }
 
-#[must_use]
-struct SessionLifetimeGuard {
-    key: SessionKey,
-    sessions: Sessions,
-}
-
-impl Drop for SessionLifetimeGuard {
-    fn drop(&mut self) {
-        if let Ok(mut sessions) = self.sessions.lock() {
-            let removed = sessions.remove(&self.key);
-            debug_assert!(removed.is_some());
-        }
-    }
-}
-
 /// Helper method for wrapping a [Workspace] method in a `custom_method` for
 /// the [LSPServer]
 macro_rules! workspace_method {

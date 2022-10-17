@@ -23,7 +23,7 @@ pub(crate) fn full_version(mut session: CliSession) -> Result<(), Termination> {
     match session.app.workspace.server_info() {
         None => {
             session.app.console.log(markup! {
-                "Server:     disconnected"
+                "Server:     "<Dim>"not connected"</Dim>
             });
         }
         Some(info) => {

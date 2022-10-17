@@ -9,11 +9,12 @@ const MAIN: Markup = markup! {
     - "<Emphasis>"check"</Emphasis>"        Run the linter on a set of files
     - "<Emphasis>"ci"</Emphasis>"           Run the linter and check the formatting of a set of files
     - "<Emphasis>"format"</Emphasis>"       Run the formatter on a set of files
-    - "<Emphasis>"help"</Emphasis>"         Prints this help message
     - "<Emphasis>"init"</Emphasis>"         Bootstraps a new rome project
     - "<Emphasis>"start"</Emphasis>"        Start the Rome daemon server process
     - "<Emphasis>"stop"</Emphasis>"         Stop the Rome daemon server process
+    - "<Emphasis>"rage"</Emphasis>"         Prints information for debugging
     - "<Emphasis>"version"</Emphasis>"      Shows the Rome version information and quit
+    - "<Emphasis>"help"</Emphasis>"         Prints this help message
 
 "<Emphasis>"OPTIONS:"</Emphasis>"
     "<Dim>"--no-colors"</Dim>"      Disable the formatting of markup (print everything as plain text)
@@ -93,6 +94,13 @@ const STOP: Markup = markup! {
     rome stop"
 };
 
+const RAGE: Markup = markup! {
+"Rome rage: Prints information for debugging
+
+"<Emphasis>"USAGE:"</Emphasis>"
+    rome rage"
+};
+
 const VERSION_HELP_TEXT: Markup = markup! {
 "Rome version: Show the Rome version information
 
@@ -110,6 +118,7 @@ pub(crate) fn help(mut session: CliSession, command: Option<&str>) -> Result<(),
         Some("start") => START,
         Some("stop") => STOP,
         Some("version") => VERSION_HELP_TEXT,
+        Some("rage") => RAGE,
 
         Some(cmd) => {
             return Err(Termination::UnknownCommandHelp {

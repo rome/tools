@@ -87,7 +87,7 @@ impl Display for RunningRomeServer {
         match service::open_transport(runtime) {
             Ok(None) => {
                 markup!(
-                    {Section("LSP")}
+                    {Section("Server")}
                     {KeyValuePair("Status", markup!(<Dim>"stopped"</Dim>))}
                 )
                 .fmt(f)?;
