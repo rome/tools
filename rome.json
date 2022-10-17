@@ -14,7 +14,8 @@
 				"noNewSymbol": "error",
 				"noVoidElementsWithChildren": "error",
 				"noDangerouslySetInnerHtmlWithChildren": "error",
-				"noAutofocus": "error"
+				"noAutofocus": "error",
+				"useKeyWithClickEvents": "error"
 			}
 		}
 	}

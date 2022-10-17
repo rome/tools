@@ -179,6 +179,7 @@ export interface Nursery {
 	useButtonType?: RuleConfiguration;
 	useCamelCase?: RuleConfiguration;
 	useFragmentSyntax?: RuleConfiguration;
+	useKeyWithClickEvents?: RuleConfiguration;
 	useKeyWithMouseEvents?: RuleConfiguration;
 	useOptionalChain?: RuleConfiguration;
 	useValidAnchor?: RuleConfiguration;
@@ -319,6 +320,7 @@ export type Category =
 	| "lint/nursery/useAnchorContent"
 	| "lint/nursery/useBlankTarget"
 	| "lint/nursery/useValidAnchor"
+	| "lint/nursery/useKeyWithClickEvents"
 	| "lint/nursery/noRestrictedGlobals"
 	| "lint/nursery/noPositiveTabindex"
 	| "lint/nursery/noExplicitAny"

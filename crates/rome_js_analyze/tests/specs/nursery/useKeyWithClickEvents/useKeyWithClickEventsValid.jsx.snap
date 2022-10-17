@@ -1,0 +1,15 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: useKeyWithClickEventsValid.jsx
+---
+# Input
+```js
+<>
+    <div onClick={() => {}} onKeyUp={handleKeyUp} />
+    <div onClick={() => {}} onKeyDown={handleKeyDown} />
+    <div onClick={() => {}} onKeyPress={handleKeyPress} />
+    <MyComponent onClick={() => {}} />
+</>
+```
+
+
