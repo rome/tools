@@ -8,7 +8,7 @@ use rome_rowan::{AstNode, TextRange};
 declare_rule! {
     /// Prevents from having `const` variables being re-assigned.
     ///
-    /// Trying to assign a value to a `const` will cause an `TypeError` at runtime.
+    /// Trying to assign a value to a `const` will cause an `TypeError` when the code is executed.
     ///
     /// ## Examples
     ///
@@ -27,6 +27,20 @@ declare_rule! {
     /// ```js,expect_diagnostic
     /// const a = 1;
     /// ++a;
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// const a = 1, b = 2;
+    ///
+    /// a = 2;
+    /// ```
+    ///
+    /// ### Valid
+    ///
+    /// ```js
+    /// const a = 10;
+    /// let b = 10;
+    /// b = 20;
     /// ```
     ///
     pub(crate) NoConstAssign {
@@ -72,7 +86,7 @@ impl Rule for NoConstAssign {
             )
             .secondary(
                 state,
-                markup! {"This is where the variables is defined as constant"},
+                markup! {"This is where the variable is defined as constant"},
             ),
         )
     }

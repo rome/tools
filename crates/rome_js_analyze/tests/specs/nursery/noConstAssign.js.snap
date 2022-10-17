@@ -29,7 +29,7 @@ noConstAssign.js:2:1 lint/nursery/noConstAssign ━━━━━━━━━━�
     3 │ 
     4 │ const b = 2, c = 43;
   
-  i This is where the variables is defined as constant
+  i This is where the variable is defined as constant
   
   > 1 │ const a = 1;
       │       ^
@@ -50,7 +50,7 @@ noConstAssign.js:5:1 lint/nursery/noConstAssign ━━━━━━━━━━�
     6 │ ++b;
     7 │ b += 45;
   
-  i This is where the variables is defined as constant
+  i This is where the variable is defined as constant
   
     2 │ a = 2;
     3 │ 
@@ -74,7 +74,7 @@ noConstAssign.js:6:3 lint/nursery/noConstAssign ━━━━━━━━━━�
     7 │ b += 45;
     8 │ b--;
   
-  i This is where the variables is defined as constant
+  i This is where the variable is defined as constant
   
     2 │ a = 2;
     3 │ 
@@ -98,7 +98,7 @@ noConstAssign.js:7:1 lint/nursery/noConstAssign ━━━━━━━━━━�
     8 │ b--;
     9 │ function f() {
   
-  i This is where the variables is defined as constant
+  i This is where the variable is defined as constant
   
     2 │ a = 2;
     3 │ 
@@ -122,7 +122,7 @@ noConstAssign.js:8:1 lint/nursery/noConstAssign ━━━━━━━━━━�
      9 │ function f() {
     10 │     b++;
   
-  i This is where the variables is defined as constant
+  i This is where the variable is defined as constant
   
     2 │ a = 2;
     3 │ 
@@ -145,7 +145,7 @@ noConstAssign.js:10:5 lint/nursery/noConstAssign ━━━━━━━━━━�
        │     ^
     11 │ }
   
-  i This is where the variables is defined as constant
+  i This is where the variable is defined as constant
   
     2 │ a = 2;
     3 │ 
