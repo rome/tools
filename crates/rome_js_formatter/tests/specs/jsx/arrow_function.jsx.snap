@@ -1,0 +1,61 @@
+---
+source: crates/rome_js_formatter/tests/spec_test.rs
+expression: arrow_function.jsx
+---
+# Input
+function BackTopContent(props){
+	return (
+		<CSSMotion>
+			{({ className: motionClassName }) =>
+				cloneElement(className => ({
+					className
+				}))}
+		</CSSMotion>
+	);
+}
+
+function BackTopContent(props){
+	return (
+		<CSSMotion>
+			{({ className: motionClassName }) =>
+				cloneElement(className => ({
+					className
+				}))/*with comment*/}
+		</CSSMotion>
+	);
+}
+
+=============================
+# Outputs
+## Output 1
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+-----
+function BackTopContent(props) {
+	return (
+		<CSSMotion>
+			{({ className: motionClassName }) =>
+				cloneElement((className) => ({
+					className,
+				}))
+			}
+		</CSSMotion>
+	);
+}
+
+function BackTopContent(props) {
+	return (
+		<CSSMotion>
+			{
+				({ className: motionClassName }) =>
+					cloneElement((className) => ({
+						className,
+					})) /*with comment*/
+			}
+		</CSSMotion>
+	);
+}
+

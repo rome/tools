@@ -17,7 +17,7 @@ use crate::utils::{
 use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyBindingPattern, JsAnyExpression, JsAnyFormalParameter,
     JsAnyFunctionBody, JsAnyParameter, JsAnyTemplateElement, JsArrowFunctionExpression,
-    JsSyntaxKind, JsSyntaxNode, JsTemplate,
+    JsSyntaxKind, JsSyntaxNode, JsTemplate, JsxExpressionChild,
 };
 use rome_rowan::SyntaxResult;
 
@@ -155,6 +155,12 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                         Some(GroupedCallArgumentLayout::GroupedLastArgument)
                     );
 
+                    let should_add_soft_line = is_last_call_arg
+                        // if it's inside a JSXExpression (e.g. an attribute) we should align the expression's closing } with the line with the opening {.
+                        || node.parent::<JsxExpressionChild>().map_or(false, |_| {
+                            !f.context().comments().has_comments(node.syntax())
+                        });
+
                     write!(
                         f,
                         [
@@ -173,10 +179,9 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
 
                                     Ok(())
                                 })),
-                                is_last_call_arg.then_some(format_args![
-                                    if_group_breaks(&text(",")),
-                                    soft_line_break()
-                                ])
+                                is_last_call_arg
+                                    .then_some(format_args![if_group_breaks(&text(",")),]),
+                                should_add_soft_line.then_some(format_args![soft_line_break()])
                             ])
                         ]
                     )
