@@ -100,9 +100,10 @@ fn assert_rage_snapshot(payload: SnapshotPayload<'_>) {
         *message = message
             .lines()
             .map(|line| match line.trim_start().split_once(':') {
-                Some(("CPU Architecture" | "OS" | "NO_COLOR" | "TERM", value)) => {
-                    line.replace(value.trim_start(), "**PLACEHOLDER**")
-                }
+                Some((
+                    "CPU Architecture" | "OS" | "NO_COLOR" | "TERM" | "Color support",
+                    value,
+                )) => line.replace(value.trim_start(), "**PLACEHOLDER**"),
                 _ => line.to_string(),
             })
             .collect::<Vec<_>>()

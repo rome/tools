@@ -7,7 +7,7 @@ expression: content
 ```block
 CLI:
   Version:              0.0.0
-  Color support:        true
+  Color support:        **PLACEHOLDER**
 
 Platform:
   CPU Architecture:     **PLACEHOLDER**
