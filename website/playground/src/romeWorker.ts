@@ -122,6 +122,7 @@ self.addEventListener("message", async (e) => {
 							noUselessFragments: "error",
 							noVoidElementsWithChildren: "error",
 							noDangerouslySetInnerHtmlWithChildren: "error",
+							noConstAssign: "error",
 						},
 					},
 				};

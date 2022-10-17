@@ -158,6 +158,7 @@ export interface Nursery {
 	noArrayIndexKey?: RuleConfiguration;
 	noAutofocus?: RuleConfiguration;
 	noChildrenProp?: RuleConfiguration;
+	noConstAssign?: RuleConfiguration;
 	noDangerouslySetInnerHtml?: RuleConfiguration;
 	noDangerouslySetInnerHtmlWithChildren?: RuleConfiguration;
 	noExplicitAny?: RuleConfiguration;
@@ -323,6 +324,7 @@ export type Category =
 	| "lint/nursery/useKeyWithClickEvents"
 	| "lint/nursery/noRestrictedGlobals"
 	| "lint/nursery/noPositiveTabindex"
+	| "lint/nursery/noConstAssign"
 	| "lint/nursery/noExplicitAny"
 	| "lint/style/noNegationElse"
 	| "lint/style/noShoutyConstants"
