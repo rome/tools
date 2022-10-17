@@ -51,7 +51,7 @@
 //! document does not implement the required capability: for instance trying to
 //! format a file with a language that does not have a formatter
 
-use crate::{Configuration, RomeError};
+use crate::{Configuration, Deserialize, RomeError, Serialize};
 use rome_analyze::ActionCategory;
 pub use rome_analyze::RuleCategories;
 use rome_diagnostics::{v2, CodeSuggestion};
@@ -280,6 +280,16 @@ pub struct RenameResult {
     pub indels: TextEdit,
 }
 
+#[derive(Debug, Eq, PartialEq, Clone, Default, Deserialize, Serialize)]
+pub struct ServerInfo {
+    /// The name of the server as defined by the server.
+    pub name: String,
+
+    /// The server's version as defined by the server.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub version: Option<String>,
+}
+
 pub trait Workspace: Send + Sync + RefUnwindSafe {
     /// Checks whether a certain feature is supported. There are different conditions:
     /// - Rome doesn't recognize a file, so it can't provide the feature;
@@ -343,6 +353,9 @@ pub trait Workspace: Send + Sync + RefUnwindSafe {
 
     /// Return the content of the file after renaming a symbol
     fn rename(&self, params: RenameParams) -> Result<RenameResult, RomeError>;
+
+    /// Returns information about the server this workspace is connected to or `None` if the workspace isn't connected to a server.
+    fn server_info(&self) -> Option<&ServerInfo>;
 }
 
 /// Convenience function for constructing a server instance of [Workspace]

@@ -59,7 +59,7 @@ impl LanguageServer for LSPServer {
             capabilities: server_capabilities(),
             server_info: Some(ServerInfo {
                 name: String::from(env!("CARGO_PKG_NAME")),
-                version: Some(String::from(env!("CARGO_PKG_VERSION"))),
+                version: Some(rome_service::VERSION.to_string()),
             }),
         };
 
@@ -163,7 +163,7 @@ impl LanguageServer for LSPServer {
 /// for each incoming connection accepted by the server
 #[derive(Default)]
 pub struct ServerFactory {
-    /// Synchronisation primitve used to broadcast a shutdown signal to all
+    /// Synchronisation primitive used to broadcast a shutdown signal to all
     /// active connections
     cancellation: Arc<Notify>,
     /// Optional [Workspace] instance shared between all clients. Currently

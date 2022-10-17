@@ -6,7 +6,7 @@ use super::{
     UpdateSettingsParams,
 };
 use crate::file_handlers::{Capabilities, FixAllParams, Language};
-use crate::workspace::SupportsFeatureResult;
+use crate::workspace::{ServerInfo, SupportsFeatureResult};
 use crate::{
     file_handlers::Features,
     settings::{SettingsHandle, WorkspaceSettings},
@@ -502,5 +502,9 @@ impl Workspace for WorkspaceServer {
         let result = rename(&params.path, parse, params.symbol_at, params.new_name)?;
 
         Ok(result)
+    }
+
+    fn server_info(&self) -> Option<&ServerInfo> {
+        None
     }
 }
