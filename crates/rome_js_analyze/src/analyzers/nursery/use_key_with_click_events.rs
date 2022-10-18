@@ -18,6 +18,10 @@ declare_rule! {
     /// <div onClick={() => {}} ></div>
     /// ```
     ///
+    /// ```jsx,expect_diagnostic
+    /// <div {...spread} onClick={() => {}} ></div>
+    /// ```
+    ///
     /// ### Valid
     ///
     /// ```jsx
@@ -90,6 +94,11 @@ impl Rule for UseKeyWithClickEvents {
                     || on_click_attribute.is_none()
                     || node.has_spread_attribute()
                 {
+                    return None;
+                }
+                element.name().ok()?.as_jsx_name()?;
+                let on_click_attribute = element.find_attribute_by_name("onClick").ok()??;
+                if element.has_trailing_spread_prop(on_click_attribute) {
                     return None;
                 }
 

@@ -235,10 +235,15 @@ impl Rule for UseValidAnchor {
             (None, Some(on_click_attribute)) => Some(UseValidAnchorState::CantBeAnchor(
                 on_click_attribute.syntax().text_trimmed_range(),
             )),
-            (None, None) if !node.has_spread_attribute()? => Some(
-                UseValidAnchorState::MissingHrefAttribute(node.syntax().text_trimmed_range()),
-            ),
-            _ => None,
+            (None, None) => {
+                if !node.has_spread_attribute()? {
+                    Some(UseValidAnchorState::MissingHrefAttribute(
+                        node.syntax().text_trimmed_range(),
+                    ))
+                } else {
+                    None
+                }
+            }
         }
     }
 
