@@ -204,9 +204,9 @@ impl Display for RomeServerLog {
         if let Ok(Some(log)) = read_most_recent_log_file() {
             markup!("\n"<Emphasis><Underline>"Rome Server Log:"</Underline></Emphasis>"
 
-"<Warn>"\u{26a0} Please check the log file before sharing it publicly as it may contain sensitive information. For example:
-    * Path names that may reveal your name, a project name, or the name of your employer.
-    * The content of source files and configurations that are copyright protected.
+"<Warn>"\u{26a0} Please review the content of the log file before sharing it publicly as it may contain sensitive information:
+  * Path names that may reveal your name, a project name, or the name of your employer.
+  * Source code
 "</Warn>)
             .fmt(fmt)?;
 

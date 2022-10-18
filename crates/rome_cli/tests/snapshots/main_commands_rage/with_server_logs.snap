@@ -32,9 +32,9 @@ Workspace:
 
 Rome Server Log:
 
-! Please check the log file before sharing it publicly as it may contain sensitive information. For example:
-    * Path names that may reveal your name, a project name, or the name of your employer.
-    * The content of source files and configurations that are copyright protected.
+! Please review the content of the log file before sharing it publicly as it may contain sensitive information:
+  * Path names that may reveal your name, a project name, or the name of your employer.
+  * Source code
 
 
 ┐rome_cli::commands::daemon::Running Server{pid=195434}
