@@ -224,19 +224,17 @@ export_named_from_clause_err.js:1:10 parse ━━━━━━━━━━━━�
 
   × expected a string literal, or an identifier but instead found ''
   
-  × Expected a string literal, or an identifier here
-  
   > 1 │ export { as b } from "mod";
       │          
     2 │ export { a as 5 } from "mod";
     3 │ export { a b c } from "mod";
   
+  × Expected a string literal, or an identifier here
+  
 --
 export_named_from_clause_err.js:2:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a string literal, or an identifier but instead found '5'
-  
-  × Expected a string literal, or an identifier here
   
     1 │ export { as b } from "mod";
   > 2 │ export { a as 5 } from "mod";
@@ -244,12 +242,12 @@ export_named_from_clause_err.js:2:15 parse ━━━━━━━━━━━━�
     3 │ export { a b c } from "mod";
     4 │ export { 5 as b } from "mod";
   
+  × Expected a string literal, or an identifier here
+  
 --
 export_named_from_clause_err.js:3:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `b`
-  
-  × unexpected
   
     1 │ export { as b } from "mod";
     2 │ export { a as 5 } from "mod";
@@ -263,8 +261,6 @@ export_named_from_clause_err.js:3:14 parse ━━━━━━━━━━━━�
 
   × expected `,` but instead found `c`
   
-  × unexpected
-  
     1 │ export { as b } from "mod";
     2 │ export { a as 5 } from "mod";
   > 3 │ export { a b c } from "mod";
@@ -277,13 +273,13 @@ export_named_from_clause_err.js:4:10 parse ━━━━━━━━━━━━�
 
   × expected a string literal, or an identifier but instead found '5 as b'
   
-  × Expected a string literal, or an identifier here
-  
     2 │ export { a as 5 } from "mod";
     3 │ export { a b c } from "mod";
   > 4 │ export { 5 as b } from "mod";
       │          ^^^^^^
     5 │ 
+  
+  × Expected a string literal, or an identifier here
   
 --
 export { as b } from "mod";

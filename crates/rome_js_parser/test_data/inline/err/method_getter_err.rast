@@ -82,26 +82,26 @@ method_getter_err.js:2:6 parse ━━━━━━━━━━━━━━━━�
 
   × expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
   
-  × Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
-  
     1 │ class foo {
   > 2 │  get {}
       │      ^
     3 │ }
     4 │ 
   
+  × Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+  
 --
 method_getter_err.js:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found '}'
-  
-  × Expected a statement here
   
     1 │ class foo {
     2 │  get {}
   > 3 │ }
       │ ^
     4 │ 
+  
+  × Expected a statement here
   
 --
 class foo {

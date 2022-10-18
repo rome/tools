@@ -142,26 +142,26 @@ optional_chain_call_without_arguments.ts:2:9 parse ━━━━━━━━━�
 
   × expected an identifier but instead found ';'
   
-  × Expected an identifier here
-  
     1 │ let a = { test: null };
   > 2 │ a.test?.;
       │         ^
     3 │ a.test?.<ab;
     4 │ 
   
+  × Expected an identifier here
+  
 --
 optional_chain_call_without_arguments.ts:3:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier but instead found '<'
-  
-  × Expected an identifier here
   
     1 │ let a = { test: null };
     2 │ a.test?.;
   > 3 │ a.test?.<ab;
       │         ^
     4 │ 
+  
+  × Expected an identifier here
   
 --
 let a = { test: null };

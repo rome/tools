@@ -1,5 +1,5 @@
 use super::{LexContext, Lexer, LexerCheckpoint, ReLexContext, TextRange, TokenFlags};
-use rome_diagnostics::Diagnostic;
+use crate::ParseDiagnostic;
 use rome_js_syntax::{JsSyntaxKind, JsSyntaxKind::EOF};
 use std::collections::VecDeque;
 use std::iter::FusedIterator;
@@ -192,7 +192,7 @@ impl<'l> BufferedLexer<'l> {
     }
 
     /// Consumes the buffered lexer and returns the lexing diagnostics
-    pub fn finish(self) -> Vec<Diagnostic> {
+    pub fn finish(self) -> Vec<ParseDiagnostic> {
         self.inner.finish()
     }
 }

@@ -46,8 +46,6 @@ ts_variable_annotation_err.ts:1:7 parse ━━━━━━━━━━━━━�
 
   × expected `:` but instead found `;`
   
-  × unexpected
-  
   > 1 │ let a!;
       │       ^
     2 │ 

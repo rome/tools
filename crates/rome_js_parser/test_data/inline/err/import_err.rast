@@ -479,19 +479,17 @@ import_err.js:1:7 parse ━━━━━━━━━━━━━━━━━━�
 
   × expected a default import, a namespace import, or a named import but instead found ';'
   
-  × Expected a default import, a namespace import, or a named import here
-  
   > 1 │ import;
       │       ^
     2 │ import *;
     3 │ import * as c, { a, b } from "c";
   
+  × Expected a default import, a namespace import, or a named import here
+  
 --
 import_err.js:2:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `as` but instead found `;`
-  
-  × unexpected
   
     1 │ import;
   > 2 │ import *;
@@ -503,8 +501,6 @@ import_err.js:2:9 parse ━━━━━━━━━━━━━━━━━━�
 import_err.js:3:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `from` but instead found `,`
-  
-  × unexpected
   
     1 │ import;
     2 │ import *;
@@ -518,8 +514,6 @@ import_err.js:3:30 parse ━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
-  
     1 │ import;
     2 │ import *;
   > 3 │ import * as c, { a, b } from "c";
@@ -527,7 +521,9 @@ import_err.js:3:30 parse ━━━━━━━━━━━━━━━━━━�
     4 │ import { aa + bb, dd } from "c";
     5 │ import { ab, ac } from "c";
   
-  i ...Which is required to end this statement
+  × An explicit or implicit semicolon is expected here...
+  
+  × ...Which is required to end this statement
   
     1 │ import;
     2 │ import *;
@@ -541,8 +537,6 @@ import_err.js:4:13 parse ━━━━━━━━━━━━━━━━━━�
 
   × expected `,` but instead found `+`
   
-  × unexpected
-  
     2 │ import *;
     3 │ import * as c, { a, b } from "c";
   > 4 │ import { aa + bb, dd } from "c";
@@ -554,8 +548,6 @@ import_err.js:4:13 parse ━━━━━━━━━━━━━━━━━━�
 import_err.js:6:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `as` but instead found `}`
-  
-  × unexpected
   
     4 │ import { aa + bb, dd } from "c";
     5 │ import { ab, ac } from "c";
@@ -569,8 +561,6 @@ import_err.js:7:14 parse ━━━━━━━━━━━━━━━━━━�
 
   × expected `as` but instead found `}`
   
-  × unexpected
-  
     5 │ import { ab, ac } from "c";
     6 │ import { default } from "c";
   > 7 │ import { "a" } from "c";
@@ -583,8 +573,6 @@ import_err.js:8:10 parse ━━━━━━━━━━━━━━━━━━�
 
   × expected a string literal, or an identifier but instead found ''
   
-  × Expected a string literal, or an identifier here
-  
      6 │ import { default } from "c";
      7 │ import { "a" } from "c";
    > 8 │ import { as x } from "c";
@@ -592,12 +580,12 @@ import_err.js:8:10 parse ━━━━━━━━━━━━━━━━━━�
      9 │ import 4 from "c";
     10 │ import y from 4;
   
+  × Expected a string literal, or an identifier here
+  
 --
 import_err.js:9:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a default import, a namespace import, or a named import but instead found '4'
-  
-  × Expected a default import, a namespace import, or a named import here
   
      7 │ import { "a" } from "c";
      8 │ import { as x } from "c";
@@ -606,12 +594,12 @@ import_err.js:9:8 parse ━━━━━━━━━━━━━━━━━━�
     10 │ import y from 4;
     11 │ 
   
+  × Expected a default import, a namespace import, or a named import here
+  
 --
 import_err.js:9:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
-  
-  × An explicit or implicit semicolon is expected here...
   
      7 │ import { "a" } from "c";
      8 │ import { as x } from "c";
@@ -620,7 +608,9 @@ import_err.js:9:10 parse ━━━━━━━━━━━━━━━━━━�
     10 │ import y from 4;
     11 │ 
   
-  i ...Which is required to end this statement
+  × An explicit or implicit semicolon is expected here...
+  
+  × ...Which is required to end this statement
   
      7 │ import { "a" } from "c";
      8 │ import { as x } from "c";
@@ -634,8 +624,6 @@ import_err.js:9:15 parse ━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
-  
      7 │ import { "a" } from "c";
      8 │ import { as x } from "c";
    > 9 │ import 4 from "c";
@@ -643,7 +631,9 @@ import_err.js:9:15 parse ━━━━━━━━━━━━━━━━━━�
     10 │ import y from 4;
     11 │ 
   
-  i ...Which is required to end this statement
+  × An explicit or implicit semicolon is expected here...
+  
+  × ...Which is required to end this statement
   
      7 │ import { "a" } from "c";
      8 │ import { as x } from "c";
@@ -657,13 +647,13 @@ import_err.js:10:15 parse ━━━━━━━━━━━━━━━━━━
 
   × expected a string literal but instead found '4'
   
-  × Expected a string literal here
-  
      8 │ import { as x } from "c";
      9 │ import 4 from "c";
   > 10 │ import y from 4;
        │               ^
     11 │ 
+  
+  × Expected a string literal here
   
 --
 import;

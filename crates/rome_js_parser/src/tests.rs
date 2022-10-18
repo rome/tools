@@ -1,7 +1,9 @@
-use crate::{parse, parse_module, test_utils::assert_errors_are_absent, Parse};
+use crate::{markup, parse, parse_module, test_utils::assert_errors_are_absent, Parse};
 use expect_test::expect_file;
+use rome_console::fmt::{Formatter, Termcolor};
 use rome_diagnostics::file::FileId;
-use rome_diagnostics::{file::SimpleFiles, Emitter};
+use rome_diagnostics::v2::DiagnosticExt;
+use rome_diagnostics::{file::SimpleFiles, v2::PrintDiagnostic};
 use rome_js_syntax::{JsAnyRoot, JsSyntaxKind, SourceType};
 use rome_js_syntax::{JsCallArguments, JsLogicalExpression, JsSyntaxToken};
 use rome_rowan::{AstNode, Direction, TextSize};
@@ -122,9 +124,14 @@ fn run_and_expect_errors(path: &str, _: &str, _: &str, _: &str) {
     let mut actual = format!("{}\n\n{:#?}", ast, parse.syntax());
     for diag in parse.diagnostics() {
         let mut write = rome_diagnostics::termcolor::Buffer::no_color();
-        let mut emitter = Emitter::new(&files);
-        emitter
-            .emit_with_writer(diag, &mut write)
+        let error = diag
+            .clone()
+            .with_file_path(path.file_name().unwrap().to_string_lossy().to_string())
+            .with_file_source_code(text.to_string());
+        Formatter::new(&mut Termcolor(&mut write))
+            .write_markup(markup! {
+                {PrintDiagnostic(&error)}
+            })
             .expect("failed to emit diagnostic");
         write!(
             actual,
@@ -360,4 +367,29 @@ pub fn node_has_comments() {
     let right = logical_expression.right().unwrap();
 
     assert!(right.syntax().has_comments_direct());
+}
+
+#[test]
+fn diagnostics_print_correctly() {
+    let text = r"const a";
+
+    let root = parse_module(text, FileId::zero());
+    for diagnostic in root.diagnostics() {
+        let mut write = rome_diagnostics::termcolor::Buffer::no_color();
+        let error = diagnostic
+            .clone()
+            .with_file_path("example.js")
+            .with_file_source_code(text.to_string());
+
+        Formatter::new(&mut Termcolor(&mut write))
+            .write_markup(markup! {
+                {PrintDiagnostic(&error)}
+            })
+            .expect("failed to emit diagnostic");
+
+        eprintln!(
+            "{}",
+            std::str::from_utf8(write.as_slice()).expect("non utf8 in error buffer")
+        );
+    }
 }

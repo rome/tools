@@ -82,8 +82,6 @@ jsx_child_expression_missing_r_curly.jsx:1:14 parse ━━━━━━━━━�
 
   × expected `}` but instead found `<`
   
-  × unexpected
-  
   > 1 │ <test>{ 4 + 3</test>
       │              ^
     2 │ 

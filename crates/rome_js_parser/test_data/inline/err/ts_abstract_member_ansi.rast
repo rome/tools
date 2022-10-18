@@ -189,11 +189,11 @@ ts_abstract_member_ansi.ts:1:43 parse ━━━━━━━━━━━━━━
 
   × expected a class method body but instead found 'abstract'
   
-  × Expected a class method body here
-  
   > 1 │ abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }
       │                                           ^^^^^^^^
     2 │ 
+  
+  × Expected a class method body here
   
 --
 ts_abstract_member_ansi.ts:1:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

@@ -49,11 +49,11 @@ ts_tuple_type_incomplete.ts:2:1 parse ━━━━━━━━━━━━━━
 
   × expected a type but instead found ''
   
-  × Expected a type here
-  
     1 │ type A = [string,
   > 2 │ 
       │ 
+  
+  × Expected a type here
   
 --
 type A = [string,

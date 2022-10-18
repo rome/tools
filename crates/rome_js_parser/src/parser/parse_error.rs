@@ -1,8 +1,7 @@
-use std::ops::Range;
-
-use crate::Parser;
-use rome_diagnostics::{Diagnostic, Span};
+use crate::{ParseDiagnostic, Parser};
+use rome_diagnostics::Span;
 use rome_js_syntax::{JsSyntaxKind, TextRange};
+use std::ops::Range;
 
 ///! Provides helper functions to build common diagnostic messages
 
@@ -52,11 +51,11 @@ pub(crate) fn expected_token_any(tokens: &[JsSyntaxKind]) -> impl ToDiagnostic {
 }
 
 pub(crate) trait ToDiagnostic {
-    fn to_diagnostic(self, p: &Parser) -> Diagnostic;
+    fn to_diagnostic(self, p: &Parser) -> ParseDiagnostic;
 }
 
-impl ToDiagnostic for Diagnostic {
-    fn to_diagnostic(self, _: &Parser) -> Diagnostic {
+impl ToDiagnostic for ParseDiagnostic {
+    fn to_diagnostic(self, _: &Parser) -> ParseDiagnostic {
         self
     }
 }
@@ -105,7 +104,7 @@ impl ExpectedNodeDiagnosticBuilder {
 }
 
 impl ToDiagnostic for ExpectedNodeDiagnosticBuilder {
-    fn to_diagnostic(self, p: &Parser) -> Diagnostic {
+    fn to_diagnostic(self, p: &Parser) -> ParseDiagnostic {
         let range = &self.range;
 
         let msg = if range.is_empty()
@@ -141,7 +140,7 @@ fn article_for(name: &str) -> &'static str {
 struct ExpectedToken(&'static str);
 
 impl ToDiagnostic for ExpectedToken {
-    fn to_diagnostic(self, p: &Parser) -> Diagnostic {
+    fn to_diagnostic(self, p: &Parser) -> ParseDiagnostic {
         match p.cur() {
             JsSyntaxKind::EOF => p
                 .err_builder(&format!("expected `{}` but instead the file ends", self.0))
@@ -152,7 +151,7 @@ impl ToDiagnostic for ExpectedToken {
                     self.0,
                     p.cur_src()
                 ))
-                .primary(p.cur_range(), "unexpected"),
+                .primary(p.cur_range(), ""),
         }
     }
 }
@@ -160,18 +159,19 @@ impl ToDiagnostic for ExpectedToken {
 struct ExpectedTokens(String);
 
 impl ToDiagnostic for ExpectedTokens {
-    fn to_diagnostic(self, p: &Parser) -> Diagnostic {
+    fn to_diagnostic(self, p: &Parser) -> ParseDiagnostic {
         match p.cur() {
             JsSyntaxKind::EOF => p
                 .err_builder(&format!("expected {} but instead the file ends", self.0))
                 .primary(p.cur_range(), "the file ends here"),
+
             _ => p
                 .err_builder(&format!(
                     "expected {} but instead found `{}`",
                     self.0,
                     p.cur_src()
                 ))
-                .primary(p.cur_range(), "unexpected"),
+                .primary(p.cur_range(), ""),
         }
     }
 }

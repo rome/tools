@@ -35,35 +35,35 @@ js_regex_assignment.js:1:1 parse ━━━━━━━━━━━━━━━�
 
   × Invalid assignment to `/=0*_:m/`
   
-  × This expression cannot be assigned to
-  
   > 1 │ /=0*_:m/=/*_:|
       │ ^^^^^^^^
     2 │ 
+  
+  × This expression cannot be assigned to
   
 --
 js_regex_assignment.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression, or an assignment but instead found ''
   
-  × Expected an expression, or an assignment here
-  
     1 │ /=0*_:m/=/*_:|
   > 2 │ 
       │ 
+  
+  × Expected an expression, or an assignment here
   
 --
 js_regex_assignment.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × unterminated block comment
   
-  × ... but the file ends here
-  
     1 │ /=0*_:m/=/*_:|
   > 2 │ 
       │ 
   
-  i A block comment starts here
+  × ... but the file ends here
+  
+  × A block comment starts here
   
   > 1 │ /=0*_:m/=/*_:|
       │          ^^

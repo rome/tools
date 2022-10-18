@@ -86,26 +86,26 @@ binding_identifier_invalid_script.js:2:5 parse ━━━━━━━━━━━
 
   × `let` cannot be declared as a variable name inside of a `let` declaration
   
-  × Rename the let identifier here
-  
     1 │ // SCRIPT
   > 2 │ let let = 5;
       │     ^^^
     3 │ const let = 5;
     4 │ 
   
+  × Rename the let identifier here
+  
 --
 binding_identifier_invalid_script.js:3:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × `let` cannot be declared as a variable name inside of a `const` declaration
-  
-  × Rename the let identifier here
   
     1 │ // SCRIPT
     2 │ let let = 5;
   > 3 │ const let = 5;
       │       ^^^
     4 │ 
+  
+  × Rename the let identifier here
   
 --
 // SCRIPT
