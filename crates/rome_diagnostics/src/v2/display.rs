@@ -1,6 +1,6 @@
 use std::{io, iter};
 
-use rome_console::{fmt, markup, Markup, MarkupBuf, MarkupElement, MarkupNode};
+use rome_console::{fmt, markup, HorizontalLine, Markup, MarkupBuf, MarkupElement, MarkupNode};
 use rome_text_edit::TextEdit;
 use unicode_width::UnicodeWidthStr;
 
@@ -131,7 +131,7 @@ impl<'fmt, D: Diagnostic + ?Sized> fmt::Display for PrintHeader<'fmt, D> {
 
         let text_width = slot.map_or(0, |writer| writer.width);
         let line_width = HEADER_WIDTH.saturating_sub(text_width).max(MIN_WIDTH);
-        f.write_str(&"\u{2501}".repeat(line_width))
+        HorizontalLine::new(line_width).fmt(f)
     }
 }
 

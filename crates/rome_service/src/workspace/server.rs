@@ -6,7 +6,7 @@ use super::{
     UpdateSettingsParams,
 };
 use crate::file_handlers::{Capabilities, FixAllParams, Language};
-use crate::workspace::{ServerInfo, SupportsFeatureResult};
+use crate::workspace::{RageEntry, RageParams, RageResult, ServerInfo, SupportsFeatureResult};
 use crate::{
     file_handlers::Features,
     settings::{SettingsHandle, WorkspaceSettings},
@@ -502,6 +502,15 @@ impl Workspace for WorkspaceServer {
         let result = rename(&params.path, parse, params.symbol_at, params.new_name)?;
 
         Ok(result)
+    }
+
+    fn rage(&self, _: RageParams) -> Result<RageResult, RomeError> {
+        let entries = vec![
+            RageEntry::section("Workspace"),
+            RageEntry::pair("Open Documents", &format!("{}", self.documents.len())),
+        ];
+
+        Ok(RageResult { entries })
     }
 
     fn server_info(&self) -> Option<&ServerInfo> {

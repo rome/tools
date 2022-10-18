@@ -7,7 +7,7 @@ use rome_formatter::Printed;
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
 use serde_json::json;
 
-use crate::workspace::{ServerInfo, SupportsFeatureResult};
+use crate::workspace::{RageParams, RageResult, ServerInfo, SupportsFeatureResult};
 use crate::{RomeError, TransportError, Workspace};
 
 use super::{
@@ -65,8 +65,8 @@ where
             "initialize",
             json!({
                 "capabilities": {},
-                "client_info": {
-                    "name": "rome_service",
+                "clientInfo": {
+                    "name": env!("CARGO_PKG_NAME"),
                     "version": crate::VERSION
                 },
             }),
@@ -169,6 +169,10 @@ where
 
     fn rename(&self, params: RenameParams) -> Result<RenameResult, RomeError> {
         self.request("rome/rename", params)
+    }
+
+    fn rage(&self, params: RageParams) -> Result<RageResult, RomeError> {
+        self.request("rome/rage", params)
     }
 
     fn server_info(&self) -> Option<&ServerInfo> {

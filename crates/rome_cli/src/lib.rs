@@ -103,6 +103,7 @@ impl<'app> CliSession<'app> {
             Some("init") => commands::init::init(self),
 
             Some("version") => commands::version::full_version(self),
+            Some("rage") => commands::rage::rage(self),
             None if self.args.contains("--version") => commands::version::brief_version(self),
 
             // Print the general help if no subcommand was specified / the subcommand is `help`

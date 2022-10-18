@@ -54,6 +54,7 @@
 use crate::{Configuration, Deserialize, RomeError, Serialize};
 use rome_analyze::ActionCategory;
 pub use rome_analyze::RuleCategories;
+use rome_console::{markup, Markup, MarkupBuf};
 use rome_diagnostics::{v2, CodeSuggestion};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
@@ -281,6 +282,7 @@ pub struct RenameResult {
 }
 
 #[derive(Debug, Eq, PartialEq, Clone, Default, Deserialize, Serialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct ServerInfo {
     /// The name of the server as defined by the server.
     pub name: String,
@@ -288,6 +290,45 @@ pub struct ServerInfo {
     /// The server's version as defined by the server.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub version: Option<String>,
+}
+
+#[derive(Copy, Clone, Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+pub struct RageParams {}
+
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+pub struct RageResult {
+    pub entries: Vec<RageEntry>,
+}
+
+#[derive(Debug, serde::Serialize, serde::Deserialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+pub enum RageEntry {
+    Section(String),
+    Pair { name: String, value: MarkupBuf },
+    Markup(MarkupBuf),
+}
+
+impl RageEntry {
+    pub fn section(name: &str) -> Self {
+        Self::Section(name.to_string())
+    }
+
+    pub fn markup(markup: Markup) -> Self {
+        Self::Markup(markup.to_owned())
+    }
+
+    pub fn pair(name: &str, value: &str) -> Self {
+        Self::pair_markup(name, markup!({ value }))
+    }
+
+    pub fn pair_markup(name: &str, value: Markup) -> Self {
+        Self::Pair {
+            name: name.to_string(),
+            value: value.to_owned(),
+        }
+    }
 }
 
 pub trait Workspace: Send + Sync + RefUnwindSafe {
@@ -353,6 +394,9 @@ pub trait Workspace: Send + Sync + RefUnwindSafe {
 
     /// Return the content of the file after renaming a symbol
     fn rename(&self, params: RenameParams) -> Result<RenameResult, RomeError>;
+
+    /// Returns debug information about this workspace.
+    fn rage(&self, params: RageParams) -> Result<RageResult, RomeError>;
 
     /// Returns information about the server this workspace is connected to or `None` if the workspace isn't connected to a server.
     fn server_info(&self) -> Option<&ServerInfo>;

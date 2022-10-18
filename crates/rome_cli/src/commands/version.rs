@@ -1,4 +1,6 @@
-use rome_console::{markup, ConsoleExt};
+use rome_console::fmt::Formatter;
+use rome_console::{fmt, markup, ConsoleExt};
+use rome_service::workspace::ServerInfo;
 
 use crate::{CliSession, Termination, VERSION};
 
@@ -25,15 +27,26 @@ pub(crate) fn full_version(mut session: CliSession) -> Result<(), Termination> {
             });
         }
         Some(info) => {
-            let version = info.version.as_deref().unwrap_or("-");
-
             session.app.console.log(markup! {
 "Server:
   Name:     "{info.name}"
-  Version:  "{version}
+  Version:  "{DisplayServerVersion(info)}
             });
         }
     };
 
     Ok(())
+}
+
+pub(super) struct DisplayServerVersion<'a>(pub &'a ServerInfo);
+
+impl fmt::Display for DisplayServerVersion<'_> {
+    fn fmt(&self, fmt: &mut Formatter) -> std::io::Result<()> {
+        match &self.0.version {
+            None => markup!(<Dim>"-"</Dim>).fmt(fmt),
+            Some(version) => {
+                write!(fmt, "{version}")
+            }
+        }
+    }
 }
