@@ -1,9 +1,12 @@
-use std::{env, io::Write};
-
 use rome_console::{markup, ConsoleExt};
 use rome_lsp::ServerFactory;
 use rome_service::{workspace::WorkspaceClient, RomeError, TransportError};
-use tokio::{io::AsyncWriteExt, runtime::Runtime, sync::mpsc};
+use std::{env, io::BufRead, io::Read};
+use tokio::{
+    io::{self, AsyncWriteExt, BufReader, BufWriter},
+    runtime::Runtime,
+    sync::mpsc,
+};
 use tracing::{debug_span, metadata::LevelFilter, Instrument, Metadata};
 use tracing_subscriber::{
     layer::{Context, Filter},
@@ -14,7 +17,7 @@ use tracing_tree::HierarchicalLayer;
 
 use crate::{
     open_transport,
-    service::{self, ensure_daemon, open_socket, run_daemon},
+    service::{self, ensure_daemon, open_socket, read_message, run_daemon, write_message},
     CliSession, Termination,
 };
 
@@ -93,37 +96,62 @@ pub(crate) fn lsp_proxy() -> Result<(), Termination> {
     let rt = Runtime::new()?;
 
     rt.block_on(async {
-        let did_spawn = ensure_daemon().await.expect("can't start rome");
+        ensure_daemon().await.expect("can't start rome");
 
-        if did_spawn {
-            match open_socket().await.expect("connect error") {
-                Some((_owned_read_half, mut _owned_write_half)) => {
-                    let (tx, mut rx) = mpsc::channel::<String>(100000);
-                    rt.spawn(async move {
-                        while let Some(msg) = rx.recv().await {
-                            let res = _owned_write_half.write(msg.as_bytes()).await;
-                            match res {
-                                Ok(lsp_response) => {
-                                    std::io::stdout()
-                                        .write_all(&lsp_response.to_owned().to_be_bytes())
-                                        .expect("response err");
-                                }
-                                Err(err) => panic!("owned_write error: {:#?}", err),
-                            };
-                        }
-                    });
+        match open_socket().await.expect("connect error") {
+            Some((owned_read_half, owned_write_half)) => {
+                let (tx, mut rx) = mpsc::channel::<String>(8);
 
+                // create spawn to write stdin content to socket
+                rt.spawn(async move {
+                    let mut socket_write = BufWriter::new(owned_write_half);
                     loop {
-                        let mut receive_msg = String::new();
-                        match std::io::stdin().read_line(&mut receive_msg) {
-                            Ok(_) => tx.send(receive_msg).await.expect("send msg error"),
-                            Err(_) => todo!(),
-                        };
+                        while let Some(msg) = rx.recv().await {
+                            write_message(&mut socket_write, msg.as_bytes().to_vec())
+                                .await
+                                .expect("write error");
+                        }
+                    }
+                });
+
+				// create spawn to receive socket response to stdout
+                rt.spawn(async move {
+                    let mut stdout = io::stdout();
+                    let mut socket_read = BufReader::new(owned_read_half);
+                    loop {
+                        let buf = read_message(&mut socket_read).await.expect("read err");
+                        let res = String::from_utf8(buf).expect("response err");
+                        print!("Content-Length: {}\r\n\r\n", res.len());
+                        let _ = stdout.write_all(res.as_bytes()).await;
+                        let _ = stdout.flush().await;
+                    }
+                });
+
+
+				// forward stdin to socket
+                let stdin = std::io::stdin();
+                let mut stdin = stdin.lock();
+                loop {
+                    let mut buf = String::new();
+                    stdin.read_line(&mut buf).unwrap();
+                    if let Some(length) = buf.strip_prefix("Content-Length: ") {
+                        let mut tmp_buf = String::new();
+                        stdin.read_line(&mut tmp_buf).unwrap();
+
+                        let length = usize::from_str_radix(length.trim(), 10).expect("解析出错");
+                        let mut msg: Vec<u8> = vec![0u8; length];
+
+                        stdin.read_exact(&mut msg).unwrap();
+
+                        let msg: String = String::from_utf8(msg).unwrap();
+                        tx.send(msg).await.expect("send error");
+                    } else {
+                        break;
                     }
                 }
-                None => print!("rome not start"),
-            };
-        }
+            }
+            None => print!("rome not start"),
+        };
     });
 
     Ok(())

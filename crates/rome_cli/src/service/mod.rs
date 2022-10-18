@@ -303,7 +303,7 @@ where
     }
 }
 
-async fn read_message<R>(mut socket_read: R) -> Result<Vec<u8>, Error>
+pub(crate) async fn read_message<R>(mut socket_read: R) -> Result<Vec<u8>, Error>
 where
     R: AsyncBufRead + Unpin,
 {
@@ -388,7 +388,7 @@ async fn write_task<W>(
     }
 }
 
-async fn write_message<W>(mut socket_write: W, message: Vec<u8>) -> Result<(), Error>
+pub(crate) async fn write_message<W>(mut socket_write: W, message: Vec<u8>) -> Result<(), Error>
 where
     W: AsyncWrite + Unpin,
 {
