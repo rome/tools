@@ -24,6 +24,7 @@ Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
 _.flatMap(this.visibilityHandlers, (fn) => fn())
 	.concat(this.record.resolved_legacy_visrules)

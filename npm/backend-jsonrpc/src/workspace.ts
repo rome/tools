@@ -102,6 +102,10 @@ export interface JavascriptFormatter {
 	 * The style for quotes. Defaults to double.
 	 */
 	quoteStyle?: QuoteStyle;
+	/**
+	 * Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
+	 */
+	trailingComma?: TrailingComma;
 }
 export interface Rules {
 	correctness?: Correctness;
@@ -114,6 +118,7 @@ export interface Rules {
 }
 export type QuoteProperties = "asNeeded" | "preserve";
 export type QuoteStyle = "double" | "single";
+export type TrailingComma = "all" | "es5";
 /**
  * A list of rules that belong to this group
  */

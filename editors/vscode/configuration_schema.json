@@ -431,6 +431,15 @@
               "$ref": "#/definitions/QuoteStyle"
             }
           ]
+        },
+        "trailingComma": {
+          "description": "Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to \"all\".",
+          "default": "all",
+          "allOf": [
+            {
+              "$ref": "#/definitions/TrailingComma"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -898,6 +907,13 @@
           ]
         }
       }
+    },
+    "TrailingComma": {
+      "type": "string",
+      "enum": [
+        "all",
+        "es5"
+      ]
     }
   }
 }

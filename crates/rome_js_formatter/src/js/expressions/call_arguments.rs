@@ -1,3 +1,4 @@
+use crate::context::trailing_comma::FormatTrailingComma;
 use crate::js::declarations::function_declaration::FormatFunctionOptions;
 use crate::js::expressions::arrow_function_expression::{
     is_multiline_template_starting_on_same_line, FormatJsArrowFunctionExpressionOptions,
@@ -722,7 +723,7 @@ impl<'a> Format<JsFormatContext> for FormatAllArgsBrokenOut<'a> {
                         write!(f, [entry])?;
                     }
 
-                    write!(f, [if_group_breaks(&text(","))])
+                    write!(f, [FormatTrailingComma::All])
                 })),
                 self.r_paren,
             ])

@@ -21,6 +21,7 @@ Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
 a ? b : c;
 d ? e + f : g + h;

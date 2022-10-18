@@ -50,6 +50,7 @@ Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
 class Y {
 	other = 4;
@@ -96,6 +97,7 @@ Indent style: Tab
 Line width: 80
 Quote style: Single Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
 class Y {
 	other = 4;
@@ -142,6 +144,7 @@ Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: Preserve
+Trailing comma: All
 -----
 class Y {
 	"other" = 4;

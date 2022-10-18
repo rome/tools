@@ -20,6 +20,7 @@ Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
 [
 	// Prettier prints the `-2` element on the same line as the `-3`.

@@ -1,17 +1,17 @@
 import init, {
+	Configuration,
 	DiagnosticPrinter,
 	RomePath,
 	Workspace,
-	Configuration,
 } from "@rometools/wasm-web";
 import {
-	SourceType,
+	IndentStyle,
 	LoadingState,
 	PlaygroundState,
-	IndentStyle,
-	RomeOutput,
-	QuoteStyle,
 	QuoteProperties,
+	QuoteStyle,
+	RomeOutput,
+	SourceType,
 } from "./types";
 
 let workspace: Workspace | null = null;
@@ -83,6 +83,7 @@ self.addEventListener("message", async (e) => {
 				sourceType,
 				cursorPosition,
 				enabledNurseryRules,
+				trailingComma,
 			} = playgroundState;
 
 			const configuration: Configuration = {
@@ -103,6 +104,7 @@ self.addEventListener("message", async (e) => {
 							quoteProperties === QuoteProperties.Preserve
 								? "preserve"
 								: "asNeeded",
+						trailingComma,
 					},
 				},
 			};

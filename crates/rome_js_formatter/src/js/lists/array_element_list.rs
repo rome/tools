@@ -3,6 +3,7 @@ use rome_formatter::{write, CstFormatContext, FormatRuleWithOptions, GroupId};
 
 use crate::utils::array::write_array_node;
 
+use crate::context::trailing_comma::FormatTrailingComma;
 use rome_js_syntax::JsArrayElementList;
 use rome_rowan::{AstNode, AstSeparatedList};
 
@@ -32,13 +33,16 @@ impl FormatRule<JsArrayElementList> for FormatJsArrayElementList {
 
         match layout {
             ArrayLayout::Fill => {
+                let trailing_separator = FormatTrailingComma::ES5.trailing_separator(f.options());
+
                 let mut filler = f.fill();
 
                 // Using format_separated is valid in this case as can_print_fill does not allow holes
-                for (element, formatted) in node
-                    .iter()
-                    .zip(node.format_separated(",").with_group_id(self.group_id))
-                {
+                for (element, formatted) in node.iter().zip(
+                    node.format_separated(",")
+                        .with_trailing_separator(trailing_separator)
+                        .with_group_id(self.group_id),
+                ) {
                     filler.entry(
                         &format_once(|f| {
                             if get_lines_before(element?.syntax()) > 1 {
