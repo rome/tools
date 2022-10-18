@@ -182,7 +182,8 @@ fn assert_rage_snapshot(payload: SnapshotPayload<'_>) {
             .lines()
             .map(|line| match line.trim_start().split_once(':') {
                 Some((
-                    "CPU Architecture" | "OS" | "NO_COLOR" | "TERM" | "Color support",
+                    "CPU Architecture" | "OS" | "NO_COLOR" | "TERM" | "ROME_LOG_DIR"
+                    | "Color support",
                     value,
                 )) => line.replace(value.trim_start(), "**PLACEHOLDER**"),
                 _ => line.to_string(),
