@@ -119,7 +119,7 @@ impl Deref for Document {
 impl std::fmt::Display for Document {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         let formatted = format!(IrFormatContext::default(), [self.elements.as_slice()])
-            .expect("Formatting not to throw any FormatErrors");
+            .expect("Formatting not to throw any FormatDiagnostics");
 
         f.write_str(
             formatted

@@ -1,7 +1,7 @@
 use crate::utils::should_hug_type;
 use crate::{prelude::*, utils::is_object_like_type};
 use rome_formatter::write;
-use rome_formatter::FormatError::SyntaxError;
+use rome_formatter::FormatDiagnostic::SyntaxError;
 use rome_js_syntax::{
     JsAnyExpression, JsSyntaxKind, JsVariableDeclarator, TsType, TsTypeArguments,
     TsTypeArgumentsFields,

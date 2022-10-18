@@ -4,7 +4,7 @@ use rome_js_syntax::JsLanguage;
 use rome_rowan::AstNode;
 
 /// Formats a node using its [`AsFormat`] implementation but falls back to printing the node as
-/// it is in the source document if the formatting returns an [`FormatError`].
+/// it is in the source document if the formatting returns an [`FormatDiagnostic`].
 pub const fn format_or_verbatim<'a, Node>(node: &'a Node) -> FormatNodeOrVerbatim<'a, Node>
 where
     Node: AstNode<Language = JsLanguage> + AsFormat<'a>,
@@ -28,7 +28,7 @@ where
         match self.node.format().fmt(f) {
             Ok(result) => Ok(result),
 
-            Err(FormatError::SyntaxError) => {
+            Err(FormatDiagnostic::SyntaxError) => {
                 f.restore_state_snapshot(snapshot);
 
                 // Lists that yield errors are formatted as they were suppressed nodes.

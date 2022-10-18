@@ -15,5 +15,6 @@ pub use crate::format_element::tag::{LabelId, Tag, TagKind};
 
 pub use crate::{
     best_fitting, dbg_write, format, format_args, write, Buffer as _, BufferExtensions, Format,
-    Format as _, FormatError, FormatResult, FormatRule, FormatWithRule as _, SimpleFormatContext,
+    Format as _, FormatDiagnostic, FormatResult, FormatRule, FormatWithRule as _,
+    SimpleFormatContext,
 };

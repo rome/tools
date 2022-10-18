@@ -1,6 +1,6 @@
 use rome_console::fmt::Bytes;
 use rome_console::{Console, EnvConsole};
-use rome_formatter::FormatError;
+use rome_formatter::FormatDiagnostic;
 use rome_fs::{FileSystem, OsFileSystem, RomePath};
 use rome_js_analyze::utils::rename::RenameError;
 use rome_js_analyze::RuleError;
@@ -60,7 +60,7 @@ pub enum RomeError {
     /// Use this error if Rome is trying to process a file that Rome can't understand
     SourceFileNotSupported(Language, RomePath),
     /// The formatter encountered an error while formatting the file
-    FormatError(FormatError),
+    FormatDiagnostic(FormatDiagnostic),
     /// The file could not be formatted since it has syntax errors and `format_with_errors` is disabled
     FormatWithErrorsDisabled,
     /// The file could not be analyzed because a rule caused an error.
@@ -115,7 +115,7 @@ impl Display for RomeError {
             RomeError::NotFound => {
                 write!(f, "the file does not exist in the workspace")
             }
-            RomeError::FormatError(cause) => {
+            RomeError::FormatDiagnostic(cause) => {
                 write!(
                     f,
                     "the formatter encountered an error while formatting the file: {}",
@@ -184,9 +184,9 @@ impl Display for RomeError {
 
 impl Error for RomeError {}
 
-impl From<FormatError> for RomeError {
-    fn from(err: FormatError) -> Self {
-        Self::FormatError(err)
+impl From<FormatDiagnostic> for RomeError {
+    fn from(err: FormatDiagnostic) -> Self {
+        Self::FormatDiagnostic(err)
     }
 }
 

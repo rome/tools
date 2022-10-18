@@ -212,7 +212,7 @@ pub(crate) fn should_hug_function_parameters(
                                     matches!(type_annotation.ty(), Ok(TsType::TsObjectType(_)))
                                 }),
                             JsAnyBinding(JsUnknownBinding(_)) => {
-                                return Err(FormatError::SyntaxError)
+                                return Err(FormatDiagnostic::SyntaxError)
                             }
                         }
                     }
@@ -234,7 +234,7 @@ pub(crate) fn should_hug_function_parameters(
                     }
                 }
             }
-            JsUnknownParameter(_) => return Err(FormatError::SyntaxError),
+            JsUnknownParameter(_) => return Err(FormatDiagnostic::SyntaxError),
         };
 
         Ok(result)

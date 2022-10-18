@@ -3,7 +3,7 @@ use rome_analyze::{
     RegistryVisitor, RuleCategories, RuleCategory, RuleFilter, RuleGroup,
 };
 use rome_diagnostics::{Applicability, CodeSuggestion, Diagnostic};
-use rome_formatter::{FormatError, Printed};
+use rome_formatter::{FormatDiagnostic, Printed};
 use rome_fs::RomePath;
 use rome_js_analyze::{analyze, analyze_with_inspect_matcher, visit_registry, RuleError};
 use rome_js_formatter::context::{QuoteProperties, QuoteStyle};
@@ -422,7 +422,7 @@ fn format(
 
     match formatted.print() {
         Ok(printed) => Ok(printed),
-        Err(error) => Err(RomeError::FormatError(error.into())),
+        Err(error) => Err(RomeError::FormatDiagnostic(error.into())),
     }
 }
 
@@ -451,7 +451,7 @@ fn format_on_type(
 
     let range = tree.text_range();
     if offset < range.start() || offset > range.end() {
-        return Err(RomeError::FormatError(FormatError::RangeError {
+        return Err(RomeError::FormatDiagnostic(FormatDiagnostic::RangeError {
             input: TextRange::at(offset, TextSize::from(0)),
             tree: range,
         }));

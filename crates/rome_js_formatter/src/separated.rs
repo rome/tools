@@ -57,7 +57,7 @@ where
                     }
                     TrailingSeparator::Disallowed => {
                         // A trailing separator was present where it wasn't allowed, opt out of formatting
-                        return Err(FormatError::SyntaxError);
+                        return Err(FormatDiagnostic::SyntaxError);
                     }
                     TrailingSeparator::Omit => {
                         write!(f, [format_removed(separator)])?;

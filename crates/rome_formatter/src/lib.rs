@@ -57,6 +57,7 @@ use crate::builders::syntax_token_cow_slice;
 use crate::comments::{CommentStyle, Comments, SourceComment};
 pub use format_element::{normalize_newlines, FormatElement, LINE_TERMINATORS};
 pub use group_id::GroupId;
+use rome_diagnostics::v2::{category, Category, Diagnostic, DiagnosticTags, Severity};
 use rome_rowan::{
     Language, SyntaxElement, SyntaxError, SyntaxNode, SyntaxResult, SyntaxToken, SyntaxTriviaPiece,
     TextLen, TextRange, TextSize, TokenAtOffset,
@@ -553,12 +554,12 @@ impl Printed {
 }
 
 /// Public return type of the formatter
-pub type FormatResult<F> = Result<F, FormatError>;
+pub type FormatResult<F> = Result<F, FormatDiagnostic>;
 
 #[derive(Debug, PartialEq, Eq, Copy, Clone)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 /// Series of errors encountered during formatting
-pub enum FormatError {
+pub enum FormatDiagnostic {
     /// In case a node can't be formatted because it either misses a require child element or
     /// a child is present that should not (e.g. a trailing comma after a rest element).
     SyntaxError,
@@ -578,48 +579,96 @@ pub enum FormatError {
     PoorLayout,
 }
 
-impl std::fmt::Display for FormatError {
-    fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl Diagnostic for FormatDiagnostic {
+    fn category(&self) -> Option<&'static Category> {
+        Some(match self {
+            FormatDiagnostic::SyntaxError => {
+                category!("format")
+            }
+            FormatDiagnostic::RangeError { .. } => {
+                category!("format")
+            }
+            FormatDiagnostic::InvalidDocument(_) | FormatDiagnostic::PoorLayout => {
+                category!("format/poorFormatting")
+            }
+        })
+    }
+
+    fn tags(&self) -> DiagnosticTags {
         match self {
-            FormatError::SyntaxError => fmt.write_str("syntax error"),
-            FormatError::RangeError { input, tree } => std::write!(
+            FormatDiagnostic::SyntaxError | FormatDiagnostic::RangeError { .. } => {
+                DiagnosticTags::empty()
+            }
+            FormatDiagnostic::InvalidDocument(_) | FormatDiagnostic::PoorLayout => {
+                DiagnosticTags::INTERNAL
+            }
+        }
+    }
+
+    fn message(
+        &self,
+        fmt: &mut rome_diagnostics::v2::console::fmt::Formatter<'_>,
+    ) -> std::io::Result<()> {
+        match self {
+            FormatDiagnostic::SyntaxError => fmt.write_str("syntax error"),
+            FormatDiagnostic::RangeError { input, tree } => std::write!(
                 fmt,
                 "formatting range {input:?} is larger than syntax tree {tree:?}"
             ),
-            FormatError::InvalidDocument(error) => std::write!(fmt, "Invalid document: {error}\n\n This is an internal Rome error. Please report if necessary."),
-            FormatError::PoorLayout => {
+            FormatDiagnostic::InvalidDocument(error) => std::write!(fmt, "Invalid document: {error}\n\n This is an internal Rome error. Please report if necessary."),
+            FormatDiagnostic::PoorLayout => {
+                std::write!(fmt, "Poor layout: The formatter wasn't able to pick a good layout for your document. This is an internal Rome error. Please report if necessary.")
+            }
+        }
+    }
+
+    fn severity(&self) -> Severity {
+        Severity::Error
+    }
+}
+
+impl std::fmt::Display for FormatDiagnostic {
+    fn fmt(&self, fmt: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            FormatDiagnostic::SyntaxError => fmt.write_str("syntax error"),
+            FormatDiagnostic::RangeError { input, tree } => std::write!(
+                fmt,
+                "formatting range {input:?} is larger than syntax tree {tree:?}"
+            ),
+            FormatDiagnostic::InvalidDocument(error) => std::write!(fmt, "Invalid document: {error}\n\n This is an internal Rome error. Please report if necessary."),
+            FormatDiagnostic::PoorLayout => {
                 std::write!(fmt, "Poor layout: The formatter wasn't able to pick a good layout for your document. This is an internal Rome error. Please report if necessary.")
             }
         }
     }
 }
 
-impl Error for FormatError {}
+impl Error for FormatDiagnostic {}
 
-impl From<SyntaxError> for FormatError {
+impl From<SyntaxError> for FormatDiagnostic {
     fn from(error: SyntaxError) -> Self {
-        FormatError::from(&error)
+        FormatDiagnostic::from(&error)
     }
 }
 
-impl From<&SyntaxError> for FormatError {
+impl From<&SyntaxError> for FormatDiagnostic {
     fn from(syntax_error: &SyntaxError) -> Self {
         match syntax_error {
-            SyntaxError::MissingRequiredChild => FormatError::SyntaxError,
+            SyntaxError::MissingRequiredChild => FormatDiagnostic::SyntaxError,
         }
     }
 }
 
-impl From<PrintError> for FormatError {
+impl From<PrintError> for FormatDiagnostic {
     fn from(error: PrintError) -> Self {
-        FormatError::from(&error)
+        FormatDiagnostic::from(&error)
     }
 }
 
-impl From<&PrintError> for FormatError {
+impl From<&PrintError> for FormatDiagnostic {
     fn from(error: &PrintError) -> Self {
         match error {
-            PrintError::InvalidDocument(reason) => FormatError::InvalidDocument(*reason),
+            PrintError::InvalidDocument(reason) => FormatDiagnostic::InvalidDocument(*reason),
         }
     }
 }
@@ -1123,7 +1172,7 @@ pub fn format_range<Language: FormatLanguage>(
 
     let root_range = root.text_range();
     if range.start() < root_range.start() || range.end() > root_range.end() {
-        return Err(FormatError::RangeError {
+        return Err(FormatDiagnostic::RangeError {
             input: range,
             tree: root_range,
         });

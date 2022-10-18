@@ -1,4 +1,7 @@
 {
+	"formatter": {
+		"formatWithErrors": true
+	},
 	"linter": {
 		"rules": {
 			"recommended": true,

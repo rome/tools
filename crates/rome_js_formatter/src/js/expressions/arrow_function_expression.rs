@@ -211,7 +211,7 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
 ///
 /// # Errors
 ///
-/// Returns [`FormatError::PoorLayout`] if `is_first_or_last_call_argument` is `true` but the parameters
+/// Returns [`FormatDiagnostic::PoorLayout`] if `is_first_or_last_call_argument` is `true` but the parameters
 /// or return type annotation contain any content that forces a [*group to break](FormatElements::will_break).
 ///
 /// This error gets captured by [FormatJsCallArguments].
@@ -268,7 +268,7 @@ fn format_signature(
             )?;
 
             if recording.stop().will_break() {
-                return Err(FormatError::PoorLayout);
+                return Err(FormatDiagnostic::PoorLayout);
             }
         } else {
             write!(

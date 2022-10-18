@@ -277,7 +277,7 @@ impl FormatCallArgument {
                         write!(f, [separator.format()])
                     }
                 } else if !is_last {
-                    Err(FormatError::SyntaxError)
+                    Err(FormatDiagnostic::SyntaxError)
                 } else {
                     Ok(())
                 }
@@ -448,7 +448,7 @@ fn write_grouped_arguments(
         // This back tracking is required because testing if the grouped argument breaks would also return `true`
         // if any content of the function body breaks. But, as far as this is concerned, it's only interested if
         // any content in the signature breaks.
-        if matches!(result, Err(FormatError::PoorLayout)) {
+        if matches!(result, Err(FormatDiagnostic::PoorLayout)) {
             drop(buffer);
             f.restore_state_snapshot(snapshot);
 
@@ -556,7 +556,7 @@ impl Format<JsFormatContext> for FormatGroupedFirstArgument<'_> {
                     match element.trailing_separator()? {
                         None => {
                             if !self.is_only {
-                                return Err(FormatError::SyntaxError);
+                                return Err(FormatDiagnostic::SyntaxError);
                             }
                         }
                         // The separator is added inside of the arrow function formatting

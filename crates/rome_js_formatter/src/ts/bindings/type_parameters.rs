@@ -1,5 +1,5 @@
 use crate::prelude::*;
-use rome_formatter::FormatError::SyntaxError;
+use rome_formatter::FormatDiagnostic::SyntaxError;
 use rome_formatter::{format_args, write, FormatRuleWithOptions, GroupId};
 use rome_js_syntax::{TsTypeParameters, TsTypeParametersFields};
 

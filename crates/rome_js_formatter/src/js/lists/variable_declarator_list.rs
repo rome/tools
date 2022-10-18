@@ -41,7 +41,7 @@ impl FormatRule<JsVariableDeclaratorList> for FormatJsVariableDeclaratorList {
 
         let (first_declarator, format_first_declarator) = match declarators.next() {
             Some((syntax, format_first_declarator)) => (syntax?, format_first_declarator),
-            None => return Err(FormatError::SyntaxError),
+            None => return Err(FormatDiagnostic::SyntaxError),
         };
 
         if length == 1 && !f.comments().has_leading_comments(first_declarator.syntax()) {

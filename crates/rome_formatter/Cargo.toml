@@ -9,6 +9,7 @@ license = "MIT"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+rome_diagnostics = { path = "../rome_diagnostics" }
 rome_rowan = { path = "../rome_rowan" }
 tracing = { workspace = true }
 serde = { version = "1.0.136", features = ["derive"], optional = true }

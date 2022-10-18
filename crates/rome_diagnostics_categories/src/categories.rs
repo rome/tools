@@ -71,6 +71,7 @@ define_dategories! {
     // General categories
     "files/missingHandler",
     "format",
+    "format/poorFormatting",
     "internalError/io",
     "internalError/fs",
     "internalError/panic",

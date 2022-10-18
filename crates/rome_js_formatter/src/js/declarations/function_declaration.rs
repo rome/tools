@@ -126,7 +126,7 @@ impl FormatFunction {
     ///
     /// # Errors
     ///
-    /// Returns [`FormatError::PoorLayout`] if [`call_argument_layout`](FormatFunctionOptions::call_argument_layout] is `Some`
+    /// Returns [`FormatDiagnostic::PoorLayout`] if [`call_argument_layout`](FormatFunctionOptions::call_argument_layout] is `Some`
     /// and the function parameters contain some content that [*force a group to break*](FormatElements::will_break).
     ///
     /// This error is handled by [FormatJsCallArguments].
@@ -168,7 +168,7 @@ impl FormatFunction {
                 let recorded = recording.stop();
 
                 if recorded.will_break() {
-                    return Err(FormatError::PoorLayout);
+                    return Err(FormatDiagnostic::PoorLayout);
                 }
             } else {
                 parameters.format().fmt(f)?;
