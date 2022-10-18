@@ -62,8 +62,11 @@ impl Rule for UseKeyWithClickEvents {
 
         match node {
             JsxAnyElement::JsxOpeningElement(element) => {
-                element.name().ok()?.as_jsx_name()?;
-                element.find_attribute_by_name("onClick").ok()??;
+                if element.name().ok()?.as_jsx_name().is_none()
+                    || element.find_attribute_by_name("onClick").ok()?.is_none()
+                {
+                    return None;
+                }
 
                 for attr in element.attributes().into_iter() {
                     let name = attr
@@ -83,8 +86,11 @@ impl Rule for UseKeyWithClickEvents {
                 Some(())
             }
             JsxAnyElement::JsxSelfClosingElement(element) => {
-                element.name().ok()?.as_jsx_name()?;
-                element.find_attribute_by_name("onClick").ok()??;
+                if element.name().ok()?.as_jsx_name().is_none()
+                    || element.find_attribute_by_name("onClick").ok()?.is_none()
+                {
+                    return None;
+                }
 
                 for attr in element.attributes().into_iter() {
                     let name = attr

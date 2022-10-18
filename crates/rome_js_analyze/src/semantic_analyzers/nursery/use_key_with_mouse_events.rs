@@ -174,9 +174,7 @@ impl Rule for UseKeyWithMouseEvents {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
 
-        node.is_custom_component()?;
-
-        if node.has_spread_attribute() {
+        if node.is_custom_component().is_none() || node.has_spread_attribute() {
             return None;
         }
 
