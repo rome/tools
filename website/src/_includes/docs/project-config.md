@@ -8,8 +8,8 @@ The configuration file must be placed at the root of your project, usually at th
 
 All properties are **optional**, you can even have an empty config!
 
-We are deliberately lean with the supported configuration.
-We do not include options just for the sake of personalization.
+We are deliberately lean with the supported configuration. 
+We do not include options just for the sake of personalization. 
 We aim to offer everything out of the box and only introduce configuration if [absolutely necessary](https://rome.tools/#philosophy).
 
 ```json
@@ -47,16 +47,16 @@ An array of Unix shell style patterns.
 
 #### `linter.rules.recommended`
 
-Enables the [recommended rules](/docs/lint/rules) for all the groups.
+Enables the [recommended rules](/docs/lint/rules) for all the groups. 
 
 > Default: `true`
 
 
-#### `linter.rules.correctness`
+#### `linter.rules.correctness` 
 
-A list of rules for `Correctness` category.
+A list of rules for `Correctness` category.  
 
-#### `linter.rules.correctness.recommended`
+#### `linter.rules.correctness.recommended` 
 
 Enables the [recommended rules](/docs/lint/rules) for the category `Correctness`.
 
@@ -132,7 +132,7 @@ Example:
 Enables Rome's formatter
 
 > Default: `true`
-
+ 
 
 #### `formatter.ignore`
 
@@ -247,7 +247,7 @@ Just add `"warn"` as value of the rule. Example:
 }
 ```
 
-This is useful in cases there's being a refactor going on and there's need to make the
+This is useful in cases there's being a refactor going on and there's need to make the 
 CI passing.
 
 #### Pass options to a rule
