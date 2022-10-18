@@ -66,14 +66,10 @@ impl Rule for UseKeyWithClickEvents {
 
         match node {
             JsxAnyElement::JsxOpeningElement(element) => {
-                if element.name().ok()?.as_jsx_name().is_none()
-                    || element.find_attribute_by_name("onClick").ok()?.is_none()
-                {
-                    return None;
-                }
-                element.name().ok()?.as_jsx_name()?;
                 let on_click_attribute = element.find_attribute_by_name("onClick").ok()??;
-                if element.has_trailing_spread_prop(on_click_attribute) {
+                if element.name().ok()?.as_jsx_name().is_none()
+                    || element.has_trailing_spread_prop(on_click_attribute)
+                {
                     return None;
                 }
 
@@ -96,17 +92,14 @@ impl Rule for UseKeyWithClickEvents {
                 Some(())
             }
             JsxAnyElement::JsxSelfClosingElement(element) => {
+                let on_click_attribute = element.find_attribute_by_name("onClick").ok()??;
                 if element.name().ok()?.as_jsx_name().is_none()
-                    || element.find_attribute_by_name("onClick").ok()?.is_none()
+                    || element.has_trailing_spread_prop(on_click_attribute)
                 {
                     return None;
                 }
 
-                if element.has_trailing_spread_prop(on_click_attribute) {
-                    return None;
-                }
-
-                for attr in element.attributes().into_iter() {
+                for attribute in element.attributes().into_iter() {
                     if let JsxAnyAttribute::JsxAttribute(attribute) = attribute {
                         let name = attribute
                             .name()

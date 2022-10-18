@@ -175,12 +175,14 @@ impl Rule for UseKeyWithMouseEvents {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
 
-        if node.is_custom_component().is_none() || node.has_valid_focus_attributes().is_none() {
-            return Some(UseKeyWithMouseEventsState::MissingOnFocus);
-        }
+        if node.is_custom_component().is_some() {
+            if node.has_valid_focus_attributes().is_none() {
+                return Some(UseKeyWithMouseEventsState::MissingOnFocus);
+            }
 
-        if node.has_valid_blur_attributes().is_none() {
-            return Some(UseKeyWithMouseEventsState::MissingOnBlur);
+            if node.has_valid_blur_attributes().is_none() {
+                return Some(UseKeyWithMouseEventsState::MissingOnBlur);
+            }
         }
 
         None
