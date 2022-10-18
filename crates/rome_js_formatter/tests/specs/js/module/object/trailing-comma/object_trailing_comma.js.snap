@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: object_trailing_comma.js
 ---
+
 # Input
+
+```js
 const b = {
 	longlonglonglongField1,
 	longlonglonglongField2,
@@ -13,9 +16,15 @@ const {  	adsadasdasdasdasdasdasdasdasdasdas,
 	dsadsadasdasdasdasdasdasdasd,
 	dsadsadasdasdasdasdasdasdasd,} = o;
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -23,6 +32,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 const b = {
 	longlonglonglongField1,
 	longlonglonglongField2,
@@ -34,7 +45,10 @@ const {
 	dsadsadasdasdasdasdasdasdasd,
 	dsadsadasdasdasdasdasdasdasd,
 } = o;
+```
+
 ## Output 2
+
 -----
 Indent style: Tab
 Line width: 80
@@ -42,6 +56,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: ES5
 -----
+
+```js
 const b = {
 	longlonglonglongField1,
 	longlonglonglongField2,
@@ -53,4 +69,6 @@ const {
 	dsadsadasdasdasdasdasdasdasd,
 	dsadsadasdasdasdasdasdasdasd,
 } = o;
+```
+
 

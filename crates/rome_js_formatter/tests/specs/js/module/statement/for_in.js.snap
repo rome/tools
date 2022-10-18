@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: for_in.js
 ---
+
 # Input
+
+```js
 for (a in b) {}
 
 for (aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks in aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks) {
@@ -10,9 +13,15 @@ for (aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineB
 
 for (a in b) { // trailing
      }
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -20,6 +29,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 for (a in b) {
 }
 
@@ -34,4 +45,6 @@ for (a in b) {
 ## Lines exceeding width of 80 characters
 
     4: for (aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks in aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks) {
+```
+
 

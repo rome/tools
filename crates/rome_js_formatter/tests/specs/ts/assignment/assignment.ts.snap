@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: assignment.ts
 ---
+
 # Input
+
+```js
 //break after operator layout
 loooooooooooooooooooooooooong1 = "looooooooooooooooooooooooooooooooooooooooooog"!;
 loooooooooooooooooooooooooong2 = void void "looooooooooooooooooooooooooooooooooooooooooog"!;
@@ -17,9 +20,15 @@ const gitBaseExtension = extensions.getExtension<GitBaseExtension>(
 	"vscode.git-base",
 )!.exports;
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -27,6 +36,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 //break after operator layout
 loooooooooooooooooooooooooong1 =
 	"looooooooooooooooooooooooooooooooooooooooooog"!;
@@ -41,4 +52,6 @@ loooooooooooooooooooooooooong7 =
 
 const gitBaseExtension =
 	extensions.getExtension<GitBaseExtension>("vscode.git-base")!.exports;
+```
+
 

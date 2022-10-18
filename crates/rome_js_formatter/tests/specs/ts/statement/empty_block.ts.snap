@@ -2,12 +2,21 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: empty_block.ts
 ---
+
 # Input
+
+```js
 interface X {}
 type X = {};
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -15,6 +24,10 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 interface X {}
 type X = {};
+```
+
 

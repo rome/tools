@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: function_clause.js
 ---
+
 # Input
+
+```js
 export function f() {
 
     
@@ -12,9 +15,15 @@ export function f() {
 export default function ff() {
 
 }
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -22,7 +31,11 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 export function f() {}
 
 export default function ff() {}
+```
+
 

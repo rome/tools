@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: type_trailing_comma.ts
 ---
+
 # Input
+
+```js
 
 type A = [
 	adsadasdasdasdasdasdasdasdasdasdas,
@@ -16,9 +19,15 @@ interface C<    	adsadasdasdasdasdasdasdasdasdasdas,
 
 }
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -26,6 +35,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 type A = [
 	adsadasdasdasdasdasdasdasdasdasdas,
 	dsadsadasdasdasdasdasdasdasd,
@@ -37,7 +48,10 @@ interface C<
 	dsadsadasdasdasdasdasdasdasd,
 	dsadsadasdasdasdasdasdasdasd,
 > {}
+```
+
 ## Output 2
+
 -----
 Indent style: Tab
 Line width: 80
@@ -45,6 +59,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: ES5
 -----
+
+```js
 type A = [
 	adsadasdasdasdasdasdasdasdasdasdas,
 	dsadsadasdasdasdasdasdasdasd,
@@ -56,4 +72,6 @@ interface C<
 	dsadsadasdasdasdasdasdasdasd,
 	dsadsadasdasdasdasdasdasdasd
 > {}
+```
+
 

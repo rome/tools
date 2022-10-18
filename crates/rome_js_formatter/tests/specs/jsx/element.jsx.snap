@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: element.jsx
 ---
+
 # Input
+
+```js
 // Single string attribute
 <div tooltip="A very long tooltip text that would otherwise make the attribute break onto the same line but it is not because of the single string layout"></div>;
 
@@ -272,9 +275,15 @@ const breadcrumbItems = [
 	),
 ].concat(extraBreadcrumbItems);
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -282,6 +291,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 // Single string attribute
 <div tooltip="A very long tooltip text that would otherwise make the attribute break onto the same line but it is not because of the single string layout"></div>;
 
@@ -626,4 +637,6 @@ const breadcrumbItems = [
   213: 							"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
   238: 				<pre className="h-screen overflow-y-scroll whitespace-pre-wrap text-red-500 text-xs">
   287: 		Uncle Boonmee Who Can Recall His Past Lives dir. Apichatpong Weerasethakul{" "}
+```
+
 

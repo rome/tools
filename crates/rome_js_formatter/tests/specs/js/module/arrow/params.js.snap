@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: params.js
 ---
+
 # Input
+
+```js
 fooooooooooooooooooooooooooooooooooooooooooooooooooo(action => next =>
     dispatch(action),
 );
@@ -325,9 +328,15 @@ foo(
   ) => {}
 );
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -335,6 +344,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 fooooooooooooooooooooooooooooooooooooooooooooooooooo(
 	(action) => (next) => dispatch(action),
 );
@@ -636,4 +647,6 @@ foo(
 			}),
 	) => {},
 );
+```
+
 

@@ -2,14 +2,23 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: directives.js
 ---
+
 # Input
+
+```js
 'use preferred quote';
 "use preferred quote";
 "keep quotes and escpaes \" ";
 'keep quotes and escpaes \' ';
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -17,11 +26,16 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 "use preferred quote";
 "use preferred quote";
 "keep quotes and escpaes \" ";
 'keep quotes and escpaes \' ';
+```
+
 ## Output 2
+
 -----
 Indent style: Tab
 Line width: 80
@@ -29,11 +43,16 @@ Quote style: Single Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 'use preferred quote';
 'use preferred quote';
 "keep quotes and escpaes \" ";
 'keep quotes and escpaes \' ';
+```
+
 ## Output 3
+
 -----
 Indent style: Tab
 Line width: 80
@@ -41,8 +60,12 @@ Quote style: Double Quotes
 Quote properties: Preserve
 Trailing comma: All
 -----
+
+```js
 "use preferred quote";
 "use preferred quote";
 "keep quotes and escpaes \" ";
 'keep quotes and escpaes \' ';
+```
+
 

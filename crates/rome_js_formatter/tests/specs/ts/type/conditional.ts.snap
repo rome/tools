@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: conditional.ts
 ---
+
 # Input
+
+```js
 type test = string;
 
 type T1 = test extends string ? test extends number ? unknown : unknown : undefined;
@@ -20,9 +23,15 @@ type T4 = test extends string
     ? unknown : test extends number ? undefined :
         // else
         undefined;
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -30,6 +39,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 type test = string;
 
 type T1 = test extends string
@@ -59,4 +70,6 @@ type T4 = test extends string
 	? undefined
 	: // else
 	  undefined;
+```
+
 

@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: decoartors.ts
 ---
+
 # Input
+
+```js
 @sealed
 class Test {
 	@readonly
@@ -50,9 +53,15 @@ class Test2 {
 }
 
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -60,6 +69,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 @sealed
 class Test {
 	@readonly
@@ -113,4 +124,6 @@ class Test2 {
 "@sealed" => 272..279
 "@test" => 338..343
 "\t@test /* trailing multiline comment\n\t for decorator */ @anotherDecorator(" => 449..523
+```
+
 

@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: parameter_quotes.ts
 ---
+
 # Input
+
+```js
 import * as f from "f";
 
 type X = {
@@ -39,9 +42,15 @@ const Y = {
     "3n": false,
     12334: false
 }
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -49,6 +58,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 import * as f from "f";
 
 type X = {
@@ -84,7 +95,10 @@ const Y = {
 	"3n": false,
 	12334: false,
 };
+```
+
 ## Output 2
+
 -----
 Indent style: Tab
 Line width: 80
@@ -92,6 +106,8 @@ Quote style: Single Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 import * as f from 'f';
 
 type X = {
@@ -127,7 +143,10 @@ const Y = {
 	'3n': false,
 	12334: false,
 };
+```
+
 ## Output 3
+
 -----
 Indent style: Tab
 Line width: 80
@@ -135,6 +154,8 @@ Quote style: Double Quotes
 Quote properties: Preserve
 Trailing comma: All
 -----
+
+```js
 import * as f from "f";
 
 type X = {
@@ -170,4 +191,6 @@ const Y = {
 	"3n": false,
 	12334: false,
 };
+```
+
 

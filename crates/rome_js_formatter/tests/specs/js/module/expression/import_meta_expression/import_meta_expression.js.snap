@@ -2,14 +2,23 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: import_meta_expression.js
 ---
+
 # Input
+
+```js
 console.log(import.meta);
 import.meta.field = obj.aReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariable;
 import.meta.aReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariable;
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -17,6 +26,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 console.log(import.meta);
 import.meta.field =
 	obj.aReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariable;
@@ -27,7 +38,10 @@ import.meta.aReallyLongVariableName.andAnotherReallyLongVariableName
 ## Lines exceeding width of 80 characters
 
     3: 	obj.aReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariable;
+```
+
 ## Output 2
+
 -----
 Indent style: Spaces, size: 4
 Line width: 120
@@ -35,6 +49,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 console.log(import.meta);
 import.meta.field =
     obj.aReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariable;
@@ -45,4 +61,6 @@ import.meta.aReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherR
 ## Lines exceeding width of 120 characters
 
     3:     obj.aReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariableName.andAnotherReallyLongVariable;
+```
+
 

@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: union_type.ts
 ---
+
 # Input
+
+```js
 type ShortUnion =
     | A
     | B
@@ -249,9 +252,15 @@ type SuperLongTypeNameLoremIpsumLoremIpsumBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBla =
 | Fooo1000
 | Baz2000
 | BarLoooooooooooooooooooooooooooooooooooooooooooooooooLong;
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -259,6 +268,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 type ShortUnion = A | B;
 
 type LongUnion =
@@ -587,4 +598,6 @@ type SuperLongTypeNameLoremIpsumLoremIpsumBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBlaBla =
 	| Fooo1000
 	| Baz2000
 	| BarLoooooooooooooooooooooooooooooooooooooooooooooooooLong;
+```
+
 

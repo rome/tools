@@ -2,16 +2,25 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: enum_trailing_comma.ts
 ---
+
 # Input
+
+```js
 enum A {
 	adsadasdasdasdasdasdasdasdasdasdas,
 	dsadsadasdasdasdasdasdasdasd,
 	dsadsadasdasdasdasdasdasdasd,
 }
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -19,12 +28,17 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 enum A {
 	adsadasdasdasdasdasdasdasdasdasdas,
 	dsadsadasdasdasdasdasdasdasd,
 	dsadsadasdasdasdasdasdasdasd,
 }
+```
+
 ## Output 2
+
 -----
 Indent style: Tab
 Line width: 80
@@ -32,9 +46,13 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: ES5
 -----
+
+```js
 enum A {
 	adsadasdasdasdasdasdasdasdasdasdas,
 	dsadsadasdasdasdasdasdasdasd,
 	dsadsadasdasdasdasdasdasdasd,
 }
+```
+
 

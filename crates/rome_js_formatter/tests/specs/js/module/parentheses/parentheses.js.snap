@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: parentheses.js
 ---
+
 # Input
+
+```js
 (foo++)?.();
 async () => {
   (await foo)?.();
@@ -27,9 +30,15 @@ async function *f() {
 const a = () => ({}?.() && a);
 
 (list || list2)?.[(list || list2)];
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -37,6 +46,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 (foo++)?.();
 async () => {
 	(await foo)?.();
@@ -66,4 +77,6 @@ const a = () => ({})?.() && a;
 ## Lines exceeding width of 80 characters
 
    11: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa;
+```
+
 

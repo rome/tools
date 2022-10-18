@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: type_assertion_expression.ts
 ---
+
 # Input
+
+```js
 let x = <
     const
     >"hello";
@@ -10,9 +13,15 @@ let y = <       string  >  x;
 var d = <Error>
         ({ name: "foo", message: "bar" })
 ;
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -20,7 +29,11 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 let x = <const>"hello";
 let y = <string>x;
 var d = <Error>{ name: "foo", message: "bar" };
+```
+
 

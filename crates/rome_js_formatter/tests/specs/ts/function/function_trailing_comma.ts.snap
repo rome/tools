@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: function_trailing_comma.ts
 ---
+
 # Input
+
+```js
 function test<
 	longlonglonglonglonglonglongT1,
 	longlonglonglonglonglonglongT2,
@@ -41,9 +44,15 @@ connect(
 	mergePropsmergeProps,
 )(Component)
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -51,6 +60,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 function test<
 	longlonglonglonglonglonglongT1,
 	longlonglonglonglonglonglongT2,
@@ -90,7 +101,10 @@ connect(
 	mapDispatchToPropsmapDispatchToProps,
 	mergePropsmergeProps,
 )(Component);
+```
+
 ## Output 2
+
 -----
 Indent style: Tab
 Line width: 80
@@ -98,6 +112,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: ES5
 -----
+
+```js
 function test<
 	longlonglonglonglonglonglongT1,
 	longlonglonglonglonglonglongT2,
@@ -137,4 +153,6 @@ connect(
 	mapDispatchToPropsmapDispatchToProps,
 	mergePropsmergeProps
 )(Component);
+```
+
 

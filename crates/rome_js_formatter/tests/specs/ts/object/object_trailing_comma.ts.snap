@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: object_trailing_comma.ts
 ---
+
 # Input
+
+```js
 
 // object method
 const obj = {
@@ -26,9 +29,15 @@ const obj = {
 	) {},
 };
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -36,6 +45,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 // object method
 const obj = {
 	one<
@@ -57,7 +68,10 @@ const obj = {
 		dsadsadasdasdasdasdasdasdasd,
 	) {},
 };
+```
+
 ## Output 2
+
 -----
 Indent style: Tab
 Line width: 80
@@ -65,6 +79,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: ES5
 -----
+
+```js
 // object method
 const obj = {
 	one<
@@ -86,4 +102,6 @@ const obj = {
 		dsadsadasdasdasdasdasdasdasd
 	) {},
 };
+```
+
 

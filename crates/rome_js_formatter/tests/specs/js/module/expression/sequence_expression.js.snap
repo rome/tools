@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: sequence_expression.js
 ---
+
 # Input
+
+```js
 a,b
 
 const f = () => (
@@ -37,9 +40,15 @@ aLongIdentifierName,
     aLongIdentifierName,
     aLongIdentifierName;
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -47,6 +56,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 a, b;
 
 const f = () => (
@@ -101,4 +112,6 @@ aLongIdentifierName,
 	aLongIdentifierName,
 	aLongIdentifierName,
 	aLongIdentifierName;
+```
+
 

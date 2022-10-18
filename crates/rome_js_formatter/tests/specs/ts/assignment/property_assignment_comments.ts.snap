@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: property_assignment_comments.ts
 ---
+
 # Input
+
+```js
 class Test {
 	prop1 = /* leading */ 1;
 
@@ -37,9 +40,15 @@ class Test {
 		{ object: 3}
 }
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -47,6 +56,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 class Test {
 	prop1 = /* leading */ 1;
 
@@ -73,4 +84,6 @@ class Test {
 	prop10: any = // 1 // 2
 		{ object: 3 };
 }
+```
+
 

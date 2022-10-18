@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: for_of.js
 ---
+
 # Input
+
+```js
 for (a of b) {}
 
 for (let a of b) {}
@@ -12,9 +15,15 @@ for (const aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforc
 
 for await ( const a of b ) {}
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -22,6 +31,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 for (a of b) {
 }
 
@@ -38,4 +49,6 @@ for await (const a of b) {
 ## Lines exceeding width of 80 characters
 
     7: for (const aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks of aVeryLongVariableNameToEnforceLineBreaksaVeryLongVariableNameToEnforceLineBreaks) {
+```
+
 

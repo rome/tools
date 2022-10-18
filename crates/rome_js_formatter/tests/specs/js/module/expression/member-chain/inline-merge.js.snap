@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: inline-merge.js
 ---
+
 # Input
+
+```js
 _.flatMap(this.visibilityHandlers, fn => fn())
     .concat(this.record.resolved_legacy_visrules)
     .filter(Boolean)
@@ -16,9 +19,15 @@ Object
     .forEach(locale => {
         // ...
     });
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -26,6 +35,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 _.flatMap(this.visibilityHandlers, (fn) => fn())
 	.concat(this.record.resolved_legacy_visrules)
 	.filter(Boolean);
@@ -37,4 +48,6 @@ Object.keys(
 ).forEach((locale) => {
 	// ...
 });
+```
+
 
