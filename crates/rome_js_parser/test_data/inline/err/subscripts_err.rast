@@ -103,24 +103,24 @@ subscripts_err.js:1:12 parse ━━━━━━━━━━━━━━━━━
 
   × expected an expression but instead found ']'
   
-  × Expected an expression here
-  
   > 1 │ foo()?.baz[].;
       │            ^
     2 │ BAR`b
     3 │ 
+  
+  × Expected an expression here
   
 --
 subscripts_err.js:1:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier but instead found ';'
   
-  × Expected an identifier here
-  
   > 1 │ foo()?.baz[].;
       │              ^
     2 │ BAR`b
     3 │ 
+  
+  × Expected an identifier here
   
 --
 subscripts_err.js:2:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

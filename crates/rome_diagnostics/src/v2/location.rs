@@ -1,7 +1,8 @@
-use std::{borrow::Borrow, ops::Deref};
-
 use rome_text_size::{TextRange, TextSize};
 use serde::{Deserialize, Serialize};
+use std::fmt::Debug;
+use std::ops::Range;
+use std::{borrow::Borrow, ops::Deref};
 
 /// Represents the location of a diagnostic in a resource.
 #[derive(Debug, Clone, Copy)]
@@ -414,6 +415,19 @@ impl<T: AsSpan + ?Sized> AsSpan for &'_ T {
 impl AsSpan for TextRange {
     fn as_span(&self) -> Option<TextRange> {
         Some(*self)
+    }
+}
+
+impl<T: Copy> AsSpan for Range<T>
+where
+    TextSize: TryFrom<T>,
+    <TextSize as TryFrom<T>>::Error: Debug,
+{
+    fn as_span(&self) -> Option<TextRange> {
+        Some(TextRange::new(
+            TextSize::try_from(self.start).expect("integer overflow"),
+            TextSize::try_from(self.end).expect("integer overflow"),
+        ))
     }
 }
 

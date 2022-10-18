@@ -3,7 +3,6 @@
 use crate::token_source::Trivia;
 use crate::*;
 pub use rome_diagnostics::file::FileId;
-use rome_diagnostics::Severity;
 use rome_js_syntax::{
     JsAnyRoot, JsExpressionSnipped, JsLanguage, JsModule, JsScript, JsSyntaxNode, ModuleKind,
     SourceType,
@@ -12,7 +11,7 @@ use rome_rowan::AstNode;
 use std::marker::PhantomData;
 
 /// A utility struct for managing the result of a parser job
-#[derive(Debug, Clone)]
+#[derive(Debug)]
 pub struct Parse<T> {
     root: JsSyntaxNode,
     errors: Vec<ParseDiagnostic>,
@@ -71,12 +70,12 @@ impl<T> Parse<T> {
     }
 
     /// Get the diagnostics which occurred when parsing
-    pub fn diagnostics(&self) -> &[Diagnostic] {
+    pub fn diagnostics(&self) -> &[ParseDiagnostic] {
         self.errors.as_slice()
     }
 
     /// Get the diagnostics which occurred when parsing
-    pub fn into_diagnostics(self) -> Vec<Diagnostic> {
+    pub fn into_diagnostics(self) -> Vec<ParseDiagnostic> {
         self.errors
     }
 
@@ -108,7 +107,7 @@ impl<T: AstNode<Language = JsLanguage>> Parse<T> {
 
     /// Convert this parse into a result
     pub fn ok(self) -> Result<T, Vec<ParseDiagnostic>> {
-        if !self.errors.iter().any(|d| d.severity == Severity::Error) {
+        if !self.errors.iter().any(|d| d.is_error()) {
             Ok(self.tree())
         } else {
             Err(self.errors)

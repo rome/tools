@@ -35,11 +35,11 @@ use crate::syntax::typescript::{
 use crate::JsSyntaxFeature::TypeScript;
 use crate::ParsedSyntax::{Absent, Present};
 use crate::{
-    CompletedMarker, Marker, ParseNodeList, ParseRecovery, Parser, StrictMode, SyntaxFeature,
+    CompletedMarker, Marker, ParseDiagnostic, ParseNodeList, ParseRecovery, Parser, StrictMode,
+    SyntaxFeature,
 };
 use bitflags::bitflags;
 use drop_bomb::DebugDropBomb;
-use rome_diagnostics::Diagnostic;
 use rome_js_syntax::JsSyntaxKind::*;
 use rome_js_syntax::TextSize;
 use rome_js_syntax::{JsSyntaxKind, T};
@@ -1948,7 +1948,7 @@ impl ClassMemberModifiers {
         modifier: &ClassMemberModifier,
         preceding_modifiers: ModifierFlags,
         member_kind: JsSyntaxKind,
-    ) -> Option<Diagnostic> {
+    ) -> Option<ParseDiagnostic> {
         // test_err index_signature_class_member_in_js
         // class A {
         //     [a: number]: string;

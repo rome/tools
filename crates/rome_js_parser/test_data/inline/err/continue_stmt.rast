@@ -137,8 +137,6 @@ continue_stmt.js:3:12 parse ━━━━━━━━━━━━━━━━━�
 
   × Use of undefined statement label `foo`
   
-  × This label is used, but it is never defined
-  
     1 │ function foo() { continue; }
     2 │ while (true) {
   > 3 │   continue foo;
@@ -146,12 +144,12 @@ continue_stmt.js:3:12 parse ━━━━━━━━━━━━━━━━━�
     4 │ }
     5 │ foo: {
   
+  × This label is used, but it is never defined
+  
 --
 continue_stmt.js:6:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A `continue` statement can only jump to a label of an enclosing `for`, `while` or `do while` statement.
-  
-  × This label
   
     4 │ }
     5 │ foo: {
@@ -160,7 +158,9 @@ continue_stmt.js:6:12 parse ━━━━━━━━━━━━━━━━━�
     7 │ }
     8 │ 
   
-  i points to non-iteration statement
+  × This label
+  
+  × points to non-iteration statement
   
     3 │   continue foo;
     4 │ }

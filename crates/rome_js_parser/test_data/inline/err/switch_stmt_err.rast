@@ -272,8 +272,6 @@ switch_stmt_err.js:1:8 parse ━━━━━━━━━━━━━━━━━
 
   × expected `(` but instead found `foo`
   
-  × unexpected
-  
   > 1 │ switch foo {}
       │        ^^^
     2 │ switch {}
@@ -283,8 +281,6 @@ switch_stmt_err.js:1:8 parse ━━━━━━━━━━━━━━━━━
 switch_stmt_err.js:1:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `{`
-  
-  × unexpected
   
   > 1 │ switch foo {}
       │            ^
@@ -296,8 +292,6 @@ switch_stmt_err.js:2:8 parse ━━━━━━━━━━━━━━━━━
 
   × expected `(` but instead found `{`
   
-  × unexpected
-  
     1 │ switch foo {}
   > 2 │ switch {}
       │        ^
@@ -308,8 +302,6 @@ switch_stmt_err.js:2:8 parse ━━━━━━━━━━━━━━━━━
 switch_stmt_err.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `(` but instead found `{`
-  
-  × unexpected
   
     1 │ switch foo {}
     2 │ switch {}
@@ -323,8 +315,6 @@ switch_stmt_err.js:3:10 parse ━━━━━━━━━━━━━━━━�
 
   × expected a default, or a case but instead found 'var i = 0'
   
-  × Expected a default, or a case here
-  
     1 │ switch foo {}
     2 │ switch {}
   > 3 │ switch { var i = 0 }
@@ -332,12 +322,12 @@ switch_stmt_err.js:3:10 parse ━━━━━━━━━━━━━━━━�
     4 │ switch { var i = 0; case "bar": {} }
     5 │ switch (foo) {
   
+  × Expected a default, or a case here
+  
 --
 switch_stmt_err.js:4:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `(` but instead found `{`
-  
-  × unexpected
   
     2 │ switch {}
     3 │ switch { var i = 0 }
@@ -351,8 +341,6 @@ switch_stmt_err.js:4:10 parse ━━━━━━━━━━━━━━━━�
 
   × expected a default, or a case but instead found 'var i = 0;'
   
-  × Expected a default, or a case here
-  
     2 │ switch {}
     3 │ switch { var i = 0 }
   > 4 │ switch { var i = 0; case "bar": {} }
@@ -360,12 +348,12 @@ switch_stmt_err.js:4:10 parse ━━━━━━━━━━━━━━━━�
     5 │ switch (foo) {
     6 │   default: {}
   
+  × Expected a default, or a case here
+  
 --
 switch_stmt_err.js:7:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Multiple default clauses inside of a switch statement are not allowed
-  
-  × a second clause here is not allowed
   
     5 │ switch (foo) {
     6 │   default: {}
@@ -374,7 +362,7 @@ switch_stmt_err.js:7:3 parse ━━━━━━━━━━━━━━━━━
     8 │ }
     9 │ switch (foo) { case : }
   
-  i the first default clause is defined here
+  × the first default clause is defined here
   
     4 │ switch { var i = 0; case "bar": {} }
     5 │ switch (foo) {
@@ -383,18 +371,20 @@ switch_stmt_err.js:7:3 parse ━━━━━━━━━━━━━━━━━
     7 │   default: {}
     8 │ }
   
+  × a second clause here is not allowed
+  
 --
 switch_stmt_err.js:9:21 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression but instead found ':'
-  
-  × Expected an expression here
   
      7 │   default: {}
      8 │ }
    > 9 │ switch (foo) { case : }
        │                     ^
     10 │ 
+  
+  × Expected an expression here
   
 --
 switch foo {}

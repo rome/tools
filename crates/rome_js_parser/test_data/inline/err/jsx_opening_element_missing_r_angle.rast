@@ -123,8 +123,6 @@ jsx_opening_element_missing_r_angle.jsx:1:9 parse ━━━━━━━━━━
 
   × expected `>` but instead found `<`
   
-  × unexpected
-  
   > 1 │ <><test <inner> some content</inner></test></>
       │         ^
     2 │ 

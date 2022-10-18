@@ -89,19 +89,17 @@ incomplete_parenthesized_sequence_expression.js:1:4 parse ━━━━━━━�
 
   × expected an expression but instead found ';'
   
-  × Expected an expression here
-  
   > 1 │ (a,;
       │    ^
     2 │ (a, b, c;
     3 │ 
   
+  × Expected an expression here
+  
 --
 incomplete_parenthesized_sequence_expression.js:2:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `;`
-  
-  × unexpected
   
     1 │ (a,;
   > 2 │ (a, b, c;

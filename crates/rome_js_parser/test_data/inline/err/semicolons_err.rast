@@ -67,13 +67,13 @@ semicolons_err.js:1:15 parse ━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
-  
   > 1 │ let foo = bar throw foo
       │               ^^^^^
     2 │ 
   
-  i ...Which is required to end this statement
+  × An explicit or implicit semicolon is expected here...
+  
+  × ...Which is required to end this statement
   
   > 1 │ let foo = bar throw foo
       │ ^^^^^^^^^^^^^^

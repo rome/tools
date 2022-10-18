@@ -120,8 +120,6 @@ export_from_clause_err.js:1:9 parse ━━━━━━━━━━━━━━�
 
   × expected `from` but instead found `;`
   
-  × unexpected
-  
   > 1 │ export *;
       │         ^
     2 │ export * from 5;
@@ -132,20 +130,18 @@ export_from_clause_err.js:2:15 parse ━━━━━━━━━━━━━━�
 
   × expected a string literal but instead found '5'
   
-  × Expected a string literal here
-  
     1 │ export *;
   > 2 │ export * from 5;
       │               ^
     3 │ export as from "test";
     4 │ export from "test";
   
+  × Expected a string literal here
+  
 --
 export_from_clause_err.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `*` but instead found `as`
-  
-  × unexpected
   
     1 │ export *;
     2 │ export * from 5;
@@ -159,8 +155,6 @@ export_from_clause_err.js:3:16 parse ━━━━━━━━━━━━━━�
 
   × expected `from` but instead found `"test"`
   
-  × unexpected
-  
     1 │ export *;
     2 │ export * from 5;
   > 3 │ export as from "test";
@@ -172,8 +166,6 @@ export_from_clause_err.js:3:16 parse ━━━━━━━━━━━━━━�
 export_from_clause_err.js:4:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `*` but instead found `from`
-  
-  × unexpected
   
     2 │ export * from 5;
     3 │ export as from "test";

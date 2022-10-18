@@ -94,13 +94,13 @@ object_expr_setter.js:2:10 parse ━━━━━━━━━━━━━━━�
 
   × expected a parameter but instead found ')'
   
-  × Expected a parameter here
-  
     1 │ let b = {
   > 2 │  set foo() {
       │          ^
     3 │     return 5;
     4 │  }
+  
+  × Expected a parameter here
   
 --
 let b = {

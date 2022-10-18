@@ -105,8 +105,6 @@ while_stmt_err.js:1:7 parse ━━━━━━━━━━━━━━━━━�
 
   × expected `(` but instead found `true`
   
-  × unexpected
-  
   > 1 │ while true {}
       │       ^^^^
     2 │ while {}
@@ -116,8 +114,6 @@ while_stmt_err.js:1:7 parse ━━━━━━━━━━━━━━━━━�
 while_stmt_err.js:1:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `{`
-  
-  × unexpected
   
   > 1 │ while true {}
       │            ^
@@ -129,8 +125,6 @@ while_stmt_err.js:2:7 parse ━━━━━━━━━━━━━━━━━�
 
   × expected `(` but instead found `{`
   
-  × unexpected
-  
     1 │ while true {}
   > 2 │ while {}
       │       ^
@@ -141,8 +135,6 @@ while_stmt_err.js:2:7 parse ━━━━━━━━━━━━━━━━━�
 while_stmt_err.js:3:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `{`
-  
-  × unexpected
   
     1 │ while true {}
     2 │ while {}
@@ -156,8 +148,6 @@ while_stmt_err.js:4:7 parse ━━━━━━━━━━━━━━━━━�
 
   × expected `(` but instead found `true`
   
-  × unexpected
-  
     2 │ while {}
     3 │ while (true {}
   > 4 │ while true) }
@@ -169,13 +159,13 @@ while_stmt_err.js:4:13 parse ━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found '}'
   
-  × Expected a statement here
-  
     2 │ while {}
     3 │ while (true {}
   > 4 │ while true) }
       │             ^
     5 │ 
+  
+  × Expected a statement here
   
 --
 while true {}

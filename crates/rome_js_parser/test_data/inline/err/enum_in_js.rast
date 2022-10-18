@@ -34,11 +34,11 @@ enum_in_js.js:1:1 parse ━━━━━━━━━━━━━━━━━━�
 
   × 'enum's are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   
-  × TypeScript only syntax
-  
   > 1 │ enum A {}
       │ ^^^^^^^^^
     2 │ 
+  
+  × TypeScript only syntax
   
 --
 enum A {}

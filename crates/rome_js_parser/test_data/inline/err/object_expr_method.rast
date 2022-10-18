@@ -71,8 +71,6 @@ object_expr_method.js:1:14 parse ━━━━━━━━━━━━━━━�
 
   × expected `,` but instead found `)`
   
-  × unexpected
-  
   > 1 │ let b = { foo) }
       │              ^
     2 │ 

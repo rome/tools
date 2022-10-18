@@ -327,8 +327,6 @@ invalid_arg_list.js:3:8 parse ━━━━━━━━━━━━━━━━�
 
   × expected `,` but instead found `;`
   
-  × unexpected
-  
     1 │ function foo(...args) {}
     2 │ let a, b, c;
   > 3 │ foo(a,b;
@@ -340,8 +338,6 @@ invalid_arg_list.js:3:8 parse ━━━━━━━━━━━━━━━━�
 invalid_arg_list.js:4:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `var`
-  
-  × unexpected
   
     2 │ let a, b, c;
     3 │ foo(a,b;
@@ -355,8 +351,6 @@ invalid_arg_list.js:4:12 parse ━━━━━━━━━━━━━━━━�
 
   × expected an identifier, an array pattern, or an object pattern but instead found ';'
   
-  × Expected an identifier, an array pattern, or an object pattern here
-  
     2 │ let a, b, c;
     3 │ foo(a,b;
   > 4 │ foo(a,b var;
@@ -364,12 +358,12 @@ invalid_arg_list.js:4:12 parse ━━━━━━━━━━━━━━━━�
     5 │ foo (,,b);
     6 │ foo (a, ...);
   
+  × Expected an identifier, an array pattern, or an object pattern here
+  
 --
 invalid_arg_list.js:5:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression but instead found ','
-  
-  × Expected an expression here
   
     3 │ foo(a,b;
     4 │ foo(a,b var;
@@ -378,12 +372,12 @@ invalid_arg_list.js:5:6 parse ━━━━━━━━━━━━━━━━�
     6 │ foo (a, ...);
     7 │ 
   
+  × Expected an expression here
+  
 --
 invalid_arg_list.js:5:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression but instead found ','
-  
-  × Expected an expression here
   
     3 │ foo(a,b;
     4 │ foo(a,b var;
@@ -392,18 +386,20 @@ invalid_arg_list.js:5:7 parse ━━━━━━━━━━━━━━━━�
     6 │ foo (a, ...);
     7 │ 
   
+  × Expected an expression here
+  
 --
 invalid_arg_list.js:6:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression, or an assignment but instead found ')'
-  
-  × Expected an expression, or an assignment here
   
     4 │ foo(a,b var;
     5 │ foo (,,b);
   > 6 │ foo (a, ...);
       │            ^
     7 │ 
+  
+  × Expected an expression, or an assignment here
   
 --
 function foo(...args) {}

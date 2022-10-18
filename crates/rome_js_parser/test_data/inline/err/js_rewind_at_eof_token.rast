@@ -118,18 +118,16 @@ js_rewind_at_eof_token.js:1:12 parse ━━━━━━━━━━━━━━�
 
   × expected a property, an expression, or a method but instead found '='
   
-  × Expected a property, an expression, or a method here
-  
   > 1 │ (([zAgRvz=[=(e{V{
       │            ^
     2 │ 
+  
+  × Expected a property, an expression, or a method here
   
 --
 js_rewind_at_eof_token.js:1:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `(`
-  
-  × unexpected
   
   > 1 │ (([zAgRvz=[=(e{V{
       │             ^
@@ -140,8 +138,6 @@ js_rewind_at_eof_token.js:1:15 parse ━━━━━━━━━━━━━━�
 
   × expected `)` but instead found `{`
   
-  × unexpected
-  
   > 1 │ (([zAgRvz=[=(e{V{
       │               ^
     2 │ 
@@ -150,8 +146,6 @@ js_rewind_at_eof_token.js:1:15 parse ━━━━━━━━━━━━━━�
 js_rewind_at_eof_token.js:1:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `{`
-  
-  × unexpected
   
   > 1 │ (([zAgRvz=[=(e{V{
       │                 ^
@@ -162,11 +156,11 @@ js_rewind_at_eof_token.js:2:1 parse ━━━━━━━━━━━━━━�
 
   × expected `}` but instead the file ends
   
-  × the file ends here
-  
     1 │ (([zAgRvz=[=(e{V{
   > 2 │ 
       │ 
+  
+  × the file ends here
   
 --
 (([zAgRvz=[=(e{V{

@@ -54,13 +54,13 @@ import_decl_not_top_level.js:2:2 parse ━━━━━━━━━━━━━�
 
   × Illegal use of an import declaration not at the top level
   
-  × move this declaration to the top level
-  
     1 │ {
   > 2 │  import foo from "bar";
       │  ^^^^^^^^^^^^^^^^^^^^^^
     3 │ }
     4 │ 
+  
+  × move this declaration to the top level
   
 --
 {

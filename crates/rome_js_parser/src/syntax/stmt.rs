@@ -1640,7 +1640,7 @@ fn parse_switch_clause(p: &mut Parser, first_default: &mut Option<TextRange>) ->
                         "Multiple default clauses inside of a switch statement are not allowed",
                     )
                     .secondary(
-                        first_default_range,
+                        &*first_default_range,
                         "the first default clause is defined here",
                     )
                     .primary(default.range(p), "a second clause here is not allowed");

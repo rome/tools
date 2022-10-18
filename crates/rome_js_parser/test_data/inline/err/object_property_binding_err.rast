@@ -211,19 +211,17 @@ object_property_binding_err.js:1:12 parse ━━━━━━━━━━━━�
 
   × expected an identifier, an array pattern, or an object pattern but instead found ','
   
-  × Expected an identifier, an array pattern, or an object pattern here
-  
   > 1 │ let { foo: , bar } = {}
       │            ^
     2 │ let { : lorem = "test" } = {}
     3 │ let { , ipsum: bazz } = {}
   
+  × Expected an identifier, an array pattern, or an object pattern here
+  
 --
 object_property_binding_err.js:2:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier, a string literal, a number literal, or a computed property but instead found ':'
-  
-  × Expected an identifier, a string literal, a number literal, or a computed property here
   
     1 │ let { foo: , bar } = {}
   > 2 │ let { : lorem = "test" } = {}
@@ -231,18 +229,20 @@ object_property_binding_err.js:2:7 parse ━━━━━━━━━━━━━
     3 │ let { , ipsum: bazz } = {}
     4 │ 
   
+  × Expected an identifier, a string literal, a number literal, or a computed property here
+  
 --
 object_property_binding_err.js:3:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier, a member name, or a rest pattern but instead found ','
-  
-  × Expected an identifier, a member name, or a rest pattern here
   
     1 │ let { foo: , bar } = {}
     2 │ let { : lorem = "test" } = {}
   > 3 │ let { , ipsum: bazz } = {}
       │       ^
     4 │ 
+  
+  × Expected an identifier, a member name, or a rest pattern here
   
 --
 let { foo: , bar } = {}
