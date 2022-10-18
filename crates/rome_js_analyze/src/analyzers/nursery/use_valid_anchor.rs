@@ -54,6 +54,7 @@ declare_rule! {
     /// <>
     ///     <a href={`https://www.javascript.com`}>navigate here</a>
     ///     <a href={somewhere}>navigate here</a>
+    ///     <a {...spread}>navigate here</a>
     /// </>
     /// ```
     ///
@@ -194,6 +195,21 @@ impl UseValidAnchorQuery {
             }
         }
     }
+
+    fn has_spread_attribute(&self) -> Option<bool> {
+        Some(match self {
+            UseValidAnchorQuery::JsxElement(element) => element
+                .opening_element()
+                .ok()?
+                .attributes()
+                .iter()
+                .any(|attribute| attribute.as_jsx_spread_attribute().is_some()),
+            UseValidAnchorQuery::JsxSelfClosingElement(element) => element
+                .attributes()
+                .iter()
+                .any(|attribute| attribute.as_jsx_spread_attribute().is_some()),
+        })
+    }
 }
 
 impl Rule for UseValidAnchor {
@@ -219,9 +235,15 @@ impl Rule for UseValidAnchor {
             (None, Some(on_click_attribute)) => Some(UseValidAnchorState::CantBeAnchor(
                 on_click_attribute.syntax().text_trimmed_range(),
             )),
-            (None, _) => Some(UseValidAnchorState::MissingHrefAttribute(
-                node.syntax().text_trimmed_range(),
-            )),
+            (None, None) => {
+                if !node.has_spread_attribute()? {
+                    Some(UseValidAnchorState::MissingHrefAttribute(
+                        node.syntax().text_trimmed_range(),
+                    ))
+                } else {
+                    None
+                }
+            }
         }
     }
 

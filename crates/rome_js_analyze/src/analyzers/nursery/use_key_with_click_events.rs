@@ -1,6 +1,6 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{JsxOpeningElement, JsxSelfClosingElement};
+use rome_js_syntax::{JsxAnyAttribute, JsxOpeningElement, JsxSelfClosingElement};
 use rome_rowan::{declare_node_union, AstNode};
 
 declare_rule! {
@@ -16,6 +16,10 @@ declare_rule! {
     ///
     /// ```jsx,expect_diagnostic
     /// <div onClick={() => {}} ></div>
+    /// ```
+    ///
+    /// ```jsx,expect_diagnostic
+    /// <div {...spread} onClick={() => {}} ></div>
     /// ```
     ///
     /// ### Valid
@@ -48,7 +52,7 @@ declare_node_union! {
 }
 
 impl UseKeyWithClickEvents {
-    const REQUIRED_PROPS: [&str; 3] = ["onKeyDown", "onKeyUp", "onKeyPress"];
+    const REQUIRED_PROPS: [&'static str; 3] = ["onKeyDown", "onKeyUp", "onKeyPress"];
 }
 
 impl Rule for UseKeyWithClickEvents {
@@ -67,19 +71,25 @@ impl Rule for UseKeyWithClickEvents {
                 {
                     return None;
                 }
+                element.name().ok()?.as_jsx_name()?;
+                let on_click_attribute = element.find_attribute_by_name("onClick").ok()??;
+                if element.has_trailing_spread_prop(on_click_attribute) {
+                    return None;
+                }
 
-                for attr in element.attributes().into_iter() {
-                    let name = attr
-                        .as_jsx_attribute()?
-                        .name()
-                        .ok()?
-                        .as_jsx_name()?
-                        .syntax()
-                        .text_trimmed()
-                        .to_string();
+                for attribute in element.attributes().into_iter() {
+                    if let JsxAnyAttribute::JsxAttribute(attribute) = attribute {
+                        let name = attribute
+                            .name()
+                            .ok()?
+                            .as_jsx_name()?
+                            .syntax()
+                            .text_trimmed()
+                            .to_string();
 
-                    if Self::REQUIRED_PROPS.contains(&name.as_str()) {
-                        return None;
+                        if Self::REQUIRED_PROPS.contains(&name.as_str()) {
+                            return None;
+                        }
                     }
                 }
 
@@ -92,18 +102,23 @@ impl Rule for UseKeyWithClickEvents {
                     return None;
                 }
 
-                for attr in element.attributes().into_iter() {
-                    let name = attr
-                        .as_jsx_attribute()?
-                        .name()
-                        .ok()?
-                        .as_jsx_name()?
-                        .syntax()
-                        .text_trimmed()
-                        .to_string();
+                if element.has_trailing_spread_prop(on_click_attribute) {
+                    return None;
+                }
 
-                    if Self::REQUIRED_PROPS.contains(&name.as_str()) {
-                        return None;
+                for attr in element.attributes().into_iter() {
+                    if let JsxAnyAttribute::JsxAttribute(attribute) = attribute {
+                        let name = attribute
+                            .name()
+                            .ok()?
+                            .as_jsx_name()?
+                            .syntax()
+                            .text_trimmed()
+                            .to_string();
+
+                        if Self::REQUIRED_PROPS.contains(&name.as_str()) {
+                            return None;
+                        }
                     }
                 }
 

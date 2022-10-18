@@ -6,6 +6,8 @@ expression: useKeyWithClickEventsInvalid.jsx
 ```js
 <>
     <div onClick={() => {}} />
+    <div  {...spread} onClick={() => {}} />
+    <div  {...spread} onClick={() => {}}>foo</div>
 </>
 ```
 
@@ -18,7 +20,41 @@ useKeyWithClickEventsInvalid.jsx:2:5 lint/nursery/useKeyWithClickEvents ━━�
     1 │ <>
   > 2 │     <div onClick={() => {}} />
       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^
-    3 │ </>
+    3 │     <div  {...spread} onClick={() => {}} />
+    4 │     <div  {...spread} onClick={() => {}}>foo</div>
+  
+  i Actions triggered using mouse events should have corresponding keyboard events to account for keyboard-only navigation.
+  
+
+```
+
+```
+useKeyWithClickEventsInvalid.jsx:3:5 lint/nursery/useKeyWithClickEvents ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Enforce to have the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event.
+  
+    1 │ <>
+    2 │     <div onClick={() => {}} />
+  > 3 │     <div  {...spread} onClick={() => {}} />
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │     <div  {...spread} onClick={() => {}}>foo</div>
+    5 │ </>
+  
+  i Actions triggered using mouse events should have corresponding keyboard events to account for keyboard-only navigation.
+  
+
+```
+
+```
+useKeyWithClickEventsInvalid.jsx:4:5 lint/nursery/useKeyWithClickEvents ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Enforce to have the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard event.
+  
+    2 │     <div onClick={() => {}} />
+    3 │     <div  {...spread} onClick={() => {}} />
+  > 4 │     <div  {...spread} onClick={() => {}}>foo</div>
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    5 │ </>
   
   i Actions triggered using mouse events should have corresponding keyboard events to account for keyboard-only navigation.
   

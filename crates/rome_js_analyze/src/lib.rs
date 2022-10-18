@@ -128,7 +128,7 @@ mod tests {
     #[ignore]
     #[test]
     fn quick_test() {
-        const SOURCE: &str = r#"[0, [12]].map(Number).flat()
+        const SOURCE: &str = r#"let spread; let a = <div  {...spread} onClick={() => {}} />; a;
         "#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
