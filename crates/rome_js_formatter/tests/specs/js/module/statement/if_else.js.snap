@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: if_else.js
 ---
+
 # Input
+
+```js
 if(a);
 if(a); else ;
 
@@ -73,15 +76,24 @@ else     if (
 true &&  false
 ) {}
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 if (a);
 if (a);
 else;
@@ -145,4 +157,6 @@ if (true) {
 	true &&  false
 ) {
 }
+```
+
 

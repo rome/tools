@@ -17,6 +17,10 @@ export enum QuoteProperties {
 	AsNeeded = "as-needed",
 	Preserve = "preserve",
 }
+export enum TrailingComma {
+	All = "all",
+	ES5 = "es5",
+}
 export enum LoadingState {
 	Loading,
 	Success,
@@ -40,6 +44,7 @@ export interface PlaygroundState {
 	quoteStyle: QuoteStyle;
 	quoteProperties: QuoteProperties;
 	sourceType: SourceType;
+	trailingComma: TrailingComma;
 	isTypeScript: boolean;
 	isJsx: boolean;
 	cursorPosition: number;
@@ -59,6 +64,7 @@ export const defaultRomeConfig: RomeConfiguration = {
 	quoteStyle: QuoteStyle.Double,
 	quoteProperties: QuoteProperties.AsNeeded,
 	sourceType: SourceType.Module,
+	trailingComma: TrailingComma.All,
 	isTypeScript: false,
 	isJsx: false,
 	cursorPosition: 0,
@@ -80,6 +86,7 @@ export type PlaygroundSettings = Pick<
 	| "quoteStyle"
 	| "quoteProperties"
 	| "sourceType"
+	| "trailingComma"
 	| "isTypeScript"
 	| "isJsx"
 	| "enabledNurseryRules"

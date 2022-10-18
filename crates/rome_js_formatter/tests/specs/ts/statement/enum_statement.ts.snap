@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: enum_statement.ts
 ---
+
 # Input
+
+```js
 enum    A   {}
 enum B {a = "something",
 b = "something", c = "something",
@@ -16,15 +19,24 @@ const enum C {
     ,
     F
 }
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 enum A {}
 enum B {
 	a = "something",
@@ -42,4 +54,6 @@ const enum C {
 	D,
 	F,
 }
+```
+
 

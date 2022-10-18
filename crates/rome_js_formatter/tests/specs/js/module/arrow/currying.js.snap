@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: currying.js
 ---
+
 # Input
+
+```js
 const fn = b => c => d => {
   return 3;
 };
@@ -21,15 +24,24 @@ const middleware = options => (req, res, next) => {
   // ...
 };
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 const fn = (b) => (c) => (d) => {
 	return 3;
 };
@@ -47,4 +59,6 @@ const mw = (store) => (next) => (action) => {
 const middleware = (options) => (req, res, next) => {
 	// ...
 };
+```
+
 

@@ -2,16 +2,30 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: qualified_name.ts
 ---
+
 # Input
+
+```js
 type QualifiedType = A  .  B . C
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 type QualifiedType = A.B.C;
+```
+
 

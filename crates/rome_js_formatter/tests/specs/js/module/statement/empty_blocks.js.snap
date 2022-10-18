@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: empty_blocks.js
 ---
+
 # Input
+
+```js
 // Line break before closing `}`
 if (true) {}
 if (true) {} else {}
@@ -33,15 +36,24 @@ function test() {}
 for (;;) {}
 while (true) {}
 do {} while (true);
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 // Line break before closing `}`
 if (true) {
 }
@@ -78,4 +90,6 @@ function test() {}
 for (;;) {}
 while (true) {}
 do {} while (true);
+```
+
 

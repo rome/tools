@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: class.js
 ---
+
 # Input
+
+```js
 class Foo extends Boar {
 	static { // some comment
 		this.a = "test";
@@ -74,15 +77,24 @@ export class Task {
 		this.args = args;
 	}
 }
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 class Foo extends Boar {
 	static {
 		// some comment
@@ -144,4 +156,6 @@ export class Task {
 		this.args = args;
 	}
 }
+```
+
 

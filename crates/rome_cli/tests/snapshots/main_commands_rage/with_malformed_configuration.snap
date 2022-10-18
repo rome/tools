@@ -1,0 +1,45 @@
+---
+source: crates/rome_cli/tests/commands/rage.rs
+expression: content
+---
+## `rome.json`
+
+```json
+{
+  "formatter": {
+    "enabled":
+  }
+}
+```
+
+# Emitted Messages
+
+```block
+CLI:
+  Version:              0.0.0
+  Color support:        **PLACEHOLDER**
+
+Platform:
+  CPU Architecture:     **PLACEHOLDER**
+  OS:                   **PLACEHOLDER**
+
+Environment:
+  NO_COLOR:             **PLACEHOLDER**
+  TERM:                 **PLACEHOLDER**
+
+Rome Configuration:
+  Status:               Failed to load
+  Error:                Rome couldn't load the configuration file, here's why: 
+expected value at line 4 column 3
+
+Server:
+  Version:              0.0.0
+  Name:                 rome_lsp
+  CPU Architecture:     **PLACEHOLDER**
+  OS:                   **PLACEHOLDER**
+
+Workspace:
+  Open Documents:       0
+```
+
+

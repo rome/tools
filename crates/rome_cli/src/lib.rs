@@ -30,6 +30,11 @@ pub use reports::{
 pub use service::{open_transport, SocketTransport};
 pub use termination::Termination;
 
+pub(crate) const VERSION: &str = match option_env!("ROME_VERSION") {
+    Some(version) => version,
+    None => env!("CARGO_PKG_VERSION"),
+};
+
 /// Global context for an execution of the CLI
 pub struct CliSession<'app> {
     /// Instance of [App] used by this run of the CLI
@@ -76,30 +81,34 @@ impl<'app> CliSession<'app> {
 
         let result = match subcommand.as_deref() {
             // Print the help for the subcommand if it was called with `--help`
-            Some(cmd) if has_help => crate::commands::help::help(self, Some(cmd)),
+            Some(cmd) if has_help => commands::help::help(self, Some(cmd)),
 
-            Some("check") if !is_empty => crate::commands::check::check(self),
-            Some("ci") if !is_empty => crate::commands::ci::ci(self),
-            Some("format") if !is_empty => crate::commands::format::format(self),
-            Some("start") => crate::commands::daemon::start(self),
-            Some("stop") => crate::commands::daemon::stop(self),
+            Some("check") if !is_empty => commands::check::check(self),
+            Some("ci") if !is_empty => commands::ci::ci(self),
+            Some("format") if !is_empty => commands::format::format(self),
+
+            Some("start") => commands::daemon::start(self),
+            Some("stop") => commands::daemon::stop(self),
+            Some("lsp_proxy") => commands::daemon::lsp_proxy(),
 
             // Internal commands
-            Some("__run_server") => crate::commands::daemon::run_server(),
-            Some("__print_socket") => crate::commands::daemon::print_socket(),
-            Some("lsp_proxy") => crate::commands::daemon::lsp_proxy(),
-
+            Some("__run_server") => commands::daemon::run_server(),
+            Some("__print_socket") => commands::daemon::print_socket(),
 
             // Print the help for known commands called without any arguments, and exit with an error
             Some(cmd @ ("check" | "ci" | "format")) => {
-                crate::commands::help::help(self, Some(cmd))?;
+                commands::help::help(self, Some(cmd))?;
                 Err(Termination::EmptyArguments)
             }
 
-            Some("init") => crate::commands::init::init(self),
+            Some("init") => commands::init::init(self),
+
+            Some("version") => commands::version::full_version(self),
+            Some("rage") => commands::rage::rage(self),
+            None if self.args.contains("--version") => commands::version::brief_version(self),
 
             // Print the general help if no subcommand was specified / the subcommand is `help`
-            None | Some("help") => crate::commands::help::help(self, None),
+            None | Some("help") => commands::help::help(self, None),
 
             Some(cmd) => Err(Termination::UnknownCommand {
                 command: cmd.into(),
@@ -107,7 +116,7 @@ impl<'app> CliSession<'app> {
         };
 
         if has_metrics {
-            crate::metrics::print_metrics();
+            metrics::print_metrics();
         }
 
         result

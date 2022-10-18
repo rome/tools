@@ -1,7 +1,7 @@
 {
   "name": "@rometools/js-api",
   "version": "0.0.0",
-  "description": "JavaScript bindings for the Rome package",
+  "description": "JavaScript APIs for the Rome package",
   "scripts": {
     "tsc": "tsc --noEmit",
     "format": "cargo rome-cli-dev format ./ --write",
@@ -15,11 +15,16 @@
     "test:ci": "vitest --run",
     "build": "tsc "
   },
+  "files": [
+    "README.md",
+    "dist/"
+  ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "keywords": [
     "JavaScript",
     "bindings",
+    "APIs",
     "rome"
   ],
   "license": "MIT",

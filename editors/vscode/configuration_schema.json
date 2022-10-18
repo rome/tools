@@ -431,6 +431,15 @@
               "$ref": "#/definitions/QuoteStyle"
             }
           ]
+        },
+        "trailingComma": {
+          "description": "Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to \"all\".",
+          "default": "all",
+          "allOf": [
+            {
+              "$ref": "#/definitions/TrailingComma"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -502,6 +511,16 @@
           ]
         },
         "noChildrenProp": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noConstAssign": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -638,6 +657,16 @@
             "null"
           ]
         },
+        "useAnchorContent": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useBlankTarget": {
           "anyOf": [
             {
@@ -668,7 +697,37 @@
             }
           ]
         },
+        "useFlatMap": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useFragmentSyntax": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useKeyWithClickEvents": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useKeyWithMouseEvents": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -848,6 +907,13 @@
           ]
         }
       }
+    },
+    "TrailingComma": {
+      "type": "string",
+      "enum": [
+        "all",
+        "es5"
+      ]
     }
   }
 }

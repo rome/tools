@@ -2,21 +2,33 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: arrow_test_callback.js
 ---
+
 # Input
+
+```js
 it('should have the default duration when using the onClose arguments', done => {
 	expect(true);
 	done();
 });
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 it("should have the default duration when using the onClose arguments", (done) => {
 	expect(true);
 	done();
@@ -26,4 +38,6 @@ it("should have the default duration when using the onClose arguments", (done) =
 ## Lines exceeding width of 80 characters
 
     1: it("should have the default duration when using the onClose arguments", (done) => {
+```
+
 

@@ -276,6 +276,13 @@ Avoid the <code>autoFocus</code> attribute
 Prevent passing of <strong>children</strong> as props.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noConstAssign">
+	<a href="/docs/lint/rules/noConstAssign">noConstAssign (since v10.0.0)</a>
+	<a class="header-anchor" href="#noConstAssign"></a>
+</h3>
+Prevents from having <code>const</code> variables being re-assigned.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noDangerouslySetInnerHtml">
 	<a href="/docs/lint/rules/noDangerouslySetInnerHtml">noDangerouslySetInnerHtml (since v0.10.0)</a>
 	<a class="header-anchor" href="#noDangerouslySetInnerHtml"></a>
@@ -360,6 +367,13 @@ Disallow unnecessary fragments
 This rules prevents void elements (AKA self-closing elements) from having children.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useAnchorContent">
+	<a href="/docs/lint/rules/useAnchorContent">useAnchorContent (since v10.0.0)</a>
+	<a class="header-anchor" href="#useAnchorContent"></a>
+</h3>
+Enforce that anchor elements have content and that the content is accessible to screen readers.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useBlankTarget">
 	<a href="/docs/lint/rules/useBlankTarget">useBlankTarget (since v10.0.0)</a>
 	<a class="header-anchor" href="#useBlankTarget"></a>
@@ -381,11 +395,34 @@ Enforces the usage of the attribute <code>type</code> for the element <code>butt
 Enforce camel case naming convention.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useFlatMap">
+	<a href="/docs/lint/rules/useFlatMap">useFlatMap (since v10.0.0)</a>
+	<a class="header-anchor" href="#useFlatMap"></a>
+</h3>
+Promotes the use of <code>.flatMap()</code> when <code>map().flat()</code> are used together.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useFragmentSyntax">
 	<a href="/docs/lint/rules/useFragmentSyntax">useFragmentSyntax (since v0.10.0)</a>
 	<a class="header-anchor" href="#useFragmentSyntax"></a>
 </h3>
 This rule enforces the use of <code>&lt;&gt;...&lt;/&gt;</code> over <code>&lt;Fragment&gt;...&lt;/Fragment&gt;</code>.
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useKeyWithClickEvents">
+	<a href="/docs/lint/rules/useKeyWithClickEvents">useKeyWithClickEvents (since v10.0.0)</a>
+	<a class="header-anchor" href="#useKeyWithClickEvents"></a>
+</h3>
+Enforce to have the <code>onClick</code> mouse event with the <code>onKeyUp</code>, the <code>onKeyDown</code>, or the <code>noKeyPress</code> keyboard event.
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useKeyWithMouseEvents">
+	<a href="/docs/lint/rules/useKeyWithMouseEvents">useKeyWithMouseEvents (since v10.0.0)</a>
+	<a class="header-anchor" href="#useKeyWithMouseEvents"></a>
+</h3>
+Enforce that <code>onMouseOver</code>/<code>onMouseOut</code> are accompanied by <code>onFocus</code>/<code>onBlur</code> for keyboard-only users.
+It is important to take into account users with physical disabilities who cannot use a mouse,
+who use assistive technology or screenreader.
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useOptionalChain">

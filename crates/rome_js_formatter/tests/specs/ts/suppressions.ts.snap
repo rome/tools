@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: suppressions.ts
 ---
+
 # Input
+
+```js
 
 interface Suppressions {
     // rome-ignore format: test
@@ -10,19 +13,30 @@ interface Suppressions {
 
     b: void
 }
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 interface Suppressions {
 	// rome-ignore format: test
 	a: void
 
 	b: void;
 }
+```
+
 

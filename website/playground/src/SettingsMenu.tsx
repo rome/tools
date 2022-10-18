@@ -7,6 +7,7 @@ import { Dispatch, SetStateAction } from "react";
 import { createSetter } from "./utils";
 import QuotePropertiesSelect from "./QuotePropertiesSelect";
 import NurseryRules from "./NurseryRules";
+import TrailingCommaSelect from "./TrailingCommaSelect";
 
 interface Props {
 	settings: PlaygroundSettings;
@@ -21,6 +22,7 @@ export function SettingsMenu({
 		indentStyle,
 		quoteStyle,
 		quoteProperties,
+		trailingComma,
 		sourceType,
 		isTypeScript,
 		isJsx,
@@ -52,6 +54,10 @@ export function SettingsMenu({
 						setPlaygroundState,
 						"quoteProperties",
 					)}
+				/>
+				<TrailingCommaSelect
+					trailingComma={trailingComma}
+					setTrailingComma={createSetter(setPlaygroundState, "trailingComma")}
 				/>
 				<SourceTypeSelect
 					isTypeScript={isTypeScript}

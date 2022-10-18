@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: function_comments.js
 ---
+
 # Input
+
+```js
 function a() { // trailing comment
     let a = 2;
 
@@ -20,15 +23,24 @@ function b() // leading comment
 function c( //some comment
     foo, bar,
 ) {}
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 function a() {
 	// trailing comment
 	let a = 2;
@@ -46,4 +58,6 @@ function c(
 	foo,
 	bar,
 ) {}
+```
+
 

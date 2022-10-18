@@ -6,7 +6,7 @@ use rome_diagnostics::{Applicability, CodeSuggestion, Diagnostic};
 use rome_formatter::{FormatError, Printed};
 use rome_fs::RomePath;
 use rome_js_analyze::{analyze, analyze_with_inspect_matcher, visit_registry, RuleError};
-use rome_js_formatter::context::{QuoteProperties, QuoteStyle};
+use rome_js_formatter::context::{trailing_comma::TrailingComma, QuoteProperties, QuoteStyle};
 use rome_js_formatter::{context::JsFormatOptions, format_node};
 use rome_js_parser::Parse;
 use rome_js_semantic::{semantic_model, SemanticModelOptions};
@@ -41,6 +41,7 @@ use std::fmt::Debug;
 pub struct JsFormatSettings {
     pub quote_style: Option<QuoteStyle>,
     pub quote_properties: Option<QuoteProperties>,
+    pub trailing_comma: Option<TrailingComma>,
 }
 
 #[derive(Debug, Clone, Default, serde::Serialize, serde::Deserialize)]
@@ -68,6 +69,7 @@ impl Language for JsLanguage {
             .with_line_width(global.line_width.unwrap_or_default())
             .with_quote_style(language.quote_style.unwrap_or_default())
             .with_quote_properties(language.quote_properties.unwrap_or_default())
+            .with_trailing_comma(language.trailing_comma.unwrap_or_default())
     }
 }
 

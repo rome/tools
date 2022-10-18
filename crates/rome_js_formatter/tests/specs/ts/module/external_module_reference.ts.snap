@@ -2,21 +2,35 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: external_module_reference.ts
 ---
+
 # Input
+
+```js
 import name = require('module_source');
 
 import name2 = require('other_source')
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 import name = require("module_source");
 
 import name2 = require("other_source");
+```
+
 

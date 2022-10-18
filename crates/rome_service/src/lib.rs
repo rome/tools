@@ -33,6 +33,11 @@ pub use crate::workspace::Workspace;
 /// Exports only for this crate
 pub(crate) use crate::configuration::{deserialize_set_of_strings, serialize_set_of_strings};
 
+pub const VERSION: &str = match option_env!("ROME_VERSION") {
+    Some(version) => version,
+    None => env!("CARGO_PKG_VERSION"),
+};
+
 /// This is the main entrypoint of the application.
 pub struct App<'app> {
     /// A reference to the internal virtual file system

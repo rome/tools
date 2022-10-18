@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: type_assertion_assignment.ts
 ---
+
 # Input
+
+```js
 let x;
 
 (<boolean> x) = true;
@@ -18,15 +21,24 @@ for (<boolean> x of []) {
 
 		x } = { x: "test"})
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 let x;
 
 (<boolean>x) = true;
@@ -37,4 +49,6 @@ let x;
 for (<boolean>x of []) {
 }
 ({ x: <string>x } = { x: "test" });
+```
+
 

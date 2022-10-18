@@ -1,4 +1,5 @@
 import { formatWithPrettier } from "./utils";
+import { PlaygroundState } from "./types";
 
 self.addEventListener("message", (e) => {
 	switch (e.data.type) {
@@ -11,7 +12,8 @@ self.addEventListener("message", (e) => {
 				quoteStyle,
 				quoteProperties,
 				isTypeScript,
-			} = e.data.playgroundState;
+				trailingComma,
+			} = e.data.playgroundState as PlaygroundState;
 			const prettierOutput = formatWithPrettier(code, {
 				lineWidth,
 				indentStyle,
@@ -19,6 +21,7 @@ self.addEventListener("message", (e) => {
 				language: isTypeScript ? "ts" : "js",
 				quoteStyle,
 				quoteProperties,
+				trailingComma,
 			});
 
 			self.postMessage({

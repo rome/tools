@@ -7,3 +7,7 @@ loooooooooooooooooooooooooong2 = void void "looooooooooooooooooooooooooooooooooo
 loooooooooooooooooooooooooong7    =
 	// rome-ignore format: test
 	!      "looooooooooooooooooooooooooooooooooooooooooog"!;
+
+const gitBaseExtension = extensions.getExtension<GitBaseExtension>(
+	"vscode.git-base",
+)!.exports;

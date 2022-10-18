@@ -9,6 +9,7 @@ import {
 	QuoteProperties,
 	RomeConfiguration,
 	SourceType,
+	TrailingComma,
 } from "./types";
 
 export function classNames(
@@ -67,6 +68,9 @@ export function usePlaygroundState(
 		quoteProperties:
 			(searchParams.get("quoteProperties") as QuoteProperties) ??
 			defaultRomeConfig.quoteProperties,
+		trailingComma:
+			(searchParams.get("trailingComma") as TrailingComma) ??
+			defaultRomeConfig.trailingComma,
 		indentWidth: parseInt(
 			searchParams.get("indentWidth") ?? defaultRomeConfig.indentWidth,
 		),
@@ -130,6 +134,7 @@ export function formatWithPrettier(
 		language: "js" | "ts";
 		quoteStyle: QuoteStyle;
 		quoteProperties: QuoteProperties;
+		trailingComma: TrailingComma;
 	},
 ): { code: string; ir: string } {
 	try {
@@ -141,6 +146,7 @@ export function formatWithPrettier(
 			plugins: [parserBabel],
 			singleQuote: options.quoteStyle === QuoteStyle.Single,
 			quoteProps: options.quoteProperties,
+			trailingComma: options.trailingComma,
 		};
 
 		// @ts-ignore

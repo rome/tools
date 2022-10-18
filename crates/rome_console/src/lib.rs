@@ -10,6 +10,7 @@ mod markup;
 mod write;
 
 pub use self::markup::{Markup, MarkupBuf, MarkupElement, MarkupNode};
+use crate::fmt::Formatter;
 pub use rome_markup::markup;
 
 /// Determines the "ouput stream" a message should get printed to
@@ -152,5 +153,22 @@ impl Console for BufferConsole {
             // particular use case for multiple prompts
             Some(self.in_buffer[0].clone())
         }
+    }
+}
+
+/// A horizontal line with the given print width
+pub struct HorizontalLine {
+    width: usize,
+}
+
+impl HorizontalLine {
+    pub fn new(width: usize) -> Self {
+        Self { width }
+    }
+}
+
+impl fmt::Display for HorizontalLine {
+    fn fmt(&self, fmt: &mut Formatter) -> io::Result<()> {
+        fmt.write_str(&"\u{2501}".repeat(self.width))
     }
 }

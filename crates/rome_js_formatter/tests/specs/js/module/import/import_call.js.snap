@@ -2,20 +2,32 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: import_call.js
 ---
+
 # Input
+
+```js
 import(x)
 import('x')
 import(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa, {assert: {type:'json'}})
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 import(x);
 import("x");
 import(
@@ -27,4 +39,6 @@ import(
 ## Lines exceeding width of 80 characters
 
     4: 	aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,
+```
+
 

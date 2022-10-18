@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: attributes.jsx
 ---
+
 # Input
+
+```js
 
 					<CodeEditor
 						value={formatted_code}
@@ -74,15 +77,24 @@ const a = <Popconfirm
 	</Popconfirm>
 ;
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 <CodeEditor
 	value={formatted_code}
 	language={language}
@@ -175,4 +187,6 @@ const a = (
 
    10: 			"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
    30: 			"ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+```
+
 

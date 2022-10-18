@@ -2,20 +2,32 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: binding_pattern.js
 ---
+
 # Input
+
+```js
 let [a,b]=c;
 let [d,...e]=c;
 let [aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,...cccccccccccccccccccccccccccccc]=f;
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 let [a, b] = c;
 let [d, ...e] = c;
 let [
@@ -23,4 +35,6 @@ let [
 	bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,
 	...cccccccccccccccccccccccccccccc
 ] = f;
+```
+
 
