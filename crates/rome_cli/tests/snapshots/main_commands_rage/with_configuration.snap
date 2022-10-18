@@ -24,6 +24,7 @@ Platform:
   OS:                   **PLACEHOLDER**
 
 Environment:
+  ROME_LOG_DIR:         "/tmp/rome-rage-test"
   NO_COLOR:             **PLACEHOLDER**
   TERM:                 **PLACEHOLDER**
 

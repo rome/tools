@@ -1,18 +1,21 @@
 use crate::run_cli;
 use crate::snap_test::{CliSnapshot, SnapshotPayload};
 use pico_args::Arguments;
-use rome_console::BufferConsole;
-use rome_fs::MemoryFileSystem;
+use rome_cli::Termination;
+use rome_console::{BufferConsole, Console};
+use rome_fs::{FileSystem, MemoryFileSystem};
 use rome_service::DynRef;
 use std::ffi::OsString;
 use std::path::{Path, PathBuf};
+use std::sync::{Mutex, MutexGuard};
+use std::{env, fs};
 
 #[test]
 fn ok() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
-    let result = run_cli(
+    let result = run_rage(
         DynRef::Borrowed(&mut fs),
         DynRef::Borrowed(&mut console),
         Arguments::from_vec(vec![OsString::from("rage")]),
@@ -42,7 +45,7 @@ fn with_configuration() {
 }"#,
     );
 
-    let result = run_cli(
+    let result = run_rage(
         DynRef::Borrowed(&mut fs),
         DynRef::Borrowed(&mut console),
         Arguments::from_vec(vec![OsString::from("rage")]),
@@ -72,7 +75,7 @@ fn with_malformed_configuration() {
 }"#,
     );
 
-    let result = run_cli(
+    let result = run_rage(
         DynRef::Borrowed(&mut fs),
         DynRef::Borrowed(&mut console),
         Arguments::from_vec(vec![OsString::from("rage")]),
@@ -87,6 +90,84 @@ fn with_malformed_configuration() {
         console,
         result,
     ));
+}
+
+#[test]
+fn with_server_logs() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let result = {
+        let log_dir = TestLogDir::new("rome-test-logs");
+        fs::create_dir_all(&log_dir.path).expect("Failed to create test log directory");
+
+        fs::write(&log_dir.path.join("server.log.2022-10-14-16"), r#"
+┐rome_cli::commands::daemon::Running Server{pid=195434}
+├─2547ms INFO rome_lsp::server Starting Rome Language Server...
+├─15333ms INFO rome_lsp::server Starting Rome Language Server...
+├─15347ms INFO rome_lsp::server Attempting to load the configuration from 'rome.json' file
+├─15347ms INFO rome_service::configuration Attempting to load the configuration file at path "/home/micha/git/ant-design/rome.json"
+├─15347ms ERROR rome_service::configuration Could not find the file configuration at "/home/micha/git/ant-design/rome.json"
+├─15347ms ERROR rome_service::configuration Reason: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+├─┐rome_js_parser::parse::parse{file_id=FileId(0)}
+├─┘
+├─┐rome_js_parser::parse::parse{file_id=FileId(1)}
+├─┘
+├─16108ms INFO rome_lsp::server Starting Rome Language Server...
+├─41801ms INFO rome_lsp::server Starting Rome Language Server...
+├─41802ms INFO rome_lsp::server Sending shutdown signal
+INFO rome_cli::commands::daemon Received shutdown signal
+├─41802ms ERROR tower_lsp::transport failed to encode message: failed to encode response: Broken pipe (os error 32)
+┘
+┐rome_cli::commands::daemon::Running Server{pid=197796}
+├─2822ms INFO rome_lsp::server Starting Rome Language Server...
+├─7550ms INFO rome_lsp::server Starting Rome Language Server...
+├─7551ms INFO rome_lsp::server Attempting to load the configuration from 'rome.json' file
+├─7551ms INFO rome_service::configuration Attempting to load the configuration file at path "/home/micha/git/ant-design/rome.json"
+├─7551ms ERROR rome_service::configuration Could not find the file configuration at "/home/micha/git/ant-design/rome.json"
+├─7551ms ERROR rome_service::configuration Reason: Os { code: 2, kind: NotFound, message: "No such file or directory" }
+├─┐rome_js_parser::parse::parse{file_id=FileId(0)}
+├─┘
+├─┐rome_js_parser::parse::parse{file_id=FileId(1)}
+├─┘
+├─7897ms INFO rome_lsp::server Starting Rome Language Server...
+"#,
+        ).expect("Failed to write log file");
+
+        fs::write(
+            &log_dir.path.join("server.log.2022-10-14-15").to_path_buf(),
+            r#"
+Not most recent log file
+"#,
+        )
+        .expect("Failed to write configuration file");
+
+        run_cli(
+            DynRef::Borrowed(&mut fs),
+            DynRef::Borrowed(&mut console),
+            Arguments::from_vec(vec![OsString::from("rage")]),
+        )
+    };
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_rage_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "with_server_logs",
+        fs,
+        console,
+        result,
+    ));
+}
+
+/// Runs the `rage` command mocking out the log directory.
+fn run_rage<'app>(
+    fs: DynRef<'app, dyn FileSystem>,
+    console: DynRef<'app, dyn Console>,
+    args: Arguments,
+) -> Result<(), Termination> {
+    let _test_dir = TestLogDir::new("rome-rage-test");
+    run_cli(fs, console, args)
 }
 
 fn assert_rage_snapshot(payload: SnapshotPayload<'_>) {
@@ -122,4 +203,36 @@ fn assert_rage_snapshot(payload: SnapshotPayload<'_>) {
         insta::assert_snapshot!(test_name, content);
 
     });
+}
+
+/// Mutex to guarantee that the `rage` tests run sequentially. Necessary to avoid race conditions
+/// when reading the server logs.
+static RAGE_GUARD: Mutex<()> = Mutex::new(());
+
+/// Mocks out the directory from which `rage` reads the server logs. Ensures that the test directory
+/// gets removed at the end of the test.
+struct TestLogDir {
+    path: PathBuf,
+    _guard: MutexGuard<'static, ()>,
+}
+
+impl TestLogDir {
+    fn new(name: &str) -> Self {
+        let guard = RAGE_GUARD.lock().unwrap();
+        let path = env::temp_dir().join(name);
+
+        env::set_var("ROME_LOG_DIR", &path);
+
+        Self {
+            path,
+            _guard: guard,
+        }
+    }
+}
+
+impl Drop for TestLogDir {
+    fn drop(&mut self) {
+        fs::remove_dir_all(&self.path).ok();
+        env::remove_var("ROME_LOG_DIR");
+    }
 }
