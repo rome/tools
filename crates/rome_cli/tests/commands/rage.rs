@@ -135,7 +135,7 @@ INFO rome_cli::commands::daemon Received shutdown signal
         ).expect("Failed to write log file");
 
         fs::write(
-            &log_dir.path.join("server.log.2022-10-14-15").to_path_buf(),
+            &log_dir.path.join("server.log.2022-10-14-15"),
             r#"
 Not most recent log file
 "#,
