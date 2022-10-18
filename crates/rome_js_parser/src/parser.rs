@@ -219,7 +219,6 @@ impl<'s> Parser<'s> {
     #[must_use]
     pub fn err_builder(&self, message: &str) -> ParseDiagnostic {
         ParseDiagnostic::new(self.file_id, message)
-        // Diagnostic::error(self.file_id, category!("parse"), message)
     }
 
     /// Add an error
