@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use std::sync::atomic::{AtomicUsize, Ordering};
+use std::sync::atomic::{AtomicU64, Ordering};
 use std::sync::{Arc, Mutex};
 
 use crate::capabilities::server_capabilities;
@@ -223,11 +223,11 @@ impl LanguageServer for LSPServer {
 
 impl Drop for LSPServer {
     fn drop(&mut self) {
-        let mut sessions = self.sessions.lock().unwrap();
+        if let Ok(mut sessions) = self.sessions.lock() {
+            let _removed = sessions.remove(&self.session.key);
 
-        let _removed = sessions.remove(&self.session.key);
-
-        debug_assert!(_removed.is_some(), "Session did not exist.");
+            debug_assert!(_removed.is_some(), "Session did not exist.");
+        }
     }
 }
 
@@ -251,7 +251,7 @@ pub struct ServerFactory {
     sessions: Sessions,
 
     /// Session key generator. Stores the key of the next session.
-    next_session_key: AtomicUsize,
+    next_session_key: AtomicU64,
 }
 
 /// Helper method for wrapping a [Workspace] method in a `custom_method` for

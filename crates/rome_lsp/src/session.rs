@@ -32,7 +32,7 @@ pub(crate) struct ClientInformation {
 
 /// Key, uniquely identifying a LSP session.
 #[derive(Clone, Copy, Eq, PartialEq, Hash, Debug)]
-pub(crate) struct SessionKey(pub usize);
+pub(crate) struct SessionKey(pub u64);
 
 /// Represents the state of an LSP server session.
 pub(crate) struct Session {
