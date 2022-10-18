@@ -204,7 +204,7 @@ impl SnapshotContent {
             writeln!(snapshot, "-----").unwrap();
             writeln!(snapshot).unwrap();
             writeln!(snapshot, "```js").unwrap();
-            snapshot.push_str(&content);
+            snapshot.push_str(content);
             writeln!(snapshot, "```").unwrap();
             writeln!(snapshot).unwrap();
         }
