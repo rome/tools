@@ -1,0 +1,228 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: useValidForDirection.js
+---
+# Input
+```js
+// invalid
+for (var i = 0; i < 10; i--) {}
+for (var i = 0; i <= 10; i--) {}
+for (var i = 10; i > 10; i++) {}
+for (var i = 10; i >= 0; i++) {}
+for (var i = 0; i < 10; i -= 1) {}
+for (var i = 0; i <= 10; i -= 1) {}
+for (var i = 10; i > 10; i += 1) {}
+for (var i = 10; i >= 0; i += 1) {}
+for (var i = 0; i < 10; i += -1) {}
+for (var i = 0; i <= 10; i += -1) {}
+for (var i = 10; i > 10; i -= -1) {}
+for (var i = 10; i >= 0; i -= -1) {}
+
+// valid
+for (var i = 0; i < 10; i++) {}
+for (var i = 0; i <= 10; i++) {}
+for (var i = 10; i > 0; i--) {}
+for (var i = 10; i >= 0; i--) {}
+for (var i = 10; i > 0; ) {}
+for (var i = 10; i >= 0; ) {}
+for (var i = 10; i < 0; ) {}
+for (var i = 10; i <= 0; ) {}
+for (var i = 10; i <= 0; j++) {}
+for (var i = 10; i <= 0; j--) {}
+for (var i = 10; i >= 0; j++) {}
+for (var i = 10; i >= 0; j--) {}
+for (var i = 10; i >= 0; j += 2) {}
+for (var i = 10; i >= 0; j -= 2) {}
+for (var i = 10; i >= 0; i |= 2) {}
+for (var i = 10; i >= 0; i %= 2) {}
+for (var i = 0; i < MAX; i += STEP_SIZE);
+for (var i = 0; i < MAX; i -= STEP_SIZE);
+for (var i = 10; i > 0; i += STEP_SIZE);
+for (var i = 0; i !== 10; i += 1) {}
+for (var i = 0; i === 10; i += 1) {}
+for (var i = 0; i == 10; i += 1) {}
+for (var i = 0; i != 10; i += 1) {}
+
+```
+
+# Diagnostics
+```
+useValidForDirection.js:2:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! TODO: message
+  
+    1 │ // invalid
+  > 2 │ for (var i = 0; i < 10; i--) {}
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ for (var i = 0; i <= 10; i--) {}
+    4 │ for (var i = 10; i > 10; i++) {}
+  
+
+```
+
+```
+useValidForDirection.js:3:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! TODO: message
+  
+    1 │ // invalid
+    2 │ for (var i = 0; i < 10; i--) {}
+  > 3 │ for (var i = 0; i <= 10; i--) {}
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │ for (var i = 10; i > 10; i++) {}
+    5 │ for (var i = 10; i >= 0; i++) {}
+  
+
+```
+
+```
+useValidForDirection.js:4:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! TODO: message
+  
+    2 │ for (var i = 0; i < 10; i--) {}
+    3 │ for (var i = 0; i <= 10; i--) {}
+  > 4 │ for (var i = 10; i > 10; i++) {}
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    5 │ for (var i = 10; i >= 0; i++) {}
+    6 │ for (var i = 0; i < 10; i -= 1) {}
+  
+
+```
+
+```
+useValidForDirection.js:5:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! TODO: message
+  
+    3 │ for (var i = 0; i <= 10; i--) {}
+    4 │ for (var i = 10; i > 10; i++) {}
+  > 5 │ for (var i = 10; i >= 0; i++) {}
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    6 │ for (var i = 0; i < 10; i -= 1) {}
+    7 │ for (var i = 0; i <= 10; i -= 1) {}
+  
+
+```
+
+```
+useValidForDirection.js:6:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! TODO: message
+  
+    4 │ for (var i = 10; i > 10; i++) {}
+    5 │ for (var i = 10; i >= 0; i++) {}
+  > 6 │ for (var i = 0; i < 10; i -= 1) {}
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    7 │ for (var i = 0; i <= 10; i -= 1) {}
+    8 │ for (var i = 10; i > 10; i += 1) {}
+  
+
+```
+
+```
+useValidForDirection.js:7:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! TODO: message
+  
+    5 │ for (var i = 10; i >= 0; i++) {}
+    6 │ for (var i = 0; i < 10; i -= 1) {}
+  > 7 │ for (var i = 0; i <= 10; i -= 1) {}
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │ for (var i = 10; i > 10; i += 1) {}
+    9 │ for (var i = 10; i >= 0; i += 1) {}
+  
+
+```
+
+```
+useValidForDirection.js:8:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! TODO: message
+  
+     6 │ for (var i = 0; i < 10; i -= 1) {}
+     7 │ for (var i = 0; i <= 10; i -= 1) {}
+   > 8 │ for (var i = 10; i > 10; i += 1) {}
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     9 │ for (var i = 10; i >= 0; i += 1) {}
+    10 │ for (var i = 0; i < 10; i += -1) {}
+  
+
+```
+
+```
+useValidForDirection.js:9:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! TODO: message
+  
+     7 │ for (var i = 0; i <= 10; i -= 1) {}
+     8 │ for (var i = 10; i > 10; i += 1) {}
+   > 9 │ for (var i = 10; i >= 0; i += 1) {}
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    10 │ for (var i = 0; i < 10; i += -1) {}
+    11 │ for (var i = 0; i <= 10; i += -1) {}
+  
+
+```
+
+```
+useValidForDirection.js:10:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! TODO: message
+  
+     8 │ for (var i = 10; i > 10; i += 1) {}
+     9 │ for (var i = 10; i >= 0; i += 1) {}
+  > 10 │ for (var i = 0; i < 10; i += -1) {}
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    11 │ for (var i = 0; i <= 10; i += -1) {}
+    12 │ for (var i = 10; i > 10; i -= -1) {}
+  
+
+```
+
+```
+useValidForDirection.js:11:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! TODO: message
+  
+     9 │ for (var i = 10; i >= 0; i += 1) {}
+    10 │ for (var i = 0; i < 10; i += -1) {}
+  > 11 │ for (var i = 0; i <= 10; i += -1) {}
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    12 │ for (var i = 10; i > 10; i -= -1) {}
+    13 │ for (var i = 10; i >= 0; i -= -1) {}
+  
+
+```
+
+```
+useValidForDirection.js:12:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! TODO: message
+  
+    10 │ for (var i = 0; i < 10; i += -1) {}
+    11 │ for (var i = 0; i <= 10; i += -1) {}
+  > 12 │ for (var i = 10; i > 10; i -= -1) {}
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    13 │ for (var i = 10; i >= 0; i -= -1) {}
+    14 │ 
+  
+
+```
+
+```
+useValidForDirection.js:13:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! TODO: message
+  
+    11 │ for (var i = 0; i <= 10; i += -1) {}
+    12 │ for (var i = 10; i > 10; i -= -1) {}
+  > 13 │ for (var i = 10; i >= 0; i -= -1) {}
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    14 │ 
+    15 │ // valid
+  
+
+```
+
+
