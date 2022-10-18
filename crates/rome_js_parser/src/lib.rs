@@ -268,8 +268,7 @@
 //!  let with_stmt = m.complete(p, JS_WITH_STATEMENT);
 //!
 //!  let conditional = StrictMode.excluding_syntax(p, with_stmt, |p, marker| {
-//!   p.err_builder("`with` statements are not allowed in strict mode")
-//!    .primary(marker.range(p), "")
+//!   p.err_builder("`with` statements are not allowed in strict mode", marker.range(p))
 //!  });
 //!
 //!  
@@ -280,8 +279,7 @@
 //!
 //! ```rust, ignore
 //! let conditional = StrictMode.excluding_syntax(p, with_stmt, |p, marker| {
-//!  p.err_builder("`with` statements are not allowed in strict mode")
-//!   .primary(marker.range(p), "")
+//!  p.err_builder("`with` statements are not allowed in strict mode", marker.range(p))
 //! });
 //! ```
 //!
@@ -329,55 +327,89 @@ pub use crate::{
     token_set::TokenSet,
 };
 pub(crate) use parser::{Checkpoint, CompletedMarker, Marker, ParseRecovery, Parser};
+use rome_console::fmt::Display;
+use rome_console::MarkupBuf;
 use rome_diagnostics::v2::console::markup;
 use rome_diagnostics::v2::location::AsSpan;
-use rome_diagnostics::v2::{Advices, Diagnostic, FileId, Location, LogCategory, Severity, Visit};
+use rome_diagnostics::v2::{Advices, Diagnostic, FileId, Location, LogCategory, Visit};
 use rome_js_syntax::{JsSyntaxKind, LanguageVariant};
 use rome_rowan::{TextRange, TextSize};
 pub(crate) use state::{ParserState, StrictMode};
-use std::fmt::{Debug, Display};
+use std::fmt::Debug;
 
 /// A specialized diagnostic for the parser
+///
+/// Parser diagnostics are always **errors**.
+///
+/// A parser diagnostics structured in this way:
+/// 1. a mandatory message and a mandatory [TextRange]
+/// 2. a list of details, useful to give more information and context around the error
+/// 3. a hint, which should tell the user how they could fix their issue
+///
+/// These information **are printed in this exact order**.
+///
 #[derive(Debug, Diagnostic, Clone)]
-#[diagnostic(category = "parse")]
+#[diagnostic(category = "parse", severity = Error)]
 pub struct ParseDiagnostic {
+    /// The location where the error is occurred
     #[location(span)]
     span: Option<TextRange>,
-    severity: Severity,
+    /// Reference to a file where the issue occurred
     #[location(resource)]
     file_id: FileId,
     #[message]
-    message: String,
+    message: MarkupBuf,
+    #[description]
+    description: String,
     #[advice]
     advice: ParserAdvice,
 }
 
+/// Possible details related to the diagnostic
 #[derive(Debug, Default, Clone)]
 struct ParserAdvice {
-    /// A list code frame details. The tuple contains the following:
-    /// - the message
-    /// - a text range
-    /// - the file id, reference to the actual file
-    detail_list: Vec<(String, Option<TextRange>, FileId)>,
-    hint: Option<String>,
+    /// A list a possible details that can be attached to the diagnostic.
+    /// Useful to explain the nature errors.
+    detail_list: Vec<ParserAdviceDetail>,
+    /// A message for the user that should tell the user how to fix the issue
+    hint: Option<MarkupBuf>,
+}
+
+/// The structure of the advice. A message that gives details, a possible range so
+/// the diagnostic is able to highlight the part of the code we want to explain.
+#[derive(Debug, Clone)]
+struct ParserAdviceDetail {
+    /// A message that should explain this detail
+    message: MarkupBuf,
+    /// An optional range that should highlight the details of the code
+    span: Option<TextRange>,
+    /// The file id, reference to the actual file
+    file_id: FileId,
 }
 
 impl ParserAdvice {
-    fn set_detail(&mut self, message: String, span: Option<TextRange>, file_id: FileId) {
-        self.detail_list.push((message, span, file_id));
+    fn add_detail(&mut self, message: impl Display, range: Option<TextRange>, file_id: FileId) {
+        self.detail_list.push(ParserAdviceDetail {
+            message: markup! { {message} }.to_owned(),
+            span: range,
+            file_id,
+        });
     }
 
-    fn set_hint(&mut self, message: String) {
-        self.hint = Some(message);
+    fn add_hint(&mut self, message: impl Display) {
+        self.hint = Some(markup! { { message } }.to_owned());
     }
 }
 
 impl Advices for ParserAdvice {
     fn record(&self, visitor: &mut dyn Visit) -> std::io::Result<()> {
-        for (message, span, file_id) in &self.detail_list {
-            if !message.is_empty() {
-                visitor.record_log(LogCategory::Info, &markup! { {message} }.to_owned())?;
-            }
+        for detail in &self.detail_list {
+            let ParserAdviceDetail {
+                span,
+                message,
+                file_id,
+            } = detail;
+            visitor.record_log(LogCategory::Info, &markup! { {message} }.to_owned())?;
             let location = Location::builder().span(span).resource(file_id).build();
             if let Some(location) = location {
                 visitor.record_frame(location)?;
@@ -395,26 +427,127 @@ impl ParseDiagnostic {
         Self {
             file_id,
             span: span.as_span(),
-            message: message.to_string(),
+            message: markup! { {message} }.to_owned(),
+            description: String::new(),
             advice: ParserAdvice::default(),
-            severity: Severity::Error,
         }
     }
 
     pub const fn is_error(&self) -> bool {
-        matches!(self.severity, Severity::Error)
+        true
     }
 
-    /// Use this API if you want to highlight more code frame, to help to explain where's the error
-    pub fn detail(mut self, range: impl AsSpan, message: impl Into<String>) -> Self {
+    /// Use this API if you want to highlight more code frame, to help to explain where's the error.
+    ///
+    /// A detail is printed **after the actual error** and before the hint.
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_console::fmt::{Termcolor};
+    /// use rome_console::markup;
+    /// use rome_diagnostics::v2::{DiagnosticExt, FileId, PrintDiagnostic, console::fmt::Formatter};
+    /// use rome_js_parser::ParseDiagnostic;
+    /// use rome_js_syntax::TextRange;
+    /// use rome_rowan::TextSize;
+    /// use std::fmt::Write;
+    ///
+    /// let source = "const a";
+    /// let range = TextRange::new(TextSize::from(0), TextSize::from(5));
+    /// let mut diagnostic = ParseDiagnostic::new(FileId::zero(), "this is wrong!", range)
+    ///     .detail(TextRange::new(TextSize::from(6), TextSize::from(7)), "This is reason why it's broken");
+    ///
+    /// let mut write = rome_diagnostics::termcolor::Buffer::no_color();
+    /// let error = diagnostic
+    ///     .clone()
+    ///     .with_file_path(FileId::zero())
+    ///     .with_file_source_code(source.to_string());
+    /// Formatter::new(&mut Termcolor(&mut write))
+    ///     .write_markup(markup! {
+    ///     {PrintDiagnostic(&error)}
+    /// })
+    ///     .expect("failed to emit diagnostic");
+    ///
+    /// let mut result = String::new();
+    /// write!(
+    ///     result,
+    ///     "{}",
+    ///     std::str::from_utf8(write.as_slice()).expect("non utf8 in error buffer")
+    /// ).expect("");
+    ///
+    /// let expected = r#"parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    ///
+    ///   × this is wrong!
+    ///  
+    ///   > 1 │ const a
+    ///       │ ^^^^^
+    ///  
+    ///   i This is reason why it's broken
+    ///  
+    ///   > 1 │ const a
+    ///       │       ^
+    ///  
+    /// "#;
+    /// assert_eq!(result, expected);
+    pub fn detail(mut self, range: impl AsSpan, message: impl Display) -> Self {
         self.advice
-            .set_detail(message.into(), range.as_span(), self.file_id);
+            .add_detail(message, range.as_span(), self.file_id);
         self
     }
 
     /// Small message that should suggest the user how they could fix the error
-    pub fn hint(mut self, message: impl Into<String>) -> Self {
-        self.advice.set_hint(message.into());
+    ///
+    /// Hints are rendered a **last part** of the diagnostics
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_console::fmt::{Termcolor};
+    /// use rome_console::markup;
+    /// use rome_diagnostics::v2::{DiagnosticExt, FileId, PrintDiagnostic, console::fmt::Formatter};
+    /// use rome_js_parser::ParseDiagnostic;
+    /// use rome_js_syntax::TextRange;
+    /// use rome_rowan::TextSize;
+    /// use std::fmt::Write;
+    ///
+    /// let source = "const a";
+    /// let range = TextRange::new(TextSize::from(0), TextSize::from(5));
+    /// let mut diagnostic = ParseDiagnostic::new(FileId::zero(), "this is wrong!", range)
+    ///     .hint("You should delete the code");
+    ///
+    /// let mut write = rome_diagnostics::termcolor::Buffer::no_color();
+    /// let error = diagnostic
+    ///     .clone()
+    ///     .with_file_path(FileId::zero())
+    ///     .with_file_source_code(source.to_string());
+    /// Formatter::new(&mut Termcolor(&mut write))
+    ///     .write_markup(markup! {
+    ///     {PrintDiagnostic(&error)}
+    /// })
+    ///     .expect("failed to emit diagnostic");
+    ///
+    /// let mut result = String::new();
+    /// write!(
+    ///     result,
+    ///     "{}",
+    ///     std::str::from_utf8(write.as_slice()).expect("non utf8 in error buffer")
+    /// ).expect("");
+    ///
+    /// let expected = r#"parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    ///
+    ///   × this is wrong!
+    ///  
+    ///   > 1 │ const a
+    ///       │ ^^^^^
+    ///  
+    ///   i You should delete the code
+    ///  
+    /// "#;
+    /// assert_eq!(result, expected);
+    /// ```
+    ///
+    pub fn hint(mut self, message: impl Display) -> Self {
+        self.advice.add_hint(message);
         self
     }
 

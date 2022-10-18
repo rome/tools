@@ -231,21 +231,10 @@ export_named_clause_err.js:1:10 parse ━━━━━━━━━━━━━━
     2 │ export { "a" as b };
     3 │ export { as b };
   
-  > 1 │ export { default as "b" };
-      │          ^^^^^^^
-    2 │ export { "a" as b };
-    3 │ export { as b };
-  
 --
 export_named_clause_err.js:2:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A string literal cannot be used as an export binding without `from`.
-  
-    1 │ export { default as "b" };
-  > 2 │ export { "a" as b };
-      │          ^^^
-    3 │ export { as b };
-    4 │ export { a as 5 };
   
     1 │ export { default as "b" };
   > 2 │ export { "a" as b };

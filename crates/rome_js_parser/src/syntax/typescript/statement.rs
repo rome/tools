@@ -325,7 +325,6 @@ fn eat_interface_heritage_clause(p: &mut Parser) {
             if let Some(first_extends) = first_extends.as_ref() {
                 p.error(
                     p.err_builder("'extends' clause already seen.", extends.range(p))
-                        .detail(extends.range(p), "")
                         .detail(first_extends.range(p), "first 'extends' clause"),
                 )
             } else {

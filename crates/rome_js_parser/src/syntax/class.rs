@@ -305,8 +305,10 @@ fn eat_class_heritage_clause(p: &mut Parser) {
                                         "'extends' clause must precede 'implements' clause.",
                                         current.range(p),
                                     )
-                                    .detail(current.range(p), "")
-                                    .detail(first_implements.range(p), ""),
+                                    .detail(
+                                        first_implements.range(p),
+                                        "This is where implements was found",
+                                    ),
                                 )
                             }
 
@@ -315,7 +317,6 @@ fn eat_class_heritage_clause(p: &mut Parser) {
                     }
                     Some(first_extends) => p.error(
                         p.err_builder("'extends' clause already seen.", current.range(p))
-                            .detail(current.range(p), "")
                             .detail(first_extends.range(p), "first 'extends' clause"),
                     ),
                 }
@@ -339,7 +340,6 @@ fn eat_class_heritage_clause(p: &mut Parser) {
                     Some(first_implements) => {
                         p.error(
                             p.err_builder("'implements' clause already seen.", current.range(p))
-                                .detail(current.range(p), "")
                                 .detail(first_implements.range(p), "first 'implements' clause"),
                         );
                     }
@@ -1049,8 +1049,8 @@ fn parse_ts_property_annotation(p: &mut Parser, modifiers: &ClassMemberModifiers
                     "class properties cannot be both optional and definite",
                     definite_range,
                 )
-                .detail(definite_range, "")
-                .detail(optional_range, "");
+                .detail(definite_range, "The definite")
+                .detail(optional_range, "The optional");
 
             p.error(error);
 

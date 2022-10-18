@@ -10,20 +10,6 @@ mod parsed_syntax;
 pub(crate) mod rewrite_parser;
 pub(crate) mod single_token_parse_recovery;
 
-use drop_bomb::DebugDropBomb;
-use rome_diagnostics::{file::FileId, v2::category};
-use rome_js_syntax::{
-    JsSyntaxKind::{self},
-    SourceType, TextRange,
-};
-use std::fmt::Display;
-use std::num::NonZeroU32;
-
-pub(crate) use parse_error::*;
-pub(crate) use parse_lists::{ParseNodeList, ParseSeparatedList};
-pub(crate) use parsed_syntax::ParsedSyntax;
-use rome_rowan::{SyntaxKind, TextSize};
-
 use crate::lexer::{LexContext, ReLexContext};
 pub(crate) use crate::parser::parse_recovery::{ParseRecovery, RecoveryError, RecoveryResult};
 use crate::*;
@@ -31,6 +17,17 @@ use crate::{
     state::ParserStateCheckpoint,
     token_source::{TokenSource, TokenSourceCheckpoint, Trivia},
 };
+use drop_bomb::DebugDropBomb;
+pub(crate) use parse_error::*;
+pub(crate) use parse_lists::{ParseNodeList, ParseSeparatedList};
+pub(crate) use parsed_syntax::ParsedSyntax;
+use rome_diagnostics::file::FileId;
+use rome_js_syntax::{
+    JsSyntaxKind::{self},
+    SourceType, TextRange,
+};
+use rome_rowan::{SyntaxKind, TextSize};
+use std::num::NonZeroU32;
 
 /// Captures the progress of the parser and allows to test if the parsing is still making progress
 #[derive(Debug, Eq, Ord, PartialOrd, PartialEq, Hash, Default)]

@@ -1,8 +1,8 @@
 use crate::token_source::TokenSourceCheckpoint;
 use crate::{CompletedMarker, Event, Marker, ParseDiagnostic, Parser, TextSize, ToDiagnostic};
+use rome_console::fmt::Display;
 use rome_diagnostics::v2::location::AsSpan;
 use rome_js_syntax::{JsSyntaxKind, TextRange};
-use std::fmt::Display;
 
 /// Simplified parser API for when rewriting the AST structure with `rewrite_events`.
 ///

@@ -522,8 +522,8 @@ fn parse_binary_or_logical_expression_recursive(
 						"unparenthesized unary expression can't appear on the left-hand side of '**'",
                         left.range(p)
 					)
-					.detail(op_range, "")
-					.detail(left.range(p), "");
+					.detail(op_range, "The operation")
+					.detail(left.range(p), "The left-hand side");
 
                 p.error(err);
                 is_unknown = true;

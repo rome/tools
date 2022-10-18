@@ -801,7 +801,7 @@ fn parse_any_export_named_specifier(p: &mut Parser) -> ParsedSyntax {
                 )
             };
 
-            p.error(error.detail(export_name.range(p), ""));
+            p.error(error);
         }
     }
 
