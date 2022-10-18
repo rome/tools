@@ -13,9 +13,9 @@ use std::collections::{BTreeMap, HashMap, HashSet};
 declare_rule! {
     /// Enforce all dependencies are correctly specified.
     ///
-    pub(crate) ReactExtensiveDependencies {
+    pub(crate) UseExhaustiveDependencies {
         version: "10.0.0",
-        name: "reactExtensiveDependencies",
+        name: "useExhaustiveDependencies",
         recommended: false,
     }
 }
@@ -60,7 +60,7 @@ pub enum Problem {
     ExtraDependency(TextRange, TextRange),
 }
 
-impl Rule for ReactExtensiveDependencies {
+impl Rule for UseExhaustiveDependencies {
     type Query = Semantic<JsCallExpression>;
     type State = Problem;
     type Signals = Vec<Self::State>;

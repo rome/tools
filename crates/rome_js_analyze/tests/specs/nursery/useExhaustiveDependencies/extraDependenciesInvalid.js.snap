@@ -12,7 +12,7 @@ function MyComponent() {
 
 # Diagnostics
 ```
-extraDependenciesInvalid.js:2:5 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+extraDependenciesInvalid.js:2:5 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has dependencies that were not captured
   

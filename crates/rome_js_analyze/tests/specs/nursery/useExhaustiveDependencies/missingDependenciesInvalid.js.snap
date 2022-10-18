@@ -61,7 +61,7 @@ function MyComponent6() {
 
 # Diagnostics
 ```
-missingDependenciesInvalid.js:3:5 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:3:5 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -85,7 +85,7 @@ missingDependenciesInvalid.js:3:5 lint/nursery/reactExtensiveDependencies ━━
 ```
 
 ```
-missingDependenciesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:17:3 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -109,7 +109,7 @@ missingDependenciesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━�
 ```
 
 ```
-missingDependenciesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:17:3 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -133,7 +133,7 @@ missingDependenciesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━�
 ```
 
 ```
-missingDependenciesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:17:3 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -157,7 +157,7 @@ missingDependenciesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━�
 ```
 
 ```
-missingDependenciesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:17:3 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -181,7 +181,7 @@ missingDependenciesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━�
 ```
 
 ```
-missingDependenciesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:17:3 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -205,7 +205,7 @@ missingDependenciesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━�
 ```
 
 ```
-missingDependenciesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:17:3 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -228,7 +228,7 @@ missingDependenciesInvalid.js:17:3 lint/nursery/reactExtensiveDependencies ━�
 ```
 
 ```
-missingDependenciesInvalid.js:37:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:37:3 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -252,7 +252,7 @@ missingDependenciesInvalid.js:37:3 lint/nursery/reactExtensiveDependencies ━�
 ```
 
 ```
-missingDependenciesInvalid.js:38:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:38:3 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -276,7 +276,7 @@ missingDependenciesInvalid.js:38:3 lint/nursery/reactExtensiveDependencies ━�
 ```
 
 ```
-missingDependenciesInvalid.js:39:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:39:3 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -300,7 +300,7 @@ missingDependenciesInvalid.js:39:3 lint/nursery/reactExtensiveDependencies ━�
 ```
 
 ```
-missingDependenciesInvalid.js:40:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:40:3 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -324,7 +324,7 @@ missingDependenciesInvalid.js:40:3 lint/nursery/reactExtensiveDependencies ━�
 ```
 
 ```
-missingDependenciesInvalid.js:41:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:41:3 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -348,7 +348,7 @@ missingDependenciesInvalid.js:41:3 lint/nursery/reactExtensiveDependencies ━�
 ```
 
 ```
-missingDependenciesInvalid.js:42:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:42:3 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
@@ -372,7 +372,7 @@ missingDependenciesInvalid.js:42:3 lint/nursery/reactExtensiveDependencies ━�
 ```
 
 ```
-missingDependenciesInvalid.js:49:3 lint/nursery/reactExtensiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━
+missingDependenciesInvalid.js:49:3 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This useEffect has missing dependencies
   
