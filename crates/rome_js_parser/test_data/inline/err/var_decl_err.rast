@@ -117,7 +117,7 @@ var_decl_err.js:1:8 parse ━━━━━━━━━━━━━━━━━━
     2 │ const b = 5 let c = 5;
     3 │ 
   
-  × Expected an expression, or an assignment here
+  i Expected an expression, or an assignment here
   
   > 1 │ var a =;
       │        ^
@@ -134,14 +134,14 @@ var_decl_err.js:2:13 parse ━━━━━━━━━━━━━━━━━�
       │             ^^^
     3 │ 
   
-  × An explicit or implicit semicolon is expected here...
+  i An explicit or implicit semicolon is expected here...
   
     1 │ var a =;
   > 2 │ const b = 5 let c = 5;
       │             ^^^
     3 │ 
   
-  × ...Which is required to end this statement
+  i ...Which is required to end this statement
   
     1 │ var a =;
   > 2 │ const b = 5 let c = 5;

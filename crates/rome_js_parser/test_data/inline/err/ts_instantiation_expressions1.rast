@@ -147,7 +147,7 @@ ts_instantiation_expressions1.ts:1:29 parse ━━━━━━━━━━━━
     2 │ const b1 = f?.<number>;  // Error, `(` expected
     3 │ 
   
-  × Expected an expression here
+  i Expected an expression here
   
   > 1 │ const a8 = f<number><number>;  // Relational operator error
       │                             ^

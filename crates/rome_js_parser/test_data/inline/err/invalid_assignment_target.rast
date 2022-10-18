@@ -306,7 +306,7 @@ invalid_assignment_target.js:6:5 parse ━━━━━━━━━━━━━�
       │     ^
     7 │ 
   
-  × Expected an expression here
+  i Expected an expression here
   
     4 │ a?.b = b;
     5 │ a?.["b"] = b;

@@ -60,7 +60,7 @@ identifier.js:2:6 parse ━━━━━━━━━━━━━━━━━━�
       │      ^
     3 │ 
   
-  × Expected an unary expression here
+  i Expected an unary expression here
   
     1 │ yield;
   > 2 │ await;

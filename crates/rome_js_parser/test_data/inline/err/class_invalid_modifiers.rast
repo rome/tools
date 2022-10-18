@@ -162,14 +162,14 @@ class_invalid_modifiers.js:2:18 parse ━━━━━━━━━━━━━━
       │                  ^^^^^^
     3 │ 
   
-  × duplicate modifier
+  i duplicate modifier
   
     1 │ class A { public foo() {} }
   > 2 │ class B { static static foo() {} }
       │                  ^^^^^^
     3 │ 
   
-  × first seen here
+  i first seen here
   
     1 │ class A { public foo() {} }
   > 2 │ class B { static static foo() {} }

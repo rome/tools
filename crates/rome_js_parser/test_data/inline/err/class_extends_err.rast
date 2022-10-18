@@ -160,7 +160,7 @@ class_extends_err.js:1:21 parse ━━━━━━━━━━━━━━━━
     2 │ class B extends bar, foo {}
     3 │ class C implements B {}
   
-  × first 'extends' clause
+  i first 'extends' clause
   
   > 1 │ class A extends bar extends foo {}
       │         ^^^^^^^^^^^

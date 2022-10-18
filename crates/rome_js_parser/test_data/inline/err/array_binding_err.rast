@@ -289,7 +289,7 @@ array_binding_err.js:2:6 parse ━━━━━━━━━━━━━━━━�
     3 │ let ["default"] = [1, 2];
     4 │ let [[c ] = [];
   
-  × Expected an identifier, an array pattern, or an object pattern here
+  i Expected an identifier, an array pattern, or an object pattern here
   
     1 │ let [a b] = [1, 2];
   > 2 │ let [="default"] = [1, 2];
@@ -309,7 +309,7 @@ array_binding_err.js:3:6 parse ━━━━━━━━━━━━━━━━�
     4 │ let [[c ] = [];
     5 │ 
   
-  × Expected an identifier, an object pattern, an array pattern, or a rest pattern here
+  i Expected an identifier, an object pattern, an array pattern, or a rest pattern here
   
     1 │ let [a b] = [1, 2];
     2 │ let [="default"] = [1, 2];

@@ -58,7 +58,7 @@ ts_type_parameters_incomplete.ts:2:1 parse ━━━━━━━━━━━━�
   > 2 │ 
       │ 
   
-  × the file ends here
+  i the file ends here
   
     1 │ type A<T
   > 2 │ 

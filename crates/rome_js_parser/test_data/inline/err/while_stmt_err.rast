@@ -175,7 +175,7 @@ while_stmt_err.js:4:13 parse ━━━━━━━━━━━━━━━━━
       │             ^
     5 │ 
   
-  × Expected a statement here
+  i Expected a statement here
   
     2 │ while {}
     3 │ while (true {}

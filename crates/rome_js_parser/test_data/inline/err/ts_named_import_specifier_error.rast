@@ -291,7 +291,7 @@ ts_named_import_specifier_error.ts:6:1 parse ━━━━━━━━━━━�
   > 6 │ 
       │ 
   
-  × the file ends here
+  i the file ends here
   
     4 │ import { type "literal-name" } from "./mod";
     5 │ import {

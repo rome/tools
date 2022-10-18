@@ -108,7 +108,7 @@ subscripts_err.js:1:12 parse ━━━━━━━━━━━━━━━━━
     2 │ BAR`b
     3 │ 
   
-  × Expected an expression here
+  i Expected an expression here
   
   > 1 │ foo()?.baz[].;
       │            ^
@@ -125,7 +125,7 @@ subscripts_err.js:1:14 parse ━━━━━━━━━━━━━━━━━
     2 │ BAR`b
     3 │ 
   
-  × Expected an identifier here
+  i Expected an identifier here
   
   > 1 │ foo()?.baz[].;
       │              ^

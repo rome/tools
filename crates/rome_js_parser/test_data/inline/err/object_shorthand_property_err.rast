@@ -208,7 +208,7 @@ object_shorthand_property_err.js:2:7 parse ━━━━━━━━━━━━�
     3 │ let { , d } = c
     4 │ 
   
-  × Expected an identifier here
+  i Expected an identifier here
   
     1 │ let { a b } = c
   > 2 │ let { = "test" } = c
@@ -227,7 +227,7 @@ object_shorthand_property_err.js:3:7 parse ━━━━━━━━━━━━�
       │       ^
     4 │ 
   
-  × Expected an identifier, a member name, or a rest pattern here
+  i Expected an identifier, a member name, or a rest pattern here
   
     1 │ let { a b } = c
     2 │ let { = "test" } = c

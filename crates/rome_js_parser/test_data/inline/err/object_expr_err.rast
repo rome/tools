@@ -186,7 +186,7 @@ object_expr_err.js:4:1 parse ━━━━━━━━━━━━━━━━━
   > 4 │ 
       │ 
   
-  × the file ends here
+  i the file ends here
   
     2 │ let b = { foo bar }
     3 │ let b = { foo

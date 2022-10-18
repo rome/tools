@@ -589,7 +589,7 @@ for_stmt_err.js:6:5 parse ━━━━━━━━━━━━━━━━━━
     7 │ for await (let i = 0; i < 10; ++i) {}
     8 │ for (let [a];;) {}
   
-  × Remove the await here
+  i Remove the await here
   
     4 │ for (in []) {}
     5 │ for (let i, j = 6 of []) {}
@@ -598,7 +598,7 @@ for_stmt_err.js:6:5 parse ━━━━━━━━━━━━━━━━━━
     7 │ for await (let i = 0; i < 10; ++i) {}
     8 │ for (let [a];;) {}
   
-  × or convert this to a `for...of` statement
+  i or convert this to a `for...of` statement
   
     4 │ for (in []) {}
     5 │ for (let i, j = 6 of []) {}
@@ -619,7 +619,7 @@ for_stmt_err.js:7:5 parse ━━━━━━━━━━━━━━━━━━
     8 │ for (let [a];;) {}
     9 │ 
   
-  × Remove the await here
+  i Remove the await here
   
     5 │ for (let i, j = 6 of []) {}
     6 │ for await (let a in []) {}
@@ -628,7 +628,7 @@ for_stmt_err.js:7:5 parse ━━━━━━━━━━━━━━━━━━
     8 │ for (let [a];;) {}
     9 │ 
   
-  × or convert this to a `for...of` statement
+  i or convert this to a `for...of` statement
   
     5 │ for (let i, j = 6 of []) {}
     6 │ for await (let a in []) {}

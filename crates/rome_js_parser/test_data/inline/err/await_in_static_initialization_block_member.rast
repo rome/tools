@@ -72,7 +72,7 @@ await_in_static_initialization_block_member.js:4:10 parse ━━━━━━━�
     5 │   }
     6 │ }
   
-  × Expected an unary expression here
+  i Expected an unary expression here
   
     2 │ class A {
     3 │   static {

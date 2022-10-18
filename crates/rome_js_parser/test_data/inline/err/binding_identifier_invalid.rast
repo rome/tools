@@ -372,7 +372,7 @@ binding_identifier_invalid.js:8:8 parse ━━━━━━━━━━━━━�
       │        ^
     9 │ 
   
-  × a second declaration of `a` is not allowed
+  i a second declaration of `a` is not allowed
   
     6 │ let let = 5;
     7 │ const let = 5;
@@ -380,7 +380,7 @@ binding_identifier_invalid.js:8:8 parse ━━━━━━━━━━━━━�
       │        ^
     9 │ 
   
-  × `a` is first declared here
+  i `a` is first declared here
   
     6 │ let let = 5;
     7 │ const let = 5;

@@ -140,7 +140,7 @@ logical_expressions_err.js:3:11 parse ━━━━━━━━━━━━━━
       │           ^
     4 │ 
   
-  × Expected an expression here
+  i Expected an expression here
   
     1 │ foo ?? * 2;
     2 │ !foo && bar;

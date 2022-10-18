@@ -127,7 +127,7 @@ binary_expressions_err.js:1:10 parse ━━━━━━━━━━━━━━�
     2 │ foo + * 2;
     3 │ !foo * bar;
   
-  × Expected an expression here
+  i Expected an expression here
   
   > 1 │ foo(foo +);
       │          ^

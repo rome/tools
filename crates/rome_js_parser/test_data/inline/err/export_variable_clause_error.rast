@@ -130,7 +130,7 @@ export_variable_clause_error.js:1:16 parse ━━━━━━━━━━━━�
     2 │ export const b;
     3 │ export let d, c;
   
-  × Expected an expression, or an assignment here
+  i Expected an expression, or an assignment here
   
   > 1 │ export let a = ;
       │                ^

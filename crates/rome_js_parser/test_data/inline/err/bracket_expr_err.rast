@@ -93,7 +93,7 @@ bracket_expr_err.js:1:5 parse ━━━━━━━━━━━━━━━━�
     2 │ foo?.[]
     3 │ foo[
   
-  × Expected an expression here
+  i Expected an expression here
   
   > 1 │ foo[]
       │     ^
@@ -111,7 +111,7 @@ bracket_expr_err.js:2:7 parse ━━━━━━━━━━━━━━━━�
     3 │ foo[
     4 │ 
   
-  × Expected an expression here
+  i Expected an expression here
   
     1 │ foo[]
   > 2 │ foo?.[]
@@ -129,7 +129,7 @@ bracket_expr_err.js:4:1 parse ━━━━━━━━━━━━━━━━�
   > 4 │ 
       │ 
   
-  × Expected an expression here
+  i Expected an expression here
   
     2 │ foo?.[]
     3 │ foo[

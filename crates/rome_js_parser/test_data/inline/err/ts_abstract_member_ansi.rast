@@ -193,7 +193,7 @@ ts_abstract_member_ansi.ts:1:43 parse ━━━━━━━━━━━━━━
       │                                           ^^^^^^^^
     2 │ 
   
-  × Expected a class method body here
+  i Expected a class method body here
   
   > 1 │ abstract class A { abstract constructor() abstract method() abstract get getter() abstract set setter(value) abstract prop }
       │                                           ^^^^^^^^

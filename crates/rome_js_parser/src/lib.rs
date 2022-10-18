@@ -376,7 +376,7 @@ impl Advices for ParserAdvice {
     fn record(&self, visitor: &mut dyn Visit) -> std::io::Result<()> {
         for (message, span, file_id) in &self.detail_list {
             if !message.is_empty() {
-                visitor.record_log(LogCategory::Error, &markup! { {message} }.to_owned())?;
+                visitor.record_log(LogCategory::Info, &markup! { {message} }.to_owned())?;
             }
             let location = Location::builder().span(span).resource(file_id).build();
             if let Some(location) = location {

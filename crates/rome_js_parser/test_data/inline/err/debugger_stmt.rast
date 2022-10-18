@@ -111,7 +111,7 @@ debugger_stmt.js:2:12 parse ━━━━━━━━━━━━━━━━━�
     3 │     var something = "lorem";
     4 │   }
   
-  × An explicit or implicit semicolon is expected here...
+  i An explicit or implicit semicolon is expected here...
   
     1 │ function foo() {
   > 2 │   debugger {
@@ -119,7 +119,7 @@ debugger_stmt.js:2:12 parse ━━━━━━━━━━━━━━━━━�
     3 │     var something = "lorem";
     4 │   }
   
-  × ...Which is required to end this statement
+  i ...Which is required to end this statement
   
     1 │ function foo() {
   > 2 │   debugger {

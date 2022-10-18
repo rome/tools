@@ -88,7 +88,7 @@ method_getter_err.js:2:6 parse ━━━━━━━━━━━━━━━━�
     3 │ }
     4 │ 
   
-  × Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+  i Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
   
     1 │ class foo {
   > 2 │  get {}
@@ -107,7 +107,7 @@ method_getter_err.js:3:1 parse ━━━━━━━━━━━━━━━━�
       │ ^
     4 │ 
   
-  × Expected a statement here
+  i Expected a statement here
   
     1 │ class foo {
     2 │  get {}

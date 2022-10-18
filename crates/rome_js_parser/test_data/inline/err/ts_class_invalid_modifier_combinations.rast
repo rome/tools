@@ -528,7 +528,7 @@ ts_class_invalid_modifier_combinations.ts:3:14 parse ━━━━━━━━━
     4 │     declare declare a;
     5 │     private protected public c;
   
-  × duplicate modifier
+  i duplicate modifier
   
     1 │ class Base { base1; base2; }
     2 │ abstract class Test extends Base {
@@ -537,7 +537,7 @@ ts_class_invalid_modifier_combinations.ts:3:14 parse ━━━━━━━━━
     4 │     declare declare a;
     5 │     private protected public c;
   
-  × first seen here
+  i first seen here
   
     1 │ class Base { base1; base2; }
     2 │ abstract class Test extends Base {
@@ -558,7 +558,7 @@ ts_class_invalid_modifier_combinations.ts:4:13 parse ━━━━━━━━━
     5 │     private protected public c;
     6 │     private private d;
   
-  × duplicate modifier
+  i duplicate modifier
   
     2 │ abstract class Test extends Base {
     3 │     override override base1;
@@ -567,7 +567,7 @@ ts_class_invalid_modifier_combinations.ts:4:13 parse ━━━━━━━━━
     5 │     private protected public c;
     6 │     private private d;
   
-  × first seen here
+  i first seen here
   
     2 │ abstract class Test extends Base {
     3 │     override override base1;
@@ -588,7 +588,7 @@ ts_class_invalid_modifier_combinations.ts:5:13 parse ━━━━━━━━━
     6 │     private private d;
     7 │     protected protected e;
   
-  × duplicate modifier
+  i duplicate modifier
   
     3 │     override override base1;
     4 │     declare declare a;
@@ -597,7 +597,7 @@ ts_class_invalid_modifier_combinations.ts:5:13 parse ━━━━━━━━━
     6 │     private private d;
     7 │     protected protected e;
   
-  × first modifier
+  i first modifier
   
     3 │     override override base1;
     4 │     declare declare a;
@@ -618,7 +618,7 @@ ts_class_invalid_modifier_combinations.ts:5:23 parse ━━━━━━━━━
     6 │     private private d;
     7 │     protected protected e;
   
-  × duplicate modifier
+  i duplicate modifier
   
     3 │     override override base1;
     4 │     declare declare a;
@@ -627,7 +627,7 @@ ts_class_invalid_modifier_combinations.ts:5:23 parse ━━━━━━━━━
     6 │     private private d;
     7 │     protected protected e;
   
-  × first modifier
+  i first modifier
   
     3 │     override override base1;
     4 │     declare declare a;
@@ -648,7 +648,7 @@ ts_class_invalid_modifier_combinations.ts:6:13 parse ━━━━━━━━━
     7 │     protected protected e;
     8 │     public public f;
   
-  × duplicate modifier
+  i duplicate modifier
   
     4 │     declare declare a;
     5 │     private protected public c;
@@ -657,7 +657,7 @@ ts_class_invalid_modifier_combinations.ts:6:13 parse ━━━━━━━━━
     7 │     protected protected e;
     8 │     public public f;
   
-  × first modifier
+  i first modifier
   
     4 │     declare declare a;
     5 │     private protected public c;
@@ -678,7 +678,7 @@ ts_class_invalid_modifier_combinations.ts:7:15 parse ━━━━━━━━━
     8 │     public public f;
     9 │     abstract abstract g;
   
-  × duplicate modifier
+  i duplicate modifier
   
     5 │     private protected public c;
     6 │     private private d;
@@ -687,7 +687,7 @@ ts_class_invalid_modifier_combinations.ts:7:15 parse ━━━━━━━━━
     8 │     public public f;
     9 │     abstract abstract g;
   
-  × first modifier
+  i first modifier
   
     5 │     private protected public c;
     6 │     private private d;
@@ -708,7 +708,7 @@ ts_class_invalid_modifier_combinations.ts:8:12 parse ━━━━━━━━━
      9 │     abstract abstract g;
     10 │     static static h;
   
-  × duplicate modifier
+  i duplicate modifier
   
      6 │     private private d;
      7 │     protected protected e;
@@ -717,7 +717,7 @@ ts_class_invalid_modifier_combinations.ts:8:12 parse ━━━━━━━━━
      9 │     abstract abstract g;
     10 │     static static h;
   
-  × first modifier
+  i first modifier
   
      6 │     private private d;
      7 │     protected protected e;
@@ -738,7 +738,7 @@ ts_class_invalid_modifier_combinations.ts:9:14 parse ━━━━━━━━━
     10 │     static static h;
     11 │     readonly readonly i;
   
-  × duplicate modifier
+  i duplicate modifier
   
      7 │     protected protected e;
      8 │     public public f;
@@ -747,7 +747,7 @@ ts_class_invalid_modifier_combinations.ts:9:14 parse ━━━━━━━━━
     10 │     static static h;
     11 │     readonly readonly i;
   
-  × first seen here
+  i first seen here
   
      7 │     protected protected e;
      8 │     public public f;
@@ -768,7 +768,7 @@ ts_class_invalid_modifier_combinations.ts:10:12 parse ━━━━━━━━�
     11 │     readonly readonly i;
     12 │     override declare base2;
   
-  × duplicate modifier
+  i duplicate modifier
   
      8 │     public public f;
      9 │     abstract abstract g;
@@ -777,7 +777,7 @@ ts_class_invalid_modifier_combinations.ts:10:12 parse ━━━━━━━━�
     11 │     readonly readonly i;
     12 │     override declare base2;
   
-  × first seen here
+  i first seen here
   
      8 │     public public f;
      9 │     abstract abstract g;
@@ -798,7 +798,7 @@ ts_class_invalid_modifier_combinations.ts:11:14 parse ━━━━━━━━�
     12 │     override declare base2;
     13 │     private abstract j;
   
-  × duplicate modifier
+  i duplicate modifier
   
      9 │     abstract abstract g;
     10 │     static static h;
@@ -807,7 +807,7 @@ ts_class_invalid_modifier_combinations.ts:11:14 parse ━━━━━━━━�
     12 │     override declare base2;
     13 │     private abstract j;
   
-  × first seen here
+  i first seen here
   
      9 │     abstract abstract g;
     10 │     static static h;
@@ -828,7 +828,7 @@ ts_class_invalid_modifier_combinations.ts:12:14 parse ━━━━━━━━�
     13 │     private abstract j;
     14 │     abstract #j;
   
-  × 'declare' modifier
+  i 'declare' modifier
   
     10 │     static static h;
     11 │     readonly readonly i;
@@ -837,7 +837,7 @@ ts_class_invalid_modifier_combinations.ts:12:14 parse ━━━━━━━━�
     13 │     private abstract j;
     14 │     abstract #j;
   
-  × 'override' modifier
+  i 'override' modifier
   
     10 │     static static h;
     11 │     readonly readonly i;
@@ -858,7 +858,7 @@ ts_class_invalid_modifier_combinations.ts:13:5 parse ━━━━━━━━━
     14 │     abstract #j;
     15 │     abstract static k;
   
-  × 'private' modifier
+  i 'private' modifier
   
     11 │     readonly readonly i;
     12 │     override declare base2;
@@ -867,7 +867,7 @@ ts_class_invalid_modifier_combinations.ts:13:5 parse ━━━━━━━━━
     14 │     abstract #j;
     15 │     abstract static k;
   
-  × 'abstract' modifier
+  i 'abstract' modifier
   
     11 │     readonly readonly i;
     12 │     override declare base2;
@@ -900,7 +900,7 @@ ts_class_invalid_modifier_combinations.ts:15:5 parse ━━━━━━━━━
     16 │     abstract async l();
     17 │     declare async m();
   
-  × 'abstract' modifier
+  i 'abstract' modifier
   
     13 │     private abstract j;
     14 │     abstract #j;
@@ -909,7 +909,7 @@ ts_class_invalid_modifier_combinations.ts:15:5 parse ━━━━━━━━━
     16 │     abstract async l();
     17 │     declare async m();
   
-  × 'static' modifier
+  i 'static' modifier
   
     13 │     private abstract j;
     14 │     abstract #j;

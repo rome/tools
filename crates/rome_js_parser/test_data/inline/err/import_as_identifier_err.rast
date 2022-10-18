@@ -67,7 +67,7 @@ import_as_identifier_err.js:1:10 parse ━━━━━━━━━━━━━�
       │          
     2 │ 
   
-  × Expected a string literal, or an identifier here
+  i Expected a string literal, or an identifier here
   
   > 1 │ import { as c } from "test";
       │          

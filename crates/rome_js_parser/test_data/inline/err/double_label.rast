@@ -73,7 +73,7 @@ double_label.js:3:5 parse ━━━━━━━━━━━━━━━━━━
     4 │   }
     5 │ }
   
-  × a second use of `label1` here is not allowed
+  i a second use of `label1` here is not allowed
   
     1 │ label1: {
     2 │   label2: {
@@ -82,7 +82,7 @@ double_label.js:3:5 parse ━━━━━━━━━━━━━━━━━━
     4 │   }
     5 │ }
   
-  × `label1` is first used as a label here
+  i `label1` is first used as a label here
   
   > 1 │ label1: {
       │ ^^^^^^

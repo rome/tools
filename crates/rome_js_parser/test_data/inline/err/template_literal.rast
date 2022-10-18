@@ -143,7 +143,7 @@ template_literal.js:1:16 parse ━━━━━━━━━━━━━━━━�
     2 │ let b = `${a a}`
     3 │ 
   
-  × Expected an expression here
+  i Expected an expression here
   
   > 1 │ let a = `foo ${}`
       │                ^

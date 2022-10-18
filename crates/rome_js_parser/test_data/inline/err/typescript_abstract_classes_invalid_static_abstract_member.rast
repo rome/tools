@@ -139,14 +139,14 @@ typescript_abstract_classes_invalid_static_abstract_member.ts:1:20 parse ━━�
     2 │ abstract class B { static abstract fn1(); }
     3 │ 
   
-  × 'abstract' modifier
+  i 'abstract' modifier
   
   > 1 │ abstract class A { abstract static fn1(); }
       │                    ^^^^^^^^
     2 │ abstract class B { static abstract fn1(); }
     3 │ 
   
-  × 'static' modifier
+  i 'static' modifier
   
   > 1 │ abstract class A { abstract static fn1(); }
       │                             ^^^^^^
@@ -163,14 +163,14 @@ typescript_abstract_classes_invalid_static_abstract_member.ts:2:27 parse ━━�
       │                           ^^^^^^^^
     3 │ 
   
-  × 'abstract' modifier
+  i 'abstract' modifier
   
     1 │ abstract class A { abstract static fn1(); }
   > 2 │ abstract class B { static abstract fn1(); }
       │                           ^^^^^^^^
     3 │ 
   
-  × 'static' modifier
+  i 'static' modifier
   
     1 │ abstract class A { abstract static fn1(); }
   > 2 │ abstract class B { static abstract fn1(); }

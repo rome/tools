@@ -513,7 +513,7 @@ import_assertion_err.js:5:8 parse ━━━━━━━━━━━━━━━�
     6 │ import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
     7 │ import "x" assert;
   
-  × An explicit or implicit semicolon is expected here...
+  i An explicit or implicit semicolon is expected here...
   
     3 │ import { foo } assert { type: "json" };
     4 │ import "lorem"
@@ -522,7 +522,7 @@ import_assertion_err.js:5:8 parse ━━━━━━━━━━━━━━━�
     6 │ import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
     7 │ import "x" assert;
   
-  × ...Which is required to end this statement
+  i ...Which is required to end this statement
   
     3 │ import { foo } assert { type: "json" };
     4 │ import "lorem"
@@ -543,7 +543,7 @@ import_assertion_err.js:6:38 parse ━━━━━━━━━━━━━━━
     7 │ import "x" assert;
     8 │ import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
   
-  × First use of the key `type`
+  i First use of the key `type`
   
     4 │ import "lorem"
     5 │ assert { type: "json" }
@@ -552,7 +552,7 @@ import_assertion_err.js:6:38 parse ━━━━━━━━━━━━━━━
     7 │ import "x" assert;
     8 │ import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
   
-  × second use here
+  i second use here
   
     4 │ import "lorem"
     5 │ assert { type: "json" }
@@ -627,7 +627,7 @@ import_assertion_err.js:10:1 parse ━━━━━━━━━━━━━━━
   > 10 │ 
        │ 
   
-  × the file ends here
+  i the file ends here
   
      8 │ import ipsum from "ipsum.json" assert { type: "json", lazy: true, startAtLine: 1 };
      9 │ import { a } from "a.json" assert

@@ -158,7 +158,7 @@ continue_stmt.js:6:12 parse ━━━━━━━━━━━━━━━━━�
     7 │ }
     8 │ 
   
-  × This label
+  i This label
   
     4 │ }
     5 │ foo: {
@@ -167,7 +167,7 @@ continue_stmt.js:6:12 parse ━━━━━━━━━━━━━━━━━�
     7 │ }
     8 │ 
   
-  × points to non-iteration statement
+  i points to non-iteration statement
   
     3 │   continue foo;
     4 │ }

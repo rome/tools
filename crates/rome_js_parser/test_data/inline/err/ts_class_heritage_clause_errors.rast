@@ -300,7 +300,7 @@ ts_class_heritage_clause_errors.ts:4:24 parse ━━━━━━━━━━━�
     5 │ class D implements {}
     6 │ class E extends {}
   
-  × first 'implements' clause
+  i first 'implements' clause
   
     2 │ interface Int {}
     3 │ class B implements Int extends A {}

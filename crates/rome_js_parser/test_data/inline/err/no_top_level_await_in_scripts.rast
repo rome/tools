@@ -102,7 +102,7 @@ no_top_level_await_in_scripts.js:3:7 parse ━━━━━━━━━━━━�
       │       ^^^^
     4 │ 
   
-  × An explicit or implicit semicolon is expected here...
+  i An explicit or implicit semicolon is expected here...
   
     1 │ // SCRIPT
     2 │ async function test() {}
@@ -110,7 +110,7 @@ no_top_level_await_in_scripts.js:3:7 parse ━━━━━━━━━━━━�
       │       ^^^^
     4 │ 
   
-  × ...Which is required to end this statement
+  i ...Which is required to end this statement
   
     1 │ // SCRIPT
     2 │ async function test() {}

@@ -111,7 +111,7 @@ let_newline_in_async_function.js:3:9 parse ━━━━━━━━━━━━�
     4 │ }
     5 │ 
   
-  × An explicit or implicit semicolon is expected here...
+  i An explicit or implicit semicolon is expected here...
   
     1 │ async function f() {
     2 │   let
@@ -120,7 +120,7 @@ let_newline_in_async_function.js:3:9 parse ━━━━━━━━━━━━�
     4 │ }
     5 │ 
   
-  × ...Which is required to end this statement
+  i ...Which is required to end this statement
   
     1 │ async function f() {
   > 2 │   let

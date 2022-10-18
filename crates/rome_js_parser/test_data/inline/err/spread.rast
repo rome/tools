@@ -42,7 +42,7 @@ spread.js:1:5 parse ━━━━━━━━━━━━━━━━━━━━
       │     ^
     2 │ 
   
-  × Expected an expression, or an assignment here
+  i Expected an expression, or an assignment here
   
   > 1 │ [...]
       │     ^

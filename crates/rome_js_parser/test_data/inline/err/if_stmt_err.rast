@@ -173,7 +173,7 @@ if_stmt_err.js:1:11 parse ━━━━━━━━━━━━━━━━━━
     2 │ if (true) else
     3 │ if else {}
   
-  × Expected a statement here
+  i Expected a statement here
   
   > 1 │ if (true) else {}
       │           ^^^^
@@ -191,7 +191,7 @@ if_stmt_err.js:2:11 parse ━━━━━━━━━━━━━━━━━━
     3 │ if else {}
     4 │ if () {} else {}
   
-  × Expected a statement here
+  i Expected a statement here
   
     1 │ if (true) else {}
   > 2 │ if (true) else
@@ -225,7 +225,7 @@ if_stmt_err.js:4:5 parse ━━━━━━━━━━━━━━━━━━�
     5 │ if (true)}}}} {}
     6 │ 
   
-  × Expected an expression here
+  i Expected an expression here
   
     2 │ if (true) else
     3 │ if else {}
@@ -245,7 +245,7 @@ if_stmt_err.js:5:10 parse ━━━━━━━━━━━━━━━━━━
       │          ^
     6 │ 
   
-  × Expected a statement here
+  i Expected a statement here
   
     3 │ if else {}
     4 │ if () {} else {}

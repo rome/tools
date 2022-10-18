@@ -168,7 +168,7 @@ array_assignment_target_rest_err.js:1:7 parse ━━━━━━━━━━━�
     2 │ ([ ...c = "default" ] = a);
     3 │ ([ ...rest, other_assignment ] = a);
   
-  × Expected an identifier, or an assignment target here
+  i Expected an identifier, or an assignment target here
   
   > 1 │ ([ ... ] = a);
       │       
@@ -186,7 +186,7 @@ array_assignment_target_rest_err.js:2:9 parse ━━━━━━━━━━━�
     3 │ ([ ...rest, other_assignment ] = a);
     4 │ 
   
-  × Remove the default value here
+  i Remove the default value here
   
     1 │ ([ ... ] = a);
   > 2 │ ([ ...c = "default" ] = a);
@@ -194,7 +194,7 @@ array_assignment_target_rest_err.js:2:9 parse ━━━━━━━━━━━�
     3 │ ([ ...rest, other_assignment ] = a);
     4 │ 
   
-  × Rest element
+  i Rest element
   
     1 │ ([ ... ] = a);
   > 2 │ ([ ...c = "default" ] = a);

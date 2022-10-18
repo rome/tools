@@ -360,7 +360,7 @@ object_binding_pattern.js:1:11 parse ━━━━━━━━━━━━━━�
     2 │ let { eval } = { eval: "foo" };
     3 │ let { 5, 6 } = { eval: "foo" };
   
-  × Expected a statement here
+  i Expected a statement here
   
   > 1 │ let { 5 } } = { eval: "foo" };
       │           ^^^
@@ -430,7 +430,7 @@ object_binding_pattern.js:4:23 parse ━━━━━━━━━━━━━━�
       │                       ^
     5 │ 
   
-  × Expected an identifier, an array pattern, or an object pattern here
+  i Expected an identifier, an array pattern, or an object pattern here
   
     2 │ let { eval } = { eval: "foo" };
     3 │ let { 5, 6 } = { eval: "foo" };

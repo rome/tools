@@ -406,7 +406,7 @@ rest_property_binding_err.js:1:11 parse ━━━━━━━━━━━━━�
     2 │ let { ...c = "default" } = a;
     3 │ let { ...{a} } = b;
   
-  × Expected an identifier here
+  i Expected an identifier here
   
   > 1 │ let { ... } = a;
       │           ^
@@ -424,7 +424,7 @@ rest_property_binding_err.js:2:12 parse ━━━━━━━━━━━━━�
     3 │ let { ...{a} } = b;
     4 │ let { ...rest, other_assignment } = a;
   
-  × Remove the default value here
+  i Remove the default value here
   
     1 │ let { ... } = a;
   > 2 │ let { ...c = "default" } = a;
@@ -432,7 +432,7 @@ rest_property_binding_err.js:2:12 parse ━━━━━━━━━━━━━�
     3 │ let { ...{a} } = b;
     4 │ let { ...rest, other_assignment } = a;
   
-  × Rest element
+  i Rest element
   
     1 │ let { ... } = a;
   > 2 │ let { ...c = "default" } = a;
@@ -480,7 +480,7 @@ rest_property_binding_err.js:5:15 parse ━━━━━━━━━━━━━�
     6 │ async function test() {
     7 │   let { ...await } = a;
   
-  × Remove the trailing comma here
+  i Remove the trailing comma here
   
     3 │ let { ...{a} } = b;
     4 │ let { ...rest, other_assignment } = a;
@@ -489,7 +489,7 @@ rest_property_binding_err.js:5:15 parse ━━━━━━━━━━━━━�
     6 │ async function test() {
     7 │   let { ...await } = a;
   
-  × Rest element
+  i Rest element
   
     3 │ let { ...{a} } = b;
     4 │ let { ...rest, other_assignment } = a;
