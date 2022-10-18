@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: block_statement.js
 ---
+
 # Input
+
+```js
 if (true) {
 	;
 }
@@ -13,9 +16,15 @@ if (true) {
 	;
 }
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -23,6 +32,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 if (true) {
 }
 
@@ -30,4 +41,6 @@ if (true) {
 	// rome-ignore format: Tests that ignored empty statements don't get removed
 	;
 }
+```
+
 

@@ -2,14 +2,23 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: identifier_binding.js
 ---
+
 # Input
+
+```js
 let x = y
 
 let abcde = "very long value that will cause a line break", fghij = "this should end up on the next line"
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -17,8 +26,12 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 let x = y;
 
 let abcde = "very long value that will cause a line break",
 	fghij = "this should end up on the next line";
+```
+
 

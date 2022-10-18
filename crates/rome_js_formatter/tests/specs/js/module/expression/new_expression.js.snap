@@ -2,14 +2,23 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: new_expression.js
 ---
+
 # Input
+
+```js
 new a()
 new b(x)
 new c(aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,cccccccccccccccccccccccccccccc)
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -17,6 +26,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 new a();
 new b(x);
 new c(
@@ -24,4 +35,6 @@ new c(
 	bbbbbbbbbbbbbbbbbbbbbbbbbbbbbb,
 	cccccccccccccccccccccccccccccc,
 );
+```
+
 

@@ -2,12 +2,21 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: non_null_expression.ts
 ---
+
 # Input
+
+```js
 let a: any;
 let  b  =   a   !;
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -15,6 +24,10 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 let a: any;
 let b = a!;
+```
+
 

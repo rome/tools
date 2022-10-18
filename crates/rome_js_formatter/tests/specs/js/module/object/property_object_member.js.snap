@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: property_object_member.js
 ---
+
 # Input
+
+```js
 const neverBreakAfterColonObject = {
     'this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-1': require(),
     x: "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
@@ -92,9 +95,15 @@ const fluidObject = {
     },
 };
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -102,6 +111,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 const neverBreakAfterColonObject = {
 	"this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-this-is-a-very-long-key-and-the-assignment-should-be-put-on-the-next-line-1": require(),
 	x: "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
@@ -277,4 +288,6 @@ const fluidObject = {
    28: 		"12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890",
    75: 			.longLongLongLongLongLlongLongLongLongLongLongLongLongLongTooLongPropongLongLongLongTooLongProp ===
    78: 		longLongLongLongLongLongLongLongLonlongLongLongLongLongLongLongLongLongTooLongPropgLongLongLongLongTooLongVar ||
+```
+
 

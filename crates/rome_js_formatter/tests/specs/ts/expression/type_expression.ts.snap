@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: type_expression.ts
 ---
+
 # Input
+
+```js
 import * as assert from "assert";
 
 type A = string;
@@ -108,9 +111,15 @@ function test2(a: string):
 type Type01 = 0 extends
     (1 extends 2 ? 3 : 4) ? 5 : 6
     ;
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -118,6 +127,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 import * as assert from "assert";
 
 type A = string;
@@ -228,4 +239,6 @@ type Constructor<T> = new (...args: any[]) => T;
 function test2(a: string): asserts a is string {}
 
 type Type01 = 0 extends (1 extends 2 ? 3 : 4) ? 5 : 6;
+```
+
 

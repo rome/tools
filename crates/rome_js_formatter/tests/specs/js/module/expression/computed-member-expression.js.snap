@@ -2,12 +2,21 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: computed-member-expression.js
 ---
+
 # Input
+
+```js
 a["test"][5 + 5][call()];
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -15,5 +24,9 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 a["test"][5 + 5][call()];
+```
+
 

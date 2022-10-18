@@ -2,13 +2,22 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: variable_declaration.js
 ---
+
 # Input
+
+```js
 export let a, d, c;
 
 export const foofoofoofoofoofoofoo = "ahah", barbarbarbarbarbarbar = {}, loremloremloremloremlorem = []
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -16,9 +25,13 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 export let a, d, c;
 
 export const foofoofoofoofoofoofoo = "ahah",
 	barbarbarbarbarbarbar = {},
 	loremloremloremloremlorem = [];
+```
+
 

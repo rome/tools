@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: class_clause.js
 ---
+
 # Input
+
+```js
 // another comment
 export          class A { // small comment
         constructor() {
@@ -13,9 +16,15 @@ export          class A { // small comment
 export default  class
 B {}
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -23,6 +32,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 // another comment
 export class A {
 	// small comment
@@ -30,4 +41,6 @@ export class A {
 }
 
 export default class B {}
+```
+
 

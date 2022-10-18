@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: call.js
 ---
+
 # Input
+
+```js
 const testResults = results.testResults.map(testResult =>
     formatResult(testResult, formatter, reporter)
   );
@@ -48,9 +51,15 @@ const composition = (ViewComponent, ContainerComponent) =>
 
 romise.then(result => result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail");
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -58,6 +67,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 const testResults = results.testResults.map((testResult) =>
 	formatResult(testResult, formatter, reporter),
 );
@@ -111,4 +122,6 @@ romise.then((result) =>
 		? "ok"
 		: "fail",
 );
+```
+
 

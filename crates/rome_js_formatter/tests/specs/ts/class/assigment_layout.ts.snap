@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: assigment_layout.ts
 ---
+
 # Input
+
+```js
 class SourceRemoveUnused extends SourceAction {
 	static readonly kind = vscode.CodeActionKind.Source.append(
 		"removeUnused",
@@ -11,9 +14,15 @@ class SourceRemoveUnused extends SourceAction {
 	public static readonly id = "javascript-walkthrough.commands.nodeInstallationFound";
 }
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -21,6 +30,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 class SourceRemoveUnused extends SourceAction {
 	static readonly kind =
 		vscode.CodeActionKind.Source.append("removeUnused").append("ts");
@@ -28,4 +39,6 @@ class SourceRemoveUnused extends SourceAction {
 	public static readonly id =
 		"javascript-walkthrough.commands.nodeInstallationFound";
 }
+```
+
 

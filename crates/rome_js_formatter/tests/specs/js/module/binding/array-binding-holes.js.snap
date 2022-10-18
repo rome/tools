@@ -2,12 +2,21 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: array-binding-holes.js
 ---
+
 # Input
+
+```js
 function foo([foo, /* not used */, /* not used */]) {
 }
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -15,5 +24,9 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 function foo([foo, /* not used */ /* not used */ ,]) {}
+```
+
 

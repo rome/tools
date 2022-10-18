@@ -2,13 +2,22 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: function_args.js
 ---
+
 # Input
+
+```js
 function foo(someotherlongvariableshould1, someotherlongvariableshould2, someotherlongvariableshould3, someotherlongvariableshould4, someotherlongvariableshould5, someotherlongvariableshould6 = foooooooooooo, ...someotherlongvariableshould7) {
 	return "nothing";
 }
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -16,6 +25,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 function foo(
 	someotherlongvariableshould1,
 	someotherlongvariableshould2,
@@ -27,4 +38,6 @@ function foo(
 ) {
 	return "nothing";
 }
+```
+
 

@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: variable_declaration.ts
 ---
+
 # Input
+
+```js
 //break left-hand side layout
 const map: Map<Function, Map<string | void, { value: UnloadedDescriptor }>> =
     new Map();
@@ -91,9 +94,15 @@ var looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 = this<A & B>().ewqeqewqweqweqweqweqweqweqw;
 let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 = this()[dsadsadsadsadsadsadsa]<{ }>().ewqoewqoeiowqieopwqie
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -101,6 +110,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 //break left-hand side layout
 const map: Map<
 	Function,
@@ -238,4 +249,6 @@ let looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
   118: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
   120: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
   122: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
+```
+
 

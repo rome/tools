@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: default_import.js
 ---
+
 # Input
+
+```js
 import hey from "hey"
 import hey from "hey";
 import "x" assert { type: "json" }
@@ -15,9 +18,15 @@ import foo from "foo.json" assert {
 import foo2 from "foo.json" assert { "type": "json", type: "html", "type": "js" };
 import a, * as b from "foo"
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -25,6 +34,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 import hey from "hey";
 import hey from "hey";
 import "x" assert { type: "json" };
@@ -37,4 +48,6 @@ import foo2 from "foo.json" assert {
 	"type": "js",
 };
 import a, * as b from "foo";
+```
+
 

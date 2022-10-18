@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: computed_member.js
 ---
+
 # Input
+
+```js
 const foo = {};
 
 foo["bar"] = true;
@@ -23,9 +26,15 @@ x[b["test"]]
 
 a[("test")]
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -33,6 +42,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 const foo = {};
 
 foo["bar"] = true;
@@ -59,4 +70,6 @@ x.very.long.chain.of.static.members.that.goes.on.for.ever.I.mean.it.for.ever[
 x[b["test"]];
 
 a["test"];
+```
+
 

@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: do_while.js
 ---
+
 # Input
+
+```js
 do {
 var foo = 4
 }
@@ -18,9 +21,15 @@ while (something)
 
 
 do; while(true);
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -28,6 +37,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 do {
 	var foo = 4;
 } while (something);
@@ -39,4 +50,6 @@ do {
 
 do;
 while (true);
+```
+
 

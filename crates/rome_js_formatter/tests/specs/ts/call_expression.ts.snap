@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: call_expression.ts
 ---
+
 # Input
+
+```js
 app.get("/", (req, res): void => {
     res.send("Hello World!");
 })
@@ -27,9 +30,15 @@ export class Task {
         this.args = args;
     }
 }
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -37,6 +46,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 app.get("/", (req, res): void => {
 	res.send("Hello World!");
 });
@@ -60,4 +71,6 @@ export class Task {
 		this.args = args;
 	}
 }
+```
+
 

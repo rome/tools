@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: arrow_function.js
 ---
+
 # Input
+
+```js
 () => {}
 async () => {}
 (foo) => {}
@@ -10,9 +13,15 @@ async () => {}
 
 
 () => (1,3,4);
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -20,6 +29,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 () => {};
 async () => {};
 (foo) => {};
@@ -30,4 +41,6 @@ async () => {};
 ) => {};
 
 () => (1, 3, 4);
+```
+
 

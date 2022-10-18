@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: empty_lines.js
 ---
+
 # Input
+
+```js
 let a = [
 
     1,
@@ -16,9 +19,15 @@ let a = [
 
   ];
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -26,6 +35,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 let a = [
 	1, 2,
 
@@ -33,4 +44,6 @@ let a = [
 
 	4,
 ];
+```
+
 

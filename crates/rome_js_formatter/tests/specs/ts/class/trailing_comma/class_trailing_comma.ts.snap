@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: class_trailing_comma.ts
 ---
+
 # Input
+
+```js
 // class method
 class C<    	longlonglonglonglonglonglongT1,
 	longlonglonglonglonglonglongT2,
@@ -15,9 +18,15 @@ class C<    	longlonglonglonglonglonglongT1,
 		longlonglonglonglonglonglongT3,>(adsadasdasdasdasdasdasdasdasdasdas1,dsadsadasdasdasdasdasdasdasd2, dsadsadasdasdasdasdasdasdasd) {}
 }
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -25,6 +34,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 // class method
 class C<
 	longlonglonglonglonglonglongT1,
@@ -50,7 +61,10 @@ class C<
 		dsadsadasdasdasdasdasdasdasd,
 	) {}
 }
+```
+
 ## Output 2
+
 -----
 Indent style: Tab
 Line width: 80
@@ -58,6 +72,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: ES5
 -----
+
+```js
 // class method
 class C<
 	longlonglonglonglonglonglongT1,
@@ -83,4 +99,6 @@ class C<
 		dsadsadasdasdasdasdasdasdasd
 	) {}
 }
+```
+
 

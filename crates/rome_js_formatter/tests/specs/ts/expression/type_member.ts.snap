@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: type_member.ts
 ---
+
 # Input
+
+```js
 type A =
     {    [   a: string   ] :       number      }
 
@@ -50,9 +53,15 @@ type J = {
 }
 
 type K = { set     something( something_with_long_name: string ) }
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -60,6 +69,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 type A = { [a: string]: number };
 
 type B = {
@@ -158,4 +169,6 @@ type J = {
 };
 
 type K = { set something(something_with_long_name: string) };
+```
+
 

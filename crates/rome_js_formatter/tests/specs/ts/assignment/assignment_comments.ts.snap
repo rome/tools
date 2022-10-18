@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: assignment_comments.ts
 ---
+
 # Input
+
+```js
 const a = // test
 	1;
 
@@ -25,9 +28,15 @@ const e: string // 1
 	{ object: 5 };
 
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -35,6 +44,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 const a = 1; // test
 
 const b =
@@ -51,4 +62,6 @@ const e: string =
 	// 1
 	// 2
 	{ object: 5 };
+```
+
 

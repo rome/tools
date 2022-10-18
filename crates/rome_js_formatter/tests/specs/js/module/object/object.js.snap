@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: object.js
 ---
+
 # Input
+
+```js
 let a = {
 	...spread,
 
@@ -36,9 +39,15 @@ const y = {
 ({
 	a, b, c} = {a: 'apple', b: 'banana', c: 'coconut'});
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -46,6 +55,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 let a = {
 	...spread,
 
@@ -75,4 +86,6 @@ const y = {
 ({ a, b, c } = { a: "apple", b: "banana", c: "coconut" });
 
 ({ a, b, c } = { a: "apple", b: "banana", c: "coconut" });
+```
+
 

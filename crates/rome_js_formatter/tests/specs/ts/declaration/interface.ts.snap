@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: interface.ts
 ---
+
 # Input
+
+```js
 interface A {}
 interface B extends A /** comment **/ {
     something: string
@@ -25,9 +28,15 @@ interface D extends B<string, symbol>, F<string, symbol>, G<string, number, symb
 interface D extends B<string, symbol>, F<string, symbol> {
 
 }
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -35,6 +44,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 interface A {}
 interface B extends A /** comment **/ {
 	something: string;
@@ -67,4 +78,6 @@ interface D
 }
 // @ts-ignore
 interface D extends B<string, symbol>, F<string, symbol> {}
+```
+
 

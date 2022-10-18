@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: intersection_type.ts
 ---
+
 # Input
+
+```js
 type ShortIntersection =
     & A
     & B
@@ -62,9 +65,15 @@ type SoftBreakBetweenNotObjectTypeInChain = {} & SomeLongType & {
 		somelonglonglongkey: SomeLongLongType;
 	} & { somelonglonglongkey: SomeLongLongType };
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -72,6 +81,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 type ShortIntersection = A & B;
 
 type LongIntersection = A &
@@ -183,4 +194,6 @@ type SoftBreakBetweenNotObjectTypeInChain = {} & SomeLongType & {
 	NotObjectLongLongLongLongLongLongType2 & {
 		somelonglonglongkey: SomeLongLongType;
 	} & { somelonglonglongkey: SomeLongLongType };
+```
+
 

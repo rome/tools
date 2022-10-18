@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: bare_import.js
 ---
+
 # Input
+
+```js
 import "very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_";
 import "very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long" assert { type :   "json"}
 import "short" assert {
@@ -27,9 +30,15 @@ import "very_long_import_very_long_import_very" assert {
 		}
 
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -37,6 +46,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 import "very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_";
 import "very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long" assert {
 	type: "json",
@@ -65,4 +76,6 @@ import "very_long_import_very_long_import_very" assert {
     1: import "very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_";
     2: import "very_long_import_very_long_import_very_long_import_very_long_import_very_long_import_very_long" assert {
    20: 	"typetypetypetypetypetypetypetypetypetypetype": /****/ "typetypetypetypetypetypetypetypetypetypetypetypetypetype",
+```
+
 

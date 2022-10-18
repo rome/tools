@@ -178,24 +178,38 @@ impl SnapshotContent {
     }
 
     fn snap_content(&mut self) -> String {
-        let mut output = String::new();
-        output.push_str("# Input");
-        output.push('\n');
-        output.push_str(self.input.as_str());
-        output.push_str("\n=============================\n");
+        let mut snapshot = String::new();
+        writeln!(snapshot).unwrap();
+        writeln!(snapshot, "# Input").unwrap();
+        writeln!(snapshot).unwrap();
+        writeln!(snapshot, "```js").unwrap();
+        snapshot.push_str(&self.input);
+        writeln!(snapshot).unwrap();
+        writeln!(snapshot, "```").unwrap();
+        writeln!(snapshot).unwrap();
 
-        output.push_str("# Outputs\n");
+        snapshot.push_str("\n=============================\n");
+        writeln!(snapshot).unwrap();
+
+        snapshot.push_str("# Outputs\n");
+        writeln!(snapshot).unwrap();
+
         let iter = self.output.iter();
         for (index, (content, options)) in iter.enumerate() {
             let formal_index = index + 1;
-            writeln!(output, "## Output {formal_index}").unwrap();
-            output.push_str("-----\n");
-            write!(output, "{}", options).unwrap();
-            output.push_str("-----\n");
-            output.push_str(content.as_str());
+            writeln!(snapshot, "## Output {formal_index}").unwrap();
+            writeln!(snapshot).unwrap();
+            writeln!(snapshot, "-----").unwrap();
+            write!(snapshot, "{}", options).unwrap();
+            writeln!(snapshot, "-----").unwrap();
+            writeln!(snapshot).unwrap();
+            writeln!(snapshot, "```js").unwrap();
+            snapshot.push_str(&content);
+            writeln!(snapshot, "```").unwrap();
+            writeln!(snapshot).unwrap();
         }
 
-        output
+        snapshot
     }
 }
 

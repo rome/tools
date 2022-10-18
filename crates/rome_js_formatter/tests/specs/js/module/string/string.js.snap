@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: string.js
 ---
+
 # Input
+
+```js
 import hey from "hey"
 import hey from "hey";
 import "x" assert { type: "json" }
@@ -61,9 +64,15 @@ export * as something_bad_will_happen from "something_bad_might_not_happen" asse
 
 // you should remove the escape
 ("content \'\' ")
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -71,6 +80,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 import hey from "hey";
 import hey from "hey";
 import "x" assert { type: "json" };
@@ -139,7 +150,10 @@ export * as something_bad_will_happen from "something_bad_might_not_happen" asse
 ## Lines exceeding width of 80 characters
 
    48: export * as something_bad_will_happen from "something_bad_might_not_happen" assert {
+```
+
 ## Output 2
+
 -----
 Indent style: Tab
 Line width: 80
@@ -147,6 +161,8 @@ Quote style: Single Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 import hey from 'hey';
 import hey from 'hey';
 import 'x' assert { type: 'json' };
@@ -215,7 +231,10 @@ export * as something_bad_will_happen from 'something_bad_might_not_happen' asse
 ## Lines exceeding width of 80 characters
 
    48: export * as something_bad_will_happen from 'something_bad_might_not_happen' assert {
+```
+
 ## Output 3
+
 -----
 Indent style: Tab
 Line width: 80
@@ -223,6 +242,8 @@ Quote style: Double Quotes
 Quote properties: Preserve
 Trailing comma: All
 -----
+
+```js
 import hey from "hey";
 import hey from "hey";
 import "x" assert { type: "json" };
@@ -291,4 +312,6 @@ export * as something_bad_will_happen from "something_bad_might_not_happen" asse
 ## Lines exceeding width of 80 characters
 
    48: export * as something_bad_will_happen from "something_bad_might_not_happen" assert {
+```
+
 

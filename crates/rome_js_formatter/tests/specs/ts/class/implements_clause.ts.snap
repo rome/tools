@@ -2,13 +2,22 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: implements_clause.ts
 ---
+
 # Input
+
+```js
 class ClassName implements Interface { }
 
 class LongClassName implements Interface1, Interface2, Interface3, Interface4, Interface5 { }
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -16,8 +25,12 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 class ClassName implements Interface {}
 
 class LongClassName
 	implements Interface1, Interface2, Interface3, Interface4, Interface5 {}
+```
+
 

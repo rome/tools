@@ -2,16 +2,25 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: as_assignment.ts
 ---
+
 # Input
+
+```js
 let binding;
 
 (binding as boolean) = true;
 
 (binding.very.long.chain.of.static.members as VeryLongTypeName) = veryLongExpression();
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -19,10 +28,14 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 let binding;
 
 (binding as boolean) = true;
 
 (binding.very.long.chain.of.static.members as VeryLongTypeName) =
 	veryLongExpression();
+```
+
 

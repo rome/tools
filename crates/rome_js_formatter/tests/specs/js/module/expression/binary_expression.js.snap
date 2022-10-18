@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: binary_expression.js
 ---
+
 # Input
+
+```js
 a  +   b
 a  <   b
 a  >   b
@@ -38,9 +41,15 @@ a + b + 4 +
 // rome-ignore format: Test formatting ignored binary expressions
   -   4_444_444;
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -48,6 +57,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 a + b;
 a < b;
 a > b;
@@ -82,4 +93,6 @@ a +
 	4 +
 	// rome-ignore format: Test formatting ignored binary expressions
 	-   4_444_444;
+```
+
 

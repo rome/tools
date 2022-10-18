@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: array_trailing_comma.js
 ---
+
 # Input
+
+```js
 const a = [
 	longlonglonglongItem1longlonglonglongItem1,
 	longlonglonglongItem1longlonglonglongItem2,
@@ -14,9 +17,15 @@ const a = [
 	dsadsadasdasdasdasdasdasdasd,
 	dsadsadasdasdasdasdasdasdasd,] = [1, 2, 10];
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -24,6 +33,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 const a = [
 	longlonglonglongItem1longlonglonglongItem1,
 	longlonglonglongItem1longlonglonglongItem2,
@@ -36,7 +47,10 @@ const a = [
 	dsadsadasdasdasdasdasdasdasd,
 	dsadsadasdasdasdasdasdasdasd,
 ] = [1, 2, 10];
+```
+
 ## Output 2
+
 -----
 Indent style: Tab
 Line width: 80
@@ -44,6 +58,8 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: ES5
 -----
+
+```js
 const a = [
 	longlonglonglongItem1longlonglonglongItem1,
 	longlonglonglongItem1longlonglonglongItem2,
@@ -56,4 +72,6 @@ const a = [
 	dsadsadasdasdasdasdasdasdasd,
 	dsadsadasdasdasdasdasdasdasd,
 ] = [1, 2, 10];
+```
+
 

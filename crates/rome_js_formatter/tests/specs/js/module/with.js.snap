@@ -2,16 +2,25 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: with.js
 ---
+
 # Input
+
+```js
 with (   b)
 
 {
 	5
 }
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
@@ -19,9 +28,13 @@ Quote style: Double Quotes
 Quote properties: As needed
 Trailing comma: All
 -----
+
+```js
 with (   b)
 
 {
 	5
 }
+```
+
 
