@@ -96,11 +96,6 @@ impl Rule for UseKeyWithClickEvents {
                 {
                     return None;
                 }
-                element.name().ok()?.as_jsx_name()?;
-                let on_click_attribute = element.find_attribute_by_name("onClick").ok()??;
-                if element.has_trailing_spread_prop(on_click_attribute) {
-                    return None;
-                }
 
                 for attribute in element.attributes().into_iter() {
                     if let JsxAnyAttribute::JsxAttribute(attribute) = attribute {
