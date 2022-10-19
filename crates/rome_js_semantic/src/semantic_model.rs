@@ -37,14 +37,15 @@ impl HasDeclarationAstNode for JsReferenceIdentifier {}
 impl HasDeclarationAstNode for JsIdentifierAssignment {}
 impl HasDeclarationAstNode for JsxReferenceIdentifier {}
 
-/// Marker trait that groups all "AstNode" that can be exported
-pub trait IsExportedCanBeQueried: AstNode<Language = JsLanguage> {
+/// Marker trait that groups all "AstNode" that can be imported or 
+/// exported
+pub trait CanBeImportedExported: AstNode<Language = JsLanguage> {
     type Result;
     fn is_exported(&self, model: &SemanticModel) -> Self::Result;
     fn is_imported(&self, model: &SemanticModel) -> Self::Result;
 }
 
-impl IsExportedCanBeQueried for JsIdentifierBinding {
+impl CanBeImportedExported for JsIdentifierBinding {
     type Result = bool;
 
     fn is_exported(&self, model: &SemanticModel) -> Self::Result {
@@ -59,7 +60,7 @@ impl IsExportedCanBeQueried for JsIdentifierBinding {
     }
 }
 
-impl IsExportedCanBeQueried for TsIdentifierBinding {
+impl CanBeImportedExported for TsIdentifierBinding {
     type Result = bool;
 
     fn is_exported(&self, model: &SemanticModel) -> Self::Result {
@@ -74,7 +75,7 @@ impl IsExportedCanBeQueried for TsIdentifierBinding {
     }
 }
 
-impl<T: HasDeclarationAstNode> IsExportedCanBeQueried for T {
+impl<T: HasDeclarationAstNode> CanBeImportedExported for T {
     type Result = Option<bool>;
 
     fn is_exported(&self, model: &SemanticModel) -> Self::Result {
@@ -764,7 +765,7 @@ impl SemanticModel {
     /// because there is no guarantee that the corresponding declaration exists.
     pub fn is_exported<T>(&self, node: &T) -> T::Result
     where
-        T: IsExportedCanBeQueried,
+        T: CanBeImportedExported,
     {
         node.is_exported(self)
     }
@@ -778,7 +779,7 @@ impl SemanticModel {
     /// because there is no guarantee that the corresponding declaration exists.
     pub fn is_imported<T>(&self, node: &T) -> T::Result
     where
-        T: IsExportedCanBeQueried,
+        T: CanBeImportedExported,
     {
         node.is_imported(self)
     }
