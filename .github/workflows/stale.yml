@@ -14,7 +14,7 @@ jobs:
           days-before-issue-stale: 14
           days-before-pr-stale: 14
           exempt-pr-labels: 'PR: on hold'
-          exempt-issue-labels: 'S-Bug: confirmed','S-Planned', 'S-Wishlist', 'umbrella'
+          exempt-issue-labels: 'S-Bug: confirmed,S-Planned,S-Wishlist,umbrella'
           stale-issue-label: 'S-Stale'
           stale-pr-label: 'S-Stale'
           days-before-close: -1
