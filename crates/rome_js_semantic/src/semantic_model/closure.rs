@@ -111,7 +111,7 @@ impl Capture {
 
     /// Returns the non trimmed text range of declaration of this capture.
     /// This is equivalent, but faster, to:
-    /// 
+    ///
     /// ```rs, ignore
     /// self.declaration().text_range()
     /// ```

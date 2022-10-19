@@ -51,7 +51,10 @@ impl ReactExtensiveDependenciesOptions {
             StableReactHookConfiguration::new("useSyncExternalStore", None),
         ]);
 
-        Self { hooks_config, stable_config }
+        Self {
+            hooks_config,
+            stable_config,
+        }
     }
 }
 
@@ -111,8 +114,10 @@ impl Rule for UseExhaustiveDependencies {
                                         .syntax()
                                         .clone()
                                         .cast::<JsIdentifierBinding>()?;
-                                    let not_stable =
-                                        !is_binding_react_stable(&declaration, &options.stable_config);
+                                    let not_stable = !is_binding_react_stable(
+                                        &declaration,
+                                        &options.stable_config,
+                                    );
                                     not_stable.then_some(capture)
                                 }
                             }
@@ -153,17 +158,11 @@ impl Rule for UseExhaustiveDependencies {
 
             // Generate signals
             for (_, captures) in add_deps {
-                signals.push(Fix::AddDependency(
-                    result.function_name_range,
-                    captures,
-                ));
+                signals.push(Fix::AddDependency(result.function_name_range, captures));
             }
 
             for dep_range in remove_deps {
-                signals.push(Fix::RemoveDependency(
-                    result.function_name_range,
-                    dep_range,
-                ));
+                signals.push(Fix::RemoveDependency(result.function_name_range, dep_range));
             }
         }
 

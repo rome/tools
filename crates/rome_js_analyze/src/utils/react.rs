@@ -91,7 +91,7 @@ impl From<(usize, usize)> for ReactHookConfiguration {
 /// Returns the [TextRange] of the hook name; the node of the
 /// expression of the argument that correspond to the closure of
 /// the hook; and the node of the dependency list of the hook.
-/// 
+///
 /// Example:
 /// ```js
 /// useEffect(() => {}, []);
@@ -99,7 +99,7 @@ impl From<(usize, usize)> for ReactHookConfiguration {
 ///           ^^^^^^^^ <- closure_node
 /// ^^^^^^^^^ <- function_name_range
 /// ```
-/// 
+///
 /// This function will use the parameter "hooks" with the configuration
 /// of all function that are considered hooks. See [ReactHookConfiguration].
 pub(crate) fn react_hook_with_dependency(
@@ -151,7 +151,7 @@ impl StableReactHookConfiguration {
 /// Checks if the binding is bound to a stable React hook
 /// return value. Stable return do not need to be specified
 /// as dependencies.
-/// 
+///
 /// Example:
 /// ```js
 /// let [name, setName] = useState(""); //setName is stable
