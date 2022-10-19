@@ -70,7 +70,7 @@ impl Rule for NoShadowRestrictedNames {
                 "Do not shadow the global \"" {state.shadowed_name} "\" property."
             },
         )
-        .footer_note(
+        .note(
             markup! {"Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global."},
         );
 

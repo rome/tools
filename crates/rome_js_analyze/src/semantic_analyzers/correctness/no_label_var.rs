@@ -62,10 +62,10 @@ impl Rule for NoLabelVar {
                 "Do not use the "<Emphasis>{name}</Emphasis>" variable name as a label"
             },
         )
-        .secondary(binding_syntax_node.text_trimmed_range(), markup! {
+        .detail(binding_syntax_node.text_trimmed_range(), markup! {
             "The variable is declared here"
         },)
-        .footer_note(markup! {"Creating a label with the same name as an in-scope variable leads to confusion."}))
+        .note(markup! {"Creating a label with the same name as an in-scope variable leads to confusion."}))
     }
 
     fn action(_: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {

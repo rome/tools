@@ -87,14 +87,14 @@ impl Rule for NoCatchAssign {
                 " Do not "<Emphasis>"reassign catch parameters."</Emphasis>""
             },
         )
-        .secondary(
+        .detail(
             catch_binding_syntax.text_trimmed_range(),
             markup! {
                 "The catch parameter is declared here"
             },
         );
 
-        Some(diagnostic.footer_note("Use a local variable instead."))
+        Some(diagnostic.note("Use a local variable instead."))
     }
 
     fn action(_: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {

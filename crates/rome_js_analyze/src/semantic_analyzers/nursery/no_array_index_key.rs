@@ -174,12 +174,12 @@ impl Rule for NoArrayIndexKey {
             incorrect_prop.syntax().text_trimmed_range(),
             markup! {"Avoid using the index of an array as key property in an element."},
         )
-        .secondary(
+        .detail(
             incorrect_key.syntax().text_trimmed_range(),
             markup! {"This is the source of the key value."},
-        ).footer_note(
+        ).note(
             markup! {"The order of the items may change, and this also affects performances and component state."}
-        ).footer_note(
+        ).note(
             markup! {
                 "Check the "<Hyperlink href="https://reactjs.org/docs/lists-and-keys.html#keys">"React documentation"</Hyperlink>". "
             }

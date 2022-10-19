@@ -63,7 +63,10 @@ impl WorkspaceSettings {
     /// The code of the has the following pattern: `{group}/{rule_name}`.
     ///
     /// It returns [None] if the `code` doesn't match any rule.
-    pub fn get_severity_from_rule_code(&self, code: &Category) -> Option<Severity> {
+    pub fn get_severity_from_rule_code(
+        &self,
+        code: &Category,
+    ) -> Option<rome_diagnostics::v2::Severity> {
         let rules = self.linter.rules.as_ref();
         if let Some(rules) = rules {
             rules.get_severity_from_code(code)

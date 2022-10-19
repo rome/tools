@@ -242,8 +242,7 @@ pub(crate) fn generate_rules_configuration(mode: Mode) -> Result<()> {
         use crate::{ConfigurationError, RomeError, RuleConfiguration};
         use rome_analyze::RuleFilter;
         use indexmap::{IndexMap, IndexSet};
-        use rome_diagnostics::Severity;
-        use rome_diagnostics::v2::Category;
+        use rome_diagnostics::v2::{Category, Severity};
 
         #[derive(Deserialize, Serialize, Debug, Clone)]
         #[cfg_attr(feature = "schemars", derive(JsonSchema))]

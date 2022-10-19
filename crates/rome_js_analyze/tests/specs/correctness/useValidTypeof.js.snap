@@ -30,13 +30,13 @@ useValidTypeof.js:7:16 lint/correctness/useValidTypeof ━━━━━━━━�
 
   ! Invalid `typeof` comparison value
   
-  ! not a valid type name
-  
     6 │ // Invalid literals
   > 7 │ typeof foo === "strnig"
       │                ^^^^^^^^
     8 │ typeof foo == "undefimed"
     9 │ typeof bar != "nunber"
+  
+  i not a valid type name
   
 
 ```
@@ -46,14 +46,14 @@ useValidTypeof.js:8:15 lint/correctness/useValidTypeof ━━━━━━━━�
 
   ! Invalid `typeof` comparison value
   
-  ! not a valid type name
-  
      6 │ // Invalid literals
      7 │ typeof foo === "strnig"
    > 8 │ typeof foo == "undefimed"
        │               ^^^^^^^^^^^
      9 │ typeof bar != "nunber"
     10 │ typeof bar !== "fucntion"
+  
+  i not a valid type name
   
 
 ```
@@ -63,14 +63,14 @@ useValidTypeof.js:9:15 lint/correctness/useValidTypeof ━━━━━━━━�
 
   ! Invalid `typeof` comparison value
   
-  ! not a valid type name
-  
      7 │ typeof foo === "strnig"
      8 │ typeof foo == "undefimed"
    > 9 │ typeof bar != "nunber"
        │               ^^^^^^^^
     10 │ typeof bar !== "fucntion"
     11 │ 
+  
+  i not a valid type name
   
 
 ```
@@ -80,14 +80,14 @@ useValidTypeof.js:10:16 lint/correctness/useValidTypeof ━━━━━━━━
 
   ! Invalid `typeof` comparison value
   
-  ! not a valid type name
-  
      8 │ typeof foo == "undefimed"
      9 │ typeof bar != "nunber"
   > 10 │ typeof bar !== "fucntion"
        │                ^^^^^^^^^^
     11 │ 
     12 │ // Invalid expressions
+  
+  i not a valid type name
   
 
 ```
@@ -97,13 +97,13 @@ useValidTypeof.js:13:16 lint/correctness/useValidTypeof  FIXABLE  ━━━━�
 
   ! Invalid `typeof` comparison value
   
-  ! not a string literal
-  
     12 │ // Invalid expressions
   > 13 │ typeof foo === undefined
        │                ^^^^^^^^^
     14 │ typeof bar == Object
     15 │ typeof foo === baz
+  
+  i not a string literal
   
   i Suggested fix: Compare the result of `typeof` with a valid type name
   
@@ -117,14 +117,14 @@ useValidTypeof.js:14:15 lint/correctness/useValidTypeof  FIXABLE  ━━━━�
 
   ! Invalid `typeof` comparison value
   
-  ! not a string literal
-  
     12 │ // Invalid expressions
     13 │ typeof foo === undefined
   > 14 │ typeof bar == Object
        │               ^^^^^^
     15 │ typeof foo === baz
     16 │ typeof foo == 5
+  
+  i not a string literal
   
   i Suggested fix: Compare the result of `typeof` with a valid type name
   
@@ -143,14 +143,14 @@ useValidTypeof.js:15:16 lint/correctness/useValidTypeof ━━━━━━━━
 
   ! Invalid `typeof` comparison value
   
-  ! not a string literal
-  
     13 │ typeof foo === undefined
     14 │ typeof bar == Object
   > 15 │ typeof foo === baz
        │                ^^^
     16 │ typeof foo == 5
     17 │ typeof foo == -5
+  
+  i not a string literal
   
 
 ```
@@ -160,14 +160,14 @@ useValidTypeof.js:16:15 lint/correctness/useValidTypeof ━━━━━━━━
 
   ! Invalid `typeof` comparison value
   
-  ! not a string literal
-  
     14 │ typeof bar == Object
     15 │ typeof foo === baz
   > 16 │ typeof foo == 5
        │               ^
     17 │ typeof foo == -5
     18 │ 
+  
+  i not a string literal
   
 
 ```
@@ -177,13 +177,13 @@ useValidTypeof.js:17:15 lint/correctness/useValidTypeof ━━━━━━━━
 
   ! Invalid `typeof` comparison value
   
-  ! not a string literal
-  
     15 │ typeof foo === baz
     16 │ typeof foo == 5
   > 17 │ typeof foo == -5
        │               ^^
     18 │ 
+  
+  i not a string literal
   
 
 ```

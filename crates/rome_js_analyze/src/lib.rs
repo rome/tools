@@ -118,7 +118,10 @@ where
 mod tests {
 
     use rome_analyze::{AnalyzerOptions, Never, RuleCategories};
-    use rome_diagnostics::Severity;
+    use rome_console::fmt::{Formatter, Termcolor};
+    use rome_console::{markup, Markup};
+    use rome_diagnostics::termcolor::NoColor;
+    use rome_diagnostics::v2::{Diagnostic, DiagnosticExt, PrintDiagnostic, Severity};
     use rome_diagnostics::{file::FileId, v2::category};
     use rome_js_parser::parse;
     use rome_js_syntax::{SourceType, TextRange, TextSize};
@@ -128,12 +131,21 @@ mod tests {
     #[ignore]
     #[test]
     fn quick_test() {
-        const SOURCE: &str = r#"[0, [12]].map(Number).flat()
+        fn markup_to_string(markup: Markup) -> String {
+            let mut buffer = Vec::new();
+            let mut write = Termcolor(NoColor::new(&mut buffer));
+            let mut fmt = Formatter::new(&mut write);
+            fmt.write_markup(markup).unwrap();
+
+            String::from_utf8(buffer).unwrap()
+        }
+
+        const SOURCE: &str = r#"<input disabled />
         "#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
 
-        let mut error_ranges = Vec::new();
+        let mut error_ranges: Vec<TextRange> = Vec::new();
         let options = AnalyzerOptions::default();
         analyze(
             FileId::zero(),
@@ -141,17 +153,18 @@ mod tests {
             AnalysisFilter::default(),
             &options,
             |signal| {
-                if let Some(diag) = signal.diagnostic() {
-                    let diag = diag.into_diagnostic(Severity::Warning);
-                    let primary = diag.primary.as_ref().unwrap();
-
-                    error_ranges.push(primary.span.range);
-                }
-
-                if let Some(action) = signal.action() {
-                    let new_code = action.mutation.commit();
-
-                    eprintln!("{new_code}");
+                if let Some(mut diag) = signal.diagnostic() {
+                    diag.set_severity(Severity::Warning);
+                    error_ranges.push(diag.location().unwrap().span.unwrap());
+                    if let Some(action) = signal.action() {
+                        let new_code = action.mutation.commit();
+                        eprintln!("{new_code}");
+                    }
+                    let error = diag.with_file_path("ahahah").with_file_source_code(SOURCE);
+                    let text = markup_to_string(markup! {
+                        {PrintDiagnostic(&error)}
+                    });
+                    eprintln!("{text}");
                 }
 
                 ControlFlow::<Never>::Continue(())
@@ -186,7 +199,7 @@ mod tests {
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::js_module());
 
-        let mut error_ranges = Vec::new();
+        let mut error_ranges: Vec<TextRange> = Vec::new();
         let options = AnalyzerOptions::default();
         analyze(
             FileId::zero(),
@@ -194,13 +207,16 @@ mod tests {
             AnalysisFilter::default(),
             &options,
             |signal| {
-                if let Some(diag) = signal.diagnostic() {
-                    let diag = diag.into_diagnostic(Severity::Warning);
-                    let code = diag.code.unwrap();
-                    let primary = diag.primary.as_ref().unwrap();
+                if let Some(mut diag) = signal.diagnostic() {
+                    diag.set_severity(Severity::Warning);
+                    let span = diag.get_span();
+                    let error = diag
+                        .with_file_path(FileId::zero())
+                        .with_file_source_code(SOURCE);
+                    let code = error.category().unwrap();
 
                     if code == category!("lint/correctness/noDoubleEquals") {
-                        error_ranges.push(primary.span.range);
+                        error_ranges.push(span.unwrap());
                     }
                 }
 
@@ -234,11 +250,10 @@ mod tests {
 
         let options = AnalyzerOptions::default();
         analyze(FileId::zero(), &parsed.tree(), filter, &options, |signal| {
-            if let Some(diag) = signal.diagnostic() {
-                let diag = diag.into_diagnostic(Severity::Warning);
-                let code = diag.code.unwrap();
-                let primary = diag.primary.as_ref().unwrap();
-                panic!("unexpected diagnostic {code:?} at {primary:?}");
+            if let Some(mut diag) = signal.diagnostic() {
+                diag.set_severity(Severity::Warning);
+                let code = diag.category().unwrap();
+                panic!("unexpected diagnostic {code:?}");
             }
 
             ControlFlow::<Never>::Continue(())
