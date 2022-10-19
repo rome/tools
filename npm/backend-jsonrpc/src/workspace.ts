@@ -176,7 +176,6 @@ export interface Nursery {
 	noUnusedVariables?: RuleConfiguration;
 	noUselessFragments?: RuleConfiguration;
 	noVoidElementsWithChildren?: RuleConfiguration;
-	reactExtensiveDependencies?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
@@ -185,6 +184,7 @@ export interface Nursery {
 	useBlankTarget?: RuleConfiguration;
 	useButtonType?: RuleConfiguration;
 	useCamelCase?: RuleConfiguration;
+	useExhaustiveDependencies?: RuleConfiguration;
 	useFlatMap?: RuleConfiguration;
 	useFragmentSyntax?: RuleConfiguration;
 	useKeyWithClickEvents?: RuleConfiguration;
@@ -335,7 +335,12 @@ export type Category =
 	| "lint/nursery/noPositiveTabindex"
 	| "lint/nursery/noConstAssign"
 	| "lint/nursery/noExplicitAny"
+<<<<<<< HEAD
 	| "lint/nursery/useValidForDirection"
+=======
+	| "lint/nursery/reactExtensiveDependencies"
+	| "lint/nursery/useExhaustiveDependencies"
+>>>>>>> ba94638ea1 (codegen)
 	| "lint/style/noNegationElse"
 	| "lint/style/noShoutyConstants"
 	| "lint/style/useSelfClosingElements"
