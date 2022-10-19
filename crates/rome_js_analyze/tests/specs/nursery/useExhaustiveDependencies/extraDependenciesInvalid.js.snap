@@ -5,6 +5,7 @@ expression: extraDependenciesInvalid.js
 # Input
 ```js
 function MyComponent() {
+    let a = 1;
     useEffect(() => {
     }, [a]);
   }
@@ -12,23 +13,24 @@ function MyComponent() {
 
 # Diagnostics
 ```
-extraDependenciesInvalid.js:2:5 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+extraDependenciesInvalid.js:3:5 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! This useEffect has dependencies that were not captured
+  ! This hook specifies more dependencies than necessary.
   
     1 │ function MyComponent() {
-  > 2 │     useEffect(() => {
+    2 │     let a = 1;
+  > 3 │     useEffect(() => {
       │     ^^^^^^^^^
-    3 │     }, [a]);
-    4 │   }
+    4 │     }, [a]);
+    5 │   }
   
-  i This dependecy is not being captured
+  i This dependency can be removed from the list.
   
-    1 │ function MyComponent() {
-    2 │     useEffect(() => {
-  > 3 │     }, [a]);
+    2 │     let a = 1;
+    3 │     useEffect(() => {
+  > 4 │     }, [a]);
       │         ^
-    4 │   }
+    5 │   }
   
 
 ```

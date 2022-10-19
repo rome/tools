@@ -109,7 +109,12 @@ impl Capture {
             })
     }
 
-    /// Returns the [TextRange] of declaration of this capture
+    /// Returns the non trimmed text range of declaration of this capture.
+    /// This is equivalent, but faster, to:
+    /// 
+    /// ```rs, ignore
+    /// self.declaration().text_range()
+    /// ```
     pub fn declaration_range(&self) -> &TextRange {
         &self.declaration_range
     }
@@ -163,7 +168,7 @@ impl Iterator for AllCapturesIter {
 
 impl FusedIterator for AllCapturesIter {}
 
-// Iterate all immediate children closures of a specific closure
+/// Iterate all immediate children closures of a specific closure
 pub struct ChildrenIter {
     data: Arc<SemanticModelData>,
     scopes: Vec<usize>,
@@ -193,7 +198,7 @@ impl Iterator for ChildrenIter {
 
 impl FusedIterator for ChildrenIter {}
 
-// Iterate all descendents closures of a specific closure
+/// Iterate all descendents closures of a specific closure
 pub struct DescendentsIter {
     data: Arc<SemanticModelData>,
     scopes: Vec<usize>,

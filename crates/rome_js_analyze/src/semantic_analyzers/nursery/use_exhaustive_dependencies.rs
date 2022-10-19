@@ -26,13 +26,13 @@ lazy_static::lazy_static! {
 
 #[derive(Clone, Serialize, Deserialize)]
 pub struct ReactExtensiveDependenciesOptions {
-    hooks: HashMap<String, ReactHookClosureDependenciesPosition>,
-    stables: HashSet<ReactHookStable>,
+    hooks_config: HashMap<String, ReactHookConfiguration>,
+    stable_config: HashSet<StableReactHookConfiguration>,
 }
 
 impl ReactExtensiveDependenciesOptions {
     pub fn new() -> Self {
-        let hooks = HashMap::from_iter([
+        let hooks_config = HashMap::from_iter([
             ("useEffect".to_string(), (0, 1).into()),
             ("useLayoutEffect".to_string(), (0, 1).into()),
             ("useInsertionEffect".to_string(), (0, 1).into()),
@@ -41,28 +41,31 @@ impl ReactExtensiveDependenciesOptions {
             ("useImperativeHandle".to_string(), (1, 2).into()),
         ]);
 
-        let stables: HashSet<ReactHookStable> = HashSet::from_iter([
-            ReactHookStable::new("useState", Some(1)),
-            ReactHookStable::new("useReducer", Some(1)),
-            ReactHookStable::new("useTransition", Some(1)),
-            ReactHookStable::new("useRef", None),
-            ReactHookStable::new("useContext", None),
-            ReactHookStable::new("useId", None),
-            ReactHookStable::new("useSyncExternalStore", None),
+        let stable_config: HashSet<StableReactHookConfiguration> = HashSet::from_iter([
+            StableReactHookConfiguration::new("useState", Some(1)),
+            StableReactHookConfiguration::new("useReducer", Some(1)),
+            StableReactHookConfiguration::new("useTransition", Some(1)),
+            StableReactHookConfiguration::new("useRef", None),
+            StableReactHookConfiguration::new("useContext", None),
+            StableReactHookConfiguration::new("useId", None),
+            StableReactHookConfiguration::new("useSyncExternalStore", None),
         ]);
 
-        Self { hooks, stables }
+        Self { hooks_config, stable_config }
     }
 }
 
-pub enum Problem {
-    MissingDependency(TextRange, Vec<Capture>),
-    ExtraDependency(TextRange, TextRange),
+/// Flags the possible fixes that were found
+pub enum Fix {
+    /// When a dependency needs to be added.
+    AddDependency(TextRange, Vec<Capture>),
+    /// When a dependency needs to be removed.
+    RemoveDependency(TextRange, TextRange),
 }
 
 impl Rule for UseExhaustiveDependencies {
     type Query = Semantic<JsCallExpression>;
-    type State = Problem;
+    type State = Fix;
     type Signals = Vec<Self::State>;
     type Options = ReactExtensiveDependenciesOptions;
 
@@ -72,7 +75,7 @@ impl Rule for UseExhaustiveDependencies {
         let mut signals = vec![];
 
         let node = ctx.query();
-        if let Some(result) = react_hook_with_dependency(node, &options.hooks) {
+        if let Some(result) = react_hook_with_dependency(node, &options.hooks_config) {
             let model = ctx.model();
 
             let captures: Vec<_> = result
@@ -109,7 +112,7 @@ impl Rule for UseExhaustiveDependencies {
                                         .clone()
                                         .cast::<JsIdentifierBinding>()?;
                                     let not_stable =
-                                        !is_stable_binding(&declaration, &options.stables);
+                                        !is_binding_react_stable(&declaration, &options.stable_config);
                                     not_stable.then_some(capture)
                                 }
                             }
@@ -141,7 +144,7 @@ impl Rule for UseExhaustiveDependencies {
                 }
             }
 
-            //TODO Search for dependencies not captured
+            // Search for dependencies not captured
             for dep in deps {
                 if !captures.iter().any(|x| x.0 == dep.0) {
                     remove_deps.push(dep.1);
@@ -150,14 +153,14 @@ impl Rule for UseExhaustiveDependencies {
 
             // Generate signals
             for (_, captures) in add_deps {
-                signals.push(Problem::MissingDependency(
+                signals.push(Fix::AddDependency(
                     result.function_name_range,
                     captures,
                 ));
             }
 
             for dep_range in remove_deps {
-                signals.push(Problem::ExtraDependency(
+                signals.push(Fix::RemoveDependency(
                     result.function_name_range,
                     dep_range,
                 ));
@@ -169,12 +172,12 @@ impl Rule for UseExhaustiveDependencies {
 
     fn diagnostic(_: &RuleContext<Self>, dep: &Self::State) -> Option<RuleDiagnostic> {
         match dep {
-            Problem::MissingDependency(use_effect_range, captures) => {
+            Fix::AddDependency(use_effect_range, captures) => {
                 let diag = RuleDiagnostic::new(
                     rule_category!(),
                     use_effect_range,
                     markup! {
-                        "This useEffect has missing dependencies"
+                        "This hook do not specify all of its dependencies."
                     },
                 );
 
@@ -184,21 +187,21 @@ impl Rule for UseExhaustiveDependencies {
                     let node = capture.node();
                     diag = diag.secondary(
                         node.text_trimmed_range(),
-                        "This capture is not in the dependency list",
+                        "This dependency is not specified in the hook dependency list.",
                     );
                 }
 
                 Some(diag)
             }
-            Problem::ExtraDependency(use_effect_range, dep_range) => {
+            Fix::RemoveDependency(use_effect_range, dep_range) => {
                 let diag = RuleDiagnostic::new(
                     rule_category!(),
                     use_effect_range,
                     markup! {
-                        "This useEffect has dependencies that were not captured"
+                        "This hook specifies more dependencies than necessary."
                     },
                 )
-                .secondary(dep_range, "This dependecy is not being captured");
+                .secondary(dep_range, "This dependency can be removed from the list.");
 
                 Some(diag)
             }

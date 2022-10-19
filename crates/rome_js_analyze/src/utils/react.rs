@@ -8,6 +8,7 @@ use rome_js_syntax::{
 use rome_rowan::AstNode;
 use serde::{Deserialize, Serialize};
 
+/// Return result of [react_hook_with_dependency].
 pub(crate) struct ReactCallWithDependencyResult {
     pub(crate) function_name_range: TextRange,
     pub(crate) closure_node: Option<JsAnyExpression>,
@@ -15,6 +16,8 @@ pub(crate) struct ReactCallWithDependencyResult {
 }
 
 impl ReactCallWithDependencyResult {
+    /// Returns all [Reference] captured by the closure argument of the React hook.  
+    /// See [react_hook_with_dependency].
     pub fn all_captures(&self, model: &SemanticModel) -> Vec<Capture> {
         if let Some(closure) = self
             .closure_node
@@ -45,6 +48,8 @@ impl ReactCallWithDependencyResult {
         }
     }
 
+    /// Returns all dependencies of a React hook.  
+    /// See [react_hook_with_dependency]
     pub fn all_dependencies(&self) -> Vec<JsAnyExpression> {
         self.dependencies_node
             .as_ref()
@@ -61,30 +66,45 @@ impl ReactCallWithDependencyResult {
     }
 }
 
-fn get_call_expression(call: &JsCallExpression, i: usize) -> Option<JsAnyExpression> {
+// Get the i-th argument of a call expression
+fn get_nth_argument(call: &JsCallExpression, n: usize) -> Option<JsAnyExpression> {
     let args = call.arguments().ok()?;
     let mut args = args.args().into_iter();
-    args.nth(i)?.ok()?.as_js_any_expression().cloned()
+    args.nth(n)?.ok()?.as_js_any_expression().cloned()
 }
 
 #[derive(Copy, Clone, Serialize, Deserialize)]
-pub struct ReactHookClosureDependenciesPosition {
-    closure: usize,
-    dependencies: usize,
+pub struct ReactHookConfiguration {
+    closure_index: usize,
+    dependencies_index: usize,
 }
 
-impl From<(usize, usize)> for ReactHookClosureDependenciesPosition {
+impl From<(usize, usize)> for ReactHookConfiguration {
     fn from((closure, dependencies): (usize, usize)) -> Self {
         Self {
-            closure,
-            dependencies,
+            closure_index: closure,
+            dependencies_index: dependencies,
         }
     }
 }
 
+/// Returns the [TextRange] of the hook name; the node of the
+/// expression of the argument that correspond to the closure of
+/// the hook; and the node of the dependency list of the hook.
+/// 
+/// Example:
+/// ```js
+/// useEffect(() => {}, []);
+///                     ^^ <- dependencies_node
+///           ^^^^^^^^ <- closure_node
+/// ^^^^^^^^^ <- function_name_range
+/// ```
+/// 
+/// This function will use the parameter "hooks" with the configuration
+/// of all function that are considered hooks. See [ReactHookConfiguration].
 pub(crate) fn react_hook_with_dependency(
     call: &JsCallExpression,
-    hooks: &HashMap<String, ReactHookClosureDependenciesPosition>,
+    hooks: &HashMap<String, ReactHookConfiguration>,
 ) -> Option<ReactCallWithDependencyResult> {
     let name = call
         .callee()
@@ -98,8 +118,8 @@ pub(crate) fn react_hook_with_dependency(
     let name = name.text_trimmed();
 
     let hook = hooks.get(name)?;
-    let closure_node = get_call_expression(call, hook.closure);
-    let dependencies_node = get_call_expression(call, hook.dependencies);
+    let closure_node = get_nth_argument(call, hook.closure_index);
+    let dependencies_node = get_nth_argument(call, hook.dependencies_index);
 
     Some(ReactCallWithDependencyResult {
         function_name_range,
@@ -108,13 +128,18 @@ pub(crate) fn react_hook_with_dependency(
     })
 }
 
+/// Specifies which, if any, of the returns of a React hook are stable.    
+/// See [is_binding_react_stable].
 #[derive(Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
-pub struct ReactHookStable {
+pub struct StableReactHookConfiguration {
+    /// Name of the React hook
     hook_name: String,
+    /// Index of the position of the stable return, [None] if
+    /// none returns are stable
     index: Option<usize>,
 }
 
-impl ReactHookStable {
+impl StableReactHookConfiguration {
     pub fn new(hook_name: &str, index: Option<usize>) -> Self {
         Self {
             hook_name: hook_name.into(),
@@ -123,9 +148,20 @@ impl ReactHookStable {
     }
 }
 
-pub fn is_stable_binding(
+/// Checks if the binding is bound to a stable React hook
+/// return value. Stable return do not need to be specified
+/// as dependencies.
+/// 
+/// Example:
+/// ```js
+/// let [name, setName] = useState(""); //setName is stable
+/// useEffect(() => {
+///     console.log(setName("a"));
+/// });
+/// ```
+pub fn is_binding_react_stable(
     binding: &JsIdentifierBinding,
-    stables: &HashSet<ReactHookStable>,
+    stable_config: &HashSet<StableReactHookConfiguration>,
 ) -> bool {
     fn array_binding_declarator_index(
         binding: &JsIdentifierBinding,
@@ -162,12 +198,12 @@ pub fn is_stable_binding(
                 .ok()?
                 .token_text();
 
-            let stable = ReactHookStable {
+            let stable = StableReactHookConfiguration {
                 hook_name: hook_name.to_string(),
                 index,
             };
 
-            Some(stables.contains(&stable))
+            Some(stable_config.contains(&stable))
         })
         .unwrap_or(false)
 }
@@ -194,11 +230,11 @@ mod test {
             .unwrap();
         let set_name = node.cast::<JsIdentifierBinding>().unwrap();
 
-        let stables = HashSet::from_iter([
-            ReactHookStable::new("useRef", None),
-            ReactHookStable::new("useState", Some(1)),
+        let config = HashSet::from_iter([
+            StableReactHookConfiguration::new("useRef", None),
+            StableReactHookConfiguration::new("useState", Some(1)),
         ]);
 
-        assert!(is_stable_binding(&set_name, &stables));
+        assert!(is_binding_react_stable(&set_name, &config));
     }
 }

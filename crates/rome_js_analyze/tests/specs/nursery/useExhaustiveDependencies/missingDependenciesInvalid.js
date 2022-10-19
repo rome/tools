@@ -1,5 +1,5 @@
 function MyComponent() {
-    const local = 1;
+    let local = 1;
     useEffect(() => {
       console.log(local);
     });
@@ -33,7 +33,7 @@ function MyComponent4() {
 // all hooks with dependencies
 
 function MyComponent5() {
-  const a = 1;
+  let a = 1;
   useEffect(() => console.log(a));
   useCallback(() => console.log(a));
   useMemo(() => console.log(a));
@@ -45,7 +45,7 @@ function MyComponent5() {
 // inner closures
 
 function MyComponent6() {
-  const a = 1;
+  let a = 1;
   useEffect(() => {
       return () => console.log(a)
   }, []);

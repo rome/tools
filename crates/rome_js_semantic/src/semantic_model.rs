@@ -769,6 +769,13 @@ impl SemanticModel {
         node.is_exported(self)
     }
 
+    /// Returns if the node is imported or is a reference to a binding
+    /// that is imported.
+    ///
+    /// When a binding is specified this method returns a bool.
+    ///
+    /// When a reference is specified this method returns Option<bool>,
+    /// because there is no guarantee that the corresponding declaration exists.
     pub fn is_imported<T>(&self, node: &T) -> T::Result
     where
         T: IsExportedCanBeQueried,
