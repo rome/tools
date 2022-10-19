@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: switch.js
 ---
+
 # Input
+
+```js
 switch (key) {
 	case // comment
 	value:
@@ -23,15 +26,24 @@ switch ("test") {
   case "test": {}
 }
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 switch (key) {
 	case // comment
 	value:
@@ -50,4 +62,6 @@ switch ("test") {
 	case "test": {
 	}
 }
+```
+
 

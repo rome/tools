@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: return.js
 ---
+
 # Input
+
+```js
 function f1() {
     return 1
 }
@@ -10,15 +13,24 @@ function f1() {
 function f2() {
     return 1,3,4
 }
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 function f1() {
 	return 1;
 }
@@ -26,4 +38,6 @@ function f1() {
 function f2() {
 	return 1, 3, 4;
 }
+```
+
 

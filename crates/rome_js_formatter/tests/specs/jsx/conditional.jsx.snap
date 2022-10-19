@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: conditional.jsx
 ---
+
 # Input
+
+```js
 (bifornCringerMoshedPerplexSawder ? (
 	askTrovenaBeenaDependsRowans
 ) : (
@@ -53,15 +56,24 @@ expression: conditional.jsx
 	</Element2>
 ) : null;
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 (
 	bifornCringerMoshedPerplexSawder
 		? askTrovenaBeenaDependsRowans
@@ -115,4 +127,6 @@ Quote properties: As needed
 		</Element2>
 	)
 ) : null;
+```
+
 

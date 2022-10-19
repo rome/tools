@@ -1,30 +1,34 @@
-use std::sync::Arc;
+use std::collections::HashMap;
+use std::sync::atomic::{AtomicU64, Ordering};
+use std::sync::{Arc, Mutex};
 
 use crate::capabilities::server_capabilities;
 use crate::requests::syntax_tree::{SyntaxTreePayload, SYNTAX_TREE_REQUEST};
-use crate::session::Session;
+use crate::session::{ClientInformation, Session, SessionHandle, SessionKey};
 use crate::utils::{into_lsp_error, panic_to_lsp_error};
 use crate::{handlers, requests};
 use futures::future::ready;
 use futures::FutureExt;
+use rome_console::markup;
+use rome_service::workspace::{RageEntry, RageParams, RageResult};
 use rome_service::{workspace, Workspace};
 use tokio::io::{AsyncRead, AsyncWrite};
 use tokio::sync::Notify;
 use tokio::task::spawn_blocking;
 use tower_lsp::jsonrpc::Result as LspResult;
 use tower_lsp::{lsp_types::*, ClientSocket};
-use tower_lsp::{Client, LanguageServer, LspService, Server};
+use tower_lsp::{LanguageServer, LspService, Server};
 use tracing::{error, info, trace};
 
 pub struct LSPServer {
-    session: Session,
+    session: SessionHandle,
+    /// Map of all sessions connected to the same [ServerFactory] as this [LSPServer].
+    sessions: Sessions,
 }
 
 impl LSPServer {
-    fn new(client: Client, workspace: Arc<dyn Workspace>, cancellation: Arc<Notify>) -> Self {
-        Self {
-            session: Session::new(client, workspace, cancellation),
-        }
+    fn new(session: SessionHandle, sessions: Sessions) -> Self {
+        Self { session, sessions }
     }
 
     async fn syntax_tree_request(&self, params: SyntaxTreePayload) -> LspResult<String> {
@@ -36,6 +40,56 @@ impl LSPServer {
 
         let url = params.text_document.uri;
         requests::syntax_tree::syntax_tree(&self.session, &url).map_err(into_lsp_error)
+    }
+
+    #[tracing::instrument(skip(self), name = "rome/rage", level = "trace")]
+    async fn rage(&self, params: RageParams) -> LspResult<RageResult> {
+        let mut entries = vec![
+            RageEntry::section("Server"),
+            RageEntry::pair("Version", rome_service::VERSION),
+            RageEntry::pair("Name", env!("CARGO_PKG_NAME")),
+            RageEntry::pair("CPU Architecture", std::env::consts::ARCH),
+            RageEntry::pair("OS", std::env::consts::OS),
+        ];
+
+        let RageResult {
+            entries: workspace_entries,
+        } = self.session.failsafe_rage(params);
+
+        entries.extend(workspace_entries);
+
+        if let Ok(sessions) = self.sessions.lock() {
+            if sessions.len() > 1 {
+                entries.push(RageEntry::markup(
+                    markup!("\n"<Underline><Emphasis>"Other Active Server Workspaces:"</Emphasis></Underline>"\n"),
+                ));
+
+                for (key, session) in sessions.iter() {
+                    if &self.session.key == key {
+                        // Already printed above
+                        continue;
+                    }
+
+                    let RageResult {
+                        entries: workspace_entries,
+                    } = session.failsafe_rage(params);
+
+                    entries.extend(workspace_entries);
+
+                    if let Ok(client_information) = session.client_information.lock() {
+                        if let Some(information) = client_information.as_ref() {
+                            entries.push(RageEntry::pair("Client Name", &information.name));
+
+                            if let Some(version) = &information.version {
+                                entries.push(RageEntry::pair("Client Version", version))
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        Ok(RageResult { entries })
     }
 }
 
@@ -55,11 +109,19 @@ impl LanguageServer for LSPServer {
             self.session.root_uri.write().unwrap().replace(uri);
         }
 
+        if let Some(client_info) = params.client_info {
+            let mut client_information = self.session.client_information.lock().unwrap();
+            *client_information = Some(ClientInformation {
+                name: client_info.name,
+                version: client_info.version,
+            })
+        };
+
         let init = InitializeResult {
             capabilities: server_capabilities(),
             server_info: Some(ServerInfo {
                 name: String::from(env!("CARGO_PKG_NAME")),
-                version: Some(String::from(env!("CARGO_PKG_VERSION"))),
+                version: Some(rome_service::VERSION.to_string()),
             }),
         };
 
@@ -159,11 +221,24 @@ impl LanguageServer for LSPServer {
     }
 }
 
+impl Drop for LSPServer {
+    fn drop(&mut self) {
+        if let Ok(mut sessions) = self.sessions.lock() {
+            let _removed = sessions.remove(&self.session.key);
+
+            debug_assert!(_removed.is_some(), "Session did not exist.");
+        }
+    }
+}
+
+/// Map of active sessions connected to a [ServerFactory].
+type Sessions = Arc<Mutex<HashMap<SessionKey, SessionHandle>>>;
+
 /// Factory data structure responsible for creating [ServerConnection] handles
 /// for each incoming connection accepted by the server
 #[derive(Default)]
 pub struct ServerFactory {
-    /// Synchronisation primitve used to broadcast a shutdown signal to all
+    /// Synchronisation primitive used to broadcast a shutdown signal to all
     /// active connections
     cancellation: Arc<Notify>,
     /// Optional [Workspace] instance shared between all clients. Currently
@@ -171,6 +246,12 @@ pub struct ServerFactory {
     /// workspace) until we figure out how to handle concurrent access to the
     /// same workspace from multiple client
     workspace: Option<Arc<dyn Workspace>>,
+
+    /// The sessions of the connected clients indexed by session key.
+    sessions: Sessions,
+
+    /// Session key generator. Stores the key of the next session.
+    next_session_key: AtomicU64,
 }
 
 /// Helper method for wrapping a [Workspace] method in a `custom_method` for
@@ -215,8 +296,15 @@ impl ServerFactory {
             .clone()
             .unwrap_or_else(workspace::server_sync);
 
+        let session_key = SessionKey(self.next_session_key.fetch_add(1, Ordering::Relaxed));
+
         let mut builder = LspService::build(move |client| {
-            LSPServer::new(client, workspace, self.cancellation.clone())
+            let session = Session::new(session_key, client, workspace, self.cancellation.clone());
+            let handle = Arc::new(session);
+
+            let mut sessions = self.sessions.lock().unwrap();
+            sessions.insert(session_key, handle.clone());
+            LSPServer::new(handle, self.sessions.clone())
         });
 
         builder = builder.custom_method(SYNTAX_TREE_REQUEST, LSPServer::syntax_tree_request);
@@ -227,6 +315,8 @@ impl ServerFactory {
             server.session.broadcast_shutdown();
             ready(Ok(Some(())))
         });
+
+        builder = builder.custom_method("rome/rage", LSPServer::rage);
 
         workspace_method!(builder, supports_feature);
         workspace_method!(builder, update_settings);

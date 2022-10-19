@@ -102,6 +102,10 @@ export interface JavascriptFormatter {
 	 * The style for quotes. Defaults to double.
 	 */
 	quoteStyle?: QuoteStyle;
+	/**
+	 * Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
+	 */
+	trailingComma?: TrailingComma;
 }
 export interface Rules {
 	correctness?: Correctness;
@@ -114,6 +118,7 @@ export interface Rules {
 }
 export type QuoteProperties = "asNeeded" | "preserve";
 export type QuoteStyle = "double" | "single";
+export type TrailingComma = "all" | "es5";
 /**
  * A list of rules that belong to this group
  */
@@ -158,6 +163,7 @@ export interface Nursery {
 	noArrayIndexKey?: RuleConfiguration;
 	noAutofocus?: RuleConfiguration;
 	noChildrenProp?: RuleConfiguration;
+	noConstAssign?: RuleConfiguration;
 	noDangerouslySetInnerHtml?: RuleConfiguration;
 	noDangerouslySetInnerHtmlWithChildren?: RuleConfiguration;
 	noExplicitAny?: RuleConfiguration;
@@ -174,10 +180,14 @@ export interface Nursery {
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
+	useAnchorContent?: RuleConfiguration;
 	useBlankTarget?: RuleConfiguration;
 	useButtonType?: RuleConfiguration;
 	useCamelCase?: RuleConfiguration;
+	useFlatMap?: RuleConfiguration;
 	useFragmentSyntax?: RuleConfiguration;
+	useKeyWithClickEvents?: RuleConfiguration;
+	useKeyWithMouseEvents?: RuleConfiguration;
 	useOptionalChain?: RuleConfiguration;
 	useValidAnchor?: RuleConfiguration;
 }
@@ -313,10 +323,15 @@ export type Category =
 	| "lint/nursery/noArrayIndexKey"
 	| "lint/nursery/noDangerouslySetInnerHtmlWithChildren"
 	| "lint/nursery/noAutofocus"
+	| "lint/nursery/useKeyWithMouseEvents"
+	| "lint/nursery/useAnchorContent"
 	| "lint/nursery/useBlankTarget"
 	| "lint/nursery/useValidAnchor"
+	| "lint/nursery/useKeyWithClickEvents"
 	| "lint/nursery/noRestrictedGlobals"
+	| "lint/nursery/useFlatMap"
 	| "lint/nursery/noPositiveTabindex"
+	| "lint/nursery/noConstAssign"
 	| "lint/nursery/noExplicitAny"
 	| "lint/style/noNegationElse"
 	| "lint/style/noShoutyConstants"

@@ -2,20 +2,32 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: declare_function.ts
 ---
+
 # Input
+
+```js
 declare function
 test(): Promise<string>;
 
 declare function looooooooooooooooooooooooooooong_naaaaaame<FirstType, SecondType, ThirdType>(loreum: string, ipsum: number, chilly: symbol, powder: number): string
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 declare function test(): Promise<string>;
 
 declare function looooooooooooooooooooooooooooong_naaaaaame<
@@ -23,4 +35,6 @@ declare function looooooooooooooooooooooooooooong_naaaaaame<
 	SecondType,
 	ThirdType,
 >(loreum: string, ipsum: number, chilly: symbol, powder: number): string;
+```
+
 

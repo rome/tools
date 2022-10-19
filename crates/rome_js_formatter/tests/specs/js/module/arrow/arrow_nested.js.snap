@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: arrow_nested.js
 ---
+
 # Input
+
+```js
 Seq(typeDef.interface.groups).forEach(group =>
     Seq(group.members).forEach((member, memberName) =>
       markdownDoc(
@@ -31,15 +34,24 @@ runtimeAgent.getProperties(
     },
 );
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 Seq(typeDef.interface.groups).forEach((group) =>
 	Seq(group.members).forEach((member, memberName) =>
 		markdownDoc(member.doc, {
@@ -66,4 +78,6 @@ runtimeAgent.getProperties(
 		return 1;
 	},
 );
+```
+
 

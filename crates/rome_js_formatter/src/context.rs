@@ -1,4 +1,5 @@
 use crate::comments::{FormatJsLeadingComment, JsCommentStyle, JsComments};
+use crate::context::trailing_comma::TrailingComma;
 use rome_formatter::printer::PrinterOptions;
 use rome_formatter::{
     CstFormatContext, FormatContext, FormatElement, FormatOptions, IndentStyle, LineWidth,
@@ -9,6 +10,8 @@ use std::fmt;
 use std::fmt::Debug;
 use std::rc::Rc;
 use std::str::FromStr;
+
+pub mod trailing_comma;
 
 #[derive(Debug, Clone)]
 pub struct JsFormatContext {
@@ -139,6 +142,9 @@ pub struct JsFormatOptions {
     /// When properties in objects are quoted. Defaults to as-needed.
     quote_properties: QuoteProperties,
 
+    /// Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
+    trailing_comma: TrailingComma,
+
     /// Information related to the current file
     source_type: SourceType,
 }
@@ -151,6 +157,7 @@ impl JsFormatOptions {
             line_width: LineWidth::default(),
             quote_style: QuoteStyle::default(),
             quote_properties: QuoteProperties::default(),
+            trailing_comma: TrailingComma::default(),
         }
     }
 
@@ -174,6 +181,11 @@ impl JsFormatOptions {
         self
     }
 
+    pub fn with_trailing_comma(mut self, trailing_comma: TrailingComma) -> Self {
+        self.trailing_comma = trailing_comma;
+        self
+    }
+
     pub fn quote_style(&self) -> QuoteStyle {
         self.quote_style
     }
@@ -184,6 +196,10 @@ impl JsFormatOptions {
 
     pub fn source_type(&self) -> SourceType {
         self.source_type
+    }
+
+    pub fn trailing_comma(&self) -> TrailingComma {
+        self.trailing_comma
     }
 
     pub fn tab_width(&self) -> TabWidth {
@@ -215,7 +231,8 @@ impl fmt::Display for JsFormatOptions {
         writeln!(f, "Indent style: {}", self.indent_style)?;
         writeln!(f, "Line width: {}", self.line_width.value())?;
         writeln!(f, "Quote style: {}", self.quote_style)?;
-        writeln!(f, "Quote properties: {}", self.quote_properties)
+        writeln!(f, "Quote properties: {}", self.quote_properties)?;
+        writeln!(f, "Trailing comma: {}", self.trailing_comma)
     }
 }
 

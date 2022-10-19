@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: if_stmt_err.js
 ---
+
 # Input
+
+```js
 function test() {
 	let x = 10;
 		if test {
@@ -20,15 +23,24 @@ if (false) {
 	let x = 99;
 } else {
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 function test() {
 	let x = 10;
 	if test {
@@ -41,4 +53,6 @@ if (true) {
 if (false) {
 	let x = 99;
 } else {
+```
+
 

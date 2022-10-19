@@ -1,0 +1,45 @@
+---
+source: crates/rome_cli/tests/commands/rage.rs
+expression: content
+---
+## `rome.json`
+
+```json
+{
+  "formatter": {
+    "enabled": false
+  }
+}
+```
+
+# Emitted Messages
+
+```block
+CLI:
+  Version:              0.0.0
+  Color support:        **PLACEHOLDER**
+
+Platform:
+  CPU Architecture:     **PLACEHOLDER**
+  OS:                   **PLACEHOLDER**
+
+Environment:
+  NO_COLOR:             **PLACEHOLDER**
+  TERM:                 **PLACEHOLDER**
+
+Rome Configuration:
+  Status:               loaded
+  Formatter disabled:   true
+  Linter disabled:      false
+
+Server:
+  Version:              0.0.0
+  Name:                 rome_lsp
+  CPU Architecture:     **PLACEHOLDER**
+  OS:                   **PLACEHOLDER**
+
+Workspace:
+  Open Documents:       0
+```
+
+

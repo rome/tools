@@ -389,6 +389,7 @@ struct NurserySchema {
     no_array_index_key: Option<RuleConfiguration>,
     no_autofocus: Option<RuleConfiguration>,
     no_children_prop: Option<RuleConfiguration>,
+    no_const_assign: Option<RuleConfiguration>,
     no_dangerously_set_inner_html: Option<RuleConfiguration>,
     no_dangerously_set_inner_html_with_children: Option<RuleConfiguration>,
     no_explicit_any: Option<RuleConfiguration>,
@@ -401,19 +402,24 @@ struct NurserySchema {
     no_unused_variables: Option<RuleConfiguration>,
     no_useless_fragments: Option<RuleConfiguration>,
     no_void_elements_with_children: Option<RuleConfiguration>,
+    use_anchor_content: Option<RuleConfiguration>,
     use_blank_target: Option<RuleConfiguration>,
     use_button_type: Option<RuleConfiguration>,
     use_camel_case: Option<RuleConfiguration>,
+    use_flat_map: Option<RuleConfiguration>,
     use_fragment_syntax: Option<RuleConfiguration>,
+    use_key_with_click_events: Option<RuleConfiguration>,
+    use_key_with_mouse_events: Option<RuleConfiguration>,
     use_optional_chain: Option<RuleConfiguration>,
     use_valid_anchor: Option<RuleConfiguration>,
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 21] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 26] = [
         "noArrayIndexKey",
         "noAutofocus",
         "noChildrenProp",
+        "noConstAssign",
         "noDangerouslySetInnerHtml",
         "noDangerouslySetInnerHtmlWithChildren",
         "noExplicitAny",
@@ -426,10 +432,14 @@ impl Nursery {
         "noUnusedVariables",
         "noUselessFragments",
         "noVoidElementsWithChildren",
+        "useAnchorContent",
         "useBlankTarget",
         "useButtonType",
         "useCamelCase",
+        "useFlatMap",
         "useFragmentSyntax",
+        "useKeyWithClickEvents",
+        "useKeyWithMouseEvents",
         "useOptionalChain",
         "useValidAnchor",
     ];

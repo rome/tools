@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: import_specifiers.js
 ---
+
 # Input
+
+```js
 import { hey } from "hey"
 import { hey } from "hey";
 import {
@@ -23,15 +26,24 @@ import {loooooooooooooooooooong3,loooooooooooooooooooong5,loooooooooooooooooooon
 import { f as x, default as w, "a-b-c" as y } from "b";
 
 import loooooooooooooooooooong7, { loooooooooooooooooooong8, loooooooooooooooooooong9, loooooooooooooooooooong10} from "module"
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 import { hey } from "hey";
 import { hey } from "hey";
 import { apple, banana } from "fruits";
@@ -59,4 +71,6 @@ import loooooooooooooooooooong7, {
 	loooooooooooooooooooong9,
 	loooooooooooooooooooong10,
 } from "module";
+```
+
 

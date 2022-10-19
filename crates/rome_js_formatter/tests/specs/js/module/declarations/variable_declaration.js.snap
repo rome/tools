@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: variable_declaration.js
 ---
+
 # Input
+
+```js
 //break left-hand side layout
 {
     const {
@@ -269,15 +272,24 @@ const a
 
 			[A,    B,   C].push( aaa )
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 //break left-hand side layout
 {
 	const {
@@ -795,4 +807,6 @@ const a
   428: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong3 =
   442: var loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong1 =
   444: let loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooong2 =
+```
+
 

@@ -2,7 +2,10 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: class.ts
 ---
+
 # Input
+
+```js
 
 class Test {
     name: string;
@@ -63,15 +66,24 @@ abstract class Test1 {
                 protected abstract readonly g: string;
                 protected readonly abstract h: string;
 }
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 class Test {
 	name: string;
 
@@ -133,4 +145,6 @@ abstract class Test1 {
 	protected abstract readonly g: string;
 	protected abstract readonly h: string;
 }
+```
+
 

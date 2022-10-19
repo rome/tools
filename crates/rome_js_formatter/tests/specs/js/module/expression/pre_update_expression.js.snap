@@ -2,23 +2,37 @@
 source: crates/rome_js_formatter/tests/spec_test.rs
 expression: pre_update_expression.js
 ---
+
 # Input
+
+```js
 ++y
 --y
 x = ++y
 x = --y
 
+```
+
+
 =============================
+
 # Outputs
+
 ## Output 1
+
 -----
 Indent style: Tab
 Line width: 80
 Quote style: Double Quotes
 Quote properties: As needed
+Trailing comma: All
 -----
+
+```js
 ++y;
 --y;
 x = ++y;
 x = --y;
+```
+
 

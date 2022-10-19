@@ -1,6 +1,7 @@
 use crate::prelude::*;
 use crate::AsFormat;
 
+use crate::context::trailing_comma::FormatTrailingComma;
 use rome_formatter::write;
 use rome_js_syntax::{
     JsAnyArrayAssignmentPatternElement, JsAnyArrayBindingPatternElement, JsAnyArrayElement,
@@ -47,7 +48,7 @@ where
                 } else if let Some(separator) = element.trailing_separator()? {
                     write!(f, [format_only_if_breaks(separator, &separator.format())])?;
                 } else {
-                    write!(f, [if_group_breaks(&text(","))])?;
+                    write!(f, [FormatTrailingComma::ES5])?;
                 };
 
                 Ok(())

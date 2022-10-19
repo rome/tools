@@ -45,6 +45,7 @@ impl WorkspaceSettings {
         if let Some(formatter) = formatter {
             self.languages.javascript.format.quote_style = Some(formatter.quote_style);
             self.languages.javascript.format.quote_properties = Some(formatter.quote_properties);
+            self.languages.javascript.format.trailing_comma = Some(formatter.trailing_comma);
         }
 
         // linter part

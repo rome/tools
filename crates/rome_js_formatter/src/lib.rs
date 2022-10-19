@@ -647,6 +647,7 @@ mod tests {
     use rome_rowan::{TextRange, TextSize};
 
     use crate::check_reformat::{check_reformat, CheckReformatParams};
+    use crate::context::trailing_comma::TrailingComma;
 
     #[test]
     fn test_range_formatting() {
@@ -861,20 +862,20 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-const b4 = (
-	<div>
-		Text <a data-very-long-prop-breakline-rome-playground data-other>
-			some link
-		</a>{" "}
-		| some other text,{" "}
-	</div>
-);
+class C {
+  one(
+    AAAAAAAAAAAAAAAAAAAAAAAAAA,
+    BBBBBBBBBBBBBBBBBBBBBBBBB,
+    BBBBBBBBBBBBBBBBBBBBBB,
+    c,
+  ) {}
+}
 
 "#;
-        let syntax = SourceType::jsx();
+        let syntax = SourceType::tsx();
         let tree = parse(src, FileId::zero(), syntax);
         let options = JsFormatOptions::new(syntax);
-
+        let options = options.with_trailing_comma(TrailingComma::ES5);
         let result = format_node(options.clone(), &tree.syntax())
             .unwrap()
             .print()
