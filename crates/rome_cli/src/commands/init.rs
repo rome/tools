@@ -13,7 +13,7 @@ pub(crate) fn init(mut session: CliSession) -> Result<(), Termination> {
     "\t1. "<Emphasis>"Setup an editor extension\n"</Emphasis>
             "\t\tGet live errors as you type and format when you save. Learn more:"<Underline>"https://rome.tools/#install-official-rome-vs-code-extension \n"</Underline>
     "\t2. "<Emphasis>"Try a command\n"</Emphasis>
-            <Italic>"\t\trome check"</Italic>" is used to validate your code, verify formatting, and check for lint errors. Run " <Italic>"rome --help"</Italic>" for a full list of commands and flags\n"
+            <Italic>"\t\trome ci"</Italic>" is used to validate your code, verify formatting, and check for lint errors. Run " <Italic>"rome --help"</Italic>" for a full list of commands and flags\n"
     "\t3. "<Emphasis>"Read documentation \n"</Emphasis>
             "\t\tOur website serves as a comprehensive source of guides and documentation: "<Underline>"https://rome.tools/ \n"</Underline>
     "\t4. "<Emphasis>"Get involved in the community\n"</Emphasis>
