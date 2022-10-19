@@ -7,13 +7,14 @@ jobs:
   stale:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/stale@v5
+      - uses: actions/stale@v6
         with:
           stale-issue-message: 'This issue is stale because it has been open 14 days with no activity.'
           stale-pr-message: 'This PR is stale because it has been open 14 days with no activity.'
           days-before-issue-stale: 14
           days-before-pr-stale: 14
           exempt-pr-labels: 'PR: on hold'
+          exempt-issue-labels: 'S-Bug: confirmed','S-Planned', 'S-Wishlist', 'umbrella'
           stale-issue-label: 'S-Stale'
           stale-pr-label: 'S-Stale'
           days-before-close: -1
