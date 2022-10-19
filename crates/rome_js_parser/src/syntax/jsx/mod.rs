@@ -198,9 +198,12 @@ fn expect_closing_fragment(
     // <>test<inner> some text</inner>;
     if let Present(name) = parse_jsx_any_element_name(p) {
         p.error(
-            p.err_builder("JSX fragment has no corresponding closing tag.")
-                .primary(opening_range, "Opening fragment")
-                .secondary(name.range(p), "Closing tag"),
+            p.err_builder(
+                "JSX fragment has no corresponding closing tag.",
+                opening_range,
+            )
+            .detail(opening_range, "Opening fragment")
+            .detail(name.range(p), "Closing tag"),
         );
     }
 
@@ -409,9 +412,10 @@ fn parse_jsx_any_element_name(p: &mut Parser) -> ParsedSyntax {
         if name.kind() == JSX_NAME && (p.at(T![.]) || !is_intrinsic_element(name.text(p))) {
             name.change_kind(p, JSX_REFERENCE_IDENTIFIER)
         } else if name.kind() == JSX_NAMESPACE_NAME && p.at(T![.]) {
-            let error = p
-                .err_builder("JSX property access expressions cannot include JSX namespace names.")
-                .primary(name.range(p), "");
+            let error = p.err_builder(
+                "JSX property access expressions cannot include JSX namespace names.",
+                name.range(p),
+            );
             p.error(error);
             name.change_to_unknown(p);
         }
@@ -551,10 +555,10 @@ fn parse_jsx_spread_attribute(p: &mut Parser) -> ParsedSyntax {
 
     let argument = parse_expression(p, ExpressionContext::default()).map(|mut expr| {
         if expr.kind() == JS_SEQUENCE_EXPRESSION {
-            p.error(
-                p.err_builder("Comma operator isn't a valid value for a JSX spread argument.")
-                    .primary(expr.range(p), ""),
-            );
+            p.error(p.err_builder(
+                "Comma operator isn't a valid value for a JSX spread argument.",
+                expr.range(p),
+            ));
             expr.change_to_unknown(p);
         }
 
@@ -703,11 +707,9 @@ fn parse_jsx_assignment_expression(p: &mut Parser, is_spread: bool) -> ParsedSyn
         let err = match expr.kind() {
             JsSyntaxKind::IMPORT_META
             | JsSyntaxKind::NEW_TARGET
-            | JsSyntaxKind::JS_CLASS_EXPRESSION => {
-                Some(p.err_builder(msg).primary(expr.range(p), ""))
-            }
+            | JsSyntaxKind::JS_CLASS_EXPRESSION => Some(p.err_builder(msg, expr.range(p))),
             JsSyntaxKind::JS_SEQUENCE_EXPRESSION if is_spread => {
-                Some(p.err_builder(msg).primary(expr.range(p), ""))
+                Some(p.err_builder(msg, expr.range(p)))
             }
             _ => None,
         };

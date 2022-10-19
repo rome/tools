@@ -82,7 +82,7 @@ labelled_function_decl_in_single_statement_context.js:1:27 parse ━━━━━
       │                           ^^^^^^^^^^^^^^^
     2 │ 
   
-  × wrap the function in a block statement
+  i wrap the function in a block statement
   
 --
 if (true) label1: label2: function a() {}

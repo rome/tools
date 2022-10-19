@@ -3,7 +3,7 @@ use crate::parser::ParserProgress;
 use crate::syntax::expr::{parse_assignment_expression_or_higher, ExpressionContext};
 use crate::syntax::js_parse_error;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{CompletedMarker, ParseRecovery, ParsedSyntax, Parser, ParseDiagnostic};
+use crate::{CompletedMarker, ParseDiagnostic, ParseRecovery, ParsedSyntax, Parser};
 use rome_js_syntax::JsSyntaxKind::{EOF, JS_ARRAY_HOLE};
 use rome_js_syntax::{JsSyntaxKind, TextRange, T};
 
@@ -236,12 +236,15 @@ fn validate_rest_pattern(
             recovered.undo_completion(p).abandon(p); // append recovered content to parent
         }
         p.error(
-            p.err_builder("rest element cannot have a default")
-                .primary(
-                    default_start..p.cur_range().start(),
-                    "Remove the default value here",
-                )
-                .secondary(rest_range, "Rest element"),
+            p.err_builder(
+                "rest element cannot have a default",
+                default_start..p.cur_range().start(),
+            )
+            .detail(
+                default_start..p.cur_range().start(),
+                "Remove the default value here",
+            )
+            .detail(rest_range, "Rest element"),
         );
 
         let mut invalid = rest_marker.complete(p, kind);
@@ -249,21 +252,20 @@ fn validate_rest_pattern(
         invalid
     } else if p.at(T![,]) && p.nth_at(1, end_token) {
         p.error(
-            p.err_builder("rest element may not have a trailing comma")
-                .primary(p.cur_range(), "Remove the trailing comma here")
-                .secondary(rest.range(p), "Rest element"),
+            p.err_builder("rest element may not have a trailing comma", p.cur_range())
+                .detail(p.cur_range(), "Remove the trailing comma here")
+                .detail(rest.range(p), "Rest element"),
         );
         rest.change_to_unknown(p);
         rest
     } else {
         p.error(
-            p.err_builder("rest element must be the last element")
-                .primary(
-                    rest.range(p),
-                    &format!(
+            p.err_builder("rest element must be the last element", rest.range(p),)
+                .hint(
+                    format!(
                     "Move the rest element to the end of the pattern, right before the closing '{}'",
                     end_token.to_string().unwrap(),
-                ),
+                    ),
                 ),
         );
         rest.change_to_unknown(p);

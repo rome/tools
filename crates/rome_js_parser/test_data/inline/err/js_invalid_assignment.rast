@@ -211,7 +211,11 @@ js_invalid_assignment.js:1:3 parse ━━━━━━━━━━━━━━━
       │   ^
     2 │ 
   
-  × Expected a property, an expression, or a method here
+  i Expected a property, an expression, or a method here
+  
+  > 1 │ ([=[(p[=[(p%]>([=[(p[=[(
+      │   ^
+    2 │ 
   
 --
 js_invalid_assignment.js:1:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -222,6 +226,8 @@ js_invalid_assignment.js:1:4 parse ━━━━━━━━━━━━━━━
       │    ^
     2 │ 
   
+  i Remove [
+  
 --
 js_invalid_assignment.js:1:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -231,7 +237,11 @@ js_invalid_assignment.js:1:8 parse ━━━━━━━━━━━━━━━
       │        ^
     2 │ 
   
-  × Expected an expression here
+  i Expected an expression here
+  
+  > 1 │ ([=[(p[=[(p%]>([=[(p[=[(
+      │        ^
+    2 │ 
   
 --
 js_invalid_assignment.js:1:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -242,7 +252,11 @@ js_invalid_assignment.js:1:13 parse ━━━━━━━━━━━━━━�
       │             ^
     2 │ 
   
-  × Expected an expression here
+  i Expected an expression here
+  
+  > 1 │ ([=[(p[=[(p%]>([=[(p[=[(
+      │             ^
+    2 │ 
   
 --
 js_invalid_assignment.js:1:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -253,7 +267,11 @@ js_invalid_assignment.js:1:17 parse ━━━━━━━━━━━━━━�
       │                 ^
     2 │ 
   
-  × Expected a property, an expression, or a method here
+  i Expected a property, an expression, or a method here
+  
+  > 1 │ ([=[(p[=[(p%]>([=[(p[=[(
+      │                 ^
+    2 │ 
   
 --
 js_invalid_assignment.js:1:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -264,6 +282,8 @@ js_invalid_assignment.js:1:18 parse ━━━━━━━━━━━━━━�
       │                  ^
     2 │ 
   
+  i Remove [
+  
 --
 js_invalid_assignment.js:1:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -273,7 +293,11 @@ js_invalid_assignment.js:1:22 parse ━━━━━━━━━━━━━━�
       │                      ^
     2 │ 
   
-  × Expected an expression here
+  i Expected an expression here
+  
+  > 1 │ ([=[(p[=[(p%]>([=[(p[=[(
+      │                      ^
+    2 │ 
   
 --
 js_invalid_assignment.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -284,7 +308,11 @@ js_invalid_assignment.js:2:1 parse ━━━━━━━━━━━━━━━
   > 2 │ 
       │ 
   
-  × the file ends here
+  i the file ends here
+  
+    1 │ ([=[(p[=[(p%]>([=[(p[=[(
+  > 2 │ 
+      │ 
   
 --
 ([=[(p[=[(p%]>([=[(p[=[(

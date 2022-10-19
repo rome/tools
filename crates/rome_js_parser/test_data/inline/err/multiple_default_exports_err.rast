@@ -156,14 +156,20 @@ multiple_default_exports_err.js:2:8 parse ━━━━━━━━━━━━�
     3 │ export default (function a() {})
     4 │ 
   
-  × the module's default export is first defined here
+  i multiple default exports are erroneous
+  
+    1 │ export default (class {})
+  > 2 │ export default a + b;
+      │        ^^^^^^^^^^^^^^
+    3 │ export default (function a() {})
+    4 │ 
+  
+  i the module's default export is first defined here
   
   > 1 │ export default (class {})
       │        ^^^^^^^^^^^^^^^^^^
     2 │ export default a + b;
     3 │ export default (function a() {})
-  
-  × multiple default exports are erroneous
   
 --
 multiple_default_exports_err.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -176,14 +182,20 @@ multiple_default_exports_err.js:3:8 parse ━━━━━━━━━━━━�
       │        ^^^^^^^^^^^^^^^^^^^^^^^^^
     4 │ 
   
-  × the module's default export is first defined here
+  i multiple default exports are erroneous
+  
+    1 │ export default (class {})
+    2 │ export default a + b;
+  > 3 │ export default (function a() {})
+      │        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │ 
+  
+  i the module's default export is first defined here
   
   > 1 │ export default (class {})
       │        ^^^^^^^^^^^^^^^^^^
     2 │ export default a + b;
     3 │ export default (function a() {})
-  
-  × multiple default exports are erroneous
   
 --
 export default (class {})

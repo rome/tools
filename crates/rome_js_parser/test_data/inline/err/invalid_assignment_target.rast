@@ -238,7 +238,7 @@ invalid_assignment_target.js:1:1 parse ━━━━━━━━━━━━━�
     2 │ (++a) = b;
     3 │ (a = b;
   
-  × This expression cannot be assigned to
+  i This expression cannot be assigned to
   
 --
 invalid_assignment_target.js:2:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -251,7 +251,7 @@ invalid_assignment_target.js:2:2 parse ━━━━━━━━━━━━━�
     3 │ (a = b;
     4 │ a?.b = b;
   
-  × This expression cannot be assigned to
+  i This expression cannot be assigned to
   
 --
 invalid_assignment_target.js:3:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -265,6 +265,8 @@ invalid_assignment_target.js:3:7 parse ━━━━━━━━━━━━━�
     4 │ a?.b = b;
     5 │ a?.["b"] = b;
   
+  i Remove ;
+  
 --
 invalid_assignment_target.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -277,7 +279,7 @@ invalid_assignment_target.js:4:1 parse ━━━━━━━━━━━━━�
     5 │ a?.["b"] = b;
     6 │ (a +) = b;
   
-  × This expression cannot be assigned to
+  i This expression cannot be assigned to
   
 --
 invalid_assignment_target.js:5:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -291,7 +293,7 @@ invalid_assignment_target.js:5:1 parse ━━━━━━━━━━━━━�
     6 │ (a +) = b;
     7 │ 
   
-  × This expression cannot be assigned to
+  i This expression cannot be assigned to
   
 --
 invalid_assignment_target.js:6:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -304,7 +306,13 @@ invalid_assignment_target.js:6:5 parse ━━━━━━━━━━━━━�
       │     ^
     7 │ 
   
-  × Expected an expression here
+  i Expected an expression here
+  
+    4 │ a?.b = b;
+    5 │ a?.["b"] = b;
+  > 6 │ (a +) = b;
+      │     ^
+    7 │ 
   
 --
 invalid_assignment_target.js:6:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -317,7 +325,7 @@ invalid_assignment_target.js:6:2 parse ━━━━━━━━━━━━━�
       │  ^^^
     7 │ 
   
-  × This expression cannot be assigned to
+  i This expression cannot be assigned to
   
 --
 ++a = b;

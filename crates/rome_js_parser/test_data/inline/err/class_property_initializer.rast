@@ -66,7 +66,11 @@ class_property_initializer.js:1:19 parse ━━━━━━━━━━━━━
       │                   ^
     2 │ 
   
-  × Expected an expression, or an assignment here
+  i Expected an expression, or an assignment here
+  
+  > 1 │ class B { lorem = ; }
+      │                   ^
+    2 │ 
   
 --
 class B { lorem = ; }

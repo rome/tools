@@ -281,6 +281,8 @@ jsx_spread_attribute_error.jsx:3:4 parse ━━━━━━━━━━━━━
     4 │ <a {obj} />;
     5 │ <div
   
+  i Remove ...
+  
 --
 jsx_spread_attribute_error.jsx:4:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -293,6 +295,8 @@ jsx_spread_attribute_error.jsx:4:5 parse ━━━━━━━━━━━━━
     5 │ <div
     6 │       {...{} /*
   
+  i Remove obj
+  
 --
 jsx_spread_attribute_error.jsx:8:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -304,6 +308,8 @@ jsx_spread_attribute_error.jsx:8:7 parse ━━━━━━━━━━━━━
        │       ^^^^^^^^^^^
      9 │     />;
     10 │ 
+  
+  i Remove invalidProp
   
 --
 let obj = {};

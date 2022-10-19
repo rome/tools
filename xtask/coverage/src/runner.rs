@@ -2,7 +2,10 @@ use super::*;
 use crate::reporters::TestReporter;
 use rome_diagnostics::file::{FileId, SimpleFiles};
 use rome_diagnostics::termcolor::Buffer;
-use rome_diagnostics::{Diagnostic, Emitter, Severity};
+use rome_diagnostics::v2::console::fmt::{Formatter, Termcolor};
+use rome_diagnostics::v2::console::markup;
+use rome_diagnostics::v2::Error;
+use rome_diagnostics::v2::PrintDiagnostic;
 use rome_js_parser::{parse, Parse};
 use rome_js_syntax::{JsAnyRoot, JsSyntaxNode, SourceType};
 use rome_rowan::SyntaxKind;
@@ -92,19 +95,23 @@ impl TestCaseFile {
     pub(crate) fn id(&self) -> FileId {
         self.id
     }
+
+    pub(crate) fn code(&self) -> &str {
+        &self.code
+    }
 }
 
 pub(crate) fn create_unknown_node_in_tree_diagnostic(
     file_id: FileId,
     node: JsSyntaxNode,
-) -> Diagnostic {
+) -> ParseDiagnostic {
     assert!(node.kind().is_unknown());
-    Diagnostic::new(
+    ParseDiagnostic::new(
         file_id,
-        Severity::Bug,
         "There are no parse errors but the parsed tree contains unknown nodes.",
+        node.text_trimmed_range()
     )
-        .primary(node.text_trimmed_range(), "This unknown node is present in the parsed tree but the parser didn't emit a diagnostic for it. Change the parser to either emit a diagnostic, fix the grammar, or the parsing.")
+    .hint( "This unknown node is present in the parsed tree but the parser didn't emit a diagnostic for it. Change the parser to either emit a diagnostic, fix the grammar, or the parsing.")
 }
 
 #[derive(Clone, Debug)]
@@ -141,16 +148,17 @@ impl TestCaseFiles {
         self.files.is_empty()
     }
 
-    pub(crate) fn emit_errors(&self, errors: &[ParseDiagnostic], buffer: &mut Buffer) {
+    pub(crate) fn emit_errors(&self, errors: &[Error], buffer: &mut Buffer) {
         let mut diag_files = SimpleFiles::new();
 
         for file in &self.files {
             diag_files.add(file.name.clone(), file.code.clone());
         }
 
-        let mut emitter = Emitter::new(&diag_files);
         for error in errors {
-            if let Err(err) = emitter.emit_with_writer(error, buffer) {
+            if let Err(err) = Formatter::new(&mut Termcolor(&mut *buffer)).write_markup(markup! {
+                {PrintDiagnostic(error)}
+            }) {
                 eprintln!("Failed to print diagnostic: {}", err);
             }
         }

@@ -144,7 +144,7 @@ continue_stmt.js:3:12 parse ━━━━━━━━━━━━━━━━━�
     4 │ }
     5 │ foo: {
   
-  × This label is used, but it is never defined
+  i This label is used, but it is never defined
   
 --
 continue_stmt.js:6:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -158,9 +158,16 @@ continue_stmt.js:6:12 parse ━━━━━━━━━━━━━━━━━�
     7 │ }
     8 │ 
   
-  × This label
+  i This label
   
-  × points to non-iteration statement
+    4 │ }
+    5 │ foo: {
+  > 6 │   continue foo;
+      │            ^^^
+    7 │ }
+    8 │ 
+  
+  i points to non-iteration statement
   
     3 │   continue foo;
     4 │ }

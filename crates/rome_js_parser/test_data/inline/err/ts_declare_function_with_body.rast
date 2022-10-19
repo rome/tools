@@ -132,7 +132,7 @@ ts_declare_function_with_body.ts:1:40 parse ━━━━━━━━━━━━
       │                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     2 │ 
   
-  × remove this body
+  i remove this body
   
 --
 declare function test<A>(a: A): string { return "ambient function with a body"; }

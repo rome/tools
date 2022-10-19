@@ -191,6 +191,8 @@ yield_expr_in_parameter_initializer.js:2:26 parse ━━━━━━━━━━
       │                          ^^^^^^
     3 │ 
   
+  i Remove "test"
+  
 --
 function* test(a = yield "test") {}
 function test2(a = yield "test") {}

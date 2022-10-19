@@ -89,12 +89,13 @@ pub(crate) fn semi(p: &mut Parser, err_range: TextRange) -> bool {
         let err = p
             .err_builder(
                 "Expected a semicolon or an implicit semicolon after a statement, but found none",
+                p.cur_range(),
             )
-            .primary(
+            .detail(
                 p.cur_range(),
                 "An explicit or implicit semicolon is expected here...",
             )
-            .secondary(err_range, "...Which is required to end this statement");
+            .detail(err_range, "...Which is required to end this statement");
 
         p.error(err);
         false
@@ -170,11 +171,17 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
 
             let error = match p.source_type.module_kind() {
                 ModuleKind::Script => p
-                    .err_builder("Illegal use of an import declaration outside of a module")
-                    .primary(import.range(p), "not allowed inside scripts"),
+                    .err_builder(
+                        "Illegal use of an import declaration outside of a module",
+                        import.range(p),
+                    )
+                    .hint("not allowed inside scripts"),
                 ModuleKind::Module => p
-                    .err_builder("Illegal use of an import declaration not at the top level")
-                    .primary(import.range(p), "move this declaration to the top level"),
+                    .err_builder(
+                        "Illegal use of an import declaration not at the top level",
+                        import.range(p),
+                    )
+                    .hint("move this declaration to the top level"),
             };
 
             p.error(error);
@@ -280,8 +287,10 @@ pub(crate) fn parse_statement(p: &mut Parser, context: StatementContext) -> Pars
         T![declare] if is_at_ts_declare_statement(p) => {
             let declare_range = p.cur_range();
             TypeScript.parse_exclusive_syntax(p, parse_ts_declare_statement, |p, _| {
-                p.err_builder("The 'declare' modifier can only be used in TypeScript files.")
-                    .primary(declare_range, "")
+                p.err_builder(
+                    "The 'declare' modifier can only be used in TypeScript files.",
+                    declare_range,
+                )
             })
         }
         T![async] if is_at_async_function(p, LineBreak::DoNotCheck) => {
@@ -306,11 +315,17 @@ pub(crate) fn parse_non_top_level_export(p: &mut Parser) -> ParsedSyntax {
     parse_export(p).map(|mut export| {
         let error = match p.source_type.module_kind() {
             ModuleKind::Module => p
-                .err_builder("Illegal use of an export declaration not at the top level")
-                .primary(export.range(p), "move this declaration to the top level"),
+                .err_builder(
+                    "Illegal use of an export declaration not at the top level",
+                    export.range(p),
+                )
+                .hint("move this declaration to the top level"),
             ModuleKind::Script => p
-                .err_builder("Illegal use of an export declaration outside of a module")
-                .primary(export.range(p), "not allowed inside scripts"),
+                .err_builder(
+                    "Illegal use of an export declaration outside of a module",
+                    export.range(p),
+                )
+                .hint("not allowed inside scripts"),
         };
 
         p.error(error);
@@ -366,14 +381,14 @@ fn parse_labeled_statement(p: &mut Parser, context: StatementContext) -> ParsedS
 			},
 			Some(label_item) if is_valid_identifier => {
 				let err = p
-					.err_builder("Duplicate statement labels are not allowed")
-					.secondary(
-						label_item.range().to_owned(),
-						&format!("`{}` is first used as a label here", label),
-					)
-					.primary(
+					.err_builder("Duplicate statement labels are not allowed", identifier_range)
+					.detail(
 						identifier_range,
-						&format!("a second use of `{}` here is not allowed", label),
+						format!("a second use of `{}` here is not allowed", label),
+					)
+					.detail(
+						label_item.range().to_owned(),
+						format!("`{}` is first used as a label here", label),
 					);
 
 				p.error(err);
@@ -389,7 +404,7 @@ fn parse_labeled_statement(p: &mut Parser, context: StatementContext) -> ParsedS
             Some(mut body) if context.is_single_statement() && body.kind() == JS_FUNCTION_DECLARATION => {
                 // test_err labelled_function_decl_in_single_statement_context
                 // if (true) label1: label2: function a() {}
-                p.error(p.err_builder("Labelled function declarations are only allowed at top-level or inside a block").primary(body.range(p), "Wrap the labelled statement in a block statement"));
+                p.error(p.err_builder("Labelled function declarations are only allowed at top-level or inside a block", body.range(p)).hint( "Wrap the labelled statement in a block statement"));
                 body.change_to_unknown(p);
             },
             // test labelled_statement_in_single_statement_context
@@ -472,11 +487,12 @@ fn parse_throw_statement(p: &mut Parser) -> ParsedSyntax {
         let mut err = p
             .err_builder(
                 "Linebreaks between a throw statement and the error to be thrown are not allowed",
+                p.cur_range(),
             )
-            .primary(p.cur_range(), "A linebreak is not allowed here");
+            .hint("A linebreak is not allowed here");
 
         if is_at_expression(p) {
-            err = err.secondary(p.cur_range(), "Help: did you mean to throw this?");
+            err = err.detail(p.cur_range(), "Help: did you mean to throw this?");
         }
 
         p.error(err);
@@ -517,19 +533,18 @@ fn parse_break_statement(p: &mut Parser) -> ParsedSyntax {
         let error = match p.state.get_labelled_item(label_name) {
             Some(_) => None,
             None => Some(
-                p.err_builder(&format!(
-                    "Use of undefined statement label `{}`",
-                    label_name
-                ))
-                .primary(p.cur_range(), "This label is used, but it is never defined"),
+                p.err_builder(
+                    format!("Use of undefined statement label `{}`", label_name,),
+                    p.cur_range(),
+                )
+                .hint("This label is used, but it is never defined"),
             ),
         };
 
         p.bump_any();
         error
     } else if !p.state.break_allowed() {
-        Some(p.err_builder("A `break` statement can only be used within an enclosing iteration or switch statement.")
-			.primary(start, ""))
+        Some(p.err_builder("A `break` statement can only be used within an enclosing iteration or switch statement.", start, ))
     } else {
         None
     };
@@ -576,18 +591,18 @@ fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax {
         let error = match p.state.get_labelled_item(label_name) {
 			Some(LabelledItem::Iteration(_)) => None,
 			Some(LabelledItem::Other(range)) => {
-				Some(p.err_builder("A `continue` statement can only jump to a label of an enclosing `for`, `while` or `do while` statement.")
-					.primary(p.cur_range(), "This label")
-					.secondary(range.to_owned(), "points to non-iteration statement"))
+				Some(p.err_builder("A `continue` statement can only jump to a label of an enclosing `for`, `while` or `do while` statement.", p.cur_range())
+					.detail(p.cur_range(), "This label")
+					.detail(range.to_owned(), "points to non-iteration statement"))
 			}
 			None => {
 				Some(p
-					.err_builder(&format!(
+					.err_builder(format!(
 						"Use of undefined statement label `{}`",
 						label_name
-					))
-					.primary(
-						p.cur_range(),
+					), p.cur_range())
+					.hint(
+
 						"This label is used, but it is never defined",
 					))
 			}
@@ -599,9 +614,7 @@ fn parse_continue_statement(p: &mut Parser) -> ParsedSyntax {
     } else if !p.state.continue_allowed() {
         Some(
             p.err_builder(
-                "A `continue` statement can only be used within an enclosing `for`, `while` or `do while` statement.",
-            )
-            .primary(start, ""),
+                "A `continue` statement can only be used within an enclosing `for`, `while` or `do while` statement.",start ),
         )
     } else {
         None
@@ -642,9 +655,10 @@ fn parse_return_statement(p: &mut Parser) -> ParsedSyntax {
     let mut complete = m.complete(p, JS_RETURN_STATEMENT);
 
     if !p.state.in_function() {
-        let err = p
-            .err_builder("Illegal return statement outside of a function")
-            .primary(complete.range(p), "");
+        let err = p.err_builder(
+            "Illegal return statement outside of a function",
+            complete.range(p),
+        );
 
         p.error(err);
         complete.change_kind(p, JS_UNKNOWN_STATEMENT);
@@ -907,8 +921,10 @@ fn parse_with_statement(p: &mut Parser) -> ParsedSyntax {
     // or SloppyMode.exclusive_syntax(...) but this reads better with the error message, saying that
     // it's only forbidden in strict mode
     StrictMode.excluding_syntax(p, with_stmt, |p, marker| {
-        p.err_builder("`with` statements are not allowed in strict mode")
-            .primary(marker.range(p), "")
+        p.err_builder(
+            "`with` statements are not allowed in strict mode",
+            marker.range(p),
+        )
     })
 }
 
@@ -990,11 +1006,11 @@ pub(crate) fn parse_variable_statement(p: &mut Parser, context: StatementContext
             // if (true) let a;
             // while (true) const b = 5;
             p.error(
-                p.err_builder("Lexical declaration cannot appear in a single-statement context")
-                    .primary(
-                        statement.range(p),
-                        "Wrap this declaration in a block statement",
-                    ),
+                p.err_builder(
+                    "Lexical declaration cannot appear in a single-statement context",
+                    statement.range(p),
+                )
+                .hint("Wrap this declaration in a block statement"),
             );
             statement.change_to_unknown(p);
         }
@@ -1214,9 +1230,9 @@ fn parse_variable_declarator(p: &mut Parser, context: &VariableDeclaratorContext
                 // let a!: string = "test";
                 p.error(
                     p
-                        .err_builder("Declarations with initializers cannot also have definite assignment assertions.")
-                        .primary(initializer.range(p), "")
-                        .secondary(ts_annotation.range(p), "")
+                        .err_builder("Declarations with initializers cannot also have definite assignment assertions.", initializer.range(p))
+
+                        .detail(ts_annotation.range(p), "Annotation")
                 );
                 initializer.change_to_unknown(p);
             }
@@ -1235,8 +1251,7 @@ fn parse_variable_declarator(p: &mut Parser, context: &VariableDeclaratorContext
             if TypeScript.is_supported(p) {
                 if let Some(mut ts_annotation) = ts_annotation {
                     let err = p
-                        .err_builder("`for` statement declarators cannot have a type annotation")
-                        .primary(ts_annotation.range(p), "");
+                        .err_builder("`for` statement declarators cannot have a type annotation", ts_annotation.range(p));
 
                     p.error(err);
                     ts_annotation.change_to_unknown(p);
@@ -1275,8 +1290,7 @@ fn parse_variable_declarator(p: &mut Parser, context: &VariableDeclaratorContext
                             "`for..in` statement declarators cannot have an initializer expression"
                         } else {
                             "`for..of` statement declarators cannot have an initializer expression"
-                        })
-                        .primary(initializer.range(p), "");
+                        }, initializer.range(p));
 
                     p.error(err);
                 }
@@ -1289,17 +1303,16 @@ fn parse_variable_declarator(p: &mut Parser, context: &VariableDeclaratorContext
             )
         {
             let err = p
-                .err_builder("Object and Array patterns require initializers")
-                .primary(
-                    id_range,
+                .err_builder("Object and Array patterns require initializers", id_range)
+                .hint(
                     "this pattern is declared, but it is not given an initialized value",
                 );
 
             p.error(err);
         } else if initializer.is_none() && context.is_const.is_some() && !p.state.in_ambient_context() {
             let err = p
-                .err_builder("Const var declarations must have an initialized value")
-                .primary(id_range, "this variable needs to be initialized");
+                .err_builder("Const var declarations must have an initialized value", id_range)
+                .hint( "this variable needs to be initialized");
 
             p.error(err);
         }
@@ -1414,11 +1427,14 @@ fn parse_for_head(p: &mut Parser, has_l_paren: bool, is_for_await: bool) -> JsSy
 
             if let Some(additional_declarations_range) = additional_declarations {
                 p.error(
-                    p.err_builder(&format!(
-                        "Only a single declaration is allowed in a `for...{}` statement.",
-                        if is_of { "of" } else { "in" },
-                    ))
-                    .primary(additional_declarations_range, "additional declarations"),
+                    p.err_builder(
+                        format!(
+                            "Only a single declaration is allowed in a `for...{}` statement.",
+                            if is_of { "of" } else { "in" },
+                        ),
+                        additional_declarations_range,
+                    )
+                    .hint("additional declarations"),
                 );
             }
 
@@ -1455,8 +1471,7 @@ fn parse_for_head(p: &mut Parser, has_l_paren: bool, is_for_await: bool) -> JsSy
                         JS_ARRAY_ASSIGNMENT_PATTERN | JS_OBJECT_ASSIGNMENT_PATTERN
                     )
                 {
-                    let err = p.err_builder("the left hand side of a `for..in` statement cannot be a destructuring pattern")
-						.primary(assignment.range(p), "");
+                    let err = p.err_builder("the left hand side of a `for..in` statement cannot be a destructuring pattern", assignment.range(p));
                     p.error(err);
                     assignment.change_to_unknown(p);
                 } else if !is_for_await && starts_with_async_of {
@@ -1472,12 +1487,10 @@ fn parse_for_head(p: &mut Parser, has_l_paren: bool, is_for_await: bool) -> JsSy
                     // test_err for_of_async_identifier
                     // let async;
                     // for (async of [1]) ;
-                    p.error(
-                        p.err_builder(
-                            "The left-hand side of a `for...of` statement may not be `async`",
-                        )
-                        .primary(assignment.range(p), ""),
-                    );
+                    p.error(p.err_builder(
+                        "The left-hand side of a `for...of` statement may not be `async`",
+                        assignment.range(p),
+                    ));
                     assignment.change_to_unknown(p);
                 }
             }
@@ -1576,12 +1589,15 @@ fn parse_for_statement(p: &mut Parser) -> ParsedSyntax {
     if kind != JS_FOR_OF_STATEMENT {
         if let Some(await_range) = await_range {
             p.error(
-                p.err_builder("await can only be used in conjunction with `for...of` statements")
-                    .primary(await_range, "Remove the await here")
-                    .secondary(
-                        completed.range(p),
-                        "or convert this to a `for...of` statement",
-                    ),
+                p.err_builder(
+                    "await can only be used in conjunction with `for...of` statements",
+                    await_range,
+                )
+                .detail(await_range, "Remove the await here")
+                .detail(
+                    completed.range(p),
+                    "or convert this to a `for...of` statement",
+                ),
             );
             completed.change_kind(p, JS_UNKNOWN_STATEMENT)
         }
@@ -1638,12 +1654,13 @@ fn parse_switch_clause(p: &mut Parser, first_default: &mut Option<TextRange>) ->
                 let err = p
                     .err_builder(
                         "Multiple default clauses inside of a switch statement are not allowed",
+                        default.range(p),
                     )
-                    .secondary(
+                    .detail(default.range(p), "a second clause here is not allowed")
+                    .detail(
                         &*first_default_range,
                         "the first default clause is defined here",
-                    )
-                    .primary(default.range(p), "a second clause here is not allowed");
+                    );
 
                 p.error(err);
             }
@@ -1806,8 +1823,7 @@ fn parse_catch_declaration(p: &mut Parser) -> ParsedSyntax {
                         if !matches!(ty.kind(), TS_ANY_TYPE | TS_UNKNOWN_TYPE) {
                             p.error(
                                 p
-                                    .err_builder("Catch clause variable type annotation must be 'any' or 'unknown' if specified.")
-                                    .primary(ty.range(p), "")
+                                    .err_builder("Catch clause variable type annotation must be 'any' or 'unknown' if specified.", ty.range(p))
                             );
                         }
                     }

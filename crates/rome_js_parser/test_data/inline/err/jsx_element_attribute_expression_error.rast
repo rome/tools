@@ -75,5 +75,7 @@ jsx_element_attribute_expression_error.jsx:1:22 parse ━━━━━━━━�
       │                      ^^^^
     2 │ 
   
+  i Remove asdf
+  
 --
 <div className={asdf asdf} />;

@@ -146,6 +146,8 @@ conditional_expr_err.js:1:11 parse ━━━━━━━━━━━━━━━
     2 │ foo ? bar baz ? foo : bar
     3 │ foo ? bar :
   
+  i Remove baz
+  
 --
 conditional_expr_err.js:2:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -157,6 +159,8 @@ conditional_expr_err.js:2:11 parse ━━━━━━━━━━━━━━━
     3 │ foo ? bar :
     4 │ 
   
+  i Remove baz
+  
 --
 conditional_expr_err.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -167,7 +171,12 @@ conditional_expr_err.js:4:1 parse ━━━━━━━━━━━━━━━�
   > 4 │ 
       │ 
   
-  × Expected an expression, or an assignment here
+  i Expected an expression, or an assignment here
+  
+    2 │ foo ? bar baz ? foo : bar
+    3 │ foo ? bar :
+  > 4 │ 
+      │ 
   
 --
 foo ? bar baz

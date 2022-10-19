@@ -177,7 +177,7 @@ ts_as_assignment_no_parenthesize.ts:3:2 parse ━━━━━━━━━━━�
     4 │ <number> a = 3;
     5 │ 
   
-  × This expression cannot be assigned to
+  i This expression cannot be assigned to
   
 --
 ts_as_assignment_no_parenthesize.ts:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -190,7 +190,7 @@ ts_as_assignment_no_parenthesize.ts:4:1 parse ━━━━━━━━━━━�
       │ ^^^^^^^^^^
     5 │ 
   
-  × This expression cannot be assigned to
+  i This expression cannot be assigned to
   
 --
 let a: any;

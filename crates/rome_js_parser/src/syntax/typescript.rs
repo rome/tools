@@ -49,9 +49,7 @@ fn parse_ts_identifier_binding(
         let name = p.source(ident.range(p));
         let is_reserved_word_this_context = ts_identifier_context.is_reserved_word(name);
         if is_reserved_word_this_context {
-            let error = p
-                .err_builder(&format!("Type alias cannot be {}", name))
-                .primary(ident.range(p), "");
+            let error = p.err_builder(format!("Type alias cannot be {}", name), ident.range(p));
             p.error(error);
             ident.change_to_unknown(p);
         }
@@ -99,10 +97,10 @@ fn expect_ts_type_list(p: &mut Parser, clause_name: &str) -> CompletedMarker {
     let list = p.start();
 
     if parse_ts_name_with_type_arguments(p).is_absent() {
-        p.error(
-            p.err_builder(&format!("'{}' list cannot be empty.", clause_name))
-                .primary(p.cur_range().start()..p.cur_range().start(), ""),
-        )
+        p.error(p.err_builder(
+            format!("'{}' list cannot be empty.", clause_name),
+            p.cur_range().start()..p.cur_range().start(),
+        ))
     }
 
     while p.at(T![,]) {
@@ -112,10 +110,7 @@ fn expect_ts_type_list(p: &mut Parser, clause_name: &str) -> CompletedMarker {
         // interface A {}
         // interface B extends A, {}
         if parse_ts_name_with_type_arguments(p).is_absent() {
-            p.error(
-                p.err_builder("Trailing comma not allowed.")
-                    .primary(comma_range, ""),
-            );
+            p.error(p.err_builder("Trailing comma not allowed.", comma_range));
             break;
         }
     }
@@ -205,8 +200,7 @@ pub(crate) fn expect_ts_index_signature_member(
     p.expect(T![']']);
 
     parse_ts_type_annotation(p).or_add_diagnostic(p, |p, range| {
-        p.err_builder("An index signature must have a type annotation")
-            .primary(range, "")
+        p.err_builder("An index signature must have a type annotation", range)
     });
 
     eat_members_separator(p, parent);
@@ -232,10 +226,9 @@ fn eat_members_separator(p: &mut Parser, parent: MemberParent) {
 
     if !separator_eaten {
         if semi_colon {
-            let err = p.err_builder("';' expected'").primary(
-                p.cur_range(),
-                "An explicit or implicit semicolon is expected here...",
-            );
+            let err = p
+                .err_builder("';' expected'", p.cur_range())
+                .hint("An explicit or implicit semicolon is expected here...");
             p.error(err);
         } else {
             let mut tokens = vec![];

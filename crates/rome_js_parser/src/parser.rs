@@ -10,19 +10,6 @@ mod parsed_syntax;
 pub(crate) mod rewrite_parser;
 pub(crate) mod single_token_parse_recovery;
 
-use drop_bomb::DebugDropBomb;
-use rome_diagnostics::{file::FileId, v2::category};
-use rome_js_syntax::{
-    JsSyntaxKind::{self},
-    SourceType, TextRange,
-};
-use std::num::NonZeroU32;
-
-pub(crate) use parse_error::*;
-pub(crate) use parse_lists::{ParseNodeList, ParseSeparatedList};
-pub(crate) use parsed_syntax::ParsedSyntax;
-use rome_rowan::{SyntaxKind, TextSize};
-
 use crate::lexer::{LexContext, ReLexContext};
 pub(crate) use crate::parser::parse_recovery::{ParseRecovery, RecoveryError, RecoveryResult};
 use crate::*;
@@ -30,6 +17,17 @@ use crate::{
     state::ParserStateCheckpoint,
     token_source::{TokenSource, TokenSourceCheckpoint, Trivia},
 };
+use drop_bomb::DebugDropBomb;
+pub(crate) use parse_error::*;
+pub(crate) use parse_lists::{ParseNodeList, ParseSeparatedList};
+pub(crate) use parsed_syntax::ParsedSyntax;
+use rome_diagnostics::file::FileId;
+use rome_js_syntax::{
+    JsSyntaxKind::{self},
+    SourceType, TextRange,
+};
+use rome_rowan::{SyntaxKind, TextSize};
+use std::num::NonZeroU32;
 
 /// Captures the progress of the parser and allows to test if the parsing is still making progress
 #[derive(Debug, Eq, Ord, PartialOrd, PartialEq, Hash, Default)]
@@ -215,22 +213,19 @@ impl<'s> Parser<'s> {
         self.do_bump(kind, LexContext::default())
     }
 
-    /// Make a new error builder with `error` severity
+    /// Creates a new diagnostic. Pass the message and the range where the error occurred
     #[must_use]
-    pub fn err_builder(&self, message: &str) -> ParseDiagnostic {
-        ParseDiagnostic::new(self.file_id, message)
+    pub fn err_builder(&self, message: impl Display, span: impl AsSpan) -> ParseDiagnostic {
+        ParseDiagnostic::new(self.file_id, message, span)
     }
 
-    /// Add an error
+    /// Add a diagnostic
     pub fn error(&mut self, err: impl ToDiagnostic) {
         let err = err.to_diagnostic(self);
 
-        // Don't report another error if it would just be at the same position as the last error.
+        // Don't report another diagnostic if the last diagnostic is at the same position of the current one
         if let Some(previous) = self.diagnostics.last() {
-            if err.category() == Some(category!("parse"))
-                && previous.category() == err.category()
-                && previous.file_id == err.file_id
-            {
+            if previous.file_id == err.file_id {
                 match (&err.diagnostic_range(), &previous.diagnostic_range()) {
                     (Some(err_range), Some(previous_range))
                         if err_range.start() == previous_range.start() =>
@@ -251,13 +246,13 @@ impl<'s> Parser<'s> {
 
     fn do_bump(&mut self, kind: JsSyntaxKind, context: LexContext) {
         let kind = if kind.is_keyword() && self.tokens.has_unicode_escape() {
-            self.error(
-                self.err_builder(&format!(
+            self.error(self.err_builder(
+                format!(
                     "'{}' keyword cannot contain escape character.",
                     kind.to_string().expect("to return a value for a keyword")
-                ))
-                .primary(self.cur_range(), ""),
-            );
+                ),
+                self.cur_range(),
+            ));
             JsSyntaxKind::ERROR_TOKEN
         } else {
             kind

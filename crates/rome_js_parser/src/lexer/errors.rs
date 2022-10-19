@@ -6,6 +6,10 @@ pub fn invalid_digits_after_unicode_escape_sequence(
     start: usize,
     end: usize,
 ) -> ParseDiagnostic {
-    ParseDiagnostic::new(file_id, "invalid digits after unicode escape sequence")
-        .primary(start..end, "expected valid unicode escape sequence")
+    ParseDiagnostic::new(
+        file_id,
+        "invalid digits after unicode escape sequence",
+        start..end,
+    )
+    .hint("expected valid unicode escape sequence")
 }

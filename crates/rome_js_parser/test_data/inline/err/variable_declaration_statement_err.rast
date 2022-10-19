@@ -295,7 +295,7 @@ variable_declaration_statement_err.js:3:7 parse ━━━━━━━━━━�
     4 │ let [f];
     5 │ const { g };
   
-  × this variable needs to be initialized
+  i this variable needs to be initialized
   
 --
 variable_declaration_statement_err.js:4:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -309,7 +309,7 @@ variable_declaration_statement_err.js:4:5 parse ━━━━━━━━━━�
     5 │ const { g };
     6 │ 
   
-  × this pattern is declared, but it is not given an initialized value
+  i this pattern is declared, but it is not given an initialized value
   
 --
 variable_declaration_statement_err.js:5:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -322,7 +322,7 @@ variable_declaration_statement_err.js:5:7 parse ━━━━━━━━━━�
       │       ^^^^^
     6 │ 
   
-  × this pattern is declared, but it is not given an initialized value
+  i this pattern is declared, but it is not given an initialized value
   
 --
 let a, { b } = { a: 10 }

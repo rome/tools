@@ -133,7 +133,7 @@ js_class_property_with_ts_annotation.js:2:3 parse ━━━━━━━━━━
     3 │  b?: string;
     4 │  c!: string
   
-  × remove this type annotation
+  i remove this type annotation
   
 --
 js_class_property_with_ts_annotation.js:3:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

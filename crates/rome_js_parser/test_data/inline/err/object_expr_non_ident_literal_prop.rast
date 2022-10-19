@@ -70,5 +70,7 @@ object_expr_non_ident_literal_prop.js:1:11 parse ━━━━━━━━━━�
       │           ^
     2 │ 
   
+  i Remove }
+  
 --
 let d = {5}

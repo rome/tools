@@ -290,7 +290,12 @@ property_assignment_target_err.js:1:3 parse ━━━━━━━━━━━━
     2 │ ({=y} = {});
     3 │ ({:="test"} = {});
   
-  × Expected an identifier, a string literal, a number literal, or a computed property here
+  i Expected an identifier, a string literal, a number literal, or a computed property here
+  
+  > 1 │ ({:y} = {});
+      │   ^
+    2 │ ({=y} = {});
+    3 │ ({:="test"} = {});
   
 --
 property_assignment_target_err.js:2:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -303,7 +308,13 @@ property_assignment_target_err.js:2:3 parse ━━━━━━━━━━━━
     3 │ ({:="test"} = {});
     4 │ ({:=} = {});
   
-  × Expected an identifier here
+  i Expected an identifier here
+  
+    1 │ ({:y} = {});
+  > 2 │ ({=y} = {});
+      │   ^
+    3 │ ({:="test"} = {});
+    4 │ ({:=} = {});
   
 --
 property_assignment_target_err.js:3:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -317,7 +328,14 @@ property_assignment_target_err.js:3:3 parse ━━━━━━━━━━━━
     4 │ ({:=} = {});
     5 │ ({ a b } = {});
   
-  × Expected an identifier, a string literal, a number literal, or a computed property here
+  i Expected an identifier, a string literal, a number literal, or a computed property here
+  
+    1 │ ({:y} = {});
+    2 │ ({=y} = {});
+  > 3 │ ({:="test"} = {});
+      │   ^
+    4 │ ({:=} = {});
+    5 │ ({ a b } = {});
   
 --
 property_assignment_target_err.js:3:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -331,7 +349,14 @@ property_assignment_target_err.js:3:4 parse ━━━━━━━━━━━━
     4 │ ({:=} = {});
     5 │ ({ a b } = {});
   
-  × Expected an identifier, or an assignment target here
+  i Expected an identifier, or an assignment target here
+  
+    1 │ ({:y} = {});
+    2 │ ({=y} = {});
+  > 3 │ ({:="test"} = {});
+      │    ^
+    4 │ ({:=} = {});
+    5 │ ({ a b } = {});
   
 --
 property_assignment_target_err.js:4:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -345,7 +370,14 @@ property_assignment_target_err.js:4:3 parse ━━━━━━━━━━━━
     5 │ ({ a b } = {});
     6 │ 
   
-  × Expected an identifier, a string literal, a number literal, or a computed property here
+  i Expected an identifier, a string literal, a number literal, or a computed property here
+  
+    2 │ ({=y} = {});
+    3 │ ({:="test"} = {});
+  > 4 │ ({:=} = {});
+      │   ^
+    5 │ ({ a b } = {});
+    6 │ 
   
 --
 property_assignment_target_err.js:4:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -359,7 +391,14 @@ property_assignment_target_err.js:4:4 parse ━━━━━━━━━━━━
     5 │ ({ a b } = {});
     6 │ 
   
-  × Expected an identifier, or an assignment target here
+  i Expected an identifier, or an assignment target here
+  
+    2 │ ({=y} = {});
+    3 │ ({:="test"} = {});
+  > 4 │ ({:=} = {});
+      │    ^
+    5 │ ({ a b } = {});
+    6 │ 
   
 --
 property_assignment_target_err.js:4:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -373,7 +412,14 @@ property_assignment_target_err.js:4:5 parse ━━━━━━━━━━━━
     5 │ ({ a b } = {});
     6 │ 
   
-  × Expected an expression, or an assignment here
+  i Expected an expression, or an assignment here
+  
+    2 │ ({=y} = {});
+    3 │ ({:="test"} = {});
+  > 4 │ ({:=} = {});
+      │     ^
+    5 │ ({ a b } = {});
+    6 │ 
   
 --
 property_assignment_target_err.js:5:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -385,6 +431,8 @@ property_assignment_target_err.js:5:6 parse ━━━━━━━━━━━━
   > 5 │ ({ a b } = {});
       │      ^
     6 │ 
+  
+  i Remove b
   
 --
 ({:y} = {});

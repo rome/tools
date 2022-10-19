@@ -310,9 +310,14 @@ paren_or_arrow_expr_invalid_params.js:1:9 parse ━━━━━━━━━━�
     2 │ (a, ,b) => {}
     3 │ (a, b) =>;
   
-  × An explicit or implicit semicolon is expected here...
+  i An explicit or implicit semicolon is expected here...
   
-  × ...Which is required to end this statement
+  > 1 │ (5 + 5) => {}
+      │         ^^
+    2 │ (a, ,b) => {}
+    3 │ (a, b) =>;
+  
+  i ...Which is required to end this statement
   
   > 1 │ (5 + 5) => {}
       │ ^^^^^^^^^^
@@ -330,7 +335,13 @@ paren_or_arrow_expr_invalid_params.js:2:5 parse ━━━━━━━━━━�
     3 │ (a, b) =>;
     4 │ (a: string;
   
-  × Expected a parameter here
+  i Expected a parameter here
+  
+    1 │ (5 + 5) => {}
+  > 2 │ (a, ,b) => {}
+      │     ^
+    3 │ (a, b) =>;
+    4 │ (a: string;
   
 --
 paren_or_arrow_expr_invalid_params.js:3:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -344,7 +355,14 @@ paren_or_arrow_expr_invalid_params.js:3:10 parse ━━━━━━━━━━�
     4 │ (a: string;
     5 │ (a, b)
   
-  × Expected a function body, or an expression here
+  i Expected a function body, or an expression here
+  
+    1 │ (5 + 5) => {}
+    2 │ (a, ,b) => {}
+  > 3 │ (a, b) =>;
+      │          ^
+    4 │ (a: string;
+    5 │ (a, b)
   
 --
 paren_or_arrow_expr_invalid_params.js:4:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -358,7 +376,7 @@ paren_or_arrow_expr_invalid_params.js:4:3 parse ━━━━━━━━━━�
     5 │ (a, b)
     6 │  => {}
   
-  × TypeScript only syntax
+  i TypeScript only syntax
   
 --
 paren_or_arrow_expr_invalid_params.js:4:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -371,6 +389,8 @@ paren_or_arrow_expr_invalid_params.js:4:11 parse ━━━━━━━━━━�
       │           ^
     5 │ (a, b)
     6 │  => {}
+  
+  i Remove ;
   
 --
 paren_or_arrow_expr_invalid_params.js:6:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

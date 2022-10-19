@@ -57,7 +57,11 @@ array_expr_incomplete.js:2:1 parse ━━━━━━━━━━━━━━━
   > 2 │ 
       │ 
   
-  × the file ends here
+  i the file ends here
+  
+    1 │ let a = [
+  > 2 │ 
+      │ 
   
 --
 let a = [

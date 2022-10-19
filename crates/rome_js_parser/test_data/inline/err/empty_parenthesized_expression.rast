@@ -34,7 +34,7 @@ empty_parenthesized_expression.js:1:2 parse ━━━━━━━━━━━━
       │  ^
     2 │ 
   
-  × Expected an expression here
+  i Expected an expression here
   
 --
 ();
