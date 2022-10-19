@@ -149,15 +149,18 @@ impl StableReactHookConfiguration {
 }
 
 /// Checks if the binding is bound to a stable React hook
-/// return value. Stable return do not need to be specified
+/// return value. Stable returns do not need to be specified
 /// as dependencies.
 ///
 /// Example:
 /// ```js
-/// let [name, setName] = useState(""); //setName is stable
+/// let [name, setName] = useState("");
 /// useEffect(() => {
+///     // name is NOT stable, so it must be specified as dependency
+///     console.log(name);
+///     // setName IS stable, so it must not be specified as dependency 
 ///     console.log(setName("a"));
-/// });
+/// }, [name]);
 /// ```
 pub fn is_binding_react_stable(
     binding: &JsIdentifierBinding,
