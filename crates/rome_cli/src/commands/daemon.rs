@@ -114,7 +114,7 @@ pub(crate) fn lsp_proxy() -> Result<(), Termination> {
                     }
                 });
 
-				// create spawn to receive socket response to stdout
+                // create spawn to receive socket response to stdout
                 rt.spawn(async move {
                     let mut stdout = io::stdout();
                     let mut socket_read = BufReader::new(owned_read_half);
@@ -127,8 +127,7 @@ pub(crate) fn lsp_proxy() -> Result<(), Termination> {
                     }
                 });
 
-
-				// forward stdin to socket
+                // forward stdin to socket
                 let stdin = std::io::stdin();
                 let mut stdin = stdin.lock();
                 loop {
@@ -138,7 +137,7 @@ pub(crate) fn lsp_proxy() -> Result<(), Termination> {
                         let mut tmp_buf = String::new();
                         stdin.read_line(&mut tmp_buf).unwrap();
 
-                        let length = usize::from_str_radix(length.trim(), 10).expect("解析出错");
+                        let length = length.trim().parse::<usize>().expect("parse error");
                         let mut msg: Vec<u8> = vec![0u8; length];
 
                         stdin.read_exact(&mut msg).unwrap();
