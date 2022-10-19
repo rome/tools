@@ -8,6 +8,7 @@ use rome_service::{load_config, DynRef, Workspace};
 use std::{env, io, ops::Deref};
 use tokio::runtime::Runtime;
 
+use crate::commands::daemon::read_most_recent_log_file;
 use crate::{service, CliSession, Termination, VERSION};
 
 /// Handler for the `rage` command
@@ -25,11 +26,13 @@ pub(crate) fn rage(mut session: CliSession) -> Result<(), Termination> {
     {KeyValuePair("OS", markup!({std::env::consts::OS}))}
 
     {Section("Environment")}
+    {EnvVarOs("ROME_LOG_DIR")}
     {EnvVarOs("NO_COLOR")}
     {EnvVarOs("TERM")}
 
     {RageConfiguration(&session.app.fs)}
     {WorkspaceRage(session.app.workspace.deref())}
+    {ConnectedClientServerLog(session.app.workspace.deref())}
     ));
 
     if session.app.workspace.server_info().is_none() {
@@ -86,11 +89,11 @@ impl Display for RunningRomeServer {
 
         match service::open_transport(runtime) {
             Ok(None) => {
-                markup!(
+                return markup!(
                     {Section("Server")}
                     {KeyValuePair("Status", markup!(<Dim>"stopped"</Dim>))}
                 )
-                .fmt(f)?;
+                .fmt(f);
             }
             Ok(Some(transport)) => {
                 markup!("\n"<Emphasis>"Running Rome Server:"</Emphasis>" "{HorizontalLine::new(78)}"
@@ -113,7 +116,7 @@ impl Display for RunningRomeServer {
             }
         };
 
-        Ok(())
+        RomeServerLog.fmt(f)
     }
 }
 
@@ -191,5 +194,38 @@ impl Display for KeyValuePair<'_> {
         value.fmt(fmt)?;
 
         fmt.write_str("\n")
+    }
+}
+
+struct RomeServerLog;
+
+impl Display for RomeServerLog {
+    fn fmt(&self, fmt: &mut Formatter) -> io::Result<()> {
+        if let Ok(Some(log)) = read_most_recent_log_file() {
+            markup!("\n"<Emphasis><Underline>"Rome Server Log:"</Underline></Emphasis>"
+
+"<Warn>"\u{26a0} Please review the content of the log file before sharing it publicly as it may contain sensitive information:
+  * Path names that may reveal your name, a project name, or the name of your employer.
+  * Source code
+"</Warn>)
+            .fmt(fmt)?;
+
+            write!(fmt, "\n{log}")?;
+        }
+
+        Ok(())
+    }
+}
+
+/// Prints the server logs but only if the client is connected to a rome server.
+struct ConnectedClientServerLog<'a>(&'a dyn Workspace);
+
+impl Display for ConnectedClientServerLog<'_> {
+    fn fmt(&self, fmt: &mut Formatter) -> io::Result<()> {
+        if self.0.server_info().is_some() {
+            RomeServerLog.fmt(fmt)
+        } else {
+            Ok(())
+        }
     }
 }
