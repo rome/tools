@@ -57,7 +57,12 @@ unary_expr.js:1:4 parse ━━━━━━━━━━━━━━━━━━�
     2 │ -- ;
     3 │ -;
   
-  × Expected an identifier, or a member expression here
+  i Expected an identifier, or a member expression here
+  
+  > 1 │ ++ ;
+      │    ^
+    2 │ -- ;
+    3 │ -;
   
 --
 unary_expr.js:2:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -70,7 +75,13 @@ unary_expr.js:2:4 parse ━━━━━━━━━━━━━━━━━━�
     3 │ -;
     4 │ 
   
-  × Expected an identifier, or a member expression here
+  i Expected an identifier, or a member expression here
+  
+    1 │ ++ ;
+  > 2 │ -- ;
+      │    ^
+    3 │ -;
+    4 │ 
   
 --
 ++ ;

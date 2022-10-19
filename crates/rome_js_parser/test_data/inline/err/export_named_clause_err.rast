@@ -254,7 +254,14 @@ export_named_clause_err.js:3:10 parse ━━━━━━━━━━━━━━
     4 │ export { a as 5 };
     5 │ export { a b c };
   
-  × Expected an identifier here
+  i Expected an identifier here
+  
+    1 │ export { default as "b" };
+    2 │ export { "a" as b };
+  > 3 │ export { as b };
+      │          
+    4 │ export { a as 5 };
+    5 │ export { a b c };
   
 --
 export_named_clause_err.js:4:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -268,7 +275,14 @@ export_named_clause_err.js:4:15 parse ━━━━━━━━━━━━━━
     5 │ export { a b c };
     6 │ 
   
-  × Expected a string literal, or an identifier here
+  i Expected a string literal, or an identifier here
+  
+    2 │ export { "a" as b };
+    3 │ export { as b };
+  > 4 │ export { a as 5 };
+      │               ^
+    5 │ export { a b c };
+    6 │ 
   
 --
 export_named_clause_err.js:5:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -281,6 +295,8 @@ export_named_clause_err.js:5:12 parse ━━━━━━━━━━━━━━
       │            ^
     6 │ 
   
+  i Remove b
+  
 --
 export_named_clause_err.js:5:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -291,6 +307,8 @@ export_named_clause_err.js:5:14 parse ━━━━━━━━━━━━━━
   > 5 │ export { a b c };
       │              ^
     6 │ 
+  
+  i Remove c
   
 --
 export { default as "b" };

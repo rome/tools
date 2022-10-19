@@ -321,7 +321,7 @@ ts_export_syntax_in_js.js:2:8 parse ━━━━━━━━━━━━━━�
     3 │ export { type b };
     4 │ export { type c as cc };
   
-  × TypeScript only syntax
+  i TypeScript only syntax
   
 --
 ts_export_syntax_in_js.js:3:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -335,7 +335,7 @@ ts_export_syntax_in_js.js:3:10 parse ━━━━━━━━━━━━━━�
     4 │ export { type c as cc };
     5 │ export type { d } from "./d";
   
-  × TypeScript only syntax
+  i TypeScript only syntax
   
 --
 ts_export_syntax_in_js.js:4:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -349,7 +349,7 @@ ts_export_syntax_in_js.js:4:10 parse ━━━━━━━━━━━━━━�
     5 │ export type { d } from "./d";
     6 │ export { type e } from "./e";
   
-  × TypeScript only syntax
+  i TypeScript only syntax
   
 --
 ts_export_syntax_in_js.js:5:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -363,7 +363,7 @@ ts_export_syntax_in_js.js:5:8 parse ━━━━━━━━━━━━━━�
     6 │ export { type e } from "./e";
     7 │ export { type e as ee } from "./e";
   
-  × TypeScript only syntax
+  i TypeScript only syntax
   
 --
 ts_export_syntax_in_js.js:6:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -377,7 +377,7 @@ ts_export_syntax_in_js.js:6:10 parse ━━━━━━━━━━━━━━�
     7 │ export { type e as ee } from "./e";
     8 │ 
   
-  × TypeScript only syntax
+  i TypeScript only syntax
   
 --
 ts_export_syntax_in_js.js:7:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -390,7 +390,7 @@ ts_export_syntax_in_js.js:7:10 parse ━━━━━━━━━━━━━━�
       │          ^^^^^^^^^^^^
     8 │ 
   
-  × TypeScript only syntax
+  i TypeScript only syntax
   
 --
 let a, b, c;

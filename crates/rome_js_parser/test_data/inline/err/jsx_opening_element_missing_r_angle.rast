@@ -127,5 +127,7 @@ jsx_opening_element_missing_r_angle.jsx:1:9 parse ━━━━━━━━━━
       │         ^
     2 │ 
   
+  i Remove <
+  
 --
 <><test <inner> some content</inner></test></>

@@ -1,5 +1,7 @@
 use crate::token_source::TokenSourceCheckpoint;
 use crate::{CompletedMarker, Event, Marker, ParseDiagnostic, Parser, TextSize, ToDiagnostic};
+use rome_console::fmt::Display;
+use rome_diagnostics::v2::location::AsSpan;
 use rome_js_syntax::{JsSyntaxKind, TextRange};
 
 /// Simplified parser API for when rewriting the AST structure with `rewrite_events`.
@@ -95,8 +97,8 @@ impl<'parser, 'source> RewriteParser<'parser, 'source> {
         self.inner.state.strict().is_some()
     }
 
-    pub fn err_builder(&self, message: &str) -> ParseDiagnostic {
-        self.inner.err_builder(message)
+    pub fn err_builder(&self, message: impl Display, span: impl AsSpan) -> ParseDiagnostic {
+        self.inner.err_builder(message, span)
     }
 
     pub fn error(&mut self, diagnostic: impl ToDiagnostic) {

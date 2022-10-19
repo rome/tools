@@ -139,6 +139,8 @@ do_while_no_continue_break.js:1:8 parse ━━━━━━━━━━━━━�
     2 │ do { } continue (break)
     3 │ 
   
+  i Remove break
+  
 --
 do_while_no_continue_break.js:1:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -149,9 +151,14 @@ do_while_no_continue_break.js:1:14 parse ━━━━━━━━━━━━━
     2 │ do { } continue (break)
     3 │ 
   
-  × An explicit or implicit semicolon is expected here...
+  i An explicit or implicit semicolon is expected here...
   
-  × ...Which is required to end this statement
+  > 1 │ do { } break (continue)
+      │              ^
+    2 │ do { } continue (break)
+    3 │ 
+  
+  i ...Which is required to end this statement
   
   > 1 │ do { } break (continue)
       │        ^^^^^^^
@@ -178,6 +185,8 @@ do_while_no_continue_break.js:1:15 parse ━━━━━━━━━━━━━
     2 │ do { } continue (break)
     3 │ 
   
+  i Remove continue
+  
 --
 do_while_no_continue_break.js:1:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -188,9 +197,14 @@ do_while_no_continue_break.js:1:23 parse ━━━━━━━━━━━━━
     2 │ do { } continue (break)
     3 │ 
   
-  × An explicit or implicit semicolon is expected here...
+  i An explicit or implicit semicolon is expected here...
   
-  × ...Which is required to end this statement
+  > 1 │ do { } break (continue)
+      │                       ^
+    2 │ do { } continue (break)
+    3 │ 
+  
+  i ...Which is required to end this statement
   
   > 1 │ do { } break (continue)
       │               ^^^^^^^^^
@@ -217,7 +231,12 @@ do_while_no_continue_break.js:1:23 parse ━━━━━━━━━━━━━
     2 │ do { } continue (break)
     3 │ 
   
-  × Expected a statement here
+  i Expected a statement here
+  
+  > 1 │ do { } break (continue)
+      │                       ^
+    2 │ do { } continue (break)
+    3 │ 
   
 --
 do_while_no_continue_break.js:2:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -229,6 +248,8 @@ do_while_no_continue_break.js:2:8 parse ━━━━━━━━━━━━━�
       │        ^^^^^^^^
     3 │ 
   
+  i Remove continue
+  
 --
 do_while_no_continue_break.js:2:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -239,9 +260,14 @@ do_while_no_continue_break.js:2:17 parse ━━━━━━━━━━━━━
       │                 ^
     3 │ 
   
-  × An explicit or implicit semicolon is expected here...
+  i An explicit or implicit semicolon is expected here...
   
-  × ...Which is required to end this statement
+    1 │ do { } break (continue)
+  > 2 │ do { } continue (break)
+      │                 ^
+    3 │ 
+  
+  i ...Which is required to end this statement
   
     1 │ do { } break (continue)
   > 2 │ do { } continue (break)
@@ -268,6 +294,8 @@ do_while_no_continue_break.js:2:18 parse ━━━━━━━━━━━━━
       │                  ^^^^^
     3 │ 
   
+  i Remove break
+  
 --
 do_while_no_continue_break.js:2:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -278,9 +306,14 @@ do_while_no_continue_break.js:2:23 parse ━━━━━━━━━━━━━
       │                       ^
     3 │ 
   
-  × An explicit or implicit semicolon is expected here...
+  i An explicit or implicit semicolon is expected here...
   
-  × ...Which is required to end this statement
+    1 │ do { } break (continue)
+  > 2 │ do { } continue (break)
+      │                       ^
+    3 │ 
+  
+  i ...Which is required to end this statement
   
     1 │ do { } break (continue)
   > 2 │ do { } continue (break)
@@ -307,7 +340,12 @@ do_while_no_continue_break.js:2:23 parse ━━━━━━━━━━━━━
       │                       ^
     3 │ 
   
-  × Expected a statement here
+  i Expected a statement here
+  
+    1 │ do { } break (continue)
+  > 2 │ do { } continue (break)
+      │                       ^
+    3 │ 
   
 --
 do { } break (continue)

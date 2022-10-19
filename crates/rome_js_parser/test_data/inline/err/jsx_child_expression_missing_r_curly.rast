@@ -86,5 +86,7 @@ jsx_child_expression_missing_r_curly.jsx:1:14 parse ━━━━━━━━━�
       │              ^
     2 │ 
   
+  i Remove <
+  
 --
 <test>{ 4 + 3</test>

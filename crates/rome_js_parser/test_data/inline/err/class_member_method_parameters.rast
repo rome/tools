@@ -120,6 +120,8 @@ class_member_method_parameters.js:1:17 parse ━━━━━━━━━━━�
       │                 ^
     2 │ 
   
+  i Remove {
+  
 --
 class_member_method_parameters.js:1:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -128,6 +130,8 @@ class_member_method_parameters.js:1:20 parse ━━━━━━━━━━━�
   > 1 │ class B { foo(a {} }
       │                    ^
     2 │ 
+  
+  i Remove }
   
 --
 class_member_method_parameters.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -138,7 +142,11 @@ class_member_method_parameters.js:2:1 parse ━━━━━━━━━━━━
   > 2 │ 
       │ 
   
-  × the file ends here
+  i the file ends here
+  
+    1 │ class B { foo(a {} }
+  > 2 │ 
+      │ 
   
 --
 class B { foo(a {} }

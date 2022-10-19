@@ -74,6 +74,8 @@ enum_no_l_curly.ts:1:5 parse ━━━━━━━━━━━━━━━━━
     2 │ enum A;
     3 │ 
   
+  i Remove ;
+  
 --
 enum_no_l_curly.ts:2:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -83,6 +85,8 @@ enum_no_l_curly.ts:2:7 parse ━━━━━━━━━━━━━━━━━
   > 2 │ enum A;
       │       ^
     3 │ 
+  
+  i Remove ;
   
 --
 enum;

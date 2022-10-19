@@ -151,7 +151,13 @@ ts_method_members_with_missing_body.ts:2:20 parse ━━━━━━━━━━
     3 │      set test(value)
     4 │ }
   
-  × Expected a class method body here
+  i Expected a class method body here
+  
+    1 │ class Test {
+  > 2 │      constructor() method() get test()
+      │                    ^^^^^^
+    3 │      set test(value)
+    4 │ }
   
 --
 ts_method_members_with_missing_body.ts:2:29 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -164,7 +170,13 @@ ts_method_members_with_missing_body.ts:2:29 parse ━━━━━━━━━━
     3 │      set test(value)
     4 │ }
   
-  × Expected a class method body here
+  i Expected a class method body here
+  
+    1 │ class Test {
+  > 2 │      constructor() method() get test()
+      │                             ^^^
+    3 │      set test(value)
+    4 │ }
   
 --
 ts_method_members_with_missing_body.ts:3:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -178,7 +190,14 @@ ts_method_members_with_missing_body.ts:3:6 parse ━━━━━━━━━━�
     4 │ }
     5 │ 
   
-  × Expected a class method body here
+  i Expected a class method body here
+  
+    1 │ class Test {
+    2 │      constructor() method() get test()
+  > 3 │      set test(value)
+      │      ^^^
+    4 │ }
+    5 │ 
   
 --
 ts_method_members_with_missing_body.ts:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -191,7 +210,13 @@ ts_method_members_with_missing_body.ts:4:1 parse ━━━━━━━━━━�
       │ ^
     5 │ 
   
-  × Expected a class method body here
+  i Expected a class method body here
+  
+    2 │      constructor() method() get test()
+    3 │      set test(value)
+  > 4 │ }
+      │ ^
+    5 │ 
   
 --
 class Test {

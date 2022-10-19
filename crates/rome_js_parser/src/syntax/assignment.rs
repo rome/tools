@@ -325,12 +325,10 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
                 JS_OBJECT_ASSIGNMENT_PATTERN | JS_ARRAY_ASSIGNMENT_PATTERN
             ) {
                 target.change_kind(p, JS_UNKNOWN_ASSIGNMENT);
-                p.error(
-                    p.err_builder(
-                        "object and array assignment targets are not allowed in rest patterns",
-                    )
-                    .primary(target.range(p), ""),
-                );
+                p.error(p.err_builder(
+                    "object and array assignment targets are not allowed in rest patterns",
+                    target.range(p),
+                ));
             }
         }
 
@@ -449,12 +447,10 @@ impl RewriteParseEvents for ReparseAssignment {
                     // arguments = "test";
                     let name = completed.text(p);
                     if matches!(name, "eval" | "arguments") && p.is_strict_mode() {
-                        let error = p
-                            .err_builder(&format!(
-                                "Illegal use of `{}` as an identifier in strict mode",
-                                name
-                            ))
-                            .primary(completed.range(p), "");
+                        let error = p.err_builder(
+                            format!("Illegal use of `{}` as an identifier in strict mode", name),
+                            completed.range(p),
+                        );
                         p.error(error);
 
                         completed.change_to_unknown(p);
@@ -463,8 +459,11 @@ impl RewriteParseEvents for ReparseAssignment {
                 JS_UNKNOWN_ASSIGNMENT => {
                     let range = completed.range(p);
                     p.error(
-                        p.err_builder(&format!("Invalid assignment to `{}`", completed.text(p)))
-                            .primary(range, "This expression cannot be assigned to"),
+                        p.err_builder(
+                            format!("Invalid assignment to `{}`", completed.text(p)),
+                            range,
+                        )
+                        .hint("This expression cannot be assigned to"),
                     );
                 }
                 _ => {}

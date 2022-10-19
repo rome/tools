@@ -86,7 +86,7 @@ ts_new_operator.ts:1:19 parse ━━━━━━━━━━━━━━━━�
       │                   ^
     2 │ 
   
-  × Expected an expression here
+  i Expected an expression here
   
 --
 new A<test><test>();

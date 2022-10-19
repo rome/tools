@@ -54,7 +54,7 @@ class_in_single_statement_context.js:1:11 parse ━━━━━━━━━━�
       │           ^^^^^^^^^^
     2 │ 
   
-  × wrap the class in a block statement
+  i wrap the class in a block statement
   
 --
 if (true) class A {}

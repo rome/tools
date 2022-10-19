@@ -108,7 +108,13 @@ do_while_stmt_err.js:2:11 parse ━━━━━━━━━━━━━━━━
     3 │ do while true
     4 │ 
   
-  × Expected an expression here
+  i Expected an expression here
+  
+    1 │ do while (true)
+  > 2 │ do while ()
+      │           ^
+    3 │ do while true
+    4 │ 
   
 --
 do_while_stmt_err.js:3:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -121,6 +127,8 @@ do_while_stmt_err.js:3:10 parse ━━━━━━━━━━━━━━━━
       │          ^^^^
     4 │ 
   
+  i Remove true
+  
 --
 do_while_stmt_err.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -131,7 +139,12 @@ do_while_stmt_err.js:4:1 parse ━━━━━━━━━━━━━━━━�
   > 4 │ 
       │ 
   
-  × the file ends here
+  i the file ends here
+  
+    2 │ do while ()
+    3 │ do while true
+  > 4 │ 
+      │ 
   
 --
 do while (true)

@@ -125,8 +125,8 @@ impl ToDiagnostic for ExpectedNodeDiagnosticBuilder {
             )
         };
 
-        let diag = p.err_builder(&msg);
-        diag.primary(&self.range, format!("Expected {} here", self.names))
+        let diag = p.err_builder(&msg, &self.range);
+        diag.detail(&self.range, format!("Expected {} here", self.names))
     }
 }
 
@@ -143,15 +143,17 @@ impl ToDiagnostic for ExpectedToken {
     fn to_diagnostic(self, p: &Parser) -> ParseDiagnostic {
         match p.cur() {
             JsSyntaxKind::EOF => p
-                .err_builder(&format!("expected `{}` but instead the file ends", self.0))
-                .primary(p.cur_range(), "the file ends here"),
+                .err_builder(
+                    format!("expected `{}` but instead the file ends", self.0),
+                    p.cur_range(),
+                )
+                .detail(p.cur_range(), "the file ends here"),
             _ => p
-                .err_builder(&format!(
-                    "expected `{}` but instead found `{}`",
-                    self.0,
-                    p.cur_src()
-                ))
-                .primary(p.cur_range(), ""),
+                .err_builder(
+                    format!("expected `{}` but instead found `{}`", self.0, p.cur_src()),
+                    p.cur_range(),
+                )
+                .hint(format!("Remove {}", p.cur_src())),
         }
     }
 }
@@ -162,16 +164,17 @@ impl ToDiagnostic for ExpectedTokens {
     fn to_diagnostic(self, p: &Parser) -> ParseDiagnostic {
         match p.cur() {
             JsSyntaxKind::EOF => p
-                .err_builder(&format!("expected {} but instead the file ends", self.0))
-                .primary(p.cur_range(), "the file ends here"),
-
+                .err_builder(
+                    format!("expected {} but instead the file ends", self.0),
+                    p.cur_range(),
+                )
+                .detail(p.cur_range(), "the file ends here"),
             _ => p
-                .err_builder(&format!(
-                    "expected {} but instead found `{}`",
-                    self.0,
-                    p.cur_src()
-                ))
-                .primary(p.cur_range(), ""),
+                .err_builder(
+                    format!("expected {} but instead found `{}`", self.0, p.cur_src()),
+                    p.cur_range(),
+                )
+                .hint(format!("Remove {}", p.cur_src())),
         }
     }
 }

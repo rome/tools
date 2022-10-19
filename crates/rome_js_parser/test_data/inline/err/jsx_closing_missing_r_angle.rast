@@ -96,5 +96,7 @@ jsx_closing_missing_r_angle.jsx:1:20 parse ━━━━━━━━━━━━�
       │                    ^^^^
     2 │ 
   
+  i Remove more
+  
 --
 <><test>abcd</test more content follows here</>

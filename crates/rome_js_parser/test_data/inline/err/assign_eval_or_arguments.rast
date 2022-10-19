@@ -324,7 +324,7 @@ assign_eval_or_arguments.js:5:15 parse ━━━━━━━━━━━━━�
       │ ^^^^^^^^^^^^^^^^^^
     8 │ 
   
-  × This expression cannot be assigned to
+  i This expression cannot be assigned to
   
 --
 eval = 0

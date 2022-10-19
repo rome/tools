@@ -75,5 +75,7 @@ object_expr_method.js:1:14 parse ━━━━━━━━━━━━━━━�
       │              ^
     2 │ 
   
+  i Remove )
+  
 --
 let b = { foo) }

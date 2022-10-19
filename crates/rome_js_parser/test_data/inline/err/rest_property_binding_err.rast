@@ -406,7 +406,12 @@ rest_property_binding_err.js:1:11 parse ━━━━━━━━━━━━━�
     2 │ let { ...c = "default" } = a;
     3 │ let { ...{a} } = b;
   
-  × Expected an identifier here
+  i Expected an identifier here
+  
+  > 1 │ let { ... } = a;
+      │           ^
+    2 │ let { ...c = "default" } = a;
+    3 │ let { ...{a} } = b;
   
 --
 rest_property_binding_err.js:2:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -419,9 +424,15 @@ rest_property_binding_err.js:2:12 parse ━━━━━━━━━━━━━�
     3 │ let { ...{a} } = b;
     4 │ let { ...rest, other_assignment } = a;
   
-  × Remove the default value here
+  i Remove the default value here
   
-  × Rest element
+    1 │ let { ... } = a;
+  > 2 │ let { ...c = "default" } = a;
+      │            ^^^^^^^^^^^^
+    3 │ let { ...{a} } = b;
+    4 │ let { ...rest, other_assignment } = a;
+  
+  i Rest element
   
     1 │ let { ... } = a;
   > 2 │ let { ...c = "default" } = a;
@@ -441,7 +452,7 @@ rest_property_binding_err.js:3:10 parse ━━━━━━━━━━━━━�
     4 │ let { ...rest, other_assignment } = a;
     5 │ let { ...rest2, } = a;
   
-  × Object rest patterns must bind to an identifier, other patterns are not allowed.
+  i Object rest patterns must bind to an identifier, other patterns are not allowed.
   
 --
 rest_property_binding_err.js:4:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -455,7 +466,7 @@ rest_property_binding_err.js:4:7 parse ━━━━━━━━━━━━━�
     5 │ let { ...rest2, } = a;
     6 │ async function test() {
   
-  × Move the rest element to the end of the pattern, right before the closing '}'
+  i Move the rest element to the end of the pattern, right before the closing '}'
   
 --
 rest_property_binding_err.js:5:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -469,9 +480,16 @@ rest_property_binding_err.js:5:15 parse ━━━━━━━━━━━━━�
     6 │ async function test() {
     7 │   let { ...await } = a;
   
-  × Remove the trailing comma here
+  i Remove the trailing comma here
   
-  × Rest element
+    3 │ let { ...{a} } = b;
+    4 │ let { ...rest, other_assignment } = a;
+  > 5 │ let { ...rest2, } = a;
+      │               ^
+    6 │ async function test() {
+    7 │   let { ...await } = a;
+  
+  i Rest element
   
     3 │ let { ...{a} } = b;
     4 │ let { ...rest, other_assignment } = a;

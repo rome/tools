@@ -44,7 +44,11 @@ assign_expr_right.js:1:8 parse ━━━━━━━━━━━━━━━━�
       │        ^
     2 │ 
   
-  × Expected an expression, or an assignment here
+  i Expected an expression, or an assignment here
+  
+  > 1 │ (foo = );
+      │        ^
+    2 │ 
   
 --
 (foo = );

@@ -261,9 +261,14 @@ jsx_closing_element_mismatch.jsx:1:1 parse ━━━━━━━━━━━━�
     2 │ <test></text>;
     3 │ <some><nested></some></nested>;
   
-  × Opening tag
+  i Opening tag
   
-  × closing tag
+  > 1 │ <test></>;
+      │ ^^^^^^
+    2 │ <test></text>;
+    3 │ <some><nested></some></nested>;
+  
+  i closing tag
   
   > 1 │ <test></>;
       │       ^^^
@@ -281,9 +286,15 @@ jsx_closing_element_mismatch.jsx:2:1 parse ━━━━━━━━━━━━�
     3 │ <some><nested></some></nested>;
     4 │ <><5></test></>;
   
-  × Opening tag
+  i Opening tag
   
-  × closing tag
+    1 │ <test></>;
+  > 2 │ <test></text>;
+      │ ^^^^^^
+    3 │ <some><nested></some></nested>;
+    4 │ <><5></test></>;
+  
+  i closing tag
   
     1 │ <test></>;
   > 2 │ <test></text>;
@@ -303,9 +314,16 @@ jsx_closing_element_mismatch.jsx:3:7 parse ━━━━━━━━━━━━�
     4 │ <><5></test></>;
     5 │ 
   
-  × Opening tag
+  i Opening tag
   
-  × closing tag
+    1 │ <test></>;
+    2 │ <test></text>;
+  > 3 │ <some><nested></some></nested>;
+      │       ^^^^^^^^
+    4 │ <><5></test></>;
+    5 │ 
+  
+  i closing tag
   
     1 │ <test></>;
     2 │ <test></text>;
@@ -326,9 +344,16 @@ jsx_closing_element_mismatch.jsx:3:1 parse ━━━━━━━━━━━━�
     4 │ <><5></test></>;
     5 │ 
   
-  × Opening tag
+  i Opening tag
   
-  × closing tag
+    1 │ <test></>;
+    2 │ <test></text>;
+  > 3 │ <some><nested></some></nested>;
+      │ ^^^^^^
+    4 │ <><5></test></>;
+    5 │ 
+  
+  i closing tag
   
     1 │ <test></>;
     2 │ <test></text>;
@@ -348,7 +373,13 @@ jsx_closing_element_mismatch.jsx:4:4 parse ━━━━━━━━━━━━�
       │    ^
     5 │ 
   
-  × Expected an identifier here
+  i Expected an identifier here
+  
+    2 │ <test></text>;
+    3 │ <some><nested></some></nested>;
+  > 4 │ <><5></test></>;
+      │    ^
+    5 │ 
   
 --
 <test></>;

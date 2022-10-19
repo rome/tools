@@ -336,6 +336,8 @@ object_binding_pattern.js:1:9 parse ━━━━━━━━━━━━━━�
     2 │ let { eval } = { eval: "foo" };
     3 │ let { 5, 6 } = { eval: "foo" };
   
+  i Remove }
+  
 --
 object_binding_pattern.js:1:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -346,7 +348,7 @@ object_binding_pattern.js:1:5 parse ━━━━━━━━━━━━━━�
     2 │ let { eval } = { eval: "foo" };
     3 │ let { 5, 6 } = { eval: "foo" };
   
-  × this pattern is declared, but it is not given an initialized value
+  i this pattern is declared, but it is not given an initialized value
   
 --
 object_binding_pattern.js:1:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -358,7 +360,12 @@ object_binding_pattern.js:1:11 parse ━━━━━━━━━━━━━━�
     2 │ let { eval } = { eval: "foo" };
     3 │ let { 5, 6 } = { eval: "foo" };
   
-  × Expected a statement here
+  i Expected a statement here
+  
+  > 1 │ let { 5 } } = { eval: "foo" };
+      │           ^^^
+    2 │ let { eval } = { eval: "foo" };
+    3 │ let { 5, 6 } = { eval: "foo" };
   
 --
 object_binding_pattern.js:2:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -383,6 +390,8 @@ object_binding_pattern.js:3:8 parse ━━━━━━━━━━━━━━�
     4 │ let { default , eval: } = {};
     5 │ 
   
+  i Remove ,
+  
 --
 object_binding_pattern.js:3:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -395,6 +404,8 @@ object_binding_pattern.js:3:12 parse ━━━━━━━━━━━━━━�
     4 │ let { default , eval: } = {};
     5 │ 
   
+  i Remove }
+  
 --
 object_binding_pattern.js:4:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -405,6 +416,8 @@ object_binding_pattern.js:4:15 parse ━━━━━━━━━━━━━━�
   > 4 │ let { default , eval: } = {};
       │               ^
     5 │ 
+  
+  i Remove ,
   
 --
 object_binding_pattern.js:4:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -417,7 +430,13 @@ object_binding_pattern.js:4:23 parse ━━━━━━━━━━━━━━�
       │                       ^
     5 │ 
   
-  × Expected an identifier, an array pattern, or an object pattern here
+  i Expected an identifier, an array pattern, or an object pattern here
+  
+    2 │ let { eval } = { eval: "foo" };
+    3 │ let { 5, 6 } = { eval: "foo" };
+  > 4 │ let { default , eval: } = {};
+      │                       ^
+    5 │ 
   
 --
 let { 5 } } = { eval: "foo" };

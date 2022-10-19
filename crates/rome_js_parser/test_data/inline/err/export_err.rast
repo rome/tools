@@ -27,7 +27,11 @@ export_err.js:2:1 parse ━━━━━━━━━━━━━━━━━━�
   > 2 │ 
       │ 
   
-  × Expected a class, a function, or a variable declaration here
+  i Expected a class, a function, or a variable declaration here
+  
+    1 │ export
+  > 2 │ 
+      │ 
   
 --
 export

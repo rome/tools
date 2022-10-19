@@ -219,7 +219,13 @@ identifier_err.js:2:6 parse ━━━━━━━━━━━━━━━━━�
     3 │ async function test(await) {}
     4 │ function* test(yield) {}
   
-  × Expected an unary expression here
+  i Expected an unary expression here
+  
+    1 │ yield;
+  > 2 │ await;
+      │      ^
+    3 │ async function test(await) {}
+    4 │ function* test(yield) {}
   
 --
 identifier_err.js:3:21 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -257,7 +263,7 @@ identifier_err.js:5:1 parse ━━━━━━━━━━━━━━━━━�
     6 │ implements;
     7 │ interface;
   
-  × TypeScript only syntax
+  i TypeScript only syntax
   
 --
 identifier_err.js:6:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
