@@ -19,7 +19,6 @@ specifiers:
   markdown-it-header-sections: ^1.0.0
   markdown-it-imsize: ^2.0.1
   npm-run-all: ^4.1.5
-  rome: next
   sass: ^1.54.0
   terser: ^4.8.0
   ts-node: ^10.7.0
@@ -46,7 +45,6 @@ devDependencies:
   markdown-it-header-sections: 1.0.0
   markdown-it-imsize: 2.0.1
   npm-run-all: 4.1.5
-  rome: 0.9.0-next
   sass: 1.54.0
   terser: 4.8.0
   ts-node: 10.7.0_trcaulukx5kvbq5axchldtacau
@@ -191,72 +189,6 @@ packages:
       fastq: 1.13.0
     dev: true
 
-  /@rometools/cli-darwin-arm64/0.9.0-next:
-    resolution: {integrity: sha512-DoqyJZoDI2lOFEJP8fIKLOGd+vG6cGvqsb5SnEBtyx6utumO1HeFhBXfhFS1zOU8A4eNE1eTdFVDeGjs6J/hYQ==}
-    cpu: [arm64]
-    os: [darwin]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@rometools/cli-darwin-x64/0.9.0-next:
-    resolution: {integrity: sha512-Imt1C/lwltDQMC0GUt/DfOeCa6tjkfvO94oXKf0WmzXzPXAOP1wT4vxne9A6pSH5h35yfW+abrByLRkro1SDPw==}
-    cpu: [x64]
-    os: [darwin]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@rometools/cli-linux-arm64/0.9.0-next:
-    resolution: {integrity: sha512-d0KPHo7cK84ZrEqwXOXHg6LNYLACcezZyxZwzEyNnia4eRtpA3kG5EXdoayR0rFpfIMwTzUUWqSmYhfppMDcvA==}
-    cpu: [arm64]
-    os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@rometools/cli-linux-x64/0.9.0-next:
-    resolution: {integrity: sha512-m1E/kGvSAexdaSwhDmTLjKBLawHEtY/bxgVCwyVaPG+sk4QCB7/4YZyQzLQxMJ1cJ+RFUYESdh1CP/KN0ZWtFw==}
-    cpu: [x64]
-    os: [linux]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@rometools/cli-win32-arm64/0.9.0-next:
-    resolution: {integrity: sha512-7lTx/l/EqF7ecntugjK0LCICFTyXnswZ/h2WT8chctkPjLJvlimqXWlC9Sem4KbNIjNPpO8gW3pmvNQlUGyWag==}
-    cpu: [arm64]
-    os: [win32]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@rometools/cli-win32-x64/0.9.0-next:
-    resolution: {integrity: sha512-Xey8/xIaSq9i9TS11L4osUIRUiA7qwmRiu86CPwACclzcucWa2ySf11jWmjiZKxgDl1O1YaxcZDHef88zZcGPA==}
-    cpu: [x64]
-    os: [win32]
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@rometools/wasm-bundler/0.9.0-next:
-    resolution: {integrity: sha512-ieC7g99orV/WLqvC1pupu1O5WMyE0YggT2mvmjXn5CUXh+iNI7ZD4d2XfFiiGNQFUs96FrNaypK7M1Nc1kC65w==}
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@rometools/wasm-nodejs/0.9.0-next:
-    resolution: {integrity: sha512-zTZLVALA/tm7D1SeW08t9TytB4Rx9s++pYU8/yc7wN/sEnWuE2QbHvnfrzRlMsw6K+k27HLCyJOfak3rAZOpvw==}
-    requiresBuild: true
-    dev: true
-    optional: true
-
-  /@rometools/wasm-web/0.9.0-next:
-    resolution: {integrity: sha512-8mRIbOtK+XWLbMBJoERHZ/RKyZSiOOquPK2DrMuKxzPnW8bGuK/4EvIImPGgoGYzTXNJFSprboQpaE+gvBmB8w==}
-    requiresBuild: true
-    dev: true
-    optional: true
-
   /@sindresorhus/slugify/1.1.2:
     resolution: {integrity: sha512-V9nR/W0Xd9TSGXpZ4iFUcFGhuOJtZX82Fzxj1YISlbSgKvIiNa7eLEZrT0vAraPOt++KHauIVNYgGRgjc13dXA==}
     engines: {node: '>=10'}
@@ -399,8 +331,6 @@ packages:
       reduce: 1.0.2
       semver: 5.7.1
       tunnel-agent: 0.6.0
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /ansi-regex/2.1.1:
@@ -875,8 +805,6 @@ packages:
       finalhandler: 1.1.0
       parseurl: 1.3.3
       utils-merge: 1.0.1
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /constantinople/4.0.1:
@@ -963,11 +891,6 @@ packages:
 
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
-    peerDependencies:
-      supports-color: '*'
-    peerDependenciesMeta:
-      supports-color:
-        optional: true
     dependencies:
       ms: 2.0.0
     dev: true
@@ -1054,8 +977,6 @@ packages:
       stack-utils: 1.0.2
       to-factory: 1.0.0
       zepto: 1.2.0
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /doctypes/1.1.0:
@@ -1382,8 +1303,6 @@ packages:
       parseurl: 1.3.3
       statuses: 1.3.1
       unpipe: 1.0.0
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /follow-redirects/1.14.9_debug@4.3.2:
@@ -2833,8 +2752,6 @@ packages:
     dependencies:
       debug: 2.6.9
       minimatch: 3.0.4
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /reusify/1.0.4:
@@ -2847,23 +2764,6 @@ packages:
     hasBin: true
     dependencies:
       glob: 7.2.0
-    dev: true
-
-  /rome/0.9.0-next:
-    resolution: {integrity: sha512-Ggk0vGhYmeFEAMdd9gTtsmGKGIGa5ldet/GJDRgtW/7gZYP7HYNizJcf5N4uwZHn0/hjgFvguWB2BEHsHGTivA==}
-    engines: {node: '>=14.*'}
-    hasBin: true
-    requiresBuild: true
-    optionalDependencies:
-      '@rometools/cli-darwin-arm64': 0.9.0-next
-      '@rometools/cli-darwin-x64': 0.9.0-next
-      '@rometools/cli-linux-arm64': 0.9.0-next
-      '@rometools/cli-linux-x64': 0.9.0-next
-      '@rometools/cli-win32-arm64': 0.9.0-next
-      '@rometools/cli-win32-x64': 0.9.0-next
-      '@rometools/wasm-bundler': 0.9.0-next
-      '@rometools/wasm-nodejs': 0.9.0-next
-      '@rometools/wasm-web': 0.9.0-next
     dev: true
 
   /run-parallel/1.2.0:
@@ -2943,8 +2843,6 @@ packages:
       on-finished: 2.3.0
       range-parser: 1.2.1
       statuses: 1.4.0
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /serve-index/1.9.1:
@@ -2958,8 +2856,6 @@ packages:
       http-errors: 1.6.3
       mime-types: 2.1.35
       parseurl: 1.3.3
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /serve-static/1.13.2:
@@ -2970,8 +2866,6 @@ packages:
       escape-html: 1.0.3
       parseurl: 1.3.3
       send: 0.16.2
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /server-destroy/1.0.1:
