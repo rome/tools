@@ -27,7 +27,6 @@
 		"markdown-it-header-sections": "^1.0.0",
 		"markdown-it-imsize": "^2.0.1",
 		"sass": "^1.54.0",
-		"rome": "next",
 		"terser": "^4.8.0",
 		"ts-node": "^10.7.0",
 		"typescript": "^4.6.2",
