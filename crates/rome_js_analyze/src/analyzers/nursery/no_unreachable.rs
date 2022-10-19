@@ -81,7 +81,7 @@ impl Rule for NoUnreachable {
                 "This code will never be reached ..."
             },
         )
-        .summary("This code is unreachable")
+        .description("This code is unreachable")
         .unnecessary();
 
         // Pluralize and adapt the error message accordingly based on the
@@ -92,7 +92,7 @@ impl Rule for NoUnreachable {
             [] => {}
             // A single node is responsible for this range being unreachable
             [node] => {
-                diagnostic = diagnostic.secondary(
+                diagnostic = diagnostic.detail(
                     node.range,
                     format_args!(
                         "... because this statement will {} beforehand",
@@ -104,8 +104,8 @@ impl Rule for NoUnreachable {
             [node_a, node_b] => {
                 if node_a.kind == node_b.kind {
                     diagnostic = diagnostic
-                        .secondary(node_a.range, "... because either this statement ...")
-                        .secondary(
+                        .detail(node_a.range, "... because either this statement ...")
+                        .detail(
                             node_b.range,
                             format_args!(
                                 "... or this statement will {} beforehand",
@@ -114,14 +114,14 @@ impl Rule for NoUnreachable {
                         );
                 } else {
                     diagnostic = diagnostic
-                        .secondary(
+                        .detail(
                             node_a.range,
                             format_args!(
                                 "... because either this statement will {} ...",
                                 node_a.reason()
                             ),
                         )
-                        .secondary(
+                        .detail(
                             node_b.range,
                             format_args!(
                                 "... or this statement will {} beforehand",
@@ -150,12 +150,11 @@ impl Rule for NoUnreachable {
                     for (index, node) in terminators.iter().enumerate() {
                         if index == 0 {
                             diagnostic = diagnostic
-                                .secondary(node.range, "... because either this statement, ...");
+                                .detail(node.range, "... because either this statement, ...");
                         } else if index < last {
-                            diagnostic =
-                                diagnostic.secondary(node.range, "... this statement, ...");
+                            diagnostic = diagnostic.detail(node.range, "... this statement, ...");
                         } else {
-                            diagnostic = diagnostic.secondary(
+                            diagnostic = diagnostic.detail(
                                 node.range,
                                 format_args!(
                                     "... or this statement will {} beforehand",
@@ -167,7 +166,7 @@ impl Rule for NoUnreachable {
                 } else {
                     for (index, node) in terminators.iter().enumerate() {
                         if index == 0 {
-                            diagnostic = diagnostic.secondary(
+                            diagnostic = diagnostic.detail(
                                 node.range,
                                 format_args!(
                                     "... because either this statement will {}, ...",
@@ -175,12 +174,12 @@ impl Rule for NoUnreachable {
                                 ),
                             );
                         } else if index < last {
-                            diagnostic = diagnostic.secondary(
+                            diagnostic = diagnostic.detail(
                                 node.range,
                                 format_args!("... this statement will {}, ...", node.reason()),
                             );
                         } else {
-                            diagnostic = diagnostic.secondary(
+                            diagnostic = diagnostic.detail(
                                 node.range,
                                 format_args!(
                                     "... or this statement will {} beforehand",

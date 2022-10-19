@@ -18,12 +18,12 @@ noDoubleEquals.js:1:18 lint/correctness/noDoubleEquals  FIXABLE  ━━━━━
 
   ! Use === instead of ==
   
-  ! == is only allowed when comparing against null
-  
   > 1 │ const isZero = a == 0;
       │                  ^^
     2 │ const isNonZero = a != 0;
     3 │ 
+  
+  i == is only allowed when comparing against null
   
   i Using === may be unsafe if you are relying on type coercion
   
@@ -39,13 +39,13 @@ noDoubleEquals.js:2:21 lint/correctness/noDoubleEquals  FIXABLE  ━━━━━
 
   ! Use !== instead of !=
   
-  ! != is only allowed when comparing against null
-  
     1 │ const isZero = a == 0;
   > 2 │ const isNonZero = a != 0;
       │                     ^^
     3 │ 
     4 │ const isNull = a == null;
+  
+  i != is only allowed when comparing against null
   
   i Using !== may be unsafe if you are relying on type coercion
   

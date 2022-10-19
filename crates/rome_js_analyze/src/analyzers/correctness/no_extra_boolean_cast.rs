@@ -230,7 +230,7 @@ impl Rule for NoExtraBooleanCast {
                     {title}
                 },
             )
-            .footer_note(note),
+            .note(note),
         )
     }
 

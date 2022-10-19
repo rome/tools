@@ -6,10 +6,8 @@ use crate::{
     AnalyzerDiagnostic, AnalyzerOptions, Queryable, RuleGroup, ServiceBag,
 };
 use rome_console::MarkupBuf;
-use rome_diagnostics::{
-    file::{FileId, FileSpan},
-    Applicability, CodeSuggestion,
-};
+use rome_diagnostics::v2::advice::CodeSuggestionAdvice;
+use rome_diagnostics::{file::FileId, Applicability};
 use rome_rowan::{BatchMutation, Language};
 
 /// Event raised by the analyzer when a [Rule](crate::Rule)
@@ -63,22 +61,17 @@ pub struct AnalyzerAction<L: Language> {
     pub mutation: BatchMutation<L>,
 }
 
-impl<L> From<AnalyzerAction<L>> for CodeSuggestion
+impl<L> From<AnalyzerAction<L>> for CodeSuggestionAdvice<MarkupBuf>
 where
     L: Language,
 {
     fn from(action: AnalyzerAction<L>) -> Self {
-        let (range, suggestion) = action.mutation.as_text_edits().unwrap_or_default();
+        let (_, suggestion) = action.mutation.as_text_edits().unwrap_or_default();
 
-        CodeSuggestion {
-            span: FileSpan {
-                file: action.file_id,
-                range,
-            },
+        CodeSuggestionAdvice {
             applicability: action.applicability,
             msg: action.message,
             suggestion,
-            labels: Vec::new(),
         }
     }
 }

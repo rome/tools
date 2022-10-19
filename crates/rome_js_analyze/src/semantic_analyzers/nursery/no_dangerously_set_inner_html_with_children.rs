@@ -186,9 +186,9 @@ impl Rule for NoDangerouslySetInnerHtmlWithChildren {
             markup! {
                 "Avoid passing both "<Emphasis>"children"</Emphasis>" and the "<Emphasis>"dangerouslySetInnerHTML"</Emphasis>" prop."
             },
-        ).secondary(state.children_kind.text_trimmed_range(), markup! {
+        ).detail(state.children_kind.text_trimmed_range(), markup! {
             "This is the source of the children prop"
-        }).footer_note(
+        }).note(
             markup! {
                 "Setting HTML content will inadvertently override any passed children in React"
             }

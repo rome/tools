@@ -216,7 +216,7 @@ impl Rule for UseBlankTarget {
             markup! {
                 "Avoid using "<Emphasis>"target=\"_blank\""</Emphasis>" without "<Emphasis>"rel=\"noreferrer\""</Emphasis>"."
             },
-        ).footer_note(
+        ).note(
             markup!{
                 "Opening external links in new tabs without rel=\"noreferrer\" is a security risk. See \
                 "<Hyperlink href="https://html.spec.whatwg.org/multipage/links.html#link-type-noopener">"the explanation"</Hyperlink>" for more details."

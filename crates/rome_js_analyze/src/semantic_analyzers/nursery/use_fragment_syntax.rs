@@ -108,7 +108,7 @@ impl Rule for UseFragmentSyntax {
                     "Use shorthand syntax for Fragment elements instead of standard syntax."
                 },
             )
-            .footer_note(markup! {
+            .note(markup! {
                 "Shorthand fragment syntax saves keystrokes and is only inapplicable when keys are required."
             }),
         )
