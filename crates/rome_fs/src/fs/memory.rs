@@ -12,7 +12,7 @@ use parking_lot::{lock_api::ArcMutexGuard, Mutex, RawMutex, RwLock};
 use rome_diagnostics::v2::Error;
 
 use crate::fs::{FileSystemExt, OpenOptions};
-use crate::{FileSystem, TraversalContext, TraversalScope};
+use crate::{FileSystem, RomePath, TraversalContext, TraversalScope};
 
 use super::{BoxedTraversal, File, UnhandledDiagnostic, UnhandledKind};
 
@@ -161,10 +161,12 @@ impl<'scope> TraversalScope<'scope> for MemoryTraversalScope<'scope> {
         {
             let files = &self.fs.files.0.read();
             for path in files.keys() {
-                if path.strip_prefix(&base).is_ok() {
-                    let file_id = ctx.interner().intern_path(path.into());
-                    ctx.handle_file(path, file_id);
+                let file_id = ctx.interner().intern_path(path.into());
+                let rome_path = RomePath::new(&path, file_id);
+                if !ctx.can_handle(&rome_path) {
+                    continue;
                 }
+                ctx.handle_file(path, file_id);
             }
         }
 

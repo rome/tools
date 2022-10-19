@@ -543,10 +543,9 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
             TraversalMode::Check { .. } => self.can_lint(rome_path),
             TraversalMode::CI { .. } => self
                 .can_lint(rome_path)
-                .or_else(|_| self.can_format(rome_path)),
+                .and_then(|_| self.can_format(rome_path)),
             TraversalMode::Format { .. } => self.can_format(rome_path),
         };
-
         match result {
             Ok(result) => result.reason.is_none(),
             Err(err) => {
