@@ -82,7 +82,7 @@ impl Rule for NoDoubleEquals {
             RuleDiagnostic::new(rule_category!(),op.text_trimmed_range(), markup! {
                 "Use "<Emphasis>{suggestion}</Emphasis>" instead of "<Emphasis>{text_trimmed}</Emphasis>
             })
-            .note( markup! {
+            .detail( op.text_trimmed_range(),markup! {
                 <Emphasis>{text_trimmed}</Emphasis>" is only allowed when comparing against "<Emphasis>"null"</Emphasis>
             })
             .note(markup! {

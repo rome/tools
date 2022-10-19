@@ -6,8 +6,9 @@ use crate::{
     AnalyzerDiagnostic, AnalyzerOptions, Queryable, RuleGroup, ServiceBag,
 };
 use rome_console::MarkupBuf;
+use rome_diagnostics::file::FileSpan;
 use rome_diagnostics::v2::advice::CodeSuggestionAdvice;
-use rome_diagnostics::{file::FileId, Applicability};
+use rome_diagnostics::{file::FileId, Applicability, CodeSuggestion};
 use rome_rowan::{BatchMutation, Language};
 
 /// Event raised by the analyzer when a [Rule](crate::Rule)
@@ -72,6 +73,26 @@ where
             applicability: action.applicability,
             msg: action.message,
             suggestion,
+        }
+    }
+}
+
+impl<L> From<AnalyzerAction<L>> for CodeSuggestion
+where
+    L: Language,
+{
+    fn from(action: AnalyzerAction<L>) -> Self {
+        let (range, suggestion) = action.mutation.as_text_edits().unwrap_or_default();
+
+        CodeSuggestion {
+            span: FileSpan {
+                file: action.file_id,
+                range,
+            },
+            applicability: action.applicability,
+            msg: action.message,
+            suggestion,
+            labels: vec![],
         }
     }
 }

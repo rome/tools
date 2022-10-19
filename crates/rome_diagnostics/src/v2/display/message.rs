@@ -17,7 +17,7 @@ use termcolor::NoColor;
 ///     message: MessageAndDescription
 /// }
 /// ```
-#[derive(Debug)]
+// #[derive(Debug)]
 pub struct MessageAndDescription {
     /// Shown when medium supports custom markup
     message: MarkupBuf,
@@ -59,6 +59,12 @@ impl From<MarkupBuf> for MessageAndDescription {
 impl std::fmt::Display for MessageAndDescription {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_str(&self.description)
+    }
+}
+
+impl std::fmt::Debug for MessageAndDescription {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        std::fmt::Display::fmt(self, f)
     }
 }
 

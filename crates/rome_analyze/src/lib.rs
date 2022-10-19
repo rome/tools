@@ -1,10 +1,9 @@
 #![deny(rustdoc::broken_intra_doc_links)]
 #![doc = include_str!("../CONTRIBUTING.md")]
 
-use rome_console::fmt::Display;
 use std::cmp::Ordering;
 use std::collections::{BTreeMap, BinaryHeap};
-use std::fmt::Formatter;
+use std::fmt::{Debug, Formatter};
 use std::ops;
 
 mod categories;
@@ -421,19 +420,19 @@ where
                     let signal = DiagnosticSignal::new(move || {
                         let diag = match group_rule {
                             Some((group, rule)) => SuppressionDiagnostic::new(
+                                file_id,
                                 range,
                                 markup! {
                                     "Unknown lint rule "{group}"/"{rule}" in suppression comment"
                                 },
-                                file_id,
                             ),
 
                             None => SuppressionDiagnostic::new(
+                                file_id,
                                 range,
                                 markup! {
                                     "Unknown lint rule group "{rule}" in suppression comment"
                                 },
-                                file_id,
                             ),
                         };
 
@@ -631,10 +630,10 @@ impl<'analysis> AnalysisFilter<'analysis> {
 pub enum AnalyzerDiagnostic {
     /// It holds various info related to diagnostics emitted by the rules
     Rule {
-        /// The severity of the rule
-        severity: Option<Severity>,
         /// Reference to the file
         file_id: FileId,
+        /// The severity of the rule
+        severity: Option<Severity>,
         /// The diagnostic emitted by a rule
         rule_diagnostic: RuleDiagnostic,
         /// Series of code suggestions offered by rule code actions
@@ -657,13 +656,7 @@ impl Diagnostic for AnalyzerDiagnostic {
         match self {
             AnalyzerDiagnostic::Rule {
                 rule_diagnostic, ..
-            } => {
-                if let Some(description) = &rule_diagnostic.description {
-                    write!(fmt, "{}", description)
-                } else {
-                    Ok(())
-                }
-            }
+            } => Debug::fmt(&rule_diagnostic.message, fmt),
             AnalyzerDiagnostic::Raw(error) => error.description(fmt),
         }
     }
@@ -672,7 +665,7 @@ impl Diagnostic for AnalyzerDiagnostic {
         match self {
             AnalyzerDiagnostic::Rule {
                 rule_diagnostic, ..
-            } => fmt.write_markup(markup!({ rule_diagnostic.message })),
+            } => rome_console::fmt::Display::fmt(&rule_diagnostic.message, fmt),
             AnalyzerDiagnostic::Raw(error) => error.message(fmt),
         }
     }
@@ -688,13 +681,7 @@ impl Diagnostic for AnalyzerDiagnostic {
         match self {
             AnalyzerDiagnostic::Rule {
                 rule_diagnostic, ..
-            } => {
-                if let Some(tags) = rule_diagnostic.tag {
-                    tags
-                } else {
-                    DiagnosticTags::empty()
-                }
-            }
+            } => rule_diagnostic.tags,
             AnalyzerDiagnostic::Raw(error) => error.tags(),
         }
     }
@@ -731,8 +718,8 @@ impl Diagnostic for AnalyzerDiagnostic {
                         &markup! { {detail.message} }.to_owned(),
                     )?;
                     if let Some(location) = Location::builder()
-                        .resource(file_id)
                         .span(&detail.range)
+                        .resource(file_id)
                         .build()
                     {
                         visitor.record_frame(location)?;
@@ -777,6 +764,15 @@ impl AnalyzerDiagnostic {
         }
     }
 
+    pub fn get_span(&self) -> Option<TextRange> {
+        match self {
+            AnalyzerDiagnostic::Rule {
+                rule_diagnostic, ..
+            } => rule_diagnostic.span,
+            AnalyzerDiagnostic::Raw(_) => None,
+        }
+    }
+
     /// It adds a code suggestion, use this API to tell the user that a rule can benefit from
     /// a automatic code fix.
     pub fn add_code_suggestion(&mut self, suggestion: CodeSuggestionAdvice<MarkupBuf>) {
@@ -786,7 +782,7 @@ impl AnalyzerDiagnostic {
             ..
         } = self
         {
-            rule_diagnostic.tag = Some(DiagnosticTags::FIXABLE);
+            rule_diagnostic.tags = DiagnosticTags::FIXABLE;
             suggestions.push(suggestion)
         }
     }
@@ -797,21 +793,25 @@ impl AnalyzerDiagnostic {
 pub(crate) struct SuppressionDiagnostic {
     #[severity]
     severity: Severity,
-    #[location(resource)]
-    file_id: FileId,
     #[location(span)]
     range: TextRange,
+    #[location(resource)]
+    file_id: FileId,
     #[message]
     message: MarkupBuf,
 }
 
 impl SuppressionDiagnostic {
-    pub(crate) fn new(range: TextRange, message: impl Display, file_id: FileId) -> Self {
+    pub(crate) fn new(
+        file_id: FileId,
+        range: TextRange,
+        message: impl rome_console::fmt::Display,
+    ) -> Self {
         Self {
+            file_id,
             severity: Severity::Warning,
             range,
             message: markup!({ message }).to_owned(),
-            file_id,
         }
     }
 }
