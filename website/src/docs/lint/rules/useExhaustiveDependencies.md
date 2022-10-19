@@ -1,9 +1,9 @@
 ---
-title: Lint Rule reactExtensiveDependencies
+title: Lint Rule useExhaustiveDependencies
 layout: layouts/rule.liquid
 ---
 
-# reactExtensiveDependencies (since v10.0.0)
+# useExhaustiveDependencies (since v10.0.0)
 
 Enforce all dependencies are correctly specified.
 

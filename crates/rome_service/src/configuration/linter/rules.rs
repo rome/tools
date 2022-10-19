@@ -438,6 +438,7 @@ impl Nursery {
         "useButtonType",
         "useCamelCase",
         "useFlatMap",
+        "useExhaustiveDependencies",
         "useFragmentSyntax",
         "useKeyWithClickEvents",
         "useKeyWithMouseEvents",
