@@ -30,6 +30,7 @@ use super::{
 use crate::configuration::to_analyzer_configuration;
 use crate::file_handlers::{FixAllParams, Language as LanguageId};
 use indexmap::IndexSet;
+use rome_diagnostics::v2::Error;
 use rome_diagnostics::{v2, v2::Diagnostic};
 use rome_js_analyze::utils::rename::{RenameError, RenameSymbolExtensions};
 use std::borrow::Cow;
@@ -233,7 +234,7 @@ fn lint(
             if let Some(action) = signal.action() {
                 diagnostic.add_code_suggestion(action.into());
             }
-            diagnostics.push(v2::serde::Diagnostic::new(diagnostic));
+            diagnostics.push(v2::serde::Diagnostic::new(Error::from(diagnostic)));
         }
 
         ControlFlow::<Never>::Continue(())

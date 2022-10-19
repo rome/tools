@@ -4,9 +4,14 @@ use crate::registry::{RegistryVisitor, RuleLanguage, RuleSuppressions};
 use crate::{AnalyzerDiagnostic, Phase, Phases, Queryable};
 use rome_console::fmt::Display;
 use rome_console::{markup, MarkupBuf};
+use rome_diagnostics::file::FileId;
+use rome_diagnostics::v2::advice::CodeSuggestionAdvice;
 use rome_diagnostics::v2::location::AsSpan;
-use rome_diagnostics::v2::{Category, Diagnostic, DiagnosticTags, LogCategory};
-use rome_diagnostics::{file::FileId, Applicability};
+use rome_diagnostics::v2::{
+    Advices, Category, Diagnostic, DiagnosticTags, Location, LogCategory, MessageAndDescription,
+    Visit,
+};
+use rome_diagnostics::Applicability;
 use rome_rowan::{BatchMutation, Language, TextRange};
 use serde::de::DeserializeOwned;
 
@@ -330,12 +335,14 @@ pub trait Rule: RuleMeta {
 pub struct RuleDiagnostic {
     #[category]
     pub(crate) category: &'static Category,
-    pub(crate) description: Option<String>,
     #[location(span)]
     pub(crate) span: Option<TextRange>,
     #[message]
-    pub(crate) message: MarkupBuf,
-    pub(crate) tag: Option<DiagnosticTags>,
+    #[description]
+    pub(crate) message: MessageAndDescription,
+    #[tags]
+    pub(crate) tags: DiagnosticTags,
+    #[advice]
     pub(crate) rule_advice: RuleAdvice,
 }
 
@@ -344,6 +351,32 @@ pub struct RuleDiagnostic {
 pub struct RuleAdvice {
     pub(crate) details: Vec<Detail>,
     pub(crate) notes: Vec<(LogCategory, MarkupBuf)>,
+    pub(crate) code_suggestion_list: Vec<CodeSuggestionAdvice<MarkupBuf>>,
+}
+
+impl Advices for RuleAdvice {
+    fn record(&self, visitor: &mut dyn Visit) -> std::io::Result<()> {
+        for detail in &self.details {
+            visitor.record_log(
+                detail.log_category,
+                &markup! { {detail.message} }.to_owned(),
+            )?;
+            if let Some(location) = Location::builder().span(&detail.range).build() {
+                visitor.record_frame(location)?;
+            }
+        }
+        // we then print notes
+        for (log_category, note) in &self.notes {
+            visitor.record_log(*log_category, &markup! { {note} }.to_owned())?;
+        }
+
+        // finally, we print possible code suggestions on how to fix the issue
+        for suggestion in &self.code_suggestion_list {
+            suggestion.record(visitor)?;
+        }
+
+        Ok(())
+    }
 }
 
 #[derive(Debug)]
@@ -353,25 +386,23 @@ pub struct Detail {
     pub range: Option<TextRange>,
 }
 
-// Some of these methods aren't used by anything yet
-#[allow(dead_code)]
 impl RuleDiagnostic {
     /// Creates a new [`RuleDiagnostic`] with a severity and title that will be
     /// used in a builder-like way to modify labels.
     pub fn new(category: &'static Category, span: impl AsSpan, title: impl Display) -> Self {
+        let message = markup!({ title }).to_owned();
         Self {
             category,
             span: span.as_span(),
-            message: markup!({ title }).to_owned(),
-            description: None,
-            tag: None,
+            message: MessageAndDescription::from(message),
+            tags: DiagnosticTags::empty(),
             rule_advice: RuleAdvice::default(),
         }
     }
 
     /// Set an explicit plain-text summary for this diagnostic.
     pub fn description(mut self, summary: impl Into<String>) -> Self {
-        self.description = Some(summary.into());
+        self.message.set_description(summary.into());
         self
     }
 
@@ -380,11 +411,7 @@ impl RuleDiagnostic {
     ///
     /// This does not have any influence on the diagnostic rendering.
     pub fn deprecated(mut self) -> Self {
-        self.tag = if matches!(self.tag, Some(DiagnosticTags::UNNECESSARY_CODE)) {
-            Some(DiagnosticTags::UNNECESSARY_CODE & DiagnosticTags::DEPRECATED_CODE)
-        } else {
-            Some(DiagnosticTags::DEPRECATED_CODE)
-        };
+        self.tags |= DiagnosticTags::DEPRECATED_CODE;
         self
     }
 
@@ -393,11 +420,7 @@ impl RuleDiagnostic {
     ///
     /// This does not have any influence on the diagnostic rendering.
     pub fn unnecessary(mut self) -> Self {
-        self.tag = if matches!(self.tag, Some(DiagnosticTags::UNNECESSARY_CODE)) {
-            Some(DiagnosticTags::UNNECESSARY_CODE & DiagnosticTags::DEPRECATED_CODE)
-        } else {
-            Some(DiagnosticTags::UNNECESSARY_CODE)
-        };
+        self.tags |= DiagnosticTags::UNNECESSARY_CODE;
         self
     }
 

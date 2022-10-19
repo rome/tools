@@ -7,10 +7,7 @@ use crate::{
 };
 use rome_console::MarkupBuf;
 use rome_diagnostics::v2::advice::CodeSuggestionAdvice;
-use rome_diagnostics::{
-    file::{FileId, FileSpan},
-    Applicability,
-};
+use rome_diagnostics::{file::FileId, Applicability};
 use rome_rowan::{BatchMutation, Language};
 
 /// Event raised by the analyzer when a [Rule](crate::Rule)
@@ -69,14 +66,9 @@ where
     L: Language,
 {
     fn from(action: AnalyzerAction<L>) -> Self {
-        let (range, suggestion) = action.mutation.as_text_edits().unwrap_or_default();
+        let (_, suggestion) = action.mutation.as_text_edits().unwrap_or_default();
 
-        dbg!(&range);
         CodeSuggestionAdvice {
-            span: FileSpan {
-                file: action.file_id,
-                range,
-            },
             applicability: action.applicability,
             msg: action.message,
             suggestion,

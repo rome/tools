@@ -160,9 +160,7 @@ mod tests {
                         let new_code = action.mutation.commit();
                         eprintln!("{new_code}");
                     }
-                    let error = diag
-                        .with_file_path("example.js")
-                        .with_file_source_code(SOURCE);
+                    let error = diag.with_file_path("ahahah").with_file_source_code(SOURCE);
                     let text = markup_to_string(markup! {
                         {PrintDiagnostic(&error)}
                     });
@@ -211,11 +209,14 @@ mod tests {
             |signal| {
                 if let Some(mut diag) = signal.diagnostic() {
                     diag.set_severity(Severity::Warning);
-                    let code = diag.category().unwrap();
-                    let location = diag.location().unwrap();
+                    let span = diag.get_span();
+                    let error = diag
+                        .with_file_path(FileId::zero())
+                        .with_file_source_code(SOURCE);
+                    let code = error.category().unwrap();
 
                     if code == category!("lint/correctness/noDoubleEquals") {
-                        error_ranges.push(location.span.unwrap());
+                        error_ranges.push(span.unwrap());
                     }
                 }
 

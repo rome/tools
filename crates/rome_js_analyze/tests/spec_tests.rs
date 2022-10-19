@@ -132,7 +132,9 @@ fn markup_to_string(markup: Markup) -> String {
 }
 #[allow(clippy::let_and_return)]
 fn diagnostic_to_string(name: &str, source: &str, diag: AnalyzerDiagnostic) -> String {
-    let error = diag.with_file_path(name).with_file_source_code(source);
+    let error = diag
+        .with_file_path((name, FileId::zero()))
+        .with_file_source_code(source);
     let text = markup_to_string(markup! {
         {PrintDiagnostic(&error)}
     });

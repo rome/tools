@@ -3,7 +3,6 @@ use super::{
     location::{AsResource, AsSourceCode, AsSpan},
     Location,
 };
-use crate::file::FileSpan;
 use crate::Applicability;
 use rome_console::fmt::{self, Display};
 use rome_console::markup;
@@ -165,7 +164,6 @@ where
 /// Utility type implementing [Advices] that emits a
 /// code suggestion with the provided text
 pub struct CodeSuggestionAdvice<M> {
-    pub span: FileSpan,
     pub applicability: Applicability,
     pub msg: M,
     pub suggestion: TextEdit,
