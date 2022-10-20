@@ -86,7 +86,11 @@ mod main {
         );
 
         match result {
-            Err(Termination::UnexpectedArgument { argument, .. }) => {
+            Err(Termination::UnexpectedArgument {
+                subcommand,
+                argument,
+            }) => {
+                assert_eq!(subcommand, "format");
                 assert_eq!(argument, OsString::from("--unknown"))
             }
             _ => panic!("run_cli returned {result:?} for an unknown argument, expected an error"),
@@ -122,7 +126,13 @@ mod main {
         );
 
         match result {
-            Err(Termination::MissingArgument { argument }) => assert_eq!(argument, "<INPUT>"),
+            Err(Termination::MissingArgument {
+                subcommand,
+                argument,
+            }) => {
+                assert_eq!(subcommand, "format");
+                assert_eq!(argument, "<INPUT>")
+            }
             _ => panic!("run_cli returned {result:?} for a missing argument, expected an error"),
         }
     }

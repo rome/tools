@@ -36,7 +36,10 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
             Some((path, input_code))
         } else {
             // we provided the argument without a piped stdin, we bail
-            return Err(Termination::MissingArgument { argument: "stdin" });
+            return Err(Termination::MissingArgument {
+                subcommand: "format",
+                argument: "stdin",
+            });
         }
     } else {
         None
