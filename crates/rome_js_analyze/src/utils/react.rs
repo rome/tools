@@ -50,19 +50,18 @@ impl ReactCallWithDependencyResult {
 
     /// Returns all dependencies of a React hook.  
     /// See [react_hook_with_dependency]
-    pub fn all_dependencies(&self) -> Vec<JsAnyExpression> {
+    pub fn all_dependencies(&self) -> impl Iterator<Item = JsAnyExpression> {
         self.dependencies_node
             .as_ref()
             .and_then(|x| {
-                Some(
-                    x.as_js_array_expression()?
-                        .elements()
-                        .into_iter()
-                        .filter_map(|x| x.ok()?.as_js_any_expression().cloned())
-                        .collect::<Vec<_>>(),
+                Some(x.as_js_array_expression()?
+                    .elements()
+                    .into_iter()
                 )
             })
-            .unwrap_or_default()
+            .into_iter()
+            .flatten()
+            .filter_map(|x| x.ok()?.as_js_any_expression().cloned())
     }
 }
 
