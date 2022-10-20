@@ -27,17 +27,23 @@ pub enum Termination {
 
     /// Returned when the CLI  doesn't recognize a command line argument
     #[error(
-        "unrecognized option {argument:?}. Type '{} format --help' for more information.",
+        "unrecognized option {argument:?}. Type '{} {subcommand} --help' for more information.",
         command_name()
     )]
-    UnexpectedArgument { argument: OsString },
+    UnexpectedArgument {
+        subcommand: &'static str,
+        argument: OsString,
+    },
 
     /// Returned when a required argument is not present in the command line
     #[error(
-        "missing argument '{argument}'. Type '{} format --help' for more information.",
+        "missing argument '{argument}'. Type '{} {subcommand} --help' for more information.",
         command_name()
     )]
-    MissingArgument { argument: &'static str },
+    MissingArgument {
+        subcommand: &'static str,
+        argument: &'static str,
+    },
 
     /// Returned when a subcommand is called without any arguments
     #[error("empty arguments")]

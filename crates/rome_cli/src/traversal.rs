@@ -47,7 +47,10 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
             }
             // `--<some character>` or `-<some character>`
             if without_dashes != input {
-                return Err(Termination::UnexpectedArgument { argument: input });
+                return Err(Termination::UnexpectedArgument {
+                    subcommand: execution.traversal_mode_subcommand(),
+                    argument: input,
+                });
             }
         }
         inputs.push(input);
@@ -55,6 +58,7 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
 
     if inputs.is_empty() && execution.as_stdin_file().is_none() {
         return Err(Termination::MissingArgument {
+            subcommand: execution.traversal_mode_subcommand(),
             argument: "<INPUT>",
         });
     }

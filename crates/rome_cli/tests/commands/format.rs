@@ -723,7 +723,13 @@ fn format_stdin_with_errors() {
     assert!(result.is_err(), "run_cli returned {result:?}");
 
     match result {
-        Err(Termination::MissingArgument { argument }) => assert_eq!(argument, "stdin"),
+        Err(Termination::MissingArgument {
+            subcommand,
+            argument,
+        }) => {
+            assert_eq!(subcommand, "format");
+            assert_eq!(argument, "stdin")
+        }
         _ => {
             panic!("run_cli returned {result:?} for an unknown command help, expected an error")
         }

@@ -117,6 +117,15 @@ impl Execution {
             _ => None,
         }
     }
+
+    /// Returns the subcommand of the [traversal mode](TraversalMode) execution
+    pub(crate) fn traversal_mode_subcommand(&self) -> &'static str {
+        match self.traversal_mode {
+            TraversalMode::Check { .. } => "check",
+            TraversalMode::CI { .. } => "ci",
+            TraversalMode::Format { .. } => "format",
+        }
+    }
 }
 
 /// Based on the [mode](ExecutionMode), the function might launch a traversal of the file system
