@@ -1,11 +1,10 @@
 use rome_console::{markup, ConsoleExt};
 use rome_lsp::ServerFactory;
 use rome_service::{workspace::WorkspaceClient, RomeError, TransportError};
-use std::env;
-use tokio::{
-    io::{self},
-    runtime::Runtime,
-};
+use std::{env, fs, path::PathBuf};
+use tokio::io;
+use tokio::runtime::Runtime;
+use tracing::subscriber::Interest;
 use tracing::{debug_span, metadata::LevelFilter, Instrument, Metadata};
 use tracing_subscriber::{
     layer::{Context, Filter},
@@ -144,6 +143,35 @@ async fn start_lsp_proxy(rt: &Runtime) -> Result<(), Termination> {
     }
 }
 
+const fn log_file_name_prefix() -> &'static str {
+    "server.log"
+}
+
+pub(crate) fn read_most_recent_log_file() -> io::Result<Option<String>> {
+    let logs_dir = rome_log_dir();
+
+    let most_recent = fs::read_dir(logs_dir)?
+        .into_iter()
+        .flatten()
+        .filter(|file| file.file_type().map_or(false, |ty| ty.is_file()))
+        .filter_map(|file| {
+            match file
+                .file_name()
+                .to_str()?
+                .split_once(log_file_name_prefix())
+            {
+                Some((_, date_part)) if date_part.split('-').count() == 4 => Some(file.path()),
+                _ => None,
+            }
+        })
+        .max();
+
+    match most_recent {
+        Some(file) => Ok(Some(fs::read_to_string(file)?)),
+        None => Ok(None),
+    }
+}
+
 /// Setup the [tracing]-based logging system for the server
 /// The events received by the subscriber are filtered at the `info` level,
 /// then printed using the [HierarchicalLayer] layer, and the resulting text
@@ -151,8 +179,7 @@ async fn start_lsp_proxy(rt: &Runtime) -> Result<(), Termination> {
 /// `rome-logs/server.log.yyyy-MM-dd-HH` files inside the system temporary
 /// directory)
 fn setup_tracing_subscriber() {
-    let logs_dir = env::temp_dir().join("rome-logs");
-    let file_appender = tracing_appender::rolling::hourly(logs_dir, "server.log");
+    let file_appender = tracing_appender::rolling::hourly(rome_log_dir(), log_file_name_prefix());
 
     registry()
         .with(
@@ -168,13 +195,20 @@ fn setup_tracing_subscriber() {
         .init();
 }
 
+pub(super) fn rome_log_dir() -> PathBuf {
+    match env::var_os("ROME_LOG_DIR") {
+        Some(directory) => PathBuf::from(directory),
+        None => env::temp_dir().join("rome-logs"),
+    }
+}
+
 /// Tracing filter enabling:
 /// - All spans and events at level info or higher
 /// - All spans and events at level debug in crates whose name starts with `rome`
 struct LoggingFilter;
 
-impl<S> Filter<S> for LoggingFilter {
-    fn enabled(&self, meta: &Metadata<'_>, _cx: &Context<'_, S>) -> bool {
+impl LoggingFilter {
+    fn is_enabled(&self, meta: &Metadata<'_>) -> bool {
         let filter = if meta.target().starts_with("rome") {
             LevelFilter::DEBUG
         } else {
@@ -182,6 +216,20 @@ impl<S> Filter<S> for LoggingFilter {
         };
 
         meta.level() <= &filter
+    }
+}
+
+impl<S> Filter<S> for LoggingFilter {
+    fn enabled(&self, meta: &Metadata<'_>, _cx: &Context<'_, S>) -> bool {
+        self.is_enabled(meta)
+    }
+
+    fn callsite_enabled(&self, meta: &'static Metadata<'static>) -> Interest {
+        if self.is_enabled(meta) {
+            Interest::always()
+        } else {
+            Interest::never()
+        }
     }
 
     fn max_level_hint(&self) -> Option<LevelFilter> {
