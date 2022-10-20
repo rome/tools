@@ -21,7 +21,7 @@
      <a href="https://rome.tools/#editor-integration">https://rome.tools/#editor-integration</a>
 
   <span style="opacity: 0.8;">2. </span><strong>Try a command</strong>
-     <i>rome check</i> is used to validate your code, verify formatting, and
+     <i>rome ci</i> is used to validate your code, verify formatting, and
      check for lint errors. Run <i>rome --help</i> for a full list of commands
      and flags.
 
