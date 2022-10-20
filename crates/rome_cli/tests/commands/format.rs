@@ -835,7 +835,7 @@ fn does_not_format_ignored_directories() {
     );
 
     let ignored_file = Path::new("scripts/test.js");
-    fs.insert(ignored_file.into(), UNFORMATTED.clone().as_bytes());
+    fs.insert(ignored_file.into(), <&str>::clone(&UNFORMATTED).as_bytes());
 
     let file_to_format = Path::new("src/test.js");
     fs.insert(file_to_format.into(), UNFORMATTED.as_bytes());

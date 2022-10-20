@@ -161,12 +161,22 @@ impl<'scope> TraversalScope<'scope> for MemoryTraversalScope<'scope> {
         {
             let files = &self.fs.files.0.read();
             for path in files.keys() {
-                let file_id = ctx.interner().intern_path(path.into());
-                let rome_path = RomePath::new(&path, file_id);
-                if !ctx.can_handle(&rome_path) {
-                    continue;
+                let should_process_file = if base.starts_with(".") || base.starts_with("./") {
+                    // we simulate absolute paths
+                    let absolute_base = PathBuf::from("/");
+                    let absolute_path = Path::new("/").join(&path);
+                    absolute_path.strip_prefix(&absolute_base).is_ok()
+                } else {
+                    base.strip_prefix(&path).is_ok()
+                };
+                if should_process_file {
+                    let file_id = ctx.interner().intern_path(path.into());
+                    let rome_path = RomePath::new(&path, file_id);
+                    if !ctx.can_handle(&rome_path) {
+                        continue;
+                    }
+                    ctx.handle_file(path, file_id);
                 }
-                ctx.handle_file(path, file_id);
             }
         }
 
