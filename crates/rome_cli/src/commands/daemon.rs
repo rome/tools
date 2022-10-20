@@ -1,11 +1,10 @@
 use rome_console::{markup, ConsoleExt};
 use rome_lsp::ServerFactory;
 use rome_service::{workspace::WorkspaceClient, RomeError, TransportError};
-use std::{env, io::BufRead, io::Read};
+use std::env;
 use tokio::{
-    io::{self, AsyncWriteExt, BufReader, BufWriter},
+    io::{self},
     runtime::Runtime,
-    sync::mpsc,
 };
 use tracing::{debug_span, metadata::LevelFilter, Instrument, Metadata};
 use tracing_subscriber::{
@@ -17,7 +16,7 @@ use tracing_tree::HierarchicalLayer;
 
 use crate::{
     open_transport,
-    service::{self, ensure_daemon, open_socket, read_message, run_daemon, write_message},
+    service::{self, ensure_daemon, open_socket, run_daemon},
     CliSession, Termination,
 };
 
@@ -94,66 +93,55 @@ pub(crate) fn print_socket() -> Result<(), Termination> {
 
 pub(crate) fn lsp_proxy() -> Result<(), Termination> {
     let rt = Runtime::new()?;
-
-    rt.block_on(async {
-        ensure_daemon().await.expect("can't start rome");
-
-        match open_socket().await.expect("connect error") {
-            Some((owned_read_half, owned_write_half)) => {
-                let (tx, mut rx) = mpsc::channel::<String>(8);
-
-                // create spawn to write stdin content to socket
-                rt.spawn(async move {
-                    let mut socket_write = BufWriter::new(owned_write_half);
-                    loop {
-                        while let Some(msg) = rx.recv().await {
-                            write_message(&mut socket_write, msg.as_bytes().to_vec())
-                                .await
-                                .expect("write error");
-                        }
-                    }
-                });
-
-                // create spawn to receive socket response to stdout
-                rt.spawn(async move {
-                    let mut stdout = io::stdout();
-                    let mut socket_read = BufReader::new(owned_read_half);
-                    loop {
-                        let buf = read_message(&mut socket_read).await.expect("read err");
-                        let res = String::from_utf8(buf).expect("response err");
-                        print!("Content-Length: {}\r\n\r\n", res.len());
-                        let _ = stdout.write_all(res.as_bytes()).await;
-                        let _ = stdout.flush().await;
-                    }
-                });
-
-                // forward stdin to socket
-                let stdin = std::io::stdin();
-                let mut stdin = stdin.lock();
-                loop {
-                    let mut buf = String::new();
-                    stdin.read_line(&mut buf).unwrap();
-                    if let Some(length) = buf.strip_prefix("Content-Length: ") {
-                        let mut tmp_buf = String::new();
-                        stdin.read_line(&mut tmp_buf).unwrap();
-
-                        let length = length.trim().parse::<usize>().expect("parse error");
-                        let mut msg: Vec<u8> = vec![0u8; length];
-
-                        stdin.read_exact(&mut msg).unwrap();
-
-                        let msg: String = String::from_utf8(msg).unwrap();
-                        tx.send(msg).await.expect("send error");
-                    } else {
-                        break;
-                    }
-                }
-            }
-            None => print!("rome not start"),
-        };
-    });
+    rt.block_on(start_lsp_proxy(&rt))?;
 
     Ok(())
+}
+
+/// start a proxy process.
+/// receive process stdin and then copy the content to lsp socket.
+/// copy to the process stdout when the lsp responds to the message
+async fn start_lsp_proxy(rt: &Runtime) -> Result<(), Termination> {
+    ensure_daemon().await?;
+
+    match open_socket().await? {
+        Some((mut owned_read_half, mut owned_write_half)) => {
+            // forward stdin to socket
+            let mut stdin = io::stdin();
+            let input_handle = rt.spawn(async move {
+                loop {
+                    match io::copy(&mut stdin, &mut owned_write_half).await {
+                        Ok(b) => {
+                            if b == 0 {
+                                return Ok(());
+                            }
+                        }
+                        Err(err) => return Err(err),
+                    };
+                }
+            });
+
+            // receive socket response to stdout
+            let mut stdout = io::stdout();
+            let out_put_handle = rt.spawn(async move {
+                loop {
+                    match io::copy(&mut owned_read_half, &mut stdout).await {
+                        Ok(b) => {
+                            if b == 0 {
+                                return Ok(());
+                            }
+                        }
+                        Err(err) => return Err(err),
+                    };
+                }
+            });
+
+            let _ = input_handle.await;
+            let _ = out_put_handle.await;
+            Ok(())
+        }
+        None => Ok(()),
+    }
 }
 
 /// Setup the [tracing]-based logging system for the server
