@@ -140,49 +140,11 @@ impl JsxSelfClosingElement {
 
 }
 
-
-macro_rules! init_none_array {
-    (@ALWAYSNONE, $name:literal) => {None};
-    (@NAMECOMPARISON, $captures:expr, $i:expr, $att:expr, $element_name:expr, $head:literal,) => {
-        if $element_name == $head {
-            $captures[$i] = Some($att);
-        }
-    };
-    (@NAMECOMPARISON, $captures:expr, $i:expr, $att:expr, $element_name:expr, $head:literal, $($tail:literal,)*) => {
-        if $element_name == $head {
-            $captures[$i] = Some($att.clone());
-        }
-
-        jsx_attributes!(@NAMECOMPARISON, $captures, $i + 1, $att, $element_name, $($tail,)*);
-    };
-    ($n:expr) => {{
-        use rome_rowan::AstNodeList;
-        let mut captures = [$(jsx_attributes!(@ALWAYSNONE, $names),)*];
-        for att in $attributes.iter() {
-            if let Some(attribute) = $crate::JsxAttribute::cast_ref(att.syntax()) {
-                if let Some(name) = attribute.name().ok()
-                    .and_then(|x| $crate::JsxName::cast_ref(x.syntax())) 
-                    .and_then(|x| x.value_token().ok())
-                {
-                    let name = name.text_trimmed();
-                    jsx_attributes!(@NAMECOMPARISON, captures, 0, attribute, name, $($names,)*);
-                }
-            }
-        };
-        captures
-    }};
-}
-
 impl JsxAttributeList {
     pub fn find_attributes_by_name<const N: usize>( &self, names_to_lookup: [&str; N]) -> [Option<JsxAttribute>; N]
     {
-        let mut captures: [Option<JsxAttribute>; N] = unsafe {
-            let mut arr: MaybeUninit<_> = MaybeUninit::uninit();
-            for i in 0..N {
-                (arr.as_mut_ptr() as *mut Option<JsxAttribute>).add(i).write(None);
-            }
-            arr.assume_init()
-        };
+        const INIT: Option<JsxAttribute> = None;
+        let mut result = [INIT; N];
 
         for att in self.iter() {
             if let Some(attribute) = JsxAttribute::cast_ref(att.syntax()) {
@@ -192,15 +154,15 @@ impl JsxAttributeList {
                 {
                     let name = name.text_trimmed();
                     for (i, name_to_lookup) in names_to_lookup.iter().enumerate() {
-                        if captures[i].is_none() && *name_to_lookup == name {
-                            captures[i] = Some(attribute.clone());
+                        if result[i].is_none() && *name_to_lookup == name {
+                            result[i] = Some(attribute.clone());
                         }
                     }
                 }
             }
         };
 
-        captures
+        result
     }
 }
 
