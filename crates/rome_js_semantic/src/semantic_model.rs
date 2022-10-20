@@ -37,7 +37,7 @@ impl HasDeclarationAstNode for JsReferenceIdentifier {}
 impl HasDeclarationAstNode for JsIdentifierAssignment {}
 impl HasDeclarationAstNode for JsxReferenceIdentifier {}
 
-/// Marker trait that groups all "AstNode" that can be imported or 
+/// Marker trait that groups all "AstNode" that can be imported or
 /// exported
 pub trait CanBeImportedExported: AstNode<Language = JsLanguage> {
     type Result;

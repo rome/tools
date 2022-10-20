@@ -158,7 +158,7 @@ impl StableReactHookConfiguration {
 /// useEffect(() => {
 ///     // name is NOT stable, so it must be specified as dependency
 ///     console.log(name);
-///     // setName IS stable, so it must not be specified as dependency 
+///     // setName IS stable, so it must not be specified as dependency
 ///     console.log(setName("a"));
 /// }, [name]);
 /// ```

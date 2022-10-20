@@ -13,6 +13,48 @@ use std::collections::{BTreeMap, HashMap, HashSet};
 declare_rule! {
     /// Enforce all dependencies are correctly specified.
     ///
+    /// ## Examples
+    ///
+    /// ### Invalid
+    ///
+    /// ```js,expect_diagnostic
+    /// let a = 1;
+    /// useEffect(() => {
+    ///     console.log(a);
+    /// })
+    /// ```
+    ///
+    /// ```js,expect_diagnostic
+    /// let b = 1;
+    /// useEffect(() => {
+    /// }, [b])
+    /// ```
+    /// 
+    /// ```js,expect_diagnostic
+    /// const [name, setName] = useState();
+    /// useEffect(() => {
+    ///     console.log(name);
+    ///     setName("");
+    /// }, [name, setName])
+    /// ```
+    ///
+    /// ## Valid
+    ///
+    /// ```js
+    /// let a = 1;
+    /// useEffect(() => {
+    ///     console.log(a);
+    /// }, [a]);
+    /// ```
+    /// 
+    /// ```js
+    /// const [name, setName] = useState();
+    /// useEffect(() => {
+    ///     console.log(name);
+    ///     setName("");
+    /// }, [name])
+    /// ```
+    /// 
     pub(crate) UseExhaustiveDependencies {
         version: "10.0.0",
         name: "useExhaustiveDependencies",
