@@ -25,7 +25,9 @@ With our new formatter, we made sure to focus on ease of adoption. We know most 
 
 You can try out our formatter by installing our [Visual Studio Code extension](https://marketplace.visualstudio.com/items?itemName=rome.rome). We also have a CLI in an early alpha state that you can learn about in our [getting started guide](/#getting-started).
 
-# Error Recovery
+<!-- DESCRIPTION_END -->
+
+## Error Recovery
 
 For each part of Rome that we build, we want to make sure it can stand on it's own. There's no benefit in making Rome do everything, if every piece ends up being worse than the alternatives.
 
@@ -41,7 +43,7 @@ We're still refining our formatter's error recovery, so we made it an opt-in fea
 
 We plan on building upon this recoverable parser in the future to bring even more innovative features to your development workflow.
 
-# Performance
+## Performance
 
 Another significant advantage that stands out over other JavaScript-based developer tools is performance. While there's an inherent speed increase from switching to a lower level language like Rust, we've focused on performance every step of the way. It's essential that we have a lean core to base future functionality.
 
@@ -62,6 +64,6 @@ As a quick example of Rome Formatter's performance, we decided to compare it to 
   Benchmarks of formatting popular open source repositories, lower is better
 </div>
 
-# More Coming
+## More Coming
 
 And of course, this is just the beginning. We’re going to expand the formatter to capture all the different languages we use in web development, such as CSS, HTML, JSON, etc. We also plan on announcing some new products in the near future. If you’re interested in joining our mission, [we’re hiring](https://careers.rome.tools). Stay tuned!

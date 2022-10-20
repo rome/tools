@@ -1,20 +1,17 @@
-## Project Configuration
+## Configuration File
 
 The configuration file is considered **optional**, Rome has good defaults. Use the configuration
 file to change those defaults.
 
-The configuration file must be placed at the root of your project, usually at the same directory level of your
-`package.json`. The name of the file must be `rome.json`.
+The Rome configuration file is named `rome.json` and should be placed in the root directory of your project. The root directory
+is usually the directory containing your project's  `package.json`.
 
-All properties are **optional**, you can even have an empty config!
-
-We are deliberately lean with the supported configuration. 
-We do not include options just for the sake of personalization. 
-We aim to offer everything out of the box and only introduce configuration if [absolutely necessary](https://rome.tools/#philosophy).
+Here's an example:
 
 ```json
 {
   "formatter": {
+		"enabled": true,
     "indentStyle": "tab",
     "lineWidth": 120
   },
@@ -24,7 +21,101 @@ We aim to offer everything out of the box and only introduce configuration if [a
 }
 ```
 
-### Properties
+This configuration file enables the linter and formatter and sets the preferred indent style and width of the formatter.
+
+### Recipes
+
+#### Enable a lint rule
+
+Rules that are recommended are enabled by default. Rules that are not recommended
+are not enabled, but they should be enabled via configuration.
+
+To enable rules, you need to change their diagnostics severity based on your needs:
+
+```json
+{
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "correctness": {
+        "noDebugger": "error",
+        "noSparseArray": "warn"
+      }
+    }
+  }
+}
+```
+
+#### Disable a lint rule
+
+Just add `"off"` as value inside its configuration. For example:
+
+```json
+{
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "correctness": {
+        "noCommentText": "off"
+      },
+      "style": {
+        "noNegationElse": "off"
+      }
+    }
+  }
+}
+```
+
+#### Change the diagnostic severity
+
+Most of Rome's rules will emit an **error**, but you are free to change their severity.
+Just add `"warn"` as value of the rule. Example:
+
+```json
+{
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "correctness": {
+        "noCommentText": "warn"
+      },
+      "style": {
+        "noNegationElse": "error"
+      }
+    }
+  }
+}
+```
+
+This is useful in cases there's being a refactor going on and there's need to make the
+CI passing.
+
+#### Rule options
+
+Not all the rules require options, but when they do *accept* some, you can pass them
+by shaping the value of the rule in a different way.
+
+```json
+{
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "correctness": {
+        "noCommentText": {
+          "level": "warn",
+          "options": {}
+        }
+      }
+    }
+  }
+}
+```
+
+- `level` will indicate the severity of the diagnostic, valid values are: `"off"`, `"warn"` and `"error"`;
+- `options` is a wildcard value, meaning that will change based on the rule;
+
+
+### Schema
 
 #### `linter.enabled`
 
@@ -47,69 +138,22 @@ An array of Unix shell style patterns.
 
 #### `linter.rules.recommended`
 
-Enables the [recommended rules](/docs/lint/rules) for all the groups. 
+Enables the [recommended rules](/docs/lint/rules) for all categories.
 
 > Default: `true`
 
 
-#### `linter.rules.correctness` 
+#### `linter.rules.[category]`
 
-A list of rules for `Correctness` category.  
+Options that influence the rules of a single category. Rome supports the following categories:
 
-#### `linter.rules.correctness.recommended` 
+* `correctness`: Code that is wrong or useless
+* `style`: Code that should be written in a more idiomatic way
+* `nursery`: new rules that are still under development.
 
-Enables the [recommended rules](/docs/lint/rules) for the category `Correctness`.
+#### `linter.rules.[category].recommended`
 
-Example:
-
-```json
-{
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "correctness": {
-        "noDebugger": "off"
-      }
-    }
-  }
-}
-
-```
-
-
-#### `linter.rules.style`
-
-A list of rules for `Style` category.
-
-#### `linter.rules.style.recommended`
-
-Enables the [recommended rules](/docs/lint/rules) for the category `Style`.
-
-
-Example:
-
-```json
-{
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "style": {
-        "noNegationElse": "off"
-      }
-    }
-  }
-}
-
-```
-
-
-#### `linter.rules.nursery`
-
-A list of rules for `Nursery` category.
-
-#### `linter.rules.nursery.recommended`
-
-Enables the [recommended rules](/docs/lint/rules) for the category `Nursery`.
+Enables the recommended rules for a single category.
 
 Example:
 
@@ -119,7 +163,7 @@ Example:
     "enabled": true,
     "rules": {
       "nursery": {
-        "noCommentText": "on"
+      	"recommended": true
       }
     }
   }
@@ -127,12 +171,13 @@ Example:
 
 ```
 
+
 #### `formatter.enabled`
 
 Enables Rome's formatter
 
 > Default: `true`
- 
+
 
 #### `formatter.ignore`
 
@@ -177,99 +222,3 @@ When properties inside objects should be quoted. It can be `asNeeded` or `preser
 
 > Default: `asNeeded`
 
-
-### Configure a rule
-
-A rule can be configured for multiple purposes:
-- change the severity of their diagnostics;
-- turn the rule off;
-- pass possible options to customize the rule;
-
-#### Turn a rule on
-
-Rules that are recommended are enabled by default. Rules that are not recommended
-are not enabled, but they should be enabled via configuration.
-
-To enable rules, you need to change their diagnostics severity based on your needs:
-
-```json
-{
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "correctness": {
-        "noDebugger": "error",
-        "noSparseArray": "warn"
-      }
-    }
-  }
-}
-```
-
-#### Turn a rule off
-
-Just add `"off"` as value inside its configuration. For example:
-
-```json
-{
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "correctness": {
-        "noCommentText": "off"
-      },
-      "style": {
-        "noNegationElse": "off"
-      }
-    }
-  }
-}
-```
-
-#### Change severity of diagnostics
-
-Most of Rome's rules will emit an **error**, but you are free to change their severity.
-Just add `"warn"` as value of the rule. Example:
-
-```json
-{
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "correctness": {
-        "noCommentText": "warn"
-      },
-      "style": {
-        "noNegationElse": "error"
-      }
-    }
-  }
-}
-```
-
-This is useful in cases there's being a refactor going on and there's need to make the 
-CI passing.
-
-#### Pass options to a rule
-
-Not all the rules require options, but when they do *accept* some, you can pass them
-by shaping the value of the rule in a different way.
-
-```json
-{
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "correctness": {
-        "noCommentText": {
-          "level": "warn",
-          "options": {}
-        }
-      }
-    }
-  }
-}
-```
-
-- `level` will indicate the severity of the diagnostic, valid values are: `"off"`, `"warn"` and `"error"`;
-- `options` is a wildcard value, meaning that will change based on the rule;

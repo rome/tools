@@ -8,6 +8,6 @@ OPTIONS:
     --use-server     Connect to a running instance of the Rome daemon server
 ```
 
-### Commands 
+### Commands
 
 {% include docs/cli-commands.md %}

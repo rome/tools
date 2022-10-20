@@ -34,7 +34,7 @@
 	--pattern-dark-img-path: url("/img/pattern-black.png");
 	--toc-background-active: #{$gray-8};
 	--toc-link-color-hover: #{$gray-6};
-	--toc-link-color-active: #{$gray-4};
+	--toc-link-color-active: #{$color-2};
 	--blockquote-color: #{$gray-7};
 	--link-hover-color: #{lighten(#27272A, 20%)};
 	--breadcrumbs-background-active: #{lighten(#27272A, 70%)};
@@ -61,7 +61,7 @@
 	--pattern-img-path: var(--pattern-dark-img-path);
 	--toc-background-active: #{$gray-3};
 	--toc-link-color-hover: #{$gray-6};
-	--toc-link-color-active: #{$gray-8};
+	--toc-link-color-active: var(--primary-color);
 	--blockquote-color: #{$gray-7};
 	--link-hover-color: #{lighten(#27272A, 60%)};
 	--breadcrumbs-background-active: #{darken(#27272A, 7%)};

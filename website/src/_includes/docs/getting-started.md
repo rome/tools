@@ -6,13 +6,17 @@ For all operating systems, we support both x86_64 and ARM architectures.
 
 Install Rome using any of the following methods.
 
-### Install official Rome VS Code extension
+### Editor Setup
 
 You can use Rome by installing the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=rome.rome) from the marketplace.
 
 Rome currently doesn't support other editors than VS Code. [Let us know](https://github.com/rome/tools/discussions/categories/suggestions) if you would like support for another editor.
 
-### Install Rome CLI
+If you want to set Rome as your default formatter, you can do so by opening the [command palette]
+and select `Format Document With ...` , then `Configure Default Formatter` and finally select `Rome`. The option will
+appear only for documents that Rome supports (JavaScript, and TypeScript).
+
+### Install the Rome CLI
 
 Install `rome` using your preferred node package manager. We require a minimum Node version of v14.18.
 
@@ -79,11 +83,6 @@ Where `<OS>` and `<ARCH>` follow the Node.js syntax convention:
 | `x64`   | [`win32-x64`]   | [`darwin-x64`]   | [`linux-x64`]   |
 
 Please make sure to choose the correct architecture from the [releases page](https://github.com/rome/tools/releases).
-
-## Post-Installation
-
-- check the [formatter section](/#formatter) for options and commands;
-- check the options available in the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=rome.rome)
 
 [`win32-arm64`]: https://github.com/rome/tools/releases/latest/download/rome-win32-arm64.exe
 [`darwin-arm64`]: https://github.com/rome/tools/releases/latest/download/rome-darwin-arm64

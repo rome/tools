@@ -13,6 +13,8 @@ layout: layouts/blog.liquid
 
 With our [last update](https://rome.tools/blog/2021/09/21/rome-will-be-rewritten-in-rust), we announced a complete rewrite in Rust. As many can attest, rewriting can be a rather long, difficult process. Our team has been working extremely hard on this undertaking and has made great progress. We’ll write a more thorough post about our experience with Rust and rewriting in the future, but here’s a short summary of our efforts.
 
+<!-- DESCRIPTION_END -->
+
 We started our Rust rewrite by forking the excellent RSLint parser. A huge thanks the entire RSLint team for their work, especially to [Riccardo D'Ambrosio](https://github.com/RDambrosio016) for helping us with this process. We chose the RSLint parser as we wanted a more modern, editor-focused architecture inspired by projects such as Roslyn, rust-analyzer, and TypeScript. The parser produces a concrete syntax tree (CST) that represents the original code completely, whitespace, comments and all. While a compiler can throw away semantically irrelevant info such as comments, an editor must preserve these bits of *trivia*.
 
 However, this CST is not the easiest to navigate, which required an abstract syntax tree (AST) facade on top of this CST that allowed for a cleaner interface. This parsing infrastructure will be the foundation for Rome’s focus on first class editor support. By representing the code in full fidelity, we can offer a code manipulation API for features like refactoring, code fixes, and many others.

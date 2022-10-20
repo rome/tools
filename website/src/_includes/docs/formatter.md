@@ -1,36 +1,17 @@
 ## Formatter
 
-You can use the formatter via our [VS Code extension] or by downloading our CLI directly from our [release page].
+Rome's an opinionated formatter that has the goal to stop all ongoing debates over styles. That's why Rome only supports
+few options to avoid that debates over styles turn into debates over Rome options.
 
-> WARNING: The CLI and VS Code extension are packaged with separate binaries, which means that if you don't
-> use our default options, you will have to **pass them to both the extension AND the CLI**.
->
-> This is a temporary choice to allow people to play with our formatter. This will change in the near future.
+### Options
+
+The language agnostic options supported by Rome are:
+
+- indent style (default: `tabs`): Use spaces or tabs for indention
+- tab width (default: `2`): The number of spaces per indention level
+- line width (default: `80)`: The column width at which Rome wraps code
 
 
-### Formatter options
-
-Our formatter is really strict and has support for only a few options:
-
-- indent style, you can choose between tabs or spaces; **Rome's default is tabs**
-- quantity of spaces, applied only if you choose spaces as indent style;
-- line width, which is the number of characters that fit in a single line; **Rome's default is `80`**
-
-### Use the formatter via VSCode extension
-
-The extension allows you to change the default [formatter options](#formatter-options).
-
-For easy access to the available options, navigate to the settings menu of the VSCode extension and type: `@ext:rome.rome`.
-
-Plus, you can try an additional feature that allows you to format code with syntax errors.
-
-This is an **opt-in feature** that allows developers to experiment with a formatter that can work with an error resilient parser.
-
-> WARNING: all options are marked as **BETA** because this might change, once we will add support of a configuration file
-
-If you want to set Rome as your default formatter, you can do so by opening the [command palette]
-and select `Format Document With ...` , then `Configure Default Formatter` and finally select `Rome`. The option will
-appear only for documents that Rome supports.
 
 
 ### Use the formatter with the CLI
