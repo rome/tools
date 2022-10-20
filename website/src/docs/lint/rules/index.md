@@ -219,7 +219,7 @@ initializer and update expressions are not needed
 
 ## Style
 
-Rules enforcing a consistent way of writing your code. 
+Rules enforcing a consistent way of writing your code.
 <section class="rule">
 <h3 data-toc-exclude id="noNegationElse">
 	<a href="/docs/lint/rules/noNegationElse">noNegationElse</a>

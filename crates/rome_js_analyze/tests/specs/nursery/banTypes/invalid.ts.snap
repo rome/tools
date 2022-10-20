@@ -1,0 +1,424 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 100
+expression: invalid.ts
+---
+# Input
+```js
+let a: String;
+
+let e: Object;
+
+let b: { c: String };
+
+function foo(a: String) {}
+
+'a' as String;
+
+class Foo<T = String> extends Bar<String> implements Baz<Object> {
+  constructor(foo: String | Object) {}
+
+  exit(): Array<String> {
+    const foo: String = 1 as String;
+  }
+}
+
+let baz: [boolean, Boolean] = [true, false];
+
+let z = true as Boolean;
+
+type Props = {};
+
+const abc: {} = [{}]
+
+let fn: Function = () => true
+
+
+```
+
+# Diagnostics
+```
+invalid.ts:1:8 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use String as a type. Use string instead.
+  
+  > 1 │ let a: String;
+      │        ^^^^^^
+    2 │ 
+    3 │ let e: Object;
+  
+  i Safe fix: Fix this problem
+  
+     1    │ - let·a:·String;
+        1 │ + let·a:·string;
+     2  2 │   
+     3  3 │   let e: Object;
+  
+
+```
+
+```
+invalid.ts:3:8 lint/nursery/banTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use Object as a type. The `Object` type actually means "any non-nullish value", so it is marginally better than `unknown`.
+    - If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+    - If you want a type meaning "any value", you probably want `unknown` instead.
+  
+    1 │ let a: String;
+    2 │ 
+  > 3 │ let e: Object;
+      │        ^^^^^^
+    4 │ 
+    5 │ let b: { c: String };
+  
+
+```
+
+```
+invalid.ts:5:13 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use String as a type. Use string instead.
+  
+    3 │ let e: Object;
+    4 │ 
+  > 5 │ let b: { c: String };
+      │             ^^^^^^
+    6 │ 
+    7 │ function foo(a: String) {}
+  
+  i Safe fix: Fix this problem
+  
+     3  3 │   let e: Object;
+     4  4 │   
+     5    │ - let·b:·{·c:·String·};
+        5 │ + let·b:·{·c:·string·};
+     6  6 │   
+     7  7 │   function foo(a: String) {}
+  
+
+```
+
+```
+invalid.ts:7:17 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use String as a type. Use string instead.
+  
+    5 │ let b: { c: String };
+    6 │ 
+  > 7 │ function foo(a: String) {}
+      │                 ^^^^^^
+    8 │ 
+    9 │ 'a' as String;
+  
+  i Safe fix: Fix this problem
+  
+     5  5 │   let b: { c: String };
+     6  6 │   
+     7    │ - function·foo(a:·String)·{}
+        7 │ + function·foo(a:·string)·{}
+     8  8 │   
+     9  9 │   'a' as String;
+  
+
+```
+
+```
+invalid.ts:9:8 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use String as a type. Use string instead.
+  
+     7 │ function foo(a: String) {}
+     8 │ 
+   > 9 │ 'a' as String;
+       │        ^^^^^^
+    10 │ 
+    11 │ class Foo<T = String> extends Bar<String> implements Baz<Object> {
+  
+  i Safe fix: Fix this problem
+  
+     7  7 │   function foo(a: String) {}
+     8  8 │   
+     9    │ - 'a'·as·String;
+        9 │ + 'a'·as·string;
+    10 10 │   
+    11 11 │   class Foo<T = String> extends Bar<String> implements Baz<Object> {
+  
+
+```
+
+```
+invalid.ts:11:15 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use String as a type. Use string instead.
+  
+     9 │ 'a' as String;
+    10 │ 
+  > 11 │ class Foo<T = String> extends Bar<String> implements Baz<Object> {
+       │               ^^^^^^
+    12 │   constructor(foo: String | Object) {}
+    13 │ 
+  
+  i Safe fix: Fix this problem
+  
+     9  9 │   'a' as String;
+    10 10 │   
+    11    │ - class·Foo<T·=·String>·extends·Bar<String>·implements·Baz<Object>·{
+       11 │ + class·Foo<T·=·string>·extends·Bar<String>·implements·Baz<Object>·{
+    12 12 │     constructor(foo: String | Object) {}
+    13 13 │   
+  
+
+```
+
+```
+invalid.ts:11:35 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use String as a type. Use string instead.
+  
+     9 │ 'a' as String;
+    10 │ 
+  > 11 │ class Foo<T = String> extends Bar<String> implements Baz<Object> {
+       │                                   ^^^^^^
+    12 │   constructor(foo: String | Object) {}
+    13 │ 
+  
+  i Safe fix: Fix this problem
+  
+     9  9 │   'a' as String;
+    10 10 │   
+    11    │ - class·Foo<T·=·String>·extends·Bar<String>·implements·Baz<Object>·{
+       11 │ + class·Foo<T·=·String>·extends·Bar<string>·implements·Baz<Object>·{
+    12 12 │     constructor(foo: String | Object) {}
+    13 13 │   
+  
+
+```
+
+```
+invalid.ts:11:58 lint/nursery/banTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use Object as a type. The `Object` type actually means "any non-nullish value", so it is marginally better than `unknown`.
+    - If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+    - If you want a type meaning "any value", you probably want `unknown` instead.
+  
+     9 │ 'a' as String;
+    10 │ 
+  > 11 │ class Foo<T = String> extends Bar<String> implements Baz<Object> {
+       │                                                          ^^^^^^
+    12 │   constructor(foo: String | Object) {}
+    13 │ 
+  
+
+```
+
+```
+invalid.ts:12:20 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use String as a type. Use string instead.
+  
+    11 │ class Foo<T = String> extends Bar<String> implements Baz<Object> {
+  > 12 │   constructor(foo: String | Object) {}
+       │                    ^^^^^^
+    13 │ 
+    14 │   exit(): Array<String> {
+  
+  i Safe fix: Fix this problem
+  
+    10 10 │   
+    11 11 │   class Foo<T = String> extends Bar<String> implements Baz<Object> {
+    12    │ - ··constructor(foo:·String·|·Object)·{}
+       12 │ + ··constructor(foo:·string·|·Object)·{}
+    13 13 │   
+    14 14 │     exit(): Array<String> {
+  
+
+```
+
+```
+invalid.ts:12:29 lint/nursery/banTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use Object as a type. The `Object` type actually means "any non-nullish value", so it is marginally better than `unknown`.
+    - If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+    - If you want a type meaning "any value", you probably want `unknown` instead.
+  
+    11 │ class Foo<T = String> extends Bar<String> implements Baz<Object> {
+  > 12 │   constructor(foo: String | Object) {}
+       │                             ^^^^^^
+    13 │ 
+    14 │   exit(): Array<String> {
+  
+
+```
+
+```
+invalid.ts:14:17 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use String as a type. Use string instead.
+  
+    12 │   constructor(foo: String | Object) {}
+    13 │ 
+  > 14 │   exit(): Array<String> {
+       │                 ^^^^^^
+    15 │     const foo: String = 1 as String;
+    16 │   }
+  
+  i Safe fix: Fix this problem
+  
+    12 12 │     constructor(foo: String | Object) {}
+    13 13 │   
+    14    │ - ··exit():·Array<String>·{
+       14 │ + ··exit():·Array<string>·{
+    15 15 │       const foo: String = 1 as String;
+    16 16 │     }
+  
+
+```
+
+```
+invalid.ts:15:16 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use String as a type. Use string instead.
+  
+    14 │   exit(): Array<String> {
+  > 15 │     const foo: String = 1 as String;
+       │                ^^^^^^
+    16 │   }
+    17 │ }
+  
+  i Safe fix: Fix this problem
+  
+    13 13 │   
+    14 14 │     exit(): Array<String> {
+    15    │ - ····const·foo:·String·=·1·as·String;
+       15 │ + ····const·foo:·string·=·1·as·String;
+    16 16 │     }
+    17 17 │   }
+  
+
+```
+
+```
+invalid.ts:15:30 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use String as a type. Use string instead.
+  
+    14 │   exit(): Array<String> {
+  > 15 │     const foo: String = 1 as String;
+       │                              ^^^^^^
+    16 │   }
+    17 │ }
+  
+  i Safe fix: Fix this problem
+  
+    13 13 │   
+    14 14 │     exit(): Array<String> {
+    15    │ - ····const·foo:·String·=·1·as·String;
+       15 │ + ····const·foo:·String·=·1·as·string;
+    16 16 │     }
+    17 17 │   }
+  
+
+```
+
+```
+invalid.ts:19:20 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use Boolean as a type. Use boolean instead.
+  
+    17 │ }
+    18 │ 
+  > 19 │ let baz: [boolean, Boolean] = [true, false];
+       │                    ^^^^^^^
+    20 │ 
+    21 │ let z = true as Boolean;
+  
+  i Safe fix: Fix this problem
+  
+    17 17 │   }
+    18 18 │   
+    19    │ - let·baz:·[boolean,·Boolean]·=·[true,·false];
+       19 │ + let·baz:·[boolean,·boolean]·=·[true,·false];
+    20 20 │   
+    21 21 │   let z = true as Boolean;
+  
+
+```
+
+```
+invalid.ts:21:17 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use Boolean as a type. Use boolean instead.
+  
+    19 │ let baz: [boolean, Boolean] = [true, false];
+    20 │ 
+  > 21 │ let z = true as Boolean;
+       │                 ^^^^^^^
+    22 │ 
+    23 │ type Props = {};
+  
+  i Safe fix: Fix this problem
+  
+    19 19 │   let baz: [boolean, Boolean] = [true, false];
+    20 20 │   
+    21    │ - let·z·=·true·as·Boolean;
+       21 │ + let·z·=·true·as·boolean;
+    22 22 │   
+    23 23 │   type Props = {};
+  
+
+```
+
+```
+invalid.ts:23:14 lint/nursery/banTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use {} as a type. `{}` actually means "any non-nullish value".
+    - If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+    - If you want a type meaning "any value", you probably want `unknown` instead.
+    - If you want a type meaning "empty object", you probably want `Record<string, never>` instead.
+  
+    21 │ let z = true as Boolean;
+    22 │ 
+  > 23 │ type Props = {};
+       │              ^^
+    24 │ 
+    25 │ const abc: {} = [{}]
+  
+
+```
+
+```
+invalid.ts:25:12 lint/nursery/banTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use {} as a type. `{}` actually means "any non-nullish value".
+    - If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
+    - If you want a type meaning "any value", you probably want `unknown` instead.
+    - If you want a type meaning "empty object", you probably want `Record<string, never>` instead.
+  
+    23 │ type Props = {};
+    24 │ 
+  > 25 │ const abc: {} = [{}]
+       │            ^^^
+    26 │ 
+    27 │ let fn: Function = () => true
+  
+
+```
+
+```
+invalid.ts:27:9 lint/nursery/banTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use Function as a type. The `Function` type accepts any function-like value.
+    It provides no type safety when calling the function, which can be a common source of bugs.
+    It also accepts things like class declarations, which will throw at runtime as they will not be called with `new`.
+    If you are expecting the function to accept certain arguments, you should explicitly define the function shape.
+  
+    25 │ const abc: {} = [{}]
+    26 │ 
+  > 27 │ let fn: Function = () => true
+       │         ^^^^^^^^
+    28 │ 
+  
+
+```
+
+
