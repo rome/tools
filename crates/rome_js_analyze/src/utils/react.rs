@@ -18,34 +18,20 @@ pub(crate) struct ReactCallWithDependencyResult {
 impl ReactCallWithDependencyResult {
     /// Returns all [Reference] captured by the closure argument of the React hook.  
     /// See [react_hook_with_dependency].
-    pub fn all_captures(&self, model: &SemanticModel) -> Vec<Capture> {
-        if let Some(closure) = self
+    pub fn all_captures(&self, model: &SemanticModel) -> impl Iterator<Item = Capture> {
+        self
             .closure_node
             .as_ref()
             .and_then(|node| node.as_js_arrow_function_expression())
-            .map(|x| x.closure(model))
-        {
-            let range = closure.closure_range();
-
-            let mut descendents = closure.descendents();
-
-            let mut captures: Vec<Capture> = if let Some(closure) = descendents.next() {
-                closure.all_captures().collect()
-            } else {
-                vec![]
-            };
-
-            for closure in descendents {
-                for capture in closure.all_captures() {
-                    if capture.declaration_range().intersect(*range).is_none() {
-                        captures.push(capture);
-                    }
-                }
-            }
-            captures
-        } else {
-            vec![]
-        }
+            .map(|arrow_function| {
+                let closure = arrow_function.closure(model);
+                let range = closure.closure_range().clone();
+                closure.descendents()
+                    .flat_map(|closure| closure.all_captures())
+                    .filter(move |capture| capture.declaration_range().intersect(range).is_none())
+            })
+            .into_iter()
+            .flatten()
     }
 
     /// Returns all dependencies of a React hook.  
