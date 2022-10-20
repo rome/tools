@@ -97,9 +97,9 @@ pub(crate) fn lsp_proxy() -> Result<(), Termination> {
     Ok(())
 }
 
-/// start a proxy process.
-/// receive process stdin and then copy the content to lsp socket.
-/// copy to the process stdout when the lsp responds to the message
+/// Start a proxy process.
+/// Receives a process via `stdin` and then copy the content to the LSP socket.
+/// Copy to the process on `stdout` when the LSP responds to a message
 async fn start_lsp_proxy(rt: &Runtime) -> Result<(), Termination> {
     ensure_daemon().await?;
 

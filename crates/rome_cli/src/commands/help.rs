@@ -12,7 +12,7 @@ const MAIN: Markup = markup! {
     - "<Emphasis>"init"</Emphasis>"         Bootstraps a new rome project
     - "<Emphasis>"start"</Emphasis>"        Start the Rome daemon server process
     - "<Emphasis>"stop"</Emphasis>"         Stop the Rome daemon server process
-    - "<Emphasis>"lsp-proxy"</Emphasis>"    Start a proxy process make Rome LSP server support communicates via stdin/stdout
+    - "<Emphasis>"lsp-proxy"</Emphasis>"    Acts as a server for the Language Server Protocol over stdin/stdout
     - "<Emphasis>"rage"</Emphasis>"         Prints information for debugging
     - "<Emphasis>"version"</Emphasis>"      Shows the Rome version information and quit
     - "<Emphasis>"help"</Emphasis>"         Prints this help message
@@ -97,7 +97,7 @@ const STOP: Markup = markup! {
 };
 
 const START_LSP_PROXY: Markup = markup! {
-"Rome lsp-proxy: Start a proxy process make Rome LSP server support communicates via stdin/stdout
+"Rome lsp-proxy: Acts as a server for the Language Server Protocol over stdin/stdout
 
 	"<Emphasis>"USAGE:"</Emphasis>"
 		rome lsp-proxy"
