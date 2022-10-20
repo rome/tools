@@ -137,7 +137,6 @@ impl JsxSelfClosingElement {
     ) -> SyntaxResult<Option<JsxAttribute>> {
         find_attribute_by_name(self.attributes(), name_to_lookup)
     }
-
 }
 
 impl JsxAttributeList {
@@ -145,8 +144,10 @@ impl JsxAttributeList {
     ///
     /// Each name of "names_to_lookup" should be unique.
     /// Support maximum of 16 names.
-    pub fn find_attributes_by_name<const N: usize>(&self, names_to_lookup: [&str; N]) -> [Option<JsxAttribute>; N]
-    {
+    pub fn find_attributes_by_name<const N: usize>(
+        &self,
+        names_to_lookup: [&str; N],
+    ) -> [Option<JsxAttribute>; N] {
         // assert there are no duplicates
         debug_assert!(HashSet::<_>::from_iter(names_to_lookup).len() == N);
         debug_assert!(N <= 16);
@@ -158,8 +159,10 @@ impl JsxAttributeList {
 
         'attributes: for att in self.iter() {
             if let Some(attribute) = att.as_jsx_attribute() {
-                if let Some(name) = attribute.name().ok()
-                    .and_then(|x| x.as_jsx_name()?.value_token().ok()) 
+                if let Some(name) = attribute
+                    .name()
+                    .ok()
+                    .and_then(|x| x.as_jsx_name()?.value_token().ok())
                 {
                     let name = name.text_trimmed();
                     for i in 0..N {
@@ -175,7 +178,7 @@ impl JsxAttributeList {
                     }
                 }
             }
-        };
+        }
 
         results
     }
