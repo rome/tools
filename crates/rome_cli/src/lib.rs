@@ -89,7 +89,7 @@ impl<'app> CliSession<'app> {
 
             Some("start") => commands::daemon::start(self),
             Some("stop") => commands::daemon::stop(self),
-            Some("lsp_proxy") => commands::daemon::lsp_proxy(),
+            Some("lsp-proxy") => commands::daemon::lsp_proxy(),
 
             // Internal commands
             Some("__run_server") => commands::daemon::run_server(),

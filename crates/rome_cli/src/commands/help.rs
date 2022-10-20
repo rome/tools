@@ -12,6 +12,7 @@ const MAIN: Markup = markup! {
     - "<Emphasis>"init"</Emphasis>"         Bootstraps a new rome project
     - "<Emphasis>"start"</Emphasis>"        Start the Rome daemon server process
     - "<Emphasis>"stop"</Emphasis>"         Stop the Rome daemon server process
+    - "<Emphasis>"lsp-proxy"</Emphasis>"    Start a proxy process make Rome LSP server support communicates via stdin/stdout
     - "<Emphasis>"rage"</Emphasis>"         Prints information for debugging
     - "<Emphasis>"version"</Emphasis>"      Shows the Rome version information and quit
     - "<Emphasis>"help"</Emphasis>"         Prints this help message
@@ -95,6 +96,13 @@ const STOP: Markup = markup! {
     rome stop"
 };
 
+const START_LSP_PROXY: Markup = markup! {
+"Rome lsp-proxy: Start a proxy process make Rome LSP server support communicates via stdin/stdout
+
+	"<Emphasis>"USAGE:"</Emphasis>"
+		rome lsp-proxy"
+};
+
 const RAGE: Markup = markup! {
 "Rome rage: Prints information for debugging
 
@@ -118,6 +126,7 @@ pub(crate) fn help(mut session: CliSession, command: Option<&str>) -> Result<(),
         Some("init") => INIT,
         Some("start") => START,
         Some("stop") => STOP,
+        Some("lsp-proxy") => START_LSP_PROXY,
         Some("version") => VERSION_HELP_TEXT,
         Some("rage") => RAGE,
 
