@@ -57,6 +57,16 @@ function MyComponent6() {
   }, []);
 }
 
+// same variable multiple times
+
+function MyComponent7() {
+  let a = 1;
+  useEffect(() => {
+    console.log(a);
+    return () => console.log(a);
+  }, []);
+}
+
 ```
 
 # Diagnostics
@@ -391,6 +401,39 @@ missingDependenciesInvalid.js:49:3 lint/nursery/useExhaustiveDependencies ━━
        │                                ^
     51 │   }, []);
     52 │ }
+  
+
+```
+
+```
+missingDependenciesInvalid.js:58:3 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This hook do not specify all of its dependencies.
+  
+    56 │ function MyComponent7() {
+    57 │   let a = 1;
+  > 58 │   useEffect(() => {
+       │   ^^^^^^^^^
+    59 │     console.log(a);
+    60 │     return () => console.log(a);
+  
+  i This dependency is not specified in the hook dependency list.
+  
+    57 │   let a = 1;
+    58 │   useEffect(() => {
+  > 59 │     console.log(a);
+       │                 ^
+    60 │     return () => console.log(a);
+    61 │   }, []);
+  
+  i This dependency is not specified in the hook dependency list.
+  
+    58 │   useEffect(() => {
+    59 │     console.log(a);
+  > 60 │     return () => console.log(a);
+       │                              ^
+    61 │   }, []);
+    62 │ }
   
 
 ```

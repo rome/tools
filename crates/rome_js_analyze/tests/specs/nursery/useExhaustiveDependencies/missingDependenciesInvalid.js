@@ -50,3 +50,13 @@ function MyComponent6() {
       return () => console.log(a)
   }, []);
 }
+
+// same variable multiple times
+
+function MyComponent7() {
+  let a = 1;
+  useEffect(() => {
+    console.log(a);
+    return () => console.log(a);
+  }, []);
+}

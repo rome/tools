@@ -105,7 +105,7 @@ pub enum Fix {
     /// When a dependency needs to be added.
     AddDependency(TextRange, Vec<Capture>),
     /// When a dependency needs to be removed.
-    RemoveDependency(TextRange, TextRange),
+    RemoveDependency(TextRange, Vec<TextRange>),
 }
 
 impl Rule for UseExhaustiveDependencies {
@@ -203,8 +203,8 @@ impl Rule for UseExhaustiveDependencies {
                 signals.push(Fix::AddDependency(result.function_name_range, captures));
             }
 
-            for dep_range in remove_deps {
-                signals.push(Fix::RemoveDependency(result.function_name_range, dep_range));
+            if !remove_deps.is_empty() {
+                signals.push(Fix::RemoveDependency(result.function_name_range, remove_deps));
             }
         }
 
@@ -214,7 +214,7 @@ impl Rule for UseExhaustiveDependencies {
     fn diagnostic(_: &RuleContext<Self>, dep: &Self::State) -> Option<RuleDiagnostic> {
         match dep {
             Fix::AddDependency(use_effect_range, captures) => {
-                let diag = RuleDiagnostic::new(
+                let mut diag = RuleDiagnostic::new(
                     rule_category!(),
                     use_effect_range,
                     markup! {
@@ -222,11 +222,10 @@ impl Rule for UseExhaustiveDependencies {
                     },
                 );
 
-                let mut diag = diag;
-
                 for capture in captures.iter() {
                     let node = capture.node();
-                    diag = diag.secondary(
+                    diag = diag.label(
+                        rome_diagnostics::Severity::Note,
                         node.text_trimmed_range(),
                         "This dependency is not specified in the hook dependency list.",
                     );
@@ -234,15 +233,21 @@ impl Rule for UseExhaustiveDependencies {
 
                 Some(diag)
             }
-            Fix::RemoveDependency(use_effect_range, dep_range) => {
-                let diag = RuleDiagnostic::new(
+            Fix::RemoveDependency(use_effect_range, ranges) => {
+                let mut diag = RuleDiagnostic::new(
                     rule_category!(),
                     use_effect_range,
                     markup! {
                         "This hook specifies more dependencies than necessary."
                     },
-                )
-                .secondary(dep_range, "This dependency can be removed from the list.");
+                );
+
+                for range in ranges.iter() {
+                    diag = diag.secondary(
+                        range,
+                        "This dependency can be removed from the list.",
+                    );
+                }
 
                 Some(diag)
             }
