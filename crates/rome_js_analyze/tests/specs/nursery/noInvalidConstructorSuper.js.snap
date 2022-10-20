@@ -1,0 +1,379 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noInvalidConstructorSuper.js
+---
+# Input
+```js
+// invalid
+class A extends B{
+    constructor() {
+    }
+}
+class A extends B{
+    constructor() {
+        missing_super()
+    }
+}
+class A {
+    constructor() {
+        super()
+    }
+}
+
+class A  extends  null {
+    constructor() {
+        super()
+    }
+}
+class A extends Object { constructor() { return a; } }
+class A extends 'test' { constructor() { super(); } }
+class A extends 100 { constructor() { super(); } }
+class A extends (B = 5) { constructor() { super(); } }
+class A extends (B && 5) { constructor() { super(); } }
+class A extends (B &&= 5) { constructor() { super(); } }
+class A extends (B += C) { constructor() { super(); } }
+class A extends (B -= C) { constructor() { super(); } }
+class A extends (B **= C) { constructor() { super(); } }
+class A extends (B |= C) { constructor() { super(); } }
+class A extends undefined { constructor() { super(); } }
+// valid
+class A  extends B {
+    constructor() {
+        super()
+    }
+}
+class A extends (B &&= C) { constructor() { super(); } }
+class A extends (false && B) { constructor() { super(); } }
+class A extends (B, C) { constructor() { super(); } }
+class A extends null { constructor() { return a; } }
+class A extends Object { constructor() { super() } }
+class A extends (5 && B) { constructor() { super(); } }
+class A extends (B || C) { constructor() { super(); } }
+
+```
+
+# Diagnostics
+```
+noInvalidConstructorSuper.js:2:9 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class extends another class and a super() call is expected.
+  
+    1 │ // invalid
+  > 2 │ class A extends B{
+      │         ^^^^^^^^^
+    3 │     constructor() {
+    4 │     }
+  
+
+```
+
+```
+noInvalidConstructorSuper.js:6:9 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class extends another class and a super() call is expected.
+  
+    4 │     }
+    5 │ }
+  > 6 │ class A extends B{
+      │         ^^^^^^^^^
+    7 │     constructor() {
+    8 │         missing_super()
+  
+
+```
+
+```
+noInvalidConstructorSuper.js:13:9 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class should not have a super() call. You should remove it.
+  
+    11 │ class A {
+    12 │     constructor() {
+  > 13 │         super()
+       │         ^^^^^
+    14 │     }
+    15 │ }
+  
+
+```
+
+```
+noInvalidConstructorSuper.js:19:9 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class calls super(), but the class extends from a non-constructor.
+  
+    17 │ class A  extends  null {
+    18 │     constructor() {
+  > 19 │         super()
+       │         ^^^^^
+    20 │     }
+    21 │ }
+  
+  i This is where the non-constructor is used.
+  
+    15 │ }
+    16 │ 
+  > 17 │ class A  extends  null {
+       │                   ^^^^
+    18 │     constructor() {
+    19 │         super()
+  
+
+```
+
+```
+noInvalidConstructorSuper.js:22:9 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class extends another class and a super() call is expected.
+  
+    20 │     }
+    21 │ }
+  > 22 │ class A extends Object { constructor() { return a; } }
+       │         ^^^^^^^^^^^^^^
+    23 │ class A extends 'test' { constructor() { super(); } }
+    24 │ class A extends 100 { constructor() { super(); } }
+  
+
+```
+
+```
+noInvalidConstructorSuper.js:23:42 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class calls super(), but the class extends from a non-constructor.
+  
+    21 │ }
+    22 │ class A extends Object { constructor() { return a; } }
+  > 23 │ class A extends 'test' { constructor() { super(); } }
+       │                                          ^^^^^
+    24 │ class A extends 100 { constructor() { super(); } }
+    25 │ class A extends (B = 5) { constructor() { super(); } }
+  
+  i This is where the non-constructor is used.
+  
+    21 │ }
+    22 │ class A extends Object { constructor() { return a; } }
+  > 23 │ class A extends 'test' { constructor() { super(); } }
+       │                 ^^^^^^
+    24 │ class A extends 100 { constructor() { super(); } }
+    25 │ class A extends (B = 5) { constructor() { super(); } }
+  
+
+```
+
+```
+noInvalidConstructorSuper.js:24:39 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class calls super(), but the class extends from a non-constructor.
+  
+    22 │ class A extends Object { constructor() { return a; } }
+    23 │ class A extends 'test' { constructor() { super(); } }
+  > 24 │ class A extends 100 { constructor() { super(); } }
+       │                                       ^^^^^
+    25 │ class A extends (B = 5) { constructor() { super(); } }
+    26 │ class A extends (B && 5) { constructor() { super(); } }
+  
+  i This is where the non-constructor is used.
+  
+    22 │ class A extends Object { constructor() { return a; } }
+    23 │ class A extends 'test' { constructor() { super(); } }
+  > 24 │ class A extends 100 { constructor() { super(); } }
+       │                 ^^^
+    25 │ class A extends (B = 5) { constructor() { super(); } }
+    26 │ class A extends (B && 5) { constructor() { super(); } }
+  
+
+```
+
+```
+noInvalidConstructorSuper.js:25:43 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class calls super(), but the class extends from a non-constructor.
+  
+    23 │ class A extends 'test' { constructor() { super(); } }
+    24 │ class A extends 100 { constructor() { super(); } }
+  > 25 │ class A extends (B = 5) { constructor() { super(); } }
+       │                                           ^^^^^
+    26 │ class A extends (B && 5) { constructor() { super(); } }
+    27 │ class A extends (B &&= 5) { constructor() { super(); } }
+  
+  i This is where the non-constructor is used.
+  
+    23 │ class A extends 'test' { constructor() { super(); } }
+    24 │ class A extends 100 { constructor() { super(); } }
+  > 25 │ class A extends (B = 5) { constructor() { super(); } }
+       │                 ^^^^^^^
+    26 │ class A extends (B && 5) { constructor() { super(); } }
+    27 │ class A extends (B &&= 5) { constructor() { super(); } }
+  
+
+```
+
+```
+noInvalidConstructorSuper.js:26:44 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class calls super(), but the class extends from a non-constructor.
+  
+    24 │ class A extends 100 { constructor() { super(); } }
+    25 │ class A extends (B = 5) { constructor() { super(); } }
+  > 26 │ class A extends (B && 5) { constructor() { super(); } }
+       │                                            ^^^^^
+    27 │ class A extends (B &&= 5) { constructor() { super(); } }
+    28 │ class A extends (B += C) { constructor() { super(); } }
+  
+  i This is where the non-constructor is used.
+  
+    24 │ class A extends 100 { constructor() { super(); } }
+    25 │ class A extends (B = 5) { constructor() { super(); } }
+  > 26 │ class A extends (B && 5) { constructor() { super(); } }
+       │                 ^^^^^^^^
+    27 │ class A extends (B &&= 5) { constructor() { super(); } }
+    28 │ class A extends (B += C) { constructor() { super(); } }
+  
+
+```
+
+```
+noInvalidConstructorSuper.js:27:45 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class calls super(), but the class extends from a non-constructor.
+  
+    25 │ class A extends (B = 5) { constructor() { super(); } }
+    26 │ class A extends (B && 5) { constructor() { super(); } }
+  > 27 │ class A extends (B &&= 5) { constructor() { super(); } }
+       │                                             ^^^^^
+    28 │ class A extends (B += C) { constructor() { super(); } }
+    29 │ class A extends (B -= C) { constructor() { super(); } }
+  
+  i This is where the non-constructor is used.
+  
+    25 │ class A extends (B = 5) { constructor() { super(); } }
+    26 │ class A extends (B && 5) { constructor() { super(); } }
+  > 27 │ class A extends (B &&= 5) { constructor() { super(); } }
+       │                 ^^^^^^^^^
+    28 │ class A extends (B += C) { constructor() { super(); } }
+    29 │ class A extends (B -= C) { constructor() { super(); } }
+  
+
+```
+
+```
+noInvalidConstructorSuper.js:28:44 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class calls super(), but the class extends from a non-constructor.
+  
+    26 │ class A extends (B && 5) { constructor() { super(); } }
+    27 │ class A extends (B &&= 5) { constructor() { super(); } }
+  > 28 │ class A extends (B += C) { constructor() { super(); } }
+       │                                            ^^^^^
+    29 │ class A extends (B -= C) { constructor() { super(); } }
+    30 │ class A extends (B **= C) { constructor() { super(); } }
+  
+  i This is where the non-constructor is used.
+  
+    26 │ class A extends (B && 5) { constructor() { super(); } }
+    27 │ class A extends (B &&= 5) { constructor() { super(); } }
+  > 28 │ class A extends (B += C) { constructor() { super(); } }
+       │                 ^^^^^^^^
+    29 │ class A extends (B -= C) { constructor() { super(); } }
+    30 │ class A extends (B **= C) { constructor() { super(); } }
+  
+
+```
+
+```
+noInvalidConstructorSuper.js:29:44 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class calls super(), but the class extends from a non-constructor.
+  
+    27 │ class A extends (B &&= 5) { constructor() { super(); } }
+    28 │ class A extends (B += C) { constructor() { super(); } }
+  > 29 │ class A extends (B -= C) { constructor() { super(); } }
+       │                                            ^^^^^
+    30 │ class A extends (B **= C) { constructor() { super(); } }
+    31 │ class A extends (B |= C) { constructor() { super(); } }
+  
+  i This is where the non-constructor is used.
+  
+    27 │ class A extends (B &&= 5) { constructor() { super(); } }
+    28 │ class A extends (B += C) { constructor() { super(); } }
+  > 29 │ class A extends (B -= C) { constructor() { super(); } }
+       │                 ^^^^^^^^
+    30 │ class A extends (B **= C) { constructor() { super(); } }
+    31 │ class A extends (B |= C) { constructor() { super(); } }
+  
+
+```
+
+```
+noInvalidConstructorSuper.js:30:45 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class calls super(), but the class extends from a non-constructor.
+  
+    28 │ class A extends (B += C) { constructor() { super(); } }
+    29 │ class A extends (B -= C) { constructor() { super(); } }
+  > 30 │ class A extends (B **= C) { constructor() { super(); } }
+       │                                             ^^^^^
+    31 │ class A extends (B |= C) { constructor() { super(); } }
+    32 │ class A extends undefined { constructor() { super(); } }
+  
+  i This is where the non-constructor is used.
+  
+    28 │ class A extends (B += C) { constructor() { super(); } }
+    29 │ class A extends (B -= C) { constructor() { super(); } }
+  > 30 │ class A extends (B **= C) { constructor() { super(); } }
+       │                 ^^^^^^^^^
+    31 │ class A extends (B |= C) { constructor() { super(); } }
+    32 │ class A extends undefined { constructor() { super(); } }
+  
+
+```
+
+```
+noInvalidConstructorSuper.js:31:44 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class calls super(), but the class extends from a non-constructor.
+  
+    29 │ class A extends (B -= C) { constructor() { super(); } }
+    30 │ class A extends (B **= C) { constructor() { super(); } }
+  > 31 │ class A extends (B |= C) { constructor() { super(); } }
+       │                                            ^^^^^
+    32 │ class A extends undefined { constructor() { super(); } }
+    33 │ // valid
+  
+  i This is where the non-constructor is used.
+  
+    29 │ class A extends (B -= C) { constructor() { super(); } }
+    30 │ class A extends (B **= C) { constructor() { super(); } }
+  > 31 │ class A extends (B |= C) { constructor() { super(); } }
+       │                 ^^^^^^^^
+    32 │ class A extends undefined { constructor() { super(); } }
+    33 │ // valid
+  
+
+```
+
+```
+noInvalidConstructorSuper.js:32:45 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This class calls super(), but the class extends from a non-constructor.
+  
+    30 │ class A extends (B **= C) { constructor() { super(); } }
+    31 │ class A extends (B |= C) { constructor() { super(); } }
+  > 32 │ class A extends undefined { constructor() { super(); } }
+       │                                             ^^^^^
+    33 │ // valid
+    34 │ class A  extends B {
+  
+  i This is where the non-constructor is used.
+  
+    30 │ class A extends (B **= C) { constructor() { super(); } }
+    31 │ class A extends (B |= C) { constructor() { super(); } }
+  > 32 │ class A extends undefined { constructor() { super(); } }
+       │                 ^^^^^^^^^
+    33 │ // valid
+    34 │ class A  extends B {
+  
+
+```
+
+

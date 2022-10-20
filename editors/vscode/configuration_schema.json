@@ -560,6 +560,16 @@
             }
           ]
         },
+        "noInvalidConstructorSuper": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noNewSymbol": {
           "anyOf": [
             {

@@ -298,6 +298,13 @@ Report when a DOM element or a component uses both <code>children</code> and <co
 Disallow the <code>any</code> type usage
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noInvalidConstructorSuper">
+	<a href="/docs/lint/rules/noInvalidConstructorSuper">noInvalidConstructorSuper</a>
+</h3>
+Prevents the incorrect use of <code>super()</code> inside classes.
+It also checks whether a call <code>super()</code> is missing from classes that extends other constructors.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noNewSymbol">
 	<a href="/docs/lint/rules/noNewSymbol">noNewSymbol</a>
 </h3>
