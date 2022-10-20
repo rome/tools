@@ -34,7 +34,7 @@ declare_rule! {
     ///
     /// ### Valid
     ///
-    /// ```js,expect_diagnostic
+    /// ```js
     /// for (var i = 0; i < 10; i++) {
     /// }
     /// ```
@@ -201,7 +201,7 @@ impl Rule for UseValidForDirection {
             rule_category!(),
             for_range.cover(r_paren_range),
             markup! {
-                "TODO: message"
+                "The update clause in this loop moves the variable in the wrong direction."
             },
         ))
     }
