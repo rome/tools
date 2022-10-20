@@ -109,13 +109,13 @@ macro_rules! assert_remove_ok {
 
 #[test]
 pub fn ok_find_attributes_by_name () {
-    let r = rome_js_parser::parse(r#"<a a="A" b="B" c="C"/>"#, 0.into(), SourceType::jsx());
+    let r = rome_js_parser::parse(r#"<a a="A" c="C" b="B" />"#, 0.into(), SourceType::jsx());
     let list = r.syntax()
         .descendants()
         .filter_map(|x| rome_js_syntax::JsxAttributeList::cast(x))
         .next().unwrap();
     let [a, c, d] = list.find_attributes_by_name(["a", "c", "d"]);
     assert_eq!(a.unwrap().initializer().unwrap().value().unwrap().to_string(), "\"A\" ");
-    assert_eq!(c.unwrap().initializer().unwrap().value().unwrap().to_string(), "\"C\"");
+    assert_eq!(c.unwrap().initializer().unwrap().value().unwrap().to_string(), "\"C\" ");
     assert!(d.is_none());
 }

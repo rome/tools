@@ -1,4 +1,4 @@
-use std::mem::MaybeUninit;
+use std::collections::HashSet;
 
 use crate::{
     JsxAttribute, JsxAttributeList, JsxName, JsxOpeningElement, JsxSelfClosingElement, JsxString,
@@ -141,28 +141,43 @@ impl JsxSelfClosingElement {
 }
 
 impl JsxAttributeList {
-    pub fn find_attributes_by_name<const N: usize>( &self, names_to_lookup: [&str; N]) -> [Option<JsxAttribute>; N]
+    /// Find and return the `JsxAttribute` that matches the given name like [find_attribute_by_name].
+    ///
+    /// Each name of "names_to_lookup" should be unique.
+    /// Support maximum of 16 names.
+    pub fn find_attributes_by_name<const N: usize>(&self, names_to_lookup: [&str; N]) -> [Option<JsxAttribute>; N]
     {
-        const INIT: Option<JsxAttribute> = None;
-        let mut result = [INIT; N];
+        // assert there are no duplicates
+        debug_assert!(HashSet::<_>::from_iter(names_to_lookup).len() == N);
+        debug_assert!(N <= 16);
 
-        for att in self.iter() {
-            if let Some(attribute) = JsxAttribute::cast_ref(att.syntax()) {
+        const INIT: Option<JsxAttribute> = None;
+        let mut results = [INIT; N];
+
+        let mut missing = N;
+
+        'attributes: for att in self.iter() {
+            if let Some(attribute) = att.as_jsx_attribute() {
                 if let Some(name) = attribute.name().ok()
-                    .and_then(|x| JsxName::cast_ref(x.syntax())) 
-                    .and_then(|x| x.value_token().ok())
+                    .and_then(|x| x.as_jsx_name()?.value_token().ok()) 
                 {
                     let name = name.text_trimmed();
-                    for (i, name_to_lookup) in names_to_lookup.iter().enumerate() {
-                        if result[i].is_none() && *name_to_lookup == name {
-                            result[i] = Some(attribute.clone());
+                    for i in 0..N {
+                        if results[i].is_none() && names_to_lookup[i] == name {
+                            results[i] = Some(attribute.clone());
+                            if missing == 1 {
+                                break 'attributes;
+                            } else {
+                                missing -= 1;
+                                break;
+                            }
                         }
                     }
                 }
             }
         };
 
-        result
+        results
     }
 }
 
