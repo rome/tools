@@ -138,13 +138,19 @@ impl From<SnapshotPayload<'_>> for CliSnapshot {
             }
         }
 
-        for (file, entry) in fs.files() {
-            let content = entry.lock();
-            let content = std::str::from_utf8(content.as_slice()).unwrap();
+        let mut files: Vec<_> = fs
+            .files()
+            .into_iter()
+            .map(|(file, entry)| {
+                let content = entry.lock();
+                let content = std::str::from_utf8(content.as_slice()).unwrap();
+                (file.to_str().unwrap().to_string(), String::from(content))
+            })
+            .collect();
+        files.sort();
 
-            cli_snapshot
-                .files
-                .insert(file.to_str().unwrap().to_string(), String::from(content));
+        for (file, content) in files {
+            cli_snapshot.files.insert(file, content);
         }
 
         let in_buffer = &console.in_buffer;
