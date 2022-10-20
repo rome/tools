@@ -50,7 +50,7 @@ pub(crate) use self::windows::{ensure_daemon, print_socket, run_daemon};
 #[cfg(unix)]
 mod unix;
 #[cfg(unix)]
-use self::unix::open_socket;
+pub(crate) use self::unix::open_socket;
 #[cfg(unix)]
 pub(crate) use self::unix::{ensure_daemon, print_socket, run_daemon};
 

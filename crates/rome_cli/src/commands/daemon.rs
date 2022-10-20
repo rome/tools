@@ -1,9 +1,8 @@
 use rome_console::{markup, ConsoleExt};
 use rome_lsp::ServerFactory;
 use rome_service::{workspace::WorkspaceClient, RomeError, TransportError};
-use std::env;
-use std::path::PathBuf;
-use std::{fs, io};
+use std::{env, fs, path::PathBuf};
+use tokio::io;
 use tokio::runtime::Runtime;
 use tracing::subscriber::Interest;
 use tracing::{debug_span, metadata::LevelFilter, Instrument, Metadata};
@@ -16,7 +15,7 @@ use tracing_tree::HierarchicalLayer;
 
 use crate::{
     open_transport,
-    service::{self, ensure_daemon, run_daemon},
+    service::{self, ensure_daemon, open_socket, run_daemon},
     CliSession, Termination,
 };
 
@@ -89,6 +88,59 @@ pub(crate) fn print_socket() -> Result<(), Termination> {
     let rt = Runtime::new()?;
     rt.block_on(service::print_socket())?;
     Ok(())
+}
+
+pub(crate) fn lsp_proxy() -> Result<(), Termination> {
+    let rt = Runtime::new()?;
+    rt.block_on(start_lsp_proxy(&rt))?;
+
+    Ok(())
+}
+
+/// Start a proxy process.
+/// Receives a process via `stdin` and then copy the content to the LSP socket.
+/// Copy to the process on `stdout` when the LSP responds to a message
+async fn start_lsp_proxy(rt: &Runtime) -> Result<(), Termination> {
+    ensure_daemon().await?;
+
+    match open_socket().await? {
+        Some((mut owned_read_half, mut owned_write_half)) => {
+            // forward stdin to socket
+            let mut stdin = io::stdin();
+            let input_handle = rt.spawn(async move {
+                loop {
+                    match io::copy(&mut stdin, &mut owned_write_half).await {
+                        Ok(b) => {
+                            if b == 0 {
+                                return Ok(());
+                            }
+                        }
+                        Err(err) => return Err(err),
+                    };
+                }
+            });
+
+            // receive socket response to stdout
+            let mut stdout = io::stdout();
+            let out_put_handle = rt.spawn(async move {
+                loop {
+                    match io::copy(&mut owned_read_half, &mut stdout).await {
+                        Ok(b) => {
+                            if b == 0 {
+                                return Ok(());
+                            }
+                        }
+                        Err(err) => return Err(err),
+                    };
+                }
+            });
+
+            let _ = input_handle.await;
+            let _ = out_put_handle.await;
+            Ok(())
+        }
+        None => Ok(()),
+    }
 }
 
 const fn log_file_name_prefix() -> &'static str {
