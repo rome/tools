@@ -289,11 +289,9 @@ impl Closure {
     pub fn all_captures(&self) -> impl Iterator<Item = Capture> {
         let scope = &self.data.scopes[self.scope_id];
 
-        let mut scopes = Vec::with_capacity(128);
-        scopes.extend(scope.children.iter().cloned());
+        let scopes = Vec::from_iter(scope.children.iter().cloned());
 
-        let mut references = Vec::with_capacity(128);
-        references.extend(scope.read_references.iter().cloned());
+        let mut references = Vec::from_iter(scope.read_references.iter().cloned());
         references.extend(scope.write_references.iter().cloned());
 
         AllCapturesIter {
@@ -320,9 +318,7 @@ impl Closure {
     /// ```
     pub fn children(&self) -> impl Iterator<Item = Closure> {
         let scope = &self.data.scopes[self.scope_id];
-
-        let mut scopes = Vec::with_capacity(128);
-        scopes.extend(scope.children.iter().cloned());
+        let scopes = Vec::from_iter(scope.children.iter().cloned());
 
         ChildrenIter {
             data: self.data.clone(),
@@ -346,9 +342,7 @@ impl Closure {
     /// assert!(model.closure(function_f).descendents(), &["f", "g", "h"]);
     /// ```
     pub fn descendents(&self) -> impl Iterator<Item = Closure> {
-        let mut scopes = Vec::with_capacity(128);
-        scopes.push(self.scope_id);
-
+        let scopes = vec![self.scope_id];
         DescendentsIter {
             data: self.data.clone(),
             scopes,
