@@ -66,7 +66,7 @@ impl ReactCallWithDependencyResult {
     }
 }
 
-// Get the i-th argument of a call expression
+// Get the n-th argument of a call expression casting it to JsAnyExpression
 fn get_nth_argument(call: &JsCallExpression, n: usize) -> Option<JsAnyExpression> {
     let args = call.arguments().ok()?;
     let mut args = args.args().into_iter();
