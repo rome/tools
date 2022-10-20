@@ -167,8 +167,9 @@ impl<'scope> TraversalScope<'scope> for MemoryTraversalScope<'scope> {
                     let absolute_path = Path::new("/").join(&path);
                     absolute_path.strip_prefix(&absolute_base).is_ok()
                 } else {
-                    base.strip_prefix(&path).is_ok()
+                    path.strip_prefix(&base).is_ok()
                 };
+
                 if should_process_file {
                     let file_id = ctx.interner().intern_path(path.into());
                     let rome_path = RomePath::new(&path, file_id);
