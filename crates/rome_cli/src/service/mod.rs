@@ -43,7 +43,7 @@ use tokio::{
 #[cfg(windows)]
 mod windows;
 #[cfg(windows)]
-pub(crate) use self::windows::{ensure_daemon, print_socket, run_daemon, open_socket};
+pub(crate) use self::windows::{ensure_daemon, open_socket, print_socket, run_daemon};
 
 #[cfg(unix)]
 mod unix;
