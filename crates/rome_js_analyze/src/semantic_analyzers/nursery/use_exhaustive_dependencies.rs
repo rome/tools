@@ -1,5 +1,5 @@
 use crate::semantic_services::Semantic;
-use crate::utils::react::*;
+use crate::react::hooks::*;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::Capture;

@@ -7,7 +7,6 @@ use rome_rowan::{AstNode, AstSeparatedList, BatchMutation};
 use std::borrow::Cow;
 
 pub mod batch;
-pub mod react;
 pub mod rename;
 #[cfg(test)]
 pub mod tests;
