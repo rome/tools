@@ -15,7 +15,7 @@ Enforce to have the `onClick` mouse event with the `onKeyUp`, the `onKeyDown`, o
 <div onClick={() => {}} />
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useKeyWithClickEvents.js:1:1 <a href="https://rome.tools/docs/lint/rules/useKeyWithClickEvents">lint/nursery/useKeyWithClickEvents</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useKeyWithClickEvents.js:1:1 <a href="https://rome.tools/docs/lint/rules/useKeyWithClickEvents">lint/a11y/useKeyWithClickEvents</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Enforce to have the </span><span style="color: Orange;"><strong>onClick</strong></span><span style="color: Orange;"> mouse event with the </span><span style="color: Orange;"><strong>onKeyUp</strong></span><span style="color: Orange;">, the </span><span style="color: Orange;"><strong>onKeyDown</strong></span><span style="color: Orange;">, or the </span><span style="color: Orange;"><strong>onKeyPress</strong></span><span style="color: Orange;"> keyboard event.</span>
   
@@ -31,7 +31,7 @@ Enforce to have the `onClick` mouse event with the `onKeyUp`, the `onKeyDown`, o
 <div onClick={() => {}} ></div>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useKeyWithClickEvents.js:1:1 <a href="https://rome.tools/docs/lint/rules/useKeyWithClickEvents">lint/nursery/useKeyWithClickEvents</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useKeyWithClickEvents.js:1:1 <a href="https://rome.tools/docs/lint/rules/useKeyWithClickEvents">lint/a11y/useKeyWithClickEvents</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Enforce to have the </span><span style="color: Orange;"><strong>onClick</strong></span><span style="color: Orange;"> mouse event with the </span><span style="color: Orange;"><strong>onKeyUp</strong></span><span style="color: Orange;">, the </span><span style="color: Orange;"><strong>onKeyDown</strong></span><span style="color: Orange;">, or the </span><span style="color: Orange;"><strong>onKeyPress</strong></span><span style="color: Orange;"> keyboard event.</span>
   
@@ -47,7 +47,7 @@ Enforce to have the `onClick` mouse event with the `onKeyUp`, the `onKeyDown`, o
 <div {...spread} onClick={() => {}} ></div>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useKeyWithClickEvents.js:1:1 <a href="https://rome.tools/docs/lint/rules/useKeyWithClickEvents">lint/nursery/useKeyWithClickEvents</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useKeyWithClickEvents.js:1:1 <a href="https://rome.tools/docs/lint/rules/useKeyWithClickEvents">lint/a11y/useKeyWithClickEvents</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Enforce to have the </span><span style="color: Orange;"><strong>onClick</strong></span><span style="color: Orange;"> mouse event with the </span><span style="color: Orange;"><strong>onKeyUp</strong></span><span style="color: Orange;">, the </span><span style="color: Orange;"><strong>onKeyDown</strong></span><span style="color: Orange;">, or the </span><span style="color: Orange;"><strong>onKeyPress</strong></span><span style="color: Orange;"> keyboard event.</span>
   

@@ -17,7 +17,7 @@ Accessible means that the content is not hidden using the `aria-hidden` attribut
 <a />
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useAnchorContent.js:1:1 <a href="https://rome.tools/docs/lint/rules/useAnchorContent">lint/nursery/useAnchorContent</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useAnchorContent.js:1:1 <a href="https://rome.tools/docs/lint/rules/useAnchorContent">lint/a11y/useAnchorContent</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Provide screen reader accessible content when using </span><span style="color: Orange;"><strong>`a`</strong></span><span style="color: Orange;"> elements.</span>
   
@@ -33,7 +33,7 @@ Accessible means that the content is not hidden using the `aria-hidden` attribut
 <a></a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useAnchorContent.js:1:1 <a href="https://rome.tools/docs/lint/rules/useAnchorContent">lint/nursery/useAnchorContent</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useAnchorContent.js:1:1 <a href="https://rome.tools/docs/lint/rules/useAnchorContent">lint/a11y/useAnchorContent</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Provide screen reader accessible content when using </span><span style="color: Orange;"><strong>`a`</strong></span><span style="color: Orange;"> elements.</span>
   
@@ -49,7 +49,7 @@ Accessible means that the content is not hidden using the `aria-hidden` attribut
 <a>    </a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useAnchorContent.js:1:1 <a href="https://rome.tools/docs/lint/rules/useAnchorContent">lint/nursery/useAnchorContent</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useAnchorContent.js:1:1 <a href="https://rome.tools/docs/lint/rules/useAnchorContent">lint/a11y/useAnchorContent</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Provide screen reader accessible content when using </span><span style="color: Orange;"><strong>`a`</strong></span><span style="color: Orange;"> elements.</span>
   
@@ -65,7 +65,7 @@ Accessible means that the content is not hidden using the `aria-hidden` attribut
 <a aria-hidden>content</a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useAnchorContent.js:1:1 <a href="https://rome.tools/docs/lint/rules/useAnchorContent">lint/nursery/useAnchorContent</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useAnchorContent.js:1:1 <a href="https://rome.tools/docs/lint/rules/useAnchorContent">lint/a11y/useAnchorContent</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Provide screen reader accessible content when using </span><span style="color: Orange;"><strong>`a`</strong></span><span style="color: Orange;"> elements.</span>
   
@@ -81,7 +81,7 @@ Accessible means that the content is not hidden using the `aria-hidden` attribut
 <a><span aria-hidden="true">content</span></a
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useAnchorContent.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useAnchorContent.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">expected `&gt;` but instead the file ends</span>
   

@@ -2,4 +2,5 @@
 
 use rome_analyze::declare_group;
 mod no_shouty_constants;
-declare_group! { pub (crate) Style { name : "style" , rules : [self :: no_shouty_constants :: NoShoutyConstants ,] } }
+mod use_fragment_syntax;
+declare_group! { pub (crate) Style { name : "style" , rules : [self :: no_shouty_constants :: NoShoutyConstants , self :: use_fragment_syntax :: UseFragmentSyntax ,] } }

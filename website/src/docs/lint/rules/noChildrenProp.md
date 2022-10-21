@@ -18,7 +18,7 @@ When not using JSX, the children should be passed as additional arguments to `Re
 <FirstComponent children={'foo'} />
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/noChildrenProp.js:1:17 <a href="https://rome.tools/docs/lint/rules/noChildrenProp">lint/nursery/noChildrenProp</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noChildrenProp.js:1:17 <a href="https://rome.tools/docs/lint/rules/noChildrenProp">lint/correctness/noChildrenProp</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Avoid passing </span><span style="color: Orange;"><strong>children</strong></span><span style="color: Orange;"> using a prop</span>
   
@@ -34,7 +34,7 @@ When not using JSX, the children should be passed as additional arguments to `Re
 React.createElement('div', { children: 'foo' });
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/noChildrenProp.js:1:30 <a href="https://rome.tools/docs/lint/rules/noChildrenProp">lint/nursery/noChildrenProp</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noChildrenProp.js:1:30 <a href="https://rome.tools/docs/lint/rules/noChildrenProp">lint/correctness/noChildrenProp</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Avoid passing </span><span style="color: Orange;"><strong>children</strong></span><span style="color: Orange;"> using a prop</span>
   

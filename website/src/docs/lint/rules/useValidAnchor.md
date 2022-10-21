@@ -35,7 +35,7 @@ in another tab, but the default "click" behaviour is prevented;
 <a href={null}>navigate here</a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useValidAnchor.js:1:10 <a href="https://rome.tools/docs/lint/rules/useValidAnchor">lint/nursery/useValidAnchor</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useValidAnchor.js:1:10 <a href="https://rome.tools/docs/lint/rules/useValidAnchor">lint/a11y/useValidAnchor</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Provide a valid value for the attribute </span><span style="color: Orange;"><strong>href</strong></span><span style="color: Orange;">.</span>
   
@@ -53,7 +53,7 @@ in another tab, but the default "click" behaviour is prevented;
 <a href={undefined}>navigate here</a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useValidAnchor.js:1:10 <a href="https://rome.tools/docs/lint/rules/useValidAnchor">lint/nursery/useValidAnchor</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useValidAnchor.js:1:10 <a href="https://rome.tools/docs/lint/rules/useValidAnchor">lint/a11y/useValidAnchor</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Provide a valid value for the attribute </span><span style="color: Orange;"><strong>href</strong></span><span style="color: Orange;">.</span>
   
@@ -71,7 +71,7 @@ in another tab, but the default "click" behaviour is prevented;
 <a href>navigate here</a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useValidAnchor.js:1:4 <a href="https://rome.tools/docs/lint/rules/useValidAnchor">lint/nursery/useValidAnchor</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useValidAnchor.js:1:4 <a href="https://rome.tools/docs/lint/rules/useValidAnchor">lint/a11y/useValidAnchor</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">The attribute </span><span style="color: Orange;"><strong>href</strong></span><span style="color: Orange;"> has to be assigned to a valid value.</span>
   
@@ -89,7 +89,7 @@ in another tab, but the default "click" behaviour is prevented;
 <a href="javascript:void(0)">navigate here</a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useValidAnchor.js:1:9 <a href="https://rome.tools/docs/lint/rules/useValidAnchor">lint/nursery/useValidAnchor</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useValidAnchor.js:1:9 <a href="https://rome.tools/docs/lint/rules/useValidAnchor">lint/a11y/useValidAnchor</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Provide a valid value for the attribute </span><span style="color: Orange;"><strong>href</strong></span><span style="color: Orange;">.</span>
   
@@ -107,7 +107,7 @@ in another tab, but the default "click" behaviour is prevented;
 <a href="https://example.com" onClick={something}>navigate here</a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useValidAnchor.js:1:1 <a href="https://rome.tools/docs/lint/rules/useValidAnchor">lint/nursery/useValidAnchor</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useValidAnchor.js:1:1 <a href="https://rome.tools/docs/lint/rules/useValidAnchor">lint/a11y/useValidAnchor</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Use a </span><span style="color: Orange;"><strong>button</strong></span><span style="color: Orange;"> element instead of an </span><span style="color: Orange;"><strong>a</strong></span><span style="color: Orange;"> element.</span>
   

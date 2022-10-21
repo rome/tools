@@ -15,7 +15,7 @@ Disallow `new` operators with the `Symbol` object
 var foo = new Symbol('foo');
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/noNewSymbol.js:1:11 <a href="https://rome.tools/docs/lint/rules/noNewSymbol">lint/nursery/noNewSymbol</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noNewSymbol.js:1:11 <a href="https://rome.tools/docs/lint/rules/noNewSymbol">lint/correctness/noNewSymbol</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;"><strong>Symbol</strong></span><span style="color: Orange;"> cannot be called as a constructor.</span>
   

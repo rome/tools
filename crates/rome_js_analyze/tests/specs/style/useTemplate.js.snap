@@ -1,0 +1,314 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: useTemplate.js
+---
+# Input
+```js
+// valid
+console.log("foo" + "bar");
+console.log(foo() + "\n");
+// invalid
+const foo = "bar";
+console.log(foo + "baz");
+console.log(1 * 2 + "foo");
+console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+console.log((1 + "foo") * 2);
+console.log(1 * (2 + "foo") + "bar");
+console.log("foo" + 1);
+console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
+console.log("foo" + 1 + 2);
+1 + "2" - 3;
+foo() + " bar";
+
+1 * /**leading*/"foo"    /**trailing */                   + "bar"
+
+```
+
+# Diagnostics
+```
+useTemplate.js:6:13 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Template literals are preferred over string concatenation.
+  
+    4 │ // invalid
+    5 │ const foo = "bar";
+  > 6 │ console.log(foo + "baz");
+      │             ^^^^^^^^^^^
+    7 │ console.log(1 * 2 + "foo");
+    8 │ console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+  
+  i Suggested fix: Use a TemplateLiteral.
+  
+     4  4 │   // invalid
+     5  5 │   const foo = "bar";
+     6    │ - console.log(foo·+·"baz");
+        6 │ + console.log(`${foo}baz`);
+     7  7 │   console.log(1 * 2 + "foo");
+     8  8 │   console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+  
+
+```
+
+```
+useTemplate.js:7:13 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Template literals are preferred over string concatenation.
+  
+    5 │ const foo = "bar";
+    6 │ console.log(foo + "baz");
+  > 7 │ console.log(1 * 2 + "foo");
+      │             ^^^^^^^^^^^^^
+    8 │ console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+    9 │ console.log((1 + "foo") * 2);
+  
+  i Suggested fix: Use a TemplateLiteral.
+  
+     5  5 │   const foo = "bar";
+     6  6 │   console.log(foo + "baz");
+     7    │ - console.log(1·*·2·+·"foo");
+        7 │ + console.log(`${1·*·2}foo`);
+     8  8 │   console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+     9  9 │   console.log((1 + "foo") * 2);
+  
+
+```
+
+```
+useTemplate.js:8:13 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Template literals are preferred over string concatenation.
+  
+     6 │ console.log(foo + "baz");
+     7 │ console.log(1 * 2 + "foo");
+   > 8 │ console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+       │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+     9 │ console.log((1 + "foo") * 2);
+    10 │ console.log(1 * (2 + "foo") + "bar");
+  
+  i Suggested fix: Use a TemplateLiteral.
+  
+     6  6 │   console.log(foo + "baz");
+     7  7 │   console.log(1 * 2 + "foo");
+     8    │ - console.log(1·+·"foo"·+·2·+·"bar"·+·"baz"·+·3);
+        8 │ + console.log(`${1}foo${2}barbaz${3}`);
+     9  9 │   console.log((1 + "foo") * 2);
+    10 10 │   console.log(1 * (2 + "foo") + "bar");
+  
+
+```
+
+```
+useTemplate.js:9:14 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Template literals are preferred over string concatenation.
+  
+     7 │ console.log(1 * 2 + "foo");
+     8 │ console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+   > 9 │ console.log((1 + "foo") * 2);
+       │              ^^^^^^^^^
+    10 │ console.log(1 * (2 + "foo") + "bar");
+    11 │ console.log("foo" + 1);
+  
+  i Suggested fix: Use a TemplateLiteral.
+  
+     7  7 │   console.log(1 * 2 + "foo");
+     8  8 │   console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+     9    │ - console.log((1·+·"foo")·*·2);
+        9 │ + console.log((`${1}foo`)·*·2);
+    10 10 │   console.log(1 * (2 + "foo") + "bar");
+    11 11 │   console.log("foo" + 1);
+  
+
+```
+
+```
+useTemplate.js:10:13 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Template literals are preferred over string concatenation.
+  
+     8 │ console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+     9 │ console.log((1 + "foo") * 2);
+  > 10 │ console.log(1 * (2 + "foo") + "bar");
+       │             ^^^^^^^^^^^^^^^^^^^^^^^
+    11 │ console.log("foo" + 1);
+    12 │ console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
+  
+  i Suggested fix: Use a TemplateLiteral.
+  
+     8  8 │   console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+     9  9 │   console.log((1 + "foo") * 2);
+    10    │ - console.log(1·*·(2·+·"foo")·+·"bar");
+       10 │ + console.log(`${1·*·(2·+·"foo")}bar`);
+    11 11 │   console.log("foo" + 1);
+    12 12 │   console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
+  
+
+```
+
+```
+useTemplate.js:10:18 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Template literals are preferred over string concatenation.
+  
+     8 │ console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+     9 │ console.log((1 + "foo") * 2);
+  > 10 │ console.log(1 * (2 + "foo") + "bar");
+       │                  ^^^^^^^^^
+    11 │ console.log("foo" + 1);
+    12 │ console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
+  
+  i Suggested fix: Use a TemplateLiteral.
+  
+     8  8 │   console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
+     9  9 │   console.log((1 + "foo") * 2);
+    10    │ - console.log(1·*·(2·+·"foo")·+·"bar");
+       10 │ + console.log(1·*·(`${2}foo`)·+·"bar");
+    11 11 │   console.log("foo" + 1);
+    12 12 │   console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
+  
+
+```
+
+```
+useTemplate.js:11:13 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Template literals are preferred over string concatenation.
+  
+     9 │ console.log((1 + "foo") * 2);
+    10 │ console.log(1 * (2 + "foo") + "bar");
+  > 11 │ console.log("foo" + 1);
+       │             ^^^^^^^^^
+    12 │ console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
+    13 │ console.log("foo" + 1 + 2);
+  
+  i Suggested fix: Use a TemplateLiteral.
+  
+     9  9 │   console.log((1 + "foo") * 2);
+    10 10 │   console.log(1 * (2 + "foo") + "bar");
+    11    │ - console.log("foo"·+·1);
+       11 │ + console.log(`foo${1}`);
+    12 12 │   console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
+    13 13 │   console.log("foo" + 1 + 2);
+  
+
+```
+
+```
+useTemplate.js:12:13 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Template literals are preferred over string concatenation.
+  
+    10 │ console.log(1 * (2 + "foo") + "bar");
+    11 │ console.log("foo" + 1);
+  > 12 │ console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
+       │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    13 │ console.log("foo" + 1 + 2);
+    14 │ 1 + "2" - 3;
+  
+  i Suggested fix: Use a TemplateLiteral.
+  
+    10 10 │   console.log(1 * (2 + "foo") + "bar");
+    11 11 │   console.log("foo" + 1);
+    12    │ - console.log("foo"·+·`bar${`baz${"bat"·+·"bam"}`}`·+·"boo");
+       12 │ + console.log(`foobarbaz${"bat"·+·"bam"}boo`);
+    13 13 │   console.log("foo" + 1 + 2);
+    14 14 │   1 + "2" - 3;
+  
+
+```
+
+```
+useTemplate.js:13:13 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Template literals are preferred over string concatenation.
+  
+    11 │ console.log("foo" + 1);
+    12 │ console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
+  > 13 │ console.log("foo" + 1 + 2);
+       │             ^^^^^^^^^^^^^
+    14 │ 1 + "2" - 3;
+    15 │ foo() + " bar";
+  
+  i Suggested fix: Use a TemplateLiteral.
+  
+    11 11 │   console.log("foo" + 1);
+    12 12 │   console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
+    13    │ - console.log("foo"·+·1·+·2);
+       13 │ + console.log(`foo${1}${2}`);
+    14 14 │   1 + "2" - 3;
+    15 15 │   foo() + " bar";
+  
+
+```
+
+```
+useTemplate.js:14:1 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Template literals are preferred over string concatenation.
+  
+    12 │ console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
+    13 │ console.log("foo" + 1 + 2);
+  > 14 │ 1 + "2" - 3;
+       │ ^^^^^^^
+    15 │ foo() + " bar";
+    16 │ 
+  
+  i Suggested fix: Use a TemplateLiteral.
+  
+    12 12 │   console.log("foo" + `bar${`baz${"bat" + "bam"}`}` + "boo");
+    13 13 │   console.log("foo" + 1 + 2);
+    14    │ - 1·+·"2"·-·3;
+       14 │ + `${1}2`·-·3;
+    15 15 │   foo() + " bar";
+    16 16 │   
+  
+
+```
+
+```
+useTemplate.js:15:1 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Template literals are preferred over string concatenation.
+  
+    13 │ console.log("foo" + 1 + 2);
+    14 │ 1 + "2" - 3;
+  > 15 │ foo() + " bar";
+       │ ^^^^^^^^^^^^^^
+    16 │ 
+    17 │ 1 * /**leading*/"foo"    /**trailing */                   + "bar"
+  
+  i Suggested fix: Use a TemplateLiteral.
+  
+    13 13 │   console.log("foo" + 1 + 2);
+    14 14 │   1 + "2" - 3;
+    15    │ - foo()·+·"·bar";
+       15 │ + `${foo()}·bar`;
+    16 16 │   
+    17 17 │   1 * /**leading*/"foo"    /**trailing */                   + "bar"
+  
+
+```
+
+```
+useTemplate.js:17:1 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Template literals are preferred over string concatenation.
+  
+    15 │ foo() + " bar";
+    16 │ 
+  > 17 │ 1 * /**leading*/"foo"    /**trailing */                   + "bar"
+       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    18 │ 
+  
+  i Suggested fix: Use a TemplateLiteral.
+  
+    15 15 │   foo() + " bar";
+    16 16 │   
+    17    │ - 1·*·/**leading*/"foo"····/**trailing·*/···················+·"bar"
+       17 │ + `${1·*·/**leading*/"foo"····/**trailing·*/}bar`
+    18 18 │   
+  
+
+```
+
+
