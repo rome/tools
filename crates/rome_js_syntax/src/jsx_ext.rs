@@ -1,3 +1,5 @@
+use std::collections::HashSet;
+
 use crate::{
     JsxAttribute, JsxAttributeList, JsxName, JsxOpeningElement, JsxSelfClosingElement, JsxString,
     TextSize,
@@ -134,6 +136,56 @@ impl JsxSelfClosingElement {
         name_to_lookup: &str,
     ) -> SyntaxResult<Option<JsxAttribute>> {
         find_attribute_by_name(self.attributes(), name_to_lookup)
+    }
+}
+
+impl JsxAttributeList {
+    /// Find and return the `JsxAttribute` that matches the given name like [find_attribute_by_name].  
+    /// Only attributes with name as [JsxName] can be returned.   
+    ///
+    /// Each name of "names_to_lookup" should be unique.  
+    ///
+    /// Supports maximum of 16 names to avoid stack overflow. Eeach attribute will consume:
+    ///
+    /// - 8 bytes for the [Option<JsxAttribute>] result;
+    /// - plus 16 bytes for the [&str] argument.
+    pub fn find_attributes_by_name<const N: usize>(
+        &self,
+        names_to_lookup: [&str; N],
+    ) -> [Option<JsxAttribute>; N] {
+        // assert there are no duplicates
+        debug_assert!(HashSet::<_>::from_iter(names_to_lookup).len() == N);
+        debug_assert!(N <= 16);
+
+        const INIT: Option<JsxAttribute> = None;
+        let mut results = [INIT; N];
+
+        let mut missing = N;
+
+        'attributes: for att in self.iter() {
+            if let Some(attribute) = att.as_jsx_attribute() {
+                if let Some(name) = attribute
+                    .name()
+                    .ok()
+                    .and_then(|x| x.as_jsx_name()?.value_token().ok())
+                {
+                    let name = name.text_trimmed();
+                    for i in 0..N {
+                        if results[i].is_none() && names_to_lookup[i] == name {
+                            results[i] = Some(attribute.clone());
+                            if missing == 1 {
+                                break 'attributes;
+                            } else {
+                                missing -= 1;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        results
     }
 }
 
