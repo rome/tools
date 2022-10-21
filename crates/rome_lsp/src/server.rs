@@ -217,13 +217,11 @@ impl LanguageServer for LSPServer {
     }
 
     async fn rename(&self, params: RenameParams) -> LspResult<Option<WorkspaceEdit>> {
-        let rename = if let Ok(config) = self.session.config.read() {
-            config.settings.rename.unwrap_or(false)
-        } else {
-            false
-        };
+        let rename_enabled = self.session.config.read().ok()
+            .and_then(|config| config.settings.rename)
+            .unwrap_or(false);
 
-        if rename {
+        if rename_enabled {
             handlers::rename::rename(&self.session, params).map_err(into_lsp_error)
         } else {
             Ok(None)
