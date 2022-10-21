@@ -40,6 +40,19 @@ All rules are enabled by default, and cannot be disabled. [Suppression](#lint-su
 [release page]: https://github.com/rome/tools/releases
 
 
+### Code fixes
+
+Lint rules may provide automatic code fixes. Rome distinguishes between two types of fixes:
+
+* safe fixes
+* suggested fixes
+
+Safe fixes are guaranteed to not change the semantics of your code,
+and can be applied without explicit review.
+
+Suggested fixes may change the semantics of your program, and it's,
+therefore, advised to manually review the changes.
+
 ### Ignoring Code
 
 There are times when a developer wants to ignore a lint rule for a specific line of the code.
@@ -69,15 +82,3 @@ debugger;
 ```
 
 
-### Code fixes
-
-Lint rules may provide automatic code fixes. Rome distinguishes between two types of fixes:
-
-* safe fixes
-* suggested fixes
-
-Safe fixes are guaranteed to not change the semantics of your code,
-and can be applied without explicit review.
-
-Suggested fixes may change the semantics of your program, and it's,
-therefore, advised to manually review the changes.
