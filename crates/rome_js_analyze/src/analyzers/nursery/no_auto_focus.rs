@@ -2,7 +2,9 @@ use crate::JsRuleAction;
 use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_syntax::{JsxAttribute, JsxOpeningElement, JsxSelfClosingElement};
+use rome_js_syntax::{
+    JsSyntaxToken, JsxAnyElementName, JsxAttribute, JsxOpeningElement, JsxSelfClosingElement,
+};
 use rome_rowan::{declare_node_union, AstNode, BatchMutationExt};
 
 declare_rule! {
@@ -57,6 +59,22 @@ declare_node_union! {
     pub(crate) JsxAnyElement = JsxOpeningElement | JsxSelfClosingElement
 }
 
+impl JsxAnyElement {
+    fn name_value_token(&self) -> Option<JsSyntaxToken> {
+        let any_name = match self {
+            JsxAnyElement::JsxOpeningElement(element) => element.name().ok()?,
+            JsxAnyElement::JsxSelfClosingElement(element) => element.name().ok()?,
+        };
+
+        match any_name {
+            JsxAnyElementName::JsxMemberName(member) => member.member().ok()?.value_token().ok(),
+            JsxAnyElementName::JsxName(name) => name.value_token().ok(),
+            JsxAnyElementName::JsxNamespaceName(name) => name.name().ok()?.value_token().ok(),
+            JsxAnyElementName::JsxReferenceIdentifier(name) => name.value_token().ok(),
+        }
+    }
+}
+
 impl Rule for NoAutoFocus {
     type Query = Ast<JsxAnyElement>;
     type State = JsxAttribute;
@@ -89,6 +107,21 @@ impl Rule for NoAutoFocus {
 
     fn action(ctx: &RuleContext<Self>, attr: &Self::State) -> Option<JsRuleAction> {
         let mut mutation = ctx.root().begin();
+        let trailing_trivia = attr.syntax().last_trailing_trivia();
+        if let Some(trailing_trivia) = trailing_trivia {
+            if trailing_trivia.pieces().any(|piece| piece.is_comments()) {
+                let element = attr.syntax().ancestors().find_map(JsxAnyElement::cast);
+                if let Some(name) = element.and_then(|e| e.name_value_token()) {
+                    let trivia_pieces = name
+                        .trailing_trivia()
+                        .pieces()
+                        .chain(trailing_trivia.pieces())
+                        .collect::<Vec<_>>();
+                    let new_name = name.with_trailing_trivia_pieces(trivia_pieces);
+                    mutation.replace_token_discard_trivia(name, new_name);
+                }
+            }
+        }
 
         mutation.remove_node(attr.clone());
 
