@@ -336,9 +336,12 @@ export type Category =
 	| "lint/nursery/noConstAssign"
 	| "lint/nursery/noExplicitAny"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	| "lint/nursery/useValidForDirection"
 =======
 	| "lint/nursery/reactExtensiveDependencies"
+=======
+>>>>>>> 394edf4cb4 (codegen)
 	| "lint/nursery/useExhaustiveDependencies"
 >>>>>>> ba94638ea1 (codegen)
 	| "lint/style/noNegationElse"
