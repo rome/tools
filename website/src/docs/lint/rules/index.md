@@ -14,7 +14,7 @@ eleventyNavigation:
 
 ## Correctness
 
-This group should includes those rules that are meant to prevent possible bugs and misuse of the language.
+Rules that detect incorrect or useless code.
 <section class="rule">
 <h3 data-toc-exclude id="noArguments">
 	<a href="/docs/lint/rules/noArguments">noArguments</a>
@@ -219,7 +219,7 @@ initializer and update expressions are not needed
 
 ## Style
 
-Rules that focus mostly on making the code more consistent.
+Rules enforcing a consistent way of writing your code. 
 <section class="rule">
 <h3 data-toc-exclude id="noNegationElse">
 	<a href="/docs/lint/rules/noNegationElse">noNegationElse</a>
@@ -251,12 +251,9 @@ When expressing array types, this rule promotes the usage of <code>T[]</code> sh
 
 ## Nursery
 
-Rules that are being written. Rules under this group are meant to be considered unstable or buggy.
+New rules that are still under development.
 
-Developers can opt-in these rules via configuration. We vehemently appreciate filing issue in case of bugs or performance problems.
-
-Rules can be downgraded to this group in case a patch release is needed. After an arbitrary amount of time, the team can decide
-to promote these rules into an appropriate group. Doing so means that the rule is stable and ready for production.
+All nursery rules require explicit opt-in via configuration. Please file issues in case you encounter any bugs or performance problems.
 <section class="rule">
 <h3 data-toc-exclude id="noArrayIndexKey">
 	<a href="/docs/lint/rules/noArrayIndexKey">noArrayIndexKey</a>
