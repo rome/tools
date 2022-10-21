@@ -253,7 +253,8 @@ When expressing array types, this rule promotes the usage of <code>T[]</code> sh
 
 New rules that are still under development.
 
-All nursery rules require explicit opt-in via configuration. Please file issues in case you encounter any bugs or performance problems.
+Nursery rules require explicit opt-in via configuration because they may still have bugs or performance problems.
+Nursery rules get promoted to other groups once they become stable or may be removed.
 <section class="rule">
 <h3 data-toc-exclude id="noArrayIndexKey">
 	<a href="/docs/lint/rules/noArrayIndexKey">noArrayIndexKey</a>
