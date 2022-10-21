@@ -113,7 +113,7 @@ pub fn ok_find_attributes_by_name() {
     let list = r
         .syntax()
         .descendants()
-        .filter_map(|x| rome_js_syntax::JsxAttributeList::cast(x))
+        .filter_map(rome_js_syntax::JsxAttributeList::cast)
         .next()
         .unwrap();
     let [a, c, d] = list.find_attributes_by_name(["a", "c", "d"]);
