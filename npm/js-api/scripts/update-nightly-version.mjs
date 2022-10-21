@@ -2,8 +2,8 @@ import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import * as fs from "node:fs";
 
-const ROMECLI_ROOT = resolve(fileURLToPath(import.meta.url), "../..");
-const MANIFEST_PATH = resolve(ROMECLI_ROOT, "package.json");
+const ROME_ROOT = resolve(fileURLToPath(import.meta.url), "../..");
+const MANIFEST_PATH = resolve(ROME_ROOT, "package.json");
 
 const rootManifest = JSON.parse(
 	fs.readFileSync(MANIFEST_PATH).toString("utf-8"),
