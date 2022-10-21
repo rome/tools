@@ -30,9 +30,15 @@ declare_rule! {
     /// ```jsx,expect_diagnostic
     /// <a href='http://external.link' target='_blank'>child</a>
     /// ```
+    ///
     /// ```jsx,expect_diagnostic
     /// <a href='http://external.link' target='_blank' rel="noopener">child</a>
     /// ```
+    ///
+    /// ```jsx,expect_diagnostic
+    /// <a {...props} href='http://external.link' target='_blank' rel="noopener">child</a>
+    /// ```
+    ///
     /// ```jsx,expect_diagnostic
     /// // case-insensitive
     /// <a href='http://external.link' target='_BlaNk'>child</a>
@@ -40,7 +46,8 @@ declare_rule! {
     /// ### Valid
     ///
     /// ```jsx
-    /// <a href='http://external.link' rel='noreferrer' target='_blank'>child</a>
+    /// let a = <a href='http://external.link' rel='noreferrer' target='_blank'>child</a>;
+    /// let a = <a href='http://external.link' target='_blank' rel="noopener" {...props}>child</a>;
     /// ```
     pub(crate) UseBlankTarget {
         version: "10.0.0",

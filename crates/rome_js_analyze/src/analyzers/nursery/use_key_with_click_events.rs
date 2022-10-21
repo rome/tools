@@ -40,6 +40,10 @@ declare_rule! {
     /// // this rule doesn't apply to user created component
     /// <MyComponent onClick={() => {}} />
     ///```
+    ///
+    /// ```jsx,
+    /// <div onClick={() => {}} {...spread}></div>
+    /// ```
     pub(crate) UseKeyWithClickEvents {
         version: "10.0.0",
         name: "useKeyWithClickEvents",
