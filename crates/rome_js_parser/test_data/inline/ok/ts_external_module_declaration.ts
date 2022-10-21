@@ -1,2 +1,3 @@
 declare module "a";
-declare module "./import" {}
+declare module "b"
+declare module "import" {}

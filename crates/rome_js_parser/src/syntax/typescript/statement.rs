@@ -427,7 +427,8 @@ pub(crate) fn parse_any_ts_namespace_declaration_statement(p: &mut Parser) -> Pa
 //
 // test ts ts_external_module_declaration
 // declare module "a";
-// declare module "./import" {}
+// declare module "b"
+// declare module "import" {}
 //
 // test_err ts ts_module_err
 // declare module a; // missing body
@@ -451,9 +452,13 @@ fn parse_ts_namespace_or_module_declaration_clause(
             let body = parse_ts_module_block(p);
 
             if body.is_absent() {
-                let body = p.start();
-                semi(p, TextRange::new(stmt_start_pos, p.cur_range().end()));
-                body.complete(p, TS_EMPTY_EXTERNAL_MODULE_DECLARATION_BODY);
+                if p.at(T![;]) {
+                    let body = p.start();
+                    p.bump(T![;]);
+                    body.complete(p, TS_EMPTY_EXTERNAL_MODULE_DECLARATION_BODY);
+                } else {
+                    semi(p, TextRange::new(stmt_start_pos, p.cur_range().end()));
+                }
             }
 
             return Present(m.complete(p, TS_EXTERNAL_MODULE_DECLARATION));

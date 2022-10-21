@@ -22,9 +22,7 @@ JsModule {
                 source: JsModuleSource {
                     value_token: JS_STRING_LITERAL@49..53 "\"a\"" [] [Whitespace(" ")],
                 },
-                body: TsEmptyExternalModuleDeclarationBody {
-                    semicolon_token: missing (required),
-                },
+                body: missing (optional),
             },
         },
         TsDeclareStatement {
@@ -62,8 +60,7 @@ JsModule {
         0: MODULE_KW@42..49 "module" [] [Whitespace(" ")]
         1: JS_MODULE_SOURCE@49..53
           0: JS_STRING_LITERAL@49..53 "\"a\"" [] [Whitespace(" ")]
-        2: TS_EMPTY_EXTERNAL_MODULE_DECLARATION_BODY@53..53
-          0: (empty)
+        2: (empty)
     3: TS_DECLARE_STATEMENT@53..88
       0: DECLARE_KW@53..61 "declare" [] [Whitespace(" ")]
       1: TS_EXTERNAL_MODULE_DECLARATION@61..88
