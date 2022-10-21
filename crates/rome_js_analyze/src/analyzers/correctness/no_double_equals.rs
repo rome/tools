@@ -88,7 +88,7 @@ impl Rule for NoDoubleEquals {
                 "Use "<Emphasis>{suggestion}</Emphasis>" instead of "<Emphasis>{text_trimmed}</Emphasis>
             },
         )
-        .detail(op.text_trimmed_range(),markup! {
+        .detail(op.text_trimmed_range(), markup! {
             <Emphasis>{text_trimmed}</Emphasis>" is only allowed when comparing against "<Emphasis>"null"</Emphasis>
         }).note(markup! {
             "Using "<Emphasis>{suggestion}</Emphasis>" may be unsafe if you are relying on type coercion"
