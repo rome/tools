@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "typescript\\conformance\\classes\\constructorDeclarations\\constructorParameters\\readonlyReadonly.ts"
+  test_file: typescript/conformance/classes/constructorDeclarations/constructorParameters/readonlyReadonly.ts
 ---
 
 # Input
@@ -43,7 +43,13 @@ readonlyReadonly.ts:2:14 parse ━━━━━━━━━━━━━━━━�
 
   × 'readonly' already seen
   
-  × duplicate modifier
+    1 │ class C {
+  > 2 │     readonly readonly x: number;
+      │              ^^^^^^^^
+    3 │     constructor(readonly readonly y: number) {}
+    4 │ }
+  
+  i duplicate modifier
   
     1 │ class C {
   > 2 │     readonly readonly x: number;
@@ -63,7 +69,13 @@ readonlyReadonly.ts:3:26 parse ━━━━━━━━━━━━━━━━�
 
   × 'readonly' already seen
   
-  × duplicate modifier
+    1 │ class C {
+    2 │     readonly readonly x: number;
+  > 3 │     constructor(readonly readonly y: number) {}
+      │                          ^^^^^^^^
+    4 │ }
+  
+  i duplicate modifier
   
     1 │ class C {
     2 │     readonly readonly x: number;

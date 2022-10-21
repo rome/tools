@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\arrows\\newline-before-arrow\\newline-before-arrow.js"
+  test_file: js/arrows/newline-before-arrow/newline-before-arrow.js
 ---
 
 # Input
@@ -39,7 +39,12 @@ newline-before-arrow.js:1:7 parse ━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+  > 1 │ async x
+      │       ^
+    2 │ => x
+    3 │ 
+  
+  i An explicit or implicit semicolon is expected here...
   
   > 1 │ async x
       │       ^
@@ -57,7 +62,12 @@ newline-before-arrow.js:2:1 parse ━━━━━━━━━━━━━━━�
 
   × expected a statement but instead found '=> x'
   
-  × Expected a statement here
+    1 │ async x
+  > 2 │ => x
+      │ ^^^^
+    3 │ 
+  
+  i Expected a statement here
   
     1 │ async x
   > 2 │ => x

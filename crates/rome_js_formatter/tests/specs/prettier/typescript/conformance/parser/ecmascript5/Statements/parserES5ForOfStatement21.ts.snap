@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "typescript\\conformance\\parser\\ecmascript5\\Statements\\parserES5ForOfStatement21.ts"
+  test_file: typescript/conformance/parser/ecmascript5/Statements/parserES5ForOfStatement21.ts
 ---
 
 # Input
@@ -38,7 +38,12 @@ parserES5ForOfStatement21.ts:2:15 parse ━━━━━━━━━━━━━�
 
   × expected an expression, or an assignment but instead found ')'
   
-  × Expected an expression, or an assignment here
+    1 │ //@target: ES5
+  > 2 │ for (var of of) { }
+      │               ^
+    3 │ 
+  
+  i Expected an expression, or an assignment here
   
     1 │ //@target: ES5
   > 2 │ for (var of of) { }

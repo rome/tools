@@ -1,4 +1,7 @@
-use rome_diagnostics::{file::FileId, file::SimpleFiles, termcolor, Emitter};
+use rome_diagnostics::v2::console::fmt::{Formatter, Termcolor};
+use rome_diagnostics::v2::console::markup;
+use rome_diagnostics::v2::{DiagnosticExt, PrintDiagnostic};
+use rome_diagnostics::{file::FileId, file::SimpleFiles, termcolor};
 use rome_js_formatter::context::JsFormatOptions;
 use rome_js_formatter::format_node;
 use rome_js_parser::parse;
@@ -31,11 +34,16 @@ pub fn check_reformat(params: CheckReformatParams) {
         files.add(file_name.into(), text.into());
 
         let mut buffer = termcolor::Buffer::ansi();
-        let mut emitter = Emitter::new(&files);
 
-        for error in re_parse.diagnostics() {
-            emitter
-                .emit_with_writer(error, &mut buffer)
+        for diagnostic in re_parse.diagnostics() {
+            let error = diagnostic
+                .clone()
+                .with_file_path(file_name)
+                .with_file_source_code(text.to_string());
+            Formatter::new(&mut Termcolor(&mut buffer))
+                .write_markup(markup! {
+                    {PrintDiagnostic(&error)}
+                })
                 .expect("failed to emit diagnostic");
         }
 

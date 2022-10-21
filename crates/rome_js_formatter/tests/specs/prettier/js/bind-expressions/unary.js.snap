@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\bind-expressions\\unary.js"
+  test_file: js/bind-expressions/unary.js
 ---
 
 # Input
@@ -93,7 +93,12 @@ unary.js:1:3 parse ━━━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+  > 1 │ !x::y;
+      │   ^
+    2 │ !(x::y /* foo */);
+    3 │ !(/* foo */ x::y);
+  
+  i An explicit or implicit semicolon is expected here...
   
   > 1 │ !x::y;
       │   ^
@@ -111,19 +116,17 @@ unary.js:2:4 parse ━━━━━━━━━━━━━━━━━━━━�
 
   × expected `)` but instead found `:`
   
-  × unexpected
-  
     1 │ !x::y;
   > 2 │ !(x::y /* foo */);
       │    ^
     3 │ !(/* foo */ x::y);
     4 │ !(
   
+  i Remove :
+  
 unary.js:3:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `:`
-  
-  × unexpected
   
     1 │ !x::y;
     2 │ !(x::y /* foo */);
@@ -132,11 +135,11 @@ unary.js:3:14 parse ━━━━━━━━━━━━━━━━━━━━
     4 │ !(
     5 │   /* foo */
   
+  i Remove :
+  
 unary.js:6:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `:`
-  
-  × unexpected
   
     4 │ !(
     5 │   /* foo */
@@ -145,11 +148,11 @@ unary.js:6:4 parse ━━━━━━━━━━━━━━━━━━━━�
     7 │ );
     8 │ !(
   
+  i Remove :
+  
 unary.js:9:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `:`
-  
-  × unexpected
   
      7 │ );
      8 │ !(
@@ -158,11 +161,11 @@ unary.js:9:4 parse ━━━━━━━━━━━━━━━━━━━━�
     10 │   /* foo */
     11 │ );
   
+  i Remove :
+  
 unary.js:13:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `:`
-  
-  × unexpected
   
     11 │ );
     12 │ !(
@@ -170,6 +173,8 @@ unary.js:13:4 parse ━━━━━━━━━━━━━━━━━━━━
        │    ^
     14 │ );
     15 │ 
+  
+  i Remove :
   
 
 ```

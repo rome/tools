@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "typescript\\error-recovery\\jsdoc_only_types.ts"
+  test_file: typescript/error-recovery/jsdoc_only_types.ts
 ---
 
 # Input
@@ -75,7 +75,12 @@ jsdoc_only_types.ts:1:8 parse ━━━━━━━━━━━━━━━━�
 
   × expected a type but instead found '*'
   
-  × Expected a type here
+  > 1 │ let a: *;
+      │        ^
+    2 │ function b(x: ?) {}
+    3 │ let c: ?string;
+  
+  i Expected a type here
   
   > 1 │ let a: *;
       │        ^
@@ -86,7 +91,13 @@ jsdoc_only_types.ts:2:15 parse ━━━━━━━━━━━━━━━━�
 
   × expected a type but instead found '?'
   
-  × Expected a type here
+    1 │ let a: *;
+  > 2 │ function b(x: ?) {}
+      │               ^
+    3 │ let c: ?string;
+    4 │ let d: string?;
+  
+  i Expected a type here
   
     1 │ let a: *;
   > 2 │ function b(x: ?) {}
@@ -98,7 +109,14 @@ jsdoc_only_types.ts:3:8 parse ━━━━━━━━━━━━━━━━�
 
   × expected a type but instead found '?'
   
-  × Expected a type here
+    1 │ let a: *;
+    2 │ function b(x: ?) {}
+  > 3 │ let c: ?string;
+      │        ^
+    4 │ let d: string?;
+    5 │ let e: ?(string | number);
+  
+  i Expected a type here
   
     1 │ let a: *;
     2 │ function b(x: ?) {}
@@ -111,7 +129,14 @@ jsdoc_only_types.ts:4:14 parse ━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    2 │ function b(x: ?) {}
+    3 │ let c: ?string;
+  > 4 │ let d: string?;
+      │              ^
+    5 │ let e: ?(string | number);
+    6 │ let f: !string;
+  
+  i An explicit or implicit semicolon is expected here...
   
     2 │ function b(x: ?) {}
     3 │ let c: ?string;
@@ -133,7 +158,14 @@ jsdoc_only_types.ts:5:8 parse ━━━━━━━━━━━━━━━━�
 
   × expected a type but instead found '?'
   
-  × Expected a type here
+    3 │ let c: ?string;
+    4 │ let d: string?;
+  > 5 │ let e: ?(string | number);
+      │        ^
+    6 │ let f: !string;
+    7 │ let g: string!;
+  
+  i Expected a type here
   
     3 │ let c: ?string;
     4 │ let d: string?;
@@ -146,7 +178,14 @@ jsdoc_only_types.ts:6:8 parse ━━━━━━━━━━━━━━━━�
 
   × expected a type but instead found '!'
   
-  × Expected a type here
+    4 │ let d: string?;
+    5 │ let e: ?(string | number);
+  > 6 │ let f: !string;
+      │        ^
+    7 │ let g: string!;
+    8 │ let h: !(string | number);
+  
+  i Expected a type here
   
     4 │ let d: string?;
     5 │ let e: ?(string | number);
@@ -159,7 +198,14 @@ jsdoc_only_types.ts:7:14 parse ━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    5 │ let e: ?(string | number);
+    6 │ let f: !string;
+  > 7 │ let g: string!;
+      │              ^
+    8 │ let h: !(string | number);
+    9 │ 
+  
+  i An explicit or implicit semicolon is expected here...
   
     5 │ let e: ?(string | number);
     6 │ let f: !string;
@@ -181,7 +227,13 @@ jsdoc_only_types.ts:8:8 parse ━━━━━━━━━━━━━━━━�
 
   × expected a type but instead found '!'
   
-  × Expected a type here
+    6 │ let f: !string;
+    7 │ let g: string!;
+  > 8 │ let h: !(string | number);
+      │        ^
+    9 │ 
+  
+  i Expected a type here
   
     6 │ let f: !string;
     7 │ let g: string!;

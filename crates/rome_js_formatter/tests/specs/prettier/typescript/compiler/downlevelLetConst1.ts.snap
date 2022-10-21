@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "typescript\\compiler\\downlevelLetConst1.ts"
+  test_file: typescript/compiler/downlevelLetConst1.ts
 ---
 
 # Input
@@ -33,7 +33,10 @@ downlevelLetConst1.ts:1:6 parse ━━━━━━━━━━━━━━━━
 
   × expected an identifier, an array pattern, or an object pattern but instead found ''
   
-  × Expected an identifier, an array pattern, or an object pattern here
+  > 1 │ const
+      │      
+  
+  i Expected an identifier, an array pattern, or an object pattern here
   
   > 1 │ const
       │      

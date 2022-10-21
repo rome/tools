@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "typescript\\compiler\\errorOnInitializerInInterfaceProperty.ts"
+  test_file: typescript/compiler/errorOnInitializerInInterfaceProperty.ts
 ---
 
 # Input
@@ -40,19 +40,25 @@ errorOnInitializerInInterfaceProperty.ts:2:17 parse ━━━━━━━━━�
 
   × ';' expected'
   
-  × An explicit or implicit semicolon is expected here...
-  
     1 │ interface Foo {
   > 2 │     bar: number = 5;
       │                 ^
     3 │ }
     4 │ 
   
+  i An explicit or implicit semicolon is expected here...
+  
 errorOnInitializerInInterfaceProperty.ts:2:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a property, or a signature but instead found ';'
   
-  × Expected a property, or a signature here
+    1 │ interface Foo {
+  > 2 │     bar: number = 5;
+      │                    ^
+    3 │ }
+    4 │ 
+  
+  i Expected a property, or a signature here
   
     1 │ interface Foo {
   > 2 │     bar: number = 5;
@@ -64,7 +70,13 @@ errorOnInitializerInInterfaceProperty.ts:3:1 parse ━━━━━━━━━�
 
   × expected a statement but instead found '}'
   
-  × Expected a statement here
+    1 │ interface Foo {
+    2 │     bar: number = 5;
+  > 3 │ }
+      │ ^
+    4 │ 
+  
+  i Expected a statement here
   
     1 │ interface Foo {
     2 │     bar: number = 5;

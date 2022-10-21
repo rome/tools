@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "typescript\\error-recovery\\generic.ts"
+  test_file: typescript/error-recovery/generic.ts
 ---
 
 # Input
@@ -83,7 +83,12 @@ generic.ts:1:4 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected a type parameter but instead found '>'
   
-  × Expected a type parameter here
+  > 1 │ f1<>();
+      │    ^
+    2 │ 
+    3 │ new f2<>();
+  
+  i Expected a type parameter here
   
   > 1 │ f1<>();
       │    ^
@@ -94,7 +99,14 @@ generic.ts:3:8 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected a type parameter but instead found '>'
   
-  × Expected a type parameter here
+    1 │ f1<>();
+    2 │ 
+  > 3 │ new f2<>();
+      │        ^
+    4 │ 
+    5 │ function f3<>() {}
+  
+  i Expected a type parameter here
   
     1 │ f1<>();
     2 │ 
@@ -107,7 +119,14 @@ generic.ts:5:13 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected a type parameter but instead found '>'
   
-  × Expected a type parameter here
+    3 │ new f2<>();
+    4 │ 
+  > 5 │ function f3<>() {}
+      │             ^
+    6 │ 
+    7 │ class f4 {
+  
+  i Expected a type parameter here
   
     3 │ new f2<>();
     4 │ 
@@ -120,7 +139,13 @@ generic.ts:8:17 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected a type parameter but instead found '>'
   
-  × Expected a type parameter here
+     7 │ class f4 {
+   > 8 │     constructor<>() {}
+       │                 ^
+     9 │ }
+    10 │ 
+  
+  i Expected a type parameter here
   
      7 │ class f4 {
    > 8 │     constructor<>() {}
@@ -142,7 +167,14 @@ generic.ts:11:21 parse ━━━━━━━━━━━━━━━━━━━
 
   × expected a type parameter but instead found '>'
   
-  × Expected a type parameter here
+     9 │ }
+    10 │ 
+  > 11 │ const f5 = function<>() {}
+       │                     ^
+    12 │ 
+    13 │ interface f6<> {
+  
+  i Expected a type parameter here
   
      9 │ }
     10 │ 
@@ -155,7 +187,14 @@ generic.ts:13:14 parse ━━━━━━━━━━━━━━━━━━━
 
   × expected a type parameter but instead found '>'
   
-  × Expected a type parameter here
+    11 │ const f5 = function<>() {}
+    12 │ 
+  > 13 │ interface f6<> {
+       │              ^
+    14 │     test<>();
+    15 │ }
+  
+  i Expected a type parameter here
   
     11 │ const f5 = function<>() {}
     12 │ 
@@ -168,7 +207,13 @@ generic.ts:14:10 parse ━━━━━━━━━━━━━━━━━━━
 
   × expected a type parameter but instead found '>'
   
-  × Expected a type parameter here
+    13 │ interface f6<> {
+  > 14 │     test<>();
+       │          ^
+    15 │ }
+    16 │ 
+  
+  i Expected a type parameter here
   
     13 │ interface f6<> {
   > 14 │     test<>();
@@ -180,7 +225,14 @@ generic.ts:17:10 parse ━━━━━━━━━━━━━━━━━━━
 
   × expected a type parameter but instead found '>'
   
-  × Expected a type parameter here
+    15 │ }
+    16 │ 
+  > 17 │ class f7<> {
+       │          ^
+    18 │     test<>() {}
+    19 │ }
+  
+  i Expected a type parameter here
   
     15 │ }
     16 │ 
@@ -193,7 +245,13 @@ generic.ts:18:10 parse ━━━━━━━━━━━━━━━━━━━
 
   × expected a type parameter but instead found '>'
   
-  × Expected a type parameter here
+    17 │ class f7<> {
+  > 18 │     test<>() {}
+       │          ^
+    19 │ }
+    20 │ 
+  
+  i Expected a type parameter here
   
     17 │ class f7<> {
   > 18 │     test<>() {}

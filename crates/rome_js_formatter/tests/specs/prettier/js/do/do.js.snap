@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\do\\do.js"
+  test_file: js/do/do.js
 ---
 
 # Input
@@ -240,7 +240,14 @@ do.js:3:5 parse ━━━━━━━━━━━━━━━━━━━━━�
 
   × expected an expression, or an assignment but instead found 'do'
   
-  × Expected an expression, or an assignment here
+    1 │ const envSpecific = {
+    2 │   domain:
+  > 3 │     do {
+      │     ^^
+    4 │       if(env === 'production') 'https://abc.mno.com/';
+    5 │       else if(env === 'development') 'http://localhost:4000';
+  
+  i Expected an expression, or an assignment here
   
     1 │ const envSpecific = {
     2 │   domain:
@@ -253,8 +260,6 @@ do.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━━�
 
   × expected `:` but instead found `{`
   
-  × unexpected
-  
     1 │ const envSpecific = {
     2 │   domain:
   > 3 │     do {
@@ -262,11 +267,11 @@ do.js:3:8 parse ━━━━━━━━━━━━━━━━━━━━━�
     4 │       if(env === 'production') 'https://abc.mno.com/';
     5 │       else if(env === 'development') 'http://localhost:4000';
   
+  i Remove {
+  
 do.js:4:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `===`
-  
-  × unexpected
   
     2 │   domain:
     3 │     do {
@@ -275,11 +280,20 @@ do.js:4:14 parse ━━━━━━━━━━━━━━━━━━━━━
     5 │       else if(env === 'development') 'http://localhost:4000';
     6 │     }
   
+  i Remove ===
+  
 do.js:4:32 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a function body but instead found ''https://abc.mno.com/''
   
-  × Expected a function body here
+    2 │   domain:
+    3 │     do {
+  > 4 │       if(env === 'production') 'https://abc.mno.com/';
+      │                                ^^^^^^^^^^^^^^^^^^^^^^
+    5 │       else if(env === 'development') 'http://localhost:4000';
+    6 │     }
+  
+  i Expected a function body here
   
     2 │   domain:
     3 │     do {
@@ -292,8 +306,6 @@ do.js:4:54 parse ━━━━━━━━━━━━━━━━━━━━━
 
   × expected `:` but instead found `;`
   
-  × unexpected
-  
     2 │   domain:
     3 │     do {
   > 4 │       if(env === 'production') 'https://abc.mno.com/';
@@ -301,11 +313,20 @@ do.js:4:54 parse ━━━━━━━━━━━━━━━━━━━━━
     5 │       else if(env === 'development') 'http://localhost:4000';
     6 │     }
   
+  i Remove ;
+  
 do.js:5:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found 'else'
   
-  × Expected a statement here
+    3 │     do {
+    4 │       if(env === 'production') 'https://abc.mno.com/';
+  > 5 │       else if(env === 'development') 'http://localhost:4000';
+      │       ^^^^
+    6 │     }
+    7 │ };
+  
+  i Expected a statement here
   
     3 │     do {
     4 │       if(env === 'production') 'https://abc.mno.com/';
@@ -319,7 +340,16 @@ do.js:6:5 parse ━━━━━━━━━━━━━━━━━━━━━�
   × expected a statement but instead found '}
     }'
   
-  × Expected a statement here
+    4 │       if(env === 'production') 'https://abc.mno.com/';
+    5 │       else if(env === 'development') 'http://localhost:4000';
+  > 6 │     }
+      │     ^
+  > 7 │ };
+      │ ^
+    8 │ 
+    9 │ let x = do {
+  
+  i Expected a statement here
   
     4 │       if(env === 'production') 'https://abc.mno.com/';
     5 │       else if(env === 'development') 'http://localhost:4000';
@@ -334,7 +364,14 @@ do.js:9:9 parse ━━━━━━━━━━━━━━━━━━━━━�
 
   × expected an expression, or an assignment but instead found 'do'
   
-  × Expected an expression, or an assignment here
+     7 │ };
+     8 │ 
+   > 9 │ let x = do {
+       │         ^^
+    10 │   let tmp = f();
+    11 │   tmp * tmp + 1
+  
+  i Expected an expression, or an assignment here
   
      7 │ };
      8 │ 
@@ -347,8 +384,6 @@ do.js:12:2 parse ━━━━━━━━━━━━━━━━━━━━━
 
   × expected `while` but instead found `;`
   
-  × unexpected
-  
     10 │   let tmp = f();
     11 │   tmp * tmp + 1
   > 12 │ };
@@ -356,11 +391,20 @@ do.js:12:2 parse ━━━━━━━━━━━━━━━━━━━━━
     13 │ 
     14 │ let y = do {
   
+  i Remove ;
+  
 do.js:14:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression, or an assignment but instead found 'do'
   
-  × Expected an expression, or an assignment here
+    12 │ };
+    13 │ 
+  > 14 │ let y = do {
+       │         ^^
+    15 │   if (foo()) { f() }
+    16 │   else if (bar()) { g() }
+  
+  i Expected an expression, or an assignment here
   
     12 │ };
     13 │ 
@@ -373,8 +417,6 @@ do.js:18:2 parse ━━━━━━━━━━━━━━━━━━━━━
 
   × expected `while` but instead found `;`
   
-  × unexpected
-  
     16 │   else if (bar()) { g() }
     17 │   else { h() }
   > 18 │ };
@@ -382,11 +424,11 @@ do.js:18:2 parse ━━━━━━━━━━━━━━━━━━━━━
     19 │ 
     20 │ function foo() {
   
+  i Remove ;
+  
 do.js:25:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `}` but instead found `do`
-  
-  × unexpected
   
     23 │       <Home />
     24 │       {
@@ -395,11 +437,11 @@ do.js:25:9 parse ━━━━━━━━━━━━━━━━━━━━━
     26 │           if (loggedIn) {
     27 │             <LogoutButton />
   
+  i Remove do
+  
 do.js:26:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `}` but instead found `if`
-  
-  × unexpected
   
     24 │       {
     25 │         do {
@@ -408,11 +450,11 @@ do.js:26:11 parse ━━━━━━━━━━━━━━━━━━━━�
     27 │             <LogoutButton />
     28 │           } else {
   
+  i Remove if
+  
 do.js:37:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `do`
-  
-  × unexpected
   
     35 │ }
     36 │ 
@@ -421,11 +463,11 @@ do.js:37:2 parse ━━━━━━━━━━━━━━━━━━━━━
     38 │ (do {} + 1);
     39 │ (1 + do {});
   
+  i Remove do
+  
 do.js:37:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `while` but instead found `)`
-  
-  × unexpected
   
     35 │ }
     36 │ 
@@ -434,11 +476,11 @@ do.js:37:7 parse ━━━━━━━━━━━━━━━━━━━━━
     38 │ (do {} + 1);
     39 │ (1 + do {});
   
+  i Remove )
+  
 do.js:38:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `do`
-  
-  × unexpected
   
     37 │ (do {});
   > 38 │ (do {} + 1);
@@ -446,11 +488,11 @@ do.js:38:2 parse ━━━━━━━━━━━━━━━━━━━━━
     39 │ (1 + do {});
     40 │ () => do {};
   
+  i Remove do
+  
 do.js:38:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `while` but instead found `+`
-  
-  × unexpected
   
     37 │ (do {});
   > 38 │ (do {} + 1);
@@ -458,11 +500,20 @@ do.js:38:8 parse ━━━━━━━━━━━━━━━━━━━━━
     39 │ (1 + do {});
     40 │ () => do {};
   
+  i Remove +
+  
 do.js:39:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression but instead found 'do'
   
-  × Expected an expression here
+    37 │ (do {});
+    38 │ (do {} + 1);
+  > 39 │ (1 + do {});
+       │      ^^
+    40 │ () => do {};
+    41 │ 
+  
+  i Expected an expression here
   
     37 │ (do {});
     38 │ (do {} + 1);
@@ -475,8 +526,6 @@ do.js:39:11 parse ━━━━━━━━━━━━━━━━━━━━�
 
   × expected `while` but instead found `)`
   
-  × unexpected
-  
     37 │ (do {});
     38 │ (do {} + 1);
   > 39 │ (1 + do {});
@@ -484,11 +533,20 @@ do.js:39:11 parse ━━━━━━━━━━━━━━━━━━━━�
     40 │ () => do {};
     41 │ 
   
+  i Remove )
+  
 do.js:40:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a function body, or an expression but instead found 'do'
   
-  × Expected a function body, or an expression here
+    38 │ (do {} + 1);
+    39 │ (1 + do {});
+  > 40 │ () => do {};
+       │       ^^
+    41 │ 
+    42 │ (do {
+  
+  i Expected a function body, or an expression here
   
     38 │ (do {} + 1);
     39 │ (1 + do {});
@@ -501,8 +559,6 @@ do.js:40:12 parse ━━━━━━━━━━━━━━━━━━━━�
 
   × expected `while` but instead found `;`
   
-  × unexpected
-  
     38 │ (do {} + 1);
     39 │ (1 + do {});
   > 40 │ () => do {};
@@ -510,11 +566,11 @@ do.js:40:12 parse ━━━━━━━━━━━━━━━━━━━━�
     41 │ 
     42 │ (do {
   
+  i Remove ;
+  
 do.js:42:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `do`
-  
-  × unexpected
   
     40 │ () => do {};
     41 │ 
@@ -523,11 +579,11 @@ do.js:42:2 parse ━━━━━━━━━━━━━━━━━━━━━
     43 │   switch(0) {
     44 │     case 0: "foo";
   
+  i Remove do
+  
 do.js:47:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `while` but instead found `)`
-  
-  × unexpected
   
     45 │     case 1: break;
     46 │   }
@@ -536,11 +592,20 @@ do.js:47:2 parse ━━━━━━━━━━━━━━━━━━━━━
     48 │ 
     49 │ () => do {
   
+  i Remove )
+  
 do.js:49:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a function body, or an expression but instead found 'do'
   
-  × Expected a function body, or an expression here
+    47 │ });
+    48 │ 
+  > 49 │ () => do {
+       │       ^^
+    50 │   var obj = { foo: "bar", bar: "foo" };
+    51 │   for (var key in obj) {
+  
+  i Expected a function body, or an expression here
   
     47 │ });
     48 │ 
@@ -553,13 +618,13 @@ do.js:54:2 parse ━━━━━━━━━━━━━━━━━━━━━
 
   × expected `while` but instead found `;`
   
-  × unexpected
-  
     52 │     obj[key];
     53 │   }
   > 54 │ };
        │  ^
     55 │ 
+  
+  i Remove ;
   
 do.js:31:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

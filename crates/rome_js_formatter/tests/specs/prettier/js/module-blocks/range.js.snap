@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\module-blocks\\range.js"
+  test_file: js/module-blocks/range.js
 ---
 
 # Input
@@ -48,7 +48,12 @@ range.js:1:26 parse ━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+  > 1 │ let moduleBlock = module {  export let y = 1;
+      │                          ^
+    2 │ };
+    3 │ 
+  
+  i An explicit or implicit semicolon is expected here...
   
   > 1 │ let moduleBlock = module {  export let y = 1;
       │                          ^
@@ -66,18 +71,16 @@ range.js:1:29 parse ━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of an export declaration not at the top level
   
-  × move this declaration to the top level
-  
   > 1 │ let moduleBlock = module {  export let y = 1;
       │                             ^^^^^^^^^^^^^^^^^
     2 │ };
     3 │ 
   
+  i move this declaration to the top level
+  
 range.js:4:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `{`
-  
-  × unexpected
   
     2 │ };
     3 │ 
@@ -85,11 +88,11 @@ range.js:4:12 parse ━━━━━━━━━━━━━━━━━━━━
       │            ^
     5 │ 
   
+  i Remove {
+  
 range.js:4:21 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `:` but instead found `let`
-  
-  × unexpected
   
     2 │ };
     3 │ 
@@ -97,17 +100,19 @@ range.js:4:21 parse ━━━━━━━━━━━━━━━━━━━━
       │                     ^^^
     5 │ 
   
+  i Remove let
+  
 range.js:4:25 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `foo`
-  
-  × unexpected
   
     2 │ };
     3 │ 
   > 4 │ foo(module { export let foo = "foo"; })
       │                         ^^^
     5 │ 
+  
+  i Remove foo
   
 range.js:4:29 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -123,19 +128,25 @@ range.js:4:36 parse ━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `;`
   
-  × unexpected
-  
     2 │ };
     3 │ 
   > 4 │ foo(module { export let foo = "foo"; })
       │                                    ^
     5 │ 
   
+  i Remove ;
+  
 range.js:4:38 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found '})'
   
-  × Expected a statement here
+    2 │ };
+    3 │ 
+  > 4 │ foo(module { export let foo = "foo"; })
+      │                                      ^^
+    5 │ 
+  
+  i Expected a statement here
   
     2 │ };
     3 │ 

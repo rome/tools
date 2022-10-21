@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\decorators\\mobx.js"
+  test_file: js/decorators/mobx.js
 ---
 
 # Input
@@ -138,19 +138,17 @@ mobx.js:4:20 parse ━━━━━━━━━━━━━━━━━━━━�
 
   × return types can only be used in TypeScript files
   
-  × remove this type annotation
-  
     3 │ @observer class OrderLine {
   > 4 │   @observable price:number = 0;
       │                    ^^^^^^^
     5 │   @observable amount:number = 1;
     6 │ 
   
+  i remove this type annotation
+  
 mobx.js:5:21 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × return types can only be used in TypeScript files
-  
-  × remove this type annotation
   
     3 │ @observer class OrderLine {
     4 │   @observable price:number = 0;
@@ -159,11 +157,11 @@ mobx.js:5:21 parse ━━━━━━━━━━━━━━━━━━━━�
     6 │ 
     7 │   constructor(price) {
   
+  i remove this type annotation
+  
 mobx.js:33:34 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  
-  × TypeScript only syntax
   
     31 │   }
     32 │ 
@@ -172,11 +170,11 @@ mobx.js:33:34 parse ━━━━━━━━━━━━━━━━━━━━
     34 │   
     35 │   @action handleSomething = (event: React.ChangeEvent<HTMLInputElement>) => doSomething();
   
+  i TypeScript only syntax
+  
 mobx.js:35:35 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  
-  × TypeScript only syntax
   
     33 │   @action handleDecrease = (event: React.ChangeEvent<HTMLInputElement>) => this.count--;
     34 │   
@@ -184,6 +182,8 @@ mobx.js:35:35 parse ━━━━━━━━━━━━━━━━━━━━
        │                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     36 │ }
     37 │ 
+  
+  i TypeScript only syntax
   
 
 ```

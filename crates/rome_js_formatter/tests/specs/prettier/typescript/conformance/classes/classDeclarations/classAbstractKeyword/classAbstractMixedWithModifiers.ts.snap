@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "typescript\\conformance\\classes\\classDeclarations\\classAbstractKeyword\\classAbstractMixedWithModifiers.ts"
+  test_file: typescript/conformance/classes/classDeclarations/classAbstractKeyword/classAbstractMixedWithModifiers.ts
 ---
 
 # Input
@@ -81,6 +81,15 @@ classAbstractMixedWithModifiers.ts:6:5 parse ━━━━━━━━━━━�
     7 │     
     8 │     abstract public foo_bb();
   
+  i 'private' modifier
+  
+    4 │     public abstract foo_b();
+    5 │     protected abstract foo_c();
+  > 6 │     private abstract foo_d();
+      │     ^^^^^^^
+    7 │     
+    8 │     abstract public foo_bb();
+  
   i 'abstract' modifier
   
     4 │     public abstract foo_b();
@@ -94,7 +103,14 @@ classAbstractMixedWithModifiers.ts:8:14 parse ━━━━━━━━━━━�
 
   × 'public' must precede 'abstract'
   
-  × move this modifier
+     6 │     private abstract foo_d();
+     7 │     
+   > 8 │     abstract public foo_bb();
+       │              ^^^^^^
+     9 │     abstract protected foo_cc();
+    10 │     abstract private foo_dd();
+  
+  i move this modifier
   
      6 │     private abstract foo_d();
      7 │     
@@ -116,7 +132,13 @@ classAbstractMixedWithModifiers.ts:9:14 parse ━━━━━━━━━━━�
 
   × 'protected' must precede 'abstract'
   
-  × move this modifier
+     8 │     abstract public foo_bb();
+   > 9 │     abstract protected foo_cc();
+       │              ^^^^^^^^^
+    10 │     abstract private foo_dd();
+    11 │     
+  
+  i move this modifier
   
      8 │     abstract public foo_bb();
    > 9 │     abstract protected foo_cc();
@@ -135,6 +157,15 @@ classAbstractMixedWithModifiers.ts:9:14 parse ━━━━━━━━━━━�
 classAbstractMixedWithModifiers.ts:10:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'private' cannot be used with 'abstract' modifier.
+  
+     8 │     abstract public foo_bb();
+     9 │     abstract protected foo_cc();
+  > 10 │     abstract private foo_dd();
+       │              ^^^^^^^
+    11 │     
+    12 │     abstract static foo_d();
+  
+  i 'private' modifier
   
      8 │     abstract public foo_bb();
      9 │     abstract protected foo_cc();
@@ -163,6 +194,15 @@ classAbstractMixedWithModifiers.ts:12:5 parse ━━━━━━━━━━━�
     13 │     
     14 │     static abstract foo_e();
   
+  i 'abstract' modifier
+  
+    10 │     abstract private foo_dd();
+    11 │     
+  > 12 │     abstract static foo_d();
+       │     ^^^^^^^^
+    13 │     
+    14 │     static abstract foo_e();
+  
   i 'static' modifier
   
     10 │     abstract private foo_dd();
@@ -175,6 +215,14 @@ classAbstractMixedWithModifiers.ts:12:5 parse ━━━━━━━━━━━�
 classAbstractMixedWithModifiers.ts:14:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × 'abstract' cannot be used with 'static' modifier.
+  
+    12 │     abstract static foo_d();
+    13 │     
+  > 14 │     static abstract foo_e();
+       │            ^^^^^^^^
+    15 │ }
+  
+  i 'abstract' modifier
   
     12 │     abstract static foo_d();
     13 │     
