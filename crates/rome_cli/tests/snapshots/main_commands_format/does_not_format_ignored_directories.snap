@@ -13,17 +13,17 @@ expression: content
 
 ```
 
-## `scripts/test.js`
-
-```js
-  statement(  )  
-```
-
 ## `src/test.js`
 
 ```js
 statement();
 
+```
+
+## `scripts/test.js`
+
+```js
+  statement(  )  
 ```
 
 # Emitted Messages

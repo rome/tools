@@ -162,8 +162,8 @@ impl<'scope> TraversalScope<'scope> for MemoryTraversalScope<'scope> {
             let files = &self.fs.files.0.read();
             for path in files.keys() {
                 let should_process_file = if base.starts_with(".") || base.starts_with("./") {
-                    // we simulate absolute paths
-                    let absolute_base = PathBuf::from("/");
+                    // we simulate absolute paths, so we can correctly strips out the base path from the path
+                    let absolute_base = PathBuf::from("/").join(&base);
                     let absolute_path = Path::new("/").join(&path);
                     absolute_path.strip_prefix(&absolute_base).is_ok()
                 } else {

@@ -147,7 +147,7 @@ impl From<SnapshotPayload<'_>> for CliSnapshot {
                 (file.to_str().unwrap().to_string(), String::from(content))
             })
             .collect();
-        files.sort();
+        files.sort_by_key(|(path, _)| path.to_string());
 
         for (file, content) in files {
             cli_snapshot.files.insert(file, content);

@@ -119,6 +119,61 @@ fn write() {
     ));
 }
 
+#[test]
+fn write_only_files_in_correct_base() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_to_format = Path::new("src/format.js");
+    fs.insert(
+        file_to_format.into(),
+        <&str>::clone(&UNFORMATTED).as_bytes(),
+    );
+
+    let file_to_not_format = Path::new("scripts/format.js");
+    fs.insert(file_to_not_format.into(), UNFORMATTED.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--write"),
+            OsString::from("./src"),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(file_to_format)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, FORMATTED, "we test the file is formatted");
+    drop(file);
+    let mut file = fs
+        .open(file_to_not_format)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, UNFORMATTED, "we test the file is not formatted");
+    drop(file);
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "write_only_files_in_correct_base",
+        fs,
+        console,
+        result,
+    ));
+}
+
 // Ensures lint warnings are not printed in format mode
 #[test]
 fn lint_warning() {
