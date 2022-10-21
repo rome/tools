@@ -144,9 +144,9 @@ impl JsxAttributeList {
     /// Only attributes with name as [JsxName] can be returned.   
     ///
     /// Each name of "names_to_lookup" should be unique.  
-    /// 
+    ///
     /// Supports maximum of 16 names to avoid stack overflow. Eeach attribute will consume:
-    /// 
+    ///
     /// - 8 bytes for the [Option<JsxAttribute>] result;
     /// - plus 16 bytes for the [&str] argument.
     pub fn find_attributes_by_name<const N: usize>(
