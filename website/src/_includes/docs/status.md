@@ -1,9 +1,8 @@
-
 ## Development Status
 
-**Rome is being rewritten in Rust, so it doesn't support all the intended features**.
+**Rome is being written in Rust, so it doesn't support all the intended features**.
 
-We plan on covering the following areas:
+Rome's vision is to cover the following features:
 
 - Bundling
 - Compiling
@@ -15,33 +14,32 @@ We plan on covering the following areas:
 - Type Checking
 - ... and more
 
-### Areas available
+### Supported Features
 
-- Formatter, check the [formatter section](#formatter)
-- Linter, check the [linter section](#linter)
+- [Formatter](/docs#formatter)
+- [Linter](/docs#linter)
 
 ### Language Support
 
 | Language                           | Parsing                                                 | Formatting                                              | Linting                                                 |
-|------------------------------------|---------------------------------------------------------|---------------------------------------------------------|---------------------------------------------------------|
-| [JavaScript](/#javascript-support) | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        |
-| [TypeScript](/#typescript-support) | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        |
-| JSX                                | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅️</span>       | <span aria-label="Supported" role="img">✅</span>        |
+| ---------------------------------- | ------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------- |
+| [JavaScript](/#javascript-support) | <span aria-label="Supported" role="img">✅</span>       | <span aria-label="Supported" role="img">✅</span>       | <span aria-label="Supported" role="img">✅</span>       |
+| [TypeScript](/#typescript-support) | <span aria-label="Supported" role="img">✅</span>       | <span aria-label="Supported" role="img">✅</span>       | <span aria-label="Supported" role="img">✅</span>       |
+| JSX                                | <span aria-label="Supported" role="img">✅</span>       | <span aria-label="Supported" role="img">✅️</span>      | <span aria-label="Supported" role="img">✅</span>       |
 | JSON                               | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> |
 | HTML                               | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> |
 | CSS                                | <span aria-label="Not in progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> |
 | Markdown                           | <span aria-label="Not in progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> |
 
+#### JavaScript Support
 
-#### JavaScript support
+Rome supports ES2022.
 
 Rome supports only the official syntax. The team starts developments of the new syntax when a proposal reaches
-[Stage 3](https://github.com/tc39/proposals#stage-3). 
+[Stage 3](https://github.com/tc39/proposals#stage-3).
 
-Rome supports ES2022 version of the language.
-
-#### TypeScript support
+#### TypeScript Support
 
 Rome doesn't support decorators (the old proposal). Rome's parser will ignore them as if they were comments.
-This means that programs with decorators are still valid, but they won't 
+This means that programs with decorators are still valid, but they won't
 benefit all the underlying features such as formatter, analyzers, etc.

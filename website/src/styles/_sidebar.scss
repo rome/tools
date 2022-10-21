@@ -99,8 +99,12 @@
 		margin-bottom: calc($unit / 2);
 	}
 
-	ol li ol{
+	ol li ol {
 		font-size: .88rem;
+	}
+
+	> ol > li > a:not(:only-child)  {
+		font-weight: bold;
 	}
 
 	li {
@@ -112,6 +116,7 @@
 		}
 
 		&.active > a {
+			color: var(--toc-link-color-active);
 			font-weight: bold;
 		}
 	}

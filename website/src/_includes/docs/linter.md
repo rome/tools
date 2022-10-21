@@ -1,18 +1,6 @@
 ## Linter
 
-You can use the linter via our [VS Code extension] or by downloading our CLI directly from our [release page].
-
-> WARNING: The CLI and VS Code extension are packaged with separate binaries, which means that if you don't
-> use our default options, you will have to **pass them to both the extension AND the CLI**.
->
-> This is a temporary choice to allow people to play with our linter. This will change in the near future.
-
-
-### Use the linter via VSCode extension
-
-The feature is opt-in, and you'd need to enable the following options:
-- `analysis.enableDiagnostics` 
-- `analysis.enableCodeActions` 
+Rome's linter statically analyzes your code to catch common errors and help write more idiomatic code.
 
 ### Use the linter via CLI
 
@@ -41,18 +29,29 @@ OPTIONS:
 
 ### Rules
 
-At the moment only a few rules are implemented as the linting / analysis infrastructure is being built.
+Rules in Rome are divided into categories to help you understand their purpose.
 
 **See the full [list of rules](/docs/lint/rules).**
 
 All rules are enabled by default, and cannot be disabled. [Suppression](#lint-suppression) can be used to hide specific lint errors.
 
-
-[VS Code extension]: https://marketplace.visualstudio.com/items?itemName=rome.rome
+[vs code extension]: https://marketplace.visualstudio.com/items?itemName=rome.rome
 [release page]: https://github.com/rome/tools/releases
 
+### Code fixes
 
-### Lint suppression
+Lint rules may provide automatic code fixes. Rome distinguishes between two types of fixes:
+
+- safe fixes
+- suggested fixes
+
+Safe fixes are guaranteed to not change the semantics of your code,
+and can be applied without explicit review.
+
+Suggested fixes may change the semantics of your program, and it's,
+therefore, advised to manually review the changes.
+
+### Ignoring Code
 
 There are times when a developer wants to ignore a lint rule for a specific line of the code.
 
@@ -66,6 +65,7 @@ Suppression comments have the following format:
 ```
 
 Where
+
 - `rome-ignore` is the start of a suppression comment;
 - `lint:` suppresses the linter;
 - `(correctness/noDebugger)`: **optional**, group and name of the rule you want to suppress;
@@ -79,17 +79,3 @@ debugger;
 // rome-ignore lint(correctness/noDebugger): reason
 debugger;
 ```
-
-
-### Code fixes
-
-Lint rules may provide automatic code fixes. Rome distinguishes between two types of fixes:
-
-* safe fixes
-* suggested fixes
-
-Safe fixes are guaranteed to not change the semantics of your code,
-and can be applied without explicit review.
-
-Suggested fixes may change the semantics of your program, and it's, 
-therefore, advised to manually review the changes. 

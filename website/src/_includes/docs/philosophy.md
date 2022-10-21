@@ -6,8 +6,8 @@ This list includes general ethos the project should abide by. This list is not c
 
 - **Set clear expectations.** Make project intent and decisions known well in advance. Nothing should be a surprise.
 - **Clear messaging of decisions.** The team might evaluate options and make decisions using private channels. While the team will try to keep discussions
-using public channels like GitHub Discussions or Discord, frequent private check-in are the norm, due to the nature of the private company.
-When decisions occur via private channels, the team has to commit to communicate these decisions using the public channels.
+  using public channels like GitHub Discussions or Discord, frequent private check-in are the norm, due to the nature of the private company.
+  When decisions occur via private channels, the team has to commit to communicate these decisions using the public channels.
 
 ### Technical
 
