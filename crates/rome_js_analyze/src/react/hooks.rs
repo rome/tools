@@ -24,7 +24,7 @@ impl ReactCallWithDependencyResult {
             .and_then(|node| node.as_js_arrow_function_expression())
             .map(|arrow_function| {
                 let closure = arrow_function.closure(model);
-                let range = closure.closure_range().clone();
+                let range = *closure.closure_range();
                 closure
                     .descendents()
                     .flat_map(|closure| closure.all_captures())
