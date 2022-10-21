@@ -29,7 +29,7 @@ declare_rule! {
     /// useEffect(() => {
     /// }, [b])
     /// ```
-    /// 
+    ///
     /// ```js,expect_diagnostic
     /// const [name, setName] = useState();
     /// useEffect(() => {
@@ -46,7 +46,7 @@ declare_rule! {
     ///     console.log(a);
     /// }, [a]);
     /// ```
-    /// 
+    ///
     /// ```js
     /// const [name, setName] = useState();
     /// useEffect(() => {
@@ -54,7 +54,7 @@ declare_rule! {
     ///     setName("");
     /// }, [name])
     /// ```
-    /// 
+    ///
     pub(crate) UseExhaustiveDependencies {
         version: "10.0.0",
         name: "useExhaustiveDependencies",
@@ -204,7 +204,10 @@ impl Rule for UseExhaustiveDependencies {
             }
 
             if !remove_deps.is_empty() {
-                signals.push(Fix::RemoveDependency(result.function_name_range, remove_deps));
+                signals.push(Fix::RemoveDependency(
+                    result.function_name_range,
+                    remove_deps,
+                ));
             }
         }
 
@@ -243,10 +246,7 @@ impl Rule for UseExhaustiveDependencies {
                 );
 
                 for range in ranges.iter() {
-                    diag = diag.secondary(
-                        range,
-                        "This dependency can be removed from the list.",
-                    );
+                    diag = diag.secondary(range, "This dependency can be removed from the list.");
                 }
 
                 Some(diag)

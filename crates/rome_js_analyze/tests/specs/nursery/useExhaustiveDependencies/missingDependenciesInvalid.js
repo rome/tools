@@ -7,7 +7,7 @@ function MyComponent() {
 
 // interaction with other react hooks
 
-function MyComponent4() {
+function MyComponent2() {
   const [name, setName] = useState(0);
   const [state, dispatch] = useReducer();
   const memoizedCallback = useCallback();
@@ -32,7 +32,7 @@ function MyComponent4() {
 
 // all hooks with dependencies
 
-function MyComponent5() {
+function MyComponent3() {
   let a = 1;
   useEffect(() => console.log(a));
   useCallback(() => console.log(a));
@@ -44,7 +44,7 @@ function MyComponent5() {
 
 // inner closures
 
-function MyComponent6() {
+function MyComponent4() {
   let a = 1;
   useEffect(() => {
       return () => console.log(a)
@@ -53,7 +53,7 @@ function MyComponent6() {
 
 // same variable multiple times
 
-function MyComponent7() {
+function MyComponent5() {
   let a = 1;
   useEffect(() => {
     console.log(a);

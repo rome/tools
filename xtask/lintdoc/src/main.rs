@@ -5,7 +5,7 @@ use rome_analyze::{
 };
 use rome_console::{
     fmt::{Formatter, HTML},
-    markup, Markup, Console,
+    markup, Console, Markup,
 };
 use rome_diagnostics::{file::FileId, file::SimpleFile, Diagnostic};
 use rome_js_analyze::{analyze, visit_registry};
@@ -482,11 +482,14 @@ fn assert_lint(
         if test.expect_diagnostic {
             // Print all diagnostics to help the user
             if all_diagnostics.len() > 1 {
-                let mut console = rome_console::EnvConsole::new(false);                
+                let mut console = rome_console::EnvConsole::new(false);
                 for diag in all_diagnostics.iter() {
-                    console.print(rome_console::LogLevel::Error, markup! {
-                        {diag.display(&file)}
-                    });
+                    console.print(
+                        rome_console::LogLevel::Error,
+                        markup! {
+                            {diag.display(&file)}
+                        },
+                    );
                 }
             }
 
@@ -497,11 +500,14 @@ fn assert_lint(
             );
         } else {
             // Print all diagnostics to help the user
-            let mut console = rome_console::EnvConsole::new(false);            
+            let mut console = rome_console::EnvConsole::new(false);
             for diag in all_diagnostics.iter() {
-                console.print(rome_console::LogLevel::Error, markup! {
-                    {diag.display(&file)}
-                });
+                console.print(
+                    rome_console::LogLevel::Error,
+                    markup! {
+                        {diag.display(&file)}
+                    },
+                );
             }
 
             bail!(format!(

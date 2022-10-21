@@ -1,7 +1,7 @@
 //! Extensions for things which are not easily generated in ast expr nodes
 use crate::numbers::parse_js_number;
 use crate::{
-    JsAnyExpression, JsAnyLiteralExpression, JsArrayExpression, JsArrayHole,
+    JsAnyCallArgument, JsAnyExpression, JsAnyLiteralExpression, JsArrayExpression, JsArrayHole,
     JsAssignmentExpression, JsBinaryExpression, JsCallExpression, JsComputedMemberExpression,
     JsIdentifierExpression, JsLiteralMemberName, JsLogicalExpression, JsNumberLiteralExpression,
     JsObjectExpression, JsPostUpdateExpression, JsReferenceIdentifier, JsRegexLiteralExpression,
@@ -13,6 +13,7 @@ use core::iter;
 use rome_rowan::{
     AstNode, AstSeparatedList, NodeOrToken, SyntaxResult, SyntaxTokenText, TextRange, TextSize,
 };
+use std::collections::HashSet;
 
 impl JsReferenceIdentifier {
     /// Returns `true` if this identifier refers to the `undefined` symbol.
@@ -731,6 +732,51 @@ impl JsCallExpression {
     /// ```
     pub fn is_optional_chain(&self) -> bool {
         is_optional_chain(self.clone().into())
+    }
+
+    /// Get [JsAnyCallArgument] by it index inside the [JsCallExpression] argument list.  
+    ///
+    /// Each index inside "indices" should be unique.  
+    /// "indices" must be sorted.  
+    ///
+    /// Supports maximum of 16 indices to avoid stack overflow. Eeach argument will consume:
+    ///
+    /// - 8 bytes for the [Option<JsAnyCallArgument>] result;
+    /// - 8 bytes for the [usize] argument.
+    pub fn get_arguments_by_index<const N: usize>(
+        &self,
+        indices: [usize; N],
+    ) -> [Option<JsAnyCallArgument>; N] {
+        // assert there are no duplicates
+        debug_assert!(HashSet::<_>::from_iter(indices).len() == N);
+        debug_assert!({
+            // is_sorted is unstable
+            let mut sorted = indices;
+            sorted.sort();
+            indices == sorted
+        });
+        debug_assert!(N <= 16);
+
+        const INIT: Option<JsAnyCallArgument> = None;
+        let mut results = [INIT; N];
+
+        let mut next = 0;
+
+        for (i, arg) in self
+            .arguments()
+            .ok()
+            .map(|x| x.args().into_iter())
+            .into_iter()
+            .flatten()
+            .enumerate()
+        {
+            if i == indices[next] {
+                results[next] = arg.ok();
+                next += 1;
+            }
+        }
+
+        results
     }
 }
 

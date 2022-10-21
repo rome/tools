@@ -19,14 +19,14 @@ impl ReactCallWithDependencyResult {
     /// Returns all [Reference] captured by the closure argument of the React hook.  
     /// See [react_hook_with_dependency].
     pub fn all_captures(&self, model: &SemanticModel) -> impl Iterator<Item = Capture> {
-        self
-            .closure_node
+        self.closure_node
             .as_ref()
             .and_then(|node| node.as_js_arrow_function_expression())
             .map(|arrow_function| {
                 let closure = arrow_function.closure(model);
                 let range = closure.closure_range().clone();
-                closure.descendents()
+                closure
+                    .descendents()
                     .flat_map(|closure| closure.all_captures())
                     .filter(move |capture| capture.declaration_range().intersect(range).is_none())
             })
@@ -39,23 +39,11 @@ impl ReactCallWithDependencyResult {
     pub fn all_dependencies(&self) -> impl Iterator<Item = JsAnyExpression> {
         self.dependencies_node
             .as_ref()
-            .and_then(|x| {
-                Some(x.as_js_array_expression()?
-                    .elements()
-                    .into_iter()
-                )
-            })
+            .and_then(|x| Some(x.as_js_array_expression()?.elements().into_iter()))
             .into_iter()
             .flatten()
             .filter_map(|x| x.ok()?.as_js_any_expression().cloned())
     }
-}
-
-// Get the n-th argument of a call expression casting it to JsAnyExpression
-fn get_nth_argument(call: &JsCallExpression, n: usize) -> Option<JsAnyExpression> {
-    let args = call.arguments().ok()?;
-    let mut args = args.args().into_iter();
-    args.nth(n)?.ok()?.as_js_any_expression().cloned()
 }
 
 #[derive(Copy, Clone, Serialize, Deserialize)]
@@ -103,13 +91,15 @@ pub(crate) fn react_hook_with_dependency(
     let name = name.text_trimmed();
 
     let hook = hooks.get(name)?;
-    let closure_node = get_nth_argument(call, hook.closure_index);
-    let dependencies_node = get_nth_argument(call, hook.dependencies_index);
+
+    let mut indices = [hook.closure_index, hook.dependencies_index];
+    indices.sort();
+    let [closure_node, dependencies_node] = call.get_arguments_by_index(indices);
 
     Some(ReactCallWithDependencyResult {
         function_name_range,
-        closure_node,
-        dependencies_node,
+        closure_node: closure_node.and_then(|x| x.as_js_any_expression().cloned()),
+        dependencies_node: dependencies_node.and_then(|x| x.as_js_any_expression().cloned()),
     })
 }
 

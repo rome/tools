@@ -13,7 +13,7 @@ function MyComponent() {
 
 // interaction with other react hooks
 
-function MyComponent4() {
+function MyComponent2() {
   const [name, setName] = useState(0);
   const [state, dispatch] = useReducer();
   const memoizedCallback = useCallback();
@@ -38,7 +38,7 @@ function MyComponent4() {
 
 // all hooks with dependencies
 
-function MyComponent5() {
+function MyComponent3() {
   let a = 1;
   useEffect(() => console.log(a));
   useCallback(() => console.log(a));
@@ -50,7 +50,7 @@ function MyComponent5() {
 
 // inner closures
 
-function MyComponent6() {
+function MyComponent4() {
   let a = 1;
   useEffect(() => {
       return () => console.log(a)
@@ -59,7 +59,7 @@ function MyComponent6() {
 
 // same variable multiple times
 
-function MyComponent7() {
+function MyComponent5() {
   let a = 1;
   useEffect(() => {
     console.log(a);
@@ -242,7 +242,7 @@ missingDependenciesInvalid.js:37:3 lint/nursery/useExhaustiveDependencies ━━
 
   ! This hook do not specify all of its dependencies.
   
-    35 │ function MyComponent5() {
+    35 │ function MyComponent3() {
     36 │   let a = 1;
   > 37 │   useEffect(() => console.log(a));
        │   ^^^^^^^^^
@@ -251,7 +251,7 @@ missingDependenciesInvalid.js:37:3 lint/nursery/useExhaustiveDependencies ━━
   
   i This dependency is not specified in the hook dependency list.
   
-    35 │ function MyComponent5() {
+    35 │ function MyComponent3() {
     36 │   let a = 1;
   > 37 │   useEffect(() => console.log(a));
        │                               ^
@@ -386,7 +386,7 @@ missingDependenciesInvalid.js:49:3 lint/nursery/useExhaustiveDependencies ━━
 
   ! This hook do not specify all of its dependencies.
   
-    47 │ function MyComponent6() {
+    47 │ function MyComponent4() {
     48 │   let a = 1;
   > 49 │   useEffect(() => {
        │   ^^^^^^^^^
@@ -410,7 +410,7 @@ missingDependenciesInvalid.js:58:3 lint/nursery/useExhaustiveDependencies ━━
 
   ! This hook do not specify all of its dependencies.
   
-    56 │ function MyComponent7() {
+    56 │ function MyComponent5() {
     57 │   let a = 1;
   > 58 │   useEffect(() => {
        │   ^^^^^^^^^
