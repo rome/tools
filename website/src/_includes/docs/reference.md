@@ -46,7 +46,7 @@ Disable the formatting of markup (print everything as plain text)
 
 Connect to a running instance of the Rome daemon server
 
-#### Global Flags
+#### Global Options
 
 Use these flags to get information about the Rome CLI.
 
