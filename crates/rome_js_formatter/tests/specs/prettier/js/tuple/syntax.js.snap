@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\tuple\\syntax.js"
+  test_file: js/tuple/syntax.js
 ---
 
 # Input
@@ -52,7 +52,14 @@ syntax.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━
     #[1, 2]
     #[1, 2, #'
   
-  × Expected a statement here
+  > 1 │ #[]
+      │ ^^^
+  > 2 │ #[1, 2]
+  > 3 │ #[1, 2, #{ a: 3 }]
+      │ ^^^^^^^^^
+    4 │ 
+  
+  i Expected a statement here
   
   > 1 │ #[]
       │ ^^^
@@ -65,7 +72,13 @@ syntax.js:3:18 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected a statement but instead found ']'
   
-  × Expected a statement here
+    1 │ #[]
+    2 │ #[1, 2]
+  > 3 │ #[1, 2, #{ a: 3 }]
+      │                  ^
+    4 │ 
+  
+  i Expected a statement here
   
     1 │ #[]
     2 │ #[1, 2]

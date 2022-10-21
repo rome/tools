@@ -20,6 +20,7 @@ serde = { version = "1.0.136", features = ["derive"], optional = true }
 schemars = { version = "0.8.10", optional = true }
 
 [dev-dependencies]
+rome_console = { path = "../rome_console" }
 rome_fs = { path = "../rome_fs" }
 rome_service = { path = "../rome_service" }
 rome_js_parser = { path = "../rome_js_parser" }

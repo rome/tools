@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "typescript\\class\\duplicates-access-modifier.ts"
+  test_file: typescript/class/duplicates-access-modifier.ts
 ---
 
 # Input
@@ -56,7 +56,13 @@ duplicates-access-modifier.ts:2:10 parse ━━━━━━━━━━━━━
 
   × Accessibility modifier already seen.
   
-  × duplicate modifier
+    1 │ class Foo {
+  > 2 │   public public a;
+      │          ^^^^^^
+    3 │   private public b;
+    4 │   protected private c;
+  
+  i duplicate modifier
   
     1 │ class Foo {
   > 2 │   public public a;
@@ -76,7 +82,14 @@ duplicates-access-modifier.ts:3:11 parse ━━━━━━━━━━━━━
 
   × Accessibility modifier already seen.
   
-  × duplicate modifier
+    1 │ class Foo {
+    2 │   public public a;
+  > 3 │   private public b;
+      │           ^^^^^^
+    4 │   protected private c;
+    5 │   public protected d;
+  
+  i duplicate modifier
   
     1 │ class Foo {
     2 │   public public a;
@@ -98,7 +111,14 @@ duplicates-access-modifier.ts:4:13 parse ━━━━━━━━━━━━━
 
   × Accessibility modifier already seen.
   
-  × duplicate modifier
+    2 │   public public a;
+    3 │   private public b;
+  > 4 │   protected private c;
+      │             ^^^^^^^
+    5 │   public protected d;
+    6 │   public protected private e;
+  
+  i duplicate modifier
   
     2 │   public public a;
     3 │   private public b;
@@ -120,7 +140,14 @@ duplicates-access-modifier.ts:5:10 parse ━━━━━━━━━━━━━
 
   × Accessibility modifier already seen.
   
-  × duplicate modifier
+    3 │   private public b;
+    4 │   protected private c;
+  > 5 │   public protected d;
+      │          ^^^^^^^^^
+    6 │   public protected private e;
+    7 │ }
+  
+  i duplicate modifier
   
     3 │   private public b;
     4 │   protected private c;
@@ -142,7 +169,14 @@ duplicates-access-modifier.ts:6:10 parse ━━━━━━━━━━━━━
 
   × Accessibility modifier already seen.
   
-  × duplicate modifier
+    4 │   protected private c;
+    5 │   public protected d;
+  > 6 │   public protected private e;
+      │          ^^^^^^^^^
+    7 │ }
+    8 │ 
+  
+  i duplicate modifier
   
     4 │   protected private c;
     5 │   public protected d;
@@ -164,7 +198,14 @@ duplicates-access-modifier.ts:6:20 parse ━━━━━━━━━━━━━
 
   × Accessibility modifier already seen.
   
-  × duplicate modifier
+    4 │   protected private c;
+    5 │   public protected d;
+  > 6 │   public protected private e;
+      │                    ^^^^^^^
+    7 │ }
+    8 │ 
+  
+  i duplicate modifier
   
     4 │   protected private c;
     5 │   public protected d;

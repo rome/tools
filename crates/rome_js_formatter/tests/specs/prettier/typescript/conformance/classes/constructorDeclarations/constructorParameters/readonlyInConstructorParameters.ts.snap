@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "typescript\\conformance\\classes\\constructorDeclarations\\constructorParameters\\readonlyInConstructorParameters.ts"
+  test_file: typescript/conformance/classes/constructorDeclarations/constructorParameters/readonlyInConstructorParameters.ts
 ---
 
 # Input
@@ -63,7 +63,13 @@ readonlyInConstructorParameters.ts:7:26 parse ━━━━━━━━━━━�
 
   × 'public' must precede 'readonly'
   
-  × move this modifier
+    6 │ class E {
+  > 7 │     constructor(readonly public x: number) {}
+      │                          ^^^^^^
+    8 │ }
+    9 │ 
+  
+  i move this modifier
   
     6 │ class E {
   > 7 │     constructor(readonly public x: number) {}

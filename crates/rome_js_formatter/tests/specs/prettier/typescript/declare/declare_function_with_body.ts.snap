@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "typescript\\declare\\declare_function_with_body.ts"
+  test_file: typescript/declare/declare_function_with_body.ts
 ---
 
 # Input
@@ -47,19 +47,17 @@ declare_function_with_body.ts:2:24 parse ━━━━━━━━━━━━━
 
   × A 'declare' function cannot have a function body
   
-  × remove this body
-  
     1 │ // Invalid, but recoverable
   > 2 │ declare function foo() {}
       │                        ^^
     3 │ declare function bar() {
     4 │   // comment
   
+  i remove this body
+  
 declare_function_with_body.ts:3:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × A 'declare' function cannot have a function body
-  
-  × remove this body
   
     1 │ // Invalid, but recoverable
     2 │ declare function foo() {}
@@ -69,6 +67,8 @@ declare_function_with_body.ts:3:24 parse ━━━━━━━━━━━━━
   > 5 │ }
       │ ^
     6 │ 
+  
+  i remove this body
   
 
 ```

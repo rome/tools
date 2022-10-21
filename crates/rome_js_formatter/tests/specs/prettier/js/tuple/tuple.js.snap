@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\tuple\\tuple.js"
+  test_file: js/tuple/tuple.js
 ---
 
 # Input
@@ -82,7 +82,12 @@ tuple.js:1:17 parse ━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier but instead found '['
   
-  × Expected an identifier here
+  > 1 │ const tuple1 = #[1, 2, 3];
+      │                 ^
+    2 │ 
+    3 │ assert(tuple1[0] === 1);
+  
+  i Expected an identifier here
   
   > 1 │ const tuple1 = #[1, 2, 3];
       │                 ^
@@ -102,7 +107,12 @@ tuple.js:1:17 parse ━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+  > 1 │ const tuple1 = #[1, 2, 3];
+      │                 ^
+    2 │ 
+    3 │ assert(tuple1[0] === 1);
+  
+  i An explicit or implicit semicolon is expected here...
   
   > 1 │ const tuple1 = #[1, 2, 3];
       │                 ^
@@ -120,7 +130,14 @@ tuple.js:7:20 parse ━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier but instead found '['
   
-  × Expected an identifier here
+    5 │ const tuple2 = tuple1.with(0, 2);
+    6 │ assert(tuple1 !== tuple2);
+  > 7 │ assert(tuple2 === #[2, 2, 3]);
+      │                    ^
+    8 │ 
+    9 │ const tuple3 = #[1, ...tuple2];
+  
+  i Expected an identifier here
   
     5 │ const tuple2 = tuple1.with(0, 2);
     6 │ assert(tuple1 !== tuple2);
@@ -144,8 +161,6 @@ tuple.js:7:20 parse ━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `[`
   
-  × unexpected
-  
     5 │ const tuple2 = tuple1.with(0, 2);
     6 │ assert(tuple1 !== tuple2);
   > 7 │ assert(tuple2 === #[2, 2, 3]);
@@ -153,11 +168,20 @@ tuple.js:7:20 parse ━━━━━━━━━━━━━━━━━━━━
     8 │ 
     9 │ const tuple3 = #[1, ...tuple2];
   
+  i Remove [
+  
 tuple.js:9:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier but instead found '['
   
-  × Expected an identifier here
+     7 │ assert(tuple2 === #[2, 2, 3]);
+     8 │ 
+   > 9 │ const tuple3 = #[1, ...tuple2];
+       │                 ^
+    10 │ assert(tuple3 === #[1, 2, 2, 3]);
+    11 │ 
+  
+  i Expected an identifier here
   
      7 │ assert(tuple2 === #[2, 2, 3]);
      8 │ 
@@ -181,7 +205,14 @@ tuple.js:9:17 parse ━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+     7 │ assert(tuple2 === #[2, 2, 3]);
+     8 │ 
+   > 9 │ const tuple3 = #[1, ...tuple2];
+       │                 ^
+    10 │ assert(tuple3 === #[1, 2, 2, 3]);
+    11 │ 
+  
+  i An explicit or implicit semicolon is expected here...
   
      7 │ assert(tuple2 === #[2, 2, 3]);
      8 │ 
@@ -203,7 +234,13 @@ tuple.js:10:20 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected an identifier but instead found '['
   
-  × Expected an identifier here
+     9 │ const tuple3 = #[1, ...tuple2];
+  > 10 │ assert(tuple3 === #[1, 2, 2, 3]);
+       │                    ^
+    11 │ 
+    12 │ const tuple4 = tuple3.pushed(4);
+  
+  i Expected an identifier here
   
      9 │ const tuple3 = #[1, ...tuple2];
   > 10 │ assert(tuple3 === #[1, 2, 2, 3]);
@@ -225,19 +262,25 @@ tuple.js:10:20 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected `,` but instead found `[`
   
-  × unexpected
-  
      9 │ const tuple3 = #[1, ...tuple2];
   > 10 │ assert(tuple3 === #[1, 2, 2, 3]);
        │                    ^
     11 │ 
     12 │ const tuple4 = tuple3.pushed(4);
   
+  i Remove [
+  
 tuple.js:13:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier but instead found '['
   
-  × Expected an identifier here
+    12 │ const tuple4 = tuple3.pushed(4);
+  > 13 │ assert(tuple4 === #[1, 2, 2, 3, 4]);
+       │                    ^
+    14 │ 
+    15 │ assert(tuple4.first() === 1);
+  
+  i Expected an identifier here
   
     12 │ const tuple4 = tuple3.pushed(4);
   > 13 │ assert(tuple4 === #[1, 2, 2, 3, 4]);
@@ -259,19 +302,25 @@ tuple.js:13:20 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected `,` but instead found `[`
   
-  × unexpected
-  
     12 │ const tuple4 = tuple3.pushed(4);
   > 13 │ assert(tuple4 === #[1, 2, 2, 3, 4]);
        │                    ^
     14 │ 
     15 │ assert(tuple4.first() === 1);
   
+  i Remove [
+  
 tuple.js:17:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier but instead found '['
   
-  × Expected an identifier here
+    15 │ assert(tuple4.first() === 1);
+    16 │ const tuple5 = tuple4.popped();
+  > 17 │ assert(tuple5 === #[2, 2, 3, 4]);
+       │                    ^
+    18 │ 
+  
+  i Expected an identifier here
   
     15 │ assert(tuple4.first() === 1);
     16 │ const tuple5 = tuple4.popped();
@@ -293,13 +342,13 @@ tuple.js:17:20 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected `,` but instead found `[`
   
-  × unexpected
-  
     15 │ assert(tuple4.first() === 1);
     16 │ const tuple5 = tuple4.popped();
   > 17 │ assert(tuple5 === #[2, 2, 3, 4]);
        │                    ^
     18 │ 
+  
+  i Remove [
   
 
 ```

@@ -299,7 +299,6 @@ mod tests {
         let mut emit_signal = |signal: &dyn AnalyzerSignal<RawLanguage>| -> ControlFlow<Never> {
             let mut diag = signal.diagnostic().expect("diagnostic");
             diag.set_severity(Severity::Warning);
-
             let code = diag.category().expect("code");
             let range = diag.get_span().expect("range");
 

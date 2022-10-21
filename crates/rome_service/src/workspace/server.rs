@@ -15,7 +15,6 @@ use crate::{
 use dashmap::{mapref::entry::Entry, DashMap};
 use indexmap::IndexSet;
 use rome_analyze::{AnalysisFilter, RuleFilter};
-use rome_diagnostics::v2;
 use rome_diagnostics::v2::{serde::Diagnostic, DiagnosticExt};
 use rome_formatter::Printed;
 use rome_fs::RomePath;

@@ -1684,6 +1684,7 @@ dependencies = [
  "insta",
  "quickcheck",
  "quickcheck_macros",
+ "rome_console",
  "rome_diagnostics",
  "rome_formatter",
  "rome_fs",

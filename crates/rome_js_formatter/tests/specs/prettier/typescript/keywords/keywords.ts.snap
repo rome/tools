@@ -220,7 +220,13 @@ keywords.ts:4:12 parse ━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    3 │ module Y3 {
+  > 4 │     public module Module {
+      │            ^^^^^^
+    5 │         class A { s: string }
+    6 │     }
+  
+  i An explicit or implicit semicolon is expected here...
   
     3 │ module Y3 {
   > 4 │     public module Module {
@@ -240,7 +246,13 @@ keywords.ts:9:12 parse ━━━━━━━━━━━━━━━━━━━
 
   × expected a class, a function, or a variable declaration but instead found 'private'
   
-  × Expected a class, a function, or a variable declaration here
+     8 │     // Apparently this parses :P
+   > 9 │     export private public protected static readonly abstract async enum X { }
+       │            ^^^^^^^
+    10 │ 
+    11 │     interface x {
+  
+  i Expected a class, a function, or a variable declaration here
   
      8 │     // Apparently this parses :P
    > 9 │     export private public protected static readonly abstract async enum X { }
@@ -252,7 +264,13 @@ keywords.ts:9:20 parse ━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+     8 │     // Apparently this parses :P
+   > 9 │     export private public protected static readonly abstract async enum X { }
+       │                    ^^^^^^
+    10 │ 
+    11 │     interface x {
+  
+  i An explicit or implicit semicolon is expected here...
   
      8 │     // Apparently this parses :P
    > 9 │     export private public protected static readonly abstract async enum X { }
@@ -272,7 +290,13 @@ keywords.ts:9:27 parse ━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+     8 │     // Apparently this parses :P
+   > 9 │     export private public protected static readonly abstract async enum X { }
+       │                           ^^^^^^^^^
+    10 │ 
+    11 │     interface x {
+  
+  i An explicit or implicit semicolon is expected here...
   
      8 │     // Apparently this parses :P
    > 9 │     export private public protected static readonly abstract async enum X { }
@@ -292,7 +316,13 @@ keywords.ts:9:37 parse ━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+     8 │     // Apparently this parses :P
+   > 9 │     export private public protected static readonly abstract async enum X { }
+       │                                     ^^^^^^
+    10 │ 
+    11 │     interface x {
+  
+  i An explicit or implicit semicolon is expected here...
   
      8 │     // Apparently this parses :P
    > 9 │     export private public protected static readonly abstract async enum X { }
@@ -312,7 +342,13 @@ keywords.ts:9:44 parse ━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+     8 │     // Apparently this parses :P
+   > 9 │     export private public protected static readonly abstract async enum X { }
+       │                                            ^^^^^^^^
+    10 │ 
+    11 │     interface x {
+  
+  i An explicit or implicit semicolon is expected here...
   
      8 │     // Apparently this parses :P
    > 9 │     export private public protected static readonly abstract async enum X { }
@@ -332,7 +368,13 @@ keywords.ts:9:53 parse ━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+     8 │     // Apparently this parses :P
+   > 9 │     export private public protected static readonly abstract async enum X { }
+       │                                                     ^^^^^^^^
+    10 │ 
+    11 │     interface x {
+  
+  i An explicit or implicit semicolon is expected here...
   
      8 │     // Apparently this parses :P
    > 9 │     export private public protected static readonly abstract async enum X { }
@@ -352,7 +394,13 @@ keywords.ts:9:62 parse ━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+     8 │     // Apparently this parses :P
+   > 9 │     export private public protected static readonly abstract async enum X { }
+       │                                                              ^^^^^
+    10 │ 
+    11 │     interface x {
+  
+  i An explicit or implicit semicolon is expected here...
   
      8 │     // Apparently this parses :P
    > 9 │     export private public protected static readonly abstract async enum X { }
@@ -372,7 +420,13 @@ keywords.ts:9:68 parse ━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+     8 │     // Apparently this parses :P
+   > 9 │     export private public protected static readonly abstract async enum X { }
+       │                                                                    ^^^^
+    10 │ 
+    11 │     interface x {
+  
+  i An explicit or implicit semicolon is expected here...
   
      8 │     // Apparently this parses :P
    > 9 │     export private public protected static readonly abstract async enum X { }
@@ -392,13 +446,13 @@ keywords.ts:12:16 parse ━━━━━━━━━━━━━━━━━━�
 
   × ';' expected'
   
-  × An explicit or implicit semicolon is expected here...
-  
     11 │     interface x {
   > 12 │         export private static readonly [x: any]: any;
        │                ^^^^^^^
     13 │     }
     14 │ }
+  
+  i An explicit or implicit semicolon is expected here...
   
 keywords.ts:12:24 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -424,7 +478,13 @@ keywords.ts:17:12 parse ━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    16 │ module Y4 {
+  > 17 │     public enum Color { Blue, Red }
+       │            ^^^^
+    18 │ }
+    19 │ 
+  
+  i An explicit or implicit semicolon is expected here...
   
     16 │ module Y4 {
   > 17 │     public enum Color { Blue, Red }
@@ -454,7 +514,13 @@ keywords.ts:21:13 parse ━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    20 │ module YY3 {
+  > 21 │     private module Module {
+       │             ^^^^^^
+    22 │         class A { s: string }
+    23 │     }
+  
+  i An explicit or implicit semicolon is expected here...
   
     20 │ module YY3 {
   > 21 │     private module Module {
@@ -484,7 +550,13 @@ keywords.ts:27:13 parse ━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    26 │ module YY4 {
+  > 27 │     private enum Color { Blue, Red }
+       │             ^^^^
+    28 │ }
+    29 │ 
+  
+  i An explicit or implicit semicolon is expected here...
   
     26 │ module YY4 {
   > 27 │     private enum Color { Blue, Red }
@@ -514,7 +586,13 @@ keywords.ts:31:12 parse ━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    30 │ module YYY3 {
+  > 31 │     static module Module {
+       │            ^^^^^^
+    32 │         class A { s: string }
+    33 │     }
+  
+  i An explicit or implicit semicolon is expected here...
   
     30 │ module YYY3 {
   > 31 │     static module Module {
@@ -544,7 +622,13 @@ keywords.ts:37:12 parse ━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    36 │ module YYY4 {
+  > 37 │     static enum Color { Blue, Red }
+       │            ^^^^
+    38 │ }
+    39 │ 
+  
+  i An explicit or implicit semicolon is expected here...
   
     36 │ module YYY4 {
   > 37 │     static enum Color { Blue, Red }

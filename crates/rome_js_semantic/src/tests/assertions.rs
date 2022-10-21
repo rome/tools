@@ -1,6 +1,10 @@
 use crate::{semantic_events, SemanticEvent};
 use rome_console::{markup, ConsoleExt, EnvConsole};
-use rome_diagnostics::{file::FileId, file::SimpleFile, v2::category, Diagnostic};
+use rome_diagnostics::file::FileId;
+use rome_diagnostics::v2::location::AsSpan;
+use rome_diagnostics::v2::{
+    Advices, Diagnostic, DiagnosticExt, Location, LogCategory, PrintDiagnostic, Visit,
+};
 use rome_js_syntax::{JsAnyRoot, JsSyntaxToken, SourceType, TextRange, TextSize, WalkEvent};
 use rome_rowan::{AstNode, NodeOrToken};
 use std::collections::{BTreeMap, HashMap};
@@ -104,11 +108,13 @@ pub fn assert(code: &str, test_name: &str) {
     let r = rome_js_parser::parse(code, FileId::zero(), SourceType::tsx());
 
     if r.has_errors() {
-        let files = SimpleFile::new(test_name.to_string(), code.into());
         let mut console = EnvConsole::new(false);
-        for diag in r.diagnostics() {
+        for diag in r.into_diagnostics() {
+            let error = diag
+                .with_file_path(FileId::zero())
+                .with_file_source_code(&code);
             console.log(markup! {
-                {diag.display(&files)}
+                {PrintDiagnostic(&error)}
             });
         }
         panic!("Compilation error");
@@ -139,6 +145,52 @@ pub fn assert(code: &str, test_name: &str) {
     // check
 
     assertions.check(code, test_name, events_by_pos);
+}
+
+#[derive(Debug, Diagnostic)]
+#[diagnostic(category = "semanticTests")]
+struct TestSemanticDiagnostic {
+    #[message]
+    #[description]
+    message: String,
+
+    #[location(span)]
+    span: Option<TextRange>,
+
+    #[advice]
+    advice: TestAdvice,
+}
+
+impl TestSemanticDiagnostic {
+    fn new(message: impl Into<String>, span: impl AsSpan) -> Self {
+        Self {
+            message: message.into(),
+            span: span.as_span(),
+            advice: TestAdvice::default(),
+        }
+    }
+
+    fn push_advice(&mut self, range: impl AsSpan, message: impl Into<String>) {
+        self.advice.advices.push((range.as_span(), message.into()));
+    }
+}
+
+#[derive(Debug, Default)]
+struct TestAdvice {
+    advices: Vec<(Option<TextRange>, String)>,
+}
+
+impl Advices for TestAdvice {
+    fn record(&self, visitor: &mut dyn Visit) -> std::io::Result<()> {
+        for (span, message) in &self.advices {
+            let location = Location::builder().span(&span).build();
+            visitor.record_log(LogCategory::Info, &message)?;
+            if let Some(location) = location {
+                visitor.record_frame(location)?;
+            }
+        }
+        Ok(())
+    }
 }
 
 #[derive(Clone, Debug)]
@@ -696,17 +748,17 @@ fn error_assertion_not_attached_to_a_declaration(
     assertion_range: TextRange,
     test_name: &str,
 ) {
-    let files = SimpleFile::new(test_name.to_string(), code.into());
-    let d = Diagnostic::error(
-        FileId::zero(),
-        category!("semanticTests"),
+    let diagnostic = TestSemanticDiagnostic::new(
         "This assertion must be attached to a SemanticEvent::DeclarationFound.",
-    )
-    .primary(assertion_range, "");
+        assertion_range,
+    );
+    let error = diagnostic
+        .with_file_path((test_name.to_string(), FileId::zero()))
+        .with_file_source_code(code);
 
     let mut console = EnvConsole::new(false);
     console.log(markup! {
-        {d.display(&files)}
+        {PrintDiagnostic(&error)}
     });
     panic!("This assertion must be attached to a SemanticEvent::DeclarationFound.");
 }
@@ -716,17 +768,18 @@ fn error_declaration_pointing_to_unknown_scope(
     assertion_range: TextRange,
     test_name: &str,
 ) {
-    let files = SimpleFile::new(test_name.to_string(), code.into());
-    let d = Diagnostic::error(
-        FileId::zero(),
-        category!("semanticTests"),
+    let diagnostic = TestSemanticDiagnostic::new(
         "Declaration assertions is pointing to the wrong scope",
-    )
-    .primary(assertion_range, "");
+        assertion_range,
+    );
+
+    let error = diagnostic
+        .with_file_path((test_name.to_string(), FileId::zero()))
+        .with_file_source_code(code);
 
     let mut console = EnvConsole::new(false);
     console.log(markup! {
-        {d.display(&files)}
+        {PrintDiagnostic(&error)}
     });
 }
 
@@ -738,21 +791,20 @@ fn error_assertion_name_clash(
 ) {
     // If there is already an assertion with the same name. Suggest a rename
 
-    let files = SimpleFile::new(test_name.to_string(), code.into());
-    let d = Diagnostic::error(
-        FileId::zero(),
-        category!("semanticTests"),
-        "Assertion label conflict.",
-    )
-    .primary(
+    let mut diagnostic =
+        TestSemanticDiagnostic::new("Assertion label conflict.", token.text_range());
+    diagnostic.push_advice(
         token.text_range(),
         "There is already a assertion with the same name. Consider renaming this one.",
-    )
-    .secondary(old_range, "Previous assertion");
+    );
+    diagnostic.push_advice(old_range, "Previous assertion");
+    let error = diagnostic
+        .with_file_path((test_name.to_string(), FileId::zero()))
+        .with_file_source_code(code);
 
     let mut console = EnvConsole::new(false);
     console.log(markup! {
-        {d.display(&files)}
+        {PrintDiagnostic(&error)}
     });
 
     panic!("Assertion label conflict");
@@ -763,20 +815,19 @@ fn error_scope_end_assertion_points_to_non_existing_scope_start_assertion(
     range: &TextRange,
     file_name: &str,
 ) {
-    let files = SimpleFile::new(file_name.to_string(), code.into());
-    let d = Diagnostic::error(
-        FileId::zero(),
-        category!("semanticTests"),
-        "Scope start assertion not found.",
-    )
-    .primary(
+    let mut diagnostic = TestSemanticDiagnostic::new("Scope start assertion not found.", range);
+    diagnostic.push_advice(
         range,
         "This scope end assertion points to a non-existing scope start assertion.",
     );
 
+    let error = diagnostic
+        .with_file_path((file_name.to_string(), FileId::zero()))
+        .with_file_source_code(code);
+
     let mut console = EnvConsole::new(false);
     console.log(markup! {
-        {d.display(&files)}
+        {PrintDiagnostic(&error)}
     });
     panic!("Scope start assertion not found.");
 }
@@ -787,21 +838,23 @@ fn error_scope_end_assertion_points_to_the_wrong_scope_start(
     same_name_range: &TextRange,
     file_name: &str,
 ) {
-    let files = SimpleFile::new(file_name.to_string(), code.into());
-    let d = Diagnostic::error(
-        FileId::zero(),
-        category!("semanticTests"),
-        "Wrong scope start",
-    )
-    .primary(
+    let mut diagnostic = TestSemanticDiagnostic::new("Wrong scope start", range);
+    diagnostic.push_advice(
+        range,
+        "This scope end assertion points to a non-existing scope start assertion.",
+    );
+    diagnostic.push_advice(
         range,
         "This scope end assertion points to the wrong scope start.",
-    )
-    .secondary(same_name_range, "This assertion has the same label");
+    );
+    diagnostic.push_advice(same_name_range, "This assertion has the same label");
+    let error = diagnostic
+        .with_file_path((file_name.to_string(), FileId::zero()))
+        .with_file_source_code(code);
 
     let mut console = EnvConsole::new(false);
     console.log(markup! {
-        {d.display(&files)}
+        {PrintDiagnostic(&error)}
     });
     panic!("Wrong scope start");
 }

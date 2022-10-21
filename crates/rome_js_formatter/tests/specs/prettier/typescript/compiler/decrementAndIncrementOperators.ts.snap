@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "typescript\\compiler\\decrementAndIncrementOperators.ts"
+  test_file: typescript/compiler/decrementAndIncrementOperators.ts
 ---
 
 # Input
@@ -119,19 +119,17 @@ decrementAndIncrementOperators.ts:4:1 parse ━━━━━━━━━━━━
 
   × Invalid assignment to `1`
   
-  × This expression cannot be assigned to
-  
     3 │ // errors
   > 4 │ 1 ++;
       │ ^
     5 │ 
     6 │ (1)++;
   
+  i This expression cannot be assigned to
+  
 decrementAndIncrementOperators.ts:6:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `1`
-  
-  × This expression cannot be assigned to
   
     4 │ 1 ++;
     5 │ 
@@ -140,11 +138,11 @@ decrementAndIncrementOperators.ts:6:2 parse ━━━━━━━━━━━━
     7 │ (1)--;
     8 │ 
   
+  i This expression cannot be assigned to
+  
 decrementAndIncrementOperators.ts:7:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `1`
-  
-  × This expression cannot be assigned to
   
     6 │ (1)++;
   > 7 │ (1)--;
@@ -152,11 +150,11 @@ decrementAndIncrementOperators.ts:7:2 parse ━━━━━━━━━━━━
     8 │ 
     9 │ ++(1);
   
+  i This expression cannot be assigned to
+  
 decrementAndIncrementOperators.ts:9:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `1`
-  
-  × This expression cannot be assigned to
   
      7 │ (1)--;
      8 │ 
@@ -165,11 +163,11 @@ decrementAndIncrementOperators.ts:9:4 parse ━━━━━━━━━━━━
     10 │ --(1);
     11 │ 
   
+  i This expression cannot be assigned to
+  
 decrementAndIncrementOperators.ts:10:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `1`
-  
-  × This expression cannot be assigned to
   
      9 │ ++(1);
   > 10 │ --(1);
@@ -177,11 +175,11 @@ decrementAndIncrementOperators.ts:10:4 parse ━━━━━━━━━━━�
     11 │ 
     12 │ (1 + 2)++;
   
+  i This expression cannot be assigned to
+  
 decrementAndIncrementOperators.ts:12:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `1 + 2`
-  
-  × This expression cannot be assigned to
   
     10 │ --(1);
     11 │ 
@@ -190,11 +188,11 @@ decrementAndIncrementOperators.ts:12:2 parse ━━━━━━━━━━━�
     13 │ (1 + 2)--;
     14 │ 
   
+  i This expression cannot be assigned to
+  
 decrementAndIncrementOperators.ts:13:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `1 + 2`
-  
-  × This expression cannot be assigned to
   
     12 │ (1 + 2)++;
   > 13 │ (1 + 2)--;
@@ -202,11 +200,11 @@ decrementAndIncrementOperators.ts:13:2 parse ━━━━━━━━━━━�
     14 │ 
     15 │ ++(1 + 2);
   
+  i This expression cannot be assigned to
+  
 decrementAndIncrementOperators.ts:15:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `1 + 2`
-  
-  × This expression cannot be assigned to
   
     13 │ (1 + 2)--;
     14 │ 
@@ -215,11 +213,11 @@ decrementAndIncrementOperators.ts:15:4 parse ━━━━━━━━━━━�
     16 │ --(1 + 2);
     17 │ 
   
+  i This expression cannot be assigned to
+  
 decrementAndIncrementOperators.ts:16:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `1 + 2`
-  
-  × This expression cannot be assigned to
   
     15 │ ++(1 + 2);
   > 16 │ --(1 + 2);
@@ -227,11 +225,11 @@ decrementAndIncrementOperators.ts:16:4 parse ━━━━━━━━━━━�
     17 │ 
     18 │ (x + x)++;
   
+  i This expression cannot be assigned to
+  
 decrementAndIncrementOperators.ts:18:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `x + x`
-  
-  × This expression cannot be assigned to
   
     16 │ --(1 + 2);
     17 │ 
@@ -240,11 +238,11 @@ decrementAndIncrementOperators.ts:18:2 parse ━━━━━━━━━━━�
     19 │ (x + x)--;
     20 │ 
   
+  i This expression cannot be assigned to
+  
 decrementAndIncrementOperators.ts:19:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `x + x`
-  
-  × This expression cannot be assigned to
   
     18 │ (x + x)++;
   > 19 │ (x + x)--;
@@ -252,11 +250,11 @@ decrementAndIncrementOperators.ts:19:2 parse ━━━━━━━━━━━�
     20 │ 
     21 │ ++(x + x);
   
+  i This expression cannot be assigned to
+  
 decrementAndIncrementOperators.ts:21:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `x + x`
-  
-  × This expression cannot be assigned to
   
     19 │ (x + x)--;
     20 │ 
@@ -265,17 +263,19 @@ decrementAndIncrementOperators.ts:21:4 parse ━━━━━━━━━━━�
     22 │ --(x + x);
     23 │ 
   
+  i This expression cannot be assigned to
+  
 decrementAndIncrementOperators.ts:22:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `x + x`
-  
-  × This expression cannot be assigned to
   
     21 │ ++(x + x);
   > 22 │ --(x + x);
        │    ^^^^^
     23 │ 
     24 │ //OK
+  
+  i This expression cannot be assigned to
   
 
 ```

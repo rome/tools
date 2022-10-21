@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\babel-plugins\\v8intrinsic.js"
+  test_file: js/babel-plugins/v8intrinsic.js
 ---
 
 # Input
@@ -97,7 +97,13 @@ v8intrinsic.js:3:1 parse ━━━━━━━━━━━━━━━━━━�
 
   × expected a statement but instead found '%DebugPrint(foo)'
   
-  × Expected a statement here
+    1 │ // https://github.com/babel/babel/pull/10148
+    2 │ 
+  > 3 │ %DebugPrint(foo);
+      │ ^^^^^^^^^^^^^^^^
+    4 │ 
+  
+  i Expected a statement here
   
     1 │ // https://github.com/babel/babel/pull/10148
     2 │ 
@@ -109,7 +115,14 @@ v8intrinsic.js:19:5 parse ━━━━━━━━━━━━━━━━━━
 
   × expected an expression but instead found '%'
   
-  × Expected an expression here
+    17 │ // %DebugPrint?.(null)
+    18 │ 
+  > 19 │ new %DebugPrint(null);
+       │     ^
+    20 │ 
+    21 │ function *foo() {
+  
+  i Expected an expression here
   
     17 │ // %DebugPrint?.(null)
     18 │ 
@@ -122,7 +135,13 @@ v8intrinsic.js:22:9 parse ━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    21 │ function *foo() {
+  > 22 │   yield %StringParseInt("42", 10)
+       │         ^
+    23 │ }
+    24 │ 
+  
+  i An explicit or implicit semicolon is expected here...
   
     21 │ function *foo() {
   > 22 │   yield %StringParseInt("42", 10)

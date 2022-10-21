@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "jsx\\do\\do.js"
+  test_file: jsx/do/do.js
 ---
 
 # Input
@@ -47,13 +47,13 @@ do.js:2:4 parse ━━━━━━━━━━━━━━━━━━━━━�
 
   × expected `}` but instead found `do`
   
-  × unexpected
-  
     1 │ <div>
   > 2 │   {do {
       │    ^^
     3 │ 	  1
     4 │   }}
+  
+  i Remove do
   
 do.js:4:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

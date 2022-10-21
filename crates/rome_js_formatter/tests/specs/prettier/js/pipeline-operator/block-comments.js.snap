@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\pipeline-operator\\block-comments.js"
+  test_file: js/pipeline-operator/block-comments.js
 ---
 
 # Input
@@ -53,19 +53,17 @@ block-comments.js:2:2 parse ━━━━━━━━━━━━━━━━━�
 
   × Expected an expression for the left hand side of the `>` operator.
   
-  × This operator requires a left hand side value
-  
     1 │ bifornCringerMoshedPerplexSawder
   > 2 │ |> foo1
       │  ^
     3 │ |> foo2 /* comment1 */
     4 │ |> foo3 /* comment2 */
   
+  i This operator requires a left hand side value
+  
 block-comments.js:3:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     1 │ bifornCringerMoshedPerplexSawder
     2 │ |> foo1
@@ -74,11 +72,11 @@ block-comments.js:3:2 parse ━━━━━━━━━━━━━━━━━�
     4 │ |> foo3 /* comment2 */
     5 │ |> kochabCooieGameOnOboleUnweave
   
+  i This operator requires a left hand side value
+  
 block-comments.js:4:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     2 │ |> foo1
     3 │ |> foo2 /* comment1 */
@@ -87,11 +85,11 @@ block-comments.js:4:2 parse ━━━━━━━━━━━━━━━━━�
     5 │ |> kochabCooieGameOnOboleUnweave
     6 │ |> glimseGlyphsHazardNoopsTieTie;
   
+  i This operator requires a left hand side value
+  
 block-comments.js:5:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     3 │ |> foo2 /* comment1 */
     4 │ |> foo3 /* comment2 */
@@ -100,17 +98,19 @@ block-comments.js:5:2 parse ━━━━━━━━━━━━━━━━━�
     6 │ |> glimseGlyphsHazardNoopsTieTie;
     7 │ 
   
+  i This operator requires a left hand side value
+  
 block-comments.js:6:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     4 │ |> foo3 /* comment2 */
     5 │ |> kochabCooieGameOnOboleUnweave
   > 6 │ |> glimseGlyphsHazardNoopsTieTie;
       │  ^
     7 │ 
+  
+  i This operator requires a left hand side value
   
 
 ```

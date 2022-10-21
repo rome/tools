@@ -17,6 +17,7 @@ use termcolor::NoColor;
 ///     message: MessageAndDescription
 /// }
 /// ```
+#[derive(Clone)]
 pub struct MessageAndDescription {
     /// Shown when medium supports custom markup
     message: MarkupBuf,

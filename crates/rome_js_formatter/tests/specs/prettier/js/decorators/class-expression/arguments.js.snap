@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\decorators\\class-expression\\arguments.js"
+  test_file: js/decorators/class-expression/arguments.js
 ---
 
 # Input
@@ -48,7 +48,12 @@ arguments.js:1:13 parse ━━━━━━━━━━━━━━━━━━�
 
   × expected an expression but instead found '@deco class Foo {}'
   
-  × Expected an expression here
+  > 1 │ console.log(@deco class Foo {})
+      │             ^^^^^^^^^^^^^^^^^^
+    2 │ console.log(@deco class {})
+    3 │ 
+  
+  i Expected an expression here
   
   > 1 │ console.log(@deco class Foo {})
       │             ^^^^^^^^^^^^^^^^^^
@@ -59,7 +64,12 @@ arguments.js:2:13 parse ━━━━━━━━━━━━━━━━━━�
 
   × expected an expression but instead found '@deco class {}'
   
-  × Expected an expression here
+    1 │ console.log(@deco class Foo {})
+  > 2 │ console.log(@deco class {})
+      │             ^^^^^^^^^^^^^^
+    3 │ 
+  
+  i Expected an expression here
   
     1 │ console.log(@deco class Foo {})
   > 2 │ console.log(@deco class {})

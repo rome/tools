@@ -331,7 +331,9 @@ use rome_console::fmt::Display;
 use rome_console::MarkupBuf;
 use rome_diagnostics::v2::console::markup;
 use rome_diagnostics::v2::location::AsSpan;
-use rome_diagnostics::v2::{Advices, Diagnostic, FileId, Location, LogCategory, Visit};
+use rome_diagnostics::v2::{
+    Advices, Diagnostic, FileId, Location, LogCategory, MessageAndDescription, Visit,
+};
 use rome_js_syntax::{JsSyntaxKind, LanguageVariant};
 use rome_rowan::{TextRange, TextSize};
 pub(crate) use state::{ParserState, StrictMode};
@@ -358,9 +360,8 @@ pub struct ParseDiagnostic {
     #[location(resource)]
     file_id: FileId,
     #[message]
-    message: MarkupBuf,
     #[description]
-    description: String,
+    message: MessageAndDescription,
     #[advice]
     advice: ParserAdvice,
 }
@@ -427,8 +428,7 @@ impl ParseDiagnostic {
         Self {
             file_id,
             span: span.as_span(),
-            message: markup! { {message} }.to_owned(),
-            description: String::new(),
+            message: MessageAndDescription::from(markup! { {message} }.to_owned()),
             advice: ParserAdvice::default(),
         }
     }
