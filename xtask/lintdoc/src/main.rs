@@ -154,7 +154,7 @@ Nursery rules get promoted to other groups once they become stable or may be rem
 
     for (rule, meta) in rules {
         match generate_rule(
-            &root,
+            root,
             group,
             rule,
             meta.docs,
