@@ -153,14 +153,7 @@ Nursery rules get promoted to other groups once they become stable or may be rem
     writeln!(index)?;
 
     for (rule, meta) in rules {
-        match generate_rule(
-            root,
-            group,
-            rule,
-            meta.docs,
-            meta.version,
-            meta.recommended,
-        ) {
+        match generate_rule(root, group, rule, meta.docs, meta.version, meta.recommended) {
             Ok(summary) => {
                 writeln!(index, "<section class=\"rule\">")?;
                 writeln!(index, "<h3 data-toc-exclude id=\"{rule}\">")?;
