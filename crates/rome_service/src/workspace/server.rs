@@ -383,19 +383,12 @@ impl Workspace for WorkspaceServer {
             });
         }
 
-        let document = self
-            .documents
-            .get(&params.path)
-            .ok_or(RomeError::NotFound)?;
-        let source_code = document.content.as_str();
         Ok(PullDiagnosticsResult {
             diagnostics: diagnostics
                 .into_iter()
                 .map(|diag| {
-                    let diag = diag
-                        .with_file_path(params.path.as_path().display().to_string())
-                        .with_file_source_code(source_code);
-                    v2::serde::Diagnostic::new(diag)
+                    let diag = diag.with_file_path(params.path.as_path().display().to_string());
+                    Diagnostic::new(diag)
                 })
                 .collect(),
         })
