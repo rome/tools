@@ -42,7 +42,7 @@ use rome_console::{markup, MarkupBuf};
 use rome_diagnostics::file::FileId;
 use rome_diagnostics::v2::advice::CodeSuggestionAdvice;
 use rome_diagnostics::v2::{
-    Advices, Category, Diagnostic, DiagnosticTags, Error, Location, Severity, Visit,
+    category, Advices, Category, Diagnostic, DiagnosticTags, Error, Location, Severity, Visit,
 };
 use rome_rowan::{
     AstNode, Direction, Language, SyntaxElement, SyntaxToken, TextRange, TextSize, TriviaPieceKind,
@@ -421,6 +421,7 @@ where
                         let diag = match group_rule {
                             Some((group, rule)) => SuppressionDiagnostic::new(
                                 file_id,
+                                category!("suppressions/unknownRule"),
                                 range,
                                 markup! {
                                     "Unknown lint rule "{group}"/"{rule}" in suppression comment"
@@ -429,6 +430,7 @@ where
 
                             None => SuppressionDiagnostic::new(
                                 file_id,
+                                category!("suppressions/unknownGroup"),
                                 range,
                                 markup! {
                                     "Unknown lint rule group "{rule}" in suppression comment"
@@ -769,7 +771,7 @@ impl AnalyzerDiagnostic {
             AnalyzerDiagnostic::Rule {
                 rule_diagnostic, ..
             } => rule_diagnostic.span,
-            AnalyzerDiagnostic::Raw(_) => None,
+            AnalyzerDiagnostic::Raw(error) => error.location().and_then(|location| location.span),
         }
     }
 
@@ -789,8 +791,9 @@ impl AnalyzerDiagnostic {
 }
 
 #[derive(Debug, Diagnostic)]
-#[diagnostic(category = "suppressions/unknownGroup")]
 pub(crate) struct SuppressionDiagnostic {
+    #[category]
+    category: &'static Category,
     #[severity]
     severity: Severity,
     #[location(span)]
@@ -804,11 +807,13 @@ pub(crate) struct SuppressionDiagnostic {
 impl SuppressionDiagnostic {
     pub(crate) fn new(
         file_id: FileId,
+        category: &'static Category,
         range: TextRange,
         message: impl rome_console::fmt::Display,
     ) -> Self {
         Self {
             file_id,
+            category,
             severity: Severity::Warning,
             range,
             message: markup!({ message }).to_owned(),
