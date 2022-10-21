@@ -23,9 +23,9 @@ If you install the CLI locally, use the [scripts field](https://docs.npmjs.com/c
 
 ```json
 {
-	"scripts": {
-		"format": "rome format ."
-	}
+  "scripts": {
+    "format": "rome format ."
+  }
 }
 ```
 
@@ -46,7 +46,6 @@ Rome currently doesn't support other editors than VS Code. [Let us know](https:/
 If you want to set Rome as your default formatter, you can do so by opening the [command palette]
 and select `Format Document With ...` , then `Configure Default Formatter` and finally select `Rome`. The option will
 appear only for documents that Rome supports (JavaScript, and TypeScript).
-
 
 ### CI Setup
 

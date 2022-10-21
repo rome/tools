@@ -3,15 +3,16 @@
 The configuration file is considered **optional**, Rome has good defaults. Use the configuration
 file to change those defaults.
 
-The Rome configuration file is named `rome.json` and should be placed in the root directory of your project. The root directory
-is usually the directory containing your project's  `package.json`.
+The Rome configuration file is named `rome.json` and should be placed in the root directory of your project. The root
+directory
+is usually the directory containing your project's `package.json`.
 
 Here's an example:
 
 ```json
 {
   "formatter": {
-		"enabled": true,
+    "enabled": true,
     "indentStyle": "tab",
     "lineWidth": 120
   },
@@ -90,7 +91,7 @@ CI passing.
 
 ### Rule options
 
-Not all the rules require options, but when they do *accept* some, you can pass them
+Not all the rules require options, but when they do _accept_ some, you can pass them
 by shaping the value of the rule in a different way.
 
 ```json
@@ -111,5 +112,3 @@ by shaping the value of the rule in a different way.
 
 - `level` will indicate the severity of the diagnostic, valid values are: `"off"`, `"warn"` and `"error"`;
 - `options` is a wildcard value, meaning that will change based on the rule;
-
-

@@ -11,9 +11,6 @@ The language agnostic options supported by Rome are:
 - tab width (default: `2`): The number of spaces per indention level
 - line width (default: `80)`: The column width at which Rome wraps code
 
-
-
-
 ### Use the formatter with the CLI
 
 You can start by running the CLI with the `--help` flag:
@@ -56,6 +53,7 @@ Suppression comments have the following format:
 ```
 
 Where
+
 - `rome-ignore` is the start of a suppression comment;
 - `format:` suppresses the formatting;
 - `<explanation>` is an explanation why the formatting is disabled;
@@ -65,37 +63,9 @@ Here's an example of how a code will look like before and after the formatter do
 Before running the formatter
 
 ```js
-const   expr   =
-// rome-ignore format: the array should not be formatted
-[
-    (2*n)/(r-l), 0,            (r+l)/(r-l),  0,
-    0,           (2*n)/(t-b),  (t+b)/(t-b),  0,
-    0,           0,           -(f+n)/(f-n), -(2*f*n)/(f-n),
-    0,           0,           -1,            0,
-];
-
-
-const   expr   =   [
-    (2*n)/(r-l), 0,            (r+l)/(r-l),  0,
-    0,           (2*n)/(t-b),  (t+b)/(t-b),  0,
-    0,           0,           -(f+n)/(f-n), -(2*f*n)/(f-n),
-    0,           0,           -1,            0,
-];
-```
-
-After running the formatter
-
-```js
 const expr =
-// rome-ignore format: the array should not be formatted
-[
-    (2*n)/(r-l), 0,            (r+l)/(r-l),  0,
-    0,           (2*n)/(t-b),  (t+b)/(t-b),  0,
-    0,           0,           -(f+n)/(f-n), -(2*f*n)/(f-n),
-    0,           0,           -1,            0,
-];
-
-const expr = [
+  // rome-ignore format: the array should not be formatted
+  [
     (2 * n) / (r - l),
     0,
     (r + l) / (r - l),
@@ -112,6 +82,69 @@ const expr = [
     0,
     -1,
     0,
+  ];
+
+const expr = [
+  (2 * n) / (r - l),
+  0,
+  (r + l) / (r - l),
+  0,
+  0,
+  (2 * n) / (t - b),
+  (t + b) / (t - b),
+  0,
+  0,
+  0,
+  -(f + n) / (f - n),
+  -(2 * f * n) / (f - n),
+  0,
+  0,
+  -1,
+  0,
+];
+```
+
+After running the formatter
+
+```js
+const expr =
+  // rome-ignore format: the array should not be formatted
+  [
+    (2 * n) / (r - l),
+    0,
+    (r + l) / (r - l),
+    0,
+    0,
+    (2 * n) / (t - b),
+    (t + b) / (t - b),
+    0,
+    0,
+    0,
+    -(f + n) / (f - n),
+    -(2 * f * n) / (f - n),
+    0,
+    0,
+    -1,
+    0,
+  ];
+
+const expr = [
+  (2 * n) / (r - l),
+  0,
+  (r + l) / (r - l),
+  0,
+  0,
+  (2 * n) / (t - b),
+  (t + b) / (t - b),
+  0,
+  0,
+  0,
+  -(f + n) / (f - n),
+  -(2 * f * n) / (f - n),
+  0,
+  0,
+  -1,
+  0,
 ];
 ```
 
@@ -133,8 +166,7 @@ Then, you are free to change the reason of the suppression that you want.
 
 Run the formatter and make sure that **the code that was ignored is still the same**.
 
-
-[VS Code extension]: https://marketplace.visualstudio.com/items?itemName=rome.rome
+[vs code extension]: https://marketplace.visualstudio.com/items?itemName=rome.rome
 [release page]: https://github.com/rome/tools/releases
 [playground]: https://play.rome.tools
 [command palette]: https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette

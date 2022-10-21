@@ -35,17 +35,15 @@ Rules in Rome are divided into categories to help you understand their purpose.
 
 All rules are enabled by default, and cannot be disabled. [Suppression](#lint-suppression) can be used to hide specific lint errors.
 
-
-[VS Code extension]: https://marketplace.visualstudio.com/items?itemName=rome.rome
+[vs code extension]: https://marketplace.visualstudio.com/items?itemName=rome.rome
 [release page]: https://github.com/rome/tools/releases
-
 
 ### Code fixes
 
 Lint rules may provide automatic code fixes. Rome distinguishes between two types of fixes:
 
-* safe fixes
-* suggested fixes
+- safe fixes
+- suggested fixes
 
 Safe fixes are guaranteed to not change the semantics of your code,
 and can be applied without explicit review.
@@ -67,6 +65,7 @@ Suppression comments have the following format:
 ```
 
 Where
+
 - `rome-ignore` is the start of a suppression comment;
 - `lint:` suppresses the linter;
 - `(correctness/noDebugger)`: **optional**, group and name of the rule you want to suppress;
@@ -80,5 +79,3 @@ debugger;
 // rome-ignore lint(correctness/noDebugger): reason
 debugger;
 ```
-
-

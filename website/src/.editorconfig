@@ -1,0 +1,4 @@
+[*.md]
+# Syntax highlighting requires spaces to render correctly on the website
+indent_style = space
+

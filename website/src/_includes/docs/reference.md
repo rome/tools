@@ -10,11 +10,9 @@ Helps you to set up Rome for a new project by guiding you through the creation o
 
 The command fails if the project already has a `rome.json` configuration file.
 
-
 ##### `rome format`
 
 Runs the formatter on a set of files.
-
 
 ##### `rome check`
 
@@ -26,7 +24,6 @@ Runs the linter and verifies the formatting of a set of files. It reports errors
 
 This command is intended to be used in CI workflows.
 
-
 ##### `rome start`
 
 Start the Rome [daemon](#daemon) server
@@ -34,7 +31,6 @@ Start the Rome [daemon](#daemon) server
 ##### `rome stop`
 
 Stop the Rome [daemon](#deamon) server
-
 
 #### Common Options
 
@@ -78,7 +74,6 @@ An array of Unix shell style patterns.
 }
 ```
 
-
 > Default: `true`
 
 ##### `linter.rules.recommended`
@@ -87,14 +82,13 @@ Enables the [recommended rules](/docs/lint/rules) for all categories.
 
 > Default: `true`
 
-
 ##### `linter.rules.[category]`
 
 Options that influence the rules of a single category. Rome supports the following categories:
 
-* `correctness`: Code that is wrong or useless
-* `style`: Code that should be written in a more idiomatic way
-* `nursery`: new rules that are still under development.
+- `correctness`: Code that is wrong or useless
+- `style`: Code that should be written in a more idiomatic way
+- `nursery`: new rules that are still under development.
 
 ##### `linter.rules.[category].recommended`
 
@@ -108,12 +102,11 @@ Example:
     "enabled": true,
     "rules": {
       "nursery": {
-      	"recommended": true
+        "recommended": true
       }
     }
   }
 }
-
 ```
 
 #### Formatter
@@ -123,7 +116,6 @@ Example:
 Enables Rome's formatter
 
 > Default: `true`
-
 
 ##### `formatter.ignore`
 
@@ -136,7 +128,6 @@ An array of Unix shell style patterns.
   }
 }
 ```
-
 
 ##### `formatter.indentStyle`
 
@@ -156,7 +147,6 @@ How many characters can be written on a single line.
 
 > Default: `80`
 
-
 #### JavaScript
 
 ##### `javascript.formatter.quoteStyle`
@@ -170,4 +160,3 @@ The type of quote used when representing string literals. It can be `single` or 
 When properties inside objects should be quoted. It can be `asNeeded` or `preserve`.
 
 > Default: `asNeeded`
-

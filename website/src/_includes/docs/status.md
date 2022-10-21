@@ -1,4 +1,3 @@
-
 ## Development Status
 
 **Rome is being written in Rust, so it doesn't support all the intended features**.
@@ -23,15 +22,14 @@ Rome's vision is to cover the following features:
 ### Language Support
 
 | Language                           | Parsing                                                 | Formatting                                              | Linting                                                 |
-|------------------------------------|---------------------------------------------------------|---------------------------------------------------------|---------------------------------------------------------|
-| [JavaScript](/#javascript-support) | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        |
-| [TypeScript](/#typescript-support) | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅</span>        |
-| JSX                                | <span aria-label="Supported" role="img">✅</span>        | <span aria-label="Supported" role="img">✅️</span>       | <span aria-label="Supported" role="img">✅</span>        |
+| ---------------------------------- | ------------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------- |
+| [JavaScript](/#javascript-support) | <span aria-label="Supported" role="img">✅</span>       | <span aria-label="Supported" role="img">✅</span>       | <span aria-label="Supported" role="img">✅</span>       |
+| [TypeScript](/#typescript-support) | <span aria-label="Supported" role="img">✅</span>       | <span aria-label="Supported" role="img">✅</span>       | <span aria-label="Supported" role="img">✅</span>       |
+| JSX                                | <span aria-label="Supported" role="img">✅</span>       | <span aria-label="Supported" role="img">✅️</span>      | <span aria-label="Supported" role="img">✅</span>       |
 | JSON                               | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> |
 | HTML                               | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> |
 | CSS                                | <span aria-label="Not in progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> |
 | Markdown                           | <span aria-label="Not in progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> | <span aria-label="Not in Progress" role="img">🚫</span> |
-
 
 #### JavaScript Support
 

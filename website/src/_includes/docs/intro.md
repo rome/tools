@@ -1,7 +1,7 @@
-
 <section>
 
 ## About Rome
+
 <!-- GENERATED:START(hash:62ccf90aeb8e7fa260c04d350a1a148b77d011c2,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/website-intro` to update. -->
 
 **Rome** is a formatter, linter, bundler, and [more](#development-status) for JavaScript, TypeScript, JSON, HTML, Markdown, and CSS.
@@ -18,6 +18,7 @@
 and top-notch error recovery.
 
 **Rome** is [MIT licensed](https://github.com/rome/tools/tree/main/LICENSE) and moderated under the [Contributor Covenant Code of Conduct](https://github.com/rome/tools/tree/main/CODE_OF_CONDUCT.md).
+
 <!-- GENERATED:END(id:main) -->
 
 {% include action-links.liquid %}
