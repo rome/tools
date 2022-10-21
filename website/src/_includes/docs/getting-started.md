@@ -6,17 +6,7 @@ For all operating systems, we support both x86_64 and ARM architectures.
 
 Install Rome using any of the following methods.
 
-### Editor Setup
-
-You can use Rome by installing the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=rome.rome) from the marketplace.
-
-Rome currently doesn't support other editors than VS Code. [Let us know](https://github.com/rome/tools/discussions/categories/suggestions) if you would like support for another editor.
-
-If you want to set Rome as your default formatter, you can do so by opening the [command palette]
-and select `Format Document With ...` , then `Configure Default Formatter` and finally select `Rome`. The option will
-appear only for documents that Rome supports (JavaScript, and TypeScript).
-
-### Install the Rome CLI
+### Installation
 
 Install `rome` using your preferred node package manager. We require a minimum Node version of v14.18.
 
@@ -47,7 +37,18 @@ yarn format
 pnpm format
 ```
 
-### Install Rome in your CI pipeline
+### Editor Setup
+
+You can use Rome by installing the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=rome.rome) from the marketplace.
+
+Rome currently doesn't support other editors than VS Code. [Let us know](https://github.com/rome/tools/discussions/categories/suggestions) if you would like support for another editor.
+
+If you want to set Rome as your default formatter, you can do so by opening the [command palette]
+and select `Format Document With ...` , then `Configure Default Formatter` and finally select `Rome`. The option will
+appear only for documents that Rome supports (JavaScript, and TypeScript).
+
+
+### CI Setup
 
 #### GitHub Actions
 

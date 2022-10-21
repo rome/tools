@@ -43,7 +43,7 @@ OPTIONS:
     --stdin-file-path <string>                A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path file.js
 ```
 
-### Suppression
+### Ignoring Code
 
 There are times when a developer wants to keep a specific formatting.
 
@@ -117,7 +117,7 @@ const expr = [
 
 As you can see the first array, which has a suppression comment, is left untouched!
 
-#### Migration from other formatters
+### Migration from other formatters
 
 Rome doesn't support a lot of options like other web formatters, which means that particular styles
 won't be available to all developers.

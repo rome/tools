@@ -40,7 +40,7 @@ All rules are enabled by default, and cannot be disabled. [Suppression](#lint-su
 [release page]: https://github.com/rome/tools/releases
 
 
-### Lint suppression
+### Ignoring Code
 
 There are times when a developer wants to ignore a lint rule for a specific line of the code.
 
