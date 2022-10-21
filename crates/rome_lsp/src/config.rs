@@ -11,11 +11,14 @@ pub struct WorkspaceSettings {
     /// Unstable features enabled
     #[serde(default)]
     pub unstable: bool,
+
+    /// Enable rename capability
+    pub rename: Option<bool>,
 }
 
 #[derive(Debug)]
 pub(crate) struct Config {
-    settings: WorkspaceSettings,
+    pub(crate) settings: WorkspaceSettings,
 }
 
 impl Config {

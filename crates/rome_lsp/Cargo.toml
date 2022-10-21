@@ -23,7 +23,7 @@ rome_flags = { path = "../rome_flags" }
 rome_rowan = { path = "../rome_rowan" }
 rome_console = { path = "../rome_console" }
 rome_text_edit = { path = "../rome_text_edit" }
-tokio = { workspace = true, features = ["io-std"] }
+tokio = { workspace = true, features = ["rt", "io-std"] }
 tower-lsp = { version = "0.17.0" }
 tracing = { workspace = true, features = ["attributes"] }
 futures = "0.3"

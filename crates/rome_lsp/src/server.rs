@@ -167,6 +167,30 @@ impl LanguageServer for LSPServer {
         Ok(())
     }
 
+    #[tracing::instrument(level = "trace", skip(self))]
+    async fn did_change_configuration(&self, params: DidChangeConfigurationParams) {
+        let _ = params;
+        self.session.fetch_client_configuration().await;
+    }
+
+    async fn did_open(&self, params: DidOpenTextDocumentParams) {
+        handlers::text_document::did_open(&self.session, params)
+            .await
+            .ok();
+    }
+
+    async fn did_change(&self, params: DidChangeTextDocumentParams) {
+        handlers::text_document::did_change(&self.session, params)
+            .await
+            .ok();
+    }
+
+    async fn did_close(&self, params: DidCloseTextDocumentParams) {
+        handlers::text_document::did_close(&self.session, params)
+            .await
+            .ok();
+    }
+
     async fn code_action(&self, params: CodeActionParams) -> LspResult<Option<CodeActionResponse>> {
         handlers::analysis::code_actions(&self.session, params).map_err(into_lsp_error)
     }
@@ -192,32 +216,17 @@ impl LanguageServer for LSPServer {
         handlers::formatting::format_on_type(&self.session, params).map_err(into_lsp_error)
     }
 
-    #[tracing::instrument(level = "trace", skip(self))]
-    async fn did_change_configuration(&self, params: DidChangeConfigurationParams) {
-        let _ = params;
-        self.session.fetch_client_configuration().await;
-    }
-
-    async fn did_open(&self, params: DidOpenTextDocumentParams) {
-        handlers::text_document::did_open(&self.session, params)
-            .await
-            .ok();
-    }
-
-    async fn did_change(&self, params: DidChangeTextDocumentParams) {
-        handlers::text_document::did_change(&self.session, params)
-            .await
-            .ok();
-    }
-
-    async fn did_close(&self, params: DidCloseTextDocumentParams) {
-        handlers::text_document::did_close(&self.session, params)
-            .await
-            .ok();
-    }
-
     async fn rename(&self, params: RenameParams) -> LspResult<Option<WorkspaceEdit>> {
-        handlers::rename::rename(&self.session, params).map_err(into_lsp_error)
+        let rename = {
+            let cfg = self.session.config.read().unwrap();
+            cfg.settings.rename.unwrap_or(false)
+        };
+
+        if rename {
+            handlers::rename::rename(&self.session, params).map_err(into_lsp_error)
+        } else {
+            Ok(None)
+        }
     }
 }
 

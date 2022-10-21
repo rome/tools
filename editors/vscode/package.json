@@ -82,6 +82,14 @@
 					],
 					"default": null,
 					"markdownDescription": "The rome lsp server executable. If the path is relative, the workspace folder will be used as base path"
+				},
+				"rome.rename": {
+					"type": [
+						"boolean",
+						"null"
+					],
+					"default": null,
+					"markdownDescription": "Enable/Disable Rome handling renames in the workspace. (Experimental)"
 				}
 			}
 		},
@@ -107,7 +115,7 @@
 		"watch": "npm run compile -- --sourcemap --watch",
 		"package": "vsce package -o rome_lsp.vsix",
 		"build": "npm run compile -- --minify && npm run package",
-		"install-extension": "code --install-extension rome_lsp.vsix",
+		"install-extension": "code --install-extension rome_lsp.vsix --force",
 		"format": "cargo run --bin rome format ./src/ ./scripts --write",
 		"pack:dev": "npm run compile && npm run package && npm run install-extension",
 		"tsc": "tsc"
