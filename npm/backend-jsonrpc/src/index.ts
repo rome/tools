@@ -40,7 +40,7 @@ export async function createWorkspaceWithBinary(
 		capabilities: {},
 		client_info: {
 			name: "@rometools/backend-jsonrpc",
-			version: "0.8.0-next",
+			version: "0.10.1-next",
 		},
 	});
 
