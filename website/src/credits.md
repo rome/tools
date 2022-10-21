@@ -109,9 +109,9 @@ layout: layouts/page.liquid
 
 {% include ./contributors.md %}
 
-### Acknowledgements
+## Acknowledgements
 
-Rome contains code that is heavily inspired from other projects. They have been adapted to Rome's 
+Rome contains code that is heavily inspired from other projects. They have been adapted to Rome's
 language/infrastructure.
 
 - [Prettier](https://github.com/prettier/prettier/)
