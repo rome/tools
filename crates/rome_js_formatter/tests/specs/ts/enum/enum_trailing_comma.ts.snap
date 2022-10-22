@@ -55,4 +55,22 @@ enum A {
 }
 ```
 
+## Output 3
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: None
+-----
+
+```js
+enum A {
+	adsadasdasdasdasdasdasdasdasdasdas,
+	dsadsadasdasdasdasdasdasdasd,
+	dsadsadasdasdasdasdasdasdasd
+}
+```
+
 

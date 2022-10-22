@@ -74,4 +74,29 @@ const a = [
 ] = [1, 2, 10];
 ```
 
+## Output 3
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: None
+-----
+
+```js
+const a = [
+	longlonglonglongItem1longlonglonglongItem1,
+	longlonglonglongItem1longlonglonglongItem2,
+	longlonglonglongItem1longlonglonglongItem3
+];
+
+// destructuring
+[
+	adsadasdasdasdasdasdasdasdasdasdas,
+	dsadsadasdasdasdasdasdasdasd,
+	dsadsadasdasdasdasdasdasdasd
+] = [1, 2, 10];
+```
+
 

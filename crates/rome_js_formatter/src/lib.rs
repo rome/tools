@@ -862,20 +862,17 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-class C {
-  one(
-    AAAAAAAAAAAAAAAAAAAAAAAAAA,
-    BBBBBBBBBBBBBBBBBBBBBBBBB,
-    BBBBBBBBBBBBBBBBBBBBBB,
-    c,
-  ) {}
-}
+const a = [
+	longlonglonglongItem1longlonglonglongItem1,
+	longlonglonglongItem1longlonglonglongItem2,
+	longlonglonglongItem1longlonglonglongItem3,
+];
 
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, FileId::zero(), syntax);
         let options = JsFormatOptions::new(syntax);
-        let options = options.with_trailing_comma(TrailingComma::ES5);
+        let options = options.with_trailing_comma(TrailingComma::None);
         let result = format_node(options.clone(), &tree.syntax())
             .unwrap()
             .print()

@@ -70,6 +70,7 @@ impl From<SerializableQuoteProperties> for QuoteProperties {
 pub enum SerializableTrailingComma {
     All,
     ES5,
+    None,
 }
 
 impl From<SerializableTrailingComma> for TrailingComma {
@@ -77,6 +78,7 @@ impl From<SerializableTrailingComma> for TrailingComma {
         match test {
             SerializableTrailingComma::All => TrailingComma::All,
             SerializableTrailingComma::ES5 => TrailingComma::ES5,
+            SerializableTrailingComma::None => TrailingComma::None,
         }
     }
 }

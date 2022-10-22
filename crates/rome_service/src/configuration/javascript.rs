@@ -69,4 +69,5 @@ pub enum PlainTrailingComma {
     #[default]
     All,
     ES5,
+    None,
 }

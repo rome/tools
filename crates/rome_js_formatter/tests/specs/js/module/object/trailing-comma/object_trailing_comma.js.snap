@@ -71,4 +71,28 @@ const {
 } = o;
 ```
 
+## Output 3
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: None
+-----
+
+```js
+const b = {
+	longlonglonglongField1,
+	longlonglonglongField2,
+	longlonglonglongField3
+};
+
+const {
+	adsadasdasdasdasdasdasdasdasdasdas,
+	dsadsadasdasdasdasdasdasdasd,
+	dsadsadasdasdasdasdasdasdasd
+} = o;
+```
+
 

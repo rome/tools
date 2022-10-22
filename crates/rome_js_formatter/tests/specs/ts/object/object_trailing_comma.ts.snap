@@ -104,4 +104,38 @@ const obj = {
 };
 ```
 
+## Output 3
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: None
+-----
+
+```js
+// object method
+const obj = {
+	one<
+		longlonglonglonglonglonglongT1,
+		longlonglonglonglonglonglongT2,
+		longlonglonglonglonglonglongT3
+	>(
+		adsadasdasdasdasdasdasdasdasdasdas1,
+		dsadsadasdasdasdasdasdasdasd2,
+		dsadsadasdasdasdasdasdasdasd
+	) {},
+	two<
+		longlonglonglonglonglonglongT1,
+		longlonglonglonglonglonglongT2,
+		longlonglonglonglonglonglongT3
+	>(
+		adsadasdasdasdasdasdasdasdasdasdas1,
+		dsadsadasdasdasdasdasdasdasd2,
+		dsadsadasdasdasdasdasdasdasd
+	) {}
+};
+```
+
 

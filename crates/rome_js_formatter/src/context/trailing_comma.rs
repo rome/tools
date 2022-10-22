@@ -19,6 +19,10 @@ pub(crate) enum FormatTrailingComma {
 impl FormatTrailingComma {
     /// This function returns corresponding [TrailingSeparator] for [format_separated] function.
     pub fn trailing_separator(&self, options: &JsFormatOptions) -> TrailingSeparator {
+        if options.trailing_comma.is_none() {
+            return TrailingSeparator::Omit;
+        }
+
         match self {
             FormatTrailingComma::All => {
                 if options.trailing_comma.is_all() {
@@ -34,6 +38,10 @@ impl FormatTrailingComma {
 
 impl Format<JsFormatContext> for FormatTrailingComma {
     fn fmt(&self, f: &mut Formatter<JsFormatContext>) -> FormatResult<()> {
+        if f.options().trailing_comma.is_none() {
+            return Ok(());
+        }
+
         if matches!(self, FormatTrailingComma::ES5) || f.options().trailing_comma().is_all() {
             write!(f, [if_group_breaks(&text(","))])?
         }
@@ -54,6 +62,8 @@ pub enum TrailingComma {
     All,
     /// Trailing commas where valid in ES5 (objects, arrays, etc.). No trailing commas in type parameters in TypeScript.
     ES5,
+    /// No trailing commas.
+    None,
 }
 
 impl TrailingComma {
@@ -62,6 +72,9 @@ impl TrailingComma {
     }
     pub const fn is_all(&self) -> bool {
         matches!(self, TrailingComma::All)
+    }
+    pub const fn is_none(&self) -> bool {
+        matches!(self, TrailingComma::None)
     }
 }
 
@@ -72,6 +85,7 @@ impl FromStr for TrailingComma {
         match s {
             "es5" | "ES5" => Ok(Self::ES5),
             "all" | "All" => Ok(Self::All),
+            "none" | "None" => Ok(Self::None),
             // TODO: replace this error with a diagnostic
             _ => Err("Value not supported for TrailingComma"),
         }
@@ -83,6 +97,7 @@ impl fmt::Display for TrailingComma {
         match self {
             TrailingComma::ES5 => std::write!(f, "ES5"),
             TrailingComma::All => std::write!(f, "All"),
+            TrailingComma::None => std::write!(f, "None"),
         }
     }
 }

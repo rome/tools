@@ -15,6 +15,8 @@ where
     N: AstSeparatedList<Language = JsLanguage, Node = I>,
     for<'a> I: ArrayNodeElement + AsFormat<'a>,
 {
+    let trailing_separator = FormatTrailingComma::ES5.trailing_separator(f.options());
+
     // Specifically do not use format_separated as arrays need separators
     // inserted after holes regardless of the formatting since this makes a
     // semantic difference
@@ -46,7 +48,14 @@ where
                         None => text(",").fmt(f)?,
                     };
                 } else if let Some(separator) = element.trailing_separator()? {
-                    write!(f, [format_only_if_breaks(separator, &separator.format())])?;
+                    match trailing_separator {
+                        TrailingSeparator::Omit => {
+                            write!(f, [format_removed(separator)])?;
+                        }
+                        _ => {
+                            write!(f, [format_only_if_breaks(separator, &separator.format())])?;
+                        }
+                    }
                 } else {
                     write!(f, [FormatTrailingComma::ES5])?;
                 };
