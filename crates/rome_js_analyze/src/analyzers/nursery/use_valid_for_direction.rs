@@ -2,7 +2,8 @@ use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic
 use rome_console::markup;
 use rome_js_syntax::{
     JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAssignmentOperator,
-    JsBinaryOperator, JsForStatement, JsPostUpdateOperator, JsUnaryOperator,
+    JsBinaryOperator, JsForStatement, JsIdentifierAssignment, JsIdentifierExpression,
+    JsPostUpdateOperator, JsUnaryOperator,
 };
 
 declare_rule! {
@@ -56,131 +57,96 @@ impl Rule for UseValidForDirection {
 
         if let Some(JsAnyExpression::JsBinaryExpression(binary_expr)) = n.test() {
             let operator = binary_expr.operator().ok()?;
-            let wrong_direction;
 
-            if matches!(
+            let is_less_than = matches!(
                 operator,
                 JsBinaryOperator::LessThan | JsBinaryOperator::LessThanOrEqual
-            ) {
-                wrong_direction = -1;
-            } else if matches!(
+            );
+            let is_greater_than = matches!(
                 operator,
                 JsBinaryOperator::GreaterThan | JsBinaryOperator::GreaterThanOrEqual
-            ) {
-                wrong_direction = 1
-            } else {
+            );
+
+            if is_less_than == false && is_greater_than == false {
                 return None;
             }
 
             match n.update() {
                 Some(JsAnyExpression::JsPostUpdateExpression(update_expr)) => {
-                    match (binary_expr.left().ok(), update_expr.operand().ok()) {
-                        (
-                            Some(JsAnyExpression::JsIdentifierExpression(counter_ident)),
-                            Some(JsAnyAssignment::JsIdentifierAssignment(update_ident)),
-                        ) => {
-                            if counter_ident
-                                .name()
-                                .ok()?
-                                .value_token()
-                                .ok()?
-                                .text_trimmed()
-                                != update_ident.name_token().ok()?.text_trimmed()
-                            {
-                                return None;
-                            }
-
-                            match update_expr.operator().ok() {
-                                Some(JsPostUpdateOperator::Increment) => {
-                                    if wrong_direction == 1 {
-                                        return Some(());
-                                    }
-                                }
-                                Some(JsPostUpdateOperator::Decrement) => {
-                                    if wrong_direction == -1 {
-                                        return Some(());
-                                    }
-                                }
-                                _ => return None,
-                            }
+                    if let (
+                        Some(JsAnyExpression::JsIdentifierExpression(counter_ident)),
+                        Some(JsAnyAssignment::JsIdentifierAssignment(update_ident)),
+                    ) = (binary_expr.left().ok(), update_expr.operand().ok())
+                    {
+                        if is_identifier_same(counter_ident, update_ident) != Some(true) {
+                            return None;
                         }
-                        _ => return None,
+
+                        if update_expr.operator().ok() == Some(JsPostUpdateOperator::Increment)
+                            && is_greater_than
+                        {
+                            return Some(());
+                        }
+
+                        if update_expr.operator().ok() == Some(JsPostUpdateOperator::Decrement)
+                            && is_less_than
+                        {
+                            return Some(());
+                        }
                     }
                 }
                 Some(JsAnyExpression::JsAssignmentExpression(assignment_expr)) => {
-                    match (binary_expr.left().ok(), assignment_expr.left().ok()) {
-                        (
-                            Some(JsAnyExpression::JsIdentifierExpression(counter_ident)),
-                            Some(JsAnyAssignmentPattern::JsAnyAssignment(
-                                JsAnyAssignment::JsIdentifierAssignment(update_ident),
-                            )),
-                        ) => {
-                            if counter_ident
-                                .name()
-                                .ok()?
-                                .value_token()
-                                .ok()?
-                                .text_trimmed()
-                                != update_ident.name_token().ok()?.text_trimmed()
-                            {
-                                return None;
+                    if let (
+                        Some(JsAnyExpression::JsIdentifierExpression(counter_ident)),
+                        Some(JsAnyAssignmentPattern::JsAnyAssignment(
+                            JsAnyAssignment::JsIdentifierAssignment(update_ident),
+                        )),
+                    ) = (binary_expr.left().ok(), assignment_expr.left().ok())
+                    {
+                        if is_identifier_same(counter_ident, update_ident) != Some(true) {
+                            return None;
+                        }
+
+                        if let Some(JsAnyExpression::JsIdentifierExpression(_)) =
+                            assignment_expr.right().ok()
+                        {
+                            return None;
+                        }
+
+                        if assignment_expr.operator().ok() == Some(JsAssignmentOperator::AddAssign)
+                        {
+                            if is_greater_than {
+                                return Some(());
                             }
 
-                            match assignment_expr.operator().ok() {
-                                Some(JsAssignmentOperator::AddAssign) => {
-                                    match assignment_expr.right().ok() {
-                                        Some(JsAnyExpression::JsUnaryExpression(unary_expr)) => {
-                                            if unary_expr.operator().ok()
-                                                == Some(JsUnaryOperator::Minus)
-                                            {
-                                                if wrong_direction == -1 {
-                                                    return Some(());
-                                                }
-                                            } else {
-                                                if wrong_direction == -1 {
-                                                    return Some(());
-                                                }
-                                            }
-                                        }
-                                        Some(JsAnyExpression::JsIdentifierExpression(_)) => {
-                                            return None
-                                        }
-                                        _ => {
-                                            if wrong_direction == 1 {
-                                                return Some(());
-                                            }
-                                        }
-                                    }
+                            if let Some(JsAnyExpression::JsUnaryExpression(unary_expr)) =
+                                assignment_expr.right().ok()
+                            {
+                                if unary_expr.operator().ok() == Some(JsUnaryOperator::Minus)
+                                    && is_less_than
+                                {
+                                    return Some(());
                                 }
-                                Some(JsAssignmentOperator::SubtractAssign) => {
-                                    match assignment_expr.right().ok() {
-                                        Some(JsAnyExpression::JsUnaryExpression(unary_expr)) => {
-                                            if unary_expr.operator().ok()
-                                                == Some(JsUnaryOperator::Minus)
-                                            {
-                                                if wrong_direction == 1 {
-                                                    return Some(());
-                                                }
-                                            } else {
-                                                if wrong_direction == -1 {
-                                                    return Some(());
-                                                }
-                                            }
-                                        }
-                                        Some(JsAnyExpression::JsIdentifierExpression(_)) => {
-                                            return None
-                                        }
-                                        _ => {
-                                            if wrong_direction == -1 {
-                                                return Some(());
-                                            }
-                                        }
-                                    }
-                                }
-                                _ => return None,
                             }
                         }
-                        _ => return None,
+
+                        if assignment_expr.operator().ok()
+                            == Some(JsAssignmentOperator::SubtractAssign)
+                        {
+                            if is_less_than {
+                                return Some(());
+                            }
+
+                            if let Some(JsAnyExpression::JsUnaryExpression(unary_expr)) =
+                                assignment_expr.right().ok()
+                            {
+                                if unary_expr.operator().ok() == Some(JsUnaryOperator::Minus)
+                                    && is_greater_than
+                                {
+                                    return Some(());
+                                }
+                            }
+                        }
                     }
                 }
                 _ => return None,
@@ -205,4 +171,19 @@ impl Rule for UseValidForDirection {
             },
         ))
     }
+}
+
+fn is_identifier_same(
+    counter_ident: JsIdentifierExpression,
+    update_ident: JsIdentifierAssignment,
+) -> Option<bool> {
+    Some(
+        counter_ident
+            .name()
+            .ok()?
+            .value_token()
+            .ok()?
+            .text_trimmed()
+            == update_ident.name_token().ok()?.text_trimmed(),
+    )
 }
