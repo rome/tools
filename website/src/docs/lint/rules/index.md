@@ -219,7 +219,7 @@ initializer and update expressions are not needed
 
 ## Style
 
-Rules enforcing a consistent way of writing your code.
+Rules enforcing a consistent way of writing your code. 
 <section class="rule">
 <h3 data-toc-exclude id="noNegationElse">
 	<a href="/docs/lint/rules/noNegationElse">noNegationElse</a>
@@ -266,6 +266,12 @@ Discourage the usage of Array index in keys.
 	<a href="/docs/lint/rules/noAutofocus">noAutofocus</a>
 </h3>
 Avoid the <code>autoFocus</code> attribute
+</section>
+<section class="rule">
+<h3 data-toc-exclude id="noBannedTypes">
+	<a href="/docs/lint/rules/noBannedTypes">noBannedTypes</a>
+</h3>
+Disallow certain types
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noChildrenProp">
