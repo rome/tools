@@ -67,28 +67,28 @@ impl Rule for UseValidForDirection {
                 JsBinaryOperator::GreaterThan | JsBinaryOperator::GreaterThanOrEqual
             );
 
-            if is_less_than == false && is_greater_than == false {
+            if !is_less_than && !is_greater_than {
                 return None;
             }
 
             match n.update() {
                 Some(JsAnyExpression::JsPostUpdateExpression(update_expr)) => {
                     if let (
-                        Some(JsAnyExpression::JsIdentifierExpression(counter_ident)),
-                        Some(JsAnyAssignment::JsIdentifierAssignment(update_ident)),
-                    ) = (binary_expr.left().ok(), update_expr.operand().ok())
+                        Ok(JsAnyExpression::JsIdentifierExpression(counter_ident)),
+                        Ok(JsAnyAssignment::JsIdentifierAssignment(update_ident)),
+                    ) = (binary_expr.left(), update_expr.operand())
                     {
                         if is_identifier_same(counter_ident, update_ident) != Some(true) {
                             return None;
                         }
 
-                        if update_expr.operator().ok() == Some(JsPostUpdateOperator::Increment)
+                        if update_expr.operator() == Ok(JsPostUpdateOperator::Increment)
                             && is_greater_than
                         {
                             return Some(());
                         }
 
-                        if update_expr.operator().ok() == Some(JsPostUpdateOperator::Decrement)
+                        if update_expr.operator() == Ok(JsPostUpdateOperator::Decrement)
                             && is_less_than
                         {
                             return Some(());
@@ -97,32 +97,31 @@ impl Rule for UseValidForDirection {
                 }
                 Some(JsAnyExpression::JsAssignmentExpression(assignment_expr)) => {
                     if let (
-                        Some(JsAnyExpression::JsIdentifierExpression(counter_ident)),
-                        Some(JsAnyAssignmentPattern::JsAnyAssignment(
+                        Ok(JsAnyExpression::JsIdentifierExpression(counter_ident)),
+                        Ok(JsAnyAssignmentPattern::JsAnyAssignment(
                             JsAnyAssignment::JsIdentifierAssignment(update_ident),
                         )),
-                    ) = (binary_expr.left().ok(), assignment_expr.left().ok())
+                    ) = (binary_expr.left(), assignment_expr.left())
                     {
                         if is_identifier_same(counter_ident, update_ident) != Some(true) {
                             return None;
                         }
 
-                        if let Some(JsAnyExpression::JsIdentifierExpression(_)) =
-                            assignment_expr.right().ok()
+                        if let Ok(JsAnyExpression::JsIdentifierExpression(_)) =
+                            assignment_expr.right()
                         {
                             return None;
                         }
 
-                        if assignment_expr.operator().ok() == Some(JsAssignmentOperator::AddAssign)
-                        {
+                        if assignment_expr.operator() == Ok(JsAssignmentOperator::AddAssign) {
                             if is_greater_than {
                                 return Some(());
                             }
 
-                            if let Some(JsAnyExpression::JsUnaryExpression(unary_expr)) =
-                                assignment_expr.right().ok()
+                            if let Ok(JsAnyExpression::JsUnaryExpression(unary_expr)) =
+                                assignment_expr.right()
                             {
-                                if unary_expr.operator().ok() == Some(JsUnaryOperator::Minus)
+                                if unary_expr.operator() == Ok(JsUnaryOperator::Minus)
                                     && is_less_than
                                 {
                                     return Some(());
@@ -130,17 +129,15 @@ impl Rule for UseValidForDirection {
                             }
                         }
 
-                        if assignment_expr.operator().ok()
-                            == Some(JsAssignmentOperator::SubtractAssign)
-                        {
+                        if assignment_expr.operator() == Ok(JsAssignmentOperator::SubtractAssign) {
                             if is_less_than {
                                 return Some(());
                             }
 
-                            if let Some(JsAnyExpression::JsUnaryExpression(unary_expr)) =
-                                assignment_expr.right().ok()
+                            if let Ok(JsAnyExpression::JsUnaryExpression(unary_expr)) =
+                                assignment_expr.right()
                             {
-                                if unary_expr.operator().ok() == Some(JsUnaryOperator::Minus)
+                                if unary_expr.operator() == Ok(JsUnaryOperator::Minus)
                                     && is_greater_than
                                 {
                                     return Some(());
