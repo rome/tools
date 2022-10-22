@@ -490,16 +490,6 @@
       "description": "A list of rules that belong to this group",
       "type": "object",
       "properties": {
-        "banTypes": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "noArrayIndexKey": {
           "anyOf": [
             {
@@ -511,6 +501,16 @@
           ]
         },
         "noAutofocus": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noBannedTypes": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

@@ -1,8 +1,8 @@
 //! Generated file, do not edit by hand, see `xtask/codegen`
 
 use rome_analyze::declare_group;
-mod ban_types;
 mod no_array_index_key;
+mod no_banned_types;
 mod no_children_prop;
 mod no_const_assign;
 mod no_dangerously_set_inner_html;

@@ -391,9 +391,9 @@ pub struct Nursery {
 #[allow(dead_code)]
 #[doc = r" A list of rules that belong to this group"]
 struct NurserySchema {
-    ban_types: Option<RuleConfiguration>,
     no_array_index_key: Option<RuleConfiguration>,
     no_autofocus: Option<RuleConfiguration>,
+    no_banned_types: Option<RuleConfiguration>,
     no_children_prop: Option<RuleConfiguration>,
     no_const_assign: Option<RuleConfiguration>,
     no_dangerously_set_inner_html: Option<RuleConfiguration>,
@@ -428,6 +428,7 @@ impl Nursery {
     pub(crate) const CATEGORY_RULES: [&'static str; 30] = [
         "noArrayIndexKey",
         "noAutofocus",
+        "noBannedTypes",
         "noChildrenProp",
         "noConstAssign",
         "noDangerouslySetInnerHtml",

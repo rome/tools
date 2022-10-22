@@ -1,9 +1,9 @@
 ---
-title: Lint Rule banTypes
+title: Lint Rule noBannedTypes
 layout: layouts/rule.liquid
 ---
 
-# banTypes (since v10.0.0)
+# noBannedTypes (since v10.0.0)
 
 Disallow certain types
 
@@ -15,7 +15,7 @@ Disallow certain types
 let foo: String = "bar";
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/banTypes.js:1:10 <a href="https://rome.tools/docs/lint/rules/banTypes">lint/nursery/banTypes</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">nursery/noBannedTypes.js:1:10 <a href="https://rome.tools/docs/lint/rules/noBannedTypes">lint/nursery/noBannedTypes</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Don't use </span><span style="color: Orange;"><strong>String</strong></span><span style="color: Orange;"> as a type. </span><span style="color: Orange;"><strong>Use string instead</strong></span><span style="color: Orange;">.</span>
   
@@ -35,7 +35,7 @@ let foo: String = "bar";
 let bool = true as Boolean;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/banTypes.js:1:20 <a href="https://rome.tools/docs/lint/rules/banTypes">lint/nursery/banTypes</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">nursery/noBannedTypes.js:1:20 <a href="https://rome.tools/docs/lint/rules/noBannedTypes">lint/nursery/noBannedTypes</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Don't use </span><span style="color: Orange;"><strong>Boolean</strong></span><span style="color: Orange;"> as a type. </span><span style="color: Orange;"><strong>Use boolean instead</strong></span><span style="color: Orange;">.</span>
   
@@ -55,7 +55,7 @@ let bool = true as Boolean;
 let invalidTuple: [string, Boolean] = ["foo", false];
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/banTypes.js:1:28 <a href="https://rome.tools/docs/lint/rules/banTypes">lint/nursery/banTypes</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">nursery/noBannedTypes.js:1:28 <a href="https://rome.tools/docs/lint/rules/noBannedTypes">lint/nursery/noBannedTypes</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Don't use </span><span style="color: Orange;"><strong>Boolean</strong></span><span style="color: Orange;"> as a type. </span><span style="color: Orange;"><strong>Use boolean instead</strong></span><span style="color: Orange;">.</span>
   

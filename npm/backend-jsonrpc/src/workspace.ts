@@ -160,9 +160,9 @@ export interface Correctness {
  * A list of rules that belong to this group
  */
 export interface Nursery {
-	banTypes?: RuleConfiguration;
 	noArrayIndexKey?: RuleConfiguration;
 	noAutofocus?: RuleConfiguration;
+	noBannedTypes?: RuleConfiguration;
 	noChildrenProp?: RuleConfiguration;
 	noConstAssign?: RuleConfiguration;
 	noDangerouslySetInnerHtml?: RuleConfiguration;

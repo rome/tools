@@ -40,9 +40,9 @@ declare_rule! {
     /// ```
     ///
     /// ```
-    pub(crate) BanTypes {
+    pub(crate) NoBannedTypes {
         version: "10.0.0",
-        name: "banTypes",
+        name: "noBannedTypes",
         recommended: false,
     }
 }
@@ -133,7 +133,7 @@ impl BannedType {
     }
 }
 
-impl Rule for BanTypes {
+impl Rule for NoBannedTypes {
     type Query = Ast<TsBannedType>;
     type State = (BannedType, TextRange, Option<JsReferenceIdentifier>);
     type Signals = Option<Self::State>;
