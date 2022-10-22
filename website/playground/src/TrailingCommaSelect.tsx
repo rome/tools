@@ -27,7 +27,7 @@ export default function TrailingCommaSelect({
 						<select
 							id="trailingComma"
 							aria-describedby="quote-style-description"
-							name="quoteStyle"
+							name="trailingComma"
 							value={trailingComma ?? "all"}
 							onChange={(e) =>
 								setTrailingComma(e.target.value as TrailingComma)}
