@@ -31,12 +31,15 @@ export default function DesktopPlayground({
 	const [clipboardStatus, setClipboardStatus] = useState<
 		"success" | "failed" | "normal"
 	>("normal");
-	const extensions = useMemo(() => [
-		javascript({
-			jsx: isJsx,
-			typescript: isTypeScript,
-		}),
-	], [isJsx, isTypeScript]);
+	const extensions = useMemo(
+		() => [
+			javascript({
+				jsx: isJsx,
+				typescript: isTypeScript,
+			}),
+		],
+		[isJsx, isTypeScript],
+	);
 
 	const romeAstSyntacticDataRef = useRef<RomeAstSyntacticData | null>(null);
 

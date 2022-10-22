@@ -38,12 +38,15 @@ export function MobilePlayground({
 		setPlaygroundState((state) => ({ ...state, code: value }));
 	}, []);
 
-	const extensions = useMemo(() => [
-		javascript({
-			jsx: isJsx,
-			typescript: isTypeScript,
-		}),
-	], [isJsx, isTypeScript]);
+	const extensions = useMemo(
+		() => [
+			javascript({
+				jsx: isJsx,
+				typescript: isTypeScript,
+			}),
+		],
+		[isJsx, isTypeScript],
+	);
 
 	return (
 		<div className="p-1">
