@@ -92,30 +92,18 @@ impl BannedType {
     }
 
     /// Retrieves a diagnostic message from a [BannedType]
-    fn message(&self) -> String {
+    fn message(&self) -> &str {
         match *self {
-			Self::BigInt => String::from("Use bigint instead"),
-			Self::Boolean => String::from("Use boolean instead"),
-			Self::Function => [
-				"The `Function` type accepts any function-like value.",
-				"It provides no type safety when calling the function, which can be a common source of bugs.",
-				"It also accepts things like class declarations, which will throw at runtime as they will not be called with `new`.",
-				"If you are expecting the function to accept certain arguments, you should explicitly define the function shape",
-			].join("\n"),
-			Self::Number => String::from("Use number instead"),
-			Self::Object => [
-				"The `Object` type actually means \"any non-nullish value\", so it is marginally better than `unknown`.",
-				"- If you want a type meaning \"any object\", you probably want `Record<string, unknown>` instead.",
-				"- If you want a type meaning \"any value\", you probably want `unknown` instead",
-			].join("\n"),
-			Self::String => String::from("Use string instead"),
-			Self::Symbol => String::from("Use symbol instead"),
-			Self::EmptyObject => [
-				"`{}` actually means \"any non-nullish value\".",
-				"- If you want a type meaning \"any object\", you probably want `Record<string, unknown>` instead.",
-				"- If you want a type meaning \"any value\", you probably want `unknown` instead.",
-				"- If you want a type meaning \"empty object\", you probably want `Record<string, never>` instead",
-			].join("\n"),
+			Self::BigInt => "Use lowercase primitives for consistency",
+			Self::Boolean => "Use lowercase primitives for consistency",
+			Self::Function =>
+				"Prefer explicitly define the function shape. This type accepts any function-like value, which can be a common source of bugs",
+			Self::Number => "Use lowercase primitives for consistency",
+			Self::Object =>
+				"Prefer explicitly define the object shape. This type means \"any non-nullish value\", which is slightly better than 'unknown', but it's still a broad type",
+			Self::String => "Use lowercase primitives for consistency",
+			Self::Symbol => "Use lowercase primitives for consistency",
+			Self::EmptyObject => "Prefer explicitly define the object shape. '{}' means \"any non-nullish value\"",
 		}
     }
 
@@ -146,8 +134,16 @@ impl Rule for NoBannedTypes {
             TsBannedType::TsObjectType(ts_object_type) => {
                 if ts_object_type.members().is_empty() {
                     let range = TextRange::new(
-                        ts_object_type.l_curly_token().ok()?.text_range().start(),
-                        ts_object_type.r_curly_token().ok()?.text_range().end(),
+                        ts_object_type
+                            .l_curly_token()
+                            .ok()?
+                            .text_trimmed_range()
+                            .start(),
+                        ts_object_type
+                            .r_curly_token()
+                            .ok()?
+                            .text_trimmed_range()
+                            .end(),
                     );
 
                     return Some((BannedType::EmptyObject, range, None));
@@ -178,7 +174,8 @@ impl Rule for NoBannedTypes {
         let diagnostic = RuleDiagnostic::new(
             rule_category!(),
             text_range,
-            markup! {"Don't use "<Emphasis>{banned_type.as_str()}</Emphasis>" as a type. "<Emphasis>{banned_type.message()}</Emphasis>"."}.to_owned(),
+            markup! {"Don't use '"{banned_type.as_str()}"' as a type. "{banned_type.message()}"."}
+                .to_owned(),
         );
 
         Some(diagnostic)
@@ -190,6 +187,7 @@ impl Rule for NoBannedTypes {
     ) -> Option<JsRuleAction> {
         let mut mutation = ctx.root().begin();
         let new_token = banned_type.fix_with()?;
+        let new_token_str = new_token.to_string()?;
         let refs = reference_identifier.as_ref()?;
 
         mutation.replace_node(
@@ -200,7 +198,7 @@ impl Rule for NoBannedTypes {
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::Always,
-            message: markup! { "Fix this problem" }.to_owned(),
+            message: markup! { "Use '"{new_token_str}"' instead" }.to_owned(),
             mutation,
         })
     }

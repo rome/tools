@@ -29,25 +29,42 @@ let z = true as Boolean;
 
 type Props = {};
 
-const abc: {} = [{}]
-
 let fn: Function = () => true
 
+const str: String = 'foo';
+
+const bool: Boolean = true;
+
+const num: Number = 1;
+
+const symb: Symbol = Symbol('foo');
+
+const bigInt: BigInt = 1n;
+
+const lowerObj: Object = {};
+
+const capitalObj: Object = { a: 'string' };
+
+const curly1: {
+
+} = 1;
+
+const curly2: {} = { a: 'string' };
 
 ```
 
 # Diagnostics
 ```
-invalid.ts:1:8 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:1:8 lint/nursery/noBannedTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use String as a type. Use string instead.
+  ! Don't use 'String' as a type. Use lowercase primitives for consistency.
   
   > 1 │ let a: String;
       │        ^^^^^^
     2 │ 
     3 │ let e: Object;
   
-  i Safe fix: Fix this problem
+  i Safe fix: Use 'string' instead
   
      1    │ - let·a:·String;
         1 │ + let·a:·string;
@@ -58,11 +75,9 @@ invalid.ts:1:8 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━
 ```
 
 ```
-invalid.ts:3:8 lint/nursery/banTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:3:8 lint/nursery/noBannedTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use Object as a type. The `Object` type actually means "any non-nullish value", so it is marginally better than `unknown`.
-    - If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
-    - If you want a type meaning "any value", you probably want `unknown` instead.
+  ! Don't use 'Object' as a type. Prefer explicitly define the object shape. This type means "any non-nullish value", which is slightly better than 'unknown', but it's still a broad type.
   
     1 │ let a: String;
     2 │ 
@@ -75,9 +90,9 @@ invalid.ts:3:8 lint/nursery/banTypes ━━━━━━━━━━━━━━�
 ```
 
 ```
-invalid.ts:5:13 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:5:13 lint/nursery/noBannedTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use String as a type. Use string instead.
+  ! Don't use 'String' as a type. Use lowercase primitives for consistency.
   
     3 │ let e: Object;
     4 │ 
@@ -86,7 +101,7 @@ invalid.ts:5:13 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━�
     6 │ 
     7 │ function foo(a: String) {}
   
-  i Safe fix: Fix this problem
+  i Safe fix: Use 'string' instead
   
      3  3 │   let e: Object;
      4  4 │   
@@ -99,9 +114,9 @@ invalid.ts:5:13 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━�
 ```
 
 ```
-invalid.ts:7:17 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:7:17 lint/nursery/noBannedTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use String as a type. Use string instead.
+  ! Don't use 'String' as a type. Use lowercase primitives for consistency.
   
     5 │ let b: { c: String };
     6 │ 
@@ -110,7 +125,7 @@ invalid.ts:7:17 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━�
     8 │ 
     9 │ 'a' as String;
   
-  i Safe fix: Fix this problem
+  i Safe fix: Use 'string' instead
   
      5  5 │   let b: { c: String };
      6  6 │   
@@ -123,9 +138,9 @@ invalid.ts:7:17 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━�
 ```
 
 ```
-invalid.ts:9:8 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:9:8 lint/nursery/noBannedTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use String as a type. Use string instead.
+  ! Don't use 'String' as a type. Use lowercase primitives for consistency.
   
      7 │ function foo(a: String) {}
      8 │ 
@@ -134,7 +149,7 @@ invalid.ts:9:8 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━
     10 │ 
     11 │ class Foo<T = String> extends Bar<String> implements Baz<Object> {
   
-  i Safe fix: Fix this problem
+  i Safe fix: Use 'string' instead
   
      7  7 │   function foo(a: String) {}
      8  8 │   
@@ -147,9 +162,9 @@ invalid.ts:9:8 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━
 ```
 
 ```
-invalid.ts:11:15 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:11:15 lint/nursery/noBannedTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use String as a type. Use string instead.
+  ! Don't use 'String' as a type. Use lowercase primitives for consistency.
   
      9 │ 'a' as String;
     10 │ 
@@ -158,7 +173,7 @@ invalid.ts:11:15 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━�
     12 │   constructor(foo: String | Object) {}
     13 │ 
   
-  i Safe fix: Fix this problem
+  i Safe fix: Use 'string' instead
   
      9  9 │   'a' as String;
     10 10 │   
@@ -171,9 +186,9 @@ invalid.ts:11:15 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━�
 ```
 
 ```
-invalid.ts:11:35 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:11:35 lint/nursery/noBannedTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use String as a type. Use string instead.
+  ! Don't use 'String' as a type. Use lowercase primitives for consistency.
   
      9 │ 'a' as String;
     10 │ 
@@ -182,7 +197,7 @@ invalid.ts:11:35 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━�
     12 │   constructor(foo: String | Object) {}
     13 │ 
   
-  i Safe fix: Fix this problem
+  i Safe fix: Use 'string' instead
   
      9  9 │   'a' as String;
     10 10 │   
@@ -195,11 +210,9 @@ invalid.ts:11:35 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━�
 ```
 
 ```
-invalid.ts:11:58 lint/nursery/banTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:11:58 lint/nursery/noBannedTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use Object as a type. The `Object` type actually means "any non-nullish value", so it is marginally better than `unknown`.
-    - If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
-    - If you want a type meaning "any value", you probably want `unknown` instead.
+  ! Don't use 'Object' as a type. Prefer explicitly define the object shape. This type means "any non-nullish value", which is slightly better than 'unknown', but it's still a broad type.
   
      9 │ 'a' as String;
     10 │ 
@@ -212,9 +225,9 @@ invalid.ts:11:58 lint/nursery/banTypes ━━━━━━━━━━━━━�
 ```
 
 ```
-invalid.ts:12:20 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:12:20 lint/nursery/noBannedTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use String as a type. Use string instead.
+  ! Don't use 'String' as a type. Use lowercase primitives for consistency.
   
     11 │ class Foo<T = String> extends Bar<String> implements Baz<Object> {
   > 12 │   constructor(foo: String | Object) {}
@@ -222,7 +235,7 @@ invalid.ts:12:20 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━�
     13 │ 
     14 │   exit(): Array<String> {
   
-  i Safe fix: Fix this problem
+  i Safe fix: Use 'string' instead
   
     10 10 │   
     11 11 │   class Foo<T = String> extends Bar<String> implements Baz<Object> {
@@ -235,11 +248,9 @@ invalid.ts:12:20 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━�
 ```
 
 ```
-invalid.ts:12:29 lint/nursery/banTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:12:29 lint/nursery/noBannedTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use Object as a type. The `Object` type actually means "any non-nullish value", so it is marginally better than `unknown`.
-    - If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
-    - If you want a type meaning "any value", you probably want `unknown` instead.
+  ! Don't use 'Object' as a type. Prefer explicitly define the object shape. This type means "any non-nullish value", which is slightly better than 'unknown', but it's still a broad type.
   
     11 │ class Foo<T = String> extends Bar<String> implements Baz<Object> {
   > 12 │   constructor(foo: String | Object) {}
@@ -251,9 +262,9 @@ invalid.ts:12:29 lint/nursery/banTypes ━━━━━━━━━━━━━�
 ```
 
 ```
-invalid.ts:14:17 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:14:17 lint/nursery/noBannedTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use String as a type. Use string instead.
+  ! Don't use 'String' as a type. Use lowercase primitives for consistency.
   
     12 │   constructor(foo: String | Object) {}
     13 │ 
@@ -262,7 +273,7 @@ invalid.ts:14:17 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━�
     15 │     const foo: String = 1 as String;
     16 │   }
   
-  i Safe fix: Fix this problem
+  i Safe fix: Use 'string' instead
   
     12 12 │     constructor(foo: String | Object) {}
     13 13 │   
@@ -275,9 +286,9 @@ invalid.ts:14:17 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━�
 ```
 
 ```
-invalid.ts:15:16 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:15:16 lint/nursery/noBannedTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use String as a type. Use string instead.
+  ! Don't use 'String' as a type. Use lowercase primitives for consistency.
   
     14 │   exit(): Array<String> {
   > 15 │     const foo: String = 1 as String;
@@ -285,7 +296,7 @@ invalid.ts:15:16 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━�
     16 │   }
     17 │ }
   
-  i Safe fix: Fix this problem
+  i Safe fix: Use 'string' instead
   
     13 13 │   
     14 14 │     exit(): Array<String> {
@@ -298,9 +309,9 @@ invalid.ts:15:16 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━�
 ```
 
 ```
-invalid.ts:15:30 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:15:30 lint/nursery/noBannedTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use String as a type. Use string instead.
+  ! Don't use 'String' as a type. Use lowercase primitives for consistency.
   
     14 │   exit(): Array<String> {
   > 15 │     const foo: String = 1 as String;
@@ -308,7 +319,7 @@ invalid.ts:15:30 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━�
     16 │   }
     17 │ }
   
-  i Safe fix: Fix this problem
+  i Safe fix: Use 'string' instead
   
     13 13 │   
     14 14 │     exit(): Array<String> {
@@ -321,9 +332,9 @@ invalid.ts:15:30 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━�
 ```
 
 ```
-invalid.ts:19:20 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:19:20 lint/nursery/noBannedTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use Boolean as a type. Use boolean instead.
+  ! Don't use 'Boolean' as a type. Use lowercase primitives for consistency.
   
     17 │ }
     18 │ 
@@ -332,7 +343,7 @@ invalid.ts:19:20 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━�
     20 │ 
     21 │ let z = true as Boolean;
   
-  i Safe fix: Fix this problem
+  i Safe fix: Use 'boolean' instead
   
     17 17 │   }
     18 18 │   
@@ -345,9 +356,9 @@ invalid.ts:19:20 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━�
 ```
 
 ```
-invalid.ts:21:17 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:21:17 lint/nursery/noBannedTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use Boolean as a type. Use boolean instead.
+  ! Don't use 'Boolean' as a type. Use lowercase primitives for consistency.
   
     19 │ let baz: [boolean, Boolean] = [true, false];
     20 │ 
@@ -356,7 +367,7 @@ invalid.ts:21:17 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━�
     22 │ 
     23 │ type Props = {};
   
-  i Safe fix: Fix this problem
+  i Safe fix: Use 'boolean' instead
   
     19 19 │   let baz: [boolean, Boolean] = [true, false];
     20 20 │   
@@ -369,54 +380,213 @@ invalid.ts:21:17 lint/nursery/banTypes  FIXABLE  ━━━━━━━━━━�
 ```
 
 ```
-invalid.ts:23:14 lint/nursery/banTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:23:14 lint/nursery/noBannedTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use {} as a type. `{}` actually means "any non-nullish value".
-    - If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
-    - If you want a type meaning "any value", you probably want `unknown` instead.
-    - If you want a type meaning "empty object", you probably want `Record<string, never>` instead.
+  ! Don't use '{}' as a type. Prefer explicitly define the object shape. '{}' means "any non-nullish value".
   
     21 │ let z = true as Boolean;
     22 │ 
   > 23 │ type Props = {};
        │              ^^
     24 │ 
-    25 │ const abc: {} = [{}]
+    25 │ let fn: Function = () => true
   
 
 ```
 
 ```
-invalid.ts:25:12 lint/nursery/banTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+invalid.ts:25:9 lint/nursery/noBannedTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Don't use {} as a type. `{}` actually means "any non-nullish value".
-    - If you want a type meaning "any object", you probably want `Record<string, unknown>` instead.
-    - If you want a type meaning "any value", you probably want `unknown` instead.
-    - If you want a type meaning "empty object", you probably want `Record<string, never>` instead.
+  ! Don't use 'Function' as a type. Prefer explicitly define the function shape. This type accepts any function-like value, which can be a common source of bugs.
   
     23 │ type Props = {};
     24 │ 
-  > 25 │ const abc: {} = [{}]
-       │            ^^^
-    26 │ 
-    27 │ let fn: Function = () => true
-  
-
-```
-
-```
-invalid.ts:27:9 lint/nursery/banTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! Don't use Function as a type. The `Function` type accepts any function-like value.
-    It provides no type safety when calling the function, which can be a common source of bugs.
-    It also accepts things like class declarations, which will throw at runtime as they will not be called with `new`.
-    If you are expecting the function to accept certain arguments, you should explicitly define the function shape.
-  
-    25 │ const abc: {} = [{}]
-    26 │ 
-  > 27 │ let fn: Function = () => true
+  > 25 │ let fn: Function = () => true
        │         ^^^^^^^^
+    26 │ 
+    27 │ const str: String = 'foo';
+  
+
+```
+
+```
+invalid.ts:27:12 lint/nursery/noBannedTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use 'String' as a type. Use lowercase primitives for consistency.
+  
+    25 │ let fn: Function = () => true
+    26 │ 
+  > 27 │ const str: String = 'foo';
+       │            ^^^^^^
     28 │ 
+    29 │ const bool: Boolean = true;
+  
+  i Safe fix: Use 'string' instead
+  
+    25 25 │   let fn: Function = () => true
+    26 26 │   
+    27    │ - const·str:·String·=·'foo';
+       27 │ + const·str:·string·=·'foo';
+    28 28 │   
+    29 29 │   const bool: Boolean = true;
+  
+
+```
+
+```
+invalid.ts:29:13 lint/nursery/noBannedTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use 'Boolean' as a type. Use lowercase primitives for consistency.
+  
+    27 │ const str: String = 'foo';
+    28 │ 
+  > 29 │ const bool: Boolean = true;
+       │             ^^^^^^^
+    30 │ 
+    31 │ const num: Number = 1;
+  
+  i Safe fix: Use 'boolean' instead
+  
+    27 27 │   const str: String = 'foo';
+    28 28 │   
+    29    │ - const·bool:·Boolean·=·true;
+       29 │ + const·bool:·boolean·=·true;
+    30 30 │   
+    31 31 │   const num: Number = 1;
+  
+
+```
+
+```
+invalid.ts:31:12 lint/nursery/noBannedTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use 'Number' as a type. Use lowercase primitives for consistency.
+  
+    29 │ const bool: Boolean = true;
+    30 │ 
+  > 31 │ const num: Number = 1;
+       │            ^^^^^^
+    32 │ 
+    33 │ const symb: Symbol = Symbol('foo');
+  
+  i Safe fix: Use 'number' instead
+  
+    29 29 │   const bool: Boolean = true;
+    30 30 │   
+    31    │ - const·num:·Number·=·1;
+       31 │ + const·num:·number·=·1;
+    32 32 │   
+    33 33 │   const symb: Symbol = Symbol('foo');
+  
+
+```
+
+```
+invalid.ts:33:13 lint/nursery/noBannedTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use 'Symbol' as a type. Use lowercase primitives for consistency.
+  
+    31 │ const num: Number = 1;
+    32 │ 
+  > 33 │ const symb: Symbol = Symbol('foo');
+       │             ^^^^^^
+    34 │ 
+    35 │ const bigInt: BigInt = 1n;
+  
+  i Safe fix: Use 'symbol' instead
+  
+    31 31 │   const num: Number = 1;
+    32 32 │   
+    33    │ - const·symb:·Symbol·=·Symbol('foo');
+       33 │ + const·symb:·symbol·=·Symbol('foo');
+    34 34 │   
+    35 35 │   const bigInt: BigInt = 1n;
+  
+
+```
+
+```
+invalid.ts:35:15 lint/nursery/noBannedTypes  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use 'BigInt' as a type. Use lowercase primitives for consistency.
+  
+    33 │ const symb: Symbol = Symbol('foo');
+    34 │ 
+  > 35 │ const bigInt: BigInt = 1n;
+       │               ^^^^^^
+    36 │ 
+    37 │ const lowerObj: Object = {};
+  
+  i Safe fix: Use 'bigint' instead
+  
+    33 33 │   const symb: Symbol = Symbol('foo');
+    34 34 │   
+    35    │ - const·bigInt:·BigInt·=·1n;
+       35 │ + const·bigInt:·bigint·=·1n;
+    36 36 │   
+    37 37 │   const lowerObj: Object = {};
+  
+
+```
+
+```
+invalid.ts:37:17 lint/nursery/noBannedTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use 'Object' as a type. Prefer explicitly define the object shape. This type means "any non-nullish value", which is slightly better than 'unknown', but it's still a broad type.
+  
+    35 │ const bigInt: BigInt = 1n;
+    36 │ 
+  > 37 │ const lowerObj: Object = {};
+       │                 ^^^^^^
+    38 │ 
+    39 │ const capitalObj: Object = { a: 'string' };
+  
+
+```
+
+```
+invalid.ts:39:19 lint/nursery/noBannedTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use 'Object' as a type. Prefer explicitly define the object shape. This type means "any non-nullish value", which is slightly better than 'unknown', but it's still a broad type.
+  
+    37 │ const lowerObj: Object = {};
+    38 │ 
+  > 39 │ const capitalObj: Object = { a: 'string' };
+       │                   ^^^^^^
+    40 │ 
+    41 │ const curly1: {
+  
+
+```
+
+```
+invalid.ts:41:15 lint/nursery/noBannedTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use '{}' as a type. Prefer explicitly define the object shape. '{}' means "any non-nullish value".
+  
+    39 │ const capitalObj: Object = { a: 'string' };
+    40 │ 
+  > 41 │ const curly1: {
+       │               ^
+  > 42 │ 
+  > 43 │ } = 1;
+       │ ^
+    44 │ 
+    45 │ const curly2: {} = { a: 'string' };
+  
+
+```
+
+```
+invalid.ts:45:15 lint/nursery/noBannedTypes ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Don't use '{}' as a type. Prefer explicitly define the object shape. '{}' means "any non-nullish value".
+  
+    43 │ } = 1;
+    44 │ 
+  > 45 │ const curly2: {} = { a: 'string' };
+       │               ^^
+    46 │ 
   
 
 ```
