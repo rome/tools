@@ -190,6 +190,7 @@ export interface Nursery {
 	useKeyWithMouseEvents?: RuleConfiguration;
 	useOptionalChain?: RuleConfiguration;
 	useValidAnchor?: RuleConfiguration;
+	useValidForDirection?: RuleConfiguration;
 }
 /**
  * A list of rules that belong to this group
@@ -333,6 +334,7 @@ export type Category =
 	| "lint/nursery/noPositiveTabindex"
 	| "lint/nursery/noConstAssign"
 	| "lint/nursery/noExplicitAny"
+	| "lint/nursery/useValidForDirection"
 	| "lint/style/noNegationElse"
 	| "lint/style/noShoutyConstants"
 	| "lint/style/useSelfClosingElements"

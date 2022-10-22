@@ -413,3 +413,9 @@ Enforce using concise optional chain instead of chained logical expressions.
 </h3>
 Enforce that all anchors are valid, and they are navigable elements.
 </section>
+<section class="rule">
+<h3 data-toc-exclude id="useValidForDirection">
+	<a href="/docs/lint/rules/useValidForDirection">useValidForDirection</a>
+</h3>
+Enforce &quot;for&quot; loop update clause moving the counter in the right direction.
+</section>
