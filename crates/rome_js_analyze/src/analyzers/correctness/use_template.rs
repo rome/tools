@@ -141,7 +141,7 @@ fn convert_expressions_to_js_template(exprs: &Vec<JsAnyExpression>) -> Option<Js
                 let chunk_element = JsAnyTemplateElement::JsTemplateChunkElement(
                     make::js_template_chunk_element(JsSyntaxToken::new_detached(
                         JsSyntaxKind::TEMPLATE_CHUNK,
-                        string_without_quotes,
+                        &escape_dollar_sign(string_without_quotes),
                         [],
                         [],
                     )),
@@ -335,4 +335,17 @@ fn collect_binary_add_expression(node: &JsBinaryExpression) -> Option<Vec<JsAnyE
         }
     };
     Some(result)
+}
+
+/// Escape dollar sign in raw string.
+fn escape_dollar_sign(unescaped_string: &str) -> String {
+    let mut chars = unescaped_string.chars().collect::<Vec<_>>();
+    for (i, _) in unescaped_string.match_indices("${") {
+        if i == 0 {
+            chars.insert(0, '\\');
+        } else if chars[i - 1] == '\\' {
+            chars.insert(i, '\\');
+        }
+    }
+    chars.into_iter().collect::<String>()
 }

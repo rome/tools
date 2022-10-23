@@ -22,6 +22,8 @@ foo() + " bar";
 
 1 * /**leading*/"foo"    /**trailing */                   + "bar"
 
+console.log("${foo." + bar + ".baz}");
+
 ```
 
 # Diagnostics
@@ -299,6 +301,7 @@ useTemplate.js:17:1 lint/correctness/useTemplate  FIXABLE  ━━━━━━━
   > 17 │ 1 * /**leading*/"foo"    /**trailing */                   + "bar"
        │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     18 │ 
+    19 │ console.log("${foo." + bar + ".baz}");
   
   i Suggested fix: Use a TemplateLiteral.
   
@@ -307,6 +310,29 @@ useTemplate.js:17:1 lint/correctness/useTemplate  FIXABLE  ━━━━━━━
     17    │ - 1·*·/**leading*/"foo"····/**trailing·*/···················+·"bar"
        17 │ + `${1·*·/**leading*/"foo"····/**trailing·*/}bar`
     18 18 │   
+    19 19 │   console.log("${foo." + bar + ".baz}");
+  
+
+```
+
+```
+useTemplate.js:19:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Template literals are preferred over string concatenation.
+  
+    17 │ 1 * /**leading*/"foo"    /**trailing */                   + "bar"
+    18 │ 
+  > 19 │ console.log("${foo." + bar + ".baz}");
+       │             ^^^^^^^^^^^^^^^^^^^^^^^^
+    20 │ 
+  
+  i Suggested fix: Use a TemplateLiteral.
+  
+    17 17 │   1 * /**leading*/"foo"    /**trailing */                   + "bar"
+    18 18 │   
+    19    │ - console.log("${foo."·+·bar·+·".baz}");
+       19 │ + console.log(`\${foo.${bar}.baz}`);
+    20 20 │   
   
 
 ```
