@@ -17,3 +17,4 @@ foo() + " bar";
 1 * /**leading*/"foo"    /**trailing */                   + "bar"
 
 console.log("${foo." + bar + ".baz}");
+console.log("foo: ${bar." + baz + ".bat}");

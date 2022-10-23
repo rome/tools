@@ -343,7 +343,7 @@ fn escape_dollar_sign(unescaped_string: &str) -> String {
     for (i, _) in unescaped_string.match_indices("${") {
         if i == 0 {
             chars.insert(0, '\\');
-        } else if chars[i - 1] == '\\' {
+        } else if chars[i - 1] != '\\' {
             chars.insert(i, '\\');
         }
     }
