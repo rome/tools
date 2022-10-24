@@ -121,9 +121,15 @@ impl BannedType {
     }
 }
 
+pub struct RuleState {
+    banned_type: BannedType,
+    banned_type_range: TextRange,
+    reference_identifier: Option<JsReferenceIdentifier>,
+}
+
 impl Rule for NoBannedTypes {
     type Query = Ast<TsBannedType>;
-    type State = (BannedType, TextRange, Option<JsReferenceIdentifier>);
+    type State = RuleState;
     type Signals = Option<Self::State>;
     type Options = ();
 
@@ -146,7 +152,11 @@ impl Rule for NoBannedTypes {
                             .end(),
                     );
 
-                    return Some((BannedType::EmptyObject, range, None));
+                    return Some(RuleState {
+                        banned_type: BannedType::EmptyObject,
+                        banned_type_range: range,
+                        reference_identifier: None,
+                    });
                 }
             }
             TsBannedType::TsReferenceType(ts_reference_type) => {
@@ -155,11 +165,11 @@ impl Rule for NoBannedTypes {
                 let identifier_token = reference_identifier.value_token().ok()?;
 
                 if let Some(banned_type) = BannedType::from_str(identifier_token.text_trimmed()) {
-                    return Some((
+                    return Some(RuleState {
                         banned_type,
-                        identifier_token.text_trimmed_range(),
-                        Some(reference_identifier.clone()),
-                    ));
+                        banned_type_range: identifier_token.text_trimmed_range(),
+                        reference_identifier: Some(reference_identifier.clone()),
+                    });
                 }
             }
         }
@@ -169,11 +179,15 @@ impl Rule for NoBannedTypes {
 
     fn diagnostic(
         _ctx: &RuleContext<Self>,
-        (banned_type, text_range, ..): &Self::State,
+        RuleState {
+            banned_type,
+            banned_type_range,
+            ..
+        }: &Self::State,
     ) -> Option<RuleDiagnostic> {
         let diagnostic = RuleDiagnostic::new(
             rule_category!(),
-            text_range,
+            banned_type_range,
             markup! {"Don't use '"{banned_type.as_str()}"' as a type. "{banned_type.message()}"."}
                 .to_owned(),
         );
@@ -183,7 +197,11 @@ impl Rule for NoBannedTypes {
 
     fn action(
         ctx: &RuleContext<Self>,
-        (banned_type, .., reference_identifier): &Self::State,
+        RuleState {
+            banned_type,
+            reference_identifier,
+            ..
+        }: &Self::State,
     ) -> Option<JsRuleAction> {
         let mut mutation = ctx.root().begin();
         let new_token = banned_type.fix_with()?;
