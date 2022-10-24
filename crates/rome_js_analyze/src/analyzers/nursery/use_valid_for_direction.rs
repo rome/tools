@@ -1,9 +1,9 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_syntax::{
-    JsAnyAssignment, JsAnyAssignmentPattern, JsAnyExpression, JsAssignmentOperator,
-    JsBinaryOperator, JsForStatement, JsIdentifierAssignment, JsIdentifierExpression,
-    JsPostUpdateOperator, JsUnaryOperator,
+    JsAnyExpression, JsAssignmentOperator, JsBinaryOperator, JsForStatement,
+    JsIdentifierAssignment, JsIdentifierExpression, JsPostUpdateOperator, JsUnaryOperator,
+    TextRange,
 };
 
 declare_rule! {
@@ -46,123 +46,120 @@ declare_rule! {
     }
 }
 
+pub struct RuleRangeState {
+    l_paren_range: TextRange,
+    r_paren_range: TextRange,
+}
+
 impl Rule for UseValidForDirection {
     type Query = Ast<JsForStatement>;
-    type State = ();
+    type State = RuleRangeState;
     type Signals = Option<Self::State>;
     type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let n = ctx.query();
 
-        if let Some(JsAnyExpression::JsBinaryExpression(binary_expr)) = n.test() {
-            let operator = binary_expr.operator().ok()?;
+        let l_paren_range = n.l_paren_token().ok()?.text_trimmed_range();
+        let r_paren_range = n.r_paren_token().ok()?.text_trimmed_range();
+        let rule_state = RuleRangeState {
+            l_paren_range,
+            r_paren_range,
+        };
 
-            let is_less_than = matches!(
-                operator,
-                JsBinaryOperator::LessThan | JsBinaryOperator::LessThanOrEqual
-            );
-            let is_greater_than = matches!(
-                operator,
-                JsBinaryOperator::GreaterThan | JsBinaryOperator::GreaterThanOrEqual
-            );
+        let test = n.test()?;
+        let binary_expr = test.as_js_binary_expression()?;
+        let operator = binary_expr.operator().ok()?;
 
-            if !is_less_than && !is_greater_than {
-                return None;
+        let is_less_than = matches!(
+            operator,
+            JsBinaryOperator::LessThan | JsBinaryOperator::LessThanOrEqual
+        );
+        let is_greater_than = matches!(
+            operator,
+            JsBinaryOperator::GreaterThan | JsBinaryOperator::GreaterThanOrEqual
+        );
+
+        if !is_less_than && !is_greater_than {
+            return None;
+        }
+
+        match n.update()? {
+            JsAnyExpression::JsPostUpdateExpression(update_expr) => {
+                let binary_expr_left = binary_expr.left().ok()?;
+                let counter_ident = binary_expr_left.as_js_identifier_expression()?;
+                let update_expr_operand = update_expr.operand().ok()?;
+                let update_ident = update_expr_operand.as_js_identifier_assignment()?;
+
+                if !is_identifier_same(counter_ident, update_ident)? {
+                    return None;
+                }
+
+                if update_expr.operator().ok()? == JsPostUpdateOperator::Increment
+                    && is_greater_than
+                {
+                    return Some(rule_state);
+                }
+
+                if update_expr.operator().ok()? == JsPostUpdateOperator::Decrement && is_less_than {
+                    return Some(rule_state);
+                }
             }
+            JsAnyExpression::JsAssignmentExpression(assignment_expr) => {
+                let binary_expr_left = binary_expr.left().ok()?;
+                let counter_ident = binary_expr_left.as_js_identifier_expression()?;
+                let assignment_expr_left = assignment_expr.left().ok()?;
+                let update_ident = assignment_expr_left
+                    .as_js_any_assignment()?
+                    .as_js_identifier_assignment()?;
 
-            match n.update() {
-                Some(JsAnyExpression::JsPostUpdateExpression(update_expr)) => {
-                    if let (
-                        Ok(JsAnyExpression::JsIdentifierExpression(counter_ident)),
-                        Ok(JsAnyAssignment::JsIdentifierAssignment(update_ident)),
-                    ) = (binary_expr.left(), update_expr.operand())
+                if !is_identifier_same(&counter_ident, &update_ident)? {
+                    return None;
+                }
+
+                if let JsAnyExpression::JsIdentifierExpression(_) = assignment_expr.right().ok()? {
+                    return None;
+                }
+
+                if assignment_expr.operator().ok()? == JsAssignmentOperator::AddAssign {
+                    if is_greater_than {
+                        return Some(rule_state);
+                    }
+
+                    if let JsAnyExpression::JsUnaryExpression(unary_expr) =
+                        assignment_expr.right().ok()?
                     {
-                        if is_identifier_same(counter_ident, update_ident) != Some(true) {
-                            return None;
-                        }
-
-                        if update_expr.operator() == Ok(JsPostUpdateOperator::Increment)
-                            && is_greater_than
-                        {
-                            return Some(());
-                        }
-
-                        if update_expr.operator() == Ok(JsPostUpdateOperator::Decrement)
-                            && is_less_than
-                        {
-                            return Some(());
+                        if unary_expr.operator().ok()? == JsUnaryOperator::Minus && is_less_than {
+                            return Some(rule_state);
                         }
                     }
                 }
-                Some(JsAnyExpression::JsAssignmentExpression(assignment_expr)) => {
-                    if let (
-                        Ok(JsAnyExpression::JsIdentifierExpression(counter_ident)),
-                        Ok(JsAnyAssignmentPattern::JsAnyAssignment(
-                            JsAnyAssignment::JsIdentifierAssignment(update_ident),
-                        )),
-                    ) = (binary_expr.left(), assignment_expr.left())
+
+                if assignment_expr.operator().ok()? == JsAssignmentOperator::SubtractAssign {
+                    if is_less_than {
+                        return Some(rule_state);
+                    }
+
+                    if let JsAnyExpression::JsUnaryExpression(unary_expr) =
+                        assignment_expr.right().ok()?
                     {
-                        if is_identifier_same(counter_ident, update_ident) != Some(true) {
-                            return None;
-                        }
-
-                        if let Ok(JsAnyExpression::JsIdentifierExpression(_)) =
-                            assignment_expr.right()
+                        if unary_expr.operator().ok()? == JsUnaryOperator::Minus && is_greater_than
                         {
-                            return None;
-                        }
-
-                        if assignment_expr.operator() == Ok(JsAssignmentOperator::AddAssign) {
-                            if is_greater_than {
-                                return Some(());
-                            }
-
-                            if let Ok(JsAnyExpression::JsUnaryExpression(unary_expr)) =
-                                assignment_expr.right()
-                            {
-                                if unary_expr.operator() == Ok(JsUnaryOperator::Minus)
-                                    && is_less_than
-                                {
-                                    return Some(());
-                                }
-                            }
-                        }
-
-                        if assignment_expr.operator() == Ok(JsAssignmentOperator::SubtractAssign) {
-                            if is_less_than {
-                                return Some(());
-                            }
-
-                            if let Ok(JsAnyExpression::JsUnaryExpression(unary_expr)) =
-                                assignment_expr.right()
-                            {
-                                if unary_expr.operator() == Ok(JsUnaryOperator::Minus)
-                                    && is_greater_than
-                                {
-                                    return Some(());
-                                }
-                            }
+                            return Some(rule_state);
                         }
                     }
                 }
-                _ => return None,
             }
+            _ => return None,
         }
 
         None
     }
 
-    fn diagnostic(ctx: &RuleContext<Self>, _state: &Self::State) -> Option<RuleDiagnostic> {
-        let node = ctx.query();
-
-        // SAFETY: These tokens have been checked for errors in `run` already
-        let for_range = node.for_token().unwrap().text_trimmed_range();
-        let r_paren_range = node.r_paren_token().unwrap().text_trimmed_range();
-
+    fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         Some(RuleDiagnostic::new(
             rule_category!(),
-            for_range.cover(r_paren_range),
+            state.l_paren_range.cover(state.r_paren_range),
             markup! {
                 "The update clause in this loop moves the variable in the wrong direction."
             },
@@ -171,8 +168,8 @@ impl Rule for UseValidForDirection {
 }
 
 fn is_identifier_same(
-    counter_ident: JsIdentifierExpression,
-    update_ident: JsIdentifierAssignment,
+    counter_ident: &JsIdentifierExpression,
+    update_ident: &JsIdentifierAssignment,
 ) -> Option<bool> {
     Some(
         counter_ident

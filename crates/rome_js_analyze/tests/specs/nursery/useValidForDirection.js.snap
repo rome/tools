@@ -47,13 +47,13 @@ for (var i = 0; i != 10; i += 1) {}
 
 # Diagnostics
 ```
-useValidForDirection.js:2:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useValidForDirection.js:2:5 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The update clause in this loop moves the variable in the wrong direction.
   
     1 │ // invalid
   > 2 │ for (var i = 0; i < 10; i--) {}
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^
     3 │ for (var i = 0; i <= 10; i--) {}
     4 │ for (var i = 10; i > 10; i++) {}
   
@@ -61,14 +61,14 @@ useValidForDirection.js:2:1 lint/nursery/useValidForDirection ━━━━━━
 ```
 
 ```
-useValidForDirection.js:3:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useValidForDirection.js:3:5 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The update clause in this loop moves the variable in the wrong direction.
   
     1 │ // invalid
     2 │ for (var i = 0; i < 10; i--) {}
   > 3 │ for (var i = 0; i <= 10; i--) {}
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^
     4 │ for (var i = 10; i > 10; i++) {}
     5 │ for (var i = 10; i >= 0; i++) {}
   
@@ -76,14 +76,14 @@ useValidForDirection.js:3:1 lint/nursery/useValidForDirection ━━━━━━
 ```
 
 ```
-useValidForDirection.js:4:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useValidForDirection.js:4:5 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The update clause in this loop moves the variable in the wrong direction.
   
     2 │ for (var i = 0; i < 10; i--) {}
     3 │ for (var i = 0; i <= 10; i--) {}
   > 4 │ for (var i = 10; i > 10; i++) {}
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^
     5 │ for (var i = 10; i >= 0; i++) {}
     6 │ for (var i = 0; i < 10; i -= 1) {}
   
@@ -91,14 +91,14 @@ useValidForDirection.js:4:1 lint/nursery/useValidForDirection ━━━━━━
 ```
 
 ```
-useValidForDirection.js:5:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useValidForDirection.js:5:5 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The update clause in this loop moves the variable in the wrong direction.
   
     3 │ for (var i = 0; i <= 10; i--) {}
     4 │ for (var i = 10; i > 10; i++) {}
   > 5 │ for (var i = 10; i >= 0; i++) {}
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^
     6 │ for (var i = 0; i < 10; i -= 1) {}
     7 │ for (var i = 0; i <= 10; i -= 1) {}
   
@@ -106,14 +106,14 @@ useValidForDirection.js:5:1 lint/nursery/useValidForDirection ━━━━━━
 ```
 
 ```
-useValidForDirection.js:6:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useValidForDirection.js:6:5 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The update clause in this loop moves the variable in the wrong direction.
   
     4 │ for (var i = 10; i > 10; i++) {}
     5 │ for (var i = 10; i >= 0; i++) {}
   > 6 │ for (var i = 0; i < 10; i -= 1) {}
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
     7 │ for (var i = 0; i <= 10; i -= 1) {}
     8 │ for (var i = 10; i > 10; i += 1) {}
   
@@ -121,14 +121,14 @@ useValidForDirection.js:6:1 lint/nursery/useValidForDirection ━━━━━━
 ```
 
 ```
-useValidForDirection.js:7:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useValidForDirection.js:7:5 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The update clause in this loop moves the variable in the wrong direction.
   
     5 │ for (var i = 10; i >= 0; i++) {}
     6 │ for (var i = 0; i < 10; i -= 1) {}
   > 7 │ for (var i = 0; i <= 10; i -= 1) {}
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     8 │ for (var i = 10; i > 10; i += 1) {}
     9 │ for (var i = 10; i >= 0; i += 1) {}
   
@@ -136,14 +136,14 @@ useValidForDirection.js:7:1 lint/nursery/useValidForDirection ━━━━━━
 ```
 
 ```
-useValidForDirection.js:8:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useValidForDirection.js:8:5 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The update clause in this loop moves the variable in the wrong direction.
   
      6 │ for (var i = 0; i < 10; i -= 1) {}
      7 │ for (var i = 0; i <= 10; i -= 1) {}
    > 8 │ for (var i = 10; i > 10; i += 1) {}
-       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
      9 │ for (var i = 10; i >= 0; i += 1) {}
     10 │ for (var i = 0; i < 10; i += -1) {}
   
@@ -151,14 +151,14 @@ useValidForDirection.js:8:1 lint/nursery/useValidForDirection ━━━━━━
 ```
 
 ```
-useValidForDirection.js:9:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useValidForDirection.js:9:5 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The update clause in this loop moves the variable in the wrong direction.
   
      7 │ for (var i = 0; i <= 10; i -= 1) {}
      8 │ for (var i = 10; i > 10; i += 1) {}
    > 9 │ for (var i = 10; i >= 0; i += 1) {}
-       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     10 │ for (var i = 0; i < 10; i += -1) {}
     11 │ for (var i = 0; i <= 10; i += -1) {}
   
@@ -166,14 +166,14 @@ useValidForDirection.js:9:1 lint/nursery/useValidForDirection ━━━━━━
 ```
 
 ```
-useValidForDirection.js:10:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useValidForDirection.js:10:5 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The update clause in this loop moves the variable in the wrong direction.
   
      8 │ for (var i = 10; i > 10; i += 1) {}
      9 │ for (var i = 10; i >= 0; i += 1) {}
   > 10 │ for (var i = 0; i < 10; i += -1) {}
-       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     11 │ for (var i = 0; i <= 10; i += -1) {}
     12 │ for (var i = 10; i > 10; i -= -1) {}
   
@@ -181,14 +181,14 @@ useValidForDirection.js:10:1 lint/nursery/useValidForDirection ━━━━━�
 ```
 
 ```
-useValidForDirection.js:11:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useValidForDirection.js:11:5 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The update clause in this loop moves the variable in the wrong direction.
   
      9 │ for (var i = 10; i >= 0; i += 1) {}
     10 │ for (var i = 0; i < 10; i += -1) {}
   > 11 │ for (var i = 0; i <= 10; i += -1) {}
-       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     12 │ for (var i = 10; i > 10; i -= -1) {}
     13 │ for (var i = 10; i >= 0; i -= -1) {}
   
@@ -196,14 +196,14 @@ useValidForDirection.js:11:1 lint/nursery/useValidForDirection ━━━━━�
 ```
 
 ```
-useValidForDirection.js:12:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useValidForDirection.js:12:5 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The update clause in this loop moves the variable in the wrong direction.
   
     10 │ for (var i = 0; i < 10; i += -1) {}
     11 │ for (var i = 0; i <= 10; i += -1) {}
   > 12 │ for (var i = 10; i > 10; i -= -1) {}
-       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     13 │ for (var i = 10; i >= 0; i -= -1) {}
     14 │ 
   
@@ -211,14 +211,14 @@ useValidForDirection.js:12:1 lint/nursery/useValidForDirection ━━━━━�
 ```
 
 ```
-useValidForDirection.js:13:1 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useValidForDirection.js:13:5 lint/nursery/useValidForDirection ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! The update clause in this loop moves the variable in the wrong direction.
   
     11 │ for (var i = 0; i <= 10; i += -1) {}
     12 │ for (var i = 10; i > 10; i -= -1) {}
   > 13 │ for (var i = 10; i >= 0; i -= -1) {}
-       │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     14 │ 
     15 │ // valid
   
