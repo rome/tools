@@ -118,7 +118,7 @@ export interface Rules {
 }
 export type QuoteProperties = "asNeeded" | "preserve";
 export type QuoteStyle = "double" | "single";
-export type TrailingComma = "all" | "es5";
+export type TrailingComma = "all" | "es5" | "none";
 /**
  * A list of rules that belong to this group
  */

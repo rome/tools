@@ -912,7 +912,8 @@
       "type": "string",
       "enum": [
         "all",
-        "es5"
+        "es5",
+        "none"
       ]
     }
   }
