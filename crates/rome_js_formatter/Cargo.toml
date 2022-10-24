@@ -10,7 +10,6 @@ license = "MIT"
 
 [dependencies]
 cfg-if = "1.0.0"
-rome_console = { path = "../rome_console" }
 rome_js_syntax = { path = "../rome_js_syntax" }
 rome_js_factory = { path = "../rome_js_factory" }
 rome_formatter = { path = "../rome_formatter" }
@@ -21,6 +20,7 @@ serde = { version = "1.0.136", features = ["derive"], optional = true }
 schemars = { version = "0.8.10", optional = true }
 
 [dev-dependencies]
+rome_console = { path = "../rome_console" }
 rome_fs = { path = "../rome_fs" }
 rome_service = { path = "../rome_service" }
 rome_js_parser = { path = "../rome_js_parser" }
