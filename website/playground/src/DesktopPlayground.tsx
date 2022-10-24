@@ -7,9 +7,12 @@ import { javascript } from "@codemirror/lang-javascript";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { SettingsMenu } from "./SettingsMenu";
 import TreeView from "./TreeView";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import MermaidGraph from "./MermaidGraph";
 import { EditorSelection } from "@codemirror/state";
+
+const romeAstCodeMirrorExtension = [romeAst()];
+const romeFormatterIrCodeMirrorExtension = [RomeFormatterIr()];
 
 export default function DesktopPlayground({
 	setPlaygroundState,
@@ -28,15 +31,16 @@ export default function DesktopPlayground({
 	const [clipboardStatus, setClipboardStatus] = useState<
 		"success" | "failed" | "normal"
 	>("normal");
-	const extensions = [
-		javascript({
-			jsx: isJsx,
-			typescript: isTypeScript,
-		}),
-	];
+	const extensions = useMemo(
+		() => [
+			javascript({
+				jsx: isJsx,
+				typescript: isTypeScript,
+			}),
+		],
+		[isJsx, isTypeScript],
+	);
 
-	const romeAstCodeMirrorExtension = [romeAst()];
-	const romeFormatterIrCodeMirrorExtension = [RomeFormatterIr()];
 	const romeAstSyntacticDataRef = useRef<RomeAstSyntacticData | null>(null);
 
 	const astPanelCodeMirrorRef = useRef<null | ReactCodeMirrorRef>(null);
