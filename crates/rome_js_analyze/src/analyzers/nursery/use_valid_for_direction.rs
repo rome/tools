@@ -117,37 +117,40 @@ impl Rule for UseValidForDirection {
                     return None;
                 }
 
-                if let JsAnyExpression::JsIdentifierExpression(_) = assignment_expr.right().ok()? {
+                if assignment_expr
+                    .right()
+                    .ok()?
+                    .as_js_identifier_expression()
+                    .is_some()
+                {
                     return None;
                 }
 
-                if assignment_expr.operator().ok()? == JsAssignmentOperator::AddAssign {
-                    if is_greater_than {
-                        return Some(rule_state);
-                    }
+                match assignment_expr.operator().ok()? {
+                    JsAssignmentOperator::AddAssign => {
+                        if is_greater_than {
+                            return Some(rule_state);
+                        }
 
-                    if let JsAnyExpression::JsUnaryExpression(unary_expr) =
-                        assignment_expr.right().ok()?
-                    {
-                        if unary_expr.operator().ok()? == JsUnaryOperator::Minus && is_less_than {
+                        let assignment_expr_right = assignment_expr.right().ok()?;
+                        let unary_expr = assignment_expr_right.as_js_unary_expression()?;
+                        if is_less_than && unary_expr.operator().ok()? == JsUnaryOperator::Minus {
                             return Some(rule_state);
                         }
                     }
-                }
+                    JsAssignmentOperator::SubtractAssign => {
+                        if is_less_than {
+                            return Some(rule_state);
+                        }
 
-                if assignment_expr.operator().ok()? == JsAssignmentOperator::SubtractAssign {
-                    if is_less_than {
-                        return Some(rule_state);
-                    }
-
-                    if let JsAnyExpression::JsUnaryExpression(unary_expr) =
-                        assignment_expr.right().ok()?
-                    {
-                        if unary_expr.operator().ok()? == JsUnaryOperator::Minus && is_greater_than
+                        let assignment_expr_right = assignment_expr.right().ok()?;
+                        let unary_expr = assignment_expr_right.as_js_unary_expression()?;
+                        if is_greater_than && unary_expr.operator().ok()? == JsUnaryOperator::Minus
                         {
                             return Some(rule_state);
                         }
                     }
+                    _ => return None,
                 }
             }
             _ => return None,
