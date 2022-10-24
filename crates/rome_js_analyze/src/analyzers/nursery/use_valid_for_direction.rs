@@ -113,7 +113,7 @@ impl Rule for UseValidForDirection {
                     .as_js_any_assignment()?
                     .as_js_identifier_assignment()?;
 
-                if !is_identifier_same(&counter_ident, &update_ident)? {
+                if !is_identifier_same(counter_ident, update_ident)? {
                     return None;
                 }
 
