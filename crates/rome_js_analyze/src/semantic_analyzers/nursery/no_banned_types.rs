@@ -102,12 +102,12 @@ impl BannedType {
 			| Self::Boolean
 			| Self::Number
 			| Self::String
-			| Self::Symbol => "Use lowercase primitives for consistency",
+			| Self::Symbol => "Use lowercase primitives for consistency.",
 			Self::Function =>
-				"Prefer explicitly define the function shape. This type accepts any function-like value, which can be a common source of bugs",
+				"Prefer explicitly define the function shape. This type accepts any function-like value, which can be a common source of bugs.",
 			Self::Object =>
-				"Prefer explicitly define the object shape. This type means \"any non-nullish value\", which is slightly better than 'unknown', but it's still a broad type",
-			Self::EmptyObject => "Prefer explicitly define the object shape. '{}' means \"any non-nullish value\"",
+				"Prefer explicitly define the object shape. This type means \"any non-nullish value\", which is slightly better than 'unknown', but it's still a broad type.",
+			Self::EmptyObject => "Prefer explicitly define the object shape. '{}' means \"any non-nullish value\".",
 		}
     }
 
@@ -192,9 +192,9 @@ impl Rule for NoBannedTypes {
         let diagnostic = RuleDiagnostic::new(
             rule_category!(),
             banned_type_range,
-            markup! {"Don't use '"{banned_type.as_str()}"' as a type. "{banned_type.message()}"."}
-                .to_owned(),
-        );
+            markup! {"Don't use '"{banned_type.as_str()}"' as a type."}.to_owned(),
+        )
+        .footer_note(markup! { {banned_type.message()} }.to_owned());
 
         Some(diagnostic)
     }
