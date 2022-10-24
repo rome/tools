@@ -4,9 +4,9 @@ use crate::{
     JsAnyExpression, JsAnyLiteralExpression, JsArrayExpression, JsArrayHole,
     JsAssignmentExpression, JsBinaryExpression, JsCallExpression, JsComputedMemberExpression,
     JsIdentifierExpression, JsLiteralMemberName, JsLogicalExpression, JsNumberLiteralExpression,
-    JsObjectExpression, JsReferenceIdentifier, JsRegexLiteralExpression, JsStaticMemberExpression,
-    JsStringLiteralExpression, JsSyntaxKind, JsSyntaxToken, JsTemplate, JsUnaryExpression,
-    OperatorPrecedence, T,
+    JsObjectExpression, JsPostUpdateExpression, JsReferenceIdentifier, JsRegexLiteralExpression,
+    JsStaticMemberExpression, JsStringLiteralExpression, JsSyntaxKind, JsSyntaxToken, JsTemplate,
+    JsUnaryExpression, OperatorPrecedence, T,
 };
 use crate::{JsPreUpdateExpression, JsSyntaxKind::*};
 use core::iter;
@@ -391,6 +391,32 @@ impl JsPreUpdateExpression {
         Ok(match operator.kind() {
             T![++] => JsPreUpdateOperator::Increment,
             T![--] => JsPreUpdateOperator::Decrement,
+            _ => unreachable!(),
+        })
+    }
+}
+
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
+pub enum JsPostUpdateOperator {
+    /// `++`
+    Increment,
+    /// `--`
+    Decrement,
+}
+
+impl JsPostUpdateOperator {
+    pub const fn precedence(&self) -> OperatorPrecedence {
+        OperatorPrecedence::Unary
+    }
+}
+
+impl JsPostUpdateExpression {
+    pub fn operator(&self) -> SyntaxResult<JsPostUpdateOperator> {
+        let operator = self.operator_token()?;
+
+        Ok(match operator.kind() {
+            T![++] => JsPostUpdateOperator::Increment,
+            T![--] => JsPostUpdateOperator::Decrement,
             _ => unreachable!(),
         })
     }

@@ -412,10 +412,11 @@ struct NurserySchema {
     use_key_with_mouse_events: Option<RuleConfiguration>,
     use_optional_chain: Option<RuleConfiguration>,
     use_valid_anchor: Option<RuleConfiguration>,
+    use_valid_for_direction: Option<RuleConfiguration>,
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 26] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 27] = [
         "noArrayIndexKey",
         "noAutofocus",
         "noChildrenProp",
@@ -442,6 +443,7 @@ impl Nursery {
         "useKeyWithMouseEvents",
         "useOptionalChain",
         "useValidAnchor",
+        "useValidForDirection",
     ];
     const RECOMMENDED_RULES: [&'static str; 0] = [];
     const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 0] = [];
