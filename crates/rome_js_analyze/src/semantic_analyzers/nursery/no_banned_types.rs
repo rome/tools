@@ -11,7 +11,11 @@ use rome_rowan::{declare_node_union, AstNodeList, BatchMutationExt};
 use crate::JsRuleAction;
 
 declare_rule! {
-    /// Disallow certain types
+    /// Disallow certain types.
+    ///
+    /// Some built-in types have aliases, while some types are considered dangerous or harmful. It's often a good idea to ban certain types to help with consistency and safety.
+    ///
+    /// This rule bans specific types and can suggest alternatives. Note that it doesn't ban the corresponding runtime objects from being used.
     ///
     /// ## Examples
     ///

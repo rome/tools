@@ -271,7 +271,7 @@ Avoid the <code>autoFocus</code> attribute
 <h3 data-toc-exclude id="noBannedTypes">
 	<a href="/docs/lint/rules/noBannedTypes">noBannedTypes</a>
 </h3>
-Disallow certain types
+Disallow certain types.
 </section>
 <section class="rule">
 <h3 data-toc-exclude id="noChildrenProp">
