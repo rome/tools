@@ -172,6 +172,13 @@ pub const CONFIG_FORMATTER_IGNORED_FILES: &str = r#"{
 }
 "#;
 
+pub const CONFIG_FORMATTER_IGNORED_DIRECTORIES: &str = r#"{
+  "formatter": {
+    "ignore": ["scripts/*"]
+  }
+}
+"#;
+
 pub const CONFIG_LINTER_IGNORED_FILES: &str = r#"{
   "linter": {
     "enabled": true,

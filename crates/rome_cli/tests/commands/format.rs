@@ -1,6 +1,6 @@
 use crate::configs::{
-    CONFIG_DISABLED_FORMATTER, CONFIG_FORMAT, CONFIG_FORMATTER_IGNORED_FILES, CONFIG_ISSUE_3175_1,
-    CONFIG_ISSUE_3175_2,
+    CONFIG_DISABLED_FORMATTER, CONFIG_FORMAT, CONFIG_FORMATTER_IGNORED_DIRECTORIES,
+    CONFIG_FORMATTER_IGNORED_FILES, CONFIG_ISSUE_3175_1, CONFIG_ISSUE_3175_2,
 };
 use crate::snap_test::{markup_to_string, SnapshotPayload};
 use crate::{
@@ -128,6 +128,61 @@ fn write() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "formatter_write",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn write_only_files_in_correct_base() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_to_format = Path::new("src/format.js");
+    fs.insert(
+        file_to_format.into(),
+        <&str>::clone(&UNFORMATTED).as_bytes(),
+    );
+
+    let file_to_not_format = Path::new("scripts/format.js");
+    fs.insert(file_to_not_format.into(), UNFORMATTED.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--write"),
+            OsString::from("./src"),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(file_to_format)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, FORMATTED, "we test the file is formatted");
+    drop(file);
+    let mut file = fs
+        .open(file_to_not_format)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, UNFORMATTED, "we test the file is not formatted");
+    drop(file);
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "write_only_files_in_correct_base",
         fs,
         console,
         result,
@@ -912,6 +967,64 @@ fn does_not_format_ignored_files() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "does_not_format_ignored_files",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn does_not_format_ignored_directories() {
+    let mut console = BufferConsole::default();
+    let mut fs = MemoryFileSystem::default();
+    let file_path = Path::new("rome.json");
+    fs.insert(
+        file_path.into(),
+        CONFIG_FORMATTER_IGNORED_DIRECTORIES.as_bytes(),
+    );
+
+    let ignored_file = Path::new("scripts/test.js");
+    fs.insert(ignored_file.into(), <&str>::clone(&UNFORMATTED).as_bytes());
+
+    let file_to_format = Path::new("src/test.js");
+    fs.insert(file_to_format.into(), UNFORMATTED.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("./"),
+            OsString::from("--write"),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(ignored_file)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, UNFORMATTED, "we test the file is not formatted");
+    drop(file);
+    let mut file = fs
+        .open(file_to_format)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, FORMATTED, "we test the file is formatted");
+    drop(file);
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "does_not_format_ignored_directories",
         fs,
         console,
         result,

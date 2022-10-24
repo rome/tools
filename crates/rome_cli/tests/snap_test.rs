@@ -3,7 +3,7 @@ use rome_console::fmt::{Formatter, Termcolor};
 use rome_console::{markup, BufferConsole, Markup};
 use rome_diagnostics::termcolor::NoColor;
 use rome_fs::{FileSystemExt, MemoryFileSystem};
-use std::collections::HashMap;
+use std::collections::BTreeMap;
 use std::env::current_exe;
 use std::fmt::Write as _;
 use std::path::PathBuf;
@@ -19,7 +19,7 @@ pub(crate) struct CliSnapshot {
     /// the configuration, if set
     pub configuration: Option<String>,
     /// file name -> content
-    pub files: HashMap<String, String>,
+    pub files: BTreeMap<String, String>,
     /// messages written in console
     pub messages: Vec<String>,
     /// possible termination error of the CLI
@@ -31,7 +31,7 @@ impl CliSnapshot {
         Self {
             in_messages: InMessages::default(),
             configuration: None,
-            files: HashMap::default(),
+            files: BTreeMap::default(),
             messages: Vec::new(),
             termination: result.err(),
         }
@@ -138,13 +138,18 @@ impl From<SnapshotPayload<'_>> for CliSnapshot {
             }
         }
 
-        for (file, entry) in fs.files() {
-            let content = entry.lock();
-            let content = std::str::from_utf8(content.as_slice()).unwrap();
+        let files: Vec<_> = fs
+            .files()
+            .into_iter()
+            .map(|(file, entry)| {
+                let content = entry.lock();
+                let content = std::str::from_utf8(content.as_slice()).unwrap();
+                (file.to_str().unwrap().to_string(), String::from(content))
+            })
+            .collect();
 
-            cli_snapshot
-                .files
-                .insert(file.to_str().unwrap().to_string(), String::from(content));
+        for (file, content) in files {
+            cli_snapshot.files.insert(file, content);
         }
 
         let in_buffer = &console.in_buffer;
