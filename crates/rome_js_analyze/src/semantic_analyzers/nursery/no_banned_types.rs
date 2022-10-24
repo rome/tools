@@ -98,15 +98,15 @@ impl BannedType {
     /// Retrieves a diagnostic message from a [BannedType]
     fn message(&self) -> &str {
         match *self {
-			Self::BigInt => "Use lowercase primitives for consistency",
-			Self::Boolean => "Use lowercase primitives for consistency",
+			| Self::BigInt
+			| Self::Boolean
+			| Self::Number
+			| Self::String
+			| Self::Symbol => "Use lowercase primitives for consistency",
 			Self::Function =>
 				"Prefer explicitly define the function shape. This type accepts any function-like value, which can be a common source of bugs",
-			Self::Number => "Use lowercase primitives for consistency",
 			Self::Object =>
 				"Prefer explicitly define the object shape. This type means \"any non-nullish value\", which is slightly better than 'unknown', but it's still a broad type",
-			Self::String => "Use lowercase primitives for consistency",
-			Self::Symbol => "Use lowercase primitives for consistency",
 			Self::EmptyObject => "Prefer explicitly define the object shape. '{}' means \"any non-nullish value\"",
 		}
     }
