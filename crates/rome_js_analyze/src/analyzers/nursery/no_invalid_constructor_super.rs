@@ -157,7 +157,7 @@ fn is_valid_constructor(expression: JsAnyExpression) -> Option<bool> {
         | JsAnyExpression::JsYieldExpression(_)
         | JsAnyExpression::JsNewExpression(_)
         | JsAnyExpression::NewTarget(_)
-        | JsAnyExpression::JsClassExpression(_) => return Some(true),
+        | JsAnyExpression::JsClassExpression(_) => Some(true),
         JsAnyExpression::JsIdentifierExpression(identifier) => {
             let name = identifier.name().ok()?;
             return Some(name.value_token().ok()?.text_trimmed() != "undefined");
@@ -184,18 +184,18 @@ fn is_valid_constructor(expression: JsAnyExpression) -> Option<bool> {
                 return is_valid_constructor(expression.right().ok()?);
             }
 
-            return is_valid_constructor(expression.left().ok()?)
-                .or_else(|| is_valid_constructor(expression.right().ok()?));
+            is_valid_constructor(expression.left().ok()?)
+                .or_else(|| is_valid_constructor(expression.right().ok()?))
         }
         JsAnyExpression::JsConditionalExpression(conditional_expression) => {
-            return is_valid_constructor(conditional_expression.alternate().ok()?)
+            is_valid_constructor(conditional_expression.alternate().ok()?)
                 .or_else(|| is_valid_constructor(conditional_expression.consequent().ok()?))
         }
         JsAnyExpression::JsSequenceExpression(sequence_expression) => {
             is_valid_constructor(sequence_expression.right().ok()?)
         }
         JsAnyExpression::JsParenthesizedExpression(expression) => {
-            return is_valid_constructor(expression.expression().ok()?)
+            is_valid_constructor(expression.expression().ok()?)
         }
         _ => Some(false),
     }
