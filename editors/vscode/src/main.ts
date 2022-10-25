@@ -31,6 +31,12 @@ export async function activate(context: ExtensionContext) {
 	const command =
 		process.env.DEBUG_SERVER_PATH || (await getServerPath(context));
 
+	if (process.env.DEBUG_SERVER_PATH) {
+		window.showInformationMessage(
+			`Rome DEBUG_SERVER_PATH detected: ${command}`,
+		);
+	}
+
 	if (!command) {
 		await window.showErrorMessage(
 			"The Rome extensions doesn't ship with prebuilt binaries for your platform yet. " +

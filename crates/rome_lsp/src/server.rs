@@ -91,6 +91,63 @@ impl LSPServer {
 
         Ok(RageResult { entries })
     }
+
+    async fn register_capability(&self, registration: Registration) {
+        let method = registration.method.clone();
+
+        if let Err(e) = self
+            .session
+            .client
+            .register_capability(vec![registration])
+            .await
+        {
+            error!("Error registering {:?} capability: {}", method, e);
+        }
+    }
+
+    async fn unregister_capability(&self, unregistration: Unregistration) {
+        let method = unregistration.method.clone();
+
+        if let Err(e) = self
+            .session
+            .client
+            .unregister_capability(vec![unregistration])
+            .await
+        {
+            error!("Error unregistering {:?} capability: {}", method, e);
+        }
+    }
+
+    async fn setup_capabilities(&self) {
+        let rename = {
+            let config = self.session.config.read().ok();
+            config.and_then(|x| x.settings.rename).unwrap_or(false)
+        };
+
+        if self.session.can_register_did_change_configuration() {
+            self.register_capability(Registration {
+                id: "workspace/didChangeConfiguration".to_string(),
+                method: "workspace/didChangeConfiguration".to_string(),
+                register_options: None,
+            })
+            .await;
+        }
+
+        if rename {
+            self.register_capability(Registration {
+                id: "textDocument/rename".to_string(),
+                method: "textDocument/rename".to_string(),
+                register_options: None,
+            })
+            .await;
+        } else {
+            self.unregister_capability(Unregistration {
+                id: "textDocument/rename".to_string(),
+                method: "textDocument/rename".to_string(),
+            })
+            .await;
+        }
+    }
 }
 
 #[tower_lsp::async_trait]
@@ -143,21 +200,7 @@ impl LanguageServer for LSPServer {
             .log_message(MessageType::INFO, msg)
             .await;
 
-        let mut registrations = Vec::new();
-
-        if self.session.can_register_did_change_configuration() {
-            registrations.push(Registration {
-                id: "workspace/didChangeConfiguration".to_string(),
-                method: "workspace/didChangeConfiguration".to_string(),
-                register_options: None,
-            });
-        }
-
-        if !registrations.is_empty() {
-            if let Err(e) = self.session.client.register_capability(registrations).await {
-                error!("Error registering didChangeConfiguration capability: {}", e);
-            }
-        }
+        self.setup_capabilities().await;
 
         // Diagnostics are disabled by default, so update them after fetching workspace config
         self.session.update_all_diagnostics().await;
@@ -165,6 +208,31 @@ impl LanguageServer for LSPServer {
 
     async fn shutdown(&self) -> LspResult<()> {
         Ok(())
+    }
+
+    #[tracing::instrument(level = "trace", skip(self))]
+    async fn did_change_configuration(&self, params: DidChangeConfigurationParams) {
+        let _ = params;
+        self.session.fetch_client_configuration().await;
+        self.setup_capabilities().await;
+    }
+
+    async fn did_open(&self, params: DidOpenTextDocumentParams) {
+        handlers::text_document::did_open(&self.session, params)
+            .await
+            .ok();
+    }
+
+    async fn did_change(&self, params: DidChangeTextDocumentParams) {
+        handlers::text_document::did_change(&self.session, params)
+            .await
+            .ok();
+    }
+
+    async fn did_close(&self, params: DidCloseTextDocumentParams) {
+        handlers::text_document::did_close(&self.session, params)
+            .await
+            .ok();
     }
 
     async fn code_action(&self, params: CodeActionParams) -> LspResult<Option<CodeActionResponse>> {
@@ -192,32 +260,20 @@ impl LanguageServer for LSPServer {
         handlers::formatting::format_on_type(&self.session, params).map_err(into_lsp_error)
     }
 
-    #[tracing::instrument(level = "trace", skip(self))]
-    async fn did_change_configuration(&self, params: DidChangeConfigurationParams) {
-        let _ = params;
-        self.session.fetch_client_configuration().await;
-    }
-
-    async fn did_open(&self, params: DidOpenTextDocumentParams) {
-        handlers::text_document::did_open(&self.session, params)
-            .await
-            .ok();
-    }
-
-    async fn did_change(&self, params: DidChangeTextDocumentParams) {
-        handlers::text_document::did_change(&self.session, params)
-            .await
-            .ok();
-    }
-
-    async fn did_close(&self, params: DidCloseTextDocumentParams) {
-        handlers::text_document::did_close(&self.session, params)
-            .await
-            .ok();
-    }
-
     async fn rename(&self, params: RenameParams) -> LspResult<Option<WorkspaceEdit>> {
-        handlers::rename::rename(&self.session, params).map_err(into_lsp_error)
+        let rename_enabled = self
+            .session
+            .config
+            .read()
+            .ok()
+            .and_then(|config| config.settings.rename)
+            .unwrap_or(false);
+
+        if rename_enabled {
+            handlers::rename::rename(&self.session, params).map_err(into_lsp_error)
+        } else {
+            Ok(None)
+        }
     }
 }
 
