@@ -20,6 +20,7 @@ mod react;
 mod registry;
 mod semantic_analyzers;
 mod semantic_services;
+mod syntax;
 pub mod utils;
 
 pub use crate::registry::visit_registry;

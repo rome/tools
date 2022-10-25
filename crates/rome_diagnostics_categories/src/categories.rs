@@ -70,6 +70,7 @@ define_dategories! {
     "lint/style/noShoutyConstants": "https://rome.tools/docs/lint/rules/noShoutyConstants",
     "lint/style/useSelfClosingElements": "https://rome.tools/docs/lint/rules/useSelfClosingElements",
     "lint/style/useShorthandArrayType": "https://rome.tools/docs/lint/rules/useShorthandArrayType",
+    "lint/nursery/noSuperWithoutExtends": "https://rome.tools/docs/lint/rules/noSuperWithoutExtends",
     ;
     // General categories
     "files/missingHandler",

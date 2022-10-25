@@ -343,6 +343,7 @@ export type Category =
 	| "lint/style/noShoutyConstants"
 	| "lint/style/useSelfClosingElements"
 	| "lint/style/useShorthandArrayType"
+	| "lint/nursery/noSuperWithoutExtends"
 	| "files/missingHandler"
 	| "format"
 	| "internalError/io"

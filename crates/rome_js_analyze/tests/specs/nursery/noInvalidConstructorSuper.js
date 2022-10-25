@@ -8,12 +8,6 @@ class A extends B{
         missing_super()
     }
 }
-class A {
-    constructor() {
-        super()
-    }
-}
-
 class A  extends  null {
     constructor() {
         super()
