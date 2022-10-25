@@ -40,7 +40,7 @@ declare_rule! {
     /// }
     /// ```
     pub(crate) UseValidForDirection {
-        version: "0.10.0",
+        version: "10.0.0",
         name: "useValidForDirection",
         recommended: false,
     }

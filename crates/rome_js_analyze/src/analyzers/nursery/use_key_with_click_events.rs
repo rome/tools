@@ -1,8 +1,6 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{
-    JsxAnyAttribute, JsxOpeningElement, JsxSelfClosingElement, JsxSpreadAttribute,
-};
+use rome_js_syntax::{JsxAnyAttribute, JsxOpeningElement, JsxSelfClosingElement};
 use rome_rowan::{declare_node_union, AstNode, AstNodeList};
 
 declare_rule! {
