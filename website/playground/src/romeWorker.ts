@@ -113,17 +113,6 @@ self.addEventListener("message", async (e) => {
 					enabled: true,
 					rules: {
 						nursery: {
-							noNewSymbol: "error",
-							noDangerouslySetInnerHtml: "error",
-							noUnusedVariables: "error",
-							noUnreachable: "error",
-							useCamelCase: "error",
-							noRenderReturnValue: "error",
-							useButtonType: "error",
-							useOptionalChain: "error",
-							noUselessFragments: "error",
-							noVoidElementsWithChildren: "error",
-							noDangerouslySetInnerHtmlWithChildren: "error",
 							noConstAssign: "error",
 							useAltText: "error",
 							useExhaustiveDependencies: "error",
