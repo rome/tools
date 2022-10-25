@@ -94,25 +94,33 @@ impl LSPServer {
 
     async fn register_capability(&self, registration: Registration) {
         let method = registration.method.clone();
-        
-        if let Err(e) = self.session.client.register_capability(vec![registration]).await {
+
+        if let Err(e) = self
+            .session
+            .client
+            .register_capability(vec![registration])
+            .await
+        {
             error!("Error registering {:?} capability: {}", method, e);
         }
     }
 
     async fn unregister_capability(&self, unregistration: Unregistration) {
         let method = unregistration.method.clone();
-        
-        if let Err(e) = self.session.client.unregister_capability(vec![unregistration]).await {
+
+        if let Err(e) = self
+            .session
+            .client
+            .unregister_capability(vec![unregistration])
+            .await
+        {
             error!("Error unregistering {:?} capability: {}", method, e);
         }
     }
-        
+
     async fn setup_capabilities(&self) {
         let rename = {
-            let config = self.session
-                .config
-                .read().ok();
+            let config = self.session.config.read().ok();
             config.and_then(|x| x.settings.rename).unwrap_or(false)
         };
 
@@ -121,7 +129,8 @@ impl LSPServer {
                 id: "workspace/didChangeConfiguration".to_string(),
                 method: "workspace/didChangeConfiguration".to_string(),
                 register_options: None,
-            }).await;
+            })
+            .await;
         }
 
         if rename {
@@ -129,16 +138,17 @@ impl LSPServer {
                 id: "textDocument/rename".to_string(),
                 method: "textDocument/rename".to_string(),
                 register_options: None,
-            }).await;
+            })
+            .await;
         } else {
             self.unregister_capability(Unregistration {
                 id: "textDocument/rename".to_string(),
                 method: "textDocument/rename".to_string(),
-            }).await;
+            })
+            .await;
         }
     }
 }
-
 
 #[tower_lsp::async_trait]
 impl LanguageServer for LSPServer {

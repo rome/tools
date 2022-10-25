@@ -1,6 +1,6 @@
 use tower_lsp::lsp_types::{
-    CodeActionProviderCapability, DocumentOnTypeFormattingOptions, OneOf, RenameOptions,
-    ServerCapabilities, TextDocumentSyncCapability, TextDocumentSyncKind, WorkDoneProgressOptions,
+    CodeActionProviderCapability, DocumentOnTypeFormattingOptions, OneOf, ServerCapabilities,
+    TextDocumentSyncCapability, TextDocumentSyncKind,
 };
 
 /// The capabilities to send from server as part of [`InitializeResult`]
