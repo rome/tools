@@ -1,7 +1,9 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{JsxAnyAttribute, JsxOpeningElement, JsxSelfClosingElement};
-use rome_rowan::{declare_node_union, AstNode};
+use rome_js_syntax::{
+    JsxAnyAttribute, JsxOpeningElement, JsxSelfClosingElement, JsxSpreadAttribute,
+};
+use rome_rowan::{declare_node_union, AstNode, AstNodeList};
 
 declare_rule! {
     /// Enforce to have the `onClick` mouse event with the `onKeyUp`, the `onKeyDown`, or the `noKeyPress` keyboard event.
@@ -16,10 +18,6 @@ declare_rule! {
     ///
     /// ```jsx,expect_diagnostic
     /// <div onClick={() => {}} ></div>
-    /// ```
-    ///
-    /// ```jsx,expect_diagnostic
-    /// <div {...spread} onClick={() => {}} ></div>
     /// ```
     ///
     /// ### Valid
@@ -44,6 +42,10 @@ declare_rule! {
     /// ```jsx,
     /// <div onClick={() => {}} {...spread}></div>
     /// ```
+    ///
+    /// ```jsx
+    /// <div {...spread} onClick={() => {}} ></div>
+    /// ```
     pub(crate) UseKeyWithClickEvents {
         version: "10.0.0",
         name: "useKeyWithClickEvents",
@@ -53,6 +55,21 @@ declare_rule! {
 
 declare_node_union! {
     pub(crate) JsxAnyElement = JsxOpeningElement | JsxSelfClosingElement
+}
+
+impl JsxAnyElement {
+    fn has_spread_attribute(&self) -> bool {
+        match self {
+            JsxAnyElement::JsxOpeningElement(element) => element
+                .attributes()
+                .iter()
+                .any(|attribute| matches!(attribute, JsxAnyAttribute::JsxSpreadAttribute(_))),
+            JsxAnyElement::JsxSelfClosingElement(element) => element
+                .attributes()
+                .iter()
+                .any(|attribute| matches!(attribute, JsxAnyAttribute::JsxSpreadAttribute(_))),
+        }
+    }
 }
 
 impl UseKeyWithClickEvents {
@@ -70,9 +87,10 @@ impl Rule for UseKeyWithClickEvents {
 
         match node {
             JsxAnyElement::JsxOpeningElement(element) => {
-                let on_click_attribute = element.find_attribute_by_name("onClick").ok()??;
+                let on_click_attribute = element.find_attribute_by_name("onClick").ok()?;
                 if element.name().ok()?.as_jsx_name().is_none()
-                    || element.has_trailing_spread_prop(on_click_attribute)
+                    || on_click_attribute.is_none()
+                    || node.has_spread_attribute()
                 {
                     return None;
                 }
@@ -96,9 +114,10 @@ impl Rule for UseKeyWithClickEvents {
                 Some(())
             }
             JsxAnyElement::JsxSelfClosingElement(element) => {
-                let on_click_attribute = element.find_attribute_by_name("onClick").ok()??;
+                let on_click_attribute = element.find_attribute_by_name("onClick").ok()?;
                 if element.name().ok()?.as_jsx_name().is_none()
-                    || element.has_trailing_spread_prop(on_click_attribute)
+                    || on_click_attribute.is_none()
+                    || node.has_spread_attribute()
                 {
                     return None;
                 }
