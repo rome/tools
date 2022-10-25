@@ -1,6 +1,8 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_js_syntax::{JsxAnyAttribute, JsxOpeningElement, JsxSelfClosingElement};
+use rome_js_syntax::{
+    JsxAnyAttribute, JsxOpeningElement, JsxSelfClosingElement, JsxSpreadAttribute,
+};
 use rome_rowan::{declare_node_union, AstNode, AstNodeList};
 
 declare_rule! {
@@ -16,10 +18,6 @@ declare_rule! {
     ///
     /// ```jsx,expect_diagnostic
     /// <div onClick={() => {}} ></div>
-    /// ```
-    ///
-    /// ```jsx,expect_diagnostic
-    /// <div {...spread} onClick={() => {}} ></div>
     /// ```
     ///
     /// ### Valid

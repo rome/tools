@@ -7,4 +7,6 @@
     <MyComponent onClick={() => {}} />
     <MyComponent onClick={() => {}} {...spread} />
     <MyComponent onClick={() => {}} {...spread} >foo</MyComponent>
+    <div  {...spread} onClick={() => {}} />
+    <div  {...spread} onClick={() => {}}>foo</div>
 </>
