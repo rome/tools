@@ -24,4 +24,4 @@ rootManifest["version"] = version;
 const content = JSON.stringify(rootManifest);
 fs.writeFileSync(MANIFEST_PATH, content);
 
-console.log(`version=${version}`);
+console.log(version);
