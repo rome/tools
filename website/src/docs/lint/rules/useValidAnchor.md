@@ -127,6 +127,7 @@ in another tab, but the default "click" behaviour is prevented;
 <>
     <a href={`https://www.javascript.com`}>navigate here</a>
     <a href={somewhere}>navigate here</a>
+    <a {...spread}>navigate here</a>
 </>
 ```
 

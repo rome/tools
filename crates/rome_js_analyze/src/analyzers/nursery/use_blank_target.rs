@@ -30,9 +30,15 @@ declare_rule! {
     /// ```jsx,expect_diagnostic
     /// <a href='http://external.link' target='_blank'>child</a>
     /// ```
+    ///
     /// ```jsx,expect_diagnostic
     /// <a href='http://external.link' target='_blank' rel="noopener">child</a>
     /// ```
+    ///
+    /// ```jsx,expect_diagnostic
+    /// <a {...props} href='http://external.link' target='_blank' rel="noopener">child</a>
+    /// ```
+    ///
     /// ```jsx,expect_diagnostic
     /// // case-insensitive
     /// <a href='http://external.link' target='_BlaNk'>child</a>
@@ -40,7 +46,8 @@ declare_rule! {
     /// ### Valid
     ///
     /// ```jsx
-    /// <a href='http://external.link' rel='noreferrer' target='_blank'>child</a>
+    /// let a = <a href='http://external.link' rel='noreferrer' target='_blank'>child</a>;
+    /// let a = <a href='http://external.link' target='_blank' rel="noopener" {...props}>child</a>;
     /// ```
     pub(crate) UseBlankTarget {
         version: "10.0.0",
@@ -51,6 +58,23 @@ declare_rule! {
 
 declare_node_union! {
     pub(crate) UseBlankTargetQuery = JsxElement | JsxSelfClosingElement
+}
+
+impl UseBlankTargetQuery {
+    fn has_trailing_spread_attribute(
+        &self,
+        current_attribute: impl Into<JsxAnyAttribute>,
+    ) -> Option<bool> {
+        Some(match self {
+            UseBlankTargetQuery::JsxElement(element) => element
+                .opening_element()
+                .ok()?
+                .has_trailing_spread_prop(current_attribute),
+            UseBlankTargetQuery::JsxSelfClosingElement(element) => {
+                element.has_trailing_spread_prop(current_attribute)
+            }
+        })
+    }
 }
 
 impl Rule for UseBlankTarget {
@@ -95,6 +119,7 @@ impl Rule for UseBlankTarget {
         };
 
         let target_attribute = target_attribute?;
+
         let text = target_attribute
             .initializer()?
             .value()
@@ -106,7 +131,9 @@ impl Rule for UseBlankTarget {
         if text.to_lowercase() == "_blank" {
             match rel_attribute {
                 None => {
-                    return Some((target_attribute, None));
+                    if !node.has_trailing_spread_attribute(target_attribute.clone())? {
+                        return Some((target_attribute, None));
+                    }
                 }
                 Some(rel_attribute) => {
                     let rel_text = rel_attribute
@@ -116,7 +143,10 @@ impl Rule for UseBlankTarget {
                         .as_jsx_string()?
                         .inner_string_text()
                         .ok()?;
-                    if !rel_text.text().contains("noreferrer") {
+                    if !rel_text.text().contains("noreferrer")
+                        && !node.has_trailing_spread_attribute(target_attribute.clone())?
+                        && !node.has_trailing_spread_attribute(rel_attribute.clone())?
+                    {
                         return Some((target_attribute, Some(rel_attribute)));
                     }
                 }

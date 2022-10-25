@@ -7,6 +7,8 @@
 <div onMouseOut={() => {}} onBlur={null} />;
 <div onMouseOver={() => {}}></div>;
 <div onMouseOut={() => {}}></div>;
+<div {...spread} onMouseOut={() => {}}></div>;
+<div {...spread} onMouseOver={() => {}}></div>;
 
 // valid
 <div />;

@@ -1,8 +1,8 @@
 use std::collections::HashSet;
 
 use crate::{
-    JsxAttribute, JsxAttributeList, JsxName, JsxOpeningElement, JsxSelfClosingElement, JsxString,
-    TextSize,
+    JsxAnyAttribute, JsxAttribute, JsxAttributeList, JsxName, JsxOpeningElement,
+    JsxSelfClosingElement, JsxString, TextSize,
 };
 use rome_rowan::{AstNode, AstNodeList, SyntaxResult, SyntaxTokenText};
 
@@ -86,6 +86,53 @@ impl JsxOpeningElement {
     ) -> SyntaxResult<Option<JsxAttribute>> {
         find_attribute_by_name(self.attributes(), name_to_lookup)
     }
+
+    /// It checks if current attribute has a trailing spread props
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_factory::make;
+    /// use rome_js_factory::make::{ident, jsx_attribute, jsx_name, jsx_opening_element, token, jsx_attribute_list, jsx_self_closing_element, jsx_spread_attribute, jsx_ident, js_identifier_expression, js_reference_identifier};
+    /// use rome_js_syntax::{JsAnyExpression, JsxAnyAttribute, JsxAnyAttributeName, JsxAnyElementName, T};
+    ///
+    /// let div = JsxAnyAttribute::JsxAttribute(jsx_attribute(
+    ///     JsxAnyAttributeName::JsxName(
+    ///         jsx_name(ident("div"))
+    ///     )
+    /// ).build());
+    ///
+    /// let spread = JsxAnyAttribute::JsxSpreadAttribute(jsx_spread_attribute(
+    ///     token(T!['{']),
+    ///     token(T![...]),
+    ///     JsAnyExpression::JsIdentifierExpression(js_identifier_expression(
+    ///         js_reference_identifier(ident("spread"))
+    ///     )),
+    ///     token(T!['}']),
+    /// ));
+    ///
+    ///
+    ///
+    /// let attributes = jsx_attribute_list(vec![
+    ///     div,
+    ///     spread
+    /// ]);
+    ///
+    /// let opening_element = jsx_opening_element(
+    ///     token(T![<]),
+    ///     JsxAnyElementName::JsxName(
+    ///         jsx_name(ident("Test"))
+    ///     ),
+    ///     attributes,
+    ///     token(T![>]),
+    /// ).build();
+    ///
+    /// let div = opening_element.find_attribute_by_name("div").unwrap().unwrap();
+    /// assert!(opening_element.has_trailing_spread_prop(div.clone()));
+    /// ```
+    pub fn has_trailing_spread_prop(&self, current_attribute: impl Into<JsxAnyAttribute>) -> bool {
+        has_trailing_spread_prop(self.attributes(), current_attribute)
+    }
 }
 
 impl JsxSelfClosingElement {
@@ -136,6 +183,54 @@ impl JsxSelfClosingElement {
         name_to_lookup: &str,
     ) -> SyntaxResult<Option<JsxAttribute>> {
         find_attribute_by_name(self.attributes(), name_to_lookup)
+    }
+
+    /// It checks if current attribute has a trailing spread props
+    ///
+    /// ## Examples
+    ///
+    /// ```
+    /// use rome_js_factory::make;
+    /// use rome_js_factory::make::{ident, jsx_attribute, jsx_name, jsx_opening_element, token, jsx_attribute_list, jsx_self_closing_element, jsx_spread_attribute, jsx_ident, js_identifier_expression, js_reference_identifier};
+    /// use rome_js_syntax::{JsAnyExpression, JsxAnyAttribute, JsxAnyAttributeName, JsxAnyElementName, T};
+    ///
+    /// let div = JsxAnyAttribute::JsxAttribute(jsx_attribute(
+    ///     JsxAnyAttributeName::JsxName(
+    ///         jsx_name(ident("div"))
+    ///     )
+    /// ).build());
+    ///
+    /// let spread = JsxAnyAttribute::JsxSpreadAttribute(jsx_spread_attribute(
+    ///     token(T!['{']),
+    ///     token(T![...]),
+    ///     JsAnyExpression::JsIdentifierExpression(js_identifier_expression(
+    ///         js_reference_identifier(ident("spread"))
+    ///     )),
+    ///     token(T!['}']),
+    /// ));
+    ///
+    ///
+    ///
+    /// let attributes = jsx_attribute_list(vec![
+    ///     div,
+    ///     spread
+    /// ]);
+    ///
+    /// let opening_element = jsx_self_closing_element(
+    ///     token(T![<]),
+    ///     JsxAnyElementName::JsxName(
+    ///         jsx_name(ident("Test"))
+    ///     ),
+    ///     attributes,
+    ///     token(T![/]),
+    ///     token(T![>]),
+    /// ).build();
+    ///
+    /// let div = opening_element.find_attribute_by_name("div").unwrap().unwrap();
+    /// assert!(opening_element.has_trailing_spread_prop(div.clone()));
+    /// ```
+    pub fn has_trailing_spread_prop(&self, current_attribute: impl Into<JsxAnyAttribute>) -> bool {
+        has_trailing_spread_prop(self.attributes(), current_attribute)
     }
 }
 
@@ -205,4 +300,22 @@ pub fn find_attribute_by_name(
     });
 
     Ok(attribute)
+}
+
+pub fn has_trailing_spread_prop(
+    attributes: JsxAttributeList,
+    current_attribute: impl Into<JsxAnyAttribute>,
+) -> bool {
+    let mut current_attribute_found = false;
+    let current_attribute = current_attribute.into();
+    for attribute in attributes {
+        if attribute == current_attribute {
+            current_attribute_found = true;
+            continue;
+        }
+        if current_attribute_found && attribute.as_jsx_spread_attribute().is_some() {
+            return true;
+        }
+    }
+    false
 }

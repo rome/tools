@@ -62,3 +62,11 @@ Enforce to have the `onClick` mouse event with the `onKeyUp`, the `onKeyDown`, o
 <MyComponent onClick={() => {}} />
 ```
 
+```jsx
+<div onClick={() => {}} {...spread}></div>
+```
+
+```jsx
+<div {...spread} onClick={() => {}} ></div>
+```
+

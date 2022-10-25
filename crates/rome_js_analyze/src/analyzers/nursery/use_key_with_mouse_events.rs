@@ -2,7 +2,7 @@ use crate::semantic_services::Semantic;
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Rule, RuleDiagnostic};
 use rome_console::{markup, MarkupBuf};
-use rome_js_syntax::{JsxAttribute, JsxOpeningElement, JsxSelfClosingElement};
+use rome_js_syntax::{JsxAnyAttribute, JsxAttribute, JsxOpeningElement, JsxSelfClosingElement};
 use rome_rowan::{declare_node_union, AstNode};
 
 declare_rule! {
@@ -83,16 +83,14 @@ impl JsxAnyElement {
         }
     }
 
-    fn has_spread_attribute(&self) -> bool {
+    fn has_trailing_spread_prop(&self, current_attribute: impl Into<JsxAnyAttribute>) -> bool {
         match self {
-            JsxAnyElement::JsxSelfClosingElement(element) => element
-                .attributes()
-                .into_iter()
-                .any(|attribute| attribute.as_jsx_spread_attribute().is_some()),
-            JsxAnyElement::JsxOpeningElement(element) => element
-                .attributes()
-                .into_iter()
-                .any(|attribute| attribute.as_jsx_spread_attribute().is_some()),
+            JsxAnyElement::JsxSelfClosingElement(element) => {
+                element.has_trailing_spread_prop(current_attribute)
+            }
+            JsxAnyElement::JsxOpeningElement(element) => {
+                element.has_trailing_spread_prop(current_attribute)
+            }
         }
     }
 
@@ -140,26 +138,29 @@ impl JsxAnyElement {
         }
     }
 
-    fn has_focus_attributes(&self) -> Option<bool> {
-        if self.find_on_mouse_over_attribute().is_some() {
-            let on_focus_attribute = self.find_on_focus_attribute();
+    fn has_valid_focus_attributes(&self) -> Option<bool> {
+        if let Some(on_mouse_over_attribute) = self.find_on_mouse_over_attribute() {
+            if !self.has_trailing_spread_prop(on_mouse_over_attribute) {
+                let on_focus_attribute = self.find_on_focus_attribute();
 
-            if on_focus_attribute.is_none() || is_value_undefined_or_null(&on_focus_attribute?) {
-                return None;
+                if on_focus_attribute.is_none() || is_value_undefined_or_null(&on_focus_attribute?)
+                {
+                    return None;
+                }
             }
-            return Some(true);
         }
         Some(true)
     }
 
-    fn has_blur_attributes(&self) -> Option<bool> {
-        if self.find_on_mouse_out_attribute().is_some() {
-            let on_blur_attribute = self.find_on_blur_attribute();
+    fn has_valid_blur_attributes(&self) -> Option<bool> {
+        if let Some(on_mouse_attribute) = self.find_on_mouse_out_attribute() {
+            if !self.has_trailing_spread_prop(on_mouse_attribute) {
+                let on_blur_attribute = self.find_on_blur_attribute();
 
-            if on_blur_attribute.is_none() || is_value_undefined_or_null(&on_blur_attribute?) {
-                return None;
+                if on_blur_attribute.is_none() || is_value_undefined_or_null(&on_blur_attribute?) {
+                    return None;
+                }
             }
-            return Some(true);
         }
         Some(true)
     }
@@ -174,16 +175,14 @@ impl Rule for UseKeyWithMouseEvents {
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let node = ctx.query();
 
-        if node.is_custom_component().is_none() || node.has_spread_attribute() {
-            return None;
-        }
+        if node.is_custom_component().is_some() {
+            if node.has_valid_focus_attributes().is_none() {
+                return Some(UseKeyWithMouseEventsState::MissingOnFocus);
+            }
 
-        if node.has_focus_attributes().is_none() {
-            return Some(UseKeyWithMouseEventsState::MissingOnFocus);
-        }
-
-        if node.has_blur_attributes().is_none() {
-            return Some(UseKeyWithMouseEventsState::MissingOnBlur);
+            if node.has_valid_blur_attributes().is_none() {
+                return Some(UseKeyWithMouseEventsState::MissingOnBlur);
+            }
         }
 
         None

@@ -16,4 +16,5 @@
     {/*  valid  */}
     <a href={`https://www.javascript.com`}/>
     <a href={somewhere}/>
+    <a {...spread }/>
 </>

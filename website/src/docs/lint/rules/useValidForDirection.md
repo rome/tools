@@ -3,7 +3,7 @@ title: Lint Rule useValidForDirection
 layout: layouts/rule.liquid
 ---
 
-# useValidForDirection (since v0.10.0)
+# useValidForDirection (since v10.0.0)
 
 Enforce "for" loop update clause moving the counter in the right direction.
 
