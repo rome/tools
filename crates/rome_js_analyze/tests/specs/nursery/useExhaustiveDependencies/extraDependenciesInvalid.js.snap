@@ -1,0 +1,79 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: extraDependenciesInvalid.js
+---
+# Input
+```js
+function MyComponent() {
+  let a = 1;
+  useEffect(() => {}, [a]);
+}
+
+// multiple extra dependencies
+
+function MyComponent2() {
+  let a = 1, b = 1;
+  useEffect(() => {}, [a, b]);
+}
+
+```
+
+# Diagnostics
+```
+extraDependenciesInvalid.js:3:3 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This hook specifies more dependencies than necessary.
+  
+    1 │ function MyComponent() {
+    2 │   let a = 1;
+  > 3 │   useEffect(() => {}, [a]);
+      │   ^^^^^^^^^
+    4 │ }
+    5 │ 
+  
+  i This dependency can be removed from the list.
+  
+    1 │ function MyComponent() {
+    2 │   let a = 1;
+  > 3 │   useEffect(() => {}, [a]);
+      │                        ^
+    4 │ }
+    5 │ 
+  
+
+```
+
+```
+extraDependenciesInvalid.js:10:3 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This hook specifies more dependencies than necessary.
+  
+     8 │ function MyComponent2() {
+     9 │   let a = 1, b = 1;
+  > 10 │   useEffect(() => {}, [a, b]);
+       │   ^^^^^^^^^
+    11 │ }
+    12 │ 
+  
+  i This dependency can be removed from the list.
+  
+     8 │ function MyComponent2() {
+     9 │   let a = 1, b = 1;
+  > 10 │   useEffect(() => {}, [a, b]);
+       │                        ^
+    11 │ }
+    12 │ 
+  
+  i This dependency can be removed from the list.
+  
+     8 │ function MyComponent2() {
+     9 │   let a = 1, b = 1;
+  > 10 │   useEffect(() => {}, [a, b]);
+       │                           ^
+    11 │ }
+    12 │ 
+  
+
+```
+
+

@@ -6,7 +6,7 @@ use crate::{
 use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_diagnostics::Applicability;
-use rome_js_semantic::{AllReferencesExtensions, IsExportedCanBeQueried, SemanticModel};
+use rome_js_semantic::{AllReferencesExtensions, CanBeImportedExported, SemanticModel};
 use rome_js_syntax::{
     JsFormalParameter, JsFunctionDeclaration, JsFunctionExportDefaultDeclaration,
     JsGetterClassMember, JsIdentifierBinding, JsLiteralMemberName, JsMethodClassMember,

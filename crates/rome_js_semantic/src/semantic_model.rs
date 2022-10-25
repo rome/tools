@@ -37,36 +37,59 @@ impl HasDeclarationAstNode for JsReferenceIdentifier {}
 impl HasDeclarationAstNode for JsIdentifierAssignment {}
 impl HasDeclarationAstNode for JsxReferenceIdentifier {}
 
-/// Marker trait that groups all "AstNode" that can be exported
-pub trait IsExportedCanBeQueried: AstNode<Language = JsLanguage> {
+/// Marker trait that groups all "AstNode" that can be imported or
+/// exported
+pub trait CanBeImportedExported: AstNode<Language = JsLanguage> {
     type Result;
     fn is_exported(&self, model: &SemanticModel) -> Self::Result;
+    fn is_imported(&self, model: &SemanticModel) -> Self::Result;
 }
 
-impl IsExportedCanBeQueried for JsIdentifierBinding {
+impl CanBeImportedExported for JsIdentifierBinding {
     type Result = bool;
 
     fn is_exported(&self, model: &SemanticModel) -> Self::Result {
         let range = self.syntax().text_range();
         model.data.is_exported(range)
     }
+
+    fn is_imported(&self, _: &SemanticModel) -> Self::Result {
+        self.syntax()
+            .ancestors()
+            .any(|x| matches!(x.kind(), JsSyntaxKind::JS_IMPORT))
+    }
 }
 
-impl IsExportedCanBeQueried for TsIdentifierBinding {
+impl CanBeImportedExported for TsIdentifierBinding {
     type Result = bool;
 
     fn is_exported(&self, model: &SemanticModel) -> Self::Result {
         let range = self.syntax().text_range();
         model.data.is_exported(range)
     }
+
+    fn is_imported(&self, _: &SemanticModel) -> Self::Result {
+        self.syntax()
+            .ancestors()
+            .any(|x| matches!(x.kind(), JsSyntaxKind::JS_IMPORT))
+    }
 }
 
-impl<T: HasDeclarationAstNode> IsExportedCanBeQueried for T {
+impl<T: HasDeclarationAstNode> CanBeImportedExported for T {
     type Result = Option<bool>;
 
     fn is_exported(&self, model: &SemanticModel) -> Self::Result {
         let range = self.declaration(model)?.syntax().text_range();
         Some(model.data.is_exported(range))
+    }
+
+    fn is_imported(&self, model: &SemanticModel) -> Self::Result {
+        Some(
+            self.declaration(model)?
+                .syntax()
+                .ancestors()
+                .any(|x| matches!(x.kind(), JsSyntaxKind::JS_IMPORT)),
+        )
     }
 }
 
@@ -191,13 +214,13 @@ impl PartialEq for SemanticModelData {
 
 impl Eq for SemanticModelData {}
 
-/// Iterate all descendas scopes of the specified scope in breadth-first order.
-pub struct ScopeDescendantsIter {
+/// Iterate all descendents scopes of the specified scope in breadth-first order.
+pub struct ScopeDescendentsIter {
     data: Arc<SemanticModelData>,
     q: VecDeque<usize>,
 }
 
-impl Iterator for ScopeDescendantsIter {
+impl Iterator for ScopeDescendentsIter {
     type Item = Scope;
 
     fn next(&mut self) -> Option<Self::Item> {
@@ -213,6 +236,8 @@ impl Iterator for ScopeDescendantsIter {
         }
     }
 }
+
+impl FusedIterator for ScopeDescendentsIter {}
 
 /// Provides all information regarding a specific scope.
 /// Allows navigation to parent and children scope and binding information.
@@ -237,13 +262,13 @@ impl Scope {
         std::iter::successors(Some(self.clone()), |scope| scope.parent())
     }
 
-    /// Returns all descendts of this scope in breadth-first order. Starting with the current
+    /// Returns all descendents of this scope in breadth-first order. Starting with the current
     /// [Scope].
-    pub fn descendants(&self) -> impl Iterator<Item = Scope> {
+    pub fn descendents(&self) -> impl Iterator<Item = Scope> {
         let mut q = VecDeque::new();
         q.push_back(self.id);
 
-        ScopeDescendantsIter {
+        ScopeDescendentsIter {
             data: self.data.clone(),
             q,
         }
@@ -740,9 +765,23 @@ impl SemanticModel {
     /// because there is no guarantee that the corresponding declaration exists.
     pub fn is_exported<T>(&self, node: &T) -> T::Result
     where
-        T: IsExportedCanBeQueried,
+        T: CanBeImportedExported,
     {
         node.is_exported(self)
+    }
+
+    /// Returns if the node is imported or is a reference to a binding
+    /// that is imported.
+    ///
+    /// When a binding is specified this method returns a bool.
+    ///
+    /// When a reference is specified this method returns Option<bool>,
+    /// because there is no guarantee that the corresponding declaration exists.
+    pub fn is_imported<T>(&self, node: &T) -> T::Result
+    where
+        T: CanBeImportedExported,
+    {
+        node.is_imported(self)
     }
 
     /// Returns the [Closure] associated with the node.

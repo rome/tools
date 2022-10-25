@@ -376,6 +376,12 @@ Enforces the usage of the attribute <code>type</code> for the element <code>butt
 Enforce camel case naming convention.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="useExhaustiveDependencies">
+	<a href="/docs/lint/rules/useExhaustiveDependencies">useExhaustiveDependencies</a>
+</h3>
+Enforce all dependencies are correctly specified.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="useFlatMap">
 	<a href="/docs/lint/rules/useFlatMap">useFlatMap</a>
 </h3>

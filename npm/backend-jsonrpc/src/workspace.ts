@@ -184,6 +184,7 @@ export interface Nursery {
 	useBlankTarget?: RuleConfiguration;
 	useButtonType?: RuleConfiguration;
 	useCamelCase?: RuleConfiguration;
+	useExhaustiveDependencies?: RuleConfiguration;
 	useFlatMap?: RuleConfiguration;
 	useFragmentSyntax?: RuleConfiguration;
 	useKeyWithClickEvents?: RuleConfiguration;
@@ -335,6 +336,7 @@ export type Category =
 	| "lint/nursery/noConstAssign"
 	| "lint/nursery/noExplicitAny"
 	| "lint/nursery/useValidForDirection"
+	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/style/noNegationElse"
 	| "lint/style/noShoutyConstants"
 	| "lint/style/useSelfClosingElements"
