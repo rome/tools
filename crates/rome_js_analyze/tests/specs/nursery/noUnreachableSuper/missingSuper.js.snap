@@ -1,0 +1,114 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: missingSuper.js
+---
+# Input
+```js
+// valid
+class A {
+    constructor() {}
+}
+
+// valid
+class B extends A {
+    constructor(cond) {
+        if (cond) {
+            super(true);
+        } else {
+            super(false);
+        }
+    }
+}
+
+// invalid
+class C extends A {
+    constructor(cond) {
+        if (cond) {
+            super(true);
+        }
+    }
+}
+
+// invalid
+class D extends A {
+    constructor(variant) {
+        switch (variant) {
+            case 0:
+                break;
+            default:
+                super();
+                break;
+        }
+    }
+}
+
+// invalid
+class E extends A {
+    constructor(cond) {
+        if (cond) {
+            return;
+        }
+
+        super(true);
+    }
+}
+
+```
+
+# Diagnostics
+```
+missingSuper.js:19:5 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! this constructor can return without calling `super()`
+  
+    17 │ // invalid
+    18 │ class C extends A {
+  > 19 │     constructor(cond) {
+       │     ^^^^^^^^^^^^^^^^^^^
+  > 20 │         if (cond) {
+  > 21 │             super(true);
+  > 22 │         }
+  > 23 │     }
+       │     ^
+    24 │ }
+    25 │ 
+  
+
+```
+
+```
+missingSuper.js:28:5 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! this constructor can return without calling `super()`
+  
+    26 │ // invalid
+    27 │ class D extends A {
+  > 28 │     constructor(variant) {
+       │     ^^^^^^^^^^^^^^^^^^^^^^
+  > 29 │         switch (variant) {
+        ...
+  > 35 │         }
+  > 36 │     }
+       │     ^
+    37 │ }
+    38 │ 
+  
+
+```
+
+```
+missingSuper.js:43:13 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! this statement can return from the constructor without having called `super()` first
+  
+    41 │     constructor(cond) {
+    42 │         if (cond) {
+  > 43 │             return;
+       │             ^^^^^^^
+    44 │         }
+    45 │ 
+  
+
+```
+
+

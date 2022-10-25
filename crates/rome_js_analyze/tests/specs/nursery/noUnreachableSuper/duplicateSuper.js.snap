@@ -1,0 +1,192 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: duplicateSuper.js
+---
+# Input
+```js
+// valid
+class B extends A {
+    constructor(cond) {
+        if (cond) {
+            super(true);
+        } else {
+            super(false);
+        }
+    }
+}
+
+// invalid
+class C extends A {
+    constructor() {
+        super(1);
+        super(2);
+    }
+}
+
+// invalid
+class D extends A {
+    constructor(cond) {
+        if (cond) {
+            super(true);
+        }
+
+        super();
+    }
+}
+
+// invalid
+class E extends A {
+    constructor(cond) {
+        do {
+            super();
+        } while (cond);
+    }
+}
+
+// invalid
+class F extends A {
+    constructor(condA, condB) {
+        if (condA) {
+            super(true);
+        }
+        if (condB) {
+            super(true);
+        }
+    }
+}
+
+// invalid
+class G extends A {
+    constructor(condA, condB) {
+        while (condA) {
+            if (condB) {
+                super();
+            }
+        }
+    }
+}
+
+```
+
+# Diagnostics
+```
+duplicateSuper.js:16:9 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! `super()` can be called more than once
+  
+    14 │     constructor() {
+    15 │         super(1);
+  > 16 │         super(2);
+       │         ^^^^^
+    17 │     }
+    18 │ }
+  
+  i `super()` may have already been called here
+  
+    13 │ class C extends A {
+    14 │     constructor() {
+  > 15 │         super(1);
+       │         ^^^^^
+    16 │         super(2);
+    17 │     }
+  
+
+```
+
+```
+duplicateSuper.js:27:9 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! `super()` can be called more than once
+  
+    25 │         }
+    26 │ 
+  > 27 │         super();
+       │         ^^^^^
+    28 │     }
+    29 │ }
+  
+  i `super()` may have already been called here
+  
+    22 │     constructor(cond) {
+    23 │         if (cond) {
+  > 24 │             super(true);
+       │             ^^^^^
+    25 │         }
+    26 │ 
+  
+
+```
+
+```
+duplicateSuper.js:35:13 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! `super()` can be called more than once
+  
+    33 │     constructor(cond) {
+    34 │         do {
+  > 35 │             super();
+       │             ^^^^^
+    36 │         } while (cond);
+    37 │     }
+  
+  i `super()` may have already been called here
+  
+    33 │     constructor(cond) {
+    34 │         do {
+  > 35 │             super();
+       │             ^^^^^
+    36 │         } while (cond);
+    37 │     }
+  
+
+```
+
+```
+duplicateSuper.js:47:13 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! `super()` can be called more than once
+  
+    45 │         }
+    46 │         if (condB) {
+  > 47 │             super(true);
+       │             ^^^^^
+    48 │         }
+    49 │     }
+  
+  i `super()` may have already been called here
+  
+    42 │     constructor(condA, condB) {
+    43 │         if (condA) {
+  > 44 │             super(true);
+       │             ^^^^^
+    45 │         }
+    46 │         if (condB) {
+  
+
+```
+
+```
+duplicateSuper.js:57:17 lint/nursery/noUnreachableSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! `super()` can be called more than once
+  
+    55 │         while (condA) {
+    56 │             if (condB) {
+  > 57 │                 super();
+       │                 ^^^^^
+    58 │             }
+    59 │         }
+  
+  i `super()` may have already been called here
+  
+    55 │         while (condA) {
+    56 │             if (condB) {
+  > 57 │                 super();
+       │                 ^^^^^
+    58 │             }
+    59 │         }
+  
+
+```
+
+

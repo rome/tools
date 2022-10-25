@@ -830,6 +830,17 @@
             }
           ]
         },
+        "noUnreachableSuper": {
+          "description": "Ensures the super() constructor is called exactly once on every code path in a class constructor before this is accessed if the class has a superclass",
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noUnsafeFinally": {
           "description": "Disallow control flow statements in finally blocks.",
           "anyOf": [

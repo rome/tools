@@ -77,35 +77,6 @@ export default class A extends B {
 
 # Diagnostics
 ```
-noInvalidConstructorSuper.js:2:9 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This class extends another class and a super() call is expected.
-  
-    1 │ // invalid
-  > 2 │ class A extends B{
-      │         ^^^^^^^^^
-    3 │     constructor() {
-    4 │     }
-  
-
-```
-
-```
-noInvalidConstructorSuper.js:6:9 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This class extends another class and a super() call is expected.
-  
-    4 │     }
-    5 │ }
-  > 6 │ class A extends B{
-      │         ^^^^^^^^^
-    7 │     constructor() {
-    8 │         missing_super()
-  
-
-```
-
-```
 noInvalidConstructorSuper.js:13:9 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This class calls super(), but the class extends from a non-constructor.
@@ -125,21 +96,6 @@ noInvalidConstructorSuper.js:13:9 lint/nursery/noInvalidConstructorSuper ━━�
        │                   ^^^^
     12 │     constructor() {
     13 │         super()
-  
-
-```
-
-```
-noInvalidConstructorSuper.js:16:9 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This class extends another class and a super() call is expected.
-  
-    14 │     }
-    15 │ }
-  > 16 │ class A extends Object { constructor() { return a; } }
-       │         ^^^^^^^^^^^^^^
-    17 │ class A extends 'test' { constructor() { super(); } }
-    18 │ class A extends 100 { constructor() { super(); } }
   
 
 ```
@@ -380,36 +336,6 @@ noInvalidConstructorSuper.js:26:45 lint/nursery/noInvalidConstructorSuper ━━
        │                 ^^^^^^^^^
     27 │ module.exports = class A extends B {
     28 │     constructor() {
-  
-
-```
-
-```
-noInvalidConstructorSuper.js:27:26 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This class extends another class and a super() call is expected.
-  
-    25 │ class A extends (B |= C) { constructor() { super(); } }
-    26 │ class A extends undefined { constructor() { super(); } }
-  > 27 │ module.exports = class A extends B {
-       │                          ^^^^^^^^^
-    28 │     constructor() {
-    29 │     }
-  
-
-```
-
-```
-noInvalidConstructorSuper.js:31:16 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ! This class extends another class and a super() call is expected.
-  
-    29 │     }
-    30 │ }
-  > 31 │ export class A extends B {
-       │                ^^^^^^^^^
-    32 │     constructor() {
-    33 │         missing_super();
   
 
 ```
