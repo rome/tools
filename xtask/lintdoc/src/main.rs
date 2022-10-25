@@ -124,6 +124,12 @@ to promote these rules into an appropriate group. Doing so means that the rule i
 
                 },
             ),
+            "react" => (
+                "React",
+                markup! {
+                    "Rules tailored for the library react, aimed to enforce common patterns and prevent bugs."
+                },
+            ),
             "style" => (
                 "Style",
                 markup! {

@@ -26,7 +26,7 @@ something.forEach((Element, index) => {
 });
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noArrayIndexKey.js:2:21 <a href="https://rome.tools/docs/lint/rules/noArrayIndexKey">lint/correctness/noArrayIndexKey</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">react/noArrayIndexKey.js:2:21 <a href="https://rome.tools/docs/lint/rules/noArrayIndexKey">lint/react/noArrayIndexKey</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Avoid using the index of an array as key property in an element.</span>
   
@@ -55,7 +55,7 @@ React.Children.map(this.props.children, (child, index) => (
 ))
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noArrayIndexKey.js:2:38 <a href="https://rome.tools/docs/lint/rules/noArrayIndexKey">lint/correctness/noArrayIndexKey</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">react/noArrayIndexKey.js:2:38 <a href="https://rome.tools/docs/lint/rules/noArrayIndexKey">lint/react/noArrayIndexKey</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Avoid using the index of an array as key property in an element.</span>
   

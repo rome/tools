@@ -20,7 +20,6 @@ define_dategories! {
     "lint/correctness/noDoubleEquals": "https://rome.tools/docs/lint/rules/noDoubleEquals",
     "lint/correctness/noDupeArgs": "https://rome.tools/docs/lint/rules/noDupeArgs",
     "lint/correctness/noEmptyPattern": "https://rome.tools/docs/lint/rules/noEmptyPattern",
-    "lint/correctness/noExtraBooleanCast": "https://rome.tools/docs/lint/rules/noExtraBooleanCast",
     "lint/correctness/noFunctionAssign": "https://rome.tools/docs/lint/rules/noFunctionAssign",
     "lint/correctness/noImplicitBoolean": "https://rome.tools/docs/lint/rules/noImplicitBoolean",
     "lint/correctness/noImportAssign": "https://rome.tools/docs/lint/rules/noImportAssign",
@@ -36,15 +35,14 @@ define_dategories! {
     "lint/correctness/useSingleVarDeclarator": "https://rome.tools/docs/lint/rules/useSingleVarDeclarator",
     "lint/correctness/useValidTypeof": "https://rome.tools/docs/lint/rules/useValidTypeof",
     "lint/correctness/useWhile": "https://rome.tools/docs/lint/rules/useWhile",
-    "lint/correctness/noDangerouslySetInnerHtml": "https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtml",
     "lint/correctness/noNewSymbol": "https://rome.tools/docs/lint/rules/noNewSymbol",
-    "lint/correctness/noRenderReturnValue": "https://rome.tools/docs/lint/rules/noRenderReturnValue",
     "lint/correctness/noUselessFragments": "https://rome.tools/docs/lint/rules/noUselessFragments",
-    "lint/correctness/noVoidElementsWithChildren": "https://rome.tools/docs/lint/rules/noVoidElementsWithChildren",
-    "lint/correctness/noChildrenProp": "https://rome.tools/docs/lint/rules/noChildrenProp",
-    "lint/correctness/noArrayIndexKey": "https://rome.tools/docs/lint/rules/noArrayIndexKey",
-    "lint/correctness/noDangerouslySetInnerHtmlWithChildren": "https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtmlWithChildren",
-    "lint/correctness/noAutofocus": "https://rome.tools/docs/lint/rules/noAutofocus",
+    "lint/correctness/noUnusedVariables": "https://rome.tools/docs/lint/rules/noUnusedVariables",
+    "lint/correctness/noUnreachable": "https://rome.tools/docs/lint/rules/noUnreachable",
+    "lint/correctness/noRestrictedGlobals": "https://rome.tools/docs/lint/rules/noRestrictedGlobals",
+    "lint/correctness/useOptionalChain": "https://rome.tools/docs/lint/rules/useOptionalChain",
+    "lint/correctness/noUndeclaredVariables": "https://rome.tools/docs/lint/rules/noUndeclaredVariables",
+
     // style category
     "lint/style/noNegationElse": "https://rome.tools/docs/lint/rules/noNegationElse",
     "lint/style/noShoutyConstants": "https://rome.tools/docs/lint/rules/noShoutyConstants",
@@ -52,10 +50,14 @@ define_dategories! {
     "lint/style/useShorthandArrayType": "https://rome.tools/docs/lint/rules/useShorthandArrayType",
     "lint/style/useFragmentSyntax": "https://rome.tools/docs/lint/rules/useFragmentSyntax",
     "lint/style/useTemplate": "https://rome.tools/docs/lint/rules/useTemplate",
+    "lint/style/useCamelCase": "https://rome.tools/docs/lint/rules/useCamelCase",
+
     // complexity
     "lint/complexity/useSimplifiedLogicExpression": "https://rome.tools/docs/lint/rules/useSimplifiedLogicExpression",
+    "lint/complexity/noExtraBooleanCast": "https://rome.tools/docs/lint/rules/noExtraBooleanCast",
 
     // a11y category
+    "lint/a11y/noAutofocus": "https://rome.tools/docs/lint/rules/noAutofocus",
     "lint/a11y/noPositiveTabindex": "https://rome.tools/docs/lint/rules/noPositiveTabindex",
     "lint/a11y/useKeyWithMouseEvents": "https://rome.tools/docs/lint/rules/useKeyWithMouseEvents",
     "lint/a11y/useAnchorContent": "https://rome.tools/docs/lint/rules/useAnchorContent",
@@ -63,16 +65,20 @@ define_dategories! {
     "lint/a11y/useValidAnchor": "https://rome.tools/docs/lint/rules/useValidAnchor",
     "lint/a11y/useKeyWithClickEvents": "https://rome.tools/docs/lint/rules/useKeyWithClickEvents",
     "lint/a11y/useButtonType": "https://rome.tools/docs/lint/rules/useButtonType",
+    // react
+    "lint/react/noDangerouslySetInnerHtml": "https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtml",
+    "lint/react/noDangerouslySetInnerHtmlWithChildren": "https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtmlWithChildren",
+    "lint/react/noVoidElementsWithChildren": "https://rome.tools/docs/lint/rules/noVoidElementsWithChildren",
+    "lint/react/noChildrenProp": "https://rome.tools/docs/lint/rules/noChildrenProp",
+    "lint/react/noRenderReturnValue": "https://rome.tools/docs/lint/rules/noRenderReturnValue",
+    "lint/react/noArrayIndexKey": "https://rome.tools/docs/lint/rules/noArrayIndexKey",
+
+
+
     // nursery
-    "lint/nursery/noRestrictedGlobals": "https://rome.tools/docs/lint/rules/noRestrictedGlobals",
     "lint/nursery/useFlatMap": "https://rome.tools/docs/lint/rules/useFlatMap",
     "lint/nursery/noConstAssign": "https://rome.tools/docs/lint/rules/noConstAssign",
     "lint/nursery/noExplicitAny": "https://rome.tools/docs/lint/rules/noExplicitAny",
-    "lint/nursery/useCamelCase": "https://rome.tools/docs/lint/rules/useCamelCase",
-    "lint/nursery/useOptionalChain": "https://rome.tools/docs/lint/rules/useOptionalChain",
-    "lint/nursery/noUndeclaredVariables": "https://rome.tools/docs/lint/rules/noUndeclaredVariables",
-    "lint/nursery/noUnreachable": "https://rome.tools/docs/lint/rules/noUnreachable",
-    "lint/nursery/noUnusedVariables": "https://rome.tools/docs/lint/rules/noUnusedVariables",
     "lint/nursery/useValidForDirection": "https://rome.tools/docs/lint/rules/useValidForDirection",
     ;
 

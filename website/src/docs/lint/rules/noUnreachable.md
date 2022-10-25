@@ -18,7 +18,7 @@ function example() {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/noUnreachable.js:3:5 <a href="https://rome.tools/docs/lint/rules/noUnreachable">lint/nursery/noUnreachable</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noUnreachable.js:3:5 <a href="https://rome.tools/docs/lint/rules/noUnreachable">lint/correctness/noUnreachable</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This code will never be reached ...</span>
   
@@ -47,7 +47,7 @@ function example() {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/noUnreachable.js:2:28 <a href="https://rome.tools/docs/lint/rules/noUnreachable">lint/nursery/noUnreachable</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noUnreachable.js:2:28 <a href="https://rome.tools/docs/lint/rules/noUnreachable">lint/correctness/noUnreachable</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This code will never be reached ...</span>
   
@@ -77,7 +77,7 @@ function example() {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/noUnreachable.js:4:9 <a href="https://rome.tools/docs/lint/rules/noUnreachable">lint/nursery/noUnreachable</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noUnreachable.js:4:9 <a href="https://rome.tools/docs/lint/rules/noUnreachable">lint/correctness/noUnreachable</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This code will never be reached ...</span>
   

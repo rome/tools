@@ -23,7 +23,7 @@ Source: [ReactDOM documentation](https://facebook.github.io/react/docs/react-dom
 const foo = ReactDOM.render(<div />, document.body);
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noRenderReturnValue.js:1:13 <a href="https://rome.tools/docs/lint/rules/noRenderReturnValue">lint/correctness/noRenderReturnValue</a> ━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">react/noRenderReturnValue.js:1:13 <a href="https://rome.tools/docs/lint/rules/noRenderReturnValue">lint/react/noRenderReturnValue</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Do not depend on the value returned by the function </span><span style="color: Orange;"><strong>ReactDOM.render()</strong></span><span style="color: Orange;">.</span>
   

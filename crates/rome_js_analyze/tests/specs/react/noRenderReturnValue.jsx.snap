@@ -1,0 +1,159 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noRenderReturnValue.jsx
+---
+# Input
+```js
+// invalid
+const a = ReactDOM.render(<div />, document.body);
+const foo = bar && ReactDOM.render(<div />, document.body);
+const foo = bar ? ReactDOM.render(<div />, document.body) : null
+const foo = () => ReactDOM.render(<div />, document.body);
+const foo = {
+    react: ReactDOM.render(<div />, document.body)
+};
+let lorem;
+lorem = ReactDOM.render(<div />, document.body);
+function render () {
+    return ReactDOM.render(<div />, document.body)
+}
+
+// valid
+ReactDOM.render(<div />, document.body);
+function render () {
+    ReactDOM.render(<div />, document.body);
+}
+const render = () => {
+    ReactDOM.render(<div />, document.body);
+}
+
+
+```
+
+# Diagnostics
+```
+noRenderReturnValue.jsx:2:11 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not depend on the value returned by the function ReactDOM.render().
+  
+    1 │ // invalid
+  > 2 │ const a = ReactDOM.render(<div />, document.body);
+      │           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ const foo = bar && ReactDOM.render(<div />, document.body);
+    4 │ const foo = bar ? ReactDOM.render(<div />, document.body) : null
+  
+  i The returned value is legacy and future versions of react might return that value asynchronously.
+    Check the React documentation for more information.
+  
+
+```
+
+```
+noRenderReturnValue.jsx:3:20 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not depend on the value returned by the function ReactDOM.render().
+  
+    1 │ // invalid
+    2 │ const a = ReactDOM.render(<div />, document.body);
+  > 3 │ const foo = bar && ReactDOM.render(<div />, document.body);
+      │                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │ const foo = bar ? ReactDOM.render(<div />, document.body) : null
+    5 │ const foo = () => ReactDOM.render(<div />, document.body);
+  
+  i The returned value is legacy and future versions of react might return that value asynchronously.
+    Check the React documentation for more information.
+  
+
+```
+
+```
+noRenderReturnValue.jsx:4:19 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not depend on the value returned by the function ReactDOM.render().
+  
+    2 │ const a = ReactDOM.render(<div />, document.body);
+    3 │ const foo = bar && ReactDOM.render(<div />, document.body);
+  > 4 │ const foo = bar ? ReactDOM.render(<div />, document.body) : null
+      │                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    5 │ const foo = () => ReactDOM.render(<div />, document.body);
+    6 │ const foo = {
+  
+  i The returned value is legacy and future versions of react might return that value asynchronously.
+    Check the React documentation for more information.
+  
+
+```
+
+```
+noRenderReturnValue.jsx:5:19 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not depend on the value returned by the function ReactDOM.render().
+  
+    3 │ const foo = bar && ReactDOM.render(<div />, document.body);
+    4 │ const foo = bar ? ReactDOM.render(<div />, document.body) : null
+  > 5 │ const foo = () => ReactDOM.render(<div />, document.body);
+      │                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    6 │ const foo = {
+    7 │     react: ReactDOM.render(<div />, document.body)
+  
+  i The returned value is legacy and future versions of react might return that value asynchronously.
+    Check the React documentation for more information.
+  
+
+```
+
+```
+noRenderReturnValue.jsx:7:12 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not depend on the value returned by the function ReactDOM.render().
+  
+    5 │ const foo = () => ReactDOM.render(<div />, document.body);
+    6 │ const foo = {
+  > 7 │     react: ReactDOM.render(<div />, document.body)
+      │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │ };
+    9 │ let lorem;
+  
+  i The returned value is legacy and future versions of react might return that value asynchronously.
+    Check the React documentation for more information.
+  
+
+```
+
+```
+noRenderReturnValue.jsx:10:9 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not depend on the value returned by the function ReactDOM.render().
+  
+     8 │ };
+     9 │ let lorem;
+  > 10 │ lorem = ReactDOM.render(<div />, document.body);
+       │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    11 │ function render () {
+    12 │     return ReactDOM.render(<div />, document.body)
+  
+  i The returned value is legacy and future versions of react might return that value asynchronously.
+    Check the React documentation for more information.
+  
+
+```
+
+```
+noRenderReturnValue.jsx:12:12 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not depend on the value returned by the function ReactDOM.render().
+  
+    10 │ lorem = ReactDOM.render(<div />, document.body);
+    11 │ function render () {
+  > 12 │     return ReactDOM.render(<div />, document.body)
+       │            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    13 │ }
+    14 │ 
+  
+  i The returned value is legacy and future versions of react might return that value asynchronously.
+    Check the React documentation for more information.
+  
+
+```
+
+
