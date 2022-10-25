@@ -56,7 +56,7 @@ jobs:
         if: env.nightly == 'true' || steps.version.outputs.type == 'prerelease' || steps.version.outputs.type == 'prepatch' || steps.version.outputs.type == 'premajor' || steps.version.outputs.type == 'preminor'
         run: |
           echo "prerelease=true" >> $GITHUB_ENV
-          echo "version=$(node ./editors/vscode/scripts/updateVersionForPrerelease.mjs)" >> $GITHUB_ENV
+          node ./editors/vscode/scripts/update-nightly-version.mjs >> $GITHUB_ENV
           echo "rome_version=$(node ./npm/rome/scripts/update-nightly-version.mjs)" >> $GITHUB_ENV
 
       - name: Check version status
@@ -149,7 +149,7 @@ jobs:
         if: needs.check.outputs.prerelease == 'true'
         working-directory: editors/vscode
         run: |
-          node ./scripts/updateVersionForPrerelease.mjs >> $GITHUB_ENV
+          node ./scripts/update-nightly-version.mjs >> $GITHUB_ENV
           echo "prerelease=true" >> $GITHUB_ENV
       - name: Set release infos
         if: needs.check.outputs.prerelease != 'true'

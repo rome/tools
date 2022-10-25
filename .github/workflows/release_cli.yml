@@ -93,7 +93,7 @@ jobs:
         if: needs.check.outputs.prerelease == 'true'
         run: |
           echo "prerelease=true" >> $GITHUB_ENV
-          node npm/rome/scripts/update-nightly-version.mjs >> $GITHUB_ENV
+          echo "version=$(node npm/rome/scripts/update-nightly-version.mjs)" >> $GITHUB_ENV
       - name: Set release infos
         if: needs.check.outputs.prerelease != 'true'
         run: |
