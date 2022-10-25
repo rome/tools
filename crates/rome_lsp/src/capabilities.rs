@@ -16,12 +16,7 @@ pub(crate) fn server_capabilities() -> ServerCapabilities {
             first_trigger_character: String::from("}"),
             more_trigger_character: Some(vec![String::from("]"), String::from(")")]),
         }),
-        rename_provider: Some(OneOf::Right(RenameOptions {
-            prepare_provider: None,
-            work_done_progress_options: WorkDoneProgressOptions {
-                work_done_progress: None,
-            },
-        })),
+        rename_provider: None,
         ..Default::default()
     }
 }
