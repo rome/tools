@@ -73,6 +73,7 @@ define_dategories! {
     "lint/nursery/noUndeclaredVariables": "https://rome.tools/docs/lint/rules/noUndeclaredVariables",
     "lint/nursery/noUnreachable": "https://rome.tools/docs/lint/rules/noUnreachable",
     "lint/nursery/noUnusedVariables": "https://rome.tools/docs/lint/rules/noUnusedVariables",
+    "lint/nursery/useValidForDirection": "https://rome.tools/docs/lint/rules/useValidForDirection",
     ;
 
     // General categories
