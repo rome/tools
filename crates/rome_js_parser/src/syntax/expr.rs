@@ -1720,30 +1720,32 @@ fn parse_call_expression_rest(
             parse_call_arguments(p)
                 .or_add_diagnostic(p, |p, _| expected_token(T!['(']).to_diagnostic(p));
             lhs = m.complete(p, JS_CALL_EXPRESSION);
-            continue;
-        }
-
-        if in_optional_chain {
-            // If the `?.` is present and what followed was neither a valid type arguments nor valid arguments.
-            // In this case, parse this as a static member access with an optional chain
-
-            // test_err ts optional_chain_call_without_arguments
-            // let a = { test: null };
-            // a.test?.;
-            // a.test?.<ab;
-            p.error(expected_identifier(p, p.cur_range()));
-            lhs = m.complete(p, JS_STATIC_MEMBER_EXPRESSION);
         } else {
-            // Safety:
-            // * The method initially checks if the parsers at a '<', '(', or '?.' token.
-            // * if the parser is at '?.': It takes the branch right above, ensuring that no token was consumed
-            // * if the parser is at '<': `parse_ts_type_arguments_in_expression` rewinds if what follows aren't  valid type arguments and this is the only way we can reach this branch
-            // * if the parser is at '(': This always parses out as valid arguments.
-            debug_assert_eq!(p.tokens.position(), start_pos);
-            m.abandon(p);
-        }
+            break if optional_chain_call {
+                // If the `?.` is present and what followed was neither a valid type arguments nor valid arguments.
+                // In this case, parse this as a static member access with an optional chain
 
-        break lhs;
+                // test_err ts optional_chain_call_without_arguments
+                // let a = { test: null };
+                // a.test?.;
+                // a.test?.<ab;
+                p.error(expected_identifier(p, p.cur_range()));
+                m.complete(p, JS_STATIC_MEMBER_EXPRESSION)
+            } else {
+                // test ts optional_chain_call_less_than
+                // String(item)?.b < 0;
+                // String(item)?.b <aBcd;
+
+                // Safety:
+                // * The method initially checks if the parsers at a '<', '(', or '?.' token.
+                // * if the parser is at '?.': It takes the branch right above, ensuring that no token was consumed
+                // * if the parser is at '<': `parse_ts_type_arguments_in_expression` rewinds if what follows aren't  valid type arguments and this is the only way we can reach this branch
+                // * if the parser is at '(': This always parses out as valid arguments.
+                debug_assert_eq!(p.tokens.position(), start_pos);
+                m.abandon(p);
+                lhs
+            };
+        }
     }
 }
 
