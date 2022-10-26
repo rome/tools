@@ -1,4 +1,4 @@
-use std::{borrow, collections::BTreeSet};
+use std::{borrow, collections::BTreeSet, time::SystemTime};
 
 use rome_diagnostics::v2::Error;
 use rome_rowan::{AstNode, Language, RawSyntaxKind, SyntaxKind, SyntaxNode};
@@ -151,6 +151,8 @@ impl<L: Language + Default> RegistryVisitor<L> for RuleRegistryBuilder<'_, L> {
         R::Query: Queryable<Language = L>,
         <R::Query as Queryable>::Output: Clone,
     {
+        crate::profiling_name::<R>();
+
         if !self.filter.match_rule::<R>() {
             return;
         }
@@ -352,6 +354,9 @@ impl<L: Language + Default> RegistryRule<L> {
                     Err(error) => return Err(error),
                 };
 
+            use std::time::Instant;
+            let start = Instant::now();
+
             for result in R::run(&ctx) {
                 let text_range =
                     R::text_range(&ctx, &result).unwrap_or_else(|| params.query.text_range());
@@ -373,6 +378,9 @@ impl<L: Language + Default> RegistryRule<L> {
                     text_range,
                 });
             }
+
+            let end = Instant::now();
+            crate::profiling_run::<R>(end.duration_since(start));
 
             Ok(())
         }

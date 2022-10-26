@@ -232,9 +232,15 @@ fn lint(
 
             diagnostic.set_severity(severity);
 
+            use std::time::Instant;
+            let start = Instant::now();
+
             if let Some(action) = signal.action() {
                 diagnostic.add_code_suggestion(action.into());
             }
+
+            signal.profiling(start);
+            
             diagnostics.push(v2::serde::Diagnostic::new(diagnostic));
         }
 

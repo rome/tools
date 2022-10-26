@@ -16,6 +16,9 @@ use rome_rowan::{BatchMutation, Language};
 pub trait AnalyzerSignal<L: Language> {
     fn diagnostic(&self) -> Option<AnalyzerDiagnostic>;
     fn action(&self) -> Option<AnalyzerAction<L>>;
+
+    fn profiling(&self, start: std::time::Instant) {
+    }
 }
 
 /// Simple implementation of [AnalyzerSignal] generating a [AnalyzerDiagnostic] from a
@@ -132,27 +135,42 @@ where
 
 impl<'bag, R> AnalyzerSignal<RuleLanguage<R>> for RuleSignal<'bag, R>
 where
-    R: Rule,
+    R: Rule + 'static,
 {
     fn diagnostic(&self) -> Option<AnalyzerDiagnostic> {
         let ctx =
             RuleContext::new(&self.query_result, self.root, self.services, &self.options).ok()?;
+            
+        use std::time::Instant;
+        let start = Instant::now();
 
-        R::diagnostic(&ctx, &self.state).map(|diag| diag.into_analyzer_diagnostic(self.file_id))
+        let r = R::diagnostic(&ctx, &self.state)
+            .map(|diag| diag.into_analyzer_diagnostic(self.file_id));
+        
+        let end = Instant::now();
+        crate::profiling_diag::<R>(end.duration_since(start));
+        
+        r
     }
 
     fn action(&self) -> Option<AnalyzerAction<RuleLanguage<R>>> {
         let ctx =
             RuleContext::new(&self.query_result, self.root, self.services, &self.options).ok()?;
 
-        R::action(&ctx, &self.state).map(|action| AnalyzerAction {
-            group_name: <R::Group as RuleGroup>::NAME,
-            rule_name: R::METADATA.name,
-            file_id: self.file_id,
-            category: action.category,
-            applicability: action.applicability,
-            message: action.message,
-            mutation: action.mutation,
-        })
+        R::action(&ctx, &self.state)
+            .map(|action| AnalyzerAction {
+                group_name: <R::Group as RuleGroup>::NAME,
+                rule_name: R::METADATA.name,
+                file_id: self.file_id,
+                category: action.category,
+                applicability: action.applicability,
+                message: action.message,
+                mutation: action.mutation,
+            })
+    }
+
+     fn profiling(&self, start: std::time::Instant) {
+        let end = std::time::Instant::now();
+        crate::profiling_action::<R>(end.duration_since(start));
     }
 }

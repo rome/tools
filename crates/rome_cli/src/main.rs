@@ -35,5 +35,9 @@ fn main() -> Result<(), Termination> {
         workspace::server()
     };
 
-    CliSession::new(&*workspace, args).run()
+    let r = CliSession::new(&*workspace, args).run();
+
+    rome_analyze::dump_profiling();
+
+    r
 }
