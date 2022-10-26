@@ -24,7 +24,7 @@ It asserts that alternative text to images or areas, help to rely on to screen r
     <strong>2 │ </strong>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Meaningful alternative text on elements helps users relying on screen
-</span><span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">                readers to understand content's purpose within a page.</span>
+</span><span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">            readers to understand content's purpose within a page.</span>
   
 </code></pre>{% endraw %}
 
@@ -41,7 +41,7 @@ It asserts that alternative text to images or areas, help to rely on to screen r
     <strong>2 │ </strong>
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Meaningful alternative text on elements helps users relying on screen
-</span><span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">                readers to understand content's purpose within a page.</span>
+</span><span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">  </span><span style="color: rgb(38, 148, 255);">            readers to understand content's purpose within a page.</span>
   
 </code></pre>{% endraw %}
 

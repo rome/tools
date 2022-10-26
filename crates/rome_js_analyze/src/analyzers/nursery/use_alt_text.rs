@@ -1,6 +1,5 @@
 use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_diagnostics::Severity;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsObjectExpression, JsStringLiteralExpression,
     JsxAnyElementName, JsxSelfClosingElement, JsxString, TextRange,

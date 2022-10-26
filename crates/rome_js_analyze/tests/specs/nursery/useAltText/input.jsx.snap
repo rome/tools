@@ -36,7 +36,7 @@ input.jsx:3:2 lint/nursery/useAltText ━━━━━━━━━━━━━━
     5 │ 	<input type="image" alt={undefined} />
   
   i Meaningful alternative text on elements helps users relying on screen
-                    readers to understand content's purpose within a page.
+                readers to understand content's purpose within a page.
   
 
 ```
@@ -54,7 +54,7 @@ input.jsx:4:2 lint/nursery/useAltText ━━━━━━━━━━━━━━
     6 │ 	<input type="image" alt={null} />
   
   i Meaningful alternative text on elements helps users relying on screen
-                    readers to understand content's purpose within a page.
+                readers to understand content's purpose within a page.
   
 
 ```
@@ -72,7 +72,7 @@ input.jsx:6:27 lint/nursery/useAltText ━━━━━━━━━━━━━�
     8 │ 
   
   i Meaningful alternative text on elements helps users relying on screen
-                    readers to understand content's purpose within a page.
+                readers to understand content's purpose within a page.
   
 
 ```

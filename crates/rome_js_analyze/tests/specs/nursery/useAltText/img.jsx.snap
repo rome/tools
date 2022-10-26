@@ -41,7 +41,7 @@ img.jsx:4:2 lint/nursery/useAltText ━━━━━━━━━━━━━━�
     6 │ 	<img src="foo" role="none" />
   
   i Meaningful alternative text on elements helps users relying on screen
-                    readers to understand content's purpose within a page.
+                readers to understand content's purpose within a page.
   
 
 ```
@@ -59,7 +59,7 @@ img.jsx:5:2 lint/nursery/useAltText ━━━━━━━━━━━━━━�
     7 │ 	<img alt />
   
   i Meaningful alternative text on elements helps users relying on screen
-                    readers to understand content's purpose within a page.
+                readers to understand content's purpose within a page.
   
 
 ```
@@ -77,7 +77,7 @@ img.jsx:6:2 lint/nursery/useAltText ━━━━━━━━━━━━━━�
     8 │ 	<img alt={null} />
   
   i Meaningful alternative text on elements helps users relying on screen
-                    readers to understand content's purpose within a page.
+                readers to understand content's purpose within a page.
   
 
 ```
@@ -95,7 +95,7 @@ img.jsx:7:2 lint/nursery/useAltText ━━━━━━━━━━━━━━�
     9 │ 	<img alt={undefined} />
   
   i Meaningful alternative text on elements helps users relying on screen
-                    readers to understand content's purpose within a page.
+                readers to understand content's purpose within a page.
   
 
 ```
@@ -113,7 +113,7 @@ img.jsx:8:12 lint/nursery/useAltText ━━━━━━━━━━━━━━�
     10 │ </>
   
   i Meaningful alternative text on elements helps users relying on screen
-                    readers to understand content's purpose within a page.
+                readers to understand content's purpose within a page.
   
 
 ```

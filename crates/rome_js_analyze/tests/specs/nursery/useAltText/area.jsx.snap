@@ -37,7 +37,7 @@ area.jsx:5:13 lint/nursery/useAltText ━━━━━━━━━━━━━━
     7 │ 	<area alt />
   
   i Meaningful alternative text on elements helps users relying on screen
-                    readers to understand content's purpose within a page.
+                readers to understand content's purpose within a page.
   
 
 ```
@@ -55,7 +55,7 @@ area.jsx:6:2 lint/nursery/useAltText ━━━━━━━━━━━━━━�
     8 │ </>
   
   i Meaningful alternative text on elements helps users relying on screen
-                    readers to understand content's purpose within a page.
+                readers to understand content's purpose within a page.
   
 
 ```
@@ -73,7 +73,7 @@ area.jsx:7:2 lint/nursery/useAltText ━━━━━━━━━━━━━━�
     9 │ 
   
   i Meaningful alternative text on elements helps users relying on screen
-                    readers to understand content's purpose within a page.
+                readers to understand content's purpose within a page.
   
 
 ```
