@@ -125,6 +125,8 @@ self.addEventListener("message", async (e) => {
 							noVoidElementsWithChildren: "error",
 							noDangerouslySetInnerHtmlWithChildren: "error",
 							noConstAssign: "error",
+							useAltText: "error",
+							useExhaustiveDependencies: "error",
 						},
 					},
 				};

@@ -359,6 +359,12 @@ Disallow unnecessary fragments
 This rules prevents void elements (AKA self-closing elements) from having children.
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="useAltText">
+	<a href="/docs/lint/rules/useAltText">useAltText</a>
+</h3>
+It asserts that alternative text to images or areas, help to rely on to screen readers to understand the purpose and the context of the image.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="useAnchorContent">
 	<a href="/docs/lint/rules/useAnchorContent">useAnchorContent</a>
 </h3>

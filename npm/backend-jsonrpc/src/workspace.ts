@@ -181,6 +181,7 @@ export interface Nursery {
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
+	useAltText?: RuleConfiguration;
 	useAnchorContent?: RuleConfiguration;
 	useBlankTarget?: RuleConfiguration;
 	useButtonType?: RuleConfiguration;
@@ -339,6 +340,7 @@ export type Category =
 	| "lint/nursery/noInvalidConstructorSuper"
 	| "lint/nursery/useValidForDirection"
 	| "lint/nursery/useExhaustiveDependencies"
+	| "lint/nursery/useAltText"
 	| "lint/style/noNegationElse"
 	| "lint/style/noShoutyConstants"
 	| "lint/style/useSelfClosingElements"

@@ -402,6 +402,7 @@ struct NurserySchema {
     no_unused_variables: Option<RuleConfiguration>,
     no_useless_fragments: Option<RuleConfiguration>,
     no_void_elements_with_children: Option<RuleConfiguration>,
+    use_alt_text: Option<RuleConfiguration>,
     use_anchor_content: Option<RuleConfiguration>,
     use_blank_target: Option<RuleConfiguration>,
     use_button_type: Option<RuleConfiguration>,
@@ -417,7 +418,7 @@ struct NurserySchema {
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 29] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 30] = [
         "noArrayIndexKey",
         "noAutofocus",
         "noChildrenProp",
@@ -435,6 +436,7 @@ impl Nursery {
         "noUnusedVariables",
         "noUselessFragments",
         "noVoidElementsWithChildren",
+        "useAltText",
         "useAnchorContent",
         "useBlankTarget",
         "useButtonType",

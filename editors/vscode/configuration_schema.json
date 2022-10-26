@@ -667,6 +667,16 @@
             "null"
           ]
         },
+        "useAltText": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useAnchorContent": {
           "anyOf": [
             {

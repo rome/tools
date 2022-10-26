@@ -16,7 +16,8 @@
 				"noDangerouslySetInnerHtmlWithChildren": "error",
 				"noConstAssign": "error",
 				"noAutofocus": "error",
-				"useKeyWithClickEvents": "error"
+				"useKeyWithClickEvents": "error",
+				"useAltText": "error"
 			}
 		}
 	}
