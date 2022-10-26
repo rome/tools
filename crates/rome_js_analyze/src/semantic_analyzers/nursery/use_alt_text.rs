@@ -2,8 +2,8 @@ use rome_analyze::{context::RuleContext, declare_rule, Ast, Rule, RuleDiagnostic
 use rome_console::markup;
 use rome_diagnostics::Severity;
 use rome_js_syntax::{
-    JsObjectExpression, JsStringLiteralExpression, JsxAnyElementName, JsxSelfClosingElement,
-    JsxString, TextRange,
+    JsAnyExpression, JsAnyLiteralExpression, JsObjectExpression, JsStringLiteralExpression,
+    JsxAnyAttributeValue, JsxAnyElementName, JsxSelfClosingElement, JsxString, TextRange,
 };
 use rome_rowan::{declare_node_union, AstNode, AstNodeList};
 
@@ -34,8 +34,8 @@ declare_rule! {
     ///
 
     pub(crate) UseAltText{
-        version:"0.10.0",
-        name:"useAltText",
+        version: "10.0.0",
+        name: "useAltText",
         recommended: false,
     }
 }
@@ -48,6 +48,7 @@ impl Rule for UseAltText {
     type Query = Ast<JsxSelfClosingElement>;
     type State = TextRange;
     type Signals = Option<Self::State>;
+    type Options = ();
 
     fn run(ctx: &RuleContext<Self>) -> Self::Signals {
         let element = ctx.query();
@@ -57,16 +58,6 @@ impl Rule for UseAltText {
                 if !input_has_type_image(element)? {
                     return None;
                 }
-            }
-
-            let is_spread_available = element
-                .attributes()
-                .iter()
-                .any(|attribute| attribute.as_jsx_spread_attribute().is_some());
-
-            // To-Do - Complex cases might invlove, not triggering rules.
-            if is_spread_available {
-                return None;
             }
 
             let alt_prop = element.find_attribute_by_name("alt").ok()?;
@@ -84,14 +75,31 @@ impl Rule for UseAltText {
                 if prop.initializer().is_none() {
                     return Some(element.syntax().text_trimmed_range());
                 }
-                if prop
+                let attribute_value = prop
                     .initializer()?
                     .value()
                     .ok()?
-                    .text()
-                    .contains("undefined")
-                {
-                    return Some(element.syntax().text_trimmed_range());
+                    .as_jsx_expression_attribute_value()?
+                    .expression()
+                    .ok()?;
+
+                match attribute_value {
+                    JsAnyExpression::JsAnyLiteralExpression(
+                        JsAnyLiteralExpression::JsNullLiteralExpression(null),
+                    ) => return Some(null.syntax().text_trimmed_range()),
+                    JsAnyExpression::JsAnyLiteralExpression(
+                        JsAnyLiteralExpression::JsStringLiteralExpression(string),
+                    ) => {
+                        if string
+                            .value_token()
+                            .ok()?
+                            .text_trimmed()
+                            .contains("undefined")
+                        {
+                            return Some(string.syntax().text_trimmed_range());
+                        }
+                    }
+                    _ => return None,
                 }
             }
         }
@@ -104,7 +112,7 @@ impl Rule for UseAltText {
             return None;
         }
         let message = markup!(
-            "Provide "<Emphasis>"alt"</Emphasis>" when using "<Emphasis>"img"</Emphasis>", "<Emphasis>"area"</Emphasis>", "<Emphasis>"input type='image'"</Emphasis>""
+            "Provide the attribute "<Emphasis>"alt"</Emphasis>" when using "<Emphasis>"img"</Emphasis>", "<Emphasis>"area"</Emphasis>" or "<Emphasis>"input type='image'"</Emphasis>""
         ).to_owned();
 
         Some(
@@ -145,9 +153,10 @@ fn is_valid_tag(name: &JsxAnyElementName) -> Option<bool> {
     Some(match name {
         JsxAnyElementName::JsxName(name) => {
             let name = name.value_token().ok()?;
-            name.text_trimmed() == "input"
-                || name.text_trimmed() == "img"
-                || name.text_trimmed() == "area"
+            match name.text_trimmed() {
+                "input" | "area" | "img" => true,
+                _ => false,
+            }
         }
         _ => false,
     })
