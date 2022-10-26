@@ -18,7 +18,7 @@ if (
 	throw new Error("GITHUB_SHA environment variable is undefined");
 }
 
-version += `.${process.env.GITHUB_SHA.substring(0, 7)}`;
+version += `-nightly.${process.env.GITHUB_SHA.substring(0, 7)}`;
 rootManifest["version"] = version;
 
 const content = JSON.stringify(rootManifest);
