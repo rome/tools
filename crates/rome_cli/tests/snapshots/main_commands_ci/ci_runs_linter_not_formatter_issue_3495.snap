@@ -1,0 +1,46 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+expression: content
+---
+## `rome.json`
+
+```json
+{
+  "formatter": {
+    "enabled": false
+  }
+}
+
+```
+
+## `file.js`
+
+```js
+let a = !b || !c
+```
+
+# Termination Message
+
+```block
+errors where emitted while running checks
+```
+
+# Emitted Messages
+
+```block
+file.js:1:9 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Logical expression contains unnecessary complexity.
+  
+  > 1 │ let a = !b || !c
+      │         ^^^^^^^^
+  
+  i Suggested fix: Reduce the complexity of the logical expression.
+  
+  - let·a·=·!b·||·!c
+  + let·a·=·!(b·&&·c)
+  
+
+```
+
+
