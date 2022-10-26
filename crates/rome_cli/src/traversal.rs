@@ -554,9 +554,8 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
         let can_lint = self.can_lint(rome_path);
         let can_format = self.can_format(rome_path);
 
-        let can_handle = match self.execution.traversal_mode() {
-            TraversalMode::Check { .. } => self
-                .can_lint(rome_path)
+        match self.execution.traversal_mode() {
+            TraversalMode::Check { .. } => can_lint
                 .map(|result| result.reason.is_none())
                 .unwrap_or_else(|err| {
                     self.miss_handler_err(err, rome_path);
@@ -569,18 +568,16 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
                     false
                 }
                 (Ok(can_format), Ok(can_lint)) => {
-                    can_lint.reason.is_none() | can_format.reason.is_none()
+                    can_lint.reason.is_none() || can_format.reason.is_none()
                 }
             },
-            TraversalMode::Format { .. } => self
-                .can_format(rome_path)
+            TraversalMode::Format { .. } => can_format
                 .map(|result| result.reason.is_none())
                 .unwrap_or_else(|err| {
                     self.miss_handler_err(err, rome_path);
                     false
                 }),
-        };
-        can_handle
+        }
     }
 
     fn handle_file(&self, path: &Path, file_id: FileId) {
