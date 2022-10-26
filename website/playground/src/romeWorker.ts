@@ -114,7 +114,6 @@ self.addEventListener("message", async (e) => {
 					rules: {
 						nursery: {
 							noConstAssign: "error",
-							useAltText: "error",
 							useExhaustiveDependencies: "error",
 						},
 					},

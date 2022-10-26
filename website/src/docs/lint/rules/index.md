@@ -390,6 +390,13 @@ Prevents the incorrect use of <code>super()</code> inside classes.
 It also checks whether a call <code>super()</code> is missing from classes that extends other constructors.
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useCamelCase">
+	<a href="/docs/lint/rules/useCamelCase">useCamelCase (since v0.8.0)</a>
+	<a class="header-anchor" href="#useCamelCase"></a>
+</h3>
+Enforce camel case naming convention.
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useExhaustiveDependencies">
 	<a href="/docs/lint/rules/useExhaustiveDependencies">useExhaustiveDependencies (since v10.0.0)</a>
 	<a class="header-anchor" href="#useExhaustiveDependencies"></a>
@@ -484,14 +491,6 @@ Disallow template literals if interpolation and special-character handling are n
 </h3>
 Requires following curly brace conventions.
 JavaScript allows the omission of curly braces when a block contains only one statement. However, it is considered by many to be best practice to never omit curly braces around blocks, even when they are optional, because it can lead to bugs and reduces code clarity.
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="useCamelCase">
-	<a href="/docs/lint/rules/useCamelCase">useCamelCase (since v0.8.0)</a>
-	<a class="header-anchor" href="#useCamelCase"></a>
-	<span class="recommended">recommended</span>
-</h3>
-Enforce camel case naming convention.
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useFragmentSyntax">

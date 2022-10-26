@@ -5,8 +5,6 @@ layout: layouts/rule.liquid
 
 # useCamelCase (since v0.8.0)
 
-> This rule is recommended by Rome.
-
 Enforce camel case naming convention.
 
 ## Examples
@@ -17,9 +15,9 @@ Enforce camel case naming convention.
 let snake_case;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">style/useCamelCase.js:1:5 <a href="https://rome.tools/docs/lint/rules/useCamelCase">lint/style/useCamelCase</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">nursery/useCamelCase.js:1:5 <a href="https://rome.tools/docs/lint/rules/useCamelCase">lint/nursery/useCamelCase</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Prefer variables names in camel case.</span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Prefer variables names in camel case.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>let snake_case;
    <strong>   │ </strong>    <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -37,9 +35,9 @@ let snake_case;
 let PascalCase;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">style/useCamelCase.js:1:5 <a href="https://rome.tools/docs/lint/rules/useCamelCase">lint/style/useCamelCase</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">nursery/useCamelCase.js:1:5 <a href="https://rome.tools/docs/lint/rules/useCamelCase">lint/nursery/useCamelCase</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Prefer variables names in camel case.</span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Prefer variables names in camel case.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>let PascalCase;
    <strong>   │ </strong>    <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>

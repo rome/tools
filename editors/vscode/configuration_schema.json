@@ -683,6 +683,16 @@
             "null"
           ]
         },
+        "useCamelCase": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "useExhaustiveDependencies": {
           "anyOf": [
             {
@@ -936,16 +946,6 @@
           ]
         },
         "useBlockStatements": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "useCamelCase": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

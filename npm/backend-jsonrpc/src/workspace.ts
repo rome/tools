@@ -201,6 +201,7 @@ export interface Nursery {
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
+	useCamelCase?: RuleConfiguration;
 	useExhaustiveDependencies?: RuleConfiguration;
 	useFlatMap?: RuleConfiguration;
 	useValidForDirection?: RuleConfiguration;
@@ -230,7 +231,6 @@ export interface Style {
 	 */
 	recommended?: boolean;
 	useBlockStatements?: RuleConfiguration;
-	useCamelCase?: RuleConfiguration;
 	useFragmentSyntax?: RuleConfiguration;
 	useOptionalChain?: RuleConfiguration;
 	useSelfClosingElements?: RuleConfiguration;
@@ -349,7 +349,6 @@ export type Category =
 	| "lint/style/useShorthandArrayType"
 	| "lint/style/useFragmentSyntax"
 	| "lint/style/useTemplate"
-	| "lint/style/useCamelCase"
 	| "lint/style/useSingleVarDeclarator"
 	| "lint/style/useOptionalChain"
 	| "lint/style/useBlockStatements"
@@ -375,6 +374,7 @@ export type Category =
 	| "lint/nursery/useValidForDirection"
 	| "lint/nursery/noInvalidConstructorSuper"
 	| "lint/nursery/useExhaustiveDependencies"
+	| "lint/nursery/useCamelCase"
 	| "files/missingHandler"
 	| "format"
 	| "internalError/io"

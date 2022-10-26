@@ -55,7 +55,7 @@ console.log(PascalCaseNOk());
 
 # Diagnostics
 ```
-useCamelCase.js:1:5 lint/style/useCamelCase  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useCamelCase.js:1:5 lint/nursery/useCamelCase  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Prefer variables names in camel case.
   
@@ -77,7 +77,7 @@ useCamelCase.js:1:5 lint/style/useCamelCase  FIXABLE  ━━━━━━━━�
 ```
 
 ```
-useCamelCase.js:6:10 lint/style/useCamelCase  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useCamelCase.js:6:10 lint/nursery/useCamelCase  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Prefer functions names in camel case.
   
@@ -101,7 +101,7 @@ useCamelCase.js:6:10 lint/style/useCamelCase  FIXABLE  ━━━━━━━━�
 ```
 
 ```
-useCamelCase.js:6:25 lint/style/useCamelCase  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useCamelCase.js:6:25 lint/nursery/useCamelCase  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Prefer parameters names in camel case.
   
@@ -125,7 +125,7 @@ useCamelCase.js:6:25 lint/style/useCamelCase  FIXABLE  ━━━━━━━━�
 ```
 
 ```
-useCamelCase.js:6:37 lint/style/useCamelCase  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useCamelCase.js:6:37 lint/nursery/useCamelCase  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Prefer parameters names in camel case.
   
@@ -149,7 +149,7 @@ useCamelCase.js:6:37 lint/style/useCamelCase  FIXABLE  ━━━━━━━━�
 ```
 
 ```
-useCamelCase.js:9:2 lint/style/useCamelCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useCamelCase.js:9:2 lint/nursery/useCamelCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Prefer properties names in camel case.
   
@@ -163,7 +163,7 @@ useCamelCase.js:9:2 lint/style/useCamelCase ━━━━━━━━━━━━
 ```
 
 ```
-useCamelCase.js:10:2 lint/style/useCamelCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useCamelCase.js:10:2 lint/nursery/useCamelCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Prefer properties names in camel case.
   
@@ -178,7 +178,7 @@ useCamelCase.js:10:2 lint/style/useCamelCase ━━━━━━━━━━━�
 ```
 
 ```
-useCamelCase.js:12:2 lint/style/useCamelCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useCamelCase.js:12:2 lint/nursery/useCamelCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Prefer methods names in camel case.
   
@@ -193,7 +193,7 @@ useCamelCase.js:12:2 lint/style/useCamelCase ━━━━━━━━━━━�
 ```
 
 ```
-useCamelCase.js:14:6 lint/style/useCamelCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useCamelCase.js:14:6 lint/nursery/useCamelCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Prefer methods names in camel case.
   
@@ -208,7 +208,7 @@ useCamelCase.js:14:6 lint/style/useCamelCase ━━━━━━━━━━━�
 ```
 
 ```
-useCamelCase.js:15:6 lint/style/useCamelCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useCamelCase.js:15:6 lint/nursery/useCamelCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Prefer methods names in camel case.
   
@@ -222,7 +222,7 @@ useCamelCase.js:15:6 lint/style/useCamelCase ━━━━━━━━━━━�
 ```
 
 ```
-useCamelCase.js:31:5 lint/style/useCamelCase  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useCamelCase.js:31:5 lint/nursery/useCamelCase  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Prefer variables names in camel case.
   
@@ -246,7 +246,7 @@ useCamelCase.js:31:5 lint/style/useCamelCase  FIXABLE  ━━━━━━━━�
 ```
 
 ```
-useCamelCase.js:45:10 lint/style/useCamelCase  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useCamelCase.js:45:10 lint/nursery/useCamelCase  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Prefer functions names in camel case.
   

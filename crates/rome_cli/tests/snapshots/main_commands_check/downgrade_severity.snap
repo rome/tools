@@ -9,7 +9,7 @@ expression: content
   "linter": {
     "rules": {
         "recommended": true,
-        "correctness": {
+        "security": {
             "recommended": true,      
             "noDebugger": "warn"
         }
@@ -27,7 +27,7 @@ debugger;
 # Emitted Messages
 
 ```block
-file.js:1:1 lint/correctness/noDebugger  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+file.js:1:1 lint/security/noDebugger  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This is an unexpected use of the debugger statement.
   

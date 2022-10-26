@@ -57,13 +57,9 @@ const JS_ERRORS_AFTER: &str = "try {
 }
 ";
 
-const NO_DEAD_CODE_ERROR: &str = r#"function f() {
-    for (;;) {
-        continue;
-        break;
-    }
-}
-"#;
+const UPGRADE_SEVERITY_CODE: &str = r#"class A extends B {
+    constructor() {}
+}"#;
 
 #[test]
 fn ok() {
@@ -516,7 +512,7 @@ fn downgrade_severity() {
             .filter(|m| m.level == LogLevel::Error)
             .filter(|m| {
                 let content = format!("{:#?}", m.content);
-                content.contains("correctness/noDebugger")
+                content.contains("security/noDebugger")
             })
             .count(),
         1
@@ -542,7 +538,7 @@ fn upgrade_severity() {
     );
 
     let file_path = Path::new("file.js");
-    fs.insert(file_path.into(), NO_DEAD_CODE_ERROR.as_bytes());
+    fs.insert(file_path.into(), UPGRADE_SEVERITY_CODE.as_bytes());
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
@@ -554,24 +550,14 @@ fn upgrade_severity() {
 
     let messages = &console.out_buffer;
 
+    dbg!(&result);
     assert_eq!(
         messages
             .iter()
             .filter(|m| m.level == LogLevel::Error)
             .filter(|m| {
                 let content = format!("{:?}", m.content);
-                content.contains("nursery/noUnreachable")
-            })
-            .count(),
-        1
-    );
-    assert_eq!(
-        messages
-            .iter()
-            .filter(|m| m.level == LogLevel::Error)
-            .filter(|m| {
-                let content = format!("{:?}", m.content);
-                content.contains("nursery/noUnusedVariables")
+                content.contains("nursery/noInvalidConstructorSuper")
             })
             .count(),
         1

@@ -686,16 +686,18 @@ struct NurserySchema {
     no_const_assign: Option<RuleConfiguration>,
     no_explicit_any: Option<RuleConfiguration>,
     no_invalid_constructor_super: Option<RuleConfiguration>,
+    use_camel_case: Option<RuleConfiguration>,
     use_exhaustive_dependencies: Option<RuleConfiguration>,
     use_flat_map: Option<RuleConfiguration>,
     use_valid_for_direction: Option<RuleConfiguration>,
 }
 impl Nursery {
     const CATEGORY_NAME: &'static str = "nursery";
-    pub(crate) const CATEGORY_RULES: [&'static str; 6] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 7] = [
         "noConstAssign",
         "noExplicitAny",
         "noInvalidConstructorSuper",
+        "useCamelCase",
         "useExhaustiveDependencies",
         "useFlatMap",
         "useValidForDirection",
@@ -866,7 +868,6 @@ struct StyleSchema {
     no_shouty_constants: Option<RuleConfiguration>,
     no_unused_template_literal: Option<RuleConfiguration>,
     use_block_statements: Option<RuleConfiguration>,
-    use_camel_case: Option<RuleConfiguration>,
     use_fragment_syntax: Option<RuleConfiguration>,
     use_optional_chain: Option<RuleConfiguration>,
     use_self_closing_elements: Option<RuleConfiguration>,
@@ -876,13 +877,12 @@ struct StyleSchema {
 }
 impl Style {
     const CATEGORY_NAME: &'static str = "style";
-    pub(crate) const CATEGORY_RULES: [&'static str; 12] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 11] = [
         "noImplicitBoolean",
         "noNegationElse",
         "noShoutyConstants",
         "noUnusedTemplateLiteral",
         "useBlockStatements",
-        "useCamelCase",
         "useFragmentSyntax",
         "useOptionalChain",
         "useSelfClosingElements",
@@ -890,31 +890,29 @@ impl Style {
         "useSingleVarDeclarator",
         "useTemplate",
     ];
-    const RECOMMENDED_RULES: [&'static str; 11] = [
+    const RECOMMENDED_RULES: [&'static str; 10] = [
         "noImplicitBoolean",
         "noNegationElse",
         "noShoutyConstants",
         "noUnusedTemplateLiteral",
         "useBlockStatements",
-        "useCamelCase",
         "useOptionalChain",
         "useSelfClosingElements",
         "useShorthandArrayType",
         "useSingleVarDeclarator",
         "useTemplate",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 11] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 10] = [
         RuleFilter::Rule("style", Self::CATEGORY_RULES[0]),
         RuleFilter::Rule("style", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("style", Self::CATEGORY_RULES[2]),
         RuleFilter::Rule("style", Self::CATEGORY_RULES[3]),
         RuleFilter::Rule("style", Self::CATEGORY_RULES[4]),
-        RuleFilter::Rule("style", Self::CATEGORY_RULES[5]),
+        RuleFilter::Rule("style", Self::CATEGORY_RULES[6]),
         RuleFilter::Rule("style", Self::CATEGORY_RULES[7]),
         RuleFilter::Rule("style", Self::CATEGORY_RULES[8]),
         RuleFilter::Rule("style", Self::CATEGORY_RULES[9]),
         RuleFilter::Rule("style", Self::CATEGORY_RULES[10]),
-        RuleFilter::Rule("style", Self::CATEGORY_RULES[11]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -941,7 +939,7 @@ impl Style {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 11] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 10] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }

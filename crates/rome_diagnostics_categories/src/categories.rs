@@ -48,7 +48,6 @@ define_dategories! {
     "lint/style/useShorthandArrayType": "https://rome.tools/docs/lint/rules/useShorthandArrayType",
     "lint/style/useFragmentSyntax": "https://rome.tools/docs/lint/rules/useFragmentSyntax",
     "lint/style/useTemplate": "https://rome.tools/docs/lint/rules/useTemplate",
-    "lint/style/useCamelCase": "https://rome.tools/docs/lint/rules/useCamelCase",
     "lint/style/useSingleVarDeclarator": "https://rome.tools/docs/lint/rules/useSingleVarDeclarator",
     "lint/style/useOptionalChain": "https://rome.tools/docs/lint/rules/useOptionalChain",
     "lint/style/useBlockStatements": "https://rome.tools/docs/lint/rules/useBlockStatements",
@@ -82,6 +81,8 @@ define_dategories! {
     "lint/nursery/useValidForDirection": "https://rome.tools/docs/lint/rules/useValidForDirection",
     "lint/nursery/noInvalidConstructorSuper": "https://rome.tools/docs/lint/rules/noInvalidConstructorSuper",
     "lint/nursery/useExhaustiveDependencies": "https://rome.tools/docs/lint/rules/useExhaustiveDependencies",
+    "lint/nursery/useCamelCase": "https://rome.tools/docs/lint/rules/useCamelCase",
+
     ;
 
     // General categories
