@@ -141,7 +141,7 @@ impl Rule for NoInvalidConstructorSuper {
     fn diagnostic(_ctx: &RuleContext<Self>, state: &Self::State) -> Option<RuleDiagnostic> {
         let mut diagnostic = RuleDiagnostic::new(rule_category!(), state.range(), state.message());
         if let Some((range, text)) = state.detail() {
-            diagnostic = diagnostic.secondary(range, text);
+            diagnostic = diagnostic.detail(range, text);
         }
         Some(diagnostic)
     }

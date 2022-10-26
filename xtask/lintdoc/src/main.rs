@@ -477,7 +477,12 @@ fn assert_lint(
     let mut all_diagnostics = vec![];
 
     let mut write_diagnostic = |code: &str, diag: rome_diagnostics::v2::Error| {
-        all_diagnostics.push(diag.clone());
+        let category = diag.category().map_or("", |code| code.name());
+        Formatter::new(&mut write).write_markup(markup! {
+            {PrintDiagnostic(&diag)}
+        })?;
+
+        all_diagnostics.push(diag);
         // Fail the test if the analysis returns more diagnostics than expected
         if test.expect_diagnostic {
             // Print all diagnostics to help the user
@@ -487,7 +492,7 @@ fn assert_lint(
                     console.print(
                         rome_console::LogLevel::Error,
                         markup! {
-                            {diag.display(&file)}
+                            {PrintDiagnostic(diag)}
                         },
                     );
                 }
@@ -505,21 +510,16 @@ fn assert_lint(
                 console.print(
                     rome_console::LogLevel::Error,
                     markup! {
-                        {diag.display(&file)}
+                        {PrintDiagnostic(diag)}
                     },
                 );
             }
 
             bail!(format!(
                 "analysis returned an unexpected diagnostic, code `snippet:\n\n{:?}\n\n{}",
-                diag.category().map_or("", |code| code.name()),
-                code
+                category, code
             ));
         }
-
-        Formatter::new(&mut write).write_markup(markup! {
-            {PrintDiagnostic(&diag)}
-        })?;
 
         diagnostic_count += 1;
         Ok(())
