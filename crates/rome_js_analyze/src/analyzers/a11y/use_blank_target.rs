@@ -52,7 +52,7 @@ declare_rule! {
     pub(crate) UseBlankTarget {
         version: "10.0.0",
         name: "useBlankTarget",
-        recommended: false,
+        recommended: true,
     }
 }
 

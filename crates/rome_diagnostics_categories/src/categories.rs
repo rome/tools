@@ -15,13 +15,11 @@ define_dategories! {
     "lint/correctness/noCatchAssign": "https://rome.tools/docs/lint/rules/noCatchAssign",
     "lint/correctness/noCommentText": "https://rome.tools/docs/lint/rules/noCommentText",
     "lint/correctness/noCompareNegZero": "https://rome.tools/docs/lint/rules/noCompareNegZero",
-    "lint/correctness/noDebugger": "https://rome.tools/docs/lint/rules/noDebugger",
     "lint/correctness/noDelete": "https://rome.tools/docs/lint/rules/noDelete",
     "lint/correctness/noDoubleEquals": "https://rome.tools/docs/lint/rules/noDoubleEquals",
     "lint/correctness/noDupeArgs": "https://rome.tools/docs/lint/rules/noDupeArgs",
     "lint/correctness/noEmptyPattern": "https://rome.tools/docs/lint/rules/noEmptyPattern",
     "lint/correctness/noFunctionAssign": "https://rome.tools/docs/lint/rules/noFunctionAssign",
-    "lint/correctness/noImplicitBoolean": "https://rome.tools/docs/lint/rules/noImplicitBoolean",
     "lint/correctness/noImportAssign": "https://rome.tools/docs/lint/rules/noImportAssign",
     "lint/correctness/noLabelVar": "https://rome.tools/docs/lint/rules/noLabelVar",
     "lint/correctness/noMultipleSpacesInRegularExpressionLiterals": "https://rome.tools/docs/lint/rules/noMultipleSpacesInRegularExpressionLiterals",
@@ -29,21 +27,21 @@ define_dategories! {
     "lint/correctness/noSparseArray": "https://rome.tools/docs/lint/rules/noSparseArray",
     "lint/correctness/noUnnecessaryContinue": "https://rome.tools/docs/lint/rules/noUnnecessaryContinue",
     "lint/correctness/noUnsafeNegation": "https://rome.tools/docs/lint/rules/noUnsafeNegation",
-    "lint/correctness/noUnusedTemplateLiteral": "https://rome.tools/docs/lint/rules/noUnusedTemplateLiteral",
-    "lint/correctness/useBlockStatements": "https://rome.tools/docs/lint/rules/useBlockStatements",
     "lint/correctness/useSingleCaseStatement": "https://rome.tools/docs/lint/rules/useSingleCaseStatement",
-    "lint/correctness/useSingleVarDeclarator": "https://rome.tools/docs/lint/rules/useSingleVarDeclarator",
-    "lint/correctness/useValidTypeof": "https://rome.tools/docs/lint/rules/useValidTypeof",
     "lint/correctness/useWhile": "https://rome.tools/docs/lint/rules/useWhile",
     "lint/correctness/noNewSymbol": "https://rome.tools/docs/lint/rules/noNewSymbol",
     "lint/correctness/noUselessFragments": "https://rome.tools/docs/lint/rules/noUselessFragments",
     "lint/correctness/noUnusedVariables": "https://rome.tools/docs/lint/rules/noUnusedVariables",
     "lint/correctness/noUnreachable": "https://rome.tools/docs/lint/rules/noUnreachable",
     "lint/correctness/noRestrictedGlobals": "https://rome.tools/docs/lint/rules/noRestrictedGlobals",
-    "lint/correctness/useOptionalChain": "https://rome.tools/docs/lint/rules/useOptionalChain",
     "lint/correctness/noUndeclaredVariables": "https://rome.tools/docs/lint/rules/noUndeclaredVariables",
+    "lint/correctness/useValidTypeof": "https://rome.tools/docs/lint/rules/useValidTypeof",
+    "lint/correctness/noVoidElementsWithChildren": "https://rome.tools/docs/lint/rules/noVoidElementsWithChildren",
+    "lint/correctness/noArrayIndexKey": "https://rome.tools/docs/lint/rules/noArrayIndexKey",
+    "lint/correctness/noChildrenProp": "https://rome.tools/docs/lint/rules/noChildrenProp",
+    "lint/correctness/noRenderReturnValue": "https://rome.tools/docs/lint/rules/noRenderReturnValue",
 
-    // style category
+    // style group
     "lint/style/noNegationElse": "https://rome.tools/docs/lint/rules/noNegationElse",
     "lint/style/noShoutyConstants": "https://rome.tools/docs/lint/rules/noShoutyConstants",
     "lint/style/useSelfClosingElements": "https://rome.tools/docs/lint/rules/useSelfClosingElements",
@@ -51,12 +49,17 @@ define_dategories! {
     "lint/style/useFragmentSyntax": "https://rome.tools/docs/lint/rules/useFragmentSyntax",
     "lint/style/useTemplate": "https://rome.tools/docs/lint/rules/useTemplate",
     "lint/style/useCamelCase": "https://rome.tools/docs/lint/rules/useCamelCase",
+    "lint/style/useSingleVarDeclarator": "https://rome.tools/docs/lint/rules/useSingleVarDeclarator",
+    "lint/style/useOptionalChain": "https://rome.tools/docs/lint/rules/useOptionalChain",
+    "lint/style/useBlockStatements": "https://rome.tools/docs/lint/rules/useBlockStatements",
+    "lint/style/noImplicitBoolean": "https://rome.tools/docs/lint/rules/noImplicitBoolean",
+    "lint/style/noUnusedTemplateLiteral": "https://rome.tools/docs/lint/rules/noUnusedTemplateLiteral",
 
     // complexity
     "lint/complexity/useSimplifiedLogicExpression": "https://rome.tools/docs/lint/rules/useSimplifiedLogicExpression",
     "lint/complexity/noExtraBooleanCast": "https://rome.tools/docs/lint/rules/noExtraBooleanCast",
 
-    // a11y category
+    // a11y group
     "lint/a11y/noAutofocus": "https://rome.tools/docs/lint/rules/noAutofocus",
     "lint/a11y/noPositiveTabindex": "https://rome.tools/docs/lint/rules/noPositiveTabindex",
     "lint/a11y/useKeyWithMouseEvents": "https://rome.tools/docs/lint/rules/useKeyWithMouseEvents",
@@ -65,14 +68,11 @@ define_dategories! {
     "lint/a11y/useValidAnchor": "https://rome.tools/docs/lint/rules/useValidAnchor",
     "lint/a11y/useKeyWithClickEvents": "https://rome.tools/docs/lint/rules/useKeyWithClickEvents",
     "lint/a11y/useButtonType": "https://rome.tools/docs/lint/rules/useButtonType",
-    // react
-    "lint/react/noDangerouslySetInnerHtml": "https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtml",
-    "lint/react/noDangerouslySetInnerHtmlWithChildren": "https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtmlWithChildren",
-    "lint/react/noVoidElementsWithChildren": "https://rome.tools/docs/lint/rules/noVoidElementsWithChildren",
-    "lint/react/noChildrenProp": "https://rome.tools/docs/lint/rules/noChildrenProp",
-    "lint/react/noRenderReturnValue": "https://rome.tools/docs/lint/rules/noRenderReturnValue",
-    "lint/react/noArrayIndexKey": "https://rome.tools/docs/lint/rules/noArrayIndexKey",
-
+    "lint/a11y/useAltText": "https://rome.tools/docs/lint/rules/useAltText",
+    // security
+    "lint/security/noDangerouslySetInnerHtml": "https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtml",
+    "lint/security/noDangerouslySetInnerHtmlWithChildren": "https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtmlWithChildren",
+    "lint/security/noDebugger": "https://rome.tools/docs/lint/rules/noDebugger",
 
 
     // nursery
@@ -80,6 +80,8 @@ define_dategories! {
     "lint/nursery/noConstAssign": "https://rome.tools/docs/lint/rules/noConstAssign",
     "lint/nursery/noExplicitAny": "https://rome.tools/docs/lint/rules/noExplicitAny",
     "lint/nursery/useValidForDirection": "https://rome.tools/docs/lint/rules/useValidForDirection",
+    "lint/nursery/noInvalidConstructorSuper": "https://rome.tools/docs/lint/rules/noInvalidConstructorSuper",
+    "lint/nursery/useExhaustiveDependencies": "https://rome.tools/docs/lint/rules/useExhaustiveDependencies",
     ;
 
     // General categories

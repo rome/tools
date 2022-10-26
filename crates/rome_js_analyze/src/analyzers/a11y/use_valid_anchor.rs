@@ -77,7 +77,7 @@ declare_rule! {
     pub(crate) UseValidAnchor {
         version: "10.0.0",
         name: "useValidAnchor",
-        recommended: false,
+        recommended: true,
     }
 }
 

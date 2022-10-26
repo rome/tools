@@ -17,7 +17,7 @@ Disallow the use of `debugger`
 debugger;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/noDebugger.js:1:1 <a href="https://rome.tools/docs/lint/rules/noDebugger">lint/correctness/noDebugger</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">security/noDebugger.js:1:1 <a href="https://rome.tools/docs/lint/rules/noDebugger">lint/security/noDebugger</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This is an unexpected use of the </span><span style="color: Tomato;"><strong>debugger</strong></span><span style="color: Tomato;"> statement.</span>
   

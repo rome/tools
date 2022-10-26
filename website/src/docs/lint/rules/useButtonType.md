@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # useButtonType (since v0.10.0)
 
+> This rule is recommended by Rome.
+
 Enforces the usage of the attribute `type` for the element `button`
 
 ## Examples
@@ -17,7 +19,7 @@ Enforces the usage of the attribute `type` for the element `button`
 
 {% raw %}<pre class="language-text"><code class="language-text">a11y/useButtonType.js:1:1 <a href="https://rome.tools/docs/lint/rules/useButtonType">lint/a11y/useButtonType</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Provide an explicit </span><span style="color: Orange;"><strong>type</strong></span><span style="color: Orange;"> prop for the </span><span style="color: Orange;"><strong>button</strong></span><span style="color: Orange;"> element.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide an explicit </span><span style="color: Tomato;"><strong>type</strong></span><span style="color: Tomato;"> prop for the </span><span style="color: Tomato;"><strong>button</strong></span><span style="color: Tomato;"> element.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>&lt;button&gt;Do something&lt;/button&gt;
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -35,7 +37,7 @@ Enforces the usage of the attribute `type` for the element `button`
 
 {% raw %}<pre class="language-text"><code class="language-text">a11y/useButtonType.js:1:14 <a href="https://rome.tools/docs/lint/rules/useButtonType">lint/a11y/useButtonType</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Provide a valid </span><span style="color: Orange;"><strong>type</strong></span><span style="color: Orange;"> prop for the </span><span style="color: Orange;"><strong>button</strong></span><span style="color: Orange;"> element.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide a valid </span><span style="color: Tomato;"><strong>type</strong></span><span style="color: Tomato;"> prop for the </span><span style="color: Tomato;"><strong>button</strong></span><span style="color: Tomato;"> element.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>&lt;button type=&quot;incorrectType&quot;&gt;Do something&lt;/button&gt;
    <strong>   │ </strong>             <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -53,7 +55,7 @@ React.createElement('button');
 
 {% raw %}<pre class="language-text"><code class="language-text">a11y/useButtonType.js:1:21 <a href="https://rome.tools/docs/lint/rules/useButtonType">lint/a11y/useButtonType</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Provide an explicit </span><span style="color: Orange;"><strong>type</strong></span><span style="color: Orange;"> prop for the </span><span style="color: Orange;"><strong>button</strong></span><span style="color: Orange;"> element.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Provide an explicit </span><span style="color: Tomato;"><strong>type</strong></span><span style="color: Tomato;"> prop for the </span><span style="color: Tomato;"><strong>button</strong></span><span style="color: Tomato;"> element.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>React.createElement('button');
    <strong>   │ </strong>                    <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>

@@ -51,7 +51,7 @@ declare_rule! {
     pub(crate) NoAutoFocus {
         version: "10.0.0",
         name: "noAutofocus",
-        recommended: false,
+        recommended: true,
     }
 }
 

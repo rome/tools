@@ -59,7 +59,7 @@ declare_rule! {
     pub(crate) UseAnchorContent {
         version: "10.0.0",
         name: "useAnchorContent",
-        recommended: false,
+        recommended: true,
     }
 }
 

@@ -47,7 +47,7 @@ declare_rule! {
     pub(crate) NoPositiveTabindex {
         version: "10.0.0",
         name: "noPositiveTabindex",
-        recommended: false,
+        recommended: true,
     }
 }
 

@@ -47,7 +47,7 @@ declare_rule! {
     pub(crate) UseKeyWithClickEvents {
         version: "10.0.0",
         name: "useKeyWithClickEvents",
-        recommended: false,
+        recommended: true,
     }
 }
 

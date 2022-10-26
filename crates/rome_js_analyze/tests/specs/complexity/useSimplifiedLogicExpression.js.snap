@@ -27,7 +27,7 @@ const r4 = !boolExpr1 || !boolExpr2;
 
 # Diagnostics
 ```
-useSimplifiedLogicExpression.js:11:11 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━━━━
+useSimplifiedLogicExpression.js:11:11 lint/complexity/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━━━━
 
   ! Logical expression contains unnecessary complexity.
   
@@ -46,7 +46,7 @@ useSimplifiedLogicExpression.js:11:11 lint/correctness/useSimplifiedLogicExpress
 ```
 
 ```
-useSimplifiedLogicExpression.js:13:12 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━━━━
+useSimplifiedLogicExpression.js:13:12 lint/complexity/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━━━━
 
   ! Logical expression contains unnecessary complexity.
   
@@ -65,7 +65,7 @@ useSimplifiedLogicExpression.js:13:12 lint/correctness/useSimplifiedLogicExpress
 ```
 
 ```
-useSimplifiedLogicExpression.js:15:12 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━━━━
+useSimplifiedLogicExpression.js:15:12 lint/complexity/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━━━━
 
   ! Logical expression contains unnecessary complexity.
   
@@ -84,7 +84,7 @@ useSimplifiedLogicExpression.js:15:12 lint/correctness/useSimplifiedLogicExpress
 ```
 
 ```
-useSimplifiedLogicExpression.js:18:12 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━━━━
+useSimplifiedLogicExpression.js:18:12 lint/complexity/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━━━━
 
   ! Logical expression contains unnecessary complexity.
   

@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # noUnreachable (since v0.7.0)
 
+> This rule is recommended by Rome.
+
 Disallow unreachable code
 
 ## Examples
@@ -20,7 +22,7 @@ function example() {
 
 {% raw %}<pre class="language-text"><code class="language-text">correctness/noUnreachable.js:3:5 <a href="https://rome.tools/docs/lint/rules/noUnreachable">lint/correctness/noUnreachable</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This code will never be reached ...</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This code will never be reached ...</span>
   
     <strong>1 │ </strong>function example() {
     <strong>2 │ </strong>    return;
@@ -49,7 +51,7 @@ function example() {
 
 {% raw %}<pre class="language-text"><code class="language-text">correctness/noUnreachable.js:2:28 <a href="https://rome.tools/docs/lint/rules/noUnreachable">lint/correctness/noUnreachable</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This code will never be reached ...</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This code will never be reached ...</span>
   
     <strong>1 │ </strong>function example() {
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>    for(let i = 0; i &lt; 10; ++i) {
@@ -79,7 +81,7 @@ function example() {
 
 {% raw %}<pre class="language-text"><code class="language-text">correctness/noUnreachable.js:4:9 <a href="https://rome.tools/docs/lint/rules/noUnreachable">lint/correctness/noUnreachable</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This code will never be reached ...</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">This code will never be reached ...</span>
   
     <strong>2 │ </strong>    for(const key in value) {
     <strong>3 │ </strong>        continue;

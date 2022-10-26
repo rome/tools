@@ -47,7 +47,7 @@ declare_rule! {
     pub(crate) NoUnreachable {
         version: "0.7.0",
         name: "noUnreachable",
-        recommended: false,
+        recommended: true,
     }
 }
 

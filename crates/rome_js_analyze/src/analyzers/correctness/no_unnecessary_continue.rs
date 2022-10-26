@@ -7,7 +7,7 @@ use rome_rowan::{AstNode, BatchMutationExt};
 use crate::{utils, JsRuleAction};
 
 declare_rule! {
-    /// Avoid using unnecessary `ContinueStatement`.
+    /// Avoid using unnecessary `continue`.
     ///
     /// ## Examples
     ///

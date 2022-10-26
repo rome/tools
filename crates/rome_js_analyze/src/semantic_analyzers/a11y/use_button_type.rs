@@ -38,7 +38,7 @@ declare_rule! {
     pub(crate) UseButtonType {
         version: "0.10.0",
         name: "useButtonType",
-        recommended: false,
+        recommended: true,
     }
 }
 

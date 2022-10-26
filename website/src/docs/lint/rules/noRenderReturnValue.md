@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # noRenderReturnValue (since v0.10.0)
 
+> This rule is recommended by Rome.
+
 Prevent the usage of the return value of `React.render`.
 
 >`ReactDOM.render()` currently returns a reference to the root `ReactComponent` instance. However, using this return value is legacy
@@ -23,9 +25,9 @@ Source: [ReactDOM documentation](https://facebook.github.io/react/docs/react-dom
 const foo = ReactDOM.render(<div />, document.body);
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">react/noRenderReturnValue.js:1:13 <a href="https://rome.tools/docs/lint/rules/noRenderReturnValue">lint/react/noRenderReturnValue</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noRenderReturnValue.js:1:13 <a href="https://rome.tools/docs/lint/rules/noRenderReturnValue">lint/correctness/noRenderReturnValue</a> ━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Do not depend on the value returned by the function </span><span style="color: Orange;"><strong>ReactDOM.render()</strong></span><span style="color: Orange;">.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Do not depend on the value returned by the function </span><span style="color: Tomato;"><strong>ReactDOM.render()</strong></span><span style="color: Tomato;">.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>const foo = ReactDOM.render(&lt;div /&gt;, document.body);
    <strong>   │ </strong>            <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>

@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # noPositiveTabindex (since v10.0.0)
 
+> This rule is recommended by Rome.
+
 Prevent the usage of positive integers on `tabIndex` property
 
 Avoid positive `tabIndex` property values to synchronize the flow of the page with keyboard tab order.
@@ -23,7 +25,7 @@ Avoid positive `tabIndex` property values to synchronize the flow of the page wi
 
 {% raw %}<pre class="language-text"><code class="language-text">a11y/noPositiveTabindex.js:1:15 <a href="https://rome.tools/docs/lint/rules/noPositiveTabindex">lint/a11y/noPositiveTabindex</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Avoid positive values for the </span><span style="color: Orange;"><strong>tabIndex</strong></span><span style="color: Orange;"> prop.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid positive values for the </span><span style="color: Tomato;"><strong>tabIndex</strong></span><span style="color: Tomato;"> prop.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>&lt;div tabIndex={1}&gt;foo&lt;/div&gt;
    <strong>   │ </strong>              <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -39,7 +41,7 @@ Avoid positive `tabIndex` property values to synchronize the flow of the page wi
 
 {% raw %}<pre class="language-text"><code class="language-text">a11y/noPositiveTabindex.js:1:15 <a href="https://rome.tools/docs/lint/rules/noPositiveTabindex">lint/a11y/noPositiveTabindex</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Avoid positive values for the </span><span style="color: Orange;"><strong>tabIndex</strong></span><span style="color: Orange;"> prop.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid positive values for the </span><span style="color: Tomato;"><strong>tabIndex</strong></span><span style="color: Tomato;"> prop.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>&lt;div tabIndex={&quot;1&quot;} /&gt;
    <strong>   │ </strong>              <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -55,7 +57,7 @@ React.createElement("div", { tabIndex: 1 })
 
 {% raw %}<pre class="language-text"><code class="language-text">a11y/noPositiveTabindex.js:1:40 <a href="https://rome.tools/docs/lint/rules/noPositiveTabindex">lint/a11y/noPositiveTabindex</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Avoid positive values for the </span><span style="color: Orange;"><strong>tabIndex</strong></span><span style="color: Orange;"> prop.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid positive values for the </span><span style="color: Tomato;"><strong>tabIndex</strong></span><span style="color: Tomato;"> prop.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>React.createElement(&quot;div&quot;, { tabIndex: 1 })
    <strong>   │ </strong>                                       <strong><span style="color: Tomato;">^</span></strong>

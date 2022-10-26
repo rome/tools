@@ -45,7 +45,7 @@ declare_rule! {
     pub(crate) UseKeyWithMouseEvents {
         version: "10.0.0",
         name: "useKeyWithMouseEvents",
-        recommended: false,
+        recommended: true,
     }
 }
 

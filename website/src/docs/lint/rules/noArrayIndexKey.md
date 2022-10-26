@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # noArrayIndexKey (since v0.10.0)
 
+> This rule is recommended by Rome.
+
 Discourage the usage of Array index in keys.
 
 >We don’t recommend using indexes for keys if the order of items may change.
@@ -26,9 +28,9 @@ something.forEach((Element, index) => {
 });
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">react/noArrayIndexKey.js:2:21 <a href="https://rome.tools/docs/lint/rules/noArrayIndexKey">lint/react/noArrayIndexKey</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noArrayIndexKey.js:2:21 <a href="https://rome.tools/docs/lint/rules/noArrayIndexKey">lint/correctness/noArrayIndexKey</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Avoid using the index of an array as key property in an element.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid using the index of an array as key property in an element.</span>
   
     <strong>1 │ </strong>something.forEach((Element, index) =&gt; {
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>    &lt;Component key={index} &gt;foo&lt;/Component&gt;
@@ -55,9 +57,9 @@ React.Children.map(this.props.children, (child, index) => (
 ))
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">react/noArrayIndexKey.js:2:38 <a href="https://rome.tools/docs/lint/rules/noArrayIndexKey">lint/react/noArrayIndexKey</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noArrayIndexKey.js:2:38 <a href="https://rome.tools/docs/lint/rules/noArrayIndexKey">lint/correctness/noArrayIndexKey</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Avoid using the index of an array as key property in an element.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid using the index of an array as key property in an element.</span>
   
     <strong>1 │ </strong>React.Children.map(this.props.children, (child, index) =&gt; (
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>    React.cloneElement(child, { key: index })
