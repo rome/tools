@@ -179,7 +179,7 @@ jobs:
     needs:
       - build
       - build-wasm
-    environment: marketplace
+    environment: npm-publish
     steps:
       - uses: actions/checkout@v3
 
@@ -205,16 +205,16 @@ jobs:
       - name: Generate npm packages
         run: node npm/rome/scripts/generate-packages.mjs
 
-      - name: Publish npm packages (pre-release)
-        run: for package in npm/*; do npm publish $package --tag nightly --access public; done
-        if: needs.build.outputs.prerelease == 'true'
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
-      - name: Publish npm packages
-        run: for package in npm/*; do npm publish $package --tag next --access public; done
+      - name: Publish npm packages as next
+        run: for package in npm/*; do if [ $package != "npm/js-api" ]; then npm publish $package --tag next --access public; fi; done
         if: needs.build.outputs.prerelease != 'true'
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish npm packages as nightly
+        run: for package in npm/*; do if [ $package != "npm/js-api" ]; then npm publish $package --tag nightly --access public; fi; done
+        if: needs.build.outputs.prerelease == 'true'
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create GitHub release and tag
         uses: softprops/action-gh-release@v1
