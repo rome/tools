@@ -123,13 +123,10 @@ impl Rule for UseAltText {
         ).to_owned();
 
         Some(
-            RuleDiagnostic::new(rule_category!(), state, message).footer(
-                Severity::Note,
-                markup! {
-                    "Meaningful alternative text on elements helps users relying on screen
-                readers to understand content's purpose within a page."
-                },
-            ),
+            RuleDiagnostic::new(rule_category!(), state, message).note(markup! {
+                "Meaningful alternative text on elements helps users relying on screen
+            readers to understand content's purpose within a page."
+            }),
         )
     }
 }
@@ -141,10 +138,10 @@ fn input_has_type_image(element: &JsxSelfClosingElement) -> Option<bool> {
     let type_attribute = element.find_attribute_by_name("type").ok()?;
 
     if let Some(prop) = type_attribute {
-        let initalizer = prop.initializer()?.value().ok()?;
-        let initalizer = initalizer.as_jsx_string()?;
+        let initializer = prop.initializer()?.value().ok()?;
+        let initializer = initializer.as_jsx_string()?;
 
-        if initalizer.inner_string_text().ok()? == "image" {
+        if initializer.inner_string_text().ok()? == "image" {
             return Some(true);
         }
         return None;
