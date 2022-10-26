@@ -3,9 +3,9 @@ use rome_console::markup;
 use rome_diagnostics::Severity;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsObjectExpression, JsStringLiteralExpression,
-    JsxAnyAttributeValue, JsxAnyElementName, JsxSelfClosingElement, JsxString, TextRange,
+    JsxAnyElementName, JsxSelfClosingElement, JsxString, TextRange,
 };
-use rome_rowan::{declare_node_union, AstNode, AstNodeList};
+use rome_rowan::{declare_node_union, AstNode};
 
 declare_rule! {
     /// It asserts that alternative text to images or areas, help to rely on to screen readers to understand the purpose and the context of the image.
@@ -14,26 +14,33 @@ declare_rule! {
     ///
     /// ### Invalid
     ///
-    /// ```js,expect_diagnostic
+    /// ```jsx,expect_diagnostic
     /// <img src="image.png" />
     /// ```
     ///
-    /// ```js,expect_diagnostic
+    /// ```jsx,expect_diagnostic
     /// <input type="image" src="image.png" />
     /// ```
     ///
     /// ### Valid
     ///
-    /// ```js
+    /// ```jsx
     /// <img src="image.png" alt="image alt" />
     /// ```
     ///
-    /// ```js
+    /// ```jsx
     /// <input type="image" src="image.png" alt="alt text" />
     /// ```
     ///
+    /// ```jsx
+    /// <input type="image" src="image.png" aria-label="alt text" />
+    /// ```
+    ///
+    /// ```jsx
+    /// <input type="image" src="image.png" aria-labelledby="someId" />
+    /// ```
 
-    pub(crate) UseAltText{
+    pub(crate) UseAltText {
         version: "10.0.0",
         name: "useAltText",
         recommended: false,
@@ -54,10 +61,10 @@ impl Rule for UseAltText {
         let element = ctx.query();
         let name = element.name().ok()?;
         if is_valid_tag(&name)? {
-            if name.as_jsx_name()?.value_token().ok()?.text_trimmed() == "input" {
-                if !input_has_type_image(element)? {
-                    return None;
-                }
+            if name.as_jsx_name()?.value_token().ok()?.text_trimmed() == "input"
+                && !input_has_type_image(element)?
+            {
+                return None;
             }
 
             let alt_prop = element.find_attribute_by_name("alt").ok()?;
@@ -153,10 +160,7 @@ fn is_valid_tag(name: &JsxAnyElementName) -> Option<bool> {
     Some(match name {
         JsxAnyElementName::JsxName(name) => {
             let name = name.value_token().ok()?;
-            match name.text_trimmed() {
-                "input" | "area" | "img" => true,
-                _ => false,
-            }
+            matches!(name.text_trimmed(), "input" | "area" | "img")
         }
         _ => false,
     })

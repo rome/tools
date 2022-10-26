@@ -5,14 +5,13 @@
 	<img src="foo" role="presentation" />
 	<img src="foo" role="none" />
 	<img alt />
+	<img alt={null} />
+	<img alt={undefined} />
 </>
 
 // valid
 
 <>
-	<img {...props} alt />
-	<img {...props} /> {/* Skipping*/}
-	<img {...props} alt={undefined} /> {/* Skipping*/}
 	<img src="foo" alt="Foo eating a sandwich." />
 	<img src="foo" alt={"Foo eating a sandwich."} />
 	<img src="foo" alt={altText} />

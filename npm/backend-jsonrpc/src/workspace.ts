@@ -102,6 +102,10 @@ export interface JavascriptFormatter {
 	 * The style for quotes. Defaults to double.
 	 */
 	quoteStyle?: QuoteStyle;
+	/**
+	 * Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Defaults to "all".
+	 */
+	trailingComma?: TrailingComma;
 }
 export interface Rules {
 	correctness?: Correctness;
@@ -114,6 +118,7 @@ export interface Rules {
 }
 export type QuoteProperties = "asNeeded" | "preserve";
 export type QuoteStyle = "double" | "single";
+export type TrailingComma = "all" | "es5" | "none";
 /**
  * A list of rules that belong to this group
  */
@@ -156,11 +161,17 @@ export interface Correctness {
  */
 export interface Nursery {
 	noArrayIndexKey?: RuleConfiguration;
+	noAutofocus?: RuleConfiguration;
 	noChildrenProp?: RuleConfiguration;
+	noConstAssign?: RuleConfiguration;
 	noDangerouslySetInnerHtml?: RuleConfiguration;
 	noDangerouslySetInnerHtmlWithChildren?: RuleConfiguration;
+	noExplicitAny?: RuleConfiguration;
+	noInvalidConstructorSuper?: RuleConfiguration;
 	noNewSymbol?: RuleConfiguration;
+	noPositiveTabindex?: RuleConfiguration;
 	noRenderReturnValue?: RuleConfiguration;
+	noRestrictedGlobals?: RuleConfiguration;
 	noUndeclaredVariables?: RuleConfiguration;
 	noUnreachable?: RuleConfiguration;
 	noUnusedVariables?: RuleConfiguration;
@@ -171,10 +182,18 @@ export interface Nursery {
 	 */
 	recommended?: boolean;
 	useAltText?: RuleConfiguration;
+	useAnchorContent?: RuleConfiguration;
+	useBlankTarget?: RuleConfiguration;
 	useButtonType?: RuleConfiguration;
 	useCamelCase?: RuleConfiguration;
+	useExhaustiveDependencies?: RuleConfiguration;
+	useFlatMap?: RuleConfiguration;
 	useFragmentSyntax?: RuleConfiguration;
+	useKeyWithClickEvents?: RuleConfiguration;
+	useKeyWithMouseEvents?: RuleConfiguration;
 	useOptionalChain?: RuleConfiguration;
+	useValidAnchor?: RuleConfiguration;
+	useValidForDirection?: RuleConfiguration;
 }
 /**
  * A list of rules that belong to this group
@@ -307,6 +326,20 @@ export type Category =
 	| "lint/nursery/useFragmentSyntax"
 	| "lint/nursery/noArrayIndexKey"
 	| "lint/nursery/noDangerouslySetInnerHtmlWithChildren"
+	| "lint/nursery/noAutofocus"
+	| "lint/nursery/useKeyWithMouseEvents"
+	| "lint/nursery/useAnchorContent"
+	| "lint/nursery/useBlankTarget"
+	| "lint/nursery/useValidAnchor"
+	| "lint/nursery/useKeyWithClickEvents"
+	| "lint/nursery/noRestrictedGlobals"
+	| "lint/nursery/useFlatMap"
+	| "lint/nursery/noPositiveTabindex"
+	| "lint/nursery/noConstAssign"
+	| "lint/nursery/noExplicitAny"
+	| "lint/nursery/noInvalidConstructorSuper"
+	| "lint/nursery/useValidForDirection"
+	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/nursery/useAltText"
 	| "lint/style/noNegationElse"
 	| "lint/style/noShoutyConstants"
@@ -319,6 +352,7 @@ export type Category =
 	| "internalError/panic"
 	| "lint"
 	| "parse"
+	| "parse/noSuperWithoutExtends"
 	| "suppressions/unknownGroup"
 	| "suppressions/unknownRule"
 	| "args/fileNotFound"

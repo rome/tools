@@ -8,14 +8,13 @@ expression: input.jsx
 <>
 	<input type="image" />
 	<input type="image" alt />
+	<input type="image" alt={undefined} />
+	<input type="image" alt={null} />
 </>;
 
 // valid
 
 <>
-	<input type="image" {...props} alt />
-	<input type="image" {...props} /> {/* Skipping*/}
-	<input type="image" {...props} alt={undefined} /> {/* Skipping*/}
 	<input type="image" alt="This is descriptive!" />
 	<input type="image" aria-label="foo" />
 	<input type="image" aria-labelledby="id1" />
@@ -27,14 +26,14 @@ expression: input.jsx
 ```
 input.jsx:3:2 lint/nursery/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide alt when using img, area, input type='image'
+  ! Provide the attribute alt when using img, area or input type='image'
   
     1 │ // invalid
     2 │ <>
   > 3 │ 	<input type="image" />
       │ 	^^^^^^^^^^^^^^^^^^^^^^
     4 │ 	<input type="image" alt />
-    5 │ </>;
+    5 │ 	<input type="image" alt={undefined} />
   
   i Meaningful alternative text on elements helps users relying on screen
                     readers to understand content's purpose within a page.
@@ -45,14 +44,32 @@ input.jsx:3:2 lint/nursery/useAltText ━━━━━━━━━━━━━━
 ```
 input.jsx:4:2 lint/nursery/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ! Provide alt when using img, area, input type='image'
+  ! Provide the attribute alt when using img, area or input type='image'
   
     2 │ <>
     3 │ 	<input type="image" />
   > 4 │ 	<input type="image" alt />
       │ 	^^^^^^^^^^^^^^^^^^^^^^^^^^
-    5 │ </>;
-    6 │ 
+    5 │ 	<input type="image" alt={undefined} />
+    6 │ 	<input type="image" alt={null} />
+  
+  i Meaningful alternative text on elements helps users relying on screen
+                    readers to understand content's purpose within a page.
+  
+
+```
+
+```
+input.jsx:6:27 lint/nursery/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide the attribute alt when using img, area or input type='image'
+  
+    4 │ 	<input type="image" alt />
+    5 │ 	<input type="image" alt={undefined} />
+  > 6 │ 	<input type="image" alt={null} />
+      │ 	                         ^^^^
+    7 │ </>;
+    8 │ 
   
   i Meaningful alternative text on elements helps users relying on screen
                     readers to understand content's purpose within a page.

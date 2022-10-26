@@ -3,7 +3,7 @@ title: Lint Rule useAltText
 layout: layouts/rule.liquid
 ---
 
-# useAltText (since v0.10.0)
+# useAltText (since v10.0.0)
 
 It asserts that alternative text to images or areas, help to rely on to screen readers to understand the purpose and the context of the image.
 
@@ -17,7 +17,7 @@ It asserts that alternative text to images or areas, help to rely on to screen r
 
 {% raw %}<pre class="language-text"><code class="language-text">nursery/useAltText.js:1:1 <a href="https://rome.tools/docs/lint/rules/useAltText">lint/nursery/useAltText</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Provide </span><span style="color: Orange;"><strong>alt</strong></span><span style="color: Orange;"> when using </span><span style="color: Orange;"><strong>img</strong></span><span style="color: Orange;">, </span><span style="color: Orange;"><strong>area</strong></span><span style="color: Orange;">, </span><span style="color: Orange;"><strong>input type='image'</strong></span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Provide the attribute </span><span style="color: Orange;"><strong>alt</strong></span><span style="color: Orange;"> when using </span><span style="color: Orange;"><strong>img</strong></span><span style="color: Orange;">, </span><span style="color: Orange;"><strong>area</strong></span><span style="color: Orange;"> or </span><span style="color: Orange;"><strong>input type='image'</strong></span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>&lt;img src=&quot;image.png&quot; /&gt;
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -34,7 +34,7 @@ It asserts that alternative text to images or areas, help to rely on to screen r
 
 {% raw %}<pre class="language-text"><code class="language-text">nursery/useAltText.js:1:1 <a href="https://rome.tools/docs/lint/rules/useAltText">lint/nursery/useAltText</a> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Provide </span><span style="color: Orange;"><strong>alt</strong></span><span style="color: Orange;"> when using </span><span style="color: Orange;"><strong>img</strong></span><span style="color: Orange;">, </span><span style="color: Orange;"><strong>area</strong></span><span style="color: Orange;">, </span><span style="color: Orange;"><strong>input type='image'</strong></span>
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Provide the attribute </span><span style="color: Orange;"><strong>alt</strong></span><span style="color: Orange;"> when using </span><span style="color: Orange;"><strong>img</strong></span><span style="color: Orange;">, </span><span style="color: Orange;"><strong>area</strong></span><span style="color: Orange;"> or </span><span style="color: Orange;"><strong>input type='image'</strong></span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>&lt;input type=&quot;image&quot; src=&quot;image.png&quot; /&gt;
    <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -53,5 +53,13 @@ It asserts that alternative text to images or areas, help to rely on to screen r
 
 ```jsx
 <input type="image" src="image.png" alt="alt text" />
+```
+
+```jsx
+<input type="image" src="image.png" aria-label="alt text" />
+```
+
+```jsx
+<input type="image" src="image.png" aria-labelledby="someId" />
 ```
 
