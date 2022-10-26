@@ -14,7 +14,7 @@ class A {
 
 # Diagnostics
 ```
-noSuperWithoutExtends.js:3:9 lint/nursery/noSuperWithoutExtends ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noSuperWithoutExtends.js:3:9 parse/noSuperWithoutExtends ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! super() is only valid in derived class constructors
   

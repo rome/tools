@@ -1,8 +1,10 @@
 use rome_analyze::context::RuleContext;
 use rome_analyze::{declare_rule, Ast, Rule, RuleDiagnostic};
 use rome_console::markup;
+use rome_diagnostics::v2::category;
 use rome_js_syntax::{JsClassDeclaration, JsSuperExpression};
 use rome_rowan::AstNode;
+
 declare_rule! {
     /// Catch a `SyntaxError` when writing calling `super()` on a class that doesn't extends any class
     ///
@@ -46,7 +48,7 @@ impl Rule for NoSuperWithoutExtends {
         let node = ctx.query();
 
         Some(RuleDiagnostic::new(
-            rule_category!(),
+            category!("parse/noSuperWithoutExtends"),
             node.syntax().text_trimmed_range(),
             markup! {
                 "super() is only valid in derived class constructors"

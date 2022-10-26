@@ -70,7 +70,6 @@ define_dategories! {
     "lint/style/noShoutyConstants": "https://rome.tools/docs/lint/rules/noShoutyConstants",
     "lint/style/useSelfClosingElements": "https://rome.tools/docs/lint/rules/useSelfClosingElements",
     "lint/style/useShorthandArrayType": "https://rome.tools/docs/lint/rules/useShorthandArrayType",
-    "lint/nursery/noSuperWithoutExtends": "https://rome.tools/docs/lint/rules/noSuperWithoutExtends",
     ;
     // General categories
     "files/missingHandler",
@@ -79,7 +78,10 @@ define_dategories! {
     "internalError/fs",
     "internalError/panic",
     "lint",
+    // parse categories
     "parse",
+    "parse/noSuperWithoutExtends",
+
     "suppressions/unknownGroup",
     "suppressions/unknownRule",
     // Used in tests and examples
