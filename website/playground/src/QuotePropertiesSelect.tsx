@@ -30,7 +30,8 @@ export default function QuotePropertiesSelect({
 							name="quoteProperties"
 							value={quoteProperties ?? ""}
 							onChange={(e) =>
-								setQuoteProperties(e.target.value as QuoteProperties)}
+								setQuoteProperties(e.target.value as QuoteProperties)
+							}
 							className="w-[100px] mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
 						>
 							<option value={QuoteProperties.AsNeeded}>As needed</option>

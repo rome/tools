@@ -18,9 +18,9 @@ use crate::utils::{
 use rome_js_syntax::{
     JsAnyArrowFunctionParameters, JsAnyBindingPattern, JsAnyExpression, JsAnyFormalParameter,
     JsAnyFunctionBody, JsAnyParameter, JsAnyTemplateElement, JsArrowFunctionExpression,
-    JsSyntaxKind, JsSyntaxNode, JsTemplate, JsxExpressionChild,
+    JsSyntaxKind, JsSyntaxNode, JsTemplate,
 };
-use rome_rowan::SyntaxResult;
+use rome_rowan::{SyntaxNodeOptionExt, SyntaxResult};
 
 #[derive(Debug, Copy, Clone, Default)]
 pub struct FormatJsArrowFunctionExpression {
@@ -73,6 +73,11 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                     )
                 });
 
+                let format_body = FormatMaybeCachedFunctionBody {
+                    body: &body,
+                    mode: self.options.body_cache_mode,
+                };
+
                 // With arrays, arrow selfs and objects, they have a natural line breaking strategy:
                 // Arrays and objects become blocks:
                 //
@@ -91,76 +96,62 @@ impl FormatNodeRule<JsArrowFunctionExpression> for FormatJsArrowFunctionExpressi
                 // do not have a soft line break after the arrow because the body is
                 // going to get broken anyways.
                 let body_has_soft_line_break = match &body {
-                    JsFunctionBody(_) => true,
-                    JsAnyExpression(expr) => match expr {
-                        JsArrowFunctionExpression(_)
-                        | JsArrayExpression(_)
-                        | JsObjectExpression(_)
-                        | JsxTagExpression(_) => true,
-                        JsTemplate(template) => {
-                            is_multiline_template_starting_on_same_line(template)
-                        }
-                        JsSequenceExpression(_) => {
-                            return write!(
-                                f,
-                                [group(&format_args![
-                                    format_signature,
-                                    group(&format_args![
-                                        space(),
-                                        text("("),
-                                        soft_block_indent(&body.format()),
-                                        text(")")
-                                    ])
-                                ])]
-                            );
-                        }
-                        _ => false,
-                    },
-                };
-                let body_has_leading_line_comment = f
-                    .context()
-                    .comments()
-                    .has_leading_own_line_comment(body.syntax());
-
-                // Add parentheses to avoid confusion between `a => b ? c : d` and `a <= b ? c : d`
-                // but only if the body isn't an object/function or class expression because parentheses are always required in that
-                // case and added by the object expression itself
-                let should_add_parens = match &body {
-                    JsAnyExpression(expression) => {
-                        let is_conditional = matches!(expression, JsConditionalExpression(_));
-                        let are_parentheses_mandatory = matches!(
-                            resolve_left_most_expression(expression),
-                            JsAnyBinaryLikeLeftExpression::JsAnyExpression(
-                                JsObjectExpression(_)
-                                    | JsFunctionExpression(_)
-                                    | JsClassExpression(_)
-                            )
+                    JsFunctionBody(_)
+                    | JsAnyExpression(
+                        JsArrowFunctionExpression(_) | JsArrayExpression(_) | JsObjectExpression(_),
+                    ) => !f.comments().has_leading_own_line_comment(body.syntax()),
+                    JsAnyExpression(JsxTagExpression(_)) => true,
+                    JsAnyExpression(JsTemplate(template)) => {
+                        is_multiline_template_starting_on_same_line(template)
+                    }
+                    JsAnyExpression(JsSequenceExpression(_)) => {
+                        return write!(
+                            f,
+                            [group(&format_args![
+                                format_signature,
+                                group(&format_args![
+                                    space(),
+                                    text("("),
+                                    soft_block_indent(&format_body),
+                                    text(")")
+                                ])
+                            ])]
                         );
-
-                        is_conditional && !are_parentheses_mandatory
                     }
                     _ => false,
                 };
 
-                let format_body = FormatMaybeCachedFunctionBody {
-                    body: &body,
-                    mode: self.options.body_cache_mode,
-                };
-
-                if body_has_soft_line_break && !should_add_parens && !body_has_leading_line_comment
-                {
+                if body_has_soft_line_break {
                     write![f, [format_signature, space(), format_body]]
                 } else {
+                    // Add parentheses to avoid confusion between `a => b ? c : d` and `a <= b ? c : d`
+                    // but only if the body isn't an object/function or class expression because parentheses are always required in that
+                    // case and added by the object expression itself
+                    let should_add_parens = match &body {
+                        JsAnyExpression(expression @ JsConditionalExpression(_)) => {
+                            let are_parentheses_mandatory = matches!(
+                                resolve_left_most_expression(expression),
+                                JsAnyBinaryLikeLeftExpression::JsAnyExpression(
+                                    JsObjectExpression(_)
+                                        | JsFunctionExpression(_)
+                                        | JsClassExpression(_)
+                                )
+                            );
+
+                            !are_parentheses_mandatory
+                        }
+                        _ => false,
+                    };
+
                     let is_last_call_arg = matches!(
                         self.options.call_arg_layout,
                         Some(GroupedCallArgumentLayout::GroupedLastArgument)
                     );
 
-                    let should_add_soft_line = is_last_call_arg
+                    let should_add_soft_line = (is_last_call_arg
                         // if it's inside a JSXExpression (e.g. an attribute) we should align the expression's closing } with the line with the opening {.
-                        || node.parent::<JsxExpressionChild>().map_or(false, |_| {
-                            !f.context().comments().has_comments(node.syntax())
-                        });
+                        || matches!(node.syntax().parent().kind(), Some(JsSyntaxKind::JSX_EXPRESSION_CHILD | JsSyntaxKind::JSX_EXPRESSION_ATTRIBUTE_VALUE)))
+                        && !f.context().comments().has_comments(node.syntax());
 
                     write!(
                         f,
