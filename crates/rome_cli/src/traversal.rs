@@ -531,6 +531,14 @@ impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
             feature: FeatureName::Lint,
         })
     }
+
+    fn miss_handler_err(&self, err: RomeError, rome_path: &RomePath) {
+        self.push_diagnostic(
+            StdError::from(err)
+                .with_category(category!("files/missingHandler"))
+                .with_file_path(rome_path.file_id()),
+        );
+    }
 }
 
 impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
@@ -543,24 +551,36 @@ impl<'ctx, 'app> TraversalContext for TraversalOptions<'ctx, 'app> {
     }
 
     fn can_handle(&self, rome_path: &RomePath) -> bool {
-        let result = match self.execution.traversal_mode() {
-            TraversalMode::Check { .. } => self.can_lint(rome_path),
-            TraversalMode::CI { .. } => self
+        let can_lint = self.can_lint(rome_path);
+        let can_format = self.can_format(rome_path);
+
+        let can_handle = match self.execution.traversal_mode() {
+            TraversalMode::Check { .. } => self
                 .can_lint(rome_path)
-                .and_then(|_| self.can_format(rome_path)),
-            TraversalMode::Format { .. } => self.can_format(rome_path),
+                .map(|result| result.reason.is_none())
+                .unwrap_or_else(|err| {
+                    self.miss_handler_err(err, rome_path);
+                    false
+                }),
+            TraversalMode::CI { .. } => match (can_format, can_lint) {
+                // the result of the error is the same, rome can't handle the file
+                (Err(err), _) | (_, Err(err)) => {
+                    self.miss_handler_err(err, rome_path);
+                    false
+                }
+                (Ok(can_format), Ok(can_lint)) => {
+                    can_lint.reason.is_none() | can_format.reason.is_none()
+                }
+            },
+            TraversalMode::Format { .. } => self
+                .can_format(rome_path)
+                .map(|result| result.reason.is_none())
+                .unwrap_or_else(|err| {
+                    self.miss_handler_err(err, rome_path);
+                    false
+                }),
         };
-        match result {
-            Ok(result) => result.reason.is_none(),
-            Err(err) => {
-                self.push_diagnostic(
-                    StdError::from(err)
-                        .with_category(category!("files/missingHandler"))
-                        .with_file_path(rome_path.file_id()),
-                );
-                false
-            }
-        }
+        can_handle
     }
 
     fn handle_file(&self, path: &Path, file_id: FileId) {
