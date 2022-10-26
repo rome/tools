@@ -141,7 +141,7 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"<input disabled />
+        const SOURCE: &str = r#"<img src="image.png" aria-label="alt text" />
         "#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());

@@ -11,13 +11,17 @@ expression: area.jsx
 	<area alt={null} />
 	<area />
 	<area alt />
+	<area {...spread} alt />
 </>
 
 //valid
 
 <>
+	<area alt {...spread} />
 	<area aria-label="foo" />
+	<area aria-label {...spread} />
 	<area aria-labelledby="id1" />
+	<area aria-labelledby {...spread} />
 	<area alt="This is descriptive!" />
 </>
 
@@ -52,7 +56,7 @@ area.jsx:6:2 lint/a11y/useAltText ━━━━━━━━━━━━━━━�
   > 6 │ 	<area />
       │ 	^^^^^^^^
     7 │ 	<area alt />
-    8 │ </>
+    8 │ 	<area {...spread} alt />
   
   i Meaningful alternative text on elements helps users relying on screen
                 readers to understand content's purpose within a page.
@@ -69,8 +73,26 @@ area.jsx:7:2 lint/a11y/useAltText ━━━━━━━━━━━━━━━�
     6 │ 	<area />
   > 7 │ 	<area alt />
       │ 	^^^^^^^^^^^^
-    8 │ </>
-    9 │ 
+    8 │ 	<area {...spread} alt />
+    9 │ </>
+  
+  i Meaningful alternative text on elements helps users relying on screen
+                readers to understand content's purpose within a page.
+  
+
+```
+
+```
+area.jsx:8:2 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide the attribute alt when using img, area or input type='image'
+  
+     6 │ 	<area />
+     7 │ 	<area alt />
+   > 8 │ 	<area {...spread} alt />
+       │ 	^^^^^^^^^^^^^^^^^^^^^^^^
+     9 │ </>
+    10 │ 
   
   i Meaningful alternative text on elements helps users relying on screen
                 readers to understand content's purpose within a page.
