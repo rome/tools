@@ -1,0 +1,13 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: issue_3141.js
+---
+# Input
+```js
+// valid
+function f() {
+    return !!specs.variables ? specs.variables(props) : {};
+}
+```
+
+

@@ -2,12 +2,11 @@ use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Ast, Rule
 use rome_console::markup;
 use rome_diagnostics::Applicability;
 use rome_js_factory::make;
-use rome_js_syntax::JsUnaryOperator::LogicalNot;
 use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsBooleanLiteralExpression, JsLogicalExpression,
     JsUnaryExpression, JsUnaryOperator, T,
 };
-use rome_rowan::{declare_node_union, AstNode, AstNodeExt, BatchMutationExt};
+use rome_rowan::{AstNode, AstNodeExt, BatchMutationExt};
 
 use crate::JsRuleAction;
 
@@ -39,10 +38,6 @@ declare_rule! {
     /// const r4 = !boolExpr1 || !boolExpr2;
     /// ```
     ///
-    /// ```js,expect_diagnostic
-    /// const boolExp2 = true;
-    /// const r2 = !!boolExp2;
-    /// ```
     /// ### Valid
     /// ```js
     /// const boolExpr3 = true;
@@ -59,12 +54,8 @@ declare_rule! {
     }
 }
 
-declare_node_union! {
-    pub(crate) AnyLogicalLikeExpression = JsLogicalExpression | JsUnaryExpression
-}
-
 impl Rule for UseSimplifiedLogicExpression {
-    type Query = Ast<AnyLogicalLikeExpression>;
+    type Query = Ast<JsLogicalExpression>;
     /// First element of tuple is if the expression is simplified by [De Morgan's Law](https://en.wikipedia.org/wiki/De_Morgan%27s_laws) rule, the second element is the expression to replace.
     type State = (bool, JsAnyExpression);
     type Signals = Option<Self::State>;
@@ -72,77 +63,60 @@ impl Rule for UseSimplifiedLogicExpression {
 
     fn run(ctx: &RuleContext<Self>) -> Option<Self::State> {
         let node = ctx.query();
-        match node {
-            AnyLogicalLikeExpression::JsLogicalExpression(node) => {
-                let left = node.left().ok()?;
-                let right = node.right().ok()?;
-                match node.operator().ok()? {
-                    rome_js_syntax::JsLogicalOperator::NullishCoalescing
-                        if matches!(
-                            left,
-                            JsAnyExpression::JsAnyLiteralExpression(
-                                JsAnyLiteralExpression::JsNullLiteralExpression(_)
-                            )
-                        ) =>
-                    {
-                        return Some((false, right));
-                    }
-                    rome_js_syntax::JsLogicalOperator::LogicalOr => {
-                        if let JsAnyExpression::JsAnyLiteralExpression(
-                            JsAnyLiteralExpression::JsBooleanLiteralExpression(literal),
-                        ) = left
-                        {
-                            return simplify_or_expression(literal, right)
-                                .map(|expr| (false, expr));
-                        }
+        let left = node.left().ok()?;
+        let right = node.right().ok()?;
+        match node.operator().ok()? {
+            rome_js_syntax::JsLogicalOperator::NullishCoalescing
+                if matches!(
+                    left,
+                    JsAnyExpression::JsAnyLiteralExpression(
+                        JsAnyLiteralExpression::JsNullLiteralExpression(_)
+                    )
+                ) =>
+            {
+                return Some((false, right));
+            }
+            rome_js_syntax::JsLogicalOperator::LogicalOr => {
+                if let JsAnyExpression::JsAnyLiteralExpression(
+                    JsAnyLiteralExpression::JsBooleanLiteralExpression(literal),
+                ) = left
+                {
+                    return simplify_or_expression(literal, right).map(|expr| (false, expr));
+                }
 
-                        if let JsAnyExpression::JsAnyLiteralExpression(
-                            JsAnyLiteralExpression::JsBooleanLiteralExpression(literal),
-                        ) = right
-                        {
-                            return simplify_or_expression(literal, left).map(|expr| (false, expr));
-                        }
+                if let JsAnyExpression::JsAnyLiteralExpression(
+                    JsAnyLiteralExpression::JsBooleanLiteralExpression(literal),
+                ) = right
+                {
+                    return simplify_or_expression(literal, left).map(|expr| (false, expr));
+                }
 
-                        if could_apply_de_morgan(node).unwrap_or(false) {
-                            return simplify_de_morgan(node)
-                                .map(|expr| (true, JsAnyExpression::JsUnaryExpression(expr)));
-                        }
-                    }
-                    rome_js_syntax::JsLogicalOperator::LogicalAnd => {
-                        if let JsAnyExpression::JsAnyLiteralExpression(
-                            JsAnyLiteralExpression::JsBooleanLiteralExpression(literal),
-                        ) = left
-                        {
-                            return simplify_and_expression(literal, right)
-                                .map(|expr| (false, expr));
-                        }
-
-                        if let JsAnyExpression::JsAnyLiteralExpression(
-                            JsAnyLiteralExpression::JsBooleanLiteralExpression(literal),
-                        ) = right
-                        {
-                            return simplify_and_expression(literal, left)
-                                .map(|expr| (false, expr));
-                        }
-
-                        if could_apply_de_morgan(node).unwrap_or(false) {
-                            return simplify_de_morgan(node)
-                                .map(|expr| (true, JsAnyExpression::JsUnaryExpression(expr)));
-                        }
-                    }
-                    _ => return None,
+                if could_apply_de_morgan(node).unwrap_or(false) {
+                    return simplify_de_morgan(node)
+                        .map(|expr| (true, JsAnyExpression::JsUnaryExpression(expr)));
                 }
             }
-            AnyLogicalLikeExpression::JsUnaryExpression(unary_expression) => {
-                if unary_expression.operator().ok()? == LogicalNot {
-                    let nested_unary = unary_expression.argument().ok()?;
-                    let nested_unary = nested_unary.as_js_unary_expression()?;
-                    if nested_unary.operator().ok()? == LogicalNot {
-                        let expression = nested_unary.argument().ok()?;
-                        return Some((false, expression));
-                    }
+            rome_js_syntax::JsLogicalOperator::LogicalAnd => {
+                if let JsAnyExpression::JsAnyLiteralExpression(
+                    JsAnyLiteralExpression::JsBooleanLiteralExpression(literal),
+                ) = left
+                {
+                    return simplify_and_expression(literal, right).map(|expr| (false, expr));
+                }
+
+                if let JsAnyExpression::JsAnyLiteralExpression(
+                    JsAnyLiteralExpression::JsBooleanLiteralExpression(literal),
+                ) = right
+                {
+                    return simplify_and_expression(literal, left).map(|expr| (false, expr));
+                }
+
+                if could_apply_de_morgan(node).unwrap_or(false) {
+                    return simplify_de_morgan(node)
+                        .map(|expr| (true, JsAnyExpression::JsUnaryExpression(expr)));
                 }
             }
+            _ => return None,
         }
 
         None
@@ -165,18 +139,11 @@ impl Rule for UseSimplifiedLogicExpression {
         let mut mutation = ctx.root().begin();
 
         let (is_simplified_by_de_morgan, expr) = state;
-        match node {
-            AnyLogicalLikeExpression::JsLogicalExpression(node) => {
-                mutation.replace_node(
-                    JsAnyExpression::JsLogicalExpression(node.clone()),
-                    expr.clone(),
-                );
-            }
-            AnyLogicalLikeExpression::JsUnaryExpression(unary) => mutation.replace_element(
-                unary.clone().into_syntax().into(),
-                expr.clone().into_syntax().into(),
-            ),
-        }
+
+        mutation.replace_node(
+            JsAnyExpression::JsLogicalExpression(node.clone()),
+            expr.clone(),
+        );
 
         let message = if *is_simplified_by_de_morgan {
             "Reduce the complexity of the logical expression."

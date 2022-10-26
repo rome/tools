@@ -5,6 +5,7 @@ const r5 = !(boolExpr1 && boolExpr2);
 const boolExpr5 = true;
 const boolExpr6 = false;
 const r6 = !!boolExpr1 || !!boolExpr2;
+!!x
 // invalid
 const boolExp = true;
 const r = true && boolExp;
@@ -15,4 +16,3 @@ const r3 = null ?? nonNullExp;
 const boolExpr1 = true;
 const boolExpr2 = false;
 const r4 = !boolExpr1 || !boolExpr2;
-!!x
