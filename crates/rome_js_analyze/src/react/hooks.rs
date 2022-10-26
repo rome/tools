@@ -189,7 +189,7 @@ pub fn is_binding_react_stable(
 #[cfg(test)]
 mod test {
     use super::*;
-    use rome_js_parser::FileId;
+    use rome_diagnostics::v2::FileId;
     use rome_js_syntax::SourceType;
     use rome_rowan::SyntaxNodeCast;
 

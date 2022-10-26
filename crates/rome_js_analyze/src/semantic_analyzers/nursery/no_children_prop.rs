@@ -99,7 +99,7 @@ impl Rule for NoChildrenProp {
                     "Avoid passing "<Emphasis>"children"</Emphasis>" using a prop"
                 },
             )
-            .footer_note(footer_help),
+            .note(footer_help),
         )
     }
 }

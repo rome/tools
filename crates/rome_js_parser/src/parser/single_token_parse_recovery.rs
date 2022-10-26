@@ -1,6 +1,5 @@
 use crate::lexer::{JsSyntaxKind, T};
 use crate::{ParseDiagnostic, Parser, TokenSet};
-use rome_diagnostics::Diagnostic;
 
 /// This struct contains the information needed to the parser to recover from a certain error
 ///
@@ -58,7 +57,7 @@ impl SingleTokenParseRecovery {
     }
 
     /// It returns the diagnostic
-    fn get_error(&self) -> Option<Diagnostic> {
+    fn get_error(&self) -> Option<ParseDiagnostic> {
         self.error.to_owned()
     }
 

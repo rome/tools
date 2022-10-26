@@ -213,7 +213,13 @@ identifier_err.js:2:6 parse ━━━━━━━━━━━━━━━━━�
 
   × expected an unary expression but instead found ';'
   
-  × Expected an unary expression here
+    1 │ yield;
+  > 2 │ await;
+      │      ^
+    3 │ async function test(await) {}
+    4 │ function* test(yield) {}
+  
+  i Expected an unary expression here
   
     1 │ yield;
   > 2 │ await;
@@ -250,14 +256,14 @@ identifier_err.js:5:1 parse ━━━━━━━━━━━━━━━━━�
 
   × 'enum's are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   
-  × TypeScript only syntax
-  
     3 │ async function test(await) {}
     4 │ function* test(yield) {}
   > 5 │ enum;
       │ ^^^^
     6 │ implements;
     7 │ interface;
+  
+  i TypeScript only syntax
   
 --
 identifier_err.js:6:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

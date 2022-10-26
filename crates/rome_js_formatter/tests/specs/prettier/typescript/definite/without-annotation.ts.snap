@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "typescript\\definite\\without-annotation.ts"
+  test_file: typescript/definite/without-annotation.ts
 ---
 
 # Input
@@ -130,8 +130,6 @@ without-annotation.ts:9:8 parse ━━━━━━━━━━━━━━━━
 
   × expected `:` but instead found `=`
   
-  × unexpected
-  
      7 │ }
      8 │ 
    > 9 │ let a! = x
@@ -139,11 +137,11 @@ without-annotation.ts:9:8 parse ━━━━━━━━━━━━━━━━
     10 │ const b! = x
     11 │ var c/* */! = x
   
+  i Remove =
+  
 without-annotation.ts:10:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `:` but instead found `=`
-  
-  × unexpected
   
      9 │ let a! = x
   > 10 │ const b! = x
@@ -151,11 +149,11 @@ without-annotation.ts:10:10 parse ━━━━━━━━━━━━━━━�
     11 │ var c/* */! = x
     12 │ export const d! = x
   
+  i Remove =
+  
 without-annotation.ts:11:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `:` but instead found `=`
-  
-  × unexpected
   
      9 │ let a! = x
     10 │ const b! = x
@@ -164,17 +162,19 @@ without-annotation.ts:11:13 parse ━━━━━━━━━━━━━━━�
     12 │ export const d! = x
     13 │ 
   
+  i Remove =
+  
 without-annotation.ts:12:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `:` but instead found `=`
-  
-  × unexpected
   
     10 │ const b! = x
     11 │ var c/* */! = x
   > 12 │ export const d! = x
        │                 ^
     13 │ 
+  
+  i Remove =
   
 
 ```

@@ -489,19 +489,17 @@ for_stmt_err.js:1:5 parse ━━━━━━━━━━━━━━━━━━
 
   × expected `(` but instead found `;`
   
-  × unexpected
-  
   > 1 │ for ;; {}
       │     ^
     2 │ for let i = 5; i < 10; i++ {}
     3 │ for let i = 5; i < 10; ++i {}
   
+  i Remove ;
+  
 --
 for_stmt_err.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `for`
-  
-  × unexpected
   
     1 │ for ;; {}
   > 2 │ for let i = 5; i < 10; i++ {}
@@ -509,38 +507,38 @@ for_stmt_err.js:2:1 parse ━━━━━━━━━━━━━━━━━━
     3 │ for let i = 5; i < 10; ++i {}
     4 │ for (in []) {}
   
+  i Remove for
+  
 --
 for_stmt_err.js:2:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `(` but instead found `let`
-  
-  × unexpected
   
     1 │ for ;; {}
   > 2 │ for let i = 5; i < 10; i++ {}
       │     ^^^
     3 │ for let i = 5; i < 10; ++i {}
     4 │ for (in []) {}
+  
+  i Remove let
   
 --
 for_stmt_err.js:2:28 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `{`
   
-  × unexpected
-  
     1 │ for ;; {}
   > 2 │ for let i = 5; i < 10; i++ {}
       │                            ^
     3 │ for let i = 5; i < 10; ++i {}
     4 │ for (in []) {}
   
+  i Remove {
+  
 --
 for_stmt_err.js:3:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `(` but instead found `let`
-  
-  × unexpected
   
     1 │ for ;; {}
     2 │ for let i = 5; i < 10; i++ {}
@@ -549,12 +547,12 @@ for_stmt_err.js:3:5 parse ━━━━━━━━━━━━━━━━━━
     4 │ for (in []) {}
     5 │ for (let i, j = 6 of []) {}
   
+  i Remove let
+  
 --
 for_stmt_err.js:3:28 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `{`
-  
-  × unexpected
   
     1 │ for ;; {}
     2 │ for let i = 5; i < 10; i++ {}
@@ -563,12 +561,12 @@ for_stmt_err.js:3:28 parse ━━━━━━━━━━━━━━━━━�
     4 │ for (in []) {}
     5 │ for (let i, j = 6 of []) {}
   
+  i Remove {
+  
 --
 for_stmt_err.js:5:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Only a single declaration is allowed in a `for...of` statement.
-  
-  × additional declarations
   
     3 │ for let i = 5; i < 10; ++i {}
     4 │ for (in []) {}
@@ -577,12 +575,21 @@ for_stmt_err.js:5:13 parse ━━━━━━━━━━━━━━━━━�
     6 │ for await (let a in []) {}
     7 │ for await (let i = 0; i < 10; ++i) {}
   
+  i additional declarations
+  
 --
 for_stmt_err.js:6:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × await can only be used in conjunction with `for...of` statements
   
-  × Remove the await here
+    4 │ for (in []) {}
+    5 │ for (let i, j = 6 of []) {}
+  > 6 │ for await (let a in []) {}
+      │     ^^^^^
+    7 │ for await (let i = 0; i < 10; ++i) {}
+    8 │ for (let [a];;) {}
+  
+  i Remove the await here
   
     4 │ for (in []) {}
     5 │ for (let i, j = 6 of []) {}
@@ -605,7 +612,14 @@ for_stmt_err.js:7:5 parse ━━━━━━━━━━━━━━━━━━
 
   × await can only be used in conjunction with `for...of` statements
   
-  × Remove the await here
+    5 │ for (let i, j = 6 of []) {}
+    6 │ for await (let a in []) {}
+  > 7 │ for await (let i = 0; i < 10; ++i) {}
+      │     ^^^^^
+    8 │ for (let [a];;) {}
+    9 │ 
+  
+  i Remove the await here
   
     5 │ for (let i, j = 6 of []) {}
     6 │ for await (let a in []) {}
@@ -628,13 +642,13 @@ for_stmt_err.js:8:10 parse ━━━━━━━━━━━━━━━━━�
 
   × Object and Array patterns require initializers
   
-  × this pattern is declared, but it is not given an initialized value
-  
     6 │ for await (let a in []) {}
     7 │ for await (let i = 0; i < 10; ++i) {}
   > 8 │ for (let [a];;) {}
       │          ^^^
     9 │ 
+  
+  i this pattern is declared, but it is not given an initialized value
   
 --
 for ;; {}

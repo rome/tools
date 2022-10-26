@@ -223,31 +223,36 @@ await_in_parameter_initializer.js:2:26 parse ━━━━━━━━━━━�
 
   × expected `,` but instead found `b`
   
-  × unexpected
-  
     1 │ async function test(a = await b()) {}
   > 2 │ function test2(a = await b()) {}
       │                          ^
     3 │ 
+  
+  i Remove b
   
 --
 await_in_parameter_initializer.js:2:27 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `(`
   
-  × unexpected
-  
     1 │ async function test(a = await b()) {}
   > 2 │ function test2(a = await b()) {}
       │                           ^
     3 │ 
+  
+  i Remove (
   
 --
 await_in_parameter_initializer.js:2:29 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a function body but instead found ')'
   
-  × Expected a function body here
+    1 │ async function test(a = await b()) {}
+  > 2 │ function test2(a = await b()) {}
+      │                             ^
+    3 │ 
+  
+  i Expected a function body here
   
     1 │ async function test(a = await b()) {}
   > 2 │ function test2(a = await b()) {}

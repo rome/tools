@@ -305,7 +305,12 @@ paren_or_arrow_expr_invalid_params.js:1:9 parse ━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+  > 1 │ (5 + 5) => {}
+      │         ^^
+    2 │ (a, ,b) => {}
+    3 │ (a, b) =>;
+  
+  i An explicit or implicit semicolon is expected here...
   
   > 1 │ (5 + 5) => {}
       │         ^^
@@ -324,7 +329,13 @@ paren_or_arrow_expr_invalid_params.js:2:5 parse ━━━━━━━━━━�
 
   × expected a parameter but instead found ','
   
-  × Expected a parameter here
+    1 │ (5 + 5) => {}
+  > 2 │ (a, ,b) => {}
+      │     ^
+    3 │ (a, b) =>;
+    4 │ (a: string;
+  
+  i Expected a parameter here
   
     1 │ (5 + 5) => {}
   > 2 │ (a, ,b) => {}
@@ -337,7 +348,14 @@ paren_or_arrow_expr_invalid_params.js:3:10 parse ━━━━━━━━━━�
 
   × expected a function body, or an expression but instead found ';'
   
-  × Expected a function body, or an expression here
+    1 │ (5 + 5) => {}
+    2 │ (a, ,b) => {}
+  > 3 │ (a, b) =>;
+      │          ^
+    4 │ (a: string;
+    5 │ (a, b)
+  
+  i Expected a function body, or an expression here
   
     1 │ (5 + 5) => {}
     2 │ (a, ,b) => {}
@@ -351,8 +369,6 @@ paren_or_arrow_expr_invalid_params.js:4:3 parse ━━━━━━━━━━�
 
   × Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   
-  × TypeScript only syntax
-  
     2 │ (a, ,b) => {}
     3 │ (a, b) =>;
   > 4 │ (a: string;
@@ -360,12 +376,12 @@ paren_or_arrow_expr_invalid_params.js:4:3 parse ━━━━━━━━━━�
     5 │ (a, b)
     6 │  => {}
   
+  i TypeScript only syntax
+  
 --
 paren_or_arrow_expr_invalid_params.js:4:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `;`
-  
-  × unexpected
   
     2 │ (a, ,b) => {}
     3 │ (a, b) =>;
@@ -373,6 +389,8 @@ paren_or_arrow_expr_invalid_params.js:4:11 parse ━━━━━━━━━━�
       │           ^
     5 │ (a, b)
     6 │  => {}
+  
+  i Remove ;
   
 --
 paren_or_arrow_expr_invalid_params.js:6:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

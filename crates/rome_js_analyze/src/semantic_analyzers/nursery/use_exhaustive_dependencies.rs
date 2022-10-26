@@ -227,8 +227,7 @@ impl Rule for UseExhaustiveDependencies {
 
                 for capture in captures.iter() {
                     let node = capture.node();
-                    diag = diag.label(
-                        rome_diagnostics::Severity::Note,
+                    diag = diag.detail(
                         node.text_trimmed_range(),
                         "This dependency is not specified in the hook dependency list.",
                     );
@@ -246,7 +245,7 @@ impl Rule for UseExhaustiveDependencies {
                 );
 
                 for range in ranges.iter() {
-                    diag = diag.secondary(range, "This dependency can be removed from the list.");
+                    diag = diag.detail(range, "This dependency can be removed from the list.");
                 }
 
                 Some(diag)

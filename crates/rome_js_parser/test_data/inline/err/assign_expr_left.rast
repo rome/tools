@@ -55,18 +55,22 @@ assign_expr_left.js:1:3 parse ━━━━━━━━━━━━━━━━�
 
   × expected `)` but instead found `=`
   
-  × unexpected
-  
   > 1 │ ( = foo);
       │   ^
     2 │ 
+  
+  i Remove =
   
 --
 assign_expr_left.js:1:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+  > 1 │ ( = foo);
+      │        ^
+    2 │ 
+  
+  i An explicit or implicit semicolon is expected here...
   
   > 1 │ ( = foo);
       │        ^

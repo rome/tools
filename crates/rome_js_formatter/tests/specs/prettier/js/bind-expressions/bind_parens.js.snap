@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\bind-expressions\\bind_parens.js"
+  test_file: js/bind-expressions/bind_parens.js
 ---
 
 # Input
@@ -229,7 +229,12 @@ bind_parens.js:1:9 parse ━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+  > 1 │ (a || b)::c;
+      │         ^
+    2 │ a || (b::c);
+    3 │ ::obj.prop;
+  
+  i An explicit or implicit semicolon is expected here...
   
   > 1 │ (a || b)::c;
       │         ^
@@ -247,19 +252,26 @@ bind_parens.js:2:8 parse ━━━━━━━━━━━━━━━━━━�
 
   × expected `)` but instead found `:`
   
-  × unexpected
-  
     1 │ (a || b)::c;
   > 2 │ a || (b::c);
       │        ^
     3 │ ::obj.prop;
     4 │ (void 0)::func();
   
+  i Remove :
+  
 bind_parens.js:3:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found '::obj.prop'
   
-  × Expected a statement here
+    1 │ (a || b)::c;
+    2 │ a || (b::c);
+  > 3 │ ::obj.prop;
+      │ ^^^^^^^^^^
+    4 │ (void 0)::func();
+    5 │ (+0)::is(-0);
+  
+  i Expected a statement here
   
     1 │ (a || b)::c;
     2 │ a || (b::c);
@@ -272,7 +284,14 @@ bind_parens.js:4:9 parse ━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    2 │ a || (b::c);
+    3 │ ::obj.prop;
+  > 4 │ (void 0)::func();
+      │         ^
+    5 │ (+0)::is(-0);
+    6 │ a::(b.c);
+  
+  i An explicit or implicit semicolon is expected here...
   
     2 │ a || (b::c);
     3 │ ::obj.prop;
@@ -294,7 +313,14 @@ bind_parens.js:5:5 parse ━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    3 │ ::obj.prop;
+    4 │ (void 0)::func();
+  > 5 │ (+0)::is(-0);
+      │     ^
+    6 │ a::(b.c);
+    7 │ a::(b.c());
+  
+  i An explicit or implicit semicolon is expected here...
   
     3 │ ::obj.prop;
     4 │ (void 0)::func();
@@ -316,7 +342,14 @@ bind_parens.js:6:3 parse ━━━━━━━━━━━━━━━━━━�
 
   × expected a statement but instead found ':'
   
-  × Expected a statement here
+    4 │ (void 0)::func();
+    5 │ (+0)::is(-0);
+  > 6 │ a::(b.c);
+      │   ^
+    7 │ a::(b.c());
+    8 │ a::b.c();
+  
+  i Expected a statement here
   
     4 │ (void 0)::func();
     5 │ (+0)::is(-0);
@@ -329,7 +362,14 @@ bind_parens.js:7:3 parse ━━━━━━━━━━━━━━━━━━�
 
   × expected a statement but instead found ':'
   
-  × Expected a statement here
+    5 │ (+0)::is(-0);
+    6 │ a::(b.c);
+  > 7 │ a::(b.c());
+      │   ^
+    8 │ a::b.c();
+    9 │ a::(b.c()());
+  
+  i Expected a statement here
   
     5 │ (+0)::is(-0);
     6 │ a::(b.c);
@@ -342,7 +382,14 @@ bind_parens.js:8:3 parse ━━━━━━━━━━━━━━━━━━�
 
   × expected a statement but instead found ':'
   
-  × Expected a statement here
+     6 │ a::(b.c);
+     7 │ a::(b.c());
+   > 8 │ a::b.c();
+       │   ^
+     9 │ a::(b.c()());
+    10 │ a::((b.c())());
+  
+  i Expected a statement here
   
      6 │ a::(b.c);
      7 │ a::(b.c());
@@ -355,7 +402,14 @@ bind_parens.js:9:3 parse ━━━━━━━━━━━━━━━━━━�
 
   × expected a statement but instead found ':'
   
-  × Expected a statement here
+     7 │ a::(b.c());
+     8 │ a::b.c();
+   > 9 │ a::(b.c()());
+       │   ^
+    10 │ a::((b.c())());
+    11 │ a::(b.c())();
+  
+  i Expected a statement here
   
      7 │ a::(b.c());
      8 │ a::b.c();
@@ -368,7 +422,14 @@ bind_parens.js:10:3 parse ━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ':'
   
-  × Expected a statement here
+     8 │ a::b.c();
+     9 │ a::(b.c()());
+  > 10 │ a::((b.c())());
+       │   ^
+    11 │ a::(b.c())();
+    12 │ a::(b.c().d);
+  
+  i Expected a statement here
   
      8 │ a::b.c();
      9 │ a::(b.c()());
@@ -381,7 +442,14 @@ bind_parens.js:11:3 parse ━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ':'
   
-  × Expected a statement here
+     9 │ a::(b.c()());
+    10 │ a::((b.c())());
+  > 11 │ a::(b.c())();
+       │   ^
+    12 │ a::(b.c().d);
+    13 │ a::(c().d.e);
+  
+  i Expected a statement here
   
      9 │ a::(b.c()());
     10 │ a::((b.c())());
@@ -394,7 +462,14 @@ bind_parens.js:12:3 parse ━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ':'
   
-  × Expected a statement here
+    10 │ a::((b.c())());
+    11 │ a::(b.c())();
+  > 12 │ a::(b.c().d);
+       │   ^
+    13 │ a::(c().d.e);
+    14 │ a::(b());
+  
+  i Expected a statement here
   
     10 │ a::((b.c())());
     11 │ a::(b.c())();
@@ -407,7 +482,14 @@ bind_parens.js:13:3 parse ━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ':'
   
-  × Expected a statement here
+    11 │ a::(b.c())();
+    12 │ a::(b.c().d);
+  > 13 │ a::(c().d.e);
+       │   ^
+    14 │ a::(b());
+    15 │ a::(b::c());
+  
+  i Expected a statement here
   
     11 │ a::(b.c())();
     12 │ a::(b.c().d);
@@ -420,7 +502,14 @@ bind_parens.js:14:3 parse ━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ':'
   
-  × Expected a statement here
+    12 │ a::(b.c().d);
+    13 │ a::(c().d.e);
+  > 14 │ a::(b());
+       │   ^
+    15 │ a::(b::c());
+    16 │ a::(b()::c);
+  
+  i Expected a statement here
   
     12 │ a::(b.c().d);
     13 │ a::(c().d.e);
@@ -433,7 +522,14 @@ bind_parens.js:15:3 parse ━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ':'
   
-  × Expected a statement here
+    13 │ a::(c().d.e);
+    14 │ a::(b());
+  > 15 │ a::(b::c());
+       │   ^
+    16 │ a::(b()::c);
+    17 │ a::(b().c::d);
+  
+  i Expected a statement here
   
     13 │ a::(c().d.e);
     14 │ a::(b());
@@ -446,7 +542,14 @@ bind_parens.js:16:3 parse ━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ':'
   
-  × Expected a statement here
+    14 │ a::(b());
+    15 │ a::(b::c());
+  > 16 │ a::(b()::c);
+       │   ^
+    17 │ a::(b().c::d);
+    18 │ a::(b.c::d);
+  
+  i Expected a statement here
   
     14 │ a::(b());
     15 │ a::(b::c());
@@ -459,7 +562,14 @@ bind_parens.js:17:3 parse ━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ':'
   
-  × Expected a statement here
+    15 │ a::(b::c());
+    16 │ a::(b()::c);
+  > 17 │ a::(b().c::d);
+       │   ^
+    18 │ a::(b.c::d);
+    19 │ a::(b::c.d);
+  
+  i Expected a statement here
   
     15 │ a::(b::c());
     16 │ a::(b()::c);
@@ -472,7 +582,14 @@ bind_parens.js:18:3 parse ━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ':'
   
-  × Expected a statement here
+    16 │ a::(b()::c);
+    17 │ a::(b().c::d);
+  > 18 │ a::(b.c::d);
+       │   ^
+    19 │ a::(b::c.d);
+    20 │ a::(b.c::d::e);
+  
+  i Expected a statement here
   
     16 │ a::(b()::c);
     17 │ a::(b().c::d);
@@ -485,7 +602,14 @@ bind_parens.js:19:3 parse ━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ':'
   
-  × Expected a statement here
+    17 │ a::(b().c::d);
+    18 │ a::(b.c::d);
+  > 19 │ a::(b::c.d);
+       │   ^
+    20 │ a::(b.c::d::e);
+    21 │ a::(b::c::d);
+  
+  i Expected a statement here
   
     17 │ a::(b().c::d);
     18 │ a::(b.c::d);
@@ -498,7 +622,14 @@ bind_parens.js:20:3 parse ━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ':'
   
-  × Expected a statement here
+    18 │ a::(b.c::d);
+    19 │ a::(b::c.d);
+  > 20 │ a::(b.c::d::e);
+       │   ^
+    21 │ a::(b::c::d);
+    22 │ a::(b::c::d.e);
+  
+  i Expected a statement here
   
     18 │ a::(b.c::d);
     19 │ a::(b::c.d);
@@ -511,7 +642,14 @@ bind_parens.js:21:3 parse ━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ':'
   
-  × Expected a statement here
+    19 │ a::(b::c.d);
+    20 │ a::(b.c::d::e);
+  > 21 │ a::(b::c::d);
+       │   ^
+    22 │ a::(b::c::d.e);
+    23 │ a::((b::c::d).e);
+  
+  i Expected a statement here
   
     19 │ a::(b::c.d);
     20 │ a::(b.c::d::e);
@@ -524,7 +662,14 @@ bind_parens.js:22:3 parse ━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ':'
   
-  × Expected a statement here
+    20 │ a::(b.c::d::e);
+    21 │ a::(b::c::d);
+  > 22 │ a::(b::c::d.e);
+       │   ^
+    23 │ a::((b::c::d).e);
+    24 │ a::(void 0);
+  
+  i Expected a statement here
   
     20 │ a::(b.c::d::e);
     21 │ a::(b::c::d);
@@ -537,7 +682,14 @@ bind_parens.js:23:3 parse ━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ':'
   
-  × Expected a statement here
+    21 │ a::(b::c::d);
+    22 │ a::(b::c::d.e);
+  > 23 │ a::((b::c::d).e);
+       │   ^
+    24 │ a::(void 0);
+    25 │ a::(b.c()::d.e);
+  
+  i Expected a statement here
   
     21 │ a::(b::c::d);
     22 │ a::(b::c::d.e);
@@ -550,7 +702,14 @@ bind_parens.js:24:3 parse ━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ':'
   
-  × Expected a statement here
+    22 │ a::(b::c::d.e);
+    23 │ a::((b::c::d).e);
+  > 24 │ a::(void 0);
+       │   ^
+    25 │ a::(b.c()::d.e);
+    26 │ a::(b.c::d.e);
+  
+  i Expected a statement here
   
     22 │ a::(b::c::d.e);
     23 │ a::((b::c::d).e);
@@ -563,7 +722,14 @@ bind_parens.js:25:3 parse ━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ':'
   
-  × Expected a statement here
+    23 │ a::((b::c::d).e);
+    24 │ a::(void 0);
+  > 25 │ a::(b.c()::d.e);
+       │   ^
+    26 │ a::(b.c::d.e);
+    27 │ a::(b.c::d.e)::f.g;
+  
+  i Expected a statement here
   
     23 │ a::((b::c::d).e);
     24 │ a::(void 0);
@@ -576,7 +742,14 @@ bind_parens.js:26:3 parse ━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ':'
   
-  × Expected a statement here
+    24 │ a::(void 0);
+    25 │ a::(b.c()::d.e);
+  > 26 │ a::(b.c::d.e);
+       │   ^
+    27 │ a::(b.c::d.e)::f.g;
+    28 │ b.c::d.e;
+  
+  i Expected a statement here
   
     24 │ a::(void 0);
     25 │ a::(b.c()::d.e);
@@ -589,7 +762,14 @@ bind_parens.js:27:3 parse ━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ':'
   
-  × Expected a statement here
+    25 │ a::(b.c()::d.e);
+    26 │ a::(b.c::d.e);
+  > 27 │ a::(b.c::d.e)::f.g;
+       │   ^
+    28 │ b.c::d.e;
+    29 │ (b.c::d).e;
+  
+  i Expected a statement here
   
     25 │ a::(b.c()::d.e);
     26 │ a::(b.c::d.e);
@@ -602,7 +782,14 @@ bind_parens.js:28:4 parse ━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    26 │ a::(b.c::d.e);
+    27 │ a::(b.c::d.e)::f.g;
+  > 28 │ b.c::d.e;
+       │    ^
+    29 │ (b.c::d).e;
+    30 │ (b::c::d).e;
+  
+  i An explicit or implicit semicolon is expected here...
   
     26 │ a::(b.c::d.e);
     27 │ a::(b.c::d.e)::f.g;
@@ -624,8 +811,6 @@ bind_parens.js:29:5 parse ━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `:`
   
-  × unexpected
-  
     27 │ a::(b.c::d.e)::f.g;
     28 │ b.c::d.e;
   > 29 │ (b.c::d).e;
@@ -633,11 +818,11 @@ bind_parens.js:29:5 parse ━━━━━━━━━━━━━━━━━━
     30 │ (b::c::d).e;
     31 │ new (a::b)();
   
+  i Remove :
+  
 bind_parens.js:30:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  
-  × TypeScript only syntax
   
     28 │ b.c::d.e;
     29 │ (b.c::d).e;
@@ -646,11 +831,11 @@ bind_parens.js:30:3 parse ━━━━━━━━━━━━━━━━━━
     31 │ new (a::b)();
     32 │ new f(a::b);
   
+  i TypeScript only syntax
+  
 bind_parens.js:30:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `:`
-  
-  × unexpected
   
     28 │ b.c::d.e;
     29 │ (b.c::d).e;
@@ -659,11 +844,11 @@ bind_parens.js:30:4 parse ━━━━━━━━━━━━━━━━━━
     31 │ new (a::b)();
     32 │ new f(a::b);
   
+  i Remove :
+  
 bind_parens.js:30:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `c`
-  
-  × unexpected
   
     28 │ b.c::d.e;
     29 │ (b.c::d).e;
@@ -672,11 +857,11 @@ bind_parens.js:30:5 parse ━━━━━━━━━━━━━━━━━━
     31 │ new (a::b)();
     32 │ new f(a::b);
   
+  i Remove c
+  
 bind_parens.js:30:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  
-  × TypeScript only syntax
   
     28 │ b.c::d.e;
     29 │ (b.c::d).e;
@@ -685,11 +870,11 @@ bind_parens.js:30:6 parse ━━━━━━━━━━━━━━━━━━
     31 │ new (a::b)();
     32 │ new f(a::b);
   
+  i TypeScript only syntax
+  
 bind_parens.js:30:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `:`
-  
-  × unexpected
   
     28 │ b.c::d.e;
     29 │ (b.c::d).e;
@@ -698,11 +883,11 @@ bind_parens.js:30:7 parse ━━━━━━━━━━━━━━━━━━
     31 │ new (a::b)();
     32 │ new f(a::b);
   
+  i Remove :
+  
 bind_parens.js:30:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `d`
-  
-  × unexpected
   
     28 │ b.c::d.e;
     29 │ (b.c::d).e;
@@ -711,11 +896,11 @@ bind_parens.js:30:8 parse ━━━━━━━━━━━━━━━━━━
     31 │ new (a::b)();
     32 │ new f(a::b);
   
+  i Remove d
+  
 bind_parens.js:30:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `=>` but instead found `.`
-  
-  × unexpected
   
     28 │ b.c::d.e;
     29 │ (b.c::d).e;
@@ -724,11 +909,11 @@ bind_parens.js:30:10 parse ━━━━━━━━━━━━━━━━━�
     31 │ new (a::b)();
     32 │ new f(a::b);
   
+  i Remove .
+  
 bind_parens.js:31:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `:`
-  
-  × unexpected
   
     29 │ (b.c::d).e;
     30 │ (b::c::d).e;
@@ -737,11 +922,11 @@ bind_parens.js:31:7 parse ━━━━━━━━━━━━━━━━━━
     32 │ new f(a::b);
     33 │ f[a::b];
   
+  i Remove :
+  
 bind_parens.js:32:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `:`
-  
-  × unexpected
   
     30 │ (b::c::d).e;
     31 │ new (a::b)();
@@ -750,11 +935,11 @@ bind_parens.js:32:8 parse ━━━━━━━━━━━━━━━━━━
     33 │ f[a::b];
     34 │ f[a::b()];
   
+  i Remove :
+  
 bind_parens.js:33:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `]` but instead found `:`
-  
-  × unexpected
   
     31 │ new (a::b)();
     32 │ new f(a::b);
@@ -763,17 +948,19 @@ bind_parens.js:33:4 parse ━━━━━━━━━━━━━━━━━━
     34 │ f[a::b()];
     35 │ 
   
+  i Remove :
+  
 bind_parens.js:34:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `]` but instead found `:`
-  
-  × unexpected
   
     32 │ new f(a::b);
     33 │ f[a::b];
   > 34 │ f[a::b()];
        │    ^
     35 │ 
+  
+  i Remove :
   
 
 ```

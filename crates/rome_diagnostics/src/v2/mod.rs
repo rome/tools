@@ -20,7 +20,9 @@ pub use advice::{
 };
 pub use context::{Context, DiagnosticExt};
 pub use diagnostic::{Diagnostic, DiagnosticTags, Severity};
-pub use display::{set_bottom_frame, Backtrace, PrintDescription, PrintDiagnostic};
+pub use display::{
+    set_bottom_frame, Backtrace, MessageAndDescription, PrintDescription, PrintDiagnostic,
+};
 pub use error::{Error, Result};
 pub use location::{FileId, FilePath, LineIndex, LineIndexBuf, Location, Resource, SourceCode};
 

@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\objects\\expression.js"
+  test_file: js/objects/expression.js
 ---
 
 # Input
@@ -100,8 +100,6 @@ expression.js:5:4 parse ━━━━━━━━━━━━━━━━━━�
 
   × expected `)` but instead found `:`
   
-  × unexpected
-  
     3 │ a = () => ({}).x;
     4 │ ({} && a, b);
   > 5 │ ({}::b, 0);
@@ -109,11 +107,11 @@ expression.js:5:4 parse ━━━━━━━━━━━━━━━━━━�
     6 │ ({}::b()``[''].c++ && 0 ? 0 : 0, 0);
     7 │ ({}(), 0);
   
+  i Remove :
+  
 expression.js:6:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `:`
-  
-  × unexpected
   
     4 │ ({} && a, b);
     5 │ ({}::b, 0);
@@ -121,6 +119,8 @@ expression.js:6:4 parse ━━━━━━━━━━━━━━━━━━�
       │    ^
     7 │ ({}(), 0);
     8 │ ({} = 0);
+  
+  i Remove :
   
 
 ```

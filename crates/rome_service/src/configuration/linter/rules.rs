@@ -3,8 +3,7 @@
 use crate::{ConfigurationError, RomeError, RuleConfiguration};
 use indexmap::{IndexMap, IndexSet};
 use rome_analyze::RuleFilter;
-use rome_diagnostics::v2::Category;
-use rome_diagnostics::Severity;
+use rome_diagnostics::v2::{Category, Severity};
 #[cfg(feature = "schemars")]
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};

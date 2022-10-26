@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\decorators\\class-expression\\super-class.js"
+  test_file: js/decorators/class-expression/super-class.js
 ---
 
 # Input
@@ -59,12 +59,12 @@ super-class.js:1:20 parse ━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `@`
   
-  × unexpected
-  
   > 1 │ class Foo extends (@deco class Foo {}){}
       │                    ^
     2 │ 
     3 │ class Foo extends (@deco class {}){}
+  
+  i Remove @
   
 super-class.js:1:32 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -79,7 +79,12 @@ super-class.js:1:36 parse ━━━━━━━━━━━━━━━━━━
 
   × expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
   
-  × Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+  > 1 │ class Foo extends (@deco class Foo {}){}
+      │                                    ^
+    2 │ 
+    3 │ class Foo extends (@deco class {}){}
+  
+  i Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
   
   > 1 │ class Foo extends (@deco class Foo {}){}
       │                                    ^
@@ -90,7 +95,12 @@ super-class.js:1:38 parse ━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ')'
   
-  × Expected a statement here
+  > 1 │ class Foo extends (@deco class Foo {}){}
+      │                                      ^
+    2 │ 
+    3 │ class Foo extends (@deco class {}){}
+  
+  i Expected a statement here
   
   > 1 │ class Foo extends (@deco class Foo {}){}
       │                                      ^
@@ -101,19 +111,25 @@ super-class.js:3:20 parse ━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `@`
   
-  × unexpected
-  
     1 │ class Foo extends (@deco class Foo {}){}
     2 │ 
   > 3 │ class Foo extends (@deco class {}){}
       │                    ^
     4 │ 
   
+  i Remove @
+  
 super-class.js:3:32 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier, a string literal, a number literal, a private field name, or a computed name but instead found '{'
   
-  × Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
+    1 │ class Foo extends (@deco class Foo {}){}
+    2 │ 
+  > 3 │ class Foo extends (@deco class {}){}
+      │                                ^
+    4 │ 
+  
+  i Expected an identifier, a string literal, a number literal, a private field name, or a computed name here
   
     1 │ class Foo extends (@deco class Foo {}){}
     2 │ 
@@ -125,7 +141,13 @@ super-class.js:3:34 parse ━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found ')'
   
-  × Expected a statement here
+    1 │ class Foo extends (@deco class Foo {}){}
+    2 │ 
+  > 3 │ class Foo extends (@deco class {}){}
+      │                                  ^
+    4 │ 
+  
+  i Expected a statement here
   
     1 │ class Foo extends (@deco class Foo {}){}
     2 │ 

@@ -116,7 +116,13 @@ jsx_element_attribute_missing_value.jsx:2:33 parse ━━━━━━━━━�
 
   × expected a JSX attribute value but instead found '>'
   
-  × Expected a JSX attribute value here
+    1 │ function f() {
+  > 2 │     return <div string_literal= ></div>;
+      │                                 ^
+    3 │ }
+    4 │ 
+  
+  i Expected a JSX attribute value here
   
     1 │ function f() {
   > 2 │     return <div string_literal= ></div>;

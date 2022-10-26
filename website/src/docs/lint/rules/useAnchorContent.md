@@ -85,7 +85,11 @@ Accessible means that the content is not hidden using the `aria-hidden` attribut
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">expected `&gt;` but instead the file ends</span>
   
-<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">the file ends here</span>
+    <strong>1 │ </strong>&lt;a&gt;&lt;span aria-hidden=&quot;true&quot;&gt;content&lt;/span&gt;&lt;/a
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>
+   <strong>   │ </strong>
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">the file ends here</span>
   
     <strong>1 │ </strong>&lt;a&gt;&lt;span aria-hidden=&quot;true&quot;&gt;content&lt;/span&gt;&lt;/a
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>

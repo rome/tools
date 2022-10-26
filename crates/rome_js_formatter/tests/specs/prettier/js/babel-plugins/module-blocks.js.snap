@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\babel-plugins\\module-blocks.js"
+  test_file: js/babel-plugins/module-blocks.js
 ---
 
 # Input
@@ -46,7 +46,12 @@ module-blocks.js:1:16 parse ━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+  > 1 │ let m = module {
+      │                ^
+    2 │   export let m = 2;
+    3 │   export let n = 3;
+  
+  i An explicit or implicit semicolon is expected here...
   
   > 1 │ let m = module {
       │                ^
@@ -64,19 +69,17 @@ module-blocks.js:2:3 parse ━━━━━━━━━━━━━━━━━�
 
   × Illegal use of an export declaration not at the top level
   
-  × move this declaration to the top level
-  
     1 │ let m = module {
   > 2 │   export let m = 2;
       │   ^^^^^^^^^^^^^^^^^
     3 │   export let n = 3;
     4 │ };
   
+  i move this declaration to the top level
+  
 module-blocks.js:3:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of an export declaration not at the top level
-  
-  × move this declaration to the top level
   
     1 │ let m = module {
     2 │   export let m = 2;
@@ -84,6 +87,8 @@ module-blocks.js:3:3 parse ━━━━━━━━━━━━━━━━━�
       │   ^^^^^^^^^^^^^^^^^
     4 │ };
     5 │ 
+  
+  i move this declaration to the top level
   
 
 ```

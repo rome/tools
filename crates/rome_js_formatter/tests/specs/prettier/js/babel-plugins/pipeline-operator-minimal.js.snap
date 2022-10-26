@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\babel-plugins\\pipeline-operator-minimal.js"
+  test_file: js/babel-plugins/pipeline-operator-minimal.js
 ---
 
 # Input
@@ -64,19 +64,17 @@ pipeline-operator-minimal.js:8:4 parse ━━━━━━━━━━━━━�
 
   × Expected an expression for the left hand side of the `>` operator.
   
-  × This operator requires a left hand side value
-  
      7 │ let result = "hello"
    > 8 │   |> doubleSay
        │    ^
      9 │   |> capitalize
     10 │   |> exclaim;
   
+  i This operator requires a left hand side value
+  
 pipeline-operator-minimal.js:9:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
      7 │ let result = "hello"
      8 │   |> doubleSay
@@ -85,11 +83,11 @@ pipeline-operator-minimal.js:9:4 parse ━━━━━━━━━━━━━�
     10 │   |> exclaim;
     11 │ 
   
+  i This operator requires a left hand side value
+  
 pipeline-operator-minimal.js:10:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
      8 │   |> doubleSay
      9 │   |> capitalize
@@ -97,6 +95,8 @@ pipeline-operator-minimal.js:10:4 parse ━━━━━━━━━━━━━�
        │    ^
     11 │ 
     12 │ result //=> "Hello, hello!"
+  
+  i This operator requires a left hand side value
   
 
 ```

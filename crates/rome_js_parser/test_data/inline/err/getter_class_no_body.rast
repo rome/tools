@@ -61,7 +61,13 @@ getter_class_no_body.js:3:1 parse ━━━━━━━━━━━━━━━�
 
   × expected a class method body but instead found '}'
   
-  × Expected a class method body here
+    1 │ class Getters {
+    2 │   get foo()
+  > 3 │ }
+      │ ^
+    4 │ 
+  
+  i Expected a class method body here
   
     1 │ class Getters {
     2 │   get foo()

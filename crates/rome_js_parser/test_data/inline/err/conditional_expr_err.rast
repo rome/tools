@@ -141,19 +141,17 @@ conditional_expr_err.js:1:11 parse ━━━━━━━━━━━━━━━
 
   × expected `:` but instead found `baz`
   
-  × unexpected
-  
   > 1 │ foo ? bar baz
       │           ^^^
     2 │ foo ? bar baz ? foo : bar
     3 │ foo ? bar :
   
+  i Remove baz
+  
 --
 conditional_expr_err.js:2:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `:` but instead found `baz`
-  
-  × unexpected
   
     1 │ foo ? bar baz
   > 2 │ foo ? bar baz ? foo : bar
@@ -161,12 +159,19 @@ conditional_expr_err.js:2:11 parse ━━━━━━━━━━━━━━━
     3 │ foo ? bar :
     4 │ 
   
+  i Remove baz
+  
 --
 conditional_expr_err.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression, or an assignment but instead found ''
   
-  × Expected an expression, or an assignment here
+    2 │ foo ? bar baz ? foo : bar
+    3 │ foo ? bar :
+  > 4 │ 
+      │ 
+  
+  i Expected an expression, or an assignment here
   
     2 │ foo ? bar baz ? foo : bar
     3 │ foo ? bar :

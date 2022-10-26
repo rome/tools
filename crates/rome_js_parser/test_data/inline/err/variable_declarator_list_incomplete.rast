@@ -53,7 +53,11 @@ variable_declarator_list_incomplete.js:2:1 parse ━━━━━━━━━━�
 
   × expected an identifier, an array pattern, or an object pattern but instead found ''
   
-  × Expected an identifier, an array pattern, or an object pattern here
+    1 │ const a = 1,
+  > 2 │ 
+      │ 
+  
+  i Expected an identifier, an array pattern, or an object pattern here
   
     1 │ const a = 1,
   > 2 │ 

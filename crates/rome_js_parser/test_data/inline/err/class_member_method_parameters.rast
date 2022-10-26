@@ -116,29 +116,33 @@ class_member_method_parameters.js:1:17 parse ━━━━━━━━━━━�
 
   × expected `,` but instead found `{`
   
-  × unexpected
-  
   > 1 │ class B { foo(a {} }
       │                 ^
     2 │ 
+  
+  i Remove {
   
 --
 class_member_method_parameters.js:1:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `}`
   
-  × unexpected
-  
   > 1 │ class B { foo(a {} }
       │                    ^
     2 │ 
+  
+  i Remove }
   
 --
 class_member_method_parameters.js:2:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead the file ends
   
-  × the file ends here
+    1 │ class B { foo(a {} }
+  > 2 │ 
+      │ 
+  
+  i the file ends here
   
     1 │ class B { foo(a {} }
   > 2 │ 

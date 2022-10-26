@@ -122,19 +122,25 @@ logical_expressions_err.js:1:8 parse ━━━━━━━━━━━━━━�
 
   × Expected an expression for the left hand side of the `*` operator.
   
-  × This operator requires a left hand side value
-  
   > 1 │ foo ?? * 2;
       │        ^
     2 │ !foo && bar;
     3 │ foo(foo ||)
+  
+  i This operator requires a left hand side value
   
 --
 logical_expressions_err.js:3:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression but instead found ')'
   
-  × Expected an expression here
+    1 │ foo ?? * 2;
+    2 │ !foo && bar;
+  > 3 │ foo(foo ||)
+      │           ^
+    4 │ 
+  
+  i Expected an expression here
   
     1 │ foo ?? * 2;
     2 │ !foo && bar;

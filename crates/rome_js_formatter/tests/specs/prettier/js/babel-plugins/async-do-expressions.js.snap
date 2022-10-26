@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\babel-plugins\\async-do-expressions.js"
+  test_file: js/babel-plugins/async-do-expressions.js
 ---
 
 # Input
@@ -38,7 +38,11 @@ async-do-expressions.js:1:7 parse ━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+  > 1 │ async do { await requestAPI().json() };
+      │       ^^
+    2 │ 
+  
+  i An explicit or implicit semicolon is expected here...
   
   > 1 │ async do { await requestAPI().json() };
       │       ^^
@@ -54,11 +58,11 @@ async-do-expressions.js:1:39 parse ━━━━━━━━━━━━━━━
 
   × expected `while` but instead found `;`
   
-  × unexpected
-  
   > 1 │ async do { await requestAPI().json() };
       │                                       ^
     2 │ 
+  
+  i Remove ;
   
 
 ```

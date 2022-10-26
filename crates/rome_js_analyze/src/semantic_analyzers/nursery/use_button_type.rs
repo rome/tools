@@ -2,7 +2,6 @@ use crate::react::{ReactApiCall, ReactCreateElementCall};
 use crate::semantic_services::Semantic;
 use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
-use rome_diagnostics::Severity;
 use rome_js_syntax::{
     JsCallExpression, JsObjectExpression, JsStringLiteralExpression, JsxAnyElementName,
     JsxOpeningElement, JsxString,
@@ -160,11 +159,11 @@ impl Rule for UseButtonType {
             state.node.syntax().text_trimmed_range(),
             message
         )
-            .footer(Severity::Note, markup! {
+            .note(markup! {
                 "The default  "<Emphasis>"type"</Emphasis>" of a button is "<Emphasis>"submit"</Emphasis>", which causes the submission of a form when placed inside a `form` element. "
                 "This is likely not the behaviour that you want inside a React application."
             })
-            .footer_help(
+            .note(
             markup! {
 
                 "Allowed button types are: "<Emphasis>"submit"</Emphasis>", "<Emphasis>"button"</Emphasis>" or "<Emphasis>"reset"</Emphasis>""

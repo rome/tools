@@ -96,7 +96,13 @@ no_top_level_await_in_scripts.js:3:7 parse ━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    1 │ // SCRIPT
+    2 │ async function test() {}
+  > 3 │ await test();
+      │       ^^^^
+    4 │ 
+  
+  i An explicit or implicit semicolon is expected here...
   
     1 │ // SCRIPT
     2 │ async function test() {}

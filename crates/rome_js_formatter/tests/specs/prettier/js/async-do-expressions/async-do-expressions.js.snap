@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\async-do-expressions\\async-do-expressions.js"
+  test_file: js/async-do-expressions/async-do-expressions.js
 ---
 
 # Input
@@ -136,7 +136,12 @@ async-do-expressions.js:1:7 parse ━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+  > 1 │ async do {
+      │       ^^
+    2 │   1;
+    3 │ };
+  
+  i An explicit or implicit semicolon is expected here...
   
   > 1 │ async do {
       │       ^^
@@ -154,8 +159,6 @@ async-do-expressions.js:3:2 parse ━━━━━━━━━━━━━━━�
 
   × expected `while` but instead found `;`
   
-  × unexpected
-  
     1 │ async do {
     2 │   1;
   > 3 │ };
@@ -163,11 +166,11 @@ async-do-expressions.js:3:2 parse ━━━━━━━━━━━━━━━�
     4 │ 
     5 │ (async do {});
   
+  i Remove ;
+  
 async-do-expressions.js:5:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `do`
-  
-  × unexpected
   
     3 │ };
     4 │ 
@@ -176,11 +179,11 @@ async-do-expressions.js:5:8 parse ━━━━━━━━━━━━━━━�
     6 │ 
     7 │ let x = async do {
   
+  i Remove do
+  
 async-do-expressions.js:5:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `while` but instead found `)`
-  
-  × unexpected
   
     3 │ };
     4 │ 
@@ -189,11 +192,20 @@ async-do-expressions.js:5:13 parse ━━━━━━━━━━━━━━━
     6 │ 
     7 │ let x = async do {
   
+  i Remove )
+  
 async-do-expressions.js:7:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    5 │ (async do {});
+    6 │ 
+  > 7 │ let x = async do {
+      │               ^^
+    8 │   if (foo()) { f() }
+    9 │   else if (bar()) { g() }
+  
+  i An explicit or implicit semicolon is expected here...
   
     5 │ (async do {});
     6 │ 
@@ -215,8 +227,6 @@ async-do-expressions.js:11:2 parse ━━━━━━━━━━━━━━━
 
   × expected `while` but instead found `;`
   
-  × unexpected
-  
      9 │   else if (bar()) { g() }
     10 │   else { h() }
   > 11 │ };
@@ -224,11 +234,20 @@ async-do-expressions.js:11:2 parse ━━━━━━━━━━━━━━━
     12 │ 
     13 │ async do {
   
+  i Remove ;
+  
 async-do-expressions.js:13:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    11 │ };
+    12 │ 
+  > 13 │ async do {
+       │       ^^
+    14 │   await 42
+    15 │ }
+  
+  i An explicit or implicit semicolon is expected here...
   
     11 │ };
     12 │ 
@@ -250,8 +269,6 @@ async-do-expressions.js:17:1 parse ━━━━━━━━━━━━━━━
 
   × expected `while` but instead found `function`
   
-  × unexpected
-  
     15 │ }
     16 │ 
   > 17 │ function iter() {
@@ -259,11 +276,19 @@ async-do-expressions.js:17:1 parse ━━━━━━━━━━━━━━━
     18 │   return async do {
     19 │     return 1;
   
+  i Remove function
+  
 async-do-expressions.js:18:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    17 │ function iter() {
+  > 18 │   return async do {
+       │                ^^
+    19 │     return 1;
+    20 │   }
+  
+  i An explicit or implicit semicolon is expected here...
   
     17 │ function iter() {
   > 18 │   return async do {
@@ -283,8 +308,6 @@ async-do-expressions.js:21:1 parse ━━━━━━━━━━━━━━━
 
   × expected `while` but instead found `}`
   
-  × unexpected
-  
     19 │     return 1;
     20 │   }
   > 21 │ };
@@ -292,11 +315,11 @@ async-do-expressions.js:21:1 parse ━━━━━━━━━━━━━━━
     22 │ 
     23 │ let x = async do {
   
+  i Remove }
+  
 async-do-expressions.js:21:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `;`
-  
-  × unexpected
   
     19 │     return 1;
     20 │   }
@@ -305,11 +328,20 @@ async-do-expressions.js:21:2 parse ━━━━━━━━━━━━━━━
     22 │ 
     23 │ let x = async do {
   
+  i Remove ;
+  
 async-do-expressions.js:23:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    21 │ };
+    22 │ 
+  > 23 │ let x = async do {
+       │               ^^
+    24 │   let tmp = f();
+    25 │   tmp * tmp + 1
+  
+  i An explicit or implicit semicolon is expected here...
   
     21 │ };
     22 │ 
@@ -331,13 +363,13 @@ async-do-expressions.js:26:2 parse ━━━━━━━━━━━━━━━
 
   × expected `while` but instead found `;`
   
-  × unexpected
-  
     24 │   let tmp = f();
     25 │   tmp * tmp + 1
   > 26 │ };
        │  ^
     27 │ 
+  
+  i Remove ;
   
 
 ```

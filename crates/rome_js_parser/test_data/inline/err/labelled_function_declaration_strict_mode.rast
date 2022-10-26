@@ -55,11 +55,11 @@ labelled_function_declaration_strict_mode.js:1:9 parse ━━━━━━━━�
 
   × In strict mode code, functions can only be declared at top level or inside a block
   
-  × wrap the function in a block statement
-  
   > 1 │ label1: function a() {}
       │         ^^^^^^^^^^^^^^^
     2 │ 
+  
+  i wrap the function in a block statement
   
 --
 label1: function a() {}

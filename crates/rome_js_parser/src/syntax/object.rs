@@ -171,8 +171,8 @@ fn parse_object_member(p: &mut Parser) -> ParsedSyntax {
                     //
                     // test_err object_shorthand_with_initializer
                     // ({ arrow = () => {} })
-                    p.error(p.err_builder("Did you mean to use a `:`? An `=` can only follow a property name when the containing object literal is part of a destructuring pattern.")
-						.primary(p.cur_range(), ""));
+                    p.error(p.err_builder("Did you mean to use a `:`? An `=` can only follow a property name when the containing object literal is part of a destructuring pattern.",
+						p.cur_range()));
                     p.bump(T![=]);
                     parse_assignment_expression_or_higher(p, ExpressionContext::default()).ok();
                     return Present(m.complete(p, JS_UNKNOWN_MEMBER));

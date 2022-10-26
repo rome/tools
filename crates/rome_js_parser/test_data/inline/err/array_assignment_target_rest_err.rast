@@ -163,7 +163,12 @@ array_assignment_target_rest_err.js:1:7 parse ━━━━━━━━━━━�
 
   × expected an identifier, or an assignment target but instead found ''
   
-  × Expected an identifier, or an assignment target here
+  > 1 │ ([ ... ] = a);
+      │       
+    2 │ ([ ...c = "default" ] = a);
+    3 │ ([ ...rest, other_assignment ] = a);
+  
+  i Expected an identifier, or an assignment target here
   
   > 1 │ ([ ... ] = a);
       │       
@@ -175,7 +180,13 @@ array_assignment_target_rest_err.js:2:9 parse ━━━━━━━━━━━�
 
   × rest element cannot have a default
   
-  × Remove the default value here
+    1 │ ([ ... ] = a);
+  > 2 │ ([ ...c = "default" ] = a);
+      │         ^^^^^^^^^^^^
+    3 │ ([ ...rest, other_assignment ] = a);
+    4 │ 
+  
+  i Remove the default value here
   
     1 │ ([ ... ] = a);
   > 2 │ ([ ...c = "default" ] = a);
@@ -196,13 +207,13 @@ array_assignment_target_rest_err.js:3:4 parse ━━━━━━━━━━━�
 
   × rest element must be the last element
   
-  × Move the rest element to the end of the pattern, right before the closing ']'
-  
     1 │ ([ ... ] = a);
     2 │ ([ ...c = "default" ] = a);
   > 3 │ ([ ...rest, other_assignment ] = a);
       │    ^^^^^^^
     4 │ 
+  
+  i Move the rest element to the end of the pattern, right before the closing ']'
   
 --
 ([ ... ] = a);

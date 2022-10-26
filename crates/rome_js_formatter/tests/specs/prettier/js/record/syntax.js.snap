@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\record\\syntax.js"
+  test_file: js/record/syntax.js
 ---
 
 # Input
@@ -70,7 +70,12 @@ syntax.js:1:1 parse ━━━━━━━━━━━━━━━━━━━━
 
   × expected a statement but instead found '#'
   
-  × Expected a statement here
+  > 1 │ #{}
+      │ ^
+    2 │ #{ a: 1, b: 2 }
+    3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
+  
+  i Expected a statement here
   
   > 1 │ #{}
       │ ^
@@ -81,7 +86,13 @@ syntax.js:2:2 parse ━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier but instead found '{'
   
-  × Expected an identifier here
+    1 │ #{}
+  > 2 │ #{ a: 1, b: 2 }
+      │  ^
+    3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
+    4 │ 
+  
+  i Expected an identifier here
   
     1 │ #{}
   > 2 │ #{ a: 1, b: 2 }
@@ -103,7 +114,13 @@ syntax.js:2:2 parse ━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    1 │ #{}
+  > 2 │ #{ a: 1, b: 2 }
+      │  ^
+    3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
+    4 │ 
+  
+  i An explicit or implicit semicolon is expected here...
   
     1 │ #{}
   > 2 │ #{ a: 1, b: 2 }
@@ -123,7 +140,13 @@ syntax.js:2:11 parse ━━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    1 │ #{}
+  > 2 │ #{ a: 1, b: 2 }
+      │           ^
+    3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
+    4 │ 
+  
+  i An explicit or implicit semicolon is expected here...
   
     1 │ #{}
   > 2 │ #{ a: 1, b: 2 }
@@ -143,7 +166,13 @@ syntax.js:3:2 parse ━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier but instead found '{'
   
-  × Expected an identifier here
+    1 │ #{}
+    2 │ #{ a: 1, b: 2 }
+  > 3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
+      │  ^
+    4 │ 
+  
+  i Expected an identifier here
   
     1 │ #{}
     2 │ #{ a: 1, b: 2 }
@@ -165,7 +194,13 @@ syntax.js:3:2 parse ━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    1 │ #{}
+    2 │ #{ a: 1, b: 2 }
+  > 3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
+      │  ^
+    4 │ 
+  
+  i An explicit or implicit semicolon is expected here...
   
     1 │ #{}
     2 │ #{ a: 1, b: 2 }
@@ -185,7 +220,13 @@ syntax.js:3:11 parse ━━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    1 │ #{}
+    2 │ #{ a: 1, b: 2 }
+  > 3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
+      │           ^
+    4 │ 
+  
+  i An explicit or implicit semicolon is expected here...
   
     1 │ #{}
     2 │ #{ a: 1, b: 2 }
@@ -205,7 +246,13 @@ syntax.js:3:30 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected a statement but instead found ']'
   
-  × Expected a statement here
+    1 │ #{}
+    2 │ #{ a: 1, b: 2 }
+  > 3 │ #{ a: 1, b: #[2, 3, #{ c: 4 }] }
+      │                              ^
+    4 │ 
+  
+  i Expected a statement here
   
     1 │ #{}
     2 │ #{ a: 1, b: 2 }

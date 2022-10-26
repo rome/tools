@@ -32,9 +32,7 @@ fn parse_literal_as_ts_enum_member(p: &mut Parser) -> ParsedSyntax {
             p.bump_remap(T![ident]);
         }
         JS_NUMBER_LITERAL => {
-            let err = p
-                .err_builder("An enum member cannot have a numeric name")
-                .primary(p.cur_range(), "");
+            let err = p.err_builder("An enum member cannot have a numeric name", p.cur_range());
             p.error(err);
             p.bump_any()
         }
@@ -53,9 +51,7 @@ fn parse_ts_enum_member(p: &mut Parser) -> ParsedSyntax {
     let name = match p.cur() {
         T!['['] => syntax::object::parse_computed_member_name(p),
         T![#] => {
-            let err = p
-                .err_builder("An `enum` member cannot be private")
-                .primary(p.cur_range(), "");
+            let err = p.err_builder("An `enum` member cannot be private", p.cur_range());
             p.error(err);
             syntax::class::parse_private_class_member_name(p).map(|mut x| {
                 x.change_to_unknown(p);
@@ -120,12 +116,13 @@ fn parse_ts_enum_id(p: &mut Parser, enum_token_range: TextRange) {
         Present(id) => {
             let text = p.source(id.range(p));
             if is_reserved_enum_name(text) {
-                let err = p
-                    .err_builder(&format!(
+                let err = p.err_builder(
+                    format!(
                         "`{}` cannot be used as a enum name because it is already reserved",
                         text
-                    ))
-                    .primary(id.range(p), "");
+                    ),
+                    id.range(p),
+                );
 
                 p.error(err);
             }
@@ -141,12 +138,12 @@ fn parse_ts_enum_id(p: &mut Parser, enum_token_range: TextRange) {
                 p.bump_any();
                 let _ = m.complete(p, JS_UNKNOWN_BINDING);
 
-                let err = p.err_builder("invalid `enum` name").primary(range, "");
+                let err = p.err_builder("invalid `enum` name", range);
                 p.error(err);
             } else {
-                let err = p.err_builder("`enum` statements must have a name").primary(
+                let err = p.err_builder(
+                    "`enum` statements must have a name",
                     TextRange::new(enum_token_range.start(), p.cur_range().start()),
-                    "",
                 );
                 p.error(err);
             }
@@ -327,9 +324,8 @@ fn eat_interface_heritage_clause(p: &mut Parser) {
 
             if let Some(first_extends) = first_extends.as_ref() {
                 p.error(
-                    p.err_builder("'extends' clause already seen.")
-                        .primary(extends.range(p), "")
-                        .secondary(first_extends.range(p), "first 'extends' clause"),
+                    p.err_builder("'extends' clause already seen.", extends.range(p))
+                        .detail(first_extends.range(p), "first 'extends' clause"),
                 )
             } else {
                 first_extends = Some(extends);
@@ -337,10 +333,10 @@ fn eat_interface_heritage_clause(p: &mut Parser) {
         } else if p.at(T![implements]) {
             let implements =
                 parse_ts_implements_clause(p).expect("positioned at the implements keyword");
-            p.error(
-                p.err_builder("Interface declaration cannot have 'implements' clause.")
-                    .primary(implements.range(p), ""),
-            );
+            p.error(p.err_builder(
+                "Interface declaration cannot have 'implements' clause.",
+                implements.range(p),
+            ));
         } else {
             break;
         }

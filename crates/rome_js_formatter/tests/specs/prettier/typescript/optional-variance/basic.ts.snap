@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "typescript\\optional-variance\\basic.ts"
+  test_file: typescript/optional-variance/basic.ts
 ---
 
 # Input
@@ -241,18 +241,25 @@ basic.ts:1:20 parse ━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `T`
   
-  × unexpected
-  
   > 1 │ type Covariant<out T> = {
       │                    ^
     2 │     x: T;
     3 │ }
   
+  i Remove T
+  
 basic.ts:4:20 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a type parameter but instead found 'in'
   
-  × Expected a type parameter here
+    2 │     x: T;
+    3 │ }
+  > 4 │ type Contravariant<in T> = {
+      │                    ^^
+    5 │     f: (x: T) => void;
+    6 │ }
+  
+  i Expected a type parameter here
   
     2 │     x: T;
     3 │ }
@@ -265,8 +272,6 @@ basic.ts:4:23 parse ━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `T`
   
-  × unexpected
-  
     2 │     x: T;
     3 │ }
   > 4 │ type Contravariant<in T> = {
@@ -274,11 +279,20 @@ basic.ts:4:23 parse ━━━━━━━━━━━━━━━━━━━━
     5 │     f: (x: T) => void;
     6 │ }
   
+  i Remove T
+  
 basic.ts:7:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a type parameter but instead found 'in'
   
-  × Expected a type parameter here
+    5 │     f: (x: T) => void;
+    6 │ }
+  > 7 │ type Invariant<in out T> = {
+      │                ^^
+    8 │     f: (x: T) => T;
+    9 │ }
+  
+  i Expected a type parameter here
   
     5 │     f: (x: T) => void;
     6 │ }
@@ -291,8 +305,6 @@ basic.ts:7:19 parse ━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `out`
   
-  × unexpected
-  
     5 │     f: (x: T) => void;
     6 │ }
   > 7 │ type Invariant<in out T> = {
@@ -300,11 +312,11 @@ basic.ts:7:19 parse ━━━━━━━━━━━━━━━━━━━━
     8 │     f: (x: T) => T;
     9 │ }
   
+  i Remove out
+  
 basic.ts:7:23 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `T`
-  
-  × unexpected
   
     5 │     f: (x: T) => void;
     6 │ }
@@ -313,11 +325,11 @@ basic.ts:7:23 parse ━━━━━━━━━━━━━━━━━━━━
     8 │     f: (x: T) => T;
     9 │ }
   
+  i Remove T
+  
 basic.ts:10:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `T`
-  
-  × unexpected
   
      8 │     f: (x: T) => T;
      9 │ }
@@ -326,11 +338,20 @@ basic.ts:10:14 parse ━━━━━━━━━━━━━━━━━━━�
     11 │ type T11<in T> = keyof T;
     12 │ type T12<out T, out K extends keyof T> = T[K];
   
+  i Remove T
+  
 basic.ts:11:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a type parameter but instead found 'in'
   
-  × Expected a type parameter here
+     9 │ }
+    10 │ type T10<out T> = T;
+  > 11 │ type T11<in T> = keyof T;
+       │          ^^
+    12 │ type T12<out T, out K extends keyof T> = T[K];
+    13 │ type T13<in out T> = T[keyof T];
+  
+  i Expected a type parameter here
   
      9 │ }
     10 │ type T10<out T> = T;
@@ -343,8 +364,6 @@ basic.ts:11:13 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected `,` but instead found `T`
   
-  × unexpected
-  
      9 │ }
     10 │ type T10<out T> = T;
   > 11 │ type T11<in T> = keyof T;
@@ -352,11 +371,11 @@ basic.ts:11:13 parse ━━━━━━━━━━━━━━━━━━━�
     12 │ type T12<out T, out K extends keyof T> = T[K];
     13 │ type T13<in out T> = T[keyof T];
   
+  i Remove T
+  
 basic.ts:12:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `T`
-  
-  × unexpected
   
     10 │ type T10<out T> = T;
     11 │ type T11<in T> = keyof T;
@@ -365,11 +384,11 @@ basic.ts:12:14 parse ━━━━━━━━━━━━━━━━━━━�
     13 │ type T13<in out T> = T[keyof T];
     14 │ 
   
+  i Remove T
+  
 basic.ts:12:21 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `K`
-  
-  × unexpected
   
     10 │ type T10<out T> = T;
     11 │ type T11<in T> = keyof T;
@@ -378,11 +397,20 @@ basic.ts:12:21 parse ━━━━━━━━━━━━━━━━━━━�
     13 │ type T13<in out T> = T[keyof T];
     14 │ 
   
+  i Remove K
+  
 basic.ts:13:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a type parameter but instead found 'in'
   
-  × Expected a type parameter here
+    11 │ type T11<in T> = keyof T;
+    12 │ type T12<out T, out K extends keyof T> = T[K];
+  > 13 │ type T13<in out T> = T[keyof T];
+       │          ^^
+    14 │ 
+    15 │ type Covariant1<in T> = {
+  
+  i Expected a type parameter here
   
     11 │ type T11<in T> = keyof T;
     12 │ type T12<out T, out K extends keyof T> = T[K];
@@ -395,8 +423,6 @@ basic.ts:13:13 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected `,` but instead found `out`
   
-  × unexpected
-  
     11 │ type T11<in T> = keyof T;
     12 │ type T12<out T, out K extends keyof T> = T[K];
   > 13 │ type T13<in out T> = T[keyof T];
@@ -404,11 +430,11 @@ basic.ts:13:13 parse ━━━━━━━━━━━━━━━━━━━�
     14 │ 
     15 │ type Covariant1<in T> = {
   
+  i Remove out
+  
 basic.ts:13:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `T`
-  
-  × unexpected
   
     11 │ type T11<in T> = keyof T;
     12 │ type T12<out T, out K extends keyof T> = T[K];
@@ -417,11 +443,20 @@ basic.ts:13:17 parse ━━━━━━━━━━━━━━━━━━━�
     14 │ 
     15 │ type Covariant1<in T> = {
   
+  i Remove T
+  
 basic.ts:15:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a type parameter but instead found 'in'
   
-  × Expected a type parameter here
+    13 │ type T13<in out T> = T[keyof T];
+    14 │ 
+  > 15 │ type Covariant1<in T> = {
+       │                 ^^
+    16 │     x: T;
+    17 │ }
+  
+  i Expected a type parameter here
   
     13 │ type T13<in out T> = T[keyof T];
     14 │ 
@@ -434,8 +469,6 @@ basic.ts:15:20 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected `,` but instead found `T`
   
-  × unexpected
-  
     13 │ type T13<in out T> = T[keyof T];
     14 │ 
   > 15 │ type Covariant1<in T> = {
@@ -443,11 +476,11 @@ basic.ts:15:20 parse ━━━━━━━━━━━━━━━━━━━�
     16 │     x: T;
     17 │ }
   
+  i Remove T
+  
 basic.ts:19:25 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `T`
-  
-  × unexpected
   
     17 │ }
     18 │ 
@@ -456,11 +489,11 @@ basic.ts:19:25 parse ━━━━━━━━━━━━━━━━━━━�
     20 │ 
     21 │ type Contravariant2<out T> = {
   
+  i Remove T
+  
 basic.ts:21:25 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `T`
-  
-  × unexpected
   
     19 │ type Contravariant1<out T> = keyof T;
     20 │ 
@@ -469,11 +502,20 @@ basic.ts:21:25 parse ━━━━━━━━━━━━━━━━━━━�
     22 │     f: (x: T) => void;
     23 │ }
   
+  i Remove T
+  
 basic.ts:25:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a type parameter but instead found 'in'
   
-  × Expected a type parameter here
+    23 │ }
+    24 │ 
+  > 25 │ type Invariant1<in T> = {
+       │                 ^^
+    26 │     f: (x: T) => T;
+    27 │ }
+  
+  i Expected a type parameter here
   
     23 │ }
     24 │ 
@@ -486,8 +528,6 @@ basic.ts:25:20 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected `,` but instead found `T`
   
-  × unexpected
-  
     23 │ }
     24 │ 
   > 25 │ type Invariant1<in T> = {
@@ -495,11 +535,11 @@ basic.ts:25:20 parse ━━━━━━━━━━━━━━━━━━━�
     26 │     f: (x: T) => T;
     27 │ }
   
+  i Remove T
+  
 basic.ts:29:21 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `T`
-  
-  × unexpected
   
     27 │ }
     28 │ 
@@ -508,11 +548,20 @@ basic.ts:29:21 parse ━━━━━━━━━━━━━━━━━━━�
     30 │     f: (x: T) => T;
     31 │ }
   
+  i Remove T
+  
 basic.ts:32:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a type parameter but instead found 'in'
   
-  × Expected a type parameter here
+    30 │     f: (x: T) => T;
+    31 │ }
+  > 32 │ type Foo1<in T> = {
+       │           ^^
+    33 │     x: T;
+    34 │     f: FooFn1<T>;
+  
+  i Expected a type parameter here
   
     30 │     f: (x: T) => T;
     31 │ }
@@ -525,8 +574,6 @@ basic.ts:32:14 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected `,` but instead found `T`
   
-  × unexpected
-  
     30 │     f: (x: T) => T;
     31 │ }
   > 32 │ type Foo1<in T> = {
@@ -534,11 +581,11 @@ basic.ts:32:14 parse ━━━━━━━━━━━━━━━━━━━�
     33 │     x: T;
     34 │     f: FooFn1<T>;
   
+  i Remove T
+  
 basic.ts:37:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `T`
-  
-  × unexpected
   
     35 │ }
     36 │ 
@@ -547,11 +594,20 @@ basic.ts:37:15 parse ━━━━━━━━━━━━━━━━━━━�
     38 │     x: T;
     39 │     f: FooFn2<T>;
   
+  i Remove T
+  
 basic.ts:42:11 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a type parameter but instead found 'in'
   
-  × Expected a type parameter here
+    40 │ }
+    41 │ 
+  > 42 │ type Foo3<in out T> = {
+       │           ^^
+    43 │     x: T;
+    44 │     f: FooFn3<T>;
+  
+  i Expected a type parameter here
   
     40 │ }
     41 │ 
@@ -564,8 +620,6 @@ basic.ts:42:14 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected `,` but instead found `out`
   
-  × unexpected
-  
     40 │ }
     41 │ 
   > 42 │ type Foo3<in out T> = {
@@ -573,11 +627,11 @@ basic.ts:42:14 parse ━━━━━━━━━━━━━━━━━━━�
     43 │     x: T;
     44 │     f: FooFn3<T>;
   
+  i Remove out
+  
 basic.ts:42:18 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `T`
-  
-  × unexpected
   
     40 │ }
     41 │ 
@@ -586,11 +640,20 @@ basic.ts:42:18 parse ━━━━━━━━━━━━━━━━━━━�
     43 │     x: T;
     44 │     f: FooFn3<T>;
   
+  i Remove T
+  
 basic.ts:47:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a type parameter but instead found 'in'
   
-  × Expected a type parameter here
+    45 │ }
+    46 │ 
+  > 47 │ type T21<in out T> = T;
+       │          ^^
+    48 │ 
+    49 │ interface Baz<out T> {}
+  
+  i Expected a type parameter here
   
     45 │ }
     46 │ 
@@ -603,8 +666,6 @@ basic.ts:47:13 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected `,` but instead found `out`
   
-  × unexpected
-  
     45 │ }
     46 │ 
   > 47 │ type T21<in out T> = T;
@@ -612,11 +673,11 @@ basic.ts:47:13 parse ━━━━━━━━━━━━━━━━━━━�
     48 │ 
     49 │ interface Baz<out T> {}
   
+  i Remove out
+  
 basic.ts:47:17 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `T`
-  
-  × unexpected
   
     45 │ }
     46 │ 
@@ -625,11 +686,11 @@ basic.ts:47:17 parse ━━━━━━━━━━━━━━━━━━━�
     48 │ 
     49 │ interface Baz<out T> {}
   
+  i Remove T
+  
 basic.ts:49:19 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `T`
-  
-  × unexpected
   
     47 │ type T21<in out T> = T;
     48 │ 
@@ -638,11 +699,19 @@ basic.ts:49:19 parse ━━━━━━━━━━━━━━━━━━━�
     50 │ interface Baz<in T> {}
     51 │ 
   
+  i Remove T
+  
 basic.ts:50:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a type parameter but instead found 'in'
   
-  × Expected a type parameter here
+    49 │ interface Baz<out T> {}
+  > 50 │ interface Baz<in T> {}
+       │               ^^
+    51 │ 
+    52 │ interface Parent<out A> {
+  
+  i Expected a type parameter here
   
     49 │ interface Baz<out T> {}
   > 50 │ interface Baz<in T> {}
@@ -654,19 +723,17 @@ basic.ts:50:18 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected `,` but instead found `T`
   
-  × unexpected
-  
     49 │ interface Baz<out T> {}
   > 50 │ interface Baz<in T> {}
        │                  ^
     51 │ 
     52 │ interface Parent<out A> {
   
+  i Remove T
+  
 basic.ts:52:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `A`
-  
-  × unexpected
   
     50 │ interface Baz<in T> {}
     51 │ 
@@ -675,11 +742,20 @@ basic.ts:52:22 parse ━━━━━━━━━━━━━━━━━━━�
     53 │     child: Child<A> | null;
     54 │     parent: Parent<A> | null;
   
+  i Remove A
+  
 basic.ts:57:35 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected a type parameter but instead found 'in'
   
-  × Expected a type parameter here
+    55 │ }
+    56 │ 
+  > 57 │ declare class StateNode<TContext, in out TEvent extends { type: string }> {
+       │                                   ^^
+    58 │     _storedEvent: TEvent;
+    59 │     _action: ActionObject<TEvent>;
+  
+  i Expected a type parameter here
   
     55 │ }
     56 │ 
@@ -692,8 +768,6 @@ basic.ts:57:38 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected `,` but instead found `out`
   
-  × unexpected
-  
     55 │ }
     56 │ 
   > 57 │ declare class StateNode<TContext, in out TEvent extends { type: string }> {
@@ -701,11 +775,11 @@ basic.ts:57:38 parse ━━━━━━━━━━━━━━━━━━━�
     58 │     _storedEvent: TEvent;
     59 │     _action: ActionObject<TEvent>;
   
+  i Remove out
+  
 basic.ts:57:42 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `TEvent`
-  
-  × unexpected
   
     55 │ }
     56 │ 
@@ -713,6 +787,8 @@ basic.ts:57:42 parse ━━━━━━━━━━━━━━━━━━━�
        │                                          ^^^^^^
     58 │     _storedEvent: TEvent;
     59 │     _action: ActionObject<TEvent>;
+  
+  i Remove TEvent
   
 
 ```

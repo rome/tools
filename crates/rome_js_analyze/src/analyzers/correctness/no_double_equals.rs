@@ -74,22 +74,26 @@ impl Rule for NoDoubleEquals {
         Some(op)
     }
 
-    fn diagnostic(_: &RuleContext<Self>, op: &Self::State) -> Option<RuleDiagnostic> {
+    fn diagnostic(_ctx: &RuleContext<Self>, op: &Self::State) -> Option<RuleDiagnostic> {
         let text_trimmed = op.text_trimmed();
         let suggestion = if op.kind() == EQ2 { "===" } else { "!==" };
-
-        Some(
-            RuleDiagnostic::new(rule_category!(),op.text_trimmed_range(), markup! {
+        let description = format!(
+            "Use {} instead of {}.\n{} is only allowed when comparing against `null`",
+            suggestion, text_trimmed, text_trimmed
+        );
+        Some(RuleDiagnostic::new(
+            rule_category!(),
+            op.text_trimmed_range(),
+            markup! {
                 "Use "<Emphasis>{suggestion}</Emphasis>" instead of "<Emphasis>{text_trimmed}</Emphasis>
-            })
-            .primary( markup! {
-                <Emphasis>{text_trimmed}</Emphasis>" is only allowed when comparing against "<Emphasis>"null"</Emphasis>
-            })
-            .footer_note(markup! {
-                "Using "<Emphasis>{suggestion}</Emphasis>" may be unsafe if you are relying on type coercion"
-            })
-            .summary(format!("Use {suggestion} instead of {text_trimmed}.\n{text_trimmed} is only allowed when comparing against `null`"))
+            },
         )
+        .detail(op.text_trimmed_range(), markup! {
+            <Emphasis>{text_trimmed}</Emphasis>" is only allowed when comparing against "<Emphasis>"null"</Emphasis>
+        }).note(markup! {
+            "Using "<Emphasis>{suggestion}</Emphasis>" may be unsafe if you are relying on type coercion"
+        })
+        .description(description))
     }
 
     fn action(ctx: &RuleContext<Self>, op: &Self::State) -> Option<JsRuleAction> {

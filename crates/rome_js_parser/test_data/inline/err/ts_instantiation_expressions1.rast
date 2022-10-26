@@ -142,7 +142,12 @@ ts_instantiation_expressions1.ts:1:29 parse ━━━━━━━━━━━━
 
   × expected an expression but instead found ';'
   
-  × Expected an expression here
+  > 1 │ const a8 = f<number><number>;  // Relational operator error
+      │                             ^
+    2 │ const b1 = f?.<number>;  // Error, `(` expected
+    3 │ 
+  
+  i Expected an expression here
   
   > 1 │ const a8 = f<number><number>;  // Relational operator error
       │                             ^
@@ -154,12 +159,12 @@ ts_instantiation_expressions1.ts:2:23 parse ━━━━━━━━━━━━
 
   × expected `(` but instead found `;`
   
-  × unexpected
-  
     1 │ const a8 = f<number><number>;  // Relational operator error
   > 2 │ const b1 = f?.<number>;  // Error, `(` expected
       │                       ^
     3 │ 
+  
+  i Remove ;
   
 --
 const a8 = f<number><number>;  // Relational operator error

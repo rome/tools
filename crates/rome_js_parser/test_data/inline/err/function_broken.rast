@@ -97,7 +97,11 @@ function_broken.js:1:15 parse ━━━━━━━━━━━━━━━━�
 
   × expected a function body but instead found ')'
   
-  × Expected a function body here
+  > 1 │ function foo())})}{{{  {}
+      │               ^
+    2 │ 
+  
+  i Expected a function body here
   
   > 1 │ function foo())})}{{{  {}
       │               ^
@@ -108,7 +112,11 @@ function_broken.js:2:1 parse ━━━━━━━━━━━━━━━━━
 
   × expected `}` but instead the file ends
   
-  × the file ends here
+    1 │ function foo())})}{{{  {}
+  > 2 │ 
+      │ 
+  
+  i the file ends here
   
     1 │ function foo())})}{{{  {}
   > 2 │ 

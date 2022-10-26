@@ -15,10 +15,10 @@ use crate::{
 use dashmap::{mapref::entry::Entry, DashMap};
 use indexmap::IndexSet;
 use rome_analyze::{AnalysisFilter, RuleFilter};
-use rome_diagnostics::file::SimpleFile;
-use rome_diagnostics::{v2, Diagnostic, Severity};
+use rome_diagnostics::v2::{serde::Diagnostic, DiagnosticExt};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
+use rome_js_parser::ParseDiagnostic;
 use rome_rowan::{AstNode, Language as RowanLanguage, SendNode, SyntaxNode};
 use std::{any::type_name, panic::RefUnwindSafe, sync::RwLock};
 
@@ -59,7 +59,7 @@ pub(crate) struct Document {
 #[derive(Clone)]
 pub(crate) struct AnyParse {
     pub(crate) root: SendNode,
-    pub(crate) diagnostics: Vec<Diagnostic>,
+    pub(crate) diagnostics: Vec<ParseDiagnostic>,
 }
 
 impl AnyParse {
@@ -83,14 +83,13 @@ impl AnyParse {
         N::unwrap_cast(self.syntax::<N::Language>())
     }
 
+    /// This function transforms diagnostics coming from the parser into serializable diagnostics
     pub(crate) fn into_diagnostics(self) -> Vec<Diagnostic> {
-        self.diagnostics
+        self.diagnostics.into_iter().map(Diagnostic::new).collect()
     }
 
     fn has_errors(&self) -> bool {
-        self.diagnostics
-            .iter()
-            .any(|diag| diag.severity >= Severity::Error)
+        self.diagnostics.iter().any(|diag| diag.is_error())
     }
 }
 
@@ -383,19 +382,12 @@ impl Workspace for WorkspaceServer {
             });
         }
 
-        let document = self
-            .documents
-            .get(&params.path)
-            .ok_or(RomeError::NotFound)?;
-
-        let files = SimpleFile::new(params.path.display().to_string(), document.content.clone());
-
         Ok(PullDiagnosticsResult {
             diagnostics: diagnostics
                 .into_iter()
                 .map(|diag| {
-                    let diag = diag.as_diagnostic(&files);
-                    v2::serde::Diagnostic::new(diag)
+                    let diag = diag.with_file_path(params.path.as_path().display().to_string());
+                    Diagnostic::new(diag)
                 })
                 .collect(),
         })

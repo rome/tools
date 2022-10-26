@@ -122,7 +122,12 @@ binary_expressions_err.js:1:10 parse ━━━━━━━━━━━━━━�
 
   × expected an expression but instead found ')'
   
-  × Expected an expression here
+  > 1 │ foo(foo +);
+      │          ^
+    2 │ foo + * 2;
+    3 │ !foo * bar;
+  
+  i Expected an expression here
   
   > 1 │ foo(foo +);
       │          ^
@@ -134,13 +139,13 @@ binary_expressions_err.js:2:7 parse ━━━━━━━━━━━━━━�
 
   × Expected an expression for the left hand side of the `*` operator.
   
-  × This operator requires a left hand side value
-  
     1 │ foo(foo +);
   > 2 │ foo + * 2;
       │       ^
     3 │ !foo * bar;
     4 │ 
+  
+  i This operator requires a left hand side value
   
 --
 foo(foo +);

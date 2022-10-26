@@ -168,20 +168,25 @@ object_expr_err.js:2:15 parse ━━━━━━━━━━━━━━━━�
 
   × expected `,` but instead found `bar`
   
-  × unexpected
-  
     1 │ let a = {, foo}
   > 2 │ let b = { foo bar }
       │               ^^^
     3 │ let b = { foo
     4 │ 
   
+  i Remove bar
+  
 --
 object_expr_err.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `}` but instead the file ends
   
-  × the file ends here
+    2 │ let b = { foo bar }
+    3 │ let b = { foo
+  > 4 │ 
+      │ 
+  
+  i the file ends here
   
     2 │ let b = { foo bar }
     3 │ let b = { foo

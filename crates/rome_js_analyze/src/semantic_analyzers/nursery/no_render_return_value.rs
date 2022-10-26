@@ -76,7 +76,7 @@ impl Rule for NoRenderReturnValue {
             markup! {
                 "Do not depend on the value returned by the function "<Emphasis>"ReactDOM.render()"</Emphasis>"."
             },
-        ).footer_note(markup! {
+        ).note(markup! {
 "The returned value is legacy and future versions of react might return that value asynchronously."
 "
 Check the "<Hyperlink href="https://facebook.github.io/react/docs/react-dom.html#render">"React documentation"</Hyperlink>" for more information."

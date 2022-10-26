@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "typescript\\conformance\\types\\parameterProperty\\parameterProperty.ts"
+  test_file: typescript/conformance/types/parameterProperty/parameterProperty.ts
 ---
 
 # Input
@@ -62,14 +62,14 @@ parameterProperty.ts:5:26 parse ━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `arg`
   
-  × unexpected
-  
     3 │     // fails because of comment
     4 │   }
   > 5 │   not_constructor(public arg: number = 10) {
       │                          ^^^
     6 │   }
     7 │ }
+  
+  i Remove arg
   
 
 ```

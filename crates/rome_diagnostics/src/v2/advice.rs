@@ -1,14 +1,14 @@
-use std::io;
-
-use rome_console::fmt::{self, Display};
-use rome_text_edit::TextEdit;
-use serde::{Deserialize, Serialize};
-
 use super::{
     display::Backtrace,
     location::{AsResource, AsSourceCode, AsSpan},
     Location,
 };
+use crate::Applicability;
+use rome_console::fmt::{self, Display};
+use rome_console::markup;
+use rome_text_edit::TextEdit;
+use serde::{Deserialize, Serialize};
+use std::io;
 
 /// Trait implemented by types that support emitting advices into a diagnostic
 pub trait Advices {
@@ -157,5 +157,35 @@ where
 {
     fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
         visitor.record_command(self.command.as_ref())
+    }
+}
+
+#[derive(Debug)]
+/// Utility type implementing [Advices] that emits a
+/// code suggestion with the provided text
+pub struct CodeSuggestionAdvice<M> {
+    pub applicability: Applicability,
+    pub msg: M,
+    pub suggestion: TextEdit,
+}
+
+impl<M> Advices for CodeSuggestionAdvice<M>
+where
+    M: Display,
+{
+    fn record(&self, visitor: &mut dyn Visit) -> io::Result<()> {
+        let applicability = match self.applicability {
+            Applicability::Always => "Safe fix",
+            Applicability::MaybeIncorrect => "Suggested fix",
+        };
+
+        visitor.record_log(
+            LogCategory::Info,
+            &markup! {
+                {applicability}": "{self.msg}
+            },
+        )?;
+
+        visitor.record_diff(&self.suggestion)
     }
 }

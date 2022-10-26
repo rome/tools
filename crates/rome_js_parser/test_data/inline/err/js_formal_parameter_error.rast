@@ -128,24 +128,24 @@ js_formal_parameter_error.js:1:13 parse ━━━━━━━━━━━━━�
 
   × Type annotations are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   
-  × TypeScript only syntax
-  
   > 1 │ function a(x: string) {}
       │             ^^^^^^^^
     2 │ function b(x?) {}
     3 │ 
+  
+  i TypeScript only syntax
   
 --
 js_formal_parameter_error.js:2:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × optional parameters are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   
-  × TypeScript only syntax
-  
     1 │ function a(x: string) {}
   > 2 │ function b(x?) {}
       │             ^
     3 │ 
+  
+  i TypeScript only syntax
   
 --
 function a(x: string) {}

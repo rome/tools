@@ -229,8 +229,17 @@ exponent_unary_unparenthesized.js:1:1 parse ━━━━━━━━━━━━
     2 │ void ident ** 2;
     3 │ typeof ident ** 2;
   
+  i The operation
+  
   > 1 │ delete a.b ** 2;
       │            ^^
+    2 │ void ident ** 2;
+    3 │ typeof ident ** 2;
+  
+  i The left-hand side
+  
+  > 1 │ delete a.b ** 2;
+      │ ^^^^^^^^^^
     2 │ void ident ** 2;
     3 │ typeof ident ** 2;
   
@@ -245,9 +254,19 @@ exponent_unary_unparenthesized.js:2:1 parse ━━━━━━━━━━━━
     3 │ typeof ident ** 2;
     4 │ -3 ** 2;
   
+  i The operation
+  
     1 │ delete a.b ** 2;
   > 2 │ void ident ** 2;
       │            ^^
+    3 │ typeof ident ** 2;
+    4 │ -3 ** 2;
+  
+  i The left-hand side
+  
+    1 │ delete a.b ** 2;
+  > 2 │ void ident ** 2;
+      │ ^^^^^^^^^^
     3 │ typeof ident ** 2;
     4 │ -3 ** 2;
   
@@ -263,10 +282,21 @@ exponent_unary_unparenthesized.js:3:1 parse ━━━━━━━━━━━━
     4 │ -3 ** 2;
     5 │ +3 ** 2;
   
+  i The operation
+  
     1 │ delete a.b ** 2;
     2 │ void ident ** 2;
   > 3 │ typeof ident ** 2;
       │              ^^
+    4 │ -3 ** 2;
+    5 │ +3 ** 2;
+  
+  i The left-hand side
+  
+    1 │ delete a.b ** 2;
+    2 │ void ident ** 2;
+  > 3 │ typeof ident ** 2;
+      │ ^^^^^^^^^^^^
     4 │ -3 ** 2;
     5 │ +3 ** 2;
   
@@ -282,10 +312,21 @@ exponent_unary_unparenthesized.js:4:1 parse ━━━━━━━━━━━━
     5 │ +3 ** 2;
     6 │ ~3 ** 2;
   
+  i The operation
+  
     2 │ void ident ** 2;
     3 │ typeof ident ** 2;
   > 4 │ -3 ** 2;
       │    ^^
+    5 │ +3 ** 2;
+    6 │ ~3 ** 2;
+  
+  i The left-hand side
+  
+    2 │ void ident ** 2;
+    3 │ typeof ident ** 2;
+  > 4 │ -3 ** 2;
+      │ ^^
     5 │ +3 ** 2;
     6 │ ~3 ** 2;
   
@@ -301,10 +342,21 @@ exponent_unary_unparenthesized.js:5:1 parse ━━━━━━━━━━━━
     6 │ ~3 ** 2;
     7 │ !true ** 2;
   
+  i The operation
+  
     3 │ typeof ident ** 2;
     4 │ -3 ** 2;
   > 5 │ +3 ** 2;
       │    ^^
+    6 │ ~3 ** 2;
+    7 │ !true ** 2;
+  
+  i The left-hand side
+  
+    3 │ typeof ident ** 2;
+    4 │ -3 ** 2;
+  > 5 │ +3 ** 2;
+      │ ^^
     6 │ ~3 ** 2;
     7 │ !true ** 2;
   
@@ -320,10 +372,21 @@ exponent_unary_unparenthesized.js:6:1 parse ━━━━━━━━━━━━
     7 │ !true ** 2;
     8 │ 
   
+  i The operation
+  
     4 │ -3 ** 2;
     5 │ +3 ** 2;
   > 6 │ ~3 ** 2;
       │    ^^
+    7 │ !true ** 2;
+    8 │ 
+  
+  i The left-hand side
+  
+    4 │ -3 ** 2;
+    5 │ +3 ** 2;
+  > 6 │ ~3 ** 2;
+      │ ^^
     7 │ !true ** 2;
     8 │ 
   
@@ -338,10 +401,20 @@ exponent_unary_unparenthesized.js:7:1 parse ━━━━━━━━━━━━
       │ ^^^^^
     8 │ 
   
+  i The operation
+  
     5 │ +3 ** 2;
     6 │ ~3 ** 2;
   > 7 │ !true ** 2;
       │       ^^
+    8 │ 
+  
+  i The left-hand side
+  
+    5 │ +3 ** 2;
+    6 │ ~3 ** 2;
+  > 7 │ !true ** 2;
+      │ ^^^^^
     8 │ 
   
 --

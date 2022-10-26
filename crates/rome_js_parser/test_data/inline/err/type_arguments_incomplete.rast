@@ -49,7 +49,11 @@ type_arguments_incomplete.ts:2:1 parse ━━━━━━━━━━━━━�
 
   × expected an expression but instead found ''
   
-  × Expected an expression here
+    1 │ func<T,
+  > 2 │ 
+      │ 
+  
+  i Expected an expression here
   
     1 │ func<T,
   > 2 │ 

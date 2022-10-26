@@ -68,14 +68,14 @@ let_array_with_new_line.js:2:4 parse ━━━━━━━━━━━━━━�
 
   × Lexical declaration cannot appear in a single-statement context
   
-  × Wrap this declaration in a block statement
-  
     1 │ // SCRIPT
   > 2 │ L: let
       │    ^^^
   > 3 │ [a] = 0;
       │ ^^^^^^^^
     4 │ 
+  
+  i Wrap this declaration in a block statement
   
 --
 // SCRIPT

@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\module-blocks\\worker.js"
+  test_file: js/module-blocks/worker.js
 ---
 
 # Input
@@ -92,12 +92,12 @@ worker.js:1:32 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected `,` but instead found `{`
   
-  × unexpected
-  
   > 1 │ let worker = new Worker(module {
       │                                ^
     2 │   onmessage = function({data}) {
     3 │     let mod = import(data);
+  
+  i Remove {
   
 worker.js:2:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -113,14 +113,14 @@ worker.js:8:32 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected `,` but instead found `{`
   
-  × unexpected
-  
      6 │ }, {type: "module"});
      7 │ 
    > 8 │ let worker = new Worker(module {
        │                                ^
      9 │   onmessage = function({data}) {
     10 │     let mod = import(data);
+  
+  i Remove {
   
 worker.js:9:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -136,25 +136,25 @@ worker.js:15:27 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected `,` but instead found `{`
   
-  × unexpected
-  
     13 │ }, {type: "module", foo: "bar" });
     14 │ 
   > 15 │ worker.postMessage(module { export function fn() { return "hello!" } });
        │                           ^
     16 │ 
   
+  i Remove {
+  
 worker.js:15:36 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `:` but instead found `function`
-  
-  × unexpected
   
     13 │ }, {type: "module", foo: "bar" });
     14 │ 
   > 15 │ worker.postMessage(module { export function fn() { return "hello!" } });
        │                                    ^^^^^^^^
     16 │ 
+  
+  i Remove function
   
 
 ```

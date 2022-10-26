@@ -150,7 +150,13 @@ multiple_default_exports_err.js:2:8 parse ━━━━━━━━━━━━�
 
   × Illegal duplicate default export declarations
   
-  × multiple default exports are erroneous
+    1 │ export default (class {})
+  > 2 │ export default a + b;
+      │        ^^^^^^^^^^^^^^
+    3 │ export default (function a() {})
+    4 │ 
+  
+  i multiple default exports are erroneous
   
     1 │ export default (class {})
   > 2 │ export default a + b;
@@ -170,7 +176,13 @@ multiple_default_exports_err.js:3:8 parse ━━━━━━━━━━━━�
 
   × Illegal duplicate default export declarations
   
-  × multiple default exports are erroneous
+    1 │ export default (class {})
+    2 │ export default a + b;
+  > 3 │ export default (function a() {})
+      │        ^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │ 
+  
+  i multiple default exports are erroneous
   
     1 │ export default (class {})
     2 │ export default a + b;

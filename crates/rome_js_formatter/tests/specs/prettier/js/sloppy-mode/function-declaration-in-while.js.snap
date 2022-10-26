@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\sloppy-mode\\function-declaration-in-while.js"
+  test_file: js/sloppy-mode/function-declaration-in-while.js
 ---
 
 # Input
@@ -34,11 +34,11 @@ function-declaration-in-while.js:1:15 parse ━━━━━━━━━━━━
 
   × In strict mode code, functions can only be declared at top level or inside a block
   
-  × wrap the function in a block statement
-  
   > 1 │ while (false) function foo(){}
       │               ^^^^^^^^^^^^^^^^
     2 │ 
+  
+  i wrap the function in a block statement
   
 
 ```

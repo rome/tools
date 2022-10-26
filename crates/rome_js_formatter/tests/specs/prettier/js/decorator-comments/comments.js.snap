@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\decorator-comments\\comments.js"
+  test_file: js/decorator-comments/comments.js
 ---
 
 # Input
@@ -47,14 +47,14 @@ comments.js:4:20 parse ━━━━━━━━━━━━━━━━━━━
 
   × return types can only be used in TypeScript files
   
-  × remove this type annotation
-  
     2 │     @Annotateme()
     3 │     // comment
   > 4 │     static property: Array<string>;
       │                    ^^^^^^^^^^^^^^^
     5 │ }
     6 │ 
+  
+  i remove this type annotation
   
 
 ```

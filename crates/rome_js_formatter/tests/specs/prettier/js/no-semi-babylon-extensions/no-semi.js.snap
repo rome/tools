@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\no-semi-babylon-extensions\\no-semi.js"
+  test_file: js/no-semi-babylon-extensions/no-semi.js
 ---
 
 # Input
@@ -58,7 +58,13 @@ no-semi.js:2:2 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected a statement but instead found '::b.c'
   
-  × Expected a statement here
+    1 │ a
+  > 2 │ ;::b.c
+      │  ^^^^^
+    3 │ 
+    4 │ class A {
+  
+  i Expected a statement here
   
     1 │ a
   > 2 │ ;::b.c

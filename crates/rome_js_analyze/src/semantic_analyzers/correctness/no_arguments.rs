@@ -63,7 +63,7 @@ impl Rule for NoArguments {
             markup! {
                 "Use the "<Emphasis>"rest parameters"</Emphasis>" instead of "<Emphasis>"arguments"</Emphasis>"."
             },
-        ).footer_note(markup! {<Emphasis>"arguments"</Emphasis>" does not have "<Emphasis>"Array.prototype"</Emphasis>" methods and can be inconvenient to use."}))
+        ).note(markup! {<Emphasis>"arguments"</Emphasis>" does not have "<Emphasis>"Array.prototype"</Emphasis>" methods and can be inconvenient to use."}))
     }
 
     fn action(_: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {

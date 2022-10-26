@@ -1,24 +1,23 @@
-use std::{
-    ffi::OsStr, fmt::Write, fs::read_to_string, os::raw::c_int, path::Path, slice, sync::Once,
-};
-
-use similar::TextDiff;
-
 use rome_analyze::{
-    AnalysisFilter, AnalyzerAction, AnalyzerOptions, ControlFlow, Never, RuleFilter,
+    AnalysisFilter, AnalyzerAction, AnalyzerDiagnostic, AnalyzerOptions, ControlFlow, Never,
+    RuleFilter,
 };
 use rome_console::{
     fmt::{Formatter, Termcolor},
     markup, Markup,
 };
 use rome_diagnostics::file::FileId;
-use rome_diagnostics::Severity;
-use rome_diagnostics::{file::SimpleFile, termcolor::NoColor, Diagnostic};
+use rome_diagnostics::termcolor::NoColor;
+use rome_diagnostics::v2::{DiagnosticExt, PrintDiagnostic, Severity};
 use rome_js_parser::{
     parse,
     test_utils::{assert_errors_are_absent, has_unknown_nodes_or_empty_slots},
 };
 use rome_js_syntax::{JsLanguage, SourceType};
+use similar::TextDiff;
+use std::{
+    ffi::OsStr, fmt::Write, fs::read_to_string, os::raw::c_int, path::Path, slice, sync::Once,
+};
 
 tests_macros::gen_tests! {"tests/specs/**/*.{cjs,js,jsx,tsx,ts}", crate::run_test, "module"}
 
@@ -46,11 +45,11 @@ fn run_test(input: &'static str, _: &str, _: &str, _: &str) {
     let mut code_fixes = Vec::new();
     let options = AnalyzerOptions::default();
     rome_js_analyze::analyze(FileId::zero(), &root, filter, &options, |event| {
-        if let Some(diag) = event.diagnostic() {
-            let mut diag = diag.into_diagnostic(Severity::Warning);
+        if let Some(mut diag) = event.diagnostic() {
+            diag.set_severity(Severity::Warning);
             if let Some(action) = event.action() {
                 check_code_action(input_file, &input_code, source_type, &action);
-                diag.suggestions.push(action.into());
+                diag.add_code_suggestion(action.into());
             }
 
             diagnostics.push(diagnostic_to_string(file_name, &input_code, diag));
@@ -132,10 +131,12 @@ fn markup_to_string(markup: Markup) -> String {
     String::from_utf8(buffer).unwrap()
 }
 #[allow(clippy::let_and_return)]
-fn diagnostic_to_string(name: &str, source: &str, diag: Diagnostic) -> String {
-    let file = SimpleFile::new(name.into(), source.into());
+fn diagnostic_to_string(name: &str, source: &str, diag: AnalyzerDiagnostic) -> String {
+    let error = diag
+        .with_file_path((name, FileId::zero()))
+        .with_file_source_code(source);
     let text = markup_to_string(markup! {
-        {diag.display(&file)}
+        {PrintDiagnostic(&error)}
     });
 
     text

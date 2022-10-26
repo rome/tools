@@ -80,13 +80,13 @@ index_signature_class_member_in_js.js:2:5 parse ━━━━━━━━━━�
 
   × Index signatures are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   
-  × TypeScript only syntax
-  
     1 │ class A {
   > 2 │     [a: number]: string;
       │     ^^^^^^^^^^^^^^^^^^^^
     3 │ }
     4 │ 
+  
+  i TypeScript only syntax
   
 --
 class A {

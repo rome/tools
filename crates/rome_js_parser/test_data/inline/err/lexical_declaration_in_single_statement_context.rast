@@ -108,24 +108,24 @@ lexical_declaration_in_single_statement_context.js:1:11 parse ━━━━━━
 
   × Lexical declaration cannot appear in a single-statement context
   
-  × Wrap this declaration in a block statement
-  
   > 1 │ if (true) let a;
       │           ^^^^^^
     2 │ while (true) const b = 5;
     3 │ 
+  
+  i Wrap this declaration in a block statement
   
 --
 lexical_declaration_in_single_statement_context.js:2:14 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Lexical declaration cannot appear in a single-statement context
   
-  × Wrap this declaration in a block statement
-  
     1 │ if (true) let a;
   > 2 │ while (true) const b = 5;
       │              ^^^^^^^^^^^^
     3 │ 
+  
+  i Wrap this declaration in a block statement
   
 --
 if (true) let a;

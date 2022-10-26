@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "typescript\\keywords\\module.ts"
+  test_file: typescript/keywords/module.ts
 ---
 
 # Input
@@ -101,7 +101,13 @@ module.ts:2:10 parse ━━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    1 │ module Y3 {
+  > 2 │   public module Module {
+      │          ^^^^^^
+    3 │       class A { s: string }
+    4 │   }
+  
+  i An explicit or implicit semicolon is expected here...
   
     1 │ module Y3 {
   > 2 │   public module Module {
@@ -121,7 +127,13 @@ module.ts:7:10 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected a class, a function, or a variable declaration but instead found 'private'
   
-  × Expected a class, a function, or a variable declaration here
+    6 │   // Apparently this parses :P
+  > 7 │   export private public protected static readonly abstract async enum X { }
+      │          ^^^^^^^
+    8 │ 
+    9 │   interface x {
+  
+  i Expected a class, a function, or a variable declaration here
   
     6 │   // Apparently this parses :P
   > 7 │   export private public protected static readonly abstract async enum X { }
@@ -133,7 +145,13 @@ module.ts:7:18 parse ━━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    6 │   // Apparently this parses :P
+  > 7 │   export private public protected static readonly abstract async enum X { }
+      │                  ^^^^^^
+    8 │ 
+    9 │   interface x {
+  
+  i An explicit or implicit semicolon is expected here...
   
     6 │   // Apparently this parses :P
   > 7 │   export private public protected static readonly abstract async enum X { }
@@ -153,7 +171,13 @@ module.ts:7:25 parse ━━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    6 │   // Apparently this parses :P
+  > 7 │   export private public protected static readonly abstract async enum X { }
+      │                         ^^^^^^^^^
+    8 │ 
+    9 │   interface x {
+  
+  i An explicit or implicit semicolon is expected here...
   
     6 │   // Apparently this parses :P
   > 7 │   export private public protected static readonly abstract async enum X { }
@@ -173,7 +197,13 @@ module.ts:7:35 parse ━━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    6 │   // Apparently this parses :P
+  > 7 │   export private public protected static readonly abstract async enum X { }
+      │                                   ^^^^^^
+    8 │ 
+    9 │   interface x {
+  
+  i An explicit or implicit semicolon is expected here...
   
     6 │   // Apparently this parses :P
   > 7 │   export private public protected static readonly abstract async enum X { }
@@ -193,7 +223,13 @@ module.ts:7:42 parse ━━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    6 │   // Apparently this parses :P
+  > 7 │   export private public protected static readonly abstract async enum X { }
+      │                                          ^^^^^^^^
+    8 │ 
+    9 │   interface x {
+  
+  i An explicit or implicit semicolon is expected here...
   
     6 │   // Apparently this parses :P
   > 7 │   export private public protected static readonly abstract async enum X { }
@@ -213,7 +249,13 @@ module.ts:7:51 parse ━━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    6 │   // Apparently this parses :P
+  > 7 │   export private public protected static readonly abstract async enum X { }
+      │                                                   ^^^^^^^^
+    8 │ 
+    9 │   interface x {
+  
+  i An explicit or implicit semicolon is expected here...
   
     6 │   // Apparently this parses :P
   > 7 │   export private public protected static readonly abstract async enum X { }
@@ -233,7 +275,13 @@ module.ts:7:60 parse ━━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    6 │   // Apparently this parses :P
+  > 7 │   export private public protected static readonly abstract async enum X { }
+      │                                                            ^^^^^
+    8 │ 
+    9 │   interface x {
+  
+  i An explicit or implicit semicolon is expected here...
   
     6 │   // Apparently this parses :P
   > 7 │   export private public protected static readonly abstract async enum X { }
@@ -253,7 +301,13 @@ module.ts:7:66 parse ━━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    6 │   // Apparently this parses :P
+  > 7 │   export private public protected static readonly abstract async enum X { }
+      │                                                                  ^^^^
+    8 │ 
+    9 │   interface x {
+  
+  i An explicit or implicit semicolon is expected here...
   
     6 │   // Apparently this parses :P
   > 7 │   export private public protected static readonly abstract async enum X { }
@@ -273,13 +327,13 @@ module.ts:10:14 parse ━━━━━━━━━━━━━━━━━━━�
 
   × ';' expected'
   
-  × An explicit or implicit semicolon is expected here...
-  
      9 │   interface x {
   > 10 │       export private static readonly [x: any]: any;
        │              ^^^^^^^
     11 │   }
     12 │ }
+  
+  i An explicit or implicit semicolon is expected here...
   
 module.ts:10:22 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

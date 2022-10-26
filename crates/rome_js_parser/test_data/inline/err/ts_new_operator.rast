@@ -82,11 +82,11 @@ ts_new_operator.ts:1:19 parse ━━━━━━━━━━━━━━━━�
 
   × Parenthesized expression didnt contain anything
   
-  × Expected an expression here
-  
   > 1 │ new A<test><test>();
       │                   ^
     2 │ 
+  
+  i Expected an expression here
   
 --
 new A<test><test>();

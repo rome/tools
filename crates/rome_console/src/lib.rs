@@ -13,7 +13,7 @@ pub use self::markup::{Markup, MarkupBuf, MarkupElement, MarkupNode};
 use crate::fmt::Formatter;
 pub use rome_markup::markup;
 
-/// Determines the "ouput stream" a message should get printed to
+/// Determines the "output stream" a message should get printed to
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum LogLevel {
     /// Print the message to the `Error` stream of the console, for instance
