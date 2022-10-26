@@ -16,7 +16,10 @@ pub fn generate_analyzer() -> Result<()> {
     let mut assists = BTreeMap::new();
     generate_category("assists", &mut assists)?;
 
-    update_registry_builder(analyzers, semantic_analyzers, assists)
+    let mut syntax = BTreeMap::new();
+    generate_category("syntax", &mut syntax)?;
+
+    update_registry_builder(analyzers, semantic_analyzers, assists, syntax)
 }
 
 fn generate_category(
@@ -189,6 +192,7 @@ fn update_registry_builder(
     analyzers: BTreeMap<&'static str, TokenStream>,
     semantic_analyzers: BTreeMap<&'static str, TokenStream>,
     assists: BTreeMap<&'static str, TokenStream>,
+    syntax: BTreeMap<&'static str, TokenStream>,
 ) -> Result<()> {
     let path = project_root().join("crates/rome_js_analyze/src/registry.rs");
 
@@ -196,6 +200,7 @@ fn update_registry_builder(
         .into_iter()
         .chain(semantic_analyzers)
         .chain(assists)
+        .chain(syntax)
         .map(|(_, tokens)| tokens);
 
     let tokens = xtask::reformat(quote! {

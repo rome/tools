@@ -63,6 +63,7 @@ define_dategories! {
     "lint/nursery/noPositiveTabindex": "https://rome.tools/docs/lint/rules/noPositiveTabindex",
     "lint/nursery/noConstAssign": "https://rome.tools/docs/lint/rules/noConstAssign",
     "lint/nursery/noExplicitAny": "https://rome.tools/docs/lint/rules/noExplicitAny",
+    "lint/nursery/noInvalidConstructorSuper": "https://rome.tools/docs/lint/rules/noInvalidConstructorSuper",
     "lint/nursery/useValidForDirection": "https://rome.tools/docs/lint/rules/useValidForDirection",
     "lint/nursery/useExhaustiveDependencies": "https://rome.tools/docs/lint/rules/useExhaustiveDependencies",
     "lint/style/noNegationElse": "https://rome.tools/docs/lint/rules/noNegationElse",
@@ -77,7 +78,10 @@ define_dategories! {
     "internalError/fs",
     "internalError/panic",
     "lint",
+    // parse categories
     "parse",
+    "parse/noSuperWithoutExtends",
+
     "suppressions/unknownGroup",
     "suppressions/unknownRule",
     // Used in tests and examples

@@ -167,6 +167,7 @@ export interface Nursery {
 	noDangerouslySetInnerHtml?: RuleConfiguration;
 	noDangerouslySetInnerHtmlWithChildren?: RuleConfiguration;
 	noExplicitAny?: RuleConfiguration;
+	noInvalidConstructorSuper?: RuleConfiguration;
 	noNewSymbol?: RuleConfiguration;
 	noPositiveTabindex?: RuleConfiguration;
 	noRenderReturnValue?: RuleConfiguration;
@@ -335,6 +336,7 @@ export type Category =
 	| "lint/nursery/noPositiveTabindex"
 	| "lint/nursery/noConstAssign"
 	| "lint/nursery/noExplicitAny"
+	| "lint/nursery/noInvalidConstructorSuper"
 	| "lint/nursery/useValidForDirection"
 	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/style/noNegationElse"
@@ -348,6 +350,7 @@ export type Category =
 	| "internalError/panic"
 	| "lint"
 	| "parse"
+	| "parse/noSuperWithoutExtends"
 	| "suppressions/unknownGroup"
 	| "suppressions/unknownRule"
 	| "args/fileNotFound"
