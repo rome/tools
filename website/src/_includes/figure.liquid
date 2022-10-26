@@ -1,4 +1,4 @@
 <figure>
-	<img width="{{ width }}" src="{{ src }}" alt="{{ description }}">
+	<img width="{{ width }}" src="{{ src }}" alt="{% if alt %} {{alt}} {% else %} {{description}} {% endif %}">
 	<figcaption>{{ description }}</figcaption>
 </figure>
