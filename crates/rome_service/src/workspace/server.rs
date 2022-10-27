@@ -5,7 +5,7 @@ use super::{
     PullDiagnosticsParams, PullDiagnosticsResult, RenameResult, SupportsFeatureParams,
     UpdateSettingsParams,
 };
-use crate::file_handlers::{Capabilities, FixAllParams, Language};
+use crate::file_handlers::{Capabilities, FixAllParams, Language, LintParams};
 use crate::workspace::{RageEntry, RageParams, RageResult, ServerInfo, SupportsFeatureResult};
 use crate::{
     file_handlers::Features,
@@ -374,22 +374,26 @@ impl Workspace for WorkspaceServer {
         let mut filter = AnalysisFilter::from_enabled_rules(Some(rule_filter_list.as_slice()));
         filter.categories = params.categories;
 
-        let diagnostics = lint(&params.path, parse, filter, rules, self.settings());
-
-        if diagnostics.is_empty() {
-            return Ok(PullDiagnosticsResult {
-                diagnostics: Vec::new(),
-            });
-        }
+        let results = lint(LintParams {
+            rome_path: &params.path,
+            parse,
+            filter,
+            rules,
+            settings: self.settings(),
+            max_diagnostics: params.max_diagnostics,
+        });
 
         Ok(PullDiagnosticsResult {
-            diagnostics: diagnostics
+            diagnostics: results
+                .diagnostics
                 .into_iter()
                 .map(|diag| {
                     let diag = diag.with_file_path(params.path.as_path().display().to_string());
                     Diagnostic::new(diag)
                 })
                 .collect(),
+            has_errors: results.has_errors,
+            skipped_diagnostics: results.skipped_diagnostics,
         })
     }
 
