@@ -93,6 +93,36 @@ useEffect(() => {
   
 </code></pre>{% endraw %}
 
+```jsx
+let a = 1;
+const b = a + 1;
+useEffect(() => {
+    console.log(b);
+})
+```
+
+{% raw %}<pre class="language-text"><code class="language-text">nursery/useExhaustiveDependencies.js:3:1 <a href="https://rome.tools/docs/lint/rules/useExhaustiveDependencies">lint/nursery/useExhaustiveDependencies</a> ━━━━━━━━━━━━━━━━━━━━
+
+<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This hook do not specify all of its dependencies.</span>
+  
+    <strong>1 │ </strong>let a = 1;
+    <strong>2 │ </strong>const b = a + 1;
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>3 │ </strong>useEffect(() =&gt; {
+   <strong>   │ </strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
+    <strong>4 │ </strong>    console.log(b);
+    <strong>5 │ </strong>})
+  
+<strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">This dependency is not specified in the hook dependency list.</span>
+  
+    <strong>2 │ </strong>const b = a + 1;
+    <strong>3 │ </strong>useEffect(() =&gt; {
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>4 │ </strong>    console.log(b);
+   <strong>   │ </strong>                <strong><span style="color: Tomato;">^</span></strong>
+    <strong>5 │ </strong>})
+    <strong>6 │ </strong>
+  
+</code></pre>{% endraw %}
+
 ## Valid
 
 ```jsx
@@ -100,6 +130,13 @@ let a = 1;
 useEffect(() => {
     console.log(a);
 }, [a]);
+```
+
+```jsx
+const a = 1;
+useEffect(() => {
+    console.log(a);
+});
 ```
 
 ```jsx
