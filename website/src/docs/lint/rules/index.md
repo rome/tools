@@ -268,6 +268,12 @@ Discourage the usage of Array index in keys.
 Avoid the <code>autoFocus</code> attribute
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noBannedTypes">
+	<a href="/docs/lint/rules/noBannedTypes">noBannedTypes</a>
+</h3>
+Disallow certain types.
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noChildrenProp">
 	<a href="/docs/lint/rules/noChildrenProp">noChildrenProp</a>
 </h3>

@@ -162,6 +162,7 @@ export interface Correctness {
 export interface Nursery {
 	noArrayIndexKey?: RuleConfiguration;
 	noAutofocus?: RuleConfiguration;
+	noBannedTypes?: RuleConfiguration;
 	noChildrenProp?: RuleConfiguration;
 	noConstAssign?: RuleConfiguration;
 	noDangerouslySetInnerHtml?: RuleConfiguration;
@@ -341,6 +342,7 @@ export type Category =
 	| "lint/nursery/useValidForDirection"
 	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/nursery/useAltText"
+	| "lint/nursery/noBannedTypes"
 	| "lint/style/noNegationElse"
 	| "lint/style/noShoutyConstants"
 	| "lint/style/useSelfClosingElements"
