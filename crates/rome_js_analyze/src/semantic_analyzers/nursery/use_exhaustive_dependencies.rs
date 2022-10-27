@@ -38,7 +38,7 @@ declare_rule! {
     ///     setName("");
     /// }, [name, setName])
     /// ```
-    /// 
+    ///
     /// ```js,expect_diagnostic
     /// let a = 1;
     /// const b = a + 1;
@@ -55,7 +55,7 @@ declare_rule! {
     ///     console.log(a);
     /// }, [a]);
     /// ```
-    /// 
+    ///
     /// ```js
     /// const a = 1;
     /// useEffect(() => {
