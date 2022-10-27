@@ -136,15 +136,12 @@ impl Rule for NoNegationElse {
 fn is_negation(node: &JsAnyExpression) -> Option<bool> {
     match node {
         JsAnyExpression::JsUnaryExpression(expr) => {
-            let argument = expr.argument().ok()?;
-            if expr.operator().ok()? == JsUnaryOperator::LogicalNot {
-                if !JsUnaryExpression::can_cast(argument.syntax().kind()) {
-                    Some(true)
-                } else {
-                    Some(false)
-                }
-            } else {
-                Some(false)
+            match (expr.operator().ok(), expr.argument().ok()) {
+                (
+                    Some(JsUnaryOperator::LogicalNot),
+                    Some(JsAnyExpression::JsUnaryExpression(_)),
+                ) => Some(false),
+                _ => Some(true),
             }
         }
 
