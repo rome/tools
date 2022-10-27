@@ -108,15 +108,12 @@ export interface JavascriptFormatter {
 	trailingComma?: TrailingComma;
 }
 export interface Rules {
-	a11y?: A11y;
-	complexity?: Complexity;
 	correctness?: Correctness;
 	nursery?: Nursery;
 	/**
 	 * It enables the lint rules recommended by Rome. `true` by default.
 	 */
 	recommended?: boolean;
-	security?: Security;
 	style?: Style;
 }
 export type QuoteProperties = "asNeeded" | "preserve";
@@ -125,9 +122,62 @@ export type TrailingComma = "all" | "es5" | "none";
 /**
  * A list of rules that belong to this group
  */
-export interface A11y {
+export interface Correctness {
+	noArguments?: RuleConfiguration;
+	noAsyncPromiseExecutor?: RuleConfiguration;
+	noCatchAssign?: RuleConfiguration;
+	noCommentText?: RuleConfiguration;
+	noCompareNegZero?: RuleConfiguration;
+	noDebugger?: RuleConfiguration;
+	noDelete?: RuleConfiguration;
+	noDoubleEquals?: RuleConfiguration;
+	noDupeArgs?: RuleConfiguration;
+	noEmptyPattern?: RuleConfiguration;
+	noExtraBooleanCast?: RuleConfiguration;
+	noFunctionAssign?: RuleConfiguration;
+	noImplicitBoolean?: RuleConfiguration;
+	noImportAssign?: RuleConfiguration;
+	noLabelVar?: RuleConfiguration;
+	noMultipleSpacesInRegularExpressionLiterals?: RuleConfiguration;
+	noShadowRestrictedNames?: RuleConfiguration;
+	noSparseArray?: RuleConfiguration;
+	noUnnecessaryContinue?: RuleConfiguration;
+	noUnsafeNegation?: RuleConfiguration;
+	noUnusedTemplateLiteral?: RuleConfiguration;
+	/**
+	 * It enables the recommended rules for this group
+	 */
+	recommended?: boolean;
+	useBlockStatements?: RuleConfiguration;
+	useSimplifiedLogicExpression?: RuleConfiguration;
+	useSingleCaseStatement?: RuleConfiguration;
+	useSingleVarDeclarator?: RuleConfiguration;
+	useTemplate?: RuleConfiguration;
+	useValidTypeof?: RuleConfiguration;
+	useWhile?: RuleConfiguration;
+}
+/**
+ * A list of rules that belong to this group
+ */
+export interface Nursery {
+	noArrayIndexKey?: RuleConfiguration;
 	noAutofocus?: RuleConfiguration;
+	noBannedTypes?: RuleConfiguration;
+	noChildrenProp?: RuleConfiguration;
+	noConstAssign?: RuleConfiguration;
+	noDangerouslySetInnerHtml?: RuleConfiguration;
+	noDangerouslySetInnerHtmlWithChildren?: RuleConfiguration;
+	noExplicitAny?: RuleConfiguration;
+	noInvalidConstructorSuper?: RuleConfiguration;
+	noNewSymbol?: RuleConfiguration;
 	noPositiveTabindex?: RuleConfiguration;
+	noRenderReturnValue?: RuleConfiguration;
+	noRestrictedGlobals?: RuleConfiguration;
+	noUndeclaredVariables?: RuleConfiguration;
+	noUnreachable?: RuleConfiguration;
+	noUnusedVariables?: RuleConfiguration;
+	noUselessFragments?: RuleConfiguration;
+	noVoidElementsWithChildren?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
@@ -136,107 +186,28 @@ export interface A11y {
 	useAnchorContent?: RuleConfiguration;
 	useBlankTarget?: RuleConfiguration;
 	useButtonType?: RuleConfiguration;
-	useKeyWithClickEvents?: RuleConfiguration;
-	useKeyWithMouseEvents?: RuleConfiguration;
-	useValidAnchor?: RuleConfiguration;
-}
-/**
- * A list of rules that belong to this group
- */
-export interface Complexity {
-	noExtraBooleanCast?: RuleConfiguration;
-	/**
-	 * It enables the recommended rules for this group
-	 */
-	recommended?: boolean;
-	useSimplifiedLogicExpression?: RuleConfiguration;
-}
-/**
- * A list of rules that belong to this group
- */
-export interface Correctness {
-	noArguments?: RuleConfiguration;
-	noArrayIndexKey?: RuleConfiguration;
-	noAsyncPromiseExecutor?: RuleConfiguration;
-	noCatchAssign?: RuleConfiguration;
-	noChildrenProp?: RuleConfiguration;
-	noCommentText?: RuleConfiguration;
-	noCompareNegZero?: RuleConfiguration;
-	noDebugger?: RuleConfiguration;
-	noDelete?: RuleConfiguration;
-	noDoubleEquals?: RuleConfiguration;
-	noDupeArgs?: RuleConfiguration;
-	noEmptyPattern?: RuleConfiguration;
-	noFunctionAssign?: RuleConfiguration;
-	noImportAssign?: RuleConfiguration;
-	noLabelVar?: RuleConfiguration;
-	noMultipleSpacesInRegularExpressionLiterals?: RuleConfiguration;
-	noNewSymbol?: RuleConfiguration;
-	noRenderReturnValue?: RuleConfiguration;
-	noRestrictedGlobals?: RuleConfiguration;
-	noShadowRestrictedNames?: RuleConfiguration;
-	noSparseArray?: RuleConfiguration;
-	noUndeclaredVariables?: RuleConfiguration;
-	noUnnecessaryContinue?: RuleConfiguration;
-	noUnreachable?: RuleConfiguration;
-	noUnsafeNegation?: RuleConfiguration;
-	noUnusedVariables?: RuleConfiguration;
-	noUselessFragments?: RuleConfiguration;
-	noVoidElementsWithChildren?: RuleConfiguration;
-	/**
-	 * It enables the recommended rules for this group
-	 */
-	recommended?: boolean;
-	useSingleCaseStatement?: RuleConfiguration;
-	useValidTypeof?: RuleConfiguration;
-	useWhile?: RuleConfiguration;
-}
-/**
- * A list of rules that belong to this group
- */
-export interface Nursery {
-	noConstAssign?: RuleConfiguration;
-	noExplicitAny?: RuleConfiguration;
-	noInvalidConstructorSuper?: RuleConfiguration;
-	/**
-	 * It enables the recommended rules for this group
-	 */
-	recommended?: boolean;
 	useCamelCase?: RuleConfiguration;
 	useExhaustiveDependencies?: RuleConfiguration;
 	useFlatMap?: RuleConfiguration;
+	useFragmentSyntax?: RuleConfiguration;
+	useKeyWithClickEvents?: RuleConfiguration;
+	useKeyWithMouseEvents?: RuleConfiguration;
+	useOptionalChain?: RuleConfiguration;
+	useValidAnchor?: RuleConfiguration;
 	useValidForDirection?: RuleConfiguration;
 }
 /**
  * A list of rules that belong to this group
  */
-export interface Security {
-	noDangerouslySetInnerHtml?: RuleConfiguration;
-	noDangerouslySetInnerHtmlWithChildren?: RuleConfiguration;
-	/**
-	 * It enables the recommended rules for this group
-	 */
-	recommended?: boolean;
-}
-/**
- * A list of rules that belong to this group
- */
 export interface Style {
-	noImplicitBoolean?: RuleConfiguration;
 	noNegationElse?: RuleConfiguration;
 	noShoutyConstants?: RuleConfiguration;
-	noUnusedTemplateLiteral?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
 	recommended?: boolean;
-	useBlockStatements?: RuleConfiguration;
-	useFragmentSyntax?: RuleConfiguration;
-	useOptionalChain?: RuleConfiguration;
 	useSelfClosingElements?: RuleConfiguration;
 	useShorthandArrayType?: RuleConfiguration;
-	useSingleVarDeclarator?: RuleConfiguration;
-	useTemplate?: RuleConfiguration;
 }
 export type RuleConfiguration = RulePlainConfiguration | RuleWithOptions;
 export type RulePlainConfiguration = "warn" | "error" | "off";
@@ -285,12 +256,15 @@ export interface GetFormatterIRParams {
 }
 export interface PullDiagnosticsParams {
 	categories: RuleCategories;
+	max_diagnostics: number;
 	path: RomePath;
 }
 export type RuleCategories = RuleCategory[];
 export type RuleCategory = "Syntax" | "Lint" | "Action";
 export interface PullDiagnosticsResult {
 	diagnostics: Diagnostic[];
+	has_errors: boolean;
+	skipped_diagnostics: number;
 }
 /**
  * Serializable representation for a [Diagnostic](super::Diagnostic).
@@ -318,11 +292,14 @@ export type Category =
 	| "lint/correctness/noCatchAssign"
 	| "lint/correctness/noCommentText"
 	| "lint/correctness/noCompareNegZero"
+	| "lint/correctness/noDebugger"
 	| "lint/correctness/noDelete"
 	| "lint/correctness/noDoubleEquals"
 	| "lint/correctness/noDupeArgs"
 	| "lint/correctness/noEmptyPattern"
+	| "lint/correctness/noExtraBooleanCast"
 	| "lint/correctness/noFunctionAssign"
+	| "lint/correctness/noImplicitBoolean"
 	| "lint/correctness/noImportAssign"
 	| "lint/correctness/noLabelVar"
 	| "lint/correctness/noMultipleSpacesInRegularExpressionLiterals"
@@ -330,51 +307,49 @@ export type Category =
 	| "lint/correctness/noSparseArray"
 	| "lint/correctness/noUnnecessaryContinue"
 	| "lint/correctness/noUnsafeNegation"
+	| "lint/correctness/noUnusedTemplateLiteral"
+	| "lint/correctness/useBlockStatements"
+	| "lint/correctness/useSimplifiedLogicExpression"
 	| "lint/correctness/useSingleCaseStatement"
-	| "lint/correctness/useWhile"
-	| "lint/correctness/noNewSymbol"
-	| "lint/correctness/noUselessFragments"
-	| "lint/correctness/noUnusedVariables"
-	| "lint/correctness/noUnreachable"
-	| "lint/correctness/noRestrictedGlobals"
-	| "lint/correctness/noUndeclaredVariables"
+	| "lint/correctness/useSingleVarDeclarator"
+	| "lint/correctness/useTemplate"
 	| "lint/correctness/useValidTypeof"
-	| "lint/correctness/noVoidElementsWithChildren"
-	| "lint/correctness/noArrayIndexKey"
-	| "lint/correctness/noChildrenProp"
-	| "lint/correctness/noRenderReturnValue"
-	| "lint/correctness/noDebugger"
+	| "lint/correctness/useWhile"
+	| "lint/nursery/noDangerouslySetInnerHtml"
+	| "lint/nursery/noNewSymbol"
+	| "lint/nursery/noRenderReturnValue"
+	| "lint/nursery/noUnreachable"
+	| "lint/nursery/noUnusedVariables"
+	| "lint/nursery/noUselessFragments"
+	| "lint/nursery/useButtonType"
+	| "lint/nursery/useCamelCase"
+	| "lint/nursery/useOptionalChain"
+	| "lint/nursery/noUndeclaredVariables"
+	| "lint/nursery/noVoidElementsWithChildren"
+	| "lint/nursery/noChildrenProp"
+	| "lint/nursery/useFragmentSyntax"
+	| "lint/nursery/noArrayIndexKey"
+	| "lint/nursery/noDangerouslySetInnerHtmlWithChildren"
+	| "lint/nursery/noAutofocus"
+	| "lint/nursery/useKeyWithMouseEvents"
+	| "lint/nursery/useAnchorContent"
+	| "lint/nursery/useBlankTarget"
+	| "lint/nursery/useValidAnchor"
+	| "lint/nursery/useKeyWithClickEvents"
+	| "lint/nursery/noRestrictedGlobals"
+	| "lint/nursery/useFlatMap"
+	| "lint/nursery/noPositiveTabindex"
+	| "lint/nursery/noConstAssign"
+	| "lint/nursery/noExplicitAny"
+	| "lint/nursery/noInvalidConstructorSuper"
+	| "lint/nursery/useValidForDirection"
+	| "lint/nursery/useExhaustiveDependencies"
+	| "lint/nursery/useAltText"
+	| "lint/nursery/noBannedTypes"
 	| "lint/style/noNegationElse"
 	| "lint/style/noShoutyConstants"
 	| "lint/style/useSelfClosingElements"
 	| "lint/style/useShorthandArrayType"
-	| "lint/style/useFragmentSyntax"
-	| "lint/style/useTemplate"
-	| "lint/style/useSingleVarDeclarator"
-	| "lint/style/useOptionalChain"
-	| "lint/style/useBlockStatements"
-	| "lint/style/noImplicitBoolean"
-	| "lint/style/noUnusedTemplateLiteral"
-	| "lint/complexity/useSimplifiedLogicExpression"
-	| "lint/complexity/noExtraBooleanCast"
-	| "lint/a11y/noAutofocus"
-	| "lint/a11y/noPositiveTabindex"
-	| "lint/a11y/useKeyWithMouseEvents"
-	| "lint/a11y/useAnchorContent"
-	| "lint/a11y/useBlankTarget"
-	| "lint/a11y/useValidAnchor"
-	| "lint/a11y/useKeyWithClickEvents"
-	| "lint/a11y/useButtonType"
-	| "lint/a11y/useAltText"
-	| "lint/security/noDangerouslySetInnerHtml"
-	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
-	| "lint/nursery/useFlatMap"
-	| "lint/nursery/noConstAssign"
-	| "lint/nursery/noExplicitAny"
-	| "lint/nursery/useValidForDirection"
-	| "lint/nursery/noInvalidConstructorSuper"
-	| "lint/nursery/useExhaustiveDependencies"
-	| "lint/nursery/useCamelCase"
 	| "files/missingHandler"
 	| "format"
 	| "internalError/io"

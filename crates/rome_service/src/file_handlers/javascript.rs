@@ -24,8 +24,8 @@ use rome_js_syntax::{
 use rome_rowan::{AstNode, BatchMutationExt, Direction};
 
 use super::{
-    AnalyzerCapabilities, DebugCapabilities, ExtensionHandler, FormatterCapabilities, Mime,
-    ParserCapabilities,
+    AnalyzerCapabilities, DebugCapabilities, ExtensionHandler, FormatterCapabilities, LintParams,
+    LintResults, Mime, ParserCapabilities,
 };
 use crate::configuration::to_analyzer_configuration;
 use crate::file_handlers::{FixAllParams, Language as LanguageId};
@@ -208,40 +208,55 @@ fn debug_formatter_ir(
     Ok(root_element.to_string())
 }
 
-fn lint(
-    rome_path: &RomePath,
-    parse: AnyParse,
-    filter: AnalysisFilter,
-    rules: Option<&Rules>,
-    settings: SettingsHandle,
-) -> Vec<v2::serde::Diagnostic> {
-    let tree = parse.tree();
-    let mut diagnostics = parse.into_diagnostics();
+fn lint(params: LintParams) -> LintResults {
+    let tree = params.parse.tree();
+    let mut diagnostics = params.parse.into_diagnostics();
 
-    let file_id = rome_path.file_id();
-    let analyzer_options = compute_analyzer_options(&settings);
-    analyze(file_id, &tree, filter, &analyzer_options, |signal| {
+    let file_id = params.rome_path.file_id();
+    let analyzer_options = compute_analyzer_options(&params.settings);
+
+    let mut diagnostic_count = diagnostics.len() as u64;
+    let mut has_errors = diagnostics
+        .iter()
+        .any(|diag| diag.severity() <= v2::Severity::Error);
+
+    analyze(file_id, &tree, params.filter, &analyzer_options, |signal| {
         if let Some(mut diagnostic) = signal.diagnostic() {
+            diagnostic_count += 1;
+
             // We do now check if the severity of the diagnostics should be changed.
             // The configuration allows to change the severity of the diagnostics emitted by rules.
             let severity = diagnostic
                 .category()
                 .filter(|category| category.name().starts_with("lint/"))
-                .and_then(|category| rules.as_ref()?.get_severity_from_code(category))
+                .and_then(|category| params.rules.as_ref()?.get_severity_from_code(category))
                 .unwrap_or(v2::Severity::Error);
 
-            diagnostic.set_severity(severity);
-
-            if let Some(action) = signal.action() {
-                diagnostic.add_code_suggestion(action.into());
+            if severity <= v2::Severity::Error {
+                has_errors = true;
             }
-            diagnostics.push(v2::serde::Diagnostic::new(diagnostic));
+
+            if diagnostic_count <= params.max_diagnostics {
+                diagnostic.set_severity(severity);
+
+                if let Some(action) = signal.action() {
+                    diagnostic.add_code_suggestion(action.into());
+                }
+
+                diagnostics.push(v2::serde::Diagnostic::new(diagnostic));
+            }
         }
 
         ControlFlow::<Never>::Continue(())
     });
 
-    diagnostics
+    let skipped_diagnostics = diagnostic_count - diagnostics.len() as u64;
+
+    LintResults {
+        diagnostics,
+        has_errors,
+        skipped_diagnostics,
+    }
 }
 
 struct ActionsVisitor<'a> {

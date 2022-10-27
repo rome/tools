@@ -82,6 +82,7 @@ define_dategories! {
     "lint/nursery/noInvalidConstructorSuper": "https://rome.tools/docs/lint/rules/noInvalidConstructorSuper",
     "lint/nursery/useExhaustiveDependencies": "https://rome.tools/docs/lint/rules/useExhaustiveDependencies",
     "lint/nursery/useCamelCase": "https://rome.tools/docs/lint/rules/useCamelCase",
+    "lint/nursery/noBannedTypes":"https://rome.tools/docs/lint/rules/noBannedTypes",
 
     ;
 

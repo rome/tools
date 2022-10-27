@@ -259,6 +259,7 @@ export class Rome {
 				const { diagnostics } = await this.backend.workspace.pullDiagnostics({
 					path: file.path,
 					categories: ["Syntax"],
+					max_diagnostics: Number.MAX_SAFE_INTEGER,
 				});
 				return {
 					content: content,

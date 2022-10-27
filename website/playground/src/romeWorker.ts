@@ -163,6 +163,7 @@ self.addEventListener("message", async (e) => {
 			const diagnostics = workspace.pullDiagnostics({
 				path,
 				categories: ["Syntax", "Lint"],
+				max_diagnostics: Number.MAX_SAFE_INTEGER,
 			});
 
 			const printer = new DiagnosticPrinter(path.path, code);
