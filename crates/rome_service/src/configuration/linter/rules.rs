@@ -500,6 +500,7 @@ struct CorrectnessSchema {
     no_children_prop: Option<RuleConfiguration>,
     no_comment_text: Option<RuleConfiguration>,
     no_compare_neg_zero: Option<RuleConfiguration>,
+    no_debugger: Option<RuleConfiguration>,
     no_delete: Option<RuleConfiguration>,
     no_double_equals: Option<RuleConfiguration>,
     no_dupe_args: Option<RuleConfiguration>,
@@ -526,7 +527,7 @@ struct CorrectnessSchema {
 }
 impl Correctness {
     const CATEGORY_NAME: &'static str = "correctness";
-    pub(crate) const CATEGORY_RULES: [&'static str; 30] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 31] = [
         "noArguments",
         "noArrayIndexKey",
         "noAsyncPromiseExecutor",
@@ -534,6 +535,7 @@ impl Correctness {
         "noChildrenProp",
         "noCommentText",
         "noCompareNegZero",
+        "noDebugger",
         "noDelete",
         "noDoubleEquals",
         "noDupeArgs",
@@ -558,7 +560,7 @@ impl Correctness {
         "useValidTypeof",
         "useWhile",
     ];
-    const RECOMMENDED_RULES: [&'static str; 26] = [
+    const RECOMMENDED_RULES: [&'static str; 27] = [
         "noArguments",
         "noArrayIndexKey",
         "noAsyncPromiseExecutor",
@@ -566,6 +568,7 @@ impl Correctness {
         "noChildrenProp",
         "noCommentText",
         "noCompareNegZero",
+        "noDebugger",
         "noDelete",
         "noDoubleEquals",
         "noDupeArgs",
@@ -586,7 +589,7 @@ impl Correctness {
         "useValidTypeof",
         "useWhile",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 26] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 27] = [
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[0]),
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[1]),
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[2]),
@@ -604,15 +607,16 @@ impl Correctness {
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[14]),
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[15]),
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[16]),
-        RuleFilter::Rule("correctness", Self::CATEGORY_RULES[18]),
+        RuleFilter::Rule("correctness", Self::CATEGORY_RULES[17]),
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[19]),
-        RuleFilter::Rule("correctness", Self::CATEGORY_RULES[21]),
+        RuleFilter::Rule("correctness", Self::CATEGORY_RULES[20]),
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[22]),
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[23]),
-        RuleFilter::Rule("correctness", Self::CATEGORY_RULES[26]),
+        RuleFilter::Rule("correctness", Self::CATEGORY_RULES[24]),
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[27]),
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[28]),
         RuleFilter::Rule("correctness", Self::CATEGORY_RULES[29]),
+        RuleFilter::Rule("correctness", Self::CATEGORY_RULES[30]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -639,7 +643,7 @@ impl Correctness {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 26] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 27] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }
@@ -775,24 +779,20 @@ pub struct Security {
 struct SecuritySchema {
     no_dangerously_set_inner_html: Option<RuleConfiguration>,
     no_dangerously_set_inner_html_with_children: Option<RuleConfiguration>,
-    no_debugger: Option<RuleConfiguration>,
 }
 impl Security {
     const CATEGORY_NAME: &'static str = "security";
-    pub(crate) const CATEGORY_RULES: [&'static str; 3] = [
+    pub(crate) const CATEGORY_RULES: [&'static str; 2] = [
         "noDangerouslySetInnerHtml",
         "noDangerouslySetInnerHtmlWithChildren",
-        "noDebugger",
     ];
-    const RECOMMENDED_RULES: [&'static str; 3] = [
+    const RECOMMENDED_RULES: [&'static str; 2] = [
         "noDangerouslySetInnerHtml",
         "noDangerouslySetInnerHtmlWithChildren",
-        "noDebugger",
     ];
-    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 3] = [
+    const RECOMMENDED_RULES_AS_FILTERS: [RuleFilter<'static>; 2] = [
         RuleFilter::Rule("security", Self::CATEGORY_RULES[0]),
         RuleFilter::Rule("security", Self::CATEGORY_RULES[1]),
-        RuleFilter::Rule("security", Self::CATEGORY_RULES[2]),
     ];
     pub(crate) fn is_recommended(&self) -> bool { !matches!(self.recommended, Some(false)) }
     pub(crate) fn get_enabled_rules(&self) -> IndexSet<RuleFilter> {
@@ -819,7 +819,7 @@ impl Security {
     pub(crate) fn is_recommended_rule(rule_name: &str) -> bool {
         Self::RECOMMENDED_RULES.contains(&rule_name)
     }
-    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 3] {
+    pub(crate) fn recommended_rules_as_filters() -> [RuleFilter<'static>; 2] {
         Self::RECOMMENDED_RULES_AS_FILTERS
     }
 }

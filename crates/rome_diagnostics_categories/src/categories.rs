@@ -40,6 +40,7 @@ define_dategories! {
     "lint/correctness/noArrayIndexKey": "https://rome.tools/docs/lint/rules/noArrayIndexKey",
     "lint/correctness/noChildrenProp": "https://rome.tools/docs/lint/rules/noChildrenProp",
     "lint/correctness/noRenderReturnValue": "https://rome.tools/docs/lint/rules/noRenderReturnValue",
+    "lint/correctness/noDebugger": "https://rome.tools/docs/lint/rules/noDebugger",
 
     // style group
     "lint/style/noNegationElse": "https://rome.tools/docs/lint/rules/noNegationElse",
@@ -71,7 +72,6 @@ define_dategories! {
     // security
     "lint/security/noDangerouslySetInnerHtml": "https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtml",
     "lint/security/noDangerouslySetInnerHtmlWithChildren": "https://rome.tools/docs/lint/rules/noDangerouslySetInnerHtmlWithChildren",
-    "lint/security/noDebugger": "https://rome.tools/docs/lint/rules/noDebugger",
 
 
     // nursery

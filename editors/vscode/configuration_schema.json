@@ -250,6 +250,16 @@
             }
           ]
         },
+        "noDebugger": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noDelete": {
           "anyOf": [
             {
@@ -866,16 +876,6 @@
           ]
         },
         "noDangerouslySetInnerHtmlWithChildren": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "noDebugger": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"

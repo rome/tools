@@ -162,6 +162,7 @@ export interface Correctness {
 	noChildrenProp?: RuleConfiguration;
 	noCommentText?: RuleConfiguration;
 	noCompareNegZero?: RuleConfiguration;
+	noDebugger?: RuleConfiguration;
 	noDelete?: RuleConfiguration;
 	noDoubleEquals?: RuleConfiguration;
 	noDupeArgs?: RuleConfiguration;
@@ -212,7 +213,6 @@ export interface Nursery {
 export interface Security {
 	noDangerouslySetInnerHtml?: RuleConfiguration;
 	noDangerouslySetInnerHtmlWithChildren?: RuleConfiguration;
-	noDebugger?: RuleConfiguration;
 	/**
 	 * It enables the recommended rules for this group
 	 */
@@ -343,6 +343,7 @@ export type Category =
 	| "lint/correctness/noArrayIndexKey"
 	| "lint/correctness/noChildrenProp"
 	| "lint/correctness/noRenderReturnValue"
+	| "lint/correctness/noDebugger"
 	| "lint/style/noNegationElse"
 	| "lint/style/noShoutyConstants"
 	| "lint/style/useSelfClosingElements"
@@ -367,7 +368,6 @@ export type Category =
 	| "lint/a11y/useAltText"
 	| "lint/security/noDangerouslySetInnerHtml"
 	| "lint/security/noDangerouslySetInnerHtmlWithChildren"
-	| "lint/security/noDebugger"
 	| "lint/nursery/useFlatMap"
 	| "lint/nursery/noConstAssign"
 	| "lint/nursery/noExplicitAny"

@@ -152,6 +152,13 @@ Prevent comments from being inserted as text nodes
 Disallow comparing against <code>-0</code>
 </section>
 <section class="rule">
+<h3 data-toc-exclude id="noDebugger">
+	<a href="/docs/lint/rules/noDebugger">noDebugger</a>
+	<span class="recommended">recommended</span>
+</h3>
+Disallow the use of <code>debugger</code>
+</section>
+<section class="rule">
 <h3 data-toc-exclude id="noDelete">
 	<a href="/docs/lint/rules/noDelete">noDelete</a>
 	<span class="recommended">recommended</span>
@@ -329,13 +336,6 @@ Prevent the usage of dangerous JSX props
 	<span class="recommended">recommended</span>
 </h3>
 Report when a DOM element or a component uses both <code>children</code> and <code>dangerouslySetInnerHTML</code> prop.
-</section>
-<section class="rule">
-<h3 data-toc-exclude id="noDebugger">
-	<a href="/docs/lint/rules/noDebugger">noDebugger</a>
-	<span class="recommended">recommended</span>
-</h3>
-Disallow the use of <code>debugger</code>
 </section>
 
 ## Style

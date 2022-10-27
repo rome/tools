@@ -18,7 +18,7 @@ function test() {
 
 # Diagnostics
 ```
-noDebugger.js:3:10 lint/security/noDebugger  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDebugger.js:3:10 lint/correctness/noDebugger  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This is an unexpected use of the debugger statement.
   
@@ -42,7 +42,7 @@ noDebugger.js:3:10 lint/security/noDebugger  FIXABLE  ━━━━━━━━�
 ```
 
 ```
-noDebugger.js:5:1 lint/security/noDebugger  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDebugger.js:5:1 lint/correctness/noDebugger  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This is an unexpected use of the debugger statement.
   
@@ -66,7 +66,7 @@ noDebugger.js:5:1 lint/security/noDebugger  FIXABLE  ━━━━━━━━━
 ```
 
 ```
-noDebugger.js:9:3 lint/security/noDebugger  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noDebugger.js:9:3 lint/correctness/noDebugger  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This is an unexpected use of the debugger statement.
   
