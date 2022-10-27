@@ -68,7 +68,7 @@ export interface JavascriptConfiguration {
 	/**
 	* A list of global bindings that should be ignored by the analyzers
 
-If defined here, they should not emit diagnostics.
+If defined here, they should not emit diagnostics. 
 	 */
 	globals?: string[];
 }
@@ -90,7 +90,7 @@ export type PlainIndentStyle = "tab" | "space";
 /**
 	* Validated value for the `line_width` formatter options
 
-The allowed range of values is 1..=320
+The allowed range of values is 1..=320 
 	 */
 export type LineWidth = number;
 export interface JavascriptFormatter {
@@ -342,6 +342,7 @@ export type Category =
 	| "lint/nursery/useValidForDirection"
 	| "lint/nursery/useExhaustiveDependencies"
 	| "lint/nursery/useAltText"
+	| "lint/nursery/noBannedTypes"
 	| "lint/style/noNegationElse"
 	| "lint/style/noShoutyConstants"
 	| "lint/style/useSelfClosingElements"
@@ -373,7 +374,7 @@ export type DiagnosticTags = DiagnosticTag[];
 /**
 	* Serializable representation of a [Diagnostic](super::Diagnostic) advice
 
-See the [Visitor] trait for additional documentation on all the supported advice types.
+See the [Visitor] trait for additional documentation on all the supported advice types. 
 	 */
 export type Advice =
 	| { Log: [LogCategory, MarkupBuf] }

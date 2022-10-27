@@ -129,7 +129,7 @@ impl BannedType {
     fn fix_with(&self) -> Option<JsReferenceIdentifier> {
         Some(match *self {
             Self::BigInt | Self::Boolean | Self::Number | Self::String | Self::Symbol => {
-                make::js_reference_identifier(make::token(Self::as_js_syntax_kind(&self)?))
+                make::js_reference_identifier(make::token(Self::as_js_syntax_kind(self)?))
             }
             _ => return None,
         })
@@ -210,7 +210,7 @@ impl Rule for NoBannedTypes {
             banned_type_range,
             markup! {"Don't use '"{banned_type.as_str()}"' as a type."}.to_owned(),
         )
-        .footer_note(markup! { {banned_type.message()} }.to_owned());
+        .note(markup! { {banned_type.message()} }.to_owned());
 
         Some(diagnostic)
     }

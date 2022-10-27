@@ -67,6 +67,7 @@ define_dategories! {
     "lint/nursery/useValidForDirection": "https://rome.tools/docs/lint/rules/useValidForDirection",
     "lint/nursery/useExhaustiveDependencies": "https://rome.tools/docs/lint/rules/useExhaustiveDependencies",
     "lint/nursery/useAltText":"https://rome.tools/docs/lint/rules/useAltText",
+    "lint/nursery/noBannedTypes":"https://rome.tools/docs/lint/rules/noBannedTypes",
     "lint/style/noNegationElse": "https://rome.tools/docs/lint/rules/noNegationElse",
     "lint/style/noShoutyConstants": "https://rome.tools/docs/lint/rules/noShoutyConstants",
     "lint/style/useSelfClosingElements": "https://rome.tools/docs/lint/rules/useSelfClosingElements",
