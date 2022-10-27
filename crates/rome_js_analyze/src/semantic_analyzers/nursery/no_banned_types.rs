@@ -62,7 +62,8 @@ pub enum BannedType {
     Object,
     String,
     Symbol,
-    EmptyObject, // {}
+    /// {}
+    EmptyObject,
 }
 
 impl BannedType {
@@ -111,9 +112,8 @@ impl BannedType {
 		}
     }
 
-    /// Retrieves a [JsSyntaxKind] from a [BannedType] that will be used to
-    /// replace it on the rule action
-    fn fix_with(&self) -> Option<JsSyntaxKind> {
+    /// Converts a [BannedType] to a [JsSyntaxKind]
+    fn as_js_syntax_kind(&self) -> Option<JsSyntaxKind> {
         Some(match *self {
             Self::BigInt => JsSyntaxKind::BIGINT_KW,
             Self::Boolean => JsSyntaxKind::BOOLEAN_KW,
@@ -123,11 +123,27 @@ impl BannedType {
             _ => return None,
         })
     }
+
+    /// Retrieves a [JsReferenceIdentifier] from a [BannedType] that will be used to
+    /// replace it on the rule action
+    fn fix_with(&self) -> Option<JsReferenceIdentifier> {
+        Some(match *self {
+            Self::BigInt | Self::Boolean | Self::Number | Self::String | Self::Symbol => {
+                make::js_reference_identifier(make::token(Self::as_js_syntax_kind(&self)?))
+            }
+            _ => return None,
+        })
+    }
 }
 
 pub struct RuleState {
+    /// Reference to the enum item containing the banned type.
+    /// Used for both diagnostic and action.
     banned_type: BannedType,
+    /// Text range used to diagnostic the banned type.
     banned_type_range: TextRange,
+    /// Reference to the node to be replaced in the action.
+    /// This is optional because we don't replace empty objects references.
     reference_identifier: Option<JsReferenceIdentifier>,
 }
 
@@ -208,19 +224,14 @@ impl Rule for NoBannedTypes {
         }: &Self::State,
     ) -> Option<JsRuleAction> {
         let mut mutation = ctx.root().begin();
-        let new_token = banned_type.fix_with()?;
-        let new_token_str = new_token.to_string()?;
-        let refs = reference_identifier.as_ref()?;
+        let suggested_type = banned_type.as_js_syntax_kind()?.to_string()?;
 
-        mutation.replace_node(
-            refs.clone(),
-            make::js_reference_identifier(make::token(new_token)),
-        );
+        mutation.replace_node(reference_identifier.clone()?, banned_type.fix_with()?);
 
         Some(JsRuleAction {
             category: ActionCategory::QuickFix,
             applicability: Applicability::Always,
-            message: markup! { "Use '"{new_token_str}"' instead" }.to_owned(),
+            message: markup! { "Use '"{suggested_type}"' instead" }.to_owned(),
             mutation,
         })
     }
