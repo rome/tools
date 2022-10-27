@@ -90,6 +90,8 @@ impl NodeVisitor for ForVisitor {
             builder
                 .append_jump(true, loop_block)
                 .with_node(test.syntax().clone());
+        } else {
+            builder.append_jump(false, loop_block);
         }
 
         builder.append_jump(false, break_block);

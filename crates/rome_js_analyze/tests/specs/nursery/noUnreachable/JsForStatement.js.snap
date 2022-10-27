@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 99
 expression: JsForStatement.js
 ---
 # Input
@@ -8,6 +9,11 @@ function JsForStatement1() {
     for (let i = 0; i < 10; ++i) {
         break;
     }
+}
+
+function JsForStatement2() {
+    for (;;) {}
+    afterLoop();
 }
 
 ```
@@ -32,6 +38,21 @@ JsForStatement.js:2:29 lint/nursery/noUnreachable ━━━━━━━━━━
       │         ^^^^^^
     4 │     }
     5 │ }
+  
+
+```
+
+```
+JsForStatement.js:9:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This code is unreachable
+  
+     7 │ function JsForStatement2() {
+     8 │     for (;;) {}
+   > 9 │     afterLoop();
+       │     ^^^^^^^^^^^^
+    10 │ }
+    11 │ 
   
 
 ```

@@ -3,3 +3,8 @@ function JsForStatement1() {
         break;
     }
 }
+
+function JsForStatement2() {
+    for (;;) {}
+    afterLoop();
+}
