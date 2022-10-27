@@ -255,12 +255,15 @@ export interface GetFormatterIRParams {
 }
 export interface PullDiagnosticsParams {
 	categories: RuleCategories;
+	max_diagnostics: number;
 	path: RomePath;
 }
 export type RuleCategories = RuleCategory[];
 export type RuleCategory = "Syntax" | "Lint" | "Action";
 export interface PullDiagnosticsResult {
 	diagnostics: Diagnostic[];
+	has_errors: boolean;
+	skipped_diagnostics: number;
 }
 /**
  * Serializable representation for a [Diagnostic](super::Diagnostic).
