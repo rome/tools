@@ -157,13 +157,22 @@ pub(crate) struct DebugCapabilities {
     pub(crate) debug_formatter_ir: Option<DebugFormatterIR>,
 }
 
-type Lint = fn(
-    &RomePath,
-    AnyParse,
-    AnalysisFilter,
-    Option<&Rules>,
-    SettingsHandle,
-) -> Vec<rome_diagnostics::v2::serde::Diagnostic>;
+pub(crate) struct LintParams<'a> {
+    pub(crate) rome_path: &'a RomePath,
+    pub(crate) parse: AnyParse,
+    pub(crate) filter: AnalysisFilter<'a>,
+    pub(crate) rules: Option<&'a Rules>,
+    pub(crate) settings: SettingsHandle<'a>,
+    pub(crate) max_diagnostics: u64,
+}
+
+pub(crate) struct LintResults {
+    pub(crate) diagnostics: Vec<rome_diagnostics::v2::serde::Diagnostic>,
+    pub(crate) has_errors: bool,
+    pub(crate) skipped_diagnostics: u64,
+}
+
+type Lint = fn(LintParams) -> LintResults;
 type CodeActions =
     fn(&RomePath, AnyParse, TextRange, Option<&Rules>, SettingsHandle) -> PullActionsResult;
 type FixAll = fn(FixAllParams) -> Result<FixFileResult, RomeError>;

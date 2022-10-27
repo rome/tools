@@ -147,6 +147,7 @@ impl Session {
             let result = self.workspace.pull_diagnostics(PullDiagnosticsParams {
                 path: rome_path,
                 categories: RuleCategories::SYNTAX | RuleCategories::LINT,
+                max_diagnostics: u64::MAX,
             })?;
 
             result

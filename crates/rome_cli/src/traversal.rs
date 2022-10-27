@@ -9,7 +9,7 @@ use rome_diagnostics::{
     v2::{
         self,
         adapters::{IoError, StdError},
-        category, Advices, Category, Diagnostic, DiagnosticExt, Error, FilePath, PrintDescription,
+        category, Advices, Category, DiagnosticExt, Error, FilePath, PrintDescription,
         PrintDiagnostic, Severity, Visit,
     },
     MAXIMUM_DISPLAYABLE_DIAGNOSTICS,
@@ -30,7 +30,10 @@ use std::{
     io,
     panic::catch_unwind,
     path::{Path, PathBuf},
-    sync::atomic::{AtomicUsize, Ordering},
+    sync::{
+        atomic::{AtomicU64, AtomicUsize, Ordering},
+        Arc,
+    },
     time::{Duration, Instant},
 };
 
@@ -75,6 +78,8 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
     let console = &mut *session.app.console;
 
     let mut has_errors = None;
+    let remaining_diagnostics = Arc::new(AtomicU64::new(u64::MAX));
+
     let mut duration = None;
     let mut report = None;
     let sender_reports_from_messages = sender_reports_from_traversal.clone();
@@ -90,6 +95,7 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
                 recv_files,
                 recv_msgs,
                 sender_reports: sender_reports_from_messages,
+                remaining_diagnostics: Arc::clone(&remaining_diagnostics),
             }));
         });
         s.spawn(|_| {
@@ -107,6 +113,7 @@ pub(crate) fn traverse(execution: Execution, mut session: CliSession) -> Result<
                     skipped: &skipped,
                     messages: send_msgs,
                     sender_reports: sender_reports_from_traversal,
+                    remaining_diagnostics: Arc::clone(&remaining_diagnostics),
                 },
             ));
         })
@@ -207,6 +214,9 @@ struct ProcessMessagesOptions<'ctx> {
     recv_msgs: Receiver<Message>,
     /// Sender of reports
     sender_reports: Sender<ReportKind>,
+    /// The approximate number of diagnostics the console will print before
+    /// folding the rest into the "skipped diagnostics" counter
+    remaining_diagnostics: Arc<AtomicU64>,
 }
 
 #[derive(Debug, v2::Diagnostic)]
@@ -269,7 +279,15 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
         recv_files,
         recv_msgs,
         sender_reports,
+        remaining_diagnostics,
     } = options;
+
+    // The command `rome check` gives a default value of 20.
+    // In case of other commands that pass here, we limit to 50 to avoid to delay the terminal.
+    // Once `--max-diagnostics` will be a global argument, `unwrap_of_default` should be enough.
+    let max_diagnostics = mode
+        .get_max_diagnostics()
+        .unwrap_or(MAXIMUM_DISPLAYABLE_DIAGNOSTICS);
 
     let mut has_errors = false;
     let mut paths = HashMap::new();
@@ -354,13 +372,10 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
                 name,
                 content,
                 diagnostics,
+                skipped_diagnostics,
             } => {
-                // The command `rome check` gives a default value of 20.
-                // In case of other commands that pass here, we limit to 50 to avoid to delay the terminal.
-                // Once `--max-diagnostics` will be a global argument, `unwrap_of_default` should be enough.
-                let max_diagnostics = mode
-                    .get_max_diagnostics()
-                    .unwrap_or(MAXIMUM_DISPLAYABLE_DIAGNOSTICS);
+                not_printed_diagnostics += skipped_diagnostics;
+
                 // is CI mode we want to print all the diagnostics
                 if mode.is_ci() {
                     for diag in diagnostics {
@@ -378,6 +393,10 @@ fn process_messages(options: ProcessMessagesOptions) -> bool {
                         let should_print = printed_diagnostics < max_diagnostics;
                         if should_print {
                             printed_diagnostics += 1;
+                            remaining_diagnostics.store(
+                                u64::from(max_diagnostics.saturating_sub(printed_diagnostics)),
+                                Ordering::Relaxed,
+                            );
                         } else {
                             not_printed_diagnostics += 1;
                         }
@@ -504,6 +523,9 @@ struct TraversalOptions<'ctx, 'app> {
     messages: Sender<Message>,
     /// Channel sending reports to the reports thread
     sender_reports: Sender<ReportKind>,
+    /// The approximate number of diagnostics the console will print before
+    /// folding the rest into the "skipped diagnostics" counter
+    remaining_diagnostics: Arc<AtomicU64>,
 }
 
 impl<'ctx, 'app> TraversalOptions<'ctx, 'app> {
@@ -713,16 +735,13 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
             RuleCategories::SYNTAX | RuleCategories::LINT
         };
 
+        let max_diagnostics = ctx.remaining_diagnostics.load(Ordering::Relaxed);
         let result = file_guard
-            .pull_diagnostics(categories)
+            .pull_diagnostics(categories, max_diagnostics)
             .with_file_id_and_code(file_id, category!("lint"))?;
 
-        let has_errors = result
-            .diagnostics
-            .iter()
-            .any(|diag| diag.severity() >= Severity::Error);
-
         // In formatting mode, abort immediately if the file has errors
+        let has_errors = result.has_errors;
         match ctx.execution.traversal_mode() {
             TraversalMode::Format { ignore_errors, .. } if has_errors => {
                 return Err(if *ignore_errors {
@@ -732,6 +751,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
                         name: path.display().to_string(),
                         content: input,
                         diagnostics: result.diagnostics.into_iter().map(Error::from).collect(),
+                        skipped_diagnostics: result.skipped_diagnostics,
                     }
                 });
             }
@@ -749,6 +769,7 @@ fn process_file(ctx: &TraversalOptions, path: &Path, file_id: FileId) -> FileRes
                 name: path.display().to_string(),
                 content: input.clone(),
                 diagnostics: result.diagnostics.into_iter().map(Error::from).collect(),
+                skipped_diagnostics: result.skipped_diagnostics,
             })
         };
 
@@ -825,6 +846,7 @@ enum Message {
         name: String,
         content: String,
         diagnostics: Vec<Error>,
+        skipped_diagnostics: u64,
     },
     Diff {
         file_name: String,

@@ -177,12 +177,15 @@ pub struct CloseFileParams {
 pub struct PullDiagnosticsParams {
     pub path: RomePath,
     pub categories: RuleCategories,
+    pub max_diagnostics: u64,
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 pub struct PullDiagnosticsResult {
     pub diagnostics: Vec<v2::serde::Diagnostic>,
+    pub has_errors: bool,
+    pub skipped_diagnostics: u64,
 }
 
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
@@ -452,10 +455,12 @@ impl<'app, W: Workspace + ?Sized> FileGuard<'app, W> {
     pub fn pull_diagnostics(
         &self,
         categories: RuleCategories,
+        max_diagnostics: u64,
     ) -> Result<PullDiagnosticsResult, RomeError> {
         self.workspace.pull_diagnostics(PullDiagnosticsParams {
             path: self.path.clone(),
             categories,
+            max_diagnostics,
         })
     }
 
