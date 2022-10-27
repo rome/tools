@@ -88,100 +88,17 @@ fn main() -> Result<()> {
     let mut visitor = LintRulesVisitor::default();
     visit_registry(&mut visitor);
 
-    let LintRulesVisitor { groups } = visitor;
+    let LintRulesVisitor { mut groups } = visitor;
+
+    let nursery_rules = groups
+        .remove("nursery")
+        .expect("Expected nursery group to exist");
 
     for (group, rules) in groups {
-        let (group_name, description) = match group {
-            "a11y" => (
-                "Accessibility",
-                markup! {
-                    "Rules focused on preventing accessibility problems."
-                },
-            ),
-            "correctness" => (
-                "Correctness",
-                markup! {
-                    "This group should includes those rules that are meant to prevent possible bugs and misuse of the language."
-                },
-            ),
-
-            "complexity" => (
-                "Complexity",
-                markup! {
-                    "Rules that focus on inspecting complex code that could be simplified."
-                },
-            ),
-
-            "nursery" => (
-                "Nursery",
-                markup! {
-                    "Rules that are being written. Rules under this group are meant to be considered unstable or buggy.
-
-Developers can opt-in these rules via configuration. We vehemently appreciate filing issue in case of bugs or performance problems. 
-
-Rules can be downgraded to this group in case a patch release is needed. After an arbitrary amount of time, the team can decide
-to promote these rules into an appropriate group. Doing so means that the rule is stable and ready for production.
-
-Rules that belong to this group "<Emphasis>"are not subject to semantic version"</Emphasis>"."
-
-                },
-            ),
-            "security" => (
-                "Security",
-                markup! {
-                    "Rules that require special attention. If if the code can be correct and bug-free, publishing it can be an hazard."
-                },
-            ),
-            "style" => (
-                "Style",
-                markup! {
-                    "Rules that focus mostly on making the code more consistent."
-                },
-            ),
-            _ => panic!("Unknown group ID {group:?}"),
-        };
-
-        writeln!(index, "<section>")?;
-        writeln!(index, "<h2>{group_name}<a class=\"header-anchor\" href=\"#{group_name}\" aria-label=\"{group_name}\"></a></h2>")?;
-        writeln!(index)?;
-        markup_to_string(&mut index, description)?;
-        writeln!(index)?;
-
-        for (rule, meta) in rules {
-            let version = meta.version;
-            match generate_rule(
-                &root,
-                group,
-                rule,
-                meta.docs,
-                meta.version,
-                meta.recommended,
-            ) {
-                Ok(summary) => {
-                    writeln!(index, "<div class=\"rule\">")?;
-                    writeln!(index, "<h3 data-toc-exclude id=\"{rule}\">")?;
-                    writeln!(
-                        index,
-                        "	<a href=\"/docs/lint/rules/{rule}\">{rule} (since v{version})</a>"
-                    )?;
-                    writeln!(index, "	<a class=\"header-anchor\" href=\"#{rule}\"></a>")?;
-                    if meta.recommended {
-                        writeln!(index, "	<span class=\"recommended\">recommended</span>")?;
-                    }
-                    writeln!(index, "</h3>")?;
-
-                    write_html(&mut index, summary.into_iter())?;
-
-                    writeln!(index, "\n</div>")?;
-                }
-                Err(err) => {
-                    errors.push((rule, err));
-                }
-            }
-        }
-
-        writeln!(index, "</section>")?;
+        generate_group(group, rules, &root, &mut index, &mut errors)?;
     }
+
+    generate_group("nursery", nursery_rules, &root, &mut index, &mut errors)?;
 
     if !errors.is_empty() {
         bail!(
@@ -194,6 +111,89 @@ Rules that belong to this group "<Emphasis>"are not subject to semantic version"
     }
 
     fs2::write(root.join("index.md"), index)?;
+
+    Ok(())
+}
+
+fn generate_group(
+    group: &'static str,
+    rules: BTreeMap<&'static str, RuleMetadata>,
+    root: &Path,
+    mut index: &mut dyn io::Write,
+    errors: &mut Vec<(&'static str, Error)>,
+) -> io::Result<()> {
+    let (group_name, description) = match group {
+        "a11y" => (
+            "Accessibility",
+            markup! {
+                "Rules focused on preventing accessibility problems."
+            },
+        ),
+        "correctness" => (
+            "Correctness",
+            markup! {
+                "Rules that detect incorrect or useless code."
+            },
+        ),
+
+        "nursery" => (
+            "Nursery",
+            markup! {
+                "New rules that are still under development.
+
+Nursery rules require explicit opt-in via configuration because they may still have bugs or performance problems.
+Nursery rules get promoted to other groups once they become stable or may be removed.
+
+Rules that belong to this group "<Emphasis>"are not subject to semantic version"</Emphasis>"."
+            },
+        ),
+        "style" => (
+            "Style",
+            markup! {
+                "Rules enforcing a consistent way of writing your code. "
+            },
+        ),
+        "complexity" => (
+            "Complexity",
+            markup! {
+                "Rules that focus on inspecting complex code that could be simplified."
+            },
+        ),
+        "security" => (
+            "Security",
+            markup! {
+                "Rules that detect potential security flaws."
+            },
+        ),
+        _ => panic!("Unknown group ID {group:?}"),
+    };
+
+    writeln!(index, "\n## {group_name}")?;
+    writeln!(index)?;
+    markup_to_string(index, description)?;
+    writeln!(index)?;
+
+    for (rule, meta) in rules {
+        match generate_rule(root, group, rule, meta.docs, meta.version, meta.recommended) {
+            Ok(summary) => {
+                writeln!(index, "<section class=\"rule\">")?;
+                writeln!(index, "<h3 data-toc-exclude id=\"{rule}\">")?;
+                writeln!(index, "	<a href=\"/docs/lint/rules/{rule}\">{rule}</a>")?;
+
+                if meta.recommended {
+                    writeln!(index, "	<span class=\"recommended\">recommended</span>")?;
+                }
+                writeln!(index, "</h3>")?;
+
+                write_html(&mut index, summary.into_iter())?;
+
+                writeln!(index, "\n</section>")?;
+            }
+            Err(err) => {
+                errors.push((rule, err));
+            }
+        }
+    }
 
     Ok(())
 }
@@ -610,7 +610,7 @@ fn assert_lint(
     Ok(())
 }
 
-pub fn markup_to_string(buffer: &mut Vec<u8>, markup: Markup) -> io::Result<()> {
+pub fn markup_to_string(buffer: &mut dyn io::Write, markup: Markup) -> io::Result<()> {
     let mut write = HTML(buffer);
     let mut fmt = Formatter::new(&mut write);
     fmt.write_markup(markup)
