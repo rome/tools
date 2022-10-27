@@ -139,8 +139,8 @@ fn is_negation(node: &JsAnyExpression) -> Option<bool> {
             match (expr.operator().ok(), expr.argument().ok()) {
                 (
                     Some(JsUnaryOperator::LogicalNot),
-                    Some(JsAnyExpression::JsUnaryExpression(_)),
-                ) => Some(false),
+                    Some(JsAnyExpression::JsUnaryExpression(inner_unary)),
+                ) => Some(inner_unary.operator().ok()? != JsUnaryOperator::LogicalNot),
                 _ => Some(true),
             }
         }
