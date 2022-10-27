@@ -7,9 +7,13 @@ use futures::Sink;
 use futures::SinkExt;
 use futures::Stream;
 use futures::StreamExt;
+use rome_diagnostics::v2::FileId;
+use rome_fs::RomePath;
 use rome_lsp::LSPServer;
 use rome_lsp::ServerFactory;
 use rome_lsp::WorkspaceSettings;
+use rome_service::workspace::GetSyntaxTreeParams;
+use rome_service::workspace::GetSyntaxTreeResult;
 use serde::de::DeserializeOwned;
 use serde::Serialize;
 use serde_json::{from_value, to_value};
@@ -32,6 +36,7 @@ use tower_lsp::lsp_types::CodeActionResponse;
 use tower_lsp::lsp_types::Diagnostic;
 use tower_lsp::lsp_types::DiagnosticRelatedInformation;
 use tower_lsp::lsp_types::DiagnosticSeverity;
+use tower_lsp::lsp_types::DidChangeTextDocumentParams;
 use tower_lsp::lsp_types::DidCloseTextDocumentParams;
 use tower_lsp::lsp_types::DidOpenTextDocumentParams;
 use tower_lsp::lsp_types::DocumentFormattingParams;
@@ -44,10 +49,12 @@ use tower_lsp::lsp_types::PartialResultParams;
 use tower_lsp::lsp_types::Position;
 use tower_lsp::lsp_types::PublishDiagnosticsParams;
 use tower_lsp::lsp_types::Range;
+use tower_lsp::lsp_types::TextDocumentContentChangeEvent;
 use tower_lsp::lsp_types::TextDocumentIdentifier;
 use tower_lsp::lsp_types::TextDocumentItem;
 use tower_lsp::lsp_types::TextEdit;
 use tower_lsp::lsp_types::Url;
+use tower_lsp::lsp_types::VersionedTextDocumentIdentifier;
 use tower_lsp::lsp_types::WorkDoneProgressParams;
 use tower_lsp::LspService;
 use tower_lsp::{jsonrpc::Request, lsp_types::InitializeParams};
@@ -195,6 +202,24 @@ impl Server {
         .await
     }
 
+    async fn change_document(
+        &mut self,
+        version: i32,
+        content_changes: Vec<TextDocumentContentChangeEvent>,
+    ) -> Result<()> {
+        self.notify(
+            "textDocument/didChange",
+            DidChangeTextDocumentParams {
+                text_document: VersionedTextDocumentIdentifier {
+                    uri: Url::parse("test://workspace/document.js")?,
+                    version,
+                },
+                content_changes,
+            },
+        )
+        .await
+    }
+
     async fn close_document(&mut self) -> Result<()> {
         self.notify(
             "textDocument/didClose",
@@ -304,7 +329,116 @@ async fn document_lifecycle() -> Result<()> {
     server.initialize().await?;
     server.initialized().await?;
 
-    server.open_document("").await?;
+    server
+        .open_document("first_line();\nsecond_line();\nthird_line();")
+        .await?;
+
+    server
+        .change_document(
+            1,
+            vec![
+                TextDocumentContentChangeEvent {
+                    range: Some(Range {
+                        start: Position {
+                            line: 2,
+                            character: 6,
+                        },
+                        end: Position {
+                            line: 2,
+                            character: 10,
+                        },
+                    }),
+                    range_length: None,
+                    text: String::from("statement"),
+                },
+                TextDocumentContentChangeEvent {
+                    range: Some(Range {
+                        start: Position {
+                            line: 1,
+                            character: 7,
+                        },
+                        end: Position {
+                            line: 1,
+                            character: 11,
+                        },
+                    }),
+                    range_length: None,
+                    text: String::from("statement"),
+                },
+                TextDocumentContentChangeEvent {
+                    range: Some(Range {
+                        start: Position {
+                            line: 0,
+                            character: 6,
+                        },
+                        end: Position {
+                            line: 0,
+                            character: 10,
+                        },
+                    }),
+                    range_length: None,
+                    text: String::from("statement"),
+                },
+            ],
+        )
+        .await?;
+
+    let res: GetSyntaxTreeResult = server
+        .request(
+            "rome/get_syntax_tree",
+            "get_syntax_tree",
+            GetSyntaxTreeParams {
+                path: RomePath::new("/document.js", FileId::zero()),
+            },
+        )
+        .await?
+        .expect("get_syntax_tree returned None");
+
+    const EXPECTED: &str = "0: JS_MODULE@0..57
+  0: (empty)
+  1: JS_DIRECTIVE_LIST@0..0
+  2: JS_MODULE_ITEM_LIST@0..57
+    0: JS_EXPRESSION_STATEMENT@0..18
+      0: JS_CALL_EXPRESSION@0..17
+        0: JS_IDENTIFIER_EXPRESSION@0..15
+          0: JS_REFERENCE_IDENTIFIER@0..15
+            0: IDENT@0..15 \"first_statement\" [] []
+        1: (empty)
+        2: (empty)
+        3: JS_CALL_ARGUMENTS@15..17
+          0: L_PAREN@15..16 \"(\" [] []
+          1: JS_CALL_ARGUMENT_LIST@16..16
+          2: R_PAREN@16..17 \")\" [] []
+      1: SEMICOLON@17..18 \";\" [] []
+    1: JS_EXPRESSION_STATEMENT@18..38
+      0: JS_CALL_EXPRESSION@18..37
+        0: JS_IDENTIFIER_EXPRESSION@18..35
+          0: JS_REFERENCE_IDENTIFIER@18..35
+            0: IDENT@18..35 \"second_statement\" [Newline(\"\\n\")] []
+        1: (empty)
+        2: (empty)
+        3: JS_CALL_ARGUMENTS@35..37
+          0: L_PAREN@35..36 \"(\" [] []
+          1: JS_CALL_ARGUMENT_LIST@36..36
+          2: R_PAREN@36..37 \")\" [] []
+      1: SEMICOLON@37..38 \";\" [] []
+    2: JS_EXPRESSION_STATEMENT@38..57
+      0: JS_CALL_EXPRESSION@38..56
+        0: JS_IDENTIFIER_EXPRESSION@38..54
+          0: JS_REFERENCE_IDENTIFIER@38..54
+            0: IDENT@38..54 \"third_statement\" [Newline(\"\\n\")] []
+        1: (empty)
+        2: (empty)
+        3: JS_CALL_ARGUMENTS@54..56
+          0: L_PAREN@54..55 \"(\" [] []
+          1: JS_CALL_ARGUMENT_LIST@55..55
+          2: R_PAREN@55..56 \")\" [] []
+      1: SEMICOLON@56..57 \";\" [] []
+  3: EOF@57..57 \"\" [] []
+";
+
+    assert_eq!(res.cst, EXPECTED);
+
     server.close_document().await?;
 
     server.shutdown().await?;
