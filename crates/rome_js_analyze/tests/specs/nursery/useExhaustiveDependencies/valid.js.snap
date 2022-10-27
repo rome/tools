@@ -12,12 +12,14 @@ function MyComponent1() {
     });
 }
 
-// All captures in the dependency list
+// All needed captures in the dependency list
 function MyComponent2() {
-    let local = 1;
+    let a = 1;
+    const b = 1;
+    const c = a + 1;
     useEffect(() => {
-        console.log(local);
-    }, [local]);
+        console.log(a, b, c);
+    }, [a, c]);
 }
 
 // capturing declarations

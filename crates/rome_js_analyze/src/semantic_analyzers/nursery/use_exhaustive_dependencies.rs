@@ -4,7 +4,8 @@ use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
 use rome_console::markup;
 use rome_js_semantic::Capture;
 use rome_js_syntax::{
-    JsCallExpression, JsIdentifierBinding, JsSyntaxKind, TextRange, TsIdentifierBinding,
+    JsCallExpression, JsIdentifierBinding, JsSyntaxKind, JsVariableDeclaration,
+    JsVariableDeclarator, TextRange, TsIdentifierBinding,
 };
 use rome_rowan::{AstNode, SyntaxNodeCast};
 use serde::{Deserialize, Serialize};
@@ -151,15 +152,33 @@ impl Rule for UseExhaustiveDependencies {
                                 {
                                     None
                                 } else {
-                                    // Ignore if stable
-                                    let declaration = declaration
+                                    let binding = declaration
                                         .syntax()
                                         .clone()
                                         .cast::<JsIdentifierBinding>()?;
-                                    let not_stable = !is_binding_react_stable(
-                                        &declaration,
-                                        &options.stable_config,
-                                    );
+
+                                    // Ignore if constant
+                                    if let Some(declarator) =
+                                        binding.parent::<JsVariableDeclarator>()
+                                    {
+                                        let declaration = declarator
+                                            .syntax()
+                                            .ancestors()
+                                            .filter_map(JsVariableDeclaration::cast)
+                                            .next()?;
+
+                                        if declaration.is_const() {
+                                            let initializer = declarator.initializer()?;
+                                            let expr = initializer.expression().ok()?;
+                                            if model.is_constant(&expr) {
+                                                return None;
+                                            }
+                                        }
+                                    }
+
+                                    // Ignore if stable
+                                    let not_stable =
+                                        !is_binding_react_stable(&binding, &options.stable_config);
                                     not_stable.then_some(capture)
                                 }
                             }

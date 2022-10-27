@@ -122,6 +122,7 @@ assert_semantics! {
     console.log(3);
 }
 f(1);"#,
+    ok_reference_write_expression, "let a/*#A*/ = 1; let b = a/*WRITE A*/ = 2;",
 }
 
 // Write Hoisting

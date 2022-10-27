@@ -9,3 +9,11 @@ function MyComponent2() {
   let a = 1, b = 1;
   useEffect(() => {}, [a, b]);
 }
+
+// extra const
+
+function MyComponent2() {
+  const a = 1;
+  useEffect(() => {}, [a]);
+}
+

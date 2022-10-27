@@ -1,10 +1,12 @@
 mod closure;
+mod is_constant;
 
 use crate::{SemanticEvent, SemanticEventExtractor};
 pub use closure::*;
 use rome_js_syntax::{
-    JsAnyRoot, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier,
-    JsSyntaxKind, JsSyntaxNode, JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding,
+    JsAnyExpression, JsAnyRoot, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage,
+    JsReferenceIdentifier, JsSyntaxKind, JsSyntaxNode, JsxReferenceIdentifier, TextRange, TextSize,
+    TsIdentifierBinding,
 };
 use rome_rowan::{AstNode, SyntaxTokenText};
 use rust_lapper::{Interval, Lapper};
@@ -788,6 +790,12 @@ impl SemanticModel {
     pub fn closure(&self, node: &impl HasClosureAstNode) -> Closure {
         Closure::from_node(self.data.clone(), node)
     }
+
+    /// Returns true or false if the expression is constant, which
+    /// means it does not depend on any other variables.
+    pub fn is_constant(&self, expr: &JsAnyExpression) -> bool {
+        is_constant::is_constant(expr)
+    }
 }
 
 // Extensions
@@ -883,6 +891,7 @@ pub struct SemanticModelBuilder {
     declaration_all_references: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
     declaration_all_reads: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
     declaration_all_writes: HashMap<TextRange, Vec<(ReferenceType, TextRange)>>,
+    reference_type: HashMap<TextRange, ReferenceType>,
     exported: HashSet<TextRange>,
     unresolved_references: Vec<(ReferenceType, TextRange)>,
     global_references: Vec<(ReferenceType, TextRange)>,
@@ -901,6 +910,7 @@ impl SemanticModelBuilder {
             declaration_all_references: HashMap::new(),
             declaration_all_reads: HashMap::new(),
             declaration_all_writes: HashMap::new(),
+            reference_type: HashMap::new(),
             exported: HashSet::new(),
             unresolved_references: Vec::new(),
             global_references: Vec::new(),
@@ -995,6 +1005,9 @@ impl SemanticModelBuilder {
 
                 let scope = &mut self.scopes[scope_id];
                 scope.read_references.push(ScopeReference { range });
+
+                self.reference_type
+                    .insert(range, ReferenceType::Read { hoisted: false });
             }
             HoistedRead {
                 range,
@@ -1013,6 +1026,9 @@ impl SemanticModelBuilder {
 
                 let scope = &mut self.scopes[scope_id];
                 scope.read_references.push(ScopeReference { range });
+
+                self.reference_type
+                    .insert(range, ReferenceType::Read { hoisted: true });
             }
             Write {
                 range,
@@ -1031,6 +1047,9 @@ impl SemanticModelBuilder {
 
                 let scope = &mut self.scopes[scope_id];
                 scope.write_references.push(ScopeReference { range });
+
+                self.reference_type
+                    .insert(range, ReferenceType::Write { hoisted: false });
             }
             HoistedWrite {
                 range,
@@ -1049,6 +1068,9 @@ impl SemanticModelBuilder {
 
                 let scope = &mut self.scopes[scope_id];
                 scope.write_references.push(ScopeReference { range });
+
+                self.reference_type
+                    .insert(range, ReferenceType::Write { hoisted: true });
             }
             UnresolvedReference { is_read, range } => {
                 let ty = if is_read {
@@ -1065,6 +1087,8 @@ impl SemanticModelBuilder {
                 } else {
                     self.unresolved_references.push((ty, range));
                 }
+
+                self.reference_type.insert(range, ty);
             }
             Exported { range } => {
                 self.exported.insert(range);
