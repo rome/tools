@@ -28,6 +28,14 @@ function BackTopContent(props){
 	);
 }
 
+function ArrowBodyIsJsxWithComment({ action }) {
+	return (action) =>
+		(
+			// eslint-disable-next-line react/no-array-index-key
+			<li/>
+		);
+}
+
 ```
 
 
@@ -68,6 +76,13 @@ function BackTopContent(props) {
 					})) /*with comment*/
 			}
 		</CSSMotion>
+	);
+}
+
+function ArrowBodyIsJsxWithComment({ action }) {
+	return (action) => (
+		// eslint-disable-next-line react/no-array-index-key
+		<li />
 	);
 }
 ```
