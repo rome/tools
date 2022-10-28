@@ -6,7 +6,7 @@ use rome_js_syntax::{
     JsAnyExpression, JsAnyLiteralExpression, JsBooleanLiteralExpression, JsLogicalExpression,
     JsUnaryExpression, JsUnaryOperator, T,
 };
-use rome_rowan::{AstNode, AstNodeExt, BatchMutationExt};
+use rome_rowan::{AstNode, AstNodeExt, BatchMutationExt, TriviaPieceKind};
 
 use crate::JsRuleAction;
 
@@ -223,25 +223,21 @@ fn simplify_de_morgan(node: &JsLogicalExpression) -> Option<JsUnaryExpression> {
         .map(|trivia| trivia.pieces());
     match (left, right) {
         (JsAnyExpression::JsUnaryExpression(left), JsAnyExpression::JsUnaryExpression(right)) => {
-            let mut next_logic_expression = match operator_token.kind() {
-                T![||] => {
-                    let mut token = make::token(T![&&]);
-                    if let Some(right_argument_trivia) = right_argument_trivia {
-                        token = token.with_leading_trivia_pieces(right_argument_trivia);
-                    }
-                    node.clone()
-                        .replace_token_discard_trivia(operator_token, token)
-                }
-                T![&&] => {
-                    let mut token = make::token(T![||]);
-                    if let Some(right_argument_trivia) = right_argument_trivia {
-                        token = token.with_leading_trivia_pieces(right_argument_trivia);
-                    }
-                    node.clone()
-                        .replace_token_discard_trivia(operator_token, token)
-                }
+            let mut next_logic_expression = node.clone();
+            let mut new_token = match operator_token.kind() {
+                T![||] => make::token(T![&&])
+                    .with_trailing_trivia(vec![(TriviaPieceKind::Whitespace, " ")]),
+                T![&&] => make::token(T![||])
+                    .with_trailing_trivia(vec![(TriviaPieceKind::Whitespace, " ")]),
                 _ => return None,
-            }?;
+            };
+            if let Some(right_argument_trivia) = right_argument_trivia {
+                new_token = new_token.with_leading_trivia_pieces(right_argument_trivia);
+            }
+
+            next_logic_expression =
+                next_logic_expression.replace_token_transfer_trivia(operator_token, new_token)?;
+
             next_logic_expression = next_logic_expression.with_left(left.argument().ok()?);
             next_logic_expression = next_logic_expression.with_right(right.argument().ok()?);
             Some(make::js_unary_expression(

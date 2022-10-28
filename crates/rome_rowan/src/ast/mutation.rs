@@ -1,6 +1,6 @@
+use crate::{AstNode, AstNodeList, AstSeparatedList, SyntaxToken, TriviaPiece};
+use rome_text_size::TextSize;
 use std::ops;
-
-use crate::{AstNode, AstNodeList, AstSeparatedList, SyntaxToken};
 
 pub trait AstNodeExt: AstNode {
     /// Return a new version of this node with the node `prev_node` replaced with `next_node`
@@ -14,7 +14,7 @@ pub trait AstNodeExt: AstNode {
         Self: Sized;
 
     /// Return a new version of this node with the node `prev_node` replaced with `next_node`,
-    /// transferring the leading and trailing trivia of `prev_node` to `next_node`
+    /// transfering the leading and trailing trivia of `prev_node` to `next_node`
     ///
     /// `prev_node` can be a direct child of this node, or an indirect child through any descendant node
     ///
@@ -44,6 +44,21 @@ pub trait AstNodeExt: AstNode {
     ///
     /// Returns `None` if `prev_token` is not a descendant of this node
     fn replace_token(
+        self,
+        prev_token: SyntaxToken<Self::Language>,
+        next_token: SyntaxToken<Self::Language>,
+    ) -> Option<Self>
+    where
+        Self: Sized;
+
+    /// Return a new version of this with, by keeping the trivia that belong to `prev_token` **and**
+    /// `next_token`. The order of trivia will be like this:
+    ///
+    /// - leading trivia of `prev_token`
+    /// - leading trivia of `next_token`
+    /// - trailing trivia of `prev_token`
+    /// - trailing trivia of `next_token`
+    fn replace_token_transfer_trivia(
         self,
         prev_token: SyntaxToken<Self::Language>,
         next_token: SyntaxToken<Self::Language>,
@@ -135,6 +150,39 @@ where
             next_token
                 .with_leading_trivia_pieces(leading_trivia)
                 .with_trailing_trivia_pieces(trailing_trivia),
+        )
+    }
+
+    fn replace_token_transfer_trivia(
+        self,
+        prev_token: SyntaxToken<Self::Language>,
+        next_token: SyntaxToken<Self::Language>,
+    ) -> Option<Self>
+    where
+        Self: Sized,
+    {
+        let leading_trivia: Vec<_> = prev_token
+            .leading_trivia()
+            .pieces()
+            .chain(prev_token.leading_trivia().pieces())
+            .map(|piece| TriviaPiece::new(piece.kind(), TextSize::of(piece.text())))
+            .collect();
+
+        let trailing_trivia: Vec<_> = next_token
+            .trailing_trivia()
+            .pieces()
+            .chain(next_token.trailing_trivia().pieces())
+            .map(|piece| TriviaPiece::new(piece.kind(), TextSize::of(piece.text())))
+            .collect();
+
+        self.replace_token_discard_trivia(
+            prev_token,
+            SyntaxToken::new_detached(
+                next_token.kind(),
+                &next_token.token_text(),
+                leading_trivia,
+                trailing_trivia,
+            ),
         )
     }
 

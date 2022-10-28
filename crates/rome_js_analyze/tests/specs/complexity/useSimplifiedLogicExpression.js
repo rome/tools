@@ -7,6 +7,7 @@ const boolExpr6 = false;
 const r6 = !!boolExpr1 || !!boolExpr2;
 !!x
 // invalid
+
 const boolExp = true;
 const r = true && boolExp;
 const boolExp2 = true;
@@ -26,3 +27,12 @@ if (
     // comment
     !boolExpr2
 ) {}
+if (
+    !boolExpr1
+    // comment
+    ||
+    // comment
+    !boolExpr2
+) {}
+const r5 = !boolExpr1 /*comment*/ || /*comment*/ !boolExpr2;
+let a = !b || !c
