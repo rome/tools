@@ -1,13 +1,16 @@
 use crate::semantic_services::Semantic;
-use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic};
+use crate::JsRuleAction;
+use rome_analyze::{context::RuleContext, declare_rule, ActionCategory, Rule, RuleDiagnostic};
 use rome_console::markup;
+use rome_diagnostics::Applicability;
+use rome_js_factory::make::{ident, js_identifier_binding};
 use rome_js_semantic::{AllReferencesExtensions, SemanticScopeExtensions};
 use rome_js_syntax::{
     JsClassExpression, JsConstructorParameterList, JsConstructorParameters, JsFunctionDeclaration,
     JsFunctionExpression, JsIdentifierBinding, JsParameterList, JsParameters, JsSyntaxKind,
     JsVariableDeclarator, TsDeclareStatement, TsPropertyParameter,
 };
-use rome_rowan::{AstNode, SyntaxNodeCast};
+use rome_rowan::{AstNode, BatchMutationExt, SyntaxNodeCast};
 
 declare_rule! {
     /// Disallow unused variables.
@@ -276,5 +279,25 @@ impl Rule for NoUnusedVariables {
         );
 
         Some(diag)
+    }
+
+    fn action(ctx: &RuleContext<Self>, _: &Self::State) -> Option<JsRuleAction> {
+        let node = ctx.query();
+        let mut mutation = ctx.root().begin();
+        let name = node.name_token().ok()?;
+        let name_trimmed = name.text_trimmed();
+        let new_text_trimmed = format!("_{}", name_trimmed);
+        mutation.replace_node(
+            node.clone(),
+            js_identifier_binding(ident(&new_text_trimmed)),
+        );
+
+        Some(JsRuleAction {
+            mutation,
+            category: ActionCategory::QuickFix,
+            applicability: Applicability::MaybeIncorrect,
+            message: markup! { "Prepend "<Emphasis>{name_trimmed}</Emphasis>" with an underscore" }
+                .to_owned(),
+        })
     }
 }

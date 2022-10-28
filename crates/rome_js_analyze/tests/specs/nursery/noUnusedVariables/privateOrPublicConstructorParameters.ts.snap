@@ -15,7 +15,7 @@ console.log(new A(1, 2, 3));
 
 # Diagnostics
 ```
-privateOrPublicConstructorParameters.ts:2:17 lint/nursery/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━
+privateOrPublicConstructorParameters.ts:2:17 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━
 
   ! This parameter is unused.
   
@@ -26,6 +26,14 @@ privateOrPublicConstructorParameters.ts:2:17 lint/nursery/noUnusedVariables ━�
     4 │ }
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
+  i Suggested fix: Prepend a with an underscore
+  
+    1 1 │   class A {
+    2   │ - ····constructor(a,·private·b,·public·c)·{
+      2 │ + ····constructor(_a,·private·b,·public·c)·{
+    3 3 │       }
+    4 4 │   }
   
 
 ```

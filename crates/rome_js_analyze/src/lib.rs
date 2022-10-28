@@ -141,7 +141,7 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"<input disabled />
+        const SOURCE: &str = r#"function f(a, b) { b; }
         "#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());
