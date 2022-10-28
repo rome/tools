@@ -196,6 +196,20 @@ impl Session {
             == Some(true)
     }
 
+    /// True if the client supports dynamic registration of "workspace/didChangeWatchedFiles" requests
+    pub(crate) fn can_register_file_watcher(&self) -> bool {
+        self.client_capabilities
+            .read()
+            .unwrap()
+            .as_ref()
+            .and_then(|c| {
+                let workspace = c.workspace.as_ref()?;
+                let capability = workspace.did_change_watched_files.as_ref()?;
+                capability.dynamic_registration
+            })
+            .unwrap_or(false)
+    }
+
     /// This function attempts to read the configuration from the root URI
     pub(crate) async fn update_configuration(&self) {
         let root_uri = self.root_uri.read().unwrap();

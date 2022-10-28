@@ -12,10 +12,12 @@ use futures::FutureExt;
 use rome_console::markup;
 use rome_service::workspace::{RageEntry, RageParams, RageResult};
 use rome_service::{workspace, Workspace};
+use serde_json::to_value;
 use tokio::io::{AsyncRead, AsyncWrite};
 use tokio::sync::Notify;
 use tokio::task::spawn_blocking;
 use tower_lsp::jsonrpc::Result as LspResult;
+use tower_lsp::lsp_types::notification::{DidChangeWatchedFiles, Notification};
 use tower_lsp::{lsp_types::*, ClientSocket};
 use tower_lsp::{LanguageServer, LspService, Server};
 use tracing::{error, info, trace};
@@ -118,12 +120,8 @@ impl LSPServer {
         }
     }
 
+    /// Register the capabilities statically supported by the Rome server to the client
     async fn setup_capabilities(&self) {
-        let rename = {
-            let config = self.session.config.read().ok();
-            config.and_then(|x| x.settings.rename).unwrap_or(false)
-        };
-
         if self.session.can_register_did_change_configuration() {
             self.register_capability(Registration {
                 id: "workspace/didChangeConfiguration".to_string(),
@@ -132,6 +130,36 @@ impl LSPServer {
             })
             .await;
         }
+
+        if self.session.can_register_file_watcher() {
+            let register_options = DidChangeWatchedFilesRegistrationOptions {
+                watchers: vec![FileSystemWatcher {
+                    glob_pattern: String::from("**/rome.json"),
+                    kind: Some(WatchKind::all()),
+                }],
+            };
+
+            // SAFETY: The `DidChangeWatchedFilesRegistrationOptions` should not fail to serialize
+            let register_options = to_value(&register_options).unwrap();
+
+            self.register_capability(Registration {
+                id: String::from("watch_configuration_file"),
+                method: DidChangeWatchedFiles::METHOD.into(),
+                register_options: Some(register_options),
+            })
+            .await;
+        }
+
+        self.setup_dynamic_capabilities().await;
+    }
+
+    /// Register or unregister the capabilities dynamically supported by the
+    /// Rome server (depending on the configuration) to the client
+    async fn setup_dynamic_capabilities(&self) {
+        let rename = {
+            let config = self.session.config.read().ok();
+            config.and_then(|x| x.settings.rename).unwrap_or(false)
+        };
 
         if rename {
             self.register_capability(Registration {
@@ -214,7 +242,20 @@ impl LanguageServer for LSPServer {
     async fn did_change_configuration(&self, params: DidChangeConfigurationParams) {
         let _ = params;
         self.session.fetch_client_configuration().await;
-        self.setup_capabilities().await;
+        self.setup_dynamic_capabilities().await;
+    }
+
+    #[tracing::instrument(level = "trace", skip(self))]
+    async fn did_change_watched_files(&self, params: DidChangeWatchedFilesParams) {
+        let has_rome_json = params
+            .changes
+            .iter()
+            .any(|event| event.uri.path().ends_with("rome.json"));
+
+        if has_rome_json {
+            self.session.fetch_client_configuration().await;
+            self.setup_dynamic_capabilities().await;
+        }
     }
 
     async fn did_open(&self, params: DidOpenTextDocumentParams) {
