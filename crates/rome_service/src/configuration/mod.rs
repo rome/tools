@@ -327,6 +327,7 @@ where
 ///  )
 /// ```
 ///
+/// [WorkspaceSettings]: crate::settings::WorkspaceSettings
 /// [metadata]: rome_analyze::RegistryRuleMetadata
 /// [configuration for the analyzer]: AnalyzerConfiguration
 pub fn to_analyzer_configuration<ToGlobals>(
