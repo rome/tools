@@ -54,3 +54,16 @@ console.log(<Button att={value}/>);
 new (class C {
 
 })
+
+(function loreum(hey, ai) {
+	console.log(ai);
+})();
+
+const a = {
+	loreum(a,b) {
+		console.log(b)
+	}
+};
+a;
+
+
