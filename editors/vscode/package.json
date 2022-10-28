@@ -45,6 +45,11 @@
 				"command": "rome.syntaxTree",
 				"title": "Show Syntax Tree",
 				"category": "Rome"
+			},
+			{
+				"command": "rome.restartLspServer",
+				"title": "Restart LSP Server",
+				"category": "Rome"
 			}
 		],
 		"menus": {

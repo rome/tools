@@ -81,6 +81,11 @@ export async function activate(context: ExtensionContext) {
 	session.registerCommand(Commands.ServerStatus, () => {
 		traceOutputChannel.show();
 	});
+	session.registerCommand(Commands.RestartLspServer, () => {
+		client.restart().catch((error) => {
+			client.error("Restarting client failed", error, "force");
+		});
+	});
 
 	context.subscriptions.push(
 		client.onDidChangeState((evt) => {
