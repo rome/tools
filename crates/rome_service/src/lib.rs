@@ -176,7 +176,7 @@ impl Display for RomeError {
                 write!(f, "The file {} was ignored", path.display())
             }
             RomeError::FileTooLarge { path, size, limit } => {
-                write!(f, "Size of {} is {} which exceeds the project maximum of {}. The file size limit exists to prevent us inadvertently slowing down and loading large files that we shouldn't.", path.display(), Bytes(*size), Bytes(*limit))
+                write!(f, "Size of {} is {} which exceeds configured maximum of {} for this project. The file size limit exists to prevent us inadvertently slowing down and loading large files that we shouldn't.", path.display(), Bytes(*size), Bytes(*limit))
             }
         }
     }

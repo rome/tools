@@ -191,6 +191,7 @@ pub struct FilesSettings {
     pub max_size: NonZeroU64,
 }
 
+/// Limit the size of files to 1.0 MiB by default
 const DEFAULT_FILE_SIZE_LIMIT: NonZeroU64 =
     // SAFETY: This constant is initialized with a non-zero value
     unsafe { NonZeroU64::new_unchecked(1024 * 1024) };
