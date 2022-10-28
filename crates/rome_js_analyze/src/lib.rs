@@ -141,7 +141,11 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"<img src="image.png" aria-label="alt text" />
+        const SOURCE: &str = r#"if (
+            !firstCondition &&
+            // comment
+            !secondCondition
+        ) {}
         "#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());

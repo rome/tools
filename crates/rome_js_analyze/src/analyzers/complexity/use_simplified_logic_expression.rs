@@ -217,15 +217,29 @@ fn simplify_de_morgan(node: &JsLogicalExpression) -> Option<JsUnaryExpression> {
     let left = node.left().ok()?;
     let right = node.right().ok()?;
     let operator_token = node.operator_token().ok()?;
+    let right_argument_trivia = right
+        .syntax()
+        .first_leading_trivia()
+        .map(|trivia| trivia.pieces());
     match (left, right) {
         (JsAnyExpression::JsUnaryExpression(left), JsAnyExpression::JsUnaryExpression(right)) => {
             let mut next_logic_expression = match operator_token.kind() {
-                T![||] => node
-                    .clone()
-                    .replace_token(operator_token, make::token(T![&&])),
-                T![&&] => node
-                    .clone()
-                    .replace_token(operator_token, make::token(T![||])),
+                T![||] => {
+                    let mut token = make::token(T![&&]);
+                    if let Some(right_argument_trivia) = right_argument_trivia {
+                        token = token.with_leading_trivia_pieces(right_argument_trivia);
+                    }
+                    node.clone()
+                        .replace_token_discard_trivia(operator_token, token)
+                }
+                T![&&] => {
+                    let mut token = make::token(T![||]);
+                    if let Some(right_argument_trivia) = right_argument_trivia {
+                        token = token.with_leading_trivia_pieces(right_argument_trivia);
+                    }
+                    node.clone()
+                        .replace_token_discard_trivia(operator_token, token)
+                }
                 _ => return None,
             }?;
             next_logic_expression = next_logic_expression.with_left(left.argument().ok()?);

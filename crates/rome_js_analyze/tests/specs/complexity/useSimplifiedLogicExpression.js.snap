@@ -22,6 +22,16 @@ const r3 = null ?? nonNullExp;
 const boolExpr1 = true;
 const boolExpr2 = false;
 const r4 = !boolExpr1 || !boolExpr2;
+if (
+    !boolExpr1 ||
+    // comment
+    !boolExpr2
+) {}
+if (
+    !boolExpr1 ||
+    // comment
+    !boolExpr2
+) {}
 
 ```
 
@@ -92,15 +102,77 @@ useSimplifiedLogicExpression.js:18:12 lint/complexity/useSimplifiedLogicExpressi
     17 │ const boolExpr2 = false;
   > 18 │ const r4 = !boolExpr1 || !boolExpr2;
        │            ^^^^^^^^^^^^^^^^^^^^^^^^
-    19 │ 
+    19 │ if (
+    20 │     !boolExpr1 ||
   
   i Suggested fix: Reduce the complexity of the logical expression.
   
     16 16 │   const boolExpr1 = true;
     17 17 │   const boolExpr2 = false;
     18    │ - const·r4·=·!boolExpr1·||·!boolExpr2;
-       18 │ + const·r4·=·!(boolExpr1·&&·boolExpr2);
-    19 19 │   
+       18 │ + const·r4·=·!(boolExpr1·&&boolExpr2);
+    19 19 │   if (
+    20 20 │       !boolExpr1 ||
+  
+
+```
+
+```
+useSimplifiedLogicExpression.js:20:5 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━━━━
+
+  ! Logical expression contains unnecessary complexity.
+  
+    18 │ const r4 = !boolExpr1 || !boolExpr2;
+    19 │ if (
+  > 20 │     !boolExpr1 ||
+       │     ^^^^^^^^^^^^^
+  > 21 │     // comment
+  > 22 │     !boolExpr2
+       │     ^^^^^^^^^^
+    23 │ ) {}
+    24 │ if (
+  
+  i Suggested fix: Reduce the complexity of the logical expression.
+  
+    18 18 │   const r4 = !boolExpr1 || !boolExpr2;
+    19 19 │   if (
+    20    │ - ····!boolExpr1·||
+       20 │ + ····!(boolExpr1·
+    21 21 │       // comment
+    22    │ - ····!boolExpr2
+       22 │ + ····&&boolExpr2)
+    23 23 │   ) {}
+    24 24 │   if (
+  
+
+```
+
+```
+useSimplifiedLogicExpression.js:25:5 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━━━━
+
+  ! Logical expression contains unnecessary complexity.
+  
+    23 │ ) {}
+    24 │ if (
+  > 25 │     !boolExpr1 ||
+       │     ^^^^^^^^^^^^^
+  > 26 │     // comment
+  > 27 │     !boolExpr2
+       │     ^^^^^^^^^^
+    28 │ ) {}
+    29 │ 
+  
+  i Suggested fix: Reduce the complexity of the logical expression.
+  
+    23 23 │   ) {}
+    24 24 │   if (
+    25    │ - ····!boolExpr1·||
+       25 │ + ····!(boolExpr1·
+    26 26 │       // comment
+    27    │ - ····!boolExpr2
+       27 │ + ····&&boolExpr2)
+    28 28 │   ) {}
+    29 29 │   
   
 
 ```
