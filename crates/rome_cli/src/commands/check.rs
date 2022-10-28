@@ -1,12 +1,13 @@
 use crate::commands::format::apply_format_settings_from_cli;
+use crate::configuration::load_configuration;
 use crate::{execute_mode, CliSession, Execution, Termination, TraversalMode};
 use rome_diagnostics::MAXIMUM_DISPLAYABLE_DIAGNOSTICS;
-use rome_service::load_config;
 use rome_service::workspace::{FixFileMode, UpdateSettingsParams};
 
 /// Handler for the "check" command of the Rome CLI
 pub(crate) fn check(mut session: CliSession) -> Result<(), Termination> {
-    let configuration = load_config(&session.app.fs, None)?;
+    let mut configuration = load_configuration(&mut session)?;
+
     let max_diagnostics: Option<u16> = session
         .args
         .opt_value_from_str("--max-diagnostics")
@@ -14,6 +15,7 @@ pub(crate) fn check(mut session: CliSession) -> Result<(), Termination> {
             argument: "--max-diagnostics",
             source,
         })?;
+
     let max_diagnostics = if let Some(max_diagnostics) = max_diagnostics {
         if max_diagnostics > MAXIMUM_DISPLAYABLE_DIAGNOSTICS {
             return Err(Termination::OverflowNumberArgument(
@@ -28,7 +30,8 @@ pub(crate) fn check(mut session: CliSession) -> Result<(), Termination> {
         20
     };
 
-    let configuration = apply_format_settings_from_cli(&mut session, configuration)?;
+    apply_format_settings_from_cli(&mut session, &mut configuration)?;
+
     session
         .app
         .workspace

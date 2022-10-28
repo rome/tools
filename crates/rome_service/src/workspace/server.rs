@@ -177,15 +177,19 @@ impl WorkspaceServer {
                     .parse
                     .ok_or_else(self.build_capability_error(rome_path))?;
 
-                /// Limit the size of files to 1.0 MiB
-                const SIZE_LIMIT_IN_BYTES: usize = 1024 * 1024;
+                let size_limit = {
+                    let settings = self.settings();
+                    let settings = settings.as_ref();
+                    let limit = settings.files.max_size.get();
+                    usize::try_from(limit).unwrap_or(usize::MAX)
+                };
 
                 let size = document.content.as_bytes().len();
-                if size >= SIZE_LIMIT_IN_BYTES {
+                if size >= size_limit {
                     return Err(RomeError::FileTooLarge {
                         path: rome_path.to_path_buf(),
                         size,
-                        limit: SIZE_LIMIT_IN_BYTES,
+                        limit: size_limit,
                     });
                 }
 

@@ -4,8 +4,8 @@ use std::ffi::OsString;
 use std::path::{Path, PathBuf};
 
 use crate::configs::{
-    CONFIG_LINTER_DISABLED, CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC, CONFIG_LINTER_IGNORED_FILES,
-    CONFIG_LINTER_SUPPRESSED_GROUP, CONFIG_LINTER_SUPPRESSED_RULE,
+    CONFIG_FILE_SIZE_LIMIT, CONFIG_LINTER_DISABLED, CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC,
+    CONFIG_LINTER_IGNORED_FILES, CONFIG_LINTER_SUPPRESSED_GROUP, CONFIG_LINTER_SUPPRESSED_RULE,
     CONFIG_LINTER_UPGRADE_DIAGNOSTIC,
 };
 use crate::snap_test::SnapshotPayload;
@@ -696,6 +696,96 @@ fn file_too_large() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "file_too_large",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn file_too_large_config_limit() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    fs.insert(PathBuf::from("rome.json"), CONFIG_FILE_SIZE_LIMIT);
+
+    let file_path = Path::new("check.js");
+    fs.insert(file_path.into(), "statement1();\nstatement2();");
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![OsString::from("check"), file_path.as_os_str().into()]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "file_too_large_config_limit",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn file_too_large_cli_limit() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("check.js");
+    fs.insert(file_path.into(), "statement1();\nstatement2();");
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("check"),
+            OsString::from("--files-max-size"),
+            OsString::from("16"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "file_too_large_cli_limit",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn files_max_size_parse_error() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("check.js");
+    fs.insert(file_path.into(), "statement1();\nstatement2();");
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("check"),
+            OsString::from("--files-max-size"),
+            OsString::from("-1"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    match result {
+        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--files-max-size"),
+        _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "files_max_size_parse_error",
         fs,
         console,
         result,
