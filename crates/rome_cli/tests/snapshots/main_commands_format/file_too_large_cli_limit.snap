@@ -3,12 +3,19 @@ source: crates/rome_cli/tests/snap_test.rs
 assertion_line: 223
 expression: content
 ---
+## `format.js`
+
+```js
+statement1();
+statement2();
+```
+
 # Emitted Messages
 
 ```block
 format.js lint ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × Size of format.js is 1.0 MiB which exceeds configured maximum of 1.0 MiB for this project. The file size limit exists to prevent us inadvertently slowing down and loading large files that we shouldn't.
+  × Size of format.js is 27 B which exceeds configured maximum of 16 B for this project. The file size limit exists to prevent us inadvertently slowing down and loading large files that we shouldn't.
   
 
 ```
