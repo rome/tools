@@ -37,26 +37,40 @@ pub(super) fn print_diff(fmt: &mut fmt::Formatter<'_>, diff: &TextEdit) -> io::R
     let after_line_count = after_line;
 
     // If only a single line was modified, print a "short diff"
-    let mut iter = modified_lines.iter();
-    let modified_line = iter.next().and_then(|key| {
-        if iter.next().is_some() {
-            return None;
-        }
+    let modified_line = if before_line_count == after_line_count {
+        let mut iter = modified_lines.iter().filter_map(|key| {
+            let line = inserted_lines.get(key)?;
 
-        let line = inserted_lines.get(key)?;
-        let mut has_non_empty = false;
+            // A line has been modified if its diff list is empty (the line was
+            // either fully inserted or fully removed) or if its diff list has
+            // any delete or insert operation
+            let has_edits = line.diffs.is_empty()
+                || line.diffs.iter().any(|(tag, text)| {
+                    matches!(tag, ChangeTag::Delete | ChangeTag::Insert) && !text.is_empty()
+                });
 
-        for (_, text) in &line.diffs {
-            has_non_empty = has_non_empty || !text.is_empty();
-        }
+            if has_edits {
+                Some((key, line))
+            } else {
+                None
+            }
+        });
 
-        // Disallow fully empty lines from being displayed in short mode
-        if has_non_empty {
-            Some((key, line))
-        } else {
-            None
-        }
-    });
+        iter.next().and_then(|(key, line)| {
+            if iter.next().is_some() {
+                return None;
+            }
+
+            // Disallow fully empty lines from being displayed in short mode
+            if !line.diffs.is_empty() {
+                Some((key, line))
+            } else {
+                None
+            }
+        })
+    } else {
+        None
+    };
 
     if let Some((key, entry)) = modified_line {
         return print_short_diff(fmt, key, entry);
@@ -68,7 +82,6 @@ pub(super) fn print_diff(fmt: &mut fmt::Formatter<'_>, diff: &TextEdit) -> io::R
     let mut shown_line_indexes = BTreeSet::new();
 
     process_diff_lines(
-        &mut modified_lines,
         &mut inserted_lines,
         &mut before_line_to_after,
         &mut diffs_by_line,
@@ -117,14 +130,7 @@ fn process_diff_ops<'a, 'diff>(
 
                     state.before_line_to_after.insert(*before_line, *after_line);
 
-                    push_to_line(
-                        &mut state,
-                        *before_line,
-                        *after_line,
-                        ChangeTag::Equal,
-                        "",
-                        false,
-                    );
+                    push_to_line(&mut state, *before_line, *after_line, ChangeTag::Equal, "");
                 }
 
                 continue;
@@ -134,36 +140,19 @@ fn process_diff_ops<'a, 'diff>(
         let tag = op.tag();
         let text = op.text(diff);
 
-        let parts_count = text.split('\n').count();
-        let last_part = match parts_count.checked_sub(1) {
-            Some(last_part) => last_part,
-            None => {
-                // Doesn't contain a newline
-                push_to_line(&mut state, *before_line, *after_line, tag, text, false);
-                continue;
-            }
-        };
-
         // Get all the lines
-        let mut parts = text.split('\n').enumerate();
+        let mut parts = text.split('\n');
 
         // Deconstruct each text chunk
         let current_line = parts.next();
 
         // The first chunk belongs to the current line
-        if let Some((part_index, current_line)) = current_line {
-            push_to_line(
-                &mut state,
-                *before_line,
-                *after_line,
-                tag,
-                current_line,
-                part_index < last_part,
-            );
+        if let Some(current_line) = current_line {
+            push_to_line(&mut state, *before_line, *after_line, tag, current_line);
         }
 
         // Create unique lines for each other chunk
-        for (part_index, new_line) in parts {
+        for new_line in parts {
             match tag {
                 ChangeTag::Equal => {
                     *after_line = after_line.saturating_add(1);
@@ -180,14 +169,7 @@ fn process_diff_ops<'a, 'diff>(
 
             state.before_line_to_after.insert(*before_line, *after_line);
 
-            push_to_line(
-                &mut state,
-                *before_line,
-                *after_line,
-                tag,
-                new_line,
-                part_index < last_part,
-            );
+            push_to_line(&mut state, *before_line, *after_line, tag, new_line);
         }
     }
 }
@@ -231,12 +213,18 @@ impl<'a> GroupDiffsLine<'a> {
         inserted_lines
             .entry(key)
             .and_modify(|line| {
-                line.diffs.push((tag, text));
+                if !text.is_empty() {
+                    line.diffs.push((tag, text));
+                }
             })
             .or_insert_with_key(|key| GroupDiffsLine {
                 before_line: key.before_line,
                 after_line: key.after_line,
-                diffs: vec![(tag, text)],
+                diffs: if text.is_empty() {
+                    Vec::new()
+                } else {
+                    vec![(tag, text)]
+                },
             });
     }
 }
@@ -253,7 +241,6 @@ fn push_to_line<'a, 'b>(
     after_line: OneIndexed,
     tag: ChangeTag,
     text: &'b str,
-    allow_empty: bool,
 ) {
     let PushToLineState {
         modified_lines,
@@ -264,15 +251,11 @@ fn push_to_line<'a, 'b>(
     match tag {
         ChangeTag::Insert => {
             GroupDiffsLine::insert(inserted_lines, LineKey::after(after_line), tag, text);
-            if allow_empty || !text.is_empty() {
-                modified_lines.insert(LineKey::after(after_line));
-            }
+            modified_lines.insert(LineKey::after(after_line));
         }
         ChangeTag::Delete => {
             GroupDiffsLine::insert(inserted_lines, LineKey::before(before_line), tag, text);
-            if allow_empty || !text.is_empty() {
-                modified_lines.insert(LineKey::before(before_line));
-            }
+            modified_lines.insert(LineKey::before(before_line));
         }
         ChangeTag::Equal => {
             if before_line == OneIndexed::MIN && after_line == OneIndexed::MIN {
@@ -286,7 +269,6 @@ fn push_to_line<'a, 'b>(
 }
 
 fn process_diff_lines<'lines, 'diff>(
-    modified_lines: &mut BTreeSet<LineKey>,
     inserted_lines: &'lines mut BTreeMap<LineKey, GroupDiffsLine<'diff>>,
     before_line_to_after: &mut BTreeMap<OneIndexed, OneIndexed>,
     diffs_by_line: &mut Vec<&'lines GroupDiffsLine<'diff>>,
@@ -301,15 +283,19 @@ fn process_diff_lines<'lines, 'diff>(
             None => continue,
         };
 
-        let has_modified_before_line = modified_lines.contains(&LineKey::before(before_line));
-        let has_modified_after_line = modified_lines.contains(&LineKey::after(after_line));
+        let inserted_before_line = inserted_lines.get(&LineKey::before(before_line));
+        let inserted_after_line = inserted_lines.get(&LineKey::after(after_line));
 
-        if !(has_modified_before_line || has_modified_after_line) {
-            let line = inserted_lines.remove(&LineKey::before(before_line));
+        if let (Some(inserted_before_line), Some(inserted_after_line)) =
+            (inserted_before_line, inserted_after_line)
+        {
+            if inserted_before_line.diffs == inserted_after_line.diffs {
+                let line = inserted_lines
+                    .remove(&LineKey::before(before_line))
+                    .unwrap();
 
-            inserted_lines.remove(&LineKey::after(after_line));
+                inserted_lines.remove(&LineKey::after(after_line)).unwrap();
 
-            if let Some(line) = line {
                 inserted_lines.insert(
                     LineKey {
                         before_line: Some(before_line),
@@ -685,6 +671,31 @@ mod tests {
     use super::print_diff;
     use rome_console::{fmt, markup, MarkupBuf};
     use rome_text_edit::TextEdit;
+    use termcolor::Buffer;
+
+    fn assert_eq_markup(actual: &MarkupBuf, expected: &MarkupBuf) {
+        if actual != expected {
+            let mut buffer = Buffer::ansi();
+            let mut writer = fmt::Termcolor(&mut buffer);
+            let mut output = fmt::Formatter::new(&mut writer);
+
+            output
+                .write_markup(markup! {
+                    "assertion failed: (actual == expected)\n"
+                    "actual:\n"
+                    {actual}"\n"
+                    {format_args!("{actual:#?}")}"\n"
+                    "expected:\n"
+                    {expected}"\n"
+                    {format_args!("{expected:#?}")}"\n"
+                })
+                .unwrap();
+
+            let buffer = buffer.into_inner();
+            let buffer = String::from_utf8(buffer).unwrap();
+            panic!("{buffer}");
+        }
+    }
 
     #[test]
     fn test_inline() {
@@ -700,10 +711,7 @@ mod tests {
         }
         .to_owned();
 
-        assert_eq!(
-            output, expected,
-            "\nactual:\n{output:#?}\nexpected:\n{expected:#?}",
-        );
+        assert_eq_markup(&output, &expected);
     }
 
     #[test]
@@ -721,10 +729,7 @@ mod tests {
         }
         .to_owned();
 
-        assert_eq!(
-            output, expected,
-            "\nactual:\n{output:#?}\nexpected:\n{expected:#?}",
-        );
+        assert_eq_markup(&output, &expected);
     }
 
     #[test]
@@ -780,24 +785,24 @@ function name(args) {
             "  "<Emphasis>" 6"</Emphasis>"   "<Emphasis>" │ "</Emphasis><Error>"-"</Error>" "<Error>"function"</Error>"\n"
             "  "<Emphasis>" 7"</Emphasis>"   "<Emphasis>" │ "</Emphasis><Error>"-"</Error>" "<Error>"name("</Error>"\n"
             "  "<Emphasis>" 8"</Emphasis>"   "<Emphasis>" │ "</Emphasis><Error>"-"</Error>" "<Error><Dim><Emphasis>"····"</Emphasis></Dim></Error><Error>"args"</Error>"\n"
+            "  "<Emphasis>" 9"</Emphasis>"   "<Emphasis>" │ "</Emphasis><Error>"-"</Error>" "<Error>")"</Error><Error><Dim>"·"</Dim></Error><Error>"{}"</Error>"\n"
             "     "<Emphasis>" 6 │ "</Emphasis><Success>"+"</Success>" "<Success>"function"</Success><Success><Dim><Emphasis>"·"</Emphasis></Dim></Success><Success>"name(args)"</Success><Success><Dim>"·"</Dim></Success><Success>"{"</Success>"\n"
-            "  "<Emphasis>" 9"</Emphasis>" "<Emphasis>" 7 │ "</Emphasis>"  ) {}\n"
+            "     "<Emphasis>" 7 │ "</Emphasis><Success>"+"</Success>" "<Success>"}"</Success>"\n"
             "  "<Emphasis>"10"</Emphasis>" "<Emphasis>" 8 │ "</Emphasis>"  consectetur\n"
+            "  "<Emphasis>"11"</Emphasis>" "<Emphasis>" 9 │ "</Emphasis>"  adipiscing\n"
             <Emphasis>"  ····· │ \n"
             </Emphasis>"  "<Emphasis>"16"</Emphasis>" "<Emphasis>"14 │ "</Emphasis>"  \n"
             "  "<Emphasis>"17"</Emphasis>" "<Emphasis>"15 │ "</Emphasis>"  incididunt\n"
             "  "<Emphasis>"18"</Emphasis>"   "<Emphasis>" │ "</Emphasis><Error>"-"</Error>" "<Error>"function"</Error>"\n"
             "  "<Emphasis>"19"</Emphasis>"   "<Emphasis>" │ "</Emphasis><Error>"-"</Error>" "<Error>"name("</Error>"\n"
             "  "<Emphasis>"20"</Emphasis>"   "<Emphasis>" │ "</Emphasis><Error>"-"</Error>" "<Error><Dim><Emphasis>"····"</Emphasis></Dim></Error><Error>"args"</Error>"\n"
+            "  "<Emphasis>"21"</Emphasis>"   "<Emphasis>" │ "</Emphasis><Error>"-"</Error>" "<Error>")"</Error><Error><Dim>"·"</Dim></Error><Error>"{}"</Error>"\n"
             "     "<Emphasis>"16 │ "</Emphasis><Success>"+"</Success>" "<Success>"function"</Success><Success><Dim><Emphasis>"·"</Emphasis></Dim></Success><Success>"name(args)"</Success><Success><Dim>"·"</Dim></Success><Success>"{"</Success>"\n"
-            "  "<Emphasis>"21"</Emphasis>" "<Emphasis>"17 │ "</Emphasis>"  ) {}\n"
+            "     "<Emphasis>"17 │ "</Emphasis><Success>"+"</Success>" "<Success>"}"</Success>"\n"
             "\n"
         }.to_owned();
 
-        assert_eq!(
-            output, expected,
-            "\nactual:\n{output:#?}\nexpected:\n{expected:#?}",
-        );
+        assert_eq_markup(&output, &expected);
     }
 
     #[test]
@@ -832,10 +837,7 @@ function name(args) {
         }
         .to_owned();
 
-        assert_eq!(
-            output, expected,
-            "\nactual:\n{output:#?}\nexpected:\n{expected:#?}",
-        );
+        assert_eq_markup(&output, &expected);
     }
 
     #[test]
@@ -874,10 +876,7 @@ function name(args) {
         }
         .to_owned();
 
-        assert_eq!(
-            output, expected,
-            "\nactual:\n{output:#?}\nexpected:\n{expected:#?}",
-        );
+        assert_eq_markup(&output, &expected);
     }
 
     #[test]
@@ -912,10 +911,7 @@ function name(args) {
         }
         .to_owned();
 
-        assert_eq!(
-            output, expected,
-            "\nactual:\n{output:#?}\nexpected:\n{expected:#?}",
-        );
+        assert_eq_markup(&output, &expected);
     }
 
     #[test]
@@ -954,9 +950,37 @@ function name(args) {
         }
         .to_owned();
 
-        assert_eq!(
-            output, expected,
-            "\nactual:\n{output:#?}\nexpected:\n{expected:#?}",
-        );
+        assert_eq_markup(&output, &expected);
+    }
+
+    #[test]
+    fn remove_empty_line() {
+        const SOURCE_LEFT: &str = "for (; ;) {
+}
+
+console.log(\"test\");
+";
+
+        const SOURCE_RIGHT: &str = "for (;;) {}
+
+console.log(\"test\");
+";
+
+        let diff = TextEdit::from_unicode_words(SOURCE_LEFT, SOURCE_RIGHT);
+
+        let mut output = MarkupBuf::default();
+        print_diff(&mut fmt::Formatter::new(&mut output), &diff).unwrap();
+
+        let expected = markup! {
+            "  "<Emphasis>"1"</Emphasis>"  "<Emphasis>" │ "</Emphasis><Error>"-"</Error>" "<Error>"for"</Error><Error><Dim>"·"</Dim></Error><Error>"(;"</Error><Error><Dim><Emphasis>"·"</Emphasis></Dim></Error><Error>";)"</Error><Error><Dim>"·"</Dim></Error><Error>"{"</Error>"\n"
+            "  "<Emphasis>"2"</Emphasis>"  "<Emphasis>" │ "</Emphasis><Error>"-"</Error>" "<Error>"}"</Error>"\n"
+            "    "<Emphasis>"1 │ "</Emphasis><Success>"+"</Success>" "<Success>"for"</Success><Success><Dim>"·"</Dim></Success><Success>"(;;)"</Success><Success><Dim>"·"</Dim></Success><Success>"{}"</Success>"\n"
+            "  "<Emphasis>"3"</Emphasis>" "<Emphasis>"2 │ "</Emphasis>"  \n"
+            "  "<Emphasis>"4"</Emphasis>" "<Emphasis>"3 │ "</Emphasis>"  console.log(\"test\");\n"
+            "\n"
+        }
+        .to_owned();
+
+        assert_eq_markup(&output, &expected);
     }
 }
