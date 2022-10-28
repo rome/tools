@@ -19,8 +19,8 @@
 [discord-url]: https://discord.gg/rome
 [ci-badge]: https://github.com/rome/tools/actions/workflows/main.yml/badge.svg
 [ci-url]: https://github.com/rome/tools/actions/workflows/main.yml
-[npm-badge]: https://img.shields.io/npm/v/rome/next?color=brightgreen
-[npm-url]: https://www.npmjs.com/package/rome/v/next
+[npm-badge]: https://img.shields.io/npm/v/rome/latest?color=brightgreen
+[npm-url]: https://www.npmjs.com/package/rome/v/latest
 [vscode-badge]: https://img.shields.io/visual-studio-marketplace/v/rome.rome?color=brightgreen&label=vscode
 [vscode-url]: (https://marketplace.visualstudio.com/items?itemName=rome.rome
 

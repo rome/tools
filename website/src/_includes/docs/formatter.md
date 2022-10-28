@@ -37,7 +37,8 @@ OPTIONS:
     --line-width <number>                    Change how many characters the formatter is allowed to print in a single line (default: 80)
     --quote-style <single|double>            Changes the quotation character for strings (default: ")
     --quote-properties <as-needed|preserve>  Changes when properties in object should be quoted (default: as-needed)
-    --stdin-file-path <string>                A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path file.js
+    --trailing-comma <all|es5|none>          Changes trailing commas in multi-line comma-separated syntactic structures (default: all)
+    --stdin-file-path <string>               A file name with its extension to pass when reading from standard in, e.g. echo 'let a;' | rome format --stdin-file-path file.js
 ```
 
 ### Ignoring Code

@@ -1,5 +1,77 @@
 # Rome changelog
 
+## 10.0.0
+
+### CLI
+
+- Added new command `rome version`.
+- Added new command `rome rage`.
+- Added new command `rome lsp-proxy`.
+- Added a new argument `--version`, supported by the command `rome`
+- Added new argument called `--trailing-comma`, supported by the command `rome format`.
+- Correctly show supported option for command `rome ci`, closes [#3456](https://github.com/rome/tools/issues/3456).
+- Fixed the command `rome ci` didn't run correctly under certain circumstances, closes [#3495](https://github.com/rome/tools/issues/3495). 
+- Fixed the messaging of some diagnostics, [#3460](https://github.com/rome/tools/pull/3460).
+
+### Diagnostics
+
+- Fixed a false positive issue, where diagnostics were incorrectly when encountering suppression comments [#3406](https://github.com/rome/tools/issues/3406).
+- Empty lines are now correctly shown when print code diffs [#3375](https://github.com/rome/tools/issues/3375).
+
+
+### Formatter
+
+- We added a new option for trailing commas: `all`, `es5` and `none`; refer to the [documentation](https://rome.tools/docs/#javascriptformattertrailingcomma) for 
+  more information 
+- Fixed bugs around JSX [#3499](https://github.com/rome/tools/issues/3499), [#3211](https://github.com/rome/tools/issues/3211), [#3377](https://github.com/rome/tools/issues/3377)
+- Better formatting of object destructing
+- Fixed formatting for test calls
+- Fixed formatting for trailing comments in arrow functions
+
+### Linter
+
+- **BREAKING CHANGE**: some rules have been moved to groups that fit them better, this was part of our ongoing
+  refactor of groups. Please check [#3471](https://github.com/rome/tools/pull/3471) for more details
+- Fixed issues in the `noUnreable` rule
+- Fixed false positive cases for `noNegationElse` [#3141](https://github.com/rome/tools/issues/3141)
+- Fixed false positive cases for `noUnusedVariables` [#3169](https://github.com/rome/tools/issues/3169)
+- Fixed an issue in our CFG [#3390](https://github.com/rome/tools/issues/3390)
+
+#### New rules
+
+- [`noAutoFocus`](https://rome.tools/docs/lint/rules/noAutoFocus/)
+- [`useAltText`](https://rome.tools/docs/lint/rules/useAltText/)
+- [`noBlankTarget`](https://rome.tools/docs/lint/rules/noBlankTarget/)
+- [`useAnchorContent`](https://rome.tools/docs/lint/rules/useAnchorContent/)
+- [`useKeyWithClickEvents`](https://rome.tools/docs/lint/rules/useKeyWithClickEvents/)
+- [`useKeyWithMouseEvents`](https://rome.tools/docs/lint/rules/useKeyWithMouseEvents/)
+- [`noPositiveTabIndex`](https://rome.tools/docs/lint/rules/noPositiveTabIndex/)
+- [`useValidAnchor`](https://rome.tools/docs/lint/rules/useValidAnchor/)
+- [`noRestrictedGlobals`](https://rome.tools/docs/lint/rules/noRestrictedGlobals/)
+- [`useSimplifiedBooleanExpression`](https://rome.tools/docs/lint/rules/useSimplifiedBooleanExpression/)
+- [`noInvalidConstructorSuper`](https://rome.tools/docs/lint/rules/noInvalidConstructorSuper/)
+- [`useValidForDirection`](https://rome.tools/docs/lint/rules/useValidForDirection/)
+- [`noConstAssign`](https://rome.tools/docs/lint/rules/noConstAssign/)
+- [`noExplicitAny`](https://rome.tools/docs/lint/rules/noExplicitAny/)
+- [`noBannedTypes`](https://rome.tools/docs/lint/rules/noBannedTypes/)
+- [`useMapFlat`](https://rome.tools/docs/lint/rules/useMapFlat/)
+- [`useExhaustiveDependencies`](https://rome.tools/docs/lint/rules/useExhaustiveDependencies/)
+
+### Parser
+
+- Improved messaging of diagnostics, using our new infrastructure
+- Fixed an issue where diagnostics couldn't be printed in WASM [#3349](https://github.com/rome/tools/pull/3349)
+- Allow arguments in d.ts files [#3388](https://github.com/rome/tools/issues/3388)
+- Fixed some edge case [#3486](https://github.com/rome/tools/issues/3486)
+- Fixed a case where `export {"a"} from "b";` wasn't correctly parsed
+
+### VSCode
+
+- now the "rename" feature is only opt-in, because it's still work in progress feature
+- 
+
+
+
 ## 0.10.1
 
 ### CLI

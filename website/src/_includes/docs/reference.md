@@ -10,6 +10,20 @@ Helps you to set up Rome for a new project by guiding you through the creation o
 
 The command fails if the project already has a `rome.json` configuration file.
 
+##### `rome version`
+
+Prints the version of the CLI and whether there's a server (daemon) connected
+
+##### `rome rage`
+
+Prints information for debugging purpose
+
+##### `rome lsp-proxy`
+
+It starts a server for the LSP protocol, which communicates over `stdin` and `stdout`.
+
+This command is useful to interact with the Rome server when developing editors/IDEs. 
+
 ##### `rome format`
 
 Runs the formatter on a set of files.
@@ -161,3 +175,13 @@ The type of quote used when representing string literals. It can be `single` or 
 When properties inside objects should be quoted. It can be `asNeeded` or `preserve`.
 
 > Default: `asNeeded`
+ 
+
+##### `javascript.formatter.trailingComma`
+
+Print trailing commas wherever possible in multi-line comma-separated syntactic structures. Possible values:
+- `all`, the trailing comma is always added
+- `es5`, the trailing comma is added only in places where it's supported by older version of JavaScript
+- `none`, trailing commas are never added
+
+> Default: `all`
