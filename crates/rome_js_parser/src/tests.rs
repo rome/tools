@@ -14,7 +14,9 @@ use std::path::{Path, PathBuf};
 #[test]
 fn parser_smoke_test() {
     let src = r#"
-const { value, f = (value) => value } = item
+let
+// comment
+a;
 "#;
 
     let module = parse(src, FileId::zero(), SourceType::tsx());
