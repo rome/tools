@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 99
 expression: noUnnecessaryContinue.js
 ---
 # Input
@@ -95,8 +96,12 @@ noUnnecessaryContinue.js:3:2 lint/correctness/noUnnecessaryContinue  FIXABLE  �
   
   i Suggested fix: Delete the unnecessary continue statement
   
-    3 │ → continue·loop;
-      │ ----------------
+     1  1 │   // invalid
+     2  2 │   loop: for (let i = 0; i < 5; i++) {
+     3    │ - → continue·loop;
+     4  3 │   }
+     5  4 │   while (i--) {
+  
 
 ```
 
@@ -114,8 +119,12 @@ noUnnecessaryContinue.js:6:2 lint/correctness/noUnnecessaryContinue  FIXABLE  �
   
   i Suggested fix: Delete the unnecessary continue statement
   
-    6 │ → continue;
-      │ -----------
+     4  4 │   }
+     5  5 │   while (i--) {
+     6    │ - → continue;
+     7  6 │   }
+     8  7 │   while (1) {
+  
 
 ```
 
@@ -133,8 +142,12 @@ noUnnecessaryContinue.js:9:2 lint/correctness/noUnnecessaryContinue  FIXABLE  �
   
   i Suggested fix: Delete the unnecessary continue statement
   
-    9 │ → continue;
-      │ -----------
+     7  7 │   }
+     8  8 │   while (1) {
+     9    │ - → continue;
+    10  9 │   }
+    11 10 │   for (let i = 0; i < 10; i++) {
+  
 
 ```
 
@@ -177,8 +190,12 @@ noUnnecessaryContinue.js:22:2 lint/correctness/noUnnecessaryContinue  FIXABLE  �
   
   i Suggested fix: Delete the unnecessary continue statement
   
-    22 │ → continue;
-       │ -----------
+    20 20 │   }
+    21 21 │   for (let i = 0; i < 9; i++) {
+    22    │ - → continue;
+    23 22 │   }
+    24 23 │   
+  
 
 ```
 
@@ -214,8 +231,12 @@ noUnnecessaryContinue.js:28:2 lint/correctness/noUnnecessaryContinue  FIXABLE  �
   
   i Suggested fix: Delete the unnecessary continue statement
   
-    28 │ → continue·test2;
-       │ -----------------
+    26 26 │   
+    27 27 │   test2: do {
+    28    │ - → continue·test2;
+    29 28 │   } while (true);
+    30 29 │   // valid
+  
 
 ```
 
