@@ -27,7 +27,7 @@ privateOrPublicConstructorParameters.ts:2:17 lint/nursery/noUnusedVariables  FIX
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
-  i Suggested fix: Prepend a with an underscore
+  i Suggested fix: If this is intentional, prepend a with an underscore.
   
     1 1 │   class A {
     2   │ - ····constructor(a,·private·b,·public·c)·{

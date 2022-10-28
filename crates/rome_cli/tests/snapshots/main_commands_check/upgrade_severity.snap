@@ -74,7 +74,7 @@ file.js:1:10 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━�
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
-  i Suggested fix: Prepend f with an underscore
+  i Suggested fix: If this is intentional, prepend f with an underscore.
   
     1   │ - function·f()·{
       1 │ + function·_f()·{

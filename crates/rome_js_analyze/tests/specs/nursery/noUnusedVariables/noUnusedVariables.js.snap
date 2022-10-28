@@ -91,7 +91,7 @@ noUnusedVariables.js:3:7 lint/nursery/noUnusedVariables  FIXABLE  ━━━━�
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
-  i Suggested fix: Prepend a with an underscore
+  i Suggested fix: If this is intentional, prepend a with an underscore.
   
      1  1 │   import React from 'react';
      2  2 │   
@@ -116,7 +116,7 @@ noUnusedVariables.js:4:7 lint/nursery/noUnusedVariables  FIXABLE  ━━━━�
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
-  i Suggested fix: Prepend b with an underscore
+  i Suggested fix: If this is intentional, prepend b with an underscore.
   
      2  2 │   
      3  3 │   const a = 1;
@@ -142,7 +142,7 @@ noUnusedVariables.js:8:10 lint/nursery/noUnusedVariables  FIXABLE  ━━━━�
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
-  i Suggested fix: Prepend f1 with an underscore
+  i Suggested fix: If this is intentional, prepend f1 with an underscore.
   
      6  6 │   console.log(c);
      7  7 │   
@@ -168,7 +168,7 @@ noUnusedVariables.js:10:10 lint/nursery/noUnusedVariables  FIXABLE  ━━━━
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
-  i Suggested fix: Prepend f2 with an underscore
+  i Suggested fix: If this is intentional, prepend f2 with an underscore.
   
      8  8 │   function f1() {}
      9  9 │   
@@ -194,7 +194,7 @@ noUnusedVariables.js:14:10 lint/nursery/noUnusedVariables  FIXABLE  ━━━━
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
-  i Suggested fix: Prepend f3 with an underscore
+  i Suggested fix: If this is intentional, prepend f3 with an underscore.
   
     12 12 │   }
     13 13 │   
@@ -220,7 +220,7 @@ noUnusedVariables.js:21:14 lint/nursery/noUnusedVariables  FIXABLE  ━━━━
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
-  i Suggested fix: Prepend a with an underscore
+  i Suggested fix: If this is intentional, prepend a with an underscore.
   
     19 19 │   }
     20 20 │   
@@ -246,7 +246,7 @@ noUnusedVariables.js:24:17 lint/nursery/noUnusedVariables  FIXABLE  ━━━━
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
-  i Suggested fix: Prepend b with an underscore
+  i Suggested fix: If this is intentional, prepend b with an underscore.
   
     22 22 │   f41();
     23 23 │   
@@ -272,7 +272,7 @@ noUnusedVariables.js:29:17 lint/nursery/noUnusedVariables  FIXABLE  ━━━━
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
-  i Suggested fix: Prepend b with an underscore
+  i Suggested fix: If this is intentional, prepend b with an underscore.
   
     27 27 │   f42();
     28 28 │   
@@ -298,7 +298,7 @@ noUnusedVariables.js:34:7 lint/nursery/noUnusedVariables  FIXABLE  ━━━━�
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
-  i Suggested fix: Prepend f5 with an underscore
+  i Suggested fix: If this is intentional, prepend f5 with an underscore.
   
     32 32 │   f43();
     33 33 │   
@@ -324,7 +324,7 @@ noUnusedVariables.js:36:7 lint/nursery/noUnusedVariables  FIXABLE  ━━━━�
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
-  i Suggested fix: Prepend f6 with an underscore
+  i Suggested fix: If this is intentional, prepend f6 with an underscore.
   
     34 34 │   const f5 = () => {};
     35 35 │   
@@ -349,7 +349,7 @@ noUnusedVariables.js:41:10 lint/nursery/noUnusedVariables  FIXABLE  ━━━━
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
-  i Suggested fix: Prepend e with an underscore
+  i Suggested fix: If this is intentional, prepend e with an underscore.
   
     39 39 │   
     40 40 │   try {
@@ -375,7 +375,7 @@ noUnusedVariables.js:58:18 lint/nursery/noUnusedVariables  FIXABLE  ━━━━
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
-  i Suggested fix: Prepend hey with an underscore
+  i Suggested fix: If this is intentional, prepend hey with an underscore.
   
     56 56 │   })
     57 57 │   
@@ -400,7 +400,7 @@ noUnusedVariables.js:63:9 lint/nursery/noUnusedVariables  FIXABLE  ━━━━�
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
-  i Suggested fix: Prepend a with an underscore
+  i Suggested fix: If this is intentional, prepend a with an underscore.
   
     61 61 │   
     62 62 │   const a = {

@@ -296,7 +296,7 @@ impl Rule for NoUnusedVariables {
             mutation,
             category: ActionCategory::QuickFix,
             applicability: Applicability::MaybeIncorrect,
-            message: markup! { "Prepend "<Emphasis>{name_trimmed}</Emphasis>" with an underscore" }
+            message: markup! { "If this is intentional, prepend "<Emphasis>{name_trimmed}</Emphasis>" with an underscore." }
                 .to_owned(),
         })
     }

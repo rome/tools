@@ -73,7 +73,7 @@ noUnusedVariables.ts:4:14 lint/nursery/noUnusedVariables  FIXABLE  ━━━━�
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
-  i Suggested fix: Prepend a with an underscore
+  i Suggested fix: If this is intentional, prepend a with an underscore.
   
      2  2 │   
      3  3 │   class D {
@@ -99,7 +99,7 @@ noUnusedVariables.ts:5:4 lint/nursery/noUnusedVariables  FIXABLE  ━━━━�
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
-  i Suggested fix: Prepend a with an underscore
+  i Suggested fix: If this is intentional, prepend a with an underscore.
   
      3  3 │   class D {
      4  4 │   	constructor(a: number) {}
@@ -125,7 +125,7 @@ noUnusedVariables.ts:6:8 lint/nursery/noUnusedVariables  FIXABLE  ━━━━�
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
-  i Suggested fix: Prepend a with an underscore
+  i Suggested fix: If this is intentional, prepend a with an underscore.
   
      4  4 │   	constructor(a: number) {}
      5  5 │   	f(a: number) {}
@@ -151,7 +151,7 @@ noUnusedVariables.ts:12:10 lint/nursery/noUnusedVariables  FIXABLE  ━━━━
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
-  i Suggested fix: Prepend unused_overloaded with an underscore
+  i Suggested fix: If this is intentional, prepend unused_overloaded with an underscore.
   
     10 10 │   function unused_overloaded(): number;
     11 11 │   function unused_overloaded(s: string): string;
