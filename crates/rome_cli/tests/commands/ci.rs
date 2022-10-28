@@ -246,7 +246,7 @@ fn file_too_large() {
 }
 
 #[test]
-fn file_too_large_custom_limit() {
+fn file_too_large_config_limit() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
 
@@ -265,7 +265,70 @@ fn file_too_large_custom_limit() {
 
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
-        "file_too_large_custom_limit",
+        "file_too_large_config_limit",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn file_too_large_cli_limit() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("ci.js");
+    fs.insert(file_path.into(), "statement1();\nstatement2();");
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("ci"),
+            OsString::from("--files-max-size"),
+            OsString::from("16"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "file_too_large_cli_limit",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn files_max_size_parse_error() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("ci.js");
+    fs.insert(file_path.into(), "statement1();\nstatement2();");
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("ci"),
+            OsString::from("--files-max-size"),
+            OsString::from("-1"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    match result {
+        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--files-max-size"),
+        _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "files_max_size_parse_error",
         fs,
         console,
         result,

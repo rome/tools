@@ -13,6 +13,7 @@ use rome_fs::OsFileSystem;
 use rome_service::{App, DynRef, Workspace, WorkspaceRef};
 
 mod commands;
+mod configuration;
 mod execute;
 mod metrics;
 mod panic;
