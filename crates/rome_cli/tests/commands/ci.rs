@@ -1,4 +1,4 @@
-use crate::configs::{CONFIG_DISABLED_FORMATTER, CONFIG_LINTER_DISABLED};
+use crate::configs::{CONFIG_DISABLED_FORMATTER, CONFIG_FILE_SIZE_LIMIT, CONFIG_LINTER_DISABLED};
 use crate::snap_test::SnapshotPayload;
 use crate::{
     assert_cli_snapshot, run_cli, CUSTOM_FORMAT_BEFORE, FORMATTED, LINT_ERROR, PARSE_ERROR,
@@ -10,7 +10,7 @@ use rome_console::BufferConsole;
 use rome_fs::{FileSystemExt, MemoryFileSystem};
 use rome_service::DynRef;
 use std::ffi::OsString;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 const INCORRECT_CODE: &str = "let a = !b || !c";
 
@@ -239,6 +239,33 @@ fn file_too_large() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "file_too_large",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn file_too_large_custom_limit() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    fs.insert(PathBuf::from("rome.json"), CONFIG_FILE_SIZE_LIMIT);
+
+    let file_path = Path::new("ci.js");
+    fs.insert(file_path.into(), "statement1();\nstatement2();");
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "file_too_large_custom_limit",
         fs,
         console,
         result,

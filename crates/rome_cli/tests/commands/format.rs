@@ -1,6 +1,7 @@
 use crate::configs::{
-    CONFIG_DISABLED_FORMATTER, CONFIG_FORMAT, CONFIG_FORMATTER_IGNORED_DIRECTORIES,
-    CONFIG_FORMATTER_IGNORED_FILES, CONFIG_ISSUE_3175_1, CONFIG_ISSUE_3175_2,
+    CONFIG_DISABLED_FORMATTER, CONFIG_FILE_SIZE_LIMIT, CONFIG_FORMAT,
+    CONFIG_FORMATTER_IGNORED_DIRECTORIES, CONFIG_FORMATTER_IGNORED_FILES, CONFIG_ISSUE_3175_1,
+    CONFIG_ISSUE_3175_2,
 };
 use crate::snap_test::{markup_to_string, SnapshotPayload};
 use crate::{
@@ -12,7 +13,7 @@ use rome_console::{markup, BufferConsole};
 use rome_fs::{FileSystemExt, MemoryFileSystem};
 use rome_service::DynRef;
 use std::ffi::OsString;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 // six spaces
 const CUSTOM_FORMAT_AFTER: &str = r#"function f() {
@@ -1057,6 +1058,33 @@ fn file_too_large() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "file_too_large",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn file_too_large_custom_limit() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    fs.insert(PathBuf::from("rome.json"), CONFIG_FILE_SIZE_LIMIT);
+
+    let file_path = Path::new("format.js");
+    fs.insert(file_path.into(), "statement1();\nstatement2();");
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![OsString::from("format"), file_path.as_os_str().into()]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "file_too_large_custom_limit",
         fs,
         console,
         result,

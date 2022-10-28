@@ -12,6 +12,7 @@ use serde::{Deserialize, Serialize};
 use std::fmt::{Debug, Display, Formatter};
 use std::io::ErrorKind;
 use std::marker::PhantomData;
+use std::num::NonZeroU64;
 use std::path::PathBuf;
 use tracing::{error, info};
 
@@ -30,6 +31,10 @@ use rome_js_analyze::metadata;
 #[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
 #[serde(deny_unknown_fields)]
 pub struct Configuration {
+    /// The configuration of the filesystem
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub files: Option<FilesConfiguration>,
+
     /// The configuration of the formatter
     #[serde(skip_serializing_if = "Option::is_none")]
     pub formatter: Option<FormatterConfiguration>,
@@ -46,6 +51,7 @@ pub struct Configuration {
 impl Default for Configuration {
     fn default() -> Self {
         Self {
+            files: None,
             linter: Some(LinterConfiguration {
                 enabled: true,
                 ..LinterConfiguration::default()
@@ -64,6 +70,16 @@ impl Configuration {
     pub fn is_linter_disabled(&self) -> bool {
         self.linter.as_ref().map(|f| !f.enabled).unwrap_or(false)
     }
+}
+
+/// The configuration of the filesystem
+#[derive(Default, Debug, Deserialize, Serialize)]
+#[cfg_attr(feature = "schemars", derive(schemars::JsonSchema))]
+#[serde(rename_all = "camelCase", default, deny_unknown_fields)]
+pub struct FilesConfiguration {
+    /// The maximum allowed size for source code files in bytes. Files above
+    /// this limit will be ignore for performance reason. Defaults to 1 MiB
+    pub max_size: Option<NonZeroU64>,
 }
 
 /// Series of errors that can be thrown while computing the configuration
