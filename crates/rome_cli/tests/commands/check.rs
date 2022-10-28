@@ -512,7 +512,7 @@ fn downgrade_severity() {
             .filter(|m| m.level == LogLevel::Error)
             .filter(|m| {
                 let content = format!("{:#?}", m.content);
-                content.contains("security/noDebugger")
+                content.contains("correctness/noDebugger")
             })
             .count(),
         1

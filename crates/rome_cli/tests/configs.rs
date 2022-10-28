@@ -100,7 +100,7 @@ pub const CONFIG_LINTER_SUPPRESSED_RULE: &str = r#"{
   "linter": {
     "rules": {
         "recommended": true,
-        "security": {
+        "correctness": {
             "noDebugger": "off"
         }
     }
@@ -122,8 +122,7 @@ pub const CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC: &str = r#"{
   "linter": {
     "rules": {
         "recommended": true,
-        "security": {
-            "recommended": true,      
+        "correctness": {
             "noDebugger": "warn"
         }
     }

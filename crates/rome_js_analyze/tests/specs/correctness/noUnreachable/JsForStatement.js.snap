@@ -1,6 +1,5 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
-assertion_line: 99
 expression: JsForStatement.js
 ---
 # Input
@@ -43,7 +42,7 @@ JsForStatement.js:2:29 lint/correctness/noUnreachable ━━━━━━━━�
 ```
 
 ```
-JsForStatement.js:9:5 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+JsForStatement.js:9:5 lint/correctness/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This code is unreachable
   
