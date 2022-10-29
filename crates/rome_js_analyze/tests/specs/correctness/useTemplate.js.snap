@@ -24,6 +24,13 @@ foo() + " bar";
 
 console.log("${foo." + bar + ".baz}");
 console.log("foo: ${bar." + baz + ".bat}");
+console.log("foo: `bar." + baz + ".bat}");
+console.log("${foo}: `bar." + baz + ".bat}");
+
+console.log("foo: \${bar." + baz + ".bat}");
+console.log("foo: \`bar." + baz + ".bat}");
+console.log("foo: \\${bar." + baz + ".bat}");
+console.log("foo: \\\${bar." + baz + ".bat}");
 
 ```
 
@@ -326,7 +333,7 @@ useTemplate.js:19:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━�
   > 19 │ console.log("${foo." + bar + ".baz}");
        │             ^^^^^^^^^^^^^^^^^^^^^^^^
     20 │ console.log("foo: ${bar." + baz + ".bat}");
-    21 │ 
+    21 │ console.log("foo: `bar." + baz + ".bat}");
   
   i Suggested fix: Use a TemplateLiteral.
   
@@ -335,7 +342,7 @@ useTemplate.js:19:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━�
     19    │ - console.log("${foo."·+·bar·+·".baz}");
        19 │ + console.log(`\${foo.${bar}.baz}`);
     20 20 │   console.log("foo: ${bar." + baz + ".bat}");
-    21 21 │   
+    21 21 │   console.log("foo: `bar." + baz + ".bat}");
   
 
 ```
@@ -348,7 +355,8 @@ useTemplate.js:20:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━�
     19 │ console.log("${foo." + bar + ".baz}");
   > 20 │ console.log("foo: ${bar." + baz + ".bat}");
        │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    21 │ 
+    21 │ console.log("foo: `bar." + baz + ".bat}");
+    22 │ console.log("${foo}: `bar." + baz + ".bat}");
   
   i Suggested fix: Use a TemplateLiteral.
   
@@ -356,7 +364,149 @@ useTemplate.js:20:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━�
     19 19 │   console.log("${foo." + bar + ".baz}");
     20    │ - console.log("foo:·${bar."·+·baz·+·".bat}");
        20 │ + console.log(`foo:·\${bar.${baz}.bat}`);
-    21 21 │   
+    21 21 │   console.log("foo: `bar." + baz + ".bat}");
+    22 22 │   console.log("${foo}: `bar." + baz + ".bat}");
+  
+
+```
+
+```
+useTemplate.js:21:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Template literals are preferred over string concatenation.
+  
+    19 │ console.log("${foo." + bar + ".baz}");
+    20 │ console.log("foo: ${bar." + baz + ".bat}");
+  > 21 │ console.log("foo: `bar." + baz + ".bat}");
+       │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    22 │ console.log("${foo}: `bar." + baz + ".bat}");
+    23 │ 
+  
+  i Suggested fix: Use a TemplateLiteral.
+  
+    19 19 │   console.log("${foo." + bar + ".baz}");
+    20 20 │   console.log("foo: ${bar." + baz + ".bat}");
+    21    │ - console.log("foo:·`bar."·+·baz·+·".bat}");
+       21 │ + console.log(`foo:·\`bar.${baz}.bat}`);
+    22 22 │   console.log("${foo}: `bar." + baz + ".bat}");
+    23 23 │   
+  
+
+```
+
+```
+useTemplate.js:22:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Template literals are preferred over string concatenation.
+  
+    20 │ console.log("foo: ${bar." + baz + ".bat}");
+    21 │ console.log("foo: `bar." + baz + ".bat}");
+  > 22 │ console.log("${foo}: `bar." + baz + ".bat}");
+       │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    23 │ 
+    24 │ console.log("foo: \${bar." + baz + ".bat}");
+  
+  i Suggested fix: Use a TemplateLiteral.
+  
+    20 20 │   console.log("foo: ${bar." + baz + ".bat}");
+    21 21 │   console.log("foo: `bar." + baz + ".bat}");
+    22    │ - console.log("${foo}:·`bar."·+·baz·+·".bat}");
+       22 │ + console.log(`\${foo}:·\`bar.${baz}.bat}`);
+    23 23 │   
+    24 24 │   console.log("foo: \${bar." + baz + ".bat}");
+  
+
+```
+
+```
+useTemplate.js:24:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Template literals are preferred over string concatenation.
+  
+    22 │ console.log("${foo}: `bar." + baz + ".bat}");
+    23 │ 
+  > 24 │ console.log("foo: \${bar." + baz + ".bat}");
+       │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    25 │ console.log("foo: \`bar." + baz + ".bat}");
+    26 │ console.log("foo: \\${bar." + baz + ".bat}");
+  
+  i Suggested fix: Use a TemplateLiteral.
+  
+    22 22 │   console.log("${foo}: `bar." + baz + ".bat}");
+    23 23 │   
+    24    │ - console.log("foo:·\${bar."·+·baz·+·".bat}");
+       24 │ + console.log(`foo:·\${bar.${baz}.bat}`);
+    25 25 │   console.log("foo: \`bar." + baz + ".bat}");
+    26 26 │   console.log("foo: \\${bar." + baz + ".bat}");
+  
+
+```
+
+```
+useTemplate.js:25:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Template literals are preferred over string concatenation.
+  
+    24 │ console.log("foo: \${bar." + baz + ".bat}");
+  > 25 │ console.log("foo: \`bar." + baz + ".bat}");
+       │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    26 │ console.log("foo: \\${bar." + baz + ".bat}");
+    27 │ console.log("foo: \\\${bar." + baz + ".bat}");
+  
+  i Suggested fix: Use a TemplateLiteral.
+  
+    23 23 │   
+    24 24 │   console.log("foo: \${bar." + baz + ".bat}");
+    25    │ - console.log("foo:·\`bar."·+·baz·+·".bat}");
+       25 │ + console.log(`foo:·\`bar.${baz}.bat}`);
+    26 26 │   console.log("foo: \\${bar." + baz + ".bat}");
+    27 27 │   console.log("foo: \\\${bar." + baz + ".bat}");
+  
+
+```
+
+```
+useTemplate.js:26:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Template literals are preferred over string concatenation.
+  
+    24 │ console.log("foo: \${bar." + baz + ".bat}");
+    25 │ console.log("foo: \`bar." + baz + ".bat}");
+  > 26 │ console.log("foo: \\${bar." + baz + ".bat}");
+       │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    27 │ console.log("foo: \\\${bar." + baz + ".bat}");
+    28 │ 
+  
+  i Suggested fix: Use a TemplateLiteral.
+  
+    24 24 │   console.log("foo: \${bar." + baz + ".bat}");
+    25 25 │   console.log("foo: \`bar." + baz + ".bat}");
+    26    │ - console.log("foo:·\\${bar."·+·baz·+·".bat}");
+       26 │ + console.log(`foo:·\\\${bar.${baz}.bat}`);
+    27 27 │   console.log("foo: \\\${bar." + baz + ".bat}");
+    28 28 │   
+  
+
+```
+
+```
+useTemplate.js:27:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Template literals are preferred over string concatenation.
+  
+    25 │ console.log("foo: \`bar." + baz + ".bat}");
+    26 │ console.log("foo: \\${bar." + baz + ".bat}");
+  > 27 │ console.log("foo: \\\${bar." + baz + ".bat}");
+       │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    28 │ 
+  
+  i Suggested fix: Use a TemplateLiteral.
+  
+    25 25 │   console.log("foo: \`bar." + baz + ".bat}");
+    26 26 │   console.log("foo: \\${bar." + baz + ".bat}");
+    27    │ - console.log("foo:·\\\${bar."·+·baz·+·".bat}");
+       27 │ + console.log(`foo:·\\\${bar.${baz}.bat}`);
+    28 28 │   
   
 
 ```
