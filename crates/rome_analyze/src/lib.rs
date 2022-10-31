@@ -9,7 +9,7 @@ mod categories;
 pub mod context;
 mod diagnostics;
 mod matcher;
-mod options;
+pub mod options;
 mod query;
 mod registry;
 mod rule;
@@ -26,6 +26,7 @@ pub use crate::categories::{
 };
 pub use crate::diagnostics::AnalyzerDiagnostic;
 use crate::diagnostics::SuppressionDiagnostic;
+pub use rule::DeserializableRuleOptions;
 pub use crate::matcher::{InspectMatcher, MatchQueryParams, QueryMatcher, RuleKey, SignalEntry};
 pub use crate::options::{AnalyzerConfiguration, AnalyzerOptions, AnalyzerRules};
 pub use crate::query::{Ast, QueryKey, QueryMatch, Queryable};

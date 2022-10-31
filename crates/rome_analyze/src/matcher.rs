@@ -56,7 +56,7 @@ pub struct RuleKey {
 }
 
 impl RuleKey {
-    pub(crate) fn new(group: &'static str, rule: &'static str) -> Self {
+    pub fn new(group: &'static str, rule: &'static str) -> Self {
         Self { group, rule }
     }
 

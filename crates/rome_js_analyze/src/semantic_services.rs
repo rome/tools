@@ -24,7 +24,9 @@ impl FromServices for SemanticServices {
         let model = services.get_service().ok_or_else(|| {
             MissingServicesDiagnostic::new(rule_key.rule_name(), &["SemanticModel"])
         })?;
-        Ok(Self { model })
+        Ok(Self { 
+            model,
+        })
     }
 }
 

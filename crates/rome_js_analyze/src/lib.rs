@@ -1,8 +1,10 @@
 use control_flow::make_visitor;
+use rome_analyze::options::OptionsDeserializationDiagnostic;
 use rome_analyze::{
     AnalysisFilter, Analyzer, AnalyzerContext, AnalyzerOptions, AnalyzerSignal, ControlFlow,
     InspectMatcher, LanguageRoot, MatchQueryParams, MetadataRegistry, Phases, RuleAction,
     RuleRegistry, ServiceBag, SuppressionCommentEmitterPayload, SuppressionKind, SyntaxVisitor,
+    DeserializableRuleOptions
 };
 use rome_aria::{AriaProperties, AriaRoles};
 use rome_diagnostics::{category, FileId};
@@ -13,8 +15,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, TokenAtOffset, TriviaPieceKind};
 use serde::{Deserialize, Serialize};
-use std::sync::Arc;
-use std::{borrow::Cow, error::Error};
+use std::{borrow::Cow, error::Error, sync::Arc};
 
 mod analyzers;
 mod aria_analyzers;
@@ -47,6 +48,44 @@ pub fn metadata() -> &'static MetadataRegistry {
     }
 
     &METADATA
+}
+
+pub struct RulesConfigurator<'a> {
+    options: &'a AnalyzerOptions,
+    services: &'a mut ServiceBag,
+    errors: Vec<OptionsDeserializationDiagnostic>
+}
+
+impl<'a, L: rome_rowan::Language + Default> rome_analyze::RegistryVisitor<L> 
+    for RulesConfigurator<'a>
+{
+    fn record_rule<R>(&mut self)
+    where
+        R: rome_analyze::Rule + 'static,
+        R::Query: rome_analyze::Queryable<Language = L>,
+        <R::Query as rome_analyze::Queryable>::Output: Clone 
+    {
+        let rule_key = rome_analyze::RuleKey::rule::<R>();
+        let options = if let Some(options) = self.options.configuration.rules.get_rule(&rule_key) {
+            let value = options.value();
+            match <R::Options as DeserializableRuleOptions>::try_from(value.clone()) {
+                Ok(result) => result,
+                Err(error) => {
+                    let err = OptionsDeserializationDiagnostic::new(
+                        rule_key.rule_name(),
+                        value.to_string(),
+                        error,
+                    );
+                    self.errors.push(err);
+                    <R::Options as Default>::default()
+                },
+            }
+        } else {
+            <R::Options as Default>::default()
+        };
+
+        self.services.insert_service_with_id(&rule_key, Arc::new(options));
+    }
 }
 
 /// Run the analyzer on the provided `root`: this process will use the given `filter`
@@ -103,6 +142,14 @@ where
 
     let mut registry = RuleRegistry::builder(&filter);
     visit_registry(&mut registry);
+
+    let mut services = ServiceBag::default();
+    let mut configurator = RulesConfigurator {
+        options,
+        services: &mut services,
+        errors: vec![]
+    };
+    visit_registry(&mut configurator);
 
     let mut analyzer = Analyzer::new(
         metadata(),

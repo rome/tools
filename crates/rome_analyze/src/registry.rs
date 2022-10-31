@@ -1,3 +1,8 @@
+use std::{borrow, collections::BTreeSet, sync::Arc};
+
+use rome_rowan::{AstNode, Language, RawSyntaxKind, SyntaxKind, SyntaxNode};
+use rome_diagnostics::Error;
+use rustc_hash::FxHashSet;
 use crate::{
     context::RuleContext,
     matcher::{GroupKey, MatchQueryParams},
@@ -6,10 +11,6 @@ use crate::{
     AnalysisFilter, GroupCategory, QueryMatcher, Rule, RuleGroup, RuleKey, RuleMetadata,
     SignalEntry,
 };
-use rome_diagnostics::Error;
-use rome_rowan::{AstNode, Language, RawSyntaxKind, SyntaxKind, SyntaxNode};
-use rustc_hash::FxHashSet;
-use std::{borrow, collections::BTreeSet};
 
 /// Defines all the phases that the [RuleRegistry] supports.
 #[repr(usize)]
@@ -339,12 +340,17 @@ impl<L: Language + Default> RegistryRule<L> {
                 }
             }
 
+            let rule_key = RuleKey::rule::<R>();
+            let options: Arc<R::Options> = params.services
+                .get_service_by_id(&rule_key)
+                .expect("Expected config not found");
+
             // SAFETY: The rule should never get executed in the first place
             // if the query doesn't match
             let query_result =
                 <R::Query as Queryable>::unwrap_match(params.services, &params.query);
             let ctx =
-                match RuleContext::new(&query_result, params.root, params.services, params.options)
+                match RuleContext::new(&query_result, params.root, params.services, options.clone())
                 {
                     Ok(ctx) => ctx,
                     Err(error) => return Err(error),
@@ -362,7 +368,7 @@ impl<L: Language + Default> RegistryRule<L> {
                     query_result.clone(),
                     result,
                     params.services,
-                    params.options.clone(),
+                    options.clone(),
                     params.apply_suppression_comment,
                 ));
 

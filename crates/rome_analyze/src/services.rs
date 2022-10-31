@@ -2,7 +2,7 @@ use crate::{RuleKey, TextRange};
 use rome_diagnostics::{Diagnostic, LineIndexBuf, Resource, Result, SourceCode};
 use std::{
     any::{Any, TypeId},
-    collections::HashMap,
+    collections::{HashMap, hash_map::DefaultHasher}, hash::{Hash, Hasher},
 };
 
 #[derive(Debug, Diagnostic)]
@@ -43,17 +43,34 @@ pub trait FromServices: Sized {
 
 #[derive(Default)]
 pub struct ServiceBag {
-    services: HashMap<TypeId, Box<dyn Any>>,
+    services: HashMap<u64, Box<dyn Any>>,
+}
+
+fn get_id_of(id: &impl Hash) -> u64 {
+    let mut hasher = DefaultHasher::new();
+    id.hash(&mut hasher);
+    hasher.finish()
 }
 
 impl ServiceBag {
     pub fn insert_service<T: 'static + Clone>(&mut self, service: T) {
         let id = TypeId::of::<T>();
-        self.services.insert(id, Box::new(service));
+        self.services.insert(get_id_of(&id), Box::new(service));
+    }
+
+    pub fn insert_service_with_id<H: Hash, T: 'static + Clone>(&mut self, id: &H, service: T) {
+        self.services.insert(get_id_of(&id), Box::new(service));
     }
 
     pub fn get_service<T: 'static + Clone>(&self) -> Option<T> {
         let id = TypeId::of::<T>();
+        let id = get_id_of(&id);
+        let svc = self.services.get(&id)?;
+        svc.downcast_ref().cloned()
+    }
+
+    pub fn get_service_by_id<H: Hash, T: 'static + Clone>(&self, id: &H) -> Option<T> {
+        let id = get_id_of(&id);
         let svc = self.services.get(&id)?;
         svc.downcast_ref().cloned()
     }

@@ -232,6 +232,16 @@ impl_group_language!(
     T19, T20, T21, T22, T23, T24, T25, T26, T27, T28, T29
 );
 
+pub trait DeserializableRuleOptions: Default + DeserializeOwned + Sized {
+    fn try_from(value: serde_json::Value) -> Result<Self, serde_json::Error> {
+        serde_json::from_value(value)
+    }
+}
+
+impl DeserializableRuleOptions for () {
+    
+}
+
 /// Trait implemented by all analysis rules: declares interest to a certain AstNode type,
 /// and a callback function to be executed on all nodes matching the query to possibly
 /// raise an analysis event
@@ -247,7 +257,7 @@ pub trait Rule: RuleMeta + Sized {
     /// analyzer
     type Signals: IntoIterator<Item = Self::State>;
     /// The options that belong to a rule
-    type Options: DeserializeOwned;
+    type Options: DeserializableRuleOptions;
 
     fn phase() -> Phases {
         <<<Self as Rule>::Query as Queryable>::Services as Phase>::phase()
@@ -336,7 +346,10 @@ pub trait Rule: RuleMeta + Sized {
         ctx: &RuleContext<Self>,
         text_range: &TextRange,
         apply_suppression_comment: SuppressionCommentEmitter<RuleLanguage<Self>>,
-    ) -> Option<SuppressAction<RuleLanguage<Self>>> {
+    ) -> Option<SuppressAction<RuleLanguage<Self>>> 
+    where 
+        Self: 'static
+    {
         // if the rule belongs to `Lint`, we auto generate an action to suppress the rule
         if <Self::Group as RuleGroup>::Category::CATEGORY == RuleCategory::Lint {
             let rule_category = format!(
@@ -345,8 +358,9 @@ pub trait Rule: RuleMeta + Sized {
                 Self::METADATA.name
             );
             let suppression_text = format!("rome-ignore {}", rule_category);
-            let mut mutation = ctx.root().begin();
-            let token = ctx.root().syntax().token_at_offset(text_range.start());
+            let root = ctx.root();
+            let token = root.syntax().token_at_offset(text_range.start());
+            let mut mutation = root.begin();
             apply_suppression_comment(SuppressionCommentEmitterPayload {
                 suppression_text: suppression_text.as_str(),
                 mutation: &mut mutation,
