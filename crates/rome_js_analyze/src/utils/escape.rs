@@ -24,10 +24,9 @@ pub fn escape<'a>(
                     for _ in candidate.chars().skip(1) {
                         iter.next();
                     }
-                    is_escaped = false;
                     continue 'unescaped;
                 } else {
-                    is_escaped = false;
+                    is_escaped = !is_escaped;
                 }
             }
         }
