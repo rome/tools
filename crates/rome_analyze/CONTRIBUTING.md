@@ -8,7 +8,7 @@ static check.
 
 First of all, you need to identify the crate where you want to implement the rule. If the rule
 is going to be implemented for the JavaScript language (and its super languages), then the rule
-will be implemented inside the `rome_js_analyzer` crate.
+will be implemented inside the `rome_js_analyze` crate.
 
 Rules are divided by capabilities:
 - `analyzers/` folder contains rules that don't require any particular capabilities;
