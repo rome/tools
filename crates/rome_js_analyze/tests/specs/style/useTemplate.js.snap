@@ -324,7 +324,7 @@ useTemplate.js:17:1 lint/style/useTemplate  FIXABLE  ━━━━━━━━━
 ```
 
 ```
-useTemplate.js:19:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useTemplate.js:19:13 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Template literals are preferred over string concatenation.
   
@@ -348,7 +348,7 @@ useTemplate.js:19:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━�
 ```
 
 ```
-useTemplate.js:20:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useTemplate.js:20:13 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Template literals are preferred over string concatenation.
   
@@ -371,7 +371,7 @@ useTemplate.js:20:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━�
 ```
 
 ```
-useTemplate.js:21:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useTemplate.js:21:13 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Template literals are preferred over string concatenation.
   
@@ -395,7 +395,7 @@ useTemplate.js:21:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━�
 ```
 
 ```
-useTemplate.js:22:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useTemplate.js:22:13 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Template literals are preferred over string concatenation.
   
@@ -419,7 +419,7 @@ useTemplate.js:22:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━�
 ```
 
 ```
-useTemplate.js:24:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useTemplate.js:24:13 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Template literals are preferred over string concatenation.
   
@@ -443,7 +443,7 @@ useTemplate.js:24:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━�
 ```
 
 ```
-useTemplate.js:25:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useTemplate.js:25:13 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Template literals are preferred over string concatenation.
   
@@ -466,7 +466,7 @@ useTemplate.js:25:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━�
 ```
 
 ```
-useTemplate.js:26:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useTemplate.js:26:13 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Template literals are preferred over string concatenation.
   
@@ -490,7 +490,7 @@ useTemplate.js:26:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━�
 ```
 
 ```
-useTemplate.js:27:13 lint/correctness/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+useTemplate.js:27:13 lint/style/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! Template literals are preferred over string concatenation.
   
