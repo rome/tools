@@ -271,7 +271,7 @@
 //!   p.err_builder("`with` statements are not allowed in strict mode", marker.range(p))
 //!  });
 //!
-//!  
+//!
 //! }
 //! ```
 //!
@@ -298,6 +298,58 @@
 //! * It returns `Absent` otherwise and must not progress parsing nor add any errors.
 //! * Lists must perform error recovery to avoid infinite loops.
 //! * Consult the grammar to identify the `UNKNOWN` node that is valid in the context of your rule.
+//!
+//! ## Parser Tests
+//!
+//! Parser tests are comments that start with `test` or `test_err` followed by the test name, and then the code on its own line.
+//!
+//! ```rust,ignore
+//! // test feature_name
+//! // let a = { new_feature : "" }
+//! // let b = { new_feature : "" }
+//! fn parse_new_feature(p: &mut Parser) -> ParsedSyntax {}
+//! ```
+//!
+//! * `test`: Test for a valid program. Should not produce any diagnostics nor missing nodes.
+//! * `test_err`: Test for a program with syntax error. Must produce a diagnostic.
+//!
+//! By default, the test runs as a JavaScript Module. You can customize the source type by specifying the
+//! file type after `test` or `test_err`
+//!
+//! ```rust,ignore
+//! // test ts typescript_test
+//! // console.log("a");
+//! if a {
+//!     // ..
+//! }
+//! ```
+//!
+//! The supported source types are:
+//! * `js`
+//! * `jsx`
+//! * `ts`
+//! * `tsx`
+//! * `d.ts`
+//!
+//! To enable script mode, add a `// script` comment to the code.
+//!
+//! To extract the test cases, run `cargo codegen test`. Running the codegen is necessary whenever you add,
+//! change, or remove inline tests .
+//!
+//! To update the test output, run
+//!
+//!
+//! **Linux/MacOs**:
+//!
+//! ```bash
+//! env UPDATE_EXPECT=1 cargo test
+//! ```
+//!
+//! **Windows**
+//!
+//! ```powershell
+//! set UPDATE_EXPECT=1 & cargo test
+//! ```
 
 mod parser;
 #[macro_use]
