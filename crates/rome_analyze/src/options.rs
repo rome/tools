@@ -10,7 +10,7 @@ use std::collections::HashMap;
 pub struct RuleOptions(Value);
 
 impl RuleOptions {
-    /// It returns the string contained in [RawValue], for the relative rule
+    /// It returns the deserialized rule option
     pub fn value(&self) -> &Value {
         &self.0
     }
