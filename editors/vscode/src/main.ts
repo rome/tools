@@ -120,10 +120,16 @@ export async function activate(context: ExtensionContext) {
 		const configurationContent = readFileSync(configurationPath, {
 			encoding: "utf-8",
 		});
-		const configurationAsJson = JSON.parse(configurationContent);
-		session.client.sendRequest(updateSettingsRequest, {
-			configuration: configurationAsJson,
-		});
+		try {
+			const configurationAsJson = JSON.parse(configurationContent);
+			session.client.sendRequest(updateSettingsRequest, {
+				configuration: configurationAsJson,
+			});
+		} catch {
+			window.showErrorMessage(
+				"Couldn't load the new configuration, it seems there's some syntax errors in the file.",
+			);
+		}
 	});
 
 	client.start();
