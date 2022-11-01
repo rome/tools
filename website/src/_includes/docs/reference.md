@@ -70,7 +70,9 @@ Prints the help message and exits.
 
 ### `rome.json`
 
-#### `files.maxSize`
+#### Files
+
+##### `files.maxSize`
 
 The maximum allowed size for source code files in bytes. Files above
 this limit will be ignored for performance reason. 
