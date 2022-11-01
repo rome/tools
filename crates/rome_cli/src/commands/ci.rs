@@ -2,6 +2,7 @@ use crate::{
     configuration::load_configuration, execute_mode, CliSession, Execution, Termination,
     TraversalMode,
 };
+use rome_service::configuration::{FormatterConfiguration, LinterConfiguration};
 use rome_service::workspace::UpdateSettingsParams;
 
 use super::format::apply_format_settings_from_cli;
@@ -9,7 +10,53 @@ use super::format::apply_format_settings_from_cli;
 /// Handler for the "ci" command of the Rome CLI
 pub(crate) fn ci(mut session: CliSession) -> Result<(), Termination> {
     let mut configuration = load_configuration(&mut session)?;
-    apply_format_settings_from_cli(&mut session, &mut configuration)?;
+
+    let formatter_enabled = session
+        .args
+        .opt_value_from_str("--formatter-enabled")
+        .map_err(|source| Termination::ParseError {
+            argument: "--formatter-enabled",
+            source,
+        })?;
+
+    let linter_enabled = session
+        .args
+        .opt_value_from_str("--linter-enabled")
+        .map_err(|source| Termination::ParseError {
+            argument: "--linter-enabled",
+            source,
+        })?;
+
+    if let Some(formatter) = &mut configuration.formatter {
+        if let Some(formatter_enabled) = formatter_enabled {
+            formatter.enabled = formatter_enabled
+        }
+    } else {
+        configuration.formatter = Some(FormatterConfiguration {
+            enabled: formatter_enabled.unwrap_or(true),
+            ..FormatterConfiguration::default()
+        })
+    }
+
+    if let Some(linter) = &mut configuration.linter {
+        if let Some(linter_enabled) = linter_enabled {
+            linter.enabled = linter_enabled
+        }
+    } else {
+        configuration.linter = Some(LinterConfiguration {
+            enabled: linter_enabled.unwrap_or(true),
+            ..LinterConfiguration::default()
+        })
+    }
+
+    // no point in doing the traversal if all the checks have been disabled
+    if configuration.is_formatter_disabled() && configuration.is_linter_disabled() {
+        return Ok(());
+    }
+
+    if !configuration.is_formatter_disabled() {
+        apply_format_settings_from_cli(&mut session, &mut configuration)?;
+    }
 
     session
         .app
