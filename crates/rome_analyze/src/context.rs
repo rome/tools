@@ -33,7 +33,7 @@ where
             query_result,
             root,
             services: FromServices::from_services(&rule_key, services)?,
-            options
+            options,
         })
     }
 

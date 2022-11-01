@@ -280,8 +280,13 @@ where
     R: Rule + 'static,
 {
     fn diagnostic(&self) -> Option<AnalyzerDiagnostic> {
-        let ctx =
-            RuleContext::new(&self.query_result, self.root, self.services, self.options.clone()).ok()?;
+        let ctx = RuleContext::new(
+            &self.query_result,
+            self.root,
+            self.services,
+            self.options.clone(),
+        )
+        .ok()?;
 
         R::diagnostic(&ctx, &self.state).map(AnalyzerDiagnostic::from)
     }

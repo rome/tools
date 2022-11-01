@@ -2,7 +2,8 @@ use crate::{RuleKey, TextRange};
 use rome_diagnostics::{Diagnostic, LineIndexBuf, Resource, Result, SourceCode};
 use std::{
     any::{Any, TypeId},
-    collections::{HashMap, hash_map::DefaultHasher}, hash::{Hash, Hasher},
+    collections::{hash_map::DefaultHasher, HashMap},
+    hash::{Hash, Hasher},
 };
 
 #[derive(Debug, Diagnostic)]

@@ -238,9 +238,7 @@ pub trait DeserializableRuleOptions: Default + DeserializeOwned + Sized {
     }
 }
 
-impl DeserializableRuleOptions for () {
-    
-}
+impl DeserializableRuleOptions for () {}
 
 /// Trait implemented by all analysis rules: declares interest to a certain AstNode type,
 /// and a callback function to be executed on all nodes matching the query to possibly

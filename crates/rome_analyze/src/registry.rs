@@ -341,7 +341,8 @@ impl<L: Language + Default> RegistryRule<L> {
             }
 
             let rule_key = RuleKey::rule::<R>();
-            let options: Arc<R::Options> = params.services
+            let options: Arc<R::Options> = params
+                .services
                 .get_service_by_id(&rule_key)
                 .expect("Expected config not found");
 
@@ -349,12 +350,15 @@ impl<L: Language + Default> RegistryRule<L> {
             // if the query doesn't match
             let query_result =
                 <R::Query as Queryable>::unwrap_match(params.services, &params.query);
-            let ctx =
-                match RuleContext::new(&query_result, params.root, params.services, options.clone())
-                {
-                    Ok(ctx) => ctx,
-                    Err(error) => return Err(error),
-                };
+            let ctx = match RuleContext::new(
+                &query_result,
+                params.root,
+                params.services,
+                options.clone(),
+            ) {
+                Ok(ctx) => ctx,
+                Err(error) => return Err(error),
+            };
 
             for result in R::run(&ctx) {
                 let text_range =

@@ -1,6 +1,8 @@
 use crate::react::hooks::*;
 use crate::semantic_services::Semantic;
-use rome_analyze::{context::RuleContext, declare_rule, Rule, RuleDiagnostic, DeserializableRuleOptions};
+use rome_analyze::{
+    context::RuleContext, declare_rule, DeserializableRuleOptions, Rule, RuleDiagnostic,
+};
 use rome_console::markup;
 use rome_js_syntax::{
     JsCallExpression, JsIdentifierBinding, JsStaticMemberExpression, JsSyntaxKind, JsSyntaxNode,
@@ -77,14 +79,14 @@ declare_rule! {
     }
 }
 
-#[derive(Default, Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ReactExtensiveDependenciesOptions {
     hooks_config: HashMap<String, ReactHookConfiguration>,
     stable_config: HashSet<StableReactHookConfiguration>,
 }
 
-impl ReactExtensiveDependenciesOptions {
-    pub fn new() -> Self {
+impl Default for ReactExtensiveDependenciesOptions {
+    fn default() -> Self {
         let hooks_config = HashMap::from_iter([
             ("useEffect".to_string(), (0, 1).into()),
             ("useLayoutEffect".to_string(), (0, 1).into()),
@@ -122,15 +124,20 @@ impl DeserializableRuleOptions for ReactExtensiveDependenciesOptions {
         }
 
         let options: Options = serde_json::from_value(value)?;
-        
-        let mut default = ReactExtensiveDependenciesOptions::new();
+
+        let mut default = ReactExtensiveDependenciesOptions::default();
         for (k, closure_index, dependencies_index) in options.hooks_config.into_iter() {
-            default.hooks_config.insert(k, ReactHookConfiguration {
-                closure_index,
-                dependencies_index,
-            });
+            default.hooks_config.insert(
+                k,
+                ReactHookConfiguration {
+                    closure_index,
+                    dependencies_index,
+                },
+            );
         }
-        default.stable_config.extend(options.stable_config.into_iter());
+        default
+            .stable_config
+            .extend(options.stable_config.into_iter());
 
         Ok(default)
     }
