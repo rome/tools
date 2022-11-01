@@ -131,7 +131,6 @@
 		"typescript": "^4.8.2",
 		"vsce": "^2.11.0",
 		"esbuild": "^0.14.47",
-		"rome": "next",
 		"vscode-languageclient": "^8.0.2"
 	}
 }

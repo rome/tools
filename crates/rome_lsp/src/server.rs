@@ -1,9 +1,4 @@
-use std::collections::HashMap;
-use std::sync::atomic::{AtomicU64, Ordering};
-use std::sync::{Arc, Mutex};
-
 use crate::capabilities::server_capabilities;
-use crate::requests::configuration_updated::{ConfigurationUpdatedParams, CHANGE_CONFIG_REQUEST};
 use crate::requests::syntax_tree::{SyntaxTreePayload, SYNTAX_TREE_REQUEST};
 use crate::session::{ClientInformation, Session, SessionHandle, SessionKey};
 use crate::utils::{into_lsp_error, panic_to_lsp_error};
@@ -13,7 +8,9 @@ use futures::FutureExt;
 use rome_console::markup;
 use rome_service::workspace::{RageEntry, RageParams, RageResult};
 use rome_service::{workspace, Workspace};
-use std::sync::Arc;
+use std::collections::HashMap;
+use std::sync::atomic::{AtomicU64, Ordering};
+use std::sync::{Arc, Mutex};
 use tokio::io::{AsyncRead, AsyncWrite};
 use tokio::sync::Notify;
 use tokio::task::spawn_blocking;
@@ -149,13 +146,6 @@ impl LSPServer {
             })
             .await;
         }
-    }
-
-    async fn change_config_request(&self, _params: ConfigurationUpdatedParams) -> LspResult<()> {
-        info!("Calling configuration change request");
-        self.session.update_configuration().await;
-        self.session.update_workspace_settings();
-        Ok(())
     }
 }
 
@@ -373,18 +363,16 @@ impl ServerFactory {
         });
 
         builder = builder.custom_method(SYNTAX_TREE_REQUEST, LSPServer::syntax_tree_request);
-        builder = builder.custom_method(CHANGE_CONFIG_REQUEST, LSPServer::change_config_request);
 
         // "shutdown" is not part of the Workspace API
         builder = builder.custom_method("rome/shutdown", |server: &LSPServer, (): ()| {
-            tracing::info!("Sending shutdown signal");
+            info!("Sending shutdown signal");
             server.session.broadcast_shutdown();
             ready(Ok(Some(())))
         });
 
         builder = builder.custom_method("rome/rage", LSPServer::rage);
 
-        workspace_method!(builder, supports_feature);
         workspace_method!(builder, supports_feature);
         workspace_method!(builder, update_settings);
         workspace_method!(builder, open_file);
