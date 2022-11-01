@@ -8,11 +8,11 @@ pub(crate) fn init(mut session: CliSession) -> Result<(), Termination> {
     create_config(fs, Configuration::default())?;
     let message = markup! {
     <Info><Emphasis>"Files created:"</Emphasis></Info>"
-\t"<Emphasis>"- rome.json: "</Emphasis>"Your project configuration. Documentation: "<Underline>"https://rome.tools/docs/#configuration"</Underline>"
+\t"<Emphasis>"- rome.json: "</Emphasis>"Your project configuration. Documentation: "<Underline>"https://rome.tools/docs/configuration"</Underline>"
 
 "<Info><Emphasis>"Next Steps:"</Emphasis></Info>"
 \t1. "<Emphasis>"Setup your editor:"</Emphasis>"
-\t\tGet live errors as you type and format when you save. Learn more: "<Underline>"https://rome.tools/#editor-setup"</Underline>"
+\t\tGet live errors as you type and format when you save. Learn more: "<Underline>"https://rome.tools/editors"</Underline>"
 \t2. "<Emphasis>"Try a command"</Emphasis>"
 \t\t"<Italic>"rome ci"</Italic>" is used to validate your code, verify formatting, and check for lint errors. Run " <Italic>"rome --help"</Italic>" for a full list of commands and flags
 \t3. "<Emphasis>"Read the documentation"</Emphasis>"
