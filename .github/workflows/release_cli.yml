@@ -49,6 +49,7 @@ jobs:
         if: env.nightly == 'true'
         env:
             prerelease: true
+        run: echo "Create pre-release"
 
   build:
     strategy:
@@ -78,9 +79,11 @@ jobs:
 
     needs: check
     if: needs.check.outputs.version_changed == 'true' || needs.check.outputs.nightly == 'true'
+    env:
+        version: ${{ needs.check.outputs.version }}
     outputs:
       version: ${{ env.version }}
-      prerelease: ${{ env.prerelease }}
+      prerelease: ${{ needs.check.outputs.prerelease }}
 
     steps:
       - name: Checkout repository
@@ -92,11 +95,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 14.x
-
-      - name: Update Package.json
-        if: needs.check.outputs.prerelease == 'true'
-        run: |
-          node npm/rome/scripts/update-nightly-version.mjs
 
       - name: Install Rust toolchain
         run: rustup target add ${{ matrix.target }}

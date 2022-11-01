@@ -94,6 +94,10 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     needs: check
+    env:
+      version: ${{ needs.check.outputs.version }}
+      prerelease: ${{ needs.check.outputs.prerelease }}
+
     if: needs.check.outputs.version_changed == 'true' || needs.check.outputs.nightly == 'true'
     outputs:
       version: ${{ env.version }}
