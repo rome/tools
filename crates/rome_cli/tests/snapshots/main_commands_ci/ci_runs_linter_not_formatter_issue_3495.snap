@@ -28,7 +28,7 @@ errors where emitted while running checks
 # Emitted Messages
 
 ```block
-file.js:1:9 lint/correctness/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+file.js:1:9 lint/complexity/useSimplifiedLogicExpression  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Logical expression contains unnecessary complexity.
   

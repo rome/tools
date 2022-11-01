@@ -10,8 +10,7 @@ expression: content
     "rules": {
         "recommended": true,
         "nursery": {
-            "noUnreachable": "error",
-            "noUnusedVariables": "error"
+            "noInvalidConstructorSuper": "error"
         }
     }
   }
@@ -21,13 +20,9 @@ expression: content
 ## `file.js`
 
 ```js
-function f() {
-    for (;;) {
-        continue;
-        break;
-    }
+class A extends B {
+    constructor() {}
 }
-
 ```
 
 # Termination Message
@@ -39,47 +34,14 @@ errors where emitted while running checks
 # Emitted Messages
 
 ```block
-file.js:4:9 lint/nursery/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+file.js:1:9 lint/nursery/noInvalidConstructorSuper ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  × This code will never be reached ...
+  × This class extends another class and a super() call is expected.
   
-    2 │     for (;;) {
-    3 │         continue;
-  > 4 │         break;
-      │         ^^^^^^
-    5 │     }
-    6 │ }
-  
-  i ... because this statement will continue the loop beforehand
-  
-    1 │ function f() {
-    2 │     for (;;) {
-  > 3 │         continue;
+  > 1 │ class A extends B {
       │         ^^^^^^^^^
-    4 │         break;
-    5 │     }
-  
-
-```
-
-```block
-file.js:1:10 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × This function is unused.
-  
-  > 1 │ function f() {
-      │          ^
-    2 │     for (;;) {
-    3 │         continue;
-  
-  i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
-  
-  i Suggested fix: If this is intentional, prepend f with an underscore.
-  
-    1   │ - function·f()·{
-      1 │ + function·_f()·{
-    2 2 │       for (;;) {
-    3 3 │           continue;
+    2 │     constructor() {}
+    3 │ }
   
 
 ```

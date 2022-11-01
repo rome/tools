@@ -1,0 +1,52 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noRestrictedGlobals.js
+---
+# Input
+```js
+// invalid
+console.log(event);
+console.log(error);
+
+// valid
+function f(event, error) {
+    console.log(event);
+    console.log(error);
+}
+```
+
+# Diagnostics
+```
+noRestrictedGlobals.js:2:13 lint/correctness/noRestrictedGlobals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not use the global variable event.
+  
+    1 │ // invalid
+  > 2 │ console.log(event);
+      │             ^^^^^
+    3 │ console.log(error);
+    4 │ 
+  
+  i Use a local variable instead.
+  
+
+```
+
+```
+noRestrictedGlobals.js:3:13 lint/correctness/noRestrictedGlobals ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Do not use the global variable error.
+  
+    1 │ // invalid
+    2 │ console.log(event);
+  > 3 │ console.log(error);
+      │             ^^^^^
+    4 │ 
+    5 │ // valid
+  
+  i Use a local variable instead.
+  
+
+```
+
+

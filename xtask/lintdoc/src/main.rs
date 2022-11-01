@@ -123,6 +123,12 @@ fn generate_group(
     errors: &mut Vec<(&'static str, Error)>,
 ) -> io::Result<()> {
     let (group_name, description) = match group {
+        "a11y" => (
+            "Accessibility",
+            markup! {
+                "Rules focused on preventing accessibility problems."
+            },
+        ),
         "correctness" => (
             "Correctness",
             markup! {
@@ -136,13 +142,27 @@ fn generate_group(
                 "New rules that are still under development.
 
 Nursery rules require explicit opt-in via configuration because they may still have bugs or performance problems.
-Nursery rules get promoted to other groups once they become stable or may be removed."
+Nursery rules get promoted to other groups once they become stable or may be removed.
+
+Rules that belong to this group "<Emphasis>"are not subject to semantic version"</Emphasis>"."
             },
         ),
         "style" => (
             "Style",
             markup! {
                 "Rules enforcing a consistent way of writing your code. "
+            },
+        ),
+        "complexity" => (
+            "Complexity",
+            markup! {
+                "Rules that focus on inspecting complex code that could be simplified."
+            },
+        ),
+        "security" => (
+            "Security",
+            markup! {
+                "Rules that detect potential security flaws."
             },
         ),
         _ => panic!("Unknown group ID {group:?}"),

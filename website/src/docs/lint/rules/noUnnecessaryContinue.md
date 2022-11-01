@@ -7,7 +7,7 @@ layout: layouts/rule.liquid
 
 > This rule is recommended by Rome.
 
-Avoid using unnecessary `ContinueStatement`.
+Avoid using unnecessary `continue`.
 
 ## Examples
 

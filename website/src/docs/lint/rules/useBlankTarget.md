@@ -5,6 +5,8 @@ layout: layouts/rule.liquid
 
 # useBlankTarget (since v10.0.0)
 
+> This rule is recommended by Rome.
+
 Disallow `target="_blank"` attribute without `rel="noreferrer"`
 
 When creating anchor `a` element, there are times when its link has to be opened in a new browser tab
@@ -22,9 +24,9 @@ and the [the noopener documentation](https://html.spec.whatwg.org/multipage/link
 <a href='http://external.link' target='_blank'>child</a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useBlankTarget.js:1:32 <a href="https://rome.tools/docs/lint/rules/useBlankTarget">lint/nursery/useBlankTarget</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useBlankTarget.js:1:32 <a href="https://rome.tools/docs/lint/rules/useBlankTarget">lint/a11y/useBlankTarget</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Avoid using </span><span style="color: Orange;"><strong>target=&quot;_blank&quot;</strong></span><span style="color: Orange;"> without </span><span style="color: Orange;"><strong>rel=&quot;noreferrer&quot;</strong></span><span style="color: Orange;">.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>target=&quot;_blank&quot;</strong></span><span style="color: Tomato;"> without </span><span style="color: Tomato;"><strong>rel=&quot;noreferrer&quot;</strong></span><span style="color: Tomato;">.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>&lt;a href='http://external.link' target='_blank'&gt;child&lt;/a&gt;
    <strong>   │ </strong>                               <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -42,9 +44,9 @@ and the [the noopener documentation](https://html.spec.whatwg.org/multipage/link
 <a href='http://external.link' target='_blank' rel="noopener">child</a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useBlankTarget.js:1:32 <a href="https://rome.tools/docs/lint/rules/useBlankTarget">lint/nursery/useBlankTarget</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useBlankTarget.js:1:32 <a href="https://rome.tools/docs/lint/rules/useBlankTarget">lint/a11y/useBlankTarget</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Avoid using </span><span style="color: Orange;"><strong>target=&quot;_blank&quot;</strong></span><span style="color: Orange;"> without </span><span style="color: Orange;"><strong>rel=&quot;noreferrer&quot;</strong></span><span style="color: Orange;">.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>target=&quot;_blank&quot;</strong></span><span style="color: Tomato;"> without </span><span style="color: Tomato;"><strong>rel=&quot;noreferrer&quot;</strong></span><span style="color: Tomato;">.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>&lt;a href='http://external.link' target='_blank' rel=&quot;noopener&quot;&gt;child&lt;/a&gt;
    <strong>   │ </strong>                               <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -62,9 +64,9 @@ and the [the noopener documentation](https://html.spec.whatwg.org/multipage/link
 <a {...props} href='http://external.link' target='_blank' rel="noopener">child</a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useBlankTarget.js:1:43 <a href="https://rome.tools/docs/lint/rules/useBlankTarget">lint/nursery/useBlankTarget</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useBlankTarget.js:1:43 <a href="https://rome.tools/docs/lint/rules/useBlankTarget">lint/a11y/useBlankTarget</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Avoid using </span><span style="color: Orange;"><strong>target=&quot;_blank&quot;</strong></span><span style="color: Orange;"> without </span><span style="color: Orange;"><strong>rel=&quot;noreferrer&quot;</strong></span><span style="color: Orange;">.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>target=&quot;_blank&quot;</strong></span><span style="color: Tomato;"> without </span><span style="color: Tomato;"><strong>rel=&quot;noreferrer&quot;</strong></span><span style="color: Tomato;">.</span>
   
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>1 │ </strong>&lt;a {...props} href='http://external.link' target='_blank' rel=&quot;noopener&quot;&gt;child&lt;/a&gt;
    <strong>   │ </strong>                                          <strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong><strong><span style="color: Tomato;">^</span></strong>
@@ -83,9 +85,9 @@ and the [the noopener documentation](https://html.spec.whatwg.org/multipage/link
 <a href='http://external.link' target='_BlaNk'>child</a>
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/useBlankTarget.js:2:32 <a href="https://rome.tools/docs/lint/rules/useBlankTarget">lint/nursery/useBlankTarget</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">a11y/useBlankTarget.js:2:32 <a href="https://rome.tools/docs/lint/rules/useBlankTarget">lint/a11y/useBlankTarget</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">Avoid using </span><span style="color: Orange;"><strong>target=&quot;_blank&quot;</strong></span><span style="color: Orange;"> without </span><span style="color: Orange;"><strong>rel=&quot;noreferrer&quot;</strong></span><span style="color: Orange;">.</span>
+<strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>target=&quot;_blank&quot;</strong></span><span style="color: Tomato;"> without </span><span style="color: Tomato;"><strong>rel=&quot;noreferrer&quot;</strong></span><span style="color: Tomato;">.</span>
   
     <strong>1 │ </strong>// case-insensitive
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">&gt;</span></strong> <strong>2 │ </strong>&lt;a href='http://external.link' target='_BlaNk'&gt;child&lt;/a&gt;

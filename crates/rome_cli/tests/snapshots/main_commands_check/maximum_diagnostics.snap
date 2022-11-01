@@ -26,27 +26,6 @@ errors where emitted while running checks
 # Emitted Messages
 
 ```block
-check.js:2:1 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  × Block statements are preferred in this position.
-  
-  > 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-      │ ^^^^^^^^^^^^
-    3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-    4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-  
-  i Suggested fix: Wrap the statement with a `JsBlockStatement`
-  
-     1  1 │   
-     2    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-        2 │ + for(;true;)·{}for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-     3  3 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-     4  4 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-  
-
-```
-
-```block
 check.js:2:1 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Use while loops instead of for loops.
@@ -68,12 +47,12 @@ check.js:2:1 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━�
 ```
 
 ```block
-check.js:2:13 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+check.js:2:1 lint/style/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Block statements are preferred in this position.
   
   > 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-      │             ^^^^^^^^^^^^
+      │ ^^^^^^^^^^^^
     3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
     4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
@@ -81,7 +60,7 @@ check.js:2:13 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
   
      1  1 │   
      2    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-        2 │ + for(;true;);for(;true;)·{}for(;true;);for(;true;);for(;true;);for(;true;);
+        2 │ + for(;true;)·{}for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      3  3 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      4  4 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
@@ -110,12 +89,12 @@ check.js:2:13 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
 ```
 
 ```block
-check.js:2:25 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+check.js:2:13 lint/style/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Block statements are preferred in this position.
   
   > 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-      │                         ^^^^^^^^^^^^
+      │             ^^^^^^^^^^^^
     3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
     4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
@@ -123,7 +102,7 @@ check.js:2:25 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
   
      1  1 │   
      2    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-        2 │ + for(;true;);for(;true;);for(;true;)·{}for(;true;);for(;true;);for(;true;);
+        2 │ + for(;true;);for(;true;)·{}for(;true;);for(;true;);for(;true;);for(;true;);
      3  3 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      4  4 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
@@ -152,12 +131,12 @@ check.js:2:25 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
 ```
 
 ```block
-check.js:2:37 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+check.js:2:25 lint/style/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Block statements are preferred in this position.
   
   > 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-      │                                     ^^^^^^^^^^^^
+      │                         ^^^^^^^^^^^^
     3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
     4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
@@ -165,7 +144,7 @@ check.js:2:37 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
   
      1  1 │   
      2    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-        2 │ + for(;true;);for(;true;);for(;true;);for(;true;)·{}for(;true;);for(;true;);
+        2 │ + for(;true;);for(;true;);for(;true;)·{}for(;true;);for(;true;);for(;true;);
      3  3 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      4  4 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
@@ -194,12 +173,12 @@ check.js:2:37 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
 ```
 
 ```block
-check.js:2:49 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+check.js:2:37 lint/style/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Block statements are preferred in this position.
   
   > 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-      │                                                 ^^^^^^^^^^^^
+      │                                     ^^^^^^^^^^^^
     3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
     4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
@@ -207,7 +186,7 @@ check.js:2:49 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
   
      1  1 │   
      2    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-        2 │ + for(;true;);for(;true;);for(;true;);for(;true;);for(;true;)·{}for(;true;);
+        2 │ + for(;true;);for(;true;);for(;true;);for(;true;)·{}for(;true;);for(;true;);
      3  3 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      4  4 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
@@ -236,12 +215,12 @@ check.js:2:49 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
 ```
 
 ```block
-check.js:2:61 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+check.js:2:49 lint/style/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Block statements are preferred in this position.
   
   > 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-      │                                                             ^^^^^^^^^^^^
+      │                                                 ^^^^^^^^^^^^
     3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
     4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
@@ -249,7 +228,7 @@ check.js:2:61 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
   
      1  1 │   
      2    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-        2 │ + for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;)·{}
+        2 │ + for(;true;);for(;true;);for(;true;);for(;true;);for(;true;)·{}for(;true;);
      3  3 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      4  4 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
@@ -278,24 +257,22 @@ check.js:2:61 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
 ```
 
 ```block
-check.js:3:1 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+check.js:2:61 lint/style/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Block statements are preferred in this position.
   
-    2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-  > 3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-      │ ^^^^^^^^^^^^
+  > 2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+      │                                                             ^^^^^^^^^^^^
+    3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
     4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-    5 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
   i Suggested fix: Wrap the statement with a `JsBlockStatement`
   
      1  1 │   
-     2  2 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-     3    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-        3 │ + for(;true;)·{}for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+     2    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+        2 │ + for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;)·{}
+     3  3 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      4  4 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-     5  5 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
 
 ```
@@ -324,13 +301,13 @@ check.js:3:1 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━�
 ```
 
 ```block
-check.js:3:13 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+check.js:3:1 lint/style/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Block statements are preferred in this position.
   
     2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   > 3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-      │             ^^^^^^^^^^^^
+      │ ^^^^^^^^^^^^
     4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
     5 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
@@ -339,7 +316,7 @@ check.js:3:13 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
      1  1 │   
      2  2 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      3    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-        3 │ + for(;true;);for(;true;)·{}for(;true;);for(;true;);for(;true;);for(;true;);
+        3 │ + for(;true;)·{}for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      4  4 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      5  5 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
@@ -370,13 +347,13 @@ check.js:3:13 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
 ```
 
 ```block
-check.js:3:25 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+check.js:3:13 lint/style/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Block statements are preferred in this position.
   
     2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   > 3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-      │                         ^^^^^^^^^^^^
+      │             ^^^^^^^^^^^^
     4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
     5 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
@@ -385,7 +362,7 @@ check.js:3:25 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
      1  1 │   
      2  2 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      3    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-        3 │ + for(;true;);for(;true;);for(;true;)·{}for(;true;);for(;true;);for(;true;);
+        3 │ + for(;true;);for(;true;)·{}for(;true;);for(;true;);for(;true;);for(;true;);
      4  4 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      5  5 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
@@ -416,13 +393,13 @@ check.js:3:25 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
 ```
 
 ```block
-check.js:3:37 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+check.js:3:25 lint/style/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Block statements are preferred in this position.
   
     2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   > 3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-      │                                     ^^^^^^^^^^^^
+      │                         ^^^^^^^^^^^^
     4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
     5 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
@@ -431,7 +408,7 @@ check.js:3:37 lint/correctness/useBlockStatements  FIXABLE  ━━━━━━�
      1  1 │   
      2  2 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      3    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
-        3 │ + for(;true;);for(;true;);for(;true;);for(;true;)·{}for(;true;);for(;true;);
+        3 │ + for(;true;);for(;true;);for(;true;)·{}for(;true;);for(;true;);for(;true;);
      4  4 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      5  5 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   
@@ -455,6 +432,29 @@ check.js:3:37 lint/correctness/useWhile  FIXABLE  ━━━━━━━━━━
      2  2 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      3    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
         3 │ + for(;true;);for(;true;);for(;true;);while·(true);for(;true;);for(;true;);
+     4  4 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+     5  5 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  
+
+```
+
+```block
+check.js:3:37 lint/style/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × Block statements are preferred in this position.
+  
+    2 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  > 3 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+      │                                     ^^^^^^^^^^^^
+    4 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+    5 │ for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+  
+  i Suggested fix: Wrap the statement with a `JsBlockStatement`
+  
+     1  1 │   
+     2  2 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+     3    │ - for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
+        3 │ + for(;true;);for(;true;);for(;true;);for(;true;)·{}for(;true;);for(;true;);
      4  4 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
      5  5 │   for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);for(;true;);
   

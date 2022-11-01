@@ -17,7 +17,7 @@ Template literals are preferred over string concatenation.
 console.log(foo + "baz");
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/useTemplate.js:1:13 <a href="https://rome.tools/docs/lint/rules/useTemplate">lint/correctness/useTemplate</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/useTemplate.js:1:13 <a href="https://rome.tools/docs/lint/rules/useTemplate">lint/style/useTemplate</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;"><strong>Template</strong></span><span style="color: Tomato;"> literals are preferred over </span><span style="color: Tomato;"><strong>string concatenation.</strong></span>
   
@@ -37,7 +37,7 @@ console.log(foo + "baz");
 console.log(1 * 2 + "foo");
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/useTemplate.js:1:13 <a href="https://rome.tools/docs/lint/rules/useTemplate">lint/correctness/useTemplate</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/useTemplate.js:1:13 <a href="https://rome.tools/docs/lint/rules/useTemplate">lint/style/useTemplate</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;"><strong>Template</strong></span><span style="color: Tomato;"> literals are preferred over </span><span style="color: Tomato;"><strong>string concatenation.</strong></span>
   
@@ -57,7 +57,7 @@ console.log(1 * 2 + "foo");
 console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/useTemplate.js:1:13 <a href="https://rome.tools/docs/lint/rules/useTemplate">lint/correctness/useTemplate</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/useTemplate.js:1:13 <a href="https://rome.tools/docs/lint/rules/useTemplate">lint/style/useTemplate</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;"><strong>Template</strong></span><span style="color: Tomato;"> literals are preferred over </span><span style="color: Tomato;"><strong>string concatenation.</strong></span>
   
@@ -77,7 +77,7 @@ console.log(1 + "foo" + 2 + "bar" + "baz" + 3);
 console.log((1 + "foo") * 2);
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/useTemplate.js:1:14 <a href="https://rome.tools/docs/lint/rules/useTemplate">lint/correctness/useTemplate</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/useTemplate.js:1:14 <a href="https://rome.tools/docs/lint/rules/useTemplate">lint/style/useTemplate</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;"><strong>Template</strong></span><span style="color: Tomato;"> literals are preferred over </span><span style="color: Tomato;"><strong>string concatenation.</strong></span>
   
@@ -97,7 +97,7 @@ console.log((1 + "foo") * 2);
 console.log("foo" + 1);
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">correctness/useTemplate.js:1:13 <a href="https://rome.tools/docs/lint/rules/useTemplate">lint/correctness/useTemplate</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">style/useTemplate.js:1:13 <a href="https://rome.tools/docs/lint/rules/useTemplate">lint/style/useTemplate</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Tomato;">  </span></strong><strong><span style="color: Tomato;">✖</span></strong> <span style="color: Tomato;"><strong>Template</strong></span><span style="color: Tomato;"> literals are preferred over </span><span style="color: Tomato;"><strong>string concatenation.</strong></span>
   

@@ -1,0 +1,60 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: inJsx.jsx
+---
+# Input
+```js
+// invalid
+<>
+    <button>do something</button>
+    <button type="bar">do something</button>
+</>
+
+
+// valid
+<>
+    <button type="button">do something</button>
+    <button type={dynamic_value}>do something</button>
+</>
+```
+
+# Diagnostics
+```
+inJsx.jsx:3:5 lint/a11y/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide an explicit type prop for the button element.
+  
+    1 │ // invalid
+    2 │ <>
+  > 3 │     <button>do something</button>
+      │     ^^^^^^^^
+    4 │     <button type="bar">do something</button>
+    5 │ </>
+  
+  i The default  type of a button is submit, which causes the submission of a form when placed inside a `form` element. This is likely not the behaviour that you want inside a React application.
+  
+  i Allowed button types are: submit, button or reset
+  
+
+```
+
+```
+inJsx.jsx:4:18 lint/a11y/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide a valid type prop for the button element.
+  
+    2 │ <>
+    3 │     <button>do something</button>
+  > 4 │     <button type="bar">do something</button>
+      │                  ^^^^^
+    5 │ </>
+    6 │ 
+  
+  i The default  type of a button is submit, which causes the submission of a form when placed inside a `form` element. This is likely not the behaviour that you want inside a React application.
+  
+  i Allowed button types are: submit, button or reset
+  
+
+```
+
+

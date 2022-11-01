@@ -10,7 +10,6 @@ expression: content
     "rules": {
         "recommended": true,
         "correctness": {
-            "recommended": true,      
             "noDebugger": "warn"
         }
     }
