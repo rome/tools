@@ -54,7 +54,7 @@ Prints the Rome version and exits.
 
 Prints the help message and exits.
 
-### Configuration
+### `rome.json`
 
 #### Linter
 
