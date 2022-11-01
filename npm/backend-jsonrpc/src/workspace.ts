@@ -28,6 +28,10 @@ export interface UpdateSettingsParams {
  */
 export interface Configuration {
 	/**
+	 * The configuration of the filesystem
+	 */
+	files?: FilesConfiguration;
+	/**
 	 * The configuration of the formatter
 	 */
 	formatter?: FormatterConfiguration;
@@ -39,6 +43,15 @@ export interface Configuration {
 	 * The configuration for the linter
 	 */
 	linter?: LinterConfiguration;
+}
+/**
+ * The configuration of the filesystem
+ */
+export interface FilesConfiguration {
+	/**
+	 * The maximum allowed size for source code files in bytes. Files above this limit will be ignore for performance reason. Defaults to 1 MiB
+	 */
+	maxSize?: number;
 }
 export interface FormatterConfiguration {
 	enabled?: boolean;

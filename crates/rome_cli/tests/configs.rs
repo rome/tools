@@ -186,3 +186,9 @@ pub const CONFIG_LINTER_IGNORED_FILES: &str = r#"{
   }
 }
 "#;
+
+pub const CONFIG_FILE_SIZE_LIMIT: &str = r#"{
+  "files": {
+    "maxSize": 16
+  }
+}"#;

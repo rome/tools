@@ -283,7 +283,11 @@ impl ParseObjectPattern for ObjectBindingPattern {
             JS_OBJECT_BINDING_PATTERN_PROPERTY
         };
 
+        // test destructuring_initializer_binding
+        // const { value, f = (value) => value } = item
+        let parent = p.state.duplicate_binding_parent.take();
         parse_initializer_clause(p, ExpressionContext::default()).ok();
+        p.state.duplicate_binding_parent = parent;
 
         Present(m.complete(p, kind))
     }

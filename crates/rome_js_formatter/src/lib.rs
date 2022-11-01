@@ -1,7 +1,7 @@
 //! Rome's official JavaScript formatter.
 //!
 //! ## Implement the formatter
-//!`
+//!
 //! Our formatter is node based. Meaning that each AST node knows how to format itself. In order to implement
 //! the formatting, a node has to implement the trait `FormatNode`.
 //!
@@ -12,8 +12,7 @@
 //! Our formatter has its own [internal IR](https://en.wikipedia.org/wiki/Intermediate_representation), it creates its own abstraction from an AST.
 //!
 //! The developer won't be creating directly this IR, but they will use a series of utilities that will help
-//! to create this IR. The whole IR is represented by the `enum` `FormatElement`. Please refer to [its internal
-//! documentation](#build-the-documentation) to understand the meaning of each variant.
+//! to create this IR. The whole IR is represented by the `enum` `FormatElement`.
 //!
 //!
 //!

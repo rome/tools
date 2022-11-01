@@ -7,7 +7,8 @@
 		"start": "npm-run-all --parallel watch:** ",
 		"watch:eleventy": "eleventy --serve",
 		"watch:sass": "sass --style=compressed src/styles:src/_includes/styles --watch",
-		"format": "cargo rome-cli-dev format --write ."
+		"format": "cargo rome-cli-dev format --write .",
+		"check": "cd ../ && cargo rome-cli-dev check ./website/src"
 	},
 	"devDependencies": {
 		"@types/node": "^18.6.1",

@@ -61,7 +61,7 @@ used_overloaded();
 
 # Diagnostics
 ```
-noUnusedVariables.ts:4:14 lint/correctness/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noUnusedVariables.ts:4:14 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This parameter is unused.
   
@@ -73,11 +73,20 @@ noUnusedVariables.ts:4:14 lint/correctness/noUnusedVariables ━━━━━━�
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
+  i Suggested fix: If this is intentional, prepend a with an underscore.
+  
+     2  2 │   
+     3  3 │   class D {
+     4    │ - → constructor(a:·number)·{}
+        4 │ + → constructor(_a:·number)·{}
+     5  5 │   	f(a: number) {}
+     6  6 │   	set a(a: number) {}
+  
 
 ```
 
 ```
-noUnusedVariables.ts:5:4 lint/correctness/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noUnusedVariables.ts:5:4 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This parameter is unused.
   
@@ -90,11 +99,20 @@ noUnusedVariables.ts:5:4 lint/correctness/noUnusedVariables ━━━━━━�
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
+  i Suggested fix: If this is intentional, prepend a with an underscore.
+  
+     3  3 │   class D {
+     4  4 │   	constructor(a: number) {}
+     5    │ - → f(a:·number)·{}
+        5 │ + → f(_a:·number)·{}
+     6  6 │   	set a(a: number) {}
+     7  7 │   }
+  
 
 ```
 
 ```
-noUnusedVariables.ts:6:8 lint/correctness/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noUnusedVariables.ts:6:8 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This parameter is unused.
   
@@ -107,11 +125,20 @@ noUnusedVariables.ts:6:8 lint/correctness/noUnusedVariables ━━━━━━�
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
   
+  i Suggested fix: If this is intentional, prepend a with an underscore.
+  
+     4  4 │   	constructor(a: number) {}
+     5  5 │   	f(a: number) {}
+     6    │ - → set·a(a:·number)·{}
+        6 │ + → set·a(_a:·number)·{}
+     7  7 │   }
+     8  8 │   console.log(new D());
+  
 
 ```
 
 ```
-noUnusedVariables.ts:12:10 lint/correctness/noUnusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noUnusedVariables.ts:12:10 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This function is unused.
   
@@ -123,6 +150,15 @@ noUnusedVariables.ts:12:10 lint/correctness/noUnusedVariables ━━━━━━
     14 │ }
   
   i Unused variables usually are result of incomplete refactoring, typos and other source of bugs.
+  
+  i Suggested fix: If this is intentional, prepend unused_overloaded with an underscore.
+  
+    10 10 │   function unused_overloaded(): number;
+    11 11 │   function unused_overloaded(s: string): string;
+    12    │ - function·unused_overloaded(s?:·string)·{
+       12 │ + function·_unused_overloaded(s?:·string)·{
+    13 13 │     return s;
+    14 14 │   }
   
 
 ```
