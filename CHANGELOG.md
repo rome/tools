@@ -65,7 +65,7 @@
 - Improved messaging of diagnostics, using our new infrastructure
 - Fixed an issue where diagnostics couldn't be printed in WASM [#3349](https://github.com/rome/tools/pull/3349)
 - Allow arguments in d.ts files [#3388](https://github.com/rome/tools/issues/3388)
-- Fixed some edge case [#3486](https://github.com/rome/tools/issues/3486)
+- Fix parsing of less than in optional call chains [#3486](https://github.com/rome/tools/issues/3486)
 - Fixed a case where `export {"a"} from "b";` wasn't correctly parsed
 
 ### VSCode
