@@ -27,7 +27,7 @@ For the time being this rule will ignore it, but this **might change in the futu
 const a = 4;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/noUnusedVariables.js:1:7 <a href="https://rome.tools/docs/lint/rules/noUnusedVariables">lint/nursery/noUnusedVariables</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noUnusedVariables.js:1:7 <a href="https://rome.tools/docs/lint/rules/noUnusedVariables">lint/correctness/noUnusedVariables</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This variable is unused.</span>
   
@@ -49,7 +49,7 @@ const a = 4;
 let a = 4;
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/noUnusedVariables.js:1:5 <a href="https://rome.tools/docs/lint/rules/noUnusedVariables">lint/nursery/noUnusedVariables</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noUnusedVariables.js:1:5 <a href="https://rome.tools/docs/lint/rules/noUnusedVariables">lint/correctness/noUnusedVariables</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This variable is unused.</span>
   
@@ -72,7 +72,7 @@ function foo() {
 };
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/noUnusedVariables.js:1:10 <a href="https://rome.tools/docs/lint/rules/noUnusedVariables">lint/nursery/noUnusedVariables</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noUnusedVariables.js:1:10 <a href="https://rome.tools/docs/lint/rules/noUnusedVariables">lint/correctness/noUnusedVariables</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This function is unused.</span>
   
@@ -99,7 +99,7 @@ function foo(myVar) {
 foo();
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/noUnusedVariables.js:1:14 <a href="https://rome.tools/docs/lint/rules/noUnusedVariables">lint/nursery/noUnusedVariables</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noUnusedVariables.js:1:14 <a href="https://rome.tools/docs/lint/rules/noUnusedVariables">lint/correctness/noUnusedVariables</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This parameter is unused.</span>
   
@@ -124,7 +124,7 @@ const foo = () => {
 };
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/noUnusedVariables.js:1:7 <a href="https://rome.tools/docs/lint/rules/noUnusedVariables">lint/nursery/noUnusedVariables</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noUnusedVariables.js:1:7 <a href="https://rome.tools/docs/lint/rules/noUnusedVariables">lint/correctness/noUnusedVariables</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This variable is unused.</span>
   
@@ -150,7 +150,7 @@ function foo() {
 }
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/noUnusedVariables.js:1:10 <a href="https://rome.tools/docs/lint/rules/noUnusedVariables">lint/nursery/noUnusedVariables</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noUnusedVariables.js:1:10 <a href="https://rome.tools/docs/lint/rules/noUnusedVariables">lint/correctness/noUnusedVariables</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This function is unused.</span>
   
@@ -177,7 +177,7 @@ const foo = () => {
 };
 ```
 
-{% raw %}<pre class="language-text"><code class="language-text">nursery/noUnusedVariables.js:1:7 <a href="https://rome.tools/docs/lint/rules/noUnusedVariables">lint/nursery/noUnusedVariables</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━
+{% raw %}<pre class="language-text"><code class="language-text">correctness/noUnusedVariables.js:1:7 <a href="https://rome.tools/docs/lint/rules/noUnusedVariables">lint/correctness/noUnusedVariables</a> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━
 
 <strong><span style="color: Orange;">  </span></strong><strong><span style="color: Orange;">⚠</span></strong> <span style="color: Orange;">This variable is unused.</span>
   

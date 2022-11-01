@@ -78,7 +78,7 @@ a;
 
 # Diagnostics
 ```
-noUnusedVariables.js:3:7 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noUnusedVariables.js:3:7 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This variable is unused.
   
@@ -104,7 +104,7 @@ noUnusedVariables.js:3:7 lint/nursery/noUnusedVariables  FIXABLE  ━━━━�
 ```
 
 ```
-noUnusedVariables.js:4:7 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noUnusedVariables.js:4:7 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This variable is unused.
   
@@ -129,7 +129,7 @@ noUnusedVariables.js:4:7 lint/nursery/noUnusedVariables  FIXABLE  ━━━━�
 ```
 
 ```
-noUnusedVariables.js:8:10 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noUnusedVariables.js:8:10 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This function is unused.
   
@@ -155,7 +155,7 @@ noUnusedVariables.js:8:10 lint/nursery/noUnusedVariables  FIXABLE  ━━━━�
 ```
 
 ```
-noUnusedVariables.js:10:10 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noUnusedVariables.js:10:10 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This function is unused.
   
@@ -181,7 +181,7 @@ noUnusedVariables.js:10:10 lint/nursery/noUnusedVariables  FIXABLE  ━━━━
 ```
 
 ```
-noUnusedVariables.js:14:10 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noUnusedVariables.js:14:10 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This function is unused.
   
@@ -207,7 +207,7 @@ noUnusedVariables.js:14:10 lint/nursery/noUnusedVariables  FIXABLE  ━━━━
 ```
 
 ```
-noUnusedVariables.js:21:14 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noUnusedVariables.js:21:14 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This parameter is unused.
   
@@ -233,7 +233,7 @@ noUnusedVariables.js:21:14 lint/nursery/noUnusedVariables  FIXABLE  ━━━━
 ```
 
 ```
-noUnusedVariables.js:24:17 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noUnusedVariables.js:24:17 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This parameter is unused.
   
@@ -259,7 +259,7 @@ noUnusedVariables.js:24:17 lint/nursery/noUnusedVariables  FIXABLE  ━━━━
 ```
 
 ```
-noUnusedVariables.js:29:17 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noUnusedVariables.js:29:17 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This parameter is unused.
   
@@ -285,7 +285,7 @@ noUnusedVariables.js:29:17 lint/nursery/noUnusedVariables  FIXABLE  ━━━━
 ```
 
 ```
-noUnusedVariables.js:34:7 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noUnusedVariables.js:34:7 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This variable is unused.
   
@@ -311,7 +311,7 @@ noUnusedVariables.js:34:7 lint/nursery/noUnusedVariables  FIXABLE  ━━━━�
 ```
 
 ```
-noUnusedVariables.js:36:7 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noUnusedVariables.js:36:7 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This variable is unused.
   
@@ -337,7 +337,7 @@ noUnusedVariables.js:36:7 lint/nursery/noUnusedVariables  FIXABLE  ━━━━�
 ```
 
 ```
-noUnusedVariables.js:41:10 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noUnusedVariables.js:41:10 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This variable is unused.
   
@@ -362,7 +362,7 @@ noUnusedVariables.js:41:10 lint/nursery/noUnusedVariables  FIXABLE  ━━━━
 ```
 
 ```
-noUnusedVariables.js:58:18 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noUnusedVariables.js:58:18 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This parameter is unused.
   
@@ -388,7 +388,7 @@ noUnusedVariables.js:58:18 lint/nursery/noUnusedVariables  FIXABLE  ━━━━
 ```
 
 ```
-noUnusedVariables.js:63:9 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noUnusedVariables.js:63:9 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This parameter is unused.
   

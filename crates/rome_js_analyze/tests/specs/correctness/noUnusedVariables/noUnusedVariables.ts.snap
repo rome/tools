@@ -61,7 +61,7 @@ used_overloaded();
 
 # Diagnostics
 ```
-noUnusedVariables.ts:4:14 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noUnusedVariables.ts:4:14 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This parameter is unused.
   
@@ -86,7 +86,7 @@ noUnusedVariables.ts:4:14 lint/nursery/noUnusedVariables  FIXABLE  ━━━━�
 ```
 
 ```
-noUnusedVariables.ts:5:4 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noUnusedVariables.ts:5:4 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This parameter is unused.
   
@@ -112,7 +112,7 @@ noUnusedVariables.ts:5:4 lint/nursery/noUnusedVariables  FIXABLE  ━━━━�
 ```
 
 ```
-noUnusedVariables.ts:6:8 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noUnusedVariables.ts:6:8 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This parameter is unused.
   
@@ -138,7 +138,7 @@ noUnusedVariables.ts:6:8 lint/nursery/noUnusedVariables  FIXABLE  ━━━━�
 ```
 
 ```
-noUnusedVariables.ts:12:10 lint/nursery/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+noUnusedVariables.ts:12:10 lint/correctness/noUnusedVariables  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ! This function is unused.
   
