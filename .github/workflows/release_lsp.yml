@@ -94,6 +94,10 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     needs: check
+    env:
+      version: ${{ needs.check.outputs.version }}
+      prerelease: ${{ needs.check.outputs.prerelease }}
+
     if: needs.check.outputs.version_changed == 'true' || needs.check.outputs.nightly == 'true'
     outputs:
       version: ${{ env.version }}
@@ -150,12 +154,6 @@ jobs:
         working-directory: editors/vscode
         run: |
           node ./scripts/update-nightly-version.mjs >> $GITHUB_ENV
-          echo "prerelease=true" >> $GITHUB_ENV
-      - name: Set release infos
-        if: needs.check.outputs.prerelease != 'true'
-        run: |
-          echo "version=${{ needs.check.outputs.version }}" >> $GITHUB_ENV
-          echo "prerelease=${{ needs.check.outputs.prerelease }}" >> $GITHUB_ENV
 
       - name: Package extension
         run: |
