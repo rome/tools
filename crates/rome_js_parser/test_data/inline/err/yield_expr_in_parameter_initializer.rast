@@ -186,12 +186,12 @@ yield_expr_in_parameter_initializer.js:2:26 parse ━━━━━━━━━━
 
   × expected `,` but instead found `"test"`
   
-  × unexpected
-  
     1 │ function* test(a = yield "test") {}
   > 2 │ function test2(a = yield "test") {}
       │                          ^^^^^^
     3 │ 
+  
+  i Remove "test"
   
 --
 function* test(a = yield "test") {}

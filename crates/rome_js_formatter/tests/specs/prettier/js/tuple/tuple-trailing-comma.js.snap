@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\tuple\\tuple-trailing-comma.js"
+  test_file: js/tuple/tuple-trailing-comma.js
 ---
 
 # Input
@@ -34,7 +34,11 @@ tuple-trailing-comma.js:1:1 parse ━━━━━━━━━━━━━━━�
 
   × expected a statement but instead found '#[1,]'
   
-  × Expected a statement here
+  > 1 │ #[1,]
+      │ ^^^^^
+    2 │ 
+  
+  i Expected a statement here
   
   > 1 │ #[1,]
       │ ^^^^^

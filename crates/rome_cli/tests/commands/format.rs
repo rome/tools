@@ -1,5 +1,6 @@
 use crate::configs::{
-    CONFIG_DISABLED_FORMATTER, CONFIG_FORMAT, CONFIG_FORMATTER_IGNORED_FILES, CONFIG_ISSUE_3175_1,
+    CONFIG_DISABLED_FORMATTER, CONFIG_FILE_SIZE_LIMIT, CONFIG_FORMAT,
+    CONFIG_FORMATTER_IGNORED_DIRECTORIES, CONFIG_FORMATTER_IGNORED_FILES, CONFIG_ISSUE_3175_1,
     CONFIG_ISSUE_3175_2,
 };
 use crate::snap_test::{markup_to_string, SnapshotPayload};
@@ -12,7 +13,7 @@ use rome_console::{markup, BufferConsole};
 use rome_fs::{FileSystemExt, MemoryFileSystem};
 use rome_service::DynRef;
 use std::ffi::OsString;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
 // six spaces
 const CUSTOM_FORMAT_AFTER: &str = r#"function f() {
@@ -28,6 +29,21 @@ let b = {
 
 const APPLY_QUOTE_STYLE_AFTER: &str = "let a = 'something';
 let b = {\n\t'hey': 'hello',\n};\n";
+
+const APPLY_TRAILING_COMMA_BEFORE: &str = r#"
+const a = [
+	longlonglonglongItem1longlonglonglongItem1,
+	longlonglonglongItem1longlonglonglongItem2,
+	longlonglonglongItem1longlonglonglongItem3,
+];
+"#;
+
+const APPLY_TRAILING_COMMA_AFTER: &str = r#"const a = [
+	longlonglonglongItem1longlonglonglongItem1,
+	longlonglonglongItem1longlonglonglongItem2,
+	longlonglonglongItem1longlonglonglongItem3
+];
+"#;
 
 const CUSTOM_CONFIGURATION_BEFORE: &str = r#"function f() {
   return { a, b }
@@ -113,6 +129,61 @@ fn write() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "formatter_write",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn write_only_files_in_correct_base() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_to_format = Path::new("src/format.js");
+    fs.insert(
+        file_to_format.into(),
+        <&str>::clone(&UNFORMATTED).as_bytes(),
+    );
+
+    let file_to_not_format = Path::new("scripts/format.js");
+    fs.insert(file_to_not_format.into(), UNFORMATTED.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--write"),
+            OsString::from("./src"),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(file_to_format)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, FORMATTED, "we test the file is formatted");
+    drop(file);
+    let mut file = fs
+        .open(file_to_not_format)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, UNFORMATTED, "we test the file is not formatted");
+    drop(file);
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "write_only_files_in_correct_base",
         fs,
         console,
         result,
@@ -392,6 +463,79 @@ fn applies_custom_quote_style() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "applies_custom_quote_style",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn applies_custom_trailing_comma() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("file.js");
+    fs.insert(file_path.into(), APPLY_TRAILING_COMMA_BEFORE.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--trailing-comma"),
+            OsString::from("none"),
+            OsString::from("--write"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(file_path)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    dbg!(&content);
+    assert_eq!(content, APPLY_TRAILING_COMMA_AFTER);
+
+    drop(file);
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "applies_custom_trailing_comma",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn trailing_comma_parse_errors() {
+    let mut console = BufferConsole::default();
+    let mut fs = MemoryFileSystem::default();
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--trailing-comma"),
+            OsString::from("NONE"),
+            OsString::from("file.js"),
+        ]),
+    );
+
+    match result {
+        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--trailing-comma"),
+        _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "trailing_comma_parse_errors",
         fs,
         console,
         result,
@@ -831,6 +975,64 @@ fn does_not_format_ignored_files() {
 }
 
 #[test]
+fn does_not_format_ignored_directories() {
+    let mut console = BufferConsole::default();
+    let mut fs = MemoryFileSystem::default();
+    let file_path = Path::new("rome.json");
+    fs.insert(
+        file_path.into(),
+        CONFIG_FORMATTER_IGNORED_DIRECTORIES.as_bytes(),
+    );
+
+    let ignored_file = Path::new("scripts/test.js");
+    fs.insert(ignored_file.into(), <&str>::clone(&UNFORMATTED).as_bytes());
+
+    let file_to_format = Path::new("src/test.js");
+    fs.insert(file_to_format.into(), UNFORMATTED.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("./"),
+            OsString::from("--write"),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(ignored_file)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, UNFORMATTED, "we test the file is not formatted");
+    drop(file);
+    let mut file = fs
+        .open(file_to_format)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, FORMATTED, "we test the file is formatted");
+    drop(file);
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "does_not_format_ignored_directories",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
 fn file_too_large() {
     let mut fs = MemoryFileSystem::default();
     let mut console = BufferConsole::default();
@@ -856,6 +1058,96 @@ fn file_too_large() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "file_too_large",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn file_too_large_config_limit() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    fs.insert(PathBuf::from("rome.json"), CONFIG_FILE_SIZE_LIMIT);
+
+    let file_path = Path::new("format.js");
+    fs.insert(file_path.into(), "statement1();\nstatement2();");
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![OsString::from("format"), file_path.as_os_str().into()]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "file_too_large_config_limit",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn file_too_large_cli_limit() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("format.js");
+    fs.insert(file_path.into(), "statement1();\nstatement2();");
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--files-max-size"),
+            OsString::from("16"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    assert!(result.is_ok(), "run_cli returned {result:?}");
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "file_too_large_cli_limit",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn files_max_size_parse_error() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("format.js");
+    fs.insert(file_path.into(), "statement1();\nstatement2();");
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("format"),
+            OsString::from("--files-max-size"),
+            OsString::from("-1"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    match result {
+        Err(Termination::ParseError { argument, .. }) => assert_eq!(argument, "--files-max-size"),
+        _ => panic!("run_cli returned {result:?} for an invalid argument value, expected an error"),
+    }
+
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "files_max_size_parse_error",
         fs,
         console,
         result,

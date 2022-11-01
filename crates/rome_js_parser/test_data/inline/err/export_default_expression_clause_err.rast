@@ -50,7 +50,11 @@ export_default_expression_clause_err.js:1:17 parse ━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+  > 1 │ export default a, b;
+      │                 ^
+    2 │ 
+  
+  i An explicit or implicit semicolon is expected here...
   
   > 1 │ export default a, b;
       │                 ^

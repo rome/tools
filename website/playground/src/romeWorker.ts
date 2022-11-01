@@ -113,18 +113,8 @@ self.addEventListener("message", async (e) => {
 					enabled: true,
 					rules: {
 						nursery: {
-							noNewSymbol: "error",
-							noDangerouslySetInnerHtml: "error",
-							noUnusedVariables: "error",
-							noUnreachable: "error",
-							useCamelCase: "error",
-							noRenderReturnValue: "error",
-							useButtonType: "error",
-							useOptionalChain: "error",
-							noUselessFragments: "error",
-							noVoidElementsWithChildren: "error",
-							noDangerouslySetInnerHtmlWithChildren: "error",
 							noConstAssign: "error",
+							useExhaustiveDependencies: "error",
 						},
 					},
 				};
@@ -173,6 +163,7 @@ self.addEventListener("message", async (e) => {
 			const diagnostics = workspace.pullDiagnostics({
 				path,
 				categories: ["Syntax", "Lint"],
+				max_diagnostics: Number.MAX_SAFE_INTEGER,
 			});
 
 			const printer = new DiagnosticPrinter(path.path, code);

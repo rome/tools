@@ -124,10 +124,10 @@ impl Rule for NoShoutyConstants {
 
         for reference in state.references.iter() {
             let node = reference.node();
-            diag = diag.secondary(node.text_trimmed_range(), "Used here.")
+            diag = diag.detail(node.text_trimmed_range(), "Used here.")
         }
 
-        let diag = diag.footer_note(
+        let diag = diag.note(
             markup! {"You should avoid declaring constants with a string that's the same
     value as the variable name. It introduces a level of unnecessary
     indirection when it's only two additional characters to inline."},

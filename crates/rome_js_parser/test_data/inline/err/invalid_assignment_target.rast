@@ -233,19 +233,17 @@ invalid_assignment_target.js:1:1 parse ━━━━━━━━━━━━━�
 
   × Invalid assignment to `++a`
   
-  × This expression cannot be assigned to
-  
   > 1 │ ++a = b;
       │ ^^^
     2 │ (++a) = b;
     3 │ (a = b;
   
+  i This expression cannot be assigned to
+  
 --
 invalid_assignment_target.js:2:2 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `++a`
-  
-  × This expression cannot be assigned to
   
     1 │ ++a = b;
   > 2 │ (++a) = b;
@@ -253,12 +251,12 @@ invalid_assignment_target.js:2:2 parse ━━━━━━━━━━━━━�
     3 │ (a = b;
     4 │ a?.b = b;
   
+  i This expression cannot be assigned to
+  
 --
 invalid_assignment_target.js:3:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `)` but instead found `;`
-  
-  × unexpected
   
     1 │ ++a = b;
     2 │ (++a) = b;
@@ -267,12 +265,12 @@ invalid_assignment_target.js:3:7 parse ━━━━━━━━━━━━━�
     4 │ a?.b = b;
     5 │ a?.["b"] = b;
   
+  i Remove ;
+  
 --
 invalid_assignment_target.js:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `a?.b`
-  
-  × This expression cannot be assigned to
   
     2 │ (++a) = b;
     3 │ (a = b;
@@ -281,12 +279,12 @@ invalid_assignment_target.js:4:1 parse ━━━━━━━━━━━━━�
     5 │ a?.["b"] = b;
     6 │ (a +) = b;
   
+  i This expression cannot be assigned to
+  
 --
 invalid_assignment_target.js:5:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `a?.["b"]`
-  
-  × This expression cannot be assigned to
   
     3 │ (a = b;
     4 │ a?.b = b;
@@ -295,12 +293,20 @@ invalid_assignment_target.js:5:1 parse ━━━━━━━━━━━━━�
     6 │ (a +) = b;
     7 │ 
   
+  i This expression cannot be assigned to
+  
 --
 invalid_assignment_target.js:6:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression but instead found ')'
   
-  × Expected an expression here
+    4 │ a?.b = b;
+    5 │ a?.["b"] = b;
+  > 6 │ (a +) = b;
+      │     ^
+    7 │ 
+  
+  i Expected an expression here
   
     4 │ a?.b = b;
     5 │ a?.["b"] = b;
@@ -313,13 +319,13 @@ invalid_assignment_target.js:6:2 parse ━━━━━━━━━━━━━�
 
   × Invalid assignment to `a +`
   
-  × This expression cannot be assigned to
-  
     4 │ a?.b = b;
     5 │ a?.["b"] = b;
   > 6 │ (a +) = b;
       │  ^^^
     7 │ 
+  
+  i This expression cannot be assigned to
   
 --
 ++a = b;

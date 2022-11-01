@@ -19,3 +19,11 @@ function BackTopContent(props){
 		</CSSMotion>
 	);
 }
+
+function ArrowBodyIsJsxWithComment({ action }) {
+	return (action) =>
+		(
+			// eslint-disable-next-line react/no-array-index-key
+			<li/>
+		);
+}

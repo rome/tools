@@ -72,4 +72,28 @@ import {
 } from "W";
 ```
 
+## Output 3
+
+-----
+Indent style: Tab
+Line width: 80
+Quote style: Double Quotes
+Quote properties: As needed
+Trailing comma: None
+-----
+
+```js
+import {
+	adsadasdasdasdasdasdasdasdasdasdas,
+	dsadsadasdasdasdasdasdasdasd,
+	dsadsadasdasdasdasdasdasdasd
+} from "D";
+
+import {
+	adsadasdasdasdasdasdasdasdasdasdas,
+	dsadsadasdasdasdasdasdasdasd,
+	dsadsadasdasdasdasdasdasdasd
+} from "W";
+```
+
 

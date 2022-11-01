@@ -68,13 +68,13 @@ export_decl_not_top_level.js:2:2 parse ━━━━━━━━━━━━━�
 
   × Illegal use of an export declaration not at the top level
   
-  × move this declaration to the top level
-  
     1 │ {
   > 2 │  export { pain } from "life";
       │  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     3 │ }
     4 │ 
+  
+  i move this declaration to the top level
   
 --
 {

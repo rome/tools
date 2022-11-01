@@ -20,7 +20,7 @@
 [ci-badge]: https://github.com/rome/tools/actions/workflows/main.yml/badge.svg
 [ci-url]: https://github.com/rome/tools/actions/workflows/main.yml
 [npm-badge]: https://img.shields.io/npm/v/rome/next?color=brightgreen
-[npm-url]: https://www.npmjs.com/package/rome/v/0.7.0-next
+[npm-url]: https://www.npmjs.com/package/rome/v/next
 [vscode-badge]: https://img.shields.io/visual-studio-marketplace/v/rome.rome?color=brightgreen&label=vscode
 [vscode-url]: (https://marketplace.visualstudio.com/items?itemName=rome.rome
 

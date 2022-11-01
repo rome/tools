@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\export-default\\escaped\\default-escaped.js"
+  test_file: js/export-default/escaped/default-escaped.js
 ---
 
 # Input
@@ -42,17 +42,21 @@ default-escaped.js:2:8 parse ━━━━━━━━━━━━━━━━━
 
   × expected `*` but instead found `n\u{63}`
   
-  × unexpected
-  
     1 │ // export asyn\u{63} from "async";
   > 2 │ export n\u{63} from "async";
       │        ^^^^^^^
+  
+  i Remove n\u{63}
   
 default-escaped.js:2:16 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    1 │ // export asyn\u{63} from "async";
+  > 2 │ export n\u{63} from "async";
+      │                ^^^^
+  
+  i An explicit or implicit semicolon is expected here...
   
     1 │ // export asyn\u{63} from "async";
   > 2 │ export n\u{63} from "async";
@@ -68,7 +72,11 @@ default-escaped.js:2:21 parse ━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    1 │ // export asyn\u{63} from "async";
+  > 2 │ export n\u{63} from "async";
+      │                     ^^^^^^^
+  
+  i An explicit or implicit semicolon is expected here...
   
     1 │ // export asyn\u{63} from "async";
   > 2 │ export n\u{63} from "async";

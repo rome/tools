@@ -1,0 +1,48 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: SuppressionComments.js
+---
+# Input
+```js
+// rome-ignore lint(correctness/noUnreachable): this comment does nothing
+function SuppressionComments1() {
+    beforeReturn();
+    return;
+    afterReturn();
+}
+
+function SuppressionComments2() {
+    beforeReturn();
+    return;
+    // rome-ignore lint(correctness/noUnreachable): supress warning
+    afterReturn();
+}
+
+```
+
+# Diagnostics
+```
+SuppressionComments.js:5:5 lint/correctness/noUnreachable ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This code will never be reached ...
+  
+    3 │     beforeReturn();
+    4 │     return;
+  > 5 │     afterReturn();
+      │     ^^^^^^^^^^^^^^
+    6 │ }
+    7 │ 
+  
+  i ... because this statement will return from the function beforehand
+  
+    2 │ function SuppressionComments1() {
+    3 │     beforeReturn();
+  > 4 │     return;
+      │     ^^^^^^^
+    5 │     afterReturn();
+    6 │ }
+  
+
+```
+
+

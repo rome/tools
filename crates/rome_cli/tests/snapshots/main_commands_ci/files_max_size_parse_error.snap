@@ -1,0 +1,19 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+assertion_line: 223
+expression: content
+---
+## `ci.js`
+
+```js
+statement1();
+statement2();
+```
+
+# Termination Message
+
+```block
+failed to parse argument '--files-max-size': failed to parse '-1': invalid digit found in string
+```
+
+

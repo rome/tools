@@ -3,20 +3,7 @@
 		"rules": {
 			"recommended": true,
 			"nursery": {
-				"noUnreachable": "error",
-				"noUnusedVariables": "error",
-				"useCamelCase": "off",
-				"noDangerouslySetInnerHtml": "error",
-				"noRenderReturnValue": "error",
-				"useButtonType": "error",
-				"useOptionalChain": "error",
-				"noUselessFragments": "error",
-				"noNewSymbol": "error",
-				"noVoidElementsWithChildren": "error",
-				"noDangerouslySetInnerHtmlWithChildren": "error",
-				"noConstAssign": "error",
-				"noAutofocus": "error",
-				"useKeyWithClickEvents": "error"
+				"noConstAssign": "error"
 			}
 		}
 	}

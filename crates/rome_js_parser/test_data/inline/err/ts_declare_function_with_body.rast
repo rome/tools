@@ -128,11 +128,11 @@ ts_declare_function_with_body.ts:1:40 parse ━━━━━━━━━━━━
 
   × A 'declare' function cannot have a function body
   
-  × remove this body
-  
   > 1 │ declare function test<A>(a: A): string { return "ambient function with a body"; }
       │                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     2 │ 
+  
+  i remove this body
   
 --
 declare function test<A>(a: A): string { return "ambient function with a body"; }

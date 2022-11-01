@@ -87,7 +87,7 @@ jobs:
         if: needs.check.outputs.prerelease == 'true'
         run: |
           echo "prerelease=true" >> $GITHUB_ENV
-          node npm/rome/scripts/update-nightly-version.mjs >> $GITHUB_ENV
+          node npm/js-api/scripts/update-nightly-version.mjs >> $GITHUB_ENV
       - name: Set release infos
         if: needs.check.outputs.prerelease != 'true'
         run: |
@@ -133,6 +133,10 @@ jobs:
         with:
           node-version: 14.x
           registry-url: 'https://registry.npmjs.org'
+
+      - name: Set release infos
+        if: needs.build.outputs.prerelease == 'true'
+        run: node npm/js-api/scripts/update-nightly-version.mjs
 
       - name: Publish npm package as latest
         run: npm publish @rometools/js-api --tag latest --access public

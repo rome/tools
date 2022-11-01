@@ -30,11 +30,11 @@ empty_parenthesized_expression.js:1:2 parse ━━━━━━━━━━━━
 
   × Parenthesized expression didnt contain anything
   
-  × Expected an expression here
-  
   > 1 │ ();
       │  ^
     2 │ 
+  
+  i Expected an expression here
   
 --
 ();

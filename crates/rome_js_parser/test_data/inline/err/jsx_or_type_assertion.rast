@@ -384,8 +384,6 @@ jsx_or_type_assertion.js:3:13 parse ━━━━━━━━━━━━━━�
 
   × type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   
-  × TypeScript only syntax
-  
     1 │ // SCRIPT
     2 │ function f() {
   > 3 │     let a = <div>a</div>; // JSX
@@ -393,12 +391,12 @@ jsx_or_type_assertion.js:3:13 parse ━━━━━━━━━━━━━━�
     4 │     let b = <string>b; // type assertion
     5 │     let c = <string>b<a>d; // type assertion
   
+  i TypeScript only syntax
+  
 --
 jsx_or_type_assertion.js:4:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  
-  × TypeScript only syntax
   
     2 │ function f() {
     3 │     let a = <div>a</div>; // JSX
@@ -407,12 +405,12 @@ jsx_or_type_assertion.js:4:13 parse ━━━━━━━━━━━━━━�
     5 │     let c = <string>b<a>d; // type assertion
     6 │     let d = <div>a</div>/; // ambiguous: JSX or "type assertion a less than regex /div>/". Probably JSX.
   
+  i TypeScript only syntax
+  
 --
 jsx_or_type_assertion.js:5:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  
-  × TypeScript only syntax
   
     3 │     let a = <div>a</div>; // JSX
     4 │     let b = <string>b; // type assertion
@@ -421,12 +419,12 @@ jsx_or_type_assertion.js:5:13 parse ━━━━━━━━━━━━━━�
     6 │     let d = <div>a</div>/; // ambiguous: JSX or "type assertion a less than regex /div>/". Probably JSX.
     7 │     let d = <string>a</string>/;
   
+  i TypeScript only syntax
+  
 --
 jsx_or_type_assertion.js:6:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  
-  × TypeScript only syntax
   
     4 │     let b = <string>b; // type assertion
     5 │     let c = <string>b<a>d; // type assertion
@@ -435,12 +433,12 @@ jsx_or_type_assertion.js:6:13 parse ━━━━━━━━━━━━━━�
     7 │     let d = <string>a</string>/;
     8 │ }
   
+  i TypeScript only syntax
+  
 --
 jsx_or_type_assertion.js:7:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × type assertion are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
-  
-  × TypeScript only syntax
   
     5 │     let c = <string>b<a>d; // type assertion
     6 │     let d = <div>a</div>/; // ambiguous: JSX or "type assertion a less than regex /div>/". Probably JSX.
@@ -448,6 +446,8 @@ jsx_or_type_assertion.js:7:13 parse ━━━━━━━━━━━━━━�
       │             ^^^^^^^^^
     8 │ }
     9 │ 
+  
+  i TypeScript only syntax
   
 --
 // SCRIPT

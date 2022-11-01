@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "typescript\\interface\\abstract.ts"
+  test_file: typescript/interface/abstract.ts
 ---
 
 # Input
@@ -38,7 +38,12 @@ abstract.ts:1:10 parse ━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+  > 1 │ abstract interface I {
+      │          ^^^^^^^^^
+    2 │ 
+    3 │ }
+  
+  i An explicit or implicit semicolon is expected here...
   
   > 1 │ abstract interface I {
       │          ^^^^^^^^^

@@ -190,19 +190,25 @@ object_shorthand_property_err.js:1:9 parse ━━━━━━━━━━━━�
 
   × expected `,` but instead found `b`
   
-  × unexpected
-  
   > 1 │ let { a b } = c
       │         ^
     2 │ let { = "test" } = c
     3 │ let { , d } = c
+  
+  i Remove b
   
 --
 object_shorthand_property_err.js:2:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an identifier but instead found '='
   
-  × Expected an identifier here
+    1 │ let { a b } = c
+  > 2 │ let { = "test" } = c
+      │       ^
+    3 │ let { , d } = c
+    4 │ 
+  
+  i Expected an identifier here
   
     1 │ let { a b } = c
   > 2 │ let { = "test" } = c
@@ -215,7 +221,13 @@ object_shorthand_property_err.js:3:7 parse ━━━━━━━━━━━━�
 
   × expected an identifier, a member name, or a rest pattern but instead found ','
   
-  × Expected an identifier, a member name, or a rest pattern here
+    1 │ let { a b } = c
+    2 │ let { = "test" } = c
+  > 3 │ let { , d } = c
+      │       ^
+    4 │ 
+  
+  i Expected an identifier, a member name, or a rest pattern here
   
     1 │ let { a b } = c
     2 │ let { = "test" } = c

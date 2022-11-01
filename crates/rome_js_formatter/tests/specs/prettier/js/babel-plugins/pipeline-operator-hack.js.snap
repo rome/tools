@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\babel-plugins\\pipeline-operator-hack.js"
+  test_file: js/babel-plugins/pipeline-operator-hack.js
 ---
 
 # Input
@@ -55,19 +55,17 @@ pipeline-operator-hack.js:5:3 parse ━━━━━━━━━━━━━━�
 
   × Expected an expression for the left hand side of the `>` operator.
   
-  × This operator requires a left hand side value
-  
     4 │ return list
   > 5 │  |> take(prefix.length, %)
       │   ^
     6 │  |> equals(%, prefix);
     7 │ 
   
+  i This operator requires a left hand side value
+  
 pipeline-operator-hack.js:5:25 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `%` operator.
-  
-  × This operator requires a left hand side value
   
     4 │ return list
   > 5 │  |> take(prefix.length, %)
@@ -75,11 +73,19 @@ pipeline-operator-hack.js:5:25 parse ━━━━━━━━━━━━━━�
     6 │  |> equals(%, prefix);
     7 │ 
   
+  i This operator requires a left hand side value
+  
 pipeline-operator-hack.js:5:26 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression but instead found ')'
   
-  × Expected an expression here
+    4 │ return list
+  > 5 │  |> take(prefix.length, %)
+      │                          ^
+    6 │  |> equals(%, prefix);
+    7 │ 
+  
+  i Expected an expression here
   
     4 │ return list
   > 5 │  |> take(prefix.length, %)
@@ -91,8 +97,6 @@ pipeline-operator-hack.js:6:3 parse ━━━━━━━━━━━━━━�
 
   × Expected an expression for the left hand side of the `>` operator.
   
-  × This operator requires a left hand side value
-  
     4 │ return list
     5 │  |> take(prefix.length, %)
   > 6 │  |> equals(%, prefix);
@@ -100,11 +104,11 @@ pipeline-operator-hack.js:6:3 parse ━━━━━━━━━━━━━━�
     7 │ 
     8 │ // (The % token isn't final; it might instead be @ or ? or #.)
   
+  i This operator requires a left hand side value
+  
 pipeline-operator-hack.js:6:12 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `%` operator.
-  
-  × This operator requires a left hand side value
   
     4 │ return list
     5 │  |> take(prefix.length, %)
@@ -113,11 +117,20 @@ pipeline-operator-hack.js:6:12 parse ━━━━━━━━━━━━━━�
     7 │ 
     8 │ // (The % token isn't final; it might instead be @ or ? or #.)
   
+  i This operator requires a left hand side value
+  
 pipeline-operator-hack.js:6:13 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected an expression but instead found ','
   
-  × Expected an expression here
+    4 │ return list
+    5 │  |> take(prefix.length, %)
+  > 6 │  |> equals(%, prefix);
+      │             ^
+    7 │ 
+    8 │ // (The % token isn't final; it might instead be @ or ? or #.)
+  
+  i Expected an expression here
   
     4 │ return list
     5 │  |> take(prefix.length, %)

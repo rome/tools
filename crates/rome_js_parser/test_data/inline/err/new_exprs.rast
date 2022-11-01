@@ -32,7 +32,11 @@ new_exprs.js:1:4 parse ━━━━━━━━━━━━━━━━━━━
 
   × expected an expression but instead found ';'
   
-  × Expected an expression here
+  > 1 │ new;
+      │    ^
+    2 │ 
+  
+  i Expected an expression here
   
   > 1 │ new;
       │    ^

@@ -75,14 +75,9 @@ function writeManifest(packagePath) {
 		]),
 	);
 
-	const wasmPackages = WASM_TARGETS.map((target) => [
-		`@rometools/wasm-${target}`,
-		rootManifest.version,
-	]);
-
 	manifestData["version"] = rootManifest.version;
 	manifestData["optionalDependencies"] = Object.fromEntries(
-		nativePackages.concat(wasmPackages),
+		nativePackages,
 	);
 
 	console.log(`Update manifest ${manifestPath}`);

@@ -92,11 +92,11 @@ jsx_fragment_closing_missing_r_angle.jsx:1:15 parse ━━━━━━━━━�
 
   × expected `>` but instead found `5`
   
-  × unexpected
-  
   > 1 │ <div><>test</ 5 more content</div>
       │               ^
     2 │ 
+  
+  i Remove 5
   
 --
 <div><>test</ 5 more content</div>

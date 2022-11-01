@@ -4,6 +4,17 @@
   "description": "The configuration that is contained inside the file `rome.json`",
   "type": "object",
   "properties": {
+    "files": {
+      "description": "The configuration of the filesystem",
+      "anyOf": [
+        {
+          "$ref": "#/definitions/FilesConfiguration"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "formatter": {
       "description": "The configuration of the formatter",
       "anyOf": [
@@ -40,11 +51,157 @@
   },
   "additionalProperties": false,
   "definitions": {
+    "A11y": {
+      "description": "A list of rules that belong to this group",
+      "type": "object",
+      "properties": {
+        "noAutofocus": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noPositiveTabindex": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recommended": {
+          "description": "It enables the recommended rules for this group",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "useAltText": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useAnchorContent": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useBlankTarget": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useButtonType": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useKeyWithClickEvents": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useKeyWithMouseEvents": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useValidAnchor": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "Complexity": {
+      "description": "A list of rules that belong to this group",
+      "type": "object",
+      "properties": {
+        "noExtraBooleanCast": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recommended": {
+          "description": "It enables the recommended rules for this group",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "useSimplifiedLogicExpression": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
     "Correctness": {
       "description": "A list of rules that belong to this group",
       "type": "object",
       "properties": {
         "noArguments": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noArrayIndexKey": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -65,6 +222,16 @@
           ]
         },
         "noCatchAssign": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noChildrenProp": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -144,27 +311,7 @@
             }
           ]
         },
-        "noExtraBooleanCast": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "noFunctionAssign": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "noImplicitBoolean": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -204,6 +351,36 @@
             }
           ]
         },
+        "noNewSymbol": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noRenderReturnValue": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noRestrictedGlobals": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noShadowRestrictedNames": {
           "anyOf": [
             {
@@ -224,7 +401,27 @@
             }
           ]
         },
+        "noUndeclaredVariables": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noUnnecessaryContinue": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noUnreachable": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -244,7 +441,27 @@
             }
           ]
         },
-        "noUnusedTemplateLiteral": {
+        "noUnusedVariables": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noUselessFragments": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noVoidElementsWithChildren": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -261,47 +478,7 @@
             "null"
           ]
         },
-        "useBlockStatements": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "useSimplifiedLogicExpression": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "useSingleCaseStatement": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "useSingleVarDeclarator": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "useTemplate": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -332,6 +509,23 @@
           ]
         }
       }
+    },
+    "FilesConfiguration": {
+      "description": "The configuration of the filesystem",
+      "type": "object",
+      "properties": {
+        "maxSize": {
+          "description": "The maximum allowed size for source code files in bytes. Files above this limit will be ignore for performance reason. Defaults to 1 MiB",
+          "default": null,
+          "type": [
+            "integer",
+            "null"
+          ],
+          "format": "uint64",
+          "minimum": 1.0
+        }
+      },
+      "additionalProperties": false
     },
     "FormatterConfiguration": {
       "type": "object",
@@ -490,27 +684,7 @@
       "description": "A list of rules that belong to this group",
       "type": "object",
       "properties": {
-        "noArrayIndexKey": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "noAutofocus": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "noChildrenProp": {
+        "noBannedTypes": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -530,26 +704,6 @@
             }
           ]
         },
-        "noDangerouslySetInnerHtml": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "noDangerouslySetInnerHtmlWithChildren": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "noExplicitAny": {
           "anyOf": [
             {
@@ -560,87 +714,7 @@
             }
           ]
         },
-        "noNewSymbol": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "noPositiveTabindex": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "noRenderReturnValue": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "noRestrictedGlobals": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "noUndeclaredVariables": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "noUnreachable": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "noUnusedVariables": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "noUselessFragments": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "noVoidElementsWithChildren": {
+        "noInvalidConstructorSuper": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -657,37 +731,17 @@
             "null"
           ]
         },
-        "useAnchorContent": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "useBlankTarget": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "useButtonType": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "useCamelCase": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useExhaustiveDependencies": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -707,47 +761,7 @@
             }
           ]
         },
-        "useFragmentSyntax": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "useKeyWithClickEvents": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "useKeyWithMouseEvents": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "useOptionalChain": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/RuleConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "useValidAnchor": {
+        "useValidForDirection": {
           "anyOf": [
             {
               "$ref": "#/definitions/RuleConfiguration"
@@ -815,6 +829,26 @@
     "Rules": {
       "type": "object",
       "properties": {
+        "a11y": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/A11y"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "complexity": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Complexity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "correctness": {
           "anyOf": [
             {
@@ -842,6 +876,16 @@
             "null"
           ]
         },
+        "security": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/Security"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "style": {
           "anyOf": [
             {
@@ -855,10 +899,53 @@
       },
       "additionalProperties": false
     },
+    "Security": {
+      "description": "A list of rules that belong to this group",
+      "type": "object",
+      "properties": {
+        "noDangerouslySetInnerHtml": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "noDangerouslySetInnerHtmlWithChildren": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recommended": {
+          "description": "It enables the recommended rules for this group",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      }
+    },
     "Style": {
       "description": "A list of rules that belong to this group",
       "type": "object",
       "properties": {
+        "noImplicitBoolean": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "noNegationElse": {
           "anyOf": [
             {
@@ -879,11 +966,51 @@
             }
           ]
         },
+        "noUnusedTemplateLiteral": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "recommended": {
           "description": "It enables the recommended rules for this group",
           "type": [
             "boolean",
             "null"
+          ]
+        },
+        "useBlockStatements": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useFragmentSyntax": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useOptionalChain": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
           ]
         },
         "useSelfClosingElements": {
@@ -905,6 +1032,26 @@
               "type": "null"
             }
           ]
+        },
+        "useSingleVarDeclarator": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "useTemplate": {
+          "anyOf": [
+            {
+              "$ref": "#/definitions/RuleConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       }
     },
@@ -912,7 +1059,8 @@
       "type": "string",
       "enum": [
         "all",
-        "es5"
+        "es5",
+        "none"
       ]
     }
   }

@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\v8_intrinsic\\intrinsic_call.js"
+  test_file: js/v8_intrinsic/intrinsic_call.js
 ---
 
 # Input
@@ -104,7 +104,16 @@ intrinsic_call.js:2:13 parse ━━━━━━━━━━━━━━━━━
             (
                     foo )'
   
-  × Expected a statement here
+    1 │ function doSmth()     {
+  > 2 │             %DebugPrint
+      │             ^^^^^^^^^^^
+  > 3 │         (
+  > 4 │                 foo )
+      │                 ^^^^^
+    5 │   }
+    6 │ 
+  
+  i Expected a statement here
   
     1 │ function doSmth()     {
   > 2 │             %DebugPrint
@@ -119,8 +128,6 @@ intrinsic_call.js:10:8 parse ━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `%` operator.
   
-  × This operator requires a left hand side value
-  
      8 │         f
      9 │ ) {
   > 10 │     if(%
@@ -128,11 +135,11 @@ intrinsic_call.js:10:8 parse ━━━━━━━━━━━━━━━━━
     11 │     IsAsmWasmCode(f))              console.log("asm.js");
     12 │         if(
   
+  i This operator requires a left hand side value
+  
 intrinsic_call.js:14:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `%` operator.
-  
-  × This operator requires a left hand side value
   
     12 │         if(
     13 │ 
@@ -141,17 +148,19 @@ intrinsic_call.js:14:9 parse ━━━━━━━━━━━━━━━━━
     15 │         f))
     16 │             console.log (
   
+  i This operator requires a left hand side value
+  
 intrinsic_call.js:21:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `%` operator.
-  
-  × This operator requires a left hand side value
   
     20 │     console.log
   > 21 │     (%
        │      ^
     22 │         GetFunctioName(f)
     23 │         );
+  
+  i This operator requires a left hand side value
   
 
 ```

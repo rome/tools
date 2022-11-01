@@ -170,8 +170,6 @@ ts_as_assignment_no_parenthesize.ts:3:2 parse ━━━━━━━━━━━�
 
   × Invalid assignment to `a()`
   
-  × This expression cannot be assigned to
-  
     1 │ let a: any;
     2 │ a as string = "string";
   > 3 │ (a() as string) = "string";
@@ -179,18 +177,20 @@ ts_as_assignment_no_parenthesize.ts:3:2 parse ━━━━━━━━━━━�
     4 │ <number> a = 3;
     5 │ 
   
+  i This expression cannot be assigned to
+  
 --
 ts_as_assignment_no_parenthesize.ts:4:1 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `<number> a`
-  
-  × This expression cannot be assigned to
   
     2 │ a as string = "string";
     3 │ (a() as string) = "string";
   > 4 │ <number> a = 3;
       │ ^^^^^^^^^^
     5 │ 
+  
+  i This expression cannot be assigned to
   
 --
 let a: any;

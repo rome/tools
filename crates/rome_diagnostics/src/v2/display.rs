@@ -7,6 +7,7 @@ use unicode_width::UnicodeWidthStr;
 mod backtrace;
 mod diff;
 mod frame;
+mod message;
 
 use crate::v2::display::frame::SourceFile;
 
@@ -16,6 +17,7 @@ use super::{
 };
 
 pub use self::backtrace::{set_bottom_frame, Backtrace};
+pub use self::message::MessageAndDescription;
 
 /// Helper struct from printing the description of a diagnostic into any
 /// formatter implementing [std::fmt::Write].

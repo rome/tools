@@ -66,7 +66,7 @@ impl Rule for NoDelete {
             RuleDiagnostic::new(rule_category!(),node.range(), markup! {
                 "This is an unexpected use of the "<Emphasis>"delete"</Emphasis>" operator."
             })
-            .summary("This is an unexpected use of the `delete` operator.\nReplace this expression with an `undefined` assignment")
+            .description("This is an unexpected use of the `delete` operator.\nReplace this expression with an `undefined` assignment")
         )
     }
 

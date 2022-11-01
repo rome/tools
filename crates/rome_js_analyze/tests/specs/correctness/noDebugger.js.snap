@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 99
 expression: noDebugger.js
 ---
 # Input
@@ -78,8 +79,11 @@ noDebugger.js:9:3 lint/correctness/noDebugger  FIXABLE  ━━━━━━━━
   
   i Suggested fix: Remove debugger statement
   
-    9 │ ··debugger;
-      │ -----------
+     7 7 │   function test() {
+     8 8 │     let a = 3;
+     9   │ - ··debugger;
+    10 9 │   }
+  
 
 ```
 

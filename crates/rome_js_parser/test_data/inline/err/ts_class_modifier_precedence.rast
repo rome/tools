@@ -413,7 +413,14 @@ ts_class_modifier_precedence.ts:4:14 parse ━━━━━━━━━━━━�
 
   × 'private' must precede 'readonly'
   
-  × move this modifier
+    2 │ abstract class Test extends Base {
+    3 │     // Accessibility
+  > 4 │     readonly private a: string;
+      │              ^^^^^^^
+    5 │     override protected base1;
+    6 │     static private b: string;
+  
+  i move this modifier
   
     2 │ abstract class Test extends Base {
     3 │     // Accessibility
@@ -436,7 +443,14 @@ ts_class_modifier_precedence.ts:5:14 parse ━━━━━━━━━━━━�
 
   × 'protected' must precede 'override'
   
-  × move this modifier
+    3 │     // Accessibility
+    4 │     readonly private a: string;
+  > 5 │     override protected base1;
+      │              ^^^^^^^^^
+    6 │     static private b: string;
+    7 │     abstract protected d: string;
+  
+  i move this modifier
   
     3 │     // Accessibility
     4 │     readonly private a: string;
@@ -459,7 +473,14 @@ ts_class_modifier_precedence.ts:6:12 parse ━━━━━━━━━━━━�
 
   × 'private' must precede 'static'
   
-  × move this modifier
+    4 │     readonly private a: string;
+    5 │     override protected base1;
+  > 6 │     static private b: string;
+      │            ^^^^^^^
+    7 │     abstract protected d: string;
+    8 │     // Static
+  
+  i move this modifier
   
     4 │     readonly private a: string;
     5 │     override protected base1;
@@ -482,7 +503,14 @@ ts_class_modifier_precedence.ts:7:14 parse ━━━━━━━━━━━━�
 
   × 'protected' must precede 'abstract'
   
-  × move this modifier
+    5 │     override protected base1;
+    6 │     static private b: string;
+  > 7 │     abstract protected d: string;
+      │              ^^^^^^^^^
+    8 │     // Static
+    9 │     readonly static c: string;
+  
+  i move this modifier
   
     5 │     override protected base1;
     6 │     static private b: string;
@@ -505,7 +533,14 @@ ts_class_modifier_precedence.ts:9:14 parse ━━━━━━━━━━━━�
 
   × 'static' must precede 'readonly'
   
-  × move this modifier
+     7 │     abstract protected d: string;
+     8 │     // Static
+   > 9 │     readonly static c: string;
+       │              ^^^^^^
+    10 │     override static base2: string;
+    11 │     // abstract
+  
+  i move this modifier
   
      7 │     abstract protected d: string;
      8 │     // Static
@@ -528,7 +563,14 @@ ts_class_modifier_precedence.ts:10:14 parse ━━━━━━━━━━━━
 
   × 'static' must precede 'override'
   
-  × move this modifier
+     8 │     // Static
+     9 │     readonly static c: string;
+  > 10 │     override static base2: string;
+       │              ^^^^^^
+    11 │     // abstract
+    12 │     override abstract base3: string;
+  
+  i move this modifier
   
      8 │     // Static
      9 │     readonly static c: string;
@@ -551,7 +593,14 @@ ts_class_modifier_precedence.ts:12:14 parse ━━━━━━━━━━━━
 
   × 'abstract' must precede 'override'
   
-  × move this modifier
+    10 │     override static base2: string;
+    11 │     // abstract
+  > 12 │     override abstract base3: string;
+       │              ^^^^^^^^
+    13 │     // override
+    14 │     readonly override base4: string;
+  
+  i move this modifier
   
     10 │     override static base2: string;
     11 │     // abstract
@@ -574,7 +623,14 @@ ts_class_modifier_precedence.ts:14:14 parse ━━━━━━━━━━━━
 
   × 'override' must precede 'readonly'
   
-  × move this modifier
+    12 │     override abstract base3: string;
+    13 │     // override
+  > 14 │     readonly override base4: string;
+       │              ^^^^^^^^
+    15 │ }
+    16 │ 
+  
+  i move this modifier
   
     12 │     override abstract base3: string;
     13 │     // override

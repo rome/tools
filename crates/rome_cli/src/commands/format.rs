@@ -2,16 +2,17 @@ use rome_formatter::IndentStyle;
 use rome_service::configuration::{
     FormatterConfiguration, JavascriptConfiguration, JavascriptFormatter, PlainIndentStyle,
 };
-use rome_service::{load_config, workspace::UpdateSettingsParams, Configuration};
+use rome_service::{workspace::UpdateSettingsParams, Configuration};
 use std::path::PathBuf;
 
+use crate::configuration::load_configuration;
 use crate::execute::ReportMode;
 use crate::{execute_mode, CliSession, Execution, Termination, TraversalMode};
 
 /// Handler for the "format" command of the Rome CLI
 pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
-    let configuration = load_config(&session.app.fs, None)?;
-    let configuration = apply_format_settings_from_cli(&mut session, configuration)?;
+    let mut configuration = load_configuration(&mut session)?;
+    apply_format_settings_from_cli(&mut session, &mut configuration)?;
 
     session
         .app
@@ -69,13 +70,8 @@ pub(crate) fn format(mut session: CliSession) -> Result<(), Termination> {
 /// into the workspace settings
 pub(crate) fn apply_format_settings_from_cli(
     session: &mut CliSession,
-    configuration: Option<Configuration>,
-) -> Result<Configuration, Termination> {
-    let mut configuration = if let Some(configuration) = configuration {
-        configuration
-    } else {
-        Configuration::default()
-    };
+    configuration: &mut Configuration,
+) -> Result<(), Termination> {
     let formatter = configuration
         .formatter
         .get_or_insert_with(FormatterConfiguration::default);
@@ -162,5 +158,5 @@ pub(crate) fn apply_format_settings_from_cli(
         javascript_formatter.trailing_comma = trailing_comma;
     }
 
-    Ok(configuration)
+    Ok(())
 }

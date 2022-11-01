@@ -1,14 +1,15 @@
-use rome_diagnostics::{file::FileId, v2::category, Diagnostic};
+use crate::ParseDiagnostic;
+use rome_diagnostics::file::FileId;
 
 pub fn invalid_digits_after_unicode_escape_sequence(
     file_id: FileId,
     start: usize,
     end: usize,
-) -> Diagnostic {
-    Diagnostic::error(
+) -> ParseDiagnostic {
+    ParseDiagnostic::new(
         file_id,
-        category!("parse"),
         "invalid digits after unicode escape sequence",
+        start..end,
     )
-    .primary(start..end, "expected valid unicode escape sequence")
+    .hint("expected valid unicode escape sequence")
 }

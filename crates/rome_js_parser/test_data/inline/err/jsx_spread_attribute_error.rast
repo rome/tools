@@ -274,8 +274,6 @@ jsx_spread_attribute_error.jsx:3:4 parse ━━━━━━━━━━━━━
 
   × expected `{` but instead found `...`
   
-  × unexpected
-  
     1 │ let obj = {};
     2 │ <a {...obj, other} />;
   > 3 │ <a ...obj} />;
@@ -283,12 +281,12 @@ jsx_spread_attribute_error.jsx:3:4 parse ━━━━━━━━━━━━━
     4 │ <a {obj} />;
     5 │ <div
   
+  i Remove ...
+  
 --
 jsx_spread_attribute_error.jsx:4:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `...` but instead found `obj`
-  
-  × unexpected
   
     2 │ <a {...obj, other} />;
     3 │ <a ...obj} />;
@@ -297,12 +295,12 @@ jsx_spread_attribute_error.jsx:4:5 parse ━━━━━━━━━━━━━
     5 │ <div
     6 │       {...{} /*
   
+  i Remove obj
+  
 --
 jsx_spread_attribute_error.jsx:8:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `}` but instead found `invalidProp`
-  
-  × unexpected
   
      6 │       {...{} /*
      7 │       // @ts-ignore */ /* prettier-ignore */
@@ -310,6 +308,8 @@ jsx_spread_attribute_error.jsx:8:7 parse ━━━━━━━━━━━━━
        │       ^^^^^^^^^^^
      9 │     />;
     10 │ 
+  
+  i Remove invalidProp
   
 --
 let obj = {};

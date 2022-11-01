@@ -138,7 +138,12 @@ template_literal.js:1:16 parse ━━━━━━━━━━━━━━━━�
 
   × expected an expression but instead found '}'
   
-  × Expected an expression here
+  > 1 │ let a = `foo ${}`
+      │                ^
+    2 │ let b = `${a a}`
+    3 │ 
+  
+  i Expected an expression here
   
   > 1 │ let a = `foo ${}`
       │                ^
@@ -150,12 +155,12 @@ template_literal.js:2:14 parse ━━━━━━━━━━━━━━━━�
 
   × expected `}` but instead found `a`
   
-  × unexpected
-  
     1 │ let a = `foo ${}`
   > 2 │ let b = `${a a}`
       │              ^
     3 │ 
+  
+  i Remove a
   
 --
 let a = `foo ${}`

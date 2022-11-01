@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import CodeMirror from "@uiw/react-codemirror";
 import type { ViewUpdate } from "@codemirror/view";
@@ -38,12 +38,15 @@ export function MobilePlayground({
 		setPlaygroundState((state) => ({ ...state, code: value }));
 	}, []);
 
-	const extensions = [
-		javascript({
-			jsx: isJsx,
-			typescript: isTypeScript,
-		}),
-	];
+	const extensions = useMemo(
+		() => [
+			javascript({
+				jsx: isJsx,
+				typescript: isTypeScript,
+			}),
+		],
+		[isJsx, isTypeScript],
+	);
 
 	return (
 		<div className="p-1">

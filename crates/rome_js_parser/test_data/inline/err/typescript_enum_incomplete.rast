@@ -34,7 +34,11 @@ typescript_enum_incomplete.ts:2:1 parse ━━━━━━━━━━━━━�
 
   × expected `}` but instead the file ends
   
-  × the file ends here
+    1 │ enum A {
+  > 2 │ 
+      │ 
+  
+  i the file ends here
   
     1 │ enum A {
   > 2 │ 

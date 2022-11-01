@@ -125,7 +125,12 @@ export_variable_clause_error.js:1:16 parse ━━━━━━━━━━━━�
 
   × expected an expression, or an assignment but instead found ';'
   
-  × Expected an expression, or an assignment here
+  > 1 │ export let a = ;
+      │                ^
+    2 │ export const b;
+    3 │ export let d, c;
+  
+  i Expected an expression, or an assignment here
   
   > 1 │ export let a = ;
       │                ^
@@ -137,13 +142,13 @@ export_variable_clause_error.js:2:14 parse ━━━━━━━━━━━━�
 
   × Const var declarations must have an initialized value
   
-  × this variable needs to be initialized
-  
     1 │ export let a = ;
   > 2 │ export const b;
       │              ^
     3 │ export let d, c;
     4 │ 
+  
+  i this variable needs to be initialized
   
 --
 export let a = ;

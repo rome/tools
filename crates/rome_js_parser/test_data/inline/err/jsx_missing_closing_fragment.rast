@@ -143,7 +143,12 @@ jsx_missing_closing_fragment.jsx:1:1 parse ━━━━━━━━━━━━�
 
   × JSX fragment has no corresponding closing tag.
   
-  × Opening fragment
+  > 1 │ <>test</test>;
+      │ ^^
+    2 │ <>test<inner> some text</inner>;
+    3 │ 
+  
+  i Opening fragment
   
   > 1 │ <>test</test>;
       │ ^^
@@ -162,7 +167,12 @@ jsx_missing_closing_fragment.jsx:3:1 parse ━━━━━━━━━━━━�
 
   × expected `<` but instead the file ends
   
-  × the file ends here
+    1 │ <>test</test>;
+    2 │ <>test<inner> some text</inner>;
+  > 3 │ 
+      │ 
+  
+  i the file ends here
   
     1 │ <>test</test>;
     2 │ <>test<inner> some text</inner>;

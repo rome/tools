@@ -169,8 +169,6 @@ ts_template_literal_error.ts:3:15 parse ━━━━━━━━━━━━━�
 
   × expected `}` but instead found `B`
   
-  × unexpected
-  
     1 │ type A = "a";
     2 │ type B = "b"
   > 3 │ type C = `${A B}bcd`
@@ -178,18 +176,20 @@ ts_template_literal_error.ts:3:15 parse ━━━━━━━━━━━━━�
     4 │ type D = `${A B`
     5 │ 
   
+  i Remove B
+  
 --
 ts_template_literal_error.ts:4:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `}` but instead found `B`
-  
-  × unexpected
   
     2 │ type B = "b"
     3 │ type C = `${A B}bcd`
   > 4 │ type D = `${A B`
       │               ^
     5 │ 
+  
+  i Remove B
   
 --
 type A = "a";

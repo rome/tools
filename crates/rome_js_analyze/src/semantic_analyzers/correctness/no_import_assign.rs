@@ -112,8 +112,8 @@ impl Rule for NoImportAssign {
                     "The imported variable "<Emphasis>{name.to_string()}</Emphasis>" is read-only"
                 },
             )
-            .footer_note(markup! {"Use a local variable instead of reassigning an import."})
-            .secondary(
+            .note(markup! {"Use a local variable instead of reassigning an import."})
+            .detail(
                 import_binding.syntax().text_trimmed_range(),
                 markup! {
                     "The variable is imported here"

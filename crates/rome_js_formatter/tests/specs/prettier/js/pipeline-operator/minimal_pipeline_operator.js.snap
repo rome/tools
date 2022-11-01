@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\pipeline-operator\\minimal_pipeline_operator.js"
+  test_file: js/pipeline-operator/minimal_pipeline_operator.js
 ---
 
 # Input
@@ -203,29 +203,27 @@ minimal_pipeline_operator.js:1:4 parse ━━━━━━━━━━━━━�
 
   × Expected an expression for the left hand side of the `>` operator.
   
-  × This operator requires a left hand side value
-  
   > 1 │ a |> b |> c;
       │    ^
     2 │ 
     3 │ a |> (b |> c);
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:1:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
   > 1 │ a |> b |> c;
       │         ^
     2 │ 
     3 │ a |> (b |> c);
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:3:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     1 │ a |> b |> c;
     2 │ 
@@ -234,11 +232,11 @@ minimal_pipeline_operator.js:3:4 parse ━━━━━━━━━━━━━�
     4 │ 
     5 │ (a |> b) || c;
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:3:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     1 │ a |> b |> c;
     2 │ 
@@ -247,11 +245,11 @@ minimal_pipeline_operator.js:3:10 parse ━━━━━━━━━━━━━�
     4 │ 
     5 │ (a |> b) || c;
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:5:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     3 │ a |> (b |> c);
     4 │ 
@@ -260,11 +258,11 @@ minimal_pipeline_operator.js:5:5 parse ━━━━━━━━━━━━━�
     6 │ a |> (b || c);
     7 │ 
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:6:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     5 │ (a |> b) || c;
   > 6 │ a |> (b || c);
@@ -272,11 +270,11 @@ minimal_pipeline_operator.js:6:4 parse ━━━━━━━━━━━━━�
     7 │ 
     8 │ let result = "hello"
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:9:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
      8 │ let result = "hello"
    > 9 │   |> doubleSay
@@ -284,11 +282,11 @@ minimal_pipeline_operator.js:9:4 parse ━━━━━━━━━━━━━�
     10 │   |> capitalize
     11 │   |> exclaim;
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:10:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
      8 │ let result = "hello"
      9 │   |> doubleSay
@@ -297,11 +295,11 @@ minimal_pipeline_operator.js:10:4 parse ━━━━━━━━━━━━━�
     11 │   |> exclaim;
     12 │ 
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:11:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
      9 │   |> doubleSay
     10 │   |> capitalize
@@ -310,11 +308,11 @@ minimal_pipeline_operator.js:11:4 parse ━━━━━━━━━━━━━�
     12 │ 
     13 │ let newScore = person.score
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:14:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     13 │ let newScore = person.score
   > 14 │   |> double
@@ -322,11 +320,11 @@ minimal_pipeline_operator.js:14:4 parse ━━━━━━━━━━━━━�
     15 │   |> (_ => add(7, _))
     16 │   |> (_ => subtract(2, _))
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:15:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     13 │ let newScore = person.score
     14 │   |> double
@@ -335,11 +333,11 @@ minimal_pipeline_operator.js:15:4 parse ━━━━━━━━━━━━━�
     16 │   |> (_ => subtract(2, _))
     17 │   |> (_ => boundScore(0, 100, _));
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:16:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     14 │   |> double
     15 │   |> (_ => add(7, _))
@@ -348,11 +346,11 @@ minimal_pipeline_operator.js:16:4 parse ━━━━━━━━━━━━━�
     17 │   |> (_ => boundScore(0, 100, _));
     18 │ 
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:17:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     15 │   |> (_ => add(7, _))
     16 │   |> (_ => subtract(2, _))
@@ -361,11 +359,11 @@ minimal_pipeline_operator.js:17:4 parse ━━━━━━━━━━━━━�
     18 │ 
     19 │ function createPerson (attrs) {
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:21:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     19 │ function createPerson (attrs) {
     20 │   attrs
@@ -374,11 +372,11 @@ minimal_pipeline_operator.js:21:6 parse ━━━━━━━━━━━━━�
     22 │     |> format('name', /^[a-z]$/i)
     23 │     |> Person.insertIntoDatabase;
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:22:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     20 │   attrs
     21 │     |> bounded('age', 1, 100)
@@ -387,11 +385,11 @@ minimal_pipeline_operator.js:22:6 parse ━━━━━━━━━━━━━�
     23 │     |> Person.insertIntoDatabase;
     24 │ }
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:23:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     21 │     |> bounded('age', 1, 100)
     22 │     |> format('name', /^[a-z]$/i)
@@ -400,11 +398,11 @@ minimal_pipeline_operator.js:23:6 parse ━━━━━━━━━━━━━�
     24 │ }
     25 │ 
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:26:6 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     24 │ }
     25 │ 
@@ -413,11 +411,11 @@ minimal_pipeline_operator.js:26:6 parse ━━━━━━━━━━━━━�
     27 │ (foo |> bar) ?? baz;
     28 │ 
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:27:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     26 │ foo |> (bar ?? baz);
   > 27 │ (foo |> bar) ?? baz;
@@ -425,11 +423,11 @@ minimal_pipeline_operator.js:27:7 parse ━━━━━━━━━━━━━�
     28 │ 
     29 │ const result = [1,2,3]
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:30:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     29 │ const result = [1,2,3]
   > 30 │  |> map(a => a * 2)
@@ -437,11 +435,11 @@ minimal_pipeline_operator.js:30:3 parse ━━━━━━━━━━━━━�
     31 │  |> filter(a => a > 5)
     32 │  |> reduce((sum, a) => a+sum, 0)
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:31:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     29 │ const result = [1,2,3]
     30 │  |> map(a => a * 2)
@@ -450,11 +448,11 @@ minimal_pipeline_operator.js:31:3 parse ━━━━━━━━━━━━━�
     32 │  |> reduce((sum, a) => a+sum, 0)
     33 │  |> increment
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:32:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     30 │  |> map(a => a * 2)
     31 │  |> filter(a => a > 5)
@@ -463,11 +461,11 @@ minimal_pipeline_operator.js:32:3 parse ━━━━━━━━━━━━━�
     33 │  |> increment
     34 │  |> add(3)
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:33:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     31 │  |> filter(a => a > 5)
     32 │  |> reduce((sum, a) => a+sum, 0)
@@ -476,11 +474,11 @@ minimal_pipeline_operator.js:33:3 parse ━━━━━━━━━━━━━�
     34 │  |> add(3)
     35 │ 
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:34:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     32 │  |> reduce((sum, a) => a+sum, 0)
     33 │  |> increment
@@ -489,11 +487,11 @@ minimal_pipeline_operator.js:34:3 parse ━━━━━━━━━━━━━�
     35 │ 
     36 │ const searchResults$ = fromEvent(document.querySelector('input'), 'input')
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:37:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     36 │ const searchResults$ = fromEvent(document.querySelector('input'), 'input')
   > 37 │   |> map(event => event.target.value)
@@ -501,11 +499,11 @@ minimal_pipeline_operator.js:37:4 parse ━━━━━━━━━━━━━�
     38 │   |> filter(searchText => searchText.length > 2)
     39 │   |> debounce(300)
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:38:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     36 │ const searchResults$ = fromEvent(document.querySelector('input'), 'input')
     37 │   |> map(event => event.target.value)
@@ -514,11 +512,11 @@ minimal_pipeline_operator.js:38:4 parse ━━━━━━━━━━━━━�
     39 │   |> debounce(300)
     40 │   |> distinctUntilChanged()
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:39:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     37 │   |> map(event => event.target.value)
     38 │   |> filter(searchText => searchText.length > 2)
@@ -527,11 +525,11 @@ minimal_pipeline_operator.js:39:4 parse ━━━━━━━━━━━━━�
     40 │   |> distinctUntilChanged()
     41 │   |> switchMap(searchText => queryApi(searchText) |> retry(3))
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:40:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     38 │   |> filter(searchText => searchText.length > 2)
     39 │   |> debounce(300)
@@ -540,11 +538,11 @@ minimal_pipeline_operator.js:40:4 parse ━━━━━━━━━━━━━�
     41 │   |> switchMap(searchText => queryApi(searchText) |> retry(3))
     42 │   |> share();
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:41:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     39 │   |> debounce(300)
     40 │   |> distinctUntilChanged()
@@ -553,11 +551,11 @@ minimal_pipeline_operator.js:41:4 parse ━━━━━━━━━━━━━�
     42 │   |> share();
     43 │ 
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:41:52 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     39 │   |> debounce(300)
     40 │   |> distinctUntilChanged()
@@ -566,11 +564,11 @@ minimal_pipeline_operator.js:41:52 parse ━━━━━━━━━━━━━
     42 │   |> share();
     43 │ 
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:42:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     40 │   |> distinctUntilChanged()
     41 │   |> switchMap(searchText => queryApi(searchText) |> retry(3))
@@ -579,11 +577,11 @@ minimal_pipeline_operator.js:42:4 parse ━━━━━━━━━━━━━�
     43 │ 
     44 │ const result = [5,10]
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:45:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     44 │ const result = [5,10]
   > 45 │   |> (_ => _.map(x => x * 2))
@@ -591,11 +589,11 @@ minimal_pipeline_operator.js:45:4 parse ━━━━━━━━━━━━━�
     46 │   |> (_ => _.reduce( (a,b) => a + b ))
     47 │   |> (sum => sum + 1)
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:46:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     44 │ const result = [5,10]
     45 │   |> (_ => _.map(x => x * 2))
@@ -604,11 +602,11 @@ minimal_pipeline_operator.js:46:4 parse ━━━━━━━━━━━━━�
     47 │   |> (sum => sum + 1)
     48 │ 
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:47:4 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     45 │   |> (_ => _.map(x => x * 2))
     46 │   |> (_ => _.reduce( (a,b) => a + b ))
@@ -617,11 +615,11 @@ minimal_pipeline_operator.js:47:4 parse ━━━━━━━━━━━━━�
     48 │ 
     49 │ const result2 = [4, 9].map( x => x |> inc |> double )
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:49:37 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     47 │   |> (sum => sum + 1)
     48 │ 
@@ -629,17 +627,19 @@ minimal_pipeline_operator.js:49:37 parse ━━━━━━━━━━━━━
        │                                     ^
     50 │ 
   
+  i This operator requires a left hand side value
+  
 minimal_pipeline_operator.js:49:44 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected an expression for the left hand side of the `>` operator.
-  
-  × This operator requires a left hand side value
   
     47 │   |> (sum => sum + 1)
     48 │ 
   > 49 │ const result2 = [4, 9].map( x => x |> inc |> double )
        │                                            ^
     50 │ 
+  
+  i This operator requires a left hand side value
   
 
 ```

@@ -267,6 +267,8 @@ ts_class_heritage_clause_errors.ts:3:24 parse ━━━━━━━━━━━�
     4 │ class C implements Int implements Int {}
     5 │ class D implements {}
   
+  i This is where implements was found
+  
     1 │ class A {}
     2 │ interface Int {}
   > 3 │ class B implements Int extends A {}

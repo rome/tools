@@ -97,7 +97,11 @@ ts_type_assertions_not_valid_at_new_expr.ts:1:17 parse ━━━━━━━━�
 
   × expected an expression but instead found '<'
   
-  × Expected an expression here
+  > 1 │ var test2 = new <any>Test2();
+      │                 ^
+    2 │ 
+  
+  i Expected an expression here
   
   > 1 │ var test2 = new <any>Test2();
       │                 ^

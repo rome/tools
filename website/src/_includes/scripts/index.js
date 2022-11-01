@@ -583,8 +583,9 @@ if (docsearchInput != null) {
 			script.addEventListener("load", () => {
 				// @ts-expect-error
 				return window.docsearch({
-					apiKey: "66db1ad366d458c6acded7cbc23dba7e",
-					indexName: "romefrontend",
+					appId: "ZKNROT3Q65",
+					apiKey: "6c573608bd6c44671bfc263fb83992e2",
+					indexName: "rome",
 					inputSelector: "#docsearch",
 					debug: false, // Set debug to true if you want to inspect the dropdown
 				});

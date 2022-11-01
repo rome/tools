@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\module-blocks\\comments.js"
+  test_file: js/module-blocks/comments.js
 ---
 
 # Input
@@ -72,7 +72,12 @@ comments.js:1:32 parse ━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+  > 1 │ const m = /*A1*/ module /*A2*/ { /*A3*/
+      │                                ^
+    2 │   /*A4*/
+    3 │   export const foo = "foo";
+  
+  i An explicit or implicit semicolon is expected here...
   
   > 1 │ const m = /*A1*/ module /*A2*/ { /*A3*/
       │                                ^
@@ -90,8 +95,6 @@ comments.js:3:3 parse ━━━━━━━━━━━━━━━━━━━�
 
   × Illegal use of an export declaration not at the top level
   
-  × move this declaration to the top level
-  
     1 │ const m = /*A1*/ module /*A2*/ { /*A3*/
     2 │   /*A4*/
   > 3 │   export const foo = "foo";
@@ -99,11 +102,11 @@ comments.js:3:3 parse ━━━━━━━━━━━━━━━━━━━�
     4 │   export { foo }; /*A5*/
     5 │   /*A6*/
   
+  i move this declaration to the top level
+  
 comments.js:4:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Illegal use of an export declaration not at the top level
-  
-  × move this declaration to the top level
   
     2 │   /*A4*/
     3 │   export const foo = "foo";
@@ -112,11 +115,20 @@ comments.js:4:3 parse ━━━━━━━━━━━━━━━━━━━�
     5 │   /*A6*/
     6 │ }/*A7*/;/*A8*/
   
+  i move this declaration to the top level
+  
 comments.js:8:26 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+     6 │ }/*A7*/;/*A8*/
+     7 │ 
+   > 8 │ const m2 = module/* B1 */{
+       │                          ^
+     9 │   /* B2 */
+    10 │ };
+  
+  i An explicit or implicit semicolon is expected here...
   
      6 │ }/*A7*/;/*A8*/
      7 │ 

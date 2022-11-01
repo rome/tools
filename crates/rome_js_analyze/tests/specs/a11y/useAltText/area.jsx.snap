@@ -1,0 +1,103 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: area.jsx
+---
+# Input
+```js
+// invalid
+
+<>
+	<area alt={undefined} />
+	<area alt={null} />
+	<area />
+	<area alt />
+	<area {...spread} alt />
+</>
+
+//valid
+
+<>
+	<area alt {...spread} />
+	<area aria-label="foo" />
+	<area aria-label {...spread} />
+	<area aria-labelledby="id1" />
+	<area aria-labelledby {...spread} />
+	<area alt="This is descriptive!" />
+</>
+
+```
+
+# Diagnostics
+```
+area.jsx:5:13 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide the attribute alt when using img, area or input type='image'
+  
+    3 │ <>
+    4 │ 	<area alt={undefined} />
+  > 5 │ 	<area alt={null} />
+      │ 	           ^^^^
+    6 │ 	<area />
+    7 │ 	<area alt />
+  
+  i Meaningful alternative text on elements helps users relying on screen
+                readers to understand content's purpose within a page.
+  
+
+```
+
+```
+area.jsx:6:2 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide the attribute alt when using img, area or input type='image'
+  
+    4 │ 	<area alt={undefined} />
+    5 │ 	<area alt={null} />
+  > 6 │ 	<area />
+      │ 	^^^^^^^^
+    7 │ 	<area alt />
+    8 │ 	<area {...spread} alt />
+  
+  i Meaningful alternative text on elements helps users relying on screen
+                readers to understand content's purpose within a page.
+  
+
+```
+
+```
+area.jsx:7:2 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide the attribute alt when using img, area or input type='image'
+  
+    5 │ 	<area alt={null} />
+    6 │ 	<area />
+  > 7 │ 	<area alt />
+      │ 	^^^^^^^^^^^^
+    8 │ 	<area {...spread} alt />
+    9 │ </>
+  
+  i Meaningful alternative text on elements helps users relying on screen
+                readers to understand content's purpose within a page.
+  
+
+```
+
+```
+area.jsx:8:2 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! Provide the attribute alt when using img, area or input type='image'
+  
+     6 │ 	<area />
+     7 │ 	<area alt />
+   > 8 │ 	<area {...spread} alt />
+       │ 	^^^^^^^^^^^^^^^^^^^^^^^^
+     9 │ </>
+    10 │ 
+  
+  i Meaningful alternative text on elements helps users relying on screen
+                readers to understand content's purpose within a page.
+  
+
+```
+
+

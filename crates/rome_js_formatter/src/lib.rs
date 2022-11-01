@@ -1,7 +1,7 @@
 //! Rome's official JavaScript formatter.
 //!
 //! ## Implement the formatter
-//!`
+//!
 //! Our formatter is node based. Meaning that each AST node knows how to format itself. In order to implement
 //! the formatting, a node has to implement the trait `FormatNode`.
 //!
@@ -12,12 +12,9 @@
 //! Our formatter has its own [internal IR](https://en.wikipedia.org/wiki/Intermediate_representation), it creates its own abstraction from an AST.
 //!
 //! The developer won't be creating directly this IR, but they will use a series of utilities that will help
-//! to create this IR. The whole IR is represented by the `enum` `FormatElement`. Please refer to [its internal
-//! documentation](#build-the-documentation) to understand the meaning of each variant.
+//! to create this IR. The whole IR is represented by the `enum` `FormatElement`.
 //!
-//!
-//!
-//! ### Rules to follow when implementing a formatter
+//! ### Best Practices
 //!
 //! 1. Use the `*Fields` struct to extract all the tokens/nodes
 //!     ```rust,ignore
@@ -58,6 +55,7 @@
 //!    documentation to understand how to use them and when;
 //!    3. `format_extensions.rs`: with these traits, we give the ability to nodes and tokens to implements certain methods
 //!    that are exposed based on its type. If you have a good IDE support, this feature will help you. For example:
+//!
 //!    ```rust,ignore
 //!    #[derive(Debug, Clone, Default)]
 //!    pub struct FormatJsExportDefaultExpressionClause;
@@ -72,27 +70,27 @@
 //!             let element = expression.format();
 //!
 //!             if let Some(expression) = &expression? {
-//!                 write!(f, [expression.format(), space_token()])?;
+//!                 write!(f, [expression.format(), space()])?;
 //!             }
 //!
 //!             if let Some(semicolon) = &semicolon_token {
 //!                 write!(f, [semicolon.format()])?;
 //!             } else {
-//!                 write!(f, [space_token()])?;
+//!                 write!(f, [space()])?;
 //!             }
 //!         }
 //!    }
 //!    ```
 //!
-//! 4. Use our [playground](https://play.rome.tools) to inspect the code that you want to format. You can inspect
-//! the AST given by a certain snippet. This will help you to understand which nodes need to be implemented/modified
+//! 4. Use the [playground](https://play.rome.tools) to inspect the code that you want to format.
+//! It helps you to understand which nodes need to be implemented/modified
 //! in order to implement formatting. Alternatively, you can locally run the playground by following
 //! the [playground instructions](https://github.com/rome/tools/blob/main/website/playground/README.md).
 //! 5. Use the [`quick_test()`](https://github.com/rome/tools/blob/main/crates/rome_js_formatter/src/lib.rs#L597-L616)
 //! function to test you snippet straight from your IDE, without running the whole test suite. The test
 //! is ignored on purpose, so you won't need to worry about the CI breaking.
 //!
-//! ## Write tests for the formatter
+//! ## Testing
 //!
 //! We use [insta.rs](https://insta.rs/docs) for our snapshot tests, please make sure you read its documentation to learn the basics of snapshot testing.
 //! You should install the companion [`cargo-insta`](https://insta.rs/docs/cli/) command to assist with snapshot reviewing.
@@ -152,7 +150,7 @@
 //!    In this case the test suite will run a **second test case** with `line_width` to 120 and `ident_style` with  4 spaces
 //! 6. when the test suite is run, you will have two outputs in your snapshot: the default one and the custom one
 //!
-//! ## Identify issues
+//! ### Debugging Test Failures
 //!
 //! There are four cases when a test is not correct:
 //! - you try to print/format the same token multiple times; the formatter will check at runtime when a test is run;
@@ -160,86 +158,11 @@
 //! called `"Unimplemented tokens/nodes"`; a test, in order to be valid, can't have that section;
 //!
 //!    If removing a token is the actual behaviour (removing some parenthesis or a semicolon), then the correct way
-//!    to do it by using the formatter API `formatter.format_replaced(token, empty_element())`;
+//!    to do it by using the formatter API [rome_formatter::trivia::format_removed];
 //! - the emitted code is not a valid program anymore, the test suite will parse again the emitted code and it will
 //! fail if there are syntax errors;
 //! - the emitted code, when formatted again, differs from the original; this usually happens when removing/adding new
 //! elements, and the grouping is not correctly set;
-//!
-//!
-//! ## Write tests for a parser
-//!
-//! If you want to create a new test for an existing parser, you will have to inline
-//! the code that you want to test in a comment that is created in a specific way.
-//!
-//! Let's say that you created a new parsing feature and you need new tests from scratch,
-//! just go to the source code where you parse this new feature if JavaScript, and add the following comment:
-//!
-//! ```rust,ignore
-//! // test feature_name
-//! // let a = { new_feature : "" }
-//! // let b = { new_feature : "" }
-//! fn parse_new_feature(p: &mut Parser) -> ParsedSyntax {}
-//! ```
-//!
-//! The first line, `// test feature_name` the important one. This will tell to the
-//! testing infrastructure to create a **positive test** (without parsing errors), called
-//! `feature_name.js` inside the `test_data/inline/ok` folder.
-//!
-//! The content of this file will be:
-//!
-//! ```js
-//! let a = { new_feature : "" }
-//! let b = { new_feature : "" }
-//! ```
-//!
-//! Basically, everything after the key comment will be the content of the new file.
-//!
-//! Now you need to run `cargo codegen test` and the task will actually generate this file for you.
-//!
-//! In case you want to create a **negative test** (*with* parsing errors), you will
-//! create a new comment like this:
-//!
-//! ```diff
-//! // test feature_name
-//! // let a = { new_feature : "" }
-//! // let b = { new_feature : "" }
-//!
-//! + // test_err feature_name
-//! + // let a = {  : "" }
-//! + // let b = { new_feature :  }
-//! fn parse_new_feature(p: &mut Parser) -> ParsedSyntax {}
-//! ```
-//!
-//! Mind the different comment **`test_err`**, which marks the error for the test suite
-//! as a test that has to fail.
-//!
-//! Run the command `cargo codegen test` and you will see a new file called
-//! `feature_name.js` inside the `test_data/inline/err` folder.
-//!
-//! The content of this file will be:
-//!
-//! ```js
-//! let a = {  : "" }
-//! let b = { new_feature :  }
-//! ```
-//!
-//! Now run the command:
-//! Unix/macOS
-//!
-//! ```bash
-//! env UPDATE_EXPECT=1 cargo test
-//! ```
-//!
-//! Windows
-//!
-//! ```powershell
-//! set UPDATE_EXPECT=1 & cargo test
-//! ```
-//! The command will tell the test suite to generate and update the `.rast` files.
-//!
-//! If tests that are inside the `ok/` folder fail or if tests that are inside the `err/`
-//! folder don't emit, the whole test suite will fail.
 
 mod cst;
 mod js;
@@ -862,20 +785,17 @@ function() {
     // use this test check if your snippet prints as you wish, without using a snapshot
     fn quick_test() {
         let src = r#"
-class C {
-  one(
-    AAAAAAAAAAAAAAAAAAAAAAAAAA,
-    BBBBBBBBBBBBBBBBBBBBBBBBB,
-    BBBBBBBBBBBBBBBBBBBBBB,
-    c,
-  ) {}
-}
+const a = [
+	longlonglonglongItem1longlonglonglongItem1,
+	longlonglonglongItem1longlonglonglongItem2,
+	longlonglonglongItem1longlonglonglongItem3,
+];
 
 "#;
         let syntax = SourceType::tsx();
         let tree = parse(src, FileId::zero(), syntax);
         let options = JsFormatOptions::new(syntax);
-        let options = options.with_trailing_comma(TrailingComma::ES5);
+        let options = options.with_trailing_comma(TrailingComma::None);
         let result = format_node(options.clone(), &tree.syntax())
             .unwrap()
             .print()

@@ -1,11 +1,15 @@
-use crate::{Configuration, MatchOptions, Matcher, RomeError, Rules};
+use crate::{
+    configuration::FilesConfiguration, Configuration, MatchOptions, Matcher, RomeError, Rules,
+};
 use indexmap::IndexSet;
 use rome_diagnostics::v2::Category;
-use rome_diagnostics::Severity;
 use rome_formatter::{IndentStyle, LineWidth};
 use rome_fs::RomePath;
 use rome_js_syntax::JsLanguage;
-use std::sync::{RwLock, RwLockReadGuard};
+use std::{
+    num::NonZeroU64,
+    sync::{RwLock, RwLockReadGuard},
+};
 
 /// Global settings for the entire workspace
 #[derive(Debug, Default)]
@@ -16,6 +20,8 @@ pub struct WorkspaceSettings {
     pub linter: LinterSettings,
     /// Language specific settings
     pub languages: LanguagesSettings,
+    /// Filesystem settings for the workspace
+    pub files: FilesSettings,
 }
 
 impl WorkspaceSettings {
@@ -56,6 +62,11 @@ impl WorkspaceSettings {
         let globals = configuration.javascript.and_then(|j| j.globals);
         self.languages.javascript.globals = globals;
 
+        // Filesystem settings
+        if let Some(files) = configuration.files {
+            self.files = FilesSettings::try_from(files)?;
+        }
+
         Ok(())
     }
 
@@ -64,7 +75,10 @@ impl WorkspaceSettings {
     /// The code of the has the following pattern: `{group}/{rule_name}`.
     ///
     /// It returns [None] if the `code` doesn't match any rule.
-    pub fn get_severity_from_rule_code(&self, code: &Category) -> Option<Severity> {
+    pub fn get_severity_from_rule_code(
+        &self,
+        code: &Category,
+    ) -> Option<rome_diagnostics::v2::Severity> {
         let rules = self.linter.rules.as_ref();
         if let Some(rules) = rules {
             rules.get_severity_from_code(code)
@@ -168,6 +182,36 @@ pub struct LanguageSettings<L: Language> {
 
     /// Globals variables/bindings that can be found in a file
     pub globals: Option<IndexSet<String>>,
+}
+
+/// Filesystem settings for the entire workspace
+#[derive(Debug)]
+pub struct FilesSettings {
+    /// File size limit in bytes
+    pub max_size: NonZeroU64,
+}
+
+/// Limit the size of files to 1.0 MiB by default
+const DEFAULT_FILE_SIZE_LIMIT: NonZeroU64 =
+    // SAFETY: This constant is initialized with a non-zero value
+    unsafe { NonZeroU64::new_unchecked(1024 * 1024) };
+
+impl Default for FilesSettings {
+    fn default() -> Self {
+        Self {
+            max_size: DEFAULT_FILE_SIZE_LIMIT,
+        }
+    }
+}
+
+impl TryFrom<FilesConfiguration> for FilesSettings {
+    type Error = RomeError;
+
+    fn try_from(config: FilesConfiguration) -> Result<Self, Self::Error> {
+        Ok(Self {
+            max_size: config.max_size.unwrap_or(DEFAULT_FILE_SIZE_LIMIT),
+        })
+    }
 }
 
 /// Handle object holding a temporary lock on the workspace settings until

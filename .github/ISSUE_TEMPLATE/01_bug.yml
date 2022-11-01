@@ -1,7 +1,7 @@
 name: 🐛 Bug Report
 description: Report a possible bug or regression
 title: "🐛 <TITLE>"
-labels: ["bug: unconfirmed"]
+labels: ["S-Bug: unconfirmed"]
 body:
   - type: markdown
     attributes:

@@ -31,6 +31,12 @@ export async function activate(context: ExtensionContext) {
 	const command =
 		process.env.DEBUG_SERVER_PATH || (await getServerPath(context));
 
+	if (process.env.DEBUG_SERVER_PATH) {
+		window.showInformationMessage(
+			`Rome DEBUG_SERVER_PATH detected: ${command}`,
+		);
+	}
+
 	if (!command) {
 		await window.showErrorMessage(
 			"The Rome extensions doesn't ship with prebuilt binaries for your platform yet. " +
@@ -74,6 +80,11 @@ export async function activate(context: ExtensionContext) {
 	session.registerCommand(Commands.SyntaxTree, syntaxTree(session));
 	session.registerCommand(Commands.ServerStatus, () => {
 		traceOutputChannel.show();
+	});
+	session.registerCommand(Commands.RestartLspServer, () => {
+		client.restart().catch((error) => {
+			client.error("Restarting client failed", error, "force");
+		});
 	});
 
 	context.subscriptions.push(

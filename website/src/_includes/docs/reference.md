@@ -62,6 +62,9 @@ Prints the help message and exits.
 
 Enables Rome's linter
 
+> Default: `true`
+
+
 ##### `linter.ignore`
 
 An array of Unix shell style patterns.
@@ -73,8 +76,6 @@ An array of Unix shell style patterns.
   }
 }
 ```
-
-> Default: `true`
 
 ##### `linter.rules.recommended`
 

@@ -127,13 +127,13 @@ js_class_property_with_ts_annotation.js:2:3 parse ━━━━━━━━━━
 
   × return types can only be used in TypeScript files
   
-  × remove this type annotation
-  
     1 │ class A {
   > 2 │  a: string;
       │   ^^^^^^^^
     3 │  b?: string;
     4 │  c!: string
+  
+  i remove this type annotation
   
 --
 js_class_property_with_ts_annotation.js:3:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

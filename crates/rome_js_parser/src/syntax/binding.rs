@@ -1,4 +1,4 @@
-use crate::parser::{expected_any, ToDiagnostic};
+use crate::parser::expected_any;
 use crate::syntax::class::parse_initializer_clause;
 use crate::syntax::expr::{is_nth_at_identifier, parse_identifier, ExpressionContext};
 use crate::syntax::js_parse_error::{
@@ -8,8 +8,8 @@ use crate::syntax::object::{is_at_object_member_name, parse_object_member_name};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
 use crate::JsSyntaxFeature::StrictMode;
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{ParsedSyntax, Parser, SyntaxFeature};
-use rome_diagnostics::{Diagnostic, Span};
+use crate::{ParseDiagnostic, ParsedSyntax, Parser, SyntaxFeature, ToDiagnostic};
+use rome_diagnostics::Span;
 use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_rowan::SyntaxKind as SyntaxKindTrait;
 
@@ -70,12 +70,13 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
         let identifier_name = identifier.text(p);
 
         if StrictMode.is_supported(p) && matches!(identifier_name, "eval" | "arguments") {
-            let err = p
-                .err_builder(&format!(
+            let err = p.err_builder(
+                format!(
                     "Illegal use of `{}` as an identifier in strict mode",
                     identifier_name
-                ))
-                .primary(identifier.range(p), "");
+                ),
+                identifier.range(p),
+            );
             p.error(err);
 
             identifier.change_to_unknown(p);
@@ -85,11 +86,15 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
         if let Some(parent) = p.state.duplicate_binding_parent {
             if identifier_name == "let" {
                 let err = p
-                    .err_builder(&format!(
+                    .err_builder(
+                        format!(
                         "`let` cannot be declared as a variable name inside of a `{}` declaration",
-                        parent
-                    ))
-                    .primary(identifier.range(p), "Rename the let identifier here");
+                        parent,
+
+                    ),
+                        identifier.range(p),
+                    )
+                    .hint("Rename the let identifier here");
 
                 p.error(err);
                 identifier.change_to_unknown(p);
@@ -98,20 +103,23 @@ pub(crate) fn parse_identifier_binding(p: &mut Parser) -> ParsedSyntax {
 
             if let Some(existing) = p.state.name_map.get(identifier_name) {
                 let err = p
-                    .err_builder(&format!(
-                        "Declarations inside of a `{}` declaration may not have duplicates",
-                        parent
-                    ))
-                    .secondary(
-                        existing.to_owned(),
-                        &format!("`{}` is first declared here", identifier_name),
-                    )
-                    .primary(
+                    .err_builder(
+                        format!(
+                            "Declarations inside of a `{}` declaration may not have duplicates",
+                            parent
+                        ),
                         identifier.range(p),
-                        &format!(
+                    )
+                    .detail(
+                        identifier.range(p),
+                        format!(
                             "a second declaration of `{}` is not allowed",
                             identifier_name
                         ),
+                    )
+                    .detail(
+                        existing.to_owned(),
+                        format!("`{}` is first declared here", identifier_name),
                     );
                 p.error(err);
                 identifier.change_to_unknown(p);
@@ -137,7 +145,7 @@ impl ParseWithDefaultPattern for BindingPatternWithDefault {
     }
 
     #[inline]
-    fn expected_pattern_error(p: &Parser, range: TextRange) -> Diagnostic {
+    fn expected_pattern_error(p: &Parser, range: TextRange) -> ParseDiagnostic {
         expected_binding(p, range)
     }
 
@@ -193,7 +201,7 @@ impl ParseArrayPattern<BindingPatternWithDefault> for ArrayBindingPattern {
     }
 
     #[inline]
-    fn expected_element_error(p: &Parser, range: TextRange) -> Diagnostic {
+    fn expected_element_error(p: &Parser, range: TextRange) -> ParseDiagnostic {
         expected_any(
             &[
                 "identifier",
@@ -235,7 +243,7 @@ impl ParseObjectPattern for ObjectBindingPattern {
     }
 
     #[inline]
-    fn expected_property_pattern_error(p: &Parser, range: TextRange) -> Diagnostic {
+    fn expected_property_pattern_error(p: &Parser, range: TextRange) -> ParseDiagnostic {
         expected_any(&["identifier", "member name", "rest pattern"], range).to_diagnostic(p)
     }
 
@@ -275,7 +283,11 @@ impl ParseObjectPattern for ObjectBindingPattern {
             JS_OBJECT_BINDING_PATTERN_PROPERTY
         };
 
+        // test destructuring_initializer_binding
+        // const { value, f = (value) => value } = item
+        let parent = p.state.duplicate_binding_parent.take();
         parse_initializer_clause(p, ExpressionContext::default()).ok();
+        p.state.duplicate_binding_parent = parent;
 
         Present(m.complete(p, kind))
     }
@@ -306,7 +318,7 @@ impl ParseObjectPattern for ObjectBindingPattern {
                     let inner_range = inner.range(p);
                     // Don't add multiple errors
                     if inner.kind() != JS_UNKNOWN_BINDING {
-                        p.error(p.err_builder("Expected identifier binding").primary(inner_range, "Object rest patterns must bind to an identifier, other patterns are not allowed."));
+                        p.error(p.err_builder("Expected identifier binding", inner_range,).hint( "Object rest patterns must bind to an identifier, other patterns are not allowed."));
                     }
 
                     inner.change_kind(p, JS_UNKNOWN_BINDING);

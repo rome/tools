@@ -35,17 +35,19 @@ pub const CONFIG_ALL_FIELDS: &str = r#"{
   "linter": {
     "enabled": true,
     "rules": {
-        "correctness": {
-            "useSimplifiedLogicExpression": "warn",
-            "noCatchAssign": "error",
-            "noLabelVar": {
-                "level": "warn"
-            },
+        "complexity": {
+            "useSimplifiedLogicExpression": "warn"
+        },
+        "style": {        
             "useTemplate": {
                 "level": "error"
             }
         },
-        "nursery": {
+        "correctness": {
+            "noCatchAssign": "error",
+            "noLabelVar": {
+                "level": "warn"
+            },
             "noUnreachable": "off"
         }
     }
@@ -121,7 +123,6 @@ pub const CONFIG_LINTER_DOWNGRADE_DIAGNOSTIC: &str = r#"{
     "rules": {
         "recommended": true,
         "correctness": {
-            "recommended": true,      
             "noDebugger": "warn"
         }
     }
@@ -133,8 +134,7 @@ pub const CONFIG_LINTER_UPGRADE_DIAGNOSTIC: &str = r#"{
     "rules": {
         "recommended": true,
         "nursery": {
-            "noUnreachable": "error",
-            "noUnusedVariables": "error"
+            "noInvalidConstructorSuper": "error"
         }
     }
   }
@@ -172,6 +172,13 @@ pub const CONFIG_FORMATTER_IGNORED_FILES: &str = r#"{
 }
 "#;
 
+pub const CONFIG_FORMATTER_IGNORED_DIRECTORIES: &str = r#"{
+  "formatter": {
+    "ignore": ["scripts/*"]
+  }
+}
+"#;
+
 pub const CONFIG_LINTER_IGNORED_FILES: &str = r#"{
   "linter": {
     "enabled": true,
@@ -179,3 +186,9 @@ pub const CONFIG_LINTER_IGNORED_FILES: &str = r#"{
   }
 }
 "#;
+
+pub const CONFIG_FILE_SIZE_LIMIT: &str = r#"{
+  "files": {
+    "maxSize": 16
+  }
+}"#;

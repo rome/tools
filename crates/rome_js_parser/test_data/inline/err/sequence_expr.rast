@@ -53,7 +53,11 @@ sequence_expr.js:1:7 parse ━━━━━━━━━━━━━━━━━�
 
   × expected an expression but instead found ','
   
-  × Expected an expression here
+  > 1 │ 1, 2, , 4
+      │       ^
+    2 │ 
+  
+  i Expected an expression here
   
   > 1 │ 1, 2, , 4
       │       ^

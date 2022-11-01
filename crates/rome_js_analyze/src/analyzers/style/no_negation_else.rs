@@ -136,8 +136,15 @@ impl Rule for NoNegationElse {
 fn is_negation(node: &JsAnyExpression) -> Option<bool> {
     match node {
         JsAnyExpression::JsUnaryExpression(expr) => {
-            Some(expr.operator().ok()? == JsUnaryOperator::LogicalNot)
+            match (expr.operator().ok(), expr.argument().ok()) {
+                (
+                    Some(JsUnaryOperator::LogicalNot),
+                    Some(JsAnyExpression::JsUnaryExpression(inner_unary)),
+                ) => Some(inner_unary.operator().ok()? != JsUnaryOperator::LogicalNot),
+                _ => Some(true),
+            }
         }
+
         _ => Some(false),
     }
 }

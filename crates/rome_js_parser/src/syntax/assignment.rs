@@ -12,8 +12,7 @@ use crate::syntax::js_parse_error::{
 use crate::syntax::object::{is_at_object_member_name, parse_object_member_name};
 use crate::syntax::pattern::{ParseArrayPattern, ParseObjectPattern, ParseWithDefaultPattern};
 use crate::ParsedSyntax::{Absent, Present};
-use crate::{Checkpoint, CompletedMarker, Parser};
-use rome_diagnostics::Diagnostic;
+use crate::{Checkpoint, CompletedMarker, ParseDiagnostic, Parser};
 use rome_js_syntax::{JsSyntaxKind::*, *};
 use rome_rowan::AstNode;
 
@@ -160,7 +159,7 @@ impl ParseWithDefaultPattern for AssignmentPatternWithDefault {
     }
 
     #[inline]
-    fn expected_pattern_error(p: &Parser, range: TextRange) -> Diagnostic {
+    fn expected_pattern_error(p: &Parser, range: TextRange) -> ParseDiagnostic {
         expected_assignment_target(p, range)
     }
 
@@ -218,7 +217,7 @@ impl ParseArrayPattern<AssignmentPatternWithDefault> for ArrayAssignmentPattern 
     }
 
     #[inline]
-    fn expected_element_error(p: &Parser, range: TextRange) -> Diagnostic {
+    fn expected_element_error(p: &Parser, range: TextRange) -> ParseDiagnostic {
         expected_any(&["assignment target", "rest element", "comma"], range).to_diagnostic(p)
     }
 
@@ -250,7 +249,7 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
     }
 
     #[inline]
-    fn expected_property_pattern_error(p: &Parser, range: TextRange) -> Diagnostic {
+    fn expected_property_pattern_error(p: &Parser, range: TextRange) -> ParseDiagnostic {
         expected_any(&["assignment target", "rest property"], range).to_diagnostic(p)
     }
 
@@ -326,12 +325,10 @@ impl ParseObjectPattern for ObjectAssignmentPattern {
                 JS_OBJECT_ASSIGNMENT_PATTERN | JS_ARRAY_ASSIGNMENT_PATTERN
             ) {
                 target.change_kind(p, JS_UNKNOWN_ASSIGNMENT);
-                p.error(
-                    p.err_builder(
-                        "object and array assignment targets are not allowed in rest patterns",
-                    )
-                    .primary(target.range(p), ""),
-                );
+                p.error(p.err_builder(
+                    "object and array assignment targets are not allowed in rest patterns",
+                    target.range(p),
+                ));
             }
         }
 
@@ -450,12 +447,10 @@ impl RewriteParseEvents for ReparseAssignment {
                     // arguments = "test";
                     let name = completed.text(p);
                     if matches!(name, "eval" | "arguments") && p.is_strict_mode() {
-                        let error = p
-                            .err_builder(&format!(
-                                "Illegal use of `{}` as an identifier in strict mode",
-                                name
-                            ))
-                            .primary(completed.range(p), "");
+                        let error = p.err_builder(
+                            format!("Illegal use of `{}` as an identifier in strict mode", name),
+                            completed.range(p),
+                        );
                         p.error(error);
 
                         completed.change_to_unknown(p);
@@ -464,8 +459,11 @@ impl RewriteParseEvents for ReparseAssignment {
                 JS_UNKNOWN_ASSIGNMENT => {
                     let range = completed.range(p);
                     p.error(
-                        p.err_builder(&format!("Invalid assignment to `{}`", completed.text(p)))
-                            .primary(range, "This expression cannot be assigned to"),
+                        p.err_builder(
+                            format!("Invalid assignment to `{}`", completed.text(p)),
+                            range,
+                        )
+                        .hint("This expression cannot be assigned to"),
                     );
                 }
                 _ => {}

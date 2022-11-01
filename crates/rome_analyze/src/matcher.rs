@@ -153,7 +153,8 @@ where
 
 #[cfg(test)]
 mod tests {
-    use rome_diagnostics::{file::FileId, v2::category, Diagnostic, Severity};
+    use rome_diagnostics::v2::{Diagnostic, Error, Severity};
+    use rome_diagnostics::{file::FileId, v2::category};
     use rome_rowan::{
         raw_language::{RawLanguage, RawLanguageKind, RawLanguageRoot, RawSyntaxTreeBuilder},
         AstNode, TextRange, TextSize, TriviaPiece, TriviaPieceKind,
@@ -168,6 +169,15 @@ mod tests {
     use super::MatchQueryParams;
 
     struct SuppressionMatcher;
+
+    #[derive(Debug, Diagnostic)]
+    #[diagnostic(category = "args/fileNotFound", message = "test_suppression")]
+    struct TestDiagnostic {
+        #[location(resource)]
+        location: FileId,
+        #[location(span)]
+        span: TextRange,
+    }
 
     impl QueryMatcher<RawLanguage> for SuppressionMatcher {
         /// Emits a warning diagnostic for all literal expressions
@@ -184,17 +194,10 @@ mod tests {
             let span = node.text_trimmed_range();
             params.signal_queue.push(SignalEntry {
                 signal: Box::new(DiagnosticSignal::new(move || {
-                    AnalyzerDiagnostic::from_diagnostic(
-                        Diagnostic::warning(
-                            FileId::zero(),
-                            // This is a random category for testing that's
-                            // pretty much guaranteed to never be emitted by
-                            // the analyzer
-                            category!("args/fileNotFound"),
-                            "test_suppression",
-                        )
-                        .primary(span, ""),
-                    )
+                    AnalyzerDiagnostic::from_error(Error::from(TestDiagnostic {
+                        span,
+                        location: FileId::zero(),
+                    }))
                 })),
                 rule: RuleKey::new("group", "rule"),
                 text_range: span,
@@ -294,15 +297,12 @@ mod tests {
 
         let mut diagnostics = Vec::new();
         let mut emit_signal = |signal: &dyn AnalyzerSignal<RawLanguage>| -> ControlFlow<Never> {
-            let diag = signal
-                .diagnostic()
-                .expect("diagnostic")
-                .into_diagnostic(Severity::Warning);
+            let mut diag = signal.diagnostic().expect("diagnostic");
+            diag.set_severity(Severity::Warning);
+            let code = diag.category().expect("code");
+            let range = diag.get_span().expect("range");
 
-            let code = diag.code.expect("code");
-            let label = diag.primary.expect("primary label");
-
-            diagnostics.push((code, label.span.range));
+            diagnostics.push((code, range));
             ControlFlow::Continue(())
         };
 

@@ -15,7 +15,11 @@ use std::{
     sync::Once,
 };
 
-use rome_diagnostics::{file::SimpleFiles, termcolor, Emitter};
+use rome_diagnostics::termcolor;
+use rome_diagnostics::v2::console::fmt::{Formatter, Termcolor};
+use rome_diagnostics::v2::console::markup;
+use rome_diagnostics::v2::DiagnosticExt;
+use rome_diagnostics::v2::PrintDiagnostic;
 use rome_formatter::{FormatOptions, IndentStyle};
 use rome_js_formatter::context::JsFormatOptions;
 use rome_js_parser::parse;
@@ -213,15 +217,17 @@ fn test_snapshot(input: &'static str, _: &str, _: &str, _: &str) {
     writeln!(snapshot).unwrap();
 
     if has_errors {
-        let mut files = SimpleFiles::new();
-        files.add(file_name.into(), parse_input);
-
         let mut buffer = termcolor::Buffer::no_color();
-        let mut emitter = Emitter::new(&files);
 
-        for error in parsed.diagnostics() {
-            emitter
-                .emit_with_writer(error, &mut buffer)
+        for diagnostic in parsed.diagnostics() {
+            let error = diagnostic
+                .clone()
+                .with_file_path(file_name)
+                .with_file_source_code(parse_input.clone());
+            Formatter::new(&mut Termcolor(&mut buffer))
+                .write_markup(markup! {
+                    {PrintDiagnostic(&error)}
+                })
                 .expect("failed to emit diagnostic");
         }
 

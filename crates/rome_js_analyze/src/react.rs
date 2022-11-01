@@ -1,5 +1,7 @@
 //! A series of AST utilities to work with the React library
 
+pub mod hooks;
+
 use rome_js_semantic::SemanticModel;
 use rome_js_syntax::{
     JsAnyCallArgument, JsAnyExpression, JsCallExpression, JsIdentifierBinding, JsImport,

@@ -6,6 +6,7 @@ use crate::line_index::LineIndex;
 #[derive(Clone)]
 pub(crate) struct Document {
     pub(crate) version: i32,
+    pub(crate) content: String,
     pub(crate) line_index: LineIndex,
 }
 
@@ -13,6 +14,7 @@ impl Document {
     pub(crate) fn new(version: i32, text: &str) -> Self {
         Self {
             version,
+            content: text.into(),
             line_index: LineIndex::new(text),
         }
     }

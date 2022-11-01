@@ -16,17 +16,19 @@ expression: content
   "linter": {
     "enabled": true,
     "rules": {
-        "correctness": {
-            "useSimplifiedLogicExpression": "warn",
-            "noCatchAssign": "error",
-            "noLabelVar": {
-                "level": "warn"
-            },
+        "complexity": {
+            "useSimplifiedLogicExpression": "warn"
+        },
+        "style": {        
             "useTemplate": {
                 "level": "error"
             }
         },
-        "nursery": {
+        "correctness": {
+            "noCatchAssign": "error",
+            "noLabelVar": {
+                "level": "warn"
+            },
             "noUnreachable": "off"
         }
     }

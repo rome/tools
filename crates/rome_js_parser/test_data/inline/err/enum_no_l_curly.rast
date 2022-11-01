@@ -69,24 +69,24 @@ enum_no_l_curly.ts:1:5 parse ━━━━━━━━━━━━━━━━━
 
   × expected `{` but instead found `;`
   
-  × unexpected
-  
   > 1 │ enum;
       │     ^
     2 │ enum A;
     3 │ 
+  
+  i Remove ;
   
 --
 enum_no_l_curly.ts:2:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `{` but instead found `;`
   
-  × unexpected
-  
     1 │ enum;
   > 2 │ enum A;
       │       ^
     3 │ 
+  
+  i Remove ;
   
 --
 enum;

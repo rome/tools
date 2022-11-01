@@ -1,0 +1,31 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+expression: noSuperWithoutExtends.js
+---
+# Input
+```js
+class A {
+    constructor() {
+        super()
+    }
+}
+
+```
+
+# Diagnostics
+```
+noSuperWithoutExtends.js:3:9 parse/noSuperWithoutExtends ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! super() is only valid in derived class constructors
+  
+    1 │ class A {
+    2 │     constructor() {
+  > 3 │         super()
+      │         ^^^^^
+    4 │     }
+    5 │ }
+  
+
+```
+
+

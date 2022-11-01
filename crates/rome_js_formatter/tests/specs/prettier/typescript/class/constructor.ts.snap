@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "typescript\\class\\constructor.ts"
+  test_file: typescript/class/constructor.ts
 ---
 
 # Input
@@ -84,7 +84,13 @@ constructor.ts:6:15 parse ━━━━━━━━━━━━━━━━━━
 
   × expected a parameter but instead found 'export'
   
-  × Expected a parameter here
+    5 │ class foo {
+  > 6 │   constructor(export a: number) {}
+      │               ^^^^^^
+    7 │ }
+    8 │ 
+  
+  i Expected a parameter here
   
     5 │ class foo {
   > 6 │   constructor(export a: number) {}
@@ -96,13 +102,13 @@ constructor.ts:6:22 parse ━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `a`
   
-  × unexpected
-  
     5 │ class foo {
   > 6 │   constructor(export a: number) {}
       │                      ^
     7 │ }
     8 │ 
+  
+  i Remove a
   
 constructor.ts:10:5 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -118,7 +124,13 @@ constructor.ts:17:15 parse ━━━━━━━━━━━━━━━━━�
 
   × expected a type parameter but instead found '>'
   
-  × Expected a type parameter here
+    16 │ class B {
+  > 17 │   constructor<>() {}
+       │               ^
+    18 │ }
+    19 │ 
+  
+  i Expected a type parameter here
   
     16 │ class B {
   > 17 │   constructor<>() {}

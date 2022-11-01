@@ -5,7 +5,7 @@ use super::{
     PullDiagnosticsParams, PullDiagnosticsResult, RenameResult, SupportsFeatureParams,
     UpdateSettingsParams,
 };
-use crate::file_handlers::{Capabilities, FixAllParams, Language};
+use crate::file_handlers::{Capabilities, FixAllParams, Language, LintParams};
 use crate::workspace::{RageEntry, RageParams, RageResult, ServerInfo, SupportsFeatureResult};
 use crate::{
     file_handlers::Features,
@@ -15,10 +15,10 @@ use crate::{
 use dashmap::{mapref::entry::Entry, DashMap};
 use indexmap::IndexSet;
 use rome_analyze::{AnalysisFilter, RuleFilter};
-use rome_diagnostics::file::SimpleFile;
-use rome_diagnostics::{v2, Diagnostic, Severity};
+use rome_diagnostics::v2::{serde::Diagnostic, DiagnosticExt};
 use rome_formatter::Printed;
 use rome_fs::RomePath;
+use rome_js_parser::ParseDiagnostic;
 use rome_rowan::{AstNode, Language as RowanLanguage, SendNode, SyntaxNode};
 use std::{any::type_name, panic::RefUnwindSafe, sync::RwLock};
 
@@ -59,7 +59,7 @@ pub(crate) struct Document {
 #[derive(Clone)]
 pub(crate) struct AnyParse {
     pub(crate) root: SendNode,
-    pub(crate) diagnostics: Vec<Diagnostic>,
+    pub(crate) diagnostics: Vec<ParseDiagnostic>,
 }
 
 impl AnyParse {
@@ -83,14 +83,13 @@ impl AnyParse {
         N::unwrap_cast(self.syntax::<N::Language>())
     }
 
+    /// This function transforms diagnostics coming from the parser into serializable diagnostics
     pub(crate) fn into_diagnostics(self) -> Vec<Diagnostic> {
-        self.diagnostics
+        self.diagnostics.into_iter().map(Diagnostic::new).collect()
     }
 
     fn has_errors(&self) -> bool {
-        self.diagnostics
-            .iter()
-            .any(|diag| diag.severity >= Severity::Error)
+        self.diagnostics.iter().any(|diag| diag.is_error())
     }
 }
 
@@ -178,15 +177,19 @@ impl WorkspaceServer {
                     .parse
                     .ok_or_else(self.build_capability_error(rome_path))?;
 
-                /// Limit the size of files to 1.0 MiB
-                const SIZE_LIMIT_IN_BYTES: usize = 1024 * 1024;
+                let size_limit = {
+                    let settings = self.settings();
+                    let settings = settings.as_ref();
+                    let limit = settings.files.max_size.get();
+                    usize::try_from(limit).unwrap_or(usize::MAX)
+                };
 
                 let size = document.content.as_bytes().len();
-                if size >= SIZE_LIMIT_IN_BYTES {
+                if size >= size_limit {
                     return Err(RomeError::FileTooLarge {
                         path: rome_path.to_path_buf(),
                         size,
-                        limit: SIZE_LIMIT_IN_BYTES,
+                        limit: size_limit,
                     });
                 }
 
@@ -375,29 +378,26 @@ impl Workspace for WorkspaceServer {
         let mut filter = AnalysisFilter::from_enabled_rules(Some(rule_filter_list.as_slice()));
         filter.categories = params.categories;
 
-        let diagnostics = lint(&params.path, parse, filter, rules, self.settings());
-
-        if diagnostics.is_empty() {
-            return Ok(PullDiagnosticsResult {
-                diagnostics: Vec::new(),
-            });
-        }
-
-        let document = self
-            .documents
-            .get(&params.path)
-            .ok_or(RomeError::NotFound)?;
-
-        let files = SimpleFile::new(params.path.display().to_string(), document.content.clone());
+        let results = lint(LintParams {
+            rome_path: &params.path,
+            parse,
+            filter,
+            rules,
+            settings: self.settings(),
+            max_diagnostics: params.max_diagnostics,
+        });
 
         Ok(PullDiagnosticsResult {
-            diagnostics: diagnostics
+            diagnostics: results
+                .diagnostics
                 .into_iter()
                 .map(|diag| {
-                    let diag = diag.as_diagnostic(&files);
-                    v2::serde::Diagnostic::new(diag)
+                    let diag = diag.with_file_path(params.path.as_path().display().to_string());
+                    Diagnostic::new(diag)
                 })
                 .collect(),
+            has_errors: results.has_errors,
+            skipped_diagnostics: results.skipped_diagnostics,
         })
     }
 

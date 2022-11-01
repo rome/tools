@@ -366,7 +366,13 @@ binding_identifier_invalid.js:8:8 parse ━━━━━━━━━━━━━�
 
   × Declarations inside of a `let` declaration may not have duplicates
   
-  × a second declaration of `a` is not allowed
+    6 │ let let = 5;
+    7 │ const let = 5;
+  > 8 │ let a, a;
+      │        ^
+    9 │ 
+  
+  i a second declaration of `a` is not allowed
   
     6 │ let let = 5;
     7 │ const let = 5;

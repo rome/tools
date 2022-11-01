@@ -36,11 +36,11 @@ abstract_class_in_js.js:1:1 parse ━━━━━━━━━━━━━━━�
 
   × abstract classes are a TypeScript only feature. Convert your file to a TypeScript file or remove the syntax.
   
-  × TypeScript only syntax
-  
   > 1 │ abstract class A {}
       │ ^^^^^^^^^^^^^^^^^^^
     2 │ 
+  
+  i TypeScript only syntax
   
 --
 abstract class A {}

@@ -43,7 +43,11 @@ js_right_shift_comments.js:1:22 parse ━━━━━━━━━━━━━━
 
   × expected an expression but instead found '>'
   
-  × Expected an expression here
+  > 1 │ 1 >> /* a comment */ > 2;
+      │                      ^
+    2 │ 
+  
+  i Expected an expression here
   
   > 1 │ 1 >> /* a comment */ > 2;
       │                      ^

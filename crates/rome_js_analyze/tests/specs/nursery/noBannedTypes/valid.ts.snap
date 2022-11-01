@@ -1,0 +1,30 @@
+---
+source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 100
+expression: valid.ts
+---
+# Input
+```js
+let f = Object();
+
+let foo: { x: number; y: number } = { x: 1, y: 1 };
+
+let g = Object.create(null);
+
+let h = String(false);
+
+let b: undefined;
+
+let c: null;
+
+let a: [];
+
+let tuple: [boolean, string] = [true, "hello"];
+
+type Props = {
+	foo: string;
+}
+
+```
+
+

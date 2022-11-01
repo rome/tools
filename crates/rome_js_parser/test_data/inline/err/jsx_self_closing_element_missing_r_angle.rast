@@ -87,11 +87,11 @@ jsx_self_closing_element_missing_r_angle.jsx:1:11 parse ━━━━━━━━
 
   × expected `>` but instead found `some`
   
-  × unexpected
-  
   > 1 │ <><test / some test followed by<a /></>;
       │           ^^^^
     2 │ 
+  
+  i Remove some
   
 --
 <><test / some test followed by<a /></>;

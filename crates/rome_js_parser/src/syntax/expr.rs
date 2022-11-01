@@ -217,7 +217,7 @@ pub(crate) fn parse_number_literal_expression(p: &mut Parser) -> ParsedSyntax {
         } else {
             "\"0\"-prefixed octal literals are deprecated; use the \"0o\" prefix instead."
         };
-        p.error(p.err_builder(err_msg).primary(p.cur_range(), ""));
+        p.error(p.err_builder(err_msg, p.cur_range()));
     }
 
     let m = p.start();
@@ -363,10 +363,10 @@ fn parse_yield_expression(p: &mut Parser, context: ExpressionContext) -> Complet
         // test_err yield_expr_in_parameter_initializer
         // function* test(a = yield "test") {}
         // function test2(a = yield "test") {}
-        p.error(
-            p.err_builder("`yield` is only allowed within generator functions.")
-                .primary(yield_expr.range(p), ""),
-        );
+        p.error(p.err_builder(
+            "`yield` is only allowed within generator functions.",
+            yield_expr.range(p),
+        ));
         yield_expr.change_to_unknown(p);
     }
 
@@ -520,9 +520,10 @@ fn parse_binary_or_logical_expression_recursive(
                 let err = p
 					.err_builder(
 						"unparenthesized unary expression can't appear on the left-hand side of '**'",
+                        left.range(p)
 					)
-					.secondary(op_range, "")
-					.primary(left.range(p), "");
+					.detail(op_range, "The operation")
+					.detail(left.range(p), "The left-hand side");
 
                 p.error(err);
                 is_unknown = true;
@@ -535,11 +536,14 @@ fn parse_binary_or_logical_expression_recursive(
             }
         } else {
             let err = p
-                .err_builder(&format!(
-                    "Expected an expression for the left hand side of the `{}` operator.",
-                    p.source(op_range)
-                ))
-                .primary(op_range, "This operator requires a left hand side value");
+                .err_builder(
+                    format!(
+                        "Expected an expression for the left hand side of the `{}` operator.",
+                        p.source(op_range),
+                    ),
+                    op_range,
+                )
+                .hint("This operator requires a left hand side value");
             p.error(err);
         }
 
@@ -750,10 +754,11 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
             let identifier_range = p.cur_range();
             let name = p.cur_src();
             let error = p
-                .err_builder(&format!(
-                    "'{name}' is not a valid meta-property for keyword 'new'."
-                ))
-                .primary(identifier_range, "Did you mean 'target'?");
+                .err_builder(
+                    format!("'{name}' is not a valid meta-property for keyword 'new'."),
+                    identifier_range,
+                )
+                .hint("Did you mean 'target'?");
 
             p.error(error);
             p.bump_remap(T![ident]);
@@ -777,11 +782,8 @@ fn parse_new_expr(p: &mut Parser, context: ExpressionContext) -> ParsedSyntax {
         // new A.b?.()()
         if p.at(T![?.]) {
             let error = p
-                .err_builder("Invalid optional chain from new expression.")
-                .primary(
-                    p.cur_range(),
-                    &format!("Did you mean to call '{}()'?", lhs.text(p)),
-                );
+                .err_builder("Invalid optional chain from new expression.", p.cur_range())
+                .hint(format!("Did you mean to call '{}()'?", lhs.text(p)));
 
             p.error(error);
         }
@@ -830,15 +832,15 @@ fn parse_super_expression(p: &mut Parser) -> ParsedSyntax {
 
     if p.at(T![?.]) {
         super_expression.change_kind(p, JS_UNKNOWN_EXPRESSION);
-        p.error(
-            p.err_builder("Super doesn't support optional chaining as super can never be null")
-                .primary(super_expression.range(p), ""),
-        );
+        p.error(p.err_builder(
+            "Super doesn't support optional chaining as super can never be null",
+            super_expression.range(p),
+        ));
     } else if p.at(T!['(']) && !p.state.in_constructor() {
-        p.error(
-            p.err_builder("`super` is only valid inside of a class constructor of a subclass.")
-                .primary(super_expression.range(p), ""),
-        );
+        p.error(p.err_builder(
+            "`super` is only valid inside of a class constructor of a subclass.",
+            super_expression.range(p),
+        ));
         super_expression.change_kind(p, JS_UNKNOWN_EXPRESSION);
     }
 
@@ -897,8 +899,11 @@ pub(super) fn parse_private_name(p: &mut Parser) -> ParsedSyntax {
         // 	# test;
         // }
         p.error(
-            p.err_builder("Unexpected space or comment between `#` and identifier")
-                .primary(hash_end..p.cur_range().start(), "remove the space here"),
+            p.err_builder(
+                "Unexpected space or comment between `#` and identifier",
+                hash_end..p.cur_range().start(),
+            )
+            .hint("remove the space here"),
         );
         Present(m.complete(p, JS_UNKNOWN))
     } else {
@@ -1072,8 +1077,11 @@ fn parse_parenthesized_expression(p: &mut Parser) -> ParsedSyntax {
         // test_err empty_parenthesized_expression
         // ();
         p.error(
-            p.err_builder("Parenthesized expression didnt contain anything")
-                .primary(p.cur_range(), "Expected an expression here"),
+            p.err_builder(
+                "Parenthesized expression didnt contain anything",
+                p.cur_range(),
+            )
+            .hint("Expected an expression here"),
         );
     } else {
         let first = parse_assignment_expression_or_higher(p, ExpressionContext::default());
@@ -1240,19 +1248,21 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
                     p.bump_remap(META);
                     m.complete(p, IMPORT_META)
                 } else if p.at(T![ident]) {
-                    let err = p
-                        .err_builder(&format!(
+                    let err = p.err_builder(
+                        format!(
                             "Expected `meta` following an import keyword, but found `{}`",
                             p.source(p.cur_range())
-                        ))
-                        .primary(p.cur_range(), "");
+                        ),
+                        p.cur_range(),
+                    );
 
                     p.err_and_bump(err, JS_UNKNOWN);
                     m.complete(p, IMPORT_META)
                 } else {
-                    let err = p
-                        .err_builder("Expected `meta` following an import keyword, but found none")
-                        .primary(p.cur_range(), "");
+                    let err = p.err_builder(
+                        "Expected `meta` following an import keyword, but found none",
+                        p.cur_range(),
+                    );
 
                     p.error(err);
                     m.complete(p, JS_UNKNOWN)
@@ -1286,8 +1296,7 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
                     if p.at(T![...]) {
                         parse_spread_element(p, context)
                             .add_diagnostic_if_present(p, |p, range| {
-                                p.err_builder("`...` is not allowed in `import()`")
-                                    .primary(range, "")
+                                p.err_builder("`...` is not allowed in `import()`", range)
                             })
                             .map(|mut marker| {
                                 marker.change_to_unknown(p);
@@ -1307,9 +1316,10 @@ fn parse_primary_expression(p: &mut Parser, context: ExpressionContext) -> Parse
 
                 args_list.complete(p, JS_CALL_ARGUMENT_LIST);
                 if args_count == 0 || args_count > 2 {
-                    let err = p
-                        .err_builder("`import()` requires exactly one or two arguments. ")
-                        .primary(error_range_start..p.cur_range().end(), "");
+                    let err = p.err_builder(
+                        "`import()` requires exactly one or two arguments. ",
+                        error_range_start..p.cur_range().end(),
+                    );
                     p.error(err);
                 }
 
@@ -1405,20 +1415,20 @@ pub(super) fn parse_identifier(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSynt
     }
 
     let error = match p.cur() {
-        T![yield] if p.state.in_generator() => Some(
-            p.err_builder("Illegal use of `yield` as an identifier in generator function")
-                .primary(p.cur_range(), ""),
-        ),
+        T![yield] if p.state.in_generator() => Some(p.err_builder(
+            "Illegal use of `yield` as an identifier in generator function",
+            p.cur_range(),
+        )),
         t if t.is_future_reserved_keyword() => {
             if StrictMode.is_supported(p) {
                 let name = p.cur_src();
-                Some(
-                    p.err_builder(&format!(
+                Some(p.err_builder(
+                    format!(
                         "Illegal use of reserved keyword `{}` as an identifier in strict mode",
                         name
-                    ))
-                    .primary(p.cur_range(), ""),
-                )
+                    ),
+                    p.cur_range(),
+                ))
             } else {
                 None
             }
@@ -1427,15 +1437,15 @@ pub(super) fn parse_identifier(p: &mut Parser, kind: JsSyntaxKind) -> ParsedSynt
         // declare const await: any;
         T![await] if !p.state.in_ambient_context() => {
             if p.state.in_async() {
-                Some(
-                    p.err_builder("Illegal use of `await` as an identifier in an async context")
-                        .primary(p.cur_range(), ""),
-                )
+                Some(p.err_builder(
+                    "Illegal use of `await` as an identifier in an async context",
+                    p.cur_range(),
+                ))
             } else if p.source_type.is_module() {
-                Some(
-                    p.err_builder("Illegal use of `await` as an identifier inside of a module")
-                        .primary(p.cur_range(), ""),
-                )
+                Some(p.err_builder(
+                    "Illegal use of `await` as an identifier inside of a module",
+                    p.cur_range(),
+                ))
             } else {
                 None
             }
@@ -1517,10 +1527,10 @@ fn parse_template_literal(
     // obj.val?.[expr]`template`
     // obj.func?.(args)`template`
     if in_optional_chain {
-        p.error(
-            p.err_builder("Tagged template expressions are not permitted in an optional chain.")
-                .primary(completed.range(p), ""),
-        );
+        p.error(p.err_builder(
+            "Tagged template expressions are not permitted in an optional chain.",
+            completed.range(p),
+        ));
         completed.change_kind(p, JS_UNKNOWN_EXPRESSION);
     }
 
@@ -1564,8 +1574,7 @@ pub(crate) fn parse_template_elements<P>(
                 e.complete(p, element_kind);
             }
             ERROR_TOKEN => {
-                let err = p.err_builder("Invalid template literal")
-                    .primary(p.cur_range(), "");
+                let err = p.err_builder("Invalid template literal",p.cur_range(), );
                 p.error(err);
                 p.bump_with_context(p.cur(), LexContext::TemplateElement { tagged });
             }
@@ -1720,30 +1729,32 @@ fn parse_call_expression_rest(
             parse_call_arguments(p)
                 .or_add_diagnostic(p, |p, _| expected_token(T!['(']).to_diagnostic(p));
             lhs = m.complete(p, JS_CALL_EXPRESSION);
-            continue;
-        }
-
-        if in_optional_chain {
-            // If the `?.` is present and what followed was neither a valid type arguments nor valid arguments.
-            // In this case, parse this as a static member access with an optional chain
-
-            // test_err ts optional_chain_call_without_arguments
-            // let a = { test: null };
-            // a.test?.;
-            // a.test?.<ab;
-            p.error(expected_identifier(p, p.cur_range()));
-            lhs = m.complete(p, JS_STATIC_MEMBER_EXPRESSION);
         } else {
-            // Safety:
-            // * The method initially checks if the parsers at a '<', '(', or '?.' token.
-            // * if the parser is at '?.': It takes the branch right above, ensuring that no token was consumed
-            // * if the parser is at '<': `parse_ts_type_arguments_in_expression` rewinds if what follows aren't  valid type arguments and this is the only way we can reach this branch
-            // * if the parser is at '(': This always parses out as valid arguments.
-            debug_assert_eq!(p.tokens.position(), start_pos);
-            m.abandon(p);
-        }
+            break if optional_chain_call {
+                // If the `?.` is present and what followed was neither a valid type arguments nor valid arguments.
+                // In this case, parse this as a static member access with an optional chain
 
-        break lhs;
+                // test_err ts optional_chain_call_without_arguments
+                // let a = { test: null };
+                // a.test?.;
+                // a.test?.<ab;
+                p.error(expected_identifier(p, p.cur_range()));
+                m.complete(p, JS_STATIC_MEMBER_EXPRESSION)
+            } else {
+                // test ts optional_chain_call_less_than
+                // String(item)?.b < 0;
+                // String(item)?.b <aBcd;
+
+                // Safety:
+                // * The method initially checks if the parsers at a '<', '(', or '?.' token.
+                // * if the parser is at '?.': It takes the branch right above, ensuring that no token was consumed
+                // * if the parser is at '<': `parse_ts_type_arguments_in_expression` rewinds if what follows aren't  valid type arguments and this is the only way we can reach this branch
+                // * if the parser is at '(': This always parses out as valid arguments.
+                debug_assert_eq!(p.tokens.position(), start_pos);
+                m.abandon(p);
+                lhs
+            };
+        }
     }
 }
 
@@ -1820,10 +1831,10 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
             //     await;
             //   }
             // }
-            p.error(
-                p.err_builder("`await` is only allowed within async functions and at the top levels of modules.")
-                    .primary(expr.range(p), ""),
-            );
+            p.error(p.err_builder(
+                "`await` is only allowed within async functions and at the top levels of modules.",
+                expr.range(p),
+            ));
             expr.change_to_unknown(p);
         }
 
@@ -1949,23 +1960,19 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
                 if StrictMode.is_supported(p) {
                     if let Some(range) = rewriter.exited_ident_expr {
                         kind = JS_UNKNOWN_EXPRESSION;
-                        p.error(
-                            p.err_builder(
-                                "the target for a delete operator cannot be a single identifier",
-                            )
-                            .primary(range, ""),
-                        );
+                        p.error(p.err_builder(
+                            "the target for a delete operator cannot be a single identifier",
+                            range,
+                        ));
                     }
                 }
 
                 if let Some(range) = rewriter.exited_private_member_expr {
                     kind = JS_UNKNOWN_EXPRESSION;
-                    p.error(
-                        p.err_builder(
-                            "the target for a delete operator cannot be a private member",
-                        )
-                        .primary(range, ""),
-                    );
+                    p.error(p.err_builder(
+                        "the target for a delete operator cannot be a private member",
+                        range,
+                    ));
                 }
 
                 res
@@ -1980,12 +1987,10 @@ pub(super) fn parse_unary_expr(p: &mut Parser, context: ExpressionContext) -> Pa
                     JS_STATIC_MEMBER_EXPRESSION | JS_COMPUTED_MEMBER_EXPRESSION => {}
                     _ => {
                         kind = JS_UNKNOWN_EXPRESSION;
-                        p.error(
-                            p.err_builder(
-                                "the target for a delete operator must be a property access",
-                            )
-                            .primary(res.range(p), ""),
-                        );
+                        p.error(p.err_builder(
+                            "the target for a delete operator must be a property access",
+                            res.range(p),
+                        ));
                     }
                 }
             }

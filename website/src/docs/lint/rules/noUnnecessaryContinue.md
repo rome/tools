@@ -7,7 +7,7 @@ layout: layouts/rule.liquid
 
 > This rule is recommended by Rome.
 
-Avoid using unnecessary `ContinueStatement`.
+Avoid using unnecessary `continue`.
 
 ## Examples
 
@@ -31,8 +31,11 @@ loop: for (let i = 0; i < 5; i++) {
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Delete the unnecessary continue statement</span>
   
-<strong>  </strong><strong>  2 │ </strong><span style="opacity: 0.8;"><span style="color: Tomato;">·</span></span><span style="opacity: 0.8;"><span style="color: Tomato;">·</span></span><span style="color: Tomato;">c</span><span style="color: Tomato;">o</span><span style="color: Tomato;">n</span><span style="color: Tomato;">t</span><span style="color: Tomato;">i</span><span style="color: Tomato;">n</span><span style="color: Tomato;">u</span><span style="color: Tomato;">e</span><span style="opacity: 0.8;"><span style="color: Tomato;">·</span></span><span style="color: Tomato;">l</span><span style="color: Tomato;">o</span><span style="color: Tomato;">o</span><span style="color: Tomato;">p</span><span style="color: Tomato;">;</span>
-<strong>  </strong><strong>    │ </strong><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span>
+    <strong>1</strong> <strong>1</strong><strong> │ </strong>  loop: for (let i = 0; i &lt; 5; i++) {
+    <strong>2</strong>  <strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><span style="opacity: 0.8;"><strong>·</strong></span></span><span style="color: Tomato;"><span style="opacity: 0.8;"><strong>·</strong></span></span><span style="color: Tomato;"><strong>c</strong></span><span style="color: Tomato;"><strong>o</strong></span><span style="color: Tomato;"><strong>n</strong></span><span style="color: Tomato;"><strong>t</strong></span><span style="color: Tomato;"><strong>i</strong></span><span style="color: Tomato;"><strong>n</strong></span><span style="color: Tomato;"><strong>u</strong></span><span style="color: Tomato;"><strong>e</strong></span><span style="color: Tomato;"><span style="opacity: 0.8;"><strong>·</strong></span></span><span style="color: Tomato;"><strong>l</strong></span><span style="color: Tomato;"><strong>o</strong></span><span style="color: Tomato;"><strong>o</strong></span><span style="color: Tomato;"><strong>p</strong></span><span style="color: Tomato;"><strong>;</strong></span>
+    <strong>3</strong> <strong>2</strong><strong> │ </strong>  }
+    <strong>4</strong> <strong>3</strong><strong> │ </strong>  
+  
 </code></pre>{% endraw %}
 
 ```jsx
@@ -53,8 +56,11 @@ while (i--) {
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Delete the unnecessary continue statement</span>
   
-<strong>  </strong><strong>  2 │ </strong><span style="opacity: 0.8;"><span style="color: Tomato;">·</span></span><span style="opacity: 0.8;"><span style="color: Tomato;">·</span></span><span style="color: Tomato;">c</span><span style="color: Tomato;">o</span><span style="color: Tomato;">n</span><span style="color: Tomato;">t</span><span style="color: Tomato;">i</span><span style="color: Tomato;">n</span><span style="color: Tomato;">u</span><span style="color: Tomato;">e</span><span style="color: Tomato;">;</span>
-<strong>  </strong><strong>    │ </strong><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span>
+    <strong>1</strong> <strong>1</strong><strong> │ </strong>  while (i--) {
+    <strong>2</strong>  <strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><span style="opacity: 0.8;"><strong>·</strong></span></span><span style="color: Tomato;"><span style="opacity: 0.8;"><strong>·</strong></span></span><span style="color: Tomato;"><strong>c</strong></span><span style="color: Tomato;"><strong>o</strong></span><span style="color: Tomato;"><strong>n</strong></span><span style="color: Tomato;"><strong>t</strong></span><span style="color: Tomato;"><strong>i</strong></span><span style="color: Tomato;"><strong>n</strong></span><span style="color: Tomato;"><strong>u</strong></span><span style="color: Tomato;"><strong>e</strong></span><span style="color: Tomato;"><strong>;</strong></span>
+    <strong>3</strong> <strong>2</strong><strong> │ </strong>  }
+    <strong>4</strong> <strong>3</strong><strong> │ </strong>  
+  
 </code></pre>{% endraw %}
 
 ```jsx
@@ -75,8 +81,11 @@ while (1) {
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Delete the unnecessary continue statement</span>
   
-<strong>  </strong><strong>  2 │ </strong><span style="opacity: 0.8;"><span style="color: Tomato;">·</span></span><span style="opacity: 0.8;"><span style="color: Tomato;">·</span></span><span style="color: Tomato;">c</span><span style="color: Tomato;">o</span><span style="color: Tomato;">n</span><span style="color: Tomato;">t</span><span style="color: Tomato;">i</span><span style="color: Tomato;">n</span><span style="color: Tomato;">u</span><span style="color: Tomato;">e</span><span style="color: Tomato;">;</span>
-<strong>  </strong><strong>    │ </strong><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span>
+    <strong>1</strong> <strong>1</strong><strong> │ </strong>  while (1) {
+    <strong>2</strong>  <strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><span style="opacity: 0.8;"><strong>·</strong></span></span><span style="color: Tomato;"><span style="opacity: 0.8;"><strong>·</strong></span></span><span style="color: Tomato;"><strong>c</strong></span><span style="color: Tomato;"><strong>o</strong></span><span style="color: Tomato;"><strong>n</strong></span><span style="color: Tomato;"><strong>t</strong></span><span style="color: Tomato;"><strong>i</strong></span><span style="color: Tomato;"><strong>n</strong></span><span style="color: Tomato;"><strong>u</strong></span><span style="color: Tomato;"><strong>e</strong></span><span style="color: Tomato;"><strong>;</strong></span>
+    <strong>3</strong> <strong>2</strong><strong> │ </strong>  }
+    <strong>4</strong> <strong>3</strong><strong> │ </strong>  
+  
 </code></pre>{% endraw %}
 
 ```jsx
@@ -105,8 +114,12 @@ for (let i = 0; i < 10; i++) {
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Delete the unnecessary continue statement</span>
   
-<strong>  </strong><strong>  4 │ </strong><span style="opacity: 0.8;"><span style="color: Tomato;">·</span></span><span style="opacity: 0.8;"><span style="color: Tomato;">·</span></span><span style="opacity: 0.8;"><span style="color: Tomato;">·</span></span><span style="opacity: 0.8;"><span style="color: Tomato;">·</span></span><span style="color: Tomato;">c</span><span style="color: Tomato;">o</span><span style="color: Tomato;">n</span><span style="color: Tomato;">t</span><span style="color: Tomato;">i</span><span style="color: Tomato;">n</span><span style="color: Tomato;">u</span><span style="color: Tomato;">e</span><span style="color: Tomato;">;</span>
-<strong>  </strong><strong>    │ </strong><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span>
+    <strong> 2</strong> <strong> 2</strong><strong> │ </strong>    if (i &gt; 5) {
+    <strong> 3</strong> <strong> 3</strong><strong> │ </strong>      console.log(&quot;foo&quot;);
+    <strong> 4</strong>   <strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><span style="opacity: 0.8;"><strong>·</strong></span></span><span style="color: Tomato;"><span style="opacity: 0.8;"><strong>·</strong></span></span><span style="color: Tomato;"><span style="opacity: 0.8;"><strong>·</strong></span></span><span style="color: Tomato;"><span style="opacity: 0.8;"><strong>·</strong></span></span><span style="color: Tomato;"><strong>c</strong></span><span style="color: Tomato;"><strong>o</strong></span><span style="color: Tomato;"><strong>n</strong></span><span style="color: Tomato;"><strong>t</strong></span><span style="color: Tomato;"><strong>i</strong></span><span style="color: Tomato;"><strong>n</strong></span><span style="color: Tomato;"><strong>u</strong></span><span style="color: Tomato;"><strong>e</strong></span><span style="color: Tomato;"><strong>;</strong></span>
+    <strong> 5</strong> <strong> 4</strong><strong> │ </strong>    } else if (i &gt;= 5 &amp;&amp; i &lt; 8) {
+    <strong> 6</strong> <strong> 5</strong><strong> │ </strong>      console.log(&quot;test&quot;);
+  
 </code></pre>{% endraw %}
 
 ```jsx
@@ -127,8 +140,11 @@ for (let i = 0; i < 9; i++) {
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Delete the unnecessary continue statement</span>
   
-<strong>  </strong><strong>  2 │ </strong><span style="opacity: 0.8;"><span style="color: Tomato;">·</span></span><span style="opacity: 0.8;"><span style="color: Tomato;">·</span></span><span style="color: Tomato;">c</span><span style="color: Tomato;">o</span><span style="color: Tomato;">n</span><span style="color: Tomato;">t</span><span style="color: Tomato;">i</span><span style="color: Tomato;">n</span><span style="color: Tomato;">u</span><span style="color: Tomato;">e</span><span style="color: Tomato;">;</span>
-<strong>  </strong><strong>    │ </strong><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span>
+    <strong>1</strong> <strong>1</strong><strong> │ </strong>  for (let i = 0; i &lt; 9; i++) {
+    <strong>2</strong>  <strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><span style="opacity: 0.8;"><strong>·</strong></span></span><span style="color: Tomato;"><span style="opacity: 0.8;"><strong>·</strong></span></span><span style="color: Tomato;"><strong>c</strong></span><span style="color: Tomato;"><strong>o</strong></span><span style="color: Tomato;"><strong>n</strong></span><span style="color: Tomato;"><strong>t</strong></span><span style="color: Tomato;"><strong>i</strong></span><span style="color: Tomato;"><strong>n</strong></span><span style="color: Tomato;"><strong>u</strong></span><span style="color: Tomato;"><strong>e</strong></span><span style="color: Tomato;"><strong>;</strong></span>
+    <strong>3</strong> <strong>2</strong><strong> │ </strong>  }
+    <strong>4</strong> <strong>3</strong><strong> │ </strong>  
+  
 </code></pre>{% endraw %}
 
 ```jsx
@@ -149,8 +165,11 @@ test2: do {
   
 <strong><span style="color: rgb(38, 148, 255);">  </span></strong><strong><span style="color: rgb(38, 148, 255);">ℹ</span></strong> <span style="color: rgb(38, 148, 255);">Suggested fix</span><span style="color: rgb(38, 148, 255);">: </span><span style="color: rgb(38, 148, 255);">Delete the unnecessary continue statement</span>
   
-<strong>  </strong><strong>  2 │ </strong><span style="opacity: 0.8;"><span style="color: Tomato;">→ </span></span><span style="color: Tomato;">c</span><span style="color: Tomato;">o</span><span style="color: Tomato;">n</span><span style="color: Tomato;">t</span><span style="color: Tomato;">i</span><span style="color: Tomato;">n</span><span style="color: Tomato;">u</span><span style="color: Tomato;">e</span><span style="opacity: 0.8;"><span style="color: Tomato;">·</span></span><span style="color: Tomato;">t</span><span style="color: Tomato;">e</span><span style="color: Tomato;">s</span><span style="color: Tomato;">t</span><span style="color: Tomato;">2</span><span style="color: Tomato;">;</span>
-<strong>  </strong><strong>    │ </strong><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span><span style="color: Tomato;">-</span>
+    <strong>1</strong> <strong>1</strong><strong> │ </strong>  test2: do {
+    <strong>2</strong>  <strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;"><span style="opacity: 0.8;"><strong>→ </strong></span></span><span style="color: Tomato;"><strong>c</strong></span><span style="color: Tomato;"><strong>o</strong></span><span style="color: Tomato;"><strong>n</strong></span><span style="color: Tomato;"><strong>t</strong></span><span style="color: Tomato;"><strong>i</strong></span><span style="color: Tomato;"><strong>n</strong></span><span style="color: Tomato;"><strong>u</strong></span><span style="color: Tomato;"><strong>e</strong></span><span style="color: Tomato;"><span style="opacity: 0.8;"><strong>·</strong></span></span><span style="color: Tomato;"><strong>t</strong></span><span style="color: Tomato;"><strong>e</strong></span><span style="color: Tomato;"><strong>s</strong></span><span style="color: Tomato;"><strong>t</strong></span><span style="color: Tomato;"><strong>2</strong></span><span style="color: Tomato;"><strong>;</strong></span>
+    <strong>3</strong> <strong>2</strong><strong> │ </strong>  } while (true);
+    <strong>4</strong> <strong>3</strong><strong> │ </strong>  
+  
 </code></pre>{% endraw %}
 
 ### Valid

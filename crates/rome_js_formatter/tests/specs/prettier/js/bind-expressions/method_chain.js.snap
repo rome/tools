@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\bind-expressions\\method_chain.js"
+  test_file: js/bind-expressions/method_chain.js
 ---
 
 # Input
@@ -90,7 +90,19 @@ method_chain.js:10:9 parse ━━━━━━━━━━━━━━━━━�
             )
             ::map(someFunction)'
   
-  × Expected a statement here
+     8 │ function test(observable) {
+     9 │     return observable
+  > 10 │         ::filter(data => data.someTest)
+       │         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 11 │         ::throttle(() =>
+        ...
+  > 15 │         )
+  > 16 │         ::map(someFunction);
+       │         ^^^^^^^^^^^^^^^^^^^
+    17 │ }
+    18 │ 
+  
+  i Expected a statement here
   
      8 │ function test(observable) {
      9 │     return observable

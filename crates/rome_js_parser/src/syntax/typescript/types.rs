@@ -807,12 +807,10 @@ fn parse_ts_property_or_method_signature_type_member(p: &mut Parser) -> ParsedSy
         let method = m.complete(p, TS_METHOD_SIGNATURE_TYPE_MEMBER);
 
         if let Some(readonly_range) = readonly_range {
-            p.error(
-                p.err_builder(
-                    "readonly modifier can only appear on a property or signature declaration",
-                )
-                .primary(readonly_range, ""),
-            );
+            p.error(p.err_builder(
+                "readonly modifier can only appear on a property or signature declaration",
+                readonly_range,
+            ));
         }
 
         Present(method)
@@ -943,9 +941,10 @@ impl ParseSeparatedList for TsTupleTypeElementList {
             // test_err ts ts_tuple_type_cannot_be_optional_and_rest
             // type A = [ ...name?: string[] ]
             if has_ellipsis && has_question_mark {
-                let err = p
-                    .err_builder("A tuple member cannot be both optional and rest.")
-                    .primary(syntax.range(p).as_range(), "");
+                let err = p.err_builder(
+                    "A tuple member cannot be both optional and rest.",
+                    syntax.range(p).as_range(),
+                );
                 p.error(err);
                 syntax.change_to_unknown(p);
             }
@@ -1417,10 +1416,9 @@ fn parse_ts_type_member_semi(p: &mut Parser) {
 
     // or a semicolon (possibly ASI)
     if !optional_semi(p) {
-        let err = p.err_builder("';' expected'").primary(
-            p.cur_range(),
-            "An explicit or implicit semicolon is expected here...",
-        );
+        let err = p
+            .err_builder("';' expected'", p.cur_range())
+            .hint("An explicit or implicit semicolon is expected here...");
 
         p.error(err);
     }

@@ -5,9 +5,10 @@ use rome_analyze::{
 };
 use rome_console::{
     fmt::{Formatter, HTML},
-    markup, Markup,
+    markup, Console, Markup,
 };
-use rome_diagnostics::{file::FileId, file::SimpleFile, Diagnostic};
+use rome_diagnostics::file::FileId;
+use rome_diagnostics::v2::{Diagnostic, DiagnosticExt, PrintDiagnostic};
 use rome_js_analyze::{analyze, visit_registry};
 use rome_js_syntax::{JsLanguage, Language, LanguageVariant, ModuleKind, SourceType};
 use rome_service::settings::WorkspaceSettings;
@@ -122,6 +123,12 @@ fn generate_group(
     errors: &mut Vec<(&'static str, Error)>,
 ) -> io::Result<()> {
     let (group_name, description) = match group {
+        "a11y" => (
+            "Accessibility",
+            markup! {
+                "Rules focused on preventing accessibility problems."
+            },
+        ),
         "correctness" => (
             "Correctness",
             markup! {
@@ -135,13 +142,27 @@ fn generate_group(
                 "New rules that are still under development.
 
 Nursery rules require explicit opt-in via configuration because they may still have bugs or performance problems.
-Nursery rules get promoted to other groups once they become stable or may be removed."
+Nursery rules get promoted to other groups once they become stable or may be removed.
+
+Rules that belong to this group "<Emphasis>"are not subject to semantic version"</Emphasis>"."
             },
         ),
         "style" => (
             "Style",
             markup! {
                 "Rules enforcing a consistent way of writing your code. "
+            },
+        ),
+        "complexity" => (
+            "Complexity",
+            markup! {
+                "Rules that focus on inspecting complex code that could be simplified."
+            },
+        ),
+        "security" => (
+            "Security",
+            markup! {
+                "Rules that detect potential security flaws."
             },
         ),
         _ => panic!("Unknown group ID {group:?}"),
@@ -468,30 +489,57 @@ fn assert_lint(
     code: &str,
     content: &mut Vec<u8>,
 ) -> Result<()> {
-    let file = SimpleFile::new(format!("{group}/{rule}.js"), code.into());
+    let file = format!("{group}/{rule}.js");
 
     let mut write = HTML(content);
     let mut diagnostic_count = 0;
 
-    let mut write_diagnostic = |code: &str, diag: Diagnostic| {
+    let mut all_diagnostics = vec![];
+
+    let mut write_diagnostic = |code: &str, diag: rome_diagnostics::v2::Error| {
+        let category = diag.category().map_or("", |code| code.name());
+        Formatter::new(&mut write).write_markup(markup! {
+            {PrintDiagnostic(&diag)}
+        })?;
+
+        all_diagnostics.push(diag);
         // Fail the test if the analysis returns more diagnostics than expected
         if test.expect_diagnostic {
+            // Print all diagnostics to help the user
+            if all_diagnostics.len() > 1 {
+                let mut console = rome_console::EnvConsole::new(false);
+                for diag in all_diagnostics.iter() {
+                    console.print(
+                        rome_console::LogLevel::Error,
+                        markup! {
+                            {PrintDiagnostic(diag)}
+                        },
+                    );
+                }
+            }
+
             ensure!(
                 diagnostic_count == 0,
                 "analysis returned multiple diagnostics, code snippet: \n\n{}",
                 code
             );
         } else {
+            // Print all diagnostics to help the user
+            let mut console = rome_console::EnvConsole::new(false);
+            for diag in all_diagnostics.iter() {
+                console.print(
+                    rome_console::LogLevel::Error,
+                    markup! {
+                        {PrintDiagnostic(diag)}
+                    },
+                );
+            }
+
             bail!(format!(
-                "analysis returned an unexpected diagnostic, code snippet:\n\n{:?}\n\n{}",
-                diag.code.map_or("", |code| code.name()),
-                code
+                "analysis returned an unexpected diagnostic, code `snippet:\n\n{:?}\n\n{}",
+                category, code
             ));
         }
-
-        Formatter::new(&mut write).write_markup(markup! {
-            {diag.display(&file)}
-        })?;
 
         diagnostic_count += 1;
         Ok(())
@@ -501,7 +549,10 @@ fn assert_lint(
 
     if parse.has_errors() {
         for diag in parse.into_diagnostics() {
-            write_diagnostic(code, diag)?;
+            let error = diag
+                .with_file_path((file.clone(), FileId::zero()))
+                .with_file_source_code(code);
+            write_diagnostic(code, error)?;
         }
     } else {
         let root = parse.tree();
@@ -516,18 +567,21 @@ fn assert_lint(
 
         let options = AnalyzerOptions::default();
         let result = analyze(FileId::zero(), &root, filter, &options, |signal| {
-            if let Some(diag) = signal.diagnostic() {
-                let category = diag.code().expect("linter diagnostic has no code");
+            if let Some(mut diag) = signal.diagnostic() {
+                let category = diag.category().expect("linter diagnostic has no code");
                 let severity = settings.get_severity_from_rule_code(category).expect(
                     "If you see this error, it means you need to run cargo codegen-configuration",
                 );
-                let mut diag = diag.into_diagnostic(severity);
+                diag.set_severity(severity);
 
                 if let Some(action) = signal.action() {
-                    diag.suggestions.push(action.into());
+                    diag.add_code_suggestion(action.into());
                 }
 
-                let res = write_diagnostic(code, diag);
+                let error = diag
+                    .with_file_path((file.clone(), FileId::zero()))
+                    .with_file_source_code(code);
+                let res = write_diagnostic(code, error);
 
                 // Abort the analysis on error
                 if let Err(err) = res {

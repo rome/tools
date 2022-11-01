@@ -297,31 +297,37 @@ array_assignment_target_err.js:1:4 parse ━━━━━━━━━━━━━
 
   × expected `,` but instead found `a`
   
-  × unexpected
-  
   > 1 │ [a a, ++b, ] = test;
       │    ^
     2 │ [a, c, ...rest,] = test;
     3 │ [a = , = "test"] = test;
+  
+  i Remove a
   
 --
 array_assignment_target_err.js:1:7 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid assignment to `++b`
   
-  × This expression cannot be assigned to
-  
   > 1 │ [a a, ++b, ] = test;
       │       ^^^
     2 │ [a, c, ...rest,] = test;
     3 │ [a = , = "test"] = test;
+  
+  i This expression cannot be assigned to
   
 --
 array_assignment_target_err.js:2:15 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × rest element may not have a trailing comma
   
-  × Remove the trailing comma here
+    1 │ [a a, ++b, ] = test;
+  > 2 │ [a, c, ...rest,] = test;
+      │               ^
+    3 │ [a = , = "test"] = test;
+    4 │ [[a b] [c]]= test;
+  
+  i Remove the trailing comma here
   
     1 │ [a a, ++b, ] = test;
   > 2 │ [a, c, ...rest,] = test;
@@ -342,7 +348,14 @@ array_assignment_target_err.js:3:6 parse ━━━━━━━━━━━━━
 
   × expected an expression, or an assignment but instead found ','
   
-  × Expected an expression, or an assignment here
+    1 │ [a a, ++b, ] = test;
+    2 │ [a, c, ...rest,] = test;
+  > 3 │ [a = , = "test"] = test;
+      │      ^
+    4 │ [[a b] [c]]= test;
+    5 │ [a: b] = c
+  
+  i Expected an expression, or an assignment here
   
     1 │ [a a, ++b, ] = test;
     2 │ [a, c, ...rest,] = test;
@@ -356,7 +369,14 @@ array_assignment_target_err.js:3:8 parse ━━━━━━━━━━━━━
 
   × expected an identifier, or an assignment target but instead found '='
   
-  × Expected an identifier, or an assignment target here
+    1 │ [a a, ++b, ] = test;
+    2 │ [a, c, ...rest,] = test;
+  > 3 │ [a = , = "test"] = test;
+      │        ^
+    4 │ [[a b] [c]]= test;
+    5 │ [a: b] = c
+  
+  i Expected an identifier, or an assignment target here
   
     1 │ [a a, ++b, ] = test;
     2 │ [a, c, ...rest,] = test;
@@ -370,8 +390,6 @@ array_assignment_target_err.js:4:5 parse ━━━━━━━━━━━━━
 
   × expected `,` but instead found `b`
   
-  × unexpected
-  
     2 │ [a, c, ...rest,] = test;
     3 │ [a = , = "test"] = test;
   > 4 │ [[a b] [c]]= test;
@@ -379,18 +397,20 @@ array_assignment_target_err.js:4:5 parse ━━━━━━━━━━━━━
     5 │ [a: b] = c
     6 │ 
   
+  i Remove b
+  
 --
 array_assignment_target_err.js:5:3 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × expected `,` but instead found `:`
-  
-  × unexpected
   
     3 │ [a = , = "test"] = test;
     4 │ [[a b] [c]]= test;
   > 5 │ [a: b] = c
       │   ^
     6 │ 
+  
+  i Remove :
   
 --
 [a a, ++b, ] = test;

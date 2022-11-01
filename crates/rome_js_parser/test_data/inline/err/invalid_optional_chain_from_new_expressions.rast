@@ -384,19 +384,17 @@ invalid_optional_chain_from_new_expressions.ts:1:17 parse ━━━━━━━�
 
   × Invalid optional chain from new expression.
   
-  × Did you mean to call 'Test<string>()'?
-  
   > 1 │ new Test<string>?.test();
       │                 ^^
     2 │ new Test?.test();
     3 │ new A.b?.c()
   
+  i Did you mean to call 'Test<string>()'?
+  
 --
 invalid_optional_chain_from_new_expressions.ts:2:9 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid optional chain from new expression.
-  
-  × Did you mean to call 'Test()'?
   
     1 │ new Test<string>?.test();
   > 2 │ new Test?.test();
@@ -404,12 +402,12 @@ invalid_optional_chain_from_new_expressions.ts:2:9 parse ━━━━━━━�
     3 │ new A.b?.c()
     4 │ new (A.b)?.c()
   
+  i Did you mean to call 'Test()'?
+  
 --
 invalid_optional_chain_from_new_expressions.ts:3:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid optional chain from new expression.
-  
-  × Did you mean to call 'A.b()'?
   
     1 │ new Test<string>?.test();
     2 │ new Test?.test();
@@ -418,12 +416,12 @@ invalid_optional_chain_from_new_expressions.ts:3:8 parse ━━━━━━━�
     4 │ new (A.b)?.c()
     5 │ new (A.b?.()).c()
   
+  i Did you mean to call 'A.b()'?
+  
 --
 invalid_optional_chain_from_new_expressions.ts:4:10 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid optional chain from new expression.
-  
-  × Did you mean to call '(A.b)()'?
   
     2 │ new Test?.test();
     3 │ new A.b?.c()
@@ -432,18 +430,20 @@ invalid_optional_chain_from_new_expressions.ts:4:10 parse ━━━━━━━�
     5 │ new (A.b?.()).c()
     6 │ new A.b?.()()
   
+  i Did you mean to call '(A.b)()'?
+  
 --
 invalid_optional_chain_from_new_expressions.ts:6:8 parse ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   × Invalid optional chain from new expression.
-  
-  × Did you mean to call 'A.b()'?
   
     4 │ new (A.b)?.c()
     5 │ new (A.b?.()).c()
   > 6 │ new A.b?.()()
       │        ^^
     7 │ 
+  
+  i Did you mean to call 'A.b()'?
   
 --
 new Test<string>?.test();

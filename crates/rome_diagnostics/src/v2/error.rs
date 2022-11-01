@@ -39,7 +39,7 @@ pub struct Error {
 /// Implement the [Diagnostic] trait as inherent methods on the [Error] type.
 impl Error {
     /// Calls [Diagnostic::category] on the [Diagnostic] wrapped by this [Error].
-    pub fn category(&self) -> Option<&Category> {
+    pub fn category(&self) -> Option<&'static Category> {
         self.as_diagnostic().category()
     }
 

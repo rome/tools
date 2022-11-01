@@ -1,7 +1,7 @@
 ---
 source: crates/rome_js_formatter/tests/prettier_tests.rs
 info:
-  test_file: "js\\record\\spread.js"
+  test_file: js/record/spread.js
 ---
 
 # Input
@@ -72,7 +72,12 @@ spread.js:1:19 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected an identifier but instead found '{'
   
-  × Expected an identifier here
+  > 1 │ const formData = #{ title: "Implement all the things" }
+      │                   ^
+    2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+  
+  i Expected an identifier here
   
   > 1 │ const formData = #{ title: "Implement all the things" }
       │                   ^
@@ -92,7 +97,12 @@ spread.js:1:19 parse ━━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+  > 1 │ const formData = #{ title: "Implement all the things" }
+      │                   ^
+    2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+  
+  i An explicit or implicit semicolon is expected here...
   
   > 1 │ const formData = #{ title: "Implement all the things" }
       │                   ^
@@ -110,7 +120,13 @@ spread.js:2:18 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected an identifier but instead found '{'
   
-  × Expected an identifier here
+    1 │ const formData = #{ title: "Implement all the things" }
+  > 2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+      │                  ^
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+    4 │ 
+  
+  i Expected an identifier here
   
     1 │ const formData = #{ title: "Implement all the things" }
   > 2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
@@ -132,7 +148,13 @@ spread.js:2:18 parse ━━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    1 │ const formData = #{ title: "Implement all the things" }
+  > 2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+      │                  ^
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+    4 │ 
+  
+  i An explicit or implicit semicolon is expected here...
   
     1 │ const formData = #{ title: "Implement all the things" }
   > 2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
@@ -152,7 +174,13 @@ spread.js:2:34 parse ━━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    1 │ const formData = #{ title: "Implement all the things" }
+  > 2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+      │                                  ^
+    3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+    4 │ 
+  
+  i An explicit or implicit semicolon is expected here...
   
     1 │ const formData = #{ title: "Implement all the things" }
   > 2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
@@ -172,7 +200,14 @@ spread.js:3:20 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected an identifier but instead found '{'
   
-  × Expected an identifier here
+    1 │ const formData = #{ title: "Implement all the things" }
+    2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+  > 3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+      │                    ^
+    4 │ 
+    5 │ // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
+  
+  i Expected an identifier here
   
     1 │ const formData = #{ title: "Implement all the things" }
     2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
@@ -196,7 +231,14 @@ spread.js:3:20 parse ━━━━━━━━━━━━━━━━━━━�
 
   × Expected a semicolon or an implicit semicolon after a statement, but found none
   
-  × An explicit or implicit semicolon is expected here...
+    1 │ const formData = #{ title: "Implement all the things" }
+    2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+  > 3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+      │                    ^
+    4 │ 
+    5 │ // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
+  
+  i An explicit or implicit semicolon is expected here...
   
     1 │ const formData = #{ title: "Implement all the things" }
     2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
@@ -218,7 +260,14 @@ spread.js:3:22 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected an expression but instead found '...taskNow, status: "DONE"'
   
-  × Expected an expression here
+    1 │ const formData = #{ title: "Implement all the things" }
+    2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
+  > 3 │ const taskLater = #{ ...taskNow, status: "DONE" }
+      │                      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    4 │ 
+    5 │ // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
+  
+  i Expected an expression here
   
     1 │ const formData = #{ title: "Implement all the things" }
     2 │ const taskNow = #{ id: 42, status: "WIP", ...formData }
@@ -231,7 +280,12 @@ spread.js:6:23 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected an identifier but instead found '{'
   
-  × Expected an identifier here
+    5 │ // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
+  > 6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
+      │                       ^
+    7 │ 
+  
+  i Expected an identifier here
   
     5 │ // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
   > 6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
@@ -251,12 +305,12 @@ spread.js:6:23 parse ━━━━━━━━━━━━━━━━━━━�
 
   × expected `,` but instead found `{`
   
-  × unexpected
-  
     5 │ // A reminder: The ordering of keys in record literals does not affect equality (and is not retained)
   > 6 │ assert(taskLater === #{ status: "DONE", title: formData.title, id: 42 })
       │                       ^
     7 │ 
+  
+  i Remove {
   
 
 ```

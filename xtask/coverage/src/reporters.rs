@@ -5,7 +5,7 @@ use atty::Stream;
 use colored::Colorize;
 use indicatif::ProgressBar;
 use rome_diagnostics::termcolor::Buffer;
-use rome_js_parser::ParseDiagnostic;
+use rome_diagnostics::v2::{DiagnosticExt, Error};
 use serde_json::Value;
 use std::collections::HashMap;
 use std::io::Write;
@@ -275,7 +275,7 @@ impl SummaryReporter {
         table.format(rows)
     }
 
-    fn write_errors(&mut self, errors: &[ParseDiagnostic], files: &TestCaseFiles) {
+    fn write_errors(&mut self, errors: &[Error], files: &TestCaseFiles) {
         files.emit_errors(errors, &mut self.buffer);
         self.writeln("");
     }
@@ -295,7 +295,11 @@ impl TestReporter for SummaryReporter {
                     let mut all_errors = Vec::new();
                     for file in files {
                         if let Some(errors) = file.parse().ok().err() {
-                            all_errors.extend(errors);
+                            all_errors.extend(errors.into_iter().map(|error| {
+                                error
+                                    .with_file_path(file.name())
+                                    .with_file_source_code(file.code())
+                            }));
                         }
                     }
 
@@ -326,8 +330,11 @@ impl TestReporter for SummaryReporter {
                     "[FAIL]".bold().red(),
                     result.test_case
                 ));
-
-                self.write_errors(errors, files);
+                let errors: Vec<_> = errors
+                    .iter()
+                    .map(|diagnostic| Error::from(diagnostic.clone()))
+                    .collect();
+                self.write_errors(&errors, files);
             }
         }
 
