@@ -217,23 +217,28 @@ fn simplify_de_morgan(node: &JsLogicalExpression) -> Option<JsUnaryExpression> {
     let left = node.left().ok()?;
     let right = node.right().ok()?;
     let operator_token = node.operator_token().ok()?;
-    let right_argument_trivia = right
-        .syntax()
-        .first_leading_trivia()
-        .map(|trivia| trivia.pieces());
+
     match (left, right) {
         (JsAnyExpression::JsUnaryExpression(left), JsAnyExpression::JsUnaryExpression(right)) => {
             let mut next_logic_expression = node.clone();
-            let mut new_token = match operator_token.kind() {
-                T![||] => make::token(T![&&])
-                    .with_trailing_trivia(vec![(TriviaPieceKind::Whitespace, " ")]),
-                T![&&] => make::token(T![||])
-                    .with_trailing_trivia(vec![(TriviaPieceKind::Whitespace, " ")]),
+            let new_token = match operator_token.kind() {
+                T![||] => make::token(T![&&]),
+                T![&&] => make::token(T![||]),
                 _ => return None,
             };
-            if let Some(right_argument_trivia) = right_argument_trivia {
-                new_token = new_token.with_leading_trivia_pieces(right_argument_trivia);
+            let mut new_token =
+                new_token.with_trailing_trivia(vec![(TriviaPieceKind::Whitespace, " ")]);
+            let right_argument_trivia = right
+                .syntax()
+                .first_leading_trivia()
+                .map(|trivia| trivia.pieces());
+            if let Some(mut right_argument_trivia) = right_argument_trivia {
+                if right_argument_trivia.any(|piece| piece.is_comments()) {
+                    new_token = new_token.with_trailing_trivia_pieces(right_argument_trivia);
+                }
             }
+            let new_token =
+                new_token.with_leading_trivia_pieces(operator_token.leading_trivia().pieces());
 
             next_logic_expression =
                 next_logic_expression.replace_token_transfer_trivia(operator_token, new_token)?;

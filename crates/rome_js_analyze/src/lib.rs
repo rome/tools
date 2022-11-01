@@ -141,11 +141,8 @@ mod tests {
             String::from_utf8(buffer).unwrap()
         }
 
-        const SOURCE: &str = r#"if (
-            !firstCondition &&
-            // comment
-            !secondCondition
-        ) {}
+        const SOURCE: &str = r#"
+        let a = !b || !c
         "#;
 
         let parsed = parse(SOURCE, FileId::zero(), SourceType::jsx());

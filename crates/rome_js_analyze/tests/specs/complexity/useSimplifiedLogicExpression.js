@@ -19,20 +19,19 @@ const boolExpr2 = false;
 const r4 = !boolExpr1 || !boolExpr2;
 if (
     !boolExpr1 ||
-    // comment
+    // comment1
     !boolExpr2
 ) {}
 if (
     !boolExpr1 ||
-    // comment
+    // comment1
     !boolExpr2
 ) {}
 if (
     !boolExpr1
-    // comment
+    // comment1
     ||
-    // comment
+    // comment2
     !boolExpr2
 ) {}
-const r5 = !boolExpr1 /*comment*/ || /*comment*/ !boolExpr2;
 let a = !b || !c
