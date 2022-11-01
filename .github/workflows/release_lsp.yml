@@ -150,12 +150,6 @@ jobs:
         working-directory: editors/vscode
         run: |
           node ./scripts/update-nightly-version.mjs >> $GITHUB_ENV
-          echo "prerelease=true" >> $GITHUB_ENV
-      - name: Set release infos
-        if: needs.check.outputs.prerelease != 'true'
-        run: |
-          echo "version=${{ needs.check.outputs.version }}" >> $GITHUB_ENV
-          echo "prerelease=${{ needs.check.outputs.prerelease }}" >> $GITHUB_ENV
 
       - name: Package extension
         run: |

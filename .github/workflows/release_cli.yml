@@ -35,16 +35,20 @@ jobs:
           file-name: npm/rome/package.json
 
       - name: Set version name
-        run: echo "version=${{ steps.version.outputs.version }}" >> $GITHUB_ENV
+        if: steps.version.outputs.changed == 'true'
+        run: |
+          echo "Version change found! New version: ${{ steps.version.outputs.version }} (${{ steps.version.outputs.version_type }})"
+          echo "version=${{ steps.version.outputs.version }}" >> $GITHUB_ENV
+      - name: Set version name
+        if: steps.version.outputs.changed != 'true'
+        run: |
+          echo "version=$(node npm/rome/scripts/update-nightly-version.mjs)" >> $GITHUB_ENV
 
       - name: Check prerelease status
         id: prerelease
         if: env.nightly == 'true'
-        run: echo "prerelease=true" >> $GITHUB_ENV
-
-      - name: Check version status
-        if: steps.version.outputs.changed == 'true'
-        run: 'echo "Version change found! New version: ${{ steps.version.outputs.version }} (${{ steps.version.outputs.version_type }})"'
+        env:
+            prerelease: true
 
   build:
     strategy:
@@ -89,16 +93,10 @@ jobs:
         with:
           node-version: 14.x
 
-      - name: Set release infos
+      - name: Update Package.json
         if: needs.check.outputs.prerelease == 'true'
         run: |
-          echo "prerelease=true" >> $GITHUB_ENV
-          echo "version=$(node npm/rome/scripts/update-nightly-version.mjs)" >> $GITHUB_ENV
-      - name: Set release infos
-        if: needs.check.outputs.prerelease != 'true'
-        run: |
-          echo "prerelease=false" >> $GITHUB_ENV
-          echo "version=${{ needs.check.outputs.version }}" >> $GITHUB_ENV
+          node npm/rome/scripts/update-nightly-version.mjs
 
       - name: Install Rust toolchain
         run: rustup target add ${{ matrix.target }}
