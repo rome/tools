@@ -4,14 +4,14 @@
 
 ### CLI
 
-- Added new command `rome version`.
-- Added new command `rome rage`.
-- Added new command `rome lsp-proxy`.
-- Added a new argument `--version`, supported by the command `rome`
+- Added the new command `rome version`.
+- Added the new command `rome rage`.
+- Added the new command `rome lsp-proxy`.
+- Added the new option`--version` as an alias for `rome version`
 - Added a new argument `--files-max-size` to change the allowed size of files, in bytes.
-- Added new argument called `--trailing-comma`, supported by the command `rome format`.
-- Correctly show supported option for command `rome ci`, closes [#3456](https://github.com/rome/tools/issues/3456).
-- Fixed the command `rome ci` didn't run correctly under certain circumstances, closes [#3495](https://github.com/rome/tools/issues/3495). 
+- Added the new `format` option `--trailing-comma` to configure where to add trailing commas.
+- Correctly show the supported options for `rome ci`, closes [#3456](https://github.com/rome/tools/issues/3456).
+- Fixed the command `rome ci` command to run the linter even if the formatter is disabled, closes [#3495](https://github.com/rome/tools/issues/3495). 
 - Fixed the messaging of some diagnostics, [#3460](https://github.com/rome/tools/pull/3460).
 
 ### Configuration
@@ -20,23 +20,21 @@
 
 ### Diagnostics
 
-- Fixed a false positive issue, where diagnostics were incorrectly when encountering suppression comments [#3406](https://github.com/rome/tools/issues/3406).
-- Empty lines are now correctly shown when print code diffs [#3375](https://github.com/rome/tools/issues/3375).
+- Fix false positive for unknown lint rule in suppression comments during formatting [#3406](https://github.com/rome/tools/issues/3406).
+- Correctly handle empty lines when printing code diffs [#3375](https://github.com/rome/tools/issues/3375).
 
 
 ### Formatter
 
-- We added a new option for trailing commas: `all`, `es5` and `none`; refer to the [documentation](https://rome.tools/docs/#javascriptformattertrailingcomma) for 
-  more information 
-- Fixed bugs around JSX [#3499](https://github.com/rome/tools/issues/3499), [#3211](https://github.com/rome/tools/issues/3211), [#3377](https://github.com/rome/tools/issues/3377)
+- Added the new trailing comma option that configures where to add trailing commas. Supports the values: `all`, `es5` and `none`; refer to the [documentation](https://rome.tools/docs/#javascriptformattertrailingcomma) to learn more.
+- Improved JSX formatting [#3499](https://github.com/rome/tools/issues/3499), [#3211](https://github.com/rome/tools/issues/3211), [#3377](https://github.com/rome/tools/issues/3377)
 - Better formatting of object destructing
-- Fixed formatting for test calls
-- Fixed formatting for trailing comments in arrow functions
+- Improved formatting of test calls
+- Fixed formatting of trailing comments in arrow functions
 
 ### Linter
 
-- **BREAKING CHANGE**: some rules have been moved to groups that fit them better, this was part of our ongoing
-  refactor of groups. Please check [#3471](https://github.com/rome/tools/pull/3471) for more details
+- **BREAKING CHANGE**: some rules have been moved to new groups to better reflect their purpose. This may result in Rome failing to load your configuration or suppression comments that now refer to unknown rules. Please check out [#3471](https://github.com/rome/tools/pull/3471) to learn more about the affected rules.
 - Fixed issues in the `noUnreable` rule
 - Fixed false positive cases for `noNegationElse` [#3141](https://github.com/rome/tools/issues/3141)
 - Fixed false positive cases for `noUnusedVariables` [#3169](https://github.com/rome/tools/issues/3169)
@@ -72,7 +70,7 @@
 
 ### VSCode
 
-- now the "rename" feature is only opt-in, because it's still work in progress feature
+- Make the "rename" command opt-in and use the VS Code provided "rename" feature that offers whole project renaming instead.
 - added the command `Restart LSP Server`
 
 
