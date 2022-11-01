@@ -16,7 +16,7 @@ import {
 	StreamInfo,
 } from "vscode-languageclient/node";
 import { isAbsolute, join } from "path";
-import {existsSync, readFileSync} from "fs";
+import { existsSync, readFileSync } from "fs";
 import { setContextValue } from "./utils";
 import { Session } from "./session";
 import { syntaxTree } from "./commands/syntaxTree";
@@ -117,10 +117,12 @@ export async function activate(context: ExtensionContext) {
 	const watcher = workspace.createFileSystemWatcher(configurationPath);
 
 	watcher.onDidChange(() => {
-		const configurationContent = readFileSync(configurationPath, { encoding: "utf-8" });
+		const configurationContent = readFileSync(configurationPath, {
+			encoding: "utf-8",
+		});
 		const configurationAsJson = JSON.parse(configurationContent);
 		session.client.sendRequest(updateSettingsRequest, {
-			configuration: configurationAsJson
+			configuration: configurationAsJson,
 		});
 	});
 
