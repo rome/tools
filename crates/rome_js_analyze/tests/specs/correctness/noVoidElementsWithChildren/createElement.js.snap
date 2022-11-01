@@ -1,5 +1,6 @@
 ---
 source: crates/rome_js_analyze/tests/spec_tests.rs
+assertion_line: 99
 expression: createElement.js
 ---
 # Input
@@ -51,8 +52,11 @@ createElement.js:7:1 lint/correctness/noVoidElementsWithChildren  FIXABLE  ━�
   
   i Suggested fix: Remove the dangerouslySetInnerHTML prop.
   
-    8 │ ····dangerouslySetInnerHTML:·"text"
-      │ -----------------------------------
+    6 6 │   
+    7 7 │   React.createElement('img', {
+    8   │ - ····dangerouslySetInnerHTML:·"text"
+    9 8 │   })
+  
 
 ```
 
