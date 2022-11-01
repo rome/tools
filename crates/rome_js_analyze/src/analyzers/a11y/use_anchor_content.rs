@@ -33,7 +33,7 @@ declare_rule! {
     /// ```
     ///
     /// ```jsx,expect_diagnostic
-    /// <a><span aria-hidden="true">content</span></a
+    /// <a><span aria-hidden="true">content</span></a>
     /// ```
     ///
     /// ## Valid
@@ -50,11 +50,11 @@ declare_rule! {
     /// ```
     ///
     /// ```jsx
-    /// <a><TextWrapper aria-hidden={true} /> content</a>
+    /// <a><TextWrapper aria-hidden={true} />content</a>
     /// ```
     ///
     /// ```jsx
-    /// <a><div aria-hidden="true"></div> content</a>
+    /// <a><div aria-hidden="true"></div>content</a>
     /// ```
     pub(crate) UseAnchorContent {
         version: "10.0.0",
