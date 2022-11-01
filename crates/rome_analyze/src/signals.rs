@@ -284,7 +284,6 @@ where
             &self.query_result,
             self.root,
             self.services,
-            self.options.clone(),
         )
         .ok()?;
 

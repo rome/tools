@@ -14,8 +14,8 @@ where
 {
     query_result: &'a RuleQueryResult<R>,
     root: &'a RuleRoot<R>,
+    bag: &'a ServiceBag,
     services: RuleServiceBag<R>,
-    options: Arc<R::Options>,
 }
 
 impl<'a, R> RuleContext<'a, R>
@@ -25,15 +25,14 @@ where
     pub fn new(
         query_result: &'a RuleQueryResult<R>,
         root: &'a RuleRoot<R>,
-        services: &ServiceBag,
-        options: Arc<R::Options>,
+        services: &'a ServiceBag,
     ) -> Result<Self, Error> {
         let rule_key = RuleKey::rule::<R>();
         Ok(Self {
             query_result,
             root,
+            bag: services,
             services: FromServices::from_services(&rule_key, services)?,
-            options,
         })
     }
 
@@ -83,8 +82,9 @@ where
     ///     }
     /// }
     /// ```
-    pub fn options(&self) -> &R::Options {
-        self.options.as_ref()
+    pub fn options(&self) -> Arc<R::Options> {
+        let rule_key = RuleKey::rule::<R>();
+        self.bag.get_service_by_id(&rule_key).unwrap()
     }
 }
 

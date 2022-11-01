@@ -340,12 +340,6 @@ impl<L: Language + Default> RegistryRule<L> {
                 }
             }
 
-            let rule_key = RuleKey::rule::<R>();
-            let options: Arc<R::Options> = params
-                .services
-                .get_service_by_id(&rule_key)
-                .expect("Expected config not found");
-
             // SAFETY: The rule should never get executed in the first place
             // if the query doesn't match
             let query_result =
@@ -354,7 +348,6 @@ impl<L: Language + Default> RegistryRule<L> {
                 &query_result,
                 params.root,
                 params.services,
-                options.clone(),
             ) {
                 Ok(ctx) => ctx,
                 Err(error) => return Err(error),
@@ -372,7 +365,7 @@ impl<L: Language + Default> RegistryRule<L> {
                     query_result.clone(),
                     result,
                     params.services,
-                    options.clone(),
+                    params.options.clone(),
                     params.apply_suppression_comment,
                 ));
 
