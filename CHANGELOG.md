@@ -8,10 +8,15 @@
 - Added new command `rome rage`.
 - Added new command `rome lsp-proxy`.
 - Added a new argument `--version`, supported by the command `rome`
+- Added a new argument `--files-max-size` to change the allowed size of files, in bytes.
 - Added new argument called `--trailing-comma`, supported by the command `rome format`.
 - Correctly show supported option for command `rome ci`, closes [#3456](https://github.com/rome/tools/issues/3456).
 - Fixed the command `rome ci` didn't run correctly under certain circumstances, closes [#3495](https://github.com/rome/tools/issues/3495). 
 - Fixed the messaging of some diagnostics, [#3460](https://github.com/rome/tools/pull/3460).
+
+### Configuration
+
+- Added `files.maxSize`, to change the allowed size of files, in bytes.
 
 ### Diagnostics
 
@@ -68,7 +73,7 @@
 ### VSCode
 
 - now the "rename" feature is only opt-in, because it's still work in progress feature
-- 
+- added the command `Restart LSP Server`
 
 
 
