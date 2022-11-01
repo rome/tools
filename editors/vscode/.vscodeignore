@@ -1,9 +1,7 @@
 **
 !icon.png
 !LICENSE
-!node_modules/
 !out/main.js
-!package-lock.json
 !package.json
 !server/rome
 !server/rome.exe

@@ -125,15 +125,13 @@
 		"pack:dev": "npm run compile && npm run package && npm run install-extension",
 		"tsc": "tsc"
 	},
-	"dependencies": {
-		"vscode-languageclient": "^8.0.2"
-	},
 	"devDependencies": {
 		"@types/node": "^18.0.0",
 		"@types/vscode": "^1.70.0",
 		"typescript": "^4.8.2",
 		"vsce": "^2.11.0",
 		"esbuild": "^0.14.47",
-		"rome": "next"
+		"rome": "next",
+		"vscode-languageclient": "^8.0.2"
 	}
 }
