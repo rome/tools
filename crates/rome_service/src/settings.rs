@@ -36,6 +36,7 @@ impl WorkspaceSettings {
     }
 
     /// The (configuration)[Configuration] is merged into the workspace
+    #[tracing::instrument(level = "debug", skip(self))]
     pub fn merge_with_configuration(
         &mut self,
         configuration: Configuration,

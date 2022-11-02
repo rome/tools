@@ -7,9 +7,9 @@ use rome_service::{
     RomeError,
 };
 use tower_lsp::lsp_types::*;
-use tracing::trace;
+use tracing::debug;
 
-#[tracing::instrument(level = "trace", skip(session), err)]
+#[tracing::instrument(level = "debug", skip(session), err)]
 pub(crate) fn format(
     session: &Session,
     params: DocumentFormattingParams,
@@ -19,7 +19,7 @@ pub(crate) fn format(
 
     let doc = session.document(&url)?;
 
-    trace!("Formatting...");
+    debug!("Formatting...");
     let result = session
         .workspace
         .format_file(FormatFileParams { path: rome_path });
