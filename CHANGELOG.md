@@ -35,7 +35,7 @@
 ### Linter
 
 - **BREAKING CHANGE**: some rules have been moved to new groups to better reflect their purpose. This may result in Rome failing to load your configuration or suppression comments that now refer to unknown rules. Please check out [#3471](https://github.com/rome/tools/pull/3471) to learn more about the affected rules.
-- Fixed issues in the `noUnreable` rule
+- Fixed issues in the `noUnreachable` rule
 - Fixed false positive cases for `noNegationElse` [#3141](https://github.com/rome/tools/issues/3141)
 - Fixed false positive cases for `noUnusedVariables` [#3169](https://github.com/rome/tools/issues/3169)
 - Fixed an issue in our CFG [#3390](https://github.com/rome/tools/issues/3390)
