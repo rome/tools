@@ -10,7 +10,7 @@ use rome_js_syntax::{
 };
 use rome_rowan::{AstNode, AstNodeExt, AstNodeList, BatchMutationExt, SyntaxToken, TriviaPiece};
 
-use crate::{utils::escape_string, JsRuleAction};
+use crate::{utils::escape::escape, utils::escape_string, JsRuleAction};
 
 declare_rule! {
     /// Template literals are preferred over string concatenation.
@@ -141,7 +141,7 @@ fn convert_expressions_to_js_template(exprs: &Vec<JsAnyExpression>) -> Option<Js
                 let chunk_element = JsAnyTemplateElement::JsTemplateChunkElement(
                     make::js_template_chunk_element(JsSyntaxToken::new_detached(
                         JsSyntaxKind::TEMPLATE_CHUNK,
-                        string_without_quotes,
+                        &escape(string_without_quotes, &["${", "`"], '\\'),
                         [],
                         [],
                     )),

@@ -15,3 +15,13 @@ console.log("foo" + 1 + 2);
 foo() + " bar";
 
 1 * /**leading*/"foo"    /**trailing */                   + "bar"
+
+console.log("${foo." + bar + ".baz}");
+console.log("foo: ${bar." + baz + ".bat}");
+console.log("foo: `bar." + baz + ".bat}");
+console.log("${foo}: `bar." + baz + ".bat}");
+
+console.log("foo: \${bar." + baz + ".bat}");
+console.log("foo: \`bar." + baz + ".bat}");
+console.log("foo: \\${bar." + baz + ".bat}");
+console.log("foo: \\\${bar." + baz + ".bat}");
