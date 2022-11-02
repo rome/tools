@@ -109,7 +109,7 @@ yarn run rome format <files> --write
 ```
 
 
-
+<!-- Make sure to update the redirect in `static/_redirects` when changing the editors title -->
 ### Editor Setup
 
 We recommend installing our editor integration to get the most out of Rome. The Rome editor integration allows you to:

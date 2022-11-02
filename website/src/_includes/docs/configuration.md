@@ -1,3 +1,4 @@
+<!-- Make sure to update the redirect in `static/_redirects` when changing the configuration title -->
 ## Configuration
 
 The configuration file is considered **optional**, Rome has good defaults. Use the configuration
