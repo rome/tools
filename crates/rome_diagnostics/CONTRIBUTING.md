@@ -7,7 +7,7 @@ contributors to the Rome codebase to help writing diagnostics, both at the
 technical level, and as general best practices to make diagnostics easier to
 understand for the final user.
 
-## Writing a Diagnostic
+## What is a Diagnostic
 
 Diagnostics are at the core of the experience of the Rome toolchain for the
 users, and providing high quality diagnostics is crucial to making the usage of
@@ -30,7 +30,7 @@ of the Rome project
 	provide additional context.
 
 
-## What is a Diagnostic
+## The `Diagnostic` trait
 
 At the lowest level, `Diagnostic` is a Rust trait implemented by various types
 across the codebase that each represent a specific kind of diagnostic. All
