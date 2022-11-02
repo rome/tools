@@ -9,7 +9,7 @@ The language agnostic options supported by Rome are:
 
 - indent style (default: `tabs`): Use spaces or tabs for indention
 - tab width (default: `2`): The number of spaces per indention level
-- line width (default: `80)`: The column width at which Rome wraps code
+- line width (default: `80`): The column width at which Rome wraps code
 
 ### Use the formatter with the CLI
 
