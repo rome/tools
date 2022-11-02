@@ -110,9 +110,7 @@ Enables the [recommended rules](/docs/lint/rules) for all categories.
 
 Options that influence the rules of a single category. Rome supports the following categories:
 
-- `correctness`: Code that is wrong or useless
-- `style`: Code that should be written in a more idiomatic way
-- `nursery`: new rules that are still under development.
+{% include docs/reference/groups.md %}
 
 ##### `linter.rules.[category].recommended`
 
