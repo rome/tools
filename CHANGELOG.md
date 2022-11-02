@@ -9,6 +9,8 @@
 - Added the new command `rome lsp-proxy`.
 - Added the new option`--version` as an alias for `rome version`
 - Added a new argument `--files-max-size` to change the allowed size of files, in bytes.
+- Added a new argument `--formatter-enabled` to the command `rome ci`.
+- Added a new argument `--linter-enabled` to the command `rome ci`.
 - Added the new `format` option `--trailing-comma` to configure where to add trailing commas.
 - Correctly show the supported options for `rome ci`, closes [#3456](https://github.com/rome/tools/issues/3456).
 - Fixed the command `rome ci` command to run the linter even if the formatter is disabled, closes [#3495](https://github.com/rome/tools/issues/3495). 

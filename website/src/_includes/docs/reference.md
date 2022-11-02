@@ -56,6 +56,12 @@ Disable the formatting of markup (print everything as plain text)
 
 Connect to a running instance of the Rome daemon server
 
+##### `--files-max-size`
+
+The maximum allowed size for source code files in bytes.
+
+> Default: 1024
+
 #### Global Options
 
 Use these flags to get information about the Rome CLI.
