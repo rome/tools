@@ -31,7 +31,8 @@ pub(crate) use object_like::JsObjectLike;
 pub(crate) use object_pattern_like::JsObjectPatternLike;
 use rome_formatter::{format_args, write, Buffer};
 use rome_js_syntax::{
-    JsAnyExpression, JsAnyStatement, JsCallExpression, JsInitializerClause, JsLanguage, Modifiers, JsSyntaxKind,
+    JsAnyExpression, JsAnyStatement, JsCallExpression, JsInitializerClause, JsLanguage,
+    JsSyntaxKind, Modifiers,
 };
 use rome_js_syntax::{JsSyntaxNode, JsSyntaxToken};
 use rome_rowan::{AstNode, AstNodeList};
