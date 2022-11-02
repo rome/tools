@@ -1,27 +1,33 @@
 use crate::{CliSession, Termination};
-use rome_console::{markup, ConsoleExt};
+use rome_console::{markup, ConsoleExt, HorizontalLine};
 use rome_service::configuration::Configuration;
 use rome_service::create_config;
 
 pub(crate) fn init(mut session: CliSession) -> Result<(), Termination> {
     let fs = &mut session.app.fs;
     create_config(fs, Configuration::default())?;
-    let message = markup! {
-    <Info><Emphasis>"Files created:"</Emphasis></Info>"
-\t"<Emphasis>"- rome.json: "</Emphasis>"Your project configuration. Documentation: "<Underline>"https://rome.tools/docs/configuration"</Underline>"
 
-"<Info><Emphasis>"Next Steps:"</Emphasis></Info>"
-\t1. "<Emphasis>"Setup your editor:"</Emphasis>"
-\t\tGet live errors as you type and format when you save. Learn more: "<Underline>"https://rome.tools/editors"</Underline>"
-\t2. "<Emphasis>"Try a command"</Emphasis>"
-\t\t"<Italic>"rome ci"</Italic>" is used to validate your code, verify formatting, and check for lint errors. Run " <Italic>"rome --help"</Italic>" for a full list of commands and flags
-\t3. "<Emphasis>"Read the documentation"</Emphasis>"
-\t\tOur website serves as a comprehensive source of guides and documentation: "<Underline>"https://rome.tools/docs"</Underline>"
-\t4. "<Emphasis>"Get involved in the community"</Emphasis>"
-\t\tAsk questions, get support, or contribute by participating on GitHub ("<Underline>"https://github.com/rome/tools"</Underline>"), or our community Discord ("<Underline>"https://discord.gg/rome"</Underline>")"
-        };
+    session.app.console.log(markup! {
+"\n"<Inverse>"Welcome to Rome! Let's get you started..."</Inverse>"
 
-    session.app.console.log(message);
+"<Info><Emphasis>"Files created "</Emphasis></Info>{HorizontalLine::new(136)}"
+
+  "<Dim>"- "</Dim><Emphasis>"rome.json: "</Emphasis>"Your project configuration. Documentation: https://rome.tools/configuration
+
+"<Info><Emphasis>"Next Steps "</Emphasis></Info>{HorizontalLine::new(139)}"
+
+  "<Dim>"1."</Dim>" "<Emphasis>"Setup an editor extension"</Emphasis>"
+     Get live errors as you type and format when you save. Learn more: https://rome.tools/editors
+
+  "<Dim>"2."</Dim>" "<Emphasis>"Try a command"</Emphasis>"
+     "<Italic>"rome ci"</Italic>" checks for lint errors and verifies formatting. Run " <Italic>"rome --help"</Italic>" for a full list of commands and options.
+
+  "<Dim>"3."</Dim>" "<Emphasis>"Read the documentation"</Emphasis>"
+     Our website serves as a comprehensive source of guides and documentation: https://rome.tools/docs
+
+  "<Dim>"4."</Dim>" "<Emphasis>"Get involved in the community"</Emphasis>"
+     Ask questions, get support, or contribute by participating on GitHub (https://github.com/rome/tools), or join our community Discord (https://discord.gg/rome)"
+        });
 
     Ok(())
 }

@@ -1,6 +1,6 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 218
+assertion_line: 223
 expression: content
 ---
 ## `rome.json`
@@ -19,18 +19,26 @@ expression: content
 # Emitted Messages
 
 ```block
-Files created:
-	- rome.json: Your project configuration. Documentation: https://rome.tools/docs/#configuration
 
-Next Steps:
-	1. Setup your editor:
-		Get live errors as you type and format when you save. Learn more: https://rome.tools/#editor-setup
-	2. Try a command
-		rome ci is used to validate your code, verify formatting, and check for lint errors. Run rome --help for a full list of commands and flags
-	3. Read the documentation
-		Our website serves as a comprehensive source of guides and documentation: https://rome.tools/docs
-	4. Get involved in the community
-		Ask questions, get support, or contribute by participating on GitHub (https://github.com/rome/tools), or our community Discord (https://discord.gg/rome)
+Welcome to Rome! Let's get you started...
+
+Files created ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  - rome.json: Your project configuration. Documentation: https://rome.tools/configuration
+
+Next Steps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  1. Setup an editor extension
+     Get live errors as you type and format when you save. Learn more: https://rome.tools/editors
+
+  2. Try a command
+     rome ci checks for lint errors and verifies formatting. Run rome --help for a full list of commands and options.
+
+  3. Read the documentation
+     Our website serves as a comprehensive source of guides and documentation: https://rome.tools/docs
+
+  4. Get involved in the community
+     Ask questions, get support, or contribute by participating on GitHub (https://github.com/rome/tools), or join our community Discord (https://discord.gg/rome)
 ```
 
 
