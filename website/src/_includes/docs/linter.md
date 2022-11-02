@@ -1,18 +1,18 @@
 ## Linter
 
-Rome's linter statically analyzes your code to catch common errors and help write more idiomatic code.
+Rome's linter statically analyzes your code to catch common errors and help you write more idiomatic code.
 
 ### Use the linter via CLI
 
 You can start by running the CLI with the `--help` flag:
 
-```shell
+```bash
 rome check --help
 ```
 
 Which will show you the options available at the moment:
 
-```shell
+```bash
 Rome Check: Run the linter on a set of files
 
 USAGE:
@@ -33,10 +33,6 @@ Rules in Rome are divided into categories to help you understand their purpose.
 
 **See the full [list of rules](/docs/lint/rules).**
 
-All rules are enabled by default, and cannot be disabled. [Suppression](#lint-suppression) can be used to hide specific lint errors.
-
-[vs code extension]: https://marketplace.visualstudio.com/items?itemName=rome.rome
-[release page]: https://github.com/rome/tools/releases
 
 ### Code fixes
 

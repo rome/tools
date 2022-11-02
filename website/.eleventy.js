@@ -6,6 +6,7 @@ const markdownItHeaderSections = require("markdown-it-header-sections");
 const markdownItAnchor = require("markdown-it-anchor");
 const markdownItImageSize = require("markdown-it-imsize");
 const markdownItFootnote = require("markdown-it-footnote");
+const markdownItAttrs = require("markdown-it-attrs");
 const fs = require("fs");
 const pluginTOC = require("eleventy-plugin-nesting-toc");
 const path = require("path");
@@ -68,6 +69,10 @@ module.exports = function (eleventyConfig) {
 					.replace(/\s+/g, "-"),
 			);
 		},
+	});
+
+	md.use(markdownItAttrs, {
+		allowedAttributes: ["data-toc-exclude"],
 	});
 
 	eleventyConfig.setLibrary("md", md);

@@ -1,92 +1,154 @@
 ## Getting Started
 
-Rome works on Linux, macOS, and Windows.
+### What is Rome  {data-toc-exclude}
 
-For all operating systems, we support both x86_64 and ARM architectures.
+Rome is a formatter, linter, and in the future, a bundler, compiler, test runner, and more.
 
-Install Rome using any of the following methods.
+### System Requirements {data-toc-exclude}
+
+* Windows (including WSL), macOS, or Linux
+* x86_64 or ARM64
+* Node.js v14.18 or newer (not applicable if you use the standalone executable)
+
 
 ### Installation
 
-Install `rome` using your preferred node package manager. We require a minimum Node version of v14.18.
+The fastest way to download Rome is to use `npm` or your preferred package manager. The CLI is also available as a [standalone executable](/standalone-executable) if you want to use Rome without installing Node.js.
 
-> NOTE: we recommend **not** installing the binary globally, instead please install the binary
-> locally to your project. You can also use `npx`, `pnpm dlx` or `yarn dlx` to run `rome@next`.
+Run the following commands in a directory with a `package.json` file to install Rome.
 
-| Package manager               | Instructions            |
-| ----------------------------- | ----------------------- |
-| [npm](https://www.npmjs.com/) | `npm i -D rome@next`    |
-| [pnpm](https://pnpm.io/)      | `pnpm add -D rome@next` |
-| [yarn](https://yarnpkg.com/)  | `yarn add -D rome@next` |
+> **Note**: It is also possible to install Rome globally rather than locally. However, this is not recommended.
 
-If you install the CLI locally, use the [scripts field](https://docs.npmjs.com/cli/v8/using-npm/scripts) of your package.json to run Rome. For instance:
+
+##### npm {data-toc-exclude}
+
+```bash
+npm install --save-dev rome@next
+```
+
+You can now use `npx rome` to run Rome.
+
+##### pnpm {data-toc-exclude}
+
+```bash
+pnpm install --save-dev rome@next
+```
+
+You can now use `pnpm exec rome` to run Rome.
+
+
+##### yarn {data-toc-exclude}
+
+```bash
+yarn add rome@next --save-dev
+```
+
+You can now use `yarn run rome` to run Rome.
+
+### Configuration
+
+We recommend creating a `rome.json` configuration file for each project. It eliminates  the need to repeat the CLI options every time you run a command and ensures that Rome applies the same configuration in your editor. If you're happy with Rome's defaults, you don't have to create the configuration.
+
+To create the configuration, run the `init` command in the root folder of your project:
+
+```bash
+npx rome init
+
+# or
+pnpm exec rome init
+
+# or
+yarn run rome init
+```
+
+After running the `init` command, you'll have a `rome.json` configuration file in your directory.
 
 ```json
 {
-  "scripts": {
-    "format": "rome format ."
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
+    }
   }
 }
 ```
 
-Then you can run:
+
+The `linter.enabled: true` enables the linter and `rules.recommended: true` enables the [recommended rules](/docs/lint/rules/).
+
+Formatting is enabled because the configuration doesn't explicitly [disables](/docs/#formatterenabled) formatting with `formatter.enabled: false`.
+
+
+
+### Usage
+
+You can lint any file or directory running:
 
 ```bash
-npm run format
-yarn format
-pnpm format
+npx rome check <files>
+
+# or
+pnpm exec rome check <files>
+
+# or
+yarn run rome check <files>
 ```
+
+or format your files and directories with:
+
+
+```bash
+npx rome format <files> --write
+
+# or
+pnpm exec rome format <files> --write
+
+# or
+yarn run rome format <files> --write
+```
+
+
 
 ### Editor Setup
 
-You can use Rome by installing the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=rome.rome) from the marketplace.
+We recommend installing our editor integration to get the most out of Rome. The Rome editor integration allows you to:
 
-Rome currently doesn't support other editors than VS Code. [Let us know](https://github.com/rome/tools/discussions/categories/suggestions) if you would like support for another editor.
+* Format files on save or when issuing the Format command.
+* Lint files and apply code fixes
 
-If you want to set Rome as your default formatter, you can do so by opening the [command palette]
-and select `Format Document With ...` , then `Configure Default Formatter` and finally select `Rome`. The option will
-appear only for documents that Rome supports (JavaScript, and TypeScript).
+#### VS Code {data-toc-exclude}
+
+Install our official [Rome VS Code extension](https://marketplace.visualstudio.com/items?itemName=rome.rome) from the Visual Studio Marketplace.
+
+To make Rome the default formatter open a supported file (JavaScript or TypeScript) and:
+
+* open the *Command Palette* (View or Command/Ctrl + Shift + P)
+* select  *Format Document With...*
+* select *Configure Default Formatter*
+* select *Rome*.
+
+#### Other Editors {data-toc-exclude}
+
+We would love to support more editors, but we don't have the capacity to implement and maintain multiple editor integrations at the moment. You can help us prioritize by [voting](https://github.com/rome/tools/discussions/3544) for your favourite editor. If you're interested in building an integration for Rome, please [reach out](https://github.com/rome/tools/issues/2390), and we would be more than happy to support you.
+
+If you are looking for editor support in a JetBrains IDE like WebStorm, then visit the relevant [issue](https://youtrack.jetbrains.com/issue/WEB-46895/Support-for-Romejs) to upvote the ticket.
+
 
 ### CI Setup
 
-#### GitHub Actions
+If you're using Node.js, the recommended way to run Rome in CI is to use [your favourite package manager](/docs/#installation). This ensures that your CI pipeline uses the same version of Rome as you do inside of the editor or when running local CLI commands.
 
-Please refer to the [`setup-rome` action documentation](https://github.com/rome/setup-rome#usage) for more information about its configuration:
 
-```yaml
-steps:
-  - uses: rome/setup-rome@v0.1
-    with:
-      version: latest
-  - run: rome --help
-```
+If you are working on a project that isn't using Node.js, then the best way to integrate Rome into your CI is to use the [setup-rome](https://github.com/rome/setup-rome#usage) GitHub Action or install the [standalone executable](/standalone-executable).
 
-#### Installation on any other CI
 
-You can download and install the binary directly using `curl`:
+### Next Steps {data-toc-exclude}
 
-```shell
-curl -L https://github.com/rome/tools/releases/latest/download/rome-<OS>-<ARCH> -o rome
-chmod +x rome
-```
+Success! You’re now ready to use Rome. 🥳
 
-Where `<OS>` and `<ARCH>` follow the Node.js syntax convention:
-
-- `<OS>` is one of the following values: `win32`, `darwin` or `linux`
-- `<ARCH>` is one of the following values: `arm64` or `x64`
-
-> NOTE: For Windows Subsystem for Linux (WSL), please use `linux` as your OS
-
-|         | `win32`         | `darwin`         | `linux`         |
-| ------- | --------------- | ---------------- | --------------- |
-| `arm64` | [`win32-arm64`] | [`darwin-arm64`] | [`linux-arm64`] |
-| `x64`   | [`win32-x64`]   | [`darwin-x64`]   | [`linux-x64`]   |
-
-Please make sure to choose the correct architecture from the [releases page](https://github.com/rome/tools/releases).
-
-[`win32-arm64`]: https://github.com/rome/tools/releases/latest/download/rome-win32-arm64.exe
-[`darwin-arm64`]: https://github.com/rome/tools/releases/latest/download/rome-darwin-arm64
-[`linux-arm64`]: https://github.com/rome/tools/releases/latest/download/rome-linux-arm64
-[`win32-x64`]: https://github.com/rome/tools/releases/latest/download/rome-win32-x64.exe
-[`darwin-x64`]: https://github.com/rome/tools/releases/latest/download/rome-darwin-x64
-[`linux-x64`]: https://github.com/rome/tools/releases/latest/download/rome-linux-x64
+* Learn more about how to use and configure the [formatter](/docs/#formatter)
+* Learn more about how to use and configure the [linter](/docs/#linter)
+* Get familiar with the [CLI options](/docs/#cli)
+* Get familiar with the [configuration options](/docs/#romejson)
+* Join our [community on Discord](https://discord.gg/rome)
