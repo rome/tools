@@ -1,10 +1,12 @@
 mod closure;
+mod is_constant;
 
 use crate::{SemanticEvent, SemanticEventExtractor};
 pub use closure::*;
 use rome_js_syntax::{
-    JsAnyRoot, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage, JsReferenceIdentifier,
-    JsSyntaxKind, JsSyntaxNode, JsxReferenceIdentifier, TextRange, TextSize, TsIdentifierBinding,
+    JsAnyExpression, JsAnyRoot, JsIdentifierAssignment, JsIdentifierBinding, JsLanguage,
+    JsReferenceIdentifier, JsSyntaxKind, JsSyntaxNode, JsxReferenceIdentifier, TextRange, TextSize,
+    TsIdentifierBinding,
 };
 use rome_rowan::{AstNode, SyntaxTokenText};
 use rust_lapper::{Interval, Lapper};
@@ -787,6 +789,12 @@ impl SemanticModel {
     /// Returns the [Closure] associated with the node.
     pub fn closure(&self, node: &impl HasClosureAstNode) -> Closure {
         Closure::from_node(self.data.clone(), node)
+    }
+
+    /// Returns true or false if the expression is constant, which
+    /// means it does not depend on any other variables.
+    pub fn is_constant(&self, expr: &JsAnyExpression) -> bool {
+        is_constant::is_constant(expr)
     }
 }
 

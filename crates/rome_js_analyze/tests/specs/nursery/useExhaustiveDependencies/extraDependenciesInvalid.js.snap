@@ -16,6 +16,14 @@ function MyComponent2() {
   useEffect(() => {}, [a, b]);
 }
 
+// extra const
+
+function MyComponent2() {
+  const a = 1;
+  useEffect(() => {}, [a]);
+}
+
+
 ```
 
 # Diagnostics
@@ -72,6 +80,30 @@ extraDependenciesInvalid.js:10:3 lint/nursery/useExhaustiveDependencies ━━�
        │                           ^
     11 │ }
     12 │ 
+  
+
+```
+
+```
+extraDependenciesInvalid.js:17:3 lint/nursery/useExhaustiveDependencies ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ! This hook specifies more dependencies than necessary.
+  
+    15 │ function MyComponent2() {
+    16 │   const a = 1;
+  > 17 │   useEffect(() => {}, [a]);
+       │   ^^^^^^^^^
+    18 │ }
+    19 │ 
+  
+  i This dependency can be removed from the list.
+  
+    15 │ function MyComponent2() {
+    16 │   const a = 1;
+  > 17 │   useEffect(() => {}, [a]);
+       │                        ^
+    18 │ }
+    19 │ 
   
 
 ```
