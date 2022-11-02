@@ -14,6 +14,22 @@ use std::path::{Path, PathBuf};
 
 const INCORRECT_CODE: &str = "let a = !b || !c";
 
+const UNFORMATTED_AND_INCORRECT: &str = "statement(    ) ; let a = !b || !c;";
+
+const CI_CONFIGURATION: &str = r#"
+{
+    "formatter": {
+        "enabled": true
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "recommended": true
+        }
+    }
+}
+"#;
+
 #[test]
 fn ok() {
     let mut fs = MemoryFileSystem::default();
@@ -148,7 +164,7 @@ fn ci_does_not_run_formatter() {
     fs.insert(file_path.into(), CONFIG_DISABLED_FORMATTER.as_bytes());
 
     let file_path = Path::new("file.js");
-    fs.insert(file_path.into(), UNFORMATTED.as_bytes());
+    fs.insert(file_path.into(), UNFORMATTED_AND_INCORRECT.as_bytes());
 
     let result = run_cli(
         DynRef::Borrowed(&mut fs),
@@ -156,7 +172,7 @@ fn ci_does_not_run_formatter() {
         Arguments::from_vec(vec![OsString::from("ci"), file_path.as_os_str().into()]),
     );
 
-    assert!(result.is_ok(), "run_cli returned {result:?}");
+    assert!(result.is_err(), "run_cli returned {result:?}");
 
     let mut file = fs
         .open(file_path)
@@ -166,12 +182,52 @@ fn ci_does_not_run_formatter() {
     file.read_to_string(&mut content)
         .expect("failed to read file from memory FS");
 
-    assert_eq!(content, UNFORMATTED);
+    assert_eq!(content, UNFORMATTED_AND_INCORRECT);
 
     drop(file);
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "ci_does_not_run_formatter",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn ci_does_not_run_formatter_via_cli() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("file.js");
+    fs.insert(file_path.into(), UNFORMATTED_AND_INCORRECT.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("ci"),
+            OsString::from("--formatter-enabled=false"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(file_path)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, UNFORMATTED_AND_INCORRECT);
+
+    drop(file);
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "ci_does_not_run_formatter_via_cli",
         fs,
         console,
         result,
@@ -211,6 +267,90 @@ fn ci_does_not_run_linter() {
     assert_cli_snapshot(SnapshotPayload::new(
         module_path!(),
         "ci_does_not_run_linter",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn ci_does_not_run_linter_via_cli() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("file.js");
+    fs.insert(file_path.into(), UNFORMATTED_AND_INCORRECT.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("ci"),
+            OsString::from("--linter-enabled=false"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(file_path)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, UNFORMATTED_AND_INCORRECT);
+
+    drop(file);
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "ci_does_not_run_linter_via_cli",
+        fs,
+        console,
+        result,
+    ));
+}
+
+#[test]
+fn ci_errors_for_all_disabled_checks() {
+    let mut fs = MemoryFileSystem::default();
+    let mut console = BufferConsole::default();
+
+    let file_path = Path::new("rome.json");
+    fs.insert(file_path.into(), CI_CONFIGURATION.as_bytes());
+
+    let file_path = Path::new("file.js");
+    fs.insert(file_path.into(), UNFORMATTED_AND_INCORRECT.as_bytes());
+
+    let result = run_cli(
+        DynRef::Borrowed(&mut fs),
+        DynRef::Borrowed(&mut console),
+        Arguments::from_vec(vec![
+            OsString::from("ci"),
+            OsString::from("--linter-enabled=false"),
+            OsString::from("--formatter-enabled=false"),
+            file_path.as_os_str().into(),
+        ]),
+    );
+
+    assert!(result.is_err(), "run_cli returned {result:?}");
+
+    let mut file = fs
+        .open(file_path)
+        .expect("formatting target file was removed by the CLI");
+
+    let mut content = String::new();
+    file.read_to_string(&mut content)
+        .expect("failed to read file from memory FS");
+
+    assert_eq!(content, UNFORMATTED_AND_INCORRECT);
+
+    drop(file);
+    assert_cli_snapshot(SnapshotPayload::new(
+        module_path!(),
+        "ci_errors_for_all_disabled_checks",
         fs,
         console,
         result,

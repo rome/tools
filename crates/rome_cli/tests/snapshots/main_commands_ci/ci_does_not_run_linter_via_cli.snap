@@ -1,0 +1,32 @@
+---
+source: crates/rome_cli/tests/snap_test.rs
+expression: content
+---
+## `file.js`
+
+```js
+statement(    ) ; let a = !b || !c;
+```
+
+# Termination Message
+
+```block
+errors where emitted while running checks
+```
+
+# Emitted Messages
+
+```block
+file.js format ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  × File content differs from formatting output
+  
+    1   │ - statement(····)·;·let·a·=·!b·||·!c;
+      1 │ + statement();
+      2 │ + let·a·=·!b·||·!c;
+      3 │ + 
+  
+
+```
+
+

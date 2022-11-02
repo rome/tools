@@ -58,7 +58,9 @@ const CI: Markup = markup! {
 
     INPUTS can be one or more filesystem path, each pointing to a single file or an entire directory to be searched recursively for supported files
 
-"<Emphasis>"OPTIONS:"</Emphasis>""
+"<Emphasis>"OPTIONS:"</Emphasis>"
+    "<Dim>"--formatter-enabled"</Dim>"                      Allow to enable or disable the formatter check. (default: true)
+    "<Dim>"--linter-enabled"</Dim>"                         Allow to enable or disable the linter check. (default: true)"
     {FORMAT_OPTIONS}
 };
 
