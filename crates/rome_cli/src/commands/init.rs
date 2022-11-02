@@ -10,24 +10,25 @@ pub(crate) fn init(mut session: CliSession) -> Result<(), Termination> {
     session.app.console.log(markup! {
 "\n"<Inverse>"Welcome to Rome! Let's get you started..."</Inverse>"
 
-"<Info><Emphasis>"Files created "</Emphasis></Info>{HorizontalLine::new(136)}"
+"<Info><Emphasis>"Files created "</Emphasis></Info>{HorizontalLine::new(106)}"
 
-  "<Dim>"- "</Dim><Emphasis>"rome.json: "</Emphasis>"Your project configuration ("<Hyperlink href="https://rome.tools/configuration">"Documentation"</Hyperlink>").
+  "<Dim>"- "</Dim><Emphasis>"rome.json: "</Emphasis>"Your project configuration. Documentation: "<Hyperlink href="https://rome.tools/configuration">"https://rome.tools/configuration"</Hyperlink>"
 
-"<Info><Emphasis>"Next Steps "</Emphasis></Info>{HorizontalLine::new(139)}"
+"<Info><Emphasis>"Next Steps "</Emphasis></Info>{HorizontalLine::new(109)}"
 
   "<Dim>"1."</Dim>" "<Emphasis>"Setup an editor extension"</Emphasis>"
-     Get live errors as you type and format when you save. "<Hyperlink href="https://rome.tools/editors">"Learn more"</Hyperlink>".
+     Get live errors as you type and format when you save. Learn more: "<Hyperlink href="https://rome.tools/editors">"https://rome.tools/editors"</Hyperlink>"
 
   "<Dim>"2."</Dim>" "<Emphasis>"Try a command"</Emphasis>"
      "<Italic>"rome ci"</Italic>" checks for lint errors and verifies formatting. Run " <Italic>"rome --help"</Italic>" for a full list of commands and options.
 
   "<Dim>"3."</Dim>" "<Emphasis>"Read the documentation"</Emphasis>"
-     Our "<Hyperlink href="https://rome.tools/docs">"website"</Hyperlink>" serves as a comprehensive source of guides and documentation.
+     Our website serves as a comprehensive source of guides and documentation: "<Hyperlink href="https://rome.tools/docs">"https://rome.tools/docs"</Hyperlink>"
 
   "<Dim>"4."</Dim>" "<Emphasis>"Get involved in the community"</Emphasis>"
-     Ask questions, get support, or contribute by participating on "<Hyperlink href="https://github.com/rome/tools">"GitHub"</Hyperlink>", or join our community "<Hyperlink href="https://discord.gg/rome">"Discord"</Hyperlink>"."
-        });
+     Ask questions, get support, or contribute by participating on GitHub ("<Hyperlink href="https://github.com/rome/tools">"https://github.com/rome/tools"</Hyperlink>"),
+     or join our community Discord ("<Hyperlink href="https://discord.gg/rome">"https://discord.gg/rome"</Hyperlink>")"
+    });
 
     Ok(())
 }
