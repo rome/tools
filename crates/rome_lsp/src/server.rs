@@ -6,6 +6,7 @@ use crate::{handlers, requests};
 use futures::future::ready;
 use futures::FutureExt;
 use rome_console::markup;
+use rome_fs::CONFIG_NAME;
 use rome_service::workspace::{RageEntry, RageParams, RageResult};
 use rome_service::{workspace, Workspace};
 use std::collections::HashMap;
@@ -132,6 +133,23 @@ impl LSPServer {
             .await;
         }
 
+        let base_path = self.session.base_path();
+
+        if let Some(base_path) = base_path {
+            let registration_options = DidChangeWatchedFilesRegistrationOptions {
+                watchers: vec![FileSystemWatcher {
+                    glob_pattern: format!("{}/rome.json", base_path.display()),
+                    kind: Some(WatchKind::all()),
+                }],
+            };
+            self.register_capability(Registration {
+                id: "workspace/didChangeWatchedFiles".to_string(),
+                method: "workspace/didChangeWatchedFiles".to_string(),
+                register_options: Some(serde_json::to_value(registration_options).unwrap()),
+            })
+            .await;
+        }
+
         if rename {
             self.register_capability(Registration {
                 id: "textDocument/rename".to_string(),
@@ -214,6 +232,37 @@ impl LanguageServer for LSPServer {
         let _ = params;
         self.session.fetch_client_configuration().await;
         self.setup_capabilities().await;
+    }
+
+    #[tracing::instrument(level = "trace", skip(self))]
+    async fn did_change_watched_files(&self, params: DidChangeWatchedFilesParams) {
+        let file_paths = params
+            .changes
+            .iter()
+            .map(|change| change.uri.to_file_path());
+        for file_path in file_paths {
+            match file_path {
+                Ok(file_path) => {
+                    let base_path = self.session.base_path();
+                    if let Some(base_path) = base_path {
+                        let possible_rome_json = file_path.strip_prefix(&base_path);
+                        if let Ok(possible_rome_json) = possible_rome_json {
+                            if possible_rome_json.display().to_string() == CONFIG_NAME {
+                                self.session.update_configuration().await;
+                                self.session.fetch_client_configuration().await;
+                                // for now we are only interested to the configuration file,
+                                // so it's OK to exist the loop
+                                break;
+                            }
+                        }
+                    }
+                }
+                Err(_) => {
+                    error!("The Workspace root URI {file_path:?} could not be parsed as a filesystem path");
+                    continue;
+                }
+            }
+        }
     }
 
     async fn did_open(&self, params: DidOpenTextDocumentParams) {

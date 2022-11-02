@@ -116,21 +116,8 @@ export async function activate(context: ExtensionContext) {
 	);
 	const watcher = workspace.createFileSystemWatcher(configurationPath);
 
-	watcher.onDidChange(() => {
-		const configurationContent = readFileSync(configurationPath, {
-			encoding: "utf-8",
-		});
-		try {
-			const configurationAsJson = JSON.parse(configurationContent);
-			session.client.sendRequest(updateSettingsRequest, {
-				configuration: configurationAsJson,
-			});
-		} catch {
-			window.showErrorMessage(
-				"Couldn't load the new configuration, it seems there's some syntax errors in the file.",
-			);
-		}
-	});
+	// watcher will be disposed automatically
+	context.subscriptions.push(watcher);
 
 	client.start();
 }

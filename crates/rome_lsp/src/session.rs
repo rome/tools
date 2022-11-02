@@ -15,6 +15,7 @@ use rome_service::workspace::{RageEntry, RageParams, RageResult, UpdateSettingsP
 use rome_service::{load_config, Workspace};
 use rome_service::{DynRef, RomeError};
 use std::collections::HashMap;
+use std::path::PathBuf;
 use std::sync::RwLock;
 use std::sync::{Arc, Mutex};
 use tokio::sync::Notify;
@@ -196,16 +197,20 @@ impl Session {
             == Some(true)
     }
 
-    /// This function attempts to read the configuration from the root URI
-    pub(crate) async fn update_configuration(&self) {
+    pub(crate) fn base_path(&self) -> Option<PathBuf> {
         let root_uri = self.root_uri.read().unwrap();
-        let base_path =  root_uri.as_ref().and_then(|root_uri| match root_uri.to_file_path() {
+        root_uri.as_ref().and_then(|root_uri| match root_uri.to_file_path() {
             Ok(base_path) => Some(base_path),
             Err(()) => {
                 error!("The Workspace root URI {root_uri:?} could not be parsed as a filesystem path");
                 None
             }
-        });
+        })
+    }
+
+    /// This function attempts to read the configuration from the root URI
+    pub(crate) async fn update_configuration(&self) {
+        let base_path = self.base_path();
 
         match load_config(&self.fs, base_path) {
             Ok(Some(configuration)) => {
