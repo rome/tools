@@ -1,6 +1,5 @@
 ---
 source: crates/rome_cli/tests/snap_test.rs
-assertion_line: 223
 expression: content
 ---
 ## `rome.json`
@@ -24,21 +23,21 @@ Welcome to Rome! Let's get you started...
 
 Files created ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  - rome.json: Your project configuration. Documentation: https://rome.tools/configuration
+  - rome.json: Your project configuration (Documentation).
 
 Next Steps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   1. Setup an editor extension
-     Get live errors as you type and format when you save. Learn more: https://rome.tools/editors
+     Get live errors as you type and format when you save. Learn more.
 
   2. Try a command
      rome ci checks for lint errors and verifies formatting. Run rome --help for a full list of commands and options.
 
   3. Read the documentation
-     Our website serves as a comprehensive source of guides and documentation: https://rome.tools/docs
+     Our website serves as a comprehensive source of guides and documentation.
 
   4. Get involved in the community
-     Ask questions, get support, or contribute by participating on GitHub (https://github.com/rome/tools), or join our community Discord (https://discord.gg/rome)
+     Ask questions, get support, or contribute by participating on GitHub, or join our community Discord.
 ```
 
 
