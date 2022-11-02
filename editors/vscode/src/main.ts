@@ -108,17 +108,6 @@ export async function activate(context: ExtensionContext) {
 	);
 
 	handleActiveTextEditorChanged(window.activeTextEditor);
-
-	// we tell the client to add a watcher to the configuration file
-	const configurationPath = join(
-		workspace.workspaceFolders[0].uri.path,
-		"rome.json",
-	);
-	const watcher = workspace.createFileSystemWatcher(configurationPath);
-
-	// watcher will be disposed automatically
-	context.subscriptions.push(watcher);
-
 	client.start();
 }
 
