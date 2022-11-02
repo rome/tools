@@ -1,6 +1,9 @@
+use std::borrow::Cow;
+
 use crate::prelude::*;
 
 use crate::parentheses::NeedsParentheses;
+use crate::utils::string_utils::ToAsciiLowercaseCow;
 use rome_formatter::write;
 use rome_js_syntax::{JsSyntaxNode, TsBigIntLiteralType, TsBigIntLiteralTypeFields};
 
@@ -13,8 +16,22 @@ impl FormatNodeRule<TsBigIntLiteralType> for FormatTsBigIntLiteralType {
             minus_token,
             literal_token,
         } = node.as_fields();
+        write![f, [minus_token.format()]]?;
+        let literal_token = literal_token?;
 
-        write![f, [minus_token.format(), literal_token.format()]]
+        let original = literal_token.text_trimmed();
+        match original.to_ascii_lowercase_cow() {
+            Cow::Borrowed(_) => write![f, [literal_token.format()]],
+            Cow::Owned(lowercase) => {
+                write!(
+                    f,
+                    [format_replaced(
+                        &literal_token,
+                        &dynamic_text(&lowercase, literal_token.text_trimmed_range().start())
+                    )]
+                )
+            }
+        }
     }
 
     fn needs_parentheses(&self, item: &TsBigIntLiteralType) -> bool {
