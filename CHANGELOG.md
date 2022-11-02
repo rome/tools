@@ -71,7 +71,8 @@
 ### VSCode
 
 - Make the "rename" command opt-in and use the VS Code provided "rename" feature that offers whole project renaming instead.
-- added the command `Restart LSP Server`
+- Added the new command `Restart LSP Server`
+- The LSP server is now able to listen to changes of `rome.json` and apply the new configuration 
 
 
 
