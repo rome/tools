@@ -1,11 +1,34 @@
 # Writing Diagnostics
 
 The `rome_diagnostics` crate implements "Diagnostics", the generic concept of
-how the various errors and issues that can be raised in the Rome codebase, 
+how the various errors and issues that can be raised in the Rome codebase,
 and displayed to the final user. This guide is aimed at
 contributors to the Rome codebase to help writing diagnostics, both at the
 technical level, and as general best practices to make diagnostics easier to
 understand for the final user.
+
+## Writing a Diagnostic
+
+Diagnostics are at the core of the experience of the Rome toolchain for the
+users, and providing high quality diagnostics is crucial to making the usage of
+Rome as frictionless as possible even when errors happen. What follows is a
+list of best practice for writing good diagnostics:
+
+- The Diagnostic should follow the [Technical Principles](https://rome.tools/#technical)
+of the Rome project
+- A diagnostic should not simply state that something went wrong, it should
+	explain why it went wrong. Add explanations in log advices, and show hyperlinks
+	to relevant documentation pages in case the user wants to know more.
+- If possible, a diagnostic should also try to provide a way for the user to
+	fix the issue. This can be in the form of a simple log advice, as a diff advice
+	for a source code change, or as a command advice to prompt the user for a
+	direct action. In any case, don't forget to add the `FIXABLE` tag to the
+	diagnostic to highlight to the user it contains an actionable hint.
+- Show don't tell: while log advices are highly versatile, always prefer
+	showing a rich advice like a code frame, diff or command to a textual
+	explanation if you can, since those are generally easier to understand and may
+	provide additional context.
+
 
 ## What is a Diagnostic
 
@@ -117,24 +140,3 @@ The category may also require some special care if you're declaring a new one,
 since all diagnostic categories have to be statically registered you'll need to
 add it to `crates/rome_diagnostics_categories/src/categories.rs`
 
-## Writing a Diagnostic
-
-Diagnostics are at the core of the experience of the Rome toolchain for the
-users, and providing high quality diagnostics is crucial to making the usage of
-Rome as frictionless as possible even when errors happen. What follows is a
-list of best practice for writing good diagnostics:
-
-- The Diagnostic should follow the (Technical Principles)[https://rome.tools/#technical]
-of the Rome project
-- A diagnostic should not simply state that something went wrong, it should
-explain why it went wrong. Add explanations in log advices, and show hyperlinks
-to relevant documentation pages in case the user wants to know more.
-- If possible, a diagnostic should also try to provide a way for the user to
-fix the issue. This can be in the form of a simple log advice, as a diff advice
-for a source code change, or as a command advice to prompt the user for a
-direct action. In any case, don't forget to add the `FIXABLE` tag to the
-diagnostic to highlight to the user it contains an actionable hint.
-- Show don't tell: while log advices are highly versatile, always prefer
-showing a rich advice like a code frame, diff or command to a textual
-explanation if you can, since those are generally easier to understand and may
-provide additional context.
