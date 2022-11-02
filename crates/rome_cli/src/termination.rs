@@ -73,6 +73,9 @@ pub enum Termination {
         command_name()
     )]
     ServerNotRunning,
+
+    #[error("The combination of configuration and arguments is invalid: \n {0}")]
+    IncompatibleEndConfiguration(&'static str),
 }
 
 fn command_name() -> String {

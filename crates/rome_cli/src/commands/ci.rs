@@ -27,31 +27,21 @@ pub(crate) fn ci(mut session: CliSession) -> Result<(), Termination> {
             source,
         })?;
 
-    if let Some(formatter) = &mut configuration.formatter {
-        if let Some(formatter_enabled) = formatter_enabled {
-            formatter.enabled = formatter_enabled
-        }
-    } else {
-        configuration.formatter = Some(FormatterConfiguration {
-            enabled: formatter_enabled.unwrap_or(true),
-            ..FormatterConfiguration::default()
-        })
-    }
+    let formatter = configuration
+        .formatter
+        .get_or_insert_with(FormatterConfiguration::default);
 
-    if let Some(linter) = &mut configuration.linter {
-        if let Some(linter_enabled) = linter_enabled {
-            linter.enabled = linter_enabled
-        }
-    } else {
-        configuration.linter = Some(LinterConfiguration {
-            enabled: linter_enabled.unwrap_or(true),
-            ..LinterConfiguration::default()
-        })
-    }
+    formatter.enabled = formatter_enabled.unwrap_or(true);
+
+    let linter = configuration
+        .linter
+        .get_or_insert_with(LinterConfiguration::default);
+
+    linter.enabled = linter_enabled.unwrap_or(true);
 
     // no point in doing the traversal if all the checks have been disabled
     if configuration.is_formatter_disabled() && configuration.is_linter_disabled() {
-        return Ok(());
+        return Err(Termination::IncompatibleEndConfiguration("Formatter and Linter are both disabled, can't perform the command. This probably and error."));
     }
 
     if !configuration.is_formatter_disabled() {
