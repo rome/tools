@@ -162,7 +162,7 @@ function HelloWorld({
         <p>Rome is 52× faster than Prettier when formatting 1,000 lines of code.</p>
       </div>
     </div>
-    <p class="founder-clout">Created by the founder of <a target="_blank" class="babel" href="https://babeljs.io/">{% include svg/homepage/babel.svg %}</a> and <a target="_blank" href="https://yarnpkg.com/" class="yarn">{% include svg/homepage/yarn.svg %}</a></p>
+    <p class="founder-clout">Created by the founder of <a target="_blank" class="babel" href="https://babeljs.io/">{% include svg/homepage/babel.svg %}<span class="sr-only">Babel</span></a> and <a target="_blank" href="https://yarnpkg.com/" class="yarn">{% include svg/homepage/yarn.svg %}<span class="sr-only">Yarn</span></a></p>
   </section>
 
   <hr class="full">
